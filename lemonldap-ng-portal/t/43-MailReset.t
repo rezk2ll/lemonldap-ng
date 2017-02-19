@@ -83,6 +83,7 @@ sub MIME::Lite::send {
     ok( $mail->header_as_string =~ /dwho\@badwolf.org/s, ' Found dest' )
       or explain( $mail->header_as_string, 'To: dwho@badwolf.org' );
     count(2);
+    print STDERR $mail->header_as_string."\n";
     unless ($mail2) {
         $mailSend = 1;
         ok(

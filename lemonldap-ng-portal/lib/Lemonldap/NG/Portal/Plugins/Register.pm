@@ -286,7 +286,12 @@ sub _register {
           if ( $req->datas->{_authChoice} );
 
         # Build mail content
+        my $tr      = $self->translate($req);
         my $subject = $self->conf->{registerConfirmSubject};
+        unless ($subject) {
+            $subject = 'registerConfirmSubject';
+            $tr->( \$subject );
+        }
         my $body;
         my $html = 1;
 
@@ -300,7 +305,7 @@ sub _register {
           unless ( -e $tplfile );
         my $template = HTML::Template->new(
             filename => $tplfile,
-            filter   => $self->translate($req),
+            filter   => $tr,
         );
         $body = $template->output();
 
@@ -345,7 +350,13 @@ sub _register {
         return $result;
     }
 
+    # Build mail content
+    my $tr      = $self->translate($req);
     my $subject = $self->conf->{registerDoneSubject};
+    unless ($subject) {
+        $subject = 'registerDoneSubject';
+        $tr->( \$subject );
+    }
     my $body;
     my $html = 1;
 
@@ -358,7 +369,7 @@ sub _register {
       unless ( -e $tplfile );
     my $template = HTML::Template->new(
         filename => $tplfile,
-        filter   => $self->translate($req),
+        filter   => $tr,
     );
     $body = $template->output();
 

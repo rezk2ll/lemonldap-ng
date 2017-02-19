@@ -1333,8 +1333,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'longtext'
         },
         'mailConfirmSubject' => {
-            'default' => '[LemonLDAP::NG] Password reset confirmation',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'mailFrom' => {
             'default' => 'noreply@example.com',
@@ -1355,8 +1354,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'text'
         },
         'mailSubject' => {
-            'default' => '[LemonLDAP::NG] Your new password',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'mailTimeout' => {
             'default' => 0,
@@ -2014,8 +2012,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'select'
         },
         'registerConfirmSubject' => {
-            'default' => '[LemonLDAP::NG] Account register confirmation',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'registerDB' => {
             'default' => 'Null',
@@ -2040,8 +2037,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'select'
         },
         'registerDoneSubject' => {
-            'default' => '[LemonLDAP::NG] Your new account',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'registerTimeout' => {
             'default' => 0,

@@ -101,20 +101,18 @@ sub defaultValues {
         'locationRules' => {
             'default' => 'deny'
         },
-        'loginHistoryEnabled'  => 1,
-        'logoutServices'       => {},
-        'macros'               => {},
-        'mailCharset'          => 'utf-8',
-        'mailConfirmSubject'   => '[LemonLDAP::NG] Password reset confirmation',
-        'mailFrom'             => 'noreply@example.com',
-        'mailSessionKey'       => 'mail',
-        'mailSubject'          => '[LemonLDAP::NG] Your new password',
-        'mailTimeout'          => 0,
-        'mailUrl'              => 'http://auth.example.com/resetpwd',
-        'managerDn'            => '',
-        'managerPassword'      => '',
-        'multiValuesSeparator' => '; ',
-        'notificationStorage'  => 'File',
+        'loginHistoryEnabled'        => 1,
+        'logoutServices'             => {},
+        'macros'                     => {},
+        'mailCharset'                => 'utf-8',
+        'mailFrom'                   => 'noreply@example.com',
+        'mailSessionKey'             => 'mail',
+        'mailTimeout'                => 0,
+        'mailUrl'                    => 'http://auth.example.com/resetpwd',
+        'managerDn'                  => '',
+        'managerPassword'            => '',
+        'multiValuesSeparator'       => '; ',
+        'notificationStorage'        => 'File',
         'notificationStorageOptions' => {
             'dirName' => '/var/lib/lemonldap-ng/notifications'
         },
@@ -167,11 +165,8 @@ sub defaultValues {
         'radiusAuthnLevel'                   => 3,
         'randomPasswordRegexp'               => '[A-Z]{3}[a-z]{5}.\\d{2}',
         'redirectFormMethod'                 => 'get',
-        'registerConfirmSubject' =>
-          '[LemonLDAP::NG] Account register confirmation',
-        'registerDB'          => 'Null',
-        'registerDoneSubject' => '[LemonLDAP::NG] Your new account',
-        'registerTimeout'     => 0,
+        'registerDB'                         => 'Null',
+        'registerTimeout'                    => 0,
         'remoteGlobalStorage' => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         'remoteGlobalStorageOptions' => {
             'ns' =>

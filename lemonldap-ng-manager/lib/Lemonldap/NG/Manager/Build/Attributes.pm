@@ -873,7 +873,6 @@ sub attributes {
         mailConfirmBody    => { type => 'longtext', },
         mailConfirmSubject => {
             type          => 'text',
-            default       => '[LemonLDAP::NG] Password reset confirmation',
             documentation => 'Mail subject for reset confirmation',
         },
         mailFrom => {
@@ -889,7 +888,6 @@ sub attributes {
         },
         mailSubject => {
             type          => 'text',
-            default       => '[LemonLDAP::NG] Your new password',
             documentation => 'Mail subject for new password email',
         },
         mailTimeout => {
@@ -914,7 +912,6 @@ sub attributes {
         # Registration
         registerConfirmSubject => {
             type          => 'text',
-            default       => '[LemonLDAP::NG] Account register confirmation',
             documentation => 'Mail subject for register confirmation',
         },
         registerDB => {
@@ -930,7 +927,6 @@ sub attributes {
         },
         registerDoneSubject => {
             type          => 'text',
-            default       => '[LemonLDAP::NG] Your new account',
             documentation => 'Mail subject when register is done',
         },
         registerTimeout => {

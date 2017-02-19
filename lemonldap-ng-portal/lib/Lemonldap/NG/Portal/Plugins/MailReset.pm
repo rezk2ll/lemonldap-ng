@@ -290,7 +290,12 @@ sub _reset {
           if ( $req->datas->{_authChoice} );
 
         # Build mail content
+        my $tr      = $self->translate($req);
         my $subject = $self->conf->{mailConfirmSubject};
+        unless ($subject) {
+            $subject = 'mailConfirmSubject';
+            $tr->( \$subject );
+        }
         my $body;
         my $html;
         if ( $self->conf->{mailConfirmBody} ) {
@@ -309,7 +314,7 @@ sub _reset {
               unless ( -e $tplfile );
             my $template = HTML::Template->new(
                 filename => $tplfile,
-                filter   => $self->translate($req),
+                filter   => $tr,
             );
             $body = $template->output();
             $html = 1;
@@ -415,7 +420,12 @@ sub changePwd {
         $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
 
     # Build mail content
+    my $tr      = $self->translate($req);
     my $subject = $self->conf->{mailSubject};
+    unless ($subject) {
+        $subject = 'mailSubject';
+        $tr->( \$subject );
+    }
     my $body;
     my $html;
     if ( $self->conf->{mailBody} ) {
@@ -434,7 +444,7 @@ sub changePwd {
           unless ( -e $tplfile );
         my $template = HTML::Template->new(
             filename => $tplfile,
-            filter   => $self->translate($req),
+            filter   => $tr,
         );
         $body = $template->output();
         $html = 1;
