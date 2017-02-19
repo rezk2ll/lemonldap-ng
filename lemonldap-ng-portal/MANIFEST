@@ -392,8 +392,10 @@ t/36-Combination.t
 t/40-Notifications-JSON-DBI.t
 t/40-Notifications-JSON-File-with-token.t
 t/40-Notifications-JSON-File.t
+t/40-Notifications-JSON-Server.t
 t/40-Notifications-XML-DBI.t
 t/40-Notifications-XML-File.t
+t/40-Notifications-XML-Server.t
 t/41-Captcha.t
 t/41-Token.t
 t/42-Register-Demo-with-captcha.t
