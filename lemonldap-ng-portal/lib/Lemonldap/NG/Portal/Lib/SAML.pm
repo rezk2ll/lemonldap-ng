@@ -705,9 +705,7 @@ sub createAuthnRequest {
     }
 
     # Set RelayState
-    if ( my $relaystate =
-        $self->storeRelayState( $req, 'urldc', 'checkLogins' ) )
-    {
+    if ( my $relaystate = $self->storeRelayState( $req, 'urldc' ) ) {
         $login->msg_relayState($relaystate);
         $self->logger->debug("Set $relaystate in RelayState");
     }
