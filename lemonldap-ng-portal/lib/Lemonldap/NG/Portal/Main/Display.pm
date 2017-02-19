@@ -141,14 +141,17 @@ sub display {
         );
     }
 
-    # 2.2 Case : display menu
-    elsif ( $req->error == PE_OK ) {
+    # 2.2 Case : display menu (with error or not)
+    elsif ( $req->error == PE_OK or ( $req->userData and %{ $req->userData } ) )
+    {
 
         $skinfile = 'menu';
 
         #utf8::decode($auth_user);
 
         %templateParams = (
+            AUTH_ERROR      => $req->error,
+            AUTH_ERROR_TYPE => $req->error_type,
             AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
             NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
             LOGOUT_URL     => $self->conf->{portal} . "?logout=1",
@@ -158,7 +161,7 @@ sub display {
         );
     }
 
-    # 3 Authentication has been refused OR this is the first access
+    # 3 Authentication has been refused OR first access
     else {
         $skinfile = 'login';
         my $login = $self->userId($req);
@@ -271,8 +274,10 @@ sub display {
                 %templateParams = (
                     %templateParams,
                     DISPLAY_FORM => $displayType =~ /\bstandardform\b/ ? 1 : 0,
-                    DISPLAY_OPENID_FORM => $displayType =~ /\bopenidform\b/ ? 1 : 0,
-                    DISPLAY_YUBIKEY_FORM => $displayType =~ /\byubikeyform\b/ ? 1
+                    DISPLAY_OPENID_FORM => $displayType =~ /\bopenidform\b/ ? 1
+                    : 0,
+                    DISPLAY_YUBIKEY_FORM => $displayType =~ /\byubikeyform\b/
+                    ? 1
                     : 0,
                     DISPLAY_LOGO_FORM => $displayType eq "logo" ? 1 : 0,
                     module => $displayType eq "logo"
