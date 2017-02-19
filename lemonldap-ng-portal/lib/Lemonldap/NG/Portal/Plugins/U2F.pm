@@ -21,7 +21,7 @@ extends 'Lemonldap::NG::Portal::Lib::U2F';
 
 # INTERFACE
 
-sub afterDatas { 'run' }
+sub betweenAuthAndDatas { 'run' }
 
 # INITIALIZATION
 
@@ -54,18 +54,16 @@ sub run {
         return PE_ERROR if ( $res == -1 );
 
         $req->sessionInfo->{_u2fRealSession} = $req->id;
-        my $token = $self->ott->createToken( $req->sessionInfo );
-        $req->id(0);
-        $self->p->rebuildCookies($req);
+        my $token = $self->ott->createToken($req);
 
         my $challenge = $self->crypter->authenticationChallenge;
         my $tmp       = $self->p->sendHtml(
             $req,
             'u2fcheck',
             params => {
-                SKIN       => $self->conf->{portalSkin},
-                CHALLENGE  => $challenge,
-                TOKEN      => $token
+                SKIN      => $self->conf->{portalSkin},
+                CHALLENGE => $challenge,
+                TOKEN     => $token
             }
         );
         $self->logger->debug( 'Prepare U2F verification for '
@@ -87,7 +85,8 @@ sub verify {
         $req->error(PE_NOTOKEN);
         return $self->fail($req);
     }
-    unless ( $req->sessionInfo( $self->ott->getToken($token) ) ) {
+    my $oldReq;
+    unless ( $oldReq = $self->ott->getToken($token) ) ) {
         $self->userLogger->info('Token expired');
         $req->error(PE_TOKENEXPIRED);
         return $self->fail($req);
@@ -104,7 +103,9 @@ sub verify {
             $req->mustRedirect(1);
             $self->userLogger->info( 'U2F signature verified for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
-            return $self->p->do( $req, [ sub { PE_OK } ] );
+            bless $oldReq, 'Lemonldap::NG::Portal::Main::Request';
+            return $self->p->do( $oldReq,
+                [ $self->p->sessionDatas, @{ $self->p->afterDatas } ] );
         }
         else {
             $self->userLogger->notice( 'Invalid U2F signature for '
