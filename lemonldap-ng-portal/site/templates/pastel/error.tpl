@@ -2,6 +2,10 @@
 
 <div id="errorcontent">
 
+  <TMPL_IF NAME="AUTH_ERROR">
+  <div class="message <TMPL_VAR NAME="AUTH_ERROR_TYPE">"><ul><li trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></li></ul></div>
+  </TMPL_IF>
+
   <TMPL_IF ERROR403>
     <div class="message negative"><ul><li><span trspan="accessDenied">You have no access authorization for this application</span></li></ul></div>
   </TMPL_IF>

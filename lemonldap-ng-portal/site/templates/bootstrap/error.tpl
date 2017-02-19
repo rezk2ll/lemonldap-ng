@@ -1,7 +1,8 @@
 <TMPL_INCLUDE NAME="header.tpl">
-
 <div id="errorcontent" class="container">
-
+  <TMPL_IF AUTH_ERROR>
+    <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
+  </TMPL_IF>
   <TMPL_IF ERROR403>
     <div class="message message-negative alert">
       <span trspan="accessDenied">You have no access authorization for this application</span>
@@ -21,7 +22,6 @@
   </TMPL_IF>
 
   <div id="error">
-
     <TMPL_IF URL>
       <div class="message message-warning alert">
         <span trspan="redirectedFrom">You were redirect from </span>
@@ -41,9 +41,6 @@
         </a>
       </TMPL_IF>
     </div>
-
   </div>
-
 </div>
-
 <TMPL_INCLUDE NAME="footer.tpl">

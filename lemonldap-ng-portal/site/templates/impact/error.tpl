@@ -8,6 +8,9 @@
       </div>
       <p></p>
       <div id="content-all-info">
+        <TMPL_IF NAME="AUTH_ERROR">
+          <h3 trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></h3>
+        </TMPL_IF>
         <TMPL_IF ERROR403>
           <h3 trspan="accessDenied">You have no access authorization for this application</h3>
         </TMPL_IF>

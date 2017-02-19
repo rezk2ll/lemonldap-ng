@@ -142,22 +142,26 @@ sub display {
     }
 
     # 2.2 Case : display menu (with error or not)
-    elsif ( $req->error == PE_OK or ( $req->userData and %{ $req->userData } ) )
-    {
-
+    elsif ( $req->error == PE_OK ) {
         $skinfile = 'menu';
 
         #utf8::decode($auth_user);
-
         %templateParams = (
-            AUTH_ERROR      => $req->error,
-            AUTH_ERROR_TYPE => $req->error_type,
             AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
             NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
             LOGOUT_URL     => $self->conf->{portal} . "?logout=1",
             APPSLIST_ORDER => $req->{sessionInfo}->{'appsListOrder'},
             PING           => $self->conf->{portalPingInterval},
             $self->menu->params($req),
+        );
+    }
+
+    # 2.3 Case : user authenticated but an error was returned (bas url,...)
+    elsif ( $req->userData and %{ $req->userData } ) {
+        $skinfile       = 'error';
+        %templateParams = (
+            AUTH_ERROR      => $req->error,
+            AUTH_ERROR_TYPE => $req->error_type,
         );
     }
 
