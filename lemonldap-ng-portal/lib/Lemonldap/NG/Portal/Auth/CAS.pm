@@ -111,7 +111,8 @@ sub extractFormInfo {
 
             # Store pgtId and pgtIou
             unless ( $self->cas->storePGT( $pgtIou, $pgtId ) ) {
-                $self->userLogger->error( "CAS: error " . &AuthCAS::get_errors() );
+                $self->userLogger->error(
+                    "CAS: error " . &AuthCAS::get_errors() );
             }
             else {
                 $self->logger->debug(

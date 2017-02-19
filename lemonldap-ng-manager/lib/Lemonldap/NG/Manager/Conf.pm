@@ -31,7 +31,7 @@ has ua => ( is => 'rw' );
 
 sub addRoutes {
     my ( $self, $conf ) = @_;
-    $self->ua(Lemonldap::NG::Common::UserAgent->new($conf));
+    $self->ua( Lemonldap::NG::Common::UserAgent->new($conf) );
 
     # HTML template
     $self->addRoute( 'manager.html', undef, ['GET'] )

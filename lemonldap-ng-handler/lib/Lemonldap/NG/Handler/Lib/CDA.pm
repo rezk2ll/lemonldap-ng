@@ -7,8 +7,9 @@ sub run {
     my $uri = $class->unparsed_uri;
     my $cn  = $class->tsv->{cookieName};
     my ( $id, $session );
-    if( $uri =~ s/[\?&;]${cn}cda=(\w+)$//oi ) {
-        if ( $id = $class->fetchId and $session = $class->retrieveSession($id) ) {
+    if ( $uri =~ s/[\?&;]${cn}cda=(\w+)$//oi ) {
+        if ( $id = $class->fetchId and $session = $class->retrieveSession($id) )
+        {
             $class->logger->info(
                 'CDA asked for an already available session, skipping');
         }

@@ -44,7 +44,7 @@ has ua => (
     builder => sub {
 
         # TODO : LWP options to use a proxy for example
-        my $ua = Lemonldap::NG::Common::UserAgent->new($_[0]->{conf});
+        my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
         $ua->env_proxy();
         return $ua;
     }
@@ -646,7 +646,8 @@ sub getOpenIDConnectSession {
 
     if ( $oidcSession->error ) {
         if ($id) {
-            $self->userLogger->warn("OpenIDConnect session $id isn't yet available");
+            $self->userLogger->warn(
+                "OpenIDConnect session $id isn't yet available");
         }
         else {
             $self->logger->error("Unable to create new OpenIDConnect session");

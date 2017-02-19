@@ -209,7 +209,8 @@ sub getAttributes {
 
     my @tmp = ();
     unless ($session) {
-        $self->userLogger->notice("SOAP attributes request: session $id not found");
+        $self->userLogger->notice(
+            "SOAP attributes request: session $id not found");
         push @tmp, SOAP::Data->name( error => 1 )->type('int');
     }
     else {

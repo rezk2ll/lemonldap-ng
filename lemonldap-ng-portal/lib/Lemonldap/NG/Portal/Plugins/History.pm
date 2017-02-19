@@ -31,7 +31,7 @@ sub run {
                 : ""
             )
         );
-        unless($req->info) {
+        unless ( $req->info ) {
             $req->info('<p trspan="noHistory"></p>');
         }
         return PE_INFO;

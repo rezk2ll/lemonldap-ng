@@ -110,7 +110,8 @@ sub extractFormInfo {
             }
             unless ( $self->captcha->validateCaptcha( $token, $code ) ) {
                 $self->captcha->setCaptcha($req);
-                $self->userLogger->warn("Captcha failed: wrong or expired code");
+                $self->userLogger->warn(
+                    "Captcha failed: wrong or expired code");
                 return PE_CAPTCHAERROR;
             }
             $self->logger->debug("Captcha code verified");

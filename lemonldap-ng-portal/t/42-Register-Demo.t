@@ -101,7 +101,7 @@ sub MIME::Lite::send {
         $mailSend = 2;
         ok(
             $mail->body_as_string =~
-              m#Your login is.+?<b>(\w+)</b>.*?Your password is.+?<b>(.*?)</b>#s,
+m#Your login is.+?<b>(\w+)</b>.*?Your password is.+?<b>(.*?)</b>#s,
             'Get login/pwd'
         );
         ( $user, $pwd ) = ( $1, $2 );

@@ -86,7 +86,7 @@ sub verify {
         return $self->fail($req);
     }
     my $oldReq;
-    unless ( $oldReq = $self->ott->getToken($token) ) ) {
+    unless ( $oldReq = $self->ott->getToken($token) ) {
         $self->userLogger->info('Token expired');
         $req->error(PE_TOKENEXPIRED);
         return $self->fail($req);
@@ -145,7 +145,8 @@ sub loadUser {
     {
         $self->crypter->{keyHandle} = $self->decode_base64url($kh);
         $self->crypter->{publicKey} = $self->decode_base64url($uk);
-        unless ( $self->crypter->setKeyHandle and $self->crypter->setPublicKey )
+        unless ($self->crypter->setKeyHandle
+            and $self->crypter->setPublicKey )
         {
             $self->logger->error(
                 'U2F error: ' . Crypt::U2F::Server::u2fclib_getError() );

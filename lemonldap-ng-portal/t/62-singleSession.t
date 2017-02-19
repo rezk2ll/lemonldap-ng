@@ -43,11 +43,11 @@ count(1);
 expectOK($res);
 my $id2 = expectCookie($res);
 
-ok($res=$client->_get('/',cookie=>"lemonldap=$id2"),'Use id 2');
+ok( $res = $client->_get( '/', cookie => "lemonldap=$id2" ), 'Use id 2' );
 count(1);
 expectOK($res);
 
-ok($res=$client->_get('/',cookie=>"lemonldap=$id1"),'Use id 1');
+ok( $res = $client->_get( '/', cookie => "lemonldap=$id1" ), 'Use id 1' );
 count(1);
 expectReject($res);
 

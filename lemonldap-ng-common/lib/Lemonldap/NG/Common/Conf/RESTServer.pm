@@ -672,7 +672,8 @@ sub getKey {
     unless ($key) {
         return $self->metadatas($req);
     }
-    $self->userLogger->info( 'User ' . $self->userId($req) . " asks for key $key" );
+    $self->userLogger->info(
+        'User ' . $self->userId($req) . " asks for key $key" );
     my $value = $self->getConfKey( $req, $key );
     return $self->sendError( $req, undef, 400 ) if ( $req->error );
 

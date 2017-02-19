@@ -227,7 +227,8 @@ sub userBind {
             return PE_OK;
         }
     }
-    $self->{portal}->userLogger->warn("Bad password for $self->{portal}->{user}");
+    $self->{portal}
+      ->userLogger->warn("Bad password for $self->{portal}->{user}");
     return PE_BADCREDENTIALS;
 }
 
@@ -514,7 +515,8 @@ sub userModifyPassword {
         if ( defined $resp ) {
             my $pp_error = $resp->pp_error;
             if ( defined $pp_error ) {
-                $self->{portal}->logger->error("Password policy error $pp_error");
+                $self->{portal}
+                  ->logger->error("Password policy error $pp_error");
                 return [
                     PE_PP_PASSWORD_EXPIRED,
                     PE_PP_ACCOUNT_LOCKED,

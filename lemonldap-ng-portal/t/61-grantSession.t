@@ -11,8 +11,8 @@ my $res;
 my $client = LLNG::Manager::Test->new(
     {
         ini => {
-            authentication => 'Demo',
-            userdb         => 'Same',
+            authentication   => 'Demo',
+            userdb           => 'Same',
             grantSessionRule => {
                 no => '$uid ne "dwho"',
             }
@@ -34,8 +34,8 @@ expectReject($res);
 $client = LLNG::Manager::Test->new(
     {
         ini => {
-            authentication => 'Demo',
-            userdb         => 'Same',
+            authentication   => 'Demo',
+            userdb           => 'Same',
             grantSessionRule => {
                 yes => '$uid eq "dwho"',
             }

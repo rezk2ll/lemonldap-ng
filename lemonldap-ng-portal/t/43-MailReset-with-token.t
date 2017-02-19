@@ -98,7 +98,8 @@ sub MIME::Lite::send {
     }
     else {
         $mailSend = 2;
-        ok( $mail->body_as_string =~ /Your password was changed/, ' Password was changed' );
+        ok( $mail->body_as_string =~ /Your password was changed/,
+            ' Password was changed' );
         ( $user, $pwd ) = ( $1, $2 );
         count(1);
     }
