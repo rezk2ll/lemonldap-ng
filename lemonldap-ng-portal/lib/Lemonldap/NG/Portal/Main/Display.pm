@@ -88,7 +88,7 @@ sub display {
             CHOICE_VALUE    => $req->datas->{_authChoice},
             CHECK_LOGINS    => $self->conf->{portalCheckLogins}
               && $req->datas->{login},
-            ASK_LOGINS => $req->param('checkLogins'),
+            ASK_LOGINS => $req->param('checkLogins') || 0,
             CONFIRMKEY => $self->stamp(),
             LIST       => $req->datas->{list} || [],
             REMEMBER   => $req->datas->{confirmRemember},
@@ -176,7 +176,7 @@ sub display {
             AUTH_URL              => $req->{datas}->{_url},
             LOGIN                 => $login,
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
-            ASK_LOGINS            => $req->param('checkLogins'),
+            ASK_LOGINS            => $req->param('checkLogins') || 0,
             DISPLAY_RESETPASSWORD => $self->conf->{portalDisplayResetPassword},
             DISPLAY_REGISTER      => $self->conf->{portalDisplayRegister},
             MAIL_URL              => $self->conf->{mailUrl},
