@@ -64,8 +64,10 @@ has 'error' => (
     isa => 'Str|Undef',
 );
 
+has info => ( is => 'rw' );
+
 sub BUILD {
-    my $self = shift;
+    my ($self) = @_;
 
     # Load Apache::Session module
     unless ( $self->storageModule->can('populate') ) {
@@ -107,6 +109,14 @@ sub BUILD {
         $data->{_session_kind} = $self->kind;
     }
 
+    if ( $self->{info} ) {
+        foreach ( keys %{ $self->{info} } ) {
+            $data->{$_} = $self->{info}->{$_}
+              if ( defined $self->{info}->{$_} );
+        }
+        delete $self->{info};
+    }
+
     # Load session data into object
     if ($data) {
         $self->_save_data($data);
@@ -118,8 +128,8 @@ sub BUILD {
 }
 
 sub _tie_session {
-    my $self = shift;
-    my $options = shift || {};
+    my $self = $_[0];
+    my $options = $_[1] || {};
 
     my %h;
 
@@ -154,9 +164,7 @@ sub _save_data {
 }
 
 sub update {
-    my $self       = shift;
-    my $infos      = shift;
-    my $tieOptions = shift;
+    my ( $self, $infos, $tieOptions ) = @_;
 
     unless ( ref $infos eq "HASH" ) {
         $self->error("You need to provide a HASHREF");
@@ -186,8 +194,7 @@ sub update {
 }
 
 sub remove {
-    my $self       = shift;
-    my $tieOptions = shift;
+    my ( $self, $tieOptions ) = @_;
 
     my $data = $self->_tie_session($tieOptions);
 

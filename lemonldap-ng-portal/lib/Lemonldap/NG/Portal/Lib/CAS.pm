@@ -31,7 +31,7 @@ sub sendSoapResponse {
 # Try to recover the CAS session corresponding to id and return session datas
 # If id is set to undef, return a new session
 sub getCasSession {
-    my ( $self, $id ) = @_;
+    my ( $self, $id, $info ) = @_;
 
     my $casSession = Lemonldap::NG::Common::Session->new(
         {
@@ -41,6 +41,7 @@ sub getCasSession {
             cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
             id                   => $id,
             kind                 => "CAS",
+            ( $info ? ( info => $info ) : () ),
         }
     );
 

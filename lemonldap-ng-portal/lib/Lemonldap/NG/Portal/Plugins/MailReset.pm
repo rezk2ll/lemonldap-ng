@@ -202,8 +202,6 @@ sub _reset {
 
         my $infos = {};
 
-        $mailSession = $self->p->getApacheSession();
-
         # Set _utime for session autoremove
         # Use default session timeout and mail session timeout to compute it
         my $time        = time();
@@ -229,8 +227,9 @@ sub _reset {
         # Store type
         $infos->{_type} = "mail";
 
-        # Update session
-        $mailSession->update($infos);
+        # create session
+        $mailSession = $self->p->getApacheSession(undef,info=>$infos);
+
         $req->id( $mailSession->id );
     }
     elsif ($mailSession) {

@@ -1101,11 +1101,6 @@ sub storeRelayState {
     }
     return unless ($infos);
 
-    # Create relaystate session
-    my $samlSessionInfo = $self->getSamlSession();
-
-    return unless $samlSessionInfo;
-
     # Session type
     $infos->{_type} = "relaystate";
 
@@ -1118,8 +1113,9 @@ sub storeRelayState {
 
     $infos->{_utime} = $time + ( $samlRelayStateTimeout - $timeout );
 
-    # Store infos in relaystate session
-    $samlSessionInfo->update($infos);
+    # Create relaystate session and store infos in relaystate session
+    my $samlSessionInfo = $self->getSamlSession( undef, $infos )
+      or return undef;
 
     # Session ID
     my $relaystate_id = $samlSessionInfo->id;
@@ -1567,22 +1563,18 @@ sub buildLogoutResponseMsg {
 # @return result
 sub storeReplayProtection {
     my ( $self, $samlID, $samlData ) = @_;
-
-    my $samlSessionInfo = $self->getSamlSession();
-
-    return 0 unless $samlSessionInfo;
-
-    my $infos;
-
-    $infos->{type}       = 'assertion';    # Session type
-    $infos->{_utime}     = time();         # Creation time
-    $infos->{_assert_id} = $samlID;
+    my $infos = {
+        type       => 'assertion',    # Session type
+        _utime     => time(),         # Creation time
+        _assert_id => $samlID,
+    };
 
     if ( defined $samlData && $samlData ) {
         $infos->{data} = $samlData;
     }
 
-    $samlSessionInfo->update($infos);
+    my $samlSessionInfo = $self->getSamlSession( undef, $infos );
+    return 0 unless $samlSessionInfo;
 
     my $session_id = $samlSessionInfo->id;
 
@@ -1700,19 +1692,16 @@ sub resolveArtifact {
 sub storeArtifact {
     my ( $self, $id, $message, $session_id ) = @_;
 
-    my $samlSessionInfo = $self->getSamlSession();
-
-    return 0 unless $samlSessionInfo;
-
-    my $infos;
-
-    $infos->{type}     = 'artifact';                   # Session type
-    $infos->{_utime}   = time();                       # Creation time
-    $infos->{_art_id}  = $id;
-    $infos->{message}  = $message;
+    my $infos = {
+        type    => 'artifact',    # Session type
+        _utime  => time(),        # Creation time
+        _art_id => $id,
+        message => $message,
+    };
     $infos->{_saml_id} = $session_id if $session_id;
 
-    $samlSessionInfo->update($infos);
+    my $samlSessionInfo = $self->getSamlSession( undef, $infos ) or return 0;
+    return 0 unless $samlSessionInfo;
 
     my $art_session_id = $samlSessionInfo->id;
 
@@ -2491,9 +2480,6 @@ sub sendLogoutRequestToProvider {
 
         $self->logger->debug("Build POST relay logout request to $providerID");
 
-        # Create a new relay session
-        my $relayInfos = $self->getSamlSession();
-
         my $infos;
 
         # Store infos
@@ -2503,7 +2489,8 @@ sub sendLogoutRequestToProvider {
         $infos->{body}       = $logout->msg_body;
         $infos->{relayState} = $logout->msg_relayState;
 
-        $relayInfos->update($infos);
+        # Create a new relay session
+        my $relayInfos = $self->getSamlSession( undef, $infos );
 
         my $relayID = $relayInfos->id;
 
@@ -2528,9 +2515,6 @@ sub sendLogoutRequestToProvider {
             $self->logger->debug(
                 "Build SOAP relay logout request for $providerID");
 
-            # Create a new relay session
-            my $relayInfos = $self->getSamlSession();
-
             my $infos;
             $infos->{type}   = 'relay';
             $infos->{_utime} = time;
@@ -2541,7 +2525,8 @@ sub sendLogoutRequestToProvider {
             $infos->{_providerID} = $providerID;
             $infos->{_relayState} = $logout->msg_relayState;
 
-            $relayInfos->update($infos);
+            # Create a new relay session
+            my $relayInfos = $self->getSamlSession( undef, $infos );
 
             my $relayID = $relayInfos->id;
 
@@ -2756,7 +2741,7 @@ sub checkDestination {
 # @param id session reference
 # @return Lemonldap::NG::Common::Session object
 sub getSamlSession {
-    my ( $self, $id ) = @_;
+    my ( $self, $id, $info ) = @_;
 
     my $samlSession = Lemonldap::NG::Common::Session->new(
         {
@@ -2766,6 +2751,7 @@ sub getSamlSession {
             cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
             id                   => $id,
             kind                 => "SAML",
+            ( $info ? ( info => $info ) : () ),
         }
     );
 

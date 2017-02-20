@@ -84,7 +84,7 @@ sub session {
 }
 
 sub getApacheSession {
-    my ( $self, $mod, $id ) = @_;
+    my ( $self, $mod, $id, $info ) = @_;
     my $apacheSession = Lemonldap::NG::Common::Session->new(
         {
             storageModule        => $mod->{module},
@@ -95,6 +95,7 @@ sub getApacheSession {
               Lemonldap::NG::Handler::PSGI::Main->tsv->{sessionCacheOptions},
             id   => $id,
             kind => $mod->{kind},
+            ( $info ? ( info => $info ) : () ),
         }
     );
     if ( $apacheSession->error ) {

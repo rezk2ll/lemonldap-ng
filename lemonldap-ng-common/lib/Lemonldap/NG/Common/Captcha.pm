@@ -72,12 +72,10 @@ sub saveSession {
             id                   => $self->md5,
             force                => 1,
             kind                 => "Captcha",
+            info =>
+              { _utime => time, code => $self->code, image => $self->image }
         }
     );
-
-    $session->update(
-        { _utime => time, code => $self->code, image => $self->image } );
-
 }
 
 sub getSession {

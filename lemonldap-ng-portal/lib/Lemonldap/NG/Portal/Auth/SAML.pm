@@ -979,10 +979,6 @@ sub extractFormInfo {
     # Keep initial SAML request data in memory in case of proxing
     if ( $req->datas->{_proxiedSamlRequest} ) {
 
-        my $samlSessionInfo = $self->getSamlSession();
-
-        return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
-
         my $infos;
 
         $infos->{type}       = 'proxy';
@@ -993,7 +989,9 @@ sub extractFormInfo {
         $infos->{Artifact}   = $req->datas->{_proxiedArtifact};
         $infos->{ProxyID}    = $samlID;
 
-        $samlSessionInfo->update($infos);
+        my $samlSessionInfo = $self->getSamlSession(undef, $infos);
+
+        return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
 
         $self->logger->debug(
             "Keep initial SAML request data in memory for ID $samlID");
@@ -1182,10 +1180,6 @@ sub authFinish {
           . $nameid->dump
           . " and SessionIndex $session_index for session $id" );
 
-    # Save SAML session
-    my $samlSessionInfo = $self->getSamlSession();
-
-    return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
 
     my $infos;
     $infos->{type}          = 'saml';            # Session type
@@ -1194,7 +1188,10 @@ sub authFinish {
     $infos->{_nameID}       = $nameid->dump;     # SAML NameID
     $infos->{_sessionIndex} = $session_index;    # SAML SessionIndex
 
-    $samlSessionInfo->update($infos);
+    # Save SAML session
+    my $samlSessionInfo = $self->getSamlSession(undef, $infos);
+
+    return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
 
     my $session_id = $samlSessionInfo->id;
 

@@ -258,8 +258,7 @@ sub buildAuthorizationCodeAuthnRequest {
 
     my $nonce;
     if ($use_nonce) {
-        my $nonceSession = $self->getOpenIDConnectSession();
-        $nonceSession->update( { '_utime' => time } );
+        my $nonceSession = $self->getOpenIDConnectSession( undef, { '_utime' => time });
         $nonce = $nonceSession->id;
     }
 
@@ -631,7 +630,7 @@ sub decodeJSON {
 # If id is set to undef, return a new session
 # @return Lemonldap::NG::Common::Session object
 sub getOpenIDConnectSession {
-    my ( $self, $id ) = @_;
+    my ( $self, $id, $info ) = @_;
 
     my $oidcSession = Lemonldap::NG::Common::Session->new(
         {
@@ -641,6 +640,7 @@ sub getOpenIDConnectSession {
             cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
             id                   => $id,
             kind                 => "OpenIDConnect",
+            ($info ? (info => $info):()),
         }
     );
 
@@ -673,10 +673,6 @@ sub storeState {
     }
     return unless ($infos);
 
-    # Create state session
-    my $stateSession = $self->getOpenIDConnectSession();
-
-    return unless $stateSession;
 
     # Session type
     $infos->{_type} = "state";
@@ -689,8 +685,9 @@ sub storeState {
 
     $infos->{_utime} = $time + ( $stateTimeout - $timeout );
 
-    # Store infos in state session
-    $stateSession->update($infos);
+    # Create state session and store infos
+    my $stateSession = $self->getOpenIDConnectSession( undef, $infos);
+    return unless $stateSession;
 
     # Return session ID
     return $stateSession->id;

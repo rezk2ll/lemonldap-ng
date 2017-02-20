@@ -15,9 +15,6 @@ has timeout => (
 sub createToken {
     my ( $self, $infos ) = @_;
 
-    # Create a new session
-    my $tsession = $self->p->getApacheSession();
-
     # Set _utime for session autoremove
     # Use default session timeout and register session timeout to compute it
     my $time = time();
@@ -34,8 +31,8 @@ sub createToken {
     # Store type
     $infos->{_type} ||= "token";
 
-    # Update session
-    $tsession->update($infos);
+    # Create a new session
+    my $tsession = $self->p->getApacheSession( undef, info => $infos );
 
     return $tsession->id;
 }

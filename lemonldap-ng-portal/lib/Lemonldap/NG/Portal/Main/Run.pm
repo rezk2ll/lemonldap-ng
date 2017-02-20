@@ -294,12 +294,19 @@ sub getApacheSession {
             id                   => $id,
             force                => $args{force},
             kind                 => $args{kind},
+            ( $args{info} ? ( info => $args{info} ) : () ),
         }
     );
 
     if ( my $err = $as->error ) {
-        $self->lmLog( $err,
-            ( $err =~ /(?:Object does not exist|Invalid session ID)/ ? 'notice' : 'error' ) );
+        $self->lmLog(
+            $err,
+            (
+                $err =~ /(?:Object does not exist|Invalid session ID)/
+                ? 'notice'
+                : 'error'
+            )
+        );
         return;
     }
 
@@ -332,7 +339,7 @@ sub getApacheSession {
 
 # Try to recover the persistent session corresponding to uid and return session datas.
 sub getPersistentSession {
-    my ( $self, $uid ) = @_;
+    my ( $self, $uid, $info ) = @_;
 
     return unless defined $uid;
 
@@ -346,6 +353,7 @@ sub getPersistentSession {
             id                   => $pid,
             force                => 1,
             kind                 => "Persistent",
+            ( $info ? ( info => $info ) : () ),
         }
     );
 
@@ -390,9 +398,7 @@ sub updatePersistentSession {
     # Update current session
     $self->updateSession( $req, $infos, $id );
 
-    my $persistentSession = $self->getPersistentSession($uid);
-
-    $persistentSession->update($infos);
+    my $persistentSession = $self->getPersistentSession( $uid, $infos );
 
     if ( $persistentSession->error ) {
         $self->logger->error(
@@ -429,15 +435,11 @@ sub updateSession {
             $req->{sessionInfo}->{$_} = $infos->{$_};
         }
 
-        # Update session in global storage
-        if ( my $apacheSession = $self->getApacheSession($id) ) {
-
-            # Store updateTime
-            $infos->{updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
-
-            # Store/update session values
-            $apacheSession->update($infos);
-
+        # Update session in global storage with updateTime
+        $infos->{updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
+        if ( my $apacheSession =
+            $self->getApacheSession( $id, info => $infos ) )
+        {
             if ( $apacheSession->error ) {
                 $self->logger->error("Cannot update session $id");
                 $self->logger->error( $apacheSession->error );

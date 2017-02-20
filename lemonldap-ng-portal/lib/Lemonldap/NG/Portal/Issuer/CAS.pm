@@ -157,13 +157,6 @@ sub run {
             $self->logger->debug(
                 "Create a CAS service ticket for service $service");
 
-            my $casServiceSession = $self->getCasSession();
-
-            unless ($casServiceSession) {
-                $self->logger->error("Unable to create CAS session");
-                return PE_ERROR;
-            }
-
             my $Sinfos;
             $Sinfos->{type}    = 'casService';
             $Sinfos->{service} = $service;
@@ -171,7 +164,12 @@ sub run {
             $Sinfos->{_cas_id} = $session_id;
             $Sinfos->{_utime}  = $time;
 
-            $casServiceSession->update($Sinfos);
+            my $casServiceSession = $self->getCasSession( undef, $Sinfos );
+
+            unless ($casServiceSession) {
+                $self->logger->error("Unable to create CAS session");
+                return PE_ERROR;
+            }
 
             my $casServiceSessionID = $casServiceSession->id;
             $casServiceTicket = "ST-" . $casServiceSessionID;
@@ -524,29 +522,27 @@ sub _validate2 {
         $self->logger->debug(
             "Create a CAS proxy granting ticket for service $service");
 
-        my $casProxyGrantingSession = $self->getCasSession();
+        my $PGinfos;
+
+        # PGT session
+        $PGinfos->{type}    = 'casProxyGranting';
+        $PGinfos->{service} = $service;
+        $PGinfos->{_cas_id} = $casServiceSession->data->{_cas_id};
+        $PGinfos->{_utime}  = $casServiceSession->data->{_utime};
+
+        # Trace proxies
+        $PGinfos->{proxies} = (
+              $proxies
+            ? $proxies . $self->{multiValuesSeparator} . $pgtUrl
+            : $pgtUrl
+        );
+
+        my $casProxyGrantingSession = $self->getCasSession( undef, $PGinfos );
 
         if ($casProxyGrantingSession) {
 
-            my $PGinfos;
-
-            # PGT session
-            $PGinfos->{type}    = 'casProxyGranting';
-            $PGinfos->{service} = $service;
-            $PGinfos->{_cas_id} = $casServiceSession->data->{_cas_id};
-            $PGinfos->{_utime}  = $casServiceSession->data->{_utime};
-
-            # Trace proxies
-            $PGinfos->{proxies} = (
-                  $proxies
-                ? $proxies . $self->{multiValuesSeparator} . $pgtUrl
-                : $pgtUrl
-            );
-
             my $casProxyGrantingSessionID = $casProxyGrantingSession->id;
             my $casProxyGrantingTicket    = "PGT-" . $casProxyGrantingSessionID;
-
-            $casProxyGrantingSession->update($PGinfos);
 
             $self->logger->debug(
                 "CAS proxy granting session $casProxyGrantingSessionID created"

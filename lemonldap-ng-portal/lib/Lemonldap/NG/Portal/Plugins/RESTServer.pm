@@ -146,11 +146,9 @@ sub newSession {
       or return $self->p->sendError( $req, undef, 400 );
     $infos->{_utime} = time();
 
-    my $session = $self->getApacheSession($mod);
+    my $session = $self->getApacheSession($mod, undef, $infos);
     return $self->p->sendError( $req, 'Unable to create session', 500 )
       unless ($session);
-
-    $session->update($infos);
 
     $self->logger->debug(
         "SOAP request create a new session (" . $session->id . ")" );
@@ -161,21 +159,19 @@ sub newSession {
 
 sub updateSession {
     my ( $self, $req, $id ) = @_;
+    $self->logger->debug("REST request to update session $id");
     my $mod = $self->getMod($req)
       or return $self->p->sendError( $req, undef, 400 );
     return $self->p->sendError( $req, 'ID is required', 400 ) unless ($id);
-
-    # Get session
-    my $session = $self->getApacheSession( $mod, $id )
-      or return $self->p->sendError( $req, 'Session id does not exists', 400 );
 
     # Get new info
     my $infos = $req->jsonBodyToObj
       or return $self->p->sendError( $req, undef, 400 );
 
-    # Store them
-    $self->logger->debug("REST request to update session $id");
-    $session->update($infos);
+    # Get session and store info
+    my $session = $self->getApacheSession( $mod, $id, $infos )
+      or return $self->p->sendError( $req, 'Session id does not exists', 400 );
+
     return $self->p->sendJSONresponse( $req, { result => 1 } );
 }
 

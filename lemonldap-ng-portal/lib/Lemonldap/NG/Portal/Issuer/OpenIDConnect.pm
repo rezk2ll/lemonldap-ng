@@ -504,14 +504,8 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
             # Authorization Code Flow
             if ( $flow eq "authorizationcode" ) {
 
-                # Generate code
-                my $codeSession = $self->getOpenIDConnectSession();
-                my $code        = $codeSession->id();
-
-                $self->logger->debug("Generated code: $code");
-
                 # Store data in session
-                $codeSession->update(
+                my $codeSession = $self->getOpenIDConnectSession(undef,
                     {
                         redirect_uri    => $oidc_request->{'redirect_uri'},
                         scope           => $oidc_request->{'scope'},
@@ -520,6 +514,11 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                         nonce           => $oidc_request->{'nonce'},
                     }
                 );
+
+                # Generate code
+                my $code        = $codeSession->id();
+
+                $self->logger->debug("Generated code: $code");
 
                 # Build Response
                 my $response_url = $self->buildAuthorizationCodeAuthnResponse(
@@ -542,8 +541,16 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
 
                 if ( $response_type =~ /\btoken\b/ ) {
 
+                    # Store data in access token
                     # Generate access_token
-                    my $accessTokenSession = $self->getOpenIDConnectSession;
+                    my $accessTokenSession = $self->getOpenIDConnectSession(undef,
+                        {
+                            scope           => $oidc_request->{'scope'},
+                            rp              => $rp,
+                            user_session_id => $req->id,
+                            _utime          => time,
+                        }
+                    );
 
                     unless ($accessTokenSession) {
                         $self->logger->error(
@@ -553,16 +560,6 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                             "server_error", undef, undef,
                             $oidc_request->{'state'}, 1 );
                     }
-
-                    # Store data in access token
-                    $accessTokenSession->update(
-                        {
-                            scope           => $oidc_request->{'scope'},
-                            rp              => $rp,
-                            user_session_id => $req->id,
-                            _utime          => time,
-                        }
-                    );
 
                     $access_token = $accessTokenSession->id;
 
@@ -656,14 +653,8 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                   ->{oidcRPMetaDataOptionsIDTokenSignAlg};
                 my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
 
-                # Generate code
-                my $codeSession = $self->getOpenIDConnectSession();
-                my $code        = $codeSession->id();
-
-                $self->logger->debug("Generated code: $code");
-
                 # Store data in session
-                $codeSession->update(
+                my $codeSession = $self->getOpenIDConnectSession(undef,
                     {
                         redirect_uri    => $oidc_request->{'redirect_uri'},
                         scope           => $oidc_request->{'scope'},
@@ -673,13 +664,25 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                     }
                 );
 
+                # Generate code
+                my $code        = $codeSession->id();
+
+                $self->logger->debug("Generated code: $code");
+
                 # Compute hash to store in c_hash
                 $c_hash = $self->createHash( $code, $hash_level );
 
                 if ( $response_type =~ /\btoken\b/ ) {
 
                     # Generate access_token
-                    my $accessTokenSession = $self->getOpenIDConnectSession;
+                    my $accessTokenSession = $self->getOpenIDConnectSession(undef,
+                        {
+                            scope           => $oidc_request->{'scope'},
+                            rp              => $rp,
+                            user_session_id => $req->id,
+                            _utime          => time,
+                        }
+                    );
 
                     unless ($accessTokenSession) {
                         $self->logger->error(
@@ -689,16 +692,6 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                             "server_error", undef, undef,
                             $oidc_request->{'state'}, 1 );
                     }
-
-                    # Store data in access token
-                    $accessTokenSession->update(
-                        {
-                            scope           => $oidc_request->{'scope'},
-                            rp              => $rp,
-                            user_session_id => $req->id,
-                            _utime          => time,
-                        }
-                    );
 
                     $access_token = $accessTokenSession->id;
 
@@ -902,17 +895,7 @@ sub token {
     $self->logger->debug("Found corresponding user: $user_id");
 
     # Generate access_token
-    my $accessTokenSession = $self->getOpenIDConnectSession;
-
-    unless ($accessTokenSession) {
-        $self->userLogger->error(
-            "Unable to create OIDC session for access_token");
-        $codeSession->remove();
-        $self->p->sendError( $req, "invalid_request", 400 );
-    }
-
-    # Store data in access token
-    $accessTokenSession->update(
+    my $accessTokenSession = $self->getOpenIDConnectSession(undef,
         {
             scope           => $codeSession->data->{scope},
             rp              => $rp,
@@ -920,6 +903,13 @@ sub token {
             _utime          => time,
         }
     );
+
+    unless ($accessTokenSession) {
+        $self->userLogger->error(
+            "Unable to create OIDC session for access_token");
+        $codeSession->remove();
+        $self->p->sendError( $req, "invalid_request", 400 );
+    }
 
     my $access_token = $accessTokenSession->id;
 

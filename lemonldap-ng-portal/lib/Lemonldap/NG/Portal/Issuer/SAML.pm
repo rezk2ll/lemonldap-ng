@@ -415,22 +415,22 @@ sub run {
 
             # Force authentication if flag is on, or previous flag still active
             if ($force_authn) {
-
-                # Store flag for further requests
-                $forceAuthnSessionInfo =
-                  $self->getSamlSession($forceAuthn_session);
-                $forceAuthnSessionInfo->update( { $spConfKey => 1 } );
+                my $info = { $spConfKey => 1 };
 
                 unless ($forceAuthn_session) {
                     my $forceInfos;
-                    $forceInfos->{'_type'}    = "forceAuthn";
-                    $forceInfos->{'_saml_id'} = $session_id;
-                    $forceInfos->{'_utime'}   = $time;
-                    $forceAuthnSessionInfo->update($forceInfos);
-                    $forceAuthn_session = $forceAuthnSessionInfo->id;
+                    $info->{'_type'}    = "forceAuthn";
+                    $info->{'_saml_id'} = $session_id;
+                    $info->{'_utime'}   = $time;
                     $self->logger->debug(
                         "Create ForceAuthn session $forceAuthn_session");
                 }
+
+                # Store flag for further requests
+                $forceAuthnSessionInfo =
+                  $self->getSamlSession( $forceAuthn_session, $info );
+                $forceAuthn_session = $forceAuthnSessionInfo->id
+                  unless ($forceAuthn_session);
 
                 $self->logger->debug(
 "Set ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session"
@@ -454,8 +454,8 @@ sub run {
 
                 # Else remove flag
                 $forceAuthnSessionInfo =
-                  $self->getSamlSession($forceAuthn_session);
-                $forceAuthnSessionInfo->update( { $spConfKey => 0 } );
+                  $self->getSamlSession( $forceAuthn_session,
+                    { $spConfKey => 0 } );
 
                 $self->logger->debug(
 "Unset ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session"
@@ -849,10 +849,6 @@ sub run {
                   . $nameid->dump
                   . " and SessionIndex $sessionIndex for session $session_id" );
 
-            my $samlSessionInfo = $self->getSamlSession();
-
-            return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
-
             my $infos;
 
             $infos->{type}          = 'saml';           # Session type
@@ -861,7 +857,9 @@ sub run {
             $infos->{_nameID}       = $nameid->dump;    # SAML NameID
             $infos->{_sessionIndex} = $sessionIndex;    # SAML SessionIndex
 
-            $samlSessionInfo->update($infos);
+            my $samlSessionInfo = $self->getSamlSession( undef, $infos );
+
+            return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
 
             my $saml_session_id = $samlSessionInfo->id;
 
@@ -1333,10 +1331,10 @@ sub sloRelaySoap {
     }
 
     # Store success status for this SLO request
-    my $sloStatusSessionInfos = $self->getSamlSession($relayState);
+    my $sloStatusSessionInfos =
+      $self->getSamlSession( $relayState, { $spConfKey => 1 } );
 
     if ($sloStatusSessionInfos) {
-        $sloStatusSessionInfos->update( { $spConfKey => 1 } );
         $self->logger->debug(
             "Store SLO status for $spConfKey in session $relayState");
     }
@@ -1530,9 +1528,6 @@ sub sloServer {
             $self->logger->debug("Set $relaystate in RelayState");
         }
 
-        # Create SLO status session and get ID
-        my $sloStatusSessionInfo = $self->getSamlSession();
-
         my $sloInfos;
         $sloInfos->{type}    = 'sloStatus';
         $sloInfos->{_utime}  = time;
@@ -1540,7 +1535,9 @@ sub sloServer {
         $sloInfos->{_session} =
           $logout->get_session() ? $logout->get_session()->dump : "";
         $sloInfos->{_method} = $method;
-        $sloStatusSessionInfo->update($sloInfos);
+
+        # Create SLO status session and get ID
+        my $sloStatusSessionInfo = $self->getSamlSession( undef, $sloInfos );
         my $relayID = $sloStatusSessionInfo->id;
 
         # Prepare logout on all others SP

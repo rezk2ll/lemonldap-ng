@@ -243,7 +243,10 @@ sub setAttributes {
     my ( $self, $req, $id, $args ) = @_;
     die 'id is required' unless ($id);
 
-    my $session = $self->p->getApacheSession($id);
+    my $infos = {};
+    %$infos = %$args;
+
+    my $session = $self->p->getApacheSession($id, info => $infos);
 
     unless ($session) {
         $self->logger->warn("Session $id does not exists ($@)");
@@ -251,11 +254,6 @@ sub setAttributes {
     }
 
     $self->logger->debug("SOAP request to update session $id");
-
-    my $infos = {};
-    %$infos = %$args;
-
-    $session->update($infos);
 
     return 1;
 }
@@ -285,19 +283,17 @@ sub lastCfg {
 sub newSession {
     my ( $self, $req, $args ) = @_;
 
-    my $session = $self->p->getApacheSession();
-
-    unless ($session) {
-        $self->logger->error("Unable to create session");
-        return 0;
-    }
-
     $args ||= {};
     my $infos = {};
     %$infos = %$args;
     $infos->{_utime} = time();
 
-    $session->update($infos);
+    my $session = $self->p->getApacheSession(undef, info => $infos);
+
+    unless ($session) {
+        $self->logger->error("Unable to create session");
+        return 0;
+    }
 
     $self->logger->debug(
         "SOAP request create a new session (" . $session->id . ")" );

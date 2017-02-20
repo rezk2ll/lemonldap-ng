@@ -398,21 +398,14 @@ sub store {
 
     # Create second session for unsecure cookie
     if ( $self->conf->{securedCookie} == 2 ) {
-        my $session2 = $self->getApacheSession(undef);
 
         my %infos = %{ $req->{sessionInfo} };
         $infos{_httpSessionType} = 1;
 
-        $session2->update( \%infos );
+        my $session2 = $self->getApacheSession( undef, info => \%infos );
 
         $req->{sessionInfo}->{_httpSession} = $session2->id;
     }
-
-    # Main session
-    my $session =
-      $self->getApacheSession( $req->{id}, force => $req->{force} );
-    return PE_APACHESESSIONERROR unless ($session);
-    $req->id( $session->{id} );
 
     # Compute unsecure cookie value if needed
     if ( $self->conf->{securedCookie} == 3 ) {
@@ -434,7 +427,15 @@ sub store {
         $self->_dump($displayValue) if ref($displayValue);
         $infos->{$k} = $req->{sessionInfo}->{$k};
     }
-    $session->update($infos);
+
+    # Main session
+    my $session = $self->getApacheSession(
+        $req->{id},
+        force => $req->{force},
+        info  => $infos
+    );
+    return PE_APACHESESSIONERROR unless ($session);
+    $req->id( $session->{id} );
 
     PE_OK;
 }
