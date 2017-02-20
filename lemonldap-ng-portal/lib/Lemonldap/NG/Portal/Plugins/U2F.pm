@@ -21,7 +21,7 @@ extends 'Lemonldap::NG::Portal::Lib::U2F';
 
 # INTERFACE
 
-sub betweenAuthAndDatas { 'run' }
+sub afterDatas { 'run' }
 
 # INITIALIZATION
 
@@ -47,30 +47,16 @@ sub init {
 # Main method
 sub run {
     my ( $self, $req ) = @_;
-
-    # Insert myself after setPersistentSessionInfo
-    $req->steps(
-        [
-            map {
-                $_ eq 'setPersistentSessionInfo'
-                  ? ( $_, sub { return $self->check(@_) } )
-                  : ($_)
-            } @{ $req->steps }
-        ]
-    );
-    return PE_OK;
-}
-
-sub check {
-    my ( $self, $req ) = @_;
     my ( $kh, $uk );
 
     # Check if user is registered
-
     if ( my $res = $self->loadUser($req) ) {
         return PE_ERROR if ( $res == -1 );
 
-        my $token = $self->ott->createToken( { req => $req } );
+        $req->sessionInfo->{_u2fRealSession} = $req->id;
+        my $token = $self->ott->createToken( $req->sessionInfo );
+        $req->id(0);
+        $self->p->rebuildCookies($req);
 
         my $challenge = $self->crypter->authenticationChallenge;
         my $tmp       = $self->p->sendHtml(
@@ -86,6 +72,7 @@ sub check {
               . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
         $req->response($tmp);
+        delete $req->{authResult};
         return PE_SENDRESPONSE;
     }
     return PE_OK;
@@ -101,20 +88,13 @@ sub verify {
         $req->error(PE_NOTOKEN);
         return $self->fail($req);
     }
-    my $oldReq;
-    unless ( $oldReq = $self->ott->getToken($token) ) {
+    unless ( $req->sessionInfo( $self->ott->getToken($token) ) ) {
         $self->userLogger->info('Token expired');
         $req->error(PE_TOKENEXPIRED);
         return $self->fail($req);
     }
-    unless ( $oldReq = $oldReq->{req} ) {
-        $self->logger->error('Bad token: no request');
-        $req->error(PE_ERROR);
-        return $self->fail($req);
-    }
-    bless $oldReq, 'Lemonldap::NG::Portal::Main::Request';
     if ( my $resp = $req->param('signature') ) {
-        unless ( $self->loadUser($oldReq) == 1 ) {
+        unless ( $self->loadUser($req) == 1 ) {
             $req->error(PE_ERROR);
             return $self->fail($req);
         }
@@ -125,8 +105,7 @@ sub verify {
             $req->mustRedirect(1);
             $self->userLogger->info( 'U2F signature verified for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
-            return $self->p->do( $oldReq,
-                [ $self->p->sessionDatas, @{ $self->p->afterDatas } ] );
+            return $self->p->do( $req, [ sub { PE_OK } ] );
         }
         else {
             $self->userLogger->notice( 'Invalid U2F signature for '
@@ -134,12 +113,14 @@ sub verify {
                   . Crypt::U2F::Server::u2fclib_getError()
                   . ')' );
             $req->error(PE_U2FFAILED);
+            $req->authResult(PE_U2FFAILED);
             return $self->fail($req);
         }
     }
     else {
         $self->userLogger->notice( 'No U2F response for user'
               . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+        $req->authResult(PE_U2FFAILED);
         return $self->fail($req);
     }
 }
@@ -166,8 +147,7 @@ sub loadUser {
     {
         $self->crypter->{keyHandle} = $self->decode_base64url($kh);
         $self->crypter->{publicKey} = $self->decode_base64url($uk);
-        unless ($self->crypter->setKeyHandle
-            and $self->crypter->setPublicKey )
+        unless ( $self->crypter->setKeyHandle and $self->crypter->setPublicKey )
         {
             $self->logger->error(
                 'U2F error: ' . Crypt::U2F::Server::u2fclib_getError() );

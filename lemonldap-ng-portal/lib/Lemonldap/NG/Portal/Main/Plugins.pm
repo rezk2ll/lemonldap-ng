@@ -15,10 +15,10 @@ use Mouse;
 our @pList = (
     portalDisplayResetPassword => '::Plugins::MailReset',
     portalStatus               => '::Plugins::Status',
-    grantSessionRule           => '::Plugins::GrantSession',
     cda                        => '::Plugins::CDA',
     portalForceAuthn           => '::Plugins::ForceAuth',
     u2fActivation              => '::Plugins::U2F',
+    grantSessionRule           => '::Plugins::GrantSession',
     u2fSelfRegistration        => '::Register::U2F',
     notification               => '::Plugins::Notifications',
     portalCheckLogins          => '::Plugins::History',

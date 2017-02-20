@@ -1,7 +1,7 @@
 package Lemonldap::NG::Common::Apache::Session::Serialize::JSON;
 
 use strict;
-use JSON;
+use JSON qw(to_json from_json);
 
 our $VERSION = '2.0.0';
 
