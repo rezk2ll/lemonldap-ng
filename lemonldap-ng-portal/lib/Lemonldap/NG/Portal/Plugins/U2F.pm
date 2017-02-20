@@ -47,9 +47,26 @@ sub init {
 # Main method
 sub run {
     my ( $self, $req ) = @_;
+
+    # Insert myself after setPersistentSessionInfo
+    $req->steps(
+        [
+            map {
+                $_ eq 'setPersistentSessionInfo'
+                  ? ( $_, sub { return $self->check(@_) } )
+                  : ($_)
+            } @{ $req->steps }
+        ]
+    );
+    return PE_OK;
+}
+
+sub check {
+    my ( $self, $req ) = @_;
     my ( $kh, $uk );
 
     # Check if user is registered
+
     if ( my $res = $self->loadUser($req) ) {
         return PE_ERROR if ( $res == -1 );
 
