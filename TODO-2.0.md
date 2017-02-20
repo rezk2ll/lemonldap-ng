@@ -1,3 +1,4 @@
+* Don't generate token for /?js
 * Update notification doc
 * securize SOAP session creation by cipher
 * write REST method to create session with an id

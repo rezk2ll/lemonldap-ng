@@ -70,8 +70,7 @@ sub check {
     if ( my $res = $self->loadUser($req) ) {
         return PE_ERROR if ( $res == -1 );
 
-        $req->sessionInfo->{_u2fRealSession} = $req->id;
-        my $token = $self->ott->createToken($req);
+        my $token = $self->ott->createToken( { req => $req } );
 
         my $challenge = $self->crypter->authenticationChallenge;
         my $tmp       = $self->p->sendHtml(
@@ -108,8 +107,14 @@ sub verify {
         $req->error(PE_TOKENEXPIRED);
         return $self->fail($req);
     }
+    unless ( $oldReq = $oldReq->{req} ) {
+        $self->logger->error('Bad token: no request');
+        $req->error(PE_ERROR);
+        return $self->fail($req);
+    }
+    bless $oldReq, 'Lemonldap::NG::Portal::Main::Request';
     if ( my $resp = $req->param('signature') ) {
-        unless ( $self->loadUser($req) == 1 ) {
+        unless ( $self->loadUser($oldReq) == 1 ) {
             $req->error(PE_ERROR);
             return $self->fail($req);
         }
@@ -120,7 +125,6 @@ sub verify {
             $req->mustRedirect(1);
             $self->userLogger->info( 'U2F signature verified for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
-            bless $oldReq, 'Lemonldap::NG::Portal::Main::Request';
             return $self->p->do( $oldReq,
                 [ $self->p->sessionDatas, @{ $self->p->afterDatas } ] );
         }

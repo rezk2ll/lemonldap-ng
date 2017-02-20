@@ -52,7 +52,7 @@ LemonLDAP::NG U2F registration script
                 if (resp.error) {
                   return setMsg('u2fFailed', 'warning');
                 } else if (resp.result) {
-                  return setMsg('u2fSuccess', 'positive');
+                  return setMsg('u2fRegistered', 'positive');
                 }
               },
               error: function(j, status, err) {

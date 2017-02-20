@@ -43,7 +43,7 @@ register = ->
 							if resp.error
 								setMsg 'u2fFailed', 'warning'
 							else if resp.result
-								setMsg 'u2fSuccess', 'positive'
+								setMsg 'u2fRegistered', 'positive'
 						error: (j, status, err) ->
 							console.log 'error', err
 
