@@ -70,7 +70,8 @@ sub init {
         }
     }
     return 0 unless (@working);
-    $self->addRoute( links => 'links', ['GET'] );
+    $self->addRoute( links     => 'links',  ['GET'] );
+    $self->addRoute( 'psgi.js' => 'sendJs', ['GET'] );
 
     $self->defaultRoute( $working[0]->defaultRoute );
 

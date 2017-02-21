@@ -203,6 +203,30 @@ sub _mustBeDefined {
 
 sub handler { _mustBeDefined(@_) }
 
+sub sendJs {
+    my ( $self, $req ) = @_;
+    my $sp = $self->staticPrefix;
+    $sp =~ s/\/*$/\//;
+    my $sc = $req->script_name;
+    $sc = '.' unless ($sc);
+    $sc =~ s#/*$#/#;
+    my $s =
+        sprintf 'var staticPrefix="%s";'
+      . 'var scriptname="%s";'
+      . 'var availableLanguages="%s".split(/[,;] */);'
+      . 'var portal="%s";', $sp, $sc, $self->languages, $self->portal;
+    $s .= $self->javascript($req) if ( $self->can('javascript') );
+    return [
+        200,
+        [
+            'Content-Type'   => 'application/javascript',
+            'Content-Length' => length($s),
+            'Cache-Control' => 'max-age=2592000',
+        ],
+        [$s]
+    ];
+}
+
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
     my $sp = $self->staticPrefix;
@@ -210,22 +234,6 @@ sub sendHtml {
     my $sc = $req->script_name;
     $sc = '.' unless ($sc);
     $sc =~ s#/*$#/#;
-    if ( defined $req->param('js') ) {
-        my $s =
-            sprintf 'var staticPrefix="%s";'
-          . 'var scriptname="%s";'
-          . 'var availableLanguages="%s".split(/[,;] */);'
-          . 'var portal="%s";', $sp, $sc, $self->languages, $self->portal;
-        $s .= $self->javascript($req) if ( $self->can('javascript') );
-        return [
-            200,
-            [
-                'Content-Type'   => 'application/javascript',
-                'Content-Length' => length($s)
-            ],
-            [$s]
-        ];
-    }
     $args{code} ||= 200;
     $args{headers} ||= $req->respHeaders || [];
     my $htpl;
