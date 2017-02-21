@@ -52,10 +52,12 @@ sub logLevelInit {
     eval "require $logger";
     die $@ if ($@);
     $class->logger( $logger->new( $class->localConfig ) );
+    $class->logger->debug("Logger $logger loaded");
     $logger = $class->localConfig->{userLogger} || $logger;
     eval "require $logger";
     die $@ if ($@);
     $class->userLogger( $logger->new( $class->localConfig ), user => 1 );
+    $class->logger->debug("User logger $logger loaded");
 }
 
 # @method void serverSignatureInit
