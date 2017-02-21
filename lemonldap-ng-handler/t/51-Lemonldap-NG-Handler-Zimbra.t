@@ -14,7 +14,7 @@ my $ini = File::Temp->new();
 my $dir = dirname( abs_path($0) );
 
 print $ini "[all]
-
+logger = Lemonldap::NG::Common::Logger::Std
 [configuration]
 type=File
 dirName=$dir
