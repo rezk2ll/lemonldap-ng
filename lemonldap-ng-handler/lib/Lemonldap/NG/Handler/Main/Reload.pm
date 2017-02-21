@@ -540,8 +540,12 @@ sub substitute {
 
 sub buildSub {
     my ( $class, $val ) = @_;
-    return $class->tsv->{jail}
-      ->jail_reval("sub{my \$session=\$_[0];return($val)}");
+    my $res =
+      $class->tsv->{jail}->jail_reval("sub{my \$session=\$_[0];return($val)}");
+    unless ($res) {
+        $class->logger->error( $class->tsv->{jail}->error );
+    }
+    return $res;
 }
 
 1;

@@ -73,17 +73,20 @@ sub build_jail {
               &unparsed_uri &args &method &header_in &env )
         ]
     );
-    $self->jail->share_from( __PACKAGE__, [ @t, '&encrypt' ] );
+    $self->jail->share_from( __PACKAGE__, [ @t, '&encrypt', '&token' ] );
     $self->jail->share_from( 'MIME::Base64', ['&encode_base64'] );
-    $self->jail->share_from( 'Lemonldap::NG::Handler::Main::SharedVariables',
-        ['$_v'] );
+    $self->jail->share_from( 'Lemonldap::NG::Handler::Main', ['$_v'] );
 
     return $self->jail;
 }
 
 # Import crypto methods for jail
 sub encrypt {
-    return &tsv->{cipher}->encrypt(@_);
+    return &Lemonldap::NG::Handler::Main::tsv->{cipher}->encrypt(@_);
+}
+
+sub token {
+    return encrypt( join( ':', time, @_ ) );
 }
 
 ## @method reval
