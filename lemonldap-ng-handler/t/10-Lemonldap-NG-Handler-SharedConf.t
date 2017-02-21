@@ -16,9 +16,8 @@ my $dir = dirname( abs_path($0) );
 my $tmp = File::Temp::tempdir();
 
 print $ini "[all]
-
-logLevel = warn
-
+logger = Lemonldap::NG::Common::Logger::Std
+logLevel = error
 [configuration]
 type=File
 dirName=$dir
