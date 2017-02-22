@@ -50,8 +50,8 @@ DATADIR=$(LMPREFIX)/data
 # Document roots for Apache VirtualHosts
 DOCUMENTROOT=$(LMPREFIX)/htdocs
 PORTALDIR=$(DOCUMENTROOT)/portal
-PORTALSITEDIR=$(MANAGERDIR)
-PORTALSTATICDIR=$(MANAGERSITEDIR)/static
+PORTALSITEDIR=$(PORTALDIR)
+PORTALSTATICDIR=$(PORTALSITEDIR)/static
 PORTALRELATIVESTATICDIR=/static
 PORTALTEMPLATESDIR=$(MANAGERSITEDIR)/templates
 
@@ -59,7 +59,6 @@ MANAGERDIR=$(DOCUMENTROOT)/manager
 MANAGERSITEDIR=$(MANAGERDIR)
 MANAGERSTATICDIR=$(MANAGERSITEDIR)/static
 MANAGERRELATIVESTATICDIR=/static
-MANAGERPSGIDIR=$(MANAGERSITEDIR)/psgi
 MANAGERTEMPLATESDIR=$(MANAGERSITEDIR)/templates
 DOCDIR=$(DOCUMENTROOT)
 DEFDOCDIR=$(DOCUMENTROOT)/doc
@@ -132,14 +131,12 @@ RINITDIR=$(DESTDIR)/$(INITDIR)
 RETCDEFAULTDIR=$(DESTDIR)/$(ETCDEFAULTDIR)
 RDATADIR=$(DESTDIR)/$(DATADIR)
 RPORTALDIR=$(DESTDIR)/$(PORTALDIR)
-RPORTALSITEDIR=$(DESTDIR)/$(MANAGERSITEDIR)
-RPORTALSTATICDIR=$(DESTDIR)/$(MANAGERSTATICDIR)
-RPORTALPSGIDIR=$(DESTDIR)/$(MANAGERPSGIDIR)
-RPORTALTEMPLATESDIR=$(DESTDIR)/$(MANAGERTEMPLATESDIR)
+RPORTALSITEDIR=$(DESTDIR)/$(PORTALSITEDIR)
+RPORTALSTATICDIR=$(DESTDIR)/$(PORTALSTATICDIR)
+RPORTALTEMPLATESDIR=$(DESTDIR)/$(PORTALTEMPLATESDIR)
 RMANAGERDIR=$(DESTDIR)/$(MANAGERDIR)
 RMANAGERSITEDIR=$(DESTDIR)/$(MANAGERSITEDIR)
 RMANAGERSTATICDIR=$(DESTDIR)/$(MANAGERSTATICDIR)
-RMANAGERPSGIDIR=$(DESTDIR)/$(MANAGERPSGIDIR)
 RMANAGERTEMPLATESDIR=$(DESTDIR)/$(MANAGERTEMPLATESDIR)
 RDOCDIR=$(DESTDIR)/$(DOCDIR)
 RDEFDOCDIR=$(DESTDIR)/$(DEFDOCDIR)
@@ -187,8 +184,8 @@ MANAGERJSONSRC= scripts/jsongenerator.pl \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Attributes.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Tree.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Conf/Zero.pm
-MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
-		$(SRCMANAGERDIR)/site/static/js/conftree.js \
+MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
+		$(SRCMANAGERDIR)/site/htdocs/static/js/conftree.js \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Attributes.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/ReConstants.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm \
@@ -196,15 +193,15 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		_example/conf/lmConf-1.json
 
 # Javascript and CSS to minify
-JSSRCFILES:=$(shell find */site/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
-		$(SRCMANAGERDIR)/site/static/bwr/file-saver.js/FileSaver.js
-CSSSRCFILES:=$(shell find */site/static/css  $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.css' ! -name '*.min.css')
+JSSRCFILES:=$(shell find */site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
+		$(SRCMANAGERDIR)/site/htdocs/static/bwr/file-saver.js/FileSaver.js
+CSSSRCFILES:=$(shell find */site/htdocs/static/css  $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.css' ! -name '*.min.css')
 
 # Coffee files
 MANAGERCOFFEESRCFILES:=$(shell find lemonldap-ng-manager/site/coffee -type f -name '*.coffee')
 PORTALCOFFEESRCFILES:=$(shell find lemonldap-ng-portal/site/coffee -type f -name '*.coffee')
 COFFEESRCFILES=$(MANAGERCOFFEESRCFILES) $(PORTALCOFFEESRCFILES)
-MANAGERCOFFEEDSTFILES:=$(subst coffee/,static/js/,$(MANAGERCOFFEESRCFILES:.coffee=.js))
+MANAGERCOFFEEDSTFILES:=$(subst coffee/,htdocs/static/js/,$(MANAGERCOFFEESRCFILES:.coffee=.js))
 PORTALCOFFEEDSTFILES:=$(subst coffee/,htdocs/static/common/js/,$(PORTALCOFFEESRCFILES:.coffee=.js))
 COFFEEDSTFILES:=$(MANAGERCOFFEEDSTFILES) $(PORTALCOFFEEDSTFILES)
 
@@ -282,10 +279,10 @@ $(SRCPORTALDIR)/site/htdocs/static/common/js/%.js: $(SRCPORTALDIR)/site/coffee/%
 		coffee -c -o $(SRCPORTALDIR)/site/htdocs/static/common/js/ $(SRCPORTALDIR)/site/coffee/$*.coffee; \
 	fi
 
-$(SRCMANAGERDIR)/site/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coffee
+$(SRCMANAGERDIR)/site/htdocs/static/htdocs/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coffee
 	@if which coffee >/dev/null; then \
 		echo "Compiling $(SRCMANAGERDIR)/site/coffee/$*.coffee"; \
-		coffee -c -o $(SRCMANAGERDIR)/site/static/js/ $(SRCMANAGERDIR)/site/coffee/$*.coffee; \
+		coffee -c -o $(SRCMANAGERDIR)/site/htdocs/static/js/ $(SRCMANAGERDIR)/site/coffee/$*.coffee; \
 	fi
 
 %.min.css: %.css
@@ -364,8 +361,11 @@ manager_test:	manager
 
 e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_server
 
+
+
 prepare_test_server:
 	@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
+	@mkdir e2e-tests/conf/manager e2e-tests/conf/portal
 	$(MAKE) install_webserver_conf install_test_site install_fastcgi_server \
 		CONFDIR=`pwd`/e2e-tests/conf \
 		RCONFDIR=e2e-tests/conf \
@@ -373,17 +373,22 @@ prepare_test_server:
 		VHOSTLISTEN='*:$(TESTWEBSERVERPORT)' \
 		PORT=$(TESTWEBSERVERPORT) \
 		FASTCGISOCKDIR=`pwd`/e2e-tests/conf \
-		PORTALDIR=`pwd`/e2e-tests/conf \
+		PORTALDIR=`pwd`/e2e-tests/conf/portal \
 		PORTALSTATICDIR=`pwd`/$(SRCPORTALDIR)/site/htdocs/static \
-		MANAGERDIR=`pwd`/$(SRCMANAGERDIR)/site \
+		MANAGERDIR=`pwd`/e2e-tests/conf/manager \
+		MANAGERSTATICDIR=`pwd`/$(SRCMANAGERDIR)/site/htdocs/static \
 		TESTDIR=`pwd`/e2e-tests/conf/site \
-		MANAGERPSGIDIR=`pwd`/e2e-tests \
 		DEFDOCDIR=`pwd`/doc \
 		FRDOCDIR=`pwd`/po-doc/fr \
 		SBINDIR=`pwd`/e2e-tests/conf/sbin \
 		INITDIR=`pwd`/e2e-tests/conf/init \
 		ETCDEFAULTDIR=`pwd`/e2e-tests/conf/def
-	@cp -f e2e-tests/index.* e2e-tests/conf/
+	#@cp -f e2e-tests/index.* e2e-tests/conf/
+	@cp -f $(SRCMANAGERDIR)/site/htdocs/manager* e2e-tests/conf/manager
+	@cp -f $(SRCPORTALDIR)/site/htdocs/index* e2e-tests/conf/portal
+	@for f in $$(find e2e-tests/conf -name '*.fcgi'); do \
+		perl -i -pe 'if($$.==2){print "BEGIN{\n"; print qq(use lib q('`pwd`'/lemonldap-ng-$$_/blib/lib);\n) foreach qw(common handler portal manager); print "}\n"; }' $$f; \
+	done
 	@cp e2e-tests/lmConf-1.json e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/test-nginx.conf e2e-tests/conf/
 	@cp e2e-tests/form.html e2e-tests/conf/site
 	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s#__port__#$(TESTWEBSERVERPORT)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#;' \
@@ -593,7 +598,6 @@ install_webserver_conf:
 			s#__PORTALSTATICDIR__#$(PORTALSTATICDIR)/#g; \
 			s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
 			s#__MANAGERSTATICDIR__#$(MANAGERSTATICDIR)/#g; \
-			s#__MANAGERPSGIDIR__#$(MANAGERPSGIDIR)/#g; \
 			s#__TESTDIR__#$(TESTDIR)/#g; \
 			s#__PORT__#$(PORT)#g; \
 			s#__CONFDIR__#$(CONFDIR)#g; \
@@ -604,9 +608,9 @@ install_webserver_conf:
 
 install_manager_site:	install_conf_dir
 	# Manager install
-	@install -v -d $(RMANAGERDIR) $(RMANAGERSTATICDIR) $(RMANAGERPSGIDIR) \
+	@install -v -d $(RMANAGERDIR) $(RMANAGERSTATICDIR) \
 		$(RMANAGERTEMPLATESDIR)
-	@cp -pR $(SRCMANAGERDIR)/site/static/* $(RMANAGERSTATICDIR)
+	@cp -pR $(SRCMANAGERDIR)/site/htdocs/static/* $(RMANAGERSTATICDIR)
 	@for f in $(SRCMANAGERDIR)/site/templates/*.tpl; do \
 		./scripts/transform-templates \
 			usedebianlibs $(USEDEBIANLIBS) \
@@ -620,9 +624,8 @@ install_manager_site:	install_conf_dir
 	elif test "$(USEDEBIANLIBS)" = "yes"; then \
 		rm -rvf $(MANAGERLIBSTOREMOVEFORDEBIAN); \
 	fi
-	@cp -pR $(SRCMANAGERDIR)/eg/* $(RMANAGERPSGIDIR)
 	# Clean svn files
-	@rm -rf $$(find ${RMANAGERSTATICDIR} $(RMANAGERPSGIDIR) \
+	@rm -rf $$(find ${RMANAGERSTATICDIR} \
 		$(RMANAGERTEMPLATESDIR) $(RCONFDIR) -type d -name .svn)
 	@$(PERL) -i -pe 's#__MANAGERSTATICDIR__#$(MANAGERRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	@$(PERL) -i -pe 's#__MANAGERTEMPLATESDIR__#$(MANAGERTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
@@ -985,7 +988,7 @@ default-diff:
 	@# Manager
 	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager ||true
 	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager.pm ||true
-	@$(DIFF) $(SRCMANAGERDIR)/site/static $(LMPREFIX)/htdocs/manager/static ||true
+	@$(DIFF) $(SRCMANAGERDIR)/site/htdocs/static $(LMPREFIX)/htdocs/manager/static ||true
 	@$(DIFF) $(SRCMANAGERDIR)/site/templates $(LMPREFIX)/htdocs/manager/templates ||true
 	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' $(SRCMANAGERDIR)/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
 	@$(DIFF) --ignore-matching-lines='set.*get.*' $(SRCCOMMONDIR)/scripts/lemonldap-ng-cli $(LMPREFIX)/bin/lemonldap-ng-cli ||true

@@ -6,7 +6,7 @@ describe('Lemonldap::NG', function() {
       browser.driver.get('http://test1.example.com:' + process.env.TESTWEBSERVERPORT + '/index.pl?logout_all');
     });
     it('should redirect after logout', function() {
-      expect(browser.getCurrentUrl()).toMatch(new RegExp('^http://lemonldap-ng\.org/welcome'));
+      expect(browser.getCurrentUrl()).toMatch(new RegExp('^https://lemonldap-ng\.org/welcome'));
     });
     it('should redirect to portal', function() {
       browser.driver.get('http://test1.example.com:' + process.env.TESTWEBSERVERPORT + '/');

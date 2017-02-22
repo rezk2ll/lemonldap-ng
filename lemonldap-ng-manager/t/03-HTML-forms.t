@@ -7,7 +7,7 @@ use Test::More;
 use strict;
 use Data::Dumper;
 
-my $formDir = 'site/static/forms';
+my $formDir = 'site/htdocs/static/forms';
 
 my $count = 0;
 use_ok('Lemonldap::NG::Manager::Build::Tree');

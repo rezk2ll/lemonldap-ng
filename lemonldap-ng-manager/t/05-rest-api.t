@@ -6,7 +6,7 @@ use JSON;
 use strict;
 
 require 't/test-lib.pm';
-my $struct = 'site/static/struct.json';
+my $struct = 'site/htdocs/static/struct.json';
 
 my @bad = qw(
   /confs/1567
