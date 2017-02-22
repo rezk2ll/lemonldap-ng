@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:customhandlers</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,customhandlers"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="customhandlers.html"/>
@@ -94,17 +94,27 @@ Wrapper usually look at this:
 <div class="level3">
 
 <p>
+Your wrappers must be named “Lemonldap::NG::Handler::&lt;platform&gt;::&lt;type&gt;” where &lt;platform&gt; is the target (ApacheMP2 or Server) and &lt;type&gt; is the name you&#039;ve chosen.
+</p>
+
+<p>
 You can enable it either:
 </p>
 <ul>
-<li class="level1"><div class="li"> by setting a “PerlSetVar” in the Apache configuration file</div>
+<li class="level1"><div class="li"> by setting a <code>PerlSetVar VHOSTTYPE &lt;type&gt;</code> in the Apache configuration file</div>
+</li>
+<li class="level1"><div class="li"> by setting a <code>fastcgi_param VHOSTTYPE &lt;type&gt;</code> in the Nginx configuration file</div>
 </li>
 <li class="level1"><div class="li"> by adding it to the menu: add its name in <code>vhostType</code> “select” declaration (file <code>lemonldap-ng-manager/lib/Lemonldap/NG/Build/Attributes</code>) and rebuild LLNG</div>
 </li>
 </ul>
 
+<p>
+Note that configuration parameter can be set only in lemonldap-ng.ini configuration file <em>(section Handler)</em>.
+</p>
+
 </div>
-<!-- EDIT3 SECTION "Enable it" [724-998] -->
+<!-- EDIT3 SECTION "Enable it" [724-1379] -->
 <h2 class="sectionedit4" id="add_a_new_platform">Add a new platform</h2>
 <div class="level2">
 
@@ -142,7 +152,7 @@ Wrapper usually look at this:
 <span class="nu0">1</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- EDIT4 SECTION "Add a new platform" [999-1839] -->
+<!-- EDIT4 SECTION "Add a new platform" [1380-2220] -->
 <h2 class="sectionedit5" id="old_fashion_nginx_handlers">Old fashion Nginx handlers</h2>
 <div class="level2">
 <div class="noteimportant">There is no need to use this feature now. It is kept for compatibility.
@@ -160,6 +170,6 @@ Three actions are needed:
 </ul>
 
 </div>
-<!-- EDIT5 SECTION "Old fashion Nginx handlers" [1840-] --></div>
+<!-- EDIT5 SECTION "Old fashion Nginx handlers" [2221-] --></div>
 </body>
 </html>

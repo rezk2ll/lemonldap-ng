@@ -74,6 +74,7 @@
 <li class="level1"><div class="li"><a href="#advanced_features">Advanced features</a></div></li>
 <li class="level1"><div class="li"><a href="#mini_howtos">Mini howtos</a></div></li>
 <li class="level1"><div class="li"><a href="#exploitation">Exploitation</a></div></li>
+<li class="level1"><div class="li"><a href="#developer_corner">Developer corner</a></div></li>
 </ul>
 </div>
 </div>
@@ -575,11 +576,13 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </li>
 <li class="level1"><div class="li"> <a href="securetoken.html" class="wikilink1" title="documentation:2.0:securetoken">Secure Token Handler</a></div>
 </li>
+<li class="level1"><div class="li"> <a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic Handler</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps Handler</a></div>
+</li>
 <li class="level1"><div class="li"> <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a></div>
 </li>
 <li class="level1"><div class="li"> <a href="loginhistory.html" class="wikilink1" title="documentation:2.0:loginhistory">Login history</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic Handler</a></div>
 </li>
 <li class="level1"><div class="li"> <a href="fastcgi.html" class="wikilink1" title="documentation:2.0:fastcgi">Fast CGI support</a></div>
 </li>
@@ -592,7 +595,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT18 SECTION "Advanced features" [9210-10054] -->
+<!-- EDIT18 SECTION "Advanced features" [9210-10091] -->
 <h2 class="sectionedit19" id="mini_howtos">Mini howtos</h2>
 <div class="level2">
 
@@ -623,7 +626,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Mini howtos" [10055-10724] -->
+<!-- EDIT19 SECTION "Mini howtos" [10092-10761] -->
 <h2 class="sectionedit20" id="exploitation">Exploitation</h2>
 <div class="level2">
 
@@ -656,6 +659,57 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT20 SECTION "Exploitation" [10725-] --></div>
+<!-- EDIT20 SECTION "Exploitation" [10762-11182] -->
+<h2 class="sectionedit21" id="developer_corner">Developer corner</h2>
+<div class="level2">
+
+<p>
+To develop an handler, see:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="handlerarch.html" class="wikilink1" title="documentation:2.0:handlerarch">Handler architecture</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="customhandlers.html" class="wikilink1" title="documentation:2.0:customhandlers">Custom handlers</a></div>
+</li>
+</ul>
+
+<p>
+To develop a portal plugin, see manpages:
+</p>
+<ul>
+<li class="level1"><div class="li"> Lemonldap::NG::Portal</div>
+</li>
+<li class="level1"><div class="li"> Lemonldap::NG::Portal::Auth::Base</div>
+</li>
+<li class="level1"><div class="li"> Lemonldap::NG::Portal::Main::Issuer</div>
+</li>
+<li class="level1"><div class="li"> Lemonldap::NG::Portal::Main::Plugin</div>
+</li>
+</ul>
+
+<p>
+To add a new language <em>(XX must be replace by your language code)</em>:
+</p>
+<ul>
+<li class="level1"><div class="li"> Manager: translate <code>lemonldap-ng-manager/site/static/languages/en.json</code> in <code>lemonldap-ng-manager/site/static/languages/XX.json</code> and enable it in “lemonldap-ng.ini” file</div>
+</li>
+<li class="level1"><div class="li"> Portal: translate <code>lemonldap-ng-portal/site/static/htdocs/languages/en.json</code> in <code>lemonldap-ng-portal/site/htdocs/static/languages/XX.json</code> and enable it in “lemonldap-ng.ini” file</div>
+</li>
+</ul>
+
+<p>
+To translate this doc (Manager help):
+</p>
+<ul>
+<li class="level1"><div class="li"> Install <a href="http://www.omegat.org/" class="urlextern" title="http://www.omegat.org/"  rel="nofollow">OmegaT</a></div>
+</li>
+<li class="level1"><div class="li"> Launch “make XX-translation” and translate all</div>
+</li>
+<li class="level1"><div class="li"> Launch “make XX-doc” to build doc</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT21 SECTION "Developer corner" [11183-] --></div>
 </body>
 </html>

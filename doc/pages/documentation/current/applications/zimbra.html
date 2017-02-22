@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:applications:zimbra</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,applications,zimbra"/>
 <link rel="search" type="application/opensearchdescription+xml" href="../lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="zimbra.html"/>
@@ -54,13 +54,7 @@
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#zimbra_preauth_key">Zimbra preauth key</a></div></li>
 <li class="level2"><div class="li"><a href="#zimbra_application_in_menu">Zimbra application in menu</a></div></li>
-<li class="level2"><div class="li"><a href="#zimbra_virtual_host">Zimbra virtual host</a></div>
-<ul class="toc">
-<li class="level3"><div class="li"><a href="#apache">Apache</a></div></li>
-<li class="level3"><div class="li"><a href="#nginx">Nginx</a></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><a href="#zimbra_virtual_host_in_manager">Zimbra virtual host in Manager</a></div></li>
+<li class="level2"><div class="li"><a href="#zimbra_virtual_host">Zimbra virtual host</a></div></li>
 <li class="level2"><div class="li"><a href="#zimbra_handler_parameters">Zimbra Handler parameters</a></div></li>
 </ul></li>
 </ul>
@@ -136,46 +130,13 @@ Choose for example <a href="http://zimbra.example.com/zimbrasso" class="urlexter
 <h3 class="sectionedit6" id="zimbra_virtual_host">Zimbra virtual host</h3>
 <div class="level3">
 
-</div>
-
-<h4 id="apache">Apache</h4>
-<div class="level4">
-
 <p>
-You will configure Zimbra virtual host like other <a href="../configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a> but you will use Zimbra Handler instead of default Handler.
-</p>
-<pre class="code file apache">PerlModule Lemonldap::NG::Handler::Specific::ZimbraPreAuth
-&lt;<span class="kw3">VirtualHost</span> *&gt;
-        <span class="kw1">ServerName</span> zimbra.example.com
-&nbsp;
-       <span class="co1"># Load Zimbra Handler</span>
-       PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::ZimbraPreAuth
-       ...
-&nbsp;
-&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
-
-</div>
-
-<h4 id="nginx">Nginx</h4>
-<div class="level4">
-<div class="noteclassic">Zimbra Handler cannot be used in Nginx for the moment.
-</div>
-</div>
-<!-- EDIT6 SECTION "Zimbra virtual host" [1820-2380] -->
-<h3 class="sectionedit7" id="zimbra_virtual_host_in_manager">Zimbra virtual host in Manager</h3>
-<div class="level3">
-
-<p>
-Go to the Manager and <a href="../configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:2.0:configvhost">create a new virtual host</a> for Zimbra.
-</p>
-
-<p>
-Just configure the <a href="../writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">access rules</a>.
+You just have to set “Type: ZimbraPreAuth” in virtualhost options and reload configuration in this handler.
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Zimbra virtual host in Manager" [2381-2597] -->
-<h3 class="sectionedit8" id="zimbra_handler_parameters">Zimbra Handler parameters</h3>
+<!-- EDIT6 SECTION "Zimbra virtual host" [1820-1959] -->
+<h3 class="sectionedit7" id="zimbra_handler_parameters">Zimbra Handler parameters</h3>
 <div class="level3">
 
 <p>
@@ -203,6 +164,6 @@ Zimbra parameters are the following:
 
 </div>
 </div>
-<!-- EDIT8 SECTION "Zimbra Handler parameters" [2598-] --></div>
+<!-- EDIT7 SECTION "Zimbra Handler parameters" [1960-] --></div>
 </body>
 </html>

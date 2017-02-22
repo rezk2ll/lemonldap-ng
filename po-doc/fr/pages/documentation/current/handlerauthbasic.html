@@ -53,12 +53,8 @@
 <li class="level1"><div class="li"><a href="#presentation">Présentation</a></div></li>
 <li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
 <ul class="toc">
-<li class="level2"><div class="li"><a href="#virtual_host">Hôte virtuel</a></div>
-<ul class="toc">
-<li class="level3"><div class="li"><a href="#apache">Apache</a></div></li>
-<li class="level3"><div class="li"><a href="#nginx">Nginx</a></div></li>
-</ul>
-</li>
+<li class="level2"><div class="li"><a href="#virtual_host">Hôte virtuel</a></div></li>
+<li class="level2"><div class="li"><a href="#nginx">Nginx</a></div></li>
 <li class="level2"><div class="li"><a href="#handler_parameters">Paramètres de l'agent</a></div></li>
 </ul></li>
 </ul>
@@ -96,43 +92,39 @@ Ce peut être pratique pour autoriser une application cliente à accéder à un 
 <h3 class="sectionedit4" id="virtual_host">Hôte virtuel</h3>
 <div class="level3">
 
-</div>
-
-<h4 id="apache">Apache</h4>
-<div class="level4">
-
 <p>
-Configurer l'hôte virtuel comme n'importe quel autre <a href="configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">hôte virtuel protégé</a> mais utiliser l'agent AuthBasic au lieu de l'agent par défaut.
+
+You just have to set “Type: AuthBasic” in the virtualHost options in the manager.
+
 </p>
-<pre class="code file apache">PerlModule Lemonldap::NG::Handler::Specific::AuthBasic
-&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
-       <span class="kw1">ServerName</span> basic.example.com
-&nbsp;
-       <span class="co1"># Load AuthBasic Handler</span>
-       PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::AuthBasic
-&nbsp;
-       ...
-&nbsp;
-&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
-<div class="notetip">Si le portail LemonLDAP::NG est protégé par SSL avec un certificat auto-signé, on peut ajouter cette ligne pour l'accepter :
-<pre class="code file apache">PerlSetEnv PERL_LWP_SSL_VERIFY_HOSTNAME <span class="nu0">0</span></pre>
-
-</div>
-</div>
-
-<h4 id="nginx">Nginx</h4>
-<div class="level4">
 
 <p>
 
-Since 1.9.6, LLNG FastCGI server can handle AuthBasic handler. To call it, you just have to add <code>fastcgi_param LLTYPE authbasic;</code> in the FastCGI server call and remove <code>error_page 401</code> directive:
+If you want to protect only a virtualHost part, keep type on “Main” and set type in your configuration file:
+
+</p>
+<ul>
+<li class="level1"><div class="li">  Apache: use simply a <code>PerlSetVar VHOSTTYPE AuthBasic</code></div>
+</li>
+<li class="level1"><div class="li">  Nginx: create another FastCGI with a <code>fastcgi_param VHOSTTYPE = AuthBasic;</code> <em>(and remove error_page 401)</em></div>
+</li>
+</ul>
+
+</div><!-- EDIT4 SECTION "Virtual host" [662-1052] -->
+
+<h3 class="sectionedit5" id="nginx">Nginx</h3>
+<div class="level3">
+
+<p>
+
+Since 1.9.6, LLNG FastCGI server can handle AuthBasic handler. To call it, you just have to add <code>fastcgi_param VHOSTTYPE AuthBasic;</code> in the FastCGI server call and remove <code>error_page 401</code> directive:
 
 </p>
 <pre class="file">location = /lmauth {
   internal;
   include /etc/nginx/fastcgi_params;
   fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
-  fastcgi_param LLTYPE authbasic;
+  fastcgi_param VHOSTTYPE AuthBasic;
 
   # Ignorer les données postées
   fastcgi_pass_request_body  off;
@@ -157,16 +149,16 @@ location / {
   ...
 }</pre>
 
-</div><!-- EDIT4 SECTION "Virtual host" [662-2321] -->
+</div><!-- EDIT5 SECTION "Nginx" [1053-2076] -->
 
-<h3 class="sectionedit5" id="handler_parameters">Paramètres de l'agent</h3>
+<h3 class="sectionedit6" id="handler_parameters">Paramètres de l'agent</h3>
 <div class="level3">
 
 <p>
 Aucun paramètres n'est requis. Il faut en revanche autoriser le service web des sessions, voir le <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">backend de sessions SOAP</a>.
 </p>
 
-</div><!-- EDIT5 SECTION "Handler parameters" [2322-] -->
+</div><!-- EDIT6 SECTION "Handler parameters" [2077-] -->
 </div>
 </body>
 </html>

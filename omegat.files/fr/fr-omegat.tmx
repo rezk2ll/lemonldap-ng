@@ -5214,44 +5214,6 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s17&gt;-&gt;&lt;/s17&gt;&lt;s18&gt;proxy&lt;/s18&gt;&lt;s19&gt;(&lt;/s19&gt;&lt;s20&gt;'http://auth.example.com/index.pl/notification'&lt;/s20&gt;&lt;s21&gt;)&lt;/s21&gt;&lt;s22&gt;;&lt;/s22&gt;
- 
- 
-&lt;s23&gt;$r&lt;/s23&gt; &lt;s24&gt;=&lt;/s24&gt; &lt;s25&gt;$lite&lt;/s25&gt;&lt;s26&gt;-&gt;&lt;/s26&gt;&lt;s27&gt;newNotification&lt;/s27&gt;&lt;s28&gt;(&lt;/s28&gt;
-&lt;s29&gt;'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
-&lt;root&gt;
-&lt;notification uid=&quot;foo.bar&quot; date=&quot;2009-01-27&quot; reference=&quot;ABC&quot;&gt;
-&lt;text&gt; You have been granted to access to appli-1 &lt;/text&gt;
-&lt;text&gt; You have been granted to access to appli-2 &lt;/text&gt;
-&lt;check&gt; I know that I can acces to appli-1 &lt;/check&gt;
-&lt;check&gt; I know that I can acces to appli-2 &lt;/check&gt;
-&lt;/notification&gt;
-&lt;/root&gt;
-'&lt;/s29&gt;&lt;s30&gt;)&lt;/s30&gt;&lt;s31&gt;;&lt;/s31&gt;
- 
-&lt;s32&gt;if&lt;/s32&gt; &lt;s33&gt;(&lt;/s33&gt; &lt;s34&gt;$r&lt;/s34&gt;&lt;s35&gt;-&gt;&lt;/s35&gt;&lt;s36&gt;fault&lt;/s36&gt; &lt;s37&gt;)&lt;/s37&gt; &lt;s38&gt;{&lt;/s38&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T060420Z" changeid="guimard">
-        <seg>&lt;s17&gt;-&gt;&lt;/s17&gt;&lt;s18&gt;proxy&lt;/s18&gt;&lt;s19&gt;(&lt;/s19&gt;&lt;s20&gt;'http://auth.example.com/index.pl/notification'&lt;/s20&gt;&lt;s21&gt;)&lt;/s21&gt;&lt;s22&gt;;&lt;/s22&gt;
- 
- 
-&lt;s23&gt;$r&lt;/s23&gt; &lt;s24&gt;=&lt;/s24&gt; &lt;s25&gt;$lite&lt;/s25&gt;&lt;s26&gt;-&gt;&lt;/s26&gt;&lt;s27&gt;newNotification&lt;/s27&gt;&lt;s28&gt;(&lt;/s28&gt;
-&lt;s29&gt;'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
-&lt;root&gt;
-&lt;notification uid=&quot;foo.bar&quot; date=&quot;2009-01-27&quot; reference=&quot;ABC&quot;&gt;
-&lt;text&gt; You have been granted to access to appli-1 &lt;/text&gt;
-&lt;text&gt; You have been granted to access to appli-2 &lt;/text&gt;
-&lt;check&gt; I know that I can acces to appli-1 &lt;/check&gt;
-&lt;check&gt; I know that I can acces to appli-2 &lt;/check&gt;
-&lt;/notification&gt;
-&lt;/root&gt;
-'&lt;/s29&gt;&lt;s30&gt;)&lt;/s30&gt;&lt;s31&gt;;&lt;/s31&gt;
- 
-&lt;s32&gt;if&lt;/s32&gt; &lt;s33&gt;(&lt;/s33&gt; &lt;s34&gt;$r&lt;/s34&gt;&lt;s35&gt;-&gt;&lt;/s35&gt;&lt;s36&gt;fault&lt;/s36&gt; &lt;s37&gt;)&lt;/s37&gt; &lt;s38&gt;{&lt;/s38&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>POST data: use form replay</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T073709Z" changeid="xavier">
@@ -6852,14 +6814,6 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Enable SOAP in General parameters » Advanced parameters » SOAP</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T062023Z" changeid="xavier">
-        <seg>Activer SOAP dans Paramètres généraux » Paramètres avancés » SOAP</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>To get more information on user (name, mail, etc.), you have to read &lt;a0&gt;HTTP headers&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T140558Z" changeid="xavier">
@@ -7010,14 +6964,6 @@ lemonldap-ng=&gt; q</seg>
       <tuv lang="FR-FR" changedate="20120420T140143Z" changeid="xavier">
         <seg>The
 #          host must be matched by a group named &quot;host&quot;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Go to the Manager and &lt;a0&gt;create a new virtual host&lt;/a0&gt; for Zimbra.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111222T180837Z" changeid="xavier">
-        <seg>Aller dans le manager et &lt;a0&gt;créer un nouvel hôte virtuel&lt;/a0&gt; pour Zimbra.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8086,14 +8032,6 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Then just configure the new XSLT file path in Manager, go in General Parameters &gt; Advanced Parameters &gt; Notifications &gt; Custom XSLT file and set for example &lt;c1&gt;/etc/lemonldap-ng/notification.xsl&lt;/c1&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T061903Z" changeid="xavier">
-        <seg>Configure ensuite le nouveau fichier XSLT dans le manager, aller dans Paramètres généraux &gt; Paramètres avancés &gt; Notifications &gt; Fichier XSLT personnalisé et mettre par exemple &lt;c1&gt;/etc/lemonldap-ng/notification.xsl&lt;/c1&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;&lt;s0&gt;IfModule&lt;/s0&gt; mod_rewrite.c&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8346,14 +8284,6 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T061326Z" changeid="xavier">
         <seg>Comme indiqué au &lt;a0&gt;chapître performances&lt;/a0&gt;, on peut utiliser des macros, macros locales,…</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>To activate SOAP on the portal:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T062009Z" changeid="xavier">
-        <seg>Pour activer SOAP sur le portal :</seg>
       </tuv>
     </tu>
     <tu>
@@ -12228,22 +12158,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Notifications trough SOAP</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20121005T041526Z" changeid="xavier">
-        <seg>Notifications via SOAP</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Custom XSLT file</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T053759Z" changeid="guimard">
-        <seg>Fichier XSLT personnalisé</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Then, go in &lt;c0&gt;SSL parameters&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T213104Z" changeid="xavier">
@@ -12678,14 +12592,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Enable Notifications SOAP service in Apache configuration:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T062032Z" changeid="xavier">
-        <seg>Activer le service SOAP de notifications dans la configuration Apache :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>nickname</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050449Z" changeid="xavier">
@@ -12874,14 +12780,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074204Z" changeid="xavier">
         <seg>&lt;s0&gt;User Header&lt;/s0&gt;: Auth-User (case sensitive)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Environment variables, in some cases (through %ENV)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T161836Z" changeid="xavier">
-        <seg>Variables d'environnement, dans certains cas (via %ENV)</seg>
       </tuv>
     </tu>
     <tu>
@@ -14264,14 +14162,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>New notifications can be insert using SOAP request (described in the WSDL file generated by buildPortalWSDL tool).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T061958Z" changeid="xavier">
-        <seg>Les nouvelles notifications peuvent être insérées en utilisant des requêtes SOAP (décrites dans le fichier WSDL généré par l'utilitaire buildPortalWSDL).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>If you need it, you can rebuild RPMs:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100729Z" changeid="xavier">
@@ -15392,14 +15282,6 @@ server {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113203Z" changeid="xavier">
         <seg>Il suffit donc de déclarer cet en-tête pour l'hôte virtuel dans le manager.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Zimbra virtual host in Manager</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111222T180829Z" changeid="xavier">
-        <seg>Hôte virtuel Zimbra dans le manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -19528,16 +19410,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; zimbra.example.com
- </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111222T180815Z" changeid="xavier">
-        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; zimbra.example.com
- </seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Schema</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194956Z" changeid="xavier">
@@ -19694,14 +19566,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T091758Z" changeid="xavier">
         <seg>&lt;s0&gt;Règle d'utilisation&lt;/s0&gt; : une règle pour autoriser l'usage de ce module, mettre 1 pour toujours l'autoriser.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>The transformation between notification XML content and &lt;a0&gt;HTML&lt;/a0&gt; display is done with XSLT.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T061815Z" changeid="xavier">
-        <seg>La transformation entre le texte XML d'une notification et l'affichage HTML est faite par XSLT.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20078,6 +19942,14 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120423T204756Z" changeid="xavier">
         <seg>Quelques exemples pour les serveurs principaux.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.omegat.org/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.omegat.org/</seg>
       </tuv>
     </tu>
     <tu>
@@ -23374,14 +23246,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>If LemonLDAP::NG portal is protected by SSL with a self-signed certificate, you can add this line to accept it:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T173806Z" changeid="xavier">
-        <seg>Si le portail LemonLDAP::NG est protégé par SSL avec un certificat auto-signé, on peut ajouter cette ligne pour l'accepter :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;&lt;s14&gt;IfModule&lt;/s14&gt; mod_rewrite.c&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064415Z" changeid="xavier">
@@ -26282,14 +26146,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Notifications are XML files containing:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T061910Z" changeid="xavier">
-        <seg>Les notifications sont des fichiers XML contenant :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You can also get groups in &lt;c0&gt;$hGroups&lt;/c0&gt; which is a Hash Reference of this form:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T161606Z" changeid="xavier">
@@ -27734,16 +27590,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T142859Z" changeid="xavier">
         <seg>La configuration de LemonLDAP::NG est construite autour des hôtes virtuels Apache ou Nginx.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;# SOAP functions for notification insertion (disabled by default)&lt;/s0&gt;
-&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/notification&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T060342Z" changeid="guimard">
-        <seg>&lt;s0&gt;# SOAP functions for notification insertion (disabled by default)&lt;/s0&gt;
-&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/notification&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -29420,14 +29266,6 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Configure the virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt; but use AuthBasic Handler instead of default Handler.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T173703Z" changeid="xavier">
-        <seg>Configurer l'hôte virtuel comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt; mais utiliser l'agent AuthBasic au lieu de l'agent par défaut.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You can add this YUM repository to get recent packages:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095546Z" changeid="xavier">
@@ -29926,14 +29764,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>The default XSLT file is in portal/skins/common/notification.xsl.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T061825Z" changeid="xavier">
-        <seg>Le fichier XSLT par défaut est portal/skins/common/notification.xsl.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Order of categories in the menu</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T131749Z" changeid="xavier">
@@ -30170,14 +30000,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163249Z" changeid="xavier">
         <seg>Par défaut, le manager est protégé et n'autorise que l'utilisateur de démonstration “dwho”.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You can create your own XSLT file and store in another place, for example /etc/lemonldap-ng.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T061836Z" changeid="xavier">
-        <seg>On peut créer son propre fichier XSLT et le stocker à un autre endroit, par exemple /etc/lemonldap-ng.</seg>
       </tuv>
     </tu>
     <tu>
@@ -32876,14 +32698,6 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You will configure Zimbra virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt; but you will use Zimbra Handler instead of default Handler.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111222T180805Z" changeid="xavier">
-        <seg>Configurer l'hôte virtuel Zimbra comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt; mais utiliser le handler Zimbra au lieu du handler par défaut.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>the portal is in the declared domain</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T113934Z" changeid="xavier">
@@ -33284,14 +33098,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081457Z" changeid="xavier">
         <seg>netid_http_header             HTTP_AUTH_USER</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Zimbra Handler cannot be used in Nginx for the moment.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T060242Z" changeid="xavier">
-        <seg>Le handler Zimbra ne peut être utilisé avec in Nginx pour l'instant.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33816,14 +33622,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>ldapgroups -&gt; memberOf</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s2&gt;# Load Zimbra Handler&lt;/s2&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111222T180818Z" changeid="xavier">
-        <seg>&lt;s2&gt;# Load Zimbra Handler&lt;/s2&gt;</seg>
       </tuv>
     </tu>
     <tu>

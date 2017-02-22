@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,extendedfunctions"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="extendedfunctions.html"/>
@@ -106,7 +106,7 @@ Dans cette cage, on peut accéder aux éléments suivants :
 </li>
 <li class="level1"><div class="li"> Fonction <a href="http://perldoc.perl.org/MIME/Base64.html" class="urlextern" title="http://perldoc.perl.org/MIME/Base64.html"  rel="nofollow">encode_base64</a></div>
 </li>
-<li class="level1"><div class="li"> Variables d'environnement, dans certains cas (via %ENV)</div>
+<li class="level1"><div class="li">  Environment variables, in some cases (through %ENV). <em>(NB: with Apache handlers it is generally empty, so unusable for rules/headers)</em> </div>
 </li>
 <li class="level1"><div class="li"> <a href="#request_information" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">Information about current request</a></div>
 </li>
@@ -131,7 +131,7 @@ Dans cette cage, on peut accéder aux éléments suivants :
 </ul>
 <div class="notetip">Pour en savoir plus sur la cage, consulter la <a href="http://perldoc.perl.org/Safe.html" class="urlextern" title="http://perldoc.perl.org/Safe.html"  rel="nofollow">documentation du module Safe</a>.
 </div>
-</div><!-- EDIT2 SECTION "Presentation" [35-1106] -->
+</div><!-- EDIT2 SECTION "Presentation" [35-1192] -->
 
 <h2 class="sectionedit3" id="request_information">Request information</h2>
 <div class="level2">
@@ -158,12 +158,12 @@ Les données suivantes concernant la requête courante sont disponibles via les 
 </li>
 </ul>
 
-</div><!-- EDIT3 SECTION "Request information" [1107-1512] -->
+</div><!-- EDIT3 SECTION "Request information" [1193-1598] -->
 
 <h2 class="sectionedit4" id="extended_functions_list">Liste des fonctions étendues</h2>
 <div class="level2">
 
-</div><!-- EDIT4 SECTION "Extended Functions List" [1513-1549] -->
+</div><!-- EDIT4 SECTION "Extended Functions List" [1599-1635] -->
 
 <h3 class="sectionedit5" id="date">date</h3>
 <div class="level3">
@@ -173,7 +173,7 @@ Retourne la date au format AAAAMMJJHHMMSS, heure locale par défaut, GMT si dema
 </p>
 <pre class="code">date(1)</pre>
 
-</div><!-- EDIT5 SECTION "date" [1550-1669] -->
+</div><!-- EDIT5 SECTION "date" [1636-1755] -->
 
 <h3 class="sectionedit6" id="checklogonhours">checkLogonHours</h3>
 <div class="level3">
@@ -228,7 +228,7 @@ Il est possible de modifier le comportement par défaut pour les utilisateurs ne
 </p>
 <pre class="code">checkLogonHours($ssoLogonHours, '', '', '1')</pre>
 
-</div><!-- EDIT6 SECTION "checkLogonHours" [1670-3607] -->
+</div><!-- EDIT6 SECTION "checkLogonHours" [1756-3693] -->
 
 <h3 class="sectionedit7" id="checkdate">checkDate</h3>
 <div class="level3">
@@ -260,7 +260,7 @@ Exemple d'usage simple :
 </p>
 <pre class="code">checkDate($ssoStartDate, $ssoEndDate)</pre>
 
-</div><!-- EDIT7 SECTION "checkDate" [3608-4235] -->
+</div><!-- EDIT7 SECTION "checkDate" [3694-4321] -->
 
 <h3 class="sectionedit8" id="basic">basic</h3>
 <div class="level3">
@@ -285,7 +285,7 @@ Exemple d'usage simple :
 </p>
 <pre class="code">basic($uid,$_password)</pre>
 
-</div><!-- EDIT8 SECTION "basic" [4236-4698] -->
+</div><!-- EDIT8 SECTION "basic" [4322-4784] -->
 
 <h3 class="sectionedit9" id="unicode2iso">unicode2iso</h3>
 <div class="level3">
@@ -308,7 +308,7 @@ Exemple d'usage simple :
 </p>
 <pre class="code">unicode2iso($nom)</pre>
 
-</div><!-- EDIT9 SECTION "unicode2iso" [4699-5003] -->
+</div><!-- EDIT9 SECTION "unicode2iso" [4785-5089] -->
 
 <h3 class="sectionedit10" id="iso2unicode">iso2unicode</h3>
 <div class="level3">
@@ -331,7 +331,7 @@ Exemple d'usage simple :
 </p>
 <pre class="code">iso2unicode($name)</pre>
 
-</div><!-- EDIT10 SECTION "iso2unicode" [5004-5308] -->
+</div><!-- EDIT10 SECTION "iso2unicode" [5090-5394] -->
 
 <h3 class="sectionedit11" id="groupmatch">groupMatch</h3>
 <div class="level3">
@@ -359,7 +359,7 @@ Exemple d'usage simple :
 </p>
 <pre class="code">groupMatch($hGroups, 'description', 'Service 1')</pre>
 
-</div><!-- EDIT11 SECTION "groupMatch" [5309-5667] -->
+</div><!-- EDIT11 SECTION "groupMatch" [5395-5753] -->
 
 <h3 class="sectionedit12" id="encrypt">encrypt</h3>
 <div class="level3">
@@ -372,7 +372,7 @@ This function uses the secret key of LLNG configuration to crypt a data. This ca
 </p>
 <pre class="code">encrypt($_whatToTrace)</pre>
 
-</div><!-- EDIT12 SECTION "encrypt" [5668-] -->
+</div><!-- EDIT12 SECTION "encrypt" [5754-] -->
 </div>
 </body>
 </html>

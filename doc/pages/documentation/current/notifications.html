@@ -60,16 +60,20 @@
 </ul>
 </li>
 <li class="level2"><div class="li"><a href="#wildcard">Wildcard</a></div></li>
-<li class="level2"><div class="li"><a href="#custom_xslt_file">Custom XSLT file</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#using_notification_system">Using notification system</a></div>
 <ul class="toc">
-<li class="level2"><div class="li"><a href="#notification_format">Notification format</a></div></li>
-<li class="level2"><div class="li"><a href="#create_new_notifications_with_notifications_explorer">Create new notifications with notifications explorer</a></div></li>
-<li class="level2"><div class="li"><a href="#notifications_trough_soap">Notifications trough SOAP</a></div>
+<li class="level2"><div class="li"><a href="#notification_format">Notification format</a></div>
 <ul class="toc">
-<li class="level3"><div class="li"><a href="#insertion_example_in_perl">Insertion example in Perl</a></div></li>
+<li class="level3"><div class="li"><a href="#examples">Examples</a></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><a href="#create_new_notifications_with_notifications_explorer">Create new notifications with notifications explorer</a></div></li>
+<li class="level2"><div class="li"><a href="#notification_server">Notification server</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#json_notifications_through_rest">JSON notifications through REST</a></div></li>
+<li class="level3"><div class="li"><a href="#xml_notifications_trough_soap">XML notifications trough SOAP</a></div></li>
 <li class="level3"><div class="li"><a href="#deletion_example_in_perl">Deletion example in Perl</a></div></li>
 </ul>
 </li>
@@ -229,25 +233,17 @@ Then creating a notification for <code>alluserscustom</code> will display the no
 
 </div>
 <!-- EDIT5 SECTION "Wildcard" [3327-3797] -->
-<h3 class="sectionedit6" id="custom_xslt_file">Custom XSLT file</h3>
-<div class="level3">
-
-<p>
-The transformation between notification XML content and <abbr title="HyperText Markup Language">HTML</abbr> display is done with XSLT. The default XSLT file is in portal/skins/common/notification.xsl. You can create your own XSLT file and store in another place, for example /etc/lemonldap-ng. Then just configure the new XSLT file path in Manager, go in General Parameters &gt; Advanced Parameters &gt; Notifications &gt; Custom XSLT file and set for example <code>/etc/lemonldap-ng/notification.xsl</code>.
-</p>
-
-</div>
-<!-- EDIT6 SECTION "Custom XSLT file" [3798-4270] -->
-<h2 class="sectionedit7" id="using_notification_system">Using notification system</h2>
+<h2 class="sectionedit6" id="using_notification_system">Using notification system</h2>
 <div class="level2">
-
+<div class="noteimportant">Since version 2.0, notifications are now stored in JSON format. If you want to keep old format, select “use old format” in the manager. Note that the server for inserting notifications is paired with the chosen format: REST for JSON and SOAP for XML.
 </div>
-<!-- EDIT7 SECTION "Using notification system" [4271-4309] -->
-<h3 class="sectionedit8" id="notification_format">Notification format</h3>
+</div>
+<!-- EDIT6 SECTION "Using notification system" [3798-4111] -->
+<h3 class="sectionedit7" id="notification_format">Notification format</h3>
 <div class="level3">
 
 <p>
-Notifications are XML files containing:
+Notifications are JSON (default) or XML files containing:
 </p>
 <ul>
 <li class="level1"><div class="li"> &lt;notification&gt; element(s) :</div>
@@ -286,9 +282,31 @@ Notifications are XML files containing:
 <div class="noteimportant">All other elements will be removed including <abbr title="HyperText Markup Language">HTML</abbr> elements like &lt;b&gt;.
 </div><div class="notetip">One notification XML document can contain several notifications messages.
 </div>
-<p>
-Example :
-</p>
+</div>
+
+<h4 id="examples">Examples</h4>
+<div class="level4">
+
+</div>
+
+<h5 id="json">JSON</h5>
+<div class="level5">
+<pre class="code file json">{
+&quot;uid&quot;: &quot;foo.bar&quot;,
+&quot;date&quot;: &quot;2009-01-27&quot;,
+&quot;reference&quot;; &quot;ABC&quot;,
+&quot;title&quot;: &quot;You have new authorizations&quot;,
+&quot;subtitle&quot;: &quot;Application 1&quot;,
+&quot;text&quot;: &quot;You have been granted to access to appli-1&quot;,
+&quot;check&quot;: [
+  &quot;I aggree&quot;,
+  &quot;Yes, I'm sure&quot;
+]</pre>
+
+</div>
+
+<h5 id="xml">XML</h5>
+<div class="level5">
 <pre class="code file xml"><span class="sc3"><span class="re1">&lt;?xml</span> <span class="re0">version</span>=<span class="st0">&quot;1.0&quot;</span> <span class="re0">encoding</span>=<span class="st0">&quot;UTF-8&quot;</span> <span class="re0">standalone</span>=<span class="st0">&quot;no&quot;</span><span class="re2">?&gt;</span></span>
 <span class="sc3"><span class="re1">&lt;root<span class="re2">&gt;</span></span></span>
 <span class="sc3"><span class="re1">&lt;notification</span> <span class="re0">uid</span>=<span class="st0">&quot;foo.bar&quot;</span> <span class="re0">date</span>=<span class="st0">&quot;2009-01-27&quot;</span> <span class="re0">reference</span>=<span class="st0">&quot;ABC&quot;</span><span class="re2">&gt;</span></span>
@@ -309,8 +327,8 @@ Example :
 <span class="sc3"><span class="re1">&lt;/root<span class="re2">&gt;</span></span></span></pre>
 
 </div>
-<!-- EDIT8 SECTION "Notification format" [4310-6408] -->
-<h3 class="sectionedit9" id="create_new_notifications_with_notifications_explorer">Create new notifications with notifications explorer</h3>
+<!-- EDIT7 SECTION "Notification format" [4112-6510] -->
+<h3 class="sectionedit8" id="create_new_notifications_with_notifications_explorer">Create new notifications with notifications explorer</h3>
 <div class="level3">
 
 <p>
@@ -330,21 +348,20 @@ When all is ok, click on <code>Save</code>.
 </p>
 
 </div>
-<!-- EDIT9 SECTION "Create new notifications with notifications explorer" [6409-6727] -->
-<h3 class="sectionedit10" id="notifications_trough_soap">Notifications trough SOAP</h3>
+<!-- EDIT8 SECTION "Create new notifications with notifications explorer" [6511-6829] -->
+<h3 class="sectionedit9" id="notification_server">Notification server</h3>
 <div class="level3">
 
 <p>
-New notifications can be insert using SOAP request (described in the WSDL file generated by buildPortalWSDL tool). To activate SOAP on the portal:
+New JSON notifications can be inserted using REST or SOAP server. If enabled, the server <abbr title="Uniform Resource Locator">URL</abbr> is <a href="https://auth.your.domain/notifications" class="urlextern" title="https://auth.your.domain/notifications"  rel="nofollow">https://auth.your.domain/notifications</a>.
 </p>
-<ul>
-<li class="level1"><div class="li"> Enable SOAP in General parameters » Advanced parameters » SOAP</div>
-</li>
-<li class="level1"><div class="li"> Enable Notifications SOAP service in Apache configuration:</div>
-</li>
-</ul>
+<div class="noteimportant">If notification server is enabled, you have to protect this <abbr title="Uniform Resource Locator">URL</abbr> using the webserver because there is no authentication required to use it.
+</div>
+<p>
+Example:
+</p>
 <pre class="code file apache"><span class="co1"># SOAP functions for notification insertion (disabled by default)</span>
-&lt;<span class="kw3">Location</span> /index.pl/notification&gt;
+&lt;<span class="kw3">LocationMatch</span> ^/(index\.fcgi/)?notifications&gt;
     <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
     <span class="kw1">Deny</span> from <span class="kw2">all</span>
     <span class="kw1">Allow</span> from 192.168.2.0/<span class="nu0">24</span>
@@ -352,16 +369,34 @@ New notifications can be insert using SOAP request (described in the WSDL file g
 
 </div>
 
-<h4 id="insertion_example_in_perl">Insertion example in Perl</h4>
+<h4 id="json_notifications_through_rest">JSON notifications through REST</h4>
 <div class="level4">
+
+<p>
+Using JSON, you just have to POST json files.
+</p>
+
+</div>
+
+<h4 id="xml_notifications_trough_soap">XML notifications trough SOAP</h4>
+<div class="level4">
+
+<p>
+If you use old XML format, new notifications can be inserted using SOAP request (described in the WSDL file generated by buildPortalWSDL tool).
+</p>
+
+</div>
+
+<h5 id="insertion_example_in_perl">Insertion example in Perl</h5>
+<div class="level5">
 <pre class="code perl"><span class="co1">#!/usr/bin/perl</span>
 &nbsp;
 <span class="kw2">use</span> SOAP<span class="sy0">::</span><span class="me2">Lite</span><span class="sy0">;</span>
 <span class="kw2">use</span> utf8<span class="sy0">;</span>
 &nbsp;
 <span class="kw1">my</span> <span class="re0">$lite</span> <span class="sy0">=</span> SOAP<span class="sy0">::</span><span class="me2">Lite</span>
-        <span class="sy0">-&gt;</span><span class="me1">uri</span><span class="br0">&#40;</span><span class="st_h">'urn:Lemonldap::NG::Common::CGI::SOAPService'</span><span class="br0">&#41;</span>
-        <span class="sy0">-&gt;</span><span class="me1">proxy</span><span class="br0">&#40;</span><span class="st_h">'http://auth.example.com/index.pl/notification'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="sy0">-&gt;</span><span class="me1">uri</span><span class="br0">&#40;</span><span class="st_h">'urn:Lemonldap::NG::Common::PSGI::SOAPService'</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">proxy</span><span class="br0">&#40;</span><span class="st_h">'http://auth.example.com/notifications'</span><span class="br0">&#41;</span><span class="sy0">;</span>
 &nbsp;
 &nbsp;
 <span class="re0">$r</span> <span class="sy0">=</span> <span class="re0">$lite</span><span class="sy0">-&gt;</span><span class="me1">newNotification</span><span class="br0">&#40;</span>
@@ -413,8 +448,8 @@ You can also delete some notifications with SOAP, once SOAP is activated:
 <span class="br0">&#125;</span></pre>
 
 </div>
-<!-- EDIT10 SECTION "Notifications trough SOAP" [6728-8624] -->
-<h3 class="sectionedit11" id="test_notification">Test notification</h3>
+<!-- EDIT9 SECTION "Notification server" [6830-9026] -->
+<h3 class="sectionedit10" id="test_notification">Test notification</h3>
 <div class="level3">
 
 <p>
@@ -430,6 +465,6 @@ Try also to create a global notification (to the uid “allusers”), and connec
 </p>
 
 </div>
-<!-- EDIT11 SECTION "Test notification" [8625-] --></div>
+<!-- EDIT10 SECTION "Test notification" [9027-] --></div>
 </body>
 </html>

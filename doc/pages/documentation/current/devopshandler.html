@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:devopshandler</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="keywords" content="documentation,2.0,devopshandler"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="devopshandler.html"/>
+<link rel="contents" href="devopshandler.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:devopshandler","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<h1 class="sectionedit1" id="devops_handler">DevOps Handler</h1>
+<div class="level1">
+
+<p>
+The goal of this handler is to read vhost configuration from the website itself and not in LLNG configuration. Rules and headers are set in a <strong>rules.json</strong> file available at the root of the website (ie <a href="http://website/rules.json" class="urlextern" title="http://website/rules.json"  rel="nofollow">http://website/rules.json</a>). This file looks like:
+</p>
+<dl class="file">
+<dt><a href="_export/code/documentation/2.0/devopshandler/codeblock.0.code" title="Download Snippet" class="mediafile mf_json">rules.json</a></dt>
+<dd><pre class="code file json">{
+  &quot;rules&quot;: {
+    &quot;^/admin&quot;: &quot;$uid eq 'admin'&quot;,
+    &quot;default&quot;: &quot;accept'
+  },
+  &quot;headers&quot;: {
+    &quot;Auth-User&quot;: &quot;$uid&quot;
+  }
+}</pre>
+</dd></dl>
+
+<p>
+If this file is not found, a default rule is applied (accept) and 1 header is sent (Auth-User ⇒ $uid)
+</p>
+
+<p>
+There is nothing to configure to use it except that:
+</p>
+<ul>
+<li class="level1"><div class="li"> you have to choose this handler <em>(directly using VHOSTTYPE environment variable [see below] or using manager if your websites are declared)</em></div>
+</li>
+<li class="level1"><div class="li"> you can set the loopback <abbr title="Uniform Resource Locator">URL</abbr> needed by the DevOps handler to get /rules.json. Default to <a href="http://127.0.0.1" class="urlextern" title="http://127.0.0.1"  rel="nofollow">http://127.0.0.1</a>:&lt;server-port&gt;</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT1 SECTION "DevOps Handler" [1-867] -->
+<h2 class="sectionedit2" id="configuration_example">Configuration example</h2>
+<div class="level2">
+
+<p>
+Here is a simple Nginx configuration file. It looks like a standard LLNG nginx configuration file except that:
+</p>
+<ul>
+<li class="level1"><div class="li"> VHOSTTYPE parameter force to use DevOps handler</div>
+</li>
+<li class="level1"><div class="li"> /rules.json nust not be protected by LLNG but by the web server itself</div>
+</li>
+</ul>
+<dl class="file">
+<dt><a href="_export/code/documentation/2.0/devopshandler/codeblock.1.code" title="Download Snippet" class="mediafile mf_conf">test-nginx.conf</a></dt>
+<dd><pre class="code file nginx">server {
+  server_name &quot;~^(?&lt;vhost&gt;.+?)\.dev\.sso\.my\.domain$&quot;;
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/home/xavier/dev/lemonldap/e2e-tests/conf/llng-fastcgi.sock;
+    # Force handler type:
+    fastcgi_param VHOSTTYPE DevOps;
+    # Drop post datas
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH &quot;&quot;;
+    # Keep original hostname
+    fastcgi_param HOST $http_host;
+    # Keep original request (LLNG server will received /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  }
+  location /rules.json {
+    proxy_pass http://$vhost;
+    allow 127.0.0.0/8;
+    deny all;
+  }
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+    proxy_pass https://$vhost;
+  }
+}</pre>
+</dd></dl>
+
+</div>
+<!-- EDIT2 SECTION "Configuration example" [868-] --></div>
+</body>
+</html>
