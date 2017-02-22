@@ -29,9 +29,10 @@ sub grant {
 
 sub loadVhostConfig {
     my ( $class, $vhost ) = @_;
+    my $base = $class->localConfig->{loopBackUrl} || "http://127.0.0.1:" . $class->get_server_port;
     my $req =
       HTTP::Request->new(
-        GET => "http://127.0.0.1:" . $class->get_server_port . '/rules.json' );
+        GET => "$base/rules.json" );
     $req->header( Host => $vhost );
     my $resp = $class->ua->request($req);
     my $json;
