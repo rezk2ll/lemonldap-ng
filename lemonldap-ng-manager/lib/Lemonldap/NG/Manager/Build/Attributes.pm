@@ -1112,6 +1112,7 @@ sub attributes {
                 { k => 'AuthBasic',   v => 'AuthBasic' },
                 { k => 'SecureToken', v => 'SecureToken' },
                 { k => 'CDA',         v => 'CDA' },
+                { k => 'DevOps',      v => 'DevOps' },
             ],
             default       => 'Main',
             documentation => 'Handler type',
@@ -1989,7 +1990,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default => {
                 proxy => 'http://auth.example.com/sessions',
                 ns =>
-                  'http://auth.example.com/Lemonldap/NG/Common/PSGI/SOAPService',
+'http://auth.example.com/Lemonldap/NG/Common/PSGI/SOAPService',
             },
             documentation => 'Demo exported variables',
         },

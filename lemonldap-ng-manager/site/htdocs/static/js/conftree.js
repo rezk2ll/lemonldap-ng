@@ -940,6 +940,10 @@ function templates(tpl,key) {
                {
                   "k" : "CDA",
                   "v" : "CDA"
+               },
+               {
+                  "k" : "DevOps",
+                  "v" : "DevOps"
                }
             ],
             "title" : "vhostType",
