@@ -105,7 +105,7 @@ sub run {
     $uri = $class->uri_with_args;
     my ($cond);
     ( $cond, $protection ) = $class->conditionSub($rule) if ($rule);
-    $protection = $class->isUnprotected($uri)
+    $protection = $class->isUnprotected($uri) || 0
       unless ( defined $protection );
 
     if ( $protection == $class->SKIP ) {
@@ -488,7 +488,12 @@ sub _buildUrl {
 sub isUnprotected {
     my ( $class, $uri ) = @_;
     my $vhost = $class->resolveAlias;
-    for ( my $i = 0 ; $i < $class->tsv->{locationCount}->{$vhost} ; $i++ ) {
+    for (
+        my $i = 0 ;
+        $i < ( $class->tsv->{locationCount}->{$vhost} || 0 ) ;
+        $i++
+      )
+    {
         if ( $uri =~ $class->tsv->{locationRegexp}->{$vhost}->[$i] ) {
             return $class->tsv->{locationProtection}->{$vhost}->[$i];
         }

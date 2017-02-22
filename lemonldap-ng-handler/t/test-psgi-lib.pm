@@ -18,13 +18,26 @@ our $sessionId =
 our $file = "t/sessions/$sessionId";
 
 sub init {
-    my $arg = shift;
+    my ( $arg, $prms ) = @_;
     if ($arg) {
         $module = $arg;
         use_ok($module);
     }
-    ok( $client = Lemonldap::NG::Handler::PSGI::Cli::Lib->new(),
-        'Client object' );
+    $prms ||= {};
+    %$prms = (
+        configStorage => { type => 'File', dirName => 't' },
+        logLevel      => 'error',
+        cookieName    => 'lemonldap',
+        securedCookie => 0,
+        https         => 0,
+        logger => 'Lemonldap::NG::Common::Logger::Std',
+        %$prms
+    );
+    ok(
+        $client =
+          Lemonldap::NG::Handler::PSGI::Cli::Lib->new( { ini => $prms } ),
+        'Client object'
+    );
     ok( $client->app, 'App object' ) or explain( $client, '->app...' );
     count(3);
     open F, ">$file"
@@ -79,25 +92,18 @@ use Mouse;
 
 extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
 
+has ini => ( is => 'rw' );
+
 has app => (
     is      => 'ro',
     isa     => 'CodeRef',
     builder => sub {
-        return $module->run(
-            {
-                configStorage => { type => 'File', dirName => 't' },
-                logLevel      => 'error',
-                cookieName    => 'lemonldap',
-                securedCookie => 0,
-                https         => 0,
-                logger => 'Lemonldap::NG::Common::Logger::Std',
-            }
-        );
+        return $module->run( $_[0]->{ini} );
     }
 );
 
 sub _get {
-    my ( $self, $path, $query, $host, $cookie ) = @_;
+    my ( $self, $path, $query, $host, $cookie, %custom ) = @_;
     $query //= '';
     $host ||= 'test1.example.com';
     return $self->app->(
@@ -118,7 +124,8 @@ sub _get {
               'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
             'REMOTE_ADDR' => '127.0.0.1',
             'HTTP_HOST'   => $host,
-            ( $cookie ? ( HTTP_COOKIE => $cookie ) : ( HTTP_COOKIE => '' ) )
+            ( $cookie ? ( HTTP_COOKIE => $cookie ) : ( HTTP_COOKIE => '' ) ),
+            %custom,
         }
     );
 }

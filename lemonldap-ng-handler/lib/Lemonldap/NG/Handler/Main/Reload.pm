@@ -253,10 +253,13 @@ sub portalInit {
 # virtual host
 # @param $args reference to the configuration hash
 sub locationRulesInit {
-    my ( $class, $conf ) = @_;
+    my ( $class, $conf, $orules ) = @_;
 
-    foreach my $vhost ( keys %{ $conf->{locationRules} } ) {
-        my $rules = $conf->{locationRules}->{$vhost};
+    $orules ||= $conf->{locationRules};
+
+    foreach my $vhost ( keys %$orules ) {
+        my $rules = $orules->{$vhost};
+        $class->tsv->{locationCount}->{$vhost} = 0;
         foreach my $url ( sort keys %{$rules} ) {
             my ( $cond, $prot ) = $class->conditionSub( $rules->{$url} );
             unless ($cond) {
@@ -331,11 +334,12 @@ sub sessionStorageInit {
 # Create the subroutines used to insert headers into the HTTP request.
 # @param $args reference to the configuration hash
 sub headersInit {
-    my ( $class, $conf ) = @_;
+    my ( $class, $conf, $headers ) = @_;
+    $headers ||= $conf->{exportedHeaders};
 
     # Creation of the subroutine which will generate headers
-    foreach my $vhost ( keys %{ $conf->{exportedHeaders} } ) {
-        my %headers = %{ $conf->{exportedHeaders}->{$vhost} };
+    foreach my $vhost ( keys %{ $headers } ) {
+        my %headers = %{ $headers->{$vhost} };
         $class->tsv->{headerList}->{$vhost} = [ keys %headers ];
         my $sub = '';
         foreach ( keys %headers ) {
