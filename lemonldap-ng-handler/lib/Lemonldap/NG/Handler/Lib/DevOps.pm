@@ -24,23 +24,31 @@ sub grant {
     {
         $class->loadVhostConfig($vhost);
     }
-    return $class->Lemonldap::NG::Handler::Main::grant( $session, $uri, $cond, $vhost );
+    return $class->Lemonldap::NG::Handler::Main::grant( $session, $uri, $cond,
+        $vhost );
 }
 
 sub loadVhostConfig {
     my ( $class, $vhost ) = @_;
-    my $base = $class->localConfig->{loopBackUrl} || "http://127.0.0.1:" . $class->get_server_port;
-    my $req =
-      HTTP::Request->new(
-        GET => "$base/rules.json" );
-    $req->header( Host => $vhost );
-    my $resp = $class->ua->request($req);
     my $json;
-    if ( $resp->is_success ) {
-        eval { $json = from_json( $resp->content ) };
-        if ($@) {
-            $class->logger->error("Bad rules.json for $vhost, skipping ($@)");
+    if ( $class->tsv->{useSafeJail} ) {
+        my $base = $class->localConfig->{loopBackUrl}
+          || "http://127.0.0.1:" . $class->get_server_port;
+        my $req = HTTP::Request->new( GET => "$base/rules.json" );
+        $req->header( Host => $vhost );
+        my $resp = $class->ua->request($req);
+        if ( $resp->is_success ) {
+            eval { $json = from_json( $resp->content ) };
+            if ($@) {
+                $class->logger->error(
+                    "Bad rules.json for $vhost, skipping ($@)");
+            }
         }
+    }
+    else {
+        $class->logger->error(
+q"I refuse to compile rules.json when useSafeJail isn't activated! Yes I know, I'm a coward..."
+        );
     }
     $json->{rules} ||= { default => 1 };
     $json->{headers} //= { 'Auth-User' => '$uid' };
