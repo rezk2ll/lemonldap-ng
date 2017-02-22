@@ -45,6 +45,7 @@ sub loadVhostConfig {
     $json->{headers} //= { 'Auth-User' => '$uid' };
     $class->locationRulesInit( undef, { $vhost => $json->{rules} } );
     $class->headersInit( undef, { $vhost => $json->{headers} } );
+    $class->tsv->{lastVhostUpdate}->{$vhost} = time;
     return;
 }
 

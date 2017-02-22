@@ -12,11 +12,26 @@ init('Lemonldap::NG::Handler::Server');
 
 my $res;
 
-# Authorizated query
+# Authorizated queries
 ok( $res = $client->_get( '/', undef, 'test3.example.com', "lemonldap=$sessionId", VHOSTTYPE => 'DevOps' ),
-    'Authentified query' );
+    'Authorizated query' );
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
+count(2);
 
+ok( $res = $client->_get( '/testyes', undef, 'test3.example.com', "lemonldap=$sessionId", VHOSTTYPE => 'DevOps' ),
+    'Authorizated query' );
+ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
+count(2);
+
+# Denied queries
+ok( $res = $client->_get( '/deny', undef, 'test3.example.com', "lemonldap=$sessionId", VHOSTTYPE => 'DevOps' ),
+    'Denied query' );
+ok( $res->[0] == 403, 'Code is 403' ) or explain( $res->[0], 403 );
+count(2);
+
+ok( $res = $client->_get( '/testno', undef, 'test3.example.com', "lemonldap=$sessionId", VHOSTTYPE => 'DevOps' ),
+    'Denied query' );
+ok( $res->[0] == 403, 'Code is 403' ) or explain( $res->[0], 403 );
 count(2);
 
 done_testing( count() );
@@ -31,6 +46,9 @@ sub LWP::UserAgent::request {
     my $httpResp;
     my $s = '{
   "rules": {
+    "^/deny": "deny",
+    "^/testno": "$uid ne qq{dwho}",
+    "^/testyes": "$uid eq qq{dwho}",
     "default": "accept"
   },
   "headers": {
