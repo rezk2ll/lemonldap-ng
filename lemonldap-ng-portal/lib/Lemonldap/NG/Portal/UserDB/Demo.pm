@@ -39,7 +39,6 @@ has demoAccounts => (
 
 # INITIALIZATION
 
-# Check AuthDemo use
 sub init {
     1;
 }

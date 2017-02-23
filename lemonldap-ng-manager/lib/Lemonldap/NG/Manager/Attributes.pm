@@ -329,6 +329,10 @@ sub attributes {
                         'v' => 'Radius'
                     },
                     {
+                        'k' => 'REST',
+                        'v' => 'REST'
+                    },
+                    {
                         'k' => 'Remote',
                         'v' => 'Remote'
                     },
@@ -383,6 +387,10 @@ sub attributes {
                         'v' => 'LDAP'
                     },
                     {
+                        'k' => 'REST',
+                        'v' => 'REST'
+                    },
+                    {
                         'k' => 'Null',
                         'v' => 'None'
                     },
@@ -433,6 +441,10 @@ sub attributes {
                         'v' => 'LDAP'
                     },
                     {
+                        'k' => 'REST',
+                        'v' => 'REST'
+                    },
+                    {
                         'k' => 'Null',
                         'v' => 'None'
                     }
@@ -477,6 +489,10 @@ sub attributes {
                 {
                     'k' => 'Radius',
                     'v' => 'Radius'
+                },
+                {
+                    'k' => 'REST',
+                    'v' => 'REST'
                 },
                 {
                     'k' => 'SSL',
@@ -675,6 +691,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'Radius',
                     'v' => 'Radius'
+                },
+                {
+                    'k' => 'REST',
+                    'v' => 'REST'
                 },
                 {
                     'k' => 'SSL',
@@ -1800,6 +1820,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     'v' => 'LDAP'
                 },
                 {
+                    'k' => 'REST',
+                    'v' => 'REST'
+                },
+                {
                     'k' => 'Null',
                     'v' => 'None'
                 }
@@ -2077,13 +2101,25 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 1,
             'type'    => 'bool'
         },
+        'restAuthUrl' => {
+            'type' => 'url'
+        },
         'restConfigServer' => {
             'default' => 0,
             'type'    => 'bool'
         },
+        'restPwdConfirmUrl' => {
+            'type' => 'url'
+        },
+        'restPwdModifyUrl' => {
+            'type' => 'url'
+        },
         'restSessionServer' => {
             'default' => 0,
             'type'    => 'bool'
+        },
+        'restUserDBUrl' => {
+            'type' => 'url'
         },
         'samlAttributeAuthorityDescriptorAttributeServiceSOAP' => {
             'default' =>
@@ -2824,6 +2860,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
                 {
                     'k' => 'LDAP',
                     'v' => 'LDAP'
+                },
+                {
+                    'k' => 'REST',
+                    'v' => 'REST'
                 },
                 {
                     'k' => 'Null',

@@ -1713,6 +1713,7 @@ sub attributes {
                 { k => 'Google',      v => 'Google' },
                 { k => 'LDAP',        v => 'LDAP' },
                 { k => 'Radius',      v => 'Radius' },
+                { k => 'REST',        v => 'REST' },
                 { k => 'SSL',         v => 'SSL' },
                 { k => 'Twitter',     v => 'Twitter' },
                 { k => 'WebID',       v => 'WebID' },
@@ -1739,6 +1740,7 @@ sub attributes {
                 { k => 'AD',   v => 'Active Directory' },
                 { k => 'DBI',  v => 'Database (DBI)' },
                 { k => 'LDAP', v => 'LDAP' },
+                { k => 'REST', v => 'REST' },
                 { k => 'Null', v => 'None' },
             ],
             default       => 'Same',
@@ -1752,6 +1754,7 @@ sub attributes {
                 { k => 'DBI',    v => 'Database (DBI)' },
                 { k => 'Demo',   v => 'Demonstration' },
                 { k => 'LDAP',   v => 'LDAP' },
+                { k => 'REST',   v => 'REST' },
                 { k => 'Null',   v => 'None' },
             ],
             default       => 'Demo',
@@ -1978,6 +1981,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         radiusSecret => { type => 'text', },
         radiusServer => { type => 'text', },
 
+        # REST
+        restAuthUrl       => { type => 'url' },
+        restUserDBUrl     => { type => 'url' },
+        restPwdConfirmUrl => { type => 'url' },
+        restPwdModifyUrl  => { type => 'url' },
+
         # Remote
         remotePortal        => { type => 'text', },
         remoteGlobalStorage => {
@@ -2167,6 +2176,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'OpenIDConnect', v => 'OpenID Connect' },
                     { k => 'Proxy',         v => 'Proxy' },
                     { k => 'Radius',        v => 'Radius' },
+                    { k => 'REST',          v => 'REST' },
                     { k => 'Remote',        v => 'Remote' },
                     { k => 'SAML',          v => 'SAML v2' },
                     { k => 'Slave',         v => 'Slave' },
@@ -2182,6 +2192,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Facebook',      v => 'Facebook' },
                     { k => 'Google',        v => 'Google' },
                     { k => 'LDAP',          v => 'LDAP' },
+                    { k => 'REST',          v => 'REST' },
                     { k => 'Null',          v => 'None' },
                     { k => 'OpenID',        v => 'OpenID' },
                     { k => 'OpenIDConnect', v => 'OpenID Connect' },
@@ -2196,6 +2207,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'DBI',  v => 'Database (DBI)' },
                     { k => 'Demo', v => 'Demo' },
                     { k => 'LDAP', v => 'LDAP' },
+                    { k => 'REST', v => 'REST' },
                     { k => 'Null', v => 'None' }
                 ]
             ],
@@ -2219,6 +2231,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'Google',   v => 'Google' },
                 { k => 'LDAP',     v => 'LDAP' },
                 { k => 'Radius',   v => 'Radius' },
+                { k => 'REST',     v => 'REST' },
                 { k => 'SSL',      v => 'SSL' },
                 { k => 'Twitter',  v => 'Twitter' },
                 { k => 'WebID',    v => 'WebID' },

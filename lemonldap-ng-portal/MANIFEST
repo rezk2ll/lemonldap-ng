@@ -24,6 +24,7 @@ lib/Lemonldap/NG/Portal/Auth/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Auth/Proxy.pm
 lib/Lemonldap/NG/Portal/Auth/Radius.pm
 lib/Lemonldap/NG/Portal/Auth/Remote.pm
+lib/Lemonldap/NG/Portal/Auth/REST.pm
 lib/Lemonldap/NG/Portal/Auth/SAML.pm
 lib/Lemonldap/NG/Portal/Auth/Slave.pm
 lib/Lemonldap/NG/Portal/Auth/SSL.pm
@@ -51,6 +52,7 @@ lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/Lib/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Lib/OtherSessions.pm
 lib/Lemonldap/NG/Portal/Lib/Remote.pm
+lib/Lemonldap/NG/Portal/Lib/REST.pm
 lib/Lemonldap/NG/Portal/Lib/RESTProxy.pm
 lib/Lemonldap/NG/Portal/Lib/SAML.pm
 lib/Lemonldap/NG/Portal/Lib/Slave.pm
@@ -74,6 +76,7 @@ lib/Lemonldap/NG/Portal/Password/Choice.pm
 lib/Lemonldap/NG/Portal/Password/DBI.pm
 lib/Lemonldap/NG/Portal/Password/Demo.pm
 lib/Lemonldap/NG/Portal/Password/LDAP.pm
+lib/Lemonldap/NG/Portal/Password/REST.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuth.pm
 lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
@@ -103,6 +106,7 @@ lib/Lemonldap/NG/Portal/UserDB/OpenID.pm
 lib/Lemonldap/NG/Portal/UserDB/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/UserDB/Proxy.pm
 lib/Lemonldap/NG/Portal/UserDB/Remote.pm
+lib/Lemonldap/NG/Portal/UserDB/REST.pm
 lib/Lemonldap/NG/Portal/UserDB/SAML.pm
 lib/Lemonldap/NG/Portal/UserDB/Slave.pm
 lib/Lemonldap/NG/Portal/UserDB/WebID.pm
@@ -361,10 +365,11 @@ site/templates/pastel/yubikeyform.tpl
 t/01-AuthDemo.t
 t/02-Password-Demo.t
 t/03-XSS-protection.t
+t/19-Auth-Null.t
 t/20-Auth-and-password-DBI.t
 t/21-Auth-and-password-LDAP.t
 t/22-Auth-and-password-AD.t
-t/23-AuthNull.t
+t/23-Auth-and-password-REST.t
 t/24-AuthApache.t
 t/25-AuthSlave.t
 t/26-AuthRemote.t

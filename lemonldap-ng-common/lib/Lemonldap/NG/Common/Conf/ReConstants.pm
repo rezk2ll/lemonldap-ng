@@ -44,6 +44,7 @@ our $authParameters = {
   proxyParams => [qw(proxyAuthService proxySessionService remoteCookieName proxyAuthnLevel proxyUseSoap)],
   radiusParams => [qw(radiusAuthnLevel radiusSecret radiusServer)],
   remoteParams => [qw(remotePortal remoteCookieName remoteGlobalStorage remoteGlobalStorageOptions)],
+  restParams => [qw(restAuthUrl restUserDBUrl restPwdConfirmUrl restPwdModifyUrl)],
   slaveParams => [qw(slaveAuthnLevel slaveExportedVars slaveUserHeader slaveMasterIP slaveHeaderName slaveHeaderContent)],
   sslParams => [qw(SSLAuthnLevel SSLVar)],
   twitterParams => [qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName)],

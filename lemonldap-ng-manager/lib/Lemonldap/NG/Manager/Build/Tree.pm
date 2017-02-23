@@ -297,6 +297,15 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'restParams',
+                            help  => 'authrest.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'restAuthUrl',       'restUserDBUrl',
+                                'restPwdConfirmUrl', 'restPwdModifyUrl'
+                            ]
+                        },
+                        {
                             title => 'remoteParams',
                             help  => 'authremote.html',
                             nodes => [

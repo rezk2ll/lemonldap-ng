@@ -1,0 +1,29 @@
+package Lemonldap::NG::Portal::Lib::REST;
+
+use strict;
+use Mouse;
+use Lemonldap::NG::Common::UserAgent;
+use JSON qw(from_json to_json);
+
+has ua => (
+    is      => 'rw',
+    default => sub {
+        return Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
+    }
+);
+
+sub restCall {
+    my($self,$url,$content) = @_;
+    my $hreq = HTTP::Request->new( POST => $url );
+    $hreq->header( 'Content-Type' => 'application/json' );
+    $hreq->content(to_json($content));
+    my $resp = $self->ua->request($hreq);
+    unless ( $resp->is_success ) {
+        die $resp->status_line;
+    }
+    my $res = eval { from_json( $resp->content ) };
+    die "Bad REST response: $@" if($@);
+    return $res;
+}
+
+1;
