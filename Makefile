@@ -53,7 +53,7 @@ PORTALDIR=$(DOCUMENTROOT)/portal
 PORTALSITEDIR=$(PORTALDIR)
 PORTALSTATICDIR=$(PORTALSITEDIR)/static
 PORTALRELATIVESTATICDIR=/static
-PORTALTEMPLATESDIR=$(MANAGERSITEDIR)/templates
+PORTALTEMPLATESDIR=$(PORTALSITEDIR)/templates
 
 MANAGERDIR=$(DOCUMENTROOT)/manager
 MANAGERSITEDIR=$(MANAGERDIR)
@@ -610,6 +610,7 @@ install_manager_site:	install_conf_dir
 	# Manager install
 	@install -v -d $(RMANAGERDIR) $(RMANAGERSTATICDIR) \
 		$(RMANAGERTEMPLATESDIR)
+	@cp -pR -f $(SRCMANAGERDIR)/site/htdocs/manager.* $(RMANAGERDIR)
 	@cp -pR $(SRCMANAGERDIR)/site/htdocs/static/* $(RMANAGERSTATICDIR)
 	@for f in $(SRCMANAGERDIR)/site/templates/*.tpl; do \
 		./scripts/transform-templates \
@@ -633,19 +634,26 @@ install_manager_site:	install_conf_dir
 install_portal_site:	install_conf_dir
 	# Portal install
 	@install -v -d $(RPORTALDIR) $(RPORTALSTATICDIR) \
-		$(RPORTALDIR)/skins/ \
+		$(RPORTALTEMPLATESDIR) \
 		$(RCRONDIR) $(RCONFDIR)
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/index.* $(RPORTALDIR)
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/static/* $(RPORTALSTATICDIR)
-	@tar -cf - -C ${SRCPORTALDIR}/site/templates/ $$(ls ${SRCPORTALDIR}/site/templates/) |tar -xf - -C $(RPORTALTEMPLATESDIR)
-	@for f in `find $(RPORTALTEMPLATEDIR) -type f -name '*.tpl'`; do \
-		./scripts/transform-templates \
+	cd $(SRCPORTALDIR)/site/templates; for f in `find * -type f -name '*.tpl'`; do \
+		echo "$$f => $(RPORTALTEMPLATESDIR)/$$f"; \
+		mkdir -p $(RPORTALTEMPLATESDIR)/`dirname $$f`; \
+		echo ../../../scripts/transform-templates \
 			usedebianlibs $(USEDEBIANLIBS) \
 			useexternallibs $(USEEXTERNALLIBS) \
 			jsminified $(JSCOMPRESS) \
 			cssminified $(CSSCOMPRESS) <$$f \
-			>$$f.tmp; \
-		mv -f $$f.tmp $$f; \
+			>$(RPORTALTEMPLATESDIR)/$$f; \
+	done; cd -
+	cd $(SRCPORTALDIR)/site/templates; for l in `find * -type l`; do \
+		echo lien à faire $$l `readlink $$l`; \
+		target=`readlink $$l`; \
+		cd $(RPORTALTEMPLATESDIR); \
+		ln -s $$target $$l; \
+		cd -; \
 	done
 	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
 		rm -rvf $(PORTALEXTERNALLIBS); \
