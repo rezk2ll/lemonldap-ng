@@ -40,7 +40,7 @@ sub getUser {
         $self->userLogger->warn( 'User ' . $req->user . ' not found' );
         return PE_USERNOTFOUND;
     }
-    $req->datas->{restUserDBInfo} = $res->{info};
+    $req->datas->{restUserDBInfo} = $res->{info} || {};
     return PE_OK;
 }
 

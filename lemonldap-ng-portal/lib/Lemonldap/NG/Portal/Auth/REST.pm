@@ -42,7 +42,7 @@ sub authenticate {
             "Bad credentials for " . $req->user . ' (' . $req->address . ')' );
         return PE_BADCREDENTIALS;
     }
-    $req->datas->{restAuthInfo} = $res->{info};
+    $req->datas->{restAuthInfo} = $res->{info} || {};
     return PE_OK;
 }
 
