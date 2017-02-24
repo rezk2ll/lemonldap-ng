@@ -31,7 +31,6 @@ lib/Lemonldap/NG/Portal/Auth/SSL.pm
 lib/Lemonldap/NG/Portal/Auth/Twitter.pm
 lib/Lemonldap/NG/Portal/Auth/WebID.pm
 lib/Lemonldap/NG/Portal/Auth/Yubikey.pm
-lib/Lemonldap/NG/Portal/AuthMulti.pm
 lib/Lemonldap/NG/Portal/CDC.pm
 lib/Lemonldap/NG/Portal/Issuer/CAS.pm
 lib/Lemonldap/NG/Portal/Issuer/Get.pm
