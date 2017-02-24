@@ -1,3 +1,4 @@
 /etc/lemonldap-ng/manager-apache2.conf /etc/apache2/sites-available/manager-apache2.conf
 /etc/lemonldap-ng/manager-nginx.conf /etc/nginx/sites-available/manager-nginx.conf
 /usr/share/lemonldap-ng/manager/static /var/lib/lemonldap-ng/manager/static
+/usr/share/lemonldap-ng/manager/manager.fcgi /var/lib/lemonldap-ng/manager/manager.fcgi

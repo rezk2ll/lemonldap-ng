@@ -2,7 +2,3 @@
 # directory, so it must not be readable by all but must be writable by www-data
 liblemonldap-ng-portal-perl: non-standard-dir-perm var/lib/lemonldap-ng/captcha/ 0770 != 0755
 liblemonldap-ng-portal-perl: non-standard-dir-perm var/lib/lemonldap-ng/notifications/ 0770 != 0755
-liblemonldap-ng-portal-perl: non-standard-dir-perm var/lib/lemonldap-ng/sessions/lock/ 0770 != 0755
-liblemonldap-ng-portal-perl: non-standard-dir-perm var/lib/lemonldap-ng/sessions/ 0770 != 0755
-liblemonldap-ng-portal-perl: non-standard-dir-perm var/lib/lemonldap-ng/psessions/lock/ 0770 != 0755
-liblemonldap-ng-portal-perl: non-standard-dir-perm var/lib/lemonldap-ng/psessions/ 0770 != 0755

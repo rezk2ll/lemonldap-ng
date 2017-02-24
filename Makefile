@@ -945,7 +945,7 @@ debian-packages: debian-dist
 	rm -rf lemonldap-ng-$$version && \
 	$(UNCOMPRESS) lemonldap-ng_$$version.orig.$(COMPRESSSUFFIX) && \
 	cd lemonldap-ng-$$version && \
-	dpkg-buildpackage -us -uc
+	debuild -us -uc
 
 # Developper corner
 # -----------------
@@ -976,7 +976,6 @@ default-diff:
 	@# Portal
 	@$(DIFF) $(SRCPORTALDIR)/lib/Lemonldap/NG/Portal /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Portal ||true
 	@$(DIFF) $(SRCPORTALDIR)/example/scripts/purgeCentralCache $(LMPREFIX)/bin/purgeCentralCache ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/scripts/buildPortalWSDL $(LMPREFIX)/bin/buildPortalWSDL ||true
 	@$(DIFF) $(SRCPORTALDIR)/example/skins $(LMPREFIX)/htdocs/portal/skins ||true
 	@$(DIFF) $(SRCPORTALDIR)/example/index_skin.pl $(LMPREFIX)/htdocs/portal/index.pl ||true
 	@$(DIFF) $(SRCPORTALDIR)/example/mail.pl $(LMPREFIX)/htdocs/portal/mail.pl ||true

@@ -1,3 +1,4 @@
 /etc/lemonldap-ng/portal-apache2.conf /etc/apache2/sites-available/portal-apache2.conf
 /etc/lemonldap-ng/portal-nginx.conf /etc/nginx/sites-available/portal-nginx.conf
+/usr/share/lemonldap-ng/portal/static /var/lib/lemonldap-ng/portal/static
 /usr/share/lemonldap-ng/portal/index.fcgi /var/lib/lemonldap-ng/portal/index.fcgi

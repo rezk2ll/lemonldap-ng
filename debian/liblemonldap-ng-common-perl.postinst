@@ -7,7 +7,7 @@ set -e
 CONFDIR=/etc/lemonldap-ng
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions
 CONFSTORAGEDIR=/var/lib/lemonldap-ng/conf
-FIRSTCONFFILE=$CONFSTORAGEDIR/lmConf-1.js
+FIRSTCONFFILE=$CONFSTORAGEDIR/lmConf-1.json
 LMINIFILE=/etc/lemonldap-ng/lemonldap-ng.ini
 MIGRATION=/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini
 

@@ -12,7 +12,7 @@ SESSIONSDIR=$(LMVARDIR)/sessions
 PSESSIONSDIR=$(LMVARDIR)/psessions
 NOTIFICATIONSDIR=$(LMVARDIR)/notifications
 CONFSTORAGEDIR=$(LMVARDIR)/conf
-FIRSTCONFFILE=$(CONFSTORAGEDIR)/lmConf-1.js
+FIRSTCONFFILE=$(CONFSTORAGEDIR)/lmConf-1.json
 LMINIFILE=$(CONFDIR)/lemonldap-ng.ini
 CAPTCHADIR=$(LMVARDIR)/captcha
 
@@ -37,8 +37,8 @@ override_dh_auto_install:
 			DOCUMENTROOT=$(LMVARDIR) \
 			EXAMPLESDIR=/examples \
 			HANDLERDIR=$(LMVARDIR)/handler \
-			PORTALSKINSDIR=$(LMSHAREDIR)/portal-skins \
 			MANAGERDIR=$(LMSHAREDIR)/manager \
+			PORTALDIR=$(LMSHAREDIR)/portal \
 			STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
 			TOOLSDIR=$(LMSHAREDIR)/ressources \
 			CONFDIR=/etc/lemonldap-ng \
@@ -53,7 +53,6 @@ override_dh_auto_install:
 			DESTDIR=$(CURDIR)/debian/tmp \
 			DOCDIR=/usr/share/doc/lemonldap-ng-fr-doc \
 			USEDEBIANLIBS=yes
-	mkdir $(TMP)/$(LMSHAREDIR)/portal
 	for i in handler portal manager test; do \
 		mv $(TMP)/etc/lemonldap-ng/$$i-apache2.X.conf $(TMP)/etc/lemonldap-ng/$$i-apache2.conf; \
 	done

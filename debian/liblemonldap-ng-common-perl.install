@@ -7,6 +7,7 @@
 /usr/share/perl5/Lemonldap/NG/Common*
 /usr/share/lemonldap-ng/ressources
 /usr/share/lemonldap-ng/bin/convertConfig
+/usr/share/lemonldap-ng/bin/lemonldap-ng-cli
 /usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini
 /usr/share/lemonldap-ng/bin/rotateOidcKeys
 /var/lib/lemonldap-ng/conf/

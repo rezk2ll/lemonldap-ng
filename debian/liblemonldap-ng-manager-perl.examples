@@ -1,1 +1,1 @@
-debian/tmp/var/lib/lemonldap-ng/manager/psgi/manager-server.*
+debian/tmp/usr/share/lemonldap-ng/manager/manager.*

@@ -565,7 +565,6 @@ rm -rf %{buildroot}
 %files -n lemonldap-ng-portal
 %defattr(-,root,root,-)
 %{lm_vardir}/portal
-%{lm_sharedir}/bin/buildPortalWSDL
 %{lm_sharedir}/bin/purgeCentralCache
 %{_sysconfdir}/cron.d/lemonldap-ng-portal
 %{lm_examplesdir}/portal
