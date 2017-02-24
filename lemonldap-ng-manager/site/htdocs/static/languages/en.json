@@ -618,6 +618,7 @@
 "SSLAuthnLevel": "Authentication level",
 "sslParams": "SSL parameters",
 "SSLVar": "Extracted certificate field",
+"SSLVarIf": "Conditional extracted certificate field",
 "startTime": "Creation date",
 "successfullySaved": "Successfully saved",
 "storePassword": "Store user password in session datas",

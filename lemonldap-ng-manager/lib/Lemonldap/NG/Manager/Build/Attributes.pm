@@ -1945,7 +1945,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 5,
             documentation => 'SSL authentication level',
         },
-        SSLVar => { type => 'text', },
+        SSLVar   => { type => 'text', },
+        SSLVarIf => { type => 'keyTextContainer', },
 
         # CAS
         CAS_authnLevel => {

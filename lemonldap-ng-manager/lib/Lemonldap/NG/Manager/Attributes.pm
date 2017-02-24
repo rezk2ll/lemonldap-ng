@@ -2778,6 +2778,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'SSLVar' => {
             'type' => 'text'
         },
+        'SSLVarIf' => {
+            'type' => 'keyTextContainer'
+        },
         'staticPrefix' => {
             'type' => 'text'
         },

@@ -618,6 +618,7 @@
 "SSLAuthnLevel": "Niveau d'authentification",
 "sslParams": "Paramètres SSL",
 "SSLVar": "Champ extrait du certificat",
+"SSLVarIf": "Champ conditionnel extrait du certificat",
 "startTime": "Date de création",
 "successfullySaved": "Sauvegarde effectuée",
 "storePassword": "Stocke le mot de passe de l'utilisateur en session",

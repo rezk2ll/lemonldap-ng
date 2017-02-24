@@ -328,7 +328,7 @@ sub tree {
                             title => 'sslParams',
                             help  => 'authssl.html',
                             form  => 'simpleInputContainer',
-                            nodes => [ 'SSLAuthnLevel', 'SSLVar' ]
+                            nodes => [ 'SSLAuthnLevel', 'SSLVar', 'SSLVarIf' ]
                         },
                         {
                             title => 'twitterParams',

@@ -20,7 +20,7 @@ our $specialNodeHash = {
 };
 
 our $doubleHashKeys = 'issuerDBGetParameters';
-our $simpleHashKeys = '(?:(?:l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar|wp(?:Ssl)?Opt)|(?:(?:d(?:emo|bi)|facebook|webID)E|e)xportedVar|g(?:r(?:antSessionRule|oup)|lobalStorageOption)|n(?:otificationStorageOption|ginxCustomHandler)|c(?:as(?:StorageOption|Attribute)|ombModule)|p(?:ersistentStorageOption|ortalSkinRule)|re(?:moteGlobalStorageOption|loadUrl)|CAS_proxiedService|macro)s|o(?:idcS(?:erviceMetaDataAuthnContext|torageOptions)|penIdExportedVars)|s(?:(?:amlStorageOption|laveExportedVar)s|essionDataToRemember)|a(?:uthChoiceModules|pplicationList))';
+our $simpleHashKeys = '(?:(?:l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar|wp(?:Ssl)?Opt)|(?:(?:d(?:emo|bi)|facebook|webID)E|e)xportedVar|g(?:r(?:antSessionRule|oup)|lobalStorageOption)|n(?:otificationStorageOption|ginxCustomHandler)|c(?:as(?:StorageOption|Attribute)|ombModule)|p(?:ersistentStorageOption|ortalSkinRule)|re(?:moteGlobalStorageOption|loadUrl)|CAS_proxiedService|macro)s|o(?:idcS(?:erviceMetaDataAuthnContext|torageOptions)|penIdExportedVars)|s(?:(?:amlStorageOption|laveExportedVar)s|essionDataToRemember)|a(?:uthChoiceModules|pplicationList)|SSLVarIf)';
 our $specialNodeKeys = '(?:(?:saml(?:ID|S)|oidc[OR])PMetaDataNode|virtualHost)s';
 our $oidcOPMetaDataNodeKeys = 'oidcOPMetaData(?:Options(?:C(?:lient(?:Secret|ID)|heckJWTSignature|onfigurationURI)|TokenEndpointAuthMethod|(?:JWKSTimeou|Promp)t|I(?:DTokenMaxAge|con)|S(?:toreIDToken|cope)|U(?:iLocales|seNonce)|Display(?:Name)?|AcrValues|MaxAge)|ExportedVars|J(?:SON|WKS))';
 our $oidcRPMetaDataNodeKeys = 'oidcRPMetaData(?:Options(?:I(?:DToken(?:Expiration|SignAlg)|con)|(?:RedirectUri|ExtraClaim)s|AccessTokenExpiration|Client(?:Secret|ID)|BypassConsent|DisplayName|UserIDAttr)|ExportedVars)';
@@ -46,7 +46,7 @@ our $authParameters = {
   remoteParams => [qw(remotePortal remoteCookieName remoteGlobalStorage remoteGlobalStorageOptions)],
   restParams => [qw(restAuthUrl restUserDBUrl restPwdConfirmUrl restPwdModifyUrl)],
   slaveParams => [qw(slaveAuthnLevel slaveExportedVars slaveUserHeader slaveMasterIP slaveHeaderName slaveHeaderContent)],
-  sslParams => [qw(SSLAuthnLevel SSLVar)],
+  sslParams => [qw(SSLAuthnLevel SSLVar SSLVarIf)],
   twitterParams => [qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName)],
   webidParams => [qw(webIDAuthnLevel webIDExportedVars webIDWhitelist)],
   yubikeyParams => [qw(yubikeyAuthnLevel yubikeyClientID yubikeySecretKey yubikeyPublicIDSize)],
