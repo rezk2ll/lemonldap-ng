@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:performances</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,performances"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="performances.html"/>
@@ -59,8 +59,6 @@
 <li class="level1"><div class="li"><a href="#portal_performances">Portal performances</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#general_performances">General performances</a></div></li>
-<li class="level2"><div class="li"><a href="#configuration_access">Configuration access</a></div></li>
-<li class="level2"><div class="li"><a href="#starting_performances">Starting performances</a></div></li>
 <li class="level2"><div class="li"><a href="#apachesession_performances">Apache::Session performances</a></div>
 <ul class="toc">
 <li class="level3"><div class="li"><a href="#replace_mysql_by_apachesessionflex">Replace MySQL by Apache::Session::Flex</a></div></li>
@@ -112,11 +110,15 @@ To bypass this, you can:
 <div class="level2">
 
 <p>
+To increase handler performance, you can disable “Sessions activity timeout” To prevent it from writing to the session database.
+</p>
+
+<p>
 Handlers check rights and calculate headers for each HTTP hit. So to improve performances, avoid too complex rules by using the macro or the groups or local macros.
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Handler performance" [659-856] -->
+<!-- EDIT3 SECTION "Handler performance" [659-986] -->
 <h3 class="sectionedit4" id="macros_and_groups">Macros and groups</h3>
 <div class="level3">
 
@@ -175,7 +177,7 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 </div><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
 </div>
 </div>
-<!-- EDIT4 SECTION "Macros and groups" [857-2819] -->
+<!-- EDIT4 SECTION "Macros and groups" [987-2949] -->
 <h3 class="sectionedit5" id="local_macros">Local macros</h3>
 <div class="level3">
 
@@ -189,59 +191,32 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 <div class="notetip">Note that this feature is interesting only for the Lemonldap::NG systems protecting a high number of applications
 </div>
 </div>
-<!-- EDIT5 SECTION "Local macros" [2820-3481] -->
+<!-- EDIT5 SECTION "Local macros" [2950-3611] -->
 <h2 class="sectionedit6" id="portal_performances">Portal performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT6 SECTION "Portal performances" [3482-3514] -->
+<!-- EDIT6 SECTION "Portal performances" [3612-3644] -->
 <h3 class="sectionedit7" id="general_performances">General performances</h3>
 <div class="level3">
 
 <p>
-The portal is the biggest component of Lemonldap::NG. It is recommended to use ModPerl::Registry instead of using cgi-script as described in Apache configuration file example (portal-apache2.conf):
+The portal is the biggest component of Lemonldap::NG. Since version 2.0, it is run under FastCGI and rewritten using plugins, so performance is increased in comparison to earlier versions. You just have to disable unused plugins:
 </p>
-<pre class="code apache">&lt;<span class="kw3">Files</span> *.pl&gt;
-    <span class="kw1">SetHandler</span> perl-<span class="kw1">script</span>
-    PerlResponseHandler ModPerl::Registry
-&lt;/<span class="kw3">Files</span>&gt;</pre>
-
-<p>
-You can also use a FastCGI server using index.fcgi given in portal examples.
-</p>
+<ul>
+<li class="level1"><div class="li"> disable unused issuer modules</div>
+</li>
+<li class="level1"><div class="li"> disable notifications if not used</div>
+</li>
+<li class="level1"><div class="li"> …</div>
+</li>
+</ul>
 <div class="notetip">In production environment for network performance, prefer using minified versions of javascript and css libs: use <code>make install <strong>PROD=yes</strong></code>. This is done by default in RPM/DEB packages.
 
 </div>
 </div>
-<!-- EDIT7 SECTION "General performances" [3515-4145] -->
-<h3 class="sectionedit8" id="configuration_access">Configuration access</h3>
-<div class="level3">
-
-<p>
-If you set <code>useLocalConf</code> to 1 in lemonldap-ng.ini (section [Portal]), the portal will use only a cached configuration. To refresh it, you have to set an handler on the same server to use the refresh mechanism or to restart the server after each configuration change.
-</p>
-
-</div>
-<!-- EDIT8 SECTION "Configuration access" [4146-4448] -->
-<h3 class="sectionedit9" id="starting_performances">Starting performances</h3>
-<div class="level3">
-
-<p>
-To make the portal start faster when the server is relaunched, add those lines in Apache configuration file (as described in portal-apache2.conf):
-</p>
-<pre class="code apache">&lt;Perl&gt;
-    <span class="kw1">require</span> Lemonldap::NG::Portal::SharedConf;
-    Lemonldap::NG::Portal::SharedConf-&gt;compile(
-        qw(delete <span class="kw1">header</span> cache read_from_client cookie <span class="kw1">redirect</span> unescapeHTML));
-    <span class="co1"># Uncomment this line if you use Lemonldap::NG menu</span>
-    <span class="kw1">require</span> Lemonldap::NG::Portal::Menu;
-    <span class="co1"># Uncomment this line if you use portal SOAP capabilities</span>
-    <span class="kw1">require</span> SOAP::Lite;
-&lt;/Perl&gt;</pre>
-
-</div>
-<!-- EDIT9 SECTION "Starting performances" [4449-5024] -->
-<h3 class="sectionedit10" id="apachesession_performances">Apache::Session performances</h3>
+<!-- EDIT7 SECTION "General performances" [3645-4198] -->
+<h3 class="sectionedit8" id="apachesession_performances">Apache::Session performances</h3>
 <div class="level3">
 
 <p>
@@ -291,8 +266,8 @@ Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
 </div><div class="noteimportant">Some Apache::Session module are not fully usable by Lemonldap::NG such as Apache::Session::Memcached since this modules do not offer capability to browse sessions. They does not allow one to use sessions explorer neither manage one-off sessions.
 </div>
 </div>
-<!-- EDIT10 SECTION "Apache::Session performances" [5025-7381] -->
-<h3 class="sectionedit11" id="ldap_performances">LDAP performances</h3>
+<!-- EDIT8 SECTION "Apache::Session performances" [4199-6555] -->
+<h3 class="sectionedit9" id="ldap_performances">LDAP performances</h3>
 <div class="level3">
 
 <p>
@@ -328,13 +303,13 @@ Now ldapgroups contains “admin su”
 
 </div>
 </div>
-<!-- EDIT11 SECTION "LDAP performances" [7382-8511] -->
-<h2 class="sectionedit12" id="manager_performances">Manager performances</h2>
+<!-- EDIT9 SECTION "LDAP performances" [6556-7685] -->
+<h2 class="sectionedit10" id="manager_performances">Manager performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT12 SECTION "Manager performances" [8512-8545] -->
-<h3 class="sectionedit13" id="disable_unused_modules">Disable unused modules</h3>
+<!-- EDIT10 SECTION "Manager performances" [7686-7719] -->
+<h3 class="sectionedit11" id="disable_unused_modules">Disable unused modules</h3>
 <div class="level3">
 
 <p>
@@ -344,8 +319,8 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
 </div>
-<!-- EDIT13 SECTION "Disable unused modules" [8546-8792] -->
-<h3 class="sectionedit14" id="use_static_html_files">Use static HTML files</h3>
+<!-- EDIT11 SECTION "Disable unused modules" [7720-7966] -->
+<h3 class="sectionedit12" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
 <p>
@@ -371,6 +346,6 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Use static HTML files" [8793-] --></div>
+<!-- EDIT12 SECTION "Use static HTML files" [7967-] --></div>
 </body>
 </html>

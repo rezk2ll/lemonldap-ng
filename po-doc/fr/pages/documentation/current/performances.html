@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,performances"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="performances.html"/>
@@ -60,8 +60,6 @@
 <li class="level1"><div class="li"><a href="#portal_performances">Performances du portail</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#general_performances">Performances générales</a></div></li>
-<li class="level2"><div class="li"><a href="#configuration_access">Accès à la configuration</a></div></li>
-<li class="level2"><div class="li"><a href="#starting_performances">Performances au démarrage</a></div></li>
 <li class="level2"><div class="li"><a href="#apachesession_performances">Performances d'Apache::Session</a></div>
 <ul class="toc">
 <li class="level3"><div class="li"><a href="#replace_mysql_by_apachesessionflex">Remplacer MySQL par Apache::Session::Flex</a></div></li>
@@ -115,10 +113,16 @@ To bypass this, you can:
 <div class="level2">
 
 <p>
+
+To increase handler performance, you can disable “Sessions activity timeout” To prevent it from writing to the session database.
+
+</p>
+
+<p>
 Les agents vérifient les droits et calculent les en-têtes pour chaque requête HTTP. Donc pour augmenter les performances, évitez les règles trop complexes en utilisant les macros, groupes ou macros locales.
 </p>
 
-</div><!-- EDIT3 SECTION "Handler performance" [659-856] -->
+</div><!-- EDIT3 SECTION "Handler performance" [659-986] -->
 
 <h3 class="sectionedit4" id="macros_and_groups">Macros et groupes</h3>
 <div class="level3">
@@ -177,7 +181,7 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 <div class="noteclassic">Noter que les groupes sont calculés après les macros, donc une règle de groupe peut utiliser une valeur issue d'une macro.
 </div><div class="noteimportant">Les macros et groupes sont calculés dans l'ordre alpha-numerique, c'est à dire dans l'ordre d'affichage dans le manager. Par exemple, la macro “macro1” sear calculée avant la macro “macro2” : donc l'expression de macro2 peut utiliser la valeur $macro1. De même pour les groupes : une règle de groupe peut en utiliser une autre calculée précédemment.
 </div>
-</div><!-- EDIT4 SECTION "Macros and groups" [857-2819] -->
+</div><!-- EDIT4 SECTION "Macros and groups" [987-2949] -->
 
 <h3 class="sectionedit5" id="local_macros">Macros locales</h3>
 <div class="level3">
@@ -191,60 +195,33 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$admin</span> <span class
 Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class="re0">$displayName</span> <span class="sy0">||=</span> <span class="re0">$givenName</span><span class="sy0">.</span><span class="st0">" "</span><span class="sy0">.</span><span class="re0">$surName</span></pre>
 <div class="notetip">Notez que cette fonctionnalité n'est intéressante que pour les systèmes Lemonldap::NG protégeant un grand nombre d'applications
 </div>
-</div><!-- EDIT5 SECTION "Local macros" [2820-3481] -->
+</div><!-- EDIT5 SECTION "Local macros" [2950-3611] -->
 
 <h2 class="sectionedit6" id="portal_performances">Performances du portail</h2>
 <div class="level2">
 
-</div><!-- EDIT6 SECTION "Portal performances" [3482-3514] -->
+</div><!-- EDIT6 SECTION "Portal performances" [3612-3644] -->
 
 <h3 class="sectionedit7" id="general_performances">Performances générales</h3>
 <div class="level3">
 
 <p>
-Le portail est le composant le plus gros de Lemonldap::NG. Il est recommendé d'utiliser ModPerl::Registry au lieu d'utiliser le dispositif "cgi-script" tel qu'indiqué dans les fichiers de configuration d'Apache proposés en exemple (portal-apache2.conf):
+Le portail est le composant le plus gros de Lemonldap::NG. Since version 2.0, it is run under FastCGI and rewritten using plugins, so performance is increased in comparison to earlier versions. You just have to disable unused plugins:
 </p>
-<pre class="code apache">&lt;<span class="kw3">Files</span> *.pl&gt;
-    <span class="kw1">SetHandler</span> perl-<span class="kw1">script</span>
-    PerlResponseHandler ModPerl::Registry
-&lt;/<span class="kw3">Files</span>&gt;</pre>
-
-<p>
-On peut utiliser un serveur FastCGI en utilisant le fichier index.fcgi disponible dans les exemples du portail.
-</p>
+<ul>
+<li class="level1"><div class="li">  disable unused issuer modules</div>
+</li>
+<li class="level1"><div class="li">  disable notifications if not used</div>
+</li>
+<li class="level1"><div class="li">  …</div>
+</li>
+</ul>
 <div class="notetip">En environnement de production et pour de meilleures performances réseau, utiliser les versions compactées des librairies javascript et css : utiliser <code>make install <strong>PROD=yes</strong></code>. Ceci est fait par défaut avec les paquets RPM/DEB.
 
 </div>
-</div><!-- EDIT7 SECTION "General performances" [3515-4145] -->
+</div><!-- EDIT7 SECTION "General performances" [3645-4198] -->
 
-<h3 class="sectionedit8" id="configuration_access">Accès à la configuration</h3>
-<div class="level3">
-
-<p>
-En mettant <code>useLocalConf</code> à 1 dans lemonldap-ng.ini (section [Portal]), le portail utilisera la configuration cachée. Pour la rafraîchir, il faut installer un agent (handler) sur le même serveur pour utiliser le mécanisme de rafraîchissement ou redémarrer le serveur à chaque changement.
-</p>
-
-</div><!-- EDIT8 SECTION "Configuration access" [4146-4448] -->
-
-<h3 class="sectionedit9" id="starting_performances">Performances au démarrage</h3>
-<div class="level3">
-
-<p>
-Pour accélérer le démarrage du portail lorsque le serveur est relancé, ajoutez les lignes suivantes dans les fichiers de configuration d'Apache (tel que proposé dans portal-apache2.conf):
-</p>
-<pre class="code apache">&lt;Perl&gt;
-    <span class="kw1">require</span> Lemonldap::NG::Portal::SharedConf;
-    Lemonldap::NG::Portal::SharedConf-&gt;compile(
-        qw(delete <span class="kw1">header</span> cache read_from_client cookie <span class="kw1">redirect</span> unescapeHTML));
-    <span class="co1"># Décommentez cette ligne si vous utilisez le menu Lemonldap::NG</span>
-    <span class="kw1">require</span> Lemonldap::NG::Portal::Menu;
-    <span class="co1"># Décommentez cette ligne si vous utilisez les capacités SOAP du portail</span>
-    <span class="kw1">require</span> SOAP::Lite;
-&lt;/Perl&gt;</pre>
-
-</div><!-- EDIT9 SECTION "Starting performances" [4449-5024] -->
-
-<h3 class="sectionedit10" id="apachesession_performances">Performances d'Apache::Session</h3>
+<h3 class="sectionedit8" id="apachesession_performances">Performances d'Apache::Session</h3>
 <div class="level3">
 
 <p>
@@ -293,9 +270,9 @@ Notez que Apache::Session::Browseable::MySQL n'utilise pas les verrous MySQL.
 <div class="notetip">Un module <a href="https://metacpan.org/module/Apache::Session::Browseable::Redis" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> a été créé, c'est le plus rapide (excepté pour l'explorateur de sessions, battu par Apache::Session::Browseable::<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">DBI</a>/<a href="https://metacpan.org/module/Apache::Session::Browseable::LDAP" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::LDAP"  rel="nofollow">LDAP</a> &gt;= 1.0)
 </div><div class="noteimportant">Certains modules Apache::Session ne sont pas utilisables par Lemonldap::NG tel Apache::Session::Memcached, car ce module n'offre pas de dispositif de parcours des sessions They does not allow one to use sessions explorer neither manage one-off sessions.
 </div>
-</div><!-- EDIT10 SECTION "Apache::Session performances" [5025-7381] -->
+</div><!-- EDIT8 SECTION "Apache::Session performances" [4199-6555] -->
 
-<h3 class="sectionedit11" id="ldap_performances">Performances LDAP</h3>
+<h3 class="sectionedit9" id="ldap_performances">Performances LDAP</h3>
 <div class="level3">
 
 <p>
@@ -330,14 +307,14 @@ Maintenant, ldapgroups contient “admin su”
 </p>
 
 </div>
-</div><!-- EDIT11 SECTION "LDAP performances" [7382-8511] -->
+</div><!-- EDIT9 SECTION "LDAP performances" [6556-7685] -->
 
-<h2 class="sectionedit12" id="manager_performances">Performances du Manager</h2>
+<h2 class="sectionedit10" id="manager_performances">Performances du Manager</h2>
 <div class="level2">
 
-</div><!-- EDIT12 SECTION "Manager performances" [8512-8545] -->
+</div><!-- EDIT10 SECTION "Manager performances" [7686-7719] -->
 
-<h3 class="sectionedit13" id="disable_unused_modules">Désactiver les modules inutilisés</h3>
+<h3 class="sectionedit11" id="disable_unused_modules">Désactiver les modules inutilisés</h3>
 <div class="level3">
 
 <p>
@@ -346,9 +323,9 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <pre class="code ini"><span class="re0"><span class="br0">[</span>manager<span class="br0">]</span></span>
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
-</div><!-- EDIT13 SECTION "Disable unused modules" [8546-8792] -->
+</div><!-- EDIT11 SECTION "Disable unused modules" [7720-7966] -->
 
-<h3 class="sectionedit14" id="use_static_html_files">Use static HTML files</h3>
+<h3 class="sectionedit12" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
 <p>
@@ -379,7 +356,7 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 
 </p>
 
-</div><!-- EDIT14 SECTION "Use static HTML files" [8793-] -->
+</div><!-- EDIT12 SECTION "Use static HTML files" [7967-] -->
 </div>
 </body>
 </html>

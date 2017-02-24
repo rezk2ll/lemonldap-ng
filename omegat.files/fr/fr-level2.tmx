@@ -1020,14 +1020,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>It is recommended to use ModPerl::Registry instead of using cgi-script as described in Apache configuration file example (portal-apache2.conf):</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg>Il est recommendé d'utiliser ModPerl::Registry au lieu d'utiliser le dispositif &quot;cgi-script&quot; tel qu'indiqué dans les fichiers de configuration d'Apache proposés en exemple (portal-apache2.conf):</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>They will be tested in the specified order.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120101T184457Z" changeid="xavier">
@@ -4950,14 +4942,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>If you set <bpt i='0' x='0'>&lt;c0&gt;</bpt>useLocalConf<ept i='0'>&lt;/c0&gt;</ept> to 1 in lemonldap-ng.ini (section [Portal]), the portal will use only a cached configuration.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20131025T080649Z" changeid="xavier">
-        <seg>En mettant <bpt i='0' x='0'>&lt;c0&gt;</bpt>useLocalConf<ept i='0'>&lt;/c0&gt;</ept> à 1 dans lemonldap-ng.ini (section [Portal]), le portail utilisera la configuration cachée.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Common Domain Cookie</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -5594,14 +5578,6 @@ make test</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120505T081329Z" changeid="xavier">
         <seg>SAML 2.0 / Shibboleth</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='3' x='3'>&lt;s3&gt;</bpt># Uncomment this line if you use Lemonldap::NG menu<ept i='3'>&lt;/s3&gt;</ept></seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg><bpt i='3' x='3'>&lt;s3&gt;</bpt># Décommentez cette ligne si vous utilisez le menu Lemonldap::NG<ept i='3'>&lt;/s3&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -7276,14 +7252,6 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120423T204341Z" changeid="xavier">
         <seg>Plusieurs chaînes dbiUser sont utilisables :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>qw(delete <bpt i='1' x='1'>&lt;s1&gt;</bpt>header<ept i='1'>&lt;/s1&gt;</ept> cache read_from_client cookie <bpt i='2' x='2'>&lt;s2&gt;</bpt>redirect<ept i='2'>&lt;/s2&gt;</ept> unescapeHTML));</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg>qw(delete <bpt i='1' x='1'>&lt;s1&gt;</bpt>header<ept i='1'>&lt;/s1&gt;</ept> cache read_from_client cookie <bpt i='2' x='2'>&lt;s2&gt;</bpt>redirect<ept i='2'>&lt;/s2&gt;</ept> unescapeHTML));</seg>
       </tuv>
     </tu>
     <tu>
@@ -10880,14 +10848,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='5' x='5'>&lt;s5&gt;</bpt># Uncomment this line if you use portal SOAP capabilities<ept i='5'>&lt;/s5&gt;</ept></seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg><bpt i='5' x='5'>&lt;s5&gt;</bpt># Décommentez cette ligne si vous utilisez les capacités SOAP du portail<ept i='5'>&lt;/s5&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Reload the Manager to see the order that will be used</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120420T095920Z" changeid="xavier">
@@ -10900,14 +10860,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR">
         <seg>Expiration des sessions</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>&lt;Perl&gt;</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg>&lt;Perl&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -15286,14 +15238,6 @@ server {</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Starting performances</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg>Performances au démarrage</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>VHOSTLISTEN<ept i='0'>&lt;/s0&gt;</ept>: how listen parameter is configured for virtual hosts in Apache (default: *:80)</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120324T161819Z" changeid="xavier">
@@ -16718,16 +16662,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='6' x='6'>&lt;s6&gt;</bpt>require<ept i='6'>&lt;/s6&gt;</ept> SOAP::Lite;
-&lt;/Perl&gt;</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg><bpt i='6' x='6'>&lt;s6&gt;</bpt>require<ept i='6'>&lt;/s6&gt;</ept> SOAP::Lite;
-&lt;/Perl&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Signature</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120221T062838Z" changeid="xavier">
@@ -16940,14 +16874,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111218T190714Z" changeid="xavier">
         <seg>Configurer les attributs :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Configuration access</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20131025T080602Z" changeid="xavier">
-        <seg>Accès à la configuration</seg>
       </tuv>
     </tu>
     <tu>
@@ -22838,14 +22764,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>You can also use a FastCGI server using index.fcgi given in portal examples.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20131025T123056Z" changeid="xavier">
-        <seg>On peut utiliser un serveur FastCGI en utilisant le fichier index.fcgi disponible dans les exemples du portail.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>globalStorage</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T061620Z" changeid="guimard">
@@ -24282,14 +24200,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>require<ept i='0'>&lt;/s0&gt;</ept> Lemonldap::NG::Portal::SharedConf;</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>require<ept i='0'>&lt;/s0&gt;</ept> Lemonldap::NG::Portal::SharedConf;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>http://packages.debian.org/search?keywords=lemonldap-ng</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120303T093243Z" changeid="xavier">
@@ -24310,14 +24220,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111211T112312Z" changeid="xavier">
         <seg><bpt i='93' x='93'>&lt;s93&gt;</bpt>//&quot;userobom_phone2&quot;             =&gt; ,<ept i='93'>&lt;/s93&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>To make the portal start faster when the server is relaunched, add those lines in Apache configuration file (as described in portal-apache2.conf):</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg>Pour accélérer le démarrage du portail lorsque le serveur est relancé, ajoutez les lignes suivantes dans les fichiers de configuration d'Apache (tel que proposé dans portal-apache2.conf):</seg>
       </tuv>
     </tu>
     <tu>
@@ -25948,14 +25850,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='1' x='1'>&lt;s1&gt;</bpt>SetHandler<ept i='1'>&lt;/s1&gt;</ept> perl-<bpt i='2' x='2'>&lt;s2&gt;</bpt>script<ept i='2'>&lt;/s2&gt;</ept></seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg><bpt i='1' x='1'>&lt;s1&gt;</bpt>SetHandler<ept i='1'>&lt;/s1&gt;</ept> perl-<bpt i='2' x='2'>&lt;s2&gt;</bpt>script<ept i='2'>&lt;/s2&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>#!/usr/bin/perl<ept i='0'>&lt;/s0&gt;</ept>
 <bpt i='1' x='1'>&lt;b1&gt;</bpt>use Lemonldap::NG::Common::CGI qw(fastcgi);<ept i='1'>&lt;/b1&gt;</ept>
 <bpt i='2' x='2'>&lt;s2&gt;</bpt>use Lemonldap::NG::Portal::SharedConf;<ept i='2'>&lt;/s2&gt;</ept>
@@ -26214,14 +26108,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T061027Z" changeid="guimard">
         <seg>Fichier temporaire <bpt i='1' x='1'>&lt;a1&gt;</bpt>PGT<ept i='1'>&lt;/a1&gt;</ept> de <bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>To refresh it, you have to set an handler on the same server to use the refresh mechanism or to restart the server after each configuration change.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20131025T081946Z" changeid="xavier">
-        <seg>Pour la rafraîchir, il faut installer un agent (handler) sur le même serveur pour utiliser le mécanisme de rafraîchissement ou redémarrer le serveur à chaque changement.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27116,14 +27002,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120420T085411Z" changeid="xavier">
         <seg>La configuration peut être stockée sous plusieurs formats (<bpt i='0' x='0'>&lt;a0&gt;</bpt>SQL<ept i='0'>&lt;/a0&gt;</ept>, <bpt i='1' x='1'>&lt;a1&gt;</bpt>File<ept i='1'>&lt;/a1&gt;</ept>, <bpt i='2' x='2'>&lt;a2&gt;</bpt>LDAP<ept i='2'>&lt;/a2&gt;</ept>) mais doit être partégée via le réseau si on utilise plus d'un serveur.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><it pos='begin' x='0'>&lt;&lt;s0&gt;</it>Files<ept i='0'>&lt;/s0&gt;</ept> *.pl&gt;</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg><it pos='begin' x='0'>&lt;&lt;s0&gt;</it>Files<ept i='0'>&lt;/s0&gt;</ept> *.pl&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -30286,16 +30164,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>PerlResponseHandler ModPerl::Registry
-&lt;/<bpt i='3' x='3'>&lt;s3&gt;</bpt>Files<ept i='3'>&lt;/s3&gt;</ept>&gt;</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg>PerlResponseHandler ModPerl::Registry
-&lt;/<bpt i='3' x='3'>&lt;s3&gt;</bpt>Files<ept i='3'>&lt;/s3&gt;</ept>&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>The file <bpt i='0' x='0'>&lt;c0&gt;</bpt>auth.keytab<ept i='0'>&lt;/c0&gt;</ept> should then be copied (with a secure media) to the Linux server (for example in <bpt i='1' x='1'>&lt;c1&gt;</bpt>/etc/lemonldap-ng<ept i='1'>&lt;/c1&gt;</ept>).</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111225T154644Z" changeid="xavier">
@@ -31604,14 +31472,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120420T134155Z" changeid="xavier">
         <seg>deny</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='4' x='4'>&lt;s4&gt;</bpt>require<ept i='4'>&lt;/s4&gt;</ept> Lemonldap::NG::Portal::Menu;</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg><bpt i='4' x='4'>&lt;s4&gt;</bpt>require<ept i='4'>&lt;/s4&gt;</ept> Lemonldap::NG::Portal::Menu;</seg>
       </tuv>
     </tu>
     <tu>

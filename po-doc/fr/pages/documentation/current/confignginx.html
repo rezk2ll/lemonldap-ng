@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,confignginx"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="confignginx.html"/>
@@ -76,11 +76,11 @@
 
 <p>
 
-To use Nginx, you must install LemonLDAP::NG FastCGI server, which is not installed by default lemonldap-ng meta package.
+To use Nginx, you must install LemonLDAP::NG FastCGI server, which is not installed by default lemonldap-ng metapackage.
 
 </p>
 
-</div><!-- EDIT2 SECTION "FastCGI server" [43-193] -->
+</div><!-- EDIT2 SECTION "FastCGI server" [43-192] -->
 
 <h3 class="sectionedit3" id="debianubuntu">Debian/Ubuntu</h3>
 <div class="level3">
@@ -94,7 +94,7 @@ Enable and start the service :
 <pre class="code">systemctl enable llng-fastcgi-server
 systemctl start llng-fastcgi-server</pre>
 
-</div><!-- EDIT3 SECTION "Debian/Ubuntu" [194-394] -->
+</div><!-- EDIT3 SECTION "Debian/Ubuntu" [193-393] -->
 
 <h3 class="sectionedit4" id="red_hatcentos">Red Hat/CentOS</h3>
 <div class="level3">
@@ -108,7 +108,7 @@ Enable and start the service :
 <pre class="code">systemctl enable llng-fastcgi-server
 systemctl start llng-fastcgi-server</pre>
 
-</div><!-- EDIT4 SECTION "Red Hat/CentOS" [395-596] -->
+</div><!-- EDIT4 SECTION "Red Hat/CentOS" [394-595] -->
 
 <h2 class="sectionedit5" id="files">Fichiers</h2>
 <div class="level2">
@@ -121,7 +121,7 @@ Depuis une installation par les sources, les fichiers de configuration de Nginx 
 Il faut les inclure dans la configuration de Nginx, par exemple :
 </p>
 
-</div><!-- EDIT5 SECTION "Files" [597-819] -->
+</div><!-- EDIT5 SECTION "Files" [596-818] -->
 
 <h3 class="sectionedit6" id="debianubuntu1">Debian/Ubuntu</h3>
 <div class="level3">
@@ -142,7 +142,7 @@ ln -s /etc/nginx/sites-available/manager-nginx.conf /etc/nginx/sites-enabled/
 ln -s /etc/nginx/sites-available/portal-nginx.conf /etc/nginx/sites-enabled/
 ln -s /etc/nginx/sites-available/test-nginx.conf /etc/nginx/sites-enabled/</pre>
 
-</div><!-- EDIT6 SECTION "Debian/Ubuntu" [820-1578] -->
+</div><!-- EDIT6 SECTION "Debian/Ubuntu" [819-1577] -->
 
 <h3 class="sectionedit7" id="red_hatcentos1">Red Hat/CentOS</h3>
 <div class="level3">
@@ -155,7 +155,7 @@ ln -s /etc/lemonldap-ng/manager-nginx.conf /etc/nginx/conf.d/
 ln -s /etc/lemonldap-ng/portal-nginx.conf /etc/nginx/conf.d/
 ln -s /etc/lemonldap-ng/test-nginx.conf /etc/nginx/conf.d/</pre>
 
-</div><!-- EDIT7 SECTION "Red Hat/CentOS" [1579-] -->
+</div><!-- EDIT7 SECTION "Red Hat/CentOS" [1578-] -->
 </div>
 </body>
 </html>
