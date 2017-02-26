@@ -24,7 +24,7 @@ $action ||= "help";
 
 if ( $action =~ /^(?:[gs]et|(?:add|del)Key)$/ ) {
     eval { require Lemonldap::NG::Manager::Cli; };
-    die 'Manager libraries not available, aborting' if ($@);
+    die "Manager libraries not available, aborting ($@)" if ($@);
     Lemonldap::NG::Manager::Cli->run(@ARGV);
 }
 elsif ( $action =~ /^(?:info|update-cache)$/ ) {

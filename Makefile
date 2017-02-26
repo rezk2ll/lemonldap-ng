@@ -401,13 +401,21 @@ e2e-tests/conf/apache2.pid: start_web_server
 
 start_web_server:	all prepare_test_server
 	# Clean old server if launched
-	@if test "$(TESTBACKEND)" = "DBI"; then \
+	if test "$(TESTBACKEND)" = "DBI"; then \
 		echo 'create table lmConfig (cfgNum int, data text);'|sqlite3 e2e-tests/conf/config.db; \
 		echo 'create table sessions (id text, a_session text, LastUpdated int);'|sqlite3 e2e-tests/conf/sessions.db; \
 		perl -Ilemonldap-ng-common/blib/lib ./lemonldap-ng-common/scripts/convertConfig \
 			--current=e2e-tests/conf/lemonldap-ng.ini \
 			--new=e2e-tests/conf/lemonldap-ng-sql.ini; \
 		mv e2e-tests/conf/lemonldap-ng-sql.ini e2e-tests/conf/lemonldap-ng.ini; \
+		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
+			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
+				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+				set globalStorage Apache::Session::SQLite3; \
+		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
+			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
+				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+				addKey globalStorageOptions DataSource 'dbi:SQLite:dbname='`pwd`'/e2e-tests/conf/sessions.db'; \
 	fi
 	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` || true
 	-@[ -e e2e-tests/conf/nginx.pid ]   && kill `cat e2e-tests/conf/nginx.pid` || true

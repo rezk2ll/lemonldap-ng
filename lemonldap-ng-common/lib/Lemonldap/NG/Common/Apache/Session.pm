@@ -36,7 +36,7 @@ sub populate {
         $self = $self->$backend(@_);
     }
     if ( $backend =~
-/^Apache::Session::(?:(?:Postgre|Redi)s|(?:Oracl|Sybas)e|(?:My|No)SQL|F(?:ile|lex)|Cassandra|LDAP)/
+/^Apache::Session::(?:(?:Postgre|Redi)s|S(?:QLite3|ybase)|(?:My|No)SQL|F(?:ile|lex)|Cassandra|Oracle|LDAP)/
         and !$self->{args}->{useStorable} )
     {
         $self->{serialize} =
