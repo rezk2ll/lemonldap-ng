@@ -1938,14 +1938,6 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>It can be upgraded using buildPortalWSDL script.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T172711Z" changeid="xavier">
-        <seg>Il peut être mis à jour en utilisant le script buildPortalWSDL.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Then restart Apache.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T084145Z" changeid="xavier">
@@ -10756,14 +10748,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T171818Z" changeid="xavier">
         <seg>&lt;s0&gt;getCookies(user,password)&lt;/s0&gt; : système d'authentification.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>When portal is installed, a file named portal.wsdl is created.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T172651Z" changeid="xavier">
-        <seg>Lorsque le portail est installé, un fichier nommé portal.wsdl est créé.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22832,14 +22816,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T171154Z" changeid="xavier">
         <seg>Utiliser SOAP pour les sessions Lemonldap::NG</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>WSDL file</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T172615Z" changeid="xavier">
-        <seg>Fichier WSDL</seg>
       </tuv>
     </tu>
     <tu>

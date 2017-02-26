@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authssl"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authssl.html"/>
@@ -193,9 +193,11 @@ Aller ensuite dans <code>Paramètres SSL</code> :
 </li>
 <li class="level1"><div class="li"> <strong>Champ extrait du certificat</strong> : champ du certificat affecté à la variable interne $user</div>
 </li>
+<li class="level1"><div class="li"> <strong>Conditional extracted certificate field</strong>: field of the certificate affected to $user internal variable depending on the certificate authority. Key is the CA <abbr title="Distinguished Name">DN</abbr>, value is the field.</div>
+</li>
 </ul>
 
-</div><!-- EDIT8 SECTION "Configuration of LemonLDAP::NG" [2369-2794] -->
+</div><!-- EDIT8 SECTION "Configuration of LemonLDAP::NG" [2369-2982] -->
 
 <h3 class="sectionedit9" id="auto_reloading_ssl_certificates">Rechargement automatique des certificats SSL</h3>
 <div class="level3">
@@ -302,7 +304,7 @@ $('.enteteBouton').click( function (e) {
 <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/body.html"><span class="kw2">body</span></a>&gt;</span></pre>
 <div class="notewarning">Ce n'est pas compatible avec une chaîne d'authentification (voir Empiler plusieurs backends), en raison du paramètre Apache “SSLVerifyClient”, qui doit être mis à la valeur “require”
 </div>
-</div><!-- EDIT9 SECTION "Auto reloading SSL Certificates" [2795-] -->
+</div><!-- EDIT9 SECTION "Auto reloading SSL Certificates" [2983-] -->
 </div>
 </body>
 </html>
