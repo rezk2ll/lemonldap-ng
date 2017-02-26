@@ -5,7 +5,6 @@ eg/index.fcgi
 example/soapconfigtest.pl
 example/soaperrortest.pl
 example/soaptest.pl
-KINEMATIC.md
 lib/Lemonldap/NG/Portal.pm
 lib/Lemonldap/NG/Portal/Auth/_WebForm.pm
 lib/Lemonldap/NG/Portal/Auth/AD.pm
@@ -114,7 +113,6 @@ MANIFEST			This list of files
 META.yml
 README
 REST-API.md
-scripts/buildPortalWSDL
 site/coffee/confirm.coffee
 site/coffee/info.coffee
 site/coffee/oidcchecksession.coffee
