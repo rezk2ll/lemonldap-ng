@@ -389,10 +389,10 @@ prepare_test_server:
 	@for f in $$(find e2e-tests/conf -name '*.fcgi'); do \
 		perl -i -pe 'if($$.==2){print "BEGIN{\n"; print qq(use lib q('`pwd`'/lemonldap-ng-$$_/blib/lib);\n) foreach qw(common handler portal manager); print "}\n"; }' $$f; \
 	done
-	@cp e2e-tests/lmConf-1.json e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/test-nginx.conf e2e-tests/conf/
+	@cp e2e-tests/lmConf-1.json e2e-tests/lemonldap-ng*.ini e2e-tests/env.conf e2e-tests/test-nginx.conf e2e-tests/conf/
 	@cp e2e-tests/form.html e2e-tests/conf/site
 	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s#__port__#$(TESTWEBSERVERPORT)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#;' \
-		e2e-tests/conf/lemonldap-ng.ini \
+		e2e-tests/conf/lemonldap-ng*.ini \
 		e2e-tests/conf/lmConf-1.json \
 		e2e-tests/conf/env.conf \
 		e2e-tests/conf/test-nginx.conf
@@ -401,6 +401,14 @@ e2e-tests/conf/apache2.pid: start_web_server
 
 start_web_server:	all prepare_test_server
 	# Clean old server if launched
+	@if test "$(TESTBACKEND)" = "DBI"; then \
+		echo 'create table lmConfig (cfgNum int, data text);'|sqlite3 e2e-tests/conf/config.db; \
+		echo 'create table sessions (id text, a_session text, LastUpdated int);'|sqlite3 e2e-tests/conf/sessions.db; \
+		perl -Ilemonldap-ng-common/blib/lib ./lemonldap-ng-common/scripts/convertConfig \
+			--current=e2e-tests/conf/lemonldap-ng.ini \
+			--new=e2e-tests/conf/lemonldap-ng-sql.ini; \
+		mv e2e-tests/conf/lemonldap-ng-sql.ini e2e-tests/conf/lemonldap-ng.ini; \
+	fi
 	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` || true
 	-@[ -e e2e-tests/conf/nginx.pid ]   && kill `cat e2e-tests/conf/nginx.pid` || true
 	-@[ -e e2e-tests/conf/llng-fastcgi.pid ] && kill `cat e2e-tests/conf/llng-fastcgi.pid` && rm -f e2e-tests/conf/llng-fastcgi.pid || true
