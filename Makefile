@@ -401,7 +401,7 @@ e2e-tests/conf/apache2.pid: start_web_server
 
 start_web_server:	all prepare_test_server
 	# Clean old server if launched
-	if test "$(TESTBACKEND)" = "DBI"; then \
+	@if test "$(TESTBACKEND)" = "DBI"; then \
 		echo 'create table lmConfig (cfgNum int, data text);'|sqlite3 e2e-tests/conf/config.db; \
 		echo 'create table sessions (id text, a_session text, LastUpdated int);'|sqlite3 e2e-tests/conf/sessions.db; \
 		perl -Ilemonldap-ng-common/blib/lib ./lemonldap-ng-common/scripts/convertConfig \
