@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+. /usr/share/debconf/confmodule
+
+if [ "$1" == "configure" ]
+then
+	db_purge
+fi
+
+#DEBHELPER#
+exit 0
