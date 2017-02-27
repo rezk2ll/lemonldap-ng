@@ -182,7 +182,11 @@ sub sp {
                 globalStorageOptions => {
                     baseUrl => 'http://auth.idp.com/sessions/global/'
                 },
-                persistentStorage => 'Lemonldap::NG::Common::Apache::File',
+                persistentStorage => 'Apache::Session::File',
+                persistentStorageOptions => {
+                    Directory => 't/sessions',
+                    LockDirectory => 't/sessions/lock',
+                },
             },
         }
     );
