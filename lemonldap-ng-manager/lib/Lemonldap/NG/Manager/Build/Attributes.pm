@@ -576,7 +576,6 @@ sub attributes {
         loginHistoryEnabled => {
             default       => 0,
             type          => 'bool',
-            default       => 1,
             documentation => 'Enable login history',
         },
         portalDisplayLoginHistory => {

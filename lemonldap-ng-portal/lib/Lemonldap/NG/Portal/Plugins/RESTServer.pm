@@ -146,7 +146,17 @@ sub newSession {
       or return $self->p->sendError( $req, undef, 400 );
     $infos->{_utime} = time();
 
-    my $session = $self->getApacheSession($mod, undef, $infos);
+    my $force = 0;
+    if ( my $s = delete $infos->{__secret} ) {
+        if ( $self->conf->{cipher}->decrypt($s) == 1 ) {
+            $force = 1;
+        }
+        else {
+            $self->userLogger->error('Bad key, force denied');
+        }
+    }
+
+    my $session = $self->getApacheSession( $mod, undef, $infos, $force );
     return $self->p->sendError( $req, 'Unable to create session', 500 )
       unless ($session);
 
@@ -168,8 +178,18 @@ sub updateSession {
     my $infos = $req->jsonBodyToObj
       or return $self->p->sendError( $req, undef, 400 );
 
+    # Get secret if given
+    my $force = 0;
+    if ( my $s = delete $infos->{__secret} ) {
+        if ( $self->conf->{cipher}->decrypt($s) == 1 ) {
+            $force = 1;
+        }
+        else {
+            $self->userLogger->error('Bad key, force denied');
+        }
+    }
     # Get session and store info
-    my $session = $self->getApacheSession( $mod, $id, $infos )
+    my $session = $self->getApacheSession( $mod, $id, $infos, $force )
       or return $self->p->sendError( $req, 'Session id does not exists', 400 );
 
     return $self->p->sendJSONresponse( $req, { result => 1 } );

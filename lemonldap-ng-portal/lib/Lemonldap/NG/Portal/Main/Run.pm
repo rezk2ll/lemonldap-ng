@@ -346,6 +346,8 @@ sub getPersistentSession {
     # Compute persistent identifier
     my $pid = $self->_md5hash($uid);
 
+    $info->{_session_uid} = $uid;
+
     my $ps = Lemonldap::NG::Common::Session->new(
         {
             storageModule        => $self->conf->{persistentStorage},
@@ -363,12 +365,12 @@ sub getPersistentSession {
 
     # Set _session_uid if not already present
     unless ( defined $ps->data->{_session_uid} ) {
-        $ps->update( { '_session_uid' => $uid } );
+        $ps->update( { _session_uid => $uid } );
     }
 
     # Set _utime if not already present
     unless ( defined $ps->data->{_utime} ) {
-        $ps->update( { '_utime' => time } );
+        $ps->update( { _utime => time } );
     }
 
     return $ps;
@@ -728,7 +730,9 @@ sub tplParams {
 
 sub registerLogin {
     my ( $self, $req ) = @_;
-    return unless ( defined $req->authResult );
+    return
+      unless ( $self->conf->{loginHistoryEnabled}
+        and defined $req->authResult );
     my $history = $req->sessionInfo->{loginHistory} ||= {};
     my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];

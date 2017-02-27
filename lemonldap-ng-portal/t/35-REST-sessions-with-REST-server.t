@@ -40,6 +40,11 @@ count(2);
 expectRedirection( $res, 'http://auth.sp.com' );
 $spId = expectCookie($res);
 
+# Test auth
+ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Auth test' );
+count(1);
+expectOK($res);
+
 # Test other REST queries
 switch ('issuer');
 
@@ -182,10 +187,10 @@ sub sp {
                 globalStorageOptions => {
                     baseUrl => 'http://auth.idp.com/sessions/global/'
                 },
-                persistentStorage => 'Apache::Session::File',
+                persistentStorage =>
+                  'Lemonldap::NG::Common::Apache::Session::REST',
                 persistentStorageOptions => {
-                    Directory => 't/sessions',
-                    LockDirectory => 't/sessions/lock',
+                    baseUrl => 'http://auth.idp.com/sessions/persistent/'
                 },
             },
         }

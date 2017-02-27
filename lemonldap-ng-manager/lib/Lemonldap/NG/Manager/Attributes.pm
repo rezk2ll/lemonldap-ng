@@ -1307,7 +1307,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'ruleContainer'
         },
         'loginHistoryEnabled' => {
-            'default' => 1,
+            'default' => 0,
             'type'    => 'bool'
         },
         'logoutServices' => {

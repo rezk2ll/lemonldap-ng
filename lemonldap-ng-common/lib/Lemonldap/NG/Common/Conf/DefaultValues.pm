@@ -101,7 +101,6 @@ sub defaultValues {
         'locationRules' => {
             'default' => 'deny'
         },
-        'loginHistoryEnabled'        => 1,
         'logoutServices'             => {},
         'macros'                     => {},
         'mailCharset'                => 'utf-8',

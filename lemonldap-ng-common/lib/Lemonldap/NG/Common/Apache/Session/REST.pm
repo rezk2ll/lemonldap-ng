@@ -2,9 +2,12 @@ package Lemonldap::NG::Common::Apache::Session::REST;
 
 use strict;
 use Lemonldap::NG::Common::UserAgent;
+use Lemonldap::NG::Common::Apache::Session::Generate::SHA256;
 use JSON qw(from_json to_json);
 
 our $VERSION = '2.0.0';
+
+our @ISA = qw(Lemonldap::NG::Common::Apache::Session::Generate::SHA256);
 
 # PUBLIC INTERFACE
 
@@ -28,6 +31,10 @@ sub TIEHASH {
     if ( defined $session_id && $session_id ) {
         die "unexistant session $session_id"
           unless ( $self->get($session_id) );
+    }
+    elsif ( $args->{setId} ) {
+        $self->{data}->{_session_id} = $args->{setId};
+        $self->newSession;
     }
     else {
         die "unable to create session"
@@ -151,7 +158,7 @@ sub get {
     my $res = $self->getJson("$id") or return 0;
     $self->{data} = $res;
 
-    $self->cache->set( "soap$id", $self->{data} ) if $self->{localStorage};
+    $self->cache->set( "rest$id", $self->{data} ) if $self->{localStorage};
 
     return $self->{data};
 }
@@ -161,30 +168,33 @@ sub get {
 # @return User datas (just the session ID)
 sub newSession {
     my $self = shift;
-    my $req = HTTP::Request->new( POST => $self->base );
-    $req->content( to_json( { _utime => time } ) );
-    $req->header( 'Content-Type' => 'application/json' );
-    my $resp = $self->ua->request($req);
-    if ( $resp->is_success ) {
-        my $res;
-        eval { $res = from_json( $resp->content ) };
-        if ( $@ or !$res->{result} ) {
-            die "Unable to create session: bad REST response $@";
-        }
-        $self->{data} = $res->{session};
-    }
-    else {
-        die "REST server returns " . $resp->status_line;
-    }
+    $self->generate unless ( $self->{data}->{_session_id} );
+    $self->{data}->{_utime} = time;
 
-    # Set cache
-    if ( $self->{localStorage} ) {
-        my $id = "rest" . $self->{data}->{_session_id};
-        if ( $self->cache->get($id) ) {
-            $self->cache->remove($id);
-        }
-        $self->cache->set( $id, $self->{data} );
-    }
+    #my $req = HTTP::Request->new( POST => $self->base );
+    #$req->content( to_json( { _utime => time } ) );
+    #$req->header( 'Content-Type' => 'application/json' );
+    #my $resp = $self->ua->request($req);
+    #if ( $resp->is_success ) {
+    #    my $res;
+    #    eval { $res = from_json( $resp->content ) };
+    #    if ( $@ or !$res->{result} ) {
+    #        die "Unable to create session: bad REST response $@";
+    #    }
+    #    $self->{data} = $res->{session};
+    #}
+    #else {
+    #    die "REST server returns " . $resp->status_line;
+    #}
+
+    ## Set cache
+    #if ( $self->{localStorage} ) {
+    #    my $id = "rest" . $self->{data}->{_session_id};
+    #    if ( $self->cache->get($id) ) {
+    #        $self->cache->remove($id);
+    #    }
+    #    $self->cache->set( $id, $self->{data} );
+    #}
 
     return $self->{data};
 }
@@ -197,7 +207,7 @@ sub save {
 
     # Update session in cache
     if ( $self->{localStorage} ) {
-        my $id = "soap" . $self->{data}->{_session_id};
+        my $id = "rest" . $self->{data}->{_session_id};
         if ( $self->cache->get($id) ) {
             $self->cache->remove($id);
         }
@@ -207,9 +217,15 @@ sub save {
     # REST
     my $req =
       HTTP::Request->new( PUT => $self->base . $self->{data}->{_session_id} );
+    eval {
+        $self->{data}->{__secret} =
+          Lemonldap::NG::Handler::Main->tsv->{cipher}->encrypt(1);
+    };
     $req->content( to_json( $self->{data} ) );
+    delete $self->{data}->{__secret};
     $req->header( 'Content-Type' => 'application/json' );
     my $resp = $self->ua->request($req);
+
     if ( $resp->is_success ) {
         my $res;
         eval { $res = from_json( $resp->content ) };
@@ -231,7 +247,7 @@ sub delete {
 
     # Remove session from cache
     if ( $self->{localStorage} ) {
-        my $id = "soap" . $self->{data}->{_session_id};
+        my $id = "rest" . $self->{data}->{_session_id};
         if ( $self->cache->get($id) ) {
             $self->cache->remove($id);
         }
