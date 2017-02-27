@@ -243,6 +243,9 @@ has ini => (
         main::ok( $self->{p}->init($ini), 'Init' );
         main::ok( $self->{app} = $self->{p}->run(), 'Portal app' );
         main::count(3);
+        no warnings 'redefine';
+        eval
+'sub Lemonldap::NG::Common::Logger::Std::error {return $_[0]->warn($_[1])}';
         $self;
     }
 );
