@@ -6,7 +6,7 @@ liblemonldap-ng-common-perl: non-standard-file-perm etc/lemonldap-ng/lemonldap-n
 liblemonldap-ng-common-perl: non-standard-dir-perm var/lib/lemonldap-ng/conf/ 0750 != 0755
 # If file storage is used for configuration, later configuration files will be
 # in 0640 mode. So the first is adjusted so
-liblemonldap-ng-common-perl: non-standard-file-perm var/lib/lemonldap-ng/conf/lmConf-1.js 0640 != 0644
+liblemonldap-ng-common-perl: non-standard-file-perm var/lib/lemonldap-ng/conf/lmConf-1.json 0640 != 0644
 # If file storage is used for sessions, user passord may be stored in this
 # directory, so it must not be readable by all but must be writable by www-data
 liblemonldap-ng-common-perl: non-standard-dir-perm var/lib/lemonldap-ng/sessions/ 0770 != 0755
