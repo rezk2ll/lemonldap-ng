@@ -616,13 +616,13 @@ system.
   use Lemonldap::NG::Manager::Build;
   
   Lemonldap::NG::Manager::Build->run(
-    structFile            => "site/static/struct.json",
-    confTreeFile          => "site/static/js/conftree.js",
+    structFile            => "site/htdocs/static/struct.json",
+    confTreeFile          => "site/htdocs/static/js/conftree.js",
     managerConstantsFile  => "lib/Lemonldap/NG/Common/Conf/ReConstants.pm",
     managerAttributesFile => 'lib/Lemonldap/NG/Manager/Attributes.pm',
     defaultValuesFile     => "lib/Lemonldap/NG/Common/Conf/DefaultValues.pm",
     firstLmConfFile       => "_example/conf/lmConf-1.json",
-    reverseTreeFile       => "site/static/reverseTree.json",
+    reverseTreeFile       => "site/htdocs/static/reverseTree.json",
   );
 
 =head1 DESCRIPTION
@@ -655,15 +655,15 @@ Lemonldap::NG::Manager::Build::Tree and Lemonldap::NG::Manager::Build::CTrees to
 
 =over
 
-=item `site/static/struct.json`:
+=item `site/htdocs/static/struct.json`:
 
 the main file that contains the tree view;
 
-=item `site/static/js/conftree.js`:
+=item `site/htdocs/static/js/conftree.js`:
 
 generates sub tree for virtualhosts and SAML and OpenID-Connect partners;
 
-=item `site/static/reverseTree.json`:
+=item `site/htdocs/static/reverseTree.json`:
 
 map used by manager diff to find attribute position in the tree;
 
@@ -796,11 +796,11 @@ to be displayed in the same form
 =item nodes_cond:
 
 array of sub nodes that will be displayed with a filter. Not
-yet documented here, see the source code of site/static/js/filterFunctions.js.
+yet documented here, see the source code of site/htdocs/static/js/filterFunctions.js.
 
 =item nodes_filter:
 
-filter entry in site/static/js/filterFunctions.js for the same feature.
+filter entry in site/htdocs/static/js/filterFunctions.js for the same feature.
 
 =back
 

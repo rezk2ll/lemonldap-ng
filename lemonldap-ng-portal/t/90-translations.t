@@ -54,7 +54,7 @@ foreach my $lang (@langs) {
 
 #ok(
 #    open( F,
-#q#perl -ne 'print if(s/.*trspan="(\w+)".*/$1/g)' site/templates/manager.tpl site/static/forms/*|sort -u|#
+#q#perl -ne 'print if(s/.*trspan="(\w+)".*/$1/g)' site/templates/manager.tpl site/htdocs/static/forms/*|sort -u|#
 #    ),
 #    'Find HTML docs'
 #);

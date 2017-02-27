@@ -19,7 +19,7 @@ Copyright: 2005-2016, Xavier Guimard <x.guimard@free.fr>
  2008-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
 License: GPL-2+
 
-Files: lemonldap-ng-portal/example/skins/common/js/portal.js
+Files: lemonldap-ng-portal/site/htdocs/static/common/js/portal.js
 Copyright: 2005-2016, Xavier Guimard <x.guimard@free.fr>
  2006-2016, Clement Oudot <clem.oudot@gmail.com>
  2008-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
@@ -27,37 +27,37 @@ License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
  (http://snipplr.com/view/29434/)
 
-Files: lemonldap-ng-portal/example/skins/common/Apache.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/Apache.png
 Copyright: Apache Software Foundation (ASF)
 License: Apache-2.0
 
-Files: lemonldap-ng-portal/example/skins/common/CAS.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/CAS.png
 Copyright: Jasig
 License: Apache-2.0
 
-Files: lemonldap-ng-portal/example/skins/common/BrowserID.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/BrowserID.png
 Copyright: 2013, Xavier Guimard <x.guimard@free.fr>
 License: CC-3
 Comment: created using images of YellowIcon and Innerer Schweinehund
  (http://findicons.com/icon/168665/firefox?id=292029 and
   http://commons.wikimedia.org/wiki/File:Mail-closed.svg)
 
-Files: lemonldap-ng-portal/example/skins/common/Google.png lemonldap-ng-portal/example/skins/common/Facebook.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/Google.png lemonldap-ng-portal/site/htdocs/static/common/Facebook.png
 Copyright: http://tempest.deviantart.com/
 License: CC-3
 Comment: Downloaded from http://www.iconspedia.com/
 
-Files: lemonldap-ng-portal/example/skins/common/OpenIDConnect.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/OpenIDConnect.png
 Copyright: http://www.customicondesign.com
 License: CC-BY-NC-ND-3.0
 Comment: Downloaded from http://www.iconspedia.com/
 
-Files: lemonldap-ng-portal/example/skins/common/Twitter.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/Twitter.png
 Copyright: Paul Schulerr, http://schulerr.deviantart.com
 License: CC-3
 Comment: Downloaded from http://www.iconspedia.com/
 
-Files: lemonldap-ng-portal/example/skins/common/WebID.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/WebID.png
 Copyright: unknown
 License: W3C
 Comment: downloaded from
@@ -65,88 +65,74 @@ Comment: downloaded from
  .
  Author is unknown and license may be W3C or public-domain
 
-Files: lemonldap-ng-portal/example/skins/common/backgrounds/*
+Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/*
 Copyright: Various artists
 License: CC-BY-NC-ND-3.0 or GFDL-1.3
 Comment: dowloaded from http://commons.wikimedia.org
 
-Files: jquery*.js jquery*.css
-Copyright: 2010, The jQuery project and the jQuery UI team
-License: GPL-2 or Expat
+Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular/* lemonldap-ng-manager/site/htdocs/static/bwr/angular-cookies/* lemonldap-ng-manager/site/htdocs/static/bwr/angular-animate/*
+Copyright: 2010-2015, Google, Inc. http://angularjs.org
+License: Expat
 
-Files: lemonldap-ng-portal/site/static/bwr/jquery.cookie/*
-Copyright: 2010, Klaus Hartl (stilbuero.de)
+Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/*
+Copyright: 2012-2016, the AngularUI Team, https://github.com/organizations/angular-ui/teams/291112
+License: Expat
+
+Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular-ui-tree/*
+Copyright: 2014, unspecified
+License: Expat
+
+Files: lemonldap-ng-*/site/htdocs/static/bwr/bootstrap/*
+Copyright: 2011-2015, Twitter Inc.
+License: Expat
+
+Files: lemonldap-ng-portal/site/htdocs/static/bwr/crypto-js/*
+Copyright: 2009-2013 Jeff Mott
+ 2013-2016 Evan Vosberg
+License: Expat
+
+Files: lemonldap-ng-manager/site/htdocs/static/bwr/es5-shim/*
+Copyright: 2009-2015, Kristopher Michael Kowal and contributors
+License: Expat
+
+Files: lemonldap-ng-manager/site/htdocs/static/bwr/file-saver.js/*
+Copyright: 2015, Eli Grey http://eligrey.com
 License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/bwr/fingerprintjs2/*
 Copyright: 2015, Valentin Vasilyev <valentin.vasilyev@outlook.com>
-Licence: Expat or Apache-2.0
+License: Expat or Apache-2.0
 
-Files: *jquery.base64.js
-Copyright: Muhammad Hussein Fattahizadeh <muhammad@semnanweb.com>
-License: GPL-2+
+Files: lemonldap-ng-*/site/htdocs/static/bwr/jquery/*
+Copyright: 2010, The jQuery project and the jQuery UI team
+License: GPL-2 or Expat
 
-Files: lemonldap-ng-portal/site/static/bwr/jquery-ui/jquery-ui*
-Copyright: 2007, 2014 jQuery Foundation and other contributors
+Files: lemonldap-ng-portal/site/htdocs/static/bwr/jquery.cookie/*
+Copyright: 2010, Klaus Hartl (stilbuero.de)
 License: Expat
 
-Files: lemonldap-ng-manager/site/static/bwr/angular/* lemonldap-ng-manager/site/static/bwr/angular-cookies/* lemonldap-ng-manager/site/static/bwr/angular-animate/*
-Copyright: 2010-2015, Google, Inc. http://angularjs.org
+Files: lemonldap-ng-portal/site/htdocs/static/bwr/jquery-ui/*
+Copyright: 2007, 2014 jQuery Foundation and other contributors
 License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/js/u2f-api.*
 Copyright: 2014-2015, Google Inc.
 License: Expat
 
-Files: lemonldap-ng-manager/site/static/bwr/angular-bootstrap/*
-Copyright: 2012-2016, the AngularUI Team, https://github.com/organizations/angular-ui/teams/291112
-License: Expat
-
-Files: lemonldap-ng-manager/site/static/bwr/angular-ui-tree/*
-Copyright: 2014, unspecified
-License: Expat
-
-Files: lemonldap-ng-manager/site/static/bwr/file-saver.js/*
-Copyright: 2015, Eli Grey http://eligrey.com
-License: Expat
-
-Files: lemonldap-ng-portal/example/skins/common/apps/*
- doc/media/icons/*
+Files: lemonldap-ng-portal/site/htdocs/static/common/apps/*
+ doc/pages/documentation/current/icons/*
 Copyright: 2006-2007 Everaldo Coelho, Crystal Project
 License: LGPL-3
 
-Files: doc/media/icons/flags/*
-Copyright: Mark James
-License: CC-3
-
-Files: doc/lib/tpl/default/images/* doc/lib/images/*
- doc/lib/plugins/note/images/* doc/media/wiki/dokuwiki-128.png
+Files: doc/pages/documentation/current/lib/images/*
 Copyright: 2004-2012 Andreas Gohr <andi@splitbrain.org>
  and the DokuWiki Community
 License: GPL-2
 
-Files: doc/media/documentation/google*
-Copyright: 2007-2011, Andreas Åkre Solberg <andreas.solberg@uninett.no>
- 2007-2011, Olav Morken <olav.morken@uninett.no>
-License: LGPL-2
-
-Files: doc/media/documentation/lasso.png
+Files: doc/pages/documentation/current/documentation/lasso*.png
 Copyright: 2004, Entr'ouvert <http://www.entrouvert.com/>
  2004, Florent Monnier
 License: GPL-2+
-
-Files: lemonldap-ng-*/site/static/bwr/bootstrap/*
-Copyright: 2011-2015, Twitter Inc.
-License: Expat
-
-Files: lemonldap-ng-manager/site/static/bwr/es5-shim/*
-Copyright: 2009-2015, Kristopher Michael Kowal and contributors
-License: Expat
-
-Files: lemonldap-ng-portal/site/static/bwr/crypto-js/*
-Copyright: 2009-2013 Jeff Mott
- 2013-2016 Evan Vosberg
-License: Expat
 
 Files: debian/*
 Copyright: 2005-2017, Xavier Guimard <x.guimard@free.fr>
@@ -167,13 +153,6 @@ License: Apache-2.0
  .
  The complete text of the Apache-2 license can be
  found in http://www.apache.org/licenses/LICENSE-2.0
-
-License: Artistic
- This program is free software; you can redistribute it and/or modify
- it under the terms of the Artistic License, which comes with Perl.
- .
- The complete text of the Artistic License can be
- found in http://opensource.org/licenses/Artistic-1.0
 
 License: CC-3
  CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE LEGAL
@@ -738,15 +717,6 @@ License: GFDL-1.3
  The complete text of version 1.3 of the GNU Free Documentation
  License can be found in https://www.gnu.org/licenses/fdl.html
 
-License: GPL-1+
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 1, or (at your option)
- any later version.
- .
- The complete text of version 1 of the GNU General
- Public License can be found in http://opensource.org/licenses/GPL-1.0
-
 License: GPL-2
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -763,23 +733,6 @@ License: GPL-2+
  .
  The complete text of version 2 of the GNU General
  Public License can be found in http://opensource.org/licenses/GPL-2.0
-
-License: GPL-3+
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 3, or (at your option)
- any later version.
- .
- The complete text of version 3 of the GNU General
- Public License can be found in http://opensource.org/licenses/GPL-2.0
-
-License: LGPL-2
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as
- published by the Free Software Foundation; version 2.
- .
- The full text of the GNU Lesser General Public License
- version 2 can be found in http://opensource.org/licenses/LGPL-2.1
 
 License: LGPL-3
  This program is free software; you can redistribute it and/or modify
@@ -848,4 +801,4 @@ License: W3C
  The name and trademarks of copyright holders may NOT be used in advertising or
  publicity pertaining to the software without specific, written prior
  permission. Title to copyright in this software and any associated
- dcumentation will at all times remain with copyright holders.
+ documentation will at all times remain with copyright holders.

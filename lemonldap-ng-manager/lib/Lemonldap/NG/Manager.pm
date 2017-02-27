@@ -182,11 +182,11 @@ Lemonldap::NG::Manager::Build::Tree and Lemonldap::NG::Manager::Build::CTrees to
 
 =over
 
-=item `site/static/struct.json`:
+=item `site/htdocs/static/struct.json`:
 
 the main file that contains the tree view;
 
-=item `site/static/js/conftree.js`:
+=item `site/htdocs/static/js/conftree.js`:
 
 generates sub tree for virtualhosts and SAML and OpenID-Connect partners;
 
