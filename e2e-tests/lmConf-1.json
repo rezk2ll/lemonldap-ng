@@ -150,6 +150,7 @@
   "macros": {
     "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\""
   },
+  "mailUrl" : "http://auth.example.com:__port__/resetpwd",
   "notification": 1,
   "notificationStorage": "File",
   "notificationStorageOptions": {
@@ -172,7 +173,7 @@
           ["postuid", "$_user"],
           ["postmail", "'x@x.org'"],
           ["poststatic", "'static content'"]],
-        "jqueryUrl": "http://manager.example.com:19876/static/bwr/jquery/dist/jquery.js",
+        "jqueryUrl": "http://manager.example.com:__port__/static/bwr/jquery/dist/jquery.js",
         "buttonSelector": "#bt",
         "formSelector": "#test",
         "target": "/index.pl"
@@ -180,6 +181,7 @@
     }
   },
   "registerDB": "Null",
+  "registerUrl" : "http://auth.example.com:__port__/register",
   "reloadUrls": {},
   "securedCookie": 0,
   "sessionDataToRemember": {},
