@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,handlerauthbasic"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="handlerauthbasic.html"/>
@@ -75,19 +75,19 @@ L'agent AuthBasic est un agent spécial qui utilise l'authentification web basiq
 </p>
 
 <p>
-L'agent envoie un en-tête WWW-Authenticate au client pour demander le couple compte-mot-de-passe et ensuite le vérifie en utilisant le service web &lt;a1&gt;SOAP&lt;/a1&gt; getCookies. Lorsque la session est validée, l'agent examine les autorisations comme un agent standard.
+The Handler will send a WWW-Authenticate header to the client, to request user and password, and then check the credentials using REST web service (you must enable REST session service in the manager). Lorsque la session est validée, l'agent examine les autorisations comme un agent standard.
 </p>
 
 <p>
 Ce peut être pratique pour autoriser une application cliente à accéder à un hôte virtuel avec un authentifiant en envoyant un en-tête basique.
 </p>
 
-</div><!-- EDIT2 SECTION "Presentation" [34-634] -->
+</div><!-- EDIT2 SECTION "Presentation" [34-677] -->
 
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT3 SECTION "Configuration" [635-661] -->
+</div><!-- EDIT3 SECTION "Configuration" [678-704] -->
 
 <h3 class="sectionedit4" id="virtual_host">Hôte virtuel</h3>
 <div class="level3">
@@ -110,7 +110,7 @@ If you want to protect only a virtualHost part, keep type on “Main” and set 
 </li>
 </ul>
 
-</div><!-- EDIT4 SECTION "Virtual host" [662-1052] -->
+</div><!-- EDIT4 SECTION "Virtual host" [705-1095] -->
 
 <h3 class="sectionedit5" id="nginx">Nginx</h3>
 <div class="level3">
@@ -149,16 +149,16 @@ location / {
   ...
 }</pre>
 
-</div><!-- EDIT5 SECTION "Nginx" [1053-2076] -->
+</div><!-- EDIT5 SECTION "Nginx" [1096-2119] -->
 
 <h3 class="sectionedit6" id="handler_parameters">Paramètres de l'agent</h3>
 <div class="level3">
 
 <p>
-Aucun paramètres n'est requis. Il faut en revanche autoriser le service web des sessions, voir le <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">backend de sessions SOAP</a>.
+Aucun paramètres n'est requis. But you have to allow sessions web services, see <a href="restsessionbackend.html" class="wikilink1" title="documentation:2.0:restsessionbackend">REST sessions backend</a>.
 </p>
 
-</div><!-- EDIT6 SECTION "Handler parameters" [2077-] -->
+</div><!-- EDIT6 SECTION "Handler parameters" [2120-] -->
 </div>
 </body>
 </html>

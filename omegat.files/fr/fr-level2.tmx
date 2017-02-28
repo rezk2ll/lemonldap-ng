@@ -134,14 +134,6 @@
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>We use the Perl module Authen::Captcha to generate codes and images, which look like this:</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T060528Z" changeid="xavier">
-        <seg>Nous utilisons le module Perl Authen::Captcha pour générer les codes et images, ce qui ressemble à :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>cda</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T061225Z" changeid="guimard">
@@ -20642,14 +20634,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>The Handler will send a WWW-Authenticate header to the client, to request user and password, and then check the credentials using SOAP getCookies web service.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T173651Z" changeid="xavier">
-        <seg>L'agent envoie un en-tête WWW-Authenticate au client pour demander le couple compte-mot-de-passe et ensuite le vérifie en utilisant le service web <bpt i='1' x='1'>&lt;a1&gt;</bpt>SOAP<ept i='1'>&lt;/a1&gt;</ept> getCookies.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>See <bpt i='0' x='0'>&lt;a0&gt;</bpt>installation pages<ept i='0'>&lt;/a0&gt;</ept> to know how install and use it.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160228T170346Z" changeid="xavier">
@@ -27652,14 +27636,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160228T221822Z" changeid="xavier">
         <seg>correspondent aux bonnes valeurs.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>But you have to allow sessions web services, see <bpt i='0' x='0'>&lt;a0&gt;</bpt>SOAP sessions backend<ept i='0'>&lt;/a0&gt;</ept>.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20121005T041516Z" changeid="xavier">
-        <seg>Il faut en revanche autoriser le service web des sessions, voir le <bpt i='0' x='0'>&lt;a0&gt;</bpt>backend de sessions SOAP<ept i='0'>&lt;/a0&gt;</ept>.</seg>
       </tuv>
     </tu>
     <tu>

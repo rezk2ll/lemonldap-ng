@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,prereq"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="prereq.html"/>
@@ -174,11 +174,11 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 <li class="level1"><div class="li">  Plack::Handler</div>
 </li>
-<li class="level1"><div class="li">  Authen::Captcha</div>
+<li class="level1"><div class="li">  GD::SecurityImage</div>
 </li>
 </ul>
 
-</div><!-- EDIT4 SECTION "Core" [655-1265] -->
+</div><!-- EDIT4 SECTION "Core" [655-1267] -->
 
 <h3 class="sectionedit5" id="saml2">SAML2</h3>
 <div class="level3">
@@ -189,7 +189,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT5 SECTION "SAML2" [1266-1335] -->
+</div><!-- EDIT5 SECTION "SAML2" [1268-1337] -->
 
 <h3 class="sectionedit6" id="cas_authentication_module">CAS (module d'authentification)</h3>
 <div class="level3">
@@ -198,7 +198,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT6 SECTION "CAS (authentication module)" [1336-1433] -->
+</div><!-- EDIT6 SECTION "CAS (authentication module)" [1338-1435] -->
 
 <h3 class="sectionedit7" id="openid">OpenID</h3>
 <div class="level3">
@@ -209,7 +209,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT7 SECTION "OpenID" [1434-1516] -->
+</div><!-- EDIT7 SECTION "OpenID" [1436-1518] -->
 
 <h3 class="sectionedit8" id="twitter">Twitter</h3>
 <div class="level3">
@@ -218,7 +218,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT8 SECTION "Twitter" [1517-1551] -->
+</div><!-- EDIT8 SECTION "Twitter" [1519-1553] -->
 
 <h3 class="sectionedit9" id="pod_unit_tests">Tests unitaires POD</h3>
 <div class="level3">
@@ -229,7 +229,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT9 SECTION "POD unit tests" [1552-1613] -->
+</div><!-- EDIT9 SECTION "POD unit tests" [1554-1615] -->
 
 <h3 class="sectionedit10" id="smtpreset_password_by_mail">SMTP / réinitialisation de mot-de-passe par courriel</h3>
 <div class="level3">
@@ -248,7 +248,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT10 SECTION "SMTP / Reset password by mail" [1614-1761] -->
+</div><!-- EDIT10 SECTION "SMTP / Reset password by mail" [1616-1763] -->
 
 <h2 class="sectionedit11" id="other">Autres</h2>
 <div class="level2">
@@ -259,12 +259,12 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT11 SECTION "Other" [1762-1978] -->
+</div><!-- EDIT11 SECTION "Other" [1764-1980] -->
 
 <h2 class="sectionedit12" id="install_dependencies_on_your_system">Installer les dépendances sur le système</h2>
 <div class="level2">
 
-</div><!-- EDIT12 SECTION "Install dependencies on your system" [1979-2028] -->
+</div><!-- EDIT12 SECTION "Install dependencies on your system" [1981-2030] -->
 
 <h3 class="sectionedit13" id="apt-get">APT-GET</h3>
 <div class="level3">
@@ -274,7 +274,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 Perl dependencies:
 
 </p>
-<pre class="code">apt-get install libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libregexp-common-perl libjs-jquery libxml-libxml-perl libcrypt-rijndael-perl libio-string-perl libxml-libxslt-perl libconfig-inifiles-perl libjson-perl libstring-random-perl libemail-date-format-perl libmime-lite-perl libcrypt-openssl-rsa-perl libdigest-hmac-perl libdigest-sha-perl libclone-perl libauthen-sasl-perl libnet-cidr-lite-perl libcrypt-openssl-x509-perl libauthcas-perl libtest-pod-perl libtest-mockobject-perl libauthen-captcha-perl libnet-openid-consumer-perl libnet-openid-server-perl libunicode-string-perl libconvert-pem-perl libmouse-perl libplack-perl</pre>
+<pre class="code">apt-get install libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libregexp-common-perl libjs-jquery libxml-libxml-perl libcrypt-rijndael-perl libio-string-perl libxml-libxslt-perl libconfig-inifiles-perl libjson-perl libstring-random-perl libemail-date-format-perl libmime-lite-perl libcrypt-openssl-rsa-perl libdigest-hmac-perl libdigest-sha-perl libclone-perl libauthen-sasl-perl libnet-cidr-lite-perl libcrypt-openssl-x509-perl libauthcas-perl libtest-pod-perl libtest-mockobject-perl libgd-securityimage-perl libnet-openid-consumer-perl libnet-openid-server-perl libunicode-string-perl libconvert-pem-perl libmouse-perl libplack-perl</pre>
 
 <p>
 Pour Apache:
@@ -286,7 +286,7 @@ Pour Nginx:
 </p>
 <pre class="code">apt-get install nginx nginx-extras</pre>
 
-</div><!-- EDIT13 SECTION "APT-GET" [2029-3021] -->
+</div><!-- EDIT13 SECTION "APT-GET" [2031-3025] -->
 
 <h3 class="sectionedit14" id="yum">YUM</h3>
 <div class="level3">
@@ -297,7 +297,7 @@ Pour Nginx:
 Perl dependencies:
 
 </p>
-<pre class="code">yum install perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Regexp-Common perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC perl-Digest-SHA perl-String-Random perl-MIME-Lite perl-Email-Date-Format perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Clone perl-Authen-SASL perl-Log-Log4perl perl-Unicode-String perl-Net-CIDR-Lite perl-Cache-Memcached perl-Convert-PEM perl-Mouse perl-Plack perl-Authen-Captcha</pre>
+<pre class="code">yum install perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Regexp-Common perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC perl-Digest-SHA perl-String-Random perl-MIME-Lite perl-Email-Date-Format perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Clone perl-Authen-SASL perl-Log-Log4perl perl-Unicode-String perl-Net-CIDR-Lite perl-Cache-Memcached perl-Convert-PEM perl-Mouse perl-Plack perl-GD-SecurityImage</pre>
 
 <p>
 Pour Apache:
@@ -311,7 +311,7 @@ Pour Nginx:
 <div class="noteimportant">As you need a recent version of Nginx, the best is to install <a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-red-hat-centos-packages" class="urlextern" title="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-red-hat-centos-packages"  rel="nofollow">Nginx official packages</a>.
 
 </div>
-</div><!-- EDIT14 SECTION "YUM" [3022-] -->
+</div><!-- EDIT14 SECTION "YUM" [3026-] -->
 </div>
 </body>
 </html>
