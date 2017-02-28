@@ -158,7 +158,7 @@ sub getCookies {
     else {
         $req->steps(
             [
-                qw(getUser setAuthSessionInfo),
+                qw(getUser authenticate setAuthSessionInfo),
                 @{ $self->p->betweenAuthAndDatas },
                 $self->p->sessionDatas,
                 @{ $self->p->afterDatas },
@@ -172,7 +172,7 @@ sub getCookies {
     my @tmp = ();
     push @tmp, SOAP::Data->name( errorCode => $req->{error} );
     my @cookies = ();
-    unless ( $self->{error} ) {
+    unless ( $req->{error} ) {
         for ( my $i = 0 ; $i < @{ $req->respHeaders } ; $i += 2 ) {
             if ( $req->respHeaders->[$i] eq 'Set-Cookie' ) {
                 my ( $k, $v ) =
