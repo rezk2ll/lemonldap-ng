@@ -51,13 +51,13 @@ DATADIR=$(LMPREFIX)/data
 DOCUMENTROOT=$(LMPREFIX)/htdocs
 PORTALDIR=$(DOCUMENTROOT)/portal
 PORTALSITEDIR=$(PORTALDIR)
-PORTALSTATICDIR=$(PORTALSITEDIR)/static
+PORTALSTATICDIR=$(PORTALSITEDIR)/htdocs/static
 PORTALRELATIVESTATICDIR=/static
 PORTALTEMPLATESDIR=$(PORTALSITEDIR)/templates
 
 MANAGERDIR=$(DOCUMENTROOT)/manager
 MANAGERSITEDIR=$(MANAGERDIR)
-MANAGERSTATICDIR=$(MANAGERSITEDIR)/static
+MANAGERSTATICDIR=$(MANAGERSITEDIR)/htdocs/static
 MANAGERRELATIVESTATICDIR=/static
 MANAGERTEMPLATESDIR=$(MANAGERSITEDIR)/templates
 DOCDIR=$(DOCUMENTROOT)
@@ -665,13 +665,13 @@ install_portal_site:	install_conf_dir
 			>$(RPORTALTEMPLATESDIR)/$$f; \
 	done; cd -
 	cd $(SRCPORTALDIR)/site/templates; for l in `find * -type l`; do \
-		echo lien à faire $$l `readlink $$l`; \
+		echo link to do $$l `readlink $$l`; \
 		target=`readlink $$l`; \
 		cd $(RPORTALTEMPLATESDIR); \
 		ln -s $$target $$l; \
 		cd -; \
 	done
-	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
+	if test "$(USEEXTERNALLIBS)" = "yes"; then \
 		rm -rvf $(PORTALEXTERNALLIBS); \
 	elif test "$(USEDEBIANLIBS)" = "yes"; then \
 		rm -rvf $(PORTALLIBSTOREMOVEFORDEBIAN); \

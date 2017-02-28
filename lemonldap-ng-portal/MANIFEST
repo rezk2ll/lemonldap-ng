@@ -1,7 +1,9 @@
 .bowerrc
 bower.json
 Changes
+eg/index.cgi
 eg/index.fcgi
+eg/index.psgi
 example/soapconfigtest.pl
 example/soaperrortest.pl
 example/soaptest.pl

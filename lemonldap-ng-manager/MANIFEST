@@ -1,9 +1,9 @@
 .bowerrc
 bower.json
 Changes
-eg/manager-server.cgi
-eg/manager-server.fcgi
-eg/manager-server.psgi
+eg/manager.cgi
+eg/manager.fcgi
+eg/manager.psgi
 KINEMATIC.md
 lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/Attributes.pm
