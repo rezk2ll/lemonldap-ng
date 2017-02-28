@@ -388,7 +388,7 @@ sub display {
     my ( $self, $req ) = @_;
     my %templateParams = (
         SKIN_PATH       => '/static',
-        SKIN            => $self->conf->{portalSkin},
+        SKIN            => $self->p->getSkin($req),
         SKIN_BG         => $self->conf->{portalSkinBackground},
         AUTH_ERROR      => $req->error,
         AUTH_ERROR_TYPE => $req->error_type,

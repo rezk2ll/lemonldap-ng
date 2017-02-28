@@ -228,7 +228,7 @@ sub _reset {
         $infos->{_type} = "mail";
 
         # create session
-        $mailSession = $self->p->getApacheSession(undef,info=>$infos);
+        $mailSession = $self->p->getApacheSession( undef, info => $infos );
 
         $req->id( $mailSession->id );
     }
@@ -477,7 +477,7 @@ sub display {
     $self->logger->debug( 'Display called with code: ' . $req->error );
     my %tplPrm = (
         SKIN_PATH       => '/static',
-        SKIN            => $self->conf->{portalSkin},
+        SKIN            => $self->p->getSkin($req),
         SKIN_BG         => $self->conf->{portalSkinBackground},
         AUTH_ERROR      => $req->error,
         AUTH_ERROR_TYPE => $req->error_type,
