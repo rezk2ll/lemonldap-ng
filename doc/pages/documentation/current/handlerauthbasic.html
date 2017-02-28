@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:handlerauthbasic</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,handlerauthbasic"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="handlerauthbasic.html"/>
@@ -75,7 +75,7 @@ host.
 </p>
 
 <p>
-The Handler will send a WWW-Authenticate header to the client, to request user and password, and then check the credentials using SOAP getCookies web service. When session is granted, the Handler will then check the authorizations like the standard Handler.
+The Handler will send a WWW-Authenticate header to the client, to request user and password, and then check the credentials using REST web service (you must enable REST session service in the manager). When session is granted, the Handler will then check the authorizations like the standard Handler.
 </p>
 
 <p>
@@ -83,12 +83,12 @@ This can be useful to allow an third party application to access a virtual host 
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Presentation" [34-634] -->
+<!-- EDIT2 SECTION "Presentation" [34-677] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Configuration" [635-661] -->
+<!-- EDIT3 SECTION "Configuration" [678-704] -->
 <h3 class="sectionedit4" id="virtual_host">Virtual host</h3>
 <div class="level3">
 
@@ -107,7 +107,7 @@ If you want to protect only a virtualHost part, keep type on “Main” and set 
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Virtual host" [662-1052] -->
+<!-- EDIT4 SECTION "Virtual host" [705-1095] -->
 <h3 class="sectionedit5" id="nginx">Nginx</h3>
 <div class="level3">
 
@@ -144,15 +144,15 @@ location / {
 }</pre>
 
 </div>
-<!-- EDIT5 SECTION "Nginx" [1053-2076] -->
+<!-- EDIT5 SECTION "Nginx" [1096-2119] -->
 <h3 class="sectionedit6" id="handler_parameters">Handler parameters</h3>
 <div class="level3">
 
 <p>
-No parameters needed. But you have to allow sessions web services, see <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP sessions backend</a>.
+No parameters needed. But you have to allow sessions web services, see <a href="restsessionbackend.html" class="wikilink1" title="documentation:2.0:restsessionbackend">REST sessions backend</a>.
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Handler parameters" [2077-] --></div>
+<!-- EDIT6 SECTION "Handler parameters" [2120-] --></div>
 </body>
 </html>

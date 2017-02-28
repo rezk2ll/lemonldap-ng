@@ -104,7 +104,7 @@ close CMD;
 for my $file (@list) {
     open F, $file;
     my $buf = join '', map {
-s#<link.*,href=".*bootstrap\.min\.css.*$"#$cssbootstrap#;
+s#<link.*href=".*bootstrap\.min\.css.*$"#$cssbootstrap#;
 s#src=".*bootstrap.min.js"#src="/javascript/bootstrap/js/bootstrap.min.js"#;
         s#(<link.*?lib/exe/css.php.t.bootstrap3.css"/>)#$1
 $cssbootstrap#;

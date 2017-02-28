@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:captcha</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,captcha"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="captcha.html"/>
@@ -67,17 +67,10 @@ Captchas are available on the following forms:
 <li class="level1"><div class="li"> Register form: where user enters information to create a new account</div>
 </li>
 </ul>
-
-<p>
-We use the Perl module Authen::Captcha to generate codes and images, which look like this:
-</p>
-
-<p>
-<a href="documentation/captcha.png_documentation_2.0_captcha.html" class="media" title="documentation:captcha.png"><img src="documentation/captcha.png" class="mediacenter" alt="" /></a>
-</p>
-
+<div class="noteimportant">We use the Perl module GD::SecurityImage to generate images, you need to install it if you enable Captcha feature.
 </div>
-<!-- EDIT2 SECTION "Presentation" [24-524] -->
+</div>
+<!-- EDIT2 SECTION "Presentation" [24-535] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -96,6 +89,6 @@ Go in <code>General parameters</code> &gt; <code>Portal</code> &gt; <code>Captch
 </ul>
 
 </div>
-<!-- EDIT3 SECTION "Configuration" [525-] --></div>
+<!-- EDIT3 SECTION "Configuration" [536-] --></div>
 </body>
 </html>
