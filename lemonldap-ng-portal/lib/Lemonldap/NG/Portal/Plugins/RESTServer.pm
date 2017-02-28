@@ -15,7 +15,8 @@
 #   * DELETE /mysession                          : ask for logout
 #
 # - Authentication
-#   * POST /sessions/<type>?auth
+#   * POST /sessions/<type>/<session-id>?auth    : authenticate with a fixed
+#                                                  sessionId
 #   * Note that the "getCookie" method (authentification via SOAP) exists for
 #      REST requests directly by using '/' path : the portal recognize REST
 #      calls and generate JSON response instead of web page.
@@ -141,7 +142,11 @@ sub init {
 }
 
 sub newSession {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $id ) = @_;
+
+    # If id is defined
+    return $self->newAuthSession( $req, $id )
+      if ( $id and exists $req->parameters->{auth} );
     my $mod = $self->getMod($req)
       or return $self->p->sendError( $req, undef, 400 );
     my $infos = $req->jsonBodyToObj
@@ -163,7 +168,7 @@ sub newSession {
         }
     }
 
-    my $session = $self->getApacheSession( $mod, undef, $infos, $force );
+    my $session = $self->getApacheSession( $mod, $id, $infos, $force );
     return $self->p->sendError( $req, 'Unable to create session', 500 )
       unless ($session);
 
@@ -172,6 +177,36 @@ sub newSession {
 
     return $self->p->sendJSONresponse( $req,
         { result => 1, session => $session->data } );
+}
+
+sub newAuthSession {
+    my ( $self, $req, $id ) = @_;
+    my $t;
+    unless ($t = $req->param('__secret')
+        and $t = $self->conf->{cipher}->decrypt($t)
+        and $t <= time
+        and $t > time - 30 )
+    {
+        return $self->p->sendError( $req, 'Bad secret', 403 );
+    }
+    $req->{id}    = $id;
+    $req->{force} = 1;
+    $req->steps(
+        [
+            @{ $self->beforeAuth },
+            $self->authProcess,
+            @{ $self->betweenAuthAndDatas },
+            $self->sessionDatas,
+            @{ $self->afterDatas },
+        ]
+    );
+    $req->{error} = $self->p->process($req);
+    $self->logger->debug(
+        "REST authentication result for $req->{user}: code $req->{error}");
+    if ( $req->error > 0 ) {
+        return $self->p->sendError( $req, 'Bad credentials', 401 );
+    }
+    return $self->session( $req, $id );
 }
 
 sub updateSession {
