@@ -1,3 +1,17 @@
-# False positive: these long lines are in source files
-lemonldap-ng source: source-is-missing lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js line length is 601 characters (>512)
-lemonldap-ng source: source-is-missing lemonldap-ng-manager/site/htdocs/static/bwr/es5-shim/es5-shim.js line length is 505 characters (>256)
+# These serialized files just contains 2 constants
+lemonldap-ng source: insane-line-length-in-source-file doc/pages/documentation/current/lib/exe/js.php.t.bootstrap3.js line length is 1787 characters (>512)
+lemonldap-ng source: source-contains-prebuilt-javascript-object doc/pages/documentation/current/lib/exe/js.php.t.bootstrap3.js line length is 1787 characters (>512)
+lemonldap-ng source: source-is-missing doc/pages/documentation/current/lib/exe/js.php.t.bootstrap3.js line length is 1787 characters (>512)
+lemonldap-ng source: source-is-missing doc/pages/documentation/current/lib/tpl/bootstrap3/assets/bootstrap/js/bootstrap.min.js
+lemonldap-ng source: insane-line-length-in-source-file po-doc/fr/pages/documentation/current/lib/exe/js.php.t.bootstrap3.js line length is 1787 characters (>512)
+lemonldap-ng source: source-contains-prebuilt-javascript-object po-doc/fr/pages/documentation/current/lib/exe/js.php.t.bootstrap3.js line length is 1787 characters (>512)
+lemonldap-ng source: source-is-missing po-doc/fr/pages/documentation/current/lib/exe/js.php.t.bootstrap3.js line length is 1787 characters (>512)
+# False positive: these long lines are in source files (and deleted during build) with USEDEBIANLIBS=yes
+lemonldap-ng source: insane-line-length-in-source-file lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js line length is 683 characters (>512)
+lemonldap-ng source: source-contains-prebuilt-javascript-object lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js line length is 680 characters (>512)
+lemonldap-ng source: source-is-missing lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js line length is 680 characters (>512)
+lemonldap-ng source: insane-line-length-in-source-file lemonldap-ng-manager/site/htdocs/static/bwr/es5-shim/es5-shim.js line length is 1119 characters (>512)
+lemonldap-ng source: source-contains-prebuilt-javascript-object lemonldap-ng-manager/site/htdocs/static/bwr/es5-shim/es5-shim.js line length is 290 characters (>256)
+lemonldap-ng source: source-is-missing lemonldap-ng-manager/site/htdocs/static/bwr/es5-shim/es5-shim.js line length is 290 characters (>256)
+lemonldap-ng source: insane-line-length-in-source-file lemonldap-ng-portal/site/htdocs/static/bwr/jquery-ui/jquery-ui.js line length is 1002 characters (>512)
+lemonldap-ng source: source-is-missing po-doc/fr/pages/documentation/current/lib/tpl/bootstrap3/assets/bootstrap/js/bootstrap.min.js
