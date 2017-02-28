@@ -1,7 +1,7 @@
 * Don't generate token for /?js
 * Update notification doc
 * securize SOAP session creation by cipher
-* write REST method to create session with an id
+* Verify securedCookie=3 (strange)
 * Test ForceAuth
 * Calendar in notifications explorer
 * Test for Zero

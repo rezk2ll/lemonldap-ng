@@ -5,7 +5,10 @@ use Exporter;
 use Digest::MD5;
 use MIME::Base64;
 use HTTP::Headers;
-use SOAP::Lite;    # link protected portalRequest
+
+#use SOAP::Lite;    # link protected portalRequest
+use Lemonldap::NG::Common::UserAgent;
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Session;
 
 our $VERSION = '2.0.0';
@@ -63,38 +66,62 @@ sub createSession {
     my $xheader = $class->header_in('X-Forwarded-For');
     $xheader .= ", " if ($xheader);
     $xheader .= $class->remote_ip;
-    my $soapHeaders = HTTP::Headers->new( "X-Forwarded-For" => $xheader );
 
-    # TODO: use adminSession or sessions
-    my $soapClient = SOAP::Lite->proxy(
-        $class->tsv->{portal}->() . '/sessions',
-        default_headers => $soapHeaders
-    )->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
+    #my $soapHeaders = HTTP::Headers->new( "X-Forwarded-For" => $xheader );
+    ## TODO: use adminSession or sessions
+    #my $soapClient = SOAP::Lite->proxy(
+    #    $class->tsv->{portal}->() . '/sessions',
+    #    default_headers => $soapHeaders
+    #)->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
 
     my $creds = $class->header_in('Authorization');
     $creds =~ s/^Basic\s+//;
     my ( $user, $pwd ) = ( decode_base64($creds) =~ /^(.*?):(.*)$/ );
     $class->logger->debug("AuthBasic authentication for user: $user");
-    my $soapRequest = $soapClient->getCookies( $user, $pwd, $id );
 
-    # Catch SOAP errors
-    if ( $soapRequest->fault ) {
-        $class->abort( "SOAP request to the portal failed: "
-              . $soapRequest->fault->{faultstring} );
+    #my $soapRequest = $soapClient->getCookies( $user, $pwd, $id );
+    my $req =
+      HTTP::Request->new(
+        POST => $class->tsv->{portal}->() . "/sessions/$id?auth" );
+    $req->header( 'X-Forwarded-For' => $xheader );
+    $req->header( 'Content-Type'    => 'application/json' );
+    $req->content(
+        build_urlencoded(
+            user     => $user,
+            password => $pwd,
+            __secret => $class->tsv->{cipher}->encrypt(time)
+        )
+    );
+    my $resp = $class->ua->request($req);
+
+    if ( $resp->is_success ) {
+        $class->userLogger->notice("Good REST authentication for $user");
+        return 1;
     }
     else {
-        my $res = $soapRequest->result();
-
-        # If authentication failed, display error
-        if ( $res->{errorCode} ) {
-            $class->userLogger->notice( "Authentication failed for $user: "
-                  . $soapClient->error( $res->{errorCode}, 'en' )->result() );
-            return 0;
-        }
-        else {
-            return 1;
-        }
+        $class->userLogger->warn(
+            "Authentication failed for $user: " . $resp->status_line );
+        return 0;
     }
+
+    ## Catch SOAP errors
+    #if ( $soapRequest->fault ) {
+    #    $class->abort( "SOAP request to the portal failed: "
+    #          . $soapRequest->fault->{faultstring} );
+    #}
+    #else {
+    #    my $res = $soapRequest->result();
+
+    #    # If authentication failed, display error
+    #    if ( $res->{errorCode} ) {
+    #        $class->userLogger->notice( "Authentication failed for $user: "
+    #              . $soapClient->error( $res->{errorCode}, 'en' )->result() );
+    #        return 0;
+    #    }
+    #    else {
+    #        return 1;
+    #    }
+    #}
 }
 
 ## @rmethod protected void hideCookie()
@@ -121,6 +148,22 @@ sub goToPortal {
             'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
         return $class->AUTH_REQUIRED;
     }
+}
+
+our $_ua;
+
+sub ua {
+    my ($class) = @_;
+    return $_ua if ($_ua);
+    $_ua = Lemonldap::NG::Common::UserAgent->new(
+        {
+            lwpOpts    => $class->localConfig->{lwpOpts},
+            lwpSslOpts => $class->localConfig->{lwpSslOpts}
+        }
+    );
+
+    # TODO: auth basic
+    return $_ua;
 }
 
 1;
