@@ -50,14 +50,14 @@ DATADIR=$(LMPREFIX)/data
 # Document roots for Apache VirtualHosts
 DOCUMENTROOT=$(LMPREFIX)/htdocs
 PORTALDIR=$(DOCUMENTROOT)/portal
-PORTALSITEDIR=$(PORTALDIR)
-PORTALSTATICDIR=$(PORTALSITEDIR)/htdocs/static
+PORTALSITEDIR=$(PORTALDIR)/htdocs
+PORTALSTATICDIR=$(PORTALSITEDIR)/static
 PORTALRELATIVESTATICDIR=/static
-PORTALTEMPLATESDIR=$(PORTALSITEDIR)/templates
+PORTALTEMPLATESDIR=$(PORTALDIR)/templates
 
 MANAGERDIR=$(DOCUMENTROOT)/manager
-MANAGERSITEDIR=$(MANAGERDIR)
-MANAGERSTATICDIR=$(MANAGERSITEDIR)/htdocs/static
+MANAGERSITEDIR=$(MANAGERDIR)/htdocs
+MANAGERSTATICDIR=$(MANAGERSITEDIR)/static
 MANAGERRELATIVESTATICDIR=/static
 MANAGERTEMPLATESDIR=$(MANAGERSITEDIR)/templates
 DOCDIR=$(DOCUMENTROOT)
@@ -626,7 +626,7 @@ install_manager_site:	install_conf_dir
 	# Manager install
 	@install -v -d $(RMANAGERDIR) $(RMANAGERSTATICDIR) \
 		$(RMANAGERTEMPLATESDIR)
-	@cp -pR -f $(SRCMANAGERDIR)/site/htdocs/manager.* $(RMANAGERDIR)
+	@cp -pR -f $(SRCMANAGERDIR)/site/htdocs/manager.* $(RMANAGERSITEDIR)
 	@cp -pR $(SRCMANAGERDIR)/site/htdocs/static/* $(RMANAGERSTATICDIR)
 	@for f in $(SRCMANAGERDIR)/site/templates/*.tpl; do \
 		./scripts/transform-templates \
@@ -652,7 +652,7 @@ install_portal_site:	install_conf_dir
 	@install -v -d $(RPORTALDIR) $(RPORTALSTATICDIR) \
 		$(RPORTALTEMPLATESDIR) \
 		$(RCRONDIR) $(RCONFDIR)
-	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/index.* $(RPORTALDIR)
+	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/index.* $(RPORTALSITEDIR)
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/static/* $(RPORTALSTATICDIR)
 	cd $(SRCPORTALDIR)/site/templates; for f in `find * -type f -name '*.tpl'`; do \
 		echo "$$f => $(RPORTALTEMPLATESDIR)/$$f"; \
