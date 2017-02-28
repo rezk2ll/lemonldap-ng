@@ -7,6 +7,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SESSIONNOTGRANTED
 );
 
+our $VERSION = '2.0.0';
+
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 use constant afterDatas => 'grantSession';

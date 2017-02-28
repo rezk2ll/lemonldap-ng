@@ -12,6 +12,8 @@ use base qw(Lemonldap::NG::Handler::ApacheMP2::Main);
 use Apache2::Filter ();
 use constant BUFF_LEN => 8192;
 
+our $VERSION = '2.0.0';
+
 sub handler {
     my $r = pop;
     __PACKAGE__->run($r);

@@ -4,6 +4,8 @@ use JSON;
 use Mouse;
 use Lemonldap::NG::Common::PSGI;
 
+our $VERSION = '2.0.0';
+
 has iniFile => ( is => 'ro', isa => 'Str' );
 
 has app => ( is => 'ro', isa => 'CodeRef' );

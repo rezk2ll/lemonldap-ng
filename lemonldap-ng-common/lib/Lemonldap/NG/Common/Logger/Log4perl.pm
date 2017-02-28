@@ -4,6 +4,8 @@ use strict;
 use Log::Log4perl;
 use Mouse;
 
+our $VERSION = '2.0.0';
+
 our $init = 0;
 
 sub new {

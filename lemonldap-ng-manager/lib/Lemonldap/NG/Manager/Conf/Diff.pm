@@ -4,6 +4,8 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Manager::Conf::Parser;
 
+our $VERSION = '2.0.0';
+
 *defaultValue = \&Lemonldap::NG::Manager::Conf::Parser::defaultValue;
 
 sub diff {

@@ -7,6 +7,8 @@ use utf8;
 use Mouse;
 use Clone 'clone';
 
+our $VERSION = '2.0.0';
+
 extends 'Lemonldap::NG::Common::Module';
 
 # PROPERTIES

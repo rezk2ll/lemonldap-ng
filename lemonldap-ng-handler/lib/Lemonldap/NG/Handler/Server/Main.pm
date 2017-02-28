@@ -5,6 +5,8 @@ package Lemonldap::NG::Handler::Server::Main;
 
 use strict;
 
+our $VERSION = '2.0.0';
+
 use base 'Lemonldap::NG::Handler::PSGI::Main';
 
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Syslog';

@@ -5,6 +5,8 @@ use Mouse;
 use Data::Dumper;
 use Lemonldap::NG::Common::Conf;
 
+our $VERSION = '2.0.0';
+
 has confAccess => (
     is      => 'rw',
     builder => sub {

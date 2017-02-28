@@ -5,6 +5,8 @@ use Mouse;
 use Data::Dumper;
 use Lemonldap::NG::Common::Conf::ReConstants;
 
+our $VERSION = '2.0.0';
+
 extends('Lemonldap::NG::Manager::Cli::Lib');
 
 has cfgNum => (

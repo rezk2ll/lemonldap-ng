@@ -14,6 +14,8 @@
 
 package Lemonldap::NG::Manager::Build::CTrees;
 
+our $VERSION = '2.0.0';
+
 sub cTrees {
     return {
         virtualHost => [

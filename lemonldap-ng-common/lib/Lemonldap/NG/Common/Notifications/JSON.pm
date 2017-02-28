@@ -4,6 +4,8 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 
+our $VERSION = '2.0.0';
+
 sub newNotification {
     my ( $self, $jsonString ) = @_;
     my $json;

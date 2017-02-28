@@ -2,6 +2,8 @@ package Lemonldap::NG::Handler::Lib::CDA;
 
 use strict;
 
+our $VERSION = '2.0.0';
+
 sub run {
     my ( $class, $req, $rule, $protection ) = @_;
     my $uri = $class->unparsed_uri;

@@ -3,6 +3,8 @@ package Lemonldap::NG::Portal::Main::Constants;
 use strict;
 use Exporter 'import';
 
+our $VERSION = '2.0.0';
+
 use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::Main';
 use constant {
 

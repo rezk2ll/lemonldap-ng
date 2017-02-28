@@ -3,6 +3,8 @@ package Lemonldap::NG::Manager::Conf::Tests;
 use utf8;
 use Lemonldap::NG::Common::Regexp;
 
+our $VERSION = '2.0.0';
+
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
 # subroutines to execute.

@@ -4,6 +4,8 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 
+our $VERSION = '2.0.0';
+
 has sessionTypes => ( is => 'rw' );
 
 sub setTypes {

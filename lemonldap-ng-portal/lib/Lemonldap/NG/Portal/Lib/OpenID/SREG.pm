@@ -9,6 +9,8 @@ package Lemonldap::NG::Portal::Lib::OpenID::SREG;
 use strict;
 use Lemonldap::NG::Common::Regexp;
 
+our $VERSION = '2.0.0';
+
 ## @method protected hash sregHook(hash prm)
 # Hook called to add SREG parameters to the OpenID response
 # @return Hash containing wanted parameters

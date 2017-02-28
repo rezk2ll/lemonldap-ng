@@ -6,6 +6,8 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Handler::Server::Main;
 
+our $VERSION = '2.0.0';
+
 extends 'Lemonldap::NG::Handler::PSGI';
 
 sub init {

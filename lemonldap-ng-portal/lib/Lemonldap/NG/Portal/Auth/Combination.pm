@@ -6,6 +6,8 @@ use Lemonldap::NG::Common::Combination::Parser;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
 use Scalar::Util 'weaken';
 
+our $VERSION = '2.0.0';
+
 # TODO: See Lib::Wrapper
 extends 'Lemonldap::NG::Portal::Auth::Base';
 

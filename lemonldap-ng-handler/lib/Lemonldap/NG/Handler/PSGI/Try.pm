@@ -3,6 +3,8 @@ package Lemonldap::NG::Handler::PSGI::Try;
 use strict;
 use Mouse;
 
+our $VERSION = '2.0.0';
+
 extends 'Lemonldap::NG::Handler::PSGI::Router';
 
 has 'authRoutes' => (

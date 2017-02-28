@@ -4,6 +4,8 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_INFO PE_OK);
 
+our $VERSION = '2.0.0';
+
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::OtherSessions';
 

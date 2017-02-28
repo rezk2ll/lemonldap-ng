@@ -2,6 +2,8 @@ package Lemonldap::NG::Common::Logger::Std;
 
 use strict;
 
+our $VERSION = '2.0.0';
+
 sub new {
     no warnings 'redefine';
     my $level = $_[1]->{logLevel} || 'info';

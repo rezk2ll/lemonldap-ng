@@ -4,6 +4,8 @@ use strict;
 use Mouse;
 use XML::LibXML;
 
+our $VERSION = '2.0.0';
+
 # XML parser
 has parser => (
     is      => 'rw',
