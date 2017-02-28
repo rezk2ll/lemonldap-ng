@@ -100,7 +100,12 @@
 
   </TMPL_IF>
 
+  <div class="panel panel-default">
+  <TMPL_IF NAME="module">
+  <form action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
+  <TMPL_ELSE>
   <form action="#" method="post" class="login" role="form">
+  </TMPL_IF>
    <!-- Hidden fields -->
    <TMPL_VAR NAME="HIDDEN_INPUTS">
    <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
@@ -108,35 +113,18 @@
    <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
 
    <TMPL_IF NAME="DISPLAY_FORM">
-     <div class="panel panel-default">
       <TMPL_INCLUDE NAME="standardform.tpl">
-     </div>
    </TMPL_IF>
 
    <TMPL_IF NAME="DISPLAY_OPENID_FORM">
-     <div class="panel panel-default">
       <TMPL_INCLUDE NAME="openidform.tpl">
-     </div>
    </TMPL_IF>
 
    <TMPL_IF NAME="DISPLAY_YUBIKEY_FORM">
-     <div class="panel panel-default">
       <TMPL_INCLUDE NAME="yubikeyform.tpl">
-     </div>
    </TMPL_IF>
 
-  </form>
-
-  <TMPL_IF NAME="DISPLAY_LOGO_FORM">
-
-    <div class="panel panel-default">
-    <form action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
-      <!-- Hidden fields -->
-      <TMPL_VAR NAME="HIDDEN_INPUTS">
-      <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
-      <input type="hidden" name="timezone" />
-      <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
-
+   <TMPL_IF NAME="DISPLAY_LOGO_FORM">
       <div class="form">
       <TMPL_IF NAME="module">
         <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/<TMPL_VAR NAME="module">.png" alt="<TMPL_VAR NAME="module">" class="img-thumbnail" />
@@ -151,10 +139,10 @@
       </button>
       </div>
       </div>
+   </TMPL_IF>
 
-    </form>
-    </div>
-  </TMPL_IF>
+  </form>
+  </div>
 
   <TMPL_IF NAME="DISPLAY_PASSWORD">
     <div id="password" class="panel panel-default">
