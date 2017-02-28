@@ -221,7 +221,7 @@ sub sendJs {
         [
             'Content-Type'   => 'application/javascript',
             'Content-Length' => length($s),
-            'Cache-Control' => 'max-age=2592000',
+            'Cache-Control'  => 'max-age=2592000',
         ],
         [$s]
     ];
@@ -257,7 +257,7 @@ sub sendHtml {
         $htpl->param(
             STATIC_PREFIX => $sp,
             SCRIPTNAME    => $sc,
-            ( $self->can('tplParams') ? ( $self->tplParams ) : () ),
+            ( $self->can('tplParams') ? ( $self->tplParams($req) ) : () ),
             (
                 $args{params}
                 ? %{ $args{params} }
