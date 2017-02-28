@@ -182,7 +182,7 @@ sub newSession {
 sub newAuthSession {
     my ( $self, $req, $id ) = @_;
     my $t;
-    unless ($t = $req->param('__secret')
+    unless ($t = $req->param('secret')
         and $t = $self->conf->{cipher}->decrypt($t)
         and $t <= time
         and $t > time - 30 )
@@ -191,18 +191,21 @@ sub newAuthSession {
     }
     $req->{id}    = $id;
     $req->{force} = 1;
+    $req->user( $req->param('user') );
+    $req->datas->{password} = $req->param('password');
     $req->steps(
         [
-            @{ $self->beforeAuth },
-            $self->authProcess,
-            @{ $self->betweenAuthAndDatas },
-            $self->sessionDatas,
-            @{ $self->afterDatas },
+            @{ $self->p->beforeAuth },
+            qw(getUser authenticate setAuthSessionInfo),
+            @{ $self->p->betweenAuthAndDatas },
+            $self->p->sessionDatas,
+            @{ $self->p->afterDatas },
         ]
     );
     $req->{error} = $self->p->process($req);
     $self->logger->debug(
         "REST authentication result for $req->{user}: code $req->{error}");
+
     if ( $req->error > 0 ) {
         return $self->p->sendError( $req, 'Bad credentials', 401 );
     }

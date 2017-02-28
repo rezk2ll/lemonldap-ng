@@ -44,8 +44,10 @@ sub retrieveSession {
     my ( $class, $id ) = @_;
 
     # First check if session already exists
-    return 1
-      if ( $class->Lemonldap::NG::Handler::Main::retrieveSession($id) );
+    if ( my $res = $class->Lemonldap::NG::Handler::Main::retrieveSession($id) )
+    {
+        return $res;
+    }
 
     # Then ask portal to create it
     if ( $class->createSession($id) ) {
@@ -80,16 +82,17 @@ sub createSession {
     $class->logger->debug("AuthBasic authentication for user: $user");
 
     #my $soapRequest = $soapClient->getCookies( $user, $pwd, $id );
-    my $req =
-      HTTP::Request->new(
-        POST => $class->tsv->{portal}->() . "/sessions/$id?auth" );
+    my $url = $class->tsv->{portal}->() . "/sessions/global/$id?auth";
+    $url =~ s#//sessions/#/sessions/#g;
+    my $req = HTTP::Request->new( POST => $url );
     $req->header( 'X-Forwarded-For' => $xheader );
-    $req->header( 'Content-Type'    => 'application/json' );
+    $req->header( 'Content-Type'    => 'application/x-www-form-urlencoded' );
+    $req->header( Accept            => 'application/json' );
     $req->content(
         build_urlencoded(
             user     => $user,
             password => $pwd,
-            __secret => $class->tsv->{cipher}->encrypt(time)
+            secret   => $class->tsv->{cipher}->encrypt(time)
         )
     );
     my $resp = $class->ua->request($req);
