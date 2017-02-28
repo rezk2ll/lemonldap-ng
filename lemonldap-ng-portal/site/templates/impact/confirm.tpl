@@ -28,6 +28,7 @@
         <TMPL_IF NAME="CONFIRMKEY">
         <input type="hidden" id="confirm" name="confirm" value="<TMPL_VAR NAME="CONFIRMKEY">" />
         </TMPL_IF>
+        <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
 
         <TMPL_IF NAME="MSG">
         <div id="content-all-info">

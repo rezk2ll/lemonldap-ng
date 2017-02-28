@@ -11,6 +11,7 @@
     <TMPL_IF NAME="CHOICE_VALUE">
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
     </TMPL_IF>
+    <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
     <TMPL_VAR NAME="MSG">
     <p id="timer"><span trspan="redirectedIn">You'll be redirected in 10 seconds</span></p>
     <table><tbody><tr><td>

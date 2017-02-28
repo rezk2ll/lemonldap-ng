@@ -53,6 +53,7 @@
             <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
             <input type="hidden" name="timezone" />
             <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="key">" />
+            <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
 
             <TMPL_IF NAME="standardform">
               <TMPL_INCLUDE NAME="standardform.tpl">
@@ -104,6 +105,7 @@
    <TMPL_VAR NAME="HIDDEN_INPUTS">
    <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
    <input type="hidden" name="timezone" />
+   <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
 
    <TMPL_IF NAME="DISPLAY_FORM">
      <div class="panel panel-default">
@@ -133,6 +135,7 @@
       <TMPL_VAR NAME="HIDDEN_INPUTS">
       <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
       <input type="hidden" name="timezone" />
+      <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
 
       <div class="form">
       <TMPL_IF NAME="module">

@@ -13,6 +13,7 @@
       <TMPL_IF NAME="CHOICE_VALUE">
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
       </TMPL_IF>
+      <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
       <div id="content-all-info">
         <TMPL_VAR NAME="MSG">
       </div>

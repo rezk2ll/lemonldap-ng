@@ -7,6 +7,7 @@
     <TMPL_IF NAME="CHOICE_VALUE">
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
     </TMPL_IF>
+    <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
     <div class="panel panel-info">
       <div class="panel-heading">
         <h3 class="panel-title" trspan="info">Information</h3>
