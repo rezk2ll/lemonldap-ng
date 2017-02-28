@@ -410,7 +410,7 @@ sub store {
     # Compute unsecure cookie value if needed
     if ( $self->conf->{securedCookie} == 3 ) {
         $req->{sessionInfo}->{_httpSession} =
-          $self->conf->{cipher}->encryptHex( $self->{id}, "http" );
+          $self->conf->{cipher}->encryptHex( $req->{id}, "http" );
     }
 
     # Fill session
