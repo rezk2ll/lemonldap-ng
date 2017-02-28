@@ -219,8 +219,9 @@ sub save {
       HTTP::Request->new( PUT => $self->base . $self->{data}->{_session_id} );
     eval {
         $self->{data}->{__secret} =
-          Lemonldap::NG::Handler::Main->tsv->{cipher}->encrypt(1);
+          Lemonldap::NG::Handler::Main->tsv->{cipher}->encrypt(time);
     };
+    print STDERR "$@\n" if ($@);
     $req->content( to_json( $self->{data} ) );
     delete $self->{data}->{__secret};
     $req->header( 'Content-Type' => 'application/json' );

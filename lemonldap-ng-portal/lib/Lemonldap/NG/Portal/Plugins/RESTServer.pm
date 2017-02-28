@@ -1,7 +1,7 @@
 # Session server plugin for REST requests
 #
 # This plugin adds the following entry points:
-# - Sessions (if restSessionServer is on)
+# - Sessions backend (if restSessionServer is on)
 #   * GET /sessions/<type>/<session-id>          : get session datas
 #   * GET /sessions/<type>/<session-id>/<key>    : get a session key value
 #   * GET /sessions/<type>/<session-id>/[k1,k2]  : get some session key value
@@ -14,6 +14,12 @@
 #   * GET /mysession/<type>/key                  : get session key
 #   * DELETE /mysession                          : ask for logout
 #
+# - Authentication
+#   * POST /sessions/<type>?auth
+#   * Note that the "getCookie" method (authentification via SOAP) exists for
+#      REST requests directly by using '/' path : the portal recognize REST
+#      calls and generate JSON response instead of web page.
+#
 # - Configuration (if restConfigServer is on)
 #   * GET /confs/latest                          : get the last config metadata
 #   * GET /confs/<cfgNum>                        : get the metadata for config
@@ -25,10 +31,6 @@
 # - Authorizations for connected users (always):
 #   * GET /mysession/?authorizationfor=<base64-encoded-url>: ask if url is
 #                                                            authorizated
-#
-# Note that the "getCookie" method (authentification via SOAP) exists for REST
-# requests directly by using '/' path : the portal recognize REST calls and
-# generate JSON response instead of web page.
 #
 # There is no conflict with SOAP server, they can be used together
 
@@ -148,7 +150,12 @@ sub newSession {
 
     my $force = 0;
     if ( my $s = delete $infos->{__secret} ) {
-        if ( $self->conf->{cipher}->decrypt($s) == 1 ) {
+        my $t;
+        if ( $t =
+                $self->conf->{cipher}->decrypt($s)
+            and $t <= time
+            and $t > time - 30 )
+        {
             $force = 1;
         }
         else {
@@ -181,13 +188,19 @@ sub updateSession {
     # Get secret if given
     my $force = 0;
     if ( my $s = delete $infos->{__secret} ) {
-        if ( $self->conf->{cipher}->decrypt($s) == 1 ) {
+        my $t;
+        if ( $t =
+                $self->conf->{cipher}->decrypt($s)
+            and $t <= time
+            and $t > time - 30 )
+        {
             $force = 1;
         }
         else {
             $self->userLogger->error('Bad key, force denied');
         }
     }
+
     # Get session and store info
     my $session = $self->getApacheSession( $mod, $id, $infos, $force )
       or return $self->p->sendError( $req, 'Session id does not exists', 400 );
