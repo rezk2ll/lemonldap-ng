@@ -32,7 +32,7 @@ sub computeLogin {
 # @result Lemonldap::NG::Portal constant
 sub createUser {
     my ( $self, $req ) = @_;
-    $self->p->_userDB->{demoAccounts}->{ $req->datas->{registerInfo}->{login} }
+    $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{ $req->datas->{registerInfo}->{login} }
       = {
         uid => $req->datas->{registerInfo}->{login},
         cn  => $req->datas->{registerInfo}->{firstname} . ' '

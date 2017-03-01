@@ -14,27 +14,22 @@ extends 'Lemonldap::NG::Common::Module';
 our $VERSION = '2.0.0';
 
 # Sample accounts from Doctor Who characters
-has demoAccounts => (
-    is      => 'rw',
-    default => sub {
-        {
-            'rtyler' => {
-                'uid'  => 'rtyler',
-                'cn'   => 'Rose Tyler',
-                'mail' => 'rtyler@badwolf.org',
-            },
-            'msmith' => {
-                'uid'  => 'msmith',
-                'cn'   => 'Mickey Smith',
-                'mail' => 'msmith@badwolf.org',
-            },
-            'dwho' => {
-                'uid'  => 'dwho',
-                'cn'   => 'Doctor Who',
-                'mail' => 'dwho@badwolf.org',
-            },
-        };
-    }
+our %demoAccounts = (
+    'rtyler' => {
+        'uid'  => 'rtyler',
+        'cn'   => 'Rose Tyler',
+        'mail' => 'rtyler@badwolf.org',
+    },
+    'msmith' => {
+        'uid'  => 'msmith',
+        'cn'   => 'Mickey Smith',
+        'mail' => 'msmith@badwolf.org',
+    },
+    'dwho' => {
+        'uid'  => 'dwho',
+        'cn'   => 'Doctor Who',
+        'mail' => 'dwho@badwolf.org',
+    },
 );
 
 # INITIALIZATION
@@ -54,7 +49,7 @@ sub getUser {
     # Search by login
     if ( $req->user ) {
         return PE_OK
-          if ( defined $self->demoAccounts->{ $req->user } );
+          if ( defined $demoAccounts{ $req->user } );
     }
 
     # Search by mail
@@ -62,8 +57,8 @@ sub getUser {
         return PE_OK
           if (
             ( $req->{user} ) =
-            grep { $self->demoAccounts->{$_}->{mail} eq $req->{mail} }
-            keys %{ $self->demoAccounts }
+            grep { $demoAccounts{$_}->{mail} eq $req->{mail} }
+            keys %demoAccounts
           );
     }
 
@@ -79,7 +74,7 @@ sub setSessionInfo {
     my %vars = ( %{ $self->conf->{exportedVars} },
         %{ $self->conf->{demoExportedVars} } );
     while ( my ( $k, $v ) = each %vars ) {
-        $req->{sessionInfo}->{$k} = $self->demoAccounts->{ $req->{user} }->{$v}
+        $req->{sessionInfo}->{$k} = $demoAccounts{ $req->{user} }->{$v}
           || "";
     }
 

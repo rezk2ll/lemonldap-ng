@@ -30,8 +30,8 @@ expectOK($res);
 # Try to auth
 ok(
     $res = $sp->_post(
-        '/', IO::String->new('user=dwho&password=dwho'),
-        length => 23,
+        '/', IO::String->new('user=french&password=french'),
+        length => 27,
         accept => 'text/html'
     ),
     'Post user/password'
@@ -58,15 +58,17 @@ ok( $res->{_session_id} eq $spId, ' Good ID' )
 count(3);
 
 # Session key
-ok( $res = $issuer->_get("/sessions/global/$spId/[_session_id,uid]"),
+ok( $res = $issuer->_get("/sessions/global/$spId/[_session_id,uid,cn]"),
     'Some session keys' );
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
 ok( $res->{_session_id} eq $spId, ' Good ID' )
   or explain( $res, "_session_id => $spId" );
-ok( $res->{uid} eq 'dwho', ' Uid is dwho' ) or explain( $res, 'uid => dwho' );
-count(4);
+ok( $res->{uid} eq 'french', ' Uid is french' )
+  or explain( $res, 'uid => french' );
+ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' );
+count(5);
 
 # Logout
 switch ('sp');
