@@ -498,10 +498,8 @@ sub tree {
                 },
                 'reloadUrls',
                 {
-                    title => 'advancedParams',
-                    help  => 'start.html#advanced_features',
+                    title => 'plugins',
                     nodes => [
-                        'customFunctions',
                         'portalStatus',
                         {
                             title => 'portalServers',
@@ -591,6 +589,17 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [ 'u2fActivation', 'u2fSelfRegistration', ]
                         },
+                        {
+                            title => 'sToken',
+                            nodes => [ 'sTokenService', 'sTokenScopes' ]
+                        },
+                    ]
+                },
+                {
+                    title => 'advancedParams',
+                    help  => 'start.html#advanced_features',
+                    nodes => [
+                        'customFunctions',
                         {
                             title => 'security',
                             help => 'security.html#configure_security_settings',

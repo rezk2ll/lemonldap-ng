@@ -1011,6 +1011,17 @@ sub attributes {
               'List of attributes to export by SOAP or REST servers',
         },
 
+        # Service token service
+        sTokenService => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Enable service token service',
+        },
+        sTokenScopes => {
+            type          => 'keyTextContainer',
+            documentation => 'List of authorizated virtualHosts',
+        },
+
         ## Virtualhosts
 
         # Fake attribute: used by manager REST API to agglomerate all other
