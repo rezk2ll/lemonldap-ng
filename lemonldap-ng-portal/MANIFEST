@@ -421,4 +421,7 @@ t/sessions/lock/.exists
 t/sessions/saml/lock/.exists
 t/sessions2/6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101
 t/sessions2/lock/Apache-Session-6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101.lock
+t/test-ldap.pm
 t/test-lib.pm
+t/testslapd/slapd.ldif
+t/testslapd/users.ldif

@@ -1,0 +1,63 @@
+dn: cn=config
+objectClass: olcGlobal
+cn: config
+olcPidFile: t/testslapd/slapd.pid
+olcAttributeOptions: x-hidden lang-
+
+dn: cn=schema,cn=config
+objectClass: olcSchemaConfig
+cn: schema
+
+include: file:///etc/ldap/schema/core.ldif
+include: file:///etc/ldap/schema/cosine.ldif
+include: file:///etc/ldap/schema/nis.ldif
+include: file:///etc/ldap/schema/inetorgperson.ldif
+
+dn: olcDatabase=frontend,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcFrontendConfig
+olcDatabase: frontend
+olcAccess: to attrs=name;x-hidden by * =cs
+olcAccess: to attrs=userPassword  by * auth
+olcAccess: to * by * read
+
+dn: olcDatabase=config,cn=config
+objectClass: olcDatabaseConfig
+olcDatabase: config
+olcRootPW: admin
+olcAccess: to * by * none
+
+dn: cn=module,cn=config
+objectClass: olcModuleList
+cn: module
+# Where the dynamically loaded modules are stored
+olcModulePath: /usr/lib/ldap
+olcModuleLoad: back_mdb
+
+dn: olcDatabase=mdb,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcMdbConfig
+olcDatabase: mdb
+olcSuffix: dc=example,dc=com
+olcDbDirectory: t/testslapd/data
+olcAccess: to * by * read
+olcRootDN: cn=admin,dc=example,dc=com
+olcRootPW: admin
+olcAccess: to * by * read
+olcLastMod: TRUE
+
+#dn: olcDatabase=ldap,cn=config
+#objectClass: olcDatabaseConfig
+#objectClass: olcLdapConfig
+#olcDatabase: ldap
+#olcSuffix: ""
+#olcDbUri: ldap://auth.example.com:19389/
+
+#dn: uid=dwho,dc=example,dc=com
+#objectClass: inetOrgPerson
+#olcDatabase: mdb
+#uid: dwho
+#cn: Dr Who
+#mail: dwho
+#userPassword: dwho
+

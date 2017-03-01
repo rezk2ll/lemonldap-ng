@@ -7,7 +7,8 @@ require 't/test-lib.pm';
 my $res;
 
 SKIP: {
-    skip 'No LDAP server given', 1 unless ( $ENV{LDAPSERVER} );
+    skip 'LLNGTESTLDAP is not set', 1 unless ( $ENV{LLNGTESTLDAP} );
+    require 't/test-ldap.pm';
 
     my $client = LLNG::Manager::Test->new(
         {
@@ -18,11 +19,10 @@ SKIP: {
                 portal          => 'http://auth.example.com/',
                 userDB          => 'Same',
                 registerDB      => 'LDAP',
-                LDAPFilter      => $ENV{LDAPFILTER} || '(cn=$user)',
-                ldapServer      => $ENV{LDAPSERVER},
-                ldapBase        => $ENV{LDAPBASE},
-                managerDn       => $ENV{MANAGERDN} || '',
-                managerPassword => $ENV{MANAGERPASSWORD} || '',
+                ldapServer      => 'ldap://127.0.0.1:19389/',
+                ldapBase        => 'dc=example,dc=com',
+                managerDn       => '',
+                managerPassword => '',
             }
         }
     );
@@ -47,4 +47,5 @@ SKIP: {
     clean_sessions();
 }
 count(1);
+stopLdapServer();
 done_testing( count() );

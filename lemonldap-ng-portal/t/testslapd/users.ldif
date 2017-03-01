@@ -1,0 +1,15 @@
+dn: dc=example,dc=com
+objectClass: top
+objectClass: organization
+objectClass: dcObject
+dc: example
+o: Example
+
+dn: uid=dwho,dc=example,dc=com
+objectClass: inetOrgPerson
+uid: dwho
+cn: Dr Who
+sn: Who
+mail: dwho
+userPassword: dwho
+
