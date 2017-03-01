@@ -68,7 +68,7 @@ sub setSessionInfo {
     foreach my $var ( keys %{ $self->exportedVars } ) {
         my $attr = $self->exportedVars->{$var};
         $req->{sessionInfo}->{$var} = $req->datas->{entry}->{$attr}
-          if ( defined $self->{entry}->{$attr} );
+          if ( defined $req->datas->{entry}->{$attr} );
     }
     PE_OK;
 }

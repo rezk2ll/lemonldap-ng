@@ -366,6 +366,7 @@ t/02-Password-Demo.t
 t/03-XSS-protection.t
 t/19-Auth-Null.t
 t/20-Auth-and-password-DBI.t
+t/20-Auth-DBI-utf8.t
 t/21-Auth-and-password-LDAP.t
 t/22-Auth-and-password-AD.t
 t/23-Auth-and-password-REST.t
