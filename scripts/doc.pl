@@ -118,6 +118,9 @@ $jqueryui#;
     close F;
 }
 
+# Restore jquery-ui
+system('cp ../lemonldap-ng-portal/site/htdocs/static/bwr/jquery-ui/* pages/documentation/current/lib/scripts/');
+
 # Put content in a container
 system('find . -name \*.html -exec sed -i "s#<div class=\"dokuwiki export\">#<div class=\"dokuwiki export container\">#" {} \;');
 
