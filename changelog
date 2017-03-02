@@ -1,5 +1,35 @@
 lemonldap-ng (2.0.0) stable; urgency=low
 
+lemonldap-ng (1.9.8) stable; urgency=high
+
+    * [LEMONLDAP-1121] - Fail to require customNginxHandler
+    * [LEMONLDAP-1130] - SOAP request fail (FCGI) - missing path info
+    * [LEMONLDAP-1136] - Mail reset form allows email enumaration
+    * [LEMONLDAP-1139] - Errors "Session cannot be tied"
+    * [LEMONLDAP-1141] - Bad encoding in reset password emails
+    * [LEMONLDAP-1145] - Missing user identifier in mail reset log messages
+    * [LEMONLDAP-1147] - SAML session ID
+    * [LEMONLDAP-1149] - lemonldap-ng-fastcgi-server not working on CentOS7
+    * [LEMONLDAP-1152] - jquery-ui.min.js not found
+    * [LEMONLDAP-1155] - Typo in OIDC OP for keeping acr_values parameter
+    * [LEMONLDAP-1159] - Session concurrency issue with SAML + OpenID Connect flow
+    * [LEMONLDAP-1166] - Typo in bootstrap footer.tpl
+    * [LEMONLDAP-1170] - Browse sessions by ip address duplicates entries
+    * [LEMONLDAP-1179] - Bad session count in sessions explorer multi IP tab
+    * [LEMONLDAP-1086] - Make Debian packages autopkgtestable
+    * [LEMONLDAP-1120] - Add public pages concept in LemonLDAP::Portal
+    * [LEMONLDAP-1122] - Enclose expressions
+    * [LEMONLDAP-1125] - Avoid using unsafe eval Javascript
+    * [LEMONLDAP-1127] - SAML: Reject same entityID on different Metadata
+    * [LEMONLDAP-1132] - Warn users about session expired in portal
+    * [LEMONLDAP-1135] - Warnings in unit tests
+    * [LEMONLDAP-1143] - Manage doc indexing using robots.txt to avoid indexing old doc
+    * [LEMONLDAP-1144] - Add vhost in reject log message
+    * [LEMONLDAP-1156] - Export OpenIDConnect request parameters in %ENV
+    * [LEMONLDAP-1158] - Export CAS request parameters in %ENV
+    * [LEMONLDAP-1129] - Extract CN field from SSL certificate (authSSL)
+    * [LEMONLDAP-1177] - Custom skin lost when submitting login form
+
 lemonldap-ng (1.9.7) stable; urgency=high
 
     * [LEMONLDAP-1097] - invalid base64 encoding on openidconnect key2jwks
