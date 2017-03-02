@@ -2,35 +2,28 @@ dn: cn=config
 objectClass: olcGlobal
 cn: config
 olcPidFile: t/testslapd/slapd.pid
-olcAttributeOptions: x-hidden lang-
 
 dn: cn=schema,cn=config
 objectClass: olcSchemaConfig
 cn: schema
 
-include: file:///etc/ldap/schema/core.ldif
-include: file:///etc/ldap/schema/cosine.ldif
-include: file:///etc/ldap/schema/nis.ldif
-include: file:///etc/ldap/schema/inetorgperson.ldif
+include: file://__SCHEMA_DIR__/core.ldif
+include: file://__SCHEMA_DIR__/cosine.ldif
+include: file://__SCHEMA_DIR__/nis.ldif
+include: file://__SCHEMA_DIR__/inetorgperson.ldif
 
 dn: olcDatabase=frontend,cn=config
 objectClass: olcDatabaseConfig
 objectClass: olcFrontendConfig
 olcDatabase: frontend
-olcAccess: to attrs=name;x-hidden by * =cs
-olcAccess: to attrs=userPassword  by * auth
-olcAccess: to * by * read
 
 dn: olcDatabase=config,cn=config
 objectClass: olcDatabaseConfig
 olcDatabase: config
-olcRootPW: admin
-olcAccess: to * by * none
 
 dn: cn=module,cn=config
 objectClass: olcModuleList
 cn: module
-# Where the dynamically loaded modules are stored
 olcModulePath: /usr/lib/ldap
 olcModuleLoad: back_mdb
 
@@ -43,5 +36,4 @@ olcDbDirectory: t/testslapd/data
 olcRootDN: cn=admin,dc=example,dc=com
 olcRootPW: admin
 olcAccess: to * by * write
-olcLastMod: TRUE
 
