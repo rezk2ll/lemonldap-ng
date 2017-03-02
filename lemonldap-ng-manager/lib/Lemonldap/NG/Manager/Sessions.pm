@@ -157,7 +157,7 @@ sub sessions {
         foreach my $k ( keys %$res ) {
             my @tmp = keys %{ $r{ $res->{$k}->{$whatToTrace} } };
             if ( @tmp > 1 ) {
-                $total += @tmp;
+                $total += 1;
                 $res->{$k}->{_sessionId} = $k;
                 push @{ $r->{ $res->{$k}->{$whatToTrace} } }, $res->{$k};
             }
