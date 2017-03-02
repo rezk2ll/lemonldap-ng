@@ -44,7 +44,7 @@ count(1);
 expectOK($res);
 
 # Try to authenticate to IdP
-$query = "user=dwho&password=dwho&$query";
+$query = "user=french&password=french&$query";
 ok(
     $res = $op->_post(
         $url,
@@ -94,8 +94,17 @@ ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancestors/,
     'Content-Security-Policy does not contain a frame-ancestors' );
 count(1);
 
-# Logout initiated by RP
+# Verify UTF-8
 switch ('rp');
+ok( $res = $rp->_get("/sessions/global/$spId"), 'Get UTF-8' );
+expectOK($res);
+ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+  or print STDERR $@;
+ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
+  or explain( $res, 'cn => Frédéric Accents' );
+count(3);
+
+# Logout initiated by RP
 ok(
     $res = $rp->_get(
         '/',
@@ -232,6 +241,7 @@ sub LWP::UserAgent::request {
     while ( my $name = shift @{ $res->[1] } ) {
         $httpResp->header( $name, shift( @{ $res->[1] } ) );
     }
+    #print STDERR Dumper($res->[2]);
     $httpResp->content( join( '', @{ $res->[2] } ) );
     count(4);
     return $httpResp;
@@ -351,6 +361,7 @@ sub rp {
                 portal                     => 'http://auth.rp.com',
                 authentication             => 'OpenIDConnect',
                 userDB                     => 'Same',
+                restSessionServer          => 1,
                 oidcOPMetaDataExportedVars => {
                     op => {
                         cn   => "name",

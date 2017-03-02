@@ -1119,7 +1119,6 @@ sub buildUserInfoResponse {
               $self->conf->{oidcRPMetaDataExportedVars}->{$rp}->{$attribute};
             if ($session_key) {
                 my $session_value = $apacheSession->data->{$session_key};
-                utf8::decode($session_value);
 
                 # Address is a JSON object
                 if ( $claim eq "address" ) {
