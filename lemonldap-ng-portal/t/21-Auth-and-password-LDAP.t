@@ -23,8 +23,8 @@ SKIP: {
                 portalRequireOldPassword => 1,
                 ldapServer      => 'ldap://127.0.0.1:19389/',
                 ldapBase        => 'dc=example,dc=com',
-                managerDn       => '',
-                managerPassword => '',
+                managerDn       => 'cn=admin,dc=example,dc=com',
+                managerPassword => 'admin',
             }
         }
     );

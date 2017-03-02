@@ -78,7 +78,7 @@ sub setSessionInfo {
     my %vars = ( %{ $self->conf->{exportedVars} },
         %{ $self->conf->{ldapExportedVars} } );
     while ( my ( $k, $v ) = each %vars ) {
-        $self->{sessionInfo}->{$k} =
+        $req->sessionInfo->{$k} =
           $self->{ldap}->getLdapValue( $req->datas->{entry}, $v ) || "";
     }
 

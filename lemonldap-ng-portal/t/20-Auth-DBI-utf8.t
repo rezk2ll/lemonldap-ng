@@ -36,8 +36,8 @@ SKIP: {
                 passwordDB               => 'DBI',
                 portalRequireOldPassword => 1,
                 restSessionServer        => 1,
-                dbiExportedVars => {
-                    cn=>'cn',
+                dbiExportedVars          => {
+                    cn => 'cn',
                 },
             }
         }
@@ -49,8 +49,7 @@ SKIP: {
     # 1- Characters available in ISO and UTF-8
     ok(
         $res = $client->_post(
-            '/',
-            IO::String->new('user=french&password=french'),
+            '/', IO::String->new('user=french&password=french'),
             length => 27
         ),
         'Auth query'
@@ -58,16 +57,17 @@ SKIP: {
     expectOK($res);
     my $id = expectCookie($res);
 
-    ok( $res = $client->_get("/sessions/global/$id"), 'Get UTF-8');
+    ok( $res = $client->_get("/sessions/global/$id"), 'Get UTF-8' );
     expectOK($res);
-    ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )or print STDERR $@;
-    ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' ) or explain($res,'cn => Frédéric Accents');
+    ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+      or print STDERR $@;
+    ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
+      or explain( $res, 'cn => Frédéric Accents' );
 
     # 2- Characters UTF-8 only
     ok(
         $res = $client->_post(
-            '/',
-            IO::String->new('user=russian&password=russian'),
+            '/', IO::String->new('user=russian&password=russian'),
             length => 29
         ),
         'Auth query'
@@ -75,10 +75,12 @@ SKIP: {
     expectOK($res);
     $id = expectCookie($res);
 
-    ok( $res = $client->_get("/sessions/global/$id"), 'Get UTF-8');
+    ok( $res = $client->_get("/sessions/global/$id"), 'Get UTF-8' );
     expectOK($res);
-    ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )or print STDERR $@;
-    ok( $res->{cn} eq 'Русский', 'UTF-8 values' ) or explain($res,'cn => Русский');
+    ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+      or print STDERR $@;
+    ok( $res->{cn} eq 'Русский', 'UTF-8 values' )
+      or explain( $res, 'cn => Русский' );
 
     clean_sessions();
 }
