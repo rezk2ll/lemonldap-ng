@@ -369,8 +369,7 @@ sub userModifyPassword {
         return PE_PP_PASSWORD_MOD_NOT_ALLOWED
           if ( $mesg->code == 19 && $ad );
         return PE_LDAPERROR unless ( $mesg->code == 0 );
-        $self->{portal}
-          ->userLogger->notice("Password changed $self->{portal}->{user}");
+        $self->{portal}->userLogger->notice("Password changed $dn");
 
         # Rebind as manager for next LDAP operations if we were bound as user
         $self->bind() if $asUser;
