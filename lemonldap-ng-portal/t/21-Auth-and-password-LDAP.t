@@ -5,20 +5,22 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
+my $mainTests = 3;
 
 SKIP: {
-    skip 'LLNGTESTLDAP is not set', 1 unless ( $ENV{LLNGTESTLDAP} );
+    skip 'LLNGTESTLDAP is not set', $mainTests unless ( $ENV{LLNGTESTLDAP} );
     require 't/test-ldap.pm';
 
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel        => 'error',
+                logLevel        => 'debug',
                 useSafeJail     => 1,
                 authentication  => 'LDAP',
                 portal          => 'http://auth.example.com/',
                 userDB          => 'Same',
-                registerDB      => 'LDAP',
+                passwordDB      => 'LDAP',
+                portalRequireOldPassword => 1,
                 ldapServer      => 'ldap://127.0.0.1:19389/',
                 ldapBase        => 'dc=example,dc=com',
                 managerDn       => '',
@@ -42,10 +44,35 @@ SKIP: {
     );
     expectOK($res);
     my $id = expectCookie($res);
-    $client->logout($id);
 
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new(
+                'oldpassword=dwho&newpassword=test&confirmpassword=test'),
+            cookie => "lemonldap=$id",
+            accept => 'application/json',
+            length => 54
+        ),
+        'Change password'
+    );
+    expectOK($res);
+    $client->logout($id);
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=test'),
+            cookie => "lemonldap=$id",
+            length => 23
+        ),
+        'Auth query with new password'
+    );
+    expectOK($res);
+    $id = expectCookie($res);
+
+    $client->logout($id);
     clean_sessions();
 }
-count(1);
+count($mainTests);
 stopLdapServer();
 done_testing( count() );

@@ -16,7 +16,7 @@ sub init {
       and $self->Lemonldap::NG::Portal::Password::Base::init;
 }
 
-# Confirmation is done by Lib::LDAP::userModifyPassword
+# Confirmation is done by Lib::Net::LDAP::userModifyPassword
 sub confirm {
     return 1;
 }
@@ -26,7 +26,7 @@ sub modifyPassword {
 
     # Call the modify password method
     my $code =
-      $self->ldap->userModifyPassword( $req->{dn}, $pwd, $self->{oldpassword} );
+      $self->ldap->userModifyPassword( $req->{dn}, $pwd, $req->datas->{oldpassword} );
 
     unless ( $code == PE_PASSWORD_OK ) {
         $self->ldap->unbind;
@@ -35,15 +35,15 @@ sub modifyPassword {
     }
 
     # If password policy and force reset, set reset flag
-    if (    $self->{ldapPpolicyControl}
-        and $self->{forceReset}
-        and $self->{ldapUsePasswordResetAttribute} )
+    if (    $self->conf->{ldapPpolicyControl}
+        and $req->datas->{forceReset}
+        and $self->conf->{ldapUsePasswordResetAttribute} )
     {
         my $result = $self->ldap->modify(
-            $self->{dn},
+            $req->{dn},
             replace => {
-                $self->{ldapPasswordResetAttribute} =>
-                  $self->{ldapPasswordResetAttributeValue}
+                $self->conf->{ldapPasswordResetAttribute} =>
+                  $self->conf->{ldapPasswordResetAttributeValue}
             }
         );
 
@@ -57,9 +57,9 @@ sub modifyPassword {
             return PE_LDAPERROR;
         }
 
-        $self->logger->debug( $self->{ldapPasswordResetAttribute}
+        $self->logger->debug( $self->conf->{ldapPasswordResetAttribute}
               . " set to "
-              . $self->{ldapPasswordResetAttributeValue} );
+              . $self->conf->{ldapPasswordResetAttributeValue} );
     }
 
     return $code;

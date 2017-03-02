@@ -40,24 +40,8 @@ objectClass: olcMdbConfig
 olcDatabase: mdb
 olcSuffix: dc=example,dc=com
 olcDbDirectory: t/testslapd/data
-olcAccess: to * by * read
 olcRootDN: cn=admin,dc=example,dc=com
 olcRootPW: admin
-olcAccess: to * by * read
+olcAccess: to * by * write
 olcLastMod: TRUE
-
-#dn: olcDatabase=ldap,cn=config
-#objectClass: olcDatabaseConfig
-#objectClass: olcLdapConfig
-#olcDatabase: ldap
-#olcSuffix: ""
-#olcDbUri: ldap://auth.example.com:19389/
-
-#dn: uid=dwho,dc=example,dc=com
-#objectClass: inetOrgPerson
-#olcDatabase: mdb
-#uid: dwho
-#cn: Dr Who
-#mail: dwho
-#userPassword: dwho
 
