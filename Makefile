@@ -374,9 +374,9 @@ prepare_test_server:
 		PORT=$(TESTWEBSERVERPORT) \
 		FASTCGISOCKDIR=`pwd`/e2e-tests/conf \
 		PORTALDIR=`pwd`/e2e-tests/conf/portal \
-		PORTALSTATICDIR=`pwd`/$(SRCPORTALDIR)/site/htdocs/static \
+		PORTALSITEDIR=`pwd`/$(SRCPORTALDIR)/site/htdocs \
 		MANAGERDIR=`pwd`/e2e-tests/conf/manager \
-		MANAGERSTATICDIR=`pwd`/$(SRCMANAGERDIR)/site/htdocs/static \
+		MANAGERSITEDIR=`pwd`/$(SRCMANAGERDIR)/site/htdocs \
 		TESTDIR=`pwd`/e2e-tests/conf/site \
 		DEFDOCDIR=`pwd`/doc \
 		FRDOCDIR=`pwd`/po-doc/fr \
@@ -611,8 +611,10 @@ install_webserver_conf:
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
 			s#__PORTALDIR__#$(PORTALDIR)/#g; \
+			s#__PORTALSITEDIR__#$(PORTALSITEDIR)/#g; \
 			s#__PORTALSTATICDIR__#$(PORTALSTATICDIR)/#g; \
 			s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
+			s#__MANAGERSITEDIR__#$(MANAGERSITEDIR)/#g; \
 			s#__MANAGERSTATICDIR__#$(MANAGERSTATICDIR)/#g; \
 			s#__TESTDIR__#$(TESTDIR)/#g; \
 			s#__PORT__#$(PORT)#g; \
