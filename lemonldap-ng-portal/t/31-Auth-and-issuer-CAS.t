@@ -58,7 +58,7 @@ SKIP: {
     $body =~ s#</form>.*$##s;
     my %fields =
       ( $body =~ /<input type="hidden".+?name="(.+?)".+?value="(.*?)"/sg );
-    $fields{user} = $fields{password} = 'dwho';
+    $fields{user} = $fields{password} = 'french';
     use URI::Escape;
     my $s = join( '&', map { "$_=" . uri_escape( $fields{$_} ) } keys %fields );
     ok(
@@ -83,7 +83,7 @@ SKIP: {
     # Test authentication
     ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
     expectOK($res);
-    expectAuthenticatedAs( $res, 'dwho' );
+    expectAuthenticatedAs( $res, 'french' );
 
     # Logout initiated by SP
     ok(
@@ -163,6 +163,8 @@ sub mygethttps2 {
       or explain( $res->[0], "200 or 400" );
     count(2);
     my @res = map { "$_\n" } split /\r?\n/, join( '', @{ $res->[2] } );
+    ok( $res->[2]->[0] =~ /Frédéric/, 'UTF-8 attribute' );
+    count(1);
     return ( "200\n", "\n", @res );
 }
 
@@ -202,10 +204,14 @@ sub sp {
                 portal                => 'http://auth.sp.com',
                 authentication        => 'CAS',
                 userDB                => 'Null',
+                restSessionServer     => 1,
                 issuerDBCASActivation => 0,
                 CAS_url               => 'http://auth.idp.com/cas',
                 CAS_CAFile            => 't/caFile.pem',
                 multiValuesSeparator  => ';',
+                exportedVars          => {
+                    cn => 'cn',
+                },
             },
         }
     );
