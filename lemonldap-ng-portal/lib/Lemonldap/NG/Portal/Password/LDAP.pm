@@ -26,7 +26,7 @@ sub modifyPassword {
 
     # Call the modify password method
     my $code =
-      $self->ldap->userModifyPassword( $req->datas->{dn}, $pwd, $req->datas->{oldpassword} );
+      $self->ldap->userModifyPassword( $req->userData->{dn}, $pwd, $req->datas->{oldpassword} );
 
     unless ( $code == PE_PASSWORD_OK ) {
         $self->ldap->unbind;

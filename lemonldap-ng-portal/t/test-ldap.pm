@@ -10,7 +10,7 @@ if($ENV{LLNGTESTLDAP}) {
     system("/bin/sed -i 's:__SCHEMA_DIR__:$slapd_schema_dir:' t/testslapd/slapd-test.ldif");
     system($slapadd_bin . ' -F t/testslapd/slapd.d -n 0 -l t/testslapd/slapd-test.ldif');
     system($slapadd_bin . ' -F t/testslapd/slapd.d -n 1 -l t/testslapd/users.ldif');
-    system($slapd_bin . ' -s 384 -h "ldap://127.0.0.1:19389/" -F t/testslapd/slapd.d');
+    system($slapd_bin . ' -s 256 -h "ldap://127.0.0.1:19389/" -F t/testslapd/slapd.d');
 }
 
 sub stopLdapServer {
