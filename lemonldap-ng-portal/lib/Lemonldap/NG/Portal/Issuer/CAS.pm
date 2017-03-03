@@ -142,7 +142,7 @@ sub run {
             # Check last authentication time to decide if
             # the authentication is recent or not
             my $casRenewFlag = 0;
-            my $last_authn_utime = $self->{sessionInfo}->{_lastAuthnUTime} || 0;
+            my $last_authn_utime = $req->{sessionInfo}->{_lastAuthnUTime} || 0;
             if (
                 time() - $last_authn_utime <
                 $self->conf->{portalForceAuthnInterval} )

@@ -124,7 +124,7 @@ sub setGroups {
 
     }
 
-    $self->{sessionInfo}->{groups} = $groups;
+    $req->{sessionInfo}->{groups} = $groups;
     PE_OK;
 }
 

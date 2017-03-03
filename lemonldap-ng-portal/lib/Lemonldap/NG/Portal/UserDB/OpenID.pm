@@ -42,7 +42,7 @@ sub setSessionInfo {
                 );
                 return PE_MISSINGREQATTR;
             }
-            $self->{sessionInfo}->{$attr} = $p;
+            $req->{sessionInfo}->{$attr} = $p;
         }
         else {
             $self->userLogger->warn(

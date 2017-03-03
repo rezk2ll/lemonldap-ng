@@ -292,7 +292,7 @@ sub authLogout {
         $req->urldc(
             $self->buildLogoutRequest(
                 $endsession_endpoint,
-                $self->{sessionInfo}->{OpenIDConnect_IDToken}, $logout_url
+                $req->{sessionInfo}->{OpenIDConnect_IDToken}, $logout_url
             )
         );
 

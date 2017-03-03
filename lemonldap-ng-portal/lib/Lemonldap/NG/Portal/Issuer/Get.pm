@@ -15,10 +15,10 @@ sub run {
     my ( $self, $req ) = @_;
 
     # Session ID
-    my $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
+    my $session_id = $req->{sessionInfo}->{_session_id} || $self->{id};
 
     # Session creation timestamp
-    my $time = $self->{sessionInfo}->{_utime} || time();
+    my $time = $req->{sessionInfo}->{_utime} || time();
     $req->path =~ m#^$self->{conf}->{issuerDBGetPath}/(log(?:in|out))#;
     my $logInOut = $1 || 'login';
     if ( $logInOut eq 'login' ) {
