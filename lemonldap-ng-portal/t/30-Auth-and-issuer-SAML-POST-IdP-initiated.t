@@ -30,8 +30,7 @@ SKIP: {
     switch ('issuer');
     ok(
         $res = $issuer->_post(
-            '/',
-            IO::String->new('user=russian&password=russian'),
+            '/', IO::String->new('user=russian&password=russian'),
             length => 29
         ),
         'Auth query'
@@ -523,7 +522,7 @@ sub sp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlIDPMetaDataOptionsForceUTF8 => 1,
+                        samlIDPMetaDataOptionsForceUTF8                => 1,
                         samlIDPMetaDataOptionsAllowLoginFromIDP        => 1,
                     }
                 },

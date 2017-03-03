@@ -505,7 +505,8 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
             if ( $flow eq "authorizationcode" ) {
 
                 # Store data in session
-                my $codeSession = $self->getOpenIDConnectSession(undef,
+                my $codeSession = $self->getOpenIDConnectSession(
+                    undef,
                     {
                         redirect_uri    => $oidc_request->{'redirect_uri'},
                         scope           => $oidc_request->{'scope'},
@@ -516,7 +517,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                 );
 
                 # Generate code
-                my $code        = $codeSession->id();
+                my $code = $codeSession->id();
 
                 $self->logger->debug("Generated code: $code");
 
@@ -543,7 +544,8 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
 
                     # Store data in access token
                     # Generate access_token
-                    my $accessTokenSession = $self->getOpenIDConnectSession(undef,
+                    my $accessTokenSession = $self->getOpenIDConnectSession(
+                        undef,
                         {
                             scope           => $oidc_request->{'scope'},
                             rp              => $rp,
@@ -654,7 +656,8 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                 my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
 
                 # Store data in session
-                my $codeSession = $self->getOpenIDConnectSession(undef,
+                my $codeSession = $self->getOpenIDConnectSession(
+                    undef,
                     {
                         redirect_uri    => $oidc_request->{'redirect_uri'},
                         scope           => $oidc_request->{'scope'},
@@ -665,7 +668,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                 );
 
                 # Generate code
-                my $code        = $codeSession->id();
+                my $code = $codeSession->id();
 
                 $self->logger->debug("Generated code: $code");
 
@@ -675,7 +678,8 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                 if ( $response_type =~ /\btoken\b/ ) {
 
                     # Generate access_token
-                    my $accessTokenSession = $self->getOpenIDConnectSession(undef,
+                    my $accessTokenSession = $self->getOpenIDConnectSession(
+                        undef,
                         {
                             scope           => $oidc_request->{'scope'},
                             rp              => $rp,
@@ -895,7 +899,8 @@ sub token {
     $self->logger->debug("Found corresponding user: $user_id");
 
     # Generate access_token
-    my $accessTokenSession = $self->getOpenIDConnectSession(undef,
+    my $accessTokenSession = $self->getOpenIDConnectSession(
+        undef,
         {
             scope           => $codeSession->data->{scope},
             rp              => $rp,

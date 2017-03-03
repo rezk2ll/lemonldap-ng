@@ -338,7 +338,7 @@ sub headersInit {
     $headers ||= $conf->{exportedHeaders};
 
     # Creation of the subroutine which will generate headers
-    foreach my $vhost ( keys %{ $headers } ) {
+    foreach my $vhost ( keys %{$headers} ) {
         my %headers = %{ $headers->{$vhost} };
         $class->tsv->{headerList}->{$vhost} = [ keys %headers ];
         my $sub = '';

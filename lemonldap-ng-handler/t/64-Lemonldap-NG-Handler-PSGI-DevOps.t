@@ -13,24 +13,48 @@ init('Lemonldap::NG::Handler::Server');
 my $res;
 
 # Authorizated queries
-ok( $res = $client->_get( '/', undef, 'test3.example.com', "lemonldap=$sessionId", VHOSTTYPE => 'DevOps' ),
-    'Authorizated query' );
+ok(
+    $res = $client->_get(
+        '/',                 undef,
+        'test3.example.com', "lemonldap=$sessionId",
+        VHOSTTYPE => 'DevOps'
+    ),
+    'Authorizated query'
+);
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
 
-ok( $res = $client->_get( '/testyes', undef, 'test3.example.com', "lemonldap=$sessionId", VHOSTTYPE => 'DevOps' ),
-    'Authorizated query' );
+ok(
+    $res = $client->_get(
+        '/testyes',          undef,
+        'test3.example.com', "lemonldap=$sessionId",
+        VHOSTTYPE => 'DevOps'
+    ),
+    'Authorizated query'
+);
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
 
 # Denied queries
-ok( $res = $client->_get( '/deny', undef, 'test3.example.com', "lemonldap=$sessionId", VHOSTTYPE => 'DevOps' ),
-    'Denied query' );
+ok(
+    $res = $client->_get(
+        '/deny',             undef,
+        'test3.example.com', "lemonldap=$sessionId",
+        VHOSTTYPE => 'DevOps'
+    ),
+    'Denied query'
+);
 ok( $res->[0] == 403, 'Code is 403' ) or explain( $res->[0], 403 );
 count(2);
 
-ok( $res = $client->_get( '/testno', undef, 'test3.example.com', "lemonldap=$sessionId", VHOSTTYPE => 'DevOps' ),
-    'Denied query' );
+ok(
+    $res = $client->_get(
+        '/testno',           undef,
+        'test3.example.com', "lemonldap=$sessionId",
+        VHOSTTYPE => 'DevOps'
+    ),
+    'Denied query'
+);
 ok( $res->[0] == 403, 'Code is 403' ) or explain( $res->[0], 403 );
 count(2);
 
@@ -56,7 +80,7 @@ sub LWP::UserAgent::request {
   }
 }';
     $httpResp = HTTP::Response->new( 200, 'OK' );
-    $httpResp->header( 'Content-Type', 'application/json' );
+    $httpResp->header( 'Content-Type',   'application/json' );
     $httpResp->header( 'Content-Length', length($s) );
     $httpResp->content($s);
     return $httpResp;

@@ -48,7 +48,8 @@ SKIP: {
         'SOAP client'
     );
     $soap->default_ns('urn:Lemonldap/NG/Common/PSGI/SOAPService');
-    ok( $soap->call( 'newNotification', $xml )->result() ==1, ' SOAP call returns 1' );
+    ok( $soap->call( 'newNotification', $xml )->result() == 1,
+        ' SOAP call returns 1' );
 
     # Try yo authenticate
     # -------------------

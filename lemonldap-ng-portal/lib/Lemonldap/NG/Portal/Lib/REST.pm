@@ -15,16 +15,16 @@ has ua => (
 );
 
 sub restCall {
-    my($self,$url,$content) = @_;
+    my ( $self, $url, $content ) = @_;
     my $hreq = HTTP::Request->new( POST => $url );
     $hreq->header( 'Content-Type' => 'application/json' );
-    $hreq->content(to_json($content));
+    $hreq->content( to_json($content) );
     my $resp = $self->ua->request($hreq);
     unless ( $resp->is_success ) {
         die $resp->status_line;
     }
     my $res = eval { from_json( $resp->content ) };
-    die "Bad REST response: $@" if($@);
+    die "Bad REST response: $@" if ($@);
     return $res;
 }
 

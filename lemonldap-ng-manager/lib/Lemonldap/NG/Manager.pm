@@ -34,7 +34,7 @@ sub init {
     if ( my $localconf = $self->confAcc->getLocalConf(MANAGERSECTION) ) {
         foreach ( keys %$localconf ) {
             $args->{$_} //= $localconf->{$_};
-            $self->{$_} = $args->{$_} unless(/^(?:l|userL)ogger$/);
+            $self->{$_} = $args->{$_} unless (/^(?:l|userL)ogger$/);
         }
     }
 

@@ -258,7 +258,8 @@ sub buildAuthorizationCodeAuthnRequest {
 
     my $nonce;
     if ($use_nonce) {
-        my $nonceSession = $self->getOpenIDConnectSession( undef, { '_utime' => time });
+        my $nonceSession =
+          $self->getOpenIDConnectSession( undef, { '_utime' => time } );
         $nonce = $nonceSession->id;
     }
 
@@ -640,7 +641,7 @@ sub getOpenIDConnectSession {
             cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
             id                   => $id,
             kind                 => "OpenIDConnect",
-            ($info ? (info => $info):()),
+            ( $info ? ( info => $info ) : () ),
         }
     );
 
@@ -673,7 +674,6 @@ sub storeState {
     }
     return unless ($infos);
 
-
     # Session type
     $infos->{_type} = "state";
 
@@ -686,7 +686,7 @@ sub storeState {
     $infos->{_utime} = $time + ( $stateTimeout - $timeout );
 
     # Create state session and store infos
-    my $stateSession = $self->getOpenIDConnectSession( undef, $infos);
+    my $stateSession = $self->getOpenIDConnectSession( undef, $infos );
     return unless $stateSession;
 
     # Return session ID

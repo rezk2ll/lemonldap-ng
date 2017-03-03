@@ -26,8 +26,10 @@ sub init {
 sub confirm {
     my ( $self, $req, $pwd ) = @_;
     my $res = eval {
-        $self->restCall( $self->conf->{restPwdConfirmUrl},
-            { user => $req->user, password => $pwd } );
+        $self->restCall(
+            $self->conf->{restPwdConfirmUrl},
+            { user => $req->user, password => $pwd }
+        );
     };
     if ($@) {
         $self->logger("Pwd confirm error: $@");
@@ -39,8 +41,10 @@ sub confirm {
 sub modifyPassword {
     my ( $self, $req, $pwd ) = @_;
     my $res = eval {
-        $self->restCall( $self->conf->{restPwdModifyUrl},
-            { user => $req->user, password => $pwd } );
+        $self->restCall(
+            $self->conf->{restPwdModifyUrl},
+            { user => $req->user, password => $pwd }
+        );
     };
     if ($@) {
         $self->logger("Pwd confirm error: $@");

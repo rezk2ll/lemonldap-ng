@@ -247,13 +247,13 @@ has ini => (
         eval
 'sub Lemonldap::NG::Common::Logger::Std::error {return $_[0]->warn($_[1])}';
         $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french} = {
-            uid => 'french',
-            cn => 'Frédéric Accents',
+            uid  => 'french',
+            cn   => 'Frédéric Accents',
             mail => 'fa@badwolf.org',
         };
         $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{russian} = {
-            uid => 'russian',
-            cn => 'Русский',
+            uid  => 'russian',
+            cn   => 'Русский',
             mail => 'ru@badwolf.org',
         };
         $self;

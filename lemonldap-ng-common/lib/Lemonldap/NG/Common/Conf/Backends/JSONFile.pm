@@ -4,7 +4,7 @@ package Lemonldap::NG::Common::Conf::Backends::JSONFile;
 
 use Lemonldap::NG::Common::Conf::File;
 
-our @ISA = qw(Lemonldap::NG::Common::Conf::Backends::File);
+our @ISA     = qw(Lemonldap::NG::Common::Conf::Backends::File);
 our $VERSION = '2.0.0';
 
 1;

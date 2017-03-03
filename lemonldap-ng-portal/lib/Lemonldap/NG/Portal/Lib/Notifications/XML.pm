@@ -251,7 +251,7 @@ has server => ( is => 'rw' );
 
 sub notificationServer {
     my ( $self, $req ) = @_;
-    unless ($self->imported) {
+    unless ( $self->imported ) {
         eval {
             require Lemonldap::NG::Common::PSGI::SOAPServer;
             require Lemonldap::NG::Common::PSGI::SOAPService;
@@ -259,9 +259,7 @@ sub notificationServer {
         if ($@) {
             return $self->p->sendError( $req, $@, 500 );
         }
-        $self->server(
-            Lemonldap::NG::Common::PSGI::SOAPServer->new
-        );
+        $self->server( Lemonldap::NG::Common::PSGI::SOAPServer->new );
         $self->imported(1);
     }
     unless ( $req->env->{HTTP_SOAPACTION} ) {
@@ -275,7 +273,7 @@ sub notificationServer {
 }
 
 sub newNotification {
-    my($self,$req,$xml) = @_;
+    my ( $self, $req, $xml ) = @_;
     return $self->notifObject->newNotification($xml);
 }
 

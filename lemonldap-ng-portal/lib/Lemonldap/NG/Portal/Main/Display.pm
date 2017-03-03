@@ -90,7 +90,7 @@ sub display {
               && $req->datas->{login},
             ASK_LOGINS => $req->param('checkLogins') || 0,
             CONFIRMKEY => $self->stamp(),
-            LIST       => $req->datas->{list} || [],
+            LIST       => $req->datas->{list}        || [],
             REMEMBER   => $req->datas->{confirmRemember},
         );
     }

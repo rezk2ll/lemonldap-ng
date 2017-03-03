@@ -989,7 +989,7 @@ sub extractFormInfo {
         $infos->{Artifact}   = $req->datas->{_proxiedArtifact};
         $infos->{ProxyID}    = $samlID;
 
-        my $samlSessionInfo = $self->getSamlSession(undef, $infos);
+        my $samlSessionInfo = $self->getSamlSession( undef, $infos );
 
         return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
 
@@ -1180,7 +1180,6 @@ sub authFinish {
           . $nameid->dump
           . " and SessionIndex $session_index for session $id" );
 
-
     my $infos;
     $infos->{type}          = 'saml';            # Session type
     $infos->{_utime}        = $utime;            # Creation time
@@ -1189,7 +1188,7 @@ sub authFinish {
     $infos->{_sessionIndex} = $session_index;    # SAML SessionIndex
 
     # Save SAML session
-    my $samlSessionInfo = $self->getSamlSession(undef, $infos);
+    my $samlSessionInfo = $self->getSamlSession( undef, $infos );
 
     return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
 

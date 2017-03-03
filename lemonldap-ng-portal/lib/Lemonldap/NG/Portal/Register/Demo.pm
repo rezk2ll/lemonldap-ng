@@ -32,13 +32,13 @@ sub computeLogin {
 # @result Lemonldap::NG::Portal constant
 sub createUser {
     my ( $self, $req ) = @_;
-    $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{ $req->datas->{registerInfo}->{login} }
-      = {
+    $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{ $req->datas
+          ->{registerInfo}->{login} } = {
         uid => $req->datas->{registerInfo}->{login},
         cn  => $req->datas->{registerInfo}->{firstname} . ' '
           . $req->datas->{registerInfo}->{lastname},
         mail => $req->datas->{registerInfo}->{login} . '@badwolf.org',
-      };
+          };
     return PE_OK;
 }
 
