@@ -589,10 +589,6 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [ 'u2fActivation', 'u2fSelfRegistration', ]
                         },
-                        {
-                            title => 'sToken',
-                            nodes => [ 'sTokenService', 'sTokenScopes' ]
-                        },
                     ]
                 },
                 {
