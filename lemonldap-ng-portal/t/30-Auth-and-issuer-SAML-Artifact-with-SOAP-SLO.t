@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 15;
+my $maintests = 18;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -89,7 +89,7 @@ SKIP: {
     $body =~ s#</form>.*$##s;
     my %fields =
       ( $body =~ /<input type="hidden".+?name="(.+?)".+?value="(.*?)"/sg );
-    $fields{user} = $fields{password} = 'dwho';
+    $fields{user} = $fields{password} = 'french';
     use URI::Escape;
     my $s = join( '&', map { "$_=" . uri_escape( $fields{$_} ) } keys %fields );
     ok(
@@ -124,7 +124,15 @@ SKIP: {
     # Verify authentication
     ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
     expectOK($res);
-    expectAuthenticatedAs( $res, 'dwho@badwolf.org@idp' );
+    expectAuthenticatedAs( $res, 'fa@badwolf.org@idp' );
+
+    # Verify UTF-8
+    ok( $res = $sp->_get("/sessions/global/$spId"), 'Get UTF-8' );
+    expectOK($res);
+    ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+      or print STDERR $@;
+    ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
+      or explain( $res, 'cn => Frédéric Accents' );
 
     # Logout initiated by SP
     ok(
@@ -519,6 +527,7 @@ sub sp {
                 authentication                    => 'SAML',
                 userDB                            => 'Same',
                 issuerDBSAMLActivation            => 0,
+                restSessionServer                 => 1,
                 samlIDPMetaDataExportedAttributes => {
                     idp => {
                         mail => "0;mail;;",
@@ -535,7 +544,14 @@ sub sp {
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
+                        samlIDPMetaDataOptionsForceUTF8 => 1,
                     }
+                },
+                samlIDPMetaDataExportedAttributes => {
+                    idp => {
+                        "uid" => "0;uid;;",
+                        "cn"  => "1;cn;;",
+                    },
                 },
                 samlIDPMetaDataXML => {
                     idp => {
