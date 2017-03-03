@@ -14,7 +14,7 @@ SKIP: {
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel                 => 'debug',
+                logLevel                 => 'error',
                 useSafeJail              => 1,
                 authentication           => 'LDAP',
                 portal                   => 'http://auth.example.com/',
@@ -22,7 +22,7 @@ SKIP: {
                 passwordDB               => 'LDAP',
                 portalRequireOldPassword => 1,
                 ldapServer               => 'ldap://127.0.0.1:19389/',
-                ldapBase                 => 'dc=example,dc=com',
+                ldapBase                 => 'ou=users,dc=example,dc=com',
                 managerDn                => 'cn=admin,dc=example,dc=com',
                 managerPassword          => 'admin',
                 restSessionServer        => 1,
