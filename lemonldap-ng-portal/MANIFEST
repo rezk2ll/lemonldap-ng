@@ -368,6 +368,7 @@ t/19-Auth-Null.t
 t/20-Auth-and-password-DBI.t
 t/20-Auth-DBI-utf8.t
 t/21-Auth-and-password-LDAP.t
+t/21-Auth-LDAP-utf8.t
 t/22-Auth-and-password-AD.t
 t/23-Auth-and-password-REST.t
 t/24-AuthApache.t

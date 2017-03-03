@@ -12,8 +12,8 @@
 #    Token header are also added for App-1 (application that wants to query
 #    others on behalf of the connected user)
 # 1) App 1 received a token in headers (header is generated using
-#    "token($uid,'ref')" where ref is a key of "sTokenScopes" configuration
-#    parameter).
+#    "token($_session_id,'ref')" where ref is a key of "sTokenScopes"
+#    configuration parameter).
 # 2) It send it to this plugin (request to /tokenfor)
 # 3) run() method verify that token is available and return a service token that
 #    can be used to request a fixed list of servers. This list is the value of
@@ -77,7 +77,7 @@ sub run {
       or return $self->p->sendError( $req, 'Bad token', 403 );
 
     # 3. Verify time
-    my ( $t, $uid, $ref ) = split /:/, $s;
+    my ( $t, $_session_id, $ref ) = split /:/, $s;
     unless ( $t <= time and $t > time - 15 ) {
         return $self->p->sendError( $req, 'Token expired', 403 );
     }
@@ -85,7 +85,7 @@ sub run {
         return $self->p->sendError( $req, 'Bad reference', 403 );
     }
     my $respToken = $self->conf->{cipher}
-      ->encrypt( join ':', time, $uid, $self->tokenScopes->{$ref} );
+      ->encrypt( join ':', time, $_session_id, $self->tokenScopes->{$ref} );
     return $self->p->sendJSONresponse( $req, { sToken => $respToken } );
 }
 

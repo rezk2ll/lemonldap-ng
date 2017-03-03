@@ -117,8 +117,7 @@ sub run {
     }
 
     # Try to recover cookie and user session
-    if (   !$id
-        and $id      = $class->fetchId
+    if (    $id = $class->fetchId
         and $session = $class->retrieveSession($id) )
     {
 
