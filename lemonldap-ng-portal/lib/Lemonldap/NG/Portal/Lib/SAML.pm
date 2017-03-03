@@ -1780,6 +1780,7 @@ sub createArtifactResponse {
 
     # Load artifact message into login response
     my $art_session = $self->loadArtifact($artifact_id);
+    utf8::decode($art_session->{message});
     eval { $login->set_artifact_message( $art_session->{message} ); };
     if ($@) {
         $self->checkLassoError($@);
