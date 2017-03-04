@@ -551,6 +551,7 @@ sub attributes {
         useSafeJail => {
             default       => 1,
             type          => 'bool',
+            help          => 'safejail.html',
             documentation => 'Activate Safe jail',
         },
         whatToTrace => {
@@ -998,11 +999,13 @@ sub attributes {
         soapSessionServer => {
             default       => 0,
             type          => 'bool',
+            help          => 'soapservices.html',
             documentation => 'Enable SOAP session server',
         },
         soapConfigServer => {
             default       => 0,
             type          => 'bool',
+            help          => 'soapservices.html',
             documentation => 'Enable SOAP config server',
         },
         exportedAttr => {
@@ -2461,7 +2464,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsRedirectUris => { type => 'text', },
         oidcRPMetaDataOptionsExtraClaims =>
           { type => 'keyTextContainer', default => {} },
-        oidcRPMetaDataOptionsBypassConsent => { type => 'bool', default => 0 },
+        oidcRPMetaDataOptionsBypassConsent =>
+          { type => 'bool', help => 'openidconnectclaims.html', default => 0 },
 
     };
 }

@@ -434,6 +434,7 @@ sub tree {
                         },
                         {
                             title => 'issuerDBGet',
+                            help  => 'issuerdbget.html',
                             nodes => [
                                 'issuerDBGetActivation',
                                 'issuerDBGetPath',
@@ -586,6 +587,7 @@ sub tree {
                         },
                         {
                             title => 'u2f',
+                            help  => 'u2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [ 'u2fActivation', 'u2fSelfRegistration', ]
                         },
@@ -658,6 +660,7 @@ sub tree {
         },
         {
             title => 'variables',
+            help  => 'variables.html',
             nodes => [ 'exportedVars', 'macros', 'groups' ]
         },
         'virtualHosts',
