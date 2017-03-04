@@ -59,19 +59,19 @@ sub extractFormInfo {
     my $res            = PE_OK;
 
     # 1. No user defined at all -> first access
-    unless ($defUser) {
+    unless ( $defUser and $req->method =~ /^POST$/i ) {
         $res = PE_FIRSTACCESS;
     }
 
     # 2. If user and password defined -> login form
-    elsif ( $defUser && $defPassword ) {
+    elsif ( $defUser and $defPassword ) {
         $res = PE_FORMEMPTY
           unless ( ( $req->{user} = $req->param('user') )
             && ( $req->datas->{password} = $req->param('password') ) );
     }
 
     # 3. If user and oldpassword defined -> password form
-    elsif ( $defUser && $defOldPassword ) {
+    elsif ( $defUser and $defOldPassword ) {
         $res = PE_PASSWORDFORMEMPTY
           unless ( ( $req->{user} = $req->param('user') )
             && ( $req->datas->{oldpassword} = $req->param('oldpassword') )

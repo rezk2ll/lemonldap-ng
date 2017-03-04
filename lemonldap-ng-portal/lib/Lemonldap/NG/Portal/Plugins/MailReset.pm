@@ -93,7 +93,9 @@ sub _reset {
     my ( $mailToken, $newPwd, $confirmPwd );
 
     # PASSWORD CHANGE FORM => changePwd()
-    if ( $req->param('newpassword') or $req->param('reset') ) {
+    if ( $req->method =~ /^POST$/i
+        and ( $req->param('newpassword') or $req->param('reset') ) )
+    {
         return $self->changePwd($req);
     }
 

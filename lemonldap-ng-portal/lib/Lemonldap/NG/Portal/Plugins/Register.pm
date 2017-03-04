@@ -108,7 +108,9 @@ sub _register {
     my ( $self, $req ) = @_;
 
     # Check if it's a first access
-    unless ( $req->param('mail') || $req->param('register_token') ) {
+    unless ( ( $req->method =~ /^POST$/i and $req->param('mail') )
+        or $req->param('register_token') )
+    {
 
         # Set captcha or token
         $self->setSecurity($req);
