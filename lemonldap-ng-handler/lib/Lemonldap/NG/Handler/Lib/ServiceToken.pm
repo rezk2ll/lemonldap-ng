@@ -19,6 +19,12 @@ sub fetchId {
         $class->userLogger->warn('Expired token');
         return 0;
     }
+    my $vh = $class->resolveAlias;
+    unless ( grep { $_ eq $vh } @vhosts ) {
+        $class->userLogger->error(
+            "$vh not authorizated in token (" . join( ', ', @vhosts ) . ')' );
+        return 0;
+    }
     return $_session_id;
 }
 
