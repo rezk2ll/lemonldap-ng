@@ -1,1 +1,0 @@
-../pastel/openidform.tpl

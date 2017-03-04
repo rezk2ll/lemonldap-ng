@@ -1,1 +1,0 @@
-../pastel/notification.tpl

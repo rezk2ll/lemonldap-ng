@@ -1,1 +1,0 @@
-../pastel/mail.tpl

@@ -1,1 +1,0 @@
-../pastel/info.tpl
