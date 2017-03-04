@@ -61,7 +61,7 @@
       </ul>
 
       <div class="user navbar-right">
-        <p class="navbar-text"><span trspan="connectedAs">Connected as</span> <TMPL_VAR NAME="AUTH_USER"> <span id="languages"></span></p>
+        <p class="navbar-text"><span trspan="connectedAs">Connected as</span> <TMPL_VAR NAME="AUTH_USER"></p>
       </div>
 
     </div>
