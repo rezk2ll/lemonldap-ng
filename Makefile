@@ -373,10 +373,10 @@ prepare_test_server:
 		VHOSTLISTEN='*:$(TESTWEBSERVERPORT)' \
 		PORT=$(TESTWEBSERVERPORT) \
 		FASTCGISOCKDIR=`pwd`/e2e-tests/conf \
-		PORTALDIR=`pwd`/e2e-tests/conf/portal \
-		PORTALSITEDIR=`pwd`/$(SRCPORTALDIR)/site/htdocs \
-		MANAGERDIR=`pwd`/e2e-tests/conf/manager \
-		MANAGERSITEDIR=`pwd`/$(SRCMANAGERDIR)/site/htdocs \
+		PORTALSITEDIR=`pwd`/e2e-tests/conf/portal \
+		PORTALSTATICDIR=`pwd`/$(SRCPORTALDIR)/site/htdocs/static \
+		MANAGERSITEDIR=`pwd`/e2e-tests/conf/manager \
+		MANAGERSTATICDIR=`pwd`/$(SRCMANAGERDIR)/site/htdocs/static \
 		TESTDIR=`pwd`/e2e-tests/conf/site \
 		DEFDOCDIR=`pwd`/doc \
 		FRDOCDIR=`pwd`/po-doc/fr \
