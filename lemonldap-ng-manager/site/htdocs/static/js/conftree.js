@@ -944,6 +944,10 @@ function templates(tpl,key) {
                {
                   "k" : "DevOps",
                   "v" : "DevOps"
+               },
+               {
+                  "k" : "ServiceToken",
+                  "v" : "ServiceToken"
                }
             ],
             "title" : "vhostType",
