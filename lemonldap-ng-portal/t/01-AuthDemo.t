@@ -69,6 +69,13 @@ count(1);
 expectOK($res);
 expectAuthenticatedAs( $res, 'dwho' );
 
+require 't/test-psgi.pm';
+
+ok( $res = mirror( cookie => "lemonldap=$id" ), 'PSGI test' );
+count(1);
+expectOK($res);
+expectAuthenticatedAs( $res, 'dwho' );
+
 # Test logout
 $client->logout($id);
 
