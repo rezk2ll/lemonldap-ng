@@ -15,7 +15,7 @@ sub fetchId {
         $class->userLogger->error('Bad token');
         return 0;
     }
-    unless ( $t <= time and $t > time - 15 ) {
+    unless ( $t <= time and $t > time - 30 ) {
         $class->userLogger->warn('Expired token');
         return 0;
     }

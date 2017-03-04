@@ -53,9 +53,14 @@
 <li class="level1"><div class="li"><a href="#presentation">Présentation</a></div></li>
 <li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
 <ul class="toc">
-<li class="level2"><div class="li"><a href="#enable_ssl_in_apache">Activer SSL dans Apache</a></div></li>
-<li class="level2"><div class="li"><a href="#apache_ssl_global_configuration">Configuration globale de ssl dans Apache</a></div></li>
-<li class="level2"><div class="li"><a href="#apache_portal_ssl_configuration">Configuration SSL du portail dans Apache</a></div></li>
+<li class="level2"><div class="li"><a href="#with_apache">With Apache</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#enable_ssl_in_apache">Activer SSL dans Apache</a></div></li>
+<li class="level3"><div class="li"><a href="#apache_ssl_global_configuration">Configuration globale de ssl dans Apache</a></div></li>
+<li class="level3"><div class="li"><a href="#apache_portal_ssl_configuration">Configuration SSL du portail dans Apache</a></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><a href="#with_nginx">With Nginx</a></div></li>
 <li class="level2"><div class="li"><a href="#configuration_of_lemonldapng">Configuration de LemonLDAP::NG</a></div></li>
 <li class="level2"><div class="li"><a href="#auto_reloading_ssl_certificates">Rechargement automatique des certificats SSL</a></div></li>
 </ul></li>
@@ -99,8 +104,13 @@
 
 </div><!-- EDIT4 SECTION "Configuration" [402-428] -->
 
-<h3 class="sectionedit5" id="enable_ssl_in_apache">Activer SSL dans Apache</h3>
+<h3 class="sectionedit5" id="with_apache">With Apache</h3>
 <div class="level3">
+
+</div>
+
+<h4 id="enable_ssl_in_apache">Activer SSL dans Apache</h4>
+<div class="level4">
 
 <p>
 Installer mod_ssl pour Apache.
@@ -110,16 +120,14 @@ Installer mod_ssl pour Apache.
 Pour CentOS/RHEL :
 </p>
 <pre class="code shell">yum install mod_ssl</pre>
+<div class="notetip">In Debian/Ubuntu mod_ssl is already shipped in <code>apache*-common</code> package.
 
-<p>
-Dans Debian/Ubuntu mod_ssl est installé avec le paquet <code>apache2.2-common</code>.
-</p>
-<div class="notetip">Pour CentOS/RHEL, il est recommandé de désactiver l'hôte virtuel SSL par défaut configuré dans /etc/httpd/conf.d/ssl.conf.
+</div><div class="notetip">Pour CentOS/RHEL, il est recommandé de désactiver l'hôte virtuel SSL par défaut configuré dans /etc/httpd/conf.d/ssl.conf.
 </div>
-</div><!-- EDIT5 SECTION "Enable SSL in Apache" [429-765] -->
+</div>
 
-<h3 class="sectionedit6" id="apache_ssl_global_configuration">Configuration globale de ssl dans Apache</h3>
-<div class="level3">
+<h4 id="apache_ssl_global_configuration">Configuration globale de ssl dans Apache</h4>
+<div class="level4">
 
 <p>
 Il est possible d'utiliser cette configuration SSL par défaut, par exemple en tête de /etc/lemonldap-ng/portal-apache2.conf :
@@ -145,10 +153,10 @@ SI le port est spécifié, déclarer le port SSL :
 <pre class="code file apache"><span class="kw1">NameVirtualHost</span> *:<span class="nu0">80</span>
 <span class="kw1">NameVirtualHost</span> *:<span class="nu0">443</span></pre>
 
-</div><!-- EDIT6 SECTION "Apache SSL global configuration" [766-1531] -->
+</div>
 
-<h3 class="sectionedit7" id="apache_portal_ssl_configuration">Configuration SSL du portail dans Apache</h3>
-<div class="level3">
+<h4 id="apache_portal_ssl_configuration">Configuration SSL du portail dans Apache</h4>
+<div class="level4">
 
 <p>
 Éditer l'hôte virtuel du portail pour activer la double authentification SSL :
@@ -175,9 +183,38 @@ Ci-dessous les principales options utilisées par <abbr title="LemonLDAP::NG">LL
 </li>
 </ul>
 
-</div><!-- EDIT7 SECTION "Apache portal SSL configuration" [1532-2368] -->
+</div><!-- EDIT5 SECTION "With Apache" [429-2399] -->
 
-<h3 class="sectionedit8" id="configuration_of_lemonldapng">Configuration de LemonLDAP::NG</h3>
+<h3 class="sectionedit6" id="with_nginx">With Nginx</h3>
+<div class="level3">
+
+<p>
+
+Enable SSL:
+
+</p>
+<pre class="code file nginx">ssl on;
+ssl_verify_client optional;
+ssl_certificate /etc/letsencrypt/live/my/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/my/privkey.pem;
+ssl_verify_depth 3;
+ssl_client_certificate /etc/nginx/ssl/ca.pem;
+ssl_crl /etc/nginx/ssl/crl/my.crl;</pre>
+
+<p>
+
+You must also export SSL_CLIENT_S_<abbr title="Distinguished Name">DN</abbr>_CN in FastCGI params:
+
+</p>
+<pre class="code file nginx">map $ssl_client_s_dn  $ssl_client_s_dn_cn {
+           default           "";
+           ~/CN=(?&lt;CN&gt;[^/]+) $CN;
+      }
+fastcgi_param  SSL_CLIENT_S_DN_CN $ssl_client_s_dn_cn;</pre>
+
+</div><!-- EDIT6 SECTION "With Nginx" [2400-2961] -->
+
+<h3 class="sectionedit7" id="configuration_of_lemonldapng">Configuration de LemonLDAP::NG</h3>
 <div class="level3">
 
 <p>
@@ -193,13 +230,11 @@ Aller ensuite dans <code>Paramètres SSL</code> :
 </li>
 <li class="level1"><div class="li"> <strong>Champ extrait du certificat</strong> : champ du certificat affecté à la variable interne $user</div>
 </li>
-<li class="level1"><div class="li"> <strong>Conditional extracted certificate field</strong>: field of the certificate affected to $user internal variable depending on the certificate authority. Key is the CA <abbr title="Distinguished Name">DN</abbr>, value is the field.</div>
-</li>
 </ul>
 
-</div><!-- EDIT8 SECTION "Configuration of LemonLDAP::NG" [2369-2982] -->
+</div><!-- EDIT7 SECTION "Configuration of LemonLDAP::NG" [2962-3387] -->
 
-<h3 class="sectionedit9" id="auto_reloading_ssl_certificates">Rechargement automatique des certificats SSL</h3>
+<h3 class="sectionedit8" id="auto_reloading_ssl_certificates">Rechargement automatique des certificats SSL</h3>
 <div class="level3">
 
 <p>
@@ -302,9 +337,10 @@ $('.enteteBouton').click( function (e) {
 });
 <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/script.html"><span class="kw2">script</span></a>&gt;</span>
 <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/body.html"><span class="kw2">body</span></a>&gt;</span></pre>
-<div class="notewarning">Ce n'est pas compatible avec une chaîne d'authentification (voir Empiler plusieurs backends), en raison du paramètre Apache “SSLVerifyClient”, qui doit être mis à la valeur “require”
+<div class="notewarning">It is incompatible with authentication combination because of Apache parameter “SSLVerifyClient”, which must have the value “require”
+
 </div>
-</div><!-- EDIT9 SECTION "Auto reloading SSL Certificates" [2983-] -->
+</div><!-- EDIT8 SECTION "Auto reloading SSL Certificates" [3388-] -->
 </div>
 </body>
 </html>

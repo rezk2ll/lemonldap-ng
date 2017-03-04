@@ -15902,14 +15902,6 @@ server {</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>In Debian/Ubuntu mod_ssl is already shipped in <bpt i='0' x='0'>&lt;c0&gt;</bpt>apache2.2-common<ept i='0'>&lt;/c0&gt;</ept> package.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120221T065635Z" changeid="xavier">
-        <seg>Dans Debian/Ubuntu mod_ssl est installé avec le paquet <bpt i='0' x='0'>&lt;c0&gt;</bpt>apache2.2-common<ept i='0'>&lt;/c0&gt;</ept>.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>As you may have guessed, these accounts are famous characters from the TV show <bpt i='0' x='0'>&lt;a0&gt;</bpt>Doctor Who<ept i='0'>&lt;/a0&gt;</ept>.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120226T115325Z" changeid="xavier">
@@ -31754,14 +31746,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120303T081229Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>error<ept i='0'>&lt;/s0&gt;</ept> : si l'utilisateur n'a pas accès, une erreur est affichée sur le portail, l'utilisateur n'est pas redirigé vers le service <bpt i='1' x='1'>&lt;a1&gt;</bpt>CAS<ept i='1'>&lt;/a1&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>It is incompatible with authentication chaining (see Stack Multiple backends), because of Apache parameter “SSLVerifyClient”, which must have the value “require”</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160229T214047Z" changeid="xavier">
-        <seg>Ce n'est pas compatible avec une chaîne d'authentification (voir Empiler plusieurs backends), en raison du paramètre Apache “SSLVerifyClient”, qui doit être mis à la valeur “require”</seg>
       </tuv>
     </tu>
     <tu>
