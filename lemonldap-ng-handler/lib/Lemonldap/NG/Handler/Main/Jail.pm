@@ -77,6 +77,9 @@ sub build_jail {
     $self->jail->share_from( 'MIME::Base64', ['&encode_base64'] );
     $self->jail->share_from( 'Lemonldap::NG::Handler::Main', ['$_v'] );
 
+    # Initialize cryptographic functions to be able to use them in jail.
+    eval { token('a') };
+
     return $self->jail;
 }
 

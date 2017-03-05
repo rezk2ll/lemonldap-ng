@@ -149,7 +149,7 @@ sub configReload {
         "Loading configuration $conf->{cfgNum} for process $$");
 
     foreach my $sub (
-        qw( jailInit defaultValuesInit portalInit locationRulesInit
+        qw( defaultValuesInit jailInit portalInit locationRulesInit
         sessionStorageInit headersInit postUrlInit aliasInit )
       )
     {
