@@ -8,6 +8,12 @@ our $VERSION = '2.0.0';
 
 #parameter baseUrl, user, password, realm, lwpOpts
 
+BEGIN {
+    *Lemonldap::NG::Common::Conf::getJson = \&getJson;
+    *Lemonldap::NG::Common::Conf::ua      = \&ua;
+    *Lemonldap::NG::Common::Conf::base    = \&base;
+}
+
 sub prereq {
     my $self = shift;
     unless ( $self->{baseUrl} ) {
@@ -116,8 +122,8 @@ sub store {
 }
 
 sub load {
-    my $self = shift;
-    my $res = $self->getJson('latest?full') or return;
+    my ( $self, $cfgNum ) = @_;
+    my $res = $self->getJson("$cfgNum?full=1") or return;
     return $res;
 }
 

@@ -309,6 +309,7 @@ t/32-Auth-and-issuer-OIDC-implicit.t
 t/33-Auth-and-issuer-OpenID2.t
 t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-SOAP-Server.t
+t/35-REST-config-backend.t
 t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-config-backend.t
 t/35-SOAP-sessions-with-SOAP-server.t

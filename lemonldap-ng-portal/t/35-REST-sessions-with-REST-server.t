@@ -170,7 +170,6 @@ sub issuer {
                 authentication    => 'Demo',
                 userDB            => 'Same',
                 restSessionServer => 1,
-                restConfigServer  => 1,
             }
         }
     );

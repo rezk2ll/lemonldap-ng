@@ -41,8 +41,9 @@ sub getConfKey {
     if ( $req->params('cfgNum') eq 'latest' ) {
         my $tmp = $self->confAcc->lastCfg;
         $req->set_param( 'cfgNum', $tmp );
-        if ($Lemonldap::NG::Common::Conf::msg) {
-            $req->error($Lemonldap::NG::Common::Conf::msg);
+        unless ($tmp) {
+            $req->error($Lemonldap::NG::Common::Conf::msg)
+              if ($Lemonldap::NG::Common::Conf::msg);
             return undef;
         }
     }
@@ -68,7 +69,8 @@ sub getConfKey {
 
 sub getConfByNum {
     my ( $self, $cfgNum, @args ) = @_;
-    unless ( %{ $self->currentConf }
+    unless ($self->currentConf
+        and %{ $self->currentConf }
         and $cfgNum == $self->currentConf->{cfgNum} )
     {
         my $tmp = $self->confAcc->getConf(
@@ -619,10 +621,16 @@ sub metadatas {
     if ( $req->params('full') and $req->params('full') !~ NO ) {
         my $c = $self->getConfKey( $req, 'cfgNum' );
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
-        $self->userLogger->notice( 'User '
-              . $self->userId($req)
-              . ' ask for full configuration '
-              . $c );
+        if ( $self->can('userId') ) {
+            $self->userLogger->notice( 'User '
+                  . $self->userId($req)
+                  . ' ask for full configuration '
+                  . $c );
+        }
+        else {
+            $self->logger->info(
+                "REST request to get full configuration $c");
+        }
         return $self->sendJSONresponse(
             $req,
             $self->currentConf,
@@ -648,11 +656,17 @@ sub metadatas {
         my ($ind) = map { $id++; $_ == $res->{cfgNum} ? ($id) : () } @a;
         if ($ind) { $res->{prev} = $a[ $ind - 1 ]; }
         if ( $ind and $ind < $#a ) { $res->{next} = $a[ $ind + 1 ]; }
-        $self->userLogger->notice( 'User '
-              . $self->userId($req)
-              . ' ask for configuration metadatas ('
-              . $res->{cfgNum}
-              . ')' );
+        if ( $self->can('userId') ) {
+            $self->userLogger->info( 'User '
+                  . $self->userId($req)
+                  . ' ask for configuration metadatas ('
+                  . $res->{cfgNum}
+                  . ')' );
+        }
+        else {
+            $self->logger->info(
+                "REST request to get configuration metadatas ($res->{cfgNum})");
+        }
         return $self->sendJSONresponse( $req, $res );
     }
 }

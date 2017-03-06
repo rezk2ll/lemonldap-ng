@@ -45,6 +45,13 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
+has configStorage => (
+    is      => 'ro',
+    default => sub {
+        $_[0]->{p}->HANDLER->localConfig->{configStorage};
+    }
+);
+
 has exportedAttr => (
     is      => 'rw',
     default => sub {
