@@ -297,14 +297,15 @@ sub mysession {
           if ( $self->p->checkXSSAttack( 'authorizationfor', $req->urldc ) );
 
         # Split URL
-        my ( $host, $uri ) = ( $url =~ m#^https?://([^/]+)(/.*)?$# );
-        return $self->p->sendError( $req, 'Bad URL', 400 ) unless ($host);
+        my ( $host, $uri ) = ( $req->urldc =~ m#^https?://([^/]+)(/.*)?$# );
+        $uri ||= '/';
+        return $self->p->sendError( $req, "Bad URL $req->{urldc}", 400 ) unless ($host);
 
         $self->logger->debug("Looking for authorization for $url");
 
         # Now check for authorization
         my $res =
-          $self->p->HANDLER->grant( $req->userDatas, $uri, undef, $host );
+          $self->p->HANDLER->grant( $req->userData, $uri, undef, $host );
         $self->logger->debug(" Result is $res");
         return $self->p->sendJSONresponse( $req, { result => $res } );
     }

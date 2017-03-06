@@ -244,7 +244,12 @@ sub grant {
     return $cond->($session) if ($cond);
 
     $vhost ||= $class->resolveAlias;
-    for ( my $i = 0 ; $i < $class->tsv->{locationCount}->{$vhost} ; $i++ ) {
+    for (
+        my $i = 0 ;
+        $i < ( $class->tsv->{locationCount}->{$vhost} || 0 ) ;
+        $i++
+      )
+    {
         if ( $uri =~ $class->tsv->{locationRegexp}->{$vhost}->[$i] ) {
             $class->logger->debug( 'Regexp "'
                   . $class->tsv->{locationConditionText}->{$vhost}->[$i]
