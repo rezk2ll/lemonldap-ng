@@ -22,6 +22,13 @@ extends 'Lemonldap::NG::Portal::Main::Plugin',
 
 has server => ( is => 'rw' );
 
+has configStorage => (
+    is      => 'ro',
+    default => sub {
+        $_[0]->{p}->HANDLER->localConfig->{configStorage};
+    }
+);
+
 has exportedAttr => (
     is      => 'rw',
     default => sub {

@@ -24,6 +24,13 @@ sub beforeAuth { 'exportRequestParameters' }
 
 # INITIALIZATION
 
+has configStorage => (
+    is      => 'ro',
+    default => sub {
+        $_[0]->{p}->HANDLER->localConfig->{configStorage};
+    }
+);
+
 # OIDC has 7 endpoints managed here as PSGI endpoints or in run() [Main/Issuer.pm
 # manage transparent authentication for run()]:
 #  - authorize   : in run()
