@@ -2837,6 +2837,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'bool'
         },
+        'u2fAuthnLevel' => {
+            'type' => 'int'
+        },
         'u2fSelfRegistration' => {
             'default' => 0,
             'type'    => 'bool'

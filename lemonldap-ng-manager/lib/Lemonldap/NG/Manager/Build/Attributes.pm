@@ -951,6 +951,11 @@ sub attributes {
             default       => 0,
             documentation => 'U2F self registration activation',
         },
+        u2fAuthnLevel => {
+            type => 'int',
+            documentation =>
+              'Authentication level for users authentified by password+U2F'
+        },
 
         # Single session
         notifyDeleted => {

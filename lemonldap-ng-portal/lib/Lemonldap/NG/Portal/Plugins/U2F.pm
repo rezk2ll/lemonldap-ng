@@ -4,6 +4,7 @@
 # have registered their U2F key
 package Lemonldap::NG::Portal::Plugins::U2F;
 
+use 5.16.0;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
@@ -99,12 +100,14 @@ sub verify {
             return $self->fail($req);
         }
         if ( $self->crypter->authenticationVerify($resp) ) {
-            $req->id( $req->sessionInfo->{_u2fRealSession} );
-            delete $req->sessionInfo->{_u2fRealSession};
+            $req->id( delete $req->sessionInfo->{_u2fRealSession} );
             $self->p->rebuildCookies($req);
             $req->mustRedirect(1);
-            $self->userLogger->info( 'U2F signature verified for '
+            $self->userLogger->notice( 'U2F signature verified for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+            if ( my $l = $self->conf->{u2fAuthnLevel} ) {
+                $self->p->updateSession( $req, { authenticationLevel => $l } );
+            }
             return $self->p->do( $req, [ sub { PE_OK } ] );
         }
         else {
@@ -147,7 +150,8 @@ sub loadUser {
     {
         $self->crypter->{keyHandle} = $self->decode_base64url($kh);
         $self->crypter->{publicKey} = $self->decode_base64url($uk);
-        unless ( $self->crypter->setKeyHandle and $self->crypter->setPublicKey )
+        unless ($self->crypter->setKeyHandle
+            and $self->crypter->setPublicKey )
         {
             $self->logger->error(
                 'U2F error: ' . Crypt::U2F::Server::u2fclib_getError() );

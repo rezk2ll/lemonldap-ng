@@ -589,7 +589,10 @@ sub tree {
                             title => 'u2f',
                             help  => 'u2f.html',
                             form  => 'simpleInputContainer',
-                            nodes => [ 'u2fActivation', 'u2fSelfRegistration', ]
+                            nodes => [
+                                'u2fActivation', 'u2fSelfRegistration',
+                                'u2fAuthnLevel'
+                            ]
                         },
                     ]
                 },

@@ -642,6 +642,7 @@
 "type": "Type",
 "u2f": "U2F",
 "u2fActivation": "Activation",
+"u2fAuthnLevel": "Niveau d'authentification U2F",
 "u2fSelfRegistration": "Activation de l'enregistrement",
 "uid": "Identifiant",
 "unknownAttrOrMacro": "Attribut ou macro inconnu",
