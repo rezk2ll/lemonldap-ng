@@ -228,6 +228,7 @@ sub reloadConf {
         foreach my $vhost ( keys %{ $self->conf->{locationRules} } ) {
             $self->logger->debug("Vhost $vhost added in trusted domains");
             $re->add( quotemeta($vhost) );
+            $self->conf->{vhostOptions} ||= {};
             if ( my $tmp =
                 $self->conf->{vhostOptions}->{$vhost}->{vhostAliases} )
             {

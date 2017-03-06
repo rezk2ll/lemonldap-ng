@@ -515,7 +515,7 @@ sub conditionSub {
 sub aliasInit {
     my ( $class, $conf ) = @_;
 
-    foreach my $vhost ( keys %{ $conf->{vhostOptions} } ) {
+    foreach my $vhost ( keys %{ $conf->{vhostOptions} || {} } ) {
         if ( my $aliases = $conf->{vhostOptions}->{$vhost}->{vhostAliases} ) {
             foreach ( split /\s+/, $aliases ) {
                 $class->tsv->{vhostAlias}->{$_} = $vhost;
