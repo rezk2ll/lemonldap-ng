@@ -6,7 +6,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 4;
+my $maintests = 7;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -49,7 +49,6 @@ SKIP: {
     # Test if we're authenticated
     ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ),
         'Try to get menu' );
-    count(1);
     expectOK($res);
 
     # Logout
@@ -62,7 +61,6 @@ SKIP: {
         ),
         'Ask for logout'
     );
-    count(1);
     expectOK($res);
 
     # Test if logout is done
@@ -72,7 +70,6 @@ SKIP: {
         ),
         'Test if user is reject on IdP'
     );
-    count(1);
     expectReject($res);
 }
 
