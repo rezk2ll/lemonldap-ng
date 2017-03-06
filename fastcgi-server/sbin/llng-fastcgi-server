@@ -133,7 +133,7 @@ package Lemonldap::NG::Handler::FastCGI::Loader;
 # Load configuration and look if custom handlers have been defined
 sub loadCustomHandlers {
     my ( $obj, $conf ) = @_;
-    foreach my $lltype ( keys %{ $conf->{nginxCustomHandlers} // {} } ) {
+    foreach my $lltype ( keys %{ $conf->{nginxCustomHandlers} || {} } ) {
         my $v = $conf->{nginxCustomHandlers}->{$lltype};
         if ( $v =~ m#[/\\\.]# ) {
             eval { require $v; };
