@@ -1,5 +1,3 @@
-* Don't generate token for /?js
-* Update notification doc
 * securize SOAP session creation by cipher
 * Verify securedCookie=3 (strange)
 * Test ForceAuth
