@@ -89,6 +89,7 @@
   "cfgDate": 1428138808,
   "cfgLog": "Default configuration provided by LemonLDAP::NG team",
   "cfgNum": "1",
+  "cfgVersion": "2.0.0",
   "cookieName": "lemonldap",
   "customFunctions": "My::hello My::get_uri My::get_additional_arg",
   "demoExportedVars": {
