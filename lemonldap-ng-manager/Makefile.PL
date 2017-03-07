@@ -22,8 +22,6 @@ WriteMakefile(
         'Lemonldap::NG::Handler' => '1.9.99',
         'LWP'                    => 0,
         'URI'                    => 0,
-        'XML::LibXSLT'           => 0,
-        'XML::LibXML'            => 0,
     },    # e.g., Module::Name => 1.1
     (
         $] >= 5.005

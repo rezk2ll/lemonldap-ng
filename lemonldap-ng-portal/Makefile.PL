@@ -27,9 +27,6 @@ WriteMakefile(
             'String::Random'        => 0,
             'URI'                   => 0,
             'Web::ID'               => 0,
-            'XML::LibXSLT'          => 0,
-            'XML::LibXML'           => 0,
-            'XML::Simple'           => 0,
         },
     },
     BUILD_REQUIRES => {
@@ -43,9 +40,6 @@ WriteMakefile(
         'SOAP::Lite'            => 0,
         'String::Random'        => 0,
         'Test::Pod'             => 1.00,
-        'XML::LibXSLT'          => 0,
-        'XML::LibXML'           => 0,
-        'XML::Simple'           => 0,
     },
     PREREQ_PM => {
         'Clone'                  => 0,

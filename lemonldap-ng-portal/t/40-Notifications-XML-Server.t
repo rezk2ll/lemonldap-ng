@@ -20,9 +20,9 @@ my $xml = '<?xml version="1.0" encoding="UTF-8"?>
 </notification></root>';
 
 SKIP: {
-    eval "use SOAP::Lite";
+    eval "use SOAP::Lite; use  XML::LibXML; use XML::LibXSLT;";
     if ($@) {
-        skip 'SOAP::Lite not found', $maintests;
+        skip 'SOAP::Lite or XML::Lib* not found', $maintests;
     }
 
     $client = LLNG::Manager::Test->new(

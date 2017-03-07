@@ -27,7 +27,6 @@ WriteMakefile(
         'IO::String'  => 0,
         'Net::LDAP'   => 0,
         'Test::Pod'   => 1.00,
-        'XML::Simple' => 0,
     },
     META_MERGE => {
         'recommends' => {
@@ -36,8 +35,6 @@ WriteMakefile(
             'HTTP::Message'               => 0,
             'JSON'                        => 0,
             'Net::LDAP'                   => 0,
-            'XML::Simple'                 => 0,
-            'XML::LibXML'                 => 0,
         },
     },
     PREREQ_PM => {

@@ -9,9 +9,14 @@ eval { unlink $file };
 require 't/test-lib.pm';
 
 SKIP: {
-    eval { require DBI; require DBD::SQLite; };
+    eval {
+        require DBI;
+        require DBD::SQLite;
+        require XML::LibXML;
+        require XML::LibXSLT;
+    };
     if ($@) {
-        skip 'DBD::SQLite not found', $mainTests;
+        skip 'DBD::SQLite or XML::Lib* not found', $mainTests;
     }
 
     my $dbh = DBI->connect("dbi:SQLite:dbname=$file");
