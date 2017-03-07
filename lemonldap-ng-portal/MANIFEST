@@ -15,6 +15,7 @@ lib/Lemonldap/NG/Portal/Auth/Base.pm
 lib/Lemonldap/NG/Portal/Auth/CAS.pm
 lib/Lemonldap/NG/Portal/Auth/Choice.pm
 lib/Lemonldap/NG/Portal/Auth/Combination.pm
+lib/Lemonldap/NG/Portal/Auth/Custom.pm
 lib/Lemonldap/NG/Portal/Auth/DBI.pm
 lib/Lemonldap/NG/Portal/Auth/Demo.pm
 lib/Lemonldap/NG/Portal/Auth/Facebook.pm
@@ -73,6 +74,7 @@ lib/Lemonldap/NG/Portal/Main/Request.pm
 lib/Lemonldap/NG/Portal/Main/Run.pm
 lib/Lemonldap/NG/Portal/Password/Base.pm
 lib/Lemonldap/NG/Portal/Password/Choice.pm
+lib/Lemonldap/NG/Portal/Password/Custom.pm
 lib/Lemonldap/NG/Portal/Password/DBI.pm
 lib/Lemonldap/NG/Portal/Password/Demo.pm
 lib/Lemonldap/NG/Portal/Password/LDAP.pm
@@ -91,12 +93,14 @@ lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
 lib/Lemonldap/NG/Portal/Plugins/Status.pm
 lib/Lemonldap/NG/Portal/Plugins/U2F.pm
 lib/Lemonldap/NG/Portal/Register/AD.pm
+lib/Lemonldap/NG/Portal/Register/Custom.pm
 lib/Lemonldap/NG/Portal/Register/Demo.pm
 lib/Lemonldap/NG/Portal/Register/LDAP.pm
 lib/Lemonldap/NG/Portal/Register/U2F.pm
 lib/Lemonldap/NG/Portal/UserDB/AD.pm
 lib/Lemonldap/NG/Portal/UserDB/Choice.pm
 lib/Lemonldap/NG/Portal/UserDB/Combination.pm
+lib/Lemonldap/NG/Portal/UserDB/Custom.pm
 lib/Lemonldap/NG/Portal/UserDB/DBI.pm
 lib/Lemonldap/NG/Portal/UserDB/Demo.pm
 lib/Lemonldap/NG/Portal/UserDB/Facebook.pm

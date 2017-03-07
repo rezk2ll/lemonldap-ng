@@ -356,6 +356,15 @@ sub tree {
                                 'yubikeySecretKey',  'yubikeyPublicIDSize'
                             ]
                         },
+                        {
+                            title => 'customParams',
+                            help  => 'authcustom.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'customAuth',     'customUserDB',
+                                'customPassword', 'customRegister',
+                            ]
+                        },
                     ],
                     'nodes_filter' => 'authParams'
                 },

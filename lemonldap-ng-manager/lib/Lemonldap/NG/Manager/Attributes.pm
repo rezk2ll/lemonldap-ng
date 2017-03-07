@@ -359,6 +359,10 @@ sub attributes {
                     {
                         'k' => 'Yubikey',
                         'v' => 'Yubikey'
+                    },
+                    {
+                        'k' => 'Custom',
+                        'v' => 'customModule'
                     }
                 ],
                 [
@@ -421,6 +425,10 @@ sub attributes {
                     {
                         'k' => 'WebID',
                         'v' => 'WebID'
+                    },
+                    {
+                        'k' => 'Custom',
+                        'v' => 'customModule'
                     }
                 ],
                 [
@@ -447,6 +455,10 @@ sub attributes {
                     {
                         'k' => 'Null',
                         'v' => 'None'
+                    },
+                    {
+                        'k' => 'Custom',
+                        'v' => 'customModule'
                     }
                 ]
             ],
@@ -553,6 +565,10 @@ sub attributes {
                 {
                     'k' => 'Null',
                     'v' => 'None'
+                },
+                {
+                    'k' => 'Custom',
+                    'v' => 'customModule'
                 }
             ],
             'type' => 'select'
@@ -747,6 +763,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'Null',
                     'v' => 'None'
+                },
+                {
+                    'k' => 'Custom',
+                    'v' => 'customModule'
                 }
             ],
             'test' => sub {
@@ -801,10 +821,22 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '\'self\'',
             'type'    => 'text'
         },
+        'customAuth' => {
+            'type' => 'text'
+        },
         'customFunctions' => {
             'msgFail' => '__badCustomFuncName__',
             'test'    => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,
             'type'    => 'text'
+        },
+        'customPassword' => {
+            'type' => 'text'
+        },
+        'customRegister' => {
+            'type' => 'text'
+        },
+        'customUserDB' => {
+            'type' => 'text'
         },
         'dbiAuthChain' => {
             'type' => 'text'
@@ -1826,6 +1858,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                 {
                     'k' => 'Null',
                     'v' => 'None'
+                },
+                {
+                    'k' => 'Custom',
+                    'v' => 'customModule'
                 }
             ],
             'type' => 'select'
@@ -2060,6 +2096,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                 {
                     'k' => 'Null',
                     'v' => 'None'
+                },
+                {
+                    'k' => 'Custom',
+                    'v' => 'customModule'
                 }
             ],
             'type' => 'select'
@@ -2874,6 +2914,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
                 {
                     'k' => 'Null',
                     'v' => 'None'
+                },
+                {
+                    'k' => 'Custom',
+                    'v' => 'customModule'
                 }
             ],
             'type' => 'select'

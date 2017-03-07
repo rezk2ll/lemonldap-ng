@@ -922,10 +922,11 @@ sub attributes {
         registerDB => {
             type   => 'select',
             select => [
-                { k => 'AD',   v => 'Active Directory' },
-                { k => 'Demo', v => 'Demonstration' },
-                { k => 'LDAP', v => 'LDAP' },
-                { k => 'Null', v => 'None' },
+                { k => 'AD',     v => 'Active Directory' },
+                { k => 'Demo',   v => 'Demonstration' },
+                { k => 'LDAP',   v => 'LDAP' },
+                { k => 'Null',   v => 'None' },
+                { k => 'Custom', v => 'customModule' },
             ],
             default       => 'Null',
             documentation => 'Register module',
@@ -1737,6 +1738,7 @@ sub attributes {
                 { k => 'Remote',        v => 'Remote' },
                 { k => 'Slave',         v => 'Slave' },
                 { k => 'Null',          v => 'None' },
+                { k => 'Custom',        v => 'customModule' },
             ],
             default       => 'Demo',
             documentation => 'Authentication module',
@@ -1744,12 +1746,13 @@ sub attributes {
         userDB => {
             type   => 'select',
             select => [
-                { k => 'Same', v => 'Same' },
-                { k => 'AD',   v => 'Active Directory' },
-                { k => 'DBI',  v => 'Database (DBI)' },
-                { k => 'LDAP', v => 'LDAP' },
-                { k => 'REST', v => 'REST' },
-                { k => 'Null', v => 'None' },
+                { k => 'Same',   v => 'Same' },
+                { k => 'AD',     v => 'Active Directory' },
+                { k => 'DBI',    v => 'Database (DBI)' },
+                { k => 'LDAP',   v => 'LDAP' },
+                { k => 'REST',   v => 'REST' },
+                { k => 'Null',   v => 'None' },
+                { k => 'Custom', v => 'customModule' },
             ],
             default       => 'Same',
             documentation => 'User module',
@@ -1764,6 +1767,7 @@ sub attributes {
                 { k => 'LDAP',   v => 'LDAP' },
                 { k => 'REST',   v => 'REST' },
                 { k => 'Null',   v => 'None' },
+                { k => 'Custom', v => 'customModule' },
             ],
             default       => 'Demo',
             documentation => 'Password module',
@@ -2192,7 +2196,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'SSL',           v => 'SSL' },
                     { k => 'Twitter',       v => 'Twitter' },
                     { k => 'WebID',         v => 'WebID' },
-                    { k => 'Yubikey',       v => 'Yubikey' }
+                    { k => 'Yubikey',       v => 'Yubikey' },
+                    { k => 'Custom',        v => 'customModule' },
                 ],
                 [
                     { k => 'AD',            v => 'Active Directory' },
@@ -2209,15 +2214,17 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Remote',        v => 'Remote' },
                     { k => 'SAML',          v => 'SAML v2' },
                     { k => 'Slave',         v => 'Slave' },
-                    { k => 'WebID',         v => 'WebID' }
+                    { k => 'WebID',         v => 'WebID' },
+                    { k => 'Custom',        v => 'customModule' },
                 ],
                 [
-                    { k => 'AD',   v => 'Active Directory' },
-                    { k => 'DBI',  v => 'Database (DBI)' },
-                    { k => 'Demo', v => 'Demo' },
-                    { k => 'LDAP', v => 'LDAP' },
-                    { k => 'REST', v => 'REST' },
-                    { k => 'Null', v => 'None' }
+                    { k => 'AD',     v => 'Active Directory' },
+                    { k => 'DBI',    v => 'Database (DBI)' },
+                    { k => 'Demo',   v => 'Demo' },
+                    { k => 'LDAP',   v => 'LDAP' },
+                    { k => 'REST',   v => 'REST' },
+                    { k => 'Null',   v => 'None' },
+                    { k => 'Custom', v => 'customModule' },
                 ]
             ],
         },
@@ -2254,6 +2261,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'Remote',        v => 'Remote' },
                 { k => 'Slave',         v => 'Slave' },
                 { k => 'Null',          v => 'None' },
+                { k => 'Custom',        v => 'customModule' },
             ],
         },
 
@@ -2269,6 +2277,24 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'int',
             default       => 12,
             documentation => 'Yubikey public ID size',
+        },
+
+        # Custom auth modules
+        customAuth => {
+            type          => 'text',
+            documentation => 'Custom auth module',
+        },
+        customUserDB => {
+            type          => 'text',
+            documentation => 'Custom user DB module',
+        },
+        customPassword => {
+            type          => 'text',
+            documentation => 'Custom password module',
+        },
+        customRegister => {
+            type          => 'text',
+            documentation => 'Custom register module',
         },
 
         # OpenID Connect auth params

@@ -34,6 +34,7 @@ our $authParameters = {
   casParams => [qw(CAS_authnLevel CAS_url CAS_CAFile CAS_renew CAS_gateway CAS_pgtFile CAS_proxiedServices)],
   choiceParams => [qw(authChoiceParam authChoiceModules)],
   combinationParams => [qw(combination combModules)],
+  customParams => [qw(customAuth customUserDB customPassword customRegister)],
   dbiParams => [qw(dbiAuthnLevel dbiExportedVars dbiAuthChain dbiAuthUser dbiAuthPassword dbiUserChain dbiUserUser dbiUserPassword dbiAuthTable dbiUserTable dbiAuthLoginCol dbiAuthPasswordCol dbiPasswordMailCol userPivot dbiAuthPasswordHash)],
   demoParams => [qw(demoExportedVars)],
   facebookParams => [qw(facebookAuthnLevel facebookExportedVars facebookAppId facebookAppSecret)],
