@@ -20,12 +20,13 @@ WriteMakefile(
             'LWP::Protocol::https'  => 0,
             'MIME::Lite'            => 0,
             'Net::Facebook::Oauth2' => 0,
+            'Net::LDAP'             => 0.38,
             'Net::OAuth'            => 0,
             'Net::OpenID::Consumer' => 0,
             'Net::OpenID::Server'   => 0,
             'SOAP::Lite'            => 0,
             'String::Random'        => 0,
-            'URI'                   => 0,
+            'Unicode::String'       => 0,
             'Web::ID'               => 0,
         },
     },
@@ -43,12 +44,8 @@ WriteMakefile(
     },
     PREREQ_PM => {
         'Clone'                  => 0,
-        'HTML::Template'         => 0,
-        'JSON'                   => 0,
         'Lemonldap::NG::Handler' => '1.9.99',
-        'Net::LDAP'              => 0.38,
         'Regexp::Assemble'       => 0,
-        'Unicode::String'        => 0,
     },
     (
         $] >= 5.005

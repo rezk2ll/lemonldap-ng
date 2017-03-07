@@ -24,34 +24,33 @@ WriteMakefile(
     VERSION_FROM   => 'lib/Lemonldap/NG/Common.pm',    # finds $VERSION
     LICENSE        => 'gpl',
     BUILD_REQUIRES => {
-        'IO::String'  => 0,
-        'Net::LDAP'   => 0,
-        'Test::Pod'   => 1.00,
+        'IO::String' => 0,
+        'Net::LDAP'  => 0,
+        'Test::Pod'  => 1.00,
     },
     META_MERGE => {
         'recommends' => {
             'Apache::Session::Browseable' => 0,
-            'HTML::Template'              => 0,
-            'HTTP::Message'               => 0,
-            'JSON'                        => 0,
+            'DBI'                         => 0,
             'Net::LDAP'                   => 0,
+            'SOAP::Lite'                  => 0,
+            'LWP::Protocol::https'        => 0,
         },
     },
     PREREQ_PM => {
         'Apache::Session'        => 0,
         'Cache::Cache'           => 0,
+        'Config::IniFiles'       => 0,
         'Crypt::OpenSSL::Bignum' => 0,
         'Crypt::OpenSSL::RSA'    => 0,
         'Crypt::OpenSSL::X509'   => 0,
         'Crypt::Rijndael'        => 0,
-        'Config::IniFiles'       => 0,
         'Digest::SHA'            => 0,
-        'File::Basename'         => 0,
+        'HTML::Template'         => 0,
         'JSON'                   => 0,
         'Mouse'                  => 0,
         'Plack'                  => 0,
-        'Net::CIDR::Lite'        => 0,
-        'SOAP::Lite'             => 0,
+        'URI'                    => 0,
     },    # e.g., Module::Name => 1.1
           #EXE_FILES => [ 'scripts/convertConfig', ],
     (

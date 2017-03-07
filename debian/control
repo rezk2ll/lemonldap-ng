@@ -42,7 +42,6 @@ Build-Depends-Indep: libapache-session-perl,
                      libtest-pod-perl,
                      libunicode-string-perl,
                      liburi-perl,
-                     libhttp-message-perl,
                      libwww-perl,
                      libxml-libxml-perl,
                      libxml-libxslt-perl,
@@ -120,7 +119,7 @@ Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libplack-perl,
          nginx-extras | nginx
-Recommends: libhttp-parser-xs-perl,
+Recommends: libhttp-parser-xs-perl
 Suggests: nginx-extras
 Section: web
 Description: Lemonldap::NG FastCGI server
@@ -165,11 +164,9 @@ Depends: ${misc:Depends},
          libmouse-perl,
          liburi-perl,
          libwww-perl
-Recommends: libhttp-message-perl,
-            liblwp-protocol-https-perl
+Recommends: liblwp-protocol-https-perl
 Suggests: libcache-memcached-perl,
           libdigest-hmac-perl,
-          liblemonldap-ng-portal-perl,
           libsoap-lite-perl
 Description: Lemonldap::NG handler common libraries
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
@@ -205,19 +202,19 @@ Depends: ${misc:Depends},
          libcrypt-openssl-rsa-perl,
          libcrypt-openssl-x509-perl,
          libcrypt-rijndael-perl,
-         libdbi-perl,
+         libdigest-sha-perl,
+         libhtml-template-perl,
          libjson-perl,
          libmouse-perl,
-         libnet-cidr-lite-perl,
          libplack-perl,
-         libsoap-lite-perl
+         liburi-perl
 Recommends: libapache-session-browseable-perl,
-            libhtml-template-perl,
-            libhttp-message-perl,
-            libnet-ldap-perl,
-            liblwp-protocol-https-perl,
-            libxml-libxml-perl,
-            libxml-simple-perl
+            libdbi-perl,
+            liblwp-protocol-https-perl
+Suggests: libnet-ldap-perl,
+          libsoap-lite-perl,
+          libxml-libxml-perl,
+          libxml-simple-perl
 Conflicts: liblemonldap-ng-cli-perl
 Description: Lemonldap::NG common files
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
@@ -239,8 +236,6 @@ Depends: ${misc:Depends},
          ${perl:Depends},
          libconvert-pem-perl,
          libcrypt-openssl-rsa-perl,
-         libhtml-template-perl,
-         libjson-perl,
          liblemonldap-ng-common-perl (= ${binary:Version}),
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libmouse-perl,
@@ -274,18 +269,15 @@ Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
          apache2 | nginx | httpd-cgi,
-         libcgi-pm-perl,
          libclone-perl,
-         libhtml-template-perl,
-         liblemonldap-ng-common-perl (= ${binary:Version}),
-         libmime-lite-perl,
-         libcrypt-openssl-bignum-perl,
-         libnet-ldap-perl,
-         libregexp-assemble-perl,
-         libstring-random-perl,
-         libunicode-string-perl,
-         liburi-perl
-Recommends: libnet-facebook-oauth2-perl | libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl | libnet-oauth-perl | libauthcas-perl | libweb-id-perl,
+         liblemonldap-ng-handler-perl (= ${binary:Version}),
+         libregexp-assemble-perl
+Recommends: libcrypt-openssl-bignum-perl,
+            libmime-lite-perl,
+            libnet-ldap-perl,
+            libnet-facebook-oauth2-perl | libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl | libnet-oauth-perl | libauthcas-perl | libweb-id-perl,
+            libstring-random-perl,
+            libunicode-string-perl,
             libwww-perl
 Suggests: libauthcas-perl,
           libauthen-captcha-perl,
@@ -301,11 +293,7 @@ Suggests: libauthcas-perl,
           libnet-oauth-perl,
           libsoap-lite-perl,
           libweb-id-perl,
-          libhttp-message-perl,
           liblwp-protocol-https-perl,
-          libxml-libxml-perl,
-          libxml-libxslt-perl,
-          libxml-simple-perl,
           slapd
 Pre-Depends: debconf
 Description: Lemonldap::NG authentication portal part
