@@ -146,7 +146,7 @@
 "customAuth": "Custom authentication module",
 "customFunctions": "Custom functions",
 "customModule": "Custom module",
-"customParams": "Custom authentication modules",
+"customParams": "Custom module names",
 "customPassword": "Custom password module",
 "customPortalSkin": "Custom portal skin",
 "customRegister": "Custom register module",
