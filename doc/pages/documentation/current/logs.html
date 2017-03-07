@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:logs</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,logs"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="logs.html"/>
@@ -49,9 +49,20 @@
 <div>
 
 <ul class="toc">
-<li class="level1"><div class="li"><a href="#apache_logging">Apache logging</a></div></li>
-<li class="level1"><div class="li"><a href="#syslog">Syslog</a></div></li>
-<li class="level1"><div class="li"><a href="#override_logging_functions">Override logging functions</a></div></li>
+<li class="level1"><div class="li"><a href="#default_loggers">Default loggers</a></div></li>
+<li class="level1"><div class="li"><a href="#log_levels">Log levels</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#technical_log_levels">Technical log levels</a></div></li>
+<li class="level2"><div class="li"><a href="#log_levels_for_user_actions">Log levels for user actions</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#logger_configuration">Logger configuration</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#std_logger">Std logger</a></div></li>
+<li class="level2"><div class="li"><a href="#apache2_logger">Apache2 logger</a></div></li>
+<li class="level2"><div class="li"><a href="#syslog">Syslog</a></div></li>
+<li class="level2"><div class="li"><a href="#log4perl">Log4perl</a></div></li>
+</ul></li>
 </ul>
 </div>
 </div>
@@ -60,20 +71,116 @@
 <h1 class="sectionedit1" id="logs">Logs</h1>
 <div class="level1">
 
-</div>
-<!-- EDIT1 SECTION "Logs" [1-20] -->
-<h2 class="sectionedit2" id="apache_logging">Apache logging</h2>
-<div class="level2">
-
 <p>
-By default, LemonLDAP::NG uses Apache logs to store user actions and other messages:
+LemonLDAP::NG provides 5 levels of error and has two kind of logs:
 </p>
 <ul>
-<li class="level1"><div class="li"> Error log: all messages emitted by the program, depending on the configured log level</div>
+<li class="level1"><div class="li"> technical logs</div>
 </li>
-<li class="level1"><div class="li"> Access log: the issuer of each request is identified</div>
+<li class="level1"><div class="li"> user actions logs</div>
 </li>
 </ul>
+
+<p>
+Each category can be handle by a different logging framework. You can choose between:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Lemonldap::NG::Common::Logger::Std</strong>: standard output (mapped in web server logs, see below)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Lemonldap::NG::Common::Logger::Syslog</strong>: syslog logging</div>
+</li>
+<li class="level1"><div class="li"> <strong>Lemonldap::NG::Common::Logger::Apache2</strong>: use Apache2 logging, levels are stored in Apache2 logs and the level is controlled by <code>LogLevel</code> Apache parameter</div>
+</li>
+<li class="level1"><div class="li"> <strong>Lemonldap::NG::Common::Logger::Log4perl</strong>: use <code>Log4perl</code> framework to log <em>(inspired by Java Log4J)</em></div>
+</li>
+</ul>
+
+<p>
+Except for Apache2 and Log4Perl, log level is defined by <code>logLevel</code> parameter set in <code>lemonldap-ng.ini</code> file. Logger configurations are defined in lemonldap-ng.ini. Example:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>all<span class="br0">&#93;</span></span>
+<span class="re1">logger</span>     <span class="sy0">=</span><span class="re2"> Lemonldap::NG::Common::Logger::Log4perl</span>
+<span class="re1">userLogger</span> <span class="sy0">=</span><span class="re2"> Lemonldap::NG::Common::Logger::Syslog</span>
+<span class="re1">logLevel</span>   <span class="sy0">=</span><span class="re2"> notice</span></pre>
+
+<p>
+You can also modify these values in each lemonldap-ng.ini section to have different values for portal, manager and handlers.
+</p>
+
+<p>
+LLNG provides also a username that can be used by webservers in their access log. To configure the user identifier in access log, go in Manager, <code>General Parameters</code> &gt; <code>Logging</code> &gt; <code>REMOTE_USER</code>.
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Logs" [1-1310] -->
+<h2 class="sectionedit2" id="default_loggers">Default loggers</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Apache handlers use by default Apache2 logger. This logger can&#039;t be used for other LLNG components</div>
+</li>
+<li class="level1"><div class="li"> Except when launched by LLNG FastCGI server <em>(used by Nginx)</em>, Portal and Manager use Std logger by default</div>
+</li>
+<li class="level1"><div class="li"> All components lauched by LLNG FastCGI server use Syslog by default</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "Default loggers" [1311-1629] -->
+<h2 class="sectionedit3" id="log_levels">Log levels</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT3 SECTION "Log levels" [1630-1653] -->
+<h3 class="sectionedit4" id="technical_log_levels">Technical log levels</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <strong>error</strong> is used for problems that must be reported to administrator and needs an action. In this case, some feature may not work</div>
+</li>
+<li class="level1"><div class="li"> <strong>warn</strong> is used for problems that doesn&#039;t block LLNG features but should be solved</div>
+</li>
+<li class="level1"><div class="li"> <strong>notice</strong> is used for actions that must be kept in logs</div>
+</li>
+<li class="level1"><div class="li"> <strong>info</strong> display some technical information</div>
+</li>
+<li class="level1"><div class="li"> <strong>debug</strong> produce a lot a debugging logs</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT4 SECTION "Technical log levels" [1654-2063] -->
+<h3 class="sectionedit5" id="log_levels_for_user_actions">Log levels for user actions</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <strong>error</strong> is used to log bad user actions that looks malicious</div>
+</li>
+<li class="level1"><div class="li"> <strong>warn</strong> is used to log some errors like “bad password”</div>
+</li>
+<li class="level1"><div class="li"> <strong>notice</strong> is used for actions that must be kept in logs for accounting (connections, logout)</div>
+</li>
+<li class="level1"><div class="li"> <strong>info</strong> display some useful information like handler authorizations (at least 1 for each HTTP hit)</div>
+</li>
+<li class="level1"><div class="li"> <strong>debug</strong> isn&#039;t used</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT5 SECTION "Log levels for user actions" [2064-2457] -->
+<h2 class="sectionedit6" id="logger_configuration">Logger configuration</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT6 SECTION "Logger configuration" [2458-2491] -->
+<h3 class="sectionedit7" id="std_logger">Std logger</h3>
+<div class="level3">
+
+<p>
+Nothing to configure except logLevel.
+</p>
+
+</div>
+<!-- EDIT7 SECTION "Std logger" [2492-2552] -->
+<h3 class="sectionedit8" id="apache2_logger">Apache2 logger</h3>
+<div class="level3">
 
 <p>
 The log level can be set with Apache <code>LogLevel</code> parameter. It can be configured globally, or inside a virtual host.
@@ -83,56 +190,30 @@ The log level can be set with Apache <code>LogLevel</code> parameter. It can be 
 See <a href="http://httpd.apache.org/docs/current/mod/core.html#loglevel" class="urlextern" title="http://httpd.apache.org/docs/current/mod/core.html#loglevel"  rel="nofollow">http://httpd.apache.org/docs/current/mod/core.html#loglevel</a> for more information.
 </p>
 
-<p>
-To configure the user identifier in access log, go in Manager, <code>General Parameters</code> &gt; <code>Logging</code> &gt; <code>REMOTE_USER</code>.
-</p>
+</div>
+<!-- EDIT8 SECTION "Apache2 logger" [2553-2788] -->
+<h3 class="sectionedit9" id="syslog">Syslog</h3>
+<div class="level3">
 
 <p>
-You can also hide sensitive values in logs (session content can be displayed in logs in debug loglevel). Go in Manager, <code>General Parameters</code> &gt; <code>Logging</code> &gt; <code>Hidden attributes</code> and set a list of attributes to hide (space separated). 
+You can choose facility in lemonldap-ng.ini file. Default values:
 </p>
+<pre class="code file ini"><span class="re1">syslogFacility</span>     <span class="sy0">=</span><span class="re2"> daemon</span>
+<span class="re1">userSyslogFacility</span> <span class="sy0">=</span><span class="re2"> auth</span></pre>
 
 </div>
-<!-- EDIT2 SECTION "Apache logging" [21-850] -->
-<h2 class="sectionedit3" id="syslog">Syslog</h2>
-<div class="level2">
+<!-- EDIT9 SECTION "Syslog" [2789-2947] -->
+<h3 class="sectionedit10" id="log4perl">Log4perl</h3>
+<div class="level3">
 
 <p>
-LemonLDAP::NG can also use syslog (only for user actions).
+You can indicate the Log4perl configuration file and the classes to use. Default values:
 </p>
-
-<p>
-In Manager, set syslog facility in <code>General Parameters</code> &gt; <code>Logging</code> &gt; <code>Syslog facility</code>.
-</p>
-
-<p>
-The messages are stored with the levels :
-</p>
-<ul>
-<li class="level1"><div class="li"> <strong>info</strong> for user actions</div>
-</li>
-<li class="level1"><div class="li"> <strong>notice</strong> for good authentications or external exchange (<abbr title="Security Assertion Markup Language">SAML</abbr>, OpenID,…)</div>
-</li>
-<li class="level1"><div class="li"> <strong>warn</strong> for failed authentications</div>
-</li>
-</ul>
+<pre class="code file ini"><span class="re1">log4perlConfFile</span>   <span class="sy0">=</span><span class="re2"> /etc/log4perl.conf</span>
+<span class="re1">log4perlLogger</span>     <span class="sy0">=</span><span class="re2"> LLNG</span>
+<span class="re1">log4perlUserLogger</span> <span class="sy0">=</span><span class="re2"> LLNG.user</span></pre>
 
 </div>
-<!-- EDIT3 SECTION "Syslog" [851-1219] -->
-<h2 class="sectionedit4" id="override_logging_functions">Override logging functions</h2>
-<div class="level2">
-
-<p>
-You can customize logs by redefining userNotice() and userError() methods, directly in <code>lemonldap-ng.ini</code>
-</p>
-
-<p>
-Example:
-</p>
-<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
-<span class="re1">userError</span> <span class="sy0">=</span><span class="re2"> sub <span class="br0">&#123;</span> my <span class="br0">&#40;</span>$self, $message<span class="br0">&#41;</span> = @_</span><span class="co0">; ... }</span>
-<span class="re1">userNotice</span> <span class="sy0">=</span><span class="re2"> sub <span class="br0">&#123;</span> my <span class="br0">&#40;</span>$self, $message<span class="br0">&#41;</span> = @_</span><span class="co0">; ... }</span></pre>
-
-</div>
-<!-- EDIT4 SECTION "Override logging functions" [1220-] --></div>
+<!-- EDIT10 SECTION "Log4perl" [2948-] --></div>
 </body>
 </html>

@@ -54,6 +54,7 @@
 <li class="level1"><div class="li"><a href="#perl">Perl</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#core">Core</a></div></li>
+<li class="level2"><div class="li"><a href="#old_notifications_format">Old Notifications format</a></div></li>
 <li class="level2"><div class="li"><a href="#saml2">SAML2</a></div></li>
 <li class="level2"><div class="li"><a href="#cas_authentication_module">CAS (module d'authentification)</a></div></li>
 <li class="level2"><div class="li"><a href="#openid">OpenID</a></div></li>
@@ -114,29 +115,19 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 <li class="level1"><div class="li">  MIME::Base64</div>
 </li>
-<li class="level1"><div class="li">  CGI</div>
-</li>
 <li class="level1"><div class="li">  LWP::UserAgent</div>
 </li>
 <li class="level1"><div class="li">  Cache::Cache</div>
 </li>
 <li class="level1"><div class="li"> <abbr title="Database Interface">DBI</abbr></div>
 </li>
-<li class="level1"><div class="li">  XML::Simple</div>
-</li>
-<li class="level1"><div class="li">  CGI::Session</div>
-</li>
 <li class="level1"><div class="li">  Regexp::Assemble</div>
 </li>
 <li class="level1"><div class="li">  Regexp::Common</div>
 </li>
-<li class="level1"><div class="li">  XML::LibXML</div>
-</li>
 <li class="level1"><div class="li">  Crypt::Rijndael</div>
 </li>
 <li class="level1"><div class="li">  IO::String</div>
-</li>
-<li class="level1"><div class="li">  XML::LibXSLT</div>
 </li>
 <li class="level1"><div class="li"> <abbr title="HyperText Markup Language">HTML</abbr>::Template</div>
 </li>
@@ -164,43 +155,54 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 <li class="level1"><div class="li">  Unicode::String</div>
 </li>
-<li class="level1"><div class="li">  Log::Log4perl::Logger</div>
-</li>
 <li class="level1"><div class="li">  Net::CIDR::Lite</div>
 </li>
 <li class="level1"><div class="li">  Cache::Memcached</div>
 </li>
 <li class="level1"><div class="li">  Mouse</div>
 </li>
-<li class="level1"><div class="li">  Plack::Handler</div>
+<li class="level1"><div class="li">  Plack</div>
 </li>
 <li class="level1"><div class="li">  GD::SecurityImage</div>
 </li>
 </ul>
 
-</div><!-- EDIT4 SECTION "Core" [655-1267] -->
+</div><!-- EDIT4 SECTION "Core" [655-1158] -->
 
-<h3 class="sectionedit5" id="saml2">SAML2</h3>
+<h3 class="sectionedit5" id="old_notifications_format">Old Notifications format</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li">  XML::LibXML</div>
+</li>
+<li class="level1"><div class="li">  XML::LibXSLT</div>
+</li>
+</ul>
+
+</div><!-- EDIT5 SECTION "Old Notifications format" [1159-1228] -->
+
+<h3 class="sectionedit6" id="saml2">SAML2</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> <a href="http://lasso.entrouvert.org/" class="urlextern" title="http://lasso.entrouvert.org/"  rel="nofollow">Lasso</a></div>
 </li>
 <li class="level1"><div class="li">  GLib</div>
 </li>
+<li class="level1"><div class="li">  XML::Simple</div>
+</li>
 </ul>
 
-</div><!-- EDIT5 SECTION "SAML2" [1268-1337] -->
+</div><!-- EDIT6 SECTION "SAML2" [1229-1314] -->
 
-<h3 class="sectionedit6" id="cas_authentication_module">CAS (module d'authentification)</h3>
+<h3 class="sectionedit7" id="cas_authentication_module">CAS (module d'authentification)</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> <a href="http://sourcesup.cru.fr/projects/perlcas/" class="urlextern" title="http://sourcesup.cru.fr/projects/perlcas/"  rel="nofollow">AuthCAS</a></div>
 </li>
 </ul>
 
-</div><!-- EDIT6 SECTION "CAS (authentication module)" [1338-1435] -->
+</div><!-- EDIT7 SECTION "CAS (authentication module)" [1315-1412] -->
 
-<h3 class="sectionedit7" id="openid">OpenID</h3>
+<h3 class="sectionedit8" id="openid">OpenID</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li">  Net::OpenID::Consumer &gt; 1.00</div>
@@ -209,18 +211,18 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT7 SECTION "OpenID" [1436-1518] -->
+</div><!-- EDIT8 SECTION "OpenID" [1413-1495] -->
 
-<h3 class="sectionedit8" id="twitter">Twitter</h3>
+<h3 class="sectionedit9" id="twitter">Twitter</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li">  Net::OAuth</div>
 </li>
 </ul>
 
-</div><!-- EDIT8 SECTION "Twitter" [1519-1553] -->
+</div><!-- EDIT9 SECTION "Twitter" [1496-1530] -->
 
-<h3 class="sectionedit9" id="pod_unit_tests">Tests unitaires POD</h3>
+<h3 class="sectionedit10" id="pod_unit_tests">Tests unitaires POD</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li">  Test::POD</div>
@@ -229,9 +231,9 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT9 SECTION "POD unit tests" [1554-1615] -->
+</div><!-- EDIT10 SECTION "POD unit tests" [1531-1592] -->
 
-<h3 class="sectionedit10" id="smtpreset_password_by_mail">SMTP / réinitialisation de mot-de-passe par courriel</h3>
+<h3 class="sectionedit11" id="smtpreset_password_by_mail">SMTP / réinitialisation de mot-de-passe par courriel</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li">  MIME::Lite</div>
@@ -248,9 +250,9 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT10 SECTION "SMTP / Reset password by mail" [1616-1763] -->
+</div><!-- EDIT11 SECTION "SMTP / Reset password by mail" [1593-1740] -->
 
-<h2 class="sectionedit11" id="other">Autres</h2>
+<h2 class="sectionedit12" id="other">Autres</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Jquery (framework javascript) est inclus dans l'archive et les RPMs, mais est une dépendance des versions officielles Debian</div>
@@ -259,14 +261,14 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT11 SECTION "Other" [1764-1980] -->
+</div><!-- EDIT12 SECTION "Other" [1741-1957] -->
 
-<h2 class="sectionedit12" id="install_dependencies_on_your_system">Installer les dépendances sur le système</h2>
+<h2 class="sectionedit13" id="install_dependencies_on_your_system">Installer les dépendances sur le système</h2>
 <div class="level2">
 
-</div><!-- EDIT12 SECTION "Install dependencies on your system" [1981-2030] -->
+</div><!-- EDIT13 SECTION "Install dependencies on your system" [1958-2007] -->
 
-<h3 class="sectionedit13" id="apt-get">APT-GET</h3>
+<h3 class="sectionedit14" id="apt-get">APT-GET</h3>
 <div class="level3">
 
 <p>
@@ -286,9 +288,9 @@ Pour Nginx:
 </p>
 <pre class="code">apt-get install nginx nginx-extras</pre>
 
-</div><!-- EDIT13 SECTION "APT-GET" [2031-3025] -->
+</div><!-- EDIT14 SECTION "APT-GET" [2008-3002] -->
 
-<h3 class="sectionedit14" id="yum">YUM</h3>
+<h3 class="sectionedit15" id="yum">YUM</h3>
 <div class="level3">
 <div class="notetip">You need  <a href="http://fedoraproject.org/wiki/EPEL/" class="urlextern" title="http://fedoraproject.org/wiki/EPEL/"  rel="nofollow">EPEL</a> repository. See how you can activate this repository: <a href="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse" class="urlextern" title="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse"  rel="nofollow">http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</a>
 </div>
@@ -311,7 +313,7 @@ Pour Nginx:
 <div class="noteimportant">As you need a recent version of Nginx, the best is to install <a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-red-hat-centos-packages" class="urlextern" title="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-red-hat-centos-packages"  rel="nofollow">Nginx official packages</a>.
 
 </div>
-</div><!-- EDIT14 SECTION "YUM" [3026-] -->
+</div><!-- EDIT15 SECTION "YUM" [3003-] -->
 </div>
 </body>
 </html>

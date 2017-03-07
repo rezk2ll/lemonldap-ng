@@ -78,11 +78,11 @@ Insert a header containing this value:
 
 <p>
 
-Webapp1 can read this header and use it in its requests in the <code>X-Llng-Token</code> header. The token is build using the session ID and the list of authorized virtualhosts. The token is available only 30  and only the listed virtualhosts.
+Webapp1 can read this header and use it in its requests in the <code>X-Llng-Token</code> header. The token is build using the session ID and the list of authorized virtualhosts. The token is available only 30 seconds and only the listed virtualhosts.
 
 </p>
 
-</div><!-- EDIT2 SECTION "Webapp1 handler configuration" [448-854] -->
+</div><!-- EDIT2 SECTION "Webapp1 handler configuration" [448-861] -->
 
 <h2 class="sectionedit3" id="webapp2_handler_configuration">Webapp2 handler configuration</h2>
 <div class="level2">
@@ -92,10 +92,8 @@ Webapp1 can read this header and use it in its requests in the <code>X-Llng-Toke
 Change handler type to “ServiceToken”. So it is able to manage both user and server connections. And that's all !
 
 </p>
-<div class="noteimportant">If you use “Server” platform (Nginx), don't forget to give the <code>X-Llng-Token</code> header to the FastCGI handler (formatted as <code>HTTP_X_LLNG_TOKEN</code>).
 
-</div>
-</div><!-- EDIT3 SECTION "Webapp2 handler configuration" [855-] -->
+</div><!-- EDIT3 SECTION "Webapp2 handler configuration" [862-] -->
 </div>
 </body>
 </html>

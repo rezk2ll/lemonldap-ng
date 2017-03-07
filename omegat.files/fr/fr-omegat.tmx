@@ -572,14 +572,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You can customize logs by redefining userNotice() and userError() methods, directly in &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T201727Z" changeid="guimard">
-        <seg>On peut personnaliser les fonctions de journalisation en redéfinissant les méthodes userNotice() et userError(), directement dans &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>http://search.cpan.org/search?query=Safe&amp;mode=module</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T203909Z" changeid="xavier">
@@ -4086,14 +4078,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>the &lt;a0&gt;portal&lt;/a0&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T171336Z" changeid="xavier">
-        <seg>le &lt;a0&gt;portail&lt;/a0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>So instead of using LDAP groups recovery, you just have to store “memberOf” field in your exported variables.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160302T063004Z" changeid="xavier">
@@ -4558,26 +4542,10 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>CGI</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T140828Z" changeid="guimard">
-        <seg>CGI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>A Zimbra Handler is called</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155348Z" changeid="xavier">
         <seg>Un handler Zimbra est appelé</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Apache logging</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T200707Z" changeid="guimard">
-        <seg>Journaux d'Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -8536,26 +8504,10 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Site Name&lt;/s0&gt;: Name that will be displayed in the BrowserID login window</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T055434Z" changeid="xavier">
-        <seg>&lt;s0&gt;Nom du site&lt;/s0&gt; : Nom qui sera affiché dans la fenêtre d'authentification BrowserID</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>To set a parameter, for example domain:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T075947Z" changeid="xavier">
         <seg>Pour définir un paramètre, par exemple le domaine :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>https://developer.mozilla.org/en-US/docs/Mozilla/Persona/FAQ?redirectlocale=en-US&amp;redirectslug=Persona%2FFAQ#How_does_Persona_compare_to_OpenID.3F</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T054034Z" changeid="xavier">
-        <seg>https://developer.mozilla.org/en-US/docs/Mozilla/Persona/FAQ?redirectlocale=en-US&amp;redirectslug=Persona%2FFAQ#How_does_Persona_compare_to_OpenID.3F</seg>
       </tuv>
     </tu>
     <tu>
@@ -8812,14 +8764,6 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191428Z" changeid="xavier">
         <seg>Voir &lt;a0&gt;how configure logging in Tomcat&lt;/a0&gt; .</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Then, go in &lt;c0&gt;BrowserID parameters&lt;/c0&gt;:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T055107Z" changeid="xavier">
-        <seg>Ensuite, aller dans les &lt;c0&gt;paramètres BrowserID&lt;/c0&gt;:</seg>
       </tuv>
     </tu>
     <tu>
@@ -11874,14 +11818,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>https://developer.mozilla.org/en-US/docs/Mozilla/Persona</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T054451Z" changeid="xavier">
-        <seg>https://developer.mozilla.org/en-US/docs/Mozilla/Persona</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>$uid eq “root”</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095718Z" changeid="xavier">
@@ -12146,14 +12082,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T163902Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut utiliser un annuaire LDAP pour :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Error log: all messages emitted by the program, depending on the configured log level</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T200945Z" changeid="guimard">
-        <seg>Journaux d'erreur (ErrorLog) : tous les messages emis par le programme, suivant le niveau de journalisation configuré (LogLevel)</seg>
       </tuv>
     </tu>
     <tu>
@@ -12560,14 +12488,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You can also hide sensitive values in logs (session content can be displayed in logs in debug loglevel).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T061415Z" changeid="xavier">
-        <seg>On peut aussi masque les sonnées sensibles dans les journaux (le contenu de la session est affiché dans les journaux lorsque logLevel est positionné à debug).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;# SAML2 Issuer&lt;/s0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064349Z" changeid="xavier">
@@ -12912,14 +12832,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>BrowserID is also known as Mozilla Persona.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T054217Z" changeid="xavier">
-        <seg>BrowserID est également connu sous le nom de « Mozilla Persona ».</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose SSL for authentication.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T213054Z" changeid="xavier">
@@ -12940,14 +12852,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T123653Z" changeid="xavier">
         <seg>L'utilitaire &lt;c0&gt;convertConfig&lt;/c0&gt; lit 2 fichiers de configuration &lt;a1&gt;LL::NG&lt;/a1&gt; (&lt;c2&gt;lemonldap-ng.ini&lt;/c2&gt;) :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>https://verifier.login.persona.org/verify</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T055204Z" changeid="xavier">
-        <seg>https://verifier.login.persona.org/verify</seg>
       </tuv>
     </tu>
     <tu>
@@ -13220,14 +13124,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T164121Z" changeid="xavier">
         <seg>Le server LDAP server peut vérifier la solidité du mot de passe et le portail &lt;a0&gt;LL::NG&lt;/a0&gt; affichera les erreurs correctes (mot-de-passe trop court, dans l'historique, etc…)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;warn&lt;/s0&gt; for failed authentications</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T201621Z" changeid="guimard">
-        <seg>&lt;s0&gt;warn&lt;/s0&gt; pour les échecs d'authentifications</seg>
       </tuv>
     </tu>
     <tu>
@@ -13720,14 +13616,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>It is a Single Sign On protocol similar to OpenID, but based on user email address rather than a &lt;a0&gt;URL&lt;/a0&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T054409Z" changeid="xavier">
-        <seg>C'est un protocole d'authentification unique (Single Sign On) similaire à OpenID, mais basé sur l'adresse emailde l'utilisateur au lieu d'une &lt;a0&gt;URL&lt;/a0&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>The statistics are collected trough a daemon launched by the Handler.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T083741Z" changeid="xavier">
@@ -13868,14 +13756,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T073502Z" changeid="guimard">
         <seg>Vérifie que l'&lt;a0&gt;URL&lt;/a0&gt; demandée est validée</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Leave blank to use Mozilla default verification &lt;a3&gt;URL&lt;/a3&gt; (&lt;a4&gt;https://verifier.login.persona.org/verify&lt;/a4&gt;)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T055354Z" changeid="xavier">
-        <seg>Laisser vide pour utiliser l'&lt;a3&gt;URL&lt;/a3&gt; de vérification par défaut de Mozilla (&lt;a4&gt;https://verifier.login.persona.org/verify&lt;/a4&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -15366,14 +15246,6 @@ server {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;notice&lt;/s0&gt; for good authentications or external exchange (&lt;a1&gt;SAML&lt;/a1&gt;, OpenID,…)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T201607Z" changeid="guimard">
-        <seg>&lt;s0&gt;notice&lt;/s0&gt; pour les authentifications réussies et les échanges externes (&lt;a1&gt;SAML&lt;/a1&gt;, OpenID,…)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;ACR values&lt;/s0&gt;: Value acr_values parameters (example: loa-1)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T202950Z" changeid="xavier">
@@ -15862,14 +15734,6 @@ server {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>This mode is not compatible with a lot of browsers which block pop-ups.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T055202Z" changeid="xavier">
-        <seg>Ce mode n'est pas compatible avec de nombreux navigateurs qui bloquent les pop-ups.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>If you disallow this, you should also disallow direct login form IDP, because proxy restriction is set in authentication requests.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T061136Z" changeid="xavier">
@@ -16210,14 +16074,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Override logging functions</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T201641Z" changeid="guimard">
-        <seg>Surcharger les fonctions de journalisation</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You should see a krbtgt ticket:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T212743Z" changeid="xavier">
@@ -16338,14 +16194,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Votre EntityID, souvent utilisé comme &lt;a0&gt;URL&lt;/a0&gt; des métadatas, par défaut #PORTAL#/saml/metadata.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Backgound color&lt;/s0&gt;: Background color displayed in the BrowserID login window</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T055835Z" changeid="xavier">
-        <seg>&lt;s0&gt;Couleur d'arrière plan&lt;/s0&gt; : Couleur d'arrière plan affichée dans la fenêtre d'authentification BrowserID</seg>
       </tuv>
     </tu>
     <tu>
@@ -17426,14 +17274,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose BrowserID for authentication.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T054611Z" changeid="xavier">
-        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir BrowserID pour l'authentification.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>persistentStorageOptions</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T080412Z" changeid="xavier">
@@ -17968,14 +17808,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Verification &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; used to verifiy the BrowserID assertion.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T055238Z" changeid="xavier">
-        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; de vérification&lt;/s0&gt; : &lt;a2&gt;URL&lt;/a2&gt; utilisée pour vérifier l'assertion BrowserID.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;c0&gt;PROD=yes&lt;/c0&gt; makes web interface use minified versions of &lt;a1&gt;CSS&lt;/a1&gt; and JS files.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T210125Z" changeid="xavier">
@@ -18060,14 +17892,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065006Z" changeid="guimard">
         <seg>hideOldPassword</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Site Logo&lt;/s0&gt;: Logo that will be displayed in the BrowserID login window.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T055509Z" changeid="xavier">
-        <seg>&lt;s0&gt;Logo du site&lt;/s0&gt; : Logo qui sera affiché dans la fenêtre d'authentification BrowserID.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19632,14 +19456,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>the manager (for internal use only)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T171508Z" changeid="xavier">
-        <seg>le manager (à usage interne seulement)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>OpenID authentication level</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063802Z" changeid="guimard">
@@ -20420,14 +20236,6 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;info&lt;/s0&gt; for user actions</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T201540Z" changeid="guimard">
-        <seg>&lt;s0&gt;info&lt;/s0&gt; pour les actions utilisateurs</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s24&gt;# mod_fcgid configuration&lt;/s24&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T080910Z" changeid="xavier">
@@ -20542,14 +20350,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160302T061056Z" changeid="xavier">
         <seg>&lt;s0&gt;ldapAttributeContent&lt;/s0&gt; : attribut utilisé pour stocker la valeur des configurations, doit être multivalué (optionnel)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Auto login&lt;/s0&gt;: set to 1 to use auto login.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T055128Z" changeid="xavier">
-        <seg>&lt;s0&gt;Authentification automatique&lt;/s0&gt; : mettre à 1 pour utiliser la connexion automatique.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22490,14 +22290,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051343Z" changeid="guimard">
         <seg>Utiliser MySQL pour la configuration de Lemonldap::NG</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Go in Manager, &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Logging&lt;/c1&gt; &gt; &lt;c2&gt;Hidden attributes&lt;/c2&gt; and set a list of attributes to hide (space separated).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T061525Z" changeid="xavier">
-        <seg>Aller dans le manager, &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Journaux&lt;/c1&gt; » &lt;c2&gt;Attributs masqués&lt;/c2&gt; et indiquer la liste des attributs à masquer (séparés par des espaces).</seg>
       </tuv>
     </tu>
     <tu>
@@ -24584,14 +24376,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>BrowserID</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T054032Z" changeid="xavier">
-        <seg>BrowserID</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>install_handler_site (/usr/local/lemonldap-ng/handler)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160902Z" changeid="xavier">
@@ -25180,14 +24964,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183009Z" changeid="xavier">
         <seg>basic($uid,$_password)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>The messages are stored with the levels :</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T045912Z" changeid="guimard">
-        <seg>Les messages sont stockés avec les niveaux :</seg>
       </tuv>
     </tu>
     <tu>
@@ -28122,14 +27898,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>LemonLDAP::NG can also use syslog (only for user actions).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T201303Z" changeid="guimard">
-        <seg>LemonLDAP::NG peut également utiliser syslog (seulement pour les actions utilisateurs).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>(o/n) n</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120423T204900Z" changeid="xavier">
@@ -29562,14 +29330,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You &lt;s1&gt;must&lt;/s1&gt; provide a full &lt;a2&gt;URI&lt;/a2&gt; (for example /skins/common/lemonldap-ng_square.png) and use HTTPS on the portal</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T055658Z" changeid="xavier">
-        <seg>&lt;s1&gt;Il faut&lt;/s1&gt; fournir une &lt;a2&gt;URI&lt;/a2&gt; complète (par exemple /skins/common/lemonldap-ng_square.png) et utiliser HTTPS pour le portail</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>nullAuthnLevel</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063752Z" changeid="guimard">
@@ -30292,14 +30052,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a1&gt;Of course, there are other differences&lt;/a1&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T054442Z" changeid="xavier">
-        <seg>&lt;a1&gt;Il y a bien sur d'autres différences&lt;/a1&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Give the uid (for accounting)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T061131Z" changeid="xavier">
@@ -30690,14 +30442,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       <tuv lang="FR-FR" changedate="20120420T141708Z" changeid="xavier">
         <seg>&lt;a9&gt;&lt;s10&gt;print&lt;/s10&gt;&lt;/a9&gt; &lt;s11&gt;'&lt;a href=&quot;http://test3.example.com/&quot;&gt;click here&lt;/a&gt;'&lt;/s11&gt;&lt;s12&gt;;&lt;/s12&gt;
 &lt;s13&gt;}&lt;/s13&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>By default, LemonLDAP::NG uses Apache logs to store user actions and other messages:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T200807Z" changeid="guimard">
-        <seg>Par défaut, LemonLDAP::NG utilise les journaux d'Apache pour journaliser les actions des utilisateurs et autre messages :</seg>
       </tuv>
     </tu>
     <tu>
@@ -31372,14 +31116,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You can then choose any other module for users and password but if you want to totally delegate authentication to BrowserID, choose &lt;a0&gt;None&lt;/a0&gt; for users and password.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T054835Z" changeid="xavier">
-        <seg>On peut ensuite choisir n'importe quel autre module de gestion des utilisateurs et des mots-de-passe mais pour déléguer totalement l'authentification à BrowserID, choisir &lt;a0&gt;None&lt;/a0&gt; pour la gestion des utilisateurs et des mots de passe.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You will need to install a Dokuwiki plugin, available on &lt;a0&gt;download page&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115056Z" changeid="xavier">
@@ -31616,14 +31352,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T220156Z" changeid="xavier">
         <seg>&lt;s3&gt;# Protection SSO&lt;/s3&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Access log: the issuer of each request is identified</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T201021Z" changeid="guimard">
-        <seg>Journaux d'accès (AccessLog) : l'utilisateur de chaque requête est identifié</seg>
       </tuv>
     </tu>
     <tu>
@@ -32032,14 +31760,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>See the full description of the protocol here: &lt;a0&gt;https://developer.mozilla.org/en-US/docs/Mozilla/Persona&lt;/a0&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T054514Z" changeid="xavier">
-        <seg>Voir la description complète du protocole ici : &lt;a0&gt;https://developer.mozilla.org/en-US/docs/Mozilla/Persona&lt;/a0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s15&gt;# Uncomment this to activate status module&lt;/s15&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T081248Z" changeid="xavier">
@@ -32158,14 +31878,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T195922Z" changeid="xavier">
         <seg>&lt;s0&gt;Portail &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; du portail distant</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>In Manager, set syslog facility in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Logging&lt;/c1&gt; &gt; &lt;c2&gt;Syslog facility&lt;/c2&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T201341Z" changeid="guimard">
-        <seg>Dans le manager, choisir la facilité syslog dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Journalisation&lt;/c1&gt; &gt; &lt;c2&gt;Facilité syslog&lt;/c2&gt;.</seg>
       </tuv>
     </tu>
     <tu>

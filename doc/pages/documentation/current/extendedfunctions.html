@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:extendedfunctions</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,extendedfunctions"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="extendedfunctions.html"/>
@@ -61,6 +61,7 @@
 <li class="level2"><div class="li"><a href="#iso2unicode">iso2unicode</a></div></li>
 <li class="level2"><div class="li"><a href="#groupmatch">groupMatch</a></div></li>
 <li class="level2"><div class="li"><a href="#encrypt">encrypt</a></div></li>
+<li class="level2"><div class="li"><a href="#token">token</a></div></li>
 </ul></li>
 </ul>
 </div>
@@ -362,7 +363,7 @@ Simple usage example:
 <!-- EDIT11 SECTION "groupMatch" [5395-5753] -->
 <h3 class="sectionedit12" id="encrypt">encrypt</h3>
 <div class="level3">
-<div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
+<div class="notetip">Since version 2.0, this function is now compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>.
 </div>
 <p>
 This function uses the secret key of LLNG configuration to crypt a data. This can be used to anonymize identifier given to the protected application.
@@ -370,6 +371,16 @@ This function uses the secret key of LLNG configuration to crypt a data. This ca
 <pre class="code">encrypt($_whatToTrace)</pre>
 
 </div>
-<!-- EDIT12 SECTION "encrypt" [5754-] --></div>
+<!-- EDIT12 SECTION "encrypt" [5754-6059] -->
+<h3 class="sectionedit13" id="token">token</h3>
+<div class="level3">
+
+<p>
+This function generates token used to <a href="servertoserver.html" class="wikilink1" title="documentation:2.0:servertoserver">handle server webservice calls</a>.
+</p>
+<pre class="code">token($_session_id,&#039;webapp1.example.com&#039;,&#039;webapp2.example.com&#039;)</pre>
+
+</div>
+<!-- EDIT13 SECTION "token" [6060-] --></div>
 </body>
 </html>
