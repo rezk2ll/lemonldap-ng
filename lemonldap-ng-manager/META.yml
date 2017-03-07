@@ -1,7 +1,7 @@
 ---
 abstract: 'Perl extension for managing Lemonldap::NG Web-SSO system.'
 author:
-  - 'Xavier Guimard <x.guimard@free.fr>, Clément Oudot <clement@oodo.net>, Thomas Chemineau <thomas.chemineau@gmail.com>'
+  - 'Xavier Guimard <x.guimard@free.fr>, ClÃ©ment Oudot <clement@oodo.net>, Thomas Chemineau <thomas.chemineau@gmail.com>'
 build_requires:
   IO::String: '0'
   Regexp::Common: '0'
@@ -25,8 +25,8 @@ requires:
   HTML::Template: '0'
   JSON: '0'
   LWP: '0'
-  Lemonldap::NG::Common: v1.9.0
-  Lemonldap::NG::Handler: v1.9.0
+  Lemonldap::NG::Common: v1.9.99
+  Lemonldap::NG::Handler: v1.9.99
   URI: '0'
   XML::LibXML: '0'
   XML::LibXSLT: '0'
