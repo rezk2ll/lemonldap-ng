@@ -3,4 +3,5 @@
 VERSION=2.0.0
 
 perl -i -pe 's/^our \$VERSION.*$/our \$VERSION = '\'$VERSION\'';/' $(find l*/lib/ -name *.pm)
-
+perl -i -pe 's/(Lemonldap::NG::(?:Common|Handler|Portal|Manager): +v)[\d\.]+/${1}'$VERSION'/' lemonldap-ng-*/META.yml
+perl -i -pe "s/('Lemonldap::NG::(?:Common|Handler|Portal|Manager)'\\s*=>\\s*)'[\d\.]+'/\${1}'$VERSION'/" lemonldap-ng-*/Makefile.PL

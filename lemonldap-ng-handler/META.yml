@@ -28,7 +28,7 @@ recommends:
   SOAP::Lite: '0'
 requires:
   LWP::UserAgent: '0'
-  Lemonldap::NG::Common: v1.9.99
+  Lemonldap::NG::Common: v2.0.0
   Mouse: '0'
   URI: '0'
 version: v2.0.0
