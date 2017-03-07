@@ -127,6 +127,7 @@ sub scanTree {
           || '_whatToTrace' } // "anonymous";
     $self->newConf->{cfgAuthorIP} = $self->req->address;
     $self->newConf->{cfgDate}     = time;
+    $self->newConf->{cfgVersion}  = $VERSION;
     $self->newConf->{key} ||=
       join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. 16 ) );
 

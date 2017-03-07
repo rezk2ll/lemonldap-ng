@@ -670,6 +670,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'int'
         },
+        'cfgVersion' => {
+            'type' => 'text'
+        },
         'checkXSS' => {
             'default' => 1,
             'type'    => 'bool'

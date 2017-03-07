@@ -166,6 +166,7 @@ sub zeroConf {
         'securedCookie' => 0,
         'cookieName'    => 'lemonldap',
         'cfgAuthor'     => 'The LemonLDAP::NG team',
+        'cfgVersion'    => $VERSION,
         'exportedVars'  => {
             'UA' => 'HTTP_USER_AGENT'
         },

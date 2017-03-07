@@ -1113,6 +1113,7 @@ sub registration {
 
     $conf->{cfgAuthor}   = "OpenID Connect Registration ($client_name)";
     $conf->{cfgAuthorIP} = $source_ip;
+    $conf->{cfgVersion}  = $VERSION;
 
     $conf->{oidcRPMetaDataExportedVars}->{$rp} = {};
     $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsClientID} =

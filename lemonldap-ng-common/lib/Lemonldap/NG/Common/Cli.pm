@@ -39,6 +39,7 @@ Num      : $conf->{cfgNum}
 Author   : $conf->{cfgAuthor}
 Author IP: $conf->{cfgAuthorIP}
 Date     : } . localtime( $conf->{cfgDate} ) . qq{
+Version  : $conf->{cfgVersion}
 Log      : $conf->{cfgLog}
 };
 }

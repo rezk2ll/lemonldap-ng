@@ -646,7 +646,7 @@ sub metadatas {
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
         return $self->sendError( $req, "Configuration without cfgNum", 500 )
           unless ( defined $res->{cfgNum} );
-        foreach my $key (qw(cfgAuthor cfgDate cfgAuthorIP cfgLog)) {
+        foreach my $key (qw(cfgAuthor cfgDate cfgAuthorIP cfgLog cfgVersion)) {
             $res->{$key} = $self->getConfKey( $req, $key );
         }
 

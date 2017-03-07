@@ -236,6 +236,10 @@ sub attributes {
             type          => 'longtext',
             documentation => 'Configuration update log',
         },
+        cfgVersion => {
+            type          => 'text',
+            documentation => 'Version of LLNG which build configuration',
+        },
         confirmFormMethod => {
             type => "select",
             select =>

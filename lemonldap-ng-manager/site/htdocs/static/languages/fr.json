@@ -118,6 +118,7 @@
 "cspConnect": "Destinations des requêtes Ajax",
 "cspFont": "Font source",
 "cfgLog": "Résumé",
+"cfgVersion": "Version de la configuration",
 "checkXSS": "Contrôler les attaques XSS",
 "clickHereToForce": "Cliquer ici pour forcer",
 "choiceParams": "Paramètres des choix",

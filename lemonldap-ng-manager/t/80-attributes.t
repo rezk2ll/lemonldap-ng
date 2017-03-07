@@ -22,7 +22,7 @@ my @notManagedAttributes = (
     'oidcOPMetaDataOptions', 'vhostOptions',
 
     # Metadatas (added by manager itself)
-    'cfgAuthor', 'cfgAuthorIP', 'cfgNum', 'cfgDate', 'cfgLog',
+    'cfgAuthor', 'cfgAuthorIP', 'cfgNum', 'cfgDate', 'cfgLog', 'cfgVersion',
 
     # HTML template parameter (for PSGI) (must be set in lemonldap-ng.ini)
     'staticPrefix',

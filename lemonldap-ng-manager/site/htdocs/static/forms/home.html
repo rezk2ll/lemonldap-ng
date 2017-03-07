@@ -25,6 +25,10 @@
       <th><span trspan="date"></span></th>
       <td>{{currentCfg.date}}</td>
     </tr>
+    <tr ng-if="currentCfg.cfgVersion">
+      <th><span trspan="cfgVersion"></span></th>
+      <td>{{currentCfg.cfgVersion}}</td>
+    </tr>
     <tr ng-if="currentCfg.cfgLog">
       <th><span trspan="cfgLog"></span></th>
       <td id="cfglog">{{currentCfg.cfgLog}}</td>
