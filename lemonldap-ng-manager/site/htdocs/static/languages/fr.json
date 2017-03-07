@@ -628,6 +628,7 @@
 "SSLVar": "Champ extrait du certificat",
 "SSLVarIf": "Champ conditionnel extrait du certificat",
 "startTime": "Date de création",
+"stayConnected": "Connexions persistantes",
 "successfullySaved": "Sauvegarde effectuée",
 "storePassword": "Stocke le mot de passe de l'utilisateur en session",
 "successLoginNumber": "Nombre de connexions mémorisées",

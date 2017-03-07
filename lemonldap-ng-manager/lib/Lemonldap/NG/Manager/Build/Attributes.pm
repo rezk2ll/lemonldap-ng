@@ -333,6 +333,10 @@ sub attributes {
             default       => '; ',
             documentation => 'Separator for multiple values',
         },
+        stayConnected => {
+            type          => 'bool',
+            documentation => 'Enable StayConnected plugin',
+        },
 
         # Manager
         protection => {

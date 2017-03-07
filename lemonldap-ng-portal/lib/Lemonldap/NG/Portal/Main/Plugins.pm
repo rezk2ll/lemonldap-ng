@@ -22,7 +22,7 @@ our @pList = (
     u2fSelfRegistration        => '::Register::U2F',
     notification               => '::Plugins::Notifications',
     portalCheckLogins          => '::Plugins::History',
-    sTokenService              => '::Plugins::ServiceTokenServer',
+    stayConnected              => '::Plugins::StayConnected',
 );
 
 ##@method list enabledPlugins

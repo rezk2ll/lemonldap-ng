@@ -2827,6 +2827,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'staticPrefix' => {
             'type' => 'text'
         },
+        'stayConnected' => {
+            'type' => 'bool'
+        },
         'storePassword' => {
             'default' => 0,
             'type'    => 'bool'

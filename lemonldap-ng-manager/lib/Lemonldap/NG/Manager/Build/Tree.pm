@@ -510,6 +510,7 @@ sub tree {
                 {
                     title => 'plugins',
                     nodes => [
+                        'stayConnected',
                         'portalStatus',
                         {
                             title => 'portalServers',

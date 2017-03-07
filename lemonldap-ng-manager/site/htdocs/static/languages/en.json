@@ -628,6 +628,7 @@
 "SSLVar": "Extracted certificate field",
 "SSLVarIf": "Conditional extracted certificate field",
 "startTime": "Creation date",
+"stayConnected": "Persistent connections",
 "successfullySaved": "Successfully saved",
 "storePassword": "Store user password in session datas",
 "successLoginNumber": "Number of registered logins",
