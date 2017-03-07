@@ -51,7 +51,7 @@ WriteMakefile(
         'Clone'                  => 0,
         'HTML::Template'         => 0,
         'JSON'                   => 0,
-        'Lemonldap::NG::Handler' => '1.9.0',
+        'Lemonldap::NG::Handler' => '1.9.99',
         'Net::LDAP'              => 0.38,
         'Regexp::Assemble'       => 0,
         'Unicode::String'        => 0,
