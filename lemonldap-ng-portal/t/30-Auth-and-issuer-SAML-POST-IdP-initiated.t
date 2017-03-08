@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 19;
+my $maintests = 18;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -141,11 +141,11 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
     # Post SAML logout response to IdP
     switch ('issuer');
     ok(
-        $res = $sp->_post(
+        $res = $issuer->_post(
             $url, IO::String->new($query),
             accept => 'text/html',
             length => length($query),
-            cookie => "lemonldap=$spId",
+            cookie => "lemonldap=$idpId",
         ),
         'Post SAML logout response to IdP'
     );
@@ -171,15 +171,7 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         'Test if user is reject on SP'
     );
     expectOK($res);
-    ok(
-        $res->[2]->[0] =~
-          /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,
-        'Found confirm key'
-      )
-      or explain(
-        $res->[2],
-'<input type="hidden" id="confirm" name="confirm" value="<base64 value>" />'
-      );
+    expectForm( $res, 'auth.idp.com', '/saml/singleSignOn', 'SAMLRequest' );
 
     #print STDERR Dumper($res);
 }
