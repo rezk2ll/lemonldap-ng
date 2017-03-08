@@ -800,8 +800,18 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
             # Ask consent for logout
             if ( $req->param('confirm') ) {
                 if ( $req->param('confirm') == 1 ) {
-                    my $apacheSession = $self->p->getApacheSession( $req->id );
-                    $self->p->_deleteSession( $req, $apacheSession );
+                    $req->steps(
+                        [
+                            @{ $self->p->beforeLogout }, 'authLogout',
+                            'deleteSession'
+                        ]
+                    );
+                    my $err = $req->error( $self->p->process($req) );
+                    if ( $err > 0 ) {
+                        $self->logger->error(
+                            "Logout process returns error code $err");
+                        return PE_ERROR;
+                    }
                 }
 
                 if ($post_logout_redirect_uri) {
