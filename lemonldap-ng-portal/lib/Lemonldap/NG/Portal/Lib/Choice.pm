@@ -76,7 +76,7 @@ sub name {
     unless ($req) {
         return 'Choice';
     }
-    my $n = ref( $req->datas->{enableMods}->[0] );
+    my $n = ref( $req->datas->{enabledMods}->[0] );
     $n =~ s/^Lemonldap::NG::Portal::(?:(?:UserDB|Auth)::)?//;
     return $n;
 }
