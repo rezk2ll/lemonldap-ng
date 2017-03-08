@@ -177,6 +177,7 @@
 "serviceProvidedBy":"Ce service est fourni par",
 "sessionsDeleted":"Les sessions suivantes ont été fermées",
 "SSOSessionInactive":"Session SSO inactive",
+"stayConnected": "Rester connecté sur cet appareil",
 "submit":"Envoyer",
 "touchU2fDevice": "Poser votre doigt sur le périphérique U2F",
 "u2fFailed": "La vérification U2F a échoué, réessayez ou contactez votre administrateur",

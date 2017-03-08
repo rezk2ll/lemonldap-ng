@@ -7,4 +7,11 @@
       </label>
     </div>
     </TMPL_IF>
-
+    <TMPL_IF NAME="STAYCONNECTED">
+    <div class="checkbox">
+      <label for="stayconnected">
+        <input type="checkbox" id="stayconnected" name="stayconnected" />
+        <span trspan="stayConnected">Stay connected on this device</span>
+      </label>
+    </div>
+    </TMPL_IF>
