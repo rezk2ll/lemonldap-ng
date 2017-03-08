@@ -125,8 +125,10 @@ sub getDisplayType {
     my ( $self, $req ) = @_;
     return $self->conf->{combinationForms}
       if ( $self->conf->{combinationForms} );
-    my ( $nb, $stack ) =
-      ( $req->datas->{combinationTry}, $req->datas->{combinationStack} );
+    my ( $nb, $stack ) = (
+        $req->datas->{dataKeep}->{combinationTry},
+        $req->datas->{combinationStack}
+    );
     my ( $res, $name ) = $stack->[$nb]->[0]->( 'getDisplayType', $req );
     return $res;
 }
@@ -151,15 +153,17 @@ sub getStack {
         $self->logger->error('No authentication scheme for this user');
     }
     @{ $req->datas->{combinationSteps} } = ( @steps, @{ $req->steps } );
-    $req->datas->{combinationTry} = 0;
+    $req->datas->{dataKeep}->{combinationTry} = 0;
     return $stack;
 }
 
 # Main running method: launch the next scheme if the current fails
 sub try {
     my ( $self, $type, $subname, $req ) = @_;
-    my ( $nb, $stack ) =
-      ( $req->datas->{combinationTry}, $req->datas->{combinationStack} );
+    my ( $nb, $stack ) = (
+        $req->datas->{dataKeep}->{combinationTry},
+        $req->datas->{combinationStack}
+    );
 
     # If more than 1 scheme is available
     my ( $res, $name );
@@ -172,7 +176,7 @@ sub try {
         if ( $res > PE_OK ) {
             $self->logger->info(
                 qq'Scheme "$name" has return $res, trying next');
-            $req->datas->{combinationTry}++;
+            $req->datas->{dataKeep}->{combinationTry}++;
             $req->steps( [ @{ $req->datas->{combinationSteps} } ] );
             return PE_OK;
         }
@@ -181,7 +185,8 @@ sub try {
         ( $res, $name ) = $stack->[$nb]->[$type]->( $subname, $req );
     }
     $req->sessionInfo->{ [ '_auth', '_userDB' ]->[$type] } = $name;
-    $req->sessionInfo->{_combinationTry} = $req->datas->{combinationTry};
+    $req->sessionInfo->{_combinationTry} =
+      $req->datas->{dataKeep}->{combinationTry};
     if ( $res > 0 ) {
         $self->userLogger->warn( 'All schemes failed'
               . ( $req->user ? ' for user ' . $req->user : '' ) );
