@@ -325,6 +325,7 @@ t/35-SOAP-config-backend.t
 t/35-SOAP-sessions-with-SOAP-server.t
 t/36-Combination-with-over.t
 t/36-Combination.t
+t/37-SAML-and-OIDC.t
 t/40-Notifications-JSON-DBI.t
 t/40-Notifications-JSON-File-with-token.t
 t/40-Notifications-JSON-File.t
