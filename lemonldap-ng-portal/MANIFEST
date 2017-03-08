@@ -345,6 +345,7 @@ t/60-Status.t
 t/61-GrantSession.t
 t/62-SingleSession.t
 t/63-History.t
+t/64-StayConnected.t
 t/90-Translations.t
 t/99-pod.t
 t/lmConf-1.js
