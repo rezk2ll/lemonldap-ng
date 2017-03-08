@@ -94,9 +94,6 @@ sub init {
 # the current user
 sub extractFormInfo {
     my ( $self, $req ) = @_;
-
-    # Get available authentication schemes for this user
-    $self->getStack( $req, 'extractFormInfo' ) or return PE_ERROR;
     return $self->try( 0, 'extractFormInfo', $req );
 }
 
@@ -153,13 +150,18 @@ sub getStack {
         $self->logger->error('No authentication scheme for this user');
     }
     @{ $req->datas->{combinationSteps} } = ( @steps, @{ $req->steps } );
-    $req->datas->{dataKeep}->{combinationTry} = 0;
+    $req->datas->{dataKeep}->{combinationTry} ||= 0;
     return $stack;
 }
 
 # Main running method: launch the next scheme if the current fails
 sub try {
     my ( $self, $type, $subname, $req ) = @_;
+
+    # Get available authentication schemes for this user if not done
+    unless ( defined $req->datas->{combinationStack} ) {
+        $self->getStack( $req, $subname ) or return PE_ERROR;
+    }
     my ( $nb, $stack ) = (
         $req->datas->{dataKeep}->{combinationTry},
         $req->datas->{combinationStack}
