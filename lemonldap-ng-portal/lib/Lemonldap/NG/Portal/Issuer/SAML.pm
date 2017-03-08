@@ -774,6 +774,7 @@ sub run {
 
             # Artifact
             # Choose method
+            no strict 'subs';
             if (   $artifact
                 or $protocolProfile ==
                 Lasso::Constants::LOGIN_PROTOCOL_PROFILE_BRWS_ART )
@@ -1320,6 +1321,7 @@ sub sloRelaySoap {
     }
 
     # Send the logout request
+    no strict 'subs';
     my ( $rstatus, $rmethod, $rinfo ) =
       $self->sendLogoutRequestToProvider( $req, $logout, $providerID,
         Lasso::Constants::HTTP_METHOD_SOAP,
