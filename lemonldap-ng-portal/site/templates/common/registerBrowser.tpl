@@ -5,7 +5,7 @@
 </head>
 <body>
  <p>Please wait...</p>
- <form id="form" method="post" action="/registerbrowser">
+ <form id="form" method="post" action="<TMPL_VAR NAME="ACTION">">
   <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
   <input type="hidden" name="url" value="<TMPL_VAR NAME="URL">" />
   <input type="hidden" name="fg" id="fg" value="" />

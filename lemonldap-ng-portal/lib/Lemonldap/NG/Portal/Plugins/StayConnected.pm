@@ -32,6 +32,14 @@ has ott => (
     }
 );
 
+# Default timeout: 1 month
+has timeout => (
+    is      => 'rw',
+    default => sub {
+        $_[0]->{conf}->{stayConnectedTimeout} || 2678400;
+    }
+);
+
 sub init {
     my ($self) = @_;
     $self->addAuthRoute( registerbrowser => 'storeBrowser', ['POST'] );
@@ -40,6 +48,8 @@ sub init {
 
 # RUNNING METHODS
 
+# Registration: detect if user wants to stay connected. Then ask for
+#               fingerprint
 sub newDevice {
     my ( $self, $req ) = @_;
 
@@ -49,15 +59,14 @@ sub newDevice {
                 name => $req->sessionInfo->{ $self->conf->{whatToTrace} }
             }
         );
-        print STDERR Data::Dumper::Dumper($token);
-        use Data::Dumper;
         $req->response(
             $self->p->sendHtml(
                 $req,
                 '../common/registerBrowser',
                 params => {
-                    URL   => $req->urldc,
-                    TOKEN => $token,
+                    URL    => $req->urldc,
+                    TOKEN  => $token,
+                    ACTION => '/registerbrowser',
                 }
             )
         );
@@ -66,6 +75,7 @@ sub newDevice {
     return PE_OK;
 }
 
+# Store datas in a long-time session
 sub storeBrowser {
     my ( $self, $req ) = @_;
     $req->urldc( $req->param('url') );
@@ -76,14 +86,16 @@ sub storeBrowser {
             if ( $tmp->{name} eq $uid ) {
                 if ( my $fg = $req->param('fg') ) {
                     my $ps = Lemonldap::NG::Common::Session->new(
-                        storageModule => $self->conf->{persistentStorage},
+                        storageModule => $self->conf->{globalStorage},
                         storageModuleOptions =>
-                          $self->conf->{persistentStorageOptions},
-                        kind => "Persistent",
+                          $self->conf->{globalStorageOptions},
+                        kind => "SSO",
                         info => {
+                            _utime          => time + $self->timeout,
                             _session_uid    => $uid,
                             _connectedSince => time,
                             dataKeep        => $req->datas->{dataToKeep},
+                            fingerprint     => $fg,
                         },
                     );
                     $req->addCookie(
@@ -115,27 +127,67 @@ sub storeBrowser {
     return $self->p->do( $req, [ sub { PE_OK } ] );
 }
 
+# Check for:
+#  - persistent connection cookie
+#  - valid session
+#  - uniq id is kept
+# Then delete authentication methods from "steps" array.
 sub check {
     my ( $self, $req ) = @_;
     if ( my $cid = $req->cookies->{llngconnexion} ) {
         my $ps = Lemonldap::NG::Common::Session->new(
-            storageModule        => $self->conf->{persistentStorage},
-            storageModuleOptions => $self->conf->{persistentStorageOptions},
-            kind                 => "Persistent",
+            storageModule        => $self->conf->{globalStorage},
+            storageModuleOptions => $self->conf->{globalStorageOptions},
+            kind                 => "SSO",
             id                   => $cid,
         );
-        # TODO: verify fingerprint
-        if ( $ps and my $uid = $ps->data->{uid} ) {
-            $req->user($uid);
-            if ( $ps->data->{dataKeep} ) {
-                $req->data( $ps->data->{dataKeep} ) :;
+        if ( $ps and my $uid = $ps->data->{_session_uid} ) {
+            $self->logger->debug('Persistent connection found');
+            if (    my $fg = $req->param('fg')
+                and my $token = $req->param('token') )
+            {
+                if ( my $prm = $self->ott->getToken($token) ) {
+                    for my $k ( keys %{ $prm->{dataKeep} || {} } ) {
+                        $self->logger->debug("Restore $k");
+                        $req->set_param( $k, $prm->{$k} );
+                    }
+                    $self->logger->debug('Persistent connection found');
+                    $req->user($uid);
+                    if ( $ps->data->{dataKeep} ) {
+                        $req->data( $ps->data->{dataKeep} );
+                    }
+                    my @steps =
+                      grep {
+                        !ref $_
+                          and $_ !~ /^(?:extractFormInfo|authenticate)$/
+                      } @{ $req->steps };
+                    $req->steps( \@steps );
+                    $self->userLogger->notice(
+                        "$uid connected by StayConnected cookie");
+                    return PE_OK;
+                }
+                else {
+                    $self->userLogger->notice(
+                        "StayConnected: expired token for $uid");
+                }
             }
-            my @steps =
-              grep { !ref $_ or $_ !~ /^(?:extractFormInfo|authenticate)$/ }
-              @{ $req->steps };
-            $req->steps( \@steps );
-            $self->userLogger->notice("$uid connected by StayConnected cookie");
-            return PE_OK;
+            else {
+                my $token = $self->ott->createToken( $req->parameters );
+                $req->response(
+                    $self->p->sendHtml(
+                        $req,
+                        '../common/registerBrowser',
+                        params => {
+                            TOKEN  => $token,
+                            ACTION => '#',
+                        }
+                    )
+                );
+                return PE_SENDRESPONSE;
+            }
+        }
+        else {
+            $self->userLogger->notice('Persistent connection expired');
         }
     }
     return PE_OK;
