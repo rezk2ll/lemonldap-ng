@@ -147,24 +147,23 @@ sub check {
                 and my $token = $req->param('token') )
             {
                 if ( my $prm = $self->ott->getToken($token) ) {
-                    for my $k ( keys %{ $prm->{dataKeep} || {} } ) {
-                        $self->logger->debug("Restore $k");
-                        $req->set_param( $k, $prm->{$k} );
-                    }
+                    $req->datas->{dataKeep} = $ps->data->{dataKeep};
                     $self->logger->debug('Persistent connection found');
-                    $req->user($uid);
-                    if ( $ps->data->{dataKeep} ) {
-                        $req->data( $ps->data->{dataKeep} );
+                    if ( $fg eq $ps->data->{fingerprint} ) {
+                        $req->user($uid);
+                        my @steps =
+                          grep {
+                            !ref $_
+                              and $_ !~ /^(?:extractFormInfo|authenticate)$/
+                          } @{ $req->steps };
+                        $req->steps( \@steps );
+                        $self->userLogger->notice(
+                            "$uid connected by StayConnected cookie");
+                        return PE_OK;
                     }
-                    my @steps =
-                      grep {
-                        !ref $_
-                          and $_ !~ /^(?:extractFormInfo|authenticate)$/
-                      } @{ $req->steps };
-                    $req->steps( \@steps );
-                    $self->userLogger->notice(
-                        "$uid connected by StayConnected cookie");
-                    return PE_OK;
+                    else {
+                        $self->userLogger->warn("Fingerprint changed for $uid");
+                    }
                 }
                 else {
                     $self->userLogger->notice(
