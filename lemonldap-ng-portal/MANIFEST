@@ -91,6 +91,7 @@ lib/Lemonldap/NG/Portal/Plugins/RESTServer.pm
 lib/Lemonldap/NG/Portal/Plugins/SingleSession.pm
 lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
 lib/Lemonldap/NG/Portal/Plugins/Status.pm
+lib/Lemonldap/NG/Portal/Plugins/StayConnected.pm
 lib/Lemonldap/NG/Portal/Plugins/U2F.pm
 lib/Lemonldap/NG/Portal/Register/AD.pm
 lib/Lemonldap/NG/Portal/Register/Custom.pm
@@ -123,6 +124,7 @@ site/coffee/confirm.coffee
 site/coffee/info.coffee
 site/coffee/oidcchecksession.coffee
 site/coffee/portal.coffee
+site/coffee/registerbrowser.coffee
 site/coffee/u2fcheck.coffee
 site/coffee/u2fregistration.coffee
 site/cron/purgeCentralCache
@@ -220,6 +222,8 @@ site/htdocs/static/common/js/oidcchecksession.js
 site/htdocs/static/common/js/oidcchecksession.min.js
 site/htdocs/static/common/js/portal.js
 site/htdocs/static/common/js/portal.min.js
+site/htdocs/static/common/js/registerbrowser.js
+site/htdocs/static/common/js/registerbrowser.min.js
 site/htdocs/static/common/js/u2f-api.js
 site/htdocs/static/common/js/u2f-api.min.js
 site/htdocs/static/common/js/u2fcheck.js
@@ -282,6 +286,7 @@ site/templates/common/notification.xsl
 site/templates/common/notifinclude.tpl
 site/templates/common/oidc_checksession.tpl
 site/templates/common/redirect.tpl
+site/templates/common/registerBrowser.tpl
 site/templates/common/script.tpl
 t/01-AuthDemo.t
 t/02-Password-Demo.t
