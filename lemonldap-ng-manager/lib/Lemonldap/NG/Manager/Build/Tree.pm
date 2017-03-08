@@ -363,6 +363,7 @@ sub tree {
                             nodes => [
                                 'customAuth',     'customUserDB',
                                 'customPassword', 'customRegister',
+                                'customAddParams',
                             ]
                         },
                     ],

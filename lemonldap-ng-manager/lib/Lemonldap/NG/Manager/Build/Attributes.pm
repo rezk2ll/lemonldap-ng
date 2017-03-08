@@ -2304,6 +2304,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'Custom register module',
         },
+        customAddParams => {
+            type          => 'keyTextContainer',
+            documentation => 'Custom additional parameters',
+        },
 
         # OpenID Connect auth params
         oidcAuthnLevel => {

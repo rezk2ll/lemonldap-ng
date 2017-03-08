@@ -144,6 +144,7 @@
 "cookieParams": "Cookies",
 "create": "Create",
 "currentConfiguration": "Current configuration",
+"customAddParams": "Additional parameters",
 "customAuth": "Custom authentication module",
 "customFunctions": "Custom functions",
 "customModule": "Custom module",
