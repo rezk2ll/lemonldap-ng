@@ -839,7 +839,7 @@ sub extractFormInfo {
     }
 
     # If IDP is found but not confirmed, let the user confirm it
-    elsif ( $confirm_flag != 1 ) {
+    elsif ( $confirm_flag != 1 and !$idp_cookie ) {
         $self->logger->debug("IDP $idp selected, need user confirmation");
 
         # Control url parameter
