@@ -164,7 +164,7 @@ sub run {
                 $self->returnRedirectError(
                     $req,
                     $oidc_request->{'redirect_uri'},
-                    "invalid_request",
+                    'invalid_request',
                     "scope required",
                     undef,
                     $oidc_request->{'state'},
@@ -176,7 +176,7 @@ sub run {
                 return $self->returnRedirectError(
                     $req,
                     $oidc_request->{'redirect_uri'},
-                    "invalid_request",
+                    'invalid_request',
                     "client_id required",
                     undef,
                     $oidc_request->{'state'},
@@ -188,7 +188,7 @@ sub run {
                 $self->logger->error("Nonce is required for implicit flow");
                 return $self->returnRedirectError(
                     $req, $oidc_request->{'redirect_uri'},
-                    "invalid_request", "nonce required",
+                    'invalid_request', "nonce required",
                     undef, $oidc_request->{'state'}, 1
                 );
             }
@@ -290,7 +290,7 @@ sub run {
                 return $self->returnRedirectError(
                     $req,
                     $oidc_request->{'redirect_uri'},
-                    "invalid_request",
+                    'invalid_request',
                     "client_id $client_id unknown",
                     undef,
                     $oidc_request->{'state'},
@@ -355,7 +355,7 @@ sub run {
                     return $self->returnRedirectError(
                         $req,
                         $oidc_request->{'redirect_uri'},
-                        "invalid_request",
+                        'invalid_request',
                         "current user do not match id_token_hint sub",
                         undef,
                         $oidc_request->{'state'},
@@ -852,7 +852,7 @@ sub token {
         $self->logger->error(
 "No authentication provided to get token, or authentication type not supported"
         );
-        return $self->p->sendError( $req, 'unauthorized_client', 401 );
+        return $self->p->sendError( $req, 'invalid_request', 400 );
     }
 
     # Verify that client_id is registered in configuration
@@ -861,7 +861,7 @@ sub token {
     unless ($rp) {
         $self->userLogger->error(
             "No registered Relying Party found with client_id $client_id");
-        return $self->p->sendError( $req, "unauthorized_client", 403 );
+        return $self->p->sendError( $req, 'invalid_request', 400 );
     }
     else {
         $self->logger->debug("Client id $client_id match RP $rp");
@@ -872,7 +872,7 @@ sub token {
         ->{oidcRPMetaDataOptionsClientSecret} )
     {
         $self->logger->error("Wrong credentials for $rp");
-        return $self->p->sendError( "access_denied", 403 );
+        return $self->p->sendError( 'invalid_request', 400 );
     }
 
     # Get code session
@@ -884,7 +884,7 @@ sub token {
 
     unless ($codeSession) {
         $self->logger->error("Unable to find OIDC session $code");
-        $self->p->sendError( $req, "invalid_grant", 400 );
+        $self->p->sendError( $req, 'invalid_request', 400 );
     }
 
     # Check we have the same redirect_uri value
@@ -892,7 +892,7 @@ sub token {
     {
         $self->userLogger->error( "Provided redirect_uri is different from "
               . $codeSession->{redirect_uri} );
-        $self->p->sendError( $req, "invalid_request", 400 );
+        $self->p->sendError( $req, 'invalid_request', 400 );
     }
 
     # Get user identifier
@@ -904,7 +904,7 @@ sub token {
         $self->userLogger->error(
             "Unable to find user session linked to OIDC session $code");
         $codeSession->remove();
-        $self->p->sendError( $req, "invalid_request", 400 );
+        $self->p->sendError( $req, 'invalid_request', 400 );
     }
 
     my $user_id_attribute =
@@ -930,7 +930,7 @@ sub token {
         $self->userLogger->error(
             "Unable to create OIDC session for access_token");
         $codeSession->remove();
-        $self->p->sendError( $req, "invalid_request", 400 );
+        $self->p->sendError( $req, 'invalid_request', 400 );
     }
 
     my $access_token = $accessTokenSession->id;
@@ -998,8 +998,8 @@ sub userInfo {
 
     unless ($access_token) {
         $self->logger->error("Unable to get access_token");
-        return $self->returnBearerError( "invalid_request",
-            "Access token not found in request" );
+        return $self->returnBearerError( 'invalid_request',
+            "Access token not found in request", 401 );
     }
 
     $self->logger->debug("Received Access Token $access_token");
@@ -1009,8 +1009,8 @@ sub userInfo {
     unless ($accessTokenSession) {
         $self->userLogger->error(
             "Unable to get access token session for id $access_token");
-        return $self->returnBearerError( "invalid_token",
-            "Access Token not found or expired" );
+        return $self->returnBearerError( 'invalid_request',
+            'Invalid request', 401 );
     }
 
     # Get access token session data
@@ -1021,7 +1021,8 @@ sub userInfo {
     my $userinfo_response =
       $self->buildUserInfoResponse( $scope, $rp, $user_session_id );
     unless ($userinfo_response) {
-        return $self->p->sendError( $req, "invalid_request", 400 );
+        return $self->returnBearerError( 'invalid_request', 'Invalid request',
+            401 );
     }
 
     my $userinfo_sign_alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
