@@ -434,7 +434,8 @@ sub updateSession {
         foreach ( keys %$infos ) {
             $self->logger->debug(
                 "Update sessionInfo $_ with " . $infos->{$_} );
-            $req->{sessionInfo}->{$_} = $infos->{$_};
+            $req->{sessionInfo}->{$_} = $self->HANDLER->datas->{$_} =
+              $infos->{$_};
         }
 
         # Update session in global storage with updateTime
