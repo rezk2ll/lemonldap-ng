@@ -3,7 +3,6 @@ package Lemonldap::NG::Portal::Issuer::SAML;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_INFO
   PE_OK
   PE_SAML_ART_ERROR
   PE_SAML_DESTINATION_ERROR
