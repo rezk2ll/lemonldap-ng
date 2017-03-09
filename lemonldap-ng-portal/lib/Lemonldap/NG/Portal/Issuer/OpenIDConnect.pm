@@ -983,6 +983,9 @@ sub token {
         id_token     => $id_token,
     };
 
+    my $cRP = join ',', $rp, $apacheSession->data->{_oidcConnectedRP};
+    $apacheSession->update( { _oidcConnectedRP => $cRP } );
+
     $self->logger->debug("Send token response");
 
     $codeSession->remove();
