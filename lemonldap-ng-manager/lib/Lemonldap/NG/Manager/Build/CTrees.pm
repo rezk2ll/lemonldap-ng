@@ -199,6 +199,15 @@ sub cTrees {
                     'oidcRPMetaDataOptionsAccessTokenExpiration',
                     'oidcRPMetaDataOptionsRedirectUris',
                     'oidcRPMetaDataOptionsBypassConsent',
+                    {
+                        title => 'logout',
+                        form  => 'simpleInputContainer',
+                        nodes => [
+                            'oidcRPMetaDataOptionsLogoutUrl',
+                            'oidcRPMetaDataOptionsLogoutType',
+                            'oidcRPMetaDataOptionsLogoutSessionRequired',
+                        ]
+                    },
                 ]
             },
             'oidcRPMetaDataOptionsExtraClaims',

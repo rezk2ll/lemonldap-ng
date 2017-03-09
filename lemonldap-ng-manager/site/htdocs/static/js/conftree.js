@@ -351,6 +351,41 @@ function templates(tpl,key) {
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsBypassConsent",
             "title" : "oidcRPMetaDataOptionsBypassConsent",
             "type" : "bool"
+         },
+         {
+            "_nodes" : [
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutUrl",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutUrl",
+                  "title" : "oidcRPMetaDataOptionsLogoutUrl"
+               },
+               {
+                  "default" : "front",
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutType",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutType",
+                  "select" : [
+                     {
+                        "k" : "front",
+                        "v" : "Front Channel"
+                     },
+                     {
+                        "k" : "back",
+                        "v" : "Back Channel"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsLogoutType",
+                  "type" : "select"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutSessionRequired",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutSessionRequired",
+                  "title" : "oidcRPMetaDataOptionsLogoutSessionRequired",
+                  "type" : "bool"
+               }
+            ],
+            "id" : "logout",
+            "title" : "logout",
+            "type" : "simpleInputContainer"
          }
       ],
       "id" : "oidcRPMetaDataOptions",

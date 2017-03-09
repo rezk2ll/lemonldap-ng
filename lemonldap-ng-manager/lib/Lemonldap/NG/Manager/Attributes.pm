@@ -1686,6 +1686,26 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             ],
             'type' => 'select'
         },
+        'oidcRPMetaDataOptionsLogoutSessionRequired' => {
+            'type' => 'bool'
+        },
+        'oidcRPMetaDataOptionsLogoutType' => {
+            'default' => 'front',
+            'select'  => [
+                {
+                    'k' => 'front',
+                    'v' => 'Front Channel'
+                },
+                {
+                    'k' => 'back',
+                    'v' => 'Back Channel'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcRPMetaDataOptionsLogoutUrl' => {
+            'type' => 'url'
+        },
         'oidcRPMetaDataOptionsRedirectUris' => {
             'type' => 'text'
         },

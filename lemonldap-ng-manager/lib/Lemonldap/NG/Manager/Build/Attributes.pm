@@ -2509,7 +2509,23 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
           { type => 'keyTextContainer', default => {} },
         oidcRPMetaDataOptionsBypassConsent =>
           { type => 'bool', help => 'openidconnectclaims.html', default => 0 },
-
+        oidcRPMetaDataOptionsLogoutUrl => {
+            type          => 'url',
+            documentation => 'Logout URL',
+        },
+        oidcRPMetaDataOptionsLogoutType => {
+            type   => 'select',
+            select => [
+                { k => 'front', v => 'Front Channel' },
+                { k => 'back',  v => 'Back Channel' },
+            ],
+            default       => 'front',
+            documentation => 'Logout type',
+        },
+        oidcRPMetaDataOptionsLogoutSessionRequired => {
+            type          => 'bool',
+            documentation => 'Session required for logout',
+        },
     };
 }
 
