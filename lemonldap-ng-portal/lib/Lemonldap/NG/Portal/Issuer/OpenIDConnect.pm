@@ -983,8 +983,9 @@ sub token {
         id_token     => $id_token,
     };
 
-    my $cRP = join ',', $rp, $apacheSession->data->{_oidcConnectedRP};
-    $apacheSession->update( { _oidcConnectedRP => $cRP } );
+    my $cRP = join ',', $rp, $apacheSession->data->{_oidcConnectedRP} || '';
+    $self->p->updateSession( $req, { _oidcConnectedRP => $cRP },
+        $apacheSession->id );
 
     $self->logger->debug("Send token response");
 
@@ -1225,6 +1226,23 @@ sub badAuthRequest {
 # Nothing to do here
 sub logout {
     my ( $self, $req ) = @_;
+    if ( my $s = $req->userData->{_oidcConnectedRP} ) {
+        my @rps = grep /\w/, split( ',', $s );
+        foreach my $rp (@rps) {
+            my $rpConf = $self->conf->{oidcRPMetaDataOptions}->{$rp};
+            if ( my $url = $rpConf->{oidcRPMetaDataOptionsLogoutUrl} ) {
+                if ( $rpConf->{oidcRPMetaDataOptionsLogoutType} eq 'front' ) {
+
+                 # TODO: sid + iss if oidcRPMetaDataOptionsLogoutSessionRequired
+                    $req->info( qq'<iframe src="$url" class="noborder">'
+                          . '</iframe>' );
+                }
+                else {
+                    # TODO
+                }
+            }
+        }
+    }
     return PE_OK;
 }
 
@@ -1277,6 +1295,12 @@ sub metadata {
             authorization_endpoint => $baseUrl . $authorize_uri,
             end_session_endpoint   => $baseUrl . $endsession_uri,
             check_session_iframe   => $baseUrl . $checksession_uri,
+
+            # Logout capabilities
+            backchannel_logout_supported          => JSON::true,
+            backchannel_logout_session_supported  => JSON::true,
+            frontchannel_logout_supported         => JSON::true,
+            frontchannel_logout_session_supported => JSON::true,
             (
                 $self->conf->{oidcServiceAllowDynamicRegistration}
                 ? ( registration_endpoint => $baseUrl . $registration_uri )
