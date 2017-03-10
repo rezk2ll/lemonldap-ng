@@ -1750,12 +1750,20 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 'authorize',
             'type'    => 'text'
         },
+        'oidcServiceMetaDataBackChannelURI' => {
+            'default' => 'blogout',
+            'type'    => 'text'
+        },
         'oidcServiceMetaDataCheckSessionURI' => {
             'default' => 'checksession.html',
             'type'    => 'text'
         },
         'oidcServiceMetaDataEndSessionURI' => {
             'default' => 'logout',
+            'type'    => 'text'
+        },
+        'oidcServiceMetaDataFrontChannelURI' => {
+            'default' => 'flogout',
             'type'    => 'text'
         },
         'oidcServiceMetaDataIssuer' => {

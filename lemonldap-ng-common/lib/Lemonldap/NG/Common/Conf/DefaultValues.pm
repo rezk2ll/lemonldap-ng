@@ -130,8 +130,10 @@ sub defaultValues {
             'loa-5' => 5
         },
         'oidcServiceMetaDataAuthorizeURI'    => 'authorize',
+        'oidcServiceMetaDataBackChannelURI'  => 'blogout',
         'oidcServiceMetaDataCheckSessionURI' => 'checksession.html',
         'oidcServiceMetaDataEndSessionURI'   => 'logout',
+        'oidcServiceMetaDataFrontChannelURI' => 'flogout',
         'oidcServiceMetaDataIssuer'          => 'http://auth.example.com',
         'oidcServiceMetaDataJWKSURI'         => 'jwks',
         'oidcServiceMetaDataRegistrationURI' => 'register',

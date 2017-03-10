@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 use strict;
 use JSON;
 use Mouse;
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADURL
   PE_CONFIRM
@@ -1230,10 +1231,25 @@ sub logout {
         my @rps = grep /\w/, split( ',', $s );
         foreach my $rp (@rps) {
             my $rpConf = $self->conf->{oidcRPMetaDataOptions}->{$rp};
+            unless ($rpConf) {
+                $self->logger->error("Unknown RP $rp");
+                return PE_ERROR;
+            }
             if ( my $url = $rpConf->{oidcRPMetaDataOptionsLogoutUrl} ) {
                 if ( $rpConf->{oidcRPMetaDataOptionsLogoutType} eq 'front' ) {
-
-                 # TODO: sid + iss if oidcRPMetaDataOptionsLogoutSessionRequired
+                    if ( $rpConf->{oidcRPMetaDataOptionsLogoutSessionRequired} )
+                    {
+                        my $user_id_attribute =
+                          $self->conf->{oidcRPMetaDataOptions}->{$rp}
+                          ->{oidcRPMetaDataOptionsUserIDAttr}
+                          || $self->conf->{whatToTrace};
+                        my $user_id = $req->{sessionInfo}->{$user_id_attribute};
+                        $url .= ( $urm =~ /\?/ ? '&' : '?' )
+                          . build_urlencoded(
+                            iss => $self->conf->{oidcServiceMetaDataIssuer},
+                            sid => $user_id
+                          );
+                    }
                     $req->info( qq'<iframe src="$url" class="noborder">'
                           . '</iframe>' );
                 }
@@ -1247,20 +1263,6 @@ sub logout {
 }
 
 # Internal methods
-
-sub addRouteFromConf {
-    my ( $self, $type, %subs ) = @_;
-    my $adder = "add${type}Route";
-    foreach ( keys %subs ) {
-        my $sub  = $subs{$_};
-        my $path = $self->conf->{$_};
-        unless ($path) {
-            $self->logger->error("$_ parameter not defined");
-            next;
-        }
-        $self->$adder( $self->path => { $path => $sub }, [ 'GET', 'POST' ] );
-    }
-}
 
 sub metadata {
     my ( $self, $req ) = @_;

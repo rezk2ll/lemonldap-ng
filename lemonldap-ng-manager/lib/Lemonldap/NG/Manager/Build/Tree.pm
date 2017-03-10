@@ -855,6 +855,8 @@ sub tree {
                         'oidcServiceMetaDataRegistrationURI',
                         'oidcServiceMetaDataEndSessionURI',
                         'oidcServiceMetaDataCheckSessionURI',
+                        'oidcServiceMetaDataFrontChannelURI',
+                        'oidcServiceMetaDataBackChannelURI',
                     ]
                 },
                 'oidcServiceMetaDataAuthnContext',

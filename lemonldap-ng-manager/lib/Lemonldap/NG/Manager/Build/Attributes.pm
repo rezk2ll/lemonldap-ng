@@ -2367,6 +2367,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'checksession.html',
             documentation => 'OpenID Connect check session iframe',
         },
+        oidcServiceMetaDataBackChannelURI => {
+            type          => 'text',
+            default       => 'blogout',
+            documentation => 'OpenID Connect Front-Channel logout endpoint',
+        },
+        oidcServiceMetaDataFrontChannelURI => {
+            type          => 'text',
+            default       => 'flogout',
+            documentation => 'OpenID Connect Front-Channel logout endpoint',
+        },
         oidcServiceMetaDataAuthnContext => {
             type    => 'keyTextContainer',
             keyTest => qr/\w/,

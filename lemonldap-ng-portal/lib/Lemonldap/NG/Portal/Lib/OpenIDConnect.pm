@@ -1372,6 +1372,20 @@ sub decode_base64url {
     return decode_base64($s);
 }
 
+sub addRouteFromConf {
+    my ( $self, $type, %subs ) = @_;
+    my $adder = "add${type}Route";
+    foreach ( keys %subs ) {
+        my $sub  = $subs{$_};
+        my $path = $self->conf->{$_};
+        unless ($path) {
+            $self->logger->error("$_ parameter not defined");
+            next;
+        }
+        $self->$adder( $self->path => { $path => $sub }, [ 'GET', 'POST' ] );
+    }
+}
+
 1;
 
 __END__
@@ -1524,6 +1538,11 @@ Build Logout Request URI
 =head2 buildLogoutResponse
 
 Build Logout Response URI 
+
+=head2 addRouteFromConf
+
+Build a Lemonldap::NG::Common::PSGI::Router route from OIDC configuration
+attribute
 
 =head1 SEE ALSO
 
