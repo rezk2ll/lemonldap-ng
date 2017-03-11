@@ -35,16 +35,6 @@ extends 'Lemonldap::NG::Portal::Main::Plugin',
 # PROPERTIES
 
 # Mail timeout token generator
-has mailott => (
-    is      => 'rw',
-    default => sub {
-        my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->timeout( $_[0]->conf->{mailTimeout} || $_[0]->conf->{timeout} );
-        return $ott;
-    }
-);
-
 # Form timout token generator (used even if requireToken is not set)
 has ott => (
     is      => 'rw',
@@ -112,16 +102,17 @@ sub _reset {
         $self->logger->debug( "Token given for password reset: " . $mailToken );
 
         # Check if token is valid
-        my $mailSession = $self->mailott->getToken($mailToken);
+        my $mailSession = $self->p->getApacheSession($mailToken);
         unless ($mailSession) {
             $self->userLogger->warn('Bad reset token');
             return PE_BADMAILTOKEN;
         }
 
-        $req->{mail} = $mailSession->{user};
+        $req->{mail} = $mailSession->data->{user};
         $req->datas->{mailAddress} =
-          $mailSession->{ $self->conf->{mailSessionKey} };
+          $mailSession->data->{ $self->conf->{mailSessionKey} };
         $self->logger->debug( 'User associated to: ' . $req->{mail} );
+        $mailSession->remove;
     }
 
     # Check for values posted
