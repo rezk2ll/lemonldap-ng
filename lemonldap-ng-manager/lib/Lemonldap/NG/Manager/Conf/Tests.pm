@@ -277,6 +277,36 @@ sub tests {
             # Return
             return 1;
         },
+
+        # SAML entity ID must be unique
+        samlIDPEntityIdUniqueness => sub {
+            return 1
+              unless ( $conf->{samlIDPMetaDataXML}
+                and %{ $conf->{samlIDPMetaDataXML} } );
+            my @msg;
+            my $res = 1;
+            my %entityIds;
+            foreach my $idpId ( keys %{ $conf->{samlIDPMetaDataXML} } ) {
+                unless (
+                    $conf->{samlIDPMetaDataXML}->{$idpId}->{samlIDPMetaDataXML}
+                    =~ /entityID=(['"])(.+?)\1/si )
+                {
+                    push @msg, "$idpId SAML metadata has no EntityID";
+                    $res = 0;
+                    next;
+                }
+                my $eid = $2;
+                if ( defined $entityIds{$eid} ) {
+                    push @msg,
+                      "$idpId and $entityIds{$eid} have the same SAML EntityID";
+                    $res = 0;
+                    next;
+                }
+                $entityIds{$eid} = $idpId;
+            }
+            return ( $res, join( ', ', @msg ) );
+        },
+
         checkCombinations => sub {
             return 1 unless ( $conf->{authentication} eq 'Combination' );
             require Lemonldap::NG::Common::Combination::Parser;
