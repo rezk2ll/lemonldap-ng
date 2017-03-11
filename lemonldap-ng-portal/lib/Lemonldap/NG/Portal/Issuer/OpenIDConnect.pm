@@ -1244,7 +1244,7 @@ sub logout {
                           ->{oidcRPMetaDataOptionsUserIDAttr}
                           || $self->conf->{whatToTrace};
                         my $user_id = $req->{sessionInfo}->{$user_id_attribute};
-                        $url .= ( $urm =~ /\?/ ? '&' : '?' )
+                        $url .= ( $url =~ /\?/ ? '&' : '?' )
                           . build_urlencoded(
                             iss => $self->conf->{oidcServiceMetaDataIssuer},
                             sid => $user_id
