@@ -237,7 +237,8 @@ sub loadIDPs {
         }
 
         # Store IDP entityID and Organization Name
-        my ($entityID) = ( $idp_metadata =~ /entityID=['"](.+?)['"]/si );
+        my ( $tmp, $entityID ) =
+          ( $idp_metadata =~ /entityID=(['"])(.+?)\1/si );
         my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
           || ucfirst($_);
         $self->idpList->{$entityID}->{confKey} = $_;
