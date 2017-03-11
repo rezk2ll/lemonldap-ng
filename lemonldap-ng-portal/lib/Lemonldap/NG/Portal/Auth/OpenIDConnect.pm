@@ -18,6 +18,7 @@ extends 'Lemonldap::NG::Portal::Auth::Base',
 
 has opList => ( is => 'rw', default => sub { [] } );
 has opNumber => ( is => 'rw', default => 0 );
+has path     => ( is => 'rw', default => 'oauth2' );
 
 # INITIALIZATION
 
@@ -57,6 +58,16 @@ sub init {
             class => "openidconnect",
           };
     }
+    $self->addRouteFromConf(
+        'Unauth',
+        oidcServiceMetaDataFrontChannelURI => 'frontLogout',
+        oidcServiceMetaDataBackChannelURI  => 'backLogout',
+    );
+    $self->addRouteFromConf(
+        'Auth',
+        oidcServiceMetaDataFrontChannelURI => 'frontLogout',
+        oidcServiceMetaDataBackChannelURI  => 'backLogout',
+    );
     $self->opList( [@list] );
     return 1;
 }
@@ -307,6 +318,14 @@ sub authLogout {
 
 sub getDisplayType {
     return "logo";
+}
+
+sub frontLogout {
+    my ( $self, $req ) = @_;
+}
+
+sub backLogout {
+    my ( $self, $req ) = @_;
 }
 
 1;
