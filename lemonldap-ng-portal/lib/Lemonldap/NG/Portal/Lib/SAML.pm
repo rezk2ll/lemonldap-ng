@@ -311,7 +311,8 @@ sub loadSPs {
         }
 
         # Store SP entityID and Organization Name
-        my ($entityID) = ( $sp_metadata =~ /entityID="(.+?)"/i );
+        my ( $tmp, $entityID ) =
+          ( $sp_metadata =~ /entityID=(['"])(.+?)\1/si );
         my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
           || ucfirst($_);
         $self->spList->{$entityID}->{confKey} = $_;
