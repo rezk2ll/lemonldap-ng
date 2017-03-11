@@ -646,6 +646,7 @@
 "timeout": "Sessions timeout",
 "timeoutActivity": "Sessions activity timeout",
 "timeoutActivityInterval": "Sessions update interval",
+"tokenUseGlobalStorage": "Use global storage",
 "trustedDomains": "Trusted domains",
 "trustedProxies": "Trusted proxies IP",
 "twitterAppName": "Application name",

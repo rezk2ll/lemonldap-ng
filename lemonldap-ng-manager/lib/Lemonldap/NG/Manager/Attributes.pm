@@ -2890,6 +2890,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             },
             'type' => 'int'
         },
+        'tokenUseGlobalStorage' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'trustedDomains' => {
             'type' => 'text'
         },

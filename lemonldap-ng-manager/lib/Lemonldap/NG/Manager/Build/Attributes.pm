@@ -430,6 +430,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Enable token for forms',
         },
+        tokenUseGlobalStorage => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable global token storage',
+        },
         cda => {
             default       => 0,
             type          => 'bool',

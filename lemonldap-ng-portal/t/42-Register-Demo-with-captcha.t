@@ -49,8 +49,9 @@ s/^.*token=([^&]+).*$/token=$1&firstname=foo&lastname=bar&mail=foobar%40badwolf.
     # Try to get captcha value
 
     my ( $ts, $captcha );
-    ok( $ts = $client->p->getApacheSession($token), ' Found token session' );
-    ok( $captcha = $ts->data->{captcha}, ' Found captcha value' );
+    ok( $ts = getCache()->get($token), ' Found token session' );
+    $ts = eval { JSON::from_json($ts) };
+    ok( $captcha = $ts->{captcha}, ' Found captcha value' );
 
     $query .= "&captcha=$captcha";
 

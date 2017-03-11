@@ -42,6 +42,18 @@ sub clean_sessions {
             }
         }
     }
+    my $cache = getCache();
+    $cache->clear;
+}
+
+sub getCache {
+    return Cache::FileCache->new(
+        {
+            namespace   => 'lemonldap-ng-session',
+            cache_root  => 't/',
+            cache_depth => 0,
+        }
+    );
 }
 
 sub expectRedirection {
@@ -211,15 +223,23 @@ use Mouse;
 extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
 
 our $defaultIni = {
-    configStorage       => { type => 'File', dirName => 't' },
-    localSessionStorage => '',
-    logLevel            => 'error',
-    cookieName          => 'lemonldap',
-    domain              => 'example.com',
-    templateDir         => 'site/templates',
-    staticPrefix        => '/index.fcgi',
-    securedCookie       => 0,
-    https               => 0,
+    configStorage => {
+        type    => 'File',
+        dirName => 't',
+    },
+    localSessionStorage        => 'Cache::FileCache',
+    localSessionStorageOptions => {
+        namespace   => 'lemonldap-ng-session',
+        cache_root  => 't/',
+        cache_depth => 0,
+    },
+    logLevel      => 'error',
+    cookieName    => 'lemonldap',
+    domain        => 'example.com',
+    templateDir   => 'site/templates',
+    staticPrefix  => '/index.fcgi',
+    securedCookie => 0,
+    https         => 0,
 };
 
 has app => (
@@ -273,7 +293,7 @@ sub logout {
         'Logout request'
     );
     main::ok( $res->[0] == 200, ' Response is 200' )
-      or explain( $res->[0], 200 );
+      or main::explain( $res->[0], 200 );
     my $c;
     main::ok(
         ( defined( $c = main::getCookies($res)->{lemonldap} ) and not $c ),

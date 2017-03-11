@@ -638,6 +638,7 @@ sub tree {
                                 },
                                 'requireToken',
                                 'formTimeout',
+                                'tokenUseGlobalStorage',
                             ]
                         },
                         {
