@@ -133,7 +133,6 @@ sub sessions {
             if ( $res->{$session}->{$k} ) {
                 delete $res->{$session}
                   unless ( $res->{$session}->{$k} =~ /^$filters{$k}$/ );
-                print STDERR "Deleted\n";
             }
         }
     }
