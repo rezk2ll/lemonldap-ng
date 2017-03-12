@@ -60,7 +60,7 @@ sub init {
     }
     $self->addRouteFromConf(
         'Unauth',
-        oidcServiceMetaDataFrontChannelURI => 'frontLogout',
+        oidcServiceMetaDataFrontChannelURI => 'alreadyLoggedOut',
         oidcServiceMetaDataBackChannelURI  => 'backLogout',
     );
     $self->addRouteFromConf(
@@ -318,6 +318,22 @@ sub authLogout {
 
 sub getDisplayType {
     return "logo";
+}
+
+sub alreadyLoggedOut {
+    my ( $self, $req ) = @_;
+    $self->userLogger->info(
+        'Front-channel logout request for an already logged out user');
+    my $img = $self->conf->{staticPrefix} . '/common/ok.png';
+
+    # No need to protect this frame
+    $req->frame(1);
+    my $frame = qq'<html><body><img src="$img"></body></html>';
+    return [
+        200,
+        [ 'Content-Type' => 'text/html', 'Content-Length' => length($frame) ],
+        [$frame]
+    ];
 }
 
 sub frontLogout {
