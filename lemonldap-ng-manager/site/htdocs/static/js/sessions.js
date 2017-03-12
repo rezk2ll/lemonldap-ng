@@ -7,6 +7,14 @@
 (function() {
   var categories, hiddenAttributes, llapp, menu, schemes;
 
+  var toMuch = {
+    _whatToTrace: function(t, v, level, over) {
+       if(level===1) {
+         return t + "=" + v + "*&groupBy=substr(" + t + "," + (level+over) + ")";
+       }
+       return schemes._whatToTrace[level];
+    }
+  };
   schemes = {
     _whatToTrace: [
       function(t, v) {
@@ -147,7 +155,7 @@
         var node;
         node = scope.$modelValue;
         if (node.nodes.length === 0) {
-          $scope.updateTree(node.value, node.nodes, node.level, node.query);
+          $scope.updateTree(node.value, node.nodes, node.level, node.over, node.query, node.count);
         }
         return scope.toggle();
       };
@@ -317,11 +325,19 @@
       };
       $scope.$on('$locationChangeSuccess', pathEvent);
       autoId = 0;
-      $scope.updateTree = function(value, node, level, currentQuery) {
+      $scope.updateTree = function(value, node, level, over, currentQuery, count) {
         var query, scheme;
         $scope.waiting = true;
         scheme = schemes[$scope.type] ? schemes[$scope.type] : $scope.type === 'updateTime' ? schemes.startTime : schemes._whatToTrace;
         query = scheme[level]($scope.type, value, currentQuery);
+        if(count > 20 && toMuch[$scope.type]) {
+          over++;
+          query = toMuch[$scope.type]($scope.type, value, level, over, currentQuery);
+          level = level-1;
+        }
+        else {
+          over=0;
+        }
         return $http.get(scriptname + "sessions/" + sessionType + "?" + query).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;
@@ -334,6 +350,7 @@
               if (level < scheme.length - 1) {
                 n.nodes = [];
                 n.level = level + 1;
+                n.over = over;
                 n.query = query;
                 if ($scope.type.match(/^(?:start|update)Time$/)) {
                   n.title = n.value.replace(/^(\d{8})(\d{2})(\d{2})$/, '$2:$3').replace(/^(\d{8})(\d{2})(\d)$/, '$2:$30').replace(/^(\d{8})(\d{2})$/, '$2h').replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
@@ -353,7 +370,7 @@
       $scope.init = function() {
         $scope.waiting = true;
         $scope.data = [];
-        return $q.all([$translator.init($scope.lang), $scope.updateTree('', $scope.data, 0)]).then(function() {
+        return $q.all([$translator.init($scope.lang), $scope.updateTree('', $scope.data, 0, 0)]).then(function() {
           return $scope.waiting = false;
         }, function(resp) {
           return $scope.waiting = false;

@@ -2,6 +2,9 @@
 # Session explorer
 ###
 
+# Max number of session to display (see overScheme)
+max = 25
+
 # Queries to do each type of display: each array item corresponds to the depth
 # of opened nodes in the tree
 schemes =
@@ -49,6 +52,13 @@ schemes =
 		(t,v,q) ->
 			q.replace(/\&groupBy.*$/, '') + "&ipAddr=#{v}"
 	]
+
+overScheme =
+	_whatToTrace: (t,v,l) ->
+		if level == 1
+			"#{t}=#{v}*&groupBy=substr(#{t},#{l})"
+		else
+			schemes._whatToTrace[level]
 
 hiddenAttributes = '_password'
 
@@ -133,7 +143,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.stoggle = (scope) ->
 		node = scope.$modelValue
 		if node.nodes.length == 0
-			$scope.updateTree node.value, node.nodes, node.level, node.query
+			$scope.updateTree node.value, node.nodes, node.level, node.over, node.query
 		scope.toggle()
 
 	# Display selected session
@@ -271,7 +281,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 	# Function to update tree: download value of opened subkey
 	autoId = 0
-	$scope.updateTree = (value, node, level, currentQuery) ->
+	$scope.updateTree = (value, node, level, over, currentQuery) ->
 		$scope.waiting = true
 
 		# Query scheme selection:
@@ -291,6 +301,14 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		# Build query using schemes
 		query = scheme[level] $scope.type, value, currentQuery
 
+		# If number of session exceeds "max" and overScheme exists, call it
+		if count > max and overScheme[$scope.type]
+			over++
+			query = overScheme[$scope.type] $scope.type, value, level, over, currentQuery
+			level = level - 1
+		else
+			over = 0
+
 		# Launch HTTP query
 		$http.get("#{scriptname}sessions/#{sessionType}?#{query}").then (response) ->
 			data = response.data
@@ -302,6 +320,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						n.nodes = []
 						n.level = level + 1
 						n.query = query
+						n.over  = over
 
 						# Date display in tree
 						if $scope.type.match /^(?:start|update)Time$/
@@ -328,7 +347,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		$scope.data = []
 		$q.all [
 			$translator.init $scope.lang
-			$scope.updateTree '', $scope.data, 0
+			$scope.updateTree '', $scope.data, 0, 0
 		]
 		.then ->
 			$scope.waiting = false
