@@ -279,7 +279,7 @@ $(SRCPORTALDIR)/site/htdocs/static/common/js/%.js: $(SRCPORTALDIR)/site/coffee/%
 		coffee -c -o $(SRCPORTALDIR)/site/htdocs/static/common/js/ $(SRCPORTALDIR)/site/coffee/$*.coffee; \
 	fi
 
-$(SRCMANAGERDIR)/site/htdocs/static/htdocs/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coffee
+$(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coffee
 	@if which coffee >/dev/null; then \
 		echo "Compiling $(SRCMANAGERDIR)/site/coffee/$*.coffee"; \
 		coffee -c -o $(SRCMANAGERDIR)/site/htdocs/static/js/ $(SRCMANAGERDIR)/site/coffee/$*.coffee; \
