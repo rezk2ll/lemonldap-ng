@@ -54,9 +54,9 @@ schemes =
 	]
 
 overScheme =
-	_whatToTrace: (t,v,l) ->
+	_whatToTrace: (t,v,level,over) ->
 		if level == 1
-			"#{t}=#{v}*&groupBy=substr(#{t},#{l})"
+			"#{t}=#{v}*&groupBy=substr(#{t},#{(level+over)})"
 		else
 			schemes._whatToTrace[level]
 
@@ -143,7 +143,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.stoggle = (scope) ->
 		node = scope.$modelValue
 		if node.nodes.length == 0
-			$scope.updateTree node.value, node.nodes, node.level, node.over, node.query
+			$scope.updateTree node.value, node.nodes, node.level, node.over, node.query, node.count
 		scope.toggle()
 
 	# Display selected session
@@ -281,7 +281,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 	# Function to update tree: download value of opened subkey
 	autoId = 0
-	$scope.updateTree = (value, node, level, over, currentQuery) ->
+	$scope.updateTree = (value, node, level, over, currentQuery, count) ->
 		$scope.waiting = true
 
 		# Query scheme selection:

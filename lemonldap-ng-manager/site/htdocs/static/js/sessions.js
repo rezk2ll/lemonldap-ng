@@ -5,16 +5,10 @@
  */
 
 (function() {
-  var categories, hiddenAttributes, llapp, menu, schemes;
+  var categories, hiddenAttributes, llapp, max, menu, overScheme, schemes;
 
-  var toMuch = {
-    _whatToTrace: function(t, v, level, over) {
-       if(level===1) {
-         return t + "=" + v + "*&groupBy=substr(" + t + "," + (level+over) + ")";
-       }
-       return schemes._whatToTrace[level];
-    }
-  };
+  max = 25;
+
   schemes = {
     _whatToTrace: [
       function(t, v) {
@@ -64,6 +58,16 @@
         return q.replace(/\&groupBy.*$/, '') + ("&ipAddr=" + v);
       }
     ]
+  };
+
+  overScheme = {
+    _whatToTrace: function(t, v, level, over) {
+      if (level === 1) {
+        return t + "=" + v + "*&groupBy=substr(" + t + "," + (level + over) + ")";
+      } else {
+        return schemes._whatToTrace[level];
+      }
+    }
   };
 
   hiddenAttributes = '_password';
@@ -330,13 +334,12 @@
         $scope.waiting = true;
         scheme = schemes[$scope.type] ? schemes[$scope.type] : $scope.type === 'updateTime' ? schemes.startTime : schemes._whatToTrace;
         query = scheme[level]($scope.type, value, currentQuery);
-        if(count > 20 && toMuch[$scope.type]) {
+        if (count > max && overScheme[$scope.type]) {
           over++;
-          query = toMuch[$scope.type]($scope.type, value, level, over, currentQuery);
-          level = level-1;
-        }
-        else {
-          over=0;
+          query = overScheme[$scope.type]($scope.type, value, level, over, currentQuery);
+          level = level - 1;
+        } else {
+          over = 0;
         }
         return $http.get(scriptname + "sessions/" + sessionType + "?" + query).then(function(response) {
           var data, i, len, n, ref;
@@ -350,8 +353,8 @@
               if (level < scheme.length - 1) {
                 n.nodes = [];
                 n.level = level + 1;
-                n.over = over;
                 n.query = query;
+                n.over = over;
                 if ($scope.type.match(/^(?:start|update)Time$/)) {
                   n.title = n.value.replace(/^(\d{8})(\d{2})(\d{2})$/, '$2:$3').replace(/^(\d{8})(\d{2})(\d)$/, '$2:$30').replace(/^(\d{8})(\d{2})$/, '$2h').replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
                 }
