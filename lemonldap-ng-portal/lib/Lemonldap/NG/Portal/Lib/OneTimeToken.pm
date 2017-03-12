@@ -63,7 +63,7 @@ sub createToken {
 
         # Dereference $infos
         my %h = %$infos;
-        $self->cache->set( $id, to_json( \%h ) );
+        $self->cache->set( $id, to_json( \%h ), $self->timeout . ' s' );
         return $id;
     }
     else {
