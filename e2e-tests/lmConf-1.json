@@ -149,9 +149,9 @@
   },
   "loginHistoryEnabled": 1,
   "macros": {
-    "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\""
+    "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\"""_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : $_auth eq 'OpenIDConnect' ? \"$_user\\@$_oidcConnectedRP\" : \"$_user\""
   },
-  "mailUrl" : "http://auth.example.com:__port__/resetpwd",
+  "mailUrl": "http://auth.example.com:__port__/resetpwd",
   "notification": 1,
   "notificationStorage": "File",
   "notificationStorageOptions": {
@@ -165,6 +165,8 @@
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
   "portal": "http://auth.example.com:__port__/",
+  "portalSkin": "bootstrap",
+  "portalSkinBackground": "1280px-Cedar_Breaks_National_Monument_partially.jpg",
   "post": {
     "test2.example.com": {},
     "manager.example.com": {},
@@ -181,8 +183,8 @@
       }
     }
   },
-  "registerDB": "Null",
-  "registerUrl" : "http://auth.example.com:__port__/register",
+  "registerDB": "Demo",
+  "registerUrl": "http://auth.example.com:__port__/register",
   "reloadUrls": {},
   "securedCookie": 0,
   "sessionDataToRemember": {},
