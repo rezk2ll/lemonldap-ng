@@ -24,6 +24,7 @@ my $portal = LLNG::Manager::Test->new(
                 type    => 'File',
                 dirName => 'e2e-tests/conf',
             },
+            localSessionStorage => undef,
         }
     }
 )->p;
