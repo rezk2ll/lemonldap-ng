@@ -89,7 +89,7 @@ rm -f $TDIR/*/t/99-pod.t \
 
 for INI in $(find $TDIR/lemonldap-ng-* -name lemonldap-ng.ini); do
     echo "Change $INI logLevel to debug"
-    perl -pi -e 's/^logLevel\s*=\s*\w+$/logLevel=debug/' $INI
+    perl -pi -e 's/^logLevel\s*=\s*\w+$/logLevel=debug/' $INI || true
 done
 
 # For now, too many bugs with Moose in autopkg jail, so manager isn't tested
