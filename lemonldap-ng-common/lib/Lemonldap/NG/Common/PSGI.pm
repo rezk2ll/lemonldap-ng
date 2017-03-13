@@ -39,13 +39,17 @@ sub init {
              $args->{logger}
           || $ENV{LLNG_DEFAULTLOGGER}
           || 'Lemonldap::NG::Common::Logger::Std';
-        eval "require $logger";
-        die $@ if ($@);
-        $self->logger( $logger->new($self) );
-        $logger = $ENV{LLNG_USERLOGGER} || $args->{userLogger} || $logger;
-        eval "require $logger";
-        die $@ if ($@);
-        $self->userLogger( $logger->new( $self, user => 1 ) );
+        unless ( $self->logger ) {
+            eval "require $logger";
+            die $@ if ($@);
+            $self->logger( $logger->new($self) );
+        }
+        unless ( $self->userLogger ) {
+            $logger = $ENV{LLNG_USERLOGGER} || $args->{userLogger} || $logger;
+            eval "require $logger";
+            die $@ if ($@);
+            $self->userLogger( $logger->new( $self, user => 1 ) );
+        }
     }
     return 1;
 }
