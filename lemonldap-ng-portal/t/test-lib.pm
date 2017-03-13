@@ -47,6 +47,7 @@ sub clean_sessions {
 }
 
 sub getCache {
+    require Cache::FileCache;
     return Cache::FileCache->new(
         {
             namespace   => 'lemonldap-ng-session',
