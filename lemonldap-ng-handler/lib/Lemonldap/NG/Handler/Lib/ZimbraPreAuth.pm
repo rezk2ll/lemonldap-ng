@@ -11,7 +11,6 @@
 package Lemonldap::NG::Handler::Lib::ZimbraPreAuth;
 
 use strict;
-use base qw(Lemonldap::NG::Handler::ApacheMP2::Main);
 use Digest::HMAC_SHA1 qw(hmac_sha1 hmac_sha1_hex);
 
 our $VERSION = '2.0.0';
