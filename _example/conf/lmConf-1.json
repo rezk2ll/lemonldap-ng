@@ -86,7 +86,6 @@
   "authentication": "Demo",
   "cfgAuthor": "The LemonLDAP::NG team",
   "cfgNum": 1,
-  "cfgLog": "Default configuration provided by LemonLDAP::NG team",
   "cfgVersion": "2.0.0",
   "cookieName": "lemonldap",
   "demoExportedVars": {
@@ -139,7 +138,7 @@
   },
   "loginHistoryEnabled": 1,
   "macros": {
-    "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : $_auth eq 'OpenIDConnect' ? \"$_user\\@$_oidcConnectedRP\" : \"$_user\""
+    "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\""
   },
   "mailUrl": "http://auth.__DNSDOMAIN__/resetpwd",
   "notification": 1,
