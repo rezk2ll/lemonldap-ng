@@ -195,8 +195,8 @@ This file contains:
         }
         return $scope.showModal('message.html');
       };
-      $scope.downlaodConf = function(c, $scope) {
-        return window.open($scope.confPrefix + $scope.currentCfg.cfgNum + '?full');
+      $scope.downloadConf = function() {
+        return window.open($scope.confPrefix + $scope.currentCfg.cfgNum + '?full=1');
       };
       $scope.save = function() {
         $scope.showModal('save.html').then(function() {

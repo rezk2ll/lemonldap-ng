@@ -161,8 +161,8 @@ llapp.controller 'TreeCtrl', [
 			$scope.showModal 'message.html'
 
 		# Download raw conf
-		$scope.downlaodConf = (c,$scope) ->
-			window.open $scope.confPrefix + $scope.currentCfg.cfgNum + '?full'
+		$scope.downloadConf = () ->
+			window.open $scope.confPrefix + $scope.currentCfg.cfgNum + '?full=1'
 
 		# Main save function
 		$scope.save = ->
