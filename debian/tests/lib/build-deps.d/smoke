@@ -53,6 +53,9 @@ for dir in common handler portal manager; do
         $TDIR2/lib/Debian/pkgperl \
         $TDIR2/blib/lib/Debian/pkgperl
     cp -a lemonldap-ng-$dir/t $TDIR2/
+    if [ -d lemonldap-ng-$dir/site ]; then
+        cp -a lemonldap-ng-$dir/site $TDIR2/
+    fi
     cat <<'EOF' > $TDIR2/lib/Debian/pkgperl/Foobar.pm
 package Debian::pkgperl::Foobar;
 our $VERSION = '0.01';
@@ -93,7 +96,7 @@ for INI in $(find $TDIR/lemonldap-ng-* -name lemonldap-ng.ini); do
 done
 
 # For now, too many bugs with Moose in autopkg jail, so manager isn't tested
-for dir in common handler portal; do
+for dir in common handler portal manager; do
     TDIR2=${TDIR}/lemonldap-ng-$dir
 
     # this is intended to be a last resort, please use it responsibly
