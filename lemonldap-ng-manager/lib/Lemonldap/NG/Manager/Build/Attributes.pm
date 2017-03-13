@@ -265,7 +265,7 @@ sub attributes {
             default       => 'get',
             documentation => 'HTTP method for info page form',
         },
-        port       => { type => 'int', },
+        port => { type => 'int', documentation => 'Force port in redirection' },
         jsRedirect => {
             type          => 'boolOrExpr',
             default       => 0,
@@ -287,6 +287,7 @@ sub attributes {
             keyTest => qr/^\w+$/,
             test    => qr/^[a-zA-Z][a-zA-Z0-9]*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/,
             msgFail => '__badPerlPackageName__',
+            documentation => 'Custom Nginx handler (deprecated)',
         },
         noAjaxHook => {
             default       => 0,
@@ -318,11 +319,12 @@ sub attributes {
             documentation => 'HTTP method for redirect page form',
         },
         reloadUrls => {
-            type    => 'keyTextContainer',
-            help    => 'configlocation.html#configuration_reload',
-            keyTest => qr/^$Regexp::Common::URI::RFC2396::host(?::\d+)?$/,
-            test    => $url,
-            msgFail => '__badUrl__'
+            type          => 'keyTextContainer',
+            help          => 'configlocation.html#configuration_reload',
+            keyTest       => qr/^$Regexp::Common::URI::RFC2396::host(?::\d+)?$/,
+            test          => $url,
+            msgFail       => '__badUrl__',
+            documentation => 'URL to call on reload',
         },
         staticPrefix => {
             type          => 'text',
@@ -411,12 +413,13 @@ sub attributes {
             ],
         },
         portalSkinRules => {
-            type       => 'keyTextContainer',
-            help       => 'portalcustom.html',
-            keyTest    => $perlExpr,
-            keyMsgFail => '__badSkinRule__',
-            test       => qr/^\w+$/,
-            msgFail    => '__badValue__',
+            type          => 'keyTextContainer',
+            help          => 'portalcustom.html',
+            keyTest       => $perlExpr,
+            keyMsgFail    => '__badSkinRule__',
+            test          => qr/^\w+$/,
+            msgFail       => '__badValue__',
+            documentation => 'Rules to choose portal skin',
         },
 
         # Security
@@ -446,9 +449,10 @@ sub attributes {
             documentation => 'Check XSS',
         },
         grantSessionRules => {
-            type    => 'grantContainer',
-            keyTest => $perlExpr,
-            test    => sub { 1 },
+            type          => 'grantContainer',
+            keyTest       => $perlExpr,
+            test          => sub { 1 },
+            documentation => 'Rules to grant sessions',
         },
         hiddenAttributes => {
             type          => 'text',
@@ -517,8 +521,9 @@ sub attributes {
             default       => '[A-Z]{3}[a-z]{5}.\d{2}',
             documentation => 'Regular expression to create a random password',
         },
-        trustedDomains => { type => 'text', },
-        storePassword  => {
+        trustedDomains =>
+          { type => 'text', documentation => 'Trusted domains', },
+        storePassword => {
             default       => 0,
             type          => 'bool',
             documentation => 'Store password in session',
@@ -631,8 +636,9 @@ sub attributes {
         },
 
         # Cookies
-        cookieExpiration => { type => 'text', },
-        cookieName       => {
+        cookieExpiration =>
+          { type => 'text', documentation => 'Cookie expiration', },
+        cookieName => {
             type          => 'text',
             test          => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
             msgFail       => '__badCookieName__',
@@ -667,15 +673,18 @@ sub attributes {
         oldNotifFormat => {
             type          => 'bool',
             default       => 0,
-            documentation => 'Use old XML format',
+            documentation => 'Use old XML format for notifications',
         },
         notificationWildcard => {
             type          => 'text',
             default       => 'allusers',
             documentation => 'Notification string to match all users',
         },
-        notificationXSLTfile => { type => 'text', },
-        notification         => {
+        notificationXSLTfile => {
+            type          => 'text',
+            documentation => 'Custom XSLT document for notifications',
+        },
+        notification => {
             default       => 0,
             type          => 'bool',
             documentation => 'Notification activation',
@@ -765,9 +774,9 @@ sub attributes {
             documentation => 'Session backend module options',
         },
         localSessionStorage => {
-            type    => 'PerlModule',
-            default => 'Cache::FileCache',
-            , documentation => 'Sessions cache module',
+            type          => 'PerlModule',
+            default       => 'Cache::FileCache',
+            documentation => 'Sessions cache module',
         },
         localSessionStorageOptions => {
             type    => 'keyTextContainer',
@@ -782,12 +791,19 @@ sub attributes {
         },
 
         # Persistent storage
-        persistentStorage        => { type => 'PerlModule', },
-        persistentStorageOptions => { type => 'keyTextContainer', },
-        sessionDataToRemember    => {
-            type       => 'keyTextContainer',
-            keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-            keyMsgFail => '__invalidSessionData__',
+        persistentStorage => {
+            type          => 'PerlModule',
+            documentation => 'Storage module for persistent sessions'
+        },
+        persistentStorageOptions => {
+            type          => 'keyTextContainer',
+            documentation => 'Options for persistent sessions storage module'
+        },
+        sessionDataToRemember => {
+            type          => 'keyTextContainer',
+            keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+            keyMsgFail    => '__invalidSessionData__',
+            documentation => 'Data to remember in login history',
         },
 
         # SAML issuer
@@ -882,13 +898,15 @@ sub attributes {
         },
 
         # Mails
-        mailBody    => { type => 'longtext', },
+        mailBody =>
+          { type => 'longtext', documentation => 'Custom mail body', },
         mailCharset => {
             type          => 'text',
             default       => 'utf-8',
             documentation => 'Mail charset',
         },
-        mailConfirmBody    => { type => 'longtext', },
+        mailConfirmBody =>
+          { type => 'longtext', documentation => 'Custom confirm mail body', },
         mailConfirmSubject => {
             type          => 'text',
             documentation => 'Mail subject for reset confirmation',
@@ -898,7 +916,7 @@ sub attributes {
             default       => 'noreply@example.com',
             documentation => 'Sender email',
         },
-        mailReplyTo    => { type => 'text', },
+        mailReplyTo => { type => 'text', documentation => 'Reply-To address' },
         mailSessionKey => {
             type          => 'text',
             default       => 'mail',
@@ -924,8 +942,14 @@ sub attributes {
             test    => qr/^(?:$Regexp::Common::URI::RFC2396::host(?::\d+)?)?$/,
             documentation => 'SMTP Server',
         },
-        SMTPAuthUser => { type => 'text', },
-        SMTPAuthPass => { type => 'password', },
+        SMTPAuthUser => {
+            type          => 'text',
+            documentation => 'Login to use to send mails',
+        },
+        SMTPAuthPass => {
+            type          => 'password',
+            documentation => 'Password to use to send mails',
+        },
 
         # Registration
         registerConfirmSubject => {
@@ -993,8 +1017,9 @@ sub attributes {
             documentation => 'Allow only one session per IP',
         },
         singleUserByIP => {
-            default => 0,
-            type    => 'bool',
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Allow only one user per IP',
         },
         singleSessionUserByIP => {
             default       => 0,

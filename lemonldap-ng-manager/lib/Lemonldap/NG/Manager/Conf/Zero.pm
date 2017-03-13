@@ -108,7 +108,7 @@ sub zeroConf {
         },
         'macros' => {
             '_whatToTrace' =>
-              '$_auth eq \'SAML\' ? "$_user\\@$_idpConfKey" : "$_user"'
+'$_auth eq \'SAML\' ? "$_user\\@$_idpConfKey" : $_auth eq \'OpenIDConnect\' ? "$_user\\@$_oidcConnectedRP" : "$_user"'
         },
         'notificationStorageOptions' => {
             'dirName' => $notificationDir

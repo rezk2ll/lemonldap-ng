@@ -495,6 +495,7 @@ sub scanTree {
             push @sessionTypes, $1
               if ( $leaf =~ /^(.*)(?<!notification)StorageOptions$/ );
             my $attr = $attributes->{$leaf} or die("Missing attribute $leaf");
+            print STDERR "| $attr->{documentation}  |  $leaf  |\n";
             $jleaf = { id => "$prefix$leaf", title => $leaf };
             unless ( $attr->{type} ) {
                 print STDERR "Fatal: no type: $leaf\n";
