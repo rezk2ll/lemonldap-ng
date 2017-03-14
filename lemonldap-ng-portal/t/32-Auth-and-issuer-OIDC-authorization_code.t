@@ -43,7 +43,7 @@ ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
 count(1);
 expectOK($res);
 
-# Try to authenticate to IdP
+# Try to authenticate to OP
 $query = "user=french&password=french&$query";
 ok(
     $res = $op->_post(
