@@ -1971,18 +1971,6 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                 {
                     'k' => 'bootstrap',
                     'v' => 'Bootstrap'
-                },
-                {
-                    'k' => 'pastel',
-                    'v' => 'Pastel'
-                },
-                {
-                    'k' => 'impact',
-                    'v' => 'Impact'
-                },
-                {
-                    'k' => 'dark',
-                    'v' => 'Dark'
                 }
             ],
             'type' => 'portalskin'

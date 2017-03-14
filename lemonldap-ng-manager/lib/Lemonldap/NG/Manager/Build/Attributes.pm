@@ -381,9 +381,6 @@ sub attributes {
             documentation => 'Name of portal skin',
             select        => [
                 { k => 'bootstrap', v => 'Bootstrap' },
-                { k => 'pastel',    v => 'Pastel' },
-                { k => 'impact',    v => 'Impact' },
-                { k => 'dark',      v => 'Dark' },
             ],
         },
         portalSkinBackground => {
