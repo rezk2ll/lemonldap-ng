@@ -24,7 +24,7 @@ ok(
           /Error: Unknown package Lemonldap::NG::Common::Conf::Backends::bad\.$/
     ),
     'Bad module'
-);
+) or print STDERR "Msg: $Lemonldap::NG::Common::Conf::msg\n";
 
 $h = bless {}, 'Lemonldap::NG::Common::Conf';
 
