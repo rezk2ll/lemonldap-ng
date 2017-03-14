@@ -17,6 +17,8 @@ translatePage = (lang) ->
 			$(this).text txt
 		$("[trmsg]").each ->
 			$(this).text translate "PE#{$(this).attr 'trmsg'}"
+		$("[trplaceholder]").each ->
+			$(this).attr 'placeholder', translate($(this).attr('trplaceholder'))
 
 translate = (str) ->
 	return if translationFields[str] then translationFields[str] else str
