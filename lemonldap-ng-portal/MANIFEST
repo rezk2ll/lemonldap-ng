@@ -194,8 +194,6 @@ site/htdocs/static/common/BrowserID.png
 site/htdocs/static/common/calendar.png
 site/htdocs/static/common/cancel.png
 site/htdocs/static/common/CAS.png
-site/htdocs/static/common/css/bg.css
-site/htdocs/static/common/css/bg.min.css
 site/htdocs/static/common/door_out.png
 site/htdocs/static/common/email.png
 site/htdocs/static/common/en.png

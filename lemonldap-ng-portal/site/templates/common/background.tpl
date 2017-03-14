@@ -1,7 +1,8 @@
 <TMPL_IF NAME="SKIN_BG">
- <!-- //if:cssminified
-  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX">common/css/bg.min.css">
- //else -->
-  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX">common/css/bg.css">
- <!-- //endif -->
+  <style>
+    html, body {
+      background: url("<TMPL_VAR NAME="STATIC_PREFIX">common/backgrounds/<TMPL_VAR NAME="SKIN_BG">") no-repeat center fixed;
+      background-size: cover;
+    }
+  </style>
 </TMPL_IF>
