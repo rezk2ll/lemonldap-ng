@@ -56,11 +56,13 @@ sub getUser {
     }
     if ( $mesg->count() > 1 ) {
         $self->logger->error('More than one entry returned by LDAP directory');
+        eval { $self->p->_authentication->setSecurity($req) };
         return PE_BADCREDENTIALS;
     }
     unless ( $req->datas->{entry} = $mesg->entry(0) ) {
         my $user = $req->{mail} || $req->{user};
         $self->userLogger->warn("$user was not found in LDAP directory");
+        eval { $self->p->_authentication->setSecurity($req) };
         return PE_BADCREDENTIALS;
     }
     $req->datas->{dn} = $req->datas->{entry}->dn();

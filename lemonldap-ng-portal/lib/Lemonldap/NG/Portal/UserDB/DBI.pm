@@ -50,10 +50,12 @@ sub getUser {
 
         # If connection isn't available, error is displayed by dbh()
         $self->logger->error("DBI error: $@") if ( $self->_dbh );
+        eval { $self->p->_authentication->setSecurity($req) };
         return PE_ERROR;
     }
     unless ( $req->datas->{entry} = $sth->fetchrow_hashref() ) {
         $self->userLogger->warn("User $user not found");
+        eval { $self->p->_authentication->setSecurity($req) };
         return PE_BADCREDENTIALS;
     }
     PE_OK;
