@@ -1756,6 +1756,7 @@ sub attributes {
                 { k => 'Facebook',    v => 'Facebook' },
                 { k => 'Google',      v => 'Google' },
                 { k => 'LDAP',        v => 'LDAP' },
+                { k => 'PAM',         v => 'PAM' },
                 { k => 'Radius',      v => 'Radius' },
                 { k => 'REST',        v => 'REST' },
                 { k => 'SSL',         v => 'SSL' },
@@ -2020,6 +2021,18 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             keyMsgFail => '__badCasProxyId__',
         },
 
+        # PAM
+        pamAuthnLevel => {
+            type          => 'int',
+            default       => 2,
+            documentation => 'PAM authentication level',
+        },
+        pamService => {
+            type          => 'text',
+            default       => 'login',
+            documentation => 'PAM service',
+        },
+
         # Radius
         radiusAuthnLevel => {
             type          => 'int',
@@ -2219,6 +2232,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Facebook',      v => 'Facebook' },
                     { k => 'Google',        v => 'Google' },
                     { k => 'LDAP',          v => 'LDAP' },
+                    { k => 'PAM',           v => 'PAM' },
                     { k => 'Null',          v => 'None' },
                     { k => 'OpenID',        v => 'OpenID' },
                     { k => 'OpenIDConnect', v => 'OpenID Connect' },
@@ -2281,6 +2295,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'Facebook', v => 'Facebook' },
                 { k => 'Google',   v => 'Google' },
                 { k => 'LDAP',     v => 'LDAP' },
+                { k => 'PAM',      v => 'PAM' },
                 { k => 'Radius',   v => 'Radius' },
                 { k => 'REST',     v => 'REST' },
                 { k => 'SSL',      v => 'SSL' },

@@ -148,6 +148,8 @@ sub defaultValues {
         'openIdSreg_fullname'                => 'cn',
         'openIdSreg_nickname'                => 'uid',
         'openIdSreg_timezone'                => '_timezone',
+        'pamAuthnLevel'                      => 2,
+        'pamService'                         => 'login',
         'passwordDB'                         => 'Demo',
         'portal'                             => 'http://auth.example.com/',
         'portalAntiFrame'                    => 1,

@@ -288,6 +288,12 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'pamParams',
+                            help  => 'authpam.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [ 'pamService', 'pamAuthnLevel', ]
+                        },
+                        {
                             title => 'radiusParams',
                             help  => 'authradius.html',
                             form  => 'simpleInputContainer',

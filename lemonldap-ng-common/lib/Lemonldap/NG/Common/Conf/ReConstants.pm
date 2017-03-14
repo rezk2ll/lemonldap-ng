@@ -42,6 +42,7 @@ our $authParameters = {
   nullParams => [qw(nullAuthnLevel)],
   oidcParams => [qw(oidcAuthnLevel oidcRPCallbackGetParam oidcRPStateTimeout)],
   openidParams => [qw(openIdAuthnLevel openIdExportedVars openIdSecret openIdIDPList)],
+  pamParams => [qw(pamService pamAuthnLevel)],
   proxyParams => [qw(proxyAuthService proxySessionService remoteCookieName proxyAuthnLevel proxyUseSoap)],
   radiusParams => [qw(radiusAuthnLevel radiusSecret radiusServer)],
   remoteParams => [qw(remotePortal remoteCookieName remoteGlobalStorage remoteGlobalStorageOptions)],
