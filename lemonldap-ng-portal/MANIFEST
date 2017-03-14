@@ -221,6 +221,7 @@ site/htdocs/static/common/js/u2fcheck.js
 site/htdocs/static/common/js/u2fcheck.min.js
 site/htdocs/static/common/js/u2fregistration.js
 site/htdocs/static/common/js/u2fregistration.min.js
+site/htdocs/static/common/logos/logo_llng_400px.png
 site/htdocs/static/common/modules/Apache.png
 site/htdocs/static/common/modules/BrowserID.png
 site/htdocs/static/common/modules/CAS.png
