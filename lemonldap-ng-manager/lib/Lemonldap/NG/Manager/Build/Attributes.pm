@@ -467,7 +467,7 @@ sub attributes {
         },
         cspImg => {
             type          => 'text',
-            default       => "'self'",
+            default       => "'self' data:",
             documentation => 'Image source for Content-Security-Policy',
         },
         cspScript => {

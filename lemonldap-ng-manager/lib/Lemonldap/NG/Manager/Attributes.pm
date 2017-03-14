@@ -813,7 +813,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'text'
         },
         'cspImg' => {
-            'default' => '\'self\'',
+            'default' => '\'self\' data:',
             'type'    => 'text'
         },
         'cspScript' => {
