@@ -62,6 +62,7 @@ sub getUser {
           );
     }
 
+    eval { $self->p->_authentication->setSecurity($req) };
     PE_USERNOTFOUND;
 }
 

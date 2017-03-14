@@ -91,6 +91,7 @@ sub extractFormInfo {
         my $token;
         unless ( $token = $req->param('token') ) {
             $self->userLogger->error('Authentication tried without token');
+            $self->ott->setToken($req);
             return PE_NOTOKEN;
         }
         if ( $self->captcha ) {
