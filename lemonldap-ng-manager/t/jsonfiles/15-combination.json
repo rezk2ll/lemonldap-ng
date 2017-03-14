@@ -208,7 +208,7 @@
         "type": "bool"
       },
       {
-        "default": 0,
+        "default": 1,
         "id": "captcha_mail_enabled",
         "title": "captcha_mail_enabled",
         "type": "bool"
