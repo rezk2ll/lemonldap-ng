@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authopenidconnect"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authopenidconnect.html"/>
@@ -125,13 +125,15 @@ On peut utiliser ce module d'authentification pour lier un serveur <abbr title="
 		<td class="col0 centeralign">  <a href="authopenidconnect_google.html" class="media" title="documentation:2.0:authopenidconnect_google"><img src="icons/kmultiple.png" class="mediacenter" alt="" /></a>  </td><td class="col1 centeralign">  <a href="authopenidconnect_franceconnect.html" class="media" title="documentation:2.0:authopenidconnect_franceconnect"><img src="icons/kmultiple.png" class="mediacenter" alt="" /></a>  </td>
 	</tr>
 </table></div><!-- EDIT4 TABLE [905-1106] -->
+<div class="noteimportant">OpenID-Connect specification isn't finished for logout propagation. So logout initiated by relaying-party will be forward to OpenID-Connect provider but logout initiated by the provider (or another RP) will not be propagated. LLNG will implement this when <abbr title="spécification">spec</abbr> will be published.
 
-</div><!-- EDIT3 SECTION "Presentation" [96-1106] -->
+</div>
+</div><!-- EDIT3 SECTION "Presentation" [96-1410] -->
 
 <h2 class="sectionedit5" id="configuration">Configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT5 SECTION "Configuration" [1107-1133] -->
+</div><!-- EDIT5 SECTION "Configuration" [1411-1437] -->
 
 <h3 class="sectionedit6" id="openid_connect_service">Service OpenID-Connect</h3>
 <div class="level3">
@@ -140,7 +142,7 @@ On peut utiliser ce module d'authentification pour lier un serveur <abbr title="
 Voir le chapître de configuration du <a href="openidconnectservice.html" class="wikilink1" title="documentation:2.0:openidconnectservice">service OpenID-Connect</a>.
 </p>
 
-</div><!-- EDIT6 SECTION "OpenID Connect Service" [1134-1242] -->
+</div><!-- EDIT6 SECTION "OpenID Connect Service" [1438-1546] -->
 
 <h3 class="sectionedit7" id="authentication_and_userdb">Authentification et base d'utilisateurs</h3>
 <div class="level3">
@@ -168,7 +170,7 @@ Ensuite dans <code>Paramètres généraux</code> &gt; <code>Paramètres d'authen
 </li>
 </ul>
 
-</div><!-- EDIT7 SECTION "Authentication and UserDB" [1243-2034] -->
+</div><!-- EDIT7 SECTION "Authentication and UserDB" [1547-2338] -->
 
 <h3 class="sectionedit8" id="register_llng_to_an_openid_connect_provider">Enregistrer LL::NG dans un fournisseur d'identité OpenID-Connect</h3>
 <div class="level3">
@@ -194,7 +196,7 @@ Pour connaître cette information, prendre simplement l'<abbr title="Uniform Res
 Après enregistrement, l'OP doit donner un identifiant et un secret clients, qui seront utilisé pour configurer l'OP dans <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </p>
 
-</div><!-- EDIT8 SECTION "Register LL::NG to an OpenID Connect Provider" [2035-2749] -->
+</div><!-- EDIT8 SECTION "Register LL::NG to an OpenID Connect Provider" [2339-3053] -->
 
 <h3 class="sectionedit9" id="declare_the_openid_connect_provider_in_llng">Déclarer le fournisseur OpenID Connect dans LL::NG</h3>
 <div class="level3">
@@ -427,7 +429,7 @@ Ainsi on peut définir par exemple:
 </li>
 </ul>
 
-</div><!-- EDIT9 SECTION "Declare the OpenID Connect Provider in LL::NG" [2750-] -->
+</div><!-- EDIT9 SECTION "Declare the OpenID Connect Provider in LL::NG" [3054-] -->
 </div>
 </body>
 </html>

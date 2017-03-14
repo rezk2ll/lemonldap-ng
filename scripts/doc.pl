@@ -133,6 +133,6 @@ system('find . -name \*.html -exec sed -i "s#<table class=\"inline\">#<table cla
 # Link duplicates files
 system(q@find . -type f -printf "%s %p\n"|sort -n|perl -a -ne 'if($F[0]==$lf&&`md5sum $F[1]|cut -f1 -d" "` eq `md5sum $ln|cut -f1 -d" "`){print "ln -srf $ln $F[1]\n"}else{$lf=$F[0];$ln=$F[1]}'|sh@);
 
-system('rm -rf doc/pages/documentation/current/bootswatch');
+system('rm -rf pages/documentation/current/bootswatch pages/documentation/current/lib/scripts/jquery-ui*');
 
 exit 0;

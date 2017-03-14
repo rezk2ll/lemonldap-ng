@@ -74,6 +74,16 @@ Pour GLPI &gt;= 0.71, une simple configuration de GLPI suffit : Setup → Authen
 Pour les versions plus anciennes, voir <a href="http://wiki.glpi-project.org/doku.php?id=en:authautoad" class="urlextern" title="http://wiki.glpi-project.org/doku.php?id=en:authautoad"  rel="nofollow">http://wiki.glpi-project.org/doku.php?id=en:authautoad</a>
 </p>
 
+<p>
+
+If you use Nginx, you need to add this in configuration:
+
+</p>
+<pre class="code file nginx">proxy_set_header Host $http_host;
+proxy_set_header X-Forwarded-Host $http_host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</pre>
+
 </div><!-- EDIT3 SECTION "Configuration" [532-] -->
 </div>
 </body>

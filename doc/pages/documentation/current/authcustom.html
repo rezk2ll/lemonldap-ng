@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authcustom</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,authcustom"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authcustom.html"/>
@@ -72,7 +72,11 @@ This artifact allows one to define its own modules (authentication, user databas
 <div class="level2">
 
 <p>
-You just have to define class names of your custom modules in “Custom module names”.
+You just have to define class names of your custom modules in “Custom module names”. You can also add your custom parameters in “Additional parameters”. Be careful to use names not already used elsewhere in configuration. This parameters are available in your plugins using <code>$self→conf→{<em>customName</em>}</code>.
+</p>
+
+<p>
+See portal manpages to see how to write these plugins.
 </p>
 
 </div>
