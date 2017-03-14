@@ -477,7 +477,7 @@ sub attributes {
         },
         cspStyle => {
             type          => 'text',
-            default       => "'self'",
+            default       => "'self' 'unsafe-inline'",
             documentation => 'Style source for Content-Security-Policy',
         },
         cspConnect => {
