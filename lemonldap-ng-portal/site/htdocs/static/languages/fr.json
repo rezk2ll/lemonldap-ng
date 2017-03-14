@@ -163,6 +163,7 @@
 "redirectedIn":"Vous allez être redirigé(e) automatiquement dans 10 secondes",
 "redirectionInProgres":"Redirection en cours...",
 "redirectionToIdp":"Redirection vers votre fournisseur d'identité",
+"refreshrights": "Rafraîchir mes droits",
 "refuse":"Refuser",
 "register": "Enregistrer",
 "registerRequestAlreadyIssued":"Une demande de création pour ce compte a déjà été faite le ",
