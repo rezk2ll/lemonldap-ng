@@ -13,6 +13,12 @@ Copyright: 2005-2017, Xavier Guimard <x.guimard@free.fr>
  2006-2015, LINAGORA <info@linagora.com>
 License: GPL-2+
 
+Files: lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Auth/PAM.pm
+Copyright: 2017, Xavier Guimard <x.guimard@free.fr>
+License: GPL-2+
+Comment: idea taken from Authen::Simple::PAM (copyright Christian Hansen
+ <chansen@cpan.org>
+
 Files: *.js
 Copyright: 2005-2016, Xavier Guimard <x.guimard@free.fr>
  2006-2016, Clement Oudot <clem.oudot@gmail.com>
