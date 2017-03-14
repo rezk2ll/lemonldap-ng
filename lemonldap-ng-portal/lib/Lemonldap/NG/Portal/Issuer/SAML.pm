@@ -1875,12 +1875,12 @@ sub attributeServer {
 
 sub imgok {
     my ( $self, $req, ) = @_;
-    return $self->sendImage( $req, 'ok.png' );
+    return $self->sendImage( $req, 'icons/ok.png' );
 }
 
 sub imgnok {
     my ( $self, $req, ) = @_;
-    return $self->sendImage( $req, 'warning.png' );
+    return $self->sendImage( $req, 'icons/warning.png' );
 }
 
 sub sendImage {

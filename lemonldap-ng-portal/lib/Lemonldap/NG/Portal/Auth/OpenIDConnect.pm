@@ -324,7 +324,7 @@ sub alreadyLoggedOut {
     my ( $self, $req ) = @_;
     $self->userLogger->info(
         'Front-channel logout request for an already logged out user');
-    my $img = $self->conf->{staticPrefix} . '/common/ok.png';
+    my $img = $self->conf->{staticPrefix} . '/common/icons/ok.png';
 
     # No need to protect this frame
     $req->frame(1);
