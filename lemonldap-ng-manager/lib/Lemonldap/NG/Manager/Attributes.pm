@@ -581,7 +581,7 @@ sub attributes {
             'type'    => 'bool'
         },
         'captcha_mail_enabled' => {
-            'default' => 0,
+            'default' => 1,
             'type'    => 'bool'
         },
         'captcha_register_enabled' => {

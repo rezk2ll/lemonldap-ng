@@ -17,6 +17,7 @@ sub defaultValues {
         },
         'authChoiceParam'          => 'lmAuth',
         'authentication'           => 'Demo',
+        'captcha_mail_enabled'     => 1,
         'captcha_register_enabled' => 1,
         'captcha_size'             => 6,
         'CAS_authnLevel'           => 1,

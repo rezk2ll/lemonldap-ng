@@ -709,7 +709,7 @@ sub attributes {
             documentation => 'Captcha on login page',
         },
         captcha_mail_enabled => {
-            default       => 0,
+            default       => 1,
             type          => 'bool',
             documentation => 'Captcha on password reset page',
         },
