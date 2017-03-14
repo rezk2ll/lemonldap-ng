@@ -48,11 +48,15 @@ sub init {
 sub authenticate {
     my ( $self, $req ) = @_;
     $self->initRadius unless ( $self->radius );
-    return PE_RADIUSCONNECTFAILED unless ( $self->radius );
+    unless ( $self->radius ) {
+        $self->setSecurity($req);
+        return PE_RADIUSCONNECTFAILED;
+    }
 
     my $res = $self->radius->check_pwd( $req->user, $req->datas->{password} );
     unless ( $res == 1 ) {
         $self->userLogger->warn("Unable to authenticate $req->{user} !");
+        $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }
     return PE_OK;

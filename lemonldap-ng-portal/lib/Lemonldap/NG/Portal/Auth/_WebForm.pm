@@ -82,16 +82,7 @@ sub extractFormInfo {
 
     # If form seems empty
     if ( $res != PE_OK ) {
-
-        # If captcha is enable, prepare it
-        if ( $self->captcha ) {
-            $self->captcha->setCaptcha($req);
-        }
-
-        # Else get token
-        elsif ( $self->ott ) {
-            $self->ott->setToken($req);
-        }
+        $self->setSecurity($req);
         return $res;
     }
 
@@ -154,6 +145,19 @@ sub setAuthSessionInfo {
 # @return display type
 sub getDisplayType {
     return "standardform";
+}
+
+sub setSecurity {
+    my($self,$req) = @_;
+    # If captcha is enable, prepare it
+    if ( $self->captcha ) {
+        $self->captcha->setCaptcha($req);
+    }
+
+    # Else get token
+    elsif ( $self->ott ) {
+        $self->ott->setToken($req);
+    }
 }
 
 1;

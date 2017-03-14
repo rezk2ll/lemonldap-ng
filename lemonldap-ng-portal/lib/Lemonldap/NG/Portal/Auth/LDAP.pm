@@ -28,6 +28,7 @@ sub authenticate {
     # Set the dn unless done before
     unless ( $req->datas->{dn} ) {
         if ( my $tmp = $self->getUser($req) ) {
+            $self->setSecurity($req);
             return $tmp;
         }
     }

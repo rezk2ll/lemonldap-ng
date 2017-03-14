@@ -65,6 +65,7 @@ sub authenticate {
         unless ( $res == PAM_SUCCESS ) {
             $self->userLogger->warn( "PAM failed to authenticate $req->{user}: "
                   . $pam->pam_strerror($res) );
+            $self->setSecurity($req);
             return PE_BADCREDENTIALS;
         }
     }

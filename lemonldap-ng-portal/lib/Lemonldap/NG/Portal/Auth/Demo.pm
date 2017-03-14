@@ -32,8 +32,10 @@ sub init {
 sub authenticate {
     my ( $self, $req ) = @_;
 
-    return PE_BADCREDENTIALS
-      unless ( $req->{user} eq $req->datas->{password} );
+    unless ( $req->{user} eq $req->datas->{password} ) {
+        $self->setSecurity($req);
+        return PE_BADCREDENTIALS;
+    }
 
     PE_OK;
 }

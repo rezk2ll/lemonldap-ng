@@ -35,11 +35,13 @@ sub authenticate {
     };
     if ($@) {
         $self->logger("Auth error: $@");
+        $self->setSecurity($req);
         return PE_ERROR;
     }
     unless ( $res->{result} ) {
         $self->userLogger->warn(
             "Bad credentials for " . $req->user . ' (' . $req->address . ')' );
+        $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }
     $req->datas->{restAuthInfo} = $res->{info} || {};

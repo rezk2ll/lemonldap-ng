@@ -44,6 +44,7 @@ sub getUser {
     if ( $res->{errorCode} ) {
         $self->userLogger->warn(
             "Authentication failed for $req->{user}: error $res->{errorCode}");
+        $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }
     unless ( $req->datas->{_remoteId} =

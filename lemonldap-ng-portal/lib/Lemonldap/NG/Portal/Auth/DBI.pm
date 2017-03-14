@@ -21,7 +21,13 @@ sub init {
 
 sub authenticate {
     my ( $self, $req ) = @_;
-    return $self->check_password($req) ? PE_OK : PE_BADCREDENTIALS;
+    if ( $self->check_password($req) ) {
+        return PE_OK;
+    }
+    else {
+        $self->setSecurity($req);
+        return PE_BADCREDENTIALS;
+    }
 }
 
 sub authLogout {
