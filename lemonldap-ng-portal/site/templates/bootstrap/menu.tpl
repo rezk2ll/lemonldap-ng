@@ -60,9 +60,17 @@
         </TMPL_LOOP>
       </ul>
 
-      <div class="user navbar-right">
-        <p class="navbar-text"><span trspan="connectedAs">Connected as</span> <TMPL_VAR NAME="AUTH_USER"></p>
-      </div>
+      <ul class="user nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a data-target="#" class="dropdown-toggle" data-toogle="dropdown">
+            <span trspan="connectedAs">Connected as</span> <TMPL_VAR NAME="AUTH_USER">
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/refresh"><span trspan="refreshrights">Refresh</span></a></li>
+          </ul>
+        </li>
+      </ul>
 
     </div>
     </TMPL_IF>
