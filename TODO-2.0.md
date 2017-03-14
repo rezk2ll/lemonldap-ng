@@ -1,3 +1,4 @@
+* Token not set on login failed
 * securize SOAP session creation by cipher
 * Verify securedCookie=3 (strange)
 * Test ForceAuth
