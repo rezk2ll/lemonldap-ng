@@ -196,10 +196,6 @@ site/htdocs/static/common/cancel.png
 site/htdocs/static/common/CAS.png
 site/htdocs/static/common/css/bg.css
 site/htdocs/static/common/css/bg.min.css
-site/htdocs/static/common/css/buttons.css
-site/htdocs/static/common/css/buttons.min.css
-site/htdocs/static/common/css/inputicons.css
-site/htdocs/static/common/css/inputicons.min.css
 site/htdocs/static/common/door_out.png
 site/htdocs/static/common/email.png
 site/htdocs/static/common/en.png
