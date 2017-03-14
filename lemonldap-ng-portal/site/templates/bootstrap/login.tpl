@@ -127,7 +127,7 @@
    <TMPL_IF NAME="DISPLAY_LOGO_FORM">
       <div class="form">
       <TMPL_IF NAME="module">
-        <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/<TMPL_VAR NAME="module">.png" alt="<TMPL_VAR NAME="module">" class="img-thumbnail" />
+        <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/modules/<TMPL_VAR NAME="module">.png" alt="<TMPL_VAR NAME="module">" class="img-thumbnail" />
       </TMPL_IF>
 
       <TMPL_INCLUDE NAME="checklogins.tpl">
