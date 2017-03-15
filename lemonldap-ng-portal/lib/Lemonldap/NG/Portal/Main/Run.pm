@@ -483,7 +483,7 @@ sub _deleteSession {
                 value   => 0,
                 domain  => $self->conf->{domain},
                 secure  => 0,
-                expires => '-1d',
+                expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
             )
         ) unless ($preserveCookie);
     }
@@ -498,7 +498,7 @@ sub _deleteSession {
             value   => 0,
             domain  => $self->conf->{domain},
             secure  => 0,
-            expires => '-1d',
+            expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
         )
     ) unless ($preserveCookie);
 
@@ -653,7 +653,8 @@ sub cookie {
     $res[0] .= "=$h{value}";
     $h{path} ||= '/';
     $h{HttpOnly} //= $self->conf->{httpOnly};
-    $h{expires}  //= $self->conf->{cookieExpiration};
+    $h{max_age}  //= $self->conf->{cookieExpiration}
+      if ( $self->conf->{cookieExpiration} );
     foreach (qw(domain path expires max_age HttpOnly)) {
         my $f = $_;
         $f =~ s/_/-/g;

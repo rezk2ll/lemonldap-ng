@@ -829,7 +829,7 @@ sub extractFormInfo {
                 value   => 0,
                 domain  => $self->conf->{domain},
                 secure  => 0,
-                expires => '-1d',
+                expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
             )
         );
 
@@ -878,13 +878,14 @@ sub extractFormInfo {
         # User can choose temporary (0) or persistent cookie (1)
         my $cookie_type = $req->param("cookie_type") || "0";
 
+        # Cookie available 1 year
         $req->addCookie(
             $self->p->cookie(
-                name    => $self->conf->{samlIdPResolveCookie},
-                value   => $idp,
-                domain  => $self->conf->{domain},
-                secure  => $self->conf->{securedCookie},
-                expires => $cookie_type ? "+365d" : "",
+                name   => $self->conf->{samlIdPResolveCookie},
+                value  => $idp,
+                domain => $self->conf->{domain},
+                secure => $self->conf->{securedCookie},
+                ( $cookie_type ? ( max_age => 31557600 ) : () ),
             )
         );
     }

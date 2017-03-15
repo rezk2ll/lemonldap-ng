@@ -114,12 +114,12 @@ sub extractFormInfo {
             my $response = Net::OAuth->response('request token')
               ->from_post_body( $res->content );
 
-            # 1.2 Store token key and secret in cookies
+            # 1.2 Store token key and secret in cookies (available 180s)
             $req->addCookie(
                 $self->cookie(
                     name    => '_twitSec',
                     value   => $response->token_secret,
-                    expires => '+3m'
+                    max_age => 180,
                 )
             );
 
@@ -198,7 +198,12 @@ sub extractFormInfo {
 
     # Clean temporaries cookies
     $req->addCookie(
-        $self->cookie( -name => '_twitSec', -value => 0, -expires => '-3m' ) );
+        $self->cookie(
+            name    => '_twitSec',
+            value   => 0,
+            expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
+        )
+    );
     PE_OK;
 }
 

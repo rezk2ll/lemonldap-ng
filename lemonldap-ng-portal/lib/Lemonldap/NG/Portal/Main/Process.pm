@@ -253,7 +253,7 @@ sub extractFormInfo {
                 value   => 0,
                 domain  => $self->conf->{domain},
                 secure  => 0,
-                expires => '-1d',
+                expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
             )
         );
         return PE_SESSIONEXPIRED;

@@ -98,11 +98,13 @@ sub storeBrowser {
                             fingerprint     => $fg,
                         },
                     );
+
+                    # Cookie available 30 days
                     $req->addCookie(
                         $self->p->cookie(
                             name    => 'llngconnexion',
                             value   => $ps->id,
-                            expires => '+1M',
+                            max_age => 2592000,
                         )
                     );
                 }
