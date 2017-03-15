@@ -136,7 +136,7 @@ ok( $res->{count} == 1,                'One A subnet' );
 ok( $res->{values}->[0]->{count} == 4, 'All sessions found' );
 $res = &client->jsonResponse( '/sessions/global', 'groupBy=net4(ipAddr,2)' );
 ok( $res->{count} == 3,                'Three B subnet' );
-ok( $res->{values}->[2]->{count} == 2, 'All sessions found' );
+ok( $res->{values}->[1]->{count} == 2, 'All sessions found' ) or print STDERR Dumper($res);
 count(4);
 
 $res = &client->jsonResponse( '/sessions/global', 'orderBy=net4(ipAddr)' );

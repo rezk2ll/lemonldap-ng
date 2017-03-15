@@ -249,8 +249,17 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
 
         # Build result
         $res = [
-            sort { $a->{value} cmp $b->{value} }
-            map { { value => $_, count => $r->{$_} } } keys %$r
+            sort {
+                my @a = ( $a->{value} =~ /^(\d+)(?:\.(\d+))*$/ );
+                my @b = ( $b->{value} =~ /^(\d+)(?:\.(\d+))*$/ );
+                ( @a and @b )
+                  ? ( $a[0] <=> $b[0]
+                      or $a[1] <=> $b[1]
+                      or $a[2] <=> $b[2]
+                      or $a[3] <=> $b[3] )
+                  : $a->{value} cmp $b->{value}
+              }
+              map { { value => $_, count => $r->{$_} } } keys %$r
         ];
     }
 
