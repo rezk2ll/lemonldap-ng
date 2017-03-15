@@ -118,7 +118,7 @@ diff.html script
             };
           }
           if (!k.match(/^cfg(?:Num|Log|Author(?:IP)?|Date)$/)) {
-            if (typeof v === 'object') {
+            if ((v != null) && typeof v === 'object') {
               if (v.constructor === 'array') {
                 tmp.oldvalue = v;
                 tmp.newvalue = c2[k];
@@ -147,7 +147,7 @@ diff.html script
                 title: k
               };
             }
-            if (typeof v === 'object') {
+            if ((v != null) && typeof v === 'object') {
               if (v.constructor === 'array') {
                 tmp.newvalue = v;
               } else {

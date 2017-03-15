@@ -394,8 +394,14 @@ sub diff {
         }
     }
     require Lemonldap::NG::Manager::Conf::Diff;
-    return $self->sendJSONresponse( $req,
-        [ Lemonldap::NG::Manager::Conf::Diff->diff( $conf[0], $conf[1] ) ] );
+    return $self->sendJSONresponse(
+        $req,
+        [
+            $self->Lemonldap::NG::Manager::Conf::Diff::diff(
+                $conf[0], $conf[1]
+            )
+        ]
+    );
 }
 
 1;

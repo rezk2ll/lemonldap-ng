@@ -101,7 +101,7 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 			else
 				tmp = title: k
 			unless k.match /^cfg(?:Num|Log|Author(?:IP)?|Date)$/
-				if typeof v == 'object'
+				if v? and typeof v == 'object'
 					if v.constructor == 'array'
 						tmp.oldvalue = v
 						tmp.newvalue = c2[k]
@@ -121,7 +121,7 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 						id: k
 				else
 					tmp = title: k
-				if typeof v == 'object'
+				if v? and typeof v == 'object'
 					if v.constructor == 'array'
 						tmp.newvalue = v
 					else

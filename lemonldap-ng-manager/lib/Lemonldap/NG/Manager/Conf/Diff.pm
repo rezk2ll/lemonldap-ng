@@ -3,6 +3,7 @@ package Lemonldap::NG::Manager::Conf::Diff;
 use strict;
 use Mouse;
 use Lemonldap::NG::Manager::Conf::Parser;
+use Lemonldap::NG::Common::Conf::Constants;
 
 our $VERSION = '2.0.0';
 
@@ -14,14 +15,18 @@ sub diff {
     my @keys = ( [ keys %{ $conf[0] } ], [ keys %{ $conf[1] } ] );
     while ( my $key = shift @{ $keys[0] } ) {
         if ( $key eq 'applicationList' ) {
-            my @tmp = $self->appListDiff( $conf[0]->{$key}, $conf[1]->{$key} );
+            my @tmp = appListDiff( $self, $conf[0]->{$key}, $conf[1]->{$key} );
             for ( my $i = 0 ; $i < @tmp ; $i++ ) {
                 $res[$i]->{$key} = $tmp[$i] if ( $tmp[$i] );
             }
         }
-        elsif ( ref $conf[0]->{$key} eq 'HASH' ) {
+        elsif ( $key =~ $hashParameters
+            or
+            ( ref( $conf[0]->{$key} ) and ref( $conf[0]->{$key} ) eq 'HASH' ) )
+        {
             if ( ref $conf[1]->{$key} ) {
-                my @tmp = $self->diff( $conf[0]->{$key}, $conf[1]->{$key}, 1 );
+                my @tmp =
+                  diff( $self, $conf[0]->{$key}, $conf[1]->{$key}, 1 );
                 for ( my $i = 0 ; $i < @tmp ; $i++ ) {
                     $res[$i]->{$key} = $tmp[$i] if ( $tmp[$i] );
                 }
@@ -71,8 +76,8 @@ sub diff {
         elsif (
             $conf[2]
             or (    defined( $conf[0]->{$key} )
-                and defined( $self->defaultValue($key) )
-                and $conf[0]->{$key} ne $self->defaultValue($key) )
+                and defined( defaultValue( $self, $key ) )
+                and $conf[0]->{$key} ne defaultValue( $self, $key ) )
           )
         {
             $res[0]->{$key} = $conf[0]->{$key} if ( defined $conf[0]->{$key} );
@@ -80,14 +85,15 @@ sub diff {
         $keys[1] = [ grep { $_ ne $key } @{ $keys[1] } ];
     }
     while ( my $key = shift @{ $keys[1] } ) {
+        next unless ( defined( $conf[1]->{$key} ) );
+        next if ( $key =~ $hashParameters and not( %{ $conf[1]->{$key} } ) );
         if (
             (
-                not ref( $conf[1]->{$key} )
-                and (
-                    $conf[2]
-                    or (    defined $self->defaultValue($key)
-                        and defined $conf[1]->{$key}
-                        and $conf[1]->{$key} ne $self->defaultValue($key) )
+                not ref( $conf[1]->{$key} ) and not(
+                    (
+                        defined defaultValue( $self, $key )
+                        and $conf[1]->{$key} eq defaultValue( $self, $key )
+                    )
                 )
             )
             or ( ref( $conf[1]->{$key} ) eq 'HASH' and %{ $conf[1]->{$key} } )
@@ -124,8 +130,11 @@ sub appListDiff {
 
             # Same category found, checking for subnodes
             if ( defined $found ) {
-                my @tmp = $self->appListDiff( $conf[0]->{$key},
-                    $conf[1]->{ $keys[1]->[$found] } );
+                my @tmp = appListDiff(
+                    $self,
+                    $conf[0]->{$key},
+                    $conf[1]->{ $keys[1]->[$found] }
+                );
                 for ( my $i = 0 ; $i < @tmp ; $i++ ) {
                     $res[$i]->{$cat} = $tmp[$i] if ( $tmp[$i] );
                 }
@@ -182,7 +191,7 @@ sub appListDiff {
     }
 
     while ( my $key = shift @{ $keys[1] } ) {
-        my @tmp = $self->_copyAppList( $conf[1]->{$key} );
+        my @tmp = _copyAppList( $self, $conf[1]->{$key} );
         $res[1]->{ $tmp[0] } = $tmp[1];
     }
     return @res;
@@ -193,7 +202,7 @@ sub _copyAppList {
     my %res;
     if ( $conf->{type} eq 'category' ) {
         foreach ( grep { $_ !~ /^(?:catname|type)$/ } keys %$conf ) {
-            my @tmp = $self->( $conf->{$_} );
+            my @tmp = _copyAppList( $self, $conf->{$_} );
             $res{ $tmp[0] } = $tmp[1];
         }
         $res{type}    = 'category';
