@@ -14,7 +14,7 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('t-portalSkin')).click();
       element(by.css('[ng-click="showModal(\'portalSkinChoice.html\')"]')).click();
       var skinChoice = element.all(by.repeater('b in currentNode.select'));
-      expect(skinChoice.count()).toEqual(4);
+      expect(skinChoice.count()).toEqual(1);
     });
   });
 });
