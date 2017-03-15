@@ -19,6 +19,9 @@ translatePage = (lang) ->
 			$(this).text translate "PE#{$(this).attr 'trmsg'}"
 		$("[trplaceholder]").each ->
 			$(this).attr 'placeholder', translate($(this).attr('trplaceholder'))
+		$("[localtime]").each ->
+			d = new Date $(this).attr('localtime') * 1000
+			$(this).text d.toLocaleString()
 
 translate = (str) ->
 	return if translationFields[str] then translationFields[str] else str
