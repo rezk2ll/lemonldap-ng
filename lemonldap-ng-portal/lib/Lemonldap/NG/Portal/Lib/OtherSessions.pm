@@ -45,7 +45,7 @@ sub mkSessionArray {
     foreach my $session (@$sessions) {
         $tmp .= "<tr>";
         $tmp .= "<td>$session->{user}</td>" if ($displayUser);
-        $tmp .= qq'<td localtime="$session->{_utime}"></td>";
+        $tmp .= qq'<td localtime="$session->{_utime}"></td>';
         $tmp .= "<td>$session->{ipAddr}</td>";
         $tmp .= "<td>" . ( $session->{$_} || "" ) . "</td>"
           foreach ( keys %{ $self->{sessionDataToRemember} } );

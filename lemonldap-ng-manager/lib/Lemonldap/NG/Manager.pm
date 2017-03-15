@@ -22,6 +22,8 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Common::Conf::AccessLib',
   'Lemonldap::NG::Handler::PSGI::Router';
 
+has csp => ( is => 'rw' );
+
 ## @method boolean init($args)
 # Launch initialization method
 #
@@ -75,6 +77,12 @@ sub init {
     $self->addRoute( links     => 'links',  ['GET'] );
     $self->addRoute( 'psgi.js' => 'sendJs', ['GET'] );
 
+    my $portal = $conf->{portal};
+    $portal =~ s#htts?://([^/])*.*#$1#;
+    $self->csp(
+"default-src 'self';frame-ancestors 'none';form-action 'self';img-src 'self' $portal;"
+    );
+
     $self->defaultRoute( $working[0]->defaultRoute );
 
     my $linksIcons =
@@ -122,6 +130,17 @@ sub javascript {
         ? 'var menulinks=' . to_json( $self->menuLinks ) . ';'
         : ''
       );
+}
+
+sub sendHtml {
+    my ( $self, $req, $template, %args ) = @_;
+    my $res = $self->SUPER::sendHtml( $req, $template, %args );
+    push @{ $res->[1] },
+      'Content-Security-Policy' => $self->csp,
+      'X-Content-Type-Options'  => 'nosniff',
+      'X-Frame-Options'         => 'DENY',
+      'X-XSS-Protection'        => '1; mode=block';
+    return $res;
 }
 
 1;

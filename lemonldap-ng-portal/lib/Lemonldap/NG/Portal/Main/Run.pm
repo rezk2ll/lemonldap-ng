@@ -674,7 +674,8 @@ sub _dump {
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
-    push @{ $req->respHeaders },
+    my $res = $self->SUPER::sendHtml( $req, $template, %args );
+    push @{ $res->[1] },
       'X-XSS-Protection'       => '1; mode=block',
       'X-Content-Type-Options' => 'nosniff';
 
@@ -692,7 +693,7 @@ sub sendHtml {
 
     # Deny using portal in frame except if it is required
     unless ( $req->frame or $self->conf->{portalAntiFrame} == 0 ) {
-        push @{ $req->respHeaders }, 'X-Frame-Options' => 'DENY';
+        push @{ $res->[1] }, 'X-Frame-Options' => 'DENY';
         $csp .= "frame-ancestors 'none';";
     }
 
@@ -707,9 +708,8 @@ sub sendHtml {
     }
 
     # Set CSP header
-    push @{ $req->respHeaders }, 'Content-Security-Policy' => $csp;
-
-    return $self->SUPER::sendHtml( $req, $template, %args );
+    push @{ $res->[1] }, 'Content-Security-Policy' => $csp;
+    return $res;
 }
 
 sub rebuildCookies {
