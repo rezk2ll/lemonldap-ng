@@ -31,7 +31,7 @@ sub diff {
                     $res[$i]->{$key} = $tmp[$i] if ( $tmp[$i] );
                 }
             }
-            elsif ( %{ $conf[0]->{$key} } ) {
+            elsif ( $conf[0]->{$key} and %{ $conf[0]->{$key} } ) {
                 $res[0]->{$key} = $conf[0]->{$key} if ( %{ $conf[0]->{$key} } );
             }
         }

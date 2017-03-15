@@ -155,18 +155,22 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 			for node in path
 				if node.length > 0
 					if offset.length
-						found = false
-						for n in offset
-							if n.title == node
-								offset = n.nodes
-								found = true
-						unless found
+						found = -1
+						for n,i in offset
+							if n.id == node
+								#offset = n.nodes
+								found = i
+						if found != -1
+							offset = offset[found].nodes
+						else
 							offset.push
+								id: node
 								title: $scope.translate node
 								nodes: []
 							offset = offset[offset.length-1].nodes
 					else
 						offset.push
+							id: node
 							title: $scope.translate node
 							nodes: []
 						offset = offset[0].nodes

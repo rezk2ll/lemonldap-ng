@@ -184,29 +184,31 @@ diff.html script
       };
       reverseTree = [];
       buildTree = function(data) {
-        var elem, found, i, j, l, len, len1, len2, n, node, offset, path, res;
+        var elem, found, i, j, l, len, len1, len2, m, n, node, offset, path, res;
         if (reverseTree == null) {
           return data;
         }
         res = [];
-        for (i = 0, len = data.length; i < len; i++) {
-          elem = data[i];
+        for (j = 0, len = data.length; j < len; j++) {
+          elem = data[j];
           offset = res;
           path = reverseTree[elem.id] != null ? reverseTree[elem.id].split('/') : '';
-          for (j = 0, len1 = path.length; j < len1; j++) {
-            node = path[j];
+          for (l = 0, len1 = path.length; l < len1; l++) {
+            node = path[l];
             if (node.length > 0) {
               if (offset.length) {
-                found = false;
-                for (l = 0, len2 = offset.length; l < len2; l++) {
-                  n = offset[l];
-                  if (n.title === node) {
-                    offset = n.nodes;
-                    found = true;
+                found = -1;
+                for (i = m = 0, len2 = offset.length; m < len2; i = ++m) {
+                  n = offset[i];
+                  if (n.id === node) {
+                    found = i;
                   }
                 }
-                if (!found) {
+                if (found !== -1) {
+                  offset = offset[found].nodes;
+                } else {
                   offset.push({
+                    id: node,
                     title: $scope.translate(node),
                     nodes: []
                   });
@@ -214,6 +216,7 @@ diff.html script
                 }
               } else {
                 offset.push({
+                  id: node,
                   title: $scope.translate(node),
                   nodes: []
                 });
