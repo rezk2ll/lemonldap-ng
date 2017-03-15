@@ -21,7 +21,7 @@
     ],
     ipAddr: [
       function(t, v) {
-        return t + "=" + v + "*&groupBy=net4(" + t + ",1)";
+        return "groupBy=net4(" + t + ",1)";
       }, function(t, v) {
         return t + "=" + v + "*&groupBy=net4(" + t + ",2)";
       }, function(t, v) {
@@ -38,14 +38,17 @@
       function(t, v) {
         return "groupBy=substr(" + t + ",8)";
       }, function(t, v) {
-        return "groupBy=substr(" + t + ",10)";
+        return t + "=" + v + "*&groupBy=substr(" + t + ",10)";
       }, function(t, v) {
-        return "groupBy=substr(" + t + ",11)";
+        return t + "=" + v + "*&groupBy=substr(" + t + ",11)";
       }, function(t, v) {
-        return "groupBy=substr(" + t + ",12)";
+        return t + "=" + v + "*&groupBy=substr(" + t + ",12)";
       }, function(t, v) {
         return t + "=" + v + "*&groupBy=_whatToTrace";
       }, function(t, v, q) {
+        console.log(t);
+        console.log(v);
+        console.log(q);
         return q.replace(/\&groupBy.*$/, '') + ("&_whatToTrace=" + v);
       }
     ],

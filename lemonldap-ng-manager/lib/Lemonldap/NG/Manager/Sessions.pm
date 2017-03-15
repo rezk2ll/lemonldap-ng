@@ -99,6 +99,11 @@ sub sessions {
           : ( $s => $params->{$_} );
     } keys %$params;
     $filters{_session_kind} = $type;
+    push @fields, keys(%filters);
+    {
+        my %seen;
+        @fields = grep { !$seen{$_}++ } @fields;
+    }
 
     # Check if a '*' is required
     my $function = 'searchOn';
@@ -112,6 +117,8 @@ sub sessions {
           : $b eq '_session_kind' ? -1
           : $a cmp $b
     } keys %filters;
+    $self->logger->debug(
+        "First filter: $firstFilter = $filters{$firstFilter} ($function)");
     $res =
       Lemonldap::NG::Common::Apache::Session->$function( $moduleOptions,
         $firstFilter, $filters{$firstFilter}, @fields );
@@ -128,6 +135,7 @@ sub sessions {
 
     delete $filters{$firstFilter};
     foreach my $k ( keys %filters ) {
+        $self->logger->debug("Removing unless $k =~ /^$filters{$k}\$/");
         $filters{$k} =~ s/\*/\.\*/g;
         foreach my $session ( keys %$res ) {
             if ( $res->{$session}->{$k} ) {

@@ -18,7 +18,7 @@ schemes =
 	]
 	ipAddr: [
 		(t,v) ->
-			"#{t}=#{v}*&groupBy=net4(#{t},1)"
+			"groupBy=net4(#{t},1)"
 		(t,v) ->
 			"#{t}=#{v}*&groupBy=net4(#{t},2)"
 		(t,v) ->
@@ -34,14 +34,17 @@ schemes =
 		(t,v) ->
 			"groupBy=substr(#{t},8)"
 		(t,v) ->
-			"groupBy=substr(#{t},10)"
+			"#{t}=#{v}*&groupBy=substr(#{t},10)"
 		(t,v) ->
-			"groupBy=substr(#{t},11)"
+			"#{t}=#{v}*&groupBy=substr(#{t},11)"
 		(t,v) ->
-			"groupBy=substr(#{t},12)"
+			"#{t}=#{v}*&groupBy=substr(#{t},12)"
 		(t,v) ->
 			"#{t}=#{v}*&groupBy=_whatToTrace"
 		(t,v,q) ->
+			console.log t
+			console.log v
+			console.log q
 			q.replace(/\&groupBy.*$/, '') + "&_whatToTrace=#{v}"
 	]
 	doubleIp: [
