@@ -144,6 +144,7 @@
 "newMessages":"New message(s)",
 "newPassword":"New password",
 "newPwdSentTo":"A confirmation has been sent to your mail address.",
+"noHistory":"This is your first connection, welcome!",
 "oidcConsent":"The application %s would like to know:",
 "openidAp":"Do you agree to provide the following parameters?",
 "openIdExample":"for example:http://myopenid.org/toto",
