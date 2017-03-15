@@ -42,6 +42,7 @@ foreach my $i ( 1 .. COUNT() ) {
     $hour = int( rand($hour) );
     $min  = int( rand(60) );
     $sec  = int( rand(60) );
+    my $ipAddr = join('.',int(rand(256)),int(rand(256)),int(rand(256)),int(rand(256)));
     my $req = Test::Request->new(
         {
             sessionInfo => {
@@ -56,6 +57,7 @@ foreach my $i ( 1 .. COUNT() ) {
                     $sec,  $min,  $hour, $mday, $mon,
                     $year, $wday, $yday, $isdst
                 ),
+                ipAddr => $ipAddr,
             }
         }
     );

@@ -136,6 +136,7 @@ sub sessions {
     delete $filters{$firstFilter};
     foreach my $k ( keys %filters ) {
         $self->logger->debug("Removing unless $k =~ /^$filters{$k}\$/");
+        $filters{$k} =~ s/\./\\./g;
         $filters{$k} =~ s/\*/\.\*/g;
         foreach my $session ( keys %$res ) {
             if ( $res->{$session}->{$k} ) {
