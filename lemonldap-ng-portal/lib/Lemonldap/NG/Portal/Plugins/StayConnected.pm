@@ -20,6 +20,8 @@ use constant afterDatas => 'newDevice';
 
 use constant beforeAuth => 'check';
 
+use constant beforeLogout => 'logout';
+
 # INITIALIZATION
 
 has ott => (
@@ -192,6 +194,18 @@ sub check {
         }
     }
     return PE_OK;
+}
+
+sub logout {
+    my ( $self, $req ) = @_;
+    $req->addCookie(
+        $self->p->cookie(
+            name    => 'llngconnexion',
+            value   => 0,
+            expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
+        )
+    );
+    PE_OK;
 }
 
 1;
