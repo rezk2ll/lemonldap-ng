@@ -3,7 +3,7 @@
     <h3 class="panel-title" trspan="portalSkin"></h3>
   </div>
   <div class="panel-body text-center">
-    <button class="btn btn-info" ng-click="showModal('portalSkinChoice.html')" ng-model="currentNode" style="position:relative;">
+    <button class="btn btn-info llcontainer" ng-click="showModal('portalSkinChoice.html')" ng-model="currentNode">
       <span ng-if="inSelect(currentNode.data)">
         <img ng-src="{{staticPrefix}}logos/{{currentNode.data}}.png" alt="{{currentNode.data}}"  title="{{currentNode.data}}" />
       </span>
@@ -29,7 +29,7 @@
   <div class="modal-body">
     <div class="row text-center">
       <div class="col-md-4" ng-repeat="b in currentNode.select">
-        <button class="btn" ng-class="{'btn-default':currentNode.data!==b.k,'btn-info':currentNode.data===b.k}" ng-click="ok(currentNode.data=b.k)" style="position:relative;margin-bottom:10px;">
+        <button class="btn llcontainer" ng-class="{'btn-default':currentNode.data!==b.k,'btn-info':currentNode.data===b.k}" ng-click="ok(currentNode.data=b.k)">
           <img ng-src="{{staticPrefix}}logos/{{b.k}}.png" alt="{{b.v}}" title="{{b.v}}" />
           <div class="carousel-caption">
             <h4>{{b.v}}</h4>
@@ -37,7 +37,7 @@
         </button>
       </div>
       <div class="col-md-4">
-        <button class="btn" ng-class="{'btn-default':inSelect(currentNode.data),'btn-info':!inSelect(currentNode.data)}" ng-click="currentNode.data='custom'" style="position:relative;">
+        <button class="btn llcontainer" ng-class="{'btn-default':inSelect(currentNode.data),'btn-info':!inSelect(currentNode.data)}" ng-click="currentNode.data='custom'">
           <img ng-src="{{staticPrefix}}logos/custom.png" alt="Custom"  title="Custom" />
           <div class="carousel-caption">
             <h4>Custom</h4>

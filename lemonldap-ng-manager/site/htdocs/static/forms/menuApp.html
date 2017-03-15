@@ -75,7 +75,7 @@
   <div class="modal-body">
     <div class="row text-center">
       <div class="col-md-2" ng-repeat="i in ['attach.png', 'bell.png', 'bookmark.png', 'configure.png', 'database.png', 'demo.png', 'folder.png', 'gear.png', 'help.png', 'mailappt.png', 'money.png', 'network.png', 'terminal.png', 'thumbnail.png', 'tux.png']">
-        <button class="btn" ng-class="{'btn-default':currentNode.data.logo!=i,'btn-info':currentNode.data.logo==i}" ng-click="ok(currentNode.data.logo=i)" style="margin-bottom:10px;">
+        <button class="btn llcontainer" ng-class="{'btn-default':currentNode.data.logo!=i,'btn-info':currentNode.data.logo==i}" ng-click="ok(currentNode.data.logo=i)">
           <img ng-src="{{elem('portal').data}}/skins/common/apps/{{i}}" title="{{i}}" alt="{{i}}" />
         </button>
       </div>
