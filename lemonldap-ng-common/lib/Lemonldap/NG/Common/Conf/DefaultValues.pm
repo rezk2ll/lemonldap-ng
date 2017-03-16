@@ -31,7 +31,7 @@ sub defaultValues {
         'cspFont'                  => '\'self\'',
         'cspImg'                   => '\'self\' data:',
         'cspScript'                => '\'self\'',
-        'cspStyle'                 => '\'self\' \'unsafe-inline\'',
+        'cspStyle'                 => '\'self\'',
         'dbiAuthnLevel'            => 2,
         'dbiExportedVars'          => {},
         'demoExportedVars'         => {

@@ -833,7 +833,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'text'
         },
         'cspStyle' => {
-            'default' => '\'self\' \'unsafe-inline\'',
+            'default' => '\'self\'',
             'type'    => 'text'
         },
         'customAddParams' => {
