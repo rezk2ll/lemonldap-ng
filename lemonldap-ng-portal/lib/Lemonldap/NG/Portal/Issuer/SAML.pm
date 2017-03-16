@@ -342,6 +342,18 @@ sub run {
                 $self->logger->debug("Message signature will not be checked");
             }
 
+            # Force AllowCreate to TRUE for transient/persistent NameIDPolicy
+            if ( $login->request()->NameIDPolicy ) {
+                my $nif = $login->request()->NameIDPolicy->Format();
+                if (   $nif eq $self->getNameIDFormat("transient")
+                    or $nif eq $self->getNameIDFormat("persistent") )
+                {
+                    $self->logger->debug(
+                        "Force AllowCreate flag in NameIDPolicy");
+                    eval { $login->request()->NameIDPolicy()->AllowCreate(1); };
+                }
+            }
+
             # Validate request
             unless ( $self->validateRequestMsg( $login, 1, 1 ) ) {
                 $self->logger->error("Unable to validate SSO request message");
