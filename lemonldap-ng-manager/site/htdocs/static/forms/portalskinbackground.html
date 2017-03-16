@@ -7,7 +7,7 @@
       <option ng-repeat="item in currentNode.select" ng-selected="item.k==currentNode.data" value="{{item.k}}" trspan="{{item.v}}"></option>
     </select>
     <div class="text-center" ng-if="currentNode.data" class="backgrounddiv">
-      <img ng-src="{{portal.data}}/skins/common/backgrounds/{{currentNode.data}}" class="img-rounded" width="250px" />
+      <img ng-src="{{portal.data}}static/common/backgrounds/{{currentNode.data}}" class="img-rounded" width="250px" />
     </div>
   </div>
 </div>

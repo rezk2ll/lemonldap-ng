@@ -80,7 +80,7 @@ sub init {
     my $portal = $conf->{portal};
     $portal =~ s#https?://([^/]*).*#$1#;
     $self->csp(
-"default-src 'self';frame-ancestors 'none';form-action 'self';img-src 'self' $portal;"
+"default-src 'self';frame-ancestors 'none';form-action 'self';img-src 'self' $portal;style-src 'self' $portal;"
     );
 
     $self->defaultRoute( $working[0]->defaultRoute );
