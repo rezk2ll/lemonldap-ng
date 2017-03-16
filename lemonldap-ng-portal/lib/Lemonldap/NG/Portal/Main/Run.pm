@@ -259,7 +259,7 @@ sub autoRedirect {
       if ( $req->mustRedirect and not( $req->info ) );
 
     # Redirection should be made if urldc defined
-    if ( $req->{urldc} and not $req->param('lmError') ) {
+    if ( $req->{urldc} ) {
         if ( $self->_jsRedirect->() ) {
             $req->error(PE_REDIRECT);
             $req->datas->{redirectFormMethod} = "get";
@@ -732,6 +732,24 @@ sub sendCss {
         ],
         [$s]
     ];
+}
+
+sub lmError {
+    my ( $self, $req ) = @_;
+    my $httpError = $req->param('code');
+
+    # Check URL
+    $self->controlUrl($req);
+
+    my %templateParams = (
+        LOGOUT_URL => $self->conf->{portal} . "?logout=1",
+        URL        => $req->{urldc},
+    );
+
+    # Error code
+    $templateParams{"ERROR$_"} = ( $httpError == $_ ? 1 : 0 )
+      foreach ( 403, 500, 503 );
+    return $self->sendHtml( $req, 'error', params => \%templateParams );
 }
 
 sub rebuildCookies {

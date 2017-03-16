@@ -227,7 +227,7 @@ sub _returnError {
     # Redirect or Forbidden?
     if ( $class->tsv->{useRedirectOnError} ) {
         $class->logger->debug("Use redirect for error");
-        return $class->goToPortal( '/', 'lmError=500' );
+        return $class->goToError( '/', 500 );
     }
 
     else {

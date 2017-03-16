@@ -91,7 +91,7 @@ sub run {
 
         if ( $class->tsv->{useRedirectOnError} ) {
             $class->logger->debug("Go to portal with maintenance error code");
-            return $class->goToPortal( '/', 'lmError=' . $class->MAINTENANCE );
+            return $class->goToError( '/', $class->MAINTENANCE );
         }
         else {
             $class->logger->debug("Return maintenance error code");
@@ -294,7 +294,7 @@ sub forbidden {
     # Redirect or Forbidden?
     if ( $class->tsv->{useRedirectOnForbidden} ) {
         $class->logger->debug("Use redirect for forbidden access");
-        return $class->goToPortal( $uri, 'lmError=403' );
+        return $class->goToError( $uri, 403 );
     }
     else {
         $class->logger->debug("Return forbidden access");
@@ -341,6 +341,17 @@ sub goToPortal {
     $class->set_header_out( 'Location' => $class->tsv->{portal}->()
           . "?url=$urlc_init"
           . ( $arg ? "&$arg" : "" ) );
+    return $class->REDIRECT;
+}
+
+sub goToError {
+    my ( $class, $url, $code ) = @_;
+    my $urlc_init = $class->encodeUrl($url);
+    $class->logger->debug(
+        "Redirect " . $class->remote_ip . " to lmError (url was $url)" );
+    $class->set_header_out( 'Location' => $class->tsv->{portal}->()
+          . "/lmerror/$code"
+          . "?url=$urlc_init" );
     return $class->REDIRECT;
 }
 
@@ -563,7 +574,7 @@ sub abort {
         # Redirect or die
         if ( $class->tsv->{useRedirectOnError} ) {
             $class->logger->debug("Use redirect for error");
-            return $class->goToPortal( $uri, 'lmError=500' );
+            return $class->goToError( $uri, 500 );
         }
         else {
             return $class->SERVER_ERROR;

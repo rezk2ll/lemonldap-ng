@@ -109,9 +109,13 @@ sub init {
       ->addUnauthRoute( 'psgi.js' => 'sendJs', ['GET'] )
       ->addAuthRoute( 'psgi.js' => 'sendJs', ['GET'] )
 
-      # psgi.js
+      # portal.css
       ->addUnauthRoute( 'portal.css' => 'sendCss', ['GET'] )
       ->addAuthRoute( 'portal.css' => 'sendCss', ['GET'] )
+
+      # lmerror
+      ->addUnauthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
+      ->addAuthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
 
       # Core REST API
       ->addUnauthRoute( ping => 'pleaseAuth', ['GET'] )

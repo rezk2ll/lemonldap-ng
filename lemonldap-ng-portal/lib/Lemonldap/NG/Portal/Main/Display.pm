@@ -36,26 +36,6 @@ sub display {
     my $skin_dir = $self->conf->{templatesDir};
     my ( $skinfile, %templateParams );
 
-    # 0. Display error page
-    if ( my $http_error = $req->param('lmError') ) {
-
-        $skinfile = 'error';
-
-        # Check URL
-        $self->controlUrl($req);
-
-        %templateParams = (
-            LOGOUT_URL => $self->conf->{portal} . "?logout=1",
-            URL        => $req->{urldc},
-        );
-
-        # Error code
-        foreach ( 403, 500, 503 ) {
-            $templateParams{"ERROR$_"} = ( $http_error == $_ ? 1 : 0 );
-        }
-
-    }
-
     # 1. Authentication not complete
 
     # 1.1 A notification has to be done (session is created but hidden and
