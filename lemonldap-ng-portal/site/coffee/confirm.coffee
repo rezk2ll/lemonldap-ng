@@ -13,7 +13,7 @@ timer = () ->
 	setTimeout timer, 1000
 
 $(document).ready ->
-	setTimeout go, 10000
+	setTimeout go, 30000
 	setTimeout timer, 1000
 	$(".idploop").on 'click', () ->
 		$("#idp").val $(this).attr("val")
