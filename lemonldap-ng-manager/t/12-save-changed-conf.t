@@ -71,7 +71,7 @@ ok( ( @c1 = sort keys %{ $res->[0] } ), 'diff() detects changes in conf 1' );
 ok( ( @c2 = sort keys %{ $res->[1] } ), 'diff() detects changes in conf 2' );
 ok( @c1 == 12, '12 keys changed in conf 1' )
   or print STDERR "Expect: 11 keys, get: " . join( ', ', @c1 ) . "\n";
-ok( @c2 == 13, '13 keys changed or created in conf 2' )
+ok( @c2 == 14, '14 keys changed or created in conf 2' )
   or print STDERR "Expect: 14 keys, get: " . join( ',', @c2 ) . "\n";
 
 count(5);
