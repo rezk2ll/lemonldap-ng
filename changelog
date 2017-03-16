@@ -1,5 +1,16 @@
 lemonldap-ng (2.0.0) stable; urgency=low
 
+lemonldap-ng (1.9.9) stable; urgency=high
+
+    * [LEMONLDAP-1081] - SAML artifact server double encode UTF-8 characters
+    * [LEMONLDAP-1193] - entityID not found in metadata if value is between simple quotes instead of double quotes
+    * [LEMONLDAP-1195] - JS error when clicking on export configuration
+    * [LEMONLDAP-1197] - CSP errors in Manager
+    * [LEMONLDAP-1199] - Compilation error in IssuerDBOpenIDConnect.pm
+    * [LEMONLDAP-1187] - Make crypto functions available in safe jail
+    * [LEMONLDAP-1191] - Brute force protection for OIDC
+    * [LEMONLDAP-1200] - Force AllowCreate in NameIDPolicy for broken SAML clients
+
 lemonldap-ng (1.9.8) stable; urgency=high
 
     * [LEMONLDAP-1121] - Fail to require customNginxHandler
