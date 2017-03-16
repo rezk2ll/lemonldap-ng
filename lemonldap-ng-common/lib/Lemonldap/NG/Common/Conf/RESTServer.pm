@@ -655,7 +655,7 @@ sub metadatas {
         my $id = -1;
         my ($ind) = map { $id++; $_ == $res->{cfgNum} ? ($id) : () } @a;
         if ($ind) { $res->{prev} = $a[ $ind - 1 ]; }
-        if ( $ind and $ind < $#a ) { $res->{next} = $a[ $ind + 1 ]; }
+        if ( defined $ind and $ind < $#a ) { $res->{next} = $a[ $ind + 1 ]; }
         if ( $self->can('userId') ) {
             $self->userLogger->info( 'User '
                   . $self->userId($req)
