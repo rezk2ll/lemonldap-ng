@@ -155,7 +155,7 @@ sub zeroConf {
                 '^/logout' => 'logout_sso'
             },
             "manager.$domain" => {
-                'default'                                  => '$uid eq "dwho"',
+                'default'                                  => '$uid eq "dwho" or $uid eq "rtyler"',
                 '(?#Configuration)^/(manager\.html|conf/)' => '$uid eq "dwho"',
                 '(?#Sessions)/sessions' => '$uid eq "dwho" or $uid eq "rtyler"',
                 '(?#Notifications)/notifications' =>
