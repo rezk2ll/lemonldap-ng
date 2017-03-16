@@ -78,7 +78,7 @@ sub init {
     $self->addRoute( 'psgi.js' => 'sendJs', ['GET'] );
 
     my $portal = $conf->{portal};
-    $portal =~ s#htts?://([^/])*.*#$1#;
+    $portal =~ s#https?://([^:/]*).*#$1#;
     $self->csp(
 "default-src 'self';frame-ancestors 'none';form-action 'self';img-src 'self' $portal;"
     );
