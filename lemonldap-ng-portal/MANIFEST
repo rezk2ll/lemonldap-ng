@@ -257,7 +257,6 @@ site/templates/bootstrap/standardform.tpl
 site/templates/bootstrap/u2fcheck.tpl
 site/templates/bootstrap/u2fregister.tpl
 site/templates/bootstrap/yubikeyform.tpl
-site/templates/common/background.tpl
 site/templates/common/bullet_go.png
 site/templates/common/key.png
 site/templates/common/mail/en.json
@@ -338,6 +337,7 @@ t/64-StayConnected.t
 t/90-Translations.t
 t/99-pod.t
 t/lmConf-1.js
+t/saml-lib.pm
 t/sessions/lock/.exists
 t/sessions/saml/lock/.exists
 t/sessions2/6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101

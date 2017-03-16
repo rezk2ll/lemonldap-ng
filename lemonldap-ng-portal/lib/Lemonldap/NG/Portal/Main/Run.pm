@@ -712,6 +712,26 @@ sub sendHtml {
     return $res;
 }
 
+sub sendCss {
+    my ( $self, $req ) = @_;
+    my $s =
+        'html,body{background:url("'
+      . $self->staticPrefix
+      . '/common/backgrounds/'
+      . $self->conf->{portalSkinBackground}
+      . '") no-repeat center fixed;'
+      . 'background-size:cover;}';
+    return [
+        200,
+        [
+            'Content-Type'   => 'text/css',
+            'Content-Length' => length($s),
+            'Cache-Control'  => 'public,max-age=3600',
+        ],
+        [$s]
+    ];
+}
+
 sub rebuildCookies {
     my ( $self, $req ) = @_;
     my @tmp;
