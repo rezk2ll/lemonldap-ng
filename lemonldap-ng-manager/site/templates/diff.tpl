@@ -55,13 +55,13 @@
         <table class="table table-striped">
           <tr ng-show="currentNode.oldvalue">
             <th><span class="old" trspan="oldValue"></span></th>
-            <td ng-show="currentNode.oldvalue.constructor === 'array'">{{currentNode.oldvalue|json}}</td>
-            <td ng-hide="currentNode.oldvalue.constructor === 'array'">{{currentNode.oldvalue}}</td>
+            <td id="tdoldarray" ng-show="currentNode.oldvalue.constructor === 'array'">{{currentNode.oldvalue|json}}</td>
+            <td id="tdold" ng-hide="currentNode.oldvalue.constructor === 'array'">{{currentNode.oldvalue}}</td>
           </tr>
           <tr ng-show="currentNode.newvalue">
             <th><span class="new" trspan="newValue"></span></th>
-            <td ng-show="currentNode.newvalue.constructor === 'array'">{{currentNode.newvalue|json}}</td>
-            <td ng-hide="currentNode.newvalue.constructor === 'array'">{{currentNode.newvalue}}</td>
+            <td id="tdnewarray" ng-show="currentNode.newvalue.constructor === 'array'">{{currentNode.newvalue|json}}</td>
+            <td id="tdnew" ng-hide="currentNode.newvalue.constructor === 'array'">{{currentNode.newvalue}}</td>
           </tr>
         </table>
       </div>
@@ -71,7 +71,7 @@
   <script type="text/ng-template" id="nodes_renderer.html">
     <div ui-tree-handle class="tree-node tree-node-content panel-info tree-node-default">
       <span ng-include="'arrow.html'"></span>
-      <span ng-click="stoggle(this,node)">{{node.title}}</span>
+      <span id="t-{{node.id}}" ng-click="stoggle(this,node)">{{node.title}}</span>
     </div>
     <ol ui-tree-nodes="" ng-model="node" ng-class="{hidden: collapsed}" ng-include="'subnodes.html'">
     </ol>
@@ -79,7 +79,7 @@
   <script type="text/ng-template" id="newnodes_renderer.html">
     <div ui-tree-handle class="tree-node tree-node-content panel-info tree-node-default">
       <span ng-include="'arrow.html'"></span>
-      <span ng-click="stoggle(this,node)" class="new">{{node.title}}</span>
+      <span id="t-{{node.id}}" ng-click="stoggle(this,node)" class="new">{{node.title}}</span>
     </div>
     <ol ui-tree-nodes="" ng-model="node" ng-class="{hidden: collapsed}" ng-include="'subnodes.html'">
     </ol>
@@ -87,7 +87,7 @@
   <script type="text/ng-template" id="oldnodes_renderer.html">
     <div ui-tree-handle class="tree-node tree-node-content panel-info tree-node-default">
       <span ng-include="'arrow.html'"></span>
-      <span ng-click="stoggle(this,node)" class="old">{{node.title}}</span>
+      <span id="t-{{node.id}}" ng-click="stoggle(this,node)" class="old">{{node.title}}</span>
     </div>
     <ol ui-tree-nodes="" ng-model="node" ng-class="{hidden: collapsed}" ng-include="'subnodes.html'">
     </ol>

@@ -454,7 +454,7 @@ reload_web_server:
 		$(MAKE) start_web_server; \
 	fi
 
-launch_protractor:	all e2e-tests/conf/apache2.pid
+launch_protractor:
 	# Start e2e tests
 	# NB: you must have protractor installed (using npm install -g protractor)
 	# and have run update-webdriver at least once and have a node.js > 4.0
