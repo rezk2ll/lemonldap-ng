@@ -63,7 +63,7 @@
       <TMPL_IF NAME="ACTIVE_TIMER">
 
         <div class="alert alert-info">
-          <p id="timer" trspan="autoAccept">Automatically accept in 5 seconds</p>
+          <p id="timer" trspan="autoAccept">Automatically accept in 30 seconds</p>
         </div>
 
         <!-- //if:jsminified

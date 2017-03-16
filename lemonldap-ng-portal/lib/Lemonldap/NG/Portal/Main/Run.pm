@@ -150,6 +150,7 @@ sub logout {
 sub do {
     my ( $self, $req, $steps ) = @_;
     $req->steps($steps);
+    $req->datas->{activeTimer} = $self->conf->{activeTimer};
     my $err = $req->error( $self->process($req) );
 
     # Update status
@@ -204,7 +205,7 @@ sub do {
                 or (    $err == PE_REDIRECT
                     and $req->datas->{redirectFormMethod}
                     and $req->datas->{redirectFormMethod} eq 'post' )
-                or ( $err == PE_REDIRECT and $req->info )
+                or $req->info
             )
           )
         {
@@ -254,7 +255,8 @@ sub autoRedirect {
     my ( $self, $req ) = @_;
 
     # Set redirection URL if needed
-    $req->{urldc} ||= $self->conf->{portal} if ( $req->mustRedirect );
+    $req->{urldc} ||= $self->conf->{portal}
+      if ( $req->mustRedirect and not( $req->info ) );
 
     # Redirection should be made if urldc defined
     if ( $req->{urldc} and not $req->param('lmError') ) {

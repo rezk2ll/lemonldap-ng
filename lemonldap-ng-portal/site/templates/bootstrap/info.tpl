@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="alert alert-info">
-      <p id="timer" trspan="redirectedIn">You'll be redirected in 10 seconds</p>
+      <p id="timer" trspan="redirectedIn">You'll be redirected in 30 seconds</p>
     </div>
       <div class="buttons">
         <button type="submit" class="positive btn btn-success">

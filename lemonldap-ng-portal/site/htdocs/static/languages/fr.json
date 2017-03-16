@@ -161,7 +161,7 @@
 "pwdResetAlreadyIssued":"Une demande de réinitialisation de mot de passe a déjà été faite le ",
 "pwdWillExpire":"%s jours, %s heures, %s minutes et %s secondes avant expiration de votre mot de passe, pensez à le changer !",
 "redirectedFrom":"Vous avez été redirigé depuis ",
-"redirectedIn":"Vous allez être redirigé(e) automatiquement dans 10 secondes",
+"redirectedIn":"Vous allez être redirigé(e) automatiquement dans 30 secondes",
 "redirectionInProgres":"Redirection en cours...",
 "redirectionToIdp":"Redirection vers votre fournisseur d'identité",
 "refreshrights": "Rafraîchir mes droits",

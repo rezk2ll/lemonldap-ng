@@ -30,7 +30,7 @@
 
   $(document).ready(function() {
     if (window.datas['activeTimer']) {
-      window.setTimeout(go, 10000);
+      window.setTimeout(go, 30000);
       window.setTimeout(timer, 1000);
     } else {
       stop;

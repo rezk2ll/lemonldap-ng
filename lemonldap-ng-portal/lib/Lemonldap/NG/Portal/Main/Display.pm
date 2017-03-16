@@ -61,6 +61,7 @@ sub display {
     # 1.1 A notification has to be done (session is created but hidden and
     #     unusable until the user has accept the message)
     if ( my $notif = $req->datas->{notification} ) {
+        $self->logger->debug('Display: notification detected');
         $skinfile       = 'notification';
         %templateParams = (
             AUTH_ERROR_TYPE => $req->error_type,
@@ -75,6 +76,7 @@ sub display {
     # 1.2 An authentication (or userDB) module needs to ask a question
     #     before processing to the request
     elsif ( $req->{error} == PE_CONFIRM ) {
+        $self->logger->debug('Display: confirm detected');
         $skinfile       = 'confirm';
         %templateParams = (
             AUTH_ERROR      => $req->error,
@@ -97,6 +99,7 @@ sub display {
 
     # 1.3 There is a message to display
     elsif ( my $info = $req->info ) {
+        $self->logger->debug('Display: info detected');
         $skinfile       = 'info';
         %templateParams = (
             AUTH_ERROR      => $self->error,
