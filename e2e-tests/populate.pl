@@ -45,7 +45,7 @@ foreach my $i ( 1 .. COUNT() ) {
     $min  = int( rand(60) );
     $sec  = int( rand(60) );
     my $ipAddr = (
-        int( rand(2) ) == 1
+        int( rand(2) ) == 2
         ? join( '.',
             int( rand(256) ),
             int( rand(256) ),

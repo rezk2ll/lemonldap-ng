@@ -6,7 +6,7 @@ use base 'Exporter';
 
 sub isIPv6 {
     my($ip) = @_;
-    return $ip =~ /^[0-9:]+$/;
+    return $ip =~ /^[a-z0-9:]+$/i;
 }
 
 sub net6 {

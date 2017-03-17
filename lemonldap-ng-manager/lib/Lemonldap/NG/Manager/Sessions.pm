@@ -106,20 +106,25 @@ sub sessions {
         @fields = grep { !$seen{$_}++ } @fields;
     }
 
-    # Check if a '*' is required
-    my $function = 'searchOn';
-    $function = 'searchOnExpr' if ( grep /\*/, values %filters );
-
     # For now, only one argument can be passed to
     # Lemonldap::NG::Common::Apache::Session so just the first filter is
     # used
     my ($firstFilter) = sort {
-            $a eq '_session_kind' ? 1
-          : $b eq '_session_kind' ? -1
+            $filters{$a} =~ m#^[\w:]+/\d+\*?$# ? 1
+          : $filters{$b} =~ m#^[\w:]+/\d+\*?$# ? -1
+          : $a eq '_session_kind'              ? 1
+          : $b eq '_session_kind'              ? -1
           : $a cmp $b
     } keys %filters;
+
+    # Check if a '*' is required
+    my $function = 'searchOn';
+    $function = 'searchOnExpr'
+      if ( grep { /\*/ and not m#^[\w:]+/\d+\*?$# }
+        ( $filters{$firstFilter} ) );
     $self->logger->debug(
         "First filter: $firstFilter = $filters{$firstFilter} ($function)");
+
     $res =
       Lemonldap::NG::Common::Apache::Session->$function( $moduleOptions,
         $firstFilter, $filters{$firstFilter}, @fields );
@@ -134,15 +139,26 @@ sub sessions {
         }
     ) unless ( $res and %$res );
 
-    delete $filters{$firstFilter};
+    delete $filters{$firstFilter}
+      unless ( grep { /\*/ and not m#^[\w:]+/\d+\*?$# }
+        ( $filters{$firstFilter} ) );
     foreach my $k ( keys %filters ) {
         $self->logger->debug("Removing unless $k =~ /^$filters{$k}\$/");
-        $filters{$k} =~ s/\./\\./g;
-        $filters{$k} =~ s/\*/\.\*/g;
-        foreach my $session ( keys %$res ) {
-            if ( $res->{$session}->{$k} ) {
+        if ( $filters{$k} =~ m#^([\w:]+)/(\d+)\*?$# ) {
+            my ( $net, $bits ) = ( $1, $2 );
+            foreach my $session ( keys %$res ) {
                 delete $res->{$session}
-                  unless ( $res->{$session}->{$k} =~ /^$filters{$k}$/ );
+                  unless ( net6( $res->{$session}->{$k}, $bits ) eq $net );
+            }
+        }
+        else {
+            $filters{$k} =~ s/\./\\./g;
+            $filters{$k} =~ s/\*/\.\*/g;
+            foreach my $session ( keys %$res ) {
+                if ( $res->{$session}->{$k} ) {
+                    delete $res->{$session}
+                      unless ( $res->{$session}->{$k} =~ /^$filters{$k}$/ );
+                }
             }
         }
     }
@@ -236,7 +252,7 @@ sub sessions {
             my $field = $1;
             my $bits  = $2;
             foreach my $k ( keys %$res ) {
-                $r->{ net6( $res->{$k}->{$field}, $bits ) }++
+                $r->{ net6( $res->{$k}->{$field}, $bits ) . "/$bits" }++
                   if ( isIPv6( $res->{$k}->{$field} ) );
             }
         }
@@ -244,11 +260,11 @@ sub sessions {
         # Both IPv4 and IPv6
         elsif ( $group =~ /^net\(([\w:]+),(\d+),(\d+)\)$/ ) {
             my $field = $1;
-            my $bits  = $3;
+            my $bits  = $2;
             my $nb    = $3 - 1;
             foreach my $k ( keys %$res ) {
                 if ( isIPv6( $res->{$k}->{$field} ) ) {
-                    $r->{ net6( $res->{$k}->{$field}, $bits ) }++;
+                    $r->{ net6( $res->{$k}->{$field}, $bits ) . "/$bits" }++;
                 }
                 elsif ( $res->{$k}->{$field} =~ /^((((\d+)\.\d+)\.\d+)\.\d+)$/ )
                 {

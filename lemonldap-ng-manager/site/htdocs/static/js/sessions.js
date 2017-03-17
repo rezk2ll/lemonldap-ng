@@ -23,11 +23,20 @@
       function(t, v) {
         return "groupBy=net(" + t + ",16,1)";
       }, function(t, v) {
-        return t + "=" + v + ".*&groupBy=net(" + t + ",32,2)";
+        if (!v.match(/:/)) {
+          v = v + '.';
+        }
+        return t + "=" + v + "*&groupBy=net(" + t + ",32,2)";
       }, function(t, v) {
-        return t + "=" + v + ".*&groupBy=net(" + t + ",48,3)";
+        if (!v.match(/:/)) {
+          v = v + '.';
+        }
+        return t + "=" + v + "*&groupBy=net(" + t + ",48,3)";
       }, function(t, v) {
-        return t + "=" + v + ".*&groupBy=net(" + t + ",128,4)";
+        if (!v.match(/:/)) {
+          v = v + '.';
+        }
+        return t + "=" + v + "*&groupBy=net(" + t + ",128,4)";
       }, function(t, v) {
         return t + "=" + v + "&groupBy=_whatToTrace";
       }, function(t, v, q) {
@@ -68,7 +77,14 @@
       if (level === 1) {
         return t + "=" + v + "*&groupBy=substr(" + t + "," + (level + over) + ")";
       } else {
-        return schemes._whatToTrace[level];
+        return null;
+      }
+    },
+    ipAddr: function(t, v, level, over) {
+      if (level > 0 && level < 4) {
+        return t + "=" + v + "*&groupBy=net(" + t + "," + (16 * level + 4 * (over + 1)) + ",2)";
+      } else {
+        return null;
       }
     }
   };
@@ -333,17 +349,22 @@
       $scope.$on('$locationChangeSuccess', pathEvent);
       autoId = 0;
       $scope.updateTree = function(value, node, level, over, currentQuery, count) {
-        var query, scheme;
+        var query, scheme, tmp;
         $scope.waiting = true;
         scheme = schemes[$scope.type] ? schemes[$scope.type] : $scope.type === 'updateTime' ? schemes.startTime : schemes._whatToTrace;
         query = scheme[level]($scope.type, value, currentQuery);
         if (count > max && overScheme[$scope.type]) {
-          over++;
-          query = overScheme[$scope.type]($scope.type, value, level, over, currentQuery);
-          level = level - 1;
+          if (tmp = overScheme[$scope.type]($scope.type, value, level, over, currentQuery)) {
+            over++;
+            query = tmp;
+            level = level - 1;
+          } else {
+            over = 0;
+          }
         } else {
           over = 0;
         }
+        console.log(query);
         return $http.get(scriptname + "sessions/" + sessionType + "?" + query).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;

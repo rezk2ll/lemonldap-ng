@@ -20,11 +20,14 @@ schemes =
 		(t,v) ->
 			"groupBy=net(#{t},16,1)"
 		(t,v) ->
-			"#{t}=#{v}.*&groupBy=net(#{t},32,2)"
+			v = v + '.' unless v.match /:/
+			"#{t}=#{v}*&groupBy=net(#{t},32,2)"
 		(t,v) ->
-			"#{t}=#{v}.*&groupBy=net(#{t},48,3)"
+			v = v + '.' unless v.match /:/
+			"#{t}=#{v}*&groupBy=net(#{t},48,3)"
 		(t,v) ->
-			"#{t}=#{v}.*&groupBy=net(#{t},128,4)"
+			v = v + '.' unless v.match /:/
+			"#{t}=#{v}*&groupBy=net(#{t},128,4)"
 		(t,v) ->
 			"#{t}=#{v}&groupBy=_whatToTrace"
 		(t,v,q) ->
@@ -61,7 +64,12 @@ overScheme =
 		if level == 1
 			"#{t}=#{v}*&groupBy=substr(#{t},#{(level+over)})"
 		else
-			schemes._whatToTrace[level]
+			null
+	ipAddr: (t,v,level,over) ->
+		if level > 0 and level < 4
+			"#{t}=#{v}*&groupBy=net(#{t},#{16*level+4*(over+1)},2)"
+		else
+			null
 
 hiddenAttributes = '_password'
 
@@ -306,9 +314,12 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 		# If number of session exceeds "max" and overScheme exists, call it
 		if count > max and overScheme[$scope.type]
-			over++
-			query = overScheme[$scope.type] $scope.type, value, level, over, currentQuery
-			level = level - 1
+			if tmp = overScheme[$scope.type] $scope.type, value, level, over, currentQuery
+				over++
+				query = tmp
+				level = level - 1
+			else
+				over = 0
 		else
 			over = 0
 
