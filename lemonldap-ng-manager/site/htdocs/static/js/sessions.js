@@ -364,7 +364,6 @@
         } else {
           over = 0;
         }
-        console.log(query);
         return $http.get(scriptname + "sessions/" + sessionType + "?" + query).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;
