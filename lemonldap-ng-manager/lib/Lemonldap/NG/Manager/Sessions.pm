@@ -10,6 +10,7 @@ use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
+use Lemonldap::NG::Common::IPv6;
 
 use feature 'state';
 
@@ -74,12 +75,12 @@ sub sessions {
     my @fields = ( '_httpSessionType', $self->{ipField}, $whatToTrace );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/
-          or $groupBy =~ s/^net4\((\w+),\d\)$/$1/;
+          or $groupBy =~ s/^net(?:4|6)\(([\w:]+),\d\)$/$1/;
         $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
           or push @fields, $groupBy;
     }
     elsif ( my $order = $params->{orderBy} ) {
-        $order =~ s/^net4\((\w+)\)$/$1/;
+        $order =~ s/^net(?:4|6)\(([\w:]+)\)$/$1/;
         $order =~ s/^_whatToTrace$/$whatToTrace/o
           or push @fields, split( /, /, $order );
     }
@@ -217,7 +218,7 @@ sub sessions {
             $group = $field;
         }
 
-        # Subnets
+        # Subnets IPv4
         elsif ( $group =~ /^net4\((\w+),(\d)\)$/ ) {
             my $field = $1;
             my $nb    = $2 - 1;
@@ -228,6 +229,15 @@ sub sessions {
                 }
             }
             $group = $field;
+        }
+
+        # Subnets IPv6
+        elsif ( $group =~ /^net6\(([\w:]+),(\d)\)$/ ) {
+            my $ip   = $1;
+            my $bits = $2;
+            foreach my $k ( keys %$res ) {
+                $r->{ net6( $res->{$k}->{$ip}, $bits ) }++ if ( isIPv6($ip) );
+            }
         }
 
         # Simple field groupBy query
@@ -271,7 +281,7 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
             my $tmp = { session => $_ };
             foreach my $f (@fields) {
                 my $s = $f;
-                $s =~ s/^net4\((\w+)\)$/$1/;
+                $s =~ s/^net(?:4|6)\(([\w:]+)\)$/$1/;
                 $tmp->{$s} = $res->{$_}->{$s};
             }
             $tmp
@@ -281,6 +291,20 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
                 @r = sort {
                     my @a = split /\./, $a->{$f};
                     my @b = split /\./, $b->{$f};
+                    my $cmp = 0;
+                  F: for ( my $i = 0 ; $i < 4 ; $i++ ) {
+                        if ( $a[$i] != $b[$i] ) {
+                            $cmp = $a[$i] <=> $b[$i];
+                            last F;
+                        }
+                    }
+                    $cmp;
+                } @r;
+            }
+            elsif ( $f =~ s/^net6\(([:\w]+)\)$/$1/ ) {
+                @r = sort {
+                    my @a = split /:/, $a->{$f};
+                    my @b = split /:/, $b->{$f};
                     my $cmp = 0;
                   F: for ( my $i = 0 ; $i < 4 ; $i++ ) {
                         if ( $a[$i] != $b[$i] ) {

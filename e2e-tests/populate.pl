@@ -28,6 +28,7 @@ my $portal = LLNG::Manager::Test->new(
                 dirName => 'e2e-tests/conf',
             },
             localSessionStorage => undef,
+            localStorage        => undef,
         }
     }
 )->p;
@@ -36,13 +37,51 @@ my @chars = ( "A" .. "Z", "a" .. "z" );
 foreach my $i ( 1 .. COUNT() ) {
     my $string;
     $string .= $chars[ rand @chars ] for 1 .. 8;
+
     #$string = 'dwho';
     my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) =
       localtime(time);
     $hour = int( rand($hour) );
     $min  = int( rand(60) );
     $sec  = int( rand(60) );
-    my $ipAddr = join('.',int(rand(256)),int(rand(256)),int(rand(256)),int(rand(256)));
+    my $ipAddr = (
+        int( rand(2) ) == 1
+        ? join( '.',
+            int( rand(256) ),
+            int( rand(256) ),
+            int( rand(256) ),
+            int( rand(256) ) )
+        : join(
+            ':',
+
+            # Mix routable IPv6 addresses (2000::/3) and local ones (fe:80::/10)
+            (
+                int( rand(2) ) == 1
+                ? sprintf( "%X",      int( rand(8192) + 8192 ) )
+                : sprintf( "fe80:%X", int( rand(16384) ) )
+            ),
+            sprintf( "%X", int( rand(65536) ) ),
+            sprintf( "%X", int( rand(65536) ) ),
+            sprintf( "%X", int( rand(65536) ) ),
+            sprintf( "%X", int( rand(65536) ) ),
+            sprintf( "%X", int( rand(65536) ) ),
+            sprintf( "%X", int( rand(65536) ) ),
+            sprintf( "%X", int( rand(65536) ) )
+        )
+    );
+
+    # Replace 0 in IPv6 addresses
+    if ( $ipAddr =~ ':0:' ) {
+        my @t   = ( $ipAddr =~ /\:(?:0\:)+/g );
+        my $ind = -1;
+        my $len = 0;
+        for ( my $i = 0 ; $i < @t ; $i++ ) {
+            $ind = $i if ( length( $t[$i] ) > $len );
+        }
+        $ipAddr =~ s/$t[$ind]/::/;
+        $ipAddr =~ s/^0//;
+        print STDERR "Found IPv6 :: => $string\n";
+    }
     my $req = Test::Request->new(
         {
             sessionInfo => {
