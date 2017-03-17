@@ -75,12 +75,12 @@ sub sessions {
     my @fields = ( '_httpSessionType', $self->{ipField}, $whatToTrace );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/
-          or $groupBy =~ s/^net(?:4|6)\(([\w:]+),\d\)$/$1/;
+          or $groupBy =~ s/^net(?:4|6|)\(([\w:]+),\d+(?:,\d+)?\)$/$1/;
         $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
           or push @fields, $groupBy;
     }
     elsif ( my $order = $params->{orderBy} ) {
-        $order =~ s/^net(?:4|6)\(([\w:]+)\)$/$1/;
+        $order =~ s/^net(?:4|6|)\(([\w:]+)\)$/$1/;
         $order =~ s/^_whatToTrace$/$whatToTrace/o
           or push @fields, split( /, /, $order );
     }
@@ -233,10 +233,28 @@ sub sessions {
 
         # Subnets IPv6
         elsif ( $group =~ /^net6\(([\w:]+),(\d)\)$/ ) {
-            my $ip   = $1;
-            my $bits = $2;
+            my $field = $1;
+            my $bits  = $2;
             foreach my $k ( keys %$res ) {
-                $r->{ net6( $res->{$k}->{$ip}, $bits ) }++ if ( isIPv6($ip) );
+                $r->{ net6( $res->{$k}->{$field}, $bits ) }++
+                  if ( isIPv6( $res->{$k}->{$field} ) );
+            }
+        }
+
+        # Both IPv4 and IPv6
+        elsif ( $group =~ /^net\(([\w:]+),(\d+),(\d+)\)$/ ) {
+            my $field = $1;
+            my $bits  = $3;
+            my $nb    = $3 - 1;
+            foreach my $k ( keys %$res ) {
+                if ( isIPv6( $res->{$k}->{$field} ) ) {
+                    $r->{ net6( $res->{$k}->{$field}, $bits ) }++;
+                }
+                elsif ( $res->{$k}->{$field} =~ /^((((\d+)\.\d+)\.\d+)\.\d+)$/ )
+                {
+                    my @d = ( $4, $3, $2, $1 );
+                    $r->{ $d[$nb] }++;
+                }
             }
         }
 
@@ -281,38 +299,30 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
             my $tmp = { session => $_ };
             foreach my $f (@fields) {
                 my $s = $f;
-                $s =~ s/^net(?:4|6)\(([\w:]+)\)$/$1/;
+                $s =~ s/^net(?:4|6|)\(([\w:]+)\)$/$1/;
                 $tmp->{$s} = $res->{$_}->{$s};
             }
             $tmp
         } keys %$res;
         while ( my $f = pop @fields ) {
             if ( $f =~ s/^net4\((\w+)\)$/$1/ ) {
-                @r = sort {
-                    my @a = split /\./, $a->{$f};
-                    my @b = split /\./, $b->{$f};
-                    my $cmp = 0;
-                  F: for ( my $i = 0 ; $i < 4 ; $i++ ) {
-                        if ( $a[$i] != $b[$i] ) {
-                            $cmp = $a[$i] <=> $b[$i];
-                            last F;
-                        }
-                    }
-                    $cmp;
-                } @r;
+                @r = sort { cmpIPv4( $a->{$f}, $b->{$f} ); } @r;
             }
             elsif ( $f =~ s/^net6\(([:\w]+)\)$/$1/ ) {
+                @r = sort { expand6( $a->{$f} ) cmp expand6( $b->{$f} ); } @r;
+            }
+            elsif ( $f =~ s/^net\(([:\w]+)\)$/$1/ ) {
                 @r = sort {
-                    my @a = split /:/, $a->{$f};
-                    my @b = split /:/, $b->{$f};
-                    my $cmp = 0;
-                  F: for ( my $i = 0 ; $i < 4 ; $i++ ) {
-                        if ( $a[$i] != $b[$i] ) {
-                            $cmp = $a[$i] <=> $b[$i];
-                            last F;
-                        }
-                    }
-                    $cmp;
+                    my $ip1 = $a->{$f};
+                    my $ip2 = $b->{$f};
+                    isIPv6($ip1)
+                      ? (
+                          isIPv6($ip2)
+                        ? expand6($ip1) cmp expand6($ip2)
+                        : -1
+                      )
+                      : isIPv6($ip2) ? 1
+                      :                cmpIPv4( $ip1, $ip2 );
                 } @r;
             }
             else {
@@ -341,6 +351,19 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
             values => $res
         }
     );
+}
+
+sub cmpIPv4 {
+    my @a = split /\./, $_[0];
+    my @b = split /\./, $_[1];
+    my $cmp = 0;
+  F: for ( my $i = 0 ; $i < 4 ; $i++ ) {
+        if ( $a[$i] != $b[$i] ) {
+            $cmp = $a[$i] <=> $b[$i];
+            last F;
+        }
+    }
+    $cmp;
 }
 
 1;
