@@ -8,7 +8,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 10;
+my $maintests = 13;
 my $debug     = 'error';
 my ( $op, $proxy, $sp, $res );
 my %handlerOR = ( op => [], proxy => [], sp => [] );
@@ -156,6 +156,35 @@ SKIP: {
     );
     my $spId = expectCookie($res);
     expectRedirection( $res, 'http://auth.sp.com' );
+
+    # Logout initiated by SP
+    ok(
+        $res = $sp->_get(
+            '/',
+            query  => 'logout',
+            cookie => "lemonldap=$spId",
+            accept => 'text/html'
+        ),
+        'Query SP for logout'
+    );
+    ( $url, $query ) = expectRedirection( $res,
+        qr#^http://auth.proxy.com(/saml/singleLogout)\?(SAMLRequest=.+)# );
+
+    # Push SAML logout request to proxy
+    switch ('proxy');
+    ok(
+        $res = $proxy->_get(
+            $url,
+            query  => $query,
+            accept => 'text/html',
+            cookie => "lemonldap=$proxyId",
+        ),
+        'Launch SAML logout request to IdP'
+    );
+    ( $url, $query ) = expectRedirection( $res,
+qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
+    );
+    pass("Logout isn't forwarded to OP...");
 
     #print STDERR Dumper($res);
 }
