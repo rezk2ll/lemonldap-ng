@@ -60,7 +60,8 @@ sub _redirect {
     $self->logger->debug('Processing _redirect');
     my $prms = $req->parameters;
     foreach my $k ( keys %$prms ) {
-        $self->p->setHiddenFormValue( $req, $k, $prms->{$k}, '', 0 );
+        $self->p->setHiddenFormValue( $req, $k, $prms->{$k}, '', 0 )
+          unless ( ref $prms->{$k} );
     }
     $self->p->setHiddenFormValue( $req, 'issuerMethod', $req->method, '', 0 );
     $self->p->setHiddenFormValue( $req, 'issuerQuery', $req->query_string, '',

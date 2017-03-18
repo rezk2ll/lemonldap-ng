@@ -312,6 +312,7 @@ t/35-SOAP-sessions-with-SOAP-server.t
 t/36-Combination-with-over.t
 t/36-Combination.t
 t/37-Logout-from-OIDC-RP-to-SAML-SP.t
+t/37-OIDC-RP-to-SAML-IdP.t
 t/37-SAML-SP-to-OIDC-OP.t
 t/40-Notifications-JSON-DBI.t
 t/40-Notifications-JSON-File-with-token.t

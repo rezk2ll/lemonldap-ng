@@ -8,7 +8,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 13;
+my $maintests = 12;
 my $debug     = 'error';
 my ( $op, $proxy, $sp, $res );
 my %handlerOR = ( op => [], proxy => [], sp => [] );
@@ -184,7 +184,7 @@ SKIP: {
     ( $url, $query ) = expectRedirection( $res,
 qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
     );
-    pass("Logout isn't forwarded to OP...");
+    diag("Logout isn't forwarded to OP...");
 
     #print STDERR Dumper($res);
 }
