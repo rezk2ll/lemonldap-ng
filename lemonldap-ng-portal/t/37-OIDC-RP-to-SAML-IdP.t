@@ -9,7 +9,7 @@ BEGIN {
 }
 
 my $maintests = 11;
-my $debug     = 'error';
+my $debug     = 'debug';
 my ( $idp, $sp, $rp, $res );
 my %handlerOR = ( idp => [], sp => [], rp => [] );
 

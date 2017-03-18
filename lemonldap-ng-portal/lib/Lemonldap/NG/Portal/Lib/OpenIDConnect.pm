@@ -50,6 +50,16 @@ has ua => (
     }
 );
 
+has ott => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        my $ott = $_[0]->{p}->loadModule('::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->timeout );
+        return $ott;
+    }
+);
+
 # METHODS
 
 # Load OpenID Connect Providers and JWKS data
@@ -257,11 +267,7 @@ sub buildAuthorizationCodeAuthnRequest {
       ->{oidcOPMetaDataOptionsAcrValues};
 
     my $nonce;
-    if ($use_nonce) {
-        my $nonceSession =
-          $self->getOpenIDConnectSession( undef, { '_utime' => time } );
-        $nonce = $nonceSession->id;
-    }
+    $nonce = $self->ott->createToken if ($use_nonce);
 
     my $authn_uri =
         $authorize_uri
@@ -530,14 +536,9 @@ sub checkIDTokenValidity {
         }
         else {
             # Get nonce session
-            my $nonceSession = $self->getOpenIDConnectSession($nonce);
-            unless ($nonceSession) {
+            unless ($self->ott->getToken($nonce)) {
                 $self->logger->error("Nonce $nonce verification failed");
                 return 0;
-            }
-            else {
-                $nonceSession->remove;
-                $self->logger->debug("Nonce $nonce deleted");
             }
         }
     }
