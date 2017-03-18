@@ -55,7 +55,6 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott = $_[0]->{p}->loadModule('::Lib::OneTimeToken');
-        $ott->timeout( $_[0]->timeout );
         return $ott;
     }
 );
@@ -687,11 +686,7 @@ sub storeState {
     $infos->{_utime} = $time + ( $stateTimeout - $timeout );
 
     # Create state session and store infos
-    my $stateSession = $self->getOpenIDConnectSession( undef, $infos );
-    return unless $stateSession;
-
-    # Return session ID
-    return $stateSession->id;
+    return $self->ott->createToken($infos);
 }
 
 # Extract state information into $self
@@ -701,14 +696,14 @@ sub extractState {
     return 0 unless $state;
 
     # Open state session
-    my $stateSession = $self->getOpenIDConnectSession($state);
+    my $stateSession = $self->ott->getToken($state);
 
     return 0 unless $stateSession;
 
     # Push values in $self
-    foreach ( keys %{ $stateSession->data } ) {
+    foreach ( keys %{ $stateSession } ) {
         next if $_ =~ /(type|_session_id|_session_kind|_utime)/;
-        my $tmp = $stateSession->data->{$_};
+        my $tmp = $stateSession->{$_};
         if (s/^datas_//) {
             $req->datas->{$_} = $tmp;
         }
@@ -718,15 +713,6 @@ sub extractState {
         else {
             $self->logger->warn("Unknown request property $_, skipping");
         }
-    }
-
-    # Delete state session
-    if ( $stateSession->remove ) {
-        $self->logger->debug("State $state was deleted");
-    }
-    else {
-        $self->logger->error("Unable to delete state $state");
-        $self->logger->error( $stateSession->error );
     }
 
     return 1;
