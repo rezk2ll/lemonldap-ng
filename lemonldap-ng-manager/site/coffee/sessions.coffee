@@ -83,7 +83,7 @@ categories =
     groups:             ['groups', 'hGroups']
     ldap:               ['dn']
     BrowserID:          ['_browserIdAnswer', '_browserIdAnswerRaw']
-    OpenIDConnect:      ['OpenIDConnect_IDToken', 'OpenIDConnect_OP', 'OpenIDConnect_access_token']
+    OpenIDConnect:      ['_oidc_id_token', '_oidc_OP', '_oidc_access_token']
 
 # Menu entries
 menu =
