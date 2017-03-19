@@ -271,8 +271,8 @@ sub setAuthSessionInfo {
 
     $req->{sessionInfo}->{authenticationLevel} = $self->conf->{oidcAuthnLevel};
 
-    $req->{sessionInfo}->{OpenIDConnect_OP} = $op;
-    $req->{sessionInfo}->{OpenIDConnect_access_token} =
+    $req->{sessionInfo}->{_oidc_OP} = $op;
+    $req->{sessionInfo}->{_oidc_access_token} =
       $req->datas->{access_token};
 
     # Keep ID Token in session
@@ -280,7 +280,7 @@ sub setAuthSessionInfo {
       ->{oidcOPMetaDataOptionsStoreIDToken};
     if ($store_IDToken) {
         $self->logger->debug("Store ID Token in session");
-        $req->{sessionInfo}->{OpenIDConnect_IDToken} = $req->datas->{id_token};
+        $req->{sessionInfo}->{_oidc_id_token} = $req->datas->{id_token};
     }
     else {
         $self->logger->debug("ID Token will not be stored in session");
@@ -292,7 +292,7 @@ sub setAuthSessionInfo {
 sub authLogout {
     my ( $self, $req ) = @_;
 
-    my $op = $req->{sessionInfo}->{OpenIDConnect_OP};
+    my $op = $req->{sessionInfo}->{_oidc_OP};
 
     # Find endession endpoint
     my $endsession_endpoint =
@@ -303,7 +303,7 @@ sub authLogout {
         $req->urldc(
             $self->buildLogoutRequest(
                 $endsession_endpoint,
-                $req->{sessionInfo}->{OpenIDConnect_IDToken}, $logout_url
+                $req->{sessionInfo}->{_oidc_id_token}, $logout_url
             )
         );
 

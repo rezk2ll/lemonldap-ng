@@ -75,7 +75,7 @@ sub getUser {
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{dn} = $req->datas->{dn};
+    $req->{sessionInfo}->{_dn} = $req->datas->{dn};
 
     my %vars = ( %{ $self->conf->{exportedVars} },
         %{ $self->conf->{ldapExportedVars} } );
