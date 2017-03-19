@@ -97,7 +97,7 @@
 "areYouSure":"Êtes vous sûr ?",
 "authPortal":"Portail d'authentification",
 "authRemaining":"%s authentifications restantes, changez votre mot de passe !",
-"autoAccept":"Acceptation automatique dans 5 secondes",
+"autoAccept":"Acceptation automatique dans 30 secondes",
 "back2CasUrl":"Le service duquel vous arrivez a fourni un lien que vous êtes invité à suivre",
 "back2Portal":"Retourner au portail",
 "cancel":"Annuler",
