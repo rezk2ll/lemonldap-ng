@@ -20,7 +20,7 @@
   };
 
   $(document).ready(function() {
-    setTimeout(go, 10000);
+    setTimeout(go, 30000);
     setTimeout(timer, 1000);
     $(".idploop").on('click', function() {
       return $("#idp").val($(this).attr("val"));
