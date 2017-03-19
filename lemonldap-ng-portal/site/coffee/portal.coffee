@@ -50,10 +50,10 @@ setSelector = "#appslist"
 # function that writes the list order to session
 getOrder = ->
 	$.ajax
-		type: "POST"
-		url: datas['scriptname']
+		type: "PUT"
+		url: datas['scriptname'] + '/mysession/persistent'
 		data:
-			storeAppsListOrder: $(setSelector).sortable("toArray").join()
+			_appsListOrder: $(setSelector).sortable("toArray").join()
 		dataType: 'json'
 
 # function that restores the list order from session

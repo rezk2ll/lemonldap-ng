@@ -72,10 +72,10 @@ LemonLDAP::NG Portal jQuery scripts
 
   getOrder = function() {
     return $.ajax({
-      type: "POST",
-      url: datas['scriptname'],
+      type: "PUT",
+      url: datas['scriptname'] + '/mysession/persistent',
       data: {
-        storeAppsListOrder: $(setSelector).sortable("toArray").join()
+        _appsListOrder: $(setSelector).sortable("toArray").join()
       },
       dataType: 'json'
     });

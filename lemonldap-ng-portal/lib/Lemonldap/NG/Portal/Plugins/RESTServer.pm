@@ -30,8 +30,12 @@
 #   where <type> is the session type ("global" for SSO session)
 #
 # - Authorizations for connected users (always):
+#   * GET /mysession/?whoami                               : get "my" uid
 #   * GET /mysession/?authorizationfor=<base64-encoded-url>: ask if url is
 #                                                            authorizated
+#   * PUT /mysession/<type>                                : update some
+#                                                            persistent datas
+#                                                            (restricted)
 #
 # There is no conflict with SOAP server, they can be used together
 
@@ -142,6 +146,10 @@ sub init {
     $self->addAuthRoute(
         mysession => { '*' => 'mysession' },
         [ 'GET', 'POST' ]
+    );
+    $self->addAuthRoute(
+        mysession => { ':sessionType' => 'updateMySession' },
+        ['PUT']
     );
     extends @parents if ($add);
     $self->setTypes( $self->conf ) if ( $self->conf->{restSessionServer} );
@@ -299,7 +307,8 @@ sub mysession {
         # Split URL
         my ( $host, $uri ) = ( $req->urldc =~ m#^https?://([^/]+)(/.*)?$# );
         $uri ||= '/';
-        return $self->p->sendError( $req, "Bad URL $req->{urldc}", 400 ) unless ($host);
+        return $self->p->sendError( $req, "Bad URL $req->{urldc}", 400 )
+          unless ($host);
 
         $self->logger->debug("Looking for authorization for $url");
 
@@ -321,6 +330,26 @@ sub getMyKey {
         $req->userData->{_session_id},
         $key || $self->exportedAttr
     );
+}
+
+sub updateMySession {
+    my ( $self, $req ) = @_;
+    my $res   = 0;
+    my $mKeys = [];
+    if ( $req->param('sessionType') eq 'persistent' ) {
+        foreach my $key (qw(_appsListOrder)) {
+            if ( my $v = $req->param($key) ) {
+                $res++;
+                push @$mKeys, $key;
+                $self->p->updatePersistentSession( $req, { $key => $v } );
+            }
+        }
+    }
+    unless ($res) {
+        return $self->p->sendError( $req, 'Modification refused', 403 );
+    }
+    return $self->p->sendJSONresponse( $req,
+        { result => 1, count => $res, modifiedKeys => $mKeys } );
 }
 
 1;
