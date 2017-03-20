@@ -8,7 +8,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 22;
+my $maintests = 20;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -95,44 +95,36 @@ SKIP: {
       ( $body =~ /<input type="hidden".+?name="(.+?)".+?value="(.*?)"/sg );
     $fields{user} = $fields{password} = 'french';
     use URI::Escape;
-    my $s = join( '&', map { "$_=" . uri_escape( $fields{$_} ) } keys %fields );
+    $query =
+      join( '&', map { "$_=" . uri_escape( $fields{$_} ) } keys %fields );
     ok(
         $res = $issuer->_post(
             $url,
-            IO::String->new($s),
+            IO::String->new($query),
             accept => 'text/html',
-            length => length($s),
+            length => length($query),
         ),
         'Post authentication'
     );
     expectOK($res);
     my $idpId = expectCookie($res);
+    ( $host, $url, $query ) =
+      expectForm( $res, 'auth.sp.com', '/saml/proxySingleSignOnPost',
+        'SAMLResponse', 'RelayState' );
 
     # Post SAML response to SP
-    ok(
-        $res->[2]->[0] =~
-          m#<form.+?action="http://auth.sp.com(.*?)".+?method="post"#,
-        'Form method is POST'
-    );
-    $url = $1;
-    ok(
-        $res->[2]->[0] =~
-          /<input type="hidden".+?name="SAMLResponse".+?value="(.+?)"/s,
-        'Found SAML response'
-    );
-    $s = "SAMLResponse=$1";
     switch ('sp');
     ok(
         $res = $sp->_post(
-            $url, IO::String->new($s),
+            $url, IO::String->new($query),
             accept => 'text/html',
-            length => length($s),
+            length => length($query),
             cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
         'Post SAML response to SP'
     );
     my $spId = expectCookie($res);
-    expectRedirection( $res, 'http://auth.sp.com' );
+    expectRedirection( $res, 'http://test1.example.com/' );
 
     ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
     expectOK($res);

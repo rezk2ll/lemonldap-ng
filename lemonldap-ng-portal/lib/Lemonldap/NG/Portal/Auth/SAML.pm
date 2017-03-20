@@ -228,7 +228,8 @@ sub extractFormInfo {
               ->{samlIDPMetaDataOptionsRelayStateURL};
 
             #  Extract RelayState information
-            if ( $self->extractRelayState( $relaystate, $relayStateURL ) ) {
+            if ( $self->extractRelayState( $req, $relaystate, $relayStateURL ) )
+            {
                 $self->logger->debug("RelayState $relaystate extracted");
             }
 
@@ -346,6 +347,16 @@ sub extractFormInfo {
                     $req->datas->{_proxiedArtifact} =
                       $samlSessionInfo->data->{Artifact};
 
+               # Save values in hidden fields in case of other user interactions
+                    $self->p->setHiddenFormValue( $req, 'SAMLRequest',
+                        $self->{_proxiedRequest} );
+                    $self->p->setHiddenFormValue( $req, 'Method',
+                        $self->{_proxiedMethod} );
+                    $self->p->setHiddenFormValue( $req, 'RelayState',
+                        $self->{_proxiedRelayState} );
+                    $self->p->setHiddenFormValue( $req, 'SAMLart',
+                        $self->{_proxiedArtifact} );
+
                     # Delete session
                     $samlSessionInfo->remove();
                 }
@@ -456,7 +467,7 @@ sub extractFormInfo {
             }
 
             # If URL in RelayState, different from portal, redirect user
-            if ( $self->extractRelayState($relaystate) ) {
+            if ( $self->extractRelayState( $req, $relaystate ) ) {
                 $self->logger->debug("RelayState $relaystate extracted");
                 $self->logger->debug(
                     "URL " . $req->urldc . " found in RelayState" );
