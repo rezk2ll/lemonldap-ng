@@ -189,6 +189,14 @@ sub run {
         # Ignore signature verification
         $self->disableSignatureVerification($login);
 
+        if ($request) {
+            $req->datas->{_proxiedSamlRequest} = $login->request();
+            $req->datas->{_proxiedRequest}     = $request;
+            $req->datas->{_proxiedMethod}      = $method;
+            $req->datas->{_proxiedRelayState}  = $relaystate,
+              $req->datas->{_proxiedArtifact}  = $artifact;
+        }
+
         # Process the request or use IDP initiated mode
         if ( $request or $idp_initiated ) {
 

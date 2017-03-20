@@ -31,7 +31,9 @@ SKIP: {
     my $res;
     ok(
         $res = $sp->_get(
-            '/', accept => 'text/html',
+            '/',
+            accept => 'text/html',
+            query  => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw=='
         ),
         'Unauth SP request'
     );
@@ -39,25 +41,25 @@ SKIP: {
     ok( expectCookie( $res, 'lemonldapidp' ) == 0, 'IDP cookie deleted' )
       or explain( $res->[1],
         'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
+    my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'confirm' );
     ok(
         $res->[2]->[0] =~
-          /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,
+          m#<button type="submit".+?val="http://auth.idp.com/saml/metadata"#s,
         'Found confirm key'
       )
       or explain(
         $res->[2],
 '<input type="hidden" id="confirm" name="confirm" value="<base64 value>" />'
       );
-    my $confirm = $1;
+    $query .= '&idp=http://auth.idp.com/saml/metadata';
 
     # Choose idp on sp
     ok(
         $res = $sp->_post(
             '/',
-            IO::String->new(
-                "confirm=$confirm&idp=http://auth.idp.com/saml/metadata"),
+            IO::String->new($query),
             accept => 'text/html',
-            length => length($confirm) + 46,
+            length => length($query),
         ),
         'Select IDP'
     );
@@ -70,7 +72,7 @@ SKIP: {
         $res->[1],
 'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
       );
-    my ( $url, $query ) = expectRedirection( $res,
+    ( $url, $query ) = expectRedirection( $res,
         qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
     # Push SAML request to IdP
@@ -348,7 +350,8 @@ ywIDAQAB
 ",
                 samlSPMetaDataXML => {
                     "sp.com" => {
-                        samlSPMetaDataXML => samlSPMetaDataXML('sp','HTTP-Redirect')
+                        samlSPMetaDataXML =>
+                          samlSPMetaDataXML( 'sp', 'HTTP-Redirect' )
                     },
                 },
             }
@@ -394,7 +397,8 @@ sub sp {
                 },
                 samlIDPMetaDataXML => {
                     idp => {
-                        samlIDPMetaDataXML => samlIDPMetaDataXML('idp','HTTP-Redirect')
+                        samlIDPMetaDataXML =>
+                          samlIDPMetaDataXML( 'idp', 'HTTP-Redirect' )
                     }
                 },
                 samlOrganizationDisplayName => "SP",
