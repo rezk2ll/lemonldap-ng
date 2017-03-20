@@ -233,6 +233,9 @@ sub reloadConf {
                 $re->add("$_");
             }
         }
+        my $p = $self->conf->{portal};
+        $p =~ s#https?://([^/]*).*$#$1#;
+        $re->add( quotemeta($p) );
         foreach my $vhost ( keys %{ $self->conf->{locationRules} } ) {
             $self->logger->debug("Vhost $vhost added in trusted domains");
             $re->add( quotemeta($vhost) );
