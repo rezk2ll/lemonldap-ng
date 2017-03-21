@@ -111,7 +111,7 @@ ok(
         cookie => "lemonldap=$spId",
         accept => 'text/html'
     ),
-    'Query SP for logout'
+    'Query RP for logout'
 );
 count(1);
 ( $url, $query ) = expectRedirection( $res,

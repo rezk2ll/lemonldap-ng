@@ -174,7 +174,7 @@ qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
             query  => $query,
             accept => 'text/html',
         ),
-        'Launch SAML logout request to IdP'
+        'Launch SAML logout request to SP'
     );
     expectOK($res);
 

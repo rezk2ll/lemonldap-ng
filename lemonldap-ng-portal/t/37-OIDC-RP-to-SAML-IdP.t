@@ -111,7 +111,6 @@ SKIP: {
         'Post authentication'
     );
 
-#( $url, $query ) = expectRedirection($res,qw#http://auth.idp.com(/+saml/singleSignOn)\?(issuerRequest=.*)$#);
     ( $host, $url, $query ) = expectAutoPost($res);
     $query =~ s/\+/%2B/g;
     my $idpId = expectCookie($res);
@@ -153,12 +152,65 @@ SKIP: {
         ),
         'Confirm OIDC sharing'
     );
-    ($query) = expectRedirection($res,qr#http://auth.rp.com/*\?(.*)$#);
+    ($query) = expectRedirection( $res, qr#http://auth.rp.com/*\?(.*)$# );
 
     # Follow redirection to RP
-    switch('rp');
-    ok($res = $rp->_get('/',query=>$query,accept=>'text/html'),'Follow redirection to RP');
+    switch ('rp');
+    ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
+        'Follow redirection to RP' );
     my $rpId = expectCookie($res);
+
+    # Logout initiated by RP
+    ok(
+        $res = $rp->_get(
+            '/',
+            query  => 'logout',
+            cookie => "lemonldap=$rpId",
+            accept => 'text/html'
+        ),
+        'Query RP for logout'
+    );
+    ( $url, $query ) = expectRedirection( $res,
+        qr#http://auth.sp.com(/oauth2/logout)\?(post_logout_redirect_uri=.+)$#
+    );
+
+    # Push logout request to proxy
+    switch ('sp');
+    ok(
+        $res = $sp->_get(
+            $url,
+            query  => $query,
+            cookie => "lemonldap=$spId",
+            accept => 'text/html'
+        ),
+        "Push logout request to OP/SP,  endpoint $url"
+    );
+    ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
+    ok(
+        $res = $sp->_post(
+            $url, IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+            cookie => "lemonldap=$spId",
+        ),
+        "Confirm logout,                endpoint $url"
+    );
+    ( $url, $query ) = expectRedirection( $res,
+        qr#http://auth.idp.com/*(/saml/singleLogout)\?(.*)# );
+
+    # Push logout to SAML IdP
+    switch ('idp');
+    ok(
+        $idp->_get(
+            $url,
+            query  => $query,
+            cookie => "lemonldap=$idpId",
+            accept => 'text/html',
+        ),
+        'Push logout to SAML IdP'
+    );
+    ( $url, $query ) = expectRedirection( $res, qr#http://auth.idp.com/*(/saml/singleLogout)\?(.*)$# );
+    diag("SAML SP isn't found");
 
     #print STDERR Dumper($res);
 }
