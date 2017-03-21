@@ -8,7 +8,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 14;
+my $maintests = 19;
 my $debug     = 'error';
 my ( $idp, $sp, $rp, $res );
 my %handlerOR = ( idp => [], sp => [], rp => [] );
@@ -201,7 +201,7 @@ SKIP: {
     # Push logout to SAML IdP
     switch ('idp');
     ok(
-        $idp->_get(
+        $res = $idp->_get(
             $url,
             query  => $query,
             cookie => "lemonldap=$idpId",
@@ -209,8 +209,20 @@ SKIP: {
         ),
         'Push logout to SAML IdP'
     );
-    ( $url, $query ) = expectRedirection( $res, qr#http://auth.idp.com/*(/saml/singleLogout)\?(.*)$# );
-    diag("SAML SP isn't found");
+    ( $url, $query ) = expectRedirection( $res,
+        qr#http://auth.sp.com/*(/saml/proxySingleLogoutReturn)\?(.*)$# );
+
+    # Push logout to SAML SP
+    switch ('sp');
+    ok(
+        $res = $sp->_get(
+            $url,
+            query  => $query,
+            cookie => "lemonldap=$spId",
+            accept => 'text/html',
+        ),
+        'Push logout to SAML IdP'
+    );
 
     #print STDERR Dumper($res);
 }
