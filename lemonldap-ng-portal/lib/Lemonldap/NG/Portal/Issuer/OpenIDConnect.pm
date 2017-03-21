@@ -801,6 +801,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
 
             # Ask consent for logout
             if ( $req->param('confirm') ) {
+                my $err;
                 if ( $req->param('confirm') == 1 ) {
                     $req->steps(
                         [
@@ -808,7 +809,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                             'deleteSession'
                         ]
                     );
-                    my $err = $req->error( $self->p->process($req) );
+                    $err = $req->error( $self->p->process($req) );
                     if ( $err > 0 ) {
                         $self->logger->error(
                             "Logout process returns error code $err");
@@ -827,7 +828,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                     $req->urldc($response_url);
                     return PE_REDIRECT;
                 }
-                return $req->param('confirm') == 1 ? PE_LOGOUT_OK : PE_OK;
+                return $req->param('confirm') == 1 ? ($err ? $err : PE_LOGOUT_OK ) : PE_OK;
             }
 
             $req->info(
