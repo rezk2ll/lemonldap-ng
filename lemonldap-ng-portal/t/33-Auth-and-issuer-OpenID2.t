@@ -36,7 +36,7 @@ SKIP: {
     ok( $res->[2]->[0] =~ /name="openid_identifier"/,
         ' Ask for OpenID identity' );
 
-    my $query .=
+    $query .=
       '&openid_identifier=http%3A%2F%2Fauth.idp.com%2Fopenidserver%2Fdwho';
 
     ok(
@@ -56,7 +56,7 @@ SKIP: {
     ok( $res = $issuer->_get( $uri, query => $query, accept => 'text/html' ),
         'Follow redirection to IdP' );
     expectOK($res);
-    my ( $host, $tmp );
+    my ($tmp);
     ( $host, $tmp, $query ) = expectForm( $res, '#', undef );
     $query .= '&user=dwho&password=dwho';
 
