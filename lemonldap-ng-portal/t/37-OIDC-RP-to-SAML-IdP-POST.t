@@ -76,7 +76,9 @@ SKIP: {
         ),
         'Confirm IdP'
     );
-    ($host,$url,$query) = expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn', 'SAMLRequest' );
+    ( $host, $url, $query ) =
+      expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn',
+        'SAMLRequest' );
 
     # Post SAML request to IdP
     switch ('idp');
@@ -84,7 +86,7 @@ SKIP: {
         $res = $idp->_post(
             $url,
             IO::String->new($query),
-            length  => length($query),
+            length => length($query),
             accept => 'text/html',
         ),
         'Launch SAML request to IdP'
@@ -195,8 +197,8 @@ SKIP: {
         ),
         "Confirm logout,                endpoint $url"
     );
-    ( $host, $url, $query ) = expectForm( $res,
-        'auth.idp.com','/saml/singleLogout', 'SAMLRequest' );
+    ( $host, $url, $query ) =
+      expectForm( $res, 'auth.idp.com', '/saml/singleLogout', 'SAMLRequest' );
 
     # Push logout to SAML IdP
     switch ('idp');
@@ -209,8 +211,8 @@ SKIP: {
         ),
         'Push logout to SAML IdP'
     );
-    ( $host, $url, $query ) = expectForm( $res,
-        'auth.sp.com','/saml/proxySingleLogoutReturn' );
+    ( $host, $url, $query ) =
+      expectForm( $res, 'auth.sp.com', '/saml/proxySingleLogoutReturn' );
 
     # Push logout to SAML SP
     switch ('sp');
