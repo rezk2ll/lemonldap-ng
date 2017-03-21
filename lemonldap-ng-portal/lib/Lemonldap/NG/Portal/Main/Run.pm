@@ -775,7 +775,7 @@ sub registerLogin {
     return
       unless ( $self->conf->{loginHistoryEnabled}
         and defined $req->authResult );
-    my $history = $req->sessionInfo->{loginHistory} ||= {};
+    my $history = $req->sessionInfo->{_loginHistory} ||= {};
     my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
@@ -793,7 +793,7 @@ sub registerLogin {
       if ( scalar @{ $history->{$type} } > $self->conf->{ $type . "Number" } );
 
     # Save into persistent session
-    $self->updatePersistentSession( $req, { loginHistory => $history, } );
+    $self->updatePersistentSession( $req, { _loginHistory => $history, } );
 }
 
 # put main session data into a hash ref

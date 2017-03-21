@@ -53,7 +53,7 @@ sub init {
       . $now
       . ',"uid":"dwho","_issuerDB":"Null","_session_id":"f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545","authenticationLevel":1,"_whatToTrace":"dwho","_auth":"Demo","_utime":'
       . $now
-      . ',"loginHistory":{"successLogin":[{"ipAddr":"127.0.0.1","_utime":'
+      . ',"_loginHistory":{"successLogin":[{"ipAddr":"127.0.0.1","_utime":'
       . $now
       . '}]},"cn":"Doctor Who","mail":"dwho@badwolf.org"}';
     close F;

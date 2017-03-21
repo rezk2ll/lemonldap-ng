@@ -116,11 +116,11 @@ sub displayModules {
             elsif ( $module->[0] eq 'LoginHistory' ) {
                 $moduleHash->{'SUCCESS_LOGIN'} =
                   $self->p->mkSessionArray(
-                    $req->{sessionInfo}->{loginHistory}->{successLogin},
+                    $req->{sessionInfo}->{_loginHistory}->{successLogin},
                     "", 0, 0 );
                 $moduleHash->{'FAILED_LOGIN'} =
                   $self->p->mkSessionArray(
-                    $req->{sessionInfo}->{loginHistory}->{failedLogin},
+                    $req->{sessionInfo}->{_loginHistory}->{failedLogin},
                     "", 0, 1 );
             }
             push @$displayModules, $moduleHash;

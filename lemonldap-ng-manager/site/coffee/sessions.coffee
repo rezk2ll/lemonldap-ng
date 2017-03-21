@@ -217,21 +217,21 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			_insert '^notification_(.+)', '__notificationsDone__'
 
 			# 4. Add session history if exists
-			if session.loginHistory
+			if session._loginHistory
 				tmp = []
-				if session.loginHistory.successLogin
-					for l in session.loginHistory.successLogin
+				if session._loginHistory.successLogin
+					for l in session._loginHistory.successLogin
 						tmp.push
 							t: l._utime
 							title: $scope.localeDate l._utime
 							value: "Success (IP #{l.ipAddr})"
-				if session.loginHistory.failedLogin
-					for l in session.loginHistory.failedLogin
+				if session._loginHistory.failedLogin
+					for l in session._loginHistory.failedLogin
 						tmp.push
 							t: l._utime
 							title: $scope.localeDate l._utime
 							value: "#{l.error} (IP #{l.ipAddr})"
-				delete session.loginHistory
+				delete session._loginHistory
 				tmp.sort (a,b) ->
 					a.t - b.t
 				res.push

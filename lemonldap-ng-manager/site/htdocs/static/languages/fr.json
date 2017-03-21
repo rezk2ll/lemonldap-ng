@@ -10,6 +10,7 @@
 "_lassoSessionDump": " Dump session Lasso ",
 "_lastAuthnUTime": "Tampon d'authentification ",
 "_lastSeen": "Tampon de dernière activité",
+"_loginHistory": "Historique des connexions",
 "_oidc_access_token": "Jeton d'accès",
 "_oidc_id_token": "Jeton d'identité",
 "_oidc_OP": "Clef du fournisseur",

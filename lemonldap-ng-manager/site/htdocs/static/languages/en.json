@@ -10,6 +10,7 @@
 "_lassoSessionDump": "Lasso session dump",
 "_lastAuthnUTime": "Authentication timestamp",
 "_lastSeen": "Last activity timestamp",
+"_loginHistory": "Login history",
 "_oidc_access_token": "Access Token",
 "_oidc_id_token": "ID Token",
 "_oidc_OP": "Provider key",

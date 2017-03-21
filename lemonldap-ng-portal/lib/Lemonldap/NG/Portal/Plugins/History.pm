@@ -19,16 +19,16 @@ sub run {
         $self->logger->debug('History asked');
         $req->info(
             (
-                $req->sessionInfo->{loginHistory}->{successLogin}
+                $req->sessionInfo->{_loginHistory}->{successLogin}
                 ? $self->mkSessionArray(
-                    $req->sessionInfo->{loginHistory}->{successLogin},
+                    $req->sessionInfo->{_loginHistory}->{successLogin},
                     'lastLogins', 0, 0 )
                 : ""
             )
             . (
-                $req->sessionInfo->{loginHistory}->{failedLogin}
+                $req->sessionInfo->{_loginHistory}->{failedLogin}
                 ? $self->mkSessionArray(
-                    $req->sessionInfo->{loginHistory}->{failedLogin},
+                    $req->sessionInfo->{_loginHistory}->{failedLogin},
                     'lastFailedLogins', 0, 1 )
                 : ""
             )

@@ -254,10 +254,10 @@
           }
           _insert('^openid', 'OpenID');
           _insert('^notification_(.+)', '__notificationsDone__');
-          if (session.loginHistory) {
+          if (session._loginHistory) {
             tmp = [];
-            if (session.loginHistory.successLogin) {
-              ref = session.loginHistory.successLogin;
+            if (session._loginHistory.successLogin) {
+              ref = session._loginHistory.successLogin;
               for (j = 0, len1 = ref.length; j < len1; j++) {
                 l = ref[j];
                 tmp.push({
@@ -267,8 +267,8 @@
                 });
               }
             }
-            if (session.loginHistory.failedLogin) {
-              ref1 = session.loginHistory.failedLogin;
+            if (session._loginHistory.failedLogin) {
+              ref1 = session._loginHistory.failedLogin;
               for (k = 0, len2 = ref1.length; k < len2; k++) {
                 l = ref1[k];
                 tmp.push({
@@ -278,7 +278,7 @@
                 });
               }
             }
-            delete session.loginHistory;
+            delete session._loginHistory;
             tmp.sort(function(a, b) {
               return a.t - b.t;
             });
