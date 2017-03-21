@@ -440,8 +440,8 @@ sub updateSession {
               $infos->{$_};
         }
 
-        # Update session in global storage with updateTime
-        $infos->{updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
+        # Update session in global storage with _updateTime
+        $infos->{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
         if ( my $apacheSession =
             $self->getApacheSession( $id, info => $infos ) )
         {

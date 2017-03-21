@@ -33,7 +33,7 @@ schemes =
 		(t,v,q) ->
 			q.replace(/\&groupBy.*$/, '') + "&_whatToTrace=#{v}"
 	]
-	startTime: [
+	_startTime: [
 		(t,v) ->
 			"groupBy=substr(#{t},8)"
 		(t,v) ->
@@ -75,7 +75,7 @@ hiddenAttributes = '_password'
 
 # Attributes to group in session display
 categories =
-    dateTitle:          ['_utime', 'startTime', 'updateTime', '_lastAuthnUTime', '_lastSeen']
+    dateTitle:          ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen']
     connectionTitle:    ['ipAddr', '_timezone', '_url']
     authenticationTitle:['_session_id', '_user', '_password', 'authenticationLevel']
     modulesTitle:       ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti']
@@ -194,7 +194,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							session[key] = '********'
 						else if key.match /^(_utime|_lastAuthnUTime|_lastSeen|notification)$/
 							session[key] = $scope.localeDate value
-						else if key.match /^(startTime|updateTime)$/
+						else if key.match /^(_startTime|_updateTime)$/
 							session[key] = _stToStr value
 			res = []
 
@@ -301,9 +301,9 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		scheme = if schemes[$scope.type]
 			schemes[$scope.type]
 
-		#  - updateTime must be displayed as startDate
-		else if $scope.type == 'updateTime'
-			schemes.startTime
+		#  - _updateTime must be displayed as startDate
+		else if $scope.type == '_updateTime'
+			schemes._startTime
 
 		#  - default to _whatToTrace scheme
 		else

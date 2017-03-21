@@ -45,9 +45,9 @@ sub init {
     my $now = time;
     my $ts = strftime "%Y%m%d%H%M%S", localtime;
 
-    print F '{"updateTime":"'
+    print F '{"_updateTime":"'
       . $ts
-      . '","_timezone":"1","_session_kind":"SSO","_passwordDB":"Demo","startTime":"'
+      . '","_timezone":"1","_session_kind":"SSO","_passwordDB":"Demo","_startTime":"'
       . $ts
       . '","ipAddr":"127.0.0.1","UA":"Mozilla/5.0 (X11; VAX4000; rv:43.0) Gecko/20100101 Firefox/143.0 Iceweasel/143.0.1","_user":"dwho","_userDB":"Demo","_lastAuthnUTime":'
       . $now

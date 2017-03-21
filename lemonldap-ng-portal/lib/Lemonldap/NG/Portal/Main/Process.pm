@@ -306,12 +306,12 @@ sub setSessionInfo {
 
     # Date and time
     if ( $self->conf->{updateSession} ) {
-        $req->{sessionInfo}->{updateTime} =
+        $req->{sessionInfo}->{_updateTime} =
           strftime( "%Y%m%d%H%M%S", localtime() );
     }
     else {
         $req->{sessionInfo}->{_utime} ||= time();
-        $req->{sessionInfo}->{startTime} =
+        $req->{sessionInfo}->{_startTime} =
           strftime( "%Y%m%d%H%M%S", localtime() );
         $req->{sessionInfo}->{_lastSeen} = time()
           if $self->conf->{timeoutActivity};

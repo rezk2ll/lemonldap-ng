@@ -19,8 +19,8 @@
             <li><a id="a-ip" href="#/ipAddr"><i class="glyphicon glyphicon-sort-by-order"></i> {{translate('ipAddresses')}}</a></li>
             <li><a id="a-multi" href="#/doubleIp"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('multiIp')}}</a></li>
             <li><a id="a-multi" href="#/persistent"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('persistent')}}</a></li>
-            <li><a id="a-starttime" href="#/startTime"><i class="glyphicon glyphicon-hourglass"></i> {{translate('startTime')}}</a></li>
-            <li><a id="a-updatetime" href="#/updateTime"><i class="glyphicon glyphicon-hourglass"></i> {{translate('updateTime')}}</a></li>
+            <li><a id="a-starttime" href="#/_startTime"><i class="glyphicon glyphicon-hourglass"></i> {{translate('_startTime')}}</a></li>
+            <li><a id="a-updatetime" href="#/_updateTime"><i class="glyphicon glyphicon-hourglass"></i> {{translate('_updateTime')}}</a></li>
           </ul>
         </div>
       </div>

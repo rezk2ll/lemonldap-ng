@@ -43,7 +43,7 @@
         return q.replace(/\&groupBy.*$/, '') + ("&_whatToTrace=" + v);
       }
     ],
-    startTime: [
+    _startTime: [
       function(t, v) {
         return "groupBy=substr(" + t + ",8)";
       }, function(t, v) {
@@ -92,7 +92,7 @@
   hiddenAttributes = '_password';
 
   categories = {
-    dateTitle: ['_utime', 'startTime', 'updateTime', '_lastAuthnUTime', '_lastSeen'],
+    dateTitle: ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen'],
     connectionTitle: ['ipAddr', '_timezone', '_url'],
     authenticationTitle: ['_session_id', '_user', '_password', 'authenticationLevel'],
     modulesTitle: ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti'],
@@ -225,7 +225,7 @@
                   session[key] = '********';
                 } else if (key.match(/^(_utime|_lastAuthnUTime|_lastSeen|notification)$/)) {
                   session[key] = $scope.localeDate(value);
-                } else if (key.match(/^(startTime|updateTime)$/)) {
+                } else if (key.match(/^(_startTime|_updateTime)$/)) {
                   session[key] = _stToStr(value);
                 }
               }
@@ -351,7 +351,7 @@
       $scope.updateTree = function(value, node, level, over, currentQuery, count) {
         var query, scheme, tmp;
         $scope.waiting = true;
-        scheme = schemes[$scope.type] ? schemes[$scope.type] : $scope.type === 'updateTime' ? schemes.startTime : schemes._whatToTrace;
+        scheme = schemes[$scope.type] ? schemes[$scope.type] : $scope.type === '_updateTime' ? schemes._startTime : schemes._whatToTrace;
         query = scheme[level]($scope.type, value, currentQuery);
         if (count > max && overScheme[$scope.type]) {
           if (tmp = overScheme[$scope.type]($scope.type, value, level, over, currentQuery)) {

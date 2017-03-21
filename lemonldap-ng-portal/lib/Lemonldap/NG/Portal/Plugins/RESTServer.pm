@@ -66,7 +66,7 @@ has exportedAttr => (
         else {
             my @attributes = (
                 'authenticationLevel', 'groups',
-                'ipAddr',              'startTime',
+                'ipAddr',              '_startTime',
                 '_utime',              '_lastSeen',
                 '_session_id',
             );
