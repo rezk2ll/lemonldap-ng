@@ -8,7 +8,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 11;
+my $maintests = 14;
 my $debug     = 'error';
 my ( $idp, $sp, $rp, $res );
 my %handlerOR = ( idp => [], sp => [], rp => [] );
@@ -110,7 +110,8 @@ SKIP: {
         ),
         'Post authentication'
     );
-    #( $url, $query ) = expectRedirection($res,qw#http://auth.idp.com(/+saml/singleSignOn)\?(issuerRequest=.*)$#);
+
+#( $url, $query ) = expectRedirection($res,qw#http://auth.idp.com(/+saml/singleSignOn)\?(issuerRequest=.*)$#);
     ( $host, $url, $query ) = expectAutoPost($res);
     $query =~ s/\+/%2B/g;
     my $idpId = expectCookie($res);
@@ -126,8 +127,38 @@ SKIP: {
         ),
         'POST SAML response'
     );
-    ( $url, $query ) = expectRedirection( $res, qr#http://auth.sp.com/*(/oauth2/authorize)\?(.*)$# );
-    diag('TODO: follow redirection');
+    my $spId = expectCookie($res);
+    ( $url, $query ) = expectRedirection( $res,
+        qr#http://auth.sp.com/*(/oauth2/authorize)\?(.*)$# );
+
+    # Follow internal redirection
+    ok(
+        $res = $sp->_get(
+            $url,
+            query  => $query,
+            accept => 'text/html',
+            cookie =>
+              "lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata"
+        ),
+        'Follow internal redirection from SAML-SP to OIDC-OP'
+    );
+    ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
+    ok(
+        $res = $sp->_get(
+            $url,
+            query  => $query,
+            accept => 'text/html',
+            cookie =>
+              "lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata"
+        ),
+        'Confirm OIDC sharing'
+    );
+    ($query) = expectRedirection($res,qr#http://auth.rp.com/*\?(.*)$#);
+
+    # Follow redirection to RP
+    switch('rp');
+    ok($res = $rp->_get('/',query=>$query,accept=>'text/html'),'Follow redirection to RP');
+    my $rpId = expectCookie($res);
 
     #print STDERR Dumper($res);
 }
