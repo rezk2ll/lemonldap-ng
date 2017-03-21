@@ -19,10 +19,6 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer';
 
-# INTERFACE
-
-sub beforeAuth { 'forUnauthUser' }
-
 # PROPERTIES
 
 has secret => (
@@ -68,22 +64,27 @@ sub init {
 
 # RUNNING METHOD
 
-sub forUnauthUser {
+# Overwrite _redirect to handle server-to-server queries
+sub _redirect {
     my ( $self, $req ) = @_;
-    my $mode = $req->param('openid.mode');
-    unless ($mode) {
-        $self->logger->debug('OpenID SP test');
-        return PE_OPENID_EMPTY;
+    unless ( $req->param('issuerUrldc')
+        or $req->param('issuerRequestopenidserver') )
+    {
+        my $mode = $req->param('openid.mode');
+        unless ($mode) {
+            $self->logger->debug('OpenID SP test');
+            return $self->p->do( $req, [ sub { PE_OPENID_EMPTY } ] );
+        }
+        if ( $mode eq 'associate' ) {
+            return $self->_openIDResponse( $req,
+                $self->openIDServer($req)->_mode_associate() );
+        }
+        elsif ( $mode eq 'check_authentication' ) {
+            return $self->_openIDResponse( $req,
+                $self->openIDServer($req)->_mode_check_authentication() );
+        }
     }
-    if ( $mode eq 'associate' ) {
-        return $self->_openIDResponse( $req,
-            $self->openIDServer($req)->_mode_associate() );
-    }
-    elsif ( $mode eq 'check_authentication' ) {
-        return $self->_openIDResponse( $req,
-            $self->openIDServer($req)->_mode_check_authentication() );
-    }
-    return PE_OK;
+    return $self->SUPER::_redirect($req);
 }
 
 sub run {
@@ -209,6 +210,15 @@ sub _openIDResponse {
             $req->info( $req->datas->{_openIdTrustExtMsg} )
               if ( $req->datas->{_openIdTrustExtMsg} );
             $self->logger->debug('OpenID confirmation');
+            foreach ( keys %{ $req->parameters } ) {
+                if (/^(?:openid.*|url)$/) {
+                    $self->p->setHiddenFormValue( $req, $_, $req->param($_),
+                        '', 0 );
+                }
+            }
+
+            # TODO: understand why this is needed here and not in OIDC
+            delete $req->datas->{_url};
             return PE_CONFIRM;
         }
         elsif ( $req->datas->{_badOpenIdentity} ) {
@@ -240,6 +250,6 @@ sub _openIDResponse {
             )
         );
     }
-    return PE_SENDRESPONSE;
+    return $req->response;
 }
 1;

@@ -1,4 +1,4 @@
-use Test::More skip_all => 'Broken for now';
+use Test::More;
 use strict;
 use IO::String;
 use MIME::Base64;
@@ -8,7 +8,7 @@ BEGIN {
 }
 
 my $maintests = 9;
-my $debug     = 'debug';
+my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -32,7 +32,7 @@ SKIP: {
         ),
         'Unauth SP request'
     );
-    my($host,$url,$query) = expectForm( $res, '#', undef);
+    my ( $host, $url, $query ) = expectForm( $res, '#', undef );
     ok( $res->[2]->[0] =~ /name="openid_identifier"/,
         ' Ask for OpenID identity' );
 
@@ -60,7 +60,6 @@ SKIP: {
     ( $host, $tmp, $query ) = expectForm( $res, '#', undef );
     $query .= '&user=dwho&password=dwho';
 
-    print STDERR Dumper($query);
     # Try to authenticate
     ok(
         $res = $issuer->_post(
@@ -78,6 +77,7 @@ SKIP: {
         $res = $issuer->_post(
             $uri, IO::String->new($query),
             length => length($query),
+            cookie => "lemonldap=$idpId",
             accept => 'text/html'
         ),
         'Confirm choice'

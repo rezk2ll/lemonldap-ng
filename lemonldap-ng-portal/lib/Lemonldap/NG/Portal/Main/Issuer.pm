@@ -69,7 +69,8 @@ sub _redirect {
     my ( $self, $req, @path ) = @_;
     $self->logger->debug('Processing _redirect');
     $self->logger->debug('Store issuer request');
-    my $ir = $self->storeRequest($req);
+    my $ir =
+      $req->param( 'issuerRequest' . $self->path ) || $self->storeRequest($req);
     $self->p->setHiddenFormValue( $req, 'issuerRequest' . $self->path,
         $ir, '', 0 );
     $req->{urldc} = $self->conf->{portal};
