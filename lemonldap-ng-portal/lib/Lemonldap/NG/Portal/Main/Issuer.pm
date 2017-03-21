@@ -76,7 +76,8 @@ sub _redirect {
     $req->{urldc} =~ s#/*$##;
     $req->{urldc} .= $req->path . "?issuerRequest$self->{path}=$ir";
     $self->p->setHiddenFormValue( $req, 'issuerUrldc', $req->urldc, '', 0 );
-    if(my $t = $req->param('issuerRequest' . $self->path)) {
+
+    if ( my $t = $req->param( 'issuerRequest' . $self->path ) ) {
         $ir = $t;
     }
 
@@ -103,9 +104,9 @@ sub _redirect {
 sub _forAuthUser {
     my ( $self, $req, @path ) = @_;
     $self->logger->debug('Processing _forAuthUser');
-                if ( my $r = $req->param( 'issuerRequest' . $self->path ) ) {
-                    $self->restoreRequest( $req, $r );
-                }
+    if ( my $r = $req->param( 'issuerRequest' . $self->path ) ) {
+        $self->restoreRequest( $req, $r );
+    }
     return $self->p->do(
         $req,
         [
@@ -138,15 +139,10 @@ sub restoreRequest {
             $env->{'psgix.input.buffered'} = 0;
             $env->{'psgi.input'}           = IO::String->new($c);
         }
-        my $r = Lemonldap::NG::Common::PSGI::Request->new($env);
-        bless $r, 'Lemonldap::NG::Portal::Main::Request';
         $req->{env} = {};
-        foreach ( keys %{ $r->env } ) {
+        foreach ( keys %$env ) {
             $self->logger->debug("Restore $_");
-            $req->env->{$_} = $r->env->{$_} unless /^plack/;
-        }
-        foreach ( keys %{ $req->env } ) {
-            delete $req->{env}->{$_} if /^plack/;
+            $req->env->{$_} = $env->{$_} unless /^plack/;
         }
     }
     return $req;
