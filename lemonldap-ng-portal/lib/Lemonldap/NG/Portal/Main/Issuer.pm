@@ -9,6 +9,7 @@ package Lemonldap::NG::Portal::Main::Issuer;
 
 use strict;
 use Mouse;
+use IO::String;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
@@ -20,6 +21,15 @@ our $VERSION = '2.0.0';
 has type => ( is => 'rw' );
 
 has path => ( is => 'rw' );
+
+has _ott => (
+    is      => 'rw',
+    default => sub {
+        my $ott = $_[0]->{p}->loadModule('::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->{conf}->{formTimeout} );
+        return $ott;
+    }
+);
 
 # INTERFACE
 
@@ -58,18 +68,17 @@ sub init {
 sub _redirect {
     my ( $self, $req, @path ) = @_;
     $self->logger->debug('Processing _redirect');
-    my $prms = $req->parameters;
-    foreach my $k ( keys %$prms ) {
-        $self->p->setHiddenFormValue( $req, $k, $prms->{$k}, '', 0 )
-          unless ( ref $prms->{$k} );
+    $self->logger->debug('Store issuer request');
+    my $ir = $self->storeRequest($req);
+    $self->p->setHiddenFormValue( $req, 'issuerRequest' . $self->path,
+        $ir, '', 0 );
+    $req->{urldc} = $self->conf->{portal};
+    $req->{urldc} =~ s#/*$##;
+    $req->{urldc} .= $req->path . "?issuerRequest$self->{path}=$ir";
+    $self->p->setHiddenFormValue( $req, 'issuerUrldc', $req->urldc, '', 0 );
+    if(my $t = $req->param('issuerRequest' . $self->path)) {
+        $ir = $t;
     }
-    $self->p->setHiddenFormValue( $req, 'issuerMethod', $req->method, '', 0 );
-    $self->p->setHiddenFormValue( $req, 'issuerQuery', $req->query_string, '',
-        0 );
-    $req->{urldc} =
-        $self->conf->{portal}
-      . $req->path
-      . ( $req->query_string ? '?' . $req->query_string : '' );
 
     # TODO: launch normal process with 'run' at the end
     return $self->p->do(
@@ -82,6 +91,8 @@ sub _redirect {
             $self->p->sessionDatas,
             @{ $self->p->afterDatas },
             sub {
+                # Restore urldc if auth doesn't need to dial with browser
+                $self->restoreRequest( $req, $ir );
                 return $self->run( @_, @path );
               }
         ]
@@ -92,6 +103,9 @@ sub _redirect {
 sub _forAuthUser {
     my ( $self, $req, @path ) = @_;
     $self->logger->debug('Processing _forAuthUser');
+                if ( my $r = $req->param( 'issuerRequest' . $self->path ) ) {
+                    $self->restoreRequest( $req, $r );
+                }
     return $self->p->do(
         $req,
         [
@@ -103,6 +117,39 @@ sub _forAuthUser {
             },
         ]
     );
+}
+
+sub storeRequest {
+    my ( $self, $req ) = @_;
+    my $info = {};
+    $info->{content} = $req->content;
+    foreach ( keys %{ $req->env } ) {
+        $info->{$_} = $req->env->{$_} unless ( ref $req->env->{$_} );
+    }
+    return $self->_ott->createToken($info);
+}
+
+sub restoreRequest {
+    my ( $self, $req, $token ) = @_;
+    my $env = $self->_ott->getToken($token);
+    if ($env) {
+        $self->logger->debug("Restoring request from $token");
+        if ( my $c = delete $env->{content} ) {
+            $env->{'psgix.input.buffered'} = 0;
+            $env->{'psgi.input'}           = IO::String->new($c);
+        }
+        my $r = Lemonldap::NG::Common::PSGI::Request->new($env);
+        bless $r, 'Lemonldap::NG::Portal::Main::Request';
+        $req->{env} = {};
+        foreach ( keys %{ $r->env } ) {
+            $self->logger->debug("Restore $_");
+            $req->env->{$_} = $r->env->{$_} unless /^plack/;
+        }
+        foreach ( keys %{ $req->env } ) {
+            delete $req->{env}->{$_} if /^plack/;
+        }
+    }
+    return $req;
 }
 
 1;

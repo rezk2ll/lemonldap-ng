@@ -72,7 +72,6 @@ ok(
 count(1);
 
 ($query) = expectRedirection( $res, qr#^http://auth.rp.com/?\?(.*)$# );
-
 # Push OP response to RP
 switch ('rp');
 

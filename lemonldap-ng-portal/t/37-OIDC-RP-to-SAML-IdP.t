@@ -110,6 +110,7 @@ SKIP: {
         ),
         'Post authentication'
     );
+    #( $url, $query ) = expectRedirection($res,qw#http://auth.idp.com(/+saml/singleSignOn)\?(issuerRequest=.*)$#);
     ( $host, $url, $query ) = expectAutoPost($res);
     $query =~ s/\+/%2B/g;
     my $idpId = expectCookie($res);
@@ -125,8 +126,8 @@ SKIP: {
         ),
         'POST SAML response'
     );
-    ( $url, $query ) = expectRedirection( $res, 'http://auth.sp.com' );
-    diag('OIDC parameter is lost for now');
+    ( $url, $query ) = expectRedirection( $res, qr#http://auth.sp.com/*(/oauth2/authorize)\?(.*)$# );
+    diag('TODO: follow redirection');
 
     #print STDERR Dumper($res);
 }

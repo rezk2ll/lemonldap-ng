@@ -1150,7 +1150,12 @@ sub extractRelayState {
         # Push values in $self
         foreach ( keys %{ $samlSessionInfo->data } ) {
             next if $_ =~ /(type|_session_id|_utime)/;
-            $req->{$_} = $samlSessionInfo->data->{$_};
+            if($_ eq 'issuerUrldc') {
+                $req->urldc($samlSessionInfo->data->{$_});
+            }
+            else {
+                $req->{$_} = $samlSessionInfo->data->{$_};
+            }
         }
 
         # delete relaystate session

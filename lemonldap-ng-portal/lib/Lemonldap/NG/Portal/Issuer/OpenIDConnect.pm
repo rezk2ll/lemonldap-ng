@@ -113,6 +113,7 @@ sub run {
                     $oidc_request->{$param} = $req->param($param);
                     $self->logger->debug( "OIDC request parameter $param: "
                           . $oidc_request->{$param} );
+                    $self->p->setHiddenFormValue( $req, $param, $oidc_request->{$param}, '', 0 );
                 }
             }
 

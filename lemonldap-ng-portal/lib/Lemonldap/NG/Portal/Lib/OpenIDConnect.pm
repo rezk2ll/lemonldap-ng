@@ -535,7 +535,7 @@ sub checkIDTokenValidity {
         }
         else {
             # Get nonce session
-            unless ($self->ott->getToken($nonce)) {
+            unless ( $self->ott->getToken($nonce) ) {
                 $self->logger->error("Nonce $nonce verification failed");
                 return 0;
             }
@@ -701,7 +701,7 @@ sub extractState {
     return 0 unless $stateSession;
 
     # Push values in $self
-    foreach ( keys %{ $stateSession } ) {
+    foreach ( keys %{$stateSession} ) {
         next if $_ =~ /(type|_session_id|_session_kind|_utime)/;
         my $tmp = $stateSession->{$_};
         if (s/^datas_//) {
