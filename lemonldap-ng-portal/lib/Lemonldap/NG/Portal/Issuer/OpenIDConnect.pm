@@ -11,6 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_LOGOUT_OK
   PE_REDIRECT
   PE_OK
+  PE_UNAUTHORIZEDPARTNER
 );
 
 our $VERSION = '2.0.0';
@@ -250,6 +251,7 @@ sub run {
                 $reauthentication = 1;
             }
 
+            # TODO: verify this
             if ($reauthentication) {
 
                 # Set prompt to 0 to avoid loop
@@ -301,6 +303,16 @@ sub run {
             }
             else {
                 $self->logger->debug("Client id $client_id match RP $rp");
+            }
+
+            # Check if this RP is authorizated
+            if ( my $rule = $self->rpRules->{$rp} ) {
+                unless ( $rule->( $req->sessionInfo ) ) {
+                    $self->userLogger->warn( 'User '
+                          . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                          . "was not authorizated to access to $rp" );
+                    return PE_UNAUTHORIZEDPARTNER;
+                }
             }
 
             # Check Request JWT signature

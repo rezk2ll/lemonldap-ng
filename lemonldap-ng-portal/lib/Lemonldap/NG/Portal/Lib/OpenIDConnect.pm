@@ -36,6 +36,7 @@ use constant PHONE => [qw/phone_number phone_number_verified/];
 has oidcOPList   => ( is => 'rw', default => sub { {} }, );
 has oidcRPList   => ( is => 'rw', default => sub { {} }, );
 has rpAttributes => ( is => 'rw', default => sub { {} }, );
+has rpRules      => ( is => 'rw', default => sub { {} } );
 
 # return LWP::UserAgent object
 has ua => (
@@ -120,6 +121,17 @@ sub loadRPs {
             }
         }
         $self->rpAttributes->{$rp} = $attributes;
+
+        my $rule = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsRule};
+        if ( length $rule ) {
+            $rule = $self->p->HANDLER->substitute($rule);
+            unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
+                $self->error( 'OIDC RP rule error: '
+                      . $self->p->HANDLER->tsv->{jail}->error );
+                return 0;
+            }
+            $self->rpRules->{$rp} = $rule;
+        }
     }
     return 1;
 }
