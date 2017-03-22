@@ -26,6 +26,7 @@ our $VERSION = '2.0.0';
 has lassoServer => ( is => 'rw' );
 has spList      => ( is => 'rw', default => sub { {} } );
 has idpList     => ( is => 'rw', default => sub { {} } );
+has idpRules    => ( is => 'rw', default => sub { {} } );
 
 # return LWP::UserAgent object
 has ua => (
@@ -261,6 +262,16 @@ sub loadIDPs {
             return 0;
         }
 
+        if(my $cond = $self->conf->{samlIDPMetaDataOptions}->{$_}
+        ->{samlIDPMetaDataOptionsResolutionRule}) {
+            $cond = $self->p->HANDLER->substitute($cond);
+            unless( $cond = $self->p->HANDLER->buildSub($cond) ) {
+                $self->error( 'SAML IdP rule error: '
+                          . $self->p->HANDLER->tsv->{jail}->error );
+                return 0;
+            }
+            $self->idpRules->{$entityID} = $cond;
+        }
         $self->logger->debug("Set encryption mode $encryption_mode on IDP $_");
 
         $self->logger->debug("IDP $_ added");

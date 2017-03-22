@@ -88,15 +88,23 @@ sub checkForNotifications {
             }
 
             # Check condition if any
-            # TODO: check this
             my $condition = $notif->getAttribute('condition');
 
             if ($condition) {
 
                 $self->logger->debug("Get condition $condition");
+                $condition = $self->p->HANDLER->substitute($condition);
+                unless ( $condition = $self->p->HANDLER->buildSub($condition) )
+                {
+                    $self->logger->error( 'Notification condition error: '
+                          . $self->p->HANDLER->tsv->{jail}->error );
+                    $notif->unbindNode();
+                    next LOOP;
+                }
 
-                unless ( $self->p->HANDLER->safe->reval($condition) ) {
-                    $self->logger->debug("Notification condition not accepted");
+                unless ( $condition->( $req->sessionInfo ) ) {
+                    $self->logger->debug(
+                        'Notification condition not authorizated');
 
                     # Remove it from XML
                     $notif->unbindNode();
