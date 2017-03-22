@@ -26,7 +26,7 @@ sub count {
 sub main::explain {
     my ( $get, $ref ) = @_;
     $get = Dumper($get) if ( ref $get );
-    print STDERR "Expect $ref, get $get\n";
+    diag("Expect $ref, get $get\n");
 }
 
 sub clean_sessions {
@@ -160,9 +160,19 @@ sub expectBadRequest {
 }
 
 sub expectReject {
-    my ($res) = @_;
+    my ( $res, $code ) = @_;
     ok( $res->[0] == 401, ' Response is 401' ) or explain( $res->[0], 401 );
-    count(1);
+    eval { $res = JSON::from_json( $res->[2]->[0] ) };
+    ok( not($@), 'Content is JSON' )
+      or explain( $res->[2]->[0], 'JSON content' );
+    if ( defined $code ) {
+        ok( $res->{error} == $code, "Error code is $code" )
+          or explain( $res->{error}, $code );
+    }
+    else {
+        pass("Error code is $code");
+    }
+    count(3);
 }
 
 sub expectCookie {
