@@ -176,7 +176,7 @@ sub do {
                     'WWW-Authenticate' => "SSO " . $self->conf->{portal},
                     'Access-Control-Allow-Origin' => '*'
                 ],
-                [qq'{"result":0,"error":$err"}']
+                [qq'{"result":0,"error":$err}']
             ];
         }
         elsif ( $err > 0 ) {
