@@ -5,7 +5,6 @@ Bad usage of "safe":
   have parameters
 
 Other:
-* Verify token with combination
 * securize SOAP session creation by cipher
 * Verify securedCookie=3 (strange)
 * Test ForceAuth
