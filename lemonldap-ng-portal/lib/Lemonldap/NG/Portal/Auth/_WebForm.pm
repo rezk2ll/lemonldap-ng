@@ -109,11 +109,12 @@ sub extractFormInfo {
             $self->logger->debug("Captcha code verified");
         }
         elsif ( $self->ott ) {
-            unless ( $self->ott->getToken($token) ) {
+            unless ( $req->datas->{tokenVerified} or $self->ott->getToken($token) ) {
                 $self->ott->setToken($req);
                 $self->userLogger->warn('Token expired');
                 return PE_TOKENEXPIRED;
             }
+            $req->datas->{tokenVerified} = 1;
         }
     }
 
