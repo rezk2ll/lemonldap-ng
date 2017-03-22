@@ -82,7 +82,7 @@ sub run {
 sub verify {
     my ( $self, $req ) = @_;
 
-    # TODO: set sessionInfo with token
+    # Check token
     my $token;
     unless ( $token = $req->param('token') ) {
         $self->userLogger->error('U2F access without token');
@@ -94,6 +94,8 @@ sub verify {
         $req->error(PE_TOKENEXPIRED);
         return $self->fail($req);
     }
+
+    # Check U2F signature
     if ( my $resp = $req->param('signature') ) {
         unless ( $self->loadUser($req) == 1 ) {
             $req->error(PE_ERROR);

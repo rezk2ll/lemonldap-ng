@@ -118,6 +118,7 @@
 "currentPwd":"Current password",
 "date":"Date",
 "enterCred":"Please enter your credentials",
+"enterExt2fCode":"A code has been sent to you. Please enter it",
 "enterOpenIDLogin":"Please enter your OpenID login",
 "enterYubikey":"Please use your Yubikey",
 "errorMsg":"Error Message",

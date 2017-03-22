@@ -962,6 +962,19 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'test'       => qr/^[_a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
         },
+        'ext2fActivation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'ext2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'ext2FSendCommand' => {
+            'type' => 'text'
+        },
+        'ext2FValidateCommand' => {
+            'type' => 'text'
+        },
         'facebookAppId' => {
             'type' => 'text'
         },

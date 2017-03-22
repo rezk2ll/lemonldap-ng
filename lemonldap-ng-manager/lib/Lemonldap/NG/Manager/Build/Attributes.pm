@@ -990,6 +990,26 @@ sub attributes {
               'Authentication level for users authentified by password+U2F'
         },
 
+        # External second factor
+        ext2fActivation => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'External second factor activation',
+        },
+        ext2FSendCommand => {
+            type          => 'text',
+            documentation => 'Send command of External second factor',
+        },
+        ext2FValidateCommand => {
+            type          => 'text',
+            documentation => 'Validation command of External second factor',
+        },
+        ext2fAuthnLevel => {
+            type => 'int',
+            documentation =>
+'Authentication level for users authentified by External second factor'
+        },
+
         # Single session
         notifyDeleted => {
             default       => 1,

@@ -611,6 +611,15 @@ sub tree {
                                 'u2fAuthnLevel'
                             ]
                         },
+                        {
+                            title => 'external2f',
+                            help  => 'external2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'ext2fActivation',      'ext2FSendCommand',
+                                'ext2FValidateCommand', 'ext2fAuthnLevel',
+                            ]
+                        },
                     ]
                 },
                 {

@@ -18,6 +18,7 @@ our @pList = (
     cda                        => '::Plugins::CDA',
     portalForceAuthn           => '::Plugins::ForceAuth',
     u2fActivation              => '::Plugins::U2F',
+    ext2fActivation            => '::Plugins::External2F',
     grantSessionRule           => '::Plugins::GrantSession',
     u2fSelfRegistration        => '::Register::U2F',
     notification               => '::Plugins::Notifications',

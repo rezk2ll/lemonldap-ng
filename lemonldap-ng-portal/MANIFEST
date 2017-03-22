@@ -81,6 +81,7 @@ lib/Lemonldap/NG/Portal/Password/Demo.pm
 lib/Lemonldap/NG/Portal/Password/LDAP.pm
 lib/Lemonldap/NG/Portal/Password/REST.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
+lib/Lemonldap/NG/Portal/Plugins/External2F.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuth.pm
 lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
 lib/Lemonldap/NG/Portal/Plugins/History.pm
@@ -240,6 +241,7 @@ site/templates/bootstrap/customfooter.tpl
 site/templates/bootstrap/customhead.tpl
 site/templates/bootstrap/customheader.tpl
 site/templates/bootstrap/error.tpl
+site/templates/bootstrap/ext2fcheck.tpl
 site/templates/bootstrap/footer.tpl
 site/templates/bootstrap/header.tpl
 site/templates/bootstrap/info.tpl
