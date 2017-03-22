@@ -83,11 +83,19 @@ sub parseAnd {
         my @res;
         foreach my $type (@mod) {
             push @res, sub {
+                my %str;
                 foreach my $obj (@$type) {
                     my ( $r, $name ) = $obj->(@_);
-                    return ( $r, $name ) unless ( $r == PE_OK );
+
+                    # Case "string" (form type)
+                    if ( $r & ~$r ) {
+                        $str{$r}++;
+                    }
+                    else {
+                        return ( $r, $name ) unless ( $r == PE_OK );
+                    }
                 }
-                return ( PE_OK, $expr );
+                return ( ( %str ? join( ',', keys %str ) : PE_OK ), $expr );
             };
         }
         return \@res;
@@ -132,11 +140,19 @@ sub parseMod {
     }
     return sub {
         my ( $sub, $req ) = @_;
+        my %str;
         for ( my $i = 0 ; $i < @list ; $i++ ) {
             my $res = $mods[$i]->$sub($req);
-            return ( $res, $list[$i] ) unless ( $res == PE_OK );
+
+            # Case "string" (form type)
+            if ( $res & ~$res ) {
+                $str{$res}++;
+            }
+            else {
+                return ( $res, $list[$i] ) unless ( $res == PE_OK );
+            }
         }
-        return ( PE_OK, $expr );
+        return ( ( %str ? join( ',', keys %str ) : PE_OK ), $expr );
     };
 }
 
