@@ -83,6 +83,7 @@
 "PE81":"Tentative d'authentification invalide",
 "PE82":"Délai d'authentification dépassé",
 "PE83":"La vérification U2F a échoué",
+"PE84":"Vous n'êtes pas autorisé à accéder à ce site",
 "PM8":"Choisissez votre fournisseur d'identité",
 "PM10":"Se souvenir de mon choix",
 "PM11":"Déconnexion des services...",

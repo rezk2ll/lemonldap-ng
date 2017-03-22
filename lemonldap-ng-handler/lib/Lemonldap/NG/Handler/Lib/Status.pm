@@ -99,6 +99,7 @@ sub portalTab {
         81 => 'PE_NOTOKEN',
         82 => 'PE_TOKENEXPIRED',
         83 => 'PE_U2FFAILED',
+        84 => 'PE_UNAUTHORIZEDPARTNER',
     };
 }
 

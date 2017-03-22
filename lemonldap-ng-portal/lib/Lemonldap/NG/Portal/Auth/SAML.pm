@@ -1413,7 +1413,6 @@ sub getIDP {
 
         # Case 4: check all IDP resolution rules
         # The first match win
-        # TODO: this is a bad safe usage => change it
         else {
             foreach ( keys %{ $self->idpList } ) {
                 my $idpConfKey = $self->idpList->{$_}->{confKey};

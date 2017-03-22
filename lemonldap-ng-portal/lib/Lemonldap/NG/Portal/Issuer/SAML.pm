@@ -11,6 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SLO_ERROR
   PE_SAML_SSO_ERROR
   PE_SAML_UNKNOWN_ENTITY
+  PE_UNAUTHORIZEDPARTNER
 );
 
 our $VERSION = '2.0.0';
@@ -322,8 +323,13 @@ sub run {
             $self->logger->debug("$sp match $spConfKey SP in configuration");
             $req->env->{llng_saml_spconfkey} = $spConfKey;
 
-            if(defined $self->conf->{samlSPMetaDataOptions}->{$spConfKey}->{samlSPMetaDataOptionsRule}) {
-                # TODO:
+            if ( my $rule = $self->spRules->{$sp} ) {
+                unless ( $rule->( $req->sessionInfo ) ) {
+                    $self->userLogger->warn( 'User '
+                          . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                          . "was not authorizated to access to $sp" );
+                    return PE_UNAUTHORIZEDPARTNER;
+                }
             }
 
             # Do we check signature?

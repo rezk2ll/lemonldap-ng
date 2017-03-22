@@ -27,6 +27,7 @@ has lassoServer => ( is => 'rw' );
 has spList      => ( is => 'rw', default => sub { {} } );
 has idpList     => ( is => 'rw', default => sub { {} } );
 has idpRules    => ( is => 'rw', default => sub { {} } );
+has spRules     => ( is => 'rw', default => sub { {} } );
 
 # return LWP::UserAgent object
 has ua => (
@@ -262,12 +263,13 @@ sub loadIDPs {
             return 0;
         }
 
-        if(my $cond = $self->conf->{samlIDPMetaDataOptions}->{$_}
-        ->{samlIDPMetaDataOptionsResolutionRule}) {
+        my $cond = $self->conf->{samlIDPMetaDataOptions}->{$_}
+          ->{samlIDPMetaDataOptionsResolutionRule};
+        if ( length $cond ) {
             $cond = $self->p->HANDLER->substitute($cond);
-            unless( $cond = $self->p->HANDLER->buildSub($cond) ) {
+            unless ( $cond = $self->p->HANDLER->buildSub($cond) ) {
                 $self->error( 'SAML IdP rule error: '
-                          . $self->p->HANDLER->tsv->{jail}->error );
+                      . $self->p->HANDLER->tsv->{jail}->error );
                 return 0;
             }
             $self->idpRules->{$entityID} = $cond;
@@ -322,8 +324,7 @@ sub loadSPs {
         }
 
         # Store SP entityID and Organization Name
-        my ( $tmp, $entityID ) =
-          ( $sp_metadata =~ /entityID=(['"])(.+?)\1/si );
+        my ( $tmp, $entityID ) = ( $sp_metadata =~ /entityID=(['"])(.+?)\1/si );
         my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
           || ucfirst($_);
         $self->spList->{$entityID}->{confKey} = $_;
@@ -344,6 +345,18 @@ sub loadSPs {
             $self->error(
                 "Unable to set encryption mode $encryption_mode on SP $_");
             return 0;
+        }
+
+        my $rule = $self->conf->{samlSPMetaDataOptions}->{$_}
+          ->{samlSPMetaDataOptionsRule};
+        if ( length $rule ) {
+            $rule = $self->p->HANDLER->substitute($rule);
+            unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
+                $self->error( 'SAML SP rule error: '
+                      . $self->p->HANDLER->tsv->{jail}->error );
+                return 0;
+            }
+            $self->spRules->{$entityID} = $rule;
         }
 
         $self->logger->debug("Set encryption mode $encryption_mode on SP $_");
@@ -1161,8 +1174,8 @@ sub extractRelayState {
         # Push values in $self
         foreach ( keys %{ $samlSessionInfo->data } ) {
             next if $_ =~ /(type|_session_id|_utime)/;
-            if($_ eq 'issuerUrldc') {
-                $req->urldc($samlSessionInfo->data->{$_});
+            if ( $_ eq 'issuerUrldc' ) {
+                $req->urldc( $samlSessionInfo->data->{$_} );
             }
             else {
                 $req->{$_} = $samlSessionInfo->data->{$_};

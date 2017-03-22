@@ -83,6 +83,7 @@
 "PE81":"Invalid authentication attempt",
 "PE82":"Exceeded authentication timeout",
 "PE83":"U2F verification failed",
+"PE84":"You're not authorizated to access to this host",
 "PM8":"Select your Identity Provider",
 "PM10":"Remember my choice",
 "PM11":"Logout from service providers...",
