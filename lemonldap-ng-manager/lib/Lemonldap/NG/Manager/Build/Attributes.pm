@@ -379,9 +379,7 @@ sub attributes {
             type          => 'portalskin',
             default       => 'bootstrap',
             documentation => 'Name of portal skin',
-            select        => [
-                { k => 'bootstrap', v => 'Bootstrap' },
-            ],
+            select        => [ { k => 'bootstrap', v => 'Bootstrap' }, ],
         },
         portalSkinBackground => {
             type          => 'portalskinbackground',
@@ -1745,6 +1743,11 @@ sub attributes {
             type    => 'bool',
             default => 1,
         },
+        samlSPMetaDataOptionsRule => {
+            type          => 'text',
+            test          => $perlExpr,
+            documentation => 'Rule to grant access to this SP',
+        },
 
         # AUTH, USERDB and PASSWORD MODULES
         authentication => {
@@ -2524,6 +2527,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsDisplayName  => { type => 'text', },
         oidcOPMetaDataOptionsIcon         => { type => 'text', },
         oidcOPMetaDataOptionsStoreIDToken => { type => 'bool', default => 0 },
+
+        oidcRPMetaDataOptionsRule => {
+            type          => 'text',
+            test          => $perlExpr,
+            documentation => 'Rule to grant access to this SP',
+        },
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {

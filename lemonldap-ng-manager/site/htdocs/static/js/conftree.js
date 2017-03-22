@@ -386,6 +386,11 @@ function templates(tpl,key) {
             "id" : "logout",
             "title" : "logout",
             "type" : "simpleInputContainer"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
+            "title" : "oidcRPMetaDataOptionsRule"
          }
       ],
       "id" : "oidcRPMetaDataOptions",
@@ -879,6 +884,11 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsEnableIDPInitiatedURL",
                   "title" : "samlSPMetaDataOptionsEnableIDPInitiatedURL",
                   "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsRule",
+                  "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsRule",
+                  "title" : "samlSPMetaDataOptionsRule"
                }
             ],
             "id" : "samlSPMetaDataOptionsSecurity",

@@ -121,7 +121,8 @@ sub cTrees {
                         form  => 'simpleInputContainer',
                         nodes => [
                             "samlSPMetaDataOptionsEncryptionMode",
-                            "samlSPMetaDataOptionsEnableIDPInitiatedURL"
+                            "samlSPMetaDataOptionsEnableIDPInitiatedURL",
+                            "samlSPMetaDataOptionsRule",
                         ]
                     }
                 ]
@@ -208,6 +209,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsLogoutSessionRequired',
                         ]
                     },
+                    'oidcRPMetaDataOptionsRule',
                 ]
             },
             'oidcRPMetaDataOptionsExtraClaims',
