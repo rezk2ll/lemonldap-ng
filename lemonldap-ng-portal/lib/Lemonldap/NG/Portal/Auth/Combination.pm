@@ -180,6 +180,7 @@ sub try {
                 qq'Scheme "$name" has return $res, trying next');
             $req->datas->{dataKeep}->{combinationTry}++;
             $req->steps( [ @{ $req->datas->{combinationSteps} } ] );
+            $req->continue(1);
             return PE_OK;
         }
     }
