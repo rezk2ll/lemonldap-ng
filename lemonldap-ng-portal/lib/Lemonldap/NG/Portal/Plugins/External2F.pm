@@ -52,11 +52,7 @@ sub run {
     my ( $self, $req ) = @_;
 
     # Prepare command and launch it
-    my $cmd = $self->conf->{ext2FSendCommand};
-    $cmd =~ s#\$(\w+)#$req->{sessionInfo}->{$1} // ''#ge;
-    my $err = `$cmd 2>&1 1>/dev/null`;
-    $self->logger->error($err) if ( length $err );
-    if ($?) {
+    if ( $self->launch( $req->sessionInfo, $self->conf->{ext2FSendCommand} ) ) {
         return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
@@ -102,12 +98,7 @@ sub verify {
     }
 
     # Prepare command and launch it
-    my $cmd = $self->conf->{ext2FValidateCommand};
-    $cmd =~ s#\$code\b#$code#g;
-    $cmd =~ s#\$(\w+)#$session->{$1} // ''#ge;
-    my $err = `$cmd 2>&1 1>/dev/null`;
-    $self->userLogger->error($err) if ( length $err );
-    if ($?) {
+    if ( $self->launch( $session, $self->conf->{ext2FValidateCommand}, $code ) ) {
         return $self->p->do( $req, [ sub { PE_BADCREDENTIALS } ] );
     }
     $req->sessionInfo($session);
@@ -120,6 +111,20 @@ sub verify {
         $self->p->updateSession( $req, { authenticationLevel => $l } );
     }
     return $self->p->do( $req, [ sub { PE_OK } ] );
+}
+
+# system() is used with an array to avoid shell injection
+sub launch {
+    my ( $self, $session, $command, $code ) = @_;
+    my @args;
+    foreach ( split( /\s+/, $command ) ) {
+        if ( defined $code ) {
+            s#\$code\b#$code#g;
+        }
+        s#\$(\w+)#$session->{$1} // ''#ge;
+        push @args, $_;
+    }
+    return system @args;
 }
 
 1;
