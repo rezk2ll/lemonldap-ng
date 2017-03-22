@@ -88,6 +88,7 @@ sub checkForNotifications {
             }
 
             # Check condition if any
+            # TODO: check this
             my $condition = $notif->getAttribute('condition');
 
             if ($condition) {

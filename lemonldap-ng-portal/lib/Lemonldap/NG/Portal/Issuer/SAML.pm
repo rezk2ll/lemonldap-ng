@@ -322,6 +322,10 @@ sub run {
             $self->logger->debug("$sp match $spConfKey SP in configuration");
             $req->env->{llng_saml_spconfkey} = $spConfKey;
 
+            if(defined $self->conf->{samlSPMetaDataOptions}->{$spConfKey}->{samlSPMetaDataOptionsRule}) {
+                # TODO:
+            }
+
             # Do we check signature?
             my $checkSSOMessageSignature =
               $self->conf->{samlSPMetaDataOptions}->{$spConfKey}

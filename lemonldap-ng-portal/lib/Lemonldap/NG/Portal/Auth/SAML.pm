@@ -1413,13 +1413,14 @@ sub getIDP {
 
         # Case 4: check all IDP resolution rules
         # The first match win
+        # TODO: this is a bad safe usage => change it
         else {
             foreach ( keys %{ $self->idpList } ) {
                 my $idpConfKey = $self->idpList->{$_}->{confKey};
                 my $cond = $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
                   ->{samlIDPMetaDataOptionsResolutionRule};
                 next unless defined $cond;
-                if ( $self->safe->reval($cond) ) {
+                if ( $self->p->HANDLER->safe->reval($cond) ) {
                     $self->logger->debug(
                         "IDP $idpConfKey resolution rule match");
                     $idp = $_;
