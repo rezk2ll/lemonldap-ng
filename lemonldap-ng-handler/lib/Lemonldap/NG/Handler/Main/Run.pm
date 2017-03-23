@@ -244,6 +244,12 @@ sub grant {
     return $cond->($session) if ($cond);
 
     $vhost ||= $class->resolveAlias;
+    if ( my $level = $class->tsv->{authnLevel}->{$vhost} ) {
+        if ( $session->{authenticationLevel} < $level ) {
+            $session->{_upgrade} = 1;
+            return 0;
+        }
+    }
     for (
         my $i = 0 ;
         $i < ( $class->tsv->{locationCount}->{$vhost} || 0 ) ;
@@ -283,6 +289,10 @@ sub forbidden {
         my $u = $session->{_logout};
         $class->localUnlog;
         return $class->goToPortal( $u, 'logout=1' );
+    }
+
+    if ( $session->{_upgrade} ) {
+        return $class->goToPortal( $class->unparsed_uri, undef, '/upgradesession' );
     }
 
     # Log forbidding
@@ -333,13 +343,14 @@ sub encodeUrl {
 # @param $arg optionnal GET parameters
 # @return Constant $class->REDIRECT
 sub goToPortal {
-    my ( $class, $url, $arg ) = @_;
+    my ( $class, $url, $arg, $path ) = @_;
+    $path ||= '';
     my ( $ret, $msg );
     my $urlc_init = $class->encodeUrl($url);
     $class->logger->debug(
         "Redirect " . $class->remote_ip . " to portal (url was $url)" );
     $class->set_header_out( 'Location' => $class->tsv->{portal}->()
-          . "?url=$urlc_init"
+          . "$path?url=$urlc_init"
           . ( $arg ? "&$arg" : "" ) );
     return $class->REDIRECT;
 }

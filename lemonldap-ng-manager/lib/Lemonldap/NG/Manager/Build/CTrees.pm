@@ -28,7 +28,7 @@ sub cTrees {
                 nodes => [
                     'vhostPort',        'vhostHttps',
                     'vhostMaintenance', 'vhostAliases',
-                    'vhostType',
+                    'vhostType',        'vhostAuthnLevel',
                 ],
             },
         ],

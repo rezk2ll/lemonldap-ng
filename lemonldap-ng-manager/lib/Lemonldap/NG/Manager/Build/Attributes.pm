@@ -1186,6 +1186,9 @@ sub attributes {
             default       => 'Main',
             documentation => 'Handler type',
         },
+        vhostAuthnLevel => {
+            type => 'int',
+        },
 
         # CAS IDP
         casAttr                => { type => 'text', },

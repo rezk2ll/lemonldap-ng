@@ -998,6 +998,12 @@ function templates(tpl,key) {
             ],
             "title" : "vhostType",
             "type" : "select"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
+            "id" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
+            "title" : "vhostAuthnLevel",
+            "type" : "int"
          }
       ],
       "help" : "configvhost.html#options",

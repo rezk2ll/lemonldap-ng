@@ -3044,6 +3044,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'vhostAliases' => {
             'type' => 'text'
         },
+        'vhostAuthnLevel' => {
+            'type' => 'int'
+        },
         'vhostHttps' => {
             'default' => -1,
             'type'    => 'trool'

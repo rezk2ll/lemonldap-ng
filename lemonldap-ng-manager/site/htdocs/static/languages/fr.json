@@ -695,6 +695,7 @@
 "variables": "Variables",
 "version": "Version",
 "vhostAliases": "Alias",
+"vhostAuthnLevel": "Niveau d'authentication requis",
 "vhostHttps": "HTTPS",
 "vhostMaintenance": "Mode maintenance",
 "vhostOptions": "Options",

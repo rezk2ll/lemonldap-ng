@@ -216,6 +216,8 @@ sub defaultValuesInit {
         foreach my $vhost ( keys %{ $conf->{vhostOptions} } ) {
             $class->tsv->{type}->{$vhost} =
               $conf->{vhostOptions}->{$vhost}->{vhostType};
+            $class->tsv->{authnLevel}->{$vhost} =
+              $conf->{vhostOptions}->{$vhost}->{vhostAuthnLevel};
         }
     }
     return 1;
