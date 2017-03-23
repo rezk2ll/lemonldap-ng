@@ -139,6 +139,16 @@ sub display {
         );
     }
 
+    elsif ( $req->error == PE_RENEWSESSION ) {
+        $skinfile = 'upgradesession';
+        %templateParams = (
+            MSG        => 'askToRenew',
+            CONFIRMKEY => $self->stamp,
+            PORTAL     => $self->conf->{portal},
+            URL        => $req->datas->{_url},
+        );
+    }
+
     # 2.3 Case : user authenticated but an error was returned (bas url,...)
     elsif ( not $req->datas->{noerror} and $req->userData and %{ $req->userData } ) {
         $skinfile       = 'error';

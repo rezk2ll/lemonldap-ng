@@ -976,7 +976,7 @@ sub attributes {
         # Upgrade session
         upgradeSession => {
             type          => 'bool',
-            default       => 0,
+            default       => 1,
             documentation => 'Upgrade session activation',
         },
 

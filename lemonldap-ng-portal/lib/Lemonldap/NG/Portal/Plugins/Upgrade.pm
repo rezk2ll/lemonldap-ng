@@ -47,6 +47,7 @@ sub ask {
         $req,
         'upgradesession',
         params => {
+            MSG        => 'askToUpgrade',
             CONFIRMKEY => $self->p->stamp,
             PORTAL     => $self->conf->{portal},
             URL        => $req->param('url'),

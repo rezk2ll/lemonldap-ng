@@ -100,6 +100,7 @@ sub portalTab {
         82 => 'PE_TOKENEXPIRED',
         83 => 'PE_U2FFAILED',
         84 => 'PE_UNAUTHORIZEDPARTNER',
+        85 => 'PE_RENEWSESSION',
     };
 }
 

@@ -2985,7 +2985,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'bool'
         },
         'upgradeSession' => {
-            'default' => 0,
+            'default' => 1,
             'type'    => 'bool'
         },
         'userControl' => {

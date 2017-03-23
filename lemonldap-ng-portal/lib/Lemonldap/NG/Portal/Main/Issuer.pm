@@ -10,7 +10,10 @@ package Lemonldap::NG::Portal::Main::Issuer;
 use strict;
 use Mouse;
 use IO::String;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
+  PE_RENEWSESSION
+);
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -72,7 +75,7 @@ sub _redirect {
     my $ir =
       $req->param( 'issuerRequest' . $self->path ) || $self->storeRequest($req);
     $self->p->setHiddenFormValue( $req, 'issuerRequest' . $self->path,
-        $ir, '', 0 );
+        $ir, '' );
     $req->{urldc} = $self->conf->{portal};
     $req->{urldc} =~ s#/*$##;
     $req->{urldc} .= $req->path . "?issuerRequest$self->{path}=$ir";
@@ -147,6 +150,14 @@ sub restoreRequest {
         }
     }
     return $req;
+}
+
+sub reAuth {
+    my ( $self, $req ) = @_;
+    $req->datas->{_url} = encode_base64(
+        $self->conf->{portal} . '?issuerRequest=' . $self->storeRequest($req),
+        '' );
+    return PE_RENEWSESSION;
 }
 
 1;

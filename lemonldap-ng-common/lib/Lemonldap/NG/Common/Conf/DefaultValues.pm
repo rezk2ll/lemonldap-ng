@@ -237,6 +237,7 @@ sub defaultValues {
         'trustedProxies'                          => '',
         'twitterAuthnLevel'                       => 1,
         'u2fActivation'                           => 0,
+        'upgradeSession'                          => 1,
         'userControl'                             => '^[\\w\\.\\-@]+$',
         'userDB'                                  => 'Same',
         'useRedirectOnError'                      => 1,

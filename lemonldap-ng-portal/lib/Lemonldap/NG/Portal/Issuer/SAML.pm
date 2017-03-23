@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Issuer::SAML;
 
 use strict;
 use Mouse;
+use MIME::Base64;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_SAML_ART_ERROR
@@ -451,8 +452,7 @@ sub run {
                     $info->{'_type'}    = "forceAuthn";
                     $info->{'_saml_id'} = $session_id;
                     $info->{'_utime'}   = $time;
-                    $self->logger->debug(
-                        "Create ForceAuthn session $forceAuthn_session");
+                    $self->logger->debug("Create ForceAuthn session");
                 }
 
                 # Store flag for further requests
@@ -462,29 +462,19 @@ sub run {
                   unless ($forceAuthn_session);
 
                 $self->logger->debug(
-"Set ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session"
+"Set ForceAuthn flag for SP $spConfKey in ForceAuthn session"
                 );
 
                 # Replay authentication process
-                $req->{updateSession} = 1;
-                $req->steps(
-                    [
-                        @{ $self->p->beforeAuth },
-                        $self->p->authProcess,
-                        @{ $self->p->betweenAuthAndDatas },
-                        $self->p->sessionDatas,
-                        @{ $self->p->afterDatas }
-                    ]
-                );
-                $req->error( $self->p->process($req) );
+                return $self->reAuth($req);
+            }
 
-                # Return error if any
-                return $req->{error} if $req->{error} > 0;
-
-                # Else remove flag
+            # Else remove flag
+            elsif ($forceAuthn_session) {
                 $forceAuthnSessionInfo =
                   $self->getSamlSession( $forceAuthn_session,
                     { $spConfKey => 0 } );
+                $forceAuthnSessionInfo->update( { $spConfKey => 0 } );
 
                 $self->logger->debug(
 "Unset ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session"
@@ -1607,7 +1597,7 @@ sub sloServer {
         else {
             $req->{urldc} =
               $self->conf->{portal} . '/saml/relaySingleLogoutTermination';
-            $self->p->setHiddenFormValue( 'relay', $relayID );
+            $self->p->setHiddenFormValue( $req, 'relay', $relayID );
             return $self->do( $req, [] );
         }
 
