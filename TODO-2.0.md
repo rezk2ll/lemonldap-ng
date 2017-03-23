@@ -1,3 +1,10 @@
+* check for issuer rules
+* unhandled parameters:
+  * portalDisplayLoginHistory
+  * portalDisplayAppslist
+  * portalDisplayChangePassword
+  * portalDisplayLogout
+  * issuerDB\*Rule
 * securize SOAP session creation by cipher
 * Verify securedCookie=3 (strange)
 * Test ForceAuth

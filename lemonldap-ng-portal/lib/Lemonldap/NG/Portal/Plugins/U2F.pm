@@ -36,9 +36,19 @@ has ott => (
     }
 );
 
+has rule => ( is => 'rw' );
+
 sub init {
     my ($self) = @_;
     $self->addUnauthRoute( u2fcheck => 'verify', ['POST'] );
+    my $rule = $self->conf->{u2fActivation};
+    $rule = $self->p->HANDLER->substitute($rule);
+    unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
+        $self->error(
+            'U2F rule error: ' . $self->p->HANDLER->tsv->{jail}->error );
+        return 0;
+    }
+    $self->rule($rule);
     return 0 unless $self->SUPER::init;
     1;
 }
@@ -48,6 +58,11 @@ sub init {
 # Main method
 sub run {
     my ( $self, $req ) = @_;
+    return PE_OK unless ( $self->rule->( $req->sessionInfo ) );
+
+    my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+    $self->userLogger->info("U2F required for $user");
+
     my ( $kh, $uk );
 
     # Check if user is registered
@@ -69,8 +84,7 @@ sub run {
                 TOKEN     => $token
             }
         );
-        $self->logger->debug( 'Prepare U2F verification for '
-              . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+        $self->logger->debug("Prepare U2F verification for $user");
 
         $req->response($tmp);
         delete $req->{authResult};

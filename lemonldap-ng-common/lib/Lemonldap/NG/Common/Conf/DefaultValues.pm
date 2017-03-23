@@ -43,6 +43,7 @@ sub defaultValues {
         'exportedVars' => {
             'UA' => 'HTTP_USER_AGENT'
         },
+        'ext2fActivation'      => 0,
         'facebookAuthnLevel'   => 1,
         'facebookExportedVars' => {},
         'failedLoginNumber'    => 5,
@@ -235,6 +236,7 @@ sub defaultValues {
         'timeoutActivityInterval'                 => 60,
         'trustedProxies'                          => '',
         'twitterAuthnLevel'                       => 1,
+        'u2fActivation'                           => 0,
         'userControl'                             => '^[\\w\\.\\-@]+$',
         'userDB'                                  => 'Same',
         'useRedirectOnError'                      => 1,

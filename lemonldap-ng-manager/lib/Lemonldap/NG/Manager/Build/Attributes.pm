@@ -975,7 +975,7 @@ sub attributes {
 
         # U2F
         u2fActivation => {
-            type          => 'bool',
+            type          => 'boolOrExpr',
             default       => 0,
             documentation => 'U2F activation',
         },
@@ -992,7 +992,7 @@ sub attributes {
 
         # External second factor
         ext2fActivation => {
-            type          => 'bool',
+            type          => 'boolOrExpr',
             default       => 0,
             documentation => 'External second factor activation',
         },

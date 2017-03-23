@@ -36,6 +36,8 @@ has ott => (
     }
 );
 
+has rule => ( is => 'rw' );
+
 sub init {
     my ($self) = @_;
     $self->addUnauthRoute( ext2fcheck => 'verify', ['POST'] );
@@ -45,14 +47,29 @@ sub init {
             return 0;
         }
     }
+    my $rule = $self->conf->{ext2fActivation};
+    $rule = $self->p->HANDLER->substitute($rule);
+    unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
+        $self->error( 'External 2F rule error: '
+              . $self->p->HANDLER->tsv->{jail}->error );
+        return 0;
+    }
+    $self->rule($rule);
     1;
 }
 
 sub run {
     my ( $self, $req ) = @_;
+    return PE_OK unless ( $self->rule->( $req->sessionInfo ) );
+
+    my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+    $self->userLogger->info("Second factor required for $user");
 
     # Prepare command and launch it
-    if ( $self->launch( $req->sessionInfo, $self->conf->{ext2FSendCommand} ) ) {
+    if ( my $c =
+        $self->launch( $req->sessionInfo, $self->conf->{ext2FSendCommand} ) )
+    {
+        $self->logger->error("External send command failed (code $c)");
         return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
@@ -69,8 +86,7 @@ sub run {
             TOKEN => $token
         }
     );
-    $self->logger->debug( 'Prepare U2F verification for '
-          . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+    $self->logger->debug("Prepare U2F verification for $user");
 
     $req->response($tmp);
     delete $req->{authResult};
@@ -98,7 +114,11 @@ sub verify {
     }
 
     # Prepare command and launch it
-    if ( $self->launch( $session, $self->conf->{ext2FValidateCommand}, $code ) ) {
+    if ( my $c =
+        $self->launch( $session, $self->conf->{ext2FValidateCommand}, $code ) )
+    {
+        $self->userLogger->warn( 'Second factor failed for '
+              . $session->{ $self->conf->{whatToTrace} } );
         return $self->p->do( $req, [ sub { PE_BADCREDENTIALS } ] );
     }
     $req->sessionInfo($session);
