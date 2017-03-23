@@ -127,6 +127,9 @@ L<http://lemonldap-ng.org>
 
 =item Writing an authentication module: L<Lemonldap::NG::Portal::Auth::Base>
 
+=item Writing a second authentication factor module:
+L<Lemonldap::NG::Portal::Main::SecondFactor>
+
 =item Writing an issuer module: L<Lemonldap::NG::Portal::Main::Issuer>
 
 =item Writing another type of plugin: L<Lemonldap::NG::Portal::Main::Plugin>
