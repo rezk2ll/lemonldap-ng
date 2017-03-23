@@ -10,14 +10,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 has crypter => ( is => 'rw' );
 
-has origin => (
-    is      => 'rw',
-    default => sub {
-        my $p = $_[0]->{conf}->{portal};
-        $p =~ s#^(https?://[^/]+).*$#$1#;
-        return $p;
-    }
-);
+has origin => ( is => 'rw', );
 
 sub init {
     my ($self) = @_;
@@ -26,6 +19,9 @@ sub init {
         $self->error("Can't load U2F library: $@");
         return 0;
     }
+    my $p = $_[0]->{conf}->{portal};
+    $p =~ s#^(https?://[^/]+).*$#$1#;
+    $self->origin($p);
     unless (
         $self->crypter(
             Crypt::U2F::Server::Simple->new(
