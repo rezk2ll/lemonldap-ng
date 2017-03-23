@@ -602,6 +602,7 @@ sub tree {
                                 'registerDoneSubject'
                             ]
                         },
+                        'upgradeSession',
                         {
                             title => 'u2f',
                             help  => 'u2f.html',

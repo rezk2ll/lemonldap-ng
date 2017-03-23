@@ -24,6 +24,7 @@ our @pList = (
     notification               => '::Plugins::Notifications',
     portalCheckLogins          => '::Plugins::History',
     stayConnected              => '::Plugins::StayConnected',
+    upgradeSession             => '::Plugins::Upgrade',
 );
 
 ##@method list enabledPlugins

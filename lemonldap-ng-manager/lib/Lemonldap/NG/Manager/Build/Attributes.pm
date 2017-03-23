@@ -973,6 +973,13 @@ sub attributes {
             documentation => 'Register session timeout',
         },
 
+        # Upgrade session
+        upgradeSession => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Upgrade session activation',
+        },
+
         # U2F
         u2fActivation => {
             type          => 'boolOrExpr',

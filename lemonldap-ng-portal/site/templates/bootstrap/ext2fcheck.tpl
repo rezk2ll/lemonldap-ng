@@ -17,5 +17,3 @@
 </form>
 
 <TMPL_INCLUDE NAME="footer.tpl">
-
-
