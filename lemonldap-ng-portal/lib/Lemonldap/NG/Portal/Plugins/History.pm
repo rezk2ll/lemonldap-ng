@@ -9,9 +9,13 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::OtherSessions';
 
+# INITIALIZATION
+
 sub afterDatas { 'run' }
 
 sub init { 1 }
+
+# RUNNING METHOD
 
 sub run {
     my ( $self, $req ) = @_;
