@@ -1,10 +1,10 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-<div class="message message-positive alert"><span trspan="enterExt2fCode"></span></div>
+<div class="message message-positive alert"><label for="extcode" id="extcodelabel" trspan="enterExt2fCode"></span></div>
 <form action="/ext2fcheck" method="post" class="password" role="form">
   <div class="form">
     <div class="form-group input-group">
-        <input name="code" value="" class="form-control">
+        <input name="code" value="" class="form-control" id="extcode" aria-describedby="extcodelabel">
         <input type="hidden" id="token" name="token" value="<TMPL_VAR NAME="TOKEN">">
     </div>
   </div>

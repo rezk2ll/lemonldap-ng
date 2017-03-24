@@ -20,17 +20,17 @@
 
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i> </span>
-      <input name="firstname" type="text" value="<TMPL_VAR NAME="FIRSTNAME">" class="form-control" trplaceholder="firstName" required />
+      <input name="firstname" type="text" value="<TMPL_VAR NAME="FIRSTNAME">" class="form-control" trplaceholder="firstName" required aria-required="true"/>
     </div>
 
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i> </span>
-      <input name="lastname" type="text" value="<TMPL_VAR NAME="LASTNAME">" class="form-control" trplaceholder="lastName" required />
+      <input name="lastname" type="text" value="<TMPL_VAR NAME="LASTNAME">" class="form-control" trplaceholder="lastName" required aria-required="true"/>
     </div>
 
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i> </span>
-      <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required />
+      <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required aria-required="true"/>
     </div>
 
     <TMPL_IF NAME=CAPTCHA_SRC>
@@ -39,7 +39,7 @@
     </div>
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i> </span>
-      <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" placeholder="Captcha" required />
+      <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" placeholder="Captcha" required aria-required="true"/>
     </div>
     </TMPL_IF>
     <TMPL_IF NAME="TOKEN">
@@ -85,8 +85,8 @@
 
       <div class="checkbox">
         <label for="resendconfirmation">
-          <input id="resendconfirmation" type="checkbox" name="resendconfirmation">
-          <span trspan="yesResendMail">Yes, resend the mail</span>
+          <input id="resendconfirmation" type="checkbox" name="resendconfirmation" ariadescribedby="resendconfirmationlabel">
+          <label id="resendconfirmationlabel" for="resendconfirmation" trspan="yesResendMail">Yes, resend the mail</label>
         </label>
       </div>
 

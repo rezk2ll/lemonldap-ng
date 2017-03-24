@@ -1,6 +1,6 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-<div id="menucontent" class="container">
+<main id="menucontent" class="container">
 
   <TMPL_IF NAME="AUTH_ERROR">
   <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
@@ -217,7 +217,7 @@
 
   </div>
 
-</div>
+</main>
 
 <TMPL_IF NAME="PING">
 <!-- Keep session alive -->

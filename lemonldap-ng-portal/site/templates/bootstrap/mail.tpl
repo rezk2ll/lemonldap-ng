@@ -31,7 +31,7 @@
     </div>
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i> </span>
-      <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" placeholder="Captcha" required />
+      <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required />
     </div>
     </TMPL_IF>
     <TMPL_IF NAME="TOKEN">
@@ -70,9 +70,9 @@
 
 
       <div class="checkbox">
-        <label for="resendconfirmation">
-          <input id="resendconfirmation" type="checkbox" name="resendconfirmation">
-          <span trspan="confirmPwd">Yes, resend the mail</span>
+        <label>
+          <input id="resendconfirmation" type="checkbox" name="resendconfirmation" aria-describedby="resendconfirmationlabel">
+          <label for="resendconfirmation" id="resendconfirmationlabel" trspan="confirmPwd">Yes, resend the mail</label>
         </label>
       </div>
 
@@ -113,9 +113,9 @@
         </div>
 
         <div class="checkbox">
-          <label for="reset">
-            <input id="reset" type="checkbox" name="reset" />
-            <span trspan="generatePwd">Generate the password automatically</span>
+          <label>
+            <input id="reset" type="checkbox" name="reset" aria-describedby="resetlabel"/>
+            <label for="reset" id="resetlabel" trspan="generatePwd">Generate the password automatically</label>
           </label>
         </div>
 

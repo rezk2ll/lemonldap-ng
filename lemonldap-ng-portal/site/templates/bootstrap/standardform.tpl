@@ -1,12 +1,12 @@
 <div class="form">
   <div class="form-group input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i> </span>
-    <input name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="login" required />
+    <input name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="login" required aria-required="true"/>
   </div>
 
   <div class="form-group input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>
-    <input name="password" type="password" class="form-control" trplaceholder="password" required />
+    <input name="password" type="password" class="form-control" trplaceholder="password" required aria-required="true"/>
   </div>
 
   <TMPL_IF NAME=CAPTCHA_SRC>
@@ -15,7 +15,7 @@
   </div>
   <div class="form-group input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i> </span>
-    <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" placeholder="Captcha" required />
+    <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required aria-required="true"/>
   </div>
   </TMPL_IF>
   <TMPL_IF NAME="TOKEN">

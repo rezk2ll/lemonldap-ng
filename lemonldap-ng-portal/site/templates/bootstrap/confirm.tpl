@@ -51,8 +51,8 @@
 
       <TMPL_IF NAME="REMEMBER">
       <div class="checkbox">
-        <label for="remember">
-          <input type="checkbox" id="remember" name="cookie_type" value="1">
+        <input type="checkbox" id="remember" name="cookie_type" value="1" aria-describedby="rememberlabel">
+        <label id="rememberlabel" for="remember">
           <span trspan="rememberChoice">Remember my choice</span>
         </label>
       </div>
