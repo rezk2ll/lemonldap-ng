@@ -645,6 +645,7 @@
 "sslParams": "SSL parameters",
 "SSLVar": "Extracted certificate field",
 "SSLVarIf": "Conditional extracted certificate field",
+"ssoSessions": "SSO sessions",
 "stayConnected": "Persistent connections",
 "successfullySaved": "Successfully saved",
 "storePassword": "Store user password in session datas",
