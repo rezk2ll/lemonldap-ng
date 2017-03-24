@@ -50,17 +50,17 @@
     <tr>
       <th><span trspan="applicationDisplay"></span></th>
       <td>
-        <div class="input-group-solid">
+        <div class="input-group-solid" role="radiogroup">
           <label class="radio-inline">
-            <input id="iOn" type="radio" value="on" ng-model="currentNode.data.display" />
+            <input id="iOn" type="radio" value="on" ng-model="currentNode.data.display" role="radio" aria-label="On"/>
             <span trspan="enabled"></span>
           </label>
           <label class="radio-inline">
-            <input id="iOff" type="radio" value="off" ng-model="currentNode.data.display" />
+            <input id="iOff" type="radio" value="off" ng-model="currentNode.data.display" role="radio" aria-label="Off"/>
             <span trspan="disabled">
           </label>
           <label class="radio-inline">
-            <input id="iAuto" type="radio" value="auto" ng-model="currentNode.data.display" />
+            <input id="iAuto" type="radio" value="auto" ng-model="currentNode.data.display" role="radio" aria-label="Auto"/>
             <span trspan="auto">
           </label>
         </div>

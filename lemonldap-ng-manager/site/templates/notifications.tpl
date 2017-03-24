@@ -14,10 +14,10 @@
     <aside id="left" class="col-lg-4 col-md-4 col-sm-5 col-xs-12 scrollable " ng-class="{'hidden-xs':!showT}" role="complementary">
       <div class="navbar navbar-default">
         <div class="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a id="a-actives" href="#"><i class="glyphicon glyphicon-eye-open"></i> {{translate('actives')}}</a></li>
-            <li><a id="a-done" href="#/done"><i class="glyphicon glyphicon-eye-close"></i> {{translate('dones')}}</a></li>
-            <li><a id="a-new" href="#/new"><i class="glyphicon glyphicon-plus-sign"></i> {{translate('create')}}</a></li>
+          <ul class="nav navbar-nav" role="grid">
+            <li><a id="a-actives" href="#" role="row"><i class="glyphicon glyphicon-eye-open"></i> {{translate('actives')}}</a></li>
+            <li><a id="a-done" href="#/done" role="row"><i class="glyphicon glyphicon-eye-close"></i> {{translate('dones')}}</a></li>
+            <li><a id="a-new" href="#/new" role="row"><i class="glyphicon glyphicon-plus-sign"></i> {{translate('create')}}</a></li>
           </ul>
         </div>
       </div>
@@ -45,9 +45,9 @@
             <li ng-if="type=='new'||currentNotification" ng-repeat="button in menu[type]" ng-include="'menubutton.html'"></li>
             <li uib-dropdown class="visible-xs">
               <a id="langmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
-              <ul uib-dropdown-menu aria-labelled-by="langmenu">
-                <li ng-repeat="link in links"><a href="{{link.target}}"><i ng-if="link.icon" class="glyphicon glyphicon-{{link.icon}}"></i> {{translate(link.title)}}</a></li>
-                <li ng-repeat="menulink in menulinks"><a href="{{menulink.target}}"><i ng-if="menulink.icon" class="glyphicon glyphicon-{{menulink.icon}}"></i> {{translate(menulink.title)}}</a></li>
+              <ul uib-dropdown-menu aria-labelled-by="langmenu" role="grid">
+                <li ng-repeat="link in links"><a href="{{link.target}}" role="row"><i ng-if="link.icon" class="glyphicon glyphicon-{{link.icon}}"></i> {{translate(link.title)}}</a></li>
+                <li ng-repeat="menulink in menulinks"><a href="{{menulink.target}}" role="row"><i ng-if="menulink.icon" class="glyphicon glyphicon-{{menulink.icon}}"></i> {{translate(menulink.title)}}</a></li>
                 <li ng-include="'languages.html'"></li>
               </ul>
             </li>

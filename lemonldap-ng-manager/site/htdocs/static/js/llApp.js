@@ -14,7 +14,7 @@ LemonLDAP::NG base app module
 (function() {
   var llapp;
 
-  llapp = angular.module('llApp', []);
+  llapp = angular.module('llApp', ['ngAria']);
 
   llapp.provider('$translator', function() {
     var al, c, j, k, langs, langs2, len, len1, nl, nlangs, ref, res;

@@ -4,8 +4,8 @@
   </div>
   <table class="table table striped">
     <tr>
-      <th><span trspan="value"></span></th>
-      <td><input id="textinput" class="form-control" ng-model="currentNode.data" ng-change="execFilters(_findScopeByKey('authParams'))"/></td>
+      <th><label id="labeli" for="textinput" trspan="value"></label></th>
+      <td><input id="textinput" class="form-control" ng-model="currentNode.data" ng-change="execFilters(_findScopeByKey('authParams'))" aria-describedby="labeli"/></td>
     </tr>
   </table>
 </div>

@@ -3,18 +3,18 @@
     <h3 class="panel-title">{{translateTitle(currentNode)}}</h3>
   </div>
   <div class="panel-body">
-    <div class="input-group-solid">
+    <div class="input-group-solid" role="radiogroup">
       <label class="radio-inline">
-        <input id="trOn" type="radio" value="1" ng-model="currentNode.data">
-        <span trspan="on"></span>
+        <input id="trOn" type="radio" value="1" ng-model="currentNode.data" role="radio" aria-labelledby="ltrOn">
+        <span id="ltrOn" for="trOn" trspan="on"></span>
       </label>
       <label class="radio-inline">
-        <input id="trOff" type="radio" value="0" ng-model="currentNode.data">
-        <span trspan="off"></span>
+        <input id="trOff" type="radio" value="0" ng-model="currentNode.data" role="radio" aria-labelledby="ltrOff">
+        <span id="ltrOff" for="trOff" trspan="off"></span>
       </label>
       <label class="radio-inline">
-        <input id="trDefault" type="radio" value="-1" ng-model="currentNode.data" ng-checked="currentNode.data!==1&&currentNode.data!=='1'&&currentNode.data!==0&&currentNode.data!=='0'">
-        <span trspan="default"></span>
+        <input id="trDefault" type="radio" value="-1" ng-model="currentNode.data" ng-checked="currentNode.data!==1&&currentNode.data!=='1'&&currentNode.data!==0&&currentNode.data!=='0'" role="radio" aria-labelledby="ltrDefault">
+        <span id="ltrDefault" for="trDefault" trspan="default"></span>
       </label>
     </div>
   </div>

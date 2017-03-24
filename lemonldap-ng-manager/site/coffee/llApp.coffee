@@ -9,7 +9,7 @@ LemonLDAP::NG base app module
   - a AngularJS factory to handle 401 Ajax responses
 ###
 
-llapp = angular.module 'llApp', []
+llapp = angular.module 'llApp', ['ngAria']
 
 # TRANSLATION SYSTEM
 #
