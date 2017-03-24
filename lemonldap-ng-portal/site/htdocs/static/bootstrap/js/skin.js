@@ -10,7 +10,7 @@ $(document).ready(function() {
   $(".notifCheck").addClass("checkbox");
 
   // Collapse menu on click
-  $('.nav a').on('click', function() {
+  $('.nav a[class!="dropdown-toggle"]').on('click', function() {
     if ($('.navbar-toggle').css('display') != 'none') {
       $(".navbar-toggle").trigger("click");
     }
