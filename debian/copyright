@@ -33,37 +33,37 @@ License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
  (http://snipplr.com/view/29434/)
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/Apache.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Apache.png
 Copyright: Apache Software Foundation (ASF)
 License: Apache-2.0
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/CAS.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/modules/CAS.png
 Copyright: Jasig
 License: Apache-2.0
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/BrowserID.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/modules/BrowserID.png
 Copyright: 2013, Xavier Guimard <x.guimard@free.fr>
 License: CC-3
 Comment: created using images of YellowIcon and Innerer Schweinehund
  (http://findicons.com/icon/168665/firefox?id=292029 and
   http://commons.wikimedia.org/wiki/File:Mail-closed.svg)
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/Google.png lemonldap-ng-portal/site/htdocs/static/common/Facebook.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Google.png lemonldap-ng-portal/site/htdocs/static/common/modules/Facebook.png
 Copyright: http://tempest.deviantart.com/
 License: CC-3
 Comment: Downloaded from http://www.iconspedia.com/
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/OpenIDConnect.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/modules/OpenIDConnect.png
 Copyright: http://www.customicondesign.com
 License: CC-BY-NC-ND-3.0
 Comment: Downloaded from http://www.iconspedia.com/
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/Twitter.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Twitter.png
 Copyright: Paul Schulerr, http://schulerr.deviantart.com
 License: CC-3
 Comment: Downloaded from http://www.iconspedia.com/
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/WebID.png
+Files: lemonldap-ng-portal/site/htdocs/static/common/modules/WebID.png
 Copyright: unknown
 License: W3C
 Comment: downloaded from
@@ -76,8 +76,8 @@ Copyright: Various artists
 License: CC-BY-NC-ND-3.0 or GFDL-1.3
 Comment: dowloaded from http://commons.wikimedia.org
 
-Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular/* lemonldap-ng-manager/site/htdocs/static/bwr/angular-cookies/* lemonldap-ng-manager/site/htdocs/static/bwr/angular-animate/*
-Copyright: 2010-2015, Google, Inc. http://angularjs.org
+Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular*
+Copyright: 2010-2017, Google, Inc. http://angularjs.org
 License: Expat
 
 Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/*

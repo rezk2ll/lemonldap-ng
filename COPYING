@@ -1,4 +1,4 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: lemonldap-ng
 Upstream-Contact: Xavier Guimard <x.guimard@free.fr>
 Source: http://forge.objectweb.org/project/showfiles.php?group_id=274
@@ -76,8 +76,8 @@ Copyright: Various artists
 License: CC-BY-NC-ND-3.0 or GFDL-1.3
 Comment: dowloaded from http://commons.wikimedia.org
 
-Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular/* lemonldap-ng-manager/site/htdocs/static/bwr/angular-cookies/* lemonldap-ng-manager/site/htdocs/static/bwr/angular-animate/*
-Copyright: 2010-2015, Google, Inc. http://angularjs.org
+Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular*
+Copyright: 2010-2017, Google, Inc. http://angularjs.org
 License: Expat
 
 Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/*
