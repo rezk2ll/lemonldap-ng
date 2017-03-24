@@ -1997,10 +1997,6 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 1,
             'type'    => 'bool'
         },
-        'portalForceAuthn' => {
-            'default' => 0,
-            'type'    => 'bool'
-        },
         'portalForceAuthnInterval' => {
             'default' => 5,
             'type'    => 'int'

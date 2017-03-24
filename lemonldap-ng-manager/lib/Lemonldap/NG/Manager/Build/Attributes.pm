@@ -500,11 +500,6 @@ sub attributes {
             type          => 'bool',
             documentation => 'Display login history checkbox in portal',
         },
-        portalForceAuthn => {
-            default       => 0,
-            type          => 'bool',
-            documentation => 'Force to authenticate when displaying portal',
-        },
         portalForceAuthnInterval => {
             type    => 'int',
             default => 5,

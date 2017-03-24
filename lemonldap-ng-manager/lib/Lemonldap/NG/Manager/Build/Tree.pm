@@ -634,7 +634,6 @@ sub tree {
                             form => 'simpleInputContainer',
                             nodes => [
                                 'userControl',
-                                'portalForceAuthn',
                                 'portalForceAuthnInterval',
                                 'key',
                                 'trustedDomains',
