@@ -16,7 +16,6 @@ our @pList = (
     portalDisplayResetPassword => '::Plugins::MailReset',
     portalStatus               => '::Plugins::Status',
     cda                        => '::Plugins::CDA',
-    portalForceAuthn           => '::Plugins::ForceAuth',
     u2fActivation              => '::Plugins::U2F',
     ext2fActivation            => '::Plugins::External2F',
     grantSessionRule           => '::Plugins::GrantSession',

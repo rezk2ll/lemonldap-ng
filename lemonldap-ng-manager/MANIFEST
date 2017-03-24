@@ -37,6 +37,9 @@ site/htdocs/manager.psgi
 site/htdocs/static/bwr/angular-animate/angular-animate.js
 site/htdocs/static/bwr/angular-animate/angular-animate.min.js
 site/htdocs/static/bwr/angular-animate/angular-animate.min.js.map
+site/htdocs/static/bwr/angular-aria/angular-aria.js
+site/htdocs/static/bwr/angular-aria/angular-aria.min.js
+site/htdocs/static/bwr/angular-aria/angular-aria.min.js.map
 site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js
 site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.min.js
 site/htdocs/static/bwr/angular-cookies/angular-cookies.js

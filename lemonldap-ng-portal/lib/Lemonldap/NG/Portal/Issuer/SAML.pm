@@ -394,91 +394,21 @@ sub run {
             $self->logger->debug(
                 "Found ForceAuthn flag with value $force_authn");
 
-            # Get ForceAuthn sessions for this session_id
-            my $moduleOptions = $self->conf->{samlStorageOptions} || {};
-            $moduleOptions->{backend} = $self->conf->{samlStorage};
-            my $module = "Lemonldap::NG::Common::Apache::Session";
-
-            my $forceAuthn_sessions =
-              $module->searchOn( $moduleOptions, "_saml_id", $session_id );
-
-            my $forceAuthn_session;
-            my $forceAuthnSessionInfo;
-
+            # Force authentication if flag is on, or previous flag still active
             if (
-                my @forceAuthn_sessions_keys =
-                keys %$forceAuthn_sessions
+                $force_authn
+                and (
+                    time - $req->sessionInfo->{_utime} >
+                    $self->conf->{portalForceAuthnInterval} )
               )
             {
 
-                # Warning if more than one session found
-                if ( $#forceAuthn_sessions_keys > 0 ) {
-                    $self->logger->warn(
-"More than one ForceAuthn session found for session $session_id"
-                    );
-                }
-
-                # Take the first session
-                $forceAuthn_session = shift @forceAuthn_sessions_keys;
-
-                # Get session
-                $self->logger->debug(
-"Retrieve ForceAuthn session $forceAuthn_session for session $session_id"
-                );
-
-                $forceAuthnSessionInfo =
-                  $self->getSamlSession($forceAuthn_session);
-
-                # Check forceAuthn flag for current SP
-                if ( $forceAuthnSessionInfo->data->{$spConfKey} ) {
-
-                    $self->logger->debug(
-"User was already forced to reauthenticate for SP $spConfKey"
-                    );
-                    $force_authn = 1;
-                }
-            }
-            else {
-                $self->logger->debug(
-                    "No ForceAuthn session found for session $session_id");
-            }
-
-            # Force authentication if flag is on, or previous flag still active
-            if ($force_authn) {
-                my $info = { $spConfKey => 1 };
-
-                unless ($forceAuthn_session) {
-                    my $forceInfos;
-                    $info->{'_type'}    = "forceAuthn";
-                    $info->{'_saml_id'} = $session_id;
-                    $info->{'_utime'}   = $time;
-                    $self->logger->debug("Create ForceAuthn session");
-                }
-
-                # Store flag for further requests
-                $forceAuthnSessionInfo =
-                  $self->getSamlSession( $forceAuthn_session, $info );
-                $forceAuthn_session = $forceAuthnSessionInfo->id
-                  unless ($forceAuthn_session);
-
-                $self->logger->debug(
-"Set ForceAuthn flag for SP $spConfKey in ForceAuthn session"
-                );
+                $self->userLogger->info(
+                    "SAML SP $sp ask to refresh session of "
+                      . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
                 # Replay authentication process
                 return $self->reAuth($req);
-            }
-
-            # Else remove flag
-            elsif ($forceAuthn_session) {
-                $forceAuthnSessionInfo =
-                  $self->getSamlSession( $forceAuthn_session,
-                    { $spConfKey => 0 } );
-                $forceAuthnSessionInfo->update( { $spConfKey => 0 } );
-
-                $self->logger->debug(
-"Unset ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session"
-                );
             }
 
             # Check Destination (only in non proxy mode)
