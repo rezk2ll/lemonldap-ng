@@ -9,6 +9,7 @@ package Lemonldap::NG::Portal::Main::Issuer;
 
 use strict;
 use Mouse;
+use MIME::Base64;
 use IO::String;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
@@ -155,8 +156,13 @@ sub restoreRequest {
 sub reAuth {
     my ( $self, $req ) = @_;
     $req->datas->{_url} = encode_base64(
-        $self->conf->{portal} . '?issuerRequest=' . $self->storeRequest($req),
-        '' );
+        $self->conf->{portal}
+          . $req->path_info
+          . '?issuerRequest'
+          . $self->path . '='
+          . $self->storeRequest($req),
+        ''
+    );
     return PE_RENEWSESSION;
 }
 

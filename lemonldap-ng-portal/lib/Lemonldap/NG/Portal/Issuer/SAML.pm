@@ -2,7 +2,6 @@ package Lemonldap::NG::Portal::Issuer::SAML;
 
 use strict;
 use Mouse;
-use MIME::Base64;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_SAML_ART_ERROR
