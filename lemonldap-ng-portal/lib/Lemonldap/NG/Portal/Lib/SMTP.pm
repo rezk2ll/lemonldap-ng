@@ -9,7 +9,9 @@ use strict;
 use Mouse;
 use JSON qw(from_json);
 use String::Random;
-use MIME::Lite;
+use MIMEEntity;
+use Email::Sender::Simple qw(sendmail);
+use Email::Sender::Transport::SMTP qw();
 use MIME::Base64;
 use Encode;
 
@@ -26,6 +28,52 @@ has random => (
 has charset => (
     is      => 'rw',
     default => sub { return $_[0]->{conf}->{mailCharset} || 'utf-8' }
+);
+has transport => (
+    is      => 'rw',
+    default => sub {
+        my $conf = $_[0]->{conf};
+        return undef
+          unless ( $conf->{SMTPServer} );
+        if (    $conf->{SMTPTLS}
+            and $Email::Sender::Simple::VERSION < 1.300027 )
+        {
+            require Email::Sender::Transport::SMTPS;
+            return Email::Sender::Transport::SMTPS->new(
+                host => $conf->{SMTPServer},
+                ( $conf->{SMTPPort} ? ( port => $conf->{SMTPPort} ) : () ),
+                (
+                    $conf->{SMTPAuthUser}
+                    ? (
+                        sasl_username => $conf->{SMTPAuthUser},
+                        sasl_password => $conf->{SMTPAuthPass}
+                      )
+                    : ()
+                ),
+                ssl => $conf->{SMTPTLS},
+            );
+        }
+        else {
+            return Email::Sender::Transport::SMTP->new(
+                host => $conf->{SMTPServer},
+                port => $conf->{SMTPPort} || 25,
+                (
+                    $conf->{SMTPAuthUser}
+                    ? (
+                        sasl_username => $conf->{SMTPAuthUser},
+                        sasl_password => $conf->{SMTPAuthPass}
+                      )
+                    : ()
+                ),
+                ( $conf->{SMTPTLS} ? ( ssl => $conf->{SMTPTLS} ) : () ),
+                (
+                    $conf->{SMTPTLSOpts}
+                    ? ( ssl_options => $conf->{SMTPTLSOpts} )
+                    : ()
+                ),
+            );
+        }
+    },
 );
 
 sub translate {
@@ -95,7 +143,7 @@ sub send_mail {
 
         # HTML case
         if ($html) {
-            $message = MIME::Lite->new(
+            $message = MIME::Entity->build(
                 From => $self->conf->{mailFrom},
                 To   => $mail,
                 (
@@ -125,7 +173,7 @@ sub send_mail {
 
         # Plain text case
         else {
-            $message = MIME::Lite->new(
+            $message = MIME::Entity->build(
                 From       => $self->conf->{mailFrom},
                 To         => $mail,
                 "Reply-To" => $self->conf->{mailReplyTo},
@@ -141,13 +189,7 @@ sub send_mail {
         }
 
         # Send the mail
-        $self->conf->{SMTPServer}
-          ? $message->send(
-            "smtp", $self->conf->{SMTPServer},
-            AuthUser => $self->conf->{SMTPAuthUser},
-            AuthPass => $self->conf->{SMTPAuthPass}
-          )
-          : $message->send();
+        sendmail( $message->stringify, { transport => $self->transport } );
     };
     if ($@) {
         $self->logger->error("Send message failed: $@");
