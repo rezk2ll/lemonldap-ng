@@ -1561,12 +1561,6 @@
         "title": "userControl",
         "data": "^[\\w\\.\\-@]+$"
       }, {
-        "default": 0,
-        "id": "portalForceAuthn",
-        "title": "portalForceAuthn",
-        "type": "bool",
-        "data": 0
-      }, {
         "default": "p2@Pol9Lo_Ze&j*P",
         "id": "key",
         "title": "key",

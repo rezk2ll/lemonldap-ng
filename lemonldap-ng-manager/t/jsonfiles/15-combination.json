@@ -2162,12 +2162,6 @@
         "title": "userControl"
       },
       {
-        "default": 0,
-        "id": "portalForceAuthn",
-        "title": "portalForceAuthn",
-        "type": "bool"
-      },
-      {
         "default": 5,
         "id": "portalForceAuthnInterval",
         "title": "portalForceAuthnInterval",
