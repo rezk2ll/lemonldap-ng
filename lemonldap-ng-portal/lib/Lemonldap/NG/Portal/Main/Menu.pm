@@ -23,7 +23,8 @@ has menuModules => (
             my $cond = $conf->{"portalDisplay$_"} // 1;
             $_[0]->p->logger->debug("Evaluate condition $cond for module $_");
             my $tmp =
-              $_[0]->{p}->HANDLER->buildSub($cond);
+              $_[0]->{p}
+              ->HANDLER->buildSub( $_[0]->{p}->HANDLER->substitute($cond) );
             push @res, [ $_, $tmp ] if ($tmp);
         }
         return \@res;
