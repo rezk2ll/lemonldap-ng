@@ -23,6 +23,7 @@ extends 'Lemonldap::NG::Portal::Auth::Base';
 
 has secret => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         return $_[0]->conf->{openIdSecret}
           || $_[0]->conf->{cipher}->encrypt(0);
@@ -31,6 +32,7 @@ has secret => (
 
 has listIsWhite => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         ( $_[0]->conf->{openIdIDPList} =~ /^(\d);/ )[0] + 0;
     }
@@ -38,6 +40,7 @@ has listIsWhite => (
 
 has idpList => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         Lemonldap::NG::Common::Regexp::reDomainsToHost(
             ( $_[0]->conf->{openIdIDPList} =~ /^\d;(.*)$/ )[0] );

@@ -17,6 +17,7 @@ our $VERSION = '2.0.0';
 
 has service => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         return $_[0]->{conf}->{pamService} || 'login';
     }

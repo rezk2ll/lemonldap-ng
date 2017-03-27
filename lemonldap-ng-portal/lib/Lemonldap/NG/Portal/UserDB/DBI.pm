@@ -12,6 +12,7 @@ our $VERSION = '2.0.0';
 
 has table => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         my $conf = $_[0]->{conf};
         return $conf->{dbiUserTable} || $conf->{dbiAuthTable};
@@ -20,6 +21,7 @@ has table => (
 
 has pivot => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         my $conf = $_[0]->{conf};
         return $conf->{userPivot} || $conf->{dbiAuthLoginCol};
@@ -28,6 +30,7 @@ has pivot => (
 
 has exportedVars => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         my $conf = $_[0]->{conf};
         return { %{ $conf->{exportedVars} }, %{ $conf->{dbiExportedVars} } };

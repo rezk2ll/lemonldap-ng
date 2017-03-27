@@ -28,6 +28,7 @@ sub beforeAuth { 'exportRequestParameters' }
 
 has configStorage => (
     is      => 'ro',
+    lazy    => 1,
     default => sub {
         $_[0]->{p}->HANDLER->localConfig->{configStorage};
     }
@@ -114,7 +115,9 @@ sub run {
                     $oidc_request->{$param} = $req->param($param);
                     $self->logger->debug( "OIDC request parameter $param: "
                           . $oidc_request->{$param} );
-                    $self->p->setHiddenFormValue( $req, $param, $oidc_request->{$param}, '', 0 );
+                    $self->p->setHiddenFormValue( $req, $param,
+                        $oidc_request->{$param},
+                        '', 0 );
                 }
             }
 
@@ -840,7 +843,9 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                     $req->urldc($response_url);
                     return PE_REDIRECT;
                 }
-                return $req->param('confirm') == 1 ? ($err ? $err : PE_LOGOUT_OK ) : PE_OK;
+                return $req->param('confirm') == 1
+                  ? ( $err ? $err : PE_LOGOUT_OK )
+                  : PE_OK;
             }
 
             $req->info(

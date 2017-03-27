@@ -10,6 +10,7 @@ has module =>
 
 has moduleOpts => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         my %opts = %{ $_[0]->{conf}->{globalStorageOptions} || {} };
         $opts{backend} = $_[0]->{conf}->{globalStorage};

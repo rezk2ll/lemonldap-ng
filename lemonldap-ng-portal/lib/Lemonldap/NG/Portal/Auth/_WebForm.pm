@@ -24,6 +24,7 @@ extends 'Lemonldap::NG::Portal::Auth::Base';
 
 has authnLevel => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         my $conf = $_[0]->{conf};
         return ( $conf->{portal} =~ /^https/ ? 2 : 1 );
@@ -109,7 +110,9 @@ sub extractFormInfo {
             $self->logger->debug("Captcha code verified");
         }
         elsif ( $self->ott ) {
-            unless ( $req->datas->{tokenVerified} or $self->ott->getToken($token) ) {
+            unless ( $req->datas->{tokenVerified}
+                or $self->ott->getToken($token) )
+            {
                 $self->ott->setToken($req);
                 $self->userLogger->warn('Token expired');
                 return PE_TOKENEXPIRED;
@@ -150,7 +153,8 @@ sub getDisplayType {
 }
 
 sub setSecurity {
-    my($self,$req) = @_;
+    my ( $self, $req ) = @_;
+
     # If captcha is enable, prepare it
     if ( $self->captcha ) {
         $self->captcha->setCaptcha($req);

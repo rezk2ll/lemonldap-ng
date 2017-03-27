@@ -26,6 +26,7 @@ use constant beforeLogout => 'logout';
 
 has ott => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
@@ -37,6 +38,7 @@ has ott => (
 # Default timeout: 1 month
 has timeout => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         $_[0]->{conf}->{stayConnectedTimeout} || 2678400;
     }

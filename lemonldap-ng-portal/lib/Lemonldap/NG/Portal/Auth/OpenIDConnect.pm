@@ -302,8 +302,8 @@ sub authLogout {
         my $logout_url = $self->conf->{portal} . '?logout=1';
         $req->urldc(
             $self->buildLogoutRequest(
-                $endsession_endpoint,
-                $req->{sessionInfo}->{_oidc_id_token}, $logout_url
+                $endsession_endpoint, $req->{sessionInfo}->{_oidc_id_token},
+                $logout_url
             )
         );
 

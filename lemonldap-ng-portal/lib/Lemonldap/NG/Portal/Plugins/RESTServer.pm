@@ -51,6 +51,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 has configStorage => (
     is      => 'ro',
+    lazy    => 1,
     default => sub {
         $_[0]->{p}->HANDLER->localConfig->{configStorage};
     }
@@ -58,6 +59,7 @@ has configStorage => (
 
 has exportedAttr => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         my $conf = $_[0]->{conf};
         if ( $conf->{exportedAttr} and $conf->{exportedAttr} !~ /^\s*\+/ ) {

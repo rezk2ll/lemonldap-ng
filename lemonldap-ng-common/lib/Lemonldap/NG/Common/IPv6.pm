@@ -5,7 +5,7 @@ use base 'Exporter';
 @EXPORT = qw(&isIPv6 &net6 &expand6);
 
 sub isIPv6 {
-    my($ip) = @_;
+    my ($ip) = @_;
     return $ip =~ /^[a-z0-9:]+$/i;
 }
 

@@ -15,6 +15,7 @@ extends 'Lemonldap::NG::Common::Module';
 
 has menuModules => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         my $conf = $_[0]->{conf}->{menuModule};
         my @res;
@@ -31,6 +32,7 @@ has menuModules => (
 
 has imgPath => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         return $_[0]->{conf}->{impgPath}
           || $_[0]->{conf}->{staticPrefix} . '/logos';

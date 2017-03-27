@@ -74,10 +74,12 @@ sub controlUrl {
         }
     }
     $req->{datas}->{_url} ||= '';
-    my ($url, $issuerUrl);
-    if ( ($url = $req->param('url')) or ($issuerUrl = $req->param('issuerUrldc')) ) {
+    my ( $url, $issuerUrl );
+    if (   ( $url = $req->param('url') )
+        or ( $issuerUrl = $req->param('issuerUrldc') ) )
+    {
 
-        if($issuerUrl) {
+        if ($issuerUrl) {
             $req->urlNotBase64(1);
             $url = $issuerUrl;
         }

@@ -16,6 +16,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 has ott => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
@@ -66,9 +67,9 @@ sub confirm {
             return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
         }
     }
-    $req->steps(['controlUrl']);
+    $req->steps( ['controlUrl'] );
     my $res = $self->p->process($req);
-    return $self->p->do( $req, [ sub { $res } ] ) if($res);
+    return $self->p->do( $req, [ sub { $res } ] ) if ($res);
     if ( $upg or $req->param('confirm') == 1 ) {
         $req->datas->{noerror} = 1;
         $self->p->setHiddenFormValue(

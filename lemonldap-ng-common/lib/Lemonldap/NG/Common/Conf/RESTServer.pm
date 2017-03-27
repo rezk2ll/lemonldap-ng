@@ -628,8 +628,7 @@ sub metadatas {
                   . $c );
         }
         else {
-            $self->logger->info(
-                "REST request to get full configuration $c");
+            $self->logger->info("REST request to get full configuration $c");
         }
         return $self->sendJSONresponse(
             $req,

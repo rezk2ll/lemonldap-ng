@@ -292,7 +292,8 @@ sub forbidden {
     }
 
     if ( $session->{_upgrade} ) {
-        return $class->goToPortal( $class->unparsed_uri, undef, '/upgradesession' );
+        return $class->goToPortal( $class->unparsed_uri, undef,
+            '/upgradesession' );
     }
 
     # Log forbidding

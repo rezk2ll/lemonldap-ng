@@ -20,6 +20,7 @@ extends 'Lemonldap::NG::Portal::Auth::Base';
 
 has SSLField => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         return ( $_[0]->{conf}->{SSLVar} || 'SSL_CLIENT_S_DN_Email' );
     }

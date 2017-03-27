@@ -73,7 +73,7 @@ sub verify {
               . $session->{ $self->conf->{whatToTrace} } );
         return PE_BADCREDENTIALS;
     }
-    PE_OK
+    PE_OK;
 }
 
 # system() is used with an array to avoid shell injection

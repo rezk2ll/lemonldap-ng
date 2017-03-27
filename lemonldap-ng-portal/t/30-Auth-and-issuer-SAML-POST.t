@@ -334,7 +334,8 @@ ywIDAQAB
 ",
                 samlSPMetaDataXML => {
                     "sp.com" => {
-                        samlSPMetaDataXML => samlSPMetaDataXML('sp','HTTP-POST')
+                        samlSPMetaDataXML =>
+                          samlSPMetaDataXML( 'sp', 'HTTP-POST' )
                     },
                 },
             }
@@ -380,7 +381,8 @@ sub sp {
                 },
                 samlIDPMetaDataXML => {
                     idp => {
-                        samlIDPMetaDataXML => samlIDPMetaDataXML('idp','HTTP-POST')
+                        samlIDPMetaDataXML =>
+                          samlIDPMetaDataXML( 'idp', 'HTTP-POST' )
                     }
                 },
                 samlOrganizationDisplayName => "SP",

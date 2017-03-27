@@ -10,6 +10,7 @@ extends 'Lemonldap::NG::Common::Module';
 
 has timeout => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         $_[0]->{conf}->{timeout};
     }
@@ -17,6 +18,7 @@ has timeout => (
 
 has cache => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         my $c = $_[0]->{conf};
         if ( !$c->{tokenUseGlobalStorage} ) {

@@ -28,6 +28,7 @@ has path => ( is => 'rw' );
 
 has _ott => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         my $ott = $_[0]->{p}->loadModule('::Lib::OneTimeToken');
         $ott->timeout( $_[0]->{conf}->{formTimeout} );

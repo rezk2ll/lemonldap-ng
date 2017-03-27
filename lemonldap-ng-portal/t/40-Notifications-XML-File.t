@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $file = 't/20160530_dwho_dGVzdHJlZg==.xml';
+my $file      = 't/20160530_dwho_dGVzdHJlZg==.xml';
 my $mainTests = 6;
 
 SKIP: {

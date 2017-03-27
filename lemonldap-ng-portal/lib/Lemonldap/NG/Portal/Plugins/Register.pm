@@ -35,6 +35,7 @@ has registerModule => ( is => 'rw' );
 # Register url to set in the mail
 has registerUrl => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         my $p = $_[0]->conf->{portal};
         $p =~ s#/*$##;
@@ -45,6 +46,7 @@ has registerUrl => (
 # Mail timeout token generator
 has mailott => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');

@@ -9,21 +9,46 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Common::Module';
 
-has width =>
-  ( is => 'rw', default => sub { $_[0]->{conf}->{captchaWidth} || 220 } );
-has height =>
-  ( is => 'rw', default => sub { $_[0]->{conf}->{captchaHeight} || 40 } );
-has lines =>
-  ( is => 'rw', default => sub { $_[0]->{conf}->{captchaLines} || 5 } );
-has scramble =>
-  ( is => 'rw', default => sub { $_[0]->{conf}->{captchaScramble} || 1 } );
-has fgColor =>
-  ( is => 'rw', default => sub { $_[0]->{conf}->{captchaFg} || '#403030' } );
-has bgColor =>
-  ( is => 'rw', default => sub { $_[0]->{conf}->{captchaBg} || '#FF644B' } );
-has rndmax =>
-  ( is => 'rw', default => sub { $_[0]->{conf}->{captcha_size} || 6 } );
-has timeout => ( is => 'rw', default => sub { $_[0]->{conf}->{formTimeout} } );
+has width => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub { $_[0]->{conf}->{captchaWidth} || 220 }
+);
+has height => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub { $_[0]->{conf}->{captchaHeight} || 40 }
+);
+has lines => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub { $_[0]->{conf}->{captchaLines} || 5 }
+);
+has scramble => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub { $_[0]->{conf}->{captchaScramble} || 1 }
+);
+has fgColor => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub { $_[0]->{conf}->{captchaFg} || '#403030' }
+);
+has bgColor => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub { $_[0]->{conf}->{captchaBg} || '#FF644B' }
+);
+has rndmax => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub { $_[0]->{conf}->{captcha_size} || 6 }
+);
+has timeout => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub { $_[0]->{conf}->{formTimeout} }
+);
 
 has ott => (
     is      => 'rw',

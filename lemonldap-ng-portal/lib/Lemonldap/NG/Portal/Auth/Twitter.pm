@@ -11,6 +11,7 @@ our $VERSION = '2.0.0';
 
 has twitterRequestTokenURL => (
     is      => 'ro',
+    lazy    => 1,
     default => sub {
         $_[0]->conf->{twitterRequestTokenURL}
           || 'https://api.twitter.com/oauth/request_token';
@@ -19,6 +20,7 @@ has twitterRequestTokenURL => (
 
 has twitterAuthorizeURL => (
     is      => 'ro',
+    lazy    => 1,
     default => sub {
         $_[0]->conf->{twitterAuthorizeURL}
           || 'https://api.twitter.com/oauth/authorize';
@@ -27,6 +29,7 @@ has twitterAuthorizeURL => (
 
 has twitterAccessTokenURL => (
     is      => 'ro',
+    lazy    => 1,
     default => sub {
         $_[0]->conf->{twitterAccessTokenURL}
           || 'https://api.twitter.com/oauth/access_token';

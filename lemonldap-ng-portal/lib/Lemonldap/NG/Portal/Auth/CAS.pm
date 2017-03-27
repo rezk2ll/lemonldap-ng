@@ -19,6 +19,7 @@ extends 'Lemonldap::NG::Portal::Auth::Base', 'Lemonldap::NG::Portal::Lib::CAS';
 # Act as a proxy if proxied services configured
 has proxy => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         return
           ref( $_[0]->conf->{CAS_proxiedServices} ) eq 'HASH'

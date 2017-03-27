@@ -50,7 +50,9 @@ ok(
 count(1);
 expectOK($res);
 
-ok( mail() =~ m#a href="http://auth.example.com/register\?(.*?)"#, 'Found register token') or print STDERR Dumper($main::mail);
+ok( mail() =~ m#a href="http://auth.example.com/register\?(.*?)"#,
+    'Found register token' )
+  or print STDERR Dumper($main::mail);
 $query = $1;
 ok( $query =~ /register_token=/, 'Found register_token' );
 count(2);
@@ -62,9 +64,13 @@ ok(
 expectOK($res);
 count(1);
 
-ok( mail() =~ m#Your login is.+?<b>(\w+)</b>.*?Your password is.+?<b>(.*?)</b>#s, 'Found user and password');
+ok(
+    mail() =~
+      m#Your login is.+?<b>(\w+)</b>.*?Your password is.+?<b>(.*?)</b>#s,
+    'Found user and password'
+);
 $user = $1;
-$pwd = $2;
+$pwd  = $2;
 ok( $user eq 'fbar', 'Get good login' );
 count(2);
 

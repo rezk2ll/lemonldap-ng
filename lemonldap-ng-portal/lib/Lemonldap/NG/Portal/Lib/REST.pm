@@ -9,6 +9,7 @@ our $VERSION = '2.0.0';
 
 has ua => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         return Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
     }

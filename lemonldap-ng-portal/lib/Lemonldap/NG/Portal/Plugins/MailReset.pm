@@ -38,6 +38,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin',
 # Form timout token generator (used even if requireToken is not set)
 has ott => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');

@@ -10,6 +10,7 @@ our $VERSION = '2.0.0';
 
 has vars => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         return {
             %{ $_[0]->conf->{exportedVars} },

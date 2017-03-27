@@ -108,7 +108,7 @@ SKIP: {
     );
     expectOK($res);
     my $idpId = expectCookie($res);
-    ok($res->[2]->[0] =~ /trmsg="84"/, 'Reject reason is 84');
+    ok( $res->[2]->[0] =~ /trmsg="84"/, 'Reject reason is 84' );
 }
 
 count($maintests);
@@ -150,7 +150,7 @@ sub issuer {
                         samlSPMetaDataOptionsSignSLOMessage           => 1,
                         samlSPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlSPMetaDataOptionsCheckSLOMessageSignature => 1,
-                        samlSPMetaDataOptionsRule                     => '$uid eq "dwho"',
+                        samlSPMetaDataOptionsRule => '$uid eq "dwho"',
                     }
                 },
                 samlSPMetaDataExportedAttributes => {

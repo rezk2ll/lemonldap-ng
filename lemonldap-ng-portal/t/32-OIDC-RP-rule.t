@@ -56,7 +56,7 @@ ok(
 );
 count(1);
 my $idpId = expectCookie($res);
-ok($res->[2]->[0] =~ /trmsg="84"/, 'Reject reason is 84');
+ok( $res->[2]->[0] =~ /trmsg="84"/, 'Reject reason is 84' );
 count(1);
 
 #print STDERR Dumper($res);
@@ -171,7 +171,7 @@ sub op {
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
                         oidcRPMetaDataOptionsUserIDAttr        => "",
                         oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
-                        oidcRPMetaDataOptionsRule              => '$uid eq "dwho"',
+                        oidcRPMetaDataOptionsRule => '$uid eq "dwho"',
                     }
                 },
                 oidcOPMetaDataOptions           => {},

@@ -19,6 +19,7 @@ has radius => ( is => 'rw' );
 
 has authnLevel => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         $_[0]->conf->{radiusAuthnLevel};
     }

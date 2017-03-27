@@ -15,7 +15,7 @@ my $token = $crypt->encrypt( join ':', time, $sessionId, 'test1.example.com' );
 ok(
     $res = $client->_get(
         '/', undef, 'test1.example.com', undef,
-        VHOSTTYPE      => 'ServiceToken',
+        VHOSTTYPE           => 'ServiceToken',
         'HTTP_X_LLNG_TOKEN' => $token,
     ),
     'Query with token'

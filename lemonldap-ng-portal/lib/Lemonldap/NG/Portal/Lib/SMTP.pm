@@ -29,10 +29,12 @@ has random => (
 );
 has charset => (
     is      => 'rw',
+    lazy    => 1,
     default => sub { return $_[0]->{conf}->{mailCharset} || 'utf-8' }
 );
 has transport => (
     is      => 'rw',
+    lazy    => 1,
     default => sub {
         return $transport if $transport;
         my $conf = $_[0]->{conf};

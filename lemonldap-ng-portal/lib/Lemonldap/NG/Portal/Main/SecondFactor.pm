@@ -58,7 +58,7 @@ sub _run {
     $req->id(0);
     $self->p->rebuildCookies($req);
     my $res = $self->run( $req, $token );
-    delete $req->{authResult} if($res);
+    delete $req->{authResult} if ($res);
     return $res;
 }
 

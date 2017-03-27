@@ -16,6 +16,7 @@ extends 'Lemonldap::NG::Portal::Auth::LDAP';
 
 has adPwdMaxAge => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         my $conf = $_[0]->{conf};
         my $res = $conf->{ADPwdMaxAge} || 0;
@@ -25,6 +26,7 @@ has adPwdMaxAge => (
 
 has adPwdExpireWarning => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         my $conf = $_[0]->{conf};
         my $res = $conf->{ADPwdExpireWarning} || 0;
