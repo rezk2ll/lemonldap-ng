@@ -540,6 +540,7 @@ sub substitute {
 
     # substitute vars with session datas, excepts special vars $_ and $\d+
     $expr =~ s/\$(?!ENV)(_*[a-zA-Z]\w*)/\$session->{$1}/sg;
+    $expr =~ s/\$ENV\{/&env()->\{/g;
 
     return $expr;
 }

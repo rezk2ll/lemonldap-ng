@@ -147,8 +147,6 @@ sub share_from {
 sub jail_reval {
     my ( $self, $reval ) = @_;
 
-    $reval =~ s/\$ENV\{/&env()->\{/g;
-
     # if nothing is returned by reval, add the return statement to
     # the "no safe wrap" reval
 
