@@ -2886,11 +2886,35 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'SMTPAuthUser' => {
             'type' => 'text'
         },
+        'SMTPPort' => {
+            'type' => 'int'
+        },
         'SMTPServer' => {
             'default' => '',
             'test' =>
 qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?)?$/,
             'type' => 'text'
+        },
+        'SMTPTLS' => {
+            'default' => '',
+            'select'  => [
+                {
+                    'k' => '',
+                    'v' => 'none'
+                },
+                {
+                    'k' => 'starttls',
+                    'v' => 'SMTP + STARTTLS'
+                },
+                {
+                    'k' => 'ssl',
+                    'v' => 'SMTPS'
+                }
+            ],
+            'type' => 'select'
+        },
+        'SMTPTLSOpts' => {
+            'type' => 'keyTextContainer'
         },
         'soapConfigServer' => {
             'default' => 0,

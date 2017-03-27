@@ -229,6 +229,7 @@ sub defaultValues {
         'slaveAuthnLevel'                         => 2,
         'slaveExportedVars'                       => {},
         'SMTPServer'                              => '',
+        'SMTPTLS'                                 => '',
         'SSLAuthnLevel'                           => 5,
         'successLoginNumber'                      => 5,
         'timeout'                                 => 72000,

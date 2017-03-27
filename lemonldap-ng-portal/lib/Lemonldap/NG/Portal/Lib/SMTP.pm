@@ -59,7 +59,7 @@ has transport => (
         else {
             $transport = Email::Sender::Transport::SMTP->new(
                 host => $conf->{SMTPServer},
-                port => $conf->{SMTPPort} || 25,
+                ( $conf->{SMTPPort} ? ( port => $conf->{SMTPPort} ) : () ),
                 (
                     $conf->{SMTPAuthUser}
                     ? (

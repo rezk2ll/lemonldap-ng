@@ -932,6 +932,24 @@ sub attributes {
             test    => qr/^(?:$Regexp::Common::URI::RFC2396::host(?::\d+)?)?$/,
             documentation => 'SMTP Server',
         },
+        SMTPPort => {
+            type          => 'int',
+            documentation => 'Fix SMTP port',
+        },
+        SMTPTLS => {
+            type    => 'select',
+            default => '',
+            select  => [
+                { k => '',         v => 'none' },
+                { k => 'starttls', v => 'SMTP + STARTTLS' },
+                { k => 'ssl',      v => 'SMTPS' },
+            ],
+            documentation => 'TLS protocol to use with SMTP',
+        },
+        SMTPTLSOpts => {
+            type          => 'keyTextContainer',
+            documentation => 'TLS/SSL options for SMTP',
+        },
         SMTPAuthUser => {
             type          => 'text',
             documentation => 'Login to use to send mails',

@@ -559,8 +559,9 @@ sub tree {
                                     title => 'SMTP',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'SMTPServer', 'SMTPAuthUser',
-                                        'SMTPAuthPass'
+                                        'SMTPServer',   'SMTPPort',
+                                        'SMTPAuthUser', 'SMTPAuthPass',
+                                        'SMTPTLS',      'SMTPTLSOpts',
                                     ]
                                 },
                                 {
