@@ -48,6 +48,7 @@ sub unset_header_in {
 *remote_ip          = *Lemonldap::NG::Handler::PSGI::Main::remote_ip;
 *is_initial_req     = *Lemonldap::NG::Handler::PSGI::Main::is_initial_req;
 *args               = *Lemonldap::NG::Handler::PSGI::Main::args;
+*env                = *Lemonldap::NG::Handler::PSGI::Main::env;
 *uri                = *Lemonldap::NG::Handler::PSGI::Main::uri;
 *uri_with_args      = *Lemonldap::NG::Handler::PSGI::Main::uri_with_args;
 *unparsed_uri       = *Lemonldap::NG::Handler::PSGI::Main::unparsed_uri;
