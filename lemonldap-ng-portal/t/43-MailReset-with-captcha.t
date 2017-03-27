@@ -3,12 +3,12 @@ use strict;
 use IO::String;
 
 BEGIN {
-    require MIME::Lite;
     require 't/test-lib.pm';
+    require 't/smtp.pm';
 }
 
 my ( $res, $host, $url, $query );
-my $maintests = 8;
+my $maintests = 10;
 my $mailSend  = 0;
 my $mail2     = 0;
 
@@ -67,7 +67,10 @@ SKIP: {
         'Post mail'
     );
 
-    # $query has been set by MIME::Lite::send
+    ok( mail() =~ m#a href="http://auth.example.com/resetpwd\?(.*?)"#,
+        'Found link in mail' );
+    $query = $1;
+
     ok(
         $res =
           $client->_get( '/resetpwd', query => $query, accept => 'text/html' ),
@@ -87,6 +90,7 @@ SKIP: {
         ),
         'Post new password'
     );
+    ok( mail() =~ /Your password was changed/, 'Password was changed' );
 
     #print STDERR Dumper($query);
 }
@@ -95,33 +99,3 @@ count($maintests);
 clean_sessions();
 
 done_testing( count() );
-
-no warnings 'redefine';
-
-sub MIME::Lite::send {
-    my ($mail) = @_;
-    pass('----- Mail given to MIME::Lite -----');
-    ok( $mail->header_as_string =~ /dwho\@badwolf.org/s, ' Found dest' )
-      or explain( $mail->header_as_string, 'To: dwho@badwolf.org' );
-    count(2);
-    unless ($mail2) {
-        $mailSend = 1;
-        ok(
-            $mail->body_as_string =~
-              m#a href="http://auth.example.com/resetpwd\?(.*?)"#,
-            ' Found link'
-        );
-        count(1);
-        $query = $1;
-        $mail2++;
-    }
-    else {
-        $mailSend = 2;
-        ok( $mail->body_as_string =~ /Your password was changed/,
-            ' Password was changed' );
-        count(1);
-    }
-    pass('----- Mail sent -----');
-    count(1);
-}
-

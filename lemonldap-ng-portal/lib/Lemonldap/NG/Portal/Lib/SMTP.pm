@@ -9,13 +9,15 @@ use strict;
 use Mouse;
 use JSON qw(from_json);
 use String::Random;
-use MIMEEntity;
+use MIME::Entity;
 use Email::Sender::Simple qw(sendmail);
 use Email::Sender::Transport::SMTP qw();
 use MIME::Base64;
 use Encode;
 
 our $VERSION = '2.0.0';
+
+our $transport;
 
 # PROPERTIES
 
@@ -32,6 +34,7 @@ has charset => (
 has transport => (
     is      => 'rw',
     default => sub {
+        return $transport if $transport;
         my $conf = $_[0]->{conf};
         return undef
           unless ( $conf->{SMTPServer} );
@@ -39,7 +42,7 @@ has transport => (
             and $Email::Sender::Simple::VERSION < 1.300027 )
         {
             require Email::Sender::Transport::SMTPS;
-            return Email::Sender::Transport::SMTPS->new(
+            $transport = Email::Sender::Transport::SMTPS->new(
                 host => $conf->{SMTPServer},
                 ( $conf->{SMTPPort} ? ( port => $conf->{SMTPPort} ) : () ),
                 (
@@ -54,7 +57,7 @@ has transport => (
             );
         }
         else {
-            return Email::Sender::Transport::SMTP->new(
+            $transport = Email::Sender::Transport::SMTP->new(
                 host => $conf->{SMTPServer},
                 port => $conf->{SMTPPort} || 25,
                 (
@@ -73,6 +76,7 @@ has transport => (
                 ),
             );
         }
+        return $transport;
     },
 );
 
@@ -189,7 +193,8 @@ sub send_mail {
         }
 
         # Send the mail
-        sendmail( $message->stringify, { transport => $self->transport } );
+        sendmail( $message->stringify,
+            ( $self->transport ? { transport => $self->transport } : () ) );
     };
     if ($@) {
         $self->logger->error("Send message failed: $@");

@@ -1,9 +1,5 @@
-* check for issuer rules
+* Add new SMTP params
 * unhandled parameters:
-  * portalDisplayLoginHistory
-  * portalDisplayAppslist
-  * portalDisplayChangePassword
-  * portalDisplayLogout
   * issuerDB\*Rule
 * securize SOAP session creation by cipher
 * Verify securedCookie=3 (strange)
