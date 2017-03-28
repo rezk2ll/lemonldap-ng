@@ -48,7 +48,7 @@ sub init {
 
 sub _run {
     my ( $self, $req ) = @_;
-    return PE_OK unless ( $self->rule->( $req->sessionInfo ) );
+    return PE_OK unless ( $self->rule->( $req, $req->sessionInfo ) );
     $self->userLogger->info( 'Second factor required ('
           . $self->prefix
           . ') for '

@@ -22,7 +22,7 @@ sub run {
     return $ret unless ( $ret == $class->OK );
 
     # Get current URI
-    my $uri = $class->uri_with_args($req);
+    my $uri = $req->{env}->{REQUEST_URI};
 
     # Get Zimbra parameters
     my $localConfig      = $class->localConfig;
@@ -52,7 +52,7 @@ sub run {
 
     # Build URL
     my $zimbra_url =
-      $class->_buildZimbraPreAuthUrl( $zimbraPreAuthKey, $zimbraUrl,
+      $class->_buildZimbraPreAuthUrl( $req, $zimbraPreAuthKey, $zimbraUrl,
         $class->datas->{$zimbraAccountKey},
         $zimbraBy, $timeout );
 
@@ -72,7 +72,7 @@ sub run {
 # @param timeout Timout
 # @return Zimbra PreAuth URL
 sub _buildZimbraPreAuthUrl {
-    my ( $class, $key, $url, $account, $by, $timeout ) = @_;
+    my ( $class, $req, $key, $url, $account, $by, $timeout ) = @_;
 
     # Expiration time is calculated with _utime and timeout
     my $expires =

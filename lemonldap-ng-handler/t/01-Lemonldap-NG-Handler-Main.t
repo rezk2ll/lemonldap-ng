@@ -3,7 +3,7 @@ use strict;
 use warnings;
 require 't/test.pm';
 
-use Test::More tests => 10;
+use Test::More tests => 4;
 BEGIN { use_ok('Lemonldap::NG::Handler::Main') }
 
 # get a standard basic configuration in $args hashref
@@ -22,12 +22,13 @@ $ENV{SERVER_NAME} = "test1.example.com";
 #open STDERR, '>/dev/null';
 
 my $conf = {
-    'cfgNum'        => 1,
-    'logLevel'      => 'error',
-    'portal'        => 'http://auth.example.com/',
-    'globalStorage' => 'Apache::Session::File',
-    'post'          => {},
-    'locationRules' => {
+    cfgNum        => 1,
+    logLevel      => 'error',
+    portal        => 'http://auth.example.com/',
+    globalStorage => 'Apache::Session::File',
+    post          => {},
+    key           => 1,
+    locationRules => {
         'test1.example.com' => {
 
             # Basic rules
@@ -51,10 +52,3 @@ ok( !$@,                     'init' );
 ok( $h->configReload($conf), 'Load conf' );
 
 ok( $h->tsv->{portal}->() eq 'http://auth.example.com/', 'portal' );
-
-ok( $h->grant( undef, '/s' ), 'basic rule "accept"' );
-ok( !$h->grant( undef, '/no' ), 'basic rule "deny"' );
-ok( $h->grant( undef, '/a/a' ), 'bad ordered rule 1/2' );
-ok( $h->grant( undef, '/a' ),   'bad ordered rule 2/2' );
-ok( !$h->grant( undef, '/b/a' ), 'good ordered rule 1/2' );
-ok( $h->grant( undef, '/b' ), 'good ordered rule 2/2' );

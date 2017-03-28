@@ -6,7 +6,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use strict;
-use Test::More tests => 12;
+use Test::More tests => 9;
 require 't/test.pm';
 BEGIN { use_ok('Lemonldap::NG::Handler::Main::Jail') }
 
@@ -46,13 +46,4 @@ ok(
 );
 ok( $res = &$code, "Function works" );
 ok( $res == 1, 'Get good result' );
-
-$sub  = "sub { return (hostname()) }";
-$code = $jail->jail_reval($sub);
-ok(
-    ( defined($code) and ref($code) eq 'CODE' ),
-    'hostname api function is defined'
-);
-ok( $res = &$code, "Function works $res" );
-ok( $res eq 'test1.example.com', 'Get good result' );
 

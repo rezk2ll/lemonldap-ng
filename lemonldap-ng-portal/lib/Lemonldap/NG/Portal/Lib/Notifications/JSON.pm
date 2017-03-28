@@ -90,7 +90,7 @@ sub getNotifBack {
       or return $self->sendError( $req, 'Unable to decrypt', 500 );
 
     # Verify that session exists
-    $req->userData( $self->p->HANDLER->retrieveSession($id) )
+    $req->userData( $self->p->HANDLER->retrieveSession( $req, $id ) )
       or return $self->sendError( $req, 'Unknown session', 401 );
 
     # Restore datas

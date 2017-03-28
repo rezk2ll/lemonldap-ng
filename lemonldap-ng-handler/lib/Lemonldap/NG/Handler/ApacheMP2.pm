@@ -4,6 +4,7 @@
 package Lemonldap::NG::Handler::ApacheMP2;
 
 use strict;
+use Lemonldap::NG::Handler::ApacheMP2::Request;
 
 use Lemonldap::NG::Handler::ApacheMP2::Main;
 
@@ -13,30 +14,31 @@ our $VERSION = '2.0.0';
 
 sub handler {
     shift if ($#_);
-    my ($res) = getClass(@_)->run(@_);
-    return $res;
+    return launch( 'run', @_ );
 }
 
 sub logout {
     shift if ($#_);
-    return getClass(@_)->unlog(@_);
+    return launch( 'unlog', @_ );
 }
 
 sub status {
     shift if ($#_);
-    return getClass(@_)->getStatus(@_);
+    return launch( 'getStatus', @_ );
 }
 
 # Internal method to get class to load
-sub getClass {
-    my $type = Lemonldap::NG::Handler::ApacheMP2::Main->checkType(@_);
+sub launch {
+    my ( $sub, $r ) = @_;
+    my $req  = Lemonldap::NG::Handler::Apache2::Request->new($r);
+    my $type = Lemonldap::NG::Handler::ApacheMP2::Main->checkType($req);
     if ( my $t = $_[0]->dir_config('VHOSTTYPE') ) {
         $type = $t;
     }
     my $class = "Lemonldap::NG::Handler::ApacheMP2::$type";
     eval "require $class";
     die $@ if ($@);
-    return $class;
+    return $class->$sub($req);
 }
 
 1;

@@ -29,10 +29,13 @@ sub new {
     $self->env->{PATH_INFO} =~ s|^$tmp|/|;
     $self->{uri} = uri_unescape( $self->env->{REQUEST_URI} );
     $self->{uri} =~ s|//+|/|g;
+    $self->{datas}       = {};
     $self->{error}       = 0;
     $self->{respHeaders} = [];
-    return $self;
+    return bless( $self, $_[0] );
 }
+
+sub datas { $_[0]->{datas} }
 
 sub uri { $_[0]->{uri} }
 

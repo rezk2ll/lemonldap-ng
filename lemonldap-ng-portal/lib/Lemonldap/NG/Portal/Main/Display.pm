@@ -377,7 +377,7 @@ sub getSkin {
 
     # Load specific skin from skinRules
     foreach my $rule ( @{ $self->conf->{skinRules} } ) {
-        if ( $rule->[1]->( $req->sessionInfo ) ) {
+        if ( $rule->[1]->( $req, $req->sessionInfo ) ) {
             $skin = $rule->[0];
             $self->logger->debug("Skin $skin selected from skin rule");
         }

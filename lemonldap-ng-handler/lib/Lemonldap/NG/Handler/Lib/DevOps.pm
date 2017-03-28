@@ -16,32 +16,35 @@ sub ua {
 }
 
 sub grant {
-    my ( $class, $session, $uri, $cond, $vhost ) = @_;
-    $vhost ||= $class->resolveAlias;
+    my ( $class, $req, $session, $uri, $cond, $vhost ) = @_;
+    $vhost ||= $class->resolveAlias($req);
     $class->tsv->{lastVhostUpdate} //= {};
     unless ( $class->tsv->{defaultCondition}->{$vhost}
         and ( time() - $class->tsv->{lastVhostUpdate}->{$vhost} < 600 ) )
     {
-        $class->loadVhostConfig($vhost);
+        $class->loadVhostConfig( $req, $vhost );
     }
-    return $class->Lemonldap::NG::Handler::Main::grant( $session, $uri, $cond,
-        $vhost );
+    return $class->Lemonldap::NG::Handler::Main::grant( $req, $session, $uri,
+        $cond, $vhost );
 }
 
 sub loadVhostConfig {
-    my ( $class, $vhost ) = @_;
+    my ( $class, $req, $vhost ) = @_;
     my $json;
     if ( $class->tsv->{useSafeJail} ) {
         my $base = $class->localConfig->{loopBackUrl}
-          || "http://127.0.0.1:" . $class->get_server_port;
-        my $req = HTTP::Request->new( GET => "$base/rules.json" );
-        $req->header( Host => $vhost );
-        my $resp = $class->ua->request($req);
+          || "http://127.0.0.1:" . $req->{env}->{SERVER_PORT};
+        my $get = HTTP::Request->new( GET => "$base/rules.json" );
+        $get->header( Host => $vhost );
+        my $resp = $class->ua->request($get);
         if ( $resp->is_success ) {
             eval { $json = from_json( $resp->content ) };
             if ($@) {
                 $class->logger->error(
                     "Bad rules.json for $vhost, skipping ($@)");
+            }
+            else {
+                $class->logger->info("Compiling rules.json for $vhost");
             }
         }
     }

@@ -6,11 +6,12 @@ our $VERSION = '2.0.0';
 
 sub run {
     my ( $class, $req, $rule, $protection ) = @_;
-    my $uri = $class->unparsed_uri;
+    my $uri = $req->{env}->{REQUEST_URI};
     my $cn  = $class->tsv->{cookieName};
     my ( $id, $session );
     if ( $uri =~ s/[\?&;]${cn}cda=(\w+)$//oi ) {
-        if ( $id = $class->fetchId and $session = $class->retrieveSession($id) )
+        if (    $id = $class->fetchId($req)
+            and $session = $class->retrieveSession( $req, $id ) )
         {
             $class->logger->info(
                 'CDA asked for an already available session, skipping');
@@ -19,19 +20,20 @@ sub run {
             my $cdaid = $1;
             $class->logger->debug("CDA request with id $cdaid");
 
-            my $cdaInfos = $class->getCDAInfos($cdaid);
+            my $cdaInfos = $class->getCDAInfos( $req, $cdaid );
             unless ( $cdaInfos->{cookie_value} and $cdaInfos->{cookie_name} ) {
                 $class->logger->error("CDA request for id $cdaid is not valid");
                 return $class->FORBIDDEN;
             }
 
-            my $redirectUrl   = $class->_buildUrl($uri);
+            my $redirectUrl = $class->_buildUrl( $req, $uri );
             my $redirectHttps = ( $redirectUrl =~ m/^https/ );
             $class->set_header_out(
+                $req,
                 'Location'   => $redirectUrl,
                 'Set-Cookie' => $cdaInfos->{cookie_name} . "=" . 'c:'
                   . $class->tsv->{cipher}->encrypt(
-                    $cdaInfos->{cookie_value} . ' ' . $class->resolveAlias
+                    $cdaInfos->{cookie_value} . ' ' . $class->resolveAlias($req)
                   )
                   . "; path=/"
                   . ( $redirectHttps          ? "; secure"   : "" )
@@ -53,7 +55,7 @@ sub run {
 # Tries to retrieve the CDA session, get infos and delete session
 # @return CDA session infos
 sub getCDAInfos {
-    my ( $class, $id ) = @_;
+    my ( $class, $req, $id ) = @_;
     my $infos = {};
 
     # Get the session

@@ -102,7 +102,7 @@ sub checkForNotifications {
                     next LOOP;
                 }
 
-                unless ( $condition->( $req->sessionInfo ) ) {
+                unless ( $condition->( $req, $req->sessionInfo ) ) {
                     $self->logger->debug(
                         'Notification condition not authorizated');
 
@@ -152,7 +152,7 @@ sub getNotifBack {
       or return $self->sendError( $req, 'Unable to decrypt', 500 );
 
     # Verify that session exists
-    $req->userData( $self->p->HANDLER->retrieveSession($id) )
+    $req->userData( $self->p->HANDLER->retrieveSession( $req, $id ) )
       or return $self->sendError( $req, 'Unknown session', 401 );
 
     # Restore datas

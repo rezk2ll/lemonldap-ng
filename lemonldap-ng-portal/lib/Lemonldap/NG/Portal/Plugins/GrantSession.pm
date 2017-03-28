@@ -41,7 +41,7 @@ sub grantSession {
     }
     foreach ( sort sortByComment keys %{ $self->rules } ) {
         $self->logger->debug("Grant session condition \"$_\"");
-        unless ( $self->rules->{$_}->( $req->sessionInfo ) ) {
+        unless ( $self->rules->{$_}->( $req, $req->sessionInfo ) ) {
             $req->userData( {} );
             $self->userLogger->error( 'User '
                   . $req->user

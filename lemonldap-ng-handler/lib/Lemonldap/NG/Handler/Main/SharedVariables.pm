@@ -24,7 +24,7 @@ BEGIN {
     };
 
     # Current sessions properties
-    our $_v = { session => {}, datas => {}, datasUpdate => {}, };
+    our $_v = { datas => {}, datasUpdate => {}, };
 
     # Thread shared accessors
     foreach ( keys %$_tshv ) {

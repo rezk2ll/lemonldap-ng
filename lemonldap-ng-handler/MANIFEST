@@ -9,6 +9,7 @@ lib/Lemonldap/NG/Handler/ApacheMP2/CDA.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/DevOps.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/Main.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/Menu.pm
+lib/Lemonldap/NG/Handler/ApacheMP2/Request.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/SecureToken.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/ServiceToken.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/ZimbraPreAuth.pm
@@ -48,7 +49,6 @@ META.yml
 README
 t/01-Lemonldap-NG-Handler-Main.t
 t/05-Lemonldap-NG-Handler-Reload.t
-t/10-Lemonldap-NG-Handler-SharedConf.t
 t/12-Lemonldap-NG-Handler-Jail.t
 t/13-Lemonldap-NG-Handler-Fake-Safe.t
 t/50-Lemonldap-NG-Handler-SecureToken.t

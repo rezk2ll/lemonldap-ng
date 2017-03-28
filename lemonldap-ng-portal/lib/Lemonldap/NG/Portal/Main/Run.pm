@@ -260,7 +260,7 @@ sub autoRedirect {
 
     # Redirection should be made if urldc defined
     if ( $req->{urldc} ) {
-        if ( $self->_jsRedirect->() ) {
+        if ( $self->_jsRedirect->( $req, $req->sessionInfo ) ) {
             $req->error(PE_REDIRECT);
             $req->datas->{redirectFormMethod} = "get";
         }
@@ -490,7 +490,7 @@ sub _deleteSession {
         ) unless ($preserveCookie);
     }
 
-    HANDLER->localUnlog( $session->id );
+    HANDLER->localUnlog( $req, $session->id );
     $session->remove;
 
     # Create an obsolete cookie to remove it

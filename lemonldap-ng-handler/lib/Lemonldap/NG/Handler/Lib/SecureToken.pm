@@ -33,13 +33,13 @@ BEGIN {
 sub run {
     my $class = shift;
     my $r     = $_[0];
-    my $ret   = $class->SUPER::run();
+    my $ret   = $class->SUPER::run($r);
 
     # Continue only if user is authorized
     return $ret unless ( $ret == $class->OK );
 
     # Get current URI
-    my $uri = Lemonldap::NG::Handler::API->uri_with_args($r);
+    my $uri = $r->{env}->{REQUEST_URI};
 
     # Catch Secure Token parameters
     my $localConfig = $class->localConfig;
@@ -101,7 +101,7 @@ sub run {
     return $class->_returnError( $r, $secureTokenAllowOnError ) unless $key;
 
     # Header location
-    $class->set_header_in( $secureTokenHeader => $key );
+    $class->set_header_in( $r, $secureTokenHeader => $key );
 
     # Remove token
     eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );

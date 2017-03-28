@@ -111,7 +111,7 @@ sub displayModules {
     foreach my $module ( @{ $self->menuModules } ) {
         $self->logger->debug("Check if $module->[0] has to be displayed");
 
-        if ( $module->[1]->() ) {
+        if ( $module->[1]->( $req, $req->sessionInfo ) ) {
             my $moduleHash = { $module->[0] => 1 };
             if ( $module->[0] eq 'Appslist' ) {
                 $moduleHash->{'APPSLIST_LOOP'} = $self->appslist($req);
@@ -465,8 +465,7 @@ sub _filterHash {
             delete $apphash->{$key}
               unless (
                 $self->p->HANDLER->grant(
-                    $req->sessionInfo,
-                    $appuri, undef, $vhost
+                    $req, $req->sessionInfo, $appuri, undef, $vhost
                 )
               );
             next;

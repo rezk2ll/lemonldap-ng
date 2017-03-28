@@ -43,33 +43,6 @@ our $request;    # Apache2::RequestRec object for current request
 
 #*run = \&Lemonldap::NG::Handler::Main::run;
 
-## @rmethod protected int redirectFilter(string url, Apache2::Filter f)
-# Launch the current HTTP request then redirects the user to $url.
-# Used by logout_app and logout_app_sso targets
-# @param $url URL to redirect the user
-# @param $f Current Apache2::Filter object
-# @return Constant $class->OK
-sub redirectFilter {
-    my $class = shift;
-    my $url   = shift;
-    my $f     = shift;
-    unless ( $f->ctx ) {
-
-        # Here, we can use Apache2 functions instead of set_header_out
-        # since this function is used only with Apache2.
-        $f->r->status( $class->REDIRECT );
-        $f->r->status_line("303 See Other");
-        $f->r->headers_out->unset('Location');
-        $f->r->err_headers_out->set( 'Location' => $url );
-        $f->ctx(1);
-    }
-    while ( $f->read( my $buffer, 1024 ) ) {
-    }
-    $class->updateStatus( $f->r, '$class->REDIRECT',
-        $class->datas->{ $class->tsv->{whatToTrace} }, 'filter' );
-    return $class->OK;
-}
-
 __PACKAGE__->init();
 
 # INTERNAL METHODS
@@ -99,36 +72,21 @@ sub setServerSignature {
     };
 }
 
-sub newRequest {
-    my ( $class, $r ) = @_;
-    $request = $r;
-}
-
 ## @method void set_user(string user)
 # sets remote_user
 # @param user string username
 sub set_user {
-    my ( $class, $user ) = @_;
-    $request->user($user);
-}
-
-## @method string header_in(string header)
-# returns request header value
-# @param header string request header
-# @return request header value
-sub header_in {
-    my ( $class, $header ) = @_;
-    $header ||= $class;    # to use header_in as a method or as a function
-    return $request->headers_in->{$header};
+    my ( $class, $request, $user ) = @_;
+    $request->env->{'psgi.r'}->user($user);
 }
 
 ## @method void set_header_in(hash headers)
 # sets or modifies request headers
 # @param headers hash containing header names => header value
 sub set_header_in {
-    my ( $class, %headers ) = @_;
+    my ( $class, $request, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        $request->headers_in->set( $h => $v );
+        $request->env->{'psgi.r'}->headers_in->set( $h => $v );
     }
 }
 
@@ -138,11 +96,11 @@ sub set_header_in {
 # header 'Auth-User' is removed, 'Auth_User' be removed also
 # @param headers array with header names to remove
 sub unset_header_in {
-    my ( $class, @headers ) = @_;
+    my ( $class, $request, @headers ) = @_;
     foreach my $h1 (@headers) {
         $h1 = lc $h1;
         $h1 =~ s/-/_/g;
-        $request->headers_in->do(
+        $request->env->{'psgi.r'}->headers_in->do(
             sub {
                 my $h  = shift;
                 my $h2 = lc $h;
@@ -158,112 +116,57 @@ sub unset_header_in {
 # sets response headers
 # @param headers hash containing header names => header value
 sub set_header_out {
-    my ( $class, %headers ) = @_;
+    my ( $class, $request, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        $request->err_headers_out->set( $h => $v );
+        $request->env->{'psgi.r'}->err_headers_out->set( $h => $v );
     }
-}
-
-## @method string hostname()
-# returns host, as set by full URI or Host header
-# @return host string Host value
-sub hostname {
-    my $class = shift;
-    return $request->hostname;
-}
-
-## @method string remote_ip
-# returns client IP address
-# @return IP_Addr string client IP
-sub remote_ip {
-    my $class     = shift;
-    my $remote_ip = (
-          $request->connection->can('remote_ip')
-        ? $request->connection->remote_ip
-        : $request->connection->client_ip
-    );
-    return $remote_ip;
 }
 
 ## @method boolean is_initial_req
 # returns true unless the current request is a subrequest
 # @return is_initial_req boolean
 sub is_initial_req {
-    my $class = shift;
-    return $request->is_initial_req;
-}
-
-## @method string args(string args)
-# gets the query string
-# @return args string Query string
-sub args {
-    my $class = shift;
-    return $request->args();
-}
-
-## @method string uri
-# returns the path portion of the URI, normalized, i.e. :
-# * URL decoded (characters encoded as %XX are decoded,
-#   except ? in order not to merge path and query string)
-# * references to relative path components "." and ".." are resolved
-# * two or more adjacent slashes are merged into a single slash
-# @return path portion of the URI, normalized
-sub uri {
-    my $class = shift;
-    my $uri   = $request->uri;
-    $uri =~ s#//+#/#g;
-    $uri =~ s#\?#%3F#g;
-    return $uri;
-}
-
-## @method string uri_with_args
-# returns the URI, with arguments and with path portion normalized
-# @return URI with normalized path portion
-sub uri_with_args {
-    my $class = shift;
-    return uri . ( $request->args ? "?" . $request->args : "" );
-}
-
-## @method string unparsed_uri
-# returns the full original request URI, with arguments
-# @return full original request URI, with arguments
-sub unparsed_uri {
-    my $class = shift;
-    return $request->unparsed_uri;
-}
-
-## @method string get_server_port
-# returns the port the server is receiving the current request on
-# @return port string server port
-sub get_server_port {
-    my $class = shift;
-    return $request->get_server_port;
-}
-
-## @method string method
-# returns the port the server is receiving the current request on
-# @return port string server port
-sub method {
-    my $class = shift;
-    return $request->method;
-}
-
-## Return environment variables as hash
-sub env {
-    return \%ENV;
+    return $_[1]->env->{'psgi.r'}->is_initial_req;
 }
 
 ## @method void print(string data)
 # write data in HTTP response body
 # @param data Text to add in response body
 sub print {
-    my ( $class, $data ) = @_;
-    $request->print($data);
+    my ( $class, $request, $data ) = @_;
+    $request->env->{'psgi.r'}->print($data);
 }
 
 1;
 
 __END__
+
+## @rmethod protected int redirectFilter(string url, Apache2::Filter f)
+# Launch the current HTTP request then redirects the user to $url.
+# Used by logout_app and logout_app_sso targets
+# @param $url URL to redirect the user
+# @param $f Current Apache2::Filter object
+# @return Constant $class->OK
+sub redirectFilter {
+    my $class = shift;
+    my $url   = shift;
+    my $f     = shift;
+    unless ( $f->ctx ) {
+
+        # Here, we can use Apache2 functions instead of set_header_out
+        # since this function is used only with Apache2.
+        $f->r->status( $class->REDIRECT );
+        $f->r->status_line("303 See Other");
+        $f->r->headers_out->unset('Location');
+        $f->r->err_headers_out->set( 'Location' => $url );
+        $f->ctx(1);
+    }
+    while ( $f->read( my $buffer, 1024 ) ) {
+    }
+    $class->updateStatus( $f->r, '$class->REDIRECT',
+        $class->datas->{ $class->tsv->{whatToTrace} }, 'filter' );
+    return $class->OK;
+}
 
 ## @method void addToHtmlHead(string data)
 # add data at end of html head
@@ -271,7 +174,7 @@ __END__
 sub addToHtmlHead {
     use APR::Bucket  ();
     use APR::Brigade ();
-    my ( $class, $data ) = @_;
+    my ( $class, $request, $data ) = @_;
     $request->add_output_filter(
         sub {
             my $f   = shift;
@@ -322,7 +225,7 @@ sub flatten_bb {
 # add or modify parameters in POST request body
 # @param $params hashref containing name => value
 sub setPostParams {
-    my ( $class, $params ) = @_;
+    my ( $class, $request, $params ) = @_;
     $request->add_input_filter(
         sub {
             my $f = shift;

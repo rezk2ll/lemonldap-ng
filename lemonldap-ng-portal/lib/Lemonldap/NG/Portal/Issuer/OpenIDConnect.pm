@@ -295,7 +295,7 @@ sub run {
 
             # Check if this RP is authorizated
             if ( my $rule = $self->rpRules->{$rp} ) {
-                unless ( $rule->( $req->sessionInfo ) ) {
+                unless ( $rule->( $req, $req->sessionInfo ) ) {
                     $self->userLogger->warn( 'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
                           . "was not authorizated to access to $rp" );

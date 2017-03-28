@@ -17,9 +17,6 @@ has steps => ( is => 'rw' );
 # Authentication result
 has authResult => ( is => 'rw' );
 
-# Datas shared between methods
-has datas => ( is => 'rw' );
-
 # Session datas when created
 has id          => ( is => 'rw' );
 has sessionInfo => ( is => 'rw' );

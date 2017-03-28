@@ -316,7 +316,7 @@ sub mysession {
 
         # Now check for authorization
         my $res =
-          $self->p->HANDLER->grant( $req->userData, $uri, undef, $host );
+          $self->p->HANDLER->grant( $req, $req->userData, $uri, undef, $host );
         $self->logger->debug(" Result is $res");
         return $self->p->sendJSONresponse( $req, { result => $res } );
     }

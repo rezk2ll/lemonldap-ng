@@ -344,7 +344,7 @@ sub setMacros {
     my ( $self, $req ) = @_;
     foreach ( sort keys %{ $self->_macros } ) {
         $req->{sessionInfo}->{$_} =
-          $self->_macros->{$_}->( $req->sessionInfo );
+          $self->_macros->{$_}->( $req, $req->sessionInfo );
     }
     PE_OK;
 }
@@ -383,7 +383,7 @@ sub setPersistentSessionInfo {
 sub setLocalGroups {
     my ( $self, $req ) = @_;
     foreach ( sort keys %{ $self->_groups } ) {
-        if ( $self->_groups->{$_}->( $req->sessionInfo ) ) {
+        if ( $self->_groups->{$_}->( $req, $req->sessionInfo ) ) {
             $req->{sessionInfo}->{groups} .=
               $self->conf->{multiValuesSeparator} . $_;
             $req->{sessionInfo}->{hGroups}->{$_}->{name} = $_;

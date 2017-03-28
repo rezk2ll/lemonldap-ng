@@ -462,12 +462,11 @@ sub conditionSub {
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
-                $Lemonldap::NG::Handler::ApacheMP2::Main::request
-                  ->add_output_filter(
+                $_[0]->add_output_filter(
                     sub {
                         return $class->redirectFilter( $u, @_ );
                     }
-                  );
+                );
                 1;
             },
             0
@@ -481,8 +480,7 @@ sub conditionSub {
 
                 #TODO: check this
                 $class->localUnlog;
-                $Lemonldap::NG::Handler::ApacheMP2::Main::request
-                  ->add_output_filter(
+                $_[0]->add_output_filter(
                     sub {
                         my $r = $_[0]->r;
                         return $class->redirectFilter(
@@ -492,7 +490,7 @@ sub conditionSub {
                             @_
                         );
                     }
-                  );
+                );
                 1;
             },
             0
@@ -535,12 +533,12 @@ sub substitute {
 
     # substitute special vars, just for retro-compatibility
     $expr =~ s/\$date\b/&date/sg;
-    $expr =~ s/\$vhost\b/&hostname/sg;
-    $expr =~ s/\$ip\b/&remote_ip/sg;
+    $expr =~ s/\$vhost\b/\$ENV{HTTP_HOST}/sg;
+    $expr =~ s/\$ip\b/\$ENV{REMOTE_ADDR}/sg;
 
     # substitute vars with session datas, excepts special vars $_ and $\d+
-    $expr =~ s/\$(?!ENV)(_*[a-zA-Z]\w*)/\$session->{$1}/sg;
-    $expr =~ s/\$ENV\{/&env()->\{/g;
+    $expr =~ s/\$(?!ENV)(_*[a-zA-Z]\w*)/\$s->{$1}/sg;
+    $expr =~ s/\$ENV\{/\$r->{env}->\{/g;
 
     return $expr;
 }
@@ -548,7 +546,7 @@ sub substitute {
 sub buildSub {
     my ( $class, $val ) = @_;
     my $res =
-      $class->tsv->{jail}->jail_reval("sub{my \$session=\$_[0];return($val)}");
+      $class->tsv->{jail}->jail_reval("sub{my (\$r,\$s)=\@_;return($val)}");
     unless ($res) {
         $class->logger->error( $class->tsv->{jail}->error );
     }

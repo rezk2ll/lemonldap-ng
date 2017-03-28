@@ -23,37 +23,35 @@ sub handler {
 sub logout {
     my $class;
     $class = $#_ ? shift : __PACKAGE__;
-    $class->newRequest( $_[0] );
-    return $class->unlog();
+    return $class->unlog(@_);
 }
 
 sub status {
     my $class;
     $class = $#_ ? shift : __PACKAGE__;
-    $class->newRequest( $_[0] );
-    return $class->getStatus();
+    return $class->getStatus(@_);
 }
 
 # Public methods
 
 # Return Handler::Lib::Status output
 sub getStatus {
-    my ($class) = @_;
+    my ( $class, $req ) = @_;
     $class->logger->debug("Request for status");
     my $statusPipe = $class->tsv->{statusPipe};
     my $statusOut  = $class->tsv->{statusOut};
-    return $class->abort("$class: status page can not be displayed")
+    return $class->abort( $req, "$class: status page can not be displayed" )
       unless ( $statusPipe and $statusOut );
-    print $statusPipe "STATUS"
-      . ( $class->args ? " " . $class->args : '' ) . "\n";
+    print $statusPipe "STATUS" . ( $req->{env}->{QUERY_STRING} || '' ) . "\n";
     my $buf;
 
     while (<$statusOut>) {
         last if (/^END$/);
         $buf .= $_;
     }
-    $class->set_header_out( ( "Content-Type" => "text/html; charset=UTF-8" ) );
-    $class->print($buf);
+    $class->set_header_out( $req,
+        "Content-Type" => "text/html; charset=UTF-8" );
+    $class->print( $req, $buf );
     return $class->OK;
 }
 
@@ -62,12 +60,11 @@ sub getStatus {
 sub checkType {
     my ( $class, $req ) = @_;
 
-    $class->newRequest($req);
     if ( time() - $class->lastCheck > $class->checkTime ) {
         die("$class: No configuration found")
           unless ( $class->checkConf );
     }
-    my $vhost = $class->resolveAlias;
+    my $vhost = $class->resolveAlias($req);
     return ( defined $class->tsv->{type}->{$vhost} )
       ? $class->tsv->{type}->{$vhost}
       : 'Main';
@@ -84,14 +81,14 @@ sub run {
     my ( $class, $req, $rule, $protection ) = @_;
     my ( $id, $session );
 
-    return $class->DECLINED unless ( $class->is_initial_req );
+    return $class->DECLINED unless ( $class->is_initial_req($req) );
 
     # Direct return if maintenance mode is active
-    if ( $class->checkMaintenanceMode ) {
+    if ( $class->checkMaintenanceMode($req) ) {
 
         if ( $class->tsv->{useRedirectOnError} ) {
             $class->logger->debug("Go to portal with maintenance error code");
-            return $class->goToError( '/', $class->MAINTENANCE );
+            return $class->goToError( $req, '/', $class->MAINTENANCE );
         }
         else {
             $class->logger->debug("Return maintenance error code");
@@ -100,25 +97,25 @@ sub run {
     }
 
     # Cross domain authentication
-    my $uri = $class->unparsed_uri;
+    my $uri = $req->{env}->{REQUEST_URI};
 
-    $uri = $class->uri_with_args;
+    $uri = $req->{env}->{REQUEST_URI};
     my ($cond);
     ( $cond, $protection ) = $class->conditionSub($rule) if ($rule);
-    $protection = $class->isUnprotected($uri) || 0
+    $protection = $class->isUnprotected( $req, $uri ) || 0
       unless ( defined $protection );
 
     if ( $protection == $class->SKIP ) {
         $class->logger->debug("Access control skipped");
-        $class->updateStatus('SKIP');
-        $class->hideCookie;
-        $class->cleanHeaders;
+        $class->updateStatus( $req, 'SKIP' );
+        $class->hideCookie($req);
+        $class->cleanHeaders($req);
         return $class->OK;
     }
 
     # Try to recover cookie and user session
-    if (    $id = $class->fetchId
-        and $session = $class->retrieveSession($id) )
+    if (    $id = $class->fetchId($req)
+        and $session = $class->retrieveSession( $req, $id ) )
     {
 
         # AUTHENTICATION done
@@ -127,24 +124,25 @@ sub run {
         my $kc = keys %{$session};    # in order to detect new local macro
 
         # ACCOUNTING (1. Inform web server)
-        $class->set_user( $session->{ $class->tsv->{whatToTrace} } );
+        $class->set_user( $req, $session->{ $class->tsv->{whatToTrace} } );
 
         # AUTHORIZATION
-        return ( $class->forbidden($session), $session )
-          unless ( $class->grant( $session, $uri, $cond ) );
-        $class->updateStatus( 'OK', $session->{ $class->tsv->{whatToTrace} } );
+        return ( $class->forbidden( $req, $session ), $session )
+          unless ( $class->grant( $req, $session, $uri, $cond ) );
+        $class->updateStatus( $req, 'OK',
+            $session->{ $class->tsv->{whatToTrace} } );
 
         # ACCOUNTING (2. Inform remote application)
-        $class->sendHeaders($session);
+        $class->sendHeaders( $req, $session );
 
         # Store local macros
         if ( keys %$session > $kc ) {
             $class->logger->debug("Update local cache");
-            $class->session->update( $session, { updateCache => 2 } );
+            $req->datas->{session}->update( $session, { updateCache => 2 } );
         }
 
         # Hide Lemonldap::NG cookie
-        $class->hideCookie;
+        $class->hideCookie($req);
 
         # Log access granted
         $class->logger->debug( "User "
@@ -152,8 +150,8 @@ sub run {
               . " was granted to access to $uri" );
 
         #  Catch POST rules
-        $class->postOutputFilter( $session, $uri );
-        $class->postInputFilter( $session, $uri );
+        $class->postOutputFilter( $req, $session, $uri );
+        $class->postInputFilter( $req, $session, $uri );
 
         return ( $class->OK, $session );
     }
@@ -162,9 +160,9 @@ sub run {
 
         # Ignore unprotected URIs
         $class->logger->debug("No valid session but unprotected access");
-        $class->updateStatus('UNPROTECT');
-        $class->hideCookie;
-        $class->cleanHeaders;
+        $class->updateStatus( $req, 'UNPROTECT' );
+        $class->hideCookie($req);
+        $class->cleanHeaders($req);
         return $class->OK;
     }
 
@@ -175,8 +173,8 @@ sub run {
           unless ($id);
 
         # if the cookie was fetched, a log is sent by retrieveSession()
-        $class->updateStatus( $id ? 'EXPIRED' : 'REDIRECT' );
-        return $class->goToPortal( $class->unparsed_uri );
+        $class->updateStatus( $req, $id ? 'EXPIRED' : 'REDIRECT' );
+        return $class->goToPortal( $req, $req->{env}->{REQUEST_URI} );
     }
 }
 
@@ -184,10 +182,10 @@ sub run {
 # Call localUnlog() then goToPortal() to unlog the current user.
 # @return Constant value returned by goToPortal()
 sub unlog {
-    my $class = shift;
-    $class->localUnlog(@_);
-    $class->updateStatus('LOGOUT');
-    return $class->goToPortal( '/', 'logout=1' );
+    my ( $class, $req ) = @_;
+    $class->localUnlog( $req, @_ );
+    $class->updateStatus( $req, 'LOGOUT' );
+    return $class->goToPortal( $req, '/', 'logout=1' );
 }
 
 # INTERNAL METHODS
@@ -198,12 +196,14 @@ sub unlog {
 # @param optional user string Username to log, if undefined defaults to remote IP
 # @param optional url string URL to log, if undefined defaults to request URI
 sub updateStatus {
-    my ( $class, $action, $user, $url ) = @_;
+    my ( $class, $req, $action, $user, $url ) = @_;
     my $statusPipe = $class->tsv->{statusPipe} or return;
-    $user ||= $class->remote_ip;
-    $url  ||= $class->uri_with_args;
+    $user ||= $req->{env}->{REMOTE_ADDR};
+    $url  ||= $req->{env}->{REQUEST_URI};
     eval {
-        print $statusPipe "$user => " . $class->hostname . "$url $action\n";
+            print $statusPipe "$user => "
+          . $req->{env}->{HTTP_HOST}
+          . "$url $action\n";
     };
 }
 
@@ -220,8 +220,8 @@ sub lmLog {
 # Check if we are in maintenance mode
 # @return true if maintenance mode
 sub checkMaintenanceMode {
-    my $class = shift;
-    my $vhost = $class->resolveAlias;
+    my ( $class, $req ) = @_;
+    my $vhost = $class->resolveAlias($req);
     my $_maintenance =
       ( defined $class->tsv->{maintenance}->{$vhost} )
       ? $class->tsv->{maintenance}->{$vhost}
@@ -240,10 +240,10 @@ sub checkMaintenanceMode {
 # @param $cond optional Function granting access
 # @return True if the user is granted to access to the current URL
 sub grant {
-    my ( $class, $session, $uri, $cond, $vhost ) = @_;
-    return $cond->($session) if ($cond);
+    my ( $class, $req, $session, $uri, $cond, $vhost ) = @_;
+    return $cond->( $req, $session ) if ($cond);
 
-    $vhost ||= $class->resolveAlias;
+    $vhost ||= $class->resolveAlias($req);
     if ( my $level = $class->tsv->{authnLevel}->{$vhost} ) {
         if ( $session->{authenticationLevel} < $level ) {
             $session->{_upgrade} = 1;
@@ -260,7 +260,8 @@ sub grant {
             $class->logger->debug( 'Regexp "'
                   . $class->tsv->{locationConditionText}->{$vhost}->[$i]
                   . '" match' );
-            return $class->tsv->{locationCondition}->{$vhost}->[$i]->($session);
+            return $class->tsv->{locationCondition}->{$vhost}->[$i]
+              ->( $req, $session );
         }
     }
     unless ( $class->tsv->{defaultCondition}->{$vhost} ) {
@@ -270,7 +271,7 @@ sub grant {
         return 0;
     }
     $class->logger->debug("$vhost: Apply default rule");
-    return $class->tsv->{defaultCondition}->{$vhost}->($session);
+    return $class->tsv->{defaultCondition}->{$vhost}->( $req, $session );
 }
 
 ## @rmethod protected int forbidden(string uri)
@@ -279,33 +280,33 @@ sub grant {
 # @param $uri URI
 # @return Constant $class->FORBIDDEN
 sub forbidden {
-    my ( $class, $session, $vhost ) = @_;
-    my $uri = $class->unparsed_uri;
-    $vhost ||= $class->resolveAlias;
+    my ( $class, $req, $session, $vhost ) = @_;
+    my $uri = $req->{env}->{REQUEST_URI};
+    $vhost ||= $class->resolveAlias($req);
 
     if ( $session->{_logout} ) {
-        $class->updateStatus( 'LOGOUT',
+        $class->updateStatus( $req, 'LOGOUT',
             $session->{ $class->tsv->{whatToTrace} } );
         my $u = $session->{_logout};
-        $class->localUnlog;
-        return $class->goToPortal( $u, 'logout=1' );
+        $class->localUnlog($req);
+        return $class->goToPortal( $req, $u, 'logout=1' );
     }
 
     if ( $session->{_upgrade} ) {
-        return $class->goToPortal( $class->unparsed_uri, undef,
-            '/upgradesession' );
+        return $class->goToPortal( $req, $uri, undef, '/upgradesession' );
     }
 
     # Log forbidding
     $class->userLogger->notice( "User "
           . $session->{ $class->tsv->{whatToTrace} }
           . " was forbidden to access to $vhost$uri" );
-    $class->updateStatus( 'REJECT', $session->{ $class->tsv->{whatToTrace} } );
+    $class->updateStatus( $req, 'REJECT',
+        $session->{ $class->tsv->{whatToTrace} } );
 
     # Redirect or Forbidden?
     if ( $class->tsv->{useRedirectOnForbidden} ) {
         $class->logger->debug("Use redirect for forbidden access");
-        return $class->goToError( $uri, 403 );
+        return $class->goToError( $req, $uri, 403 );
     }
     else {
         $class->logger->debug("Return forbidden access");
@@ -316,16 +317,16 @@ sub forbidden {
 ## @rmethod protected void hideCookie()
 # Hide Lemonldap::NG cookie to the protected application.
 sub hideCookie {
-    my $class = shift;
+    my ( $class, $req ) = @_;
     $class->logger->debug("removing cookie");
-    my $cookie = $class->header_in('Cookie');
+    my $cookie = $req->env->{HTTP_COOKIE};
     my $cn     = $class->tsv->{cookieName};
     $cookie =~ s/$cn(http)?=[^,;]*[,;\s]*//og;
     if ($cookie) {
-        $class->set_header_in( 'Cookie' => $cookie );
+        $class->set_header_in( $req, 'Cookie' => $cookie );
     }
     else {
-        $class->unset_header_in('Cookie');
+        $class->unset_header_in( $req, 'Cookie' );
     }
 }
 
@@ -333,8 +334,8 @@ sub hideCookie {
 # Encode URl in the format used by Lemonldap::NG::Portal for redirections.
 # @return Base64 encoded string
 sub encodeUrl {
-    my ( $class, $url ) = @_;
-    $url = $class->_buildUrl($url) if ( $url !~ m#^https?://# );
+    my ( $class, $req, $url ) = @_;
+    $url = $class->_buildUrl( $req, $url ) if ( $url !~ m#^https?://# );
     return encode_base64( $url, '' );
 }
 
@@ -344,24 +345,26 @@ sub encodeUrl {
 # @param $arg optionnal GET parameters
 # @return Constant $class->REDIRECT
 sub goToPortal {
-    my ( $class, $url, $arg, $path ) = @_;
+    my ( $class, $req, $url, $arg, $path ) = @_;
     $path ||= '';
     my ( $ret, $msg );
-    my $urlc_init = $class->encodeUrl($url);
+    my $urlc_init = $class->encodeUrl( $req, $url );
     $class->logger->debug(
-        "Redirect " . $class->remote_ip . " to portal (url was $url)" );
-    $class->set_header_out( 'Location' => $class->tsv->{portal}->()
+        "Redirect $req->{env}->{REMOTE_ADDR} to portal (url was $url)");
+    $class->set_header_out( $req,
+            'Location' => $class->tsv->{portal}->()
           . "$path?url=$urlc_init"
           . ( $arg ? "&$arg" : "" ) );
     return $class->REDIRECT;
 }
 
 sub goToError {
-    my ( $class, $url, $code ) = @_;
-    my $urlc_init = $class->encodeUrl($url);
+    my ( $class, $req, $url, $code ) = @_;
+    my $urlc_init = $class->encodeUrl( $req, $url );
     $class->logger->debug(
-        "Redirect " . $class->remote_ip . " to lmError (url was $url)" );
-    $class->set_header_out( 'Location' => $class->tsv->{portal}->()
+        "Redirect $req->{env}->{REMOTE_ADDR} to lmError (url was $url)");
+    $class->set_header_out( $req,
+            'Location' => $class->tsv->{portal}->()
           . "/lmerror/$code"
           . "?url=$urlc_init" );
     return $class->REDIRECT;
@@ -371,9 +374,9 @@ sub goToError {
 # Get user cookies and search for Lemonldap::NG cookie.
 # @return Value of the cookie if found, 0 else
 sub fetchId {
-    my $class             = shift;
-    my $t                 = $class->header_in('Cookie') or return 0;
-    my $vhost             = $class->resolveAlias;
+    my ( $class, $req ) = @_;
+    my $t                 = $req->{env}->{HTTP_COOKIE} or return 0;
+    my $vhost             = $class->resolveAlias($req);
     my $lookForHttpCookie = (
         $class->tsv->{securedCookie} =~ /^(2|3)$/
           and !( defined( $class->tsv->{https}->{$vhost} ) )
@@ -404,7 +407,7 @@ sub fetchId {
 # Tries to retrieve the session whose index is id
 # @return true if the session was found, false else
 sub retrieveSession {
-    my ( $class, $id ) = @_;
+    my ( $class, $req, $id ) = @_;
     my $now = time();
 
     # 1. Search if the user was the same as previous (very efficient in
@@ -418,7 +421,7 @@ sub retrieveSession {
     }
 
     # 2. Get the session from cache or backend
-    my $session = $class->session(
+    my $session = $req->datas->{session} = (
         Lemonldap::NG::Common::Session->new(
             {
                 storageModule        => $class->tsv->{sessionStorageModule},
@@ -460,11 +463,11 @@ sub retrieveSession {
                 $class->tsv->{timeoutActivityInterval} )
           )
         {
-            $class->session->update( { '_lastSeen' => $now } );
+            $req->datas->{session}->update( { '_lastSeen' => $now } );
 
             if ( $session->error ) {
                 $class->logger->error("Cannot update session $id");
-                $class->logger->error( $class->session->error );
+                $class->logger->error( $req->datas->{session}->error );
             }
             else {
                 $class->logger->debug("Update _lastSeen with $now");
@@ -487,8 +490,8 @@ sub retrieveSession {
 # @param $s path
 # @return URL
 sub _buildUrl {
-    my ( $class, $s ) = @_;
-    my $vhost  = $class->hostname;
+    my ( $class, $req, $s ) = @_;
+    my $vhost  = $req->{env}->{HTTP_HOST};
     my $_https = (
         defined( $class->tsv->{https}->{$vhost} )
         ? $class->tsv->{https}->{$vhost}
@@ -497,7 +500,7 @@ sub _buildUrl {
     my $portString =
          $class->tsv->{port}->{$vhost}
       || $class->tsv->{port}->{_}
-      || $class->get_server_port;
+      || $req->{env}->{SERVER_PORT};
     $portString = (
              ( $_https  && $portString == 443 )
           or ( !$_https && $portString == 80 )
@@ -513,8 +516,8 @@ sub _buildUrl {
 # $class->UNPROTECT if it is unprotected by "unprotect",
 # SKIP if is is unprotected by "skip"
 sub isUnprotected {
-    my ( $class, $uri ) = @_;
-    my $vhost = $class->resolveAlias;
+    my ( $class, $req, $uri ) = @_;
+    my $vhost = $class->resolveAlias($req);
     for (
         my $i = 0 ;
         $i < ( $class->tsv->{locationCount}->{$vhost} || 0 ) ;
@@ -531,12 +534,12 @@ sub isUnprotected {
 ## @rmethod void sendHeaders()
 # Launch function compiled by forgeHeadersInit() for the current virtual host
 sub sendHeaders {
-    my ( $class, $session ) = @_;
-    my $vhost = $class->resolveAlias;
+    my ( $class, $req, $session ) = @_;
+    my $vhost = $class->resolveAlias($req);
     if ( defined $class->tsv->{forgeHeaders}->{$vhost} ) {
 
         # Log headers in debug mode
-        my %headers = $class->tsv->{forgeHeaders}->{$vhost}->($session);
+        my %headers = $class->tsv->{forgeHeaders}->{$vhost}->( $req, $session );
         foreach my $h ( sort keys %headers ) {
             if ( defined( my $v = $headers{$h} ) ) {
                 $class->logger->debug("Send header $h with value $v");
@@ -545,25 +548,26 @@ sub sendHeaders {
                 $class->logger->debug("Send header $h with empty value");
             }
         }
-        $class->set_header_in(%headers);
+        $class->set_header_in( $req, %headers );
     }
 }
 
 ## @rmethod void cleanHeaders()
 # Unset HTTP headers, when sendHeaders is skipped
 sub cleanHeaders {
-    my $class = shift;
-    my $vhost = $class->resolveAlias;
+    my ( $class, $req ) = @_;
+    my $vhost = $class->resolveAlias($req);
     if ( defined( $class->tsv->{headerList}->{$vhost} ) ) {
-        $class->unset_header_in( @{ $class->tsv->{headerList}->{$vhost} } );
+        $class->unset_header_in( $req,
+            @{ $class->tsv->{headerList}->{$vhost} } );
     }
 }
 
 ## @rmethod string resolveAlias
 # returns vhost whose current hostname is an alias
 sub resolveAlias {
-    my $class = shift;
-    my $vhost = $class->hostname;
+    my ( $class, $req ) = @_;
+    my $vhost = $req->{env}->{HTTP_HOST};
     return $class->tsv->{vhostAlias}->{$vhost} || $vhost;
 }
 
@@ -575,18 +579,18 @@ sub resolveAlias {
 # @param $msg Message to log
 # @return Constant ($class->REDIRECT, $class->SERVER_ERROR)
 sub abort {
-    my ( $class, $msg ) = @_;
+    my ( $class, $req, $msg ) = @_;
 
     # If abort is called without a valid request, fall to die
     eval {
-        my $uri = $class->unparsed_uri;
+        my $uri = $req->{env}->{REQUEST_URI};
 
         $class->logger->error($msg);
 
         # Redirect or die
         if ( $class->tsv->{useRedirectOnError} ) {
             $class->logger->debug("Use redirect for error");
-            return $class->goToError( $uri, 500 );
+            return $class->goToError( $req, $uri, 500 );
         }
         else {
             return $class->SERVER_ERROR;
@@ -598,9 +602,9 @@ sub abort {
 ## @rmethod protected void localUnlog()
 # Delete current user from local cache entry.
 sub localUnlog {
-    my ( $class, $id ) = @_;
+    my ( $class, $req, $id ) = @_;
     $class->logger->debug('Local handler logout');
-    if ( $id //= $class->fetchId ) {
+    if ( $id //= $class->fetchId($req) ) {
 
         # Delete thread datas
         if (    $class->datas->{_session_id}
@@ -608,6 +612,7 @@ sub localUnlog {
         {
             $class->datas( {} );
         }
+        delete $req->datas->{session};
 
         # Delete local cache
         if (    $class->tsv->{refLocalStorage}
@@ -622,18 +627,18 @@ sub localUnlog {
 # Add a javascript to html page in order to fill html form with fake data
 # @param uri URI to catch
 sub postOutputFilter {
-    my ( $class, $session, $uri ) = @_;
-    my $vhost = $class->resolveAlias;
+    my ( $class, $req, $session, $uri ) = @_;
+    my $vhost = $class->resolveAlias($req);
 
     if ( defined( $class->tsv->{outputPostData}->{$vhost}->{$uri} ) ) {
         $class->logger->debug("Filling a html form with fake data");
 
-        $class->unset_header_in("Accept-Encoding");
+        $class->unset_header_in( $req, "Accept-Encoding" );
         my %postdata =
-          $class->tsv->{outputPostData}->{$vhost}->{$uri}->($session);
+          $class->tsv->{outputPostData}->{$vhost}->{$uri}->( $req, $session );
         my $formParams = $class->tsv->{postFormParams}->{$vhost}->{$uri};
-        my $js = $class->postJavascript( \%postdata, $formParams );
-        $class->addToHtmlHead($js);
+        my $js = $class->postJavascript( $req, \%postdata, $formParams );
+        $class->addToHtmlHead( $req, $js );
     }
 }
 
@@ -641,17 +646,18 @@ sub postOutputFilter {
 # Replace request body with form datas defined in configuration
 # @param uri URI to catch
 sub postInputFilter {
-    my ( $class, $session, $uri ) = @_;
-    my $vhost = $class->resolveAlias;
+    my ( $class, $req, $session, $uri ) = @_;
+    my $vhost = $class->resolveAlias($req);
 
     if ( defined( $class->tsv->{inputPostData}->{$vhost}->{$uri} ) ) {
         $class->logger->debug("Replacing fake data with real form data");
 
-        my %data = $class->tsv->{inputPostData}->{$vhost}->{$uri}->($session);
+        my %data =
+          $class->tsv->{inputPostData}->{$vhost}->{$uri}->( $req, $session );
         foreach ( keys %data ) {
             $data{$_} = uri_escape( $data{$_} );
         }
-        $class->setPostParams( \%data );
+        $class->setPostParams( $req, \%data );
     }
 }
 
@@ -659,7 +665,7 @@ sub postInputFilter {
 # build a javascript to fill a html form with fake data
 # @param data hashref containing input => value
 sub postJavascript {
-    my ( $class, $data, $formParams ) = @_;
+    my ( $class, $req, $data, $formParams ) = @_;
 
     my $form = $formParams->{formSelector} || "form";
 

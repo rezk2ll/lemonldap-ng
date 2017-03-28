@@ -5,9 +5,9 @@ use strict;
 our $VERSION = '2.0.0';
 
 sub fetchId {
-    my ($class) = @_;
-    my $token = $class->header_in('X-Llng-Token');
-    return $class->Lemonldap::NG::Handler::Main::fetchId() unless ($token);
+    my ( $class, $req ) = @_;
+    my $token = $req->{env}->{HTTP_X_LLNG_TOKEN};
+    return $class->Lemonldap::NG::Handler::Main::fetchId($req) unless ($token);
     $class->logger->debug('Found token header');
     my $s = $class->tsv->{cipher}->decrypt($token);
     my ( $t, $_session_id, @vhosts ) = split /:/, $s;
@@ -19,7 +19,7 @@ sub fetchId {
         $class->userLogger->warn('Expired token');
         return 0;
     }
-    my $vh = $class->resolveAlias;
+    my $vh = $class->resolveAlias($req);
     unless ( grep { $_ eq $vh } @vhosts ) {
         $class->userLogger->error(
             "$vh not authorizated in token (" . join( ', ', @vhosts ) . ')' );

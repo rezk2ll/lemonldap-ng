@@ -43,8 +43,6 @@ has ua => (
     is      => 'rw',
     lazy    => 1,
     builder => sub {
-
-        # TODO : LWP options to use a proxy for example
         my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
         $ua->env_proxy();
         return $ua;

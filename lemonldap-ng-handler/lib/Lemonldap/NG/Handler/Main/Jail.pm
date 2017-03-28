@@ -4,7 +4,6 @@ use strict;
 
 use Safe;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
-use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 use Mouse;
 
 has customFunctions => ( is => 'rw', isa => 'Maybe[Str]' );
@@ -66,16 +65,10 @@ sub build_jail {
     $self->jail->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
 
-    $self->jail->share_from(
-        $api,
-        [
-            qw( &hostname &remote_ip &uri &uri_with_args
-              &unparsed_uri &args &method &header_in &env )
-        ]
-    );
     $self->jail->share_from( __PACKAGE__, [ @t, '&encrypt', '&token' ] );
     $self->jail->share_from( 'MIME::Base64', ['&encode_base64'] );
-    $self->jail->share_from( 'Lemonldap::NG::Handler::Main', ['$_v'] );
+
+    #$self->jail->share_from( 'Lemonldap::NG::Handler::Main', ['$_v'] );
 
     # Initialize cryptographic functions to be able to use them in jail.
     eval { token('a') };
@@ -142,7 +135,7 @@ sub share_from {
 }
 
 ## @imethod protected jail_reval()
-# Build and return restricted eval command with SAFEWRAP, if activated
+# Build and return restricted eval command
 # @return evaluation of $reval or $reval2
 sub jail_reval {
     my ( $self, $reval ) = @_;
@@ -151,14 +144,7 @@ sub jail_reval {
     # the "no safe wrap" reval
 
     my $res;
-    eval {
-        $res = (
-            SAFEWRAP
-              and $self->useSafeJail
-            ? $self->jail->wrap_code_ref( $self->jail->reval($reval) )
-            : $self->jail->reval($reval)
-        );
-    };
+    eval { $res = ( $self->jail->reval($reval) ) };
     if ($@) {
         $self->error($@);
         return undef;

@@ -324,7 +324,7 @@ sub run {
             $req->env->{llng_saml_spconfkey} = $spConfKey;
 
             if ( my $rule = $self->spRules->{$sp} ) {
-                unless ( $rule->( $req->sessionInfo ) ) {
+                unless ( $rule->( $req, $req->sessionInfo ) ) {
                     $self->userLogger->warn( 'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
                           . "was not authorizated to access to $sp" );
