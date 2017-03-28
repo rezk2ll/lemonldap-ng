@@ -9,7 +9,6 @@ WriteMakefile(
     LICENSE      => 'gpl',
     META_MERGE   => {
         'recommends' => {
-            'AuthCAS'               => 0,
             'DBI'                   => 0,
             'Email::Sender'         => 1.300027,
             'GD::SecurityImage'     => 0,
@@ -32,7 +31,6 @@ WriteMakefile(
         },
     },
     BUILD_REQUIRES => {
-        'AuthCAS'               => 0,
         'Email::Sender'         => 0,
         'HTTP::Message'         => 0,
         'IO::String'            => 0,

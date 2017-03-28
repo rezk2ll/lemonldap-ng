@@ -330,8 +330,7 @@ cat << \EOF > %{name}-req
 %{__perl_requires} $* |\
 sed -e '/perl(lasso)/d' |\
 sed -e '/perl(Apache::Log)/d' |\
-sed -e '/perl(Net::OpenID::Server)/d' |\
-sed -e '/perl(AuthCAS)/d'
+sed -e '/perl(Net::OpenID::Server)/d'
 EOF
 
 %define __perl_requires %{_builddir}/%{name}-%{real_version}/%{name}-req
