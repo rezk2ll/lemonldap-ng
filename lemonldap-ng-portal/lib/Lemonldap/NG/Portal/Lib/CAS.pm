@@ -2,6 +2,8 @@ package Lemonldap::NG::Portal::Lib::CAS;
 
 use strict;
 use Mouse;
+use URI::Escape;
+use XML::Simple;
 use Lemonldap::NG::Common::UserAgent;
 
 our $VERSION = '2.0.0';
@@ -242,6 +244,126 @@ sub callPgtUrl {
 
     # Return result
     return $response->is_success();
+}
+
+# Get Server Login URL
+sub getServerLoginURL {
+    my ( $self, $service ) = @_;
+
+    return $self->conf->{CAS_url} . "/login?service=" . uri_escape($service);
+}
+
+# Get Server Logout URL
+sub getServerLogoutURL {
+    my ( $self, $service ) = @_;
+
+    return $self->conf->{CAS_url} . "/logout?service=" . uri_escape($service);
+}
+
+# Validate ST
+sub validateST {
+    my ( $self, $service, $ticket ) = @_;
+
+    my $serviceValidateUrl =
+        $self->conf->{CAS_url}
+      . "/serviceValidate?service="
+      . uri_escape($service);
+    $serviceValidateUrl .= "&ticket=$ticket";
+    $serviceValidateUrl .= "&pgtUrl=" . uri_escape( $self->proxyUrl )
+      if ( $self->proxyUrl );
+
+    my $response = $self->ua->get($serviceValidateUrl);
+
+    $self->logger->debug(
+        "Get CAS serviceValidate response: " . $response->as_string );
+
+    return 0 if $response->is_error;
+
+    my $xs  = XML::Simple->new();
+    my $xml = XMLin( $response->decoded_content );
+
+    if ( defined $xml->{'cas:serviceResponse'}->{'cas:authenticationFailure'} )
+    {
+        $self->logger->error( "Failed to validate Service Ticket $ticket: "
+              . $xml->{'cas:serviceResponse'}->{'cas:authenticationFailure'} );
+        return 0;
+    }
+
+    # Get proxy data and store pgtId
+    if ( $self->proxyUrl ) {
+        my $pgtIou =
+          $xml->{'cas:serviceResponse'}->{'cas:authenticationSuccess'}
+          ->{'cas:proxyGrantingTicket'}
+
+          if ($pgtIou) {
+            my $moduleOptions = $self->conf->{casStorageOptions} || {};
+            $moduleOptions->{backend} = $self->conf->{casStorage};
+            my $module = "Lemonldap::NG::Common::Apache::Session";
+
+            my $pgtIdSessions =
+              $module->searchOn( $moduleOptions, "pgtIou", $pgtIou );
+
+            foreach my $id ( keys %$pgtIdSessions ) {
+
+                # There should be only on session
+                my $pgtIdSession = $self->getCasSession($id) or next;
+                $self->pgtId = $pgtIdSession->data->{pgtId};
+                $pgtIdSession->remove;
+            }
+        }
+    }
+
+    my $user = $xml->{'cas:serviceResponse'}->{'cas:authenticationSuccess'}
+      ->{'cas:user'};
+
+    # TODO store attributes for UserDBCAS
+
+    return $user;
+}
+
+# Store PGT IOU and PGT ID
+sub storePGT {
+    my ( $self, $pgtIou, $pgtId ) = @_;
+
+    my $infos = {
+        type   => 'casPgtId',
+        _utime => time,
+        pgtIou => $pgtIou,
+        pgtId  => $pgtId
+    };
+
+    my $pgtSession = $self->getCasSession( undef, $infos );
+
+    return $pgtSession->id;
+}
+
+# Retrieve Proxy Ticket
+sub retrievePT {
+    my ( $self, $service ) = @_;
+
+    my $proxyUrl =
+      $self->conf->{CAS_url} . "/proxy?targetService=" . uri_escape($service);
+    $proxyUrl .= "&pgt=" . $self->{pgtId};
+
+    my $response = $self->ua->get($proxyUrl);
+
+    $self->logger->debug( "Get CAS proxy response: " . $response->as_string );
+
+    return 0 if $response->is_error;
+
+    my $xs  = XML::Simple->new();
+    my $xml = XMLin( $response->decoded_content );
+
+    if ( defined $xml->{'cas:serviceResponse'}->{'cas:proxyFailure'} ) {
+        $self->logger->error( "Failed to get PT: "
+              . $xml->{'cas:serviceResponse'}->{'cas:proxyFailure'} );
+        return 0;
+    }
+
+    my $pt =
+      $xml->{'cas:serviceResponse'}->{'cas:proxySuccess'}->{'cas:proxyTicket'};
+
+    return $pt;
 }
 
 1;

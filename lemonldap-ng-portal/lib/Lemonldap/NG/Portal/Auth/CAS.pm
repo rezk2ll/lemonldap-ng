@@ -28,23 +28,16 @@ has proxy => (
     }
 );
 
-has cas => ( is => 'rw' );
+has proxyUrl => ( is => 'rw' );
+has pgtId    => ( is => 'rw' );
 
 # INITIALIZATION
 
 sub init {
     my ($self) = @_;
-    eval { require AuthCAS };
-    if ($@) {
-        $self->error("Unable to load AuthCAS: $@");
-        return 0;
-    }
-    $self->cas(
-        AuthCAS->new(
-            casUrl => $self->conf->{CAS_url},
-            CAFile => $self->conf->{CAS_CAFile},
-        )
-    );
+
+    # TODO: loop over CAS servers
+
     return 1;
 }
 
@@ -56,6 +49,7 @@ sub extractFormInfo {
     # Local URL
     my $local_url = $self->p->fullUrl($req);
 
+    # TODO: create a CAS state session
     # Add request state parameters
     if ( $req->datas->{_url} ) {
         my $url_param = 'url=' . uri_escape( $req->datas->{_url} );
@@ -95,10 +89,7 @@ sub extractFormInfo {
 
         $self->logger->debug("CAS Proxy URL: $proxy_url");
 
-        $self->cas->proxyMode(
-            pgtFile        => $self->conf->{CAS_pgtFile},
-            pgtCallbackUrl => $proxy_url
-        );
+        $self->proxyUrl = $proxy_url;
     }
 
     # Catch proxy callback
@@ -111,13 +102,15 @@ sub extractFormInfo {
         if ( $pgtIou and $pgtId ) {
 
             # Store pgtId and pgtIou
-            unless ( $self->cas->storePGT( $pgtIou, $pgtId ) ) {
+            my $pgtSessionId = $self->storePGT( $pgtIou, $pgtId );
+            unless ($pgtSessionId) {
                 $self->userLogger->error(
-                    "CAS: error " . &AuthCAS::get_errors() );
+                    "CAS: Unable to store pgtIou $pgtIou and pgtId $pgtId");
             }
             else {
                 $self->logger->debug(
-                    "CAS: Store pgtIou $pgtIou and pgtId $pgtId");
+"CAS: Store pgtIou $pgtIou and pgtId $pgtId in session $pgtSessionId"
+                );
             }
         }
 
@@ -127,7 +120,7 @@ sub extractFormInfo {
     }
 
     # Build login URL
-    my $login_url = $self->cas->getServerLoginURL($local_url);
+    my $login_url = $self->getServerLoginURL($local_url);
     $login_url .= '&renew=true'   if $self->conf->{CAS_renew};
     $login_url .= '&gateway=true' if $self->conf->{CAS_gateway};
 
@@ -145,8 +138,8 @@ sub extractFormInfo {
     $self->logger->debug("CAS: Service Ticket received: $ticket");
 
     # Ticket found, try to validate it
-    unless ( $req->{user} = $self->cas->validateST( $local_url, $ticket ) ) {
-        $self->userLogger->error( "CAS: error " . &AuthCAS::get_errors() );
+    unless ( $req->{user} = $self->validateST( $local_url, $ticket ) ) {
+        $self->userLogger->error("CAS: Unable to validate ST $ticket");
         return PE_ERROR;
     }
     else {
@@ -157,7 +150,7 @@ sub extractFormInfo {
     if ( $self->proxy ) {
 
         # Check we received a PGT
-        my $pgtId = $self->cas->{pgtId};
+        my $pgtId = $self->pgtId;
 
         unless ($pgtId) {
             $self->logger->error(
@@ -168,7 +161,7 @@ sub extractFormInfo {
         # Get a proxy ticket for each proxied service
         foreach ( keys %{ $self->conf->{CAS_proxiedServices} } ) {
             my $service = $self->conf->{CAS_proxiedServices}->{$_};
-            my $pt      = $self->cas->retrievePT($service);
+            my $pt      = $self->retrievePT($service);
 
             unless ($pt) {
                 $self->logger->error(
@@ -204,7 +197,7 @@ sub authLogout {
 
     # Build CAS logout URL
     my $logout_url =
-      $self->cas->getServerLogoutURL( uri_escape( $self->p->fullUrl($req) ) );
+      $self->getServerLogoutURL( uri_escape( $self->p->fullUrl($req) ) );
 
     $self->logger->debug("Build CAS logout URL: $logout_url");
 

@@ -8,19 +8,12 @@ BEGIN {
 }
 
 my $maintests = 14;
-my $debug     = 'error';
+my $debug     = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
 SKIP: {
     no warnings 'redefine';
-    eval q#use AuthCAS#;
-    if ($@) {
-        skip 'AuthCAS not found', $maintests;
-    }
-
-    no warnings 'once';
-    *AuthCAS::get_https2 = *mygethttps2;
 
     ok( $issuer = issuer(), 'Issuer portal' );
     $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
@@ -38,7 +31,7 @@ SKIP: {
         'Unauth SP request'
     );
     expectRedirection( $res,
-        'http://auth.idp.com/cas/login?service=http://auth.sp.com/' );
+        'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
 
     # Query IdP
     switch ('issuer');
@@ -153,19 +146,36 @@ clean_sessions();
 done_testing( count() );
 
 # Redefine LWP methods for tests
-sub mygethttps2 {
-    my ( $host, $port, $path, $ssl_data ) = @_;
-    ok( $path =~ m#^(/[^\?]+)(?:\?(.*))?$#, "Path to push to IdP: $path" );
-    $path = $1;
-    my $query = $2;
-    ok( $res = $issuer->_get( $path, query => $query ), 'Execute request' );
-    ok( ( $res->[0] == 200 or $res->[0] == 400 ), 'Response is 200 or 400' )
-      or explain( $res->[0], "200 or 400" );
-    count(2);
-    my @res = map { "$_\n" } split /\r?\n/, join( '', @{ $res->[2] } );
-    ok( $res->[2]->[0] =~ /Frédéric/, 'UTF-8 attribute' );
-    count(1);
-    return ( "200\n", "\n", @res );
+no warnings 'redefine';
+
+sub LWP::UserAgent::request {
+    my ( $self, $req ) = @_;
+    ok( $req->uri =~ m#http://auth.((?:id|s)p).com(.*)#, 'SOAP request' );
+    my $host = $1;
+    my $url  = $2;
+    my $res;
+    my $s = $req->content;
+    my $client = ( $host eq 'idp' ? $issuer : $sp );
+    ok(
+        $res = $client->_post(
+            $url, IO::String->new($s),
+            length => length($s),
+            type   => 'application/xml',
+        ),
+        'Execute request'
+    );
+    expectOK($res);
+    ok( getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
+        'Content is XML' )
+      or explain( $res->[1], 'Content-Type => application/xml' );
+    my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
+
+    while ( my $name = shift @{ $res->[1] } ) {
+        $httpResp->header( $name, shift( @{ $res->[1] } ) );
+    }
+    $httpResp->content( join( '', @{ $res->[2] } ) );
+    count(3);
+    return $httpResp;
 }
 
 sub switch {
