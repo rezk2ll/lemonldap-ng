@@ -236,13 +236,19 @@ sub run {
             }
 
             # Check if user needs to be reauthenticated
-            my $reauthentication = 0;
-            my $prompt           = $oidc_request->{'prompt'};
-            if ( $prompt and $prompt =~ /\blogin\b/ ) {
+            my $prompt = $oidc_request->{'prompt'};
+            if (
+                    $prompt
+                and $prompt =~ /\blogin\b/
+                and (
+                    time - $req->sessionInfo->{_utime} >
+                    $self->conf->{portalForceAuthnInterval} )
+              )
+            {
                 $self->logger->debug(
 "Reauthentication requested by Relying Party in prompt parameter"
                 );
-                $reauthentication = 1;
+                return $self->reAuth($req);
             }
 
             my $max_age         = $oidc_request->{'max_age'};
@@ -251,28 +257,7 @@ sub run {
                 $self->logger->debug(
 "Reauthentication forced cause authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
                 );
-                $reauthentication = 1;
-            }
-
-            # TODO: verify this
-            if ($reauthentication) {
-
-                # Set prompt to 0 to avoid loop
-                $self->p->setHiddenFormValue( $req, 'prompt', '', '' );
-
-                # Replay authentication process
-                $self->{updateSession} = 1;
-                $req->steps(
-                    [
-                        $self->p->authProcess,
-                        @{ $self->p->betweenAuthAndDatas },
-                        $self->p->sessionDatas,
-                        @{ $self->p->afterDatas }
-                    ]
-                );
-
-                # Update session_id
-                return PE_OK;
+                return $self->reAuth($req);
             }
 
             # Check openid scope
