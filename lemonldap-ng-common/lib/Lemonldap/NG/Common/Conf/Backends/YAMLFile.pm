@@ -109,7 +109,7 @@ sub load {
     eval { $ret = YAML::Load($f) };
     if ($@) {
         print STDERR "$@\n";
-        $Lemonldap::NG::Common::Conf::msg .= "JSON fails to read file: $@ \n";
+        $Lemonldap::NG::Common::Conf::msg .= "YAML fails to read file: $@ \n";
         return undef;
     }
     return $ret;

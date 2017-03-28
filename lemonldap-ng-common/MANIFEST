@@ -23,7 +23,7 @@ lib/Lemonldap/NG/Common/Conf/Backends/MongoDB.pm
 lib/Lemonldap/NG/Common/Conf/Backends/RDBI.pm
 lib/Lemonldap/NG/Common/Conf/Backends/REST.pm
 lib/Lemonldap/NG/Common/Conf/Backends/SOAP.pm
-lib/Lemonldap/NG/Common/Conf/Backends/YAML.pm
+lib/Lemonldap/NG/Common/Conf/Backends/YAMLFile.pm
 lib/Lemonldap/NG/Common/Conf/Compact.pm
 lib/Lemonldap/NG/Common/Conf/Constants.pm
 lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
