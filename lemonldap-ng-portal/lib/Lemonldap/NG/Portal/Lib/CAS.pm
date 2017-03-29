@@ -289,18 +289,16 @@ sub validateST {
     my $xs  = XML::Simple->new();
     my $xml = XMLin( $response->decoded_content );
 
-    if ( defined $xml->{'cas:serviceResponse'}->{'cas:authenticationFailure'} )
-    {
+    if ( defined $xml->{'cas:authenticationFailure'} ) {
         $self->logger->error( "Failed to validate Service Ticket $ticket: "
-              . $xml->{'cas:serviceResponse'}->{'cas:authenticationFailure'} );
+              . $xml->{'cas:authenticationFailure'} );
         return 0;
     }
 
     # Get proxy data and store pgtId
     if ( $self->proxyUrl ) {
         my $pgtIou =
-          $xml->{'cas:serviceResponse'}->{'cas:authenticationSuccess'}
-          ->{'cas:proxyGrantingTicket'};
+          $xml->{'cas:authenticationSuccess'}->{'cas:proxyGrantingTicket'};
 
         if ($pgtIou) {
             my $moduleOptions = $self->conf->{casStorageOptions} || {};
@@ -320,8 +318,7 @@ sub validateST {
         }
     }
 
-    my $user = $xml->{'cas:serviceResponse'}->{'cas:authenticationSuccess'}
-      ->{'cas:user'};
+    my $user = $xml->{'cas:authenticationSuccess'}->{'cas:user'};
 
     # TODO store attributes for UserDBCAS
 
@@ -361,14 +358,13 @@ sub retrievePT {
     my $xs  = XML::Simple->new();
     my $xml = XMLin( $response->decoded_content );
 
-    if ( defined $xml->{'cas:serviceResponse'}->{'cas:proxyFailure'} ) {
-        $self->logger->error( "Failed to get PT: "
-              . $xml->{'cas:serviceResponse'}->{'cas:proxyFailure'} );
+    if ( defined $xml->{'cas:proxyFailure'} ) {
+        $self->logger->error(
+            "Failed to get PT: " . $xml->{'cas:proxyFailure'} );
         return 0;
     }
 
-    my $pt =
-      $xml->{'cas:serviceResponse'}->{'cas:proxySuccess'}->{'cas:proxyTicket'};
+    my $pt = $xml->{'cas:proxySuccess'}->{'cas:proxyTicket'};
 
     return $pt;
 }
