@@ -132,18 +132,15 @@ ok( $res = $issuer->_get( '/', cookie => "lemonldap=$idpId" ), 'Query IdP' );
 count(1);
 expectReject($res);
 
-#switch ('sp');
-#ok( $res = $sp->_get( '/', cookie => "lemonldap=$idpId" ), 'Query IdP' );
-#ok( $res->[0] == 302, 'Return code is 302' ) or explain( $res->[0], 302 );
-#ok(
-#    $sp->getRedirection($res) eq
-#      'http://auth.idp.com/cas/login?service=http://auth.sp.com/',
-#    'Redirection points to IdP'
-#  )
-#  or explain(
-#    $res->[1],
-#    'location => http://auth.idp.com/cas/login?service=http://auth.sp.com/'
-#  );
+switch ('sp');
+ok(
+    $res =
+      $sp->_get( '/', accept => 'text/html', cookie => "lemonldap=$idpId" ),
+    'Query IdP'
+);
+count(1);
+expectRedirection( $res,
+    'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
 
 clean_sessions();
 done_testing( count() );
