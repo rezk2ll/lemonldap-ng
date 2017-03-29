@@ -7,141 +7,144 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 14;
-my $debug     = 'debug';
+my $debug = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
-SKIP: {
-    no warnings 'redefine';
+no warnings 'redefine';
 
-    ok( $issuer = issuer(), 'Issuer portal' );
-    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
-    switch ('sp');
+ok( $issuer = issuer(), 'Issuer portal' );
+$handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
+count(1);
+switch ('sp');
 
-    ok( $sp = sp(), 'SP portal' );
-    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
+ok( $sp = sp(), 'SP portal' );
+count(1);
+$handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
 
-    # Simple SP access
-    my $res;
-    ok(
-        $res = $sp->_get(
-            '/', accept => 'text/html',
-        ),
-        'Unauth SP request'
-    );
-    expectRedirection( $res,
-        'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
+# Simple SP access
+ok(
+    $res = $sp->_get(
+        '/', accept => 'text/html',
+    ),
+    'Unauth SP request'
+);
+count(1);
+expectRedirection( $res,
+    'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
 
-    # Query IdP
-    switch ('issuer');
-    ok(
-        $res = $issuer->_get(
-            '/cas/login',
-            query  => 'service=http://auth.sp.com/',
-            accept => 'text/html'
-        ),
-        'Query CAS server'
-    );
-    expectOK($res);
+# Query IdP
+switch ('issuer');
+ok(
+    $res = $issuer->_get(
+        '/cas/login',
+        query  => 'service=http://auth.sp.com/',
+        accept => 'text/html'
+    ),
+    'Query CAS server'
+);
+count(1);
+expectOK($res);
 
-    # Try to authenticate to IdP
-    my $body = $res->[2]->[0];
-    $body =~ s/^.*?<form.*?>//s;
-    $body =~ s#</form>.*$##s;
-    my %fields =
-      ( $body =~ /<input type="hidden".+?name="(.+?)".+?value="(.*?)"/sg );
-    $fields{user} = $fields{password} = 'french';
-    use URI::Escape;
-    my $s = join( '&', map { "$_=" . uri_escape( $fields{$_} ) } keys %fields );
-    ok(
-        $res = $issuer->_post(
-            '/cas/login',
-            IO::String->new($s),
-            accept => 'text/html',
-            length => length($s),
-        ),
-        'Post authentication'
-    );
-    my ($query) =
-      expectRedirection( $res, qr#^http://auth.sp.com/\?(ticket=[^&]+)$# );
-    my $idpId = expectCookie($res);
+# Try to authenticate to IdP
+my $body = $res->[2]->[0];
+$body =~ s/^.*?<form.*?>//s;
+$body =~ s#</form>.*$##s;
+my %fields =
+  ( $body =~ /<input type="hidden".+?name="(.+?)".+?value="(.*?)"/sg );
+$fields{user} = $fields{password} = 'french';
+use URI::Escape;
+my $s = join( '&', map { "$_=" . uri_escape( $fields{$_} ) } keys %fields );
+ok(
+    $res = $issuer->_post(
+        '/cas/login',
+        IO::String->new($s),
+        accept => 'text/html',
+        length => length($s),
+    ),
+    'Post authentication'
+);
+count(1);
+my ($query) =
+  expectRedirection( $res, qr#^http://auth.sp.com/\?(ticket=[^&]+)$# );
+my $idpId = expectCookie($res);
 
-    # Back to SP
-    switch ('sp');
-    ok( $res = $sp->_get( '/', query => $query, accept => 'text/html' ),
-        'Query SP with ticket' );
-    my $spId = expectCookie($res);
+# Back to SP
+switch ('sp');
+ok( $res = $sp->_get( '/', query => $query, accept => 'text/html' ),
+    'Query SP with ticket' );
+count(1);
+my $spId = expectCookie($res);
 
-    # Test authentication
-    ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
-    expectOK($res);
-    expectAuthenticatedAs( $res, 'french' );
+# Test authentication
+ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
+count(1);
+expectOK($res);
+expectAuthenticatedAs( $res, 'french' );
 
-    # Logout initiated by SP
-    ok(
-        $res = $sp->_get(
-            '/',
-            query  => 'logout',
-            cookie => "lemonldap=$spId",
-            accept => 'text/html'
-        ),
-        'Query SP for logout'
-    );
-    expectOK($res);
-    ok(
-        $res->[2]->[0] =~
-          m#iframe src="http://auth.idp.com(/cas/logout)\?(.+?)"#s,
-        'Found iframe'
-    );
+# Logout initiated by SP
+ok(
+    $res = $sp->_get(
+        '/',
+        query  => 'logout',
+        cookie => "lemonldap=$spId",
+        accept => 'text/html'
+    ),
+    'Query SP for logout'
+);
+count(1);
+expectOK($res);
+ok(
+    $res->[2]->[0] =~ m#iframe src="http://auth.idp.com(/cas/logout)\?(.+?)"#s,
+    'Found iframe'
+);
+count(1);
 
-    # Query IdP with iframe src
-    my $url = $1;
-    $query = $2;
-    ok(
-        getHeader( $res, 'Content-Security-Policy' ) =~
-          /child-src auth.idp.com/,
-        'Frame is authorizated'
-      )
-      or explain( $res->[1],
-        'Content-Security-Policy => ...child-src auth.idp.com' );
+# Query IdP with iframe src
+my $url = $1;
+$query = $2;
+ok( getHeader( $res, 'Content-Security-Policy' ) =~ /child-src auth.idp.com/,
+    'Frame is authorizated' )
+  or
+  explain( $res->[1], 'Content-Security-Policy => ...child-src auth.idp.com' );
+count(1);
 
-    switch ('issuer');
-    ok(
-        $res = $issuer->_get(
-            $url,
-            query  => $query,
-            accept => 'text/html',
-            cookie => "lemonldap=$idpId"
-        ),
-        'Get iframe from IdP'
-    );
-    expectOK($res);
-    ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancestors/,
-        ' Frame can be embedded' )
-      or explain( $res->[1],
-        'Content-Security-Policy does not contain a frame-ancestors' );
+switch ('issuer');
+ok(
+    $res = $issuer->_get(
+        $url,
+        query  => $query,
+        accept => 'text/html',
+        cookie => "lemonldap=$idpId"
+    ),
+    'Get iframe from IdP'
+);
+count(1);
+expectOK($res);
+ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancestors/,
+    ' Frame can be embedded' )
+  or explain( $res->[1],
+    'Content-Security-Policy does not contain a frame-ancestors' );
+count(1);
 
-    # Verify that user has been disconnected
-    ok( $res = $issuer->_get( '/', cookie => "lemonldap=$idpId" ),
-        'Query IdP' );
-    expectReject($res);
+# Verify that user has been disconnected
+ok( $res = $issuer->_get( '/', cookie => "lemonldap=$idpId" ), 'Query IdP' );
+count(1);
+expectReject($res);
 
-    #switch ('sp');
-    #ok( $res = $sp->_get( '/', cookie => "lemonldap=$idpId" ), 'Query IdP' );
-    #ok( $res->[0] == 302, 'Return code is 302' ) or explain( $res->[0], 302 );
-    #ok(
-    #    $sp->getRedirection($res) eq
-    #      'http://auth.idp.com/cas/login?service=http://auth.sp.com/',
-    #    'Redirection points to IdP'
-    #  )
-    #  or explain(
-    #    $res->[1],
-    #    'location => http://auth.idp.com/cas/login?service=http://auth.sp.com/'
-    #  );
-}
+#switch ('sp');
+#ok( $res = $sp->_get( '/', cookie => "lemonldap=$idpId" ), 'Query IdP' );
+#ok( $res->[0] == 302, 'Return code is 302' ) or explain( $res->[0], 302 );
+#ok(
+#    $sp->getRedirection($res) eq
+#      'http://auth.idp.com/cas/login?service=http://auth.sp.com/',
+#    'Redirection points to IdP'
+#  )
+#  or explain(
+#    $res->[1],
+#    'location => http://auth.idp.com/cas/login?service=http://auth.sp.com/'
+#  );
 
-count($maintests);
 clean_sessions();
 done_testing( count() );
 
@@ -180,8 +183,7 @@ sub LWP::UserAgent::request {
         );
     }
     expectOK($res);
-    ok( getHeader( $res, 'Content-Type' ) =~ m#xml#,
-        'Content is XML' )
+    ok( getHeader( $res, 'Content-Type' ) =~ m#xml#, 'Content is XML' )
       or explain( $res->[1], 'Content-Type => application/xml' );
     my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
 
