@@ -138,6 +138,8 @@ sub extractFormInfo {
     $self->logger->debug("CAS: Service Ticket received: $ticket");
 
     # Ticket found, try to validate it
+    $local_url =~ s/ticket=[^&]+//;
+    $local_url =~ s/\?$//;
     unless ( $req->{user} = $self->validateST( $local_url, $ticket ) ) {
         $self->userLogger->error("CAS: Unable to validate ST $ticket");
         return PE_ERROR;
