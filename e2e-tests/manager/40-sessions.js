@@ -36,6 +36,7 @@ describe('Lemonldap::NG Session explorer', function() {
   });
 
   it('Should display my IP address', function() {
+    element(by.id('navsso')).click();
     element(by.id('a-ip')).click();
     var t = element.all(by.repeater('node in data track by node.id'));
     expect(t.count()).toBeGreaterThan(0);

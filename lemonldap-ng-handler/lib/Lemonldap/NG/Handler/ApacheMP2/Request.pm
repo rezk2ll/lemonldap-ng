@@ -12,9 +12,8 @@ sub new {
 
     # $r->subprocess_env breaks header modification. That's why it is not used
     # here
-    my $uri = $r->uri;
-    $uri =~ s#//+#/#g;
-    $uri =~ s#\?#%3F#g;
+    my ( $uri, $args ) = ( $r->uri, $r->args );
+    my $uri_full = $uri . ( $args ? "?$args" : '' );
     my $env = {
 
         #%ENV,
@@ -23,12 +22,12 @@ sub new {
               $r->connection->can('remote_ip') ? $r->connection->remote_ip
             : $r->connection->client_ip
         ),
-        QUERY_STRING   => $r->args,
-        REQUEST_URI    => $uri . ( $r->args ? '?' . $r->args : '' ),
-        PATH_INFO      => '',
-        SERVER_PORT    => $r->get_server_port,
-        REQUEST_METHOD => $r->method,
-        'psgi.version' => [ 1, 1 ],
+        QUERY_STRING      => $args,
+        REQUEST_URI       => $uri_full,
+        PATH_INFO         => '',
+        SERVER_PORT       => $r->get_server_port,
+        REQUEST_METHOD    => $r->method,
+        'psgi.version'    => [ 1, 1 ],
         'psgi.url_scheme' => ( $ENV{HTTPS} || 'off' ) =~ /^(?:on|1)$/i
         ? 'https'
         : 'http',

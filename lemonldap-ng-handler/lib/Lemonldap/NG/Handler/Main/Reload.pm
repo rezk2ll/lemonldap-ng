@@ -462,7 +462,7 @@ sub conditionSub {
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
-                $_[0]->add_output_filter(
+                $_[0]->{env}->{'psgi.r'}->add_output_filter(
                     sub {
                         return $class->redirectFilter( $u, @_ );
                     }

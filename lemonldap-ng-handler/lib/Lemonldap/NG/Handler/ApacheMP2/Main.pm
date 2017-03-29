@@ -137,10 +137,6 @@ sub print {
     $request->env->{'psgi.r'}->print($data);
 }
 
-1;
-
-__END__
-
 ## @rmethod protected int redirectFilter(string url, Apache2::Filter f)
 # Launch the current HTTP request then redirects the user to $url.
 # Used by logout_app and logout_app_sso targets
@@ -167,6 +163,10 @@ sub redirectFilter {
         $class->datas->{ $class->tsv->{whatToTrace} }, 'filter' );
     return $class->OK;
 }
+
+1;
+
+__END__
 
 ## @method void addToHtmlHead(string data)
 # add data at end of html head
