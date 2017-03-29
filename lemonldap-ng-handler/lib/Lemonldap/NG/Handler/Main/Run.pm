@@ -502,7 +502,8 @@ sub _buildUrl {
       || $class->tsv->{port}->{_}
       || $req->{env}->{SERVER_PORT};
     $portString = (
-             ( $_https  && $portString == 443 )
+             ( $vhost =~ /:\d+/ )
+          or ( $_https  && $portString == 443 )
           or ( !$_https && $portString == 80 )
     ) ? '' : ":$portString";
     my $url = "http" . ( $_https ? "s" : "" ) . "://$vhost$portString$s";
