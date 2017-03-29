@@ -38,7 +38,8 @@ sub launch {
     my $class = "Lemonldap::NG::Handler::ApacheMP2::$type";
     eval "require $class";
     die $@ if ($@);
-    return $class->$sub($req);
+    my ($res) = $class->$sub($req);
+    return $res;
 }
 
 1;

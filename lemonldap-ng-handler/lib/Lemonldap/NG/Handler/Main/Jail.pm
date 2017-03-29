@@ -47,7 +47,7 @@ sub build_jail {
         }
         next if ( $self->can($_) );
         eval "sub $_ {
-            my \$uri = $api\::uri_with_args();
+            my \$uri = \$_[1]->{env}->{REQUEST_URI};
             return $sub(\$uri,\@_)
         }";
         $api->logger->error($@) if ($@);

@@ -568,6 +568,8 @@ sub cleanHeaders {
 sub resolveAlias {
     my ( $class, $req ) = @_;
     my $vhost = $req->{env}->{HTTP_HOST};
+
+    $vhost =~ s/:\d+//;
     return $class->tsv->{vhostAlias}->{$vhost} || $vhost;
 }
 
