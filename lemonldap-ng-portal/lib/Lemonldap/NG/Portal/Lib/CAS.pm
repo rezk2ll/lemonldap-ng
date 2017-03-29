@@ -27,7 +27,14 @@ has ua => (
 
 sub sendSoapResponse {
     my ( $self, $req, $s ) = @_;
-    return [ 200, [ 'Content-Length' => length($s) ], [$s] ];
+    return [
+        200,
+        [
+            'Content-Length' => length($s),
+            'Content-Type'   => 'application/soap+xml',
+        ],
+        [$s]
+    ];
 }
 
 # Try to recover the CAS session corresponding to id and return session datas

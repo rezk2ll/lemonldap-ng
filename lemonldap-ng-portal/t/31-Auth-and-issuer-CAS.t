@@ -150,22 +150,37 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.((?:id|s)p).com(.*)#, 'SOAP request' );
-    my $host = $1;
-    my $url  = $2;
+    ok( $req->uri =~ m#http://auth.((?:id|s)p).com([^\?]*)(?:\?(.*))?$#,
+        'SOAP request' );
+    my $host  = $1;
+    my $url   = $2;
+    my $query = $3;
     my $res;
-    my $s = $req->content;
     my $client = ( $host eq 'idp' ? $issuer : $sp );
-    ok(
-        $res = $client->_post(
-            $url, IO::String->new($s),
-            length => length($s),
-            type   => 'application/xml',
-        ),
-        "Execute request to $url"
-    );
+    if ( $req->method eq 'POST' ) {
+        my $s = $req->content;
+        ok(
+            $res = $client->_post(
+                $url, IO::String->new($s),
+                length => length($s),
+                query  => $query,
+                type   => 'application/xml',
+            ),
+            "Execute POST request to $url"
+        );
+    }
+    else {
+        ok(
+            $res = $client->_get(
+                $url,
+                type  => 'application/xml',
+                query => $query,
+            ),
+            "Execute request to $url"
+        );
+    }
     expectOK($res);
-    ok( getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
+    ok( getHeader( $res, 'Content-Type' ) =~ m#xml#,
         'Content is XML' )
       or explain( $res->[1], 'Content-Type => application/xml' );
     my $httpResp = HTTP::Response->new( $res->[0], 'OK' );

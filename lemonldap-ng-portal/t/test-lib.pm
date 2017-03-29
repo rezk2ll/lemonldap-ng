@@ -3,6 +3,7 @@ package main;
 
 use strict;
 use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;
 use LWP::UserAgent;
 use URI::Escape;
 use 5.10.0;
