@@ -28,12 +28,12 @@ sub new {
         'psgix.harakiri'         => Plack::Util::TRUE,
         'psgix.cleanup'          => Plack::Util::TRUE,
         'psgix.cleanup.handlers' => [],
-        'psqi.r'                 => $r,
+        'psgi.r'                 => $r,
     };
     if ( defined( my $HTTP_AUTHORIZATION = $r->headers_in->{Authorization} ) ) {
         $env->{HTTP_AUTHORIZATION} = $HTTP_AUTHORIZATION;
     }
-    my $uri = URI->new( "http://" . $r->hostname . $r->{env}->{REQUEST_URI} );
+    my $uri = URI->new( "http://" . $r->hostname . $r->unparsed_uri );
     $env->{PATH_INFO} = uri_unescape( $uri->path );
 
     my $self = Plack::Request->new($env);

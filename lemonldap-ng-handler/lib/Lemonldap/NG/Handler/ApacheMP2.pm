@@ -30,9 +30,9 @@ sub status {
 # Internal method to get class to load
 sub launch {
     my ( $sub, $r ) = @_;
-    my $req  = Lemonldap::NG::Handler::Apache2::Request->new($r);
+    my $req  = Lemonldap::NG::Handler::ApacheMP2::Request->new($r);
     my $type = Lemonldap::NG::Handler::ApacheMP2::Main->checkType($req);
-    if ( my $t = $_[0]->dir_config('VHOSTTYPE') ) {
+    if ( my $t = $r->dir_config('VHOSTTYPE') ) {
         $type = $t;
     }
     my $class = "Lemonldap::NG::Handler::ApacheMP2::$type";
