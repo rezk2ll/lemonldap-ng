@@ -429,15 +429,14 @@ sub conditionSub {
             $url
             ? (
                 sub {
-                    $_[0]->{_logout} = $url;
+                    $_[1]->{_logout} = $url;
                     return 0;
                 },
                 0
               )
             : (
                 sub {
-                    $_[0]->{_logout} =
-                      &{ $class->tsv->{portal} }();
+                    $_[1]->{_logout} = $class->tsv->{portal}->();
                     return 0;
                 },
                 0
@@ -478,14 +477,14 @@ sub conditionSub {
         return (
             sub {
 
-                #TODO: check this
+                my ($req) = @_;
                 $class->localUnlog;
-                $_[0]->add_output_filter(
+                $req->{env}->{'psgi.r'}->add_output_filter(
                     sub {
                         my $r = $_[0]->r;
                         return $class->redirectFilter(
                             &{ $class->tsv->{portal} }() . "?url="
-                              . $class->encodeUrl($u)
+                              . $class->encodeUrl( $req, $u )
                               . "&logout=1",
                             @_
                         );

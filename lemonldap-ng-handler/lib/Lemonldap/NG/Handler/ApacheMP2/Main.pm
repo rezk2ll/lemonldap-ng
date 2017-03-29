@@ -175,7 +175,7 @@ sub addToHtmlHead {
     use APR::Bucket  ();
     use APR::Brigade ();
     my ( $class, $request, $data ) = @_;
-    $request->add_output_filter(
+    $request->{env}->{'psgi.r'}->add_output_filter(
         sub {
             my $f   = shift;
             my $bb  = shift;
@@ -226,7 +226,7 @@ sub flatten_bb {
 # @param $params hashref containing name => value
 sub setPostParams {
     my ( $class, $request, $params ) = @_;
-    $request->add_input_filter(
+    $request->{env}->{'psgi.r'}->add_input_filter(
         sub {
             my $f = shift;
             my $buffer;
