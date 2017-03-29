@@ -162,7 +162,7 @@ sub LWP::UserAgent::request {
             length => length($s),
             type   => 'application/xml',
         ),
-        'Execute request'
+        "Execute request to $url"
     );
     expectOK($res);
     ok( getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
