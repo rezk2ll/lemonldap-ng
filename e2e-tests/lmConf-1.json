@@ -91,7 +91,7 @@
   "cfgNum": "1",
   "cfgVersion": "2.0.0",
   "cookieName": "lemonldap",
-  "customFunctions": "My::hello My::get_uri My::get_additional_arg",
+  "customFunctions": "My::hello My::get_additional_arg",
   "demoExportedVars": {
     "cn": "cn",
     "mail": "mail",
@@ -103,7 +103,7 @@
       "Auth-User": "$uid",
       "Ip-Addr": "$ipAddr",
       "Hello": "hello()",
-      "Uri": "get_uri()",
+      "Uri": "$ENV{REQUEST_URI}",
       "Additional-Arg": "get_additional_arg('header-added')",
       "Base64": "encode_base64('a:b','')"
     },

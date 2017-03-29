@@ -10,10 +10,24 @@ use URI::Escape;
 sub new {
     my ( $class, $r ) = @_;
 
-    # Apache populates ENV:
-    $r->subprocess_env;
+    # $r->subprocess_env breaks header modification. That's why it is not used
+    # here
+    my $uri = $r->uri;
+    $uri =~ s#//+#/#g;
+    $uri =~ s#\?#%3F#g;
     my $env = {
-        %ENV,
+
+        #%ENV,
+        HTTP_HOST   => $r->hostname,
+        REMOTE_ADDR => (
+              $r->connection->can('remote_ip') ? $r->connection->remote_ip
+            : $r->connection->client_ip
+        ),
+        QUERY_STRING   => $r->args,
+        REQUEST_URI    => $uri . ( $r->args ? '?' . $r->args : '' ),
+        PATH_INFO      => '',
+        SERVER_PORT    => $r->get_server_port,
+        REQUEST_METHOD => $r->method,
         'psgi.version' => [ 1, 1 ],
         'psgi.url_scheme' => ( $ENV{HTTPS} || 'off' ) =~ /^(?:on|1)$/i
         ? 'https'
@@ -30,9 +44,15 @@ sub new {
         'psgix.cleanup.handlers' => [],
         'psgi.r'                 => $r,
     };
-    if ( defined( my $HTTP_AUTHORIZATION = $r->headers_in->{Authorization} ) ) {
-        $env->{HTTP_AUTHORIZATION} = $HTTP_AUTHORIZATION;
-    }
+    $r->headers_in->do(
+        sub {
+            my $h = shift;
+            my $k = uc($h);
+            $k =~ s/-/_/g;
+            $env->{"HTTP_$k"} = $r->headers_in->{$h};
+            return 1;
+        }
+    );
     my $uri = URI->new( "http://" . $r->hostname . $r->unparsed_uri );
     $env->{PATH_INFO} = uri_unescape( $uri->path );
 
@@ -42,7 +62,7 @@ sub new {
 }
 
 sub datas {
-    my($self) = @_;
+    my ($self) = @_;
     return $self->{datas} ||= {};
 }
 

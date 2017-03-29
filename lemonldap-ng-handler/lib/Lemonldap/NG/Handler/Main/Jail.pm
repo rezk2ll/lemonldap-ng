@@ -25,11 +25,8 @@ sub build_jail {
     return $self->jail
       if (  $self->jail
         and $self->jail->useSafeJail
-        and $self->jail->customFunctions
         and $self->useSafeJail
-        and $self->customFunctions
-        and $self->jail->useSafeJail == $self->useSafeJail
-        and $self->jail->customFunctions == $self->customFunctions );
+        and $self->jail->useSafeJail == $self->useSafeJail );
 
     $self->useSafeJail(1) unless defined $self->useSafeJail;
 
@@ -47,8 +44,7 @@ sub build_jail {
         }
         next if ( $self->can($_) );
         eval "sub $_ {
-            my \$uri = \$_[1]->{env}->{REQUEST_URI};
-            return $sub(\$uri,\@_)
+            return $sub(\@_)
         }";
         $api->logger->error($@) if ($@);
         $_ = "&$_";
