@@ -48,9 +48,10 @@ sub new {
         sub {
             my $h = shift;
             my $k = uc($h);
-            next if ( $k eq 'HOST' );
-            $k =~ s/-/_/g;
-            $env->{"HTTP_$k"} = $r->headers_in->{$h};
+            if ( $k ne 'HOST' ) {
+                $k =~ s/-/_/g;
+                $env->{"HTTP_$k"} = $r->headers_in->{$h};
+            }
             return 1;
         }
     );
