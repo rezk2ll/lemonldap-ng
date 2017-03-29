@@ -293,9 +293,9 @@ sub validateST {
     if ( $self->proxyUrl ) {
         my $pgtIou =
           $xml->{'cas:serviceResponse'}->{'cas:authenticationSuccess'}
-          ->{'cas:proxyGrantingTicket'}
+          ->{'cas:proxyGrantingTicket'};
 
-          if ($pgtIou) {
+        if ($pgtIou) {
             my $moduleOptions = $self->conf->{casStorageOptions} || {};
             $moduleOptions->{backend} = $self->conf->{casStorage};
             my $module = "Lemonldap::NG::Common::Apache::Session";
