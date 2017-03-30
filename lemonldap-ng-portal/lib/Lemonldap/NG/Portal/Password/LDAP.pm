@@ -25,7 +25,7 @@ sub modifyPassword {
     my ( $self, $req, $pwd ) = @_;
 
     # Call the modify password method
-    my $code = $self->ldap->userModifyPassword( $req->userData->{dn},
+    my $code = $self->ldap->userModifyPassword( $req->userData->{_dn},
         $pwd, $req->datas->{oldpassword} );
 
     unless ( $code == PE_PASSWORD_OK ) {
