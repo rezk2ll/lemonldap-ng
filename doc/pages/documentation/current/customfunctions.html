@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:customfunctions</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,customfunctions"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="customfunctions.html"/>
@@ -86,30 +86,21 @@ Create your Perl module with custom functions. You can name your module as you w
 <pre class="code file perl"><a href="http://perldoc.perl.org/functions/package.html"><span class="kw3">package</span></a> SSOExtensions<span class="sy0">;</span>
 &nbsp;
 <span class="kw2">sub</span> function1 <span class="br0">&#123;</span>
-  <span class="kw1">my</span> <span class="re0">$url</span> <span class="sy0">=</span> <a href="http://perldoc.perl.org/functions/shift.html"><span class="kw3">shift</span></a><span class="sy0">;</span>
-  <span class="kw1">my</span> <span class="re0">$param</span> <span class="sy0">=</span> <a href="http://perldoc.perl.org/functions/shift.html"><span class="kw3">shift</span></a><span class="sy0">;</span>
+  <span class="kw1">my</span> <span class="br0">&#40;</span><span class="re0">@args</span><span class="br0">&#41;</span> <span class="sy0">=</span> <span class="co5">@_</span><span class="sy0">;</span>
 &nbsp;
   <span class="co1"># Your nice code here</span>
-&nbsp;
-  <a href="http://perldoc.perl.org/functions/return.html"><span class="kw3">return</span></a> <span class="re0">$param</span><span class="sy0">;</span>
+  <a href="http://perldoc.perl.org/functions/return.html"><span class="kw3">return</span></a> <span class="re0">$result</span><span class="sy0">;</span>
 <span class="br0">&#125;</span>
 &nbsp;
 <span class="nu0">1</span><span class="sy0">;</span></pre>
-<div class="notetip">First parameter passed to the custom function is the requested <abbr title="Uniform Resource Locator">URL</abbr>, that is<ul>
-<li class="level1"><div class="li"> <strong>portal full <abbr title="Uniform Resource Locator">URL</abbr></strong> if custom function is run by portal (e.g. <a href="https://auth.example.com/" class="urlextern" title="https://auth.example.com/"  rel="nofollow">https://auth.example.com/</a>)</div>
-</li>
-<li class="level1"><div class="li"> <strong>absolute <abbr title="Uniform Resource Locator">URL</abbr></strong> if it is run by handler (e.g. /admin/index.php?param=foo).</div>
-</li>
-</ul>
 
 </div>
-</div>
-<!-- EDIT2 SECTION "Write custom functions library" [220-844] -->
+<!-- EDIT2 SECTION "Write custom functions library" [220-554] -->
 <h2 class="sectionedit3" id="import_custom_functions_in_lemonldapng">Import custom functions in LemonLDAP::NG</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Import custom functions in LemonLDAP::NG" [845-898] -->
+<!-- EDIT3 SECTION "Import custom functions in LemonLDAP::NG" [555-608] -->
 <h3 class="sectionedit4" id="declare_module_in_handler_server">Declare module in handler server</h3>
 <div class="level3">
 
@@ -151,7 +142,7 @@ GROUP=www-data
 CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</pre>
 
 </div>
-<!-- EDIT4 SECTION "Declare module in handler server" [899-1833] -->
+<!-- EDIT4 SECTION "Declare module in handler server" [609-1543] -->
 <h3 class="sectionedit5" id="declare_custom_functions">Declare custom functions</h3>
 <div class="level3">
 
@@ -162,16 +153,16 @@ Go in Manager, <code>General Parameters</code> » <code>Advanced Parameters</cod
 <div class="noteimportant">If your function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail.
 </div>
 </div>
-<!-- EDIT5 SECTION "Declare custom functions" [1834-2130] -->
+<!-- EDIT5 SECTION "Declare custom functions" [1544-1840] -->
 <h2 class="sectionedit6" id="use_it">Use it</h2>
 <div class="level2">
 
 <p>
 You can now use your function in a macro, an header or an access rule, for example:
 </p>
-<pre class="code">Custom-Header =&gt; function1($uid)</pre>
+<pre class="code">Custom-Header =&gt; function1( $uid, $ENV{REMOTE_ADDR} )</pre>
 
 </div>
-<!-- EDIT6 SECTION "Use it" [2131-] --></div>
+<!-- EDIT6 SECTION "Use it" [1841-] --></div>
 </body>
 </html>

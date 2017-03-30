@@ -215,17 +215,17 @@ Données concernant le processus d'authentification.
 		<td class="col0 leftalign">  _utime    </td><td class="col1 leftalign"> Date et heure (timestamp) de la création de la session  </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0 leftalign">  startTime    </td><td class="col1 leftalign"> Date et heure (timestamp) de la création de la session  </td>
+		<td class="col0 leftalign">  _startTime    </td><td class="col1 leftalign"> Date et heure (timestamp) de la création de la session  </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 leftalign">  updateTime    </td><td class="col1 leftalign"> Date de la dernière modification de la session  </td>
+		<td class="col0 leftalign">  _updateTime    </td><td class="col1 leftalign"> Date de la dernière modification de la session  </td>
 	</tr>
 	<tr class="row4 roweven">
 		<td class="col0">  _lastAuthnUTime  </td><td class="col1 leftalign"> Date et heure (timestamp) de la dernière authentification  </td>
 	</tr>
-</table></div><!-- EDIT10 TABLE [2160-2387] -->
+</table></div><!-- EDIT10 TABLE [2160-2389] -->
 
-</div><!-- EDIT9 SECTION "Dates" [2141-2388] -->
+</div><!-- EDIT9 SECTION "Dates" [2141-2390] -->
 
 <h2 class="sectionedit11" id="saml">SAML</h2>
 <div class="level2">
@@ -254,9 +254,9 @@ Donnée relative au protocole <abbr title="Security Assertion Markup Language">S
 	<tr class="row5 rowodd">
 		<td class="col0 leftalign">  _lassoIdentityDump    </td><td class="col1 leftalign"> Dump de l'identité Lasso  </td>
 	</tr>
-</table></div><!-- EDIT12 TABLE [2439-2704] -->
+</table></div><!-- EDIT12 TABLE [2441-2706] -->
 
-</div><!-- EDIT11 SECTION "SAML" [2389-2705] -->
+</div><!-- EDIT11 SECTION "SAML" [2391-2707] -->
 
 <h2 class="sectionedit13" id="notifications">Notifications</h2>
 <div class="level2">
@@ -269,9 +269,9 @@ Donnée relative au protocole <abbr title="Security Assertion Markup Language">S
 	<tr class="row1 rowodd">
 		<td class="col0 leftalign">  _notification_<em>id</em>  </td><td class="col1 leftalign"> Date de validation de la notification <em>id</em>  </td>
 	</tr>
-</table></div><!-- EDIT14 TABLE [2733-2833] -->
+</table></div><!-- EDIT14 TABLE [2735-2835] -->
 
-</div><!-- EDIT13 SECTION "Notifications" [2706-2834] -->
+</div><!-- EDIT13 SECTION "Notifications" [2708-2836] -->
 
 <h2 class="sectionedit15" id="login_history">Historique de connexion</h2>
 <div class="level2">
@@ -282,11 +282,11 @@ Donnée relative au protocole <abbr title="Security Assertion Markup Language">S
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 leftalign">  loginHistory    </td><td class="col1 leftalign"> Table des connexion réussies ou échouées  </td>
+		<td class="col0 leftalign">  _loginHistory    </td><td class="col1 leftalign"> Table des connexion réussies ou échouées  </td>
 	</tr>
-</table></div><!-- EDIT16 TABLE [2862-2943] -->
+</table></div><!-- EDIT16 TABLE [2864-2946] -->
 
-</div><!-- EDIT15 SECTION "Login history" [2835-2944] -->
+</div><!-- EDIT15 SECTION "Login history" [2837-2947] -->
 
 <h2 class="sectionedit17" id="ldap">LDAP</h2>
 <div class="level2">
@@ -303,11 +303,11 @@ Only with UserDB LDAP.
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 leftalign">  dn    </td><td class="col1"> Nom distinct (distinguished name) </td>
+		<td class="col0 leftalign">  _dn    </td><td class="col1"> Nom distinct (distinguished name) </td>
 	</tr>
-</table></div><!-- EDIT18 TABLE [2987-3041] -->
+</table></div><!-- EDIT18 TABLE [2990-3045] -->
 
-</div><!-- EDIT17 SECTION "LDAP" [2945-3042] -->
+</div><!-- EDIT17 SECTION "LDAP" [2948-3046] -->
 
 <h2 class="sectionedit19" id="openid">OpenID</h2>
 <div class="level2">
@@ -320,9 +320,9 @@ Only with UserDB LDAP.
 	<tr class="row1 rowodd">
 		<td class="col0 leftalign">  _openid_<em>id</em>  </td><td class="col1 leftalign"> Consentement de partage de l'attribut <em>id</em> via OpenID  </td>
 	</tr>
-</table></div><!-- EDIT20 TABLE [3063-3159] -->
+</table></div><!-- EDIT20 TABLE [3067-3163] -->
 
-</div><!-- EDIT19 SECTION "OpenID" [3043-3160] -->
+</div><!-- EDIT19 SECTION "OpenID" [3047-3164] -->
 
 <h2 class="sectionedit21" id="openid_connect">OpenID Connect</h2>
 <div class="level2">
@@ -333,13 +333,13 @@ Only with UserDB LDAP.
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 leftalign">  OpenIDConnect_IDToken    </td><td class="col1 leftalign">  ID Token    </td>
+		<td class="col0 leftalign">  _oidc_id_token    </td><td class="col1 leftalign">  ID Token    </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0 leftalign">  OpenIDConnect_OP    </td><td class="col1 leftalign">  Configuration key of OP used for authentication    </td>
+		<td class="col0 leftalign">  _oidc_OP    </td><td class="col1 leftalign">  Configuration key of OP used for authentication    </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 leftalign">  OpenIDConnect_access_token    </td><td class="col1 leftalign">  OAuth2 Access Token used to get UserInfo data    </td>
+		<td class="col0 leftalign">  _oidc_access_token    </td><td class="col1 leftalign">  OAuth2 Access Token used to get UserInfo data    </td>
 	</tr>
 	<tr class="row4 roweven">
 		<td class="col0">  _oidc_consent_scope_<em>rp</em> </td><td class="col1 leftalign">  Scope for which consent was given for RP <em>rp</em>  </td>
@@ -347,9 +347,9 @@ Only with UserDB LDAP.
 	<tr class="row5 rowodd">
 		<td class="col0">  _oidc_consent_time_<em>rp</em> </td><td class="col1 leftalign">  Time when consent was given for RP <em>rp</em>  </td>
 	</tr>
-</table></div><!-- EDIT22 TABLE [3189-3564] -->
+</table></div><!-- EDIT22 TABLE [3193-3545] -->
 
-</div><!-- EDIT21 SECTION "OpenID Connect" [3161-3565] -->
+</div><!-- EDIT21 SECTION "OpenID Connect" [3165-3546] -->
 
 <h2 class="sectionedit23" id="other">Autres</h2>
 <div class="level2">
@@ -360,14 +360,14 @@ Only with UserDB LDAP.
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 leftalign">  appsListOrder    </td><td class="col1 leftalign"> Ordre des catégories dans le menu  </td>
+		<td class="col0 leftalign">  _appsListOrder    </td><td class="col1 leftalign"> Ordre des catégories dans le menu  </td>
 	</tr>
 	<tr class="row2 roweven">
 		<td class="col0 leftalign">  _session_kind    </td><td class="col1 leftalign">  Type of session (<abbr title="Authentification unique (Single Sign On)">SSO</abbr>, Persistent, …)    </td>
 	</tr>
-</table></div><!-- EDIT24 TABLE [3585-3725] -->
+</table></div><!-- EDIT24 TABLE [3566-3707] -->
 
-</div><!-- EDIT23 SECTION "Other" [3566-] -->
+</div><!-- EDIT23 SECTION "Other" [3547-] -->
 </div>
 </body>
 </html>

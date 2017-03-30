@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,writingrulesand_headers"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="writingrulesand_headers.html"/>
@@ -50,7 +50,12 @@
 <div>
 
 <ul class="toc">
-<li class="level1"><div class="li"><a href="#rules">Règles</a></div></li>
+<li class="level1"><div class="li"><a href="#available_env_variables">Available $ENV{} variables</a></div></li>
+<li class="level1"><div class="li"><a href="#rules">Règles</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#rules_on_authentication_level">Rules on authentication level</a></div></li>
+</ul>
+</li>
 <li class="level1"><div class="li"><a href="#headers">En-têtes</a></div></li>
 <li class="level1"><div class="li"><a href="#available_functions">Available functions</a></div></li>
 </ul>
@@ -64,17 +69,43 @@
 <p>
 Lemonldap::NG gère les applications par leurs noms d'hôtes(hôtes virtuels d'Apache). Rules are used to protect applications, headers are HTTP headers added to the request to give datas to the application (for logs, profiles,…).
 </p>
-<div class="noteimportant">Noter que les variables designées par $xx correspondent au nom de <a href="exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">variables exportées</a> ou de <a href="performances.html#macros_and_groups" class="wikilink1" title="documentation:2.0:performances">noms de macro</a>.
+<div class="noteimportant">Note that variables designed by $xx correspond to the name of the <a href="exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables</a> or <a href="performances.html#macros_and_groups" class="wikilink1" title="documentation:2.0:performances">macro names</a> except for <code>$ENV{&lt;cgi-header&gt;}</code> which correspond to CGI header <em>(<code>$ENV{REMOTE_ADDR}</code> for example)</em>.
+
 </div>
+</div><!-- EDIT1 SECTION "Writing rules and headers" [1-546] -->
+
+<h2 class="sectionedit2" id="available_env_variables">Available $ENV{} variables</h2>
+<div class="level2">
+
+<p>
+
+The %ENV table provides:
+
+</p>
+<ul>
+<li class="level1"><div class="li">  all headers in CGI format <em>(<code>User-Agent</code> becomes <code>HTTP_USER_AGENT</code>)</em></div>
+</li>
+<li class="level1"><div class="li">  some CGI variables depending on the context:</div>
+<ul>
+<li class="level2"><div class="li">  For portal: all CGI standard variables <em>(you can add custom headers using <code>fastcgi_param</code> with Nginx)</em>,</div>
+</li>
+<li class="level2"><div class="li">  For Apache handler: REMOTE_ADDR, QUERY_STRING, REQUEST_<abbr title="Uniform Resource Identifier">URI</abbr>, SERVER_PORT, REQUEST_METHOD,</div>
+</li>
+<li class="level2"><div class="li">  For Nginx handler: all variables given by <code>fastcgi_param</code> commands.</div>
+</li>
+</ul>
+</li>
+</ul>
+
 <p>
 
 See also <a href="extendedfunctions.html" class="wikilink1" title="documentation:2.0:extendedfunctions">extended functions</a>.
 
 </p>
 
-</div><!-- EDIT1 SECTION "Writing rules and headers" [1-492] -->
+</div><!-- EDIT2 SECTION "Available $ENV{} variables" [547-1077] -->
 
-<h2 class="sectionedit2" id="rules">Règles</h2>
+<h2 class="sectionedit3" id="rules">Règles</h2>
 <div class="level2">
 
 <p>
@@ -90,7 +121,7 @@ A rule associates a <a href="http://en.wikipedia.org/wiki/Perl_Compatible_Regula
 <p>
 Exemples :
 </p>
-<div class="table sectionedit3"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit4"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  But  </th><th class="col1 centeralign">  Expression régulière  </th><th class="col2 centeralign">  Règle  </th>
@@ -114,7 +145,7 @@ Exemples :
 	<tr class="row6 roweven">
 		<td class="col0 leftalign">  Restrict access to the whole site to users that have the LDAP description field set to “LDAP administrator” (must be set in exported variables)    </td><td class="col1 centeralign">    default    </td><td class="col2 centeralign">    $description&nbsp;eq&nbsp;"LDAP&nbsp;administrator"    </td>
 	</tr>
-</table></div><!-- EDIT3 TABLE [715-1558] -->
+</table></div><!-- EDIT4 TABLE [1300-2143] -->
 
 <p>
 La règle d'accès “<strong>default</strong>” est utilisée si aucune règle ne correspond à l'<abbr title="Uniform Resource Locator">URL</abbr> courante.
@@ -130,7 +161,7 @@ La règle d'accès “<strong>default</strong>” est utilisée si aucune règle
 <p>
 Les règles peuvent également être utilisées pour intercepter les <abbr title="Uniform Resource Locator">URL</abbr> de déconnexion :
 </p>
-<div class="table sectionedit4"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit5"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  But  </th><th class="col1 centeralign">  Expression régulière  </th><th class="col2 centeralign">  Règle  </th>
@@ -145,16 +176,55 @@ Les règles peuvent également être utilisées pour intercepter les <abbr title
 	<tr class="row3 rowodd">
 		<td class="col0">  Logout user from current application and from Lemonldap::NG and redirect it to http://intranet/ <strong><em>(Apache only)</em></strong> </td><td class="col1 centeralign">    ^/index.php\?logout    </td><td class="col2 centeralign">    logout_app_sso&nbsp;http://intranet/    </td>
 	</tr>
-</table></div><!-- EDIT4 TABLE [2052-2700] -->
+</table></div><!-- EDIT5 TABLE [2637-3285] -->
 
 <p>
 Par défaut, l'utilisateur est redirigé vers le portail si aucune <abbr title="Uniform Resource Locator">URL</abbr> n'est définie ou vers l'<abbr title="Uniform Resource Locator">URL</abbr> indiquée sinon.
 </p>
 <div class="noteimportant">Seule l'application est concernée par les cibles logout_app*. Faire attention avec certaines applications qui ne vérifient pas les en-têtes Lemonldap::NG après avoir créé leurs propres cookies. Dans ce cas, il faut rediriger les utilisateurs vers une page <abbr title="HyperText Markup Language">HTML</abbr> qui explique qu'il est préférable de clore son navigateur après déconnexion.
 </div>
-</div><!-- EDIT2 SECTION "Rules" [493-3111] -->
+</div><!-- EDIT3 SECTION "Rules" [1078-3696] -->
 
-<h2 class="sectionedit5" id="headers">En-têtes</h2>
+<h3 class="sectionedit6" id="rules_on_authentication_level">Rules on authentication level</h3>
+<div class="level3">
+
+<p>
+
+LLNG set an “authentication level” during authentication process. This level is the value of the authentication backend used for this user. Default values are:
+
+</p>
+<ul>
+<li class="level1"><div class="li">  0 for <a href="authnull.html" class="wikilink1" title="documentation:2.0:authnull">Null</a></div>
+</li>
+<li class="level1"><div class="li">  1 for <a href="authcas.html" class="wikilink1" title="documentation:2.0:authcas">CAS</a>, <a href="authopenid.html" class="wikilink1" title="documentation:2.0:authopenid">old OpenID-2</a>, <a href="authfacebook.html" class="wikilink1" title="documentation:2.0:authfacebook">Facebook</a>,…</div>
+</li>
+<li class="level1"><div class="li">  2 for web-form based authentication <em>(<a href="authldap.html" class="wikilink1" title="documentation:2.0:authldap">LDAP</a>, <a href="authdbi.html" class="wikilink1" title="documentation:2.0:authdbi">DBI</a>,…)</em></div>
+</li>
+<li class="level1"><div class="li">  3 for <a href="authyubikey.html" class="wikilink1" title="documentation:2.0:authyubikey">Yubikey</a></div>
+</li>
+<li class="level1"><div class="li">  4 for <a href="authapache.html" class="wikilink1" title="documentation:2.0:authapache">Kerberos</a></div>
+</li>
+<li class="level1"><div class="li">  5 for <a href="authssl.html" class="wikilink1" title="documentation:2.0:authssl">SSL</a></div>
+</li>
+</ul>
+
+<p>
+
+There are two way to impose users to have a high authentication level:
+
+</p>
+<ul>
+<li class="level1"><div class="li">  writing a rule based en authentication level: <code>$authenticationLevel &gt; 3</code></div>
+</li>
+<li class="level1"><div class="li">  since 2.0, set a minimum level in virtual host options</div>
+</li>
+</ul>
+<div class="notetip">Instead of returning a 403 code, “minimum level” returns user to a form that explain that a higher level is required and propose to user to reauthenticate itself.
+
+</div>
+</div><!-- EDIT6 SECTION "Rules on authentication level" [3697-4582] -->
+
+<h2 class="sectionedit7" id="headers">En-têtes</h2>
 <div class="level2">
 
 <p>
@@ -164,7 +234,7 @@ Les en-têtes sont des associations entre un nom d'en-tête et une expression pe
 <p>
 Exemples :
 </p>
-<div class="table sectionedit6"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit8"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  But  </th><th class="col1 centeralign">  Nom d'en-tête  </th><th class="col2 centeralign">  Valeur d'en-tête  </th>
@@ -182,7 +252,7 @@ Exemples :
 	<tr class="row4 roweven">
 		<td class="col0 leftalign"> Done une valeur non-ascii  </td><td class="col1 centeralign">    Display-Name    </td><td class="col2 centeralign">    encode_base64($givenName."&nbsp;".$surName)    </td>
 	</tr>
-</table></div><!-- EDIT6 TABLE [3295-3628] -->
+</table></div><!-- EDIT8 TABLE [4766-5099] -->
 
 <p>
 Comme indiqué au <a href="performances.html#handler_performance" class="wikilink1" title="documentation:2.0:performances">chapître performances</a>, on peut utiliser des macros, macros locales,…
@@ -198,9 +268,9 @@ Comme indiqué au <a href="performances.html#handler_performance" class="wikilin
 <pre class="code">Session-ID =&gt; $_session_id</pre>
 
 </div>
-</div><!-- EDIT5 SECTION "Headers" [3112-4161] -->
+</div><!-- EDIT7 SECTION "Headers" [4583-5632] -->
 
-<h2 class="sectionedit7" id="available_functions">Available functions</h2>
+<h2 class="sectionedit9" id="available_functions">Available functions</h2>
 <div class="level2">
 
 <p>
@@ -215,7 +285,7 @@ In addition to macros and name, you can use some functions in rules and headers:
 </li>
 </ul>
 
-</div><!-- EDIT7 SECTION "Available functions" [4162-] -->
+</div><!-- EDIT9 SECTION "Available functions" [5633-] -->
 </div>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authcombination</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authcombination"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authcombination.html"/>
@@ -60,6 +60,8 @@
 <li class="level3"><div class="li"><a href="#let_s_be_crazy">Let&#039;s be crazy</a></div></li>
 </ul>
 </li>
+<li class="level2"><div class="li"><a href="#combine_second_factor">Combine second factor</a></div></li>
+<li class="level2"><div class="li"><a href="#display_multiple_forms">Display multiple forms</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#known_problems">Known problems</a></div>
@@ -268,18 +270,54 @@ The following rule is valid:
 
 </div>
 <!-- EDIT7 SECTION "Rule chain" [1304-3610] -->
-<h2 class="sectionedit11" id="known_problems">Known problems</h2>
+<h3 class="sectionedit11" id="combine_second_factor">Combine second factor</h3>
+<div class="level3">
+
+<p>
+Imagine you want to authenticate users either by SSL or LDAP+U2F, you can&#039;t directly write this rule: this is done in 2 steps:
+</p>
+<ul>
+<li class="level1"><div class="li"> use this combination rule: <code>[SSL,LDAP] or [LDAP]</code></div>
+</li>
+<li class="level1"><div class="li"> enable U2F with this rule: <code>$_auth eq “LDAP”</code> or <code>$_authenticationLevel &lt; 4</code> <em>(and adapt U2F authentication level)</em></div>
+</li>
+</ul>
+
+<p>
+Now if you want to authenticate users either by LDAP or LDAP+U2F <em>(to have 2 different authentication level)</em>, 2 possibilities:
+</p>
+<ul>
+<li class="level1"><div class="li"> configure 2 portals and overwrite U2F activation in the second</div>
+</li>
+<li class="level1"><div class="li"> Modify login template to propose the choice <em>(add a “submit” button that points to the second portal)</em></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT11 SECTION "Combine second factor" [3611-4260] -->
+<h3 class="sectionedit12" id="display_multiple_forms">Display multiple forms</h3>
+<div class="level3">
+
+<p>
+Combination module returns the form corresponding to the first authentication scheme available for the current request. You can force it to display the forms chosen using <code>combinationForms</code> in lemonldap-ng.ini. Example:
+</p>
+<pre class="code :ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">combinationForms</span> <span class="sy0">=</span><span class="re2"> standardform, openidform</span></pre>
+
+</div>
+<!-- EDIT12 SECTION "Display multiple forms" [4261-4589] -->
+<h2 class="sectionedit13" id="known_problems">Known problems</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT11 SECTION "Known problems" [3611-3638] -->
-<h3 class="sectionedit12" id="federation_protocols">Federation protocols</h3>
+<!-- EDIT13 SECTION "Known problems" [4590-4617] -->
+<h3 class="sectionedit14" id="federation_protocols">Federation protocols</h3>
 <div class="level3">
 
 <p>
 <a href="authsaml.html" class="wikilink1" title="documentation:2.0:authsaml">SAML</a>, <a href="authopenidconnect.html" class="wikilink1" title="documentation:2.0:authopenidconnect">OpenID-Connect</a>, <a href="authcas.html" class="wikilink1" title="documentation:2.0:authcas">CAS</a> or <a href="authopenid.html" class="wikilink1" title="documentation:2.0:authopenid">old OpenID</a> can&#039;t be chained with a “and” for authentication part. So “[<abbr title="Security Assertion Markup Language">SAML</abbr>] and [LDAP]” isn&#039;t valid. This is because their authentication kinematic don&#039;t use the same steps.
 </p>
-<div class="table sectionedit13"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit15"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Bad expression  </th><th class="col1 centeralign">  Solution  </th><th class="col2 centeralign">  Explanation  </th>
@@ -292,10 +330,10 @@ The following rule is valid:
 		<td class="col0"> <em><code>[<abbr title="Security Assertion Markup Language">SAML</abbr>] and [LDAP] or [LDAP]</code></em> </td><td class="col1"> <code>[<abbr title="Security Assertion Markup Language">SAML</abbr>, <abbr title="Security Assertion Markup Language">SAML</abbr> and LDAP] or [LDAP]</code> </td><td class="col2"> Authentication is done by <abbr title="Security Assertion Markup Language">SAML</abbr> or LDAP but user must match an LDAP entry </td>
 	</tr>
 </table></div>
-<!-- EDIT13 TABLE [3938-4270] -->
+<!-- EDIT15 TABLE [4917-5249] -->
 </div>
-<!-- EDIT12 SECTION "Federation protocols" [3639-4271] -->
-<h3 class="sectionedit14" id="authapache_authentication">AuthApache authentication</h3>
+<!-- EDIT14 SECTION "Federation protocols" [4618-5250] -->
+<h3 class="sectionedit16" id="authapache_authentication">AuthApache authentication</h3>
 <div class="level3">
 
 <p>
@@ -311,8 +349,8 @@ To bypass this, follow the documentation of <a href="authapache.html" class="wik
 </p>
 
 </div>
-<!-- EDIT14 SECTION "AuthApache authentication" [4272-4688] -->
-<h3 class="sectionedit15" id="ssl_authentication">SSL authentication</h3>
+<!-- EDIT16 SECTION "AuthApache authentication" [5251-5667] -->
+<h3 class="sectionedit17" id="ssl_authentication">SSL authentication</h3>
 <div class="level3">
 
 <p>
@@ -320,6 +358,6 @@ To chain SSL, you have to set “SSLRequire optional” in Apache configuration,
 </p>
 
 </div>
-<!-- EDIT15 SECTION "SSL authentication" [4689-] --></div>
+<!-- EDIT17 SECTION "SSL authentication" [5668-] --></div>
 </body>
 </html>

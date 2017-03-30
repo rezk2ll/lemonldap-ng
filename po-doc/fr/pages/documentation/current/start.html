@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,start"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="start.html"/>
@@ -238,7 +238,7 @@
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0"> <a href="authad.html" class="wikilink1" title="documentation:2.0:authad">Active Directory</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authad.html" class="wikilink1" title="documentation:2.0:authad">Active Directory</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
 	</tr>
 	<tr class="row2 roweven">
 		<td class="col0"> <a href="authapache.html" class="wikilink1" title="documentation:2.0:authapache">Apache (Kerberos, NTLM, OTP, ...)</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
@@ -324,13 +324,16 @@
 	<tr class="row29 rowodd">
 		<td class="col0"> <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2"></td><td class="col3"></td>
 	</tr>
-</table></div><!-- EDIT10 TABLE [2160-3733] -->
+	<tr class="row30 roweven">
+		<td class="col0"> <a href="external2f.html" class="wikilink1" title="documentation:2.0:external2f">External Second Factor</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2"></td><td class="col3"></td>
+	</tr>
+</table></div><!-- EDIT10 TABLE [2160-3786] -->
 
 <p>
 </p></div></div>
 </p>
 
-</div><!-- EDIT9 SECTION "Authentication, users and password databases" [1987-3761] -->
+</div><!-- EDIT9 SECTION "Authentication, users and password databases" [1987-3814] -->
 
 <h3 class="sectionedit11" id="configuration_database">Base de données de la configuration</h3>
 <div class="level3">
@@ -365,14 +368,14 @@
 	<tr class="row5 rowodd">
 		<td class="col0 centeralign">  <a href="soapconfbackend.html" class="wikilink1" title="documentation:2.0:soapconfbackend">SOAP</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign"> Backend proxy à utiliser avec un autre backend de configuration. <br/><strong>Peut être utilisé pour sécuriser un autre backend</strong> pour des serveurs distants.  </td>
 	</tr>
-</table></div><!-- EDIT12 TABLE [4036-4625] -->
+</table></div><!-- EDIT12 TABLE [4089-4678] -->
 <div class="notetip">On ne peut démarrer avec une configuration vide, il faut donc lire <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">comment changer de backend de configuration</a> pour convertir une configuration existante en une autre.
 </div>
 <p>
 </p></div></div>
 </p>
 
-</div><!-- EDIT11 SECTION "Configuration database" [3762-4841] -->
+</div><!-- EDIT11 SECTION "Configuration database" [3815-4894] -->
 
 <h3 class="sectionedit13" id="sessions_database">Base de données des sessions</h3>
 <div class="level3">
@@ -416,13 +419,13 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 	<tr class="row8 roweven">
 		<td class="col0 centeralign">  <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5 leftalign"> Backend proxy à utiliser avec un autre backend de sessions. <br/> <strong>Peut être utilisé pour sécuriser un autre backend</strong> pour des serveurs distants.  </td>
 	</tr>
-</table></div><!-- EDIT14 TABLE [5227-6885] -->
+</table></div><!-- EDIT14 TABLE [5280-6938] -->
 
 <p>
 </p></div></div>
 </p>
 
-</div><!-- EDIT13 SECTION "Sessions database" [4842-6913] -->
+</div><!-- EDIT13 SECTION "Sessions database" [4895-6966] -->
 
 <h3 class="sectionedit15" id="identity_provider">Fournisseur d'identité</h3>
 <div class="level3">
@@ -456,7 +459,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT15 SECTION "Identity provider" [6914-7458] -->
+</div><!-- EDIT15 SECTION "Identity provider" [6967-7511] -->
 
 <h2 class="sectionedit16" id="applications_protection">Protection des applications</h2>
 <div class="level2">
@@ -485,7 +488,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT16 SECTION "Applications protection" [7459-7949] -->
+</div><!-- EDIT16 SECTION "Applications protection" [7512-8002] -->
 
 <h3 class="sectionedit17" id="well_known_compatible_applications">Well known compatible applications</h3>
 <div class="level3">
@@ -566,7 +569,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div>
 </p>
 
-</div><!-- EDIT17 SECTION "Well known compatible applications" [7950-9723] -->
+</div><!-- EDIT17 SECTION "Well known compatible applications" [8003-9776] -->
 
 <h2 class="sectionedit18" id="advanced_features">Fonctionnalités avancées</h2>
 <div class="level2">
@@ -617,7 +620,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT18 SECTION "Advanced features" [9724-10661] -->
+</div><!-- EDIT18 SECTION "Advanced features" [9777-10714] -->
 
 <h2 class="sectionedit19" id="mini_howtos">Mini howtos</h2>
 <div class="level2">
@@ -648,7 +651,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT19 SECTION "Mini howtos" [10662-11331] -->
+</div><!-- EDIT19 SECTION "Mini howtos" [10715-11384] -->
 
 <h2 class="sectionedit20" id="exploitation">Exploitation</h2>
 <div class="level2">
@@ -681,7 +684,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT20 SECTION "Exploitation" [11332-11752] -->
+</div><!-- EDIT20 SECTION "Exploitation" [11385-11805] -->
 
 <h2 class="sectionedit21" id="developer_corner">Developer corner</h2>
 <div class="level2">
@@ -740,7 +743,7 @@ To translate this doc (Manager help):
 </li>
 </ul>
 
-</div><!-- EDIT21 SECTION "Developer corner" [11753-] -->
+</div><!-- EDIT21 SECTION "Developer corner" [11806-] -->
 </div>
 </body>
 </html>

@@ -217,6 +217,8 @@ Then you can take any virtual host and modify it:
     auth_request /lmauth;
     auth_request_set $lmremote_user $upstream_http_lm_remote_user;
     auth_request_set $lmlocation $upstream_http_location;
+    auth_request_set $cookie_value $upstream_http_set_cookie;
+    add_header Set-Cookie $cookie_value;
     error_page 401 $lmlocation;
     try_files $uri $uri/ =404;
 &nbsp;
@@ -251,7 +253,7 @@ Then you can take any virtual host and modify it:
   }</pre>
 
 </div>
-<!-- EDIT6 SECTION "Nginx configuration" [3049-4833] -->
+<!-- EDIT6 SECTION "Nginx configuration" [3049-4936] -->
 <h3 class="sectionedit7" id="hosted_application1">Hosted application</h3>
 <div class="level3">
 
@@ -310,7 +312,7 @@ server {
 }</pre>
 
 </div>
-<!-- EDIT7 SECTION "Hosted application" [4834-6463] -->
+<!-- EDIT7 SECTION "Hosted application" [4937-6566] -->
 <h3 class="sectionedit8" id="reverse_proxy1">Reverse proxy</h3>
 <div class="level3">
 
@@ -361,7 +363,7 @@ server {
 }</pre>
 
 </div>
-<!-- EDIT8 SECTION "Reverse proxy" [6464-7758] -->
+<!-- EDIT8 SECTION "Reverse proxy" [6567-7861] -->
 <h2 class="sectionedit9" id="lemonldapng_configuration">LemonLDAP::NG configuration</h2>
 <div class="level2">
 
@@ -388,7 +390,7 @@ A virtual host contains:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7759-8246] -->
+<!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7862-8349] -->
 <h3 class="sectionedit10" id="access_rules_and_http_headers">Access rules and HTTP headers</h3>
 <div class="level3">
 
@@ -397,7 +399,7 @@ See <strong><a href="writingrulesand_headers.html" class="wikilink1" title="docu
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Access rules and HTTP headers" [8247-8439] -->
+<!-- EDIT10 SECTION "Access rules and HTTP headers" [8350-8542] -->
 <h3 class="sectionedit11" id="post_data">POST data</h3>
 <div class="level3">
 
@@ -406,7 +408,7 @@ See <strong><a href="formreplay.html" class="wikilink1" title="documentation:2.0
 </p>
 
 </div>
-<!-- EDIT11 SECTION "POST data" [8440-8574] -->
+<!-- EDIT11 SECTION "POST data" [8543-8677] -->
 <h3 class="sectionedit12" id="options">Options</h3>
 <div class="level3">
 
@@ -427,6 +429,6 @@ These options are used to build redirection <abbr title="Uniform Resource Locato
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Options" [8575-] --></div>
+<!-- EDIT12 SECTION "Options" [8678-] --></div>
 </body>
 </html>

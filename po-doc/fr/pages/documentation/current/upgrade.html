@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,upgrade"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="upgrade.html"/>
@@ -135,11 +135,15 @@ Now, <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a>,
 <h2 class="sectionedit6" id="rules_and_headers">Rules and headers</h2>
 <div class="level2">
 <ul>
-<li class="level1"><div class="li">  pseudo variable <code>$ip</code> is replaced by <code><a href="extendedfunctions.html#request_information" class="wikilink1" title="documentation:2.0:extendedfunctions">remote_ip()</a></code> function in <a href="writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">rules and headers</a>. Note that session variable <code>$ipAddr</code> <em>(remote address seen by portal)</em> is still available</div>
+<li class="level1"><div class="li">  hostname() and remote_ip() are no more provided to avoid some name conflicts <em>(replaced by $ENV{})</em></div>
+</li>
+<li class="level1"><div class="li"> <code>$ENV{&lt;cgi_variable&gt;}</code> is now available everywhere: see <a href="writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Writing rules and headers</a></div>
+</li>
+<li class="level1"><div class="li">  some variable names have changed. See <a href="variables.html" class="wikilink1" title="documentation:2.0:variables">variables</a> document</div>
 </li>
 </ul>
 
-</div><!-- EDIT6 SECTION "Rules and headers" [2203-2488] -->
+</div><!-- EDIT6 SECTION "Rules and headers" [2203-2521] -->
 
 <h2 class="sectionedit7" id="supported_servers">Supported servers</h2>
 <div class="level2">
@@ -148,7 +152,7 @@ Now, <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a>,
 </li>
 </ul>
 
-</div><!-- EDIT7 SECTION "Supported servers" [2489-2634] -->
+</div><!-- EDIT7 SECTION "Supported servers" [2522-2667] -->
 
 <h2 class="sectionedit8" id="soaprest_services">SOAP/REST services</h2>
 <div class="level2">
@@ -165,12 +169,12 @@ Now, <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a>,
 <div class="noteimportant"><a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic Handler</a> uses now REST services instead of SOAP.
 
 </div>
-</div><!-- EDIT8 SECTION "SOAP/REST services" [2635-3233] -->
+</div><!-- EDIT8 SECTION "SOAP/REST services" [2668-3266] -->
 
 <h2 class="sectionedit9" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
-</div><!-- EDIT9 SECTION "Developer corner" [3234-3263] -->
+</div><!-- EDIT9 SECTION "Developer corner" [3267-3296] -->
 
 <h3 class="sectionedit10" id="apis">APIs</h3>
 <div class="level3">
@@ -181,7 +185,7 @@ Portal has now many REST features and includes a plugin <abbr title="Interface d
 
 </p>
 
-</div><!-- EDIT10 SECTION "APIs" [3264-3421] -->
+</div><!-- EDIT10 SECTION "APIs" [3297-3454] -->
 
 <h3 class="sectionedit11" id="portal_overview">Portal overview</h3>
 <div class="level3">
@@ -207,13 +211,13 @@ The request is a separated object based on Lemonldap::NG::Portal::Main::Request 
 
 </p>
 
-</div><!-- EDIT11 SECTION "Portal overview" [3422-3869] -->
+</div><!-- EDIT11 SECTION "Portal overview" [3455-3902] -->
 
 <h3 class="sectionedit12" id="handler">Agent (Handler)</h3>
 <div class="level3">
 <div class="noteimportant">Handler libraries have been totally rewritten. If you've made custom handlers, they must be rewritten. See <a href="customhandlers.html" class="wikilink1" title="documentation:2.0:customhandlers">customhandlers</a>
 </div>
-</div><!-- EDIT12 SECTION "Handler" [3870-] -->
+</div><!-- EDIT12 SECTION "Handler" [3903-] -->
 </div>
 </body>
 </html>

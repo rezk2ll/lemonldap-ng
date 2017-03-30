@@ -62,6 +62,7 @@
 <li class="level2"><div class="li"><a href="#groupmatch">groupMatch</a></div></li>
 <li class="level2"><div class="li"><a href="#encrypt">encrypt</a></div></li>
 <li class="level2"><div class="li"><a href="#token">token</a></div></li>
+<li class="level2"><div class="li"><a href="#isinnet6">isInNet6</a></div></li>
 </ul></li>
 </ul>
 </div>
@@ -126,13 +127,19 @@ Inside this jail, you can access to:
 </li>
 <li class="level2"><div class="li"> <a href="#groupmatch" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">groupMatch</a></div>
 </li>
+<li class="level2"><div class="li"> <a href="#encrypt" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">encrypt</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#token" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">token</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#isinnet6" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">isInNet6</a></div>
+</li>
 </ul>
 </li>
 </ul>
 <div class="notetip">To know more about the jail, check <a href="http://perldoc.perl.org/Safe.html" class="urlextern" title="http://perldoc.perl.org/Safe.html"  rel="nofollow">Safe module documentation</a>.
 </div>
 </div>
-<!-- EDIT2 SECTION "Presentation" [35-1192] -->
+<!-- EDIT2 SECTION "Presentation" [35-1271] -->
 <h2 class="sectionedit3" id="request_information">Request information</h2>
 <div class="level2">
 
@@ -159,12 +166,12 @@ The following data about the current request are available through functions :
 </ul>
 
 </div>
-<!-- EDIT3 SECTION "Request information" [1193-1598] -->
+<!-- EDIT3 SECTION "Request information" [1272-1677] -->
 <h2 class="sectionedit4" id="extended_functions_list">Extended Functions List</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT4 SECTION "Extended Functions List" [1599-1635] -->
+<!-- EDIT4 SECTION "Extended Functions List" [1678-1714] -->
 <h3 class="sectionedit5" id="date">date</h3>
 <div class="level3">
 
@@ -174,7 +181,7 @@ Returns the date, in format YYYYMMDDHHMMSS, local time by default, GMT by callin
 <pre class="code">date(1)</pre>
 
 </div>
-<!-- EDIT5 SECTION "date" [1636-1755] -->
+<!-- EDIT5 SECTION "date" [1715-1834] -->
 <h3 class="sectionedit6" id="checklogonhours">checkLogonHours</h3>
 <div class="level3">
 
@@ -231,7 +238,7 @@ You can modify the default behavior for people without value in ssoLogonHours. I
 <pre class="code">checkLogonHours($ssoLogonHours, &#039;&#039;, &#039;&#039;, &#039;1&#039;)</pre>
 
 </div>
-<!-- EDIT6 SECTION "checkLogonHours" [1756-3693] -->
+<!-- EDIT6 SECTION "checkLogonHours" [1835-3772] -->
 <h3 class="sectionedit7" id="checkdate">checkDate</h3>
 <div class="level3">
 
@@ -263,7 +270,7 @@ Simple usage example:
 <pre class="code">checkDate($ssoStartDate, $ssoEndDate)</pre>
 
 </div>
-<!-- EDIT7 SECTION "checkDate" [3694-4321] -->
+<!-- EDIT7 SECTION "checkDate" [3773-4400] -->
 <h3 class="sectionedit8" id="basic">basic</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -288,7 +295,7 @@ Simple usage example:
 <pre class="code">basic($uid,$_password)</pre>
 
 </div>
-<!-- EDIT8 SECTION "basic" [4322-4784] -->
+<!-- EDIT8 SECTION "basic" [4401-4863] -->
 <h3 class="sectionedit9" id="unicode2iso">unicode2iso</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -311,7 +318,7 @@ Simple usage example:
 <pre class="code">unicode2iso($name)</pre>
 
 </div>
-<!-- EDIT9 SECTION "unicode2iso" [4785-5089] -->
+<!-- EDIT9 SECTION "unicode2iso" [4864-5168] -->
 <h3 class="sectionedit10" id="iso2unicode">iso2unicode</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -334,7 +341,7 @@ Simple usage example:
 <pre class="code">iso2unicode($name)</pre>
 
 </div>
-<!-- EDIT10 SECTION "iso2unicode" [5090-5394] -->
+<!-- EDIT10 SECTION "iso2unicode" [5169-5473] -->
 <h3 class="sectionedit11" id="groupmatch">groupMatch</h3>
 <div class="level3">
 
@@ -360,7 +367,7 @@ Simple usage example:
 <pre class="code">groupMatch($hGroups, &#039;description&#039;, &#039;Service 1&#039;)</pre>
 
 </div>
-<!-- EDIT11 SECTION "groupMatch" [5395-5753] -->
+<!-- EDIT11 SECTION "groupMatch" [5474-5832] -->
 <h3 class="sectionedit12" id="encrypt">encrypt</h3>
 <div class="level3">
 <div class="notetip">Since version 2.0, this function is now compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>.
@@ -371,7 +378,7 @@ This function uses the secret key of LLNG configuration to crypt a data. This ca
 <pre class="code">encrypt($_whatToTrace)</pre>
 
 </div>
-<!-- EDIT12 SECTION "encrypt" [5754-6059] -->
+<!-- EDIT12 SECTION "encrypt" [5833-6138] -->
 <h3 class="sectionedit13" id="token">token</h3>
 <div class="level3">
 
@@ -381,6 +388,16 @@ This function generates token used to <a href="servertoserver.html" class="wikil
 <pre class="code">token($_session_id,&#039;webapp1.example.com&#039;,&#039;webapp2.example.com&#039;)</pre>
 
 </div>
-<!-- EDIT13 SECTION "token" [6060-] --></div>
+<!-- EDIT13 SECTION "token" [6139-6343] -->
+<h3 class="sectionedit14" id="isinnet6">isInNet6</h3>
+<div class="level3">
+
+<p>
+Function to check if an IPv6 address is in a subnet. Example <em>check if <abbr title="Internet Protocol">IP</abbr> address is local</em>:
+</p>
+<pre class="code perl">isInNet6<span class="br0">&#40;</span><span class="re0">$ipAddr</span><span class="sy0">,</span> <span class="st_h">'fe80::/10'</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT14 SECTION "isInNet6" [6344-] --></div>
 </body>
 </html>

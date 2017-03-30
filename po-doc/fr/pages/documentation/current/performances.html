@@ -216,10 +216,16 @@ Le portail est le composant le plus gros de Lemonldap::NG. Since version 2.0, it
 <li class="level1"><div class="li">  …</div>
 </li>
 </ul>
+
+<p>
+
+By default it uses local storage to store its tokens. If you have more than 1 portal and if your load-balancer doesn't keep state, you have to disable this to use the global session storage <em>(General parameters » portal Parameters » Advanced Parameters » Forms)</em>. Note that this will decrease performances.
+
+</p>
 <div class="notetip">En environnement de production et pour de meilleures performances réseau, utiliser les versions compactées des librairies javascript et css : utiliser <code>make install <strong>PROD=yes</strong></code>. Ceci est fait par défaut avec les paquets RPM/DEB.
 
 </div>
-</div><!-- EDIT7 SECTION "General performances" [3645-4198] -->
+</div><!-- EDIT7 SECTION "General performances" [3645-4511] -->
 
 <h3 class="sectionedit8" id="apachesession_performances">Performances d'Apache::Session</h3>
 <div class="level3">
@@ -267,10 +273,11 @@ Index      -&gt; ipAddr uid</pre>
 <p>
 Notez que Apache::Session::Browseable::MySQL n'utilise pas les verrous MySQL.
 </p>
-<div class="notetip">Un module <a href="https://metacpan.org/module/Apache::Session::Browseable::Redis" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> a été créé, c'est le plus rapide (excepté pour l'explorateur de sessions, battu par Apache::Session::Browseable::<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">DBI</a>/<a href="https://metacpan.org/module/Apache::Session::Browseable::LDAP" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::LDAP"  rel="nofollow">LDAP</a> &gt;= 1.0)
+<div class="notetip">A <a href="https://metacpan.org/module/Apache::Session::Browseable::Redis" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> has been created, it is the faster (except for session explorer, defeated by Apache::Session::Browseable::<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">DBI</a>/<a href="https://metacpan.org/module/Apache::Session::Browseable::LDAP" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::LDAP"  rel="nofollow">LDAP</a> ≥ 1.0)
+
 </div><div class="noteimportant">Certains modules Apache::Session ne sont pas utilisables par Lemonldap::NG tel Apache::Session::Memcached, car ce module n'offre pas de dispositif de parcours des sessions They does not allow one to use sessions explorer neither manage one-off sessions.
 </div>
-</div><!-- EDIT8 SECTION "Apache::Session performances" [4199-6555] -->
+</div><!-- EDIT8 SECTION "Apache::Session performances" [4512-6869] -->
 
 <h3 class="sectionedit9" id="ldap_performances">Performances LDAP</h3>
 <div class="level3">
@@ -307,12 +314,12 @@ Maintenant, ldapgroups contient “admin su”
 </p>
 
 </div>
-</div><!-- EDIT9 SECTION "LDAP performances" [6556-7685] -->
+</div><!-- EDIT9 SECTION "LDAP performances" [6870-7999] -->
 
 <h2 class="sectionedit10" id="manager_performances">Performances du Manager</h2>
 <div class="level2">
 
-</div><!-- EDIT10 SECTION "Manager performances" [7686-7719] -->
+</div><!-- EDIT10 SECTION "Manager performances" [8000-8033] -->
 
 <h3 class="sectionedit11" id="disable_unused_modules">Désactiver les modules inutilisés</h3>
 <div class="level3">
@@ -323,7 +330,7 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <pre class="code ini"><span class="re0"><span class="br0">[</span>manager<span class="br0">]</span></span>
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
-</div><!-- EDIT11 SECTION "Disable unused modules" [7720-7966] -->
+</div><!-- EDIT11 SECTION "Disable unused modules" [8034-8280] -->
 
 <h3 class="sectionedit12" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
@@ -356,7 +363,7 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 
 </p>
 
-</div><!-- EDIT12 SECTION "Use static HTML files" [7967-] -->
+</div><!-- EDIT12 SECTION "Use static HTML files" [8281-] -->
 </div>
 </body>
 </html>

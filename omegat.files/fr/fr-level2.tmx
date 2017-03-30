@@ -3066,14 +3066,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>appsListOrder</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20131025T131733Z" changeid="xavier">
-        <seg>appsListOrder</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Protect only the administration pages</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111203T173253Z" changeid="xavier">
@@ -9904,14 +9896,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Custom-Header =&gt; function1($uid)</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120225T112334Z" changeid="xavier">
-        <seg>Custom-Header =&gt; function1($uid)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Unoptimized for <bpt i='0' x='0'>&lt;a0&gt;</bpt>session explorer<ept i='0'>&lt;/a0&gt;</ept> and <bpt i='1' x='1'>&lt;a1&gt;</bpt>single session<ept i='1'>&lt;/a1&gt;</ept> features.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120505T082204Z" changeid="xavier">
@@ -11180,14 +11164,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>An <bpt i='0' x='0'>&lt;a0&gt;</bpt>SAML server<ept i='0'>&lt;/a0&gt;</ept> with <bpt i='1' x='1'>&lt;a1&gt;</bpt>OpenID authentication<ept i='1'>&lt;/a1&gt;</ept></seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120225T183642Z" changeid="xavier">
-        <seg>Un <bpt i='0' x='0'>&lt;a0&gt;</bpt>serveur SAML<ept i='0'>&lt;/a0&gt;</ept> avec une <bpt i='1' x='1'>&lt;a1&gt;</bpt>authentification OpenID<ept i='1'>&lt;/a1&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>If this regex matches, the line is ignored.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120420T140217Z" changeid="xavier">
@@ -11548,14 +11524,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR">
         <seg>Performances d'Apache::Session</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>startTime</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20131025T084339Z" changeid="xavier">
-        <seg>startTime</seg>
       </tuv>
     </tu>
     <tu>
@@ -12660,14 +12628,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160301T082249Z" changeid="xavier">
         <seg># Appe interne au serveur FastCGI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>dn</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20131025T131521Z" changeid="xavier">
-        <seg>dn</seg>
       </tuv>
     </tu>
     <tu>
@@ -14224,14 +14184,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T052619Z" changeid="guimard">
         <seg>On peut changer les paramètres par défaut en utilisant les paramètres “notificationStorage” et “notificationStorageOptions” avec la même syntaxe que les paramètres de stockage de la configuration.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>portal full <bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept><ept i='0'>&lt;/s0&gt;</ept> if custom function is run by portal (e.g. <bpt i='2' x='2'>&lt;a2&gt;</bpt>https://auth.example.com/<ept i='2'>&lt;/a2&gt;</ept>)</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20121005T040429Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>l'<bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept> complète du portail<ept i='0'>&lt;/s0&gt;</ept> si la fonction personnalisée est appelée par le portail (i.e. <bpt i='2' x='2'>&lt;a2&gt;</bpt>https://auth.example.com/<ept i='2'>&lt;/a2&gt;</ept>)</seg>
       </tuv>
     </tu>
     <tu>
@@ -16566,14 +16518,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>loginHistory</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20131025T131424Z" changeid="xavier">
-        <seg>loginHistory</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Status module can not be loaded without localStorage parameter</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T112845Z" changeid="xavier">
@@ -17084,14 +17028,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
         <seg>Module du cache local</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>A <bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS server<ept i='0'>&lt;/a0&gt;</ept> with <bpt i='1' x='1'>&lt;a1&gt;</bpt>SAML authentication<ept i='1'>&lt;/a1&gt;</ept></seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120225T183551Z" changeid="xavier">
-        <seg>Un <bpt i='0' x='0'>&lt;a0&gt;</bpt> serveur CAS<ept i='0'>&lt;/a0&gt;</ept> avec une <bpt i='1' x='1'>&lt;a1&gt;</bpt>authentification SAML<ept i='1'>&lt;/a1&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -18912,14 +18848,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>A <bpt i='0' x='0'>&lt;a0&gt;</bpt>Apache::Session::Browseable::Redis<ept i='0'>&lt;/a0&gt;</ept> has been created, it is the faster (except for session explorer, defeated by Apache::Session::Browseable::<bpt i='1' x='1'>&lt;a1&gt;</bpt>DBI<ept i='1'>&lt;/a1&gt;</ept>/<bpt i='2' x='2'>&lt;a2&gt;</bpt>LDAP<ept i='2'>&lt;/a2&gt;</ept> &gt;= 1.0)</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20131025T082105Z" changeid="xavier">
-        <seg>Un module <bpt i='0' x='0'>&lt;a0&gt;</bpt>Apache::Session::Browseable::Redis<ept i='0'>&lt;/a0&gt;</ept> a été créé, c'est le plus rapide (excepté pour l'explorateur de sessions, battu par Apache::Session::Browseable::<bpt i='1' x='1'>&lt;a1&gt;</bpt>DBI<ept i='1'>&lt;/a1&gt;</ept>/<bpt i='2' x='2'>&lt;a2&gt;</bpt>LDAP<ept i='2'>&lt;/a2&gt;</ept> &gt;= 1.0)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Mail charset</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T063357Z" changeid="guimard">
@@ -19924,14 +19852,6 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120221T070037Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>SSLCACertificateFile<ept i='0'>&lt;/s0&gt;</ept> : certificat d'autorité pour valider les certificats clients</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>First parameter passed to the custom function is the requested <bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept>, that is</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20121005T040332Z" changeid="xavier">
-        <seg>Le premier paramètre passé à la fonction personnalisée est l'<bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept> demandée, c'est à dire</seg>
       </tuv>
     </tu>
     <tu>
@@ -21418,14 +21338,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>http://perldoc.perl.org/functions/shift.html</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120225T111855Z" changeid="xavier">
-        <seg>http://perldoc.perl.org/functions/shift.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Role</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120226T115217Z" changeid="xavier">
@@ -22072,16 +21984,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20131025T131328Z" changeid="xavier">
         <seg>_lassoIdentityDump</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='11' x='11'>&lt;s11&gt;</bpt>my<ept i='11'>&lt;/s11&gt;</ept> <bpt i='12' x='12'>&lt;s12&gt;</bpt>$param<ept i='12'>&lt;/s12&gt;</ept> <bpt i='13' x='13'>&lt;s13&gt;</bpt>=<ept i='13'>&lt;/s13&gt;</ept> <bpt i='14' x='14'>&lt;a14&gt;</bpt><bpt i='15' x='15'>&lt;s15&gt;</bpt>shift<ept i='15'>&lt;/s15&gt;</ept><ept i='14'>&lt;/a14&gt;</ept><bpt i='16' x='16'>&lt;s16&gt;</bpt>;<ept i='16'>&lt;/s16&gt;</ept>
- </seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120225T111905Z" changeid="xavier">
-        <seg><bpt i='11' x='11'>&lt;s11&gt;</bpt>my<ept i='11'>&lt;/s11&gt;</ept> <bpt i='12' x='12'>&lt;s12&gt;</bpt>$param<ept i='12'>&lt;/s12&gt;</ept> <bpt i='13' x='13'>&lt;s13&gt;</bpt>=<ept i='13'>&lt;/s13&gt;</ept> <bpt i='14' x='14'>&lt;a14&gt;</bpt><bpt i='15' x='15'>&lt;s15&gt;</bpt>shift<ept i='15'>&lt;/s15&gt;</ept><ept i='14'>&lt;/a14&gt;</ept><bpt i='16' x='16'>&lt;s16&gt;</bpt>;<ept i='16'>&lt;/s16&gt;</ept>
- </seg>
       </tuv>
     </tu>
     <tu>
@@ -25392,16 +25294,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='17' x='17'>&lt;s17&gt;</bpt># Your nice code here<ept i='17'>&lt;/s17&gt;</ept>
- </seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120225T111922Z" changeid="xavier">
-        <seg><bpt i='17' x='17'>&lt;s17&gt;</bpt># Le joli code ici :<ept i='17'>&lt;/s17&gt;</ept>
- </seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Index list</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160301T055931Z" changeid="xavier">
@@ -26030,14 +25922,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Note that variables designed by $xx correspond to the name of the <bpt i='0' x='0'>&lt;a0&gt;</bpt>exported variables<ept i='0'>&lt;/a0&gt;</ept> or <bpt i='1' x='1'>&lt;a1&gt;</bpt>macro names<ept i='1'>&lt;/a1&gt;</ept>.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120506T055253Z" changeid="xavier">
-        <seg>Noter que les variables designées par $xx correspondent au nom de <bpt i='0' x='0'>&lt;a0&gt;</bpt>variables exportées<ept i='0'>&lt;/a0&gt;</ept> ou de <bpt i='1' x='1'>&lt;a1&gt;</bpt>noms de macro<ept i='1'>&lt;/a1&gt;</ept>.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Value<ept i='0'>&lt;/s0&gt;</ept>: application logout <bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept></seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120418T200414Z" changeid="guimard">
@@ -26082,14 +25966,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20131025T064411Z" changeid="xavier">
         <seg>https://metacpan.org/module/Web::ID::Certificate::Generator</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>For example, a <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> server can be:</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120225T183527Z" changeid="xavier">
-        <seg>Par exemple, un serveur <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> peut être :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26738,14 +26614,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120303T094257Z" changeid="xavier">
         <seg>Il est désormais possible d'utiliser le manager pour configurer toutes les <bpt i='0' x='0'>&lt;a0&gt;</bpt>applications et catégories<ept i='0'>&lt;/a0&gt;</ept>, ensuite commenter ou supprimer le paramètre <bpt i='1' x='1'>&lt;c1&gt;</bpt>applicationList<ept i='1'>&lt;/c1&gt;</ept> de <bpt i='2' x='2'>&lt;c2&gt;</bpt>/etc/lemonldap-ng/lemonldap-ng.ini<ept i='2'>&lt;/c2&gt;</ept>.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>An <bpt i='0' x='0'>&lt;a0&gt;</bpt>OpenID server<ept i='0'>&lt;/a0&gt;</ept> with <bpt i='1' x='1'>&lt;a1&gt;</bpt>CAS authentication<ept i='1'>&lt;/a1&gt;</ept></seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120225T183618Z" changeid="xavier">
-        <seg>Un <bpt i='0' x='0'>&lt;a0&gt;</bpt>serveur OpenID<ept i='0'>&lt;/a0&gt;</ept> avec une <bpt i='1' x='1'>&lt;a1&gt;</bpt>authentification CAS<ept i='1'>&lt;/a1&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -27530,14 +27398,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>https://auth.example.com/</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20121005T040334Z" changeid="xavier">
-        <seg>https://auth.example.com/</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Some applications using it</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111225T153717Z" changeid="xavier">
@@ -27874,14 +27734,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>absolute <bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept><ept i='0'>&lt;/s0&gt;</ept> if it is run by handler (e.g. /admin/index.php?param=foo).</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20121005T040520Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>l'<bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept> absolue<ept i='0'>&lt;/s0&gt;</ept> si elle est appelée par un agent (e.g. /admin/index.php?param=foo).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Any OpenID consumer</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120303T082010Z" changeid="xavier">
@@ -28054,14 +27906,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111222T181427Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Type de compte<ept i='0'>&lt;/s0&gt;</ept> : pour Zimbra, ce peut être name, id ou foreignKey (par défaut : id)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='5' x='5'>&lt;s5&gt;</bpt>my<ept i='5'>&lt;/s5&gt;</ept> <bpt i='6' x='6'>&lt;s6&gt;</bpt>$url<ept i='6'>&lt;/s6&gt;</ept> <bpt i='7' x='7'>&lt;s7&gt;</bpt>=<ept i='7'>&lt;/s7&gt;</ept> <bpt i='8' x='8'>&lt;a8&gt;</bpt><bpt i='9' x='9'>&lt;s9&gt;</bpt>shift<ept i='9'>&lt;/s9&gt;</ept><ept i='8'>&lt;/a8&gt;</ept><bpt i='10' x='10'>&lt;s10&gt;</bpt>;<ept i='10'>&lt;/s10&gt;</ept></seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20121005T040210Z" changeid="xavier">
-        <seg><bpt i='5' x='5'>&lt;s5&gt;</bpt>my<ept i='5'>&lt;/s5&gt;</ept> <bpt i='6' x='6'>&lt;s6&gt;</bpt>$url<ept i='6'>&lt;/s6&gt;</ept> <bpt i='7' x='7'>&lt;s7&gt;</bpt>=<ept i='7'>&lt;/s7&gt;</ept> <bpt i='8' x='8'>&lt;a8&gt;</bpt><bpt i='9' x='9'>&lt;s9&gt;</bpt>shift<ept i='9'>&lt;/s9&gt;</ept><ept i='8'>&lt;/a8&gt;</ept><bpt i='10' x='10'>&lt;s10&gt;</bpt>;<ept i='10'>&lt;/s10&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -30368,14 +30212,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111211T074535Z" changeid="xavier">
         <seg>http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>updateTime</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20131025T084357Z" changeid="xavier">
-        <seg>updateTime</seg>
       </tuv>
     </tu>
     <tu>

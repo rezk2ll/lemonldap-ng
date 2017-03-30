@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:start</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,start"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="start.html"/>
@@ -237,7 +237,7 @@
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0"> <a href="authad.html" class="wikilink1" title="documentation:2.0:authad">Active Directory</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authad.html" class="wikilink1" title="documentation:2.0:authad">Active Directory</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td>
 	</tr>
 	<tr class="row2 roweven">
 		<td class="col0"> <a href="authapache.html" class="wikilink1" title="documentation:2.0:authapache">Apache (Kerberos, NTLM, OTP, ...)</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
@@ -323,14 +323,17 @@
 	<tr class="row29 rowodd">
 		<td class="col0"> <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2"></td><td class="col3"></td>
 	</tr>
+	<tr class="row30 roweven">
+		<td class="col0"> <a href="external2f.html" class="wikilink1" title="documentation:2.0:external2f">External Second Factor</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2"></td><td class="col3"></td>
+	</tr>
 </table></div>
-<!-- EDIT10 TABLE [2160-3733] -->
+<!-- EDIT10 TABLE [2160-3786] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT9 SECTION "Authentication, users and password databases" [1987-3761] -->
+<!-- EDIT9 SECTION "Authentication, users and password databases" [1987-3814] -->
 <h3 class="sectionedit11" id="configuration_database">Configuration database</h3>
 <div class="level3">
 
@@ -365,14 +368,14 @@
 		<td class="col0 centeralign">  <a href="soapconfbackend.html" class="wikilink1" title="documentation:2.0:soapconfbackend">SOAP</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign"> Proxy backend to be used in conjunction with another configuration backend. <br/><strong>Can be used to secure another backend</strong> for remote servers.  </td>
 	</tr>
 </table></div>
-<!-- EDIT12 TABLE [4036-4625] --><div class="notetip">You can not start with an empty configuration, so read <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
+<!-- EDIT12 TABLE [4089-4678] --><div class="notetip">You can not start with an empty configuration, so read <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
 </div>
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT11 SECTION "Configuration database" [3762-4841] -->
+<!-- EDIT11 SECTION "Configuration database" [3815-4894] -->
 <h3 class="sectionedit13" id="sessions_database">Sessions database</h3>
 <div class="level3">
 
@@ -418,13 +421,13 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 <strong>Can be used to secure another backend</strong> for remote servers.  </td>
 	</tr>
 </table></div>
-<!-- EDIT14 TABLE [5227-6885] -->
+<!-- EDIT14 TABLE [5280-6938] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Sessions database" [4842-6913] -->
+<!-- EDIT13 SECTION "Sessions database" [4895-6966] -->
 <h3 class="sectionedit15" id="identity_provider">Identity provider</h3>
 <div class="level3">
 <div class="notetip"><ul>
@@ -458,7 +461,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT15 SECTION "Identity provider" [6914-7458] -->
+<!-- EDIT15 SECTION "Identity provider" [6967-7511] -->
 <h2 class="sectionedit16" id="applications_protection">Applications protection</h2>
 <div class="level2">
 
@@ -487,7 +490,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT16 SECTION "Applications protection" [7459-7949] -->
+<!-- EDIT16 SECTION "Applications protection" [7512-8002] -->
 <h3 class="sectionedit17" id="well_known_compatible_applications">Well known compatible applications</h3>
 <div class="level3">
 <div class="noteclassic">Here is a list of well known applications that are compatible with <abbr title="LemonLDAP::NG">LL::NG</abbr>. A full list is available on <a href="applications.html" class="wikilink1" title="documentation:2.0:applications">vendor applications page</a>.
@@ -567,7 +570,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT17 SECTION "Well known compatible applications" [7950-9723] -->
+<!-- EDIT17 SECTION "Well known compatible applications" [8003-9776] -->
 <h2 class="sectionedit18" id="advanced_features">Advanced features</h2>
 <div class="level2">
 
@@ -618,7 +621,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT18 SECTION "Advanced features" [9724-10661] -->
+<!-- EDIT18 SECTION "Advanced features" [9777-10714] -->
 <h2 class="sectionedit19" id="mini_howtos">Mini howtos</h2>
 <div class="level2">
 
@@ -649,7 +652,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Mini howtos" [10662-11331] -->
+<!-- EDIT19 SECTION "Mini howtos" [10715-11384] -->
 <h2 class="sectionedit20" id="exploitation">Exploitation</h2>
 <div class="level2">
 
@@ -682,7 +685,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT20 SECTION "Exploitation" [11332-11752] -->
+<!-- EDIT20 SECTION "Exploitation" [11385-11805] -->
 <h2 class="sectionedit21" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -733,6 +736,6 @@ To translate this doc (Manager help):
 </ul>
 
 </div>
-<!-- EDIT21 SECTION "Developer corner" [11753-] --></div>
+<!-- EDIT21 SECTION "Developer corner" [11806-] --></div>
 </body>
 </html>
