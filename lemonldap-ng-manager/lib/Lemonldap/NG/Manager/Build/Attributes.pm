@@ -2229,7 +2229,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         # Null
         nullAuthnLevel => {
             type          => 'int',
-            default       => 2,
+            default       => 0,
             documentation => 'Null authentication level',
         },
 
