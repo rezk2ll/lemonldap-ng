@@ -119,7 +119,7 @@ sub defaultValues {
         },
         'notificationWildcard'                  => 'allusers',
         'notifyDeleted'                         => 1,
-        'nullAuthnLevel'                        => 2,
+        'nullAuthnLevel'                        => 0,
         'oidcAuthnLevel'                        => 1,
         'oidcRPCallbackGetParam'                => 'openidconnectcallback',
         'oidcRPStateTimeout'                    => 600,

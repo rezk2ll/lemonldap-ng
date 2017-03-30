@@ -1511,7 +1511,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'bool'
         },
         'nullAuthnLevel' => {
-            'default' => 2,
+            'default' => 0,
             'type'    => 'int'
         },
         'oidcAuthnLevel' => {
