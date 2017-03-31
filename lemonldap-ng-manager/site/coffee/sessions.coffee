@@ -62,7 +62,7 @@ schemes =
 overScheme =
 	_whatToTrace: (t,v,level,over) ->
 		if level == 1
-			"#{t}=#{v}*&groupBy=substr(#{t},#{(level+over)})"
+			"#{t}=#{v}*&groupBy=substr(#{t},#{(level+over+1)})"
 		else
 			null
 	ipAddr: (t,v,level,over) ->

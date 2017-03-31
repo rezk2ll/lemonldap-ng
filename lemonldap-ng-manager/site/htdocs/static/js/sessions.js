@@ -75,7 +75,7 @@
   overScheme = {
     _whatToTrace: function(t, v, level, over) {
       if (level === 1) {
-        return t + "=" + v + "*&groupBy=substr(" + t + "," + (level + over) + ")";
+        return t + "=" + v + "*&groupBy=substr(" + t + "," + (level + over + 1) + ")";
       } else {
         return null;
       }

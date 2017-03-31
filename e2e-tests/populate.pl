@@ -18,7 +18,7 @@ use lib 'lemonldap-ng-portal/blib/lib';
 use lib 'lemonldap-ng-manager/blib/lib';
 require './lemonldap-ng-portal/t/test-lib.pm';
 
-use constant COUNT => 1000;
+use constant COUNT => 10000;
 
 my $portal = LLNG::Manager::Test->new(
     {
@@ -34,6 +34,8 @@ my $portal = LLNG::Manager::Test->new(
 )->p;
 
 my @chars = ( "A" .. "Z", "a" .. "z" );
+my $t = time;;
+
 foreach my $i ( 1 .. COUNT() ) {
     my $string;
     $string .= $chars[ rand @chars ] for 1 .. 8;
@@ -45,7 +47,7 @@ foreach my $i ( 1 .. COUNT() ) {
     $min  = int( rand(60) );
     $sec  = int( rand(60) );
     my $ipAddr = (
-        int( rand(2) ) == 2
+        int( rand(2) ) == 1
         ? join( '.',
             int( rand(256) ),
             int( rand(256) ),
@@ -80,7 +82,6 @@ foreach my $i ( 1 .. COUNT() ) {
         }
         $ipAddr =~ s/$t[$ind]/::/;
         $ipAddr =~ s/^0//;
-        print STDERR "Found IPv6 :: => $string\n";
     }
     my $req = Test::Request->new(
         {
@@ -104,4 +105,12 @@ foreach my $i ( 1 .. COUNT() ) {
     $portal->setMacros($req);
     $portal->store($req);
 }
+print 'LOAD TIME: '.(time - $t)."\n";
 done_testing( count() );
+
+#use LWP::UserAgent;
+#my $ua = LWP::UserAgent->new;
+#$ua->get('http://manager.example.com:19876/sessions.html');
+#$t = time;
+#$ua->get('http://manager.example.com:19876/manager.fcgi/sessions/global?groupBy=substr(_whatToTrace,1)');
+#print 'READ TIME: '.(time - $t)."\n";
