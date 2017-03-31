@@ -319,15 +319,6 @@ sub setSessionInfo {
           if $self->conf->{timeoutActivity};
     }
 
-    # Get environment variables matching exportedVars (works only with HTTP_*
-    # and SSL_*: see Main/Request.pm)
-    foreach ( keys %{ $self->conf->{exportedVars} } ) {
-        if ( my $tmp = $req->{ $self->conf->{exportedVars}->{$_} } ) {
-            $tmp =~ s/[\r\n]/ /gs;
-            $req->{sessionInfo}->{$_} = $tmp;
-        }
-    }
-
     # Store URL origin in session
     $req->{sessionInfo}->{_url} = $req->{urldc};
 

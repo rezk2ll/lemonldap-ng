@@ -1639,21 +1639,11 @@
   "id": "variables",
   "title": "variables",
   "nodes": [{
-    "default": [{
-      "data": "HTTP_USER_AGENT",
-      "id": "exportedVars/UA",
-      "title": "UA",
-      "type": "keyText"
-    }],
+    "default": [],
     "id": "exportedVars",
     "title": "exportedVars",
     "type": "keyTextContainer",
-    "nodes": [{
-      "data": "HTTP_USER_AGENT",
-      "type": "keyText",
-      "id": "exportedVars/UA",
-      "title": "UA"
-    }]
+    "nodes": []
   }, {
     "default": [],
     "id": "macros",

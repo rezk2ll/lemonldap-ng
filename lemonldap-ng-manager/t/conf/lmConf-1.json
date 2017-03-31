@@ -105,7 +105,6 @@
     }
   },
   "exportedVars": {
-    "UA": "HTTP_USER_AGENT"
   },
   "globalStorage": "Apache::Session::File",
   "globalStorageOptions": {

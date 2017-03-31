@@ -1469,12 +1469,7 @@
 }, {
   "_nodes": [{
     "cnodes": "exportedVars",
-    "default": [{
-      "data": "HTTP_USER_AGENT",
-      "id": "exportedVars/UA",
-      "title": "UA",
-      "type": "keyText"
-    }],
+    "default": [],
     "id": "exportedVars",
     "title": "exportedVars",
     "type": "keyTextContainer"
