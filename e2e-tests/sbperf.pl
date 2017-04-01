@@ -12,6 +12,23 @@ system 'make stop_web_server';
 Redis->new->flushall;
 
 my $tests = {
+    (
+        $ENV{LLNGTESTLDAP}
+        ? (
+            LDAP => {
+                cmd => 'cd lemonldap-ng-portal;perl t/test-ldap.pm;cd -',
+                globalStorage        => 'Apache::Session::Browseable::LDAP',
+                globalStorageOptions => {
+                    ldapServer       => 'ldap://localhost:19389',
+                    ldapBindDN       => 'cn=admin,dc=example,dc=com',
+                    ldapBindPassword => 'admin',
+                    ldapConfBase     => 'ou=sessions,dc=example,dc=com',
+                    Index            => '_whatToTrace _session_kind'
+                },
+            }
+          )
+        : ()
+    ),
     Redis => {
         globalStorage        => 'Apache::Session::Browseable::Redis',
         globalStorageOptions => {},
@@ -19,7 +36,7 @@ my $tests = {
     BRedis => {
         globalStorage        => 'Apache::Session::Browseable::Redis',
         globalStorageOptions => {
-            Index      => '_whatToTrace _session_kind'
+            Index => '_whatToTrace _session_kind'
         },
     },
     Postgres => {
@@ -91,7 +108,10 @@ my $times = {};
 
 foreach my $name ( keys %$tests ) {
     my $opts = $tests->{$name}->{globalStorageOptions};
-    if ( my $cmd = $tests->{$name}->{pg} ) {
+    if ( my $cmd = delete $tests->{$name}->{cmd} ) {
+        system $cmd;
+    }
+    if ( my $cmd = delete $tests->{$name}->{pg} ) {
         my $dbh = DBI->connect( $opts->{DataSource}, $opts->{UserName},
             $opts->{Password}, { RaiseError => 1, AutoCommit => 1 } );
         foreach (@$cmd) {
@@ -117,6 +137,7 @@ q(perl -i -pe 's/protection\s*=\s*manager/protection=none/' e2e-tests/conf/lemon
     open F, '>e2e-tests/conf/lmConf-1.json' or die;
     print F to_json($conf);
     close F;
+
     #system 'cat e2e-tests/conf/lmConf-1.json';
     sleep(1);
     system 'make reload_web_server';
@@ -132,30 +153,39 @@ q(perl -i -pe 's/protection\s*=\s*manager/protection=none/' e2e-tests/conf/lemon
 'http://manager.example.com:19876/manager.fcgi/sessions/global?groupBy=substr(_whatToTrace,1)'
     );
     $times->{$name}->{read} = Time::HiRes::time() - $t;
-    $res = from_json($res->content);
+    $res = from_json( $res->content );
     my $letter = $res->{values}->[0]->{value};
-    $t = Time::HiRes::time();
+    $t   = Time::HiRes::time();
     $res = $ua->get(
-'http://manager.example.com:19876/manager.fcgi/sessions/global?_whatToTrace='.$letter.'*&groupBy=_whatToTrace'
-    );
+'http://manager.example.com:19876/manager.fcgi/sessions/global?_whatToTrace='
+          . $letter
+          . '*&groupBy=_whatToTrace' );
     $times->{$name}->{getLetter} = Time::HiRes::time() - $t;
-    $res = from_json($res->content);
+    $res = from_json( $res->content );
     my $user = $res->{values}->[0]->{value};
-    $t = Time::HiRes::time();
+    $t   = Time::HiRes::time();
     $res = $ua->get(
-'http://manager.example.com:19876/manager.fcgi/sessions/global?_whatToTrace='.$user
-    );
+'http://manager.example.com:19876/manager.fcgi/sessions/global?_whatToTrace='
+          . $user );
     $times->{$name}->{getUid} = Time::HiRes::time() - $t;
-    $res = from_json($res->content);
+    $res = from_json( $res->content );
     my $id = $res->{values}->[0]->{session};
-    $t = Time::HiRes::time();
+    $t   = Time::HiRes::time();
     $res = $ua->get(
-'http://manager.example.com:19876/manager.fcgi/sessions/global/'.$id
-    );
+        'http://manager.example.com:19876/manager.fcgi/sessions/global/'
+          . $id );
     $times->{$name}->{getSession} = Time::HiRes::time() - $t;
-    $res = from_json($res->content);
+    $res = from_json( $res->content );
     system 'make stop_web_server';
 }
 
+if ( $ENV{LLNGTESTLDAP} ) {
+    open F, 'lemonldap-ng-portal/t/testslapd/slapd.pid';
+    my $pid = join '', <F>;
+    system "kill $pid";
+    system 'rm -rf lemonldap-ng-portal/t/testslapd/slapd.d';
+    system 'rm -rf lemonldap-ng-portal/t/testslapd/data';
+    system 'rm -rf lemonldap-ng-portal/t/testslapd/slapd-test.ldif';
+}
 use Data::Dumper;
 print Dumper($times);

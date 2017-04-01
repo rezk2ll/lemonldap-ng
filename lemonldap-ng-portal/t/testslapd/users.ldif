@@ -5,6 +5,11 @@ objectClass: dcObject
 dc: example
 o: Example
 
+dn: ou=sessions,dc=example,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: sessions
+
 dn: ou=users,dc=example,dc=com
 objectClass: top
 objectClass: organizationalUnit
