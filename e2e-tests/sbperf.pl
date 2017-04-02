@@ -12,6 +12,7 @@ system 'make stop_web_server';
 Redis->new->flushall;
 
 my $tests = {
+
     (
         $ENV{LLNGTESTLDAP}
         ? (
@@ -87,6 +88,22 @@ my $tests = {
             'CREATE INDEX _s1 ON sessions (_session_kind)',
         ],
     },
+    PgHstore => {
+        globalStorage        => 'Apache::Session::Browseable::PgHstore',
+        globalStorageOptions => {
+            DataSource => 'dbi:Pg:host=127.0.0.1;database=sessions',
+            UserName   => 'sso',
+            Password   => 'sso',
+            Commit     => 1,
+        },
+        pg => [
+            'DROP TABLE IF EXISTS sessions',
+            'DROP INDEX IF EXISTS uid1',
+            'DROP INDEX IF EXISTS _s1',
+'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session hstore)',
+        ],
+    },
+
     PgJSON => {
         globalStorage        => 'Apache::Session::Browseable::PgJSON',
         globalStorageOptions => {
@@ -180,12 +197,26 @@ q(perl -i -pe 's/protection\s*=\s*manager/protection=none/' e2e-tests/conf/lemon
 }
 
 if ( $ENV{LLNGTESTLDAP} ) {
-    open F, 'lemonldap-ng-portal/t/testslapd/slapd.pid';
-    my $pid = join '', <F>;
-    system "kill $pid";
+    if ( open F, 'lemonldap-ng-portal/t/testslapd/slapd.pid' ) {
+        my $pid = join '', <F>;
+        system "kill $pid";
+    }
     system 'rm -rf lemonldap-ng-portal/t/testslapd/slapd.d';
     system 'rm -rf lemonldap-ng-portal/t/testslapd/data';
     system 'rm -rf lemonldap-ng-portal/t/testslapd/slapd-test.ldif';
 }
-use Data::Dumper;
-print Dumper($times);
+
+#use Data::Dumper;
+#print Dumper($times);
+
+print <<EOT;
++-----------+-----------------------+-----------------------------+
+|           |         Main use      |       Session explorer      |
+|  Backend  | Insert 1000 |  Get 1  |Parse all| 1 letter|  1 user |
++-----------+-----------------------+-----------------------------+
+EOT
+foreach my $type ( keys %$times ) {
+    printf "|%10s |%11.5f  | %.5f | %.5f | %.5f | %.5f |\n", $type,
+      map { $times->{$type}->{$_} } qw(insert getSession read getLetter getUid);
+}
+print "+-----------+-----------------------+-----------------------------+\n";
