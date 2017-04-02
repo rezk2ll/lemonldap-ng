@@ -1,4 +1,43 @@
 #!/usr/bin/perl
+#
+# Session Backend Performance Test
+# --------------------------------
+#
+# This test is used to compare different session backend. To use it, you have
+# to:
+#  * have a PostgreSQL database running on this host. PostgreSQL DB must have
+#    * listen on 127.0.0.1:5432
+#    * a database names "sessions"
+#    * "hstore" extension enabled is database "sessions":
+#        psql# CREATE EXTENSION hstore;
+#    * a Pg user named "sso" identified by "sso" password
+#    * "sso" user must have right to create tables in database "sessions"
+#  * have a Redis server installed on this host listen on 127.0.0.1:6379
+#
+# If you want to enable LDAP test:
+#  * set LLNGTESTLDAP environment variable to 1
+#  * if OpenLDAP schemes aren't available in /etc/slapd/schema, set the scheme
+#    directory in environment variables:
+#      LLNGTESTLDAP_SCHEMA_DIR=/etc/ldap/schema
+#  * prepare some coffee or tea
+#  * open the window or light a fan
+#  * launch the test, run away and come back 5mn later
+#
+#
+# (c) Copyright: 2017, LemonLDAP::NG team
+#
+#This library is free software; you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation; either version 2, or (at your option)
+#any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see L<http://www.gnu.org/licenses/>.
 
 use strict;
 use DBI;
