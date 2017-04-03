@@ -63,10 +63,7 @@ foreach my $i ( 1 .. COUNT() ) {
 
     #$string = 'dwho';
     my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) =
-      localtime(time);
-    $hour = int( rand($hour) );
-    $min  = int( rand(60) );
-    $sec  = int( rand(60) );
+      localtime(time-int(rand(4*3600)));
     my $ipAddr = (
         int( rand(2) ) == 1
         ? join( '.',

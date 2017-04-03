@@ -76,7 +76,7 @@ my $tests = {
     BRedis => {
         globalStorage        => 'Apache::Session::Browseable::Redis',
         globalStorageOptions => {
-            Index => '_whatToTrace _session_kind'
+            Index => '_whatToTrace _session_kind _utime'
         },
     },
     Postgres => {
@@ -116,13 +116,13 @@ my $tests = {
             UserName   => 'sso',
             Password   => 'sso',
             Commit     => 1,
-            Index      => '_whatToTrace _session_kind'
+            Index      => '_whatToTrace _session_kind _utime'
         },
         pg => [
             'DROP TABLE IF EXISTS sessions',
             'DROP INDEX IF EXISTS uid1',
             'DROP INDEX IF EXISTS _s1',
-'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session text, _whatToTrace text, _session_kind text)',
+'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session text, _whatToTrace text, _session_kind text, _utime bigint)',
             'CREATE INDEX uid1 ON sessions (_whatToTrace)',
             'CREATE INDEX _s1 ON sessions (_session_kind)',
         ],
@@ -189,6 +189,9 @@ q(perl -i -pe 's/protection\s*=\s*manager/protection=none/' e2e-tests/conf/lemon
     foreach my $k ( keys %{ $tests->{$name} } ) {
         $conf->{$k} = $tests->{$name}->{$k};
     }
+
+    # Fix timeout to 2h
+    $conf->{timeout} = 7200;
     print STDERR "Write conf\n";
     open F, '>e2e-tests/conf/lmConf-1.json' or die;
     print F to_json($conf);
@@ -198,40 +201,75 @@ q(perl -i -pe 's/protection\s*=\s*manager/protection=none/' e2e-tests/conf/lemon
     sleep(1);
     system 'make reload_web_server';
 
+    # Insert 1000 sessions
     my $t = Time::HiRes::time();
     system './e2e-tests/populate.pl';
     $times->{$name}->{insert} = Time::HiRes::time() - $t;
 
+    # Initialize manager
     my $ua = LWP::UserAgent->new;
     $ua->get('http://manager.example.com:19876/sessions.html');
-    $t = Time::HiRes::time();
-    my $res = $ua->get(
+
+    my $tmp = {
+        read       => 0,
+        getLetter  => 0,
+        getUid     => 0,
+        getSession => 0,
+    };
+
+    # First loop isn't used in averages
+    foreach my $i ( 0 .. 10 ) {
+
+        # Test first Session Explorer access
+        $t = Time::HiRes::time();
+        my $res = $ua->get(
 'http://manager.example.com:19876/manager.fcgi/sessions/global?groupBy=substr(_whatToTrace,1)'
-    );
-    $times->{$name}->{read} = Time::HiRes::time() - $t;
-    $res = from_json( $res->content );
-    my $letter = $res->{values}->[0]->{value};
-    $t   = Time::HiRes::time();
-    $res = $ua->get(
+        );
+        $tmp->{read} += Time::HiRes::time() - $t if ($i);
+        $res = from_json( $res->content );
+
+        # Partial "_whatToTrace" search
+        my $letter = $res->{values}->[0]->{value};
+        $t   = Time::HiRes::time();
+        $res = $ua->get(
 'http://manager.example.com:19876/manager.fcgi/sessions/global?_whatToTrace='
-          . $letter
-          . '*&groupBy=_whatToTrace' );
-    $times->{$name}->{getLetter} = Time::HiRes::time() - $t;
-    $res = from_json( $res->content );
-    my $user = $res->{values}->[0]->{value};
-    $t   = Time::HiRes::time();
-    $res = $ua->get(
+              . $letter
+              . '*&groupBy=_whatToTrace' );
+        $tmp->{getLetter} += Time::HiRes::time() - $t if ($i);
+        $res = from_json( $res->content );
+
+        # Search for an uid
+        my $user = $res->{values}->[$i]->{value};
+        $t   = Time::HiRes::time();
+        $res = $ua->get(
 'http://manager.example.com:19876/manager.fcgi/sessions/global?_whatToTrace='
-          . $user );
-    $times->{$name}->{getUid} = Time::HiRes::time() - $t;
-    $res = from_json( $res->content );
-    my $id = $res->{values}->[0]->{session};
-    $t   = Time::HiRes::time();
-    $res = $ua->get(
-        'http://manager.example.com:19876/manager.fcgi/sessions/global/'
-          . $id );
-    $times->{$name}->{getSession} = Time::HiRes::time() - $t;
-    $res = from_json( $res->content );
+              . $user );
+        $tmp->{getUid} += Time::HiRes::time() - $t if ($i);
+        $res = from_json( $res->content );
+
+        # Get a session
+        my $id = $res->{values}->[0]->{session};
+        $t   = Time::HiRes::time();
+        $res = $ua->get(
+            'http://manager.example.com:19876/manager.fcgi/sessions/global/'
+              . $id );
+        $tmp->{getSession} += Time::HiRes::time() - $t if ($i);
+        $res = from_json( $res->content );
+    }
+
+    # Average
+    foreach my $type ( keys %$tmp ) {
+        $times->{$name}->{$type} = $tmp->{$type} / 10;
+    }
+
+    # Purge half sessions
+    $t = Time::HiRes::time();
+    system 'LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini '
+      . 'perl -Ilemonldap-ng-common/blib/lib '
+      . 'lemonldap-ng-portal/site/cron/purgeCentralCache';
+    $times->{$name}->{purge} = Time::HiRes::time() - $t;
+
+    # Turn off webserver
     system 'make stop_web_server';
 }
 
@@ -249,13 +287,15 @@ if ( $ENV{LLNGTESTLDAP} ) {
 #print Dumper($times);
 
 print <<EOT;
-+-----------+-----------------------+-----------------------------+
-|           |         Main use      |       Session explorer      |
-|  Backend  | Insert 1000 |  Get 1  |Parse all| 1 letter|  1 user |
-+-----------+-----------------------+-----------------------------+
++-----------+---------------------------------+-----------------------------+
+|           |            Main use             |       Session explorer      |
+|  Backend  | Insert 1000 |  Get 1  |Purge 500|Parse all| 1 letter|  1 user |
++-----------+---------------------------------+-----------------------------+
 EOT
 foreach my $type ( keys %$times ) {
-    printf "|%10s |%11.5f  | %.5f | %.5f | %.5f | %.5f |\n", $type,
-      map { $times->{$type}->{$_} } qw(insert getSession read getLetter getUid);
+    printf "|%10s |%11.5f  | %.5f | %7.4f | %.5f | %.5f | %.5f |\n", $type,
+      map { $times->{$type}->{$_} }
+      qw(insert getSession purge read getLetter getUid);
 }
-print "+-----------+-----------------------+-----------------------------+\n";
+print
+"+-----------+---------------------------------+-----------------------------+\n";

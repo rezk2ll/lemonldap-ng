@@ -143,6 +143,23 @@ for my $options (@backends) {
 
     next if ( $options->{backend} eq "Apache::Session::Memcached" );
     my @t;
+    if ( $options->{backend}->can('deleteIfLowerThan') ) {
+        next
+          if $options->{backend}->deleteIfLowerThan(
+            $options,
+            {
+                not => { '_session_kind' => 'Persistent' },
+                or  => {
+                    _utime => time - $conf->{timeout},
+                    (
+                        $conf->{timeoutActivity}
+                        ? ( _lastSeen => time - $conf->{timeoutActivity} )
+                        : ()
+                    )
+                }
+            }
+          );
+    }
 
     # Get all expired sessions
     Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
