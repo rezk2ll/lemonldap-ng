@@ -69,7 +69,6 @@ my @legend = (
 );
 
 my $tests = {
-
     (
         $ENV{LLNGTESTLDAP}
         ? (
@@ -191,6 +190,9 @@ my $tests = {
             'DROP INDEX IF EXISTS _s1',
             'DROP INDEX IF EXISTS _u1',
 'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session hstore)',
+            "CREATE INDEX uid1 ON sessions ( (a_session -> '_whatToTrace') )",
+            "CREATE INDEX _s1 ON sessions ( (a_session -> '_session_kind') )",
+            "CREATE INDEX _u1 ON sessions ( (a_session -> '_utime') )",
         ],
     },
     PgJSON => {
@@ -207,6 +209,9 @@ my $tests = {
             'DROP INDEX IF EXISTS _s1',
             'DROP INDEX IF EXISTS _u1',
 'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session json)',
+            "CREATE INDEX uid1 ON sessions ( (a_session ->> '_whatToTrace') )",
+            "CREATE INDEX _s1 ON sessions ( (a_session ->> '_session_kind') )",
+            "CREATE INDEX _u1 ON sessions ( (a_session ->> '_utime') )",
         ],
     },
 };
@@ -343,10 +348,11 @@ print <<EOT;
 |                 Backend                 | Insert 1000 |   Get 1   | Purge 500 | Parse all |  1 letter |   1 user  |
 +-----------------------------------------+-------------------------------------+-----------------------------------+
 EOT
-for(my $i = 0; $i < @legend; $i+=2) {
-    my $type = $legend[$i+1];
-    next unless($times->{$type});
-    printf "|%40s |%11.5f  |  %.5f  |  %7.4f  |  %.5f  |  %.5f  |  %.5f  |\n", $legend[$i],
+for ( my $i = 0 ; $i < @legend ; $i += 2 ) {
+    my $type = $legend[ $i + 1 ];
+    next unless ( $times->{$type} );
+    printf "|%40s |%11.5f  |  %.5f  |  %7.4f  |  %.5f  |  %.5f  |  %.5f  |\n",
+      $legend[$i],
       map { $times->{$type}->{$_} }
       qw(insert getSession purge read getLetter getUid);
 }
