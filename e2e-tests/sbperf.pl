@@ -5,12 +5,17 @@
 #
 # This test is used to compare different session backend. To use it, you have
 # to:
-#  * have a PostgreSQL database running on this host. PostgreSQL DB must have
+#  * have a PostgreSQL database running on this host. PostgreSQL DB must:
 #    * listen on 127.0.0.1:5432
-#    * a database names "sessions"
-#    * "hstore" extension enabled is database "sessions":
+#    * have a database names "sessions"
+#    * have "hstore" extension enabled is database "sessions":
 #        psql# CREATE EXTENSION hstore;
-#    * a Pg user named "sso" identified by "sso" password
+#    * have a Pg user named "sso" identified by "sso" password
+#    * "sso" user must have right to create tables in database "sessions"
+#  * have a MySQL or MriaDB database running on this host. DB must:
+#    * listen on 127.0.0.1:3306
+#    * have a database names "sessions"
+#    * have a user named "sso" identified by "sso" password
 #    * "sso" user must have right to create tables in database "sessions"
 #  * have a Redis server installed on this host listen on 127.0.0.1:6379
 #
@@ -50,6 +55,19 @@ system 'make stop_web_server';
 
 Redis->new->flushall;
 
+my @legend = (
+    'Apache::Session::Browseable::LDAP'        => 'LDAP',
+    'Apache::Session::MySQL (no lock)'         => 'BMySQL',
+    'Apache::Session::Browseable::MySQL'       => 'BiMySQL',
+    'Apache::Session::Postgres (logged table)' => 'Postgres',
+    'Apache::Session::Postgres'                => 'UPostgres',
+    'Apache::Session::Browseable::Postgres'    => 'BPostgres',
+    'Apache::Session::Browseable::PgJSON'      => 'PgJSON',
+    'Apache::Session::Browseable::PgHstore'    => 'PgHstore',
+    'Apache::Session::Redis'                   => 'Redis',
+    'Apache::Session::Browseable::Redis'       => 'BRedis',
+);
+
 my $tests = {
 
     (
@@ -76,8 +94,36 @@ my $tests = {
     BRedis => {
         globalStorage        => 'Apache::Session::Browseable::Redis',
         globalStorageOptions => {
-            Index => '_whatToTrace _session_kind _utime'
+            Index => '_whatToTrace _session_kind'
         },
+    },
+    BMySQL => {
+        globalStorage        => 'Apache::Session::Browseable::MySQL',
+        globalStorageOptions => {
+            DataSource => 'dbi:mysql:host=127.0.0.1;database=sessions',
+            UserName   => 'sso',
+            Password   => 'sso',
+        },
+        pg => [
+            'DROP TABLE IF EXISTS sessions',
+'CREATE TABLE sessions (id varchar(64) not null primary key, a_session text)',
+        ],
+    },
+    BiMySQL => {
+        globalStorage        => 'Apache::Session::Browseable::MySQL',
+        globalStorageOptions => {
+            DataSource => 'dbi:mysql:host=127.0.0.1;database=sessions',
+            UserName   => 'sso',
+            Password   => 'sso',
+            Index      => '_whatToTrace _session_kind _utime'
+        },
+        pg => [
+            'DROP TABLE IF EXISTS sessions',
+'CREATE TABLE sessions (id varchar(64) not null primary key, a_session text, _whatToTrace varchar(64), _session_kind varchar(15), _utime bigint)',
+            'CREATE INDEX uid1 ON sessions (_whatToTrace) USING BTREE',
+            'CREATE INDEX _s1 ON sessions (_session_kind) USING BTREE',
+            'CREATE INDEX _u1 ON sessions (_utime) USING BTREE',
+        ],
     },
     Postgres => {
         globalStorage        => 'Apache::Session::Browseable::Postgres',
@@ -91,6 +137,7 @@ my $tests = {
             'DROP TABLE IF EXISTS sessions',
             'DROP INDEX IF EXISTS uid1',
             'DROP INDEX IF EXISTS _s1',
+            'DROP INDEX IF EXISTS _u1',
 'CREATE TABLE sessions (id varchar(64) not null primary key, a_session text)',
         ],
     },
@@ -106,6 +153,7 @@ my $tests = {
             'DROP TABLE IF EXISTS sessions',
             'DROP INDEX IF EXISTS uid1',
             'DROP INDEX IF EXISTS _s1',
+            'DROP INDEX IF EXISTS _u1',
 'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session text)',
         ],
     },
@@ -122,9 +170,11 @@ my $tests = {
             'DROP TABLE IF EXISTS sessions',
             'DROP INDEX IF EXISTS uid1',
             'DROP INDEX IF EXISTS _s1',
+            'DROP INDEX IF EXISTS _u1',
 'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session text, _whatToTrace text, _session_kind text, _utime bigint)',
             'CREATE INDEX uid1 ON sessions (_whatToTrace)',
             'CREATE INDEX _s1 ON sessions (_session_kind)',
+            'CREATE INDEX _u1 ON sessions (_utime)',
         ],
     },
     PgHstore => {
@@ -139,10 +189,10 @@ my $tests = {
             'DROP TABLE IF EXISTS sessions',
             'DROP INDEX IF EXISTS uid1',
             'DROP INDEX IF EXISTS _s1',
+            'DROP INDEX IF EXISTS _u1',
 'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session hstore)',
         ],
     },
-
     PgJSON => {
         globalStorage        => 'Apache::Session::Browseable::PgJSON',
         globalStorageOptions => {
@@ -155,6 +205,7 @@ my $tests = {
             'DROP TABLE IF EXISTS sessions',
             'DROP INDEX IF EXISTS uid1',
             'DROP INDEX IF EXISTS _s1',
+            'DROP INDEX IF EXISTS _u1',
 'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session json)',
         ],
     },
@@ -287,15 +338,17 @@ if ( $ENV{LLNGTESTLDAP} ) {
 #print Dumper($times);
 
 print <<EOT;
-+-----------+---------------------------------+-----------------------------+
-|           |            Main use             |       Session explorer      |
-|  Backend  | Insert 1000 |  Get 1  |Purge 500|Parse all| 1 letter|  1 user |
-+-----------+---------------------------------+-----------------------------+
++-----------------------------------------+-------------------------------------+-----------------------------------+
+|                                         |              Main use               |          Session explorer         |
+|                 Backend                 | Insert 1000 |   Get 1   | Purge 500 | Parse all |  1 letter |   1 user  |
++-----------------------------------------+-------------------------------------+-----------------------------------+
 EOT
-foreach my $type ( keys %$times ) {
-    printf "|%10s |%11.5f  | %.5f | %7.4f | %.5f | %.5f | %.5f |\n", $type,
+for(my $i = 0; $i < @legend; $i+=2) {
+    my $type = $legend[$i+1];
+    next unless($times->{$type});
+    printf "|%40s |%11.5f  |  %.5f  |  %7.4f  |  %.5f  |  %.5f  |  %.5f  |\n", $legend[$i],
       map { $times->{$type}->{$_} }
       qw(insert getSession purge read getLetter getUid);
 }
 print
-"+-----------+---------------------------------+-----------------------------+\n";
+"+-----------------------------------------+-------------------------------------+-----------------------------------+\n";
