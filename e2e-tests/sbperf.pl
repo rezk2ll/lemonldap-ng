@@ -53,7 +53,7 @@ use Redis;
 
 system 'make stop_web_server';
 
-Redis->new->flushall;
+eval { Redis->new->flushall };
 
 my @legend = (
     'Apache::Session::Browseable::LDAP'        => 'LDAP',
@@ -63,6 +63,7 @@ my @legend = (
     'Apache::Session::Postgres'                => 'UPostgres',
     'Apache::Session::Browseable::Postgres'    => 'BPostgres',
     'Apache::Session::Browseable::PgJSON'      => 'PgJSON',
+    'Apache::Session::Browseable::PgJSONB'     => 'PgJSONB',
     'Apache::Session::Browseable::PgHstore'    => 'PgHstore',
     'Apache::Session::Redis'                   => 'Redis',
     'Apache::Session::Browseable::Redis'       => 'BRedis',
@@ -171,7 +172,7 @@ my $tests = {
             'DROP INDEX IF EXISTS _s1',
             'DROP INDEX IF EXISTS _u1',
 'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session text, _whatToTrace text, _session_kind text, _utime bigint)',
-            'CREATE INDEX uid1 ON sessions USING BTREE (_whatToTrace)',
+            'CREATE INDEX uid1 ON sessions USING BTREE (_whatToTrace text_pattern_ops)',
             'CREATE INDEX _s1 ON sessions (_session_kind)',
             'CREATE INDEX _u1 ON sessions (_utime)',
         ],
@@ -190,9 +191,9 @@ my $tests = {
             'DROP INDEX IF EXISTS _s1',
             'DROP INDEX IF EXISTS _u1',
 'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session hstore)',
-            "CREATE INDEX uid1 ON sessions USING BTREE ( (a_session -> '_whatToTrace') )",
+"CREATE INDEX uid1 ON sessions USING BTREE ( (a_session -> '_whatToTrace') text_pattern_ops )",
             "CREATE INDEX _s1  ON sessions ( (a_session -> '_session_kind') )",
-            "CREATE INDEX _u1  ON sessions ( ( cast(a_session -> '_utime' AS bigint) ) )",
+"CREATE INDEX _u1  ON sessions ( ( cast(a_session -> '_utime' AS bigint) ) )",
         ],
     },
     PgJSON => {
@@ -209,9 +210,28 @@ my $tests = {
             'DROP INDEX IF EXISTS _s1',
             'DROP INDEX IF EXISTS _u1',
 'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session json)',
-            "CREATE INDEX uid1 ON sessions USING BTREE ( (a_session ->> '_whatToTrace') )",
+"CREATE INDEX uid1 ON sessions USING BTREE ( (a_session ->> '_whatToTrace') text_pattern_ops )",
             "CREATE INDEX _s1  ON sessions ( (a_session ->> '_session_kind') )",
-            "CREATE INDEX _u1  ON sessions ( ( cast(a_session ->> '_utime' AS bigint) ) )",
+"CREATE INDEX _u1  ON sessions ( ( cast(a_session ->> '_utime' AS bigint) ) )",
+        ],
+    },
+    PgJSONB => {
+        globalStorage        => 'Apache::Session::Browseable::PgJSON',
+        globalStorageOptions => {
+            DataSource => 'dbi:Pg:host=127.0.0.1;database=sessions',
+            UserName   => 'sso',
+            Password   => 'sso',
+            Commit     => 1,
+        },
+        pg => [
+            'DROP TABLE IF EXISTS sessions',
+            'DROP INDEX IF EXISTS uid1',
+            'DROP INDEX IF EXISTS _s1',
+            'DROP INDEX IF EXISTS _u1',
+'CREATE UNLOGGED TABLE sessions (id varchar(64) not null primary key, a_session jsonb)',
+"CREATE INDEX uid1 ON sessions USING BTREE ( (a_session ->> '_whatToTrace') text_pattern_ops )",
+            "CREATE INDEX _s1  ON sessions ( (a_session ->> '_session_kind') )",
+"CREATE INDEX _u1  ON sessions ( ( cast(a_session ->> '_utime' AS bigint) ) )",
         ],
     },
 };
