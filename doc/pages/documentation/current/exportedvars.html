@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:exportedvars</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,exportedvars"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="exportedvars.html"/>
@@ -90,7 +90,7 @@ You can define exported variables for each module in the module configuration it
 <div class="notetip">You can define environment variables in <code>Exported variables</code>, this allows one to populate user session with some environment values. Environment variables will not be queried in users database.
 </div>
 </div>
-<!-- EDIT2 SECTION "Presentation" [35-1270] -->
+<!-- EDIT2 SECTION "Presentation" [35-1271] -->
 <h2 class="sectionedit4" id="extend_variables_using_macros_and_groups">Extend variables using macros and groups</h2>
 <div class="level2">
 
@@ -103,6 +103,8 @@ Macros and groups are calculated during authentication process by the portal:
 </p>
 <ul>
 <li class="level1"><div class="li"> macros are used to extend (or rewrite) <span class="curid"><a href="exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables</a></span>. A macro is stored as attributes: it can contain boolean results or any string</div>
+</li>
+<li class="level1"><div class="li"> macros can also be used to import environment variables <em>(these variables are in CGI format)</em>. Example: <code>$ENV{HTTP_COOKIE}</code></div>
 </li>
 <li class="level1"><div class="li"> groups are stored as space-separated strings in the special attribute “groups”: it contains the names of groups whose rules were returned true for the current user</div>
 </li>
@@ -157,6 +159,6 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 <div class="level2">
 
 </div>
-<!-- EDIT4 SECTION "Extend variables using macros and groups" [1271-] --></div>
+<!-- EDIT4 SECTION "Extend variables using macros and groups" [1272-] --></div>
 </body>
 </html>

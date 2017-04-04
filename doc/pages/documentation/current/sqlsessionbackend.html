@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:sqlsessionbackend</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,sqlsessionbackend"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="sqlsessionbackend.html"/>
@@ -120,7 +120,7 @@ Create sessions table:
     id <span class="kw1">CHAR</span><span class="br0">&#40;</span><span class="nu0">32</span><span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span><span class="sy0">,</span>
     a_session text
     <span class="br0">&#41;</span>;</pre>
-<div class="noteimportant">Change char(32) by char(64) if you use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
+<div class="noteimportant">Change <code>char(32)</code> by <code>varchar(64)</code> if you use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
 </div><div class="notetip">You can change table name <code>sessions</code> to whatever you want, just adapt the parameter <code>TableName</code> in module options.
 </div>
 </div>
@@ -150,12 +150,12 @@ Create table:
 <pre class="code">psql -h 127.0.0.1 -U lemonldap-ng -W lemonldap-ng</pre>
 <pre class="code">Mot de passe pour l&#039;utilisateur lemonldap-ng :
 [...]
-lemonldap-ng=&gt; create table sessions ( id char(32) not null primary key, a_session text );
+lemonldap-ng=&gt; create unlogged table sessions ( id char(32) not null primary key, a_session text );
 lemonldap-ng=&gt; q</pre>
-<div class="noteimportant">Change char(32) by char(64) if you use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
+<div class="noteimportant">Change <code>char(32)</code> by <code>varchar(64)</code> if you use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
 </div>
 </div>
-<!-- EDIT3 SECTION "Prepare the database" [488-2206] -->
+<!-- EDIT3 SECTION "Prepare the database" [488-2237] -->
 <h3 class="sectionedit4" id="manager">Manager</h3>
 <div class="level3">
 
@@ -184,10 +184,10 @@ Go in the Manager and set the session module (for example <a href="http://search
 		<td class="col0 centeralign">  <strong>Commit</strong>  </td><td class="col1"> Required for PostgreSQL </td><td class="col2"> 1 </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0 centeralign">  <strong>TableName</strong>  </td><td class="col1"> Name of the table </td><td class="col2"> sessions </td>
+		<td class="col0 centeralign">  <strong>TableName</strong>  </td><td class="col1"> <em>(Optional)</em> Name of the table </td><td class="col2"> sessions </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [2535-2929] -->
+<!-- EDIT5 TABLE [2566-2975] -->
 <p>
 You must read the man page corresponding to your database (<a href="http://search.cpan.org/perldoc?Apache::Session::MySQL" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::MySQL"  rel="nofollow">Apache::Session::MySQL</a>, …) to learn more about parameters. You must also install the database connector (<a href="http://search.cpan.org/perldoc?DBD::Oracle" class="urlextern" title="http://search.cpan.org/perldoc?DBD::Oracle"  rel="nofollow">DBD::Oracle</a>, <a href="http://search.cpan.org/perldoc?DBD::Pg" class="urlextern" title="http://search.cpan.org/perldoc?DBD::Pg"  rel="nofollow">DBD::Pg</a>,…)
 </p>
@@ -206,7 +206,7 @@ If you choose to use MySQL, read <a href="performances.html#apachesession_perfor
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Manager" [2207-3508] -->
+<!-- EDIT4 SECTION "Manager" [2238-3554] -->
 <h2 class="sectionedit6" id="security">Security</h2>
 <div class="level2">
 
@@ -219,6 +219,6 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Security" [3509-] --></div>
+<!-- EDIT6 SECTION "Security" [3555-] --></div>
 </body>
 </html>

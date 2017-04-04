@@ -1986,14 +1986,6 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>The following data about the current request are available through functions :</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T162017Z" changeid="xavier">
-        <seg>Les données suivantes concernant la requête courante sont disponibles via les fonctions :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>To use custom files, delete links and copy them into your skin folder:</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T074933Z" changeid="guimard">
@@ -2612,14 +2604,6 @@ make debian-packages</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20131025T060849Z" changeid="xavier">
         <seg>msmith@badwolf.org</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>To use it (with MySQL for example), choose “Apache::Session::Browseable::MySQL” as “Apache::Session module” and use the following parameters:</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120419T071256Z" changeid="guimard">
-        <seg>Pour l'utiliser (avec MySQL par exemple), choisissez “Apache::Session::Browseable::MySQL” comme “Module Apache::Session” et utilisez les paramètres suivants :</seg>
       </tuv>
     </tu>
     <tu>
@@ -6588,20 +6572,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Mot de passe pour l'utilisateur lemonldap-ng :
-[...]
-lemonldap-ng=&gt; create table sessions ( id char(32) not null primary key, a_session text );
-lemonldap-ng=&gt; q</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120423T204926Z" changeid="xavier">
-        <seg>Mot de passe pour l'utilisateur lemonldap-ng :
-[...]
-lemonldap-ng=&gt; create table sessions ( id char(32) not null primary key, a_session text );
-lemonldap-ng=&gt; q</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Extra claims definition</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160301T201407Z" changeid="xavier">
@@ -7478,14 +7448,6 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T114718Z" changeid="xavier">
         <seg>L'ajouter à trustedDomains (ou mettre <bpt i='0' x='0'>&lt;c0&gt;</bpt>*<ept i='0'>&lt;/c0&gt;</ept> dans trustedDomains pour tout accepter).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>header_in(“Your-Request-Header”): any request header</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T162216Z" changeid="xavier">
-        <seg>header_in(“Your-Request-Header”) : n'importe quel en-tête de la requête</seg>
       </tuv>
     </tu>
     <tu>
@@ -8528,14 +8490,6 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>DataSource -&gt; dbi:mysql:sessions;host=...</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR">
-        <seg>DataSource -&gt; dbi:mysql:sessions;host=...</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>#compilation</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111218T190457Z" changeid="xavier">
@@ -9442,14 +9396,6 @@ description: {whatToTrace}'$uid'
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160301T215214Z" changeid="xavier">
         <seg>Pour en savoir plus :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept> issuer</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20130203T113818Z" changeid="xavier">
-        <seg>Fourniture d'identité <bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -11778,14 +11724,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>uri_with_args: <bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept> path with query string</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T162104Z" changeid="xavier">
-        <seg>uri_with_args : l'<bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept> complète (y compris les arguments GET)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>$uid eq “root”</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120420T095718Z" changeid="xavier">
@@ -12672,14 +12610,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Change char(32) by char(64) if you use the now recommended SHA256 hash algorithm.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T055611Z" changeid="xavier">
-        <seg>Changer char(32) en char(64) pour utiliser l'algorithme de hashage SHA256 (recommandé).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>In LDAP filters, $user is replaced by user login, and $mail by user email.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160229T165335Z" changeid="xavier">
@@ -13132,14 +13062,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160227T183124Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>Alfresco<ept i='0'>&lt;/a0&gt;</ept> est un logiciel ECM/BPM.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>_cas_id</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20130203T113819Z" changeid="xavier">
-        <seg>_cas_id</seg>
       </tuv>
     </tu>
     <tu>
@@ -15110,14 +15032,6 @@ server {</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>ipAddr <bpt i='0' x='0'>&lt;e0&gt;</bpt>WHATTOTRACE<ept i='0'>&lt;/e0&gt;</ept></seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20130203T113734Z" changeid="xavier">
-        <seg>ipAddr <bpt i='0' x='0'>&lt;e0&gt;</bpt>WHATTOTRACE<ept i='0'>&lt;/e0&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Known problems</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120107T150214Z" changeid="xavier">
@@ -15402,14 +15316,6 @@ server {</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120303T093240Z" changeid="xavier">
         <seg>Pour les utilisateurs de Debian testing ou unstable, les paquets sont directement installables :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>You have access to all environment variable, like user <bpt i='1' x='1'>&lt;a1&gt;</bpt>IP<ept i='1'>&lt;/a1&gt;</ept> address.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120221T060222Z" changeid="xavier">
-        <seg>Toutes les variables d'environnement sont disponibles, telle l'adresse <bpt i='1' x='1'>&lt;a1&gt;</bpt>IP<ept i='1'>&lt;/a1&gt;</ept> de l'utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16948,14 +16854,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111211T112326Z" changeid="xavier">
         <seg><bpt i='147' x='147'>&lt;s147&gt;</bpt>//&quot;userobm_email_nomade&quot;        =&gt; ,<ept i='147'>&lt;/s147&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>method: the request method (GET, POST etc.)</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T162200Z" changeid="xavier">
-        <seg>method : la méthode de la requête (GET, POST, etc…)</seg>
       </tuv>
     </tu>
     <tu>
@@ -20204,14 +20102,6 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Some Apache::Session module are not fully usable by Lemonldap::NG such as Apache::Session::Memcached since this modules do not offer capability to browse sessions.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160302T062842Z" changeid="xavier">
-        <seg>Certains modules Apache::Session ne sont pas utilisables par Lemonldap::NG tel Apache::Session::Memcached, car ce module n'offre pas de dispositif de parcours des sessions</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>a2ensite manager-apache2.conf
 a2ensite portal-apache2.conf
 a2ensite handler-apache2.conf
@@ -20800,14 +20690,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111211T171538Z" changeid="xavier">
         <seg>Il est également possible de créer ces macros pour gérer le compte administrateur OBM (<bpt i='0' x='0'>&lt;c0&gt;</bpt>Variables<ept i='0'>&lt;/c0&gt;</ept> » <bpt i='1' x='1'>&lt;c1&gt;</bpt>Macros<ept i='1'>&lt;/c1&gt;</ept>):</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>uri: <bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept> path</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T162044Z" changeid="xavier">
-        <seg>uri : l'<bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -21440,14 +21322,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120507T182658Z" changeid="xavier">
         <seg>Le connecteur Django est disponible sur GitHub : <bpt i='0' x='0'>&lt;a0&gt;</bpt>https://github.com/9h37/django-lemonldap<ept i='0'>&lt;/a0&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>remote_ip: the client <bpt i='0' x='0'>&lt;a0&gt;</bpt>IP<ept i='0'>&lt;/a0&gt;</ept> address</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T162031Z" changeid="xavier">
-        <seg>remote_ip : l'adresse <bpt i='0' x='0'>&lt;a0&gt;</bpt>IP<ept i='0'>&lt;/a0&gt;</ept> cliente</seg>
       </tuv>
     </tu>
     <tu>
@@ -22610,14 +22484,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>$ENV{REMOTE_ADDR} =~ /^192\.168/</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120221T060310Z" changeid="xavier">
-        <seg>$ENV{REMOTE_ADDR} =~ /^192\.168/</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> Portal can be used under a <bpt i='1' x='1'>&lt;a1&gt;</bpt>FastCGI system<ept i='1'>&lt;/a1&gt;</ept> very easily.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160301T163052Z" changeid="xavier">
@@ -23566,14 +23432,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>SAML<ept i='0'>&lt;/a0&gt;</ept> authentication and issuer</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20130203T113759Z" changeid="xavier">
-        <seg>Authentification ou fourniture d'identité <bpt i='0' x='0'>&lt;a0&gt;</bpt>SAML<ept i='0'>&lt;/a0&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt><bpt i='1' x='1'>&lt;a1&gt;</bpt>SSO<ept i='1'>&lt;/a1&gt;</ept> binding<ept i='0'>&lt;/s0&gt;</ept>: force binding to use for <bpt i='2' x='2'>&lt;a2&gt;</bpt>SSO<ept i='2'>&lt;/a2&gt;</ept> (http-redirect, http-post, etc.)</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120221T063428Z" changeid="xavier">
@@ -24490,14 +24348,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20130203T114111Z" changeid="xavier">
         <seg>Il est préférable d'utiliser des bases de sessions séparées pour les sessions standard, <bpt i='0' x='0'>&lt;a0&gt;</bpt>SAML<ept i='0'>&lt;/a0&gt;</ept> et <bpt i='1' x='1'>&lt;a1&gt;</bpt>CAS<ept i='1'>&lt;/a1&gt;</ept> afin de gérer séparemment les index.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;e0&gt;</bpt>WHATTOTRACE<ept i='0'>&lt;/e0&gt;</ept> must be replaced by the attribute or macro configured in the What To Trace parameter (REMOTE_USER)</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20130203T113955Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;e0&gt;</bpt>WHATTOTRACE<ept i='0'>&lt;/e0&gt;</ept> doit être remplacé par l'attribut ou la macro configurée dans le paramètre indiquant le champ utilisateur à stocker dans les journaux (REMOTE_USER)</seg>
       </tuv>
     </tu>
     <tu>
@@ -27012,14 +26862,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Password reset</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20130203T113832Z" changeid="xavier">
-        <seg>Réinitialisation de mots-de-passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Please always try to find another solution to protect your application with <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept>.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T192429Z" changeid="xavier">
@@ -28018,14 +27860,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111218T190305Z" changeid="xavier">
         <seg><bpt i='20' x='20'>&lt;s20&gt;</bpt><bpt i='21' x='21'>&lt;s21&gt;</bpt>&lt;user<ept i='21'>&lt;/s21&gt;</ept> <bpt i='22' x='22'>&lt;s22&gt;</bpt>username<ept i='22'>&lt;/s22&gt;</ept>=<bpt i='23' x='23'>&lt;s23&gt;</bpt>&quot;tomcat&quot;<ept i='23'>&lt;/s23&gt;</ept> <bpt i='24' x='24'>&lt;s24&gt;</bpt>password<ept i='24'>&lt;/s24&gt;</ept>=<bpt i='25' x='25'>&lt;s25&gt;</bpt>&quot;tomcat&quot;<ept i='25'>&lt;/s25&gt;</ept> <bpt i='26' x='26'>&lt;s26&gt;</bpt>roles<ept i='26'>&lt;/s26&gt;</ept>=<bpt i='27' x='27'>&lt;s27&gt;</bpt>&quot;tomcat&quot;<ept i='27'>&lt;/s27&gt;</ept><bpt i='28' x='28'>&lt;s28&gt;</bpt>/&gt;<ept i='28'>&lt;/s28&gt;</ept><ept i='20'>&lt;/s20&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>args: the query string</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T162141Z" changeid="xavier">
-        <seg>args : la chaîne de requête</seg>
       </tuv>
     </tu>
     <tu>
@@ -29238,14 +29072,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>dbi:mysql:dbname=sessions</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120221T072312Z" changeid="xavier">
-        <seg>dbi:mysql:dbname=sessions</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Local groups</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -30244,14 +30070,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111119T114803Z" changeid="xavier">
         <seg>Il est destiné aux équipes de développeurs, groupes de travail ou petites entreprises.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>This documentation concerns MySQL.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T055501Z" changeid="xavier">
-        <seg>Cette documentation est construite autour de MySQL.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31994,22 +31812,6 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>_saml_id ProxyID _nameID _assert_id _art_id _session_id</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20131025T064525Z" changeid="xavier">
-        <seg>_saml_id ProxyID _nameID _assert_id _art_id _session_id</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>For example, to preselect this IDP for users coming from 129.168.0.0/16 network:</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120221T060308Z" changeid="xavier">
-        <seg>Par exemple, pour pré-sélectionner cet IDP pour les utilisateurs provenant dui réseau 129.168.0.0/16 :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Password<ept i='0'>&lt;/s0&gt;</ept>: Connection password</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111226T200754Z" changeid="xavier">
@@ -32824,14 +32626,6 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>See <bpt i='0' x='0'>&lt;a0&gt;</bpt>Sessions<ept i='0'>&lt;/a0&gt;</ept> for more details</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T055627Z" changeid="xavier">
-        <seg>Voir <bpt i='0' x='0'>&lt;a0&gt;</bpt>Sessions<ept i='0'>&lt;/a0&gt;</ept> pour plus de détails</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>To view a configuration parameter, for example portal <bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept>:</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160301T075921Z" changeid="xavier">
@@ -32940,14 +32734,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120507T182719Z" changeid="xavier">
         <seg>Voir le README pour l'installer et le configurer.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>unparsed_uri: <bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept> path, before <bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept> decoding</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T162125Z" changeid="xavier">
-        <seg>unparsed_uri : l'<bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept> avant décodage</seg>
       </tuv>
     </tu>
     <tu>

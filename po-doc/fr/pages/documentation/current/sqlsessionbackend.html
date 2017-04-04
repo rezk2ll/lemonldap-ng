@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,sqlsessionbackend"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="sqlsessionbackend.html"/>
@@ -125,7 +125,8 @@ Créer la table des sessions :
     id <span class="kw1">CHAR</span><span class="br0">(</span><span class="nu0">32</span><span class="br0">)</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span><span class="sy0">,</span>
     a_session text
     <span class="br0">)</span>;</pre>
-<div class="noteimportant">Changer char(32) en char(64) pour utiliser l'algorithme de hashage SHA256 (recommandé). Voir <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> pour plus de détails
+<div class="noteimportant">Change <code>char(32)</code> by <code>varchar(64)</code> if you use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
+
 </div><div class="notetip">You can change table name <code>sessions</code> to whatever you want, just adapt the parameter <code>TableName</code> in module options.
 
 </div>
@@ -156,11 +157,12 @@ Créer la table:
 <pre class="code">psql -h 127.0.0.1 -U lemonldap-ng -W lemonldap-ng</pre>
 <pre class="code">Mot de passe pour l'utilisateur lemonldap-ng :
 [...]
-lemonldap-ng=&gt; create table sessions ( id char(32) not null primary key, a_session text );
+lemonldap-ng=&gt; create unlogged table sessions ( id char(32) not null primary key, a_session text );
 lemonldap-ng=&gt; q</pre>
-<div class="noteimportant">Changer char(32) en char(64) pour utiliser l'algorithme de hashage SHA256 (recommandé). Voir <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> pour plus de détails
+<div class="noteimportant">Change <code>char(32)</code> by <code>varchar(64)</code> if you use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
+
 </div>
-</div><!-- EDIT3 SECTION "Prepare the database" [488-2206] -->
+</div><!-- EDIT3 SECTION "Prepare the database" [488-2237] -->
 
 <h3 class="sectionedit4" id="manager">Manager</h3>
 <div class="level3">
@@ -190,9 +192,9 @@ Aller dans le Manager et choisir le module de session (par exemple <a href="http
 		<td class="col0 centeralign">  <strong>Commit</strong>  </td><td class="col1"> Requis pour PostgreSQL </td><td class="col2">  1  </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0 centeralign">  <strong>TableName</strong>  </td><td class="col1">  Name of the table  </td><td class="col2">  sessions  </td>
+		<td class="col0 centeralign">  <strong>TableName</strong>  </td><td class="col1"> <em>(Optional)</em> Name of the table  </td><td class="col2">  sessions  </td>
 	</tr>
-</table></div><!-- EDIT5 TABLE [2535-2929] -->
+</table></div><!-- EDIT5 TABLE [2566-2975] -->
 
 <p>
 Il faut consulter la page de manuel correspondant à la base de données (<a href="http://search.cpan.org/perldoc?Apache::Session::MySQL" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::MySQL"  rel="nofollow">Apache::Session::MySQL</a>, …) pour connaître les paramètres. Il faut également installer le connecteur à la base de données (<a href="http://search.cpan.org/perldoc?DBD::Oracle" class="urlextern" title="http://search.cpan.org/perldoc?DBD::Oracle"  rel="nofollow">DBD::Oracle</a>, <a href="http://search.cpan.org/perldoc?DBD::Pg" class="urlextern" title="http://search.cpan.org/perldoc?DBD::Pg"  rel="nofollow">DBD::Pg</a>,…)
@@ -211,7 +213,7 @@ Il faut consulter la page de manuel correspondant à la base de données (<a hre
 Si MySQL est choisi, lire <a href="performances.html#apachesession_performances" class="wikilink1" title="documentation:2.0:performances">comment augmenter les performances de MySQL</a>.
 </p>
 
-</div><!-- EDIT4 SECTION "Manager" [2207-3508] -->
+</div><!-- EDIT4 SECTION "Manager" [2238-3554] -->
 
 <h2 class="sectionedit6" id="security">Sécurité</h2>
 <div class="level2">
@@ -224,7 +226,7 @@ Restreindre l'accès réseau à la base de données.
 On peut utiliser différent login/mot-de-passe pour les serveurs en surchargeant les paramètres <code>globalStorage</code> et <code>globalStorageOptions</code> dans le fichier lemonldap-ng.ini.
 </p>
 
-</div><!-- EDIT6 SECTION "Security" [3509-] -->
+</div><!-- EDIT6 SECTION "Security" [3555-] -->
 </div>
 </body>
 </html>

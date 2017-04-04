@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,exportedvars"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="exportedvars.html"/>
@@ -90,7 +90,7 @@ On peut définir des variables exportées pour chaque module dans sa propre conf
 </p>
 <div class="notetip">You can define environment variables in <code>Exported variables</code>, this allows one to populate user session with some environment values. Les variables d'environnement ne seront pas demandées à la base de données utilisateurs.
 </div>
-</div><!-- EDIT2 SECTION "Presentation" [35-1270] -->
+</div><!-- EDIT2 SECTION "Presentation" [35-1271] -->
 
 <h2 class="sectionedit4" id="extend_variables_using_macros_and_groups">Étendre les variables en utilisant les macros et groups</h2>
 <div class="level2">
@@ -104,6 +104,8 @@ Les macros et les groupes sont calculées pendant le processus d'authentificatio
 </p>
 <ul>
 <li class="level1"><div class="li"> Les macros sont utilisées pour étendre (ou réécrire) les <span class="curid"><a href="exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">variables exportées</a></span>. Une macro est stockée comme un attribut : elle peut contenir le résultat d'un calcul booléen ou n'importe quelle chaîne de caractères</div>
+</li>
+<li class="level1"><div class="li">  macros can also be used to import environment variables <em>(these variables are in CGI format)</em>. Example: <code>$ENV{HTTP_COOKIE}</code></div>
 </li>
 <li class="level1"><div class="li"> les groupes sont stockées en chaîne de caractères séparées par des espaces dans l'attribut spécial “groups” : il contient les noms des groupes dont la règle à retournée une valeur non nulle pour l'utilisateur courant</div>
 </li>
@@ -157,7 +159,7 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 </div>
 <div class="level2">
 
-</div><!-- EDIT4 SECTION "Extend variables using macros and groups" [1271-] -->
+</div><!-- EDIT4 SECTION "Extend variables using macros and groups" [1272-] -->
 </div>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:browseablesessionbackend</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,browseablesessionbackend"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="browseablesessionbackend.html"/>
@@ -91,30 +91,28 @@ The following table list fields to index depending on the feature you want to in
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0"> Session explorer </td><td class="col1 centeralign">  ipAddr <em>WHATTOTRACE</em>  </td>
+		<td class="col0"> Database cleaup <em>(cron)</em> </td><td class="col1 centeralign">  _session_kind _utime  </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0"> Session explorer (persistent sessions) </td><td class="col1 centeralign">  _session_uid  </td>
+		<td class="col0"> Session explorer </td><td class="col1 centeralign">  _session_kind ipAddr <em>WHATTOTRACE</em>  </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0"> Session restrictions </td><td class="col1 centeralign">  ipAddr <em>WHATTOTRACE</em>  </td>
+		<td class="col0"> Session explorer (persistent sessions) </td><td class="col1 centeralign">  _session_kind _session_uid  </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0"> <abbr title="Security Assertion Markup Language">SAML</abbr> authentication and issuer </td><td class="col1 centeralign">  _saml_id ProxyID _nameID _assert_id _art_id _session_id  </td>
-	</tr>
-	<tr class="row5 rowodd">
-		<td class="col0 leftalign"> <abbr title="Central Authentication Service">CAS</abbr> issuer  </td><td class="col1 centeralign">  _cas_id  </td>
-	</tr>
-	<tr class="row6 roweven">
-		<td class="col0 leftalign"> Password reset  </td><td class="col1 centeralign">  user  </td>
+		<td class="col0"> Session restrictions </td><td class="col1 centeralign">  _session_kind ipAddr <em>WHATTOTRACE</em>  </td>
 	</tr>
 </table></div>
-<!-- EDIT3 TABLE [877-1222] --><div class="noteimportant"><em>WHATTOTRACE</em> must be replaced by the attribute or macro configured in the What To Trace parameter (REMOTE_USER)
+<!-- EDIT3 TABLE [877-1168] -->
+<p>
+See Apache::Session::Browseable::* man page to see how use indexes.
+</p>
+<div class="noteimportant"><em>WHATTOTRACE</em> must be replaced by the attribute or macro configured in the What To Trace parameter (REMOTE_USER). By default: <strong>_whatToTrace</strong>
 </div><div class="notetip">It is advised to use separate session backends for standard sessions, <abbr title="Security Assertion Markup Language">SAML</abbr> sessions and <abbr title="Central Authentication Service">CAS</abbr> sessions, in order to manage index separately.
 </div><div class="noteclassic">Documentation below explains how set index on ipAddr and _whatToTrace. Adapt it to configure the index you need.
 </div>
 </div>
-<!-- EDIT2 SECTION "Presentation" [43-1646] -->
+<!-- EDIT2 SECTION "Presentation" [43-1691] -->
 <h2 class="sectionedit4" id="browseable_nosql">Browseable NoSQL</h2>
 <div class="level2">
 
@@ -141,33 +139,44 @@ You then just have to add the <code>Index</code> parameter  in <code>General par
 		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [1934-2091] -->
+<!-- EDIT5 TABLE [1979-2136] -->
 </div>
-<!-- EDIT4 SECTION "Browseable NoSQL" [1647-2092] -->
+<!-- EDIT4 SECTION "Browseable NoSQL" [1692-2137] -->
 <h2 class="sectionedit6" id="browseable_sql">Browseable SQL</h2>
 <div class="level2">
-<div class="noteclassic">This documentation concerns MySQL. Some adaptations are needed with other databases.
+<div class="noteclassic">This documentation concerns PostgreSQL. Some adaptations are needed with other databases.
 </div>
 </div>
-<!-- EDIT6 SECTION "Browseable SQL" [2093-2219] -->
+<!-- EDIT6 SECTION "Browseable SQL" [2138-2269] -->
 <h3 class="sectionedit7" id="prepare_database">Prepare database</h3>
 <div class="level3">
 
 <p>
 Database must be prepared exactly like in <a href="sqlsessionbackend.html#prepare_the_database" class="wikilink1" title="documentation:2.0:sqlsessionbackend">SQL session backend</a> except that a field must be added for each data to index.
 </p>
-<pre class="code file sql"><span class="kw1">CREATE</span> <span class="kw1">TABLE</span> sessions <span class="br0">&#40;</span>
-    id <span class="kw1">CHAR</span><span class="br0">&#40;</span><span class="nu0">32</span><span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span><span class="sy0">,</span>
-    a_session <span class="kw1">BLOB</span><span class="sy0">,</span>
-    _whatToTrace <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="sy0">,</span>
-    ipAddr <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="br0">&#41;</span><span class="sy0">,</span>
-    <span class="kw1">KEY</span> _whatToTrace <span class="br0">&#40;</span>_whatToTrace<span class="br0">&#41;</span><span class="sy0">,</span>
-    <span class="kw1">KEY</span> ipAddr <span class="br0">&#40;</span>ipAddr<span class="br0">&#41;</span>
-    <span class="br0">&#41;</span>;</pre>
-<div class="noteimportant">Change char(32) by char(64) if you use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
+<pre class="code file sql"> Apache::<span class="kw1">SESSION</span>::Browseable::Postgres example:
+<span class="sy0">&lt;</span>code sql<span class="sy0">&gt;</span>
+<span class="kw1">CREATE</span> UNLOGGED <span class="kw1">TABLE</span> sessions <span class="br0">&#40;</span>
+    id <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">64</span><span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span><span class="sy0">,</span>
+    a_session text<span class="sy0">,</span>
+    _whatToTrace text<span class="sy0">,</span>
+    _session_kind text<span class="sy0">,</span>
+    _utime <span class="kw1">BIGINT</span><span class="sy0">,</span>
+    ipAddr text
+<span class="br0">&#41;</span>;
+<span class="kw1">CREATE</span> <span class="kw1">INDEX</span> uid1 <span class="kw1">ON</span> sessions <span class="kw1">USING</span> BTREE <span class="br0">&#40;</span>_whatToTrace<span class="br0">&#41;</span>;
+<span class="kw1">CREATE</span> <span class="kw1">INDEX</span> s1   <span class="kw1">ON</span> sessions <span class="br0">&#40;</span>_session_kind<span class="br0">&#41;</span>;
+<span class="kw1">CREATE</span> <span class="kw1">INDEX</span> u1   <span class="kw1">ON</span> sessions <span class="br0">&#40;</span>_utime<span class="br0">&#41;</span>;
+<span class="kw1">CREATE</span> <span class="kw1">INDEX</span> ip1  <span class="kw1">ON</span> sessions <span class="kw1">USING</span> BTREE <span class="br0">&#40;</span>ipAddr<span class="br0">&#41;</span>;</pre>
+<div class="noteimportant">For Session Explorer and one-off sessions, it is recommended to use BTREE or any index method that indexes partial content.
+</div>
+<p>
+“id” fieds is set to <code>varchar(64)</code> (instead of char(32)) to use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details.
+</p>
+<div class="notetip">With new Apache::Session::Browseable::<strong>PgHstore</strong> and <strong>PgJSON</strong>, you don&#039;t need to declare indexes in <code>CREATE TABLE</code> since “json” and “hstore” type are browseable. You should anyway add some indexes <em>(see manpage)</em>.
 </div>
 </div>
-<!-- EDIT7 SECTION "Prepare database" [2220-2806] -->
+<!-- EDIT7 SECTION "Prepare database" [2270-3479] -->
 <h3 class="sectionedit8" id="manager">Manager</h3>
 <div class="level3">
 
@@ -184,7 +193,7 @@ Go in the Manager and set the session module (<a href="http://search.cpan.org/pe
 	</tr>
 	</thead>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  <strong>DataSource</strong>  </td><td class="col1"> The <a href="http://search.cpan.org/perldoc?DBI" class="urlextern" title="http://search.cpan.org/perldoc?DBI"  rel="nofollow">DBI</a> string </td><td class="col2"> dbi:mysql:dbname=sessions </td>
+		<td class="col0 centeralign">  <strong>DataSource</strong>  </td><td class="col1"> The <a href="http://search.cpan.org/perldoc?DBI" class="urlextern" title="http://search.cpan.org/perldoc?DBI"  rel="nofollow">DBI</a> string </td><td class="col2"> dbi:Pg:database=sessions </td>
 	</tr>
 	<tr class="row3 rowodd">
 		<td class="col0 centeralign">  <strong>UserName</strong>  </td><td class="col1"> The database username </td><td class="col2"> lemonldapng </td>
@@ -193,17 +202,17 @@ Go in the Manager and set the session module (<a href="http://search.cpan.org/pe
 		<td class="col0 centeralign">  <strong>Password</strong>  </td><td class="col1"> The database password </td><td class="col2"> mysuperpassword </td>
 	</tr>
 	<tr class="row5 rowodd">
-		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr </td>
+		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr _session_kind _utime </td>
 	</tr>
 </table></div>
-<!-- EDIT9 TABLE [3135-3466] --><div class="notetip">Apache::Session::Browseable::MySQL doesn&#039;t use locks so performances are keeped.
+<!-- EDIT9 TABLE [3808-4159] --><div class="notetip">Apache::Session::Browseable::MySQL doesn&#039;t use locks so performances are keeped.
 <p>
 For databases like PostgreSQL, don&#039;t forget to add “Commit” with a value of 1
 </p>
 
 </div>
 </div>
-<!-- EDIT8 SECTION "Manager" [2807-3645] -->
+<!-- EDIT8 SECTION "Manager" [3480-4338] -->
 <h2 class="sectionedit10" id="browseable_ldap">Browseable LDAP</h2>
 <div class="level2">
 
@@ -257,9 +266,9 @@ You need to add the <code>Index</code> field and can also configure the <code>ld
 		<td class="col0 centeralign">  <strong>ldapAttributeIndex</strong>  </td><td class="col1"> Attribute storing index </td><td class="col2"> ou </td>
 	</tr>
 </table></div>
-<!-- EDIT11 TABLE [3997-4731] -->
+<!-- EDIT11 TABLE [4690-5424] -->
 </div>
-<!-- EDIT10 SECTION "Browseable LDAP" [3646-4732] -->
+<!-- EDIT10 SECTION "Browseable LDAP" [4339-5425] -->
 <h2 class="sectionedit12" id="security">Security</h2>
 <div class="level2">
 
@@ -272,6 +281,6 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Security" [4733-] --></div>
+<!-- EDIT12 SECTION "Security" [5426-] --></div>
 </body>
 </html>

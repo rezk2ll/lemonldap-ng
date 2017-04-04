@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authsaml"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authsaml.html"/>
@@ -201,14 +201,16 @@ Pour chaque attribut, on peut indiquer :
 <h5 id="general_options">Options générales</h5>
 <div class="level5">
 <ul>
-<li class="level1"><div class="li"> <strong>Règle de résolution</strong> : règle à appliquer pour pré-sélectionner cet IDP. Toutes les variables d'environnement sont disponibles, telle l'adresse <abbr title="Internet Protocol">IP</abbr> de l'utilisateur.</div>
+<li class="level1"><div class="li"> <strong>Règle de résolution</strong> : règle à appliquer pour pré-sélectionner cet IDP. You have access to all environment variable <em>(like user <abbr title="Internet Protocol">IP</abbr> address)</em> and all session keys.</div>
 </li>
 </ul>
 
 <p>
-Par exemple, pour pré-sélectionner cet IDP pour les utilisateurs provenant dui réseau 129.168.0.0/16 :
+
+For example, to preselect this IDP for users coming from 129.168.0.0/16 network and member of “admin” group:
+
 </p>
-<pre class="code">$ENV{REMOTE_ADDR} =~ /^192\.168/</pre>
+<pre class="code">$ENV{REMOTE_ADDR} =~ /^192\.168/ and $groups =~ /\badmin\b/</pre>
 
 </div>
 

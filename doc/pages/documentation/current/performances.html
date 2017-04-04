@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:performances</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,performances"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="performances.html"/>
@@ -63,6 +63,7 @@
 <ul class="toc">
 <li class="level3"><div class="li"><a href="#replace_mysql_by_apachesessionflex">Replace MySQL by Apache::Session::Flex</a></div></li>
 <li class="level3"><div class="li"><a href="#use_apachesessionbrowseable">Use Apache::Session::Browseable</a></div></li>
+<li class="level3"><div class="li"><a href="#performance_test">Performance test</a></div></li>
 </ul>
 </li>
 <li class="level2"><div class="li"><a href="#ldap_performances">LDAP performances</a></div></li>
@@ -128,6 +129,8 @@ Macros and groups are calculated during authentication process by the portal:
 <ul>
 <li class="level1"><div class="li"> macros are used to extend (or rewrite) <a href="exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables</a>. A macro is stored as attributes: it can contain boolean results or any string</div>
 </li>
+<li class="level1"><div class="li"> macros can also be used to import environment variables <em>(these variables are in CGI format)</em>. Example: <code>$ENV{HTTP_COOKIE}</code></div>
+</li>
 <li class="level1"><div class="li"> groups are stored as space-separated strings in the special attribute “groups”: it contains the names of groups whose rules were returned true for the current user</div>
 </li>
 <li class="level1"><div class="li"> You can also get groups in <code>$hGroups</code> which is a Hash Reference of this form:</div>
@@ -177,7 +180,7 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 </div><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
 </div>
 </div>
-<!-- EDIT4 SECTION "Macros and groups" [987-2949] -->
+<!-- EDIT4 SECTION "Macros and groups" [987-3081] -->
 <h3 class="sectionedit5" id="local_macros">Local macros</h3>
 <div class="level3">
 
@@ -191,12 +194,12 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 <div class="notetip">Note that this feature is interesting only for the Lemonldap::NG systems protecting a high number of applications
 </div>
 </div>
-<!-- EDIT5 SECTION "Local macros" [2950-3611] -->
+<!-- EDIT5 SECTION "Local macros" [3082-3743] -->
 <h2 class="sectionedit6" id="portal_performances">Portal performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT6 SECTION "Portal performances" [3612-3644] -->
+<!-- EDIT6 SECTION "Portal performances" [3744-3776] -->
 <h3 class="sectionedit7" id="general_performances">General performances</h3>
 <div class="level3">
 
@@ -219,7 +222,7 @@ By default it uses local storage to store its tokens. If you have more than 1 po
 
 </div>
 </div>
-<!-- EDIT7 SECTION "General performances" [3645-4511] -->
+<!-- EDIT7 SECTION "General performances" [3777-4643] -->
 <h3 class="sectionedit8" id="apachesession_performances">Apache::Session performances</h3>
 <div class="level3">
 
@@ -232,7 +235,8 @@ Lemonldap::NG handlers use a local cache to store sessions (for 10 minutes). So 
 <li class="level1"><div class="li"> Since MySQL does not have always transaction feature, Apache::Session::MySQL has been designed to use MySQL locks. Since MySQL performances are very bad using this, if you want to store sessions in a MySQL database, prefer one of the following</div>
 </li>
 </ol>
-
+<div class="notetip">Since 1.9.6, LLNG portal and handler check if session is valid at each access, so purgeCentralCache cron no longer needs to be launched every 10 minutes: one or two times per day is enough.
+</div>
 </div>
 
 <h4 id="replace_mysql_by_apachesessionflex">Replace MySQL by Apache::Session::Flex</h4>
@@ -256,9 +260,9 @@ Password   -&gt; ...</pre>
 <div class="level4">
 
 <p>
-<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> is a wrapper for other Apache::Session modules that add the capability to manage indexes. To use it (with MySQL for example), choose “Apache::Session::Browseable::MySQL” as “Apache::Session module” and use the following parameters:
+<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> is a wrapper for other Apache::Session modules that add the capability to manage indexes. Prefer versions ≥ 1.2.5 to have better performances in DB cleaning. To use it (with PostgreSQL for example), choose “Apache::Session::Browseable::Postgres” as “Apache::Session module” and use the following parameters:
 </p>
-<pre class="code">DataSource -&gt; dbi:mysql:sessions;host=...
+<pre class="code">DataSource -&gt; dbi:Pg:database=sessions;host=...
 UserName   -&gt; user
 Password   -&gt; password
 Index      -&gt; ipAddr uid</pre>
@@ -266,12 +270,85 @@ Index      -&gt; ipAddr uid</pre>
 <p>
 Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
 </p>
-<div class="notetip">A <a href="https://metacpan.org/module/Apache::Session::Browseable::Redis" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> has been created, it is the faster (except for session explorer, defeated by Apache::Session::Browseable::<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">DBI</a>/<a href="https://metacpan.org/module/Apache::Session::Browseable::LDAP" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::LDAP"  rel="nofollow">LDAP</a> ≥ 1.0)
-</div><div class="noteimportant">Some Apache::Session module are not fully usable by Lemonldap::NG such as Apache::Session::Memcached since this modules do not offer capability to browse sessions. They does not allow one to use sessions explorer neither manage one-off sessions.
+
+<p>
+Look at <a href="browseablesessionbackend.html" class="wikilink1" title="documentation:2.0:browseablesessionbackend">Browseable session backend</a> to known which index to choose.
+</p>
+<div class="noteimportant">Some Apache::Session module are not fully usable by Lemonldap::NG such as Apache::Session::Memcached since these modules do not offer capability to browse sessions. They does not allow one to use sessions explorer neither manage one-off sessions.
 </div>
 </div>
-<!-- EDIT8 SECTION "Apache::Session performances" [4512-6869] -->
-<h3 class="sectionedit9" id="ldap_performances">LDAP performances</h3>
+
+<h4 id="performance_test">Performance test</h4>
+<div class="level4">
+<div class="notetip">A <a href="https://metacpan.org/module/Apache::Session::Browseable::Redis" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> has been created, it is the faster (except for session explorer, defeated by Apache::Session::Browseable::<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">DBI</a>/<a href="https://metacpan.org/module/Apache::Session::Browseable::LDAP" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::LDAP"  rel="nofollow">LDAP</a>])
+</div>
+<p>
+This test isn&#039;t a “only-backend” test but embed some LLNG methods, so real differences between engines are mitigate here.
+</p>
+<div class="table sectionedit9"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign" colspan="2">  Backend  </th><th class="col2 centeralign" colspan="3">  Portal and handlers  </th><th class="col5 centeralign" colspan="3">  Session explorer and one-off sessions  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<th class="col0 centeralign">  Name  </th><th class="col1 centeralign">  Configuration  </th><th class="col2 centeralign">  Insert 1000  </th><th class="col3 centeralign">  Search 1  </th><th class="col4 centeralign">  Purge 500  </th><th class="col5 centeralign">  Parse all  </th><th class="col6 centeralign">  Search by substring  </th><th class="col7 centeralign">  Search by UID  </th>
+	</tr>
+	</thead>
+	<tr class="row2 roweven">
+		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::LDAP</strong>  </td><td class="col1 leftalign"> mdb  </td><td class="col2 centeralign">  159.66  </td><td class="col3 centeralign">  0.0120  </td><td class="col4 centeralign">  49.22  </td><td class="col5 centeralign">  0.1110  </td><td class="col6 centeralign">  0.0076  </td><td class="col7 centeralign">  0.0050  </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 leftalign"> Apache::Session::<strong>MySQL</strong>             </td><td class="col1"> No lock </td><td class="col2 centeralign">  87.20  </td><td class="col3 centeralign">  <strong>0.0039</strong>  </td><td class="col4 centeralign">  23.14  </td><td class="col5 centeralign">  0.0281  </td><td class="col6 centeralign">  0.0252  </td><td class="col7 centeralign">  0.0235  </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0"> Apache::Session::<strong>Browseable::MySQL</strong> </td><td class="col1 leftalign">      </td><td class="col2 centeralign">  91.79  </td><td class="col3 centeralign">  <strong>0.0039</strong>  </td><td class="col4 centeralign">   <strong>0.139</strong> (*)  </td><td class="col5 centeralign">  0.0272  </td><td class="col6 centeralign">  <strong>0.0036</strong>  </td><td class="col7 centeralign">  <strong>0.0026</strong>  </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0 leftalign"> Apache::Session::<strong>Postgres</strong>          </td><td class="col1 leftalign">      </td><td class="col2 centeralign">  18.31  </td><td class="col3 centeralign">  0.0095  </td><td class="col4 centeralign">  13.40  </td><td class="col5 centeralign">  0.0323  </td><td class="col6 centeralign">  0.0277  </td><td class="col7 centeralign">  0.0264  </td>
+	</tr>
+	<tr class="row6 roweven">
+		<td class="col0"> Apache::Session::<strong>Postgres</strong> </td><td class="col1"> Unlogged table </td><td class="col2 centeralign">  9.16  </td><td class="col3 centeralign">  0.0095  </td><td class="col4 centeralign">  7.91  </td><td class="col5 centeralign">  0.0318  </td><td class="col6 centeralign">  0.0270  </td><td class="col7 centeralign">  0.0254  </td>
+	</tr>
+	<tr class="row7 rowodd">
+		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::Postgres</strong>  </td><td class="col1"> Unlogged table with indexes </td><td class="col2 centeralign">  9.24  </td><td class="col3 centeralign">  0.0094  </td><td class="col4 centeralign">  <strong>0.103</strong> (*)  </td><td class="col5 centeralign">  0.0301  </td><td class="col6 centeralign">  <strong>0.0037</strong>  </td><td class="col7 centeralign">  <strong>0.0028</strong>  </td>
+	</tr>
+	<tr class="row8 roweven">
+		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::PgJSON</strong>  </td><td class="col1"> Unlogged table, json field </td><td class="col2 centeralign">  9.25  </td><td class="col3 centeralign">  0.0091  </td><td class="col4 centeralign">  <strong>0.108</strong> (*)  </td><td class="col5 centeralign">  0.0247  </td><td class="col6 centeralign">  0.0061  </td><td class="col7 centeralign">  <strong>0.0029</strong>  </td>
+	</tr>
+	<tr class="row9 rowodd">
+		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::PgHstore</strong>  </td><td class="col1"> Unlogged table, hstore field </td><td class="col2 centeralign">  9.62  </td><td class="col3 centeralign">  0.0111  </td><td class="col4 centeralign">  <strong>0.105</strong> (*)  </td><td class="col5 centeralign">  <strong>0.0125</strong>  </td><td class="col6 centeralign">  <strong>0.0031</strong>  </td><td class="col7 centeralign">  <strong>0.0029</strong>  </td>
+	</tr>
+	<tr class="row10 roweven">
+		<td class="col0 leftalign"> Apache::Session::<strong>Redis</strong>  </td><td class="col1 leftalign">  </td><td class="col2 centeralign">  <strong>2.13</strong>  </td><td class="col3 centeralign">  <strong>0.0033</strong>  </td><td class="col4 centeralign">  1.158  </td><td class="col5 centeralign">  0.0623  </td><td class="col6 centeralign">  0.0570  </td><td class="col7 centeralign">  0.0550  </td>
+	</tr>
+	<tr class="row11 rowodd">
+		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::Redis</strong>  </td><td class="col1 leftalign">  </td><td class="col2 centeralign">  <strong>2.36</strong>  </td><td class="col3 centeralign">  <strong>0.0033</strong>  </td><td class="col4 centeralign">  1.154  </td><td class="col5 centeralign">  0.0643  </td><td class="col6 centeralign">  0.1048  </td><td class="col7 centeralign">  0.0024  </td>
+	</tr>
+</table></div>
+<!-- EDIT9 TABLE [7534-9034] -->
+<p>
+<em><strong>(*) :</strong> “purge” test is done with Apache::Session::Browseable-1.2.5 and LLG-2.0. Earlier results are not so good.</em>
+</p>
+
+<p>
+Analysis:
+</p>
+<ul>
+<li class="level1"><div class="li"> LDAP servers are “write-once-read-many”, so write performances are very bad. Don&#039;t use this on heavy load if “Session activity timeout” is enabled <em>(if set, handler “write” sessions)</em></div>
+</li>
+<li class="level1"><div class="li"> MySQL/MariaDB is better to read than to write. Prefer PostgreSQL if you use “Session activity timeout”</div>
+</li>
+<li class="level1"><div class="li"> Logged tables decrease a lot insert performances with PostgreSQL, so use unlogged tables for sessions except for persistent sessions</div>
+</li>
+<li class="level1"><div class="li"> Redis is the best for main usage</div>
+</li>
+<li class="level1"><div class="li"> Browseable::Postgres/PgHstore/PgJSON are the best SQL solutions on average</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT8 SECTION "Apache::Session performances" [4644-9717] -->
+<h3 class="sectionedit10" id="ldap_performances">LDAP performances</h3>
 <div class="level3">
 
 <p>
@@ -307,13 +384,13 @@ Now ldapgroups contains “admin su”
 
 </div>
 </div>
-<!-- EDIT9 SECTION "LDAP performances" [6870-7999] -->
-<h2 class="sectionedit10" id="manager_performances">Manager performances</h2>
+<!-- EDIT10 SECTION "LDAP performances" [9718-10847] -->
+<h2 class="sectionedit11" id="manager_performances">Manager performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT10 SECTION "Manager performances" [8000-8033] -->
-<h3 class="sectionedit11" id="disable_unused_modules">Disable unused modules</h3>
+<!-- EDIT11 SECTION "Manager performances" [10848-10881] -->
+<h3 class="sectionedit12" id="disable_unused_modules">Disable unused modules</h3>
 <div class="level3">
 
 <p>
@@ -323,8 +400,8 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
 </div>
-<!-- EDIT11 SECTION "Disable unused modules" [8034-8280] -->
-<h3 class="sectionedit12" id="use_static_html_files">Use static HTML files</h3>
+<!-- EDIT12 SECTION "Disable unused modules" [10882-11128] -->
+<h3 class="sectionedit13" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
 <p>
@@ -350,6 +427,6 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Use static HTML files" [8281-] --></div>
+<!-- EDIT13 SECTION "Use static HTML files" [11129-] --></div>
 </body>
 </html>

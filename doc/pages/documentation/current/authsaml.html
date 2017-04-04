@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authsaml</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authsaml"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authsaml.html"/>
@@ -199,14 +199,14 @@ For each attribute, you can set:
 <h5 id="general_options">General options</h5>
 <div class="level5">
 <ul>
-<li class="level1"><div class="li"> <strong>Resolution Rule</strong>: rule that will be applied to preselect an IDP for a user. You have access to all environment variable, like user <abbr title="Internet Protocol">IP</abbr> address.</div>
+<li class="level1"><div class="li"> <strong>Resolution Rule</strong>: rule that will be applied to preselect an IDP for a user. You have access to all environment variable <em>(like user <abbr title="Internet Protocol">IP</abbr> address)</em> and all session keys.</div>
 </li>
 </ul>
 
 <p>
-For example, to preselect this IDP for users coming from 129.168.0.0/16 network:
+For example, to preselect this IDP for users coming from 129.168.0.0/16 network and member of “admin” group:
 </p>
-<pre class="code">$ENV{REMOTE_ADDR} =~ /^192\.168/</pre>
+<pre class="code">$ENV{REMOTE_ADDR} =~ /^192\.168/ and $groups =~ /\badmin\b/</pre>
 
 </div>
 

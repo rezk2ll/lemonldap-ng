@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:extendedfunctions</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,extendedfunctions"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="extendedfunctions.html"/>
@@ -50,7 +50,6 @@
 
 <ul class="toc">
 <li class="level1"><div class="li"><a href="#presentation">Presentation</a></div></li>
-<li class="level1"><div class="li"><a href="#request_information">Request information</a></div></li>
 <li class="level1"><div class="li"><a href="#extended_functions_list">Extended Functions List</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#date">date</a></div></li>
@@ -101,13 +100,13 @@ This is also true for:
 Inside this jail, you can access to:
 </p>
 <ul>
+<li class="level1"><div class="li"> all session values and CGI environment variables <em>(through $ENV{&lt;HTTP_NAME&gt;})</em></div>
+</li>
 <li class="level1"><div class="li"> Core Perl subroutines (split, pop, map, etc.)</div>
 </li>
 <li class="level1"><div class="li"> <a href="customfunctions.html" class="wikilink1" title="documentation:2.0:customfunctions">Custom functions</a></div>
 </li>
 <li class="level1"><div class="li"> The <a href="http://perldoc.perl.org/MIME/Base64.html" class="urlextern" title="http://perldoc.perl.org/MIME/Base64.html"  rel="nofollow">encode_base64</a> subroutine</div>
-</li>
-<li class="level1"><div class="li"> Environment variables, in some cases (through %ENV). <em>(NB: with Apache handlers it is generally empty, so unusable for rules/headers)</em> </div>
 </li>
 <li class="level1"><div class="li"> <a href="#request_information" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">Information about current request</a></div>
 </li>
@@ -139,40 +138,13 @@ Inside this jail, you can access to:
 <div class="notetip">To know more about the jail, check <a href="http://perldoc.perl.org/Safe.html" class="urlextern" title="http://perldoc.perl.org/Safe.html"  rel="nofollow">Safe module documentation</a>.
 </div>
 </div>
-<!-- EDIT2 SECTION "Presentation" [35-1271] -->
-<h2 class="sectionedit3" id="request_information">Request information</h2>
-<div class="level2">
-
-<p>
-The following data about the current request are available through functions :
-</p>
-<ul>
-<li class="level1"><div class="li"> hostname</div>
-</li>
-<li class="level1"><div class="li"> remote_ip: the client <abbr title="Internet Protocol">IP</abbr> address</div>
-</li>
-<li class="level1"><div class="li"> uri: <abbr title="Uniform Resource Locator">URL</abbr> path</div>
-</li>
-<li class="level1"><div class="li"> uri_with_args: <abbr title="Uniform Resource Locator">URL</abbr> path with query string</div>
-</li>
-<li class="level1"><div class="li"> unparsed_uri: <abbr title="Uniform Resource Locator">URL</abbr> path, before <abbr title="Uniform Resource Locator">URL</abbr> decoding</div>
-</li>
-<li class="level1"><div class="li"> args: the query string</div>
-</li>
-<li class="level1"><div class="li"> method: the request method (GET, POST etc.)</div>
-</li>
-<li class="level1"><div class="li"> header_in(“Your-Request-Header”): any request header</div>
-</li>
-</ul>
-
-</div>
-<!-- EDIT3 SECTION "Request information" [1272-1677] -->
-<h2 class="sectionedit4" id="extended_functions_list">Extended Functions List</h2>
+<!-- EDIT2 SECTION "Presentation" [35-1215] -->
+<h2 class="sectionedit3" id="extended_functions_list">Extended Functions List</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT4 SECTION "Extended Functions List" [1678-1714] -->
-<h3 class="sectionedit5" id="date">date</h3>
+<!-- EDIT3 SECTION "Extended Functions List" [1216-1252] -->
+<h3 class="sectionedit4" id="date">date</h3>
 <div class="level3">
 
 <p>
@@ -181,8 +153,8 @@ Returns the date, in format YYYYMMDDHHMMSS, local time by default, GMT by callin
 <pre class="code">date(1)</pre>
 
 </div>
-<!-- EDIT5 SECTION "date" [1715-1834] -->
-<h3 class="sectionedit6" id="checklogonhours">checkLogonHours</h3>
+<!-- EDIT4 SECTION "date" [1253-1372] -->
+<h3 class="sectionedit5" id="checklogonhours">checkLogonHours</h3>
 <div class="level3">
 
 <p>
@@ -238,8 +210,8 @@ You can modify the default behavior for people without value in ssoLogonHours. I
 <pre class="code">checkLogonHours($ssoLogonHours, &#039;&#039;, &#039;&#039;, &#039;1&#039;)</pre>
 
 </div>
-<!-- EDIT6 SECTION "checkLogonHours" [1835-3772] -->
-<h3 class="sectionedit7" id="checkdate">checkDate</h3>
+<!-- EDIT5 SECTION "checkLogonHours" [1373-3310] -->
+<h3 class="sectionedit6" id="checkdate">checkDate</h3>
 <div class="level3">
 
 <p>
@@ -270,8 +242,8 @@ Simple usage example:
 <pre class="code">checkDate($ssoStartDate, $ssoEndDate)</pre>
 
 </div>
-<!-- EDIT7 SECTION "checkDate" [3773-4400] -->
-<h3 class="sectionedit8" id="basic">basic</h3>
+<!-- EDIT6 SECTION "checkDate" [3311-3938] -->
+<h3 class="sectionedit7" id="basic">basic</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
 </div>
@@ -295,8 +267,8 @@ Simple usage example:
 <pre class="code">basic($uid,$_password)</pre>
 
 </div>
-<!-- EDIT8 SECTION "basic" [4401-4863] -->
-<h3 class="sectionedit9" id="unicode2iso">unicode2iso</h3>
+<!-- EDIT7 SECTION "basic" [3939-4401] -->
+<h3 class="sectionedit8" id="unicode2iso">unicode2iso</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
 </div>
@@ -318,8 +290,8 @@ Simple usage example:
 <pre class="code">unicode2iso($name)</pre>
 
 </div>
-<!-- EDIT9 SECTION "unicode2iso" [4864-5168] -->
-<h3 class="sectionedit10" id="iso2unicode">iso2unicode</h3>
+<!-- EDIT8 SECTION "unicode2iso" [4402-4706] -->
+<h3 class="sectionedit9" id="iso2unicode">iso2unicode</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
 </div>
@@ -341,8 +313,8 @@ Simple usage example:
 <pre class="code">iso2unicode($name)</pre>
 
 </div>
-<!-- EDIT10 SECTION "iso2unicode" [5169-5473] -->
-<h3 class="sectionedit11" id="groupmatch">groupMatch</h3>
+<!-- EDIT9 SECTION "iso2unicode" [4707-5011] -->
+<h3 class="sectionedit10" id="groupmatch">groupMatch</h3>
 <div class="level3">
 
 <p>
@@ -367,8 +339,8 @@ Simple usage example:
 <pre class="code">groupMatch($hGroups, &#039;description&#039;, &#039;Service 1&#039;)</pre>
 
 </div>
-<!-- EDIT11 SECTION "groupMatch" [5474-5832] -->
-<h3 class="sectionedit12" id="encrypt">encrypt</h3>
+<!-- EDIT10 SECTION "groupMatch" [5012-5370] -->
+<h3 class="sectionedit11" id="encrypt">encrypt</h3>
 <div class="level3">
 <div class="notetip">Since version 2.0, this function is now compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>.
 </div>
@@ -378,8 +350,8 @@ This function uses the secret key of LLNG configuration to crypt a data. This ca
 <pre class="code">encrypt($_whatToTrace)</pre>
 
 </div>
-<!-- EDIT12 SECTION "encrypt" [5833-6138] -->
-<h3 class="sectionedit13" id="token">token</h3>
+<!-- EDIT11 SECTION "encrypt" [5371-5676] -->
+<h3 class="sectionedit12" id="token">token</h3>
 <div class="level3">
 
 <p>
@@ -388,8 +360,8 @@ This function generates token used to <a href="servertoserver.html" class="wikil
 <pre class="code">token($_session_id,&#039;webapp1.example.com&#039;,&#039;webapp2.example.com&#039;)</pre>
 
 </div>
-<!-- EDIT13 SECTION "token" [6139-6343] -->
-<h3 class="sectionedit14" id="isinnet6">isInNet6</h3>
+<!-- EDIT12 SECTION "token" [5677-5881] -->
+<h3 class="sectionedit13" id="isinnet6">isInNet6</h3>
 <div class="level3">
 
 <p>
@@ -398,6 +370,6 @@ Function to check if an IPv6 address is in a subnet. Example <em>check if <abbr 
 <pre class="code perl">isInNet6<span class="br0">&#40;</span><span class="re0">$ipAddr</span><span class="sy0">,</span> <span class="st_h">'fe80::/10'</span><span class="br0">&#41;</span></pre>
 
 </div>
-<!-- EDIT14 SECTION "isInNet6" [6344-] --></div>
+<!-- EDIT13 SECTION "isInNet6" [5882-] --></div>
 </body>
 </html>
