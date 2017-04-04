@@ -59,6 +59,7 @@ my @legend = (
     'Apache::Session::Browseable::LDAP'        => 'LDAP',
     'Apache::Session::MySQL (no lock)'         => 'BMySQL',
     'Apache::Session::Browseable::MySQL'       => 'BiMySQL',
+    'Apache::Session::Browseable::MySQLJSON'   => 'MySQLJSON',
     'Apache::Session::Postgres (logged table)' => 'Postgres',
     'Apache::Session::Postgres'                => 'UPostgres',
     'Apache::Session::Browseable::Postgres'    => 'BPostgres',
@@ -123,6 +124,18 @@ my $tests = {
             'CREATE INDEX uid1 ON sessions (_whatToTrace) USING BTREE',
             'CREATE INDEX _s1 ON sessions (_session_kind) USING BTREE',
             'CREATE INDEX _u1 ON sessions (_utime) USING BTREE',
+        ],
+    },
+    MySQLJSON => {
+        globalStorage        => 'Apache::Session::Browseable::MySQLJSON',
+        globalStorageOptions => {
+            DataSource => 'dbi:mysql:host=127.0.0.1;database=sessions',
+            UserName   => 'sso',
+            Password   => 'sso',
+        },
+        pg => [
+            'DROP TABLE IF EXISTS sessions',
+        'CREATE TABLE sessions (id varchar(64) not null primary key,a_session json,as_wt varchar(32) AS (a_session->"$._whatToTrace") VIRTUAL,as_sk varchar(12)  AS (a_session->"$._session_kind") VIRTUAL,as_ut bigint  AS (a_session->"$._utime") VIRTUAL,as_ip varchar(64)  AS (a_session->"$.ipAddr") VIRTUAL,KEY as_wt (as_wt),KEY as_sk (as_sk),KEY as_ut (as_ut),KEY as_ip (as_ip)) ENGINE=InnoDB',
         ],
     },
     Postgres => {
