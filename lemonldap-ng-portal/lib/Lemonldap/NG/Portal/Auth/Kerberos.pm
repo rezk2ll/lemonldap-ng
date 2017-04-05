@@ -19,10 +19,12 @@ extends 'Lemonldap::NG::Portal::Auth::Base';
 
 sub init {
     my ($self) = @_;
-    unless($self->keytab($self->conf->{krbKeyTab})){
+    my $file;
+    unless ( $file = $self->conf->{krbKeyTab} ) {
         $self->error('Keytab not defined');
         return 0;
     }
+    $self->keytab("FILE:$file");
     return 1;
 }
 
@@ -76,6 +78,7 @@ sub extractFormInfo {
         }
         return PE_ERROR;
     }
+    $self->userLogger->notice("$client_name authentified by Kerberos");
     $req->user($client_name);
     return PE_OK;
 }
