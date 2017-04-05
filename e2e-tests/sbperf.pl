@@ -260,6 +260,12 @@ my $tests = {
 
 my $times = {};
 
+if(@ARGV) {
+    foreach my $t ( keys %$tests ) {
+        delete $tests->{$t} unless(grep /^$t$/, @ARGV);
+    }
+}
+
 foreach my $name ( keys %$tests ) {
     my $opts = $tests->{$name}->{globalStorageOptions};
     if ( my $cmd = delete $tests->{$name}->{cmd} ) {
