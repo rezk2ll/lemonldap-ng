@@ -5,6 +5,7 @@ use Mouse;
 use GSSAPI;
 use MIME::Base64;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_BADCREDENTIALS
   PE_ERROR
   PE_OK
   PE_SENDRESPONSE
@@ -26,7 +27,7 @@ sub extractFormInfo {
     unless ($auth) {
         $req->response(
             [
-                410,
+                401,
                 [ 'WWW-Authenticate' => 'Negotiate' ],
                 ['Authentication required']
             ]
@@ -35,14 +36,13 @@ sub extractFormInfo {
     }
     if ( $auth !~ /^Negotiate (.*)$/ ) {
         $self->userLogger->error('Bad authorization header');
-        $req->response( [ 403, [], ['Forbidden'] ] );
-        return PE_SENDRESPONSE;
+        return PE_BADCREDENTIALS;
     }
     my $data;
     eval { $data = MIME::Base64::decode($1) };
     if ($@) {
         $self->userLogger->error( 'Bad authorization header: ' . $@ );
-        return PE_ERROR;
+        return PE_BADCREDENTIALS;
     }
     my $server_context;
     my $status = GSSAPI::Context::accept(
