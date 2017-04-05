@@ -19,6 +19,7 @@ lib/Lemonldap/NG/Portal/Auth/Custom.pm
 lib/Lemonldap/NG/Portal/Auth/DBI.pm
 lib/Lemonldap/NG/Portal/Auth/Demo.pm
 lib/Lemonldap/NG/Portal/Auth/Facebook.pm
+lib/Lemonldap/NG/Portal/Auth/Kerberos.pm
 lib/Lemonldap/NG/Portal/Auth/LDAP.pm
 lib/Lemonldap/NG/Portal/Auth/Null.pm
 lib/Lemonldap/NG/Portal/Auth/OpenID.pm
