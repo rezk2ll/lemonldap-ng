@@ -63,7 +63,7 @@ foreach my $i ( 1 .. COUNT() ) {
 
     #$string = 'dwho';
     my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) =
-      localtime(time-int(rand(4*3600)));
+      localtime( time - int( rand( 4 * 3600 ) ) );
     my $ipAddr = (
         int( rand(2) ) == 1
         ? join( '.',
@@ -77,10 +77,12 @@ foreach my $i ( 1 .. COUNT() ) {
             # Mix routable IPv6 addresses (2000::/3) and local ones (fe:80::/10)
             (
                 int( rand(2) ) == 1
-                ? sprintf( "%X",      int( rand(8192) + 8192 ) )
+                ? (
+                    sprintf( "%X", int( rand(8192) + 8192 ) ),
+                    sprintf( "%X", int( rand(65536) ) )
+                  )
                 : sprintf( "fe80:%X", int( rand(16384) ) )
             ),
-            sprintf( "%X", int( rand(65536) ) ),
             sprintf( "%X", int( rand(65536) ) ),
             sprintf( "%X", int( rand(65536) ) ),
             sprintf( "%X", int( rand(65536) ) ),
