@@ -65,6 +65,9 @@ sub extractFormInfo {
     $status = $gss_client_name->display($client_name);
     unless ($status) {
         $self->logger->error('Unable to display KRB client name');
+        foreach ( $status->generic_message(), $status->specific_message() ) {
+            $self->logger->error($_);
+        }
         return PE_ERROR;
     }
     $req->user($client_name);
