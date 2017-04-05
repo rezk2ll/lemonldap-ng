@@ -19,6 +19,11 @@ extends 'Lemonldap::NG::Portal::Auth::Base';
 
 sub init {
     my ($self) = @_;
+    unless($self->keytab($self->conf->{krbKeyTab})){
+        $self->error('Keytab not defined');
+        return 0;
+    }
+    return 1;
 }
 
 sub extractFormInfo {
@@ -44,13 +49,14 @@ sub extractFormInfo {
         $self->userLogger->error( 'Bad authorization header: ' . $@ );
         return PE_BADCREDENTIALS;
     }
-    my $server_context;
+    $ENV{KRB5_KTNAME} = $self->keytab;
+    my $gss_client_name;
     my $status = GSSAPI::Context::accept(
-        $server_context,
+        my $server_context,
         GSS_C_NO_CREDENTIAL,
         $data,
         GSS_C_NO_CHANNEL_BINDINGS,
-        my $gss_client_name,
+        $gss_client_name,
         my $out_mech,
         my $gss_output_token,
         my $out_flags,
@@ -80,7 +86,7 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{SSLAuthnLevel};
+    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{krbAuthnLevel};
     PE_OK;
 }
 
