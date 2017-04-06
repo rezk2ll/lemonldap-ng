@@ -37,6 +37,7 @@ sub extractFormInfo {
         # Case 1: simple usage or first Kerberos Ajax request
         #         => return 401 to initiate Kerberos
         if ( !$self->{conf}->{krbByJs} or $req->param('krb') ) {
+            $self->logger->debug('Initialize Kerberos dialog');
 
             # Case 1.1: Ajax request
             if ( $req->wantJSON ) {
@@ -53,7 +54,8 @@ sub extractFormInfo {
                 );
             }
 
-            # Case 1.2: HTML request: error is customized
+            # Case 1.2: HTML request: display error and initiate Kerberos
+            #           dialog
             else {
                 $req->error(PE_BADCREDENTIALS);
                 push @{ $req->respHeaders }, 'WWW-Authenticate' => 'Negotiate';
@@ -74,11 +76,13 @@ sub extractFormInfo {
         # another backend (Combination)
         # switch to another backend
         elsif ( defined $req->param('krb') ) {
+            $self->userLogger->warn('Kerberos authentication has failed');
             return PE_BADCREDENTIALS;
         }
 
         # Case 3: Display kerberos auth page (with javascript)
         else {
+            $self->logger->debug('Send Kerberos javascript');
             $req->datas->{customScript} .=
                 '<script type="text/javascript" src="'
               . $self->p->staticPrefix
