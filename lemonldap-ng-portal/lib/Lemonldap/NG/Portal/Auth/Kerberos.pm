@@ -16,6 +16,8 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Auth::Base';
 
+has keytab => ( is => 'rw' );
+
 # INITIALIZATION
 
 sub init {
@@ -36,7 +38,7 @@ sub extractFormInfo {
 
         # Case 1: simple usage or first Kerberos Ajax request
         #         => return 401 to initiate Kerberos
-        if ( !$self->{conf}->{krbByJs} or $req->param('krb') ) {
+        if ( !$self->{conf}->{krbByJs} or $req->param('kerberos') ) {
             $self->logger->debug('Initialize Kerberos dialog');
 
             # Case 1.1: Ajax request
@@ -75,19 +77,19 @@ sub extractFormInfo {
         # page with "kerberos=0". Return an error to be able to switch to
         # another backend (Combination)
         # switch to another backend
-        elsif ( defined $req->param('krb') ) {
-            $self->userLogger->warn('Kerberos authentication has failed');
+        elsif ( defined $req->param('kerberos') ) {
+            $self->userLogger->warn('Kerberos authentication has failed, back to portal');
             return PE_BADCREDENTIALS;
         }
 
         # Case 3: Display kerberos auth page (with javascript)
         else {
             $self->logger->debug('Send Kerberos javascript');
-            $self->p->setHiddenValue( $req, kerberos => 0, '', 0 );
+            $self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );
             $req->datas->{customScript} .=
                 '<script type="text/javascript" src="'
               . $self->p->staticPrefix
-              . 'common/js/kerberos.js"></script>';
+              . '/common/js/kerberos.js"></script>';
             return PE_FIRSTACCESS;
         }
     }

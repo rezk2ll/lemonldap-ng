@@ -46,7 +46,7 @@
 
         <div id="<TMPL_VAR NAME="key">">
 
-          <form action="<TMPL_VAR NAME="url">" method="post" class="login <TMPL_VAR NAME="module">">
+          <form id="form" action="<TMPL_VAR NAME="url">" method="post" class="login <TMPL_VAR NAME="module">">
 
             <!-- Hidden fields -->
             <TMPL_VAR NAME="HIDDEN_INPUTS">
@@ -102,9 +102,9 @@
 
   <div class="panel panel-default">
   <TMPL_IF NAME="module">
-  <form action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
+  <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
   <TMPL_ELSE>
-  <form action="#" method="post" class="login" role="form">
+  <form id="lform" action="#" method="post" class="login" role="form">
   </TMPL_IF>
    <!-- Hidden fields -->
    <TMPL_VAR NAME="HIDDEN_INPUTS">
