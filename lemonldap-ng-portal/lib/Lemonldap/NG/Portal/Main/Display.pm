@@ -50,6 +50,11 @@ sub display {
             AUTH_URL        => $req->{datas}->{_url},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->datas->{_authChoice},
+            (
+                $req->datas->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                : ()
+            ),
         );
     }
 
@@ -74,6 +79,11 @@ sub display {
             CONFIRMKEY => $self->stamp(),
             LIST       => $req->datas->{list}        || [],
             REMEMBER   => $req->datas->{confirmRemember},
+            (
+                $req->datas->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                : ()
+            ),
         );
     }
 
@@ -91,6 +101,11 @@ sub display {
             FORM_METHOD     => $self->conf->{infoFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->datas->{_authChoice},
+            (
+                $req->datas->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                : ()
+            ),
         );
     }
 
@@ -108,6 +123,11 @@ sub display {
             AUTH_ERROR_TYPE => $req->error_type,
             PROVIDERURI     => $p,
             MSG             => $req->info(),
+            (
+                $req->datas->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                : ()
+            ),
         );
         $templateParams{ID} = $req->datas->{_openidPortal} . $id if ($id);
     }
@@ -121,6 +141,11 @@ sub display {
             URL           => $req->{urldc},
             HIDDEN_INPUTS => $self->buildHiddenForm($req),
             FORM_METHOD   => $req->datas->{redirectFormMethod} || 'get',
+            (
+                $req->datas->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                : ()
+            ),
         );
     }
 
@@ -136,6 +161,11 @@ sub display {
             APPSLIST_ORDER => $req->{sessionInfo}->{'appsListOrder'},
             PING           => $self->conf->{portalPingInterval},
             $self->menu->params($req),
+            (
+                $req->datas->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                : ()
+            ),
         );
     }
 
@@ -146,6 +176,11 @@ sub display {
             CONFIRMKEY => $self->stamp,
             PORTAL     => $self->conf->{portal},
             URL        => $req->datas->{_url},
+            (
+                $req->datas->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                : ()
+            ),
         );
     }
 
@@ -158,6 +193,11 @@ sub display {
         %templateParams = (
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
+            (
+                $req->datas->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                : ()
+            ),
         );
     }
 
@@ -179,6 +219,11 @@ sub display {
             REGISTER_URL          => $self->conf->{registerUrl},
             HIDDEN_INPUTS         => $self->buildHiddenForm($req),
             STAYCONNECTED         => $self->conf->{stayConnected},
+            (
+                $req->datas->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                : ()
+            ),
         );
 
         # Display captcha if it's enabled

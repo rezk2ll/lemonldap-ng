@@ -7,6 +7,7 @@ use MIME::Base64;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_ERROR
+  PE_FIRSTACCESS
   PE_OK
   PE_SENDRESPONSE
 );
@@ -32,19 +33,67 @@ sub extractFormInfo {
     my ( $self, $req ) = @_;
     my $auth = $req->env->{HTTP_AUTHORIZATION};
     unless ($auth) {
-        $req->response(
-            [
-                401,
-                [ 'WWW-Authenticate' => 'Negotiate' ],
-                ['Authentication required']
-            ]
-        );
-        return PE_SENDRESPONSE;
+
+        # Case 1: simple usage or first Kerberos Ajax request
+        #         => return 401 to initiate Kerberos
+        if ( !$self->{conf}->{krbByJs} or $req->param('krb') ) {
+
+            # Case 1.1: Ajax request
+            if ( $req->wantJSON ) {
+                $req->response(
+                    [
+                        401,
+                        [
+                            'WWW-Authenticate' => 'Negotiate',
+                            'Content-Type'     => 'application/json',
+                            'Content-Length'   => 35
+                        ],
+                        ['{"error":"Authentication required"}']
+                    ]
+                );
+            }
+
+            # Case 1.2: HTML request: error is customized
+            else {
+                $req->error(PE_BADCREDENTIALS);
+                push @{ $req->respHeaders }, 'WWW-Authenticate' => 'Negotiate';
+                my ( $tpl, $prms ) = $self->p->display($req);
+                $req->response(
+                    $self->p->sendHtml(
+                        $req, $tpl,
+                        params => $prms,
+                        code   => 401
+                    )
+                );
+            }
+            return PE_SENDRESPONSE;
+        }
+
+        # Case 2: Ajax Kerberos request has failed, and javascript has reloaded
+        # page with "kerberos=0". Return an error to be able to switch to
+        # another backend (Combination)
+        # switch to another backend
+        elsif ( defined $req->param('krb') ) {
+            return PE_BADCREDENTIALS;
+        }
+
+        # Case 3: Display kerberos auth page (with javascript)
+        else {
+            $req->datas->{customScript} .=
+                '<script type="text/javascript" src="'
+              . $self->p->staticPrefix
+              . 'common/js/kerberos.js"></script>';
+            return PE_FIRSTACCESS;
+        }
     }
+
+    # Case 4: an "Authorization header" has been sent
     if ( $auth !~ /^Negotiate (.*)$/ ) {
         $self->userLogger->error('Bad authorization header');
         return PE_BADCREDENTIALS;
     }
+
+    # Case 5: Kerberos ticket received
     my $data;
     eval { $data = MIME::Base64::decode($1) };
     if ($@) {

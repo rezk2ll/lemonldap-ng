@@ -128,13 +128,6 @@ sub sendError {
     $err  ||= $req->error;
     $code ||= 500;
     $self->lmLog( "Error $code: $err", $code > 499 ? 'error' : 'notice' );
-    my $title = (
-          $code >= 500 ? 'Server error'
-        : $code == 403 ? 'Forbidden'
-        : $code == 401 ? 'Authentication required'
-        : $code == 400 ? 'Bad request'
-        :                'Error'
-    );
 
     # SOAP responses
     if ( $req->env->{HTTP_SOAPACTION} ) {
@@ -166,6 +159,13 @@ sub sendError {
 
     # Default response: HTML
     else {
+        my $title = (
+              $code >= 500 ? 'Server error'
+            : $code == 403 ? 'Forbidden'
+            : $code == 401 ? 'Authentication required'
+            : $code == 400 ? 'Bad request'
+            :                'Error'
+        );
         my $s = "<html><head><title>$title</title>
 <style>
 body{background:#000;color:#fff;padding:10px 50px;font-family:sans-serif;}a{text-decoration:none;color:#fff;}h1{text-align:center;}
