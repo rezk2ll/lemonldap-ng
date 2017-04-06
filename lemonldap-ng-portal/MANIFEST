@@ -126,6 +126,7 @@ README
 REST-API.md
 site/coffee/confirm.coffee
 site/coffee/info.coffee
+site/coffee/kerberos.coffee
 site/coffee/oidcchecksession.coffee
 site/coffee/portal.coffee
 site/coffee/registerbrowser.coffee
@@ -212,6 +213,8 @@ site/htdocs/static/common/js/confirm.js
 site/htdocs/static/common/js/confirm.min.js
 site/htdocs/static/common/js/info.js
 site/htdocs/static/common/js/info.min.js
+site/htdocs/static/common/js/kerberos.js
+site/htdocs/static/common/js/kerberos.min.js
 site/htdocs/static/common/js/oidcchecksession.js
 site/htdocs/static/common/js/oidcchecksession.min.js
 site/htdocs/static/common/js/portal.js
@@ -289,6 +292,7 @@ t/21-Auth-LDAP-utf8.t
 t/22-Auth-and-password-AD.t
 t/23-Auth-and-password-REST.t
 t/24-AuthApache.t
+t/24-AuthKerberos.t
 t/25-AuthSlave.t
 t/26-AuthRemote.t
 t/27-AuthProxy.t

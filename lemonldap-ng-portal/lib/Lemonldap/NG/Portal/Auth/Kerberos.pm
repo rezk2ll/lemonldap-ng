@@ -23,7 +23,7 @@ has keytab => ( is => 'rw' );
 sub init {
     my ($self) = @_;
     my $file;
-    unless ( $file = $self->conf->{krbKeyTab} ) {
+    unless ( $file = $self->conf->{krbKeytab} ) {
         $self->error('Keytab not defined');
         return 0;
     }
