@@ -83,6 +83,7 @@ sub extractFormInfo {
         # Case 3: Display kerberos auth page (with javascript)
         else {
             $self->logger->debug('Send Kerberos javascript');
+            $self->p->setHiddenValue( $req, kerberos => 0, '', 0 );
             $req->datas->{customScript} .=
                 '<script type="text/javascript" src="'
               . $self->p->staticPrefix
