@@ -571,7 +571,7 @@ sub setHiddenFormValue {
     $base64 = 1           unless defined $base64;
 
     # Store value
-    if ( defined $val ) {
+    if ( $val or !($val & ~$val) ) {
         $key = $prefix . $key;
         $val =~ s/\+/%2B/g;
         $req->{portalHiddenFormValues}->{$key} = $val;
