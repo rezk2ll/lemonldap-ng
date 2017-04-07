@@ -815,6 +815,9 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                             "Logout process returns error code $err");
                         return PE_ERROR;
                     }
+                    elsif ($err) {
+                        return $err;
+                    }
                 }
 
                 if ($post_logout_redirect_uri) {
