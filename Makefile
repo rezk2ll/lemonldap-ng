@@ -693,6 +693,8 @@ install_portal_site:	install_conf_dir
 	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-portal
 	# Clean SVN files
 	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
+	@$(PERL) -i -pe 's#__PORTALSTATICDIR__#$(PORTALRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
+	@$(PERL) -i -pe 's#__PORTALTEMPLATESDIR__#$(PORTALTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 
 install_handler_site:	install_conf_dir
 	# Handler install
