@@ -341,24 +341,11 @@ sub display {
 
     }
 
-    ## Common template params
-    my $skin       = $self->getSkin($req);
-    my $portalPath = $self->conf->{portal};
-    $portalPath =~ s#^https?://[^/]+/?#/#;
-    $portalPath =~ s#[^/]+\.fcgi$##;
+    # Additional $req param
     %templateParams = (
         %templateParams,
-        SKIN_PATH => $portalPath . "skins",
-        ANTIFRAME => $self->conf->{portalAntiFrame},
-        SKIN_BG   => $self->conf->{portalSkinBackground},
-        %{ $self->customParameters },
         %{ $req->{customParameters} // {} },
     );
-
-    ## Custom template params
-    if ( my $customParams = $self->getCustomTemplateParameters() ) {
-        %templateParams = ( %templateParams, %$customParams );
-    }
 
     $self->logger->debug("Skin returned: $skinfile");
     return ( $skinfile, \%templateParams );
@@ -436,26 +423,6 @@ sub getSkin {
     }
 
     return $skin;
-}
-
-# Find custom templates parameters
-# @return Custom parameters
-sub getCustomTemplateParameters {
-    my ($self)          = @_;
-    my $conf            = $self->conf;
-    my $customTplParams = {};
-
-    foreach ( keys %$conf ) {
-        next unless ( $_ =~ /^tpl_(.+)$/ );
-        my $tplParam = $1;
-        my $tplValue = $conf->{$_};
-        $self->logger->debug(
-            "Set custom template parameter $tplParam with $tplValue");
-
-        $customTplParams->{$tplParam} = $tplValue;
-    }
-
-    return $customTplParams;
 }
 
 # Build an HTML array to display sessions

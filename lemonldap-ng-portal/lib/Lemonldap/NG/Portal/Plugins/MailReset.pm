@@ -554,7 +554,7 @@ sub display {
     }
 
     # Custom template parameters
-    if ( my $customParams = $self->p->getCustomTemplateParameters() ) {
+    if ( my $customParams = $self->p->customParameters ) {
         foreach ( keys %$customParams ) {
             $tplPrm{$_} = $customParams->{$_};
         }

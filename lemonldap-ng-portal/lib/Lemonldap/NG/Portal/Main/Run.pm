@@ -571,7 +571,7 @@ sub setHiddenFormValue {
     $base64 = 1           unless defined $base64;
 
     # Store value
-    if ( $val or !($val & ~$val) ) {
+    if ( $val or !( $val & ~$val ) ) {
         $key = $prefix . $key;
         $val =~ s/\+/%2B/g;
         $req->{portalHiddenFormValues}->{$key} = $val;
@@ -764,9 +764,16 @@ sub rebuildCookies {
 }
 
 sub tplParams {
+    my $portalPath = $_[0]->conf->{portal};
+    $portalPath =~ s#^https?://[^/]+/?#/#;
+    $portalPath =~ s#[^/]+\.fcgi$##;
     return (
         SKIN       => $_[0]->getSkin( $_[1] ),
         PORTAL_URL => $_[0]->conf->{portal},
+        SKIN_PATH  => $portalPath . "skins",
+        ANTIFRAME  => $_[0]->conf->{portalAntiFrame},
+        SKIN_BG    => $_[0]->conf->{portalSkinBackground},
+        ( $_[0]->customParameters ? ( %{ $_[0]->customParameters } ) : () ),
     );
 }
 
