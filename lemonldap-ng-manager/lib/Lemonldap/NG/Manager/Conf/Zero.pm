@@ -108,7 +108,8 @@ sub zeroConf {
         },
         'macros' => {
             '_whatToTrace' =>
-'$_auth eq \'SAML\' ? "$_user\\@$_idpConfKey" : $_auth eq \'OpenIDConnect\' ? "$_user\\@$_oidcConnectedRP" : "$_user"'
+'$_auth eq \'SAML\' ? "$_user\\@$_idpConfKey" : $_auth eq \'OpenIDConnect\' ? "$_user\\@$_oidcConnectedRP" : "$_user"',
+            'UA' => 'HTTP_USER_AGENT'
         },
         'notificationStorageOptions' => {
             'dirName' => $notificationDir
@@ -167,10 +168,8 @@ sub zeroConf {
         'cookieName'    => 'lemonldap',
         'cfgAuthor'     => 'The LemonLDAP::NG team',
         'cfgVersion'    => $VERSION,
-        'exportedVars'  => {
-            'UA' => 'HTTP_USER_AGENT'
-        },
-        'portalSkin' => 'bootstrap',
+        'exportedVars'  => {},
+        'portalSkin'    => 'bootstrap',
         'portalSkinBackground' =>
           '1280px-Cedar_Breaks_National_Monument_partially.jpg',
         'mailUrl'                    => "http://auth.$domain/resetpwd",
