@@ -286,8 +286,9 @@ sub validateST {
 
     return 0 if $response->is_error;
 
-    my $xs  = XML::Simple->new();
-    my $xml = XMLin( $response->decoded_content );
+    my $xml = $response->decoded_content( default_charset => 'UTF-8' );
+    utf8::encode($xml);
+    $xml = XMLin($xml);
 
     if ( defined $xml->{'cas:authenticationFailure'} ) {
         $self->logger->error( "Failed to validate Service Ticket $ticket: "
@@ -318,11 +319,21 @@ sub validateST {
         }
     }
 
-    my $user = $xml->{'cas:authenticationSuccess'}->{'cas:user'};
+    my $user  = $xml->{'cas:authenticationSuccess'}->{'cas:user'};
+    my $attrs = {};
+    if ( my $casAttr = $xml->{'cas:authenticationSuccess'}->{'cas:attributes'} )
+    {
+        foreach my $k ( keys %$casAttr ) {
+            my $v = $casAttr->{$k};
+            utf8::encode($v);
+            $k =~ s/^cas://;
+            $attrs->{$k} = $v;
+        }
+    }
 
     # TODO store attributes for UserDBCAS
 
-    return $user;
+    return ( $user, $attrs );
 }
 
 # Store PGT IOU and PGT ID
@@ -355,7 +366,6 @@ sub retrievePT {
 
     return 0 if $response->is_error;
 
-    my $xs  = XML::Simple->new();
     my $xml = XMLin( $response->decoded_content );
 
     if ( defined $xml->{'cas:proxyFailure'} ) {
