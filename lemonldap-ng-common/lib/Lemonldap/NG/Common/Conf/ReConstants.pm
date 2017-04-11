@@ -38,6 +38,7 @@ our $authParameters = {
   dbiParams => [qw(dbiAuthnLevel dbiExportedVars dbiAuthChain dbiAuthUser dbiAuthPassword dbiUserChain dbiUserUser dbiUserPassword dbiAuthTable dbiUserTable dbiAuthLoginCol dbiAuthPasswordCol dbiPasswordMailCol userPivot dbiAuthPasswordHash)],
   demoParams => [qw(demoExportedVars)],
   facebookParams => [qw(facebookAuthnLevel facebookExportedVars facebookAppId facebookAppSecret)],
+  krbParams => [qw(krbKeytab krbByJs krbAuthnLevel)],
   ldapParams => [qw(ldapAuthnLevel ldapExportedVars ldapServer ldapPort ldapBase managerDn managerPassword ldapTimeout ldapVersion ldapRaw LDAPFilter AuthLDAPFilter mailLDAPFilter ldapSearchDeref ldapGroupBase ldapGroupObjectClass ldapGroupAttributeName ldapGroupAttributeNameUser ldapGroupAttributeNameSearch ldapGroupRecursive ldapGroupAttributeNameGroup ldapPpolicyControl ldapSetPassword ldapChangePasswordAsUser ldapPwdEnc ldapUsePasswordResetAttribute ldapPasswordResetAttribute ldapPasswordResetAttributeValue ldapAllowResetExpiredPassword)],
   nullParams => [qw(nullAuthnLevel)],
   oidcParams => [qw(oidcAuthnLevel oidcRPCallbackGetParam oidcRPStateTimeout)],

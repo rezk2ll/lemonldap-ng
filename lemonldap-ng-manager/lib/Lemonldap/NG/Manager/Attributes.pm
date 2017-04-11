@@ -305,6 +305,10 @@ sub attributes {
                         'v' => 'Google'
                     },
                     {
+                        'k' => 'Kerberos',
+                        'v' => 'Kerberos'
+                    },
+                    {
                         'k' => 'LDAP',
                         'v' => 'LDAP'
                     },
@@ -497,6 +501,10 @@ sub attributes {
                 {
                     'k' => 'Google',
                     'v' => 'Google'
+                },
+                {
+                    'k' => 'Kerberos',
+                    'v' => 'Kerberos'
                 },
                 {
                     'k' => 'LDAP',
@@ -710,6 +718,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'Google',
                     'v' => 'Google'
+                },
+                {
+                    'k' => 'Kerberos',
+                    'v' => 'Kerberos'
                 },
                 {
                     'k' => 'LDAP',
@@ -1174,6 +1186,17 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'key' => {
             'type' => 'password'
+        },
+        'krbAuthnLevel' => {
+            'default' => 3,
+            'type'    => 'int'
+        },
+        'krbByJs' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'krbKeytab' => {
+            'type' => 'text'
         },
         'ldapAllowResetExpiredPassword' => {
             'default' => 0,

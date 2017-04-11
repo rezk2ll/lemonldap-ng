@@ -1801,6 +1801,7 @@ sub attributes {
                 { k => 'DBI',         v => 'Database (DBI)' },
                 { k => 'Facebook',    v => 'Facebook' },
                 { k => 'Google',      v => 'Google' },
+                { k => 'Kerberos',    v => 'Kerberos' },
                 { k => 'LDAP',        v => 'LDAP' },
                 { k => 'PAM',         v => 'PAM' },
                 { k => 'Radius',      v => 'Radius' },
@@ -2233,6 +2234,22 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Null authentication level',
         },
 
+        # Kerberos
+        krbKeytab => {
+            type          => 'text',
+            documentation => 'Kerberos keytab',
+        },
+        krbByJs => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Launch Kerberos authentication by Ajax',
+        },
+        krbAuthnLevel => {
+            type          => 'int',
+            default       => 3,
+            documentation => 'Null authentication level',
+        },
+
         # Slave
         slaveAuthnLevel => {
             type          => 'int',
@@ -2277,6 +2294,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Demo',          v => 'Demo' },
                     { k => 'Facebook',      v => 'Facebook' },
                     { k => 'Google',        v => 'Google' },
+                    { k => 'Kerberos',      v => 'Kerberos' },
                     { k => 'LDAP',          v => 'LDAP' },
                     { k => 'PAM',           v => 'PAM' },
                     { k => 'Null',          v => 'None' },
@@ -2340,6 +2358,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'DBI',      v => 'Database (DBI)' },
                 { k => 'Facebook', v => 'Facebook' },
                 { k => 'Google',   v => 'Google' },
+                { k => 'Kerberos', v => 'Kerberos' },
                 { k => 'LDAP',     v => 'LDAP' },
                 { k => 'PAM',      v => 'PAM' },
                 { k => 'Radius',   v => 'Radius' },
@@ -2504,9 +2523,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'OpenID Connect allow hybrid flow',
         },
         oidcStorage        => { type => 'PerlModule', },
-        oidcStorageOptions => {
-            type => 'keyTextContainer',
-        },
+        oidcStorageOptions => { type => 'keyTextContainer', },
 
         # OpenID Connect metadata nodes
         oidcOPMetaDataNodes => {

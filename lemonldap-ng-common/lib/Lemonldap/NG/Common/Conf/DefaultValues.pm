@@ -71,6 +71,7 @@ sub defaultValues {
         'issuerDBSAMLPath'          => '^/saml/',
         'issuerDBSAMLRule'          => 1,
         'jsRedirect'                => 0,
+        'krbAuthnLevel'             => 3,
         'ldapAuthnLevel'            => 2,
         'ldapBase'                  => 'dc=example,dc=com',
         'ldapExportedVars'          => {
