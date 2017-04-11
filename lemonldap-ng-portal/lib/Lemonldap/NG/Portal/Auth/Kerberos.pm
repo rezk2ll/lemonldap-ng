@@ -115,7 +115,7 @@ sub extractFormInfo {
         $data,
         GSS_C_NO_CHANNEL_BINDINGS,
         $gss_client_name,
-        my $out_mech,
+        undef,
         my $gss_output_token,
         my $out_flags,
         my $out_time,
@@ -140,6 +140,10 @@ sub extractFormInfo {
 }
 
 sub authenticate {
+    PE_OK;
+}
+
+sub authLogout {
     PE_OK;
 }
 
