@@ -325,8 +325,9 @@ sub display {
                     DISPLAY_YUBIKEY_FORM => $displayType =~ /\byubikeyform\b/
                     ? 1
                     : 0,
-                    DISPLAY_LOGO_FORM => $displayType eq "logo" ? 1 : 0,
-                    module => $displayType eq "logo"
+                    DISPLAY_SSL_FORM  => $displayType =~ /sslform/ ? 1 : 0,
+                    DISPLAY_LOGO_FORM => $displayType eq "logo"    ? 1 : 0,
+                    module            => $displayType eq "logo"
                     ? $self->getModule( $req, 'auth' )
                     : "",
                     AUTH_LOOP => [],
@@ -342,10 +343,7 @@ sub display {
     }
 
     # Additional $req param
-    %templateParams = (
-        %templateParams,
-        %{ $req->{customParameters} // {} },
-    );
+    %templateParams = ( %templateParams, %{ $req->{customParameters} // {} }, );
 
     $self->logger->debug("Skin returned: $skinfile");
     return ( $skinfile, \%templateParams );

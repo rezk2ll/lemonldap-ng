@@ -2,8 +2,12 @@ package Lemonldap::NG::Portal::Auth::SSL;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants
-  qw(PE_OK PE_BADCERTIFICATE PE_CERTIFICATEREQUIRED);
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_BADCERTIFICATE
+  PE_CERTIFICATEREQUIRED
+  PE_FIRSTACCESS
+  PE_OK
+);
 
 our $VERSION = '2.0.0';
 
@@ -33,14 +37,24 @@ sub extractFormInfo {
     {
         $field = $tmp;
     }
-    return PE_OK
-      if ( $req->user( $req->env->{$field} ) );
-    if ( $req->env->{SSL_CLIENT_S_DN} ) {
+    if ( $req->user( $req->env->{$field} ) ) {
+        $self->userLogger->notice( "GoodSSL authentication for " . $req->user );
+        return PE_OK;
+    }
+    elsif ( $req->env->{SSL_CLIENT_S_DN} ) {
         $self->userLogger->warn("$field was not found in user certificate");
         return PE_BADCERTIFICATE;
     }
+    elsif ( $self->conf->{sslByAjax} and not $req->param('nossl') ) {
+        $self->logger->debug('Send SSL javascript');
+        $req->datas->{customScript} .=
+            '<script type="application/init">{"sslHost":"'
+          . $self->conf->{sslHost}
+          . '"}</script>';
+        return PE_FIRSTACCESS;
+    }
     else {
-        $self->userlogger->warn('No certificate found');
+        $self->userLogger->warn('No certificate found');
         return PE_CERTIFICATEREQUIRED;
     }
 }
@@ -56,7 +70,7 @@ sub setAuthSessionInfo {
 }
 
 sub getDisplayType {
-    return "logo";
+    return ( $_[0]->conf->{sslByAjax} ? "sslform" : "logo" );
 }
 
 1;

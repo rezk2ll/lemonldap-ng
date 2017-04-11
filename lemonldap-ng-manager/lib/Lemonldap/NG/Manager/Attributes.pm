@@ -2951,6 +2951,12 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 5,
             'type'    => 'int'
         },
+        'sslByAjax' => {
+            'type' => 'bool'
+        },
+        'sslHost' => {
+            'type' => 'url'
+        },
         'SSLVar' => {
             'type' => 'text'
         },

@@ -67,6 +67,10 @@
               <TMPL_INCLUDE NAME="yubikeyform.tpl">
             </TMPL_IF>
 
+            <TMPL_IF NAME="sslform">
+              <TMPL_INCLUDE NAME="sslform.tpl">
+            </TMPL_IF>
+
             <TMPL_IF NAME="logo">
 
               <div class="form">
@@ -118,6 +122,10 @@
 
    <TMPL_IF NAME="DISPLAY_OPENID_FORM">
       <TMPL_INCLUDE NAME="openidform.tpl">
+   </TMPL_IF>
+
+   <TMPL_IF NAME="DISPLAY_SSL_FORM">
+      <TMPL_INCLUDE NAME="sslform.tpl">
    </TMPL_IF>
 
    <TMPL_IF NAME="DISPLAY_YUBIKEY_FORM">

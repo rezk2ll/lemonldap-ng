@@ -645,6 +645,8 @@
 "soapSessionServer": "Serveur de sessions SOAP",
 "specialRule": "Règle spécifique",
 "SSLAuthnLevel": "Niveau d'authentification",
+"sslByAjax": "Utiliser une requête Ajax",
+"sslHost": "URL SSL pour Ajax",
 "sslParams": "Paramètres SSL",
 "SSLVar": "Champ extrait du certificat",
 "SSLVarIf": "Champ conditionnel extrait du certificat",

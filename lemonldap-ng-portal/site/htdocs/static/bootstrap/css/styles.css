@@ -60,6 +60,7 @@ div.actions a {
 .buttons {
   text-align: center;
   margin: 10px 0 0 0;
+  cursor: pointer;
 }
 /* Override bootstrap btn style */
 .btn {
@@ -152,4 +153,8 @@ div.oidc_consent_message > ul {
 
 .noborder {
   border: none;
+}
+
+.max {
+  width: 100%;
 }
