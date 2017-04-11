@@ -30,7 +30,6 @@ has proxy => (
 );
 
 has proxyUrl => ( is => 'rw' );
-has pgtId    => ( is => 'rw' );
 
 # INITIALIZATION
 
@@ -137,7 +136,7 @@ sub extractFormInfo {
     $local_url =~ s/ticket=[^&]+//;
     $local_url =~ s/\?$//;
     ( $req->{user}, $req->datas->{casAttr} ) =
-      $self->validateST( $local_url, $ticket );
+      $self->validateST( $req, $local_url, $ticket );
     unless ( $req->{user} ) {
         $self->userLogger->error("CAS: Unable to validate ST $ticket");
         return PE_ERROR;
@@ -150,7 +149,7 @@ sub extractFormInfo {
     if ( $self->proxy ) {
 
         # Check we received a PGT
-        my $pgtId = $self->pgtId;
+        my $pgtId = $req->datas->{pgtId};
 
         unless ($pgtId) {
             $self->logger->error(

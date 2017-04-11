@@ -269,7 +269,7 @@ sub getServerLogoutURL {
 
 # Validate ST
 sub validateST {
-    my ( $self, $service, $ticket ) = @_;
+    my ( $self, $req, $service, $ticket ) = @_;
 
     my $serviceValidateUrl =
         $self->conf->{CAS_url}
@@ -313,7 +313,7 @@ sub validateST {
 
                 # There should be only on session
                 my $pgtIdSession = $self->getCasSession($id) or next;
-                $self->pgtId = $pgtIdSession->data->{pgtId};
+                $req->datas->{pgtId} = $pgtIdSession->data->{pgtId};
                 $pgtIdSession->remove;
             }
         }
