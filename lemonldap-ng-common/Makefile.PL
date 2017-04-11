@@ -50,6 +50,7 @@ WriteMakefile(
         'JSON'                   => 0,
         'Mouse'                  => 0,
         'Plack'                  => 0,
+        'Test::Pod'              => 1.00,
         'URI'                    => 0,
     },    # e.g., Module::Name => 1.1
           #EXE_FILES => [ 'scripts/convertConfig', ],
