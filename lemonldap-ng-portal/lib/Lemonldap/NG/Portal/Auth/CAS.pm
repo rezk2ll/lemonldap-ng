@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Auth::CAS;
 use strict;
 use Mouse;
 use URI::Escape;
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_OK
@@ -52,14 +53,14 @@ sub extractFormInfo {
     # TODO: create a CAS state session
     # Add request state parameters
     if ( $req->datas->{_url} ) {
-        my $url_param = 'url=' . uri_escape( $req->datas->{_url} );
-        $local_url .= ( $local_url =~ /\?/ ? '&' : '?' ) . $url_param;
+        $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
+          . build_urlencoded( url => $req->datas->{_url} );
     }
     if ( $self->conf->{authChoiceParam}
         and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )
     {
-        my $url_param = $self->conf->{authChoiceParam} . '=' . uri_escape($tmp);
-        $local_url .= ( $local_url =~ /\?/ ? '&' : '?' ) . $url_param;
+        $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
+          . build_urlencoded( $self->conf->{authChoiceParam} => $tmp );
     }
 
     # Forward hidden fields
@@ -68,13 +69,8 @@ sub extractFormInfo {
     {
 
         $self->logger->debug("Add hidden values to CAS redirect URL\n");
-
-        foreach ( keys %{ $req->{portalHiddenFormValues} } ) {
-            $local_url .=
-                ( $local_url =~ /\?/ ? '&' : '?' )
-              . $_ . '='
-              . uri_escape( $req->{portalHiddenFormValues}->{$_} );
-        }
+        $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
+          . build_urlencoded( %{ $req->{portalHiddenFormValues} } );
     }
 
     if ( $self->proxy ) {
