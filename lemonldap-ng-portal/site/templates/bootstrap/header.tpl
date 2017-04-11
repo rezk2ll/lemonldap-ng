@@ -40,7 +40,6 @@
   <link rel="openid2.provider" href="<TMPL_VAR NAME="PROVIDERURI">" />
  </TMPL_IF>
  <TMPL_INCLUDE NAME="../common/script.tpl">
- <TMPL_VAR NAME="CUSTOM_SCRIPT">
 <!-- //if:usedebianlibs
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.min.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/portal.min.js"></script>
@@ -54,6 +53,7 @@
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/portal.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/js/bootstrap.js"></script>
  <!-- //endif -->
+ <TMPL_VAR NAME="CUSTOM_SCRIPT">
  <TMPL_INCLUDE NAME="customhead.tpl">
 </head>
 <body>
