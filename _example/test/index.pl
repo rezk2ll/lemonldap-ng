@@ -112,24 +112,7 @@ foreach ( sort keys %$headers ) {
     <td><tt>$headers->{$_}</tt></td>
     <td><tt>\$_SERVER{$headers->{$_}}</tt></td>
     <td id="v-$_">};
-    my @tmp;
-    if (    $ENV{ $headers->{$_} }
-        and @tmp = grep /\S/, split( /;/, $ENV{ $headers->{$_} } ) )
-    {
-        if ($#tmp) {
-            print '<ul class="list-unstyled">';
-            foreach (@tmp) {
-                print "<li>$_</li>";
-            }
-            print '</ul>';
-        }
-        else {
-            print $ENV{ $headers->{$_} };
-        }
-    }
-    else {
-        print "☒",;
-    }
+    print $ENV{ $headers->{$_} } // "☒",;
     print "</td></tr>\n";
 }
 print "</tbody></table>\n";

@@ -104,6 +104,7 @@
       "Ip-Addr": "$ipAddr",
       "Hello": "hello()",
       "Uri": "$ENV{REQUEST_URI}",
+      "Macro-Uri": "$UA",
       "Additional-Arg": "get_additional_arg('header-added')",
       "Base64": "encode_base64('a:b','')"
     },
@@ -148,6 +149,7 @@
   },
   "loginHistoryEnabled": 1,
   "macros": {
+      "UA" : "$ENV{HTTP_USER_AGENT}",
     "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : $_auth eq 'OpenIDConnect' ? \"$_user\\@$_oidcConnectedRP\" : \"$_user\""
   },
   "mailUrl": "http://auth.example.com:__port__/resetpwd",
