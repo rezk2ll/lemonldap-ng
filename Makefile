@@ -664,7 +664,7 @@ install_portal_site:	install_conf_dir
 	cd $(SRCPORTALDIR)/site/templates; for f in `find * -type f -name '*.tpl'`; do \
 		echo "$$f => $(RPORTALTEMPLATESDIR)/$$f"; \
 		mkdir -p $(RPORTALTEMPLATESDIR)/`dirname $$f`; \
-		echo ../../../scripts/transform-templates \
+		../../../scripts/transform-templates \
 			usedebianlibs $(USEDEBIANLIBS) \
 			useexternallibs $(USEEXTERNALLIBS) \
 			jsminified $(JSCOMPRESS) \
