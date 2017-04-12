@@ -102,7 +102,6 @@
 "CAS_authnLevel": "Niveau d'authentification",
 "CAS_CAFile": "Fichier d'AC",
 "CAS_gateway": "Authentification transparente",
-"CAS_pgtFile": "Fichier de PGT",
 "CAS_renew": "Renouveller l'authentication",
 "CAS_proxiedServices": "Services mandatés",
 "CAS_url": "URL du serveur",

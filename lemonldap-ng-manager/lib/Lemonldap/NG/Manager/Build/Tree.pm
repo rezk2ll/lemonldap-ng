@@ -124,8 +124,7 @@ sub tree {
                             nodes => [
                                 'CAS_authnLevel', 'CAS_url',
                                 'CAS_CAFile',     'CAS_renew',
-                                'CAS_gateway',    'CAS_pgtFile',
-                                'CAS_proxiedServices'
+                                'CAS_gateway',    'CAS_proxiedServices'
                             ]
                         },
                         {

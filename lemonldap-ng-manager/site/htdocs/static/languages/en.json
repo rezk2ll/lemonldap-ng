@@ -102,7 +102,6 @@
 "CAS_authnLevel": "Authentication level",
 "CAS_CAFile": "CA file",
 "CAS_gateway": "Gateway authentication",
-"CAS_pgtFile": "PGT file",
 "CAS_renew": "Renew authentication",
 "CAS_proxiedServices": "Proxied services",
 "CAS_url": "Server URL",

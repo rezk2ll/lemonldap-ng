@@ -21,7 +21,6 @@ sub defaultValues {
         'captcha_register_enabled' => 1,
         'captcha_size'             => 6,
         'CAS_authnLevel'           => 1,
-        'CAS_pgtFile'              => '/tmp/pgt.txt',
         'casAccessControlPolicy'   => 'none',
         'checkXSS'                 => 1,
         'confirmFormMethod'        => 'post',

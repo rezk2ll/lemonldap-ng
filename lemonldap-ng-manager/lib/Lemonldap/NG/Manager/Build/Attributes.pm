@@ -2057,23 +2057,18 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 1,
             documentation => 'CAS authentication level',
         },
-        CAS_url => {
-            type    => 'text',
-            test    => $url,
-            msgFail => '__badUrl__',
-        },
         CAS_CAFile  => { type => 'text', },
-        CAS_renew   => { type => 'bool', },
         CAS_gateway => { type => 'bool', },
-        CAS_pgtFile => {
-            type          => 'text',
-            default       => '/tmp/pgt.txt',
-            documentation => 'CAS PGT file',
-        },
         CAS_proxiedServices => {
             type       => 'keyTextContainer',
             keyTest    => qr/^\w+$/,
             keyMsgFail => '__badCasProxyId__',
+        },
+        CAS_renew   => { type => 'bool', },
+        CAS_url => {
+            type    => 'text',
+            test    => $url,
+            msgFail => '__badUrl__',
         },
 
         # PAM

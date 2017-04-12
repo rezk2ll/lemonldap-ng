@@ -618,10 +618,6 @@ sub attributes {
         'CAS_gateway' => {
             'type' => 'bool'
         },
-        'CAS_pgtFile' => {
-            'default' => '/tmp/pgt.txt',
-            'type'    => 'text'
-        },
         'CAS_proxiedServices' => {
             'keyMsgFail' => '__badCasProxyId__',
             'keyTest'    => qr/^\w+$/,
