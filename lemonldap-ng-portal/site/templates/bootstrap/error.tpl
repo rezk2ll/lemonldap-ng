@@ -9,9 +9,21 @@
     </div>
   </TMPL_IF>
 
+  <TMPL_IF ERROR404>
+    <div class="message message-negative alert">
+      <span trspan="notFound">File not found</span>
+    </div>
+  </TMPL_IF>
+
   <TMPL_IF ERROR500>
     <div class="message message-negative alert">
       <span trspan="serverError">Error occurs on the server</span>
+    </div>
+  </TMPL_IF>
+
+  <TMPL_IF ERROR502>
+    <div class="message message-negative alert">
+      <span trspan="proxyError">Proxy error</span>
     </div>
   </TMPL_IF>
 
