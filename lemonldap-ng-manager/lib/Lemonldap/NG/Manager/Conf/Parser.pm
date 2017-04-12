@@ -453,17 +453,27 @@ sub _scanNodes {
                         $self->_scanNodes($subNodes);
                     }
                 }
-                elsif ( $target =~
-                    /^(?:$casSrvMetaDataNodeKeys|$casAppMetaDataNodeKeys)/o )
-                {
-                    $self->set( $optKey, [ $oldName, $key ],
-                        $target, $leaf->{data} );
+                elsif ( $target =~ /^cas(?:Srv|App)MetaDataOptions/ ) {
+                    my $optKey = $&;
+                    hdebug "  $base sub key: $target";
+                    if ( $target =~
+                        /^(?:$casSrvMetaDataNodeKeys|$casAppMetaDataNodeKeys)/o )
+                    {
+                        $self->set( $optKey, [ $oldName, $key ],
+                            $target, $leaf->{data} );
+                    }
+                    else {
+                        push @{ $self->errors },
+                          { message => "Unknown CAS metadata option $target" };
+                        return 0;
+                    }
                 }
                 else {
                     push @{ $self->errors },
-                      { message => "Unknown OIDC metadata option $target" };
+                      { message => "Unknown CAS option $target" };
                     return 0;
                 }
+                next;
             }
             else {
                 push @{ $self->errors },

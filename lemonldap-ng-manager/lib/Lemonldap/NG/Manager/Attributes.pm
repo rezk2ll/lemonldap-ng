@@ -632,14 +632,13 @@ sub attributes {
                 'mail' => 'mail',
                 'uid'  => 'uid'
             },
-            'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail'    => '__badValue__',
-            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'       => 'keyTextContainer'
+            'type' => 'keyTextContainer'
         },
         'casAppMetaDataNodes' => {
             'type' => 'casAppMetaDataNodeContainer'
+        },
+        'casAppMetaDataOptions' => {
+            'type' => 'subContainer'
         },
         'casAttr' => {
             'type' => 'text'
@@ -657,11 +656,7 @@ sub attributes {
                 'mail' => 'mail',
                 'uid'  => 'uid'
             },
-            'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail'    => '__badValue__',
-            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'       => 'keyTextContainer'
+            'type' => 'keyTextContainer'
         },
         'casSrvMetaDataNodes' => {
             'type' => 'casSrvMetaDataNodeContainer'

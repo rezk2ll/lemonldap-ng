@@ -2060,10 +2060,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         casSrvMetaDataExportedVars => {
             type          => 'keyTextContainer',
-            keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => '__badVariableName__',
-            test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            msgFail       => '__badValue__',
             default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
             documentation => 'CAS exported variables',
         },
@@ -2081,12 +2077,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             msgFail => '__badUrl__',
         },
 
+        casAppMetaDataOptions => { type => 'subContainer', },
         casAppMetaDataExportedVars => {
             type          => 'keyTextContainer',
-            keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => '__badVariableName__',
-            test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            msgFail       => '__badValue__',
             default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
             documentation => 'CAS exported variables',
         },

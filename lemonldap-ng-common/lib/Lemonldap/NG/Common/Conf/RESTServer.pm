@@ -451,14 +451,14 @@ sub _casMetaDataNodes {
     my ( $self, $type, $req, @path ) = @_;
     my $refKey =
       ( $type eq 'App' ? 'casAppMetaDataOptions' : 'casSrvMetaDataOptions' );
-    return $self->complexNodesRoot( $req, $refKey, "oidc${type}MetaDataNode" )
+    return $self->complexNodesRoot( $req, $refKey, "cas${type}MetaDataNode" )
       unless (@path);
 
     my $partner = shift @path;
     my $query   = shift @path;
     unless ($query) {
         return $self->sendError( $req,
-            "Bad request: oidc${type}MetaDataNode query must ask for a key",
+            "Bad request: cas${type}MetaDataNode query must ask for a key",
             400 );
     }
 
@@ -495,12 +495,12 @@ sub _casMetaDataNodes {
 
 sub casSrvMetaDataNodes {
     my ( $self, $req, @path ) = @_;
-    return $self->_oidcMetaDataNodes( 'Srv', $req, @path );
+    return $self->_casMetaDataNodes( 'Srv', $req, @path );
 }
 
 sub casAppMetaDataNodes {
     my ( $self, $req, @path ) = @_;
-    return $self->_oidcMetaDataNodes( 'App', $req, @path );
+    return $self->_casMetaDataNodes( 'App', $req, @path );
 }
 
 # 32 - Other special nodes
