@@ -9,7 +9,39 @@ function templates(tpl,key) {
   };
   switch(tpl){
   case 'casAppMetaDataNode':
-    return []
+    return [
+   {
+      "_nodes" : [],
+      "id" : "casAppMetaDataOptions",
+      "title" : "casAppMetaDataOptions"
+   },
+   {
+      "cnodes" : tpl+"s/"+key+"/"+"casAppMetaDataExportedVars",
+      "default" : [
+         {
+            "data" : "cn",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataExportedVars/cn",
+            "title" : "cn",
+            "type" : "keyText"
+         },
+         {
+            "data" : "mail",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataExportedVars/mail",
+            "title" : "mail",
+            "type" : "keyText"
+         },
+         {
+            "data" : "uid",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataExportedVars/uid",
+            "title" : "uid",
+            "type" : "keyText"
+         }
+      ],
+      "id" : tpl+"s/"+key+"/"+"casAppMetaDataExportedVars",
+      "title" : "casAppMetaDataExportedVars",
+      "type" : "keyTextContainer"
+   }
+]
 ;
   case 'casSrvMetaDataNode':
     return [

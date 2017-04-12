@@ -19,7 +19,8 @@ my @notManagedAttributes = (
 
     # Complex nodes
     'samlSPMetaDataOptions', 'samlIDPMetaDataOptions', 'oidcRPMetaDataOptions',
-    'oidcOPMetaDataOptions', 'vhostOptions',
+    'oidcOPMetaDataOptions', 'casSrvMetaDataOptions',  'casAppMetaDataOptions',
+    'vhostOptions',
 
     # Metadatas (added by manager itself)
     'cfgAuthor', 'cfgAuthorIP', 'cfgNum', 'cfgDate', 'cfgLog', 'cfgVersion',
@@ -37,6 +38,8 @@ my $doubleUsage = qr/^(?:
   samlIDPMetaDataOptions|
   oidcRPMetaDataOptions|
   oidcOPMetaDataOptions|
+  casSrvMetaDataOptions|
+  casAppMetaDataOptions|
   vhostOptions
 )$/x;
 

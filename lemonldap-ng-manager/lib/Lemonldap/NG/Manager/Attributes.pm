@@ -626,6 +626,18 @@ sub attributes {
             ],
             'type' => 'select'
         },
+        'casAppMetaDataExportedVars' => {
+            'default' => {
+                'cn'   => 'cn',
+                'mail' => 'mail',
+                'uid'  => 'uid'
+            },
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
         'casAppMetaDataNodes' => {
             'type' => 'casAppMetaDataNodeContainer'
         },
@@ -653,6 +665,9 @@ sub attributes {
         },
         'casSrvMetaDataNodes' => {
             'type' => 'casSrvMetaDataNodeContainer'
+        },
+        'casSrvMetaDataOptions' => {
+            'type' => 'subContainer'
         },
         'casSrvMetaDataOptionsGateway' => {
             'type' => 'bool'

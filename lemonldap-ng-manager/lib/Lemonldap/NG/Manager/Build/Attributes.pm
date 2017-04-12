@@ -1481,14 +1481,15 @@ sub attributes {
         samlIDPMetaDataNodes => {
             type     => 'samlIDPMetaDataNodeContainer',
             template => 'samlIDPMetaDataNode',
+            help     => 'authsaml.html',
         },
 
         # Fake attribute: used by manager REST API to agglomerate all nodes
         # related to a SAML SP partner
         samlSPMetaDataNodes => {
             type     => 'samlSPMetaDataNodeContainer',
-            help     => 'authsaml.html',
             template => 'samlSPMetaDataNode',
+            help     => 'idpsaml.html',
         },
 
         # TODO: split that
@@ -2066,6 +2067,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
             documentation => 'CAS exported variables',
         },
+        casSrvMetaDataOptions => { type => 'subContainer', },
         casSrvMetaDataOptionsGateway         => { type => 'bool', },
         casSrvMetaDataOptionsProxiedServices => {
             type       => 'keyTextContainer',
@@ -2079,19 +2081,30 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             msgFail => '__badUrl__',
         },
 
+        casAppMetaDataExportedVars => {
+            type          => 'keyTextContainer',
+            keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            keyMsgFail    => '__badVariableName__',
+            test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            msgFail       => '__badValue__',
+            default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
+            documentation => 'CAS exported variables',
+        },
+
         # Fake attribute: used by manager REST API to agglomerate all nodes
         # related to a SAML IDP partner
         casSrvMetaDataNodes => {
             type     => 'casSrvMetaDataNodeContainer',
             template => 'casSrvMetaDataNode',
+            help     => 'authcas.html',
         },
 
         # Fake attribute: used by manager REST API to agglomerate all nodes
         # related to a SAML SP partner
         casAppMetaDataNodes => {
             type     => 'casAppMetaDataNodeContainer',
-            help     => 'authsaml.html',
             template => 'casAppMetaDataNode',
+            help     => 'idpcas.html',
         },
 
         # PAM

@@ -431,7 +431,29 @@ sub _scanNodes {
             elsif ( $base =~ /^cas(?:App|Srv)MetaDataNodes$/ ) {
                 my $optKey = $&;
                 hdebug('CAS');
-                if ( $target =~
+                if ( $target =~ /^cas(?:App|Srv)MetaDataOptions$/ ) {
+                    hdebug("  $target: looking for subnodes");
+                    $self->_scanNodes($subNodes);
+                    $self->set( $target, $key, $leaf->{title}, $leaf->{data} );
+                }
+                elsif ( $target =~ /^cas(?:App|Srv)MetaDataExportedVars$/ ) {
+                    hdebug("  $target");
+                    if ( $leaf->{cnodes} ) {
+                        hdebug('    unopened');
+                        $self->newConf->{$target}->{$key} =
+                          $self->refConf->{$target}->{$oldName} // {};
+                    }
+                    elsif ($h) {
+                        hdebug('    opened');
+                        $self->set( $target, $key, $leaf->{title},
+                            $leaf->{data} );
+                    }
+                    else {
+                        hdebug("  $target: looking for subnodes");
+                        $self->_scanNodes($subNodes);
+                    }
+                }
+                elsif ( $target =~
                     /^(?:$casSrvMetaDataNodeKeys|$casAppMetaDataNodeKeys)/o )
                 {
                     $self->set( $optKey, [ $oldName, $key ],
