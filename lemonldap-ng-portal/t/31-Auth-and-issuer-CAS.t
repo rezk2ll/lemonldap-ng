@@ -1,4 +1,4 @@
-use Test::More;
+use Test::More skip_all => 'CAS is in rebuild';
 use strict;
 use IO::String;
 use MIME::Base64;

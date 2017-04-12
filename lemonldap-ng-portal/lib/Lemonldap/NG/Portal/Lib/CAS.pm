@@ -23,7 +23,39 @@ has ua => (
     }
 );
 
-# INITIALIZATION
+has casSrvList => ( is => 'rw', default => sub { {} }, );
+has casAppList => ( is => 'rw', default => sub { {} }, );
+
+# RUNNING METHODS
+
+# Load CAS server list
+sub loadSrv {
+    my ($self) = @_;
+    unless ( $self->conf->{casSrvMetaDataOptions}
+        and %{ $self->conf->{casSrvMetaDataOptions} } )
+    {
+        $self->logger->warn("No CAS application found in configuration");
+    }
+    $self->casSrvList( $self->conf->{casSrvMetaDataOptions} );
+    return 1;
+}
+
+# Load CAS application list, key is the service URL
+sub loadApp {
+    my ($self) = @_;
+    unless ( $self->conf->{casAppMetaDataOptions}
+        and %{ $self->conf->{casAppMetaDataOptions} } )
+    {
+        $self->logger->warn("No CAS server found in configuration");
+    }
+    foreach ( keys %{ $self->conf->{casAppMetaDataOptions} } ) {
+        my $tmp =
+          $self->conf->{casAppMetaDataOptions}->{casAppMetaDataOptionsService};
+        $tmp =~ s#^(https?://[^/]+).*$#$1#;
+        $self->casAppList->{$tmp} = $_;
+    }
+    return 1;
+}
 
 sub sendSoapResponse {
     my ( $self, $req, $s ) = @_;
@@ -255,24 +287,27 @@ sub callPgtUrl {
 
 # Get Server Login URL
 sub getServerLoginURL {
-    my ( $self, $service ) = @_;
+    my ( $self, $service, $srvConf ) = @_;
 
-    return $self->conf->{CAS_url} . "/login?service=" . uri_escape($service);
+    return
+        $srvConf->{casSrvMetaDataOptionsUrl}
+      . "/login?service="
+      . uri_escape($service);
 }
 
 # Get Server Logout URL
 sub getServerLogoutURL {
-    my ( $self, $service ) = @_;
+    my ( $self, $service, $srvUrl ) = @_;
 
-    return $self->conf->{CAS_url} . "/logout?service=" . uri_escape($service);
+    return $srvUrl . "/logout?service=" . uri_escape($service);
 }
 
 # Validate ST
 sub validateST {
-    my ( $self, $req, $service, $ticket ) = @_;
+    my ( $self, $req, $service, $ticket, $srvConf ) = @_;
 
     my $serviceValidateUrl =
-        $self->conf->{CAS_url}
+        $srvConf->{casSrvMetaDataOptionsUrl}
       . "/serviceValidate?service="
       . uri_escape($service);
     $serviceValidateUrl .= "&ticket=$ticket";
@@ -354,10 +389,12 @@ sub storePGT {
 
 # Retrieve Proxy Ticket
 sub retrievePT {
-    my ( $self, $service ) = @_;
+    my ( $self, $service, $srvConf ) = @_;
 
     my $proxyUrl =
-      $self->conf->{CAS_url} . "/proxy?targetService=" . uri_escape($service);
+        $srvConf->{casSrvMetaDataOptionsUrl}
+      . "/proxy?targetService="
+      . uri_escape($service);
     $proxyUrl .= "&pgt=" . $self->{pgtId};
 
     my $response = $self->ua->get($proxyUrl);

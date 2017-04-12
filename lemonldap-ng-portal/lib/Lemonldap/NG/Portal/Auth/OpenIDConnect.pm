@@ -226,8 +226,6 @@ sub extractFormInfo {
         else {
 
             # IDP list
-            my @list = ();
-
             my $portalPath = $self->{portal};
             $portalPath =~ s#^https?://[^/]+/?#/#;
 

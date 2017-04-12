@@ -5,6 +5,7 @@ use Mouse;
 use URI::Escape;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_CONFIRM
   PE_ERROR
   PE_OK
   PE_REDIRECT
@@ -29,15 +30,49 @@ has proxy => (
     }
 );
 
-has proxyUrl => ( is => 'rw' );
+has proxyUrl  => ( is => 'rw' );
+has srvNumber => ( is => 'rw', default => 0 );
+has srvList   => ( is => 'rw', default => sub { [] } );
 
 # INITIALIZATION
 
 sub init {
     my ($self) = @_;
+    return 0 unless ( $self->loadSrv );
+    my @tab = ( keys %{ $self->casSrvList } );
+    unless (@tab) {
+        $self->logger->error("No CAS server configured");
+        return 0;
+    }
+    $self->srvNumber( scalar @tab );
+    my @list;
 
-    # TODO: loop over CAS servers
+    my $portalPath = $self->conf->{portal};
+    $portalPath =~ s#^https?://[^/]+/?#/#;
 
+    foreach (@tab) {
+        my $name = $self->conf->{casSrvMetaDataOptions}->{$_}
+          ->{casSrvMetaDataOptionsDisplayName};
+        my $icon = $self->conf->{casSrvMetaDataOptions}->{$_}
+          ->{casSrvMetaDataOptionsIcon};
+        my $img_src;
+
+        if ($icon) {
+            $img_src =
+              ( $icon =~ m#^https?://# )
+              ? $icon
+              : $portalPath . $self->p->staticPrefix . "/common/" . $icon;
+        }
+
+        push @list,
+          {
+            val   => $_,
+            name  => $name,
+            icon  => $img_src,
+            class => "openidconnect",
+          };
+    }
+    $self->srvList( \@list );
     return 1;
 }
 
@@ -49,7 +84,6 @@ sub extractFormInfo {
     # Local URL
     my $local_url = $self->p->fullUrl($req);
 
-    # TODO: create a CAS state session
     # Add request state parameters
     if ( $req->datas->{_url} ) {
         $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
@@ -114,19 +148,65 @@ sub extractFormInfo {
         return PE_SENDRESPONSE;
     }
 
-    # Build login URL
-    my $login_url = $self->getServerLoginURL($local_url);
-    $login_url .= '&renew=true'   if $self->conf->{CAS_renew};
-    $login_url .= '&gateway=true' if $self->conf->{CAS_gateway};
+    my $srv;
 
     # Check Service Ticket
     my $ticket = $req->param('ticket');
+
+    # Check if CAS server is chosen
+    unless ( ( $ticket and $srv = $req->cookies->{llngcasserver} )
+        or $srv = $req->param('idp') )
+    {
+        $self->logger->debug("Redirecting user to CAS server list");
+
+        # Auto select provider if there is only one
+        if ( $self->srvNumber == 1 ) {
+            $srv = ( keys %{ $self->casSrvList } );
+            $self->logger->debug("Selecting the only defined CAS server: $srv");
+        }
+
+        else {
+
+            # Server list
+            my $portalPath = $self->{portal};
+            $portalPath =~ s#^https?://[^/]+/?#/#;
+
+            $req->datas->{list}            = $self->opList;
+            $req->datas->{confirmRemember} = 0;
+
+            $req->datas->{login} = 1;
+            return PE_CONFIRM;
+        }
+    }
+
+    my $srvConf = $self->conf->{casAppMetaDataOptions}->{$srv};
+    unless ($srvConf) {
+        $self->userLogger->error("CAS server $srv not configured");
+        return PE_ERROR;
+    }
+
+    # Provider is choosen
+    $self->logger->debug("CAS server $srv choosen");
+
+    $req->datas->{_casSrvCurrent} = $srv;
+
+    # Build login URL
+    my $login_url = $self->getServerLoginURL( $local_url, $srvConf );
+    $login_url .= '&renew=true'   if $srvConf->{casAppMetaDataOptionsRenew};
+    $login_url .= '&gateway=true' if $srvConf->{casAppMetaDataOptionsGateway};
 
     # Unless a ticket has been found, we redirect the user
     unless ($ticket) {
         $self->logger->debug("CAS: Redirect user to $login_url");
         $req->{urldc} = $login_url;
         $req->steps( [] );
+        $req->addCookie(
+            $self->p->cookie(
+                name   => 'llngcasserver',
+                value  => $srv,
+                secure => $self->conf->{securedCookie},
+            )
+        );
         return PE_REDIRECT;
     }
 
@@ -136,7 +216,7 @@ sub extractFormInfo {
     $local_url =~ s/ticket=[^&]+//;
     $local_url =~ s/\?$//;
     ( $req->{user}, $req->datas->{casAttr} ) =
-      $self->validateST( $req, $local_url, $ticket );
+      $self->validateST( $req, $local_url, $ticket, $srvConf );
     unless ( $req->{user} ) {
         $self->userLogger->error("CAS: Unable to validate ST $ticket");
         return PE_ERROR;
@@ -158,9 +238,10 @@ sub extractFormInfo {
         }
 
         # Get a proxy ticket for each proxied service
-        foreach ( keys %{ $self->conf->{CAS_proxiedServices} } ) {
-            my $service = $self->conf->{CAS_proxiedServices}->{$_};
-            my $pt      = $self->retrievePT($service);
+        foreach ( keys %{ $srvConf->{casSrvMetaDataOptionsProxiedServices} } ) {
+            my $service =
+              $srvConf->{casSrvMetaDataOptionsProxiedServices}->{$_};
+            my $pt = $self->retrievePT( $service, $srvConf );
 
             unless ($pt) {
                 $self->logger->error(
@@ -188,6 +269,7 @@ sub authenticate {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     $req->{sessionInfo}->{authenticationLevel} = $self->conf->{CAS_authnLevel};
+    $req->{sessionInfo}->{_casSrv}             = $req->datas->{_casSrvCurrent};
     PE_OK;
 }
 
@@ -196,7 +278,8 @@ sub authLogout {
 
     # Build CAS logout URL
     my $logout_url =
-      $self->getServerLogoutURL( uri_escape( $self->p->fullUrl($req) ) );
+      $self->getServerLogoutURL( uri_escape( $self->p->fullUrl($req) ),
+        $req->userData->{_casSrv} );
 
     $self->logger->debug("Build CAS logout URL: $logout_url");
 
