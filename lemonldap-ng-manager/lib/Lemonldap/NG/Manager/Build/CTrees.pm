@@ -215,10 +215,18 @@ sub cTrees {
             'oidcRPMetaDataOptionsExtraClaims',
         ],
         casSrvMetaDataNode => [
-            'casSrvMetaDataOptionsUrl',
+            {
+                title => 'casSrvMetaDataOptions',
+                nodes => [
+                    'casSrvMetaDataOptionsUrl',
+                    'casSrvMetaDataOptionsRenew',
+                    'casSrvMetaDataOptionsGateway',
+                    'casSrvMetaDataOptionsProxiedServices',
+                ]
+            },
+            'casSrvMetaDataExportedVars',
         ],
-        casAppMetaDataNode => [
-        ],
+        casAppMetaDataNode => [],
     };
 }
 

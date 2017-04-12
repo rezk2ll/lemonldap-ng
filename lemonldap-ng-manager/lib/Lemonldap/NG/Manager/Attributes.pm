@@ -608,24 +608,6 @@ sub attributes {
             'default' => 6,
             'type'    => 'int'
         },
-        'CAS_authnLevel' => {
-            'default' => 1,
-            'type'    => 'int'
-        },
-        'CAS_CAFile' => {
-            'type' => 'text'
-        },
-        'CAS_gateway' => {
-            'type' => 'bool'
-        },
-        'CAS_proxiedServices' => {
-            'keyMsgFail' => '__badCasProxyId__',
-            'keyTest'    => qr/^\w+$/,
-            'type'       => 'keyTextContainer'
-        },
-        'CAS_renew' => {
-            'type' => 'bool'
-        },
         'casAccessControlPolicy' => {
             'default' => 'none',
             'select'  => [
@@ -653,8 +635,35 @@ sub attributes {
         'casAttributes' => {
             'type' => 'keyTextContainer'
         },
+        'casAuthnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'casSrvMetaDataExportedVars' => {
+            'default' => {
+                'cn'   => 'cn',
+                'mail' => 'mail',
+                'uid'  => 'uid'
+            },
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
         'casSrvMetaDataNodes' => {
             'type' => 'casSrvMetaDataNodeContainer'
+        },
+        'casSrvMetaDataOptionsGateway' => {
+            'type' => 'bool'
+        },
+        'casSrvMetaDataOptionsProxiedServices' => {
+            'keyMsgFail' => '__badCasProxyId__',
+            'keyTest'    => qr/^\w+$/,
+            'type'       => 'keyTextContainer'
+        },
+        'casSrvMetaDataOptionsRenew' => {
+            'type' => 'bool'
         },
         'casSrvMetaDataOptionsUrl' => {
             'msgFail' => '__badUrl__',

@@ -121,11 +121,7 @@ sub tree {
                         {
                             title => 'casParams',
                             help  => 'authcas.html',
-                            nodes => [
-                                'CAS_authnLevel', 'CAS_CAFile',
-                                'CAS_renew',      'CAS_gateway',
-                                'CAS_proxiedServices'
-                            ]
+                            nodes => [ 'casAuthnLevel' ]
                         },
                         {
                             title => 'dbiParams',

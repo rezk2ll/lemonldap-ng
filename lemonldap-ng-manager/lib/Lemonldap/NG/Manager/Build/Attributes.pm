@@ -2052,20 +2052,28 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         # CAS
-        CAS_authnLevel => {
+        casAuthnLevel => {
             type          => 'int',
             default       => 1,
             documentation => 'CAS authentication level',
         },
-        CAS_CAFile  => { type => 'text', },
-        CAS_gateway => { type => 'bool', },
-        CAS_proxiedServices => {
+        casSrvMetaDataExportedVars => {
+            type          => 'keyTextContainer',
+            keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            keyMsgFail    => '__badVariableName__',
+            test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            msgFail       => '__badValue__',
+            default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
+            documentation => 'CAS exported variables',
+        },
+        casSrvMetaDataOptionsGateway         => { type => 'bool', },
+        casSrvMetaDataOptionsProxiedServices => {
             type       => 'keyTextContainer',
             keyTest    => qr/^\w+$/,
             keyMsgFail => '__badCasProxyId__',
         },
-        CAS_renew   => { type => 'bool', },
-        casSrvMetaDataOptionsUrl => {
+        casSrvMetaDataOptionsRenew => { type => 'bool', },
+        casSrvMetaDataOptionsUrl   => {
             type    => 'text',
             test    => $url,
             msgFail => '__badUrl__',
@@ -2085,7 +2093,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             help     => 'authsaml.html',
             template => 'casAppMetaDataNode',
         },
-
 
         # PAM
         pamAuthnLevel => {

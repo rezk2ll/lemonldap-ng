@@ -14,9 +14,59 @@ function templates(tpl,key) {
   case 'casSrvMetaDataNode':
     return [
    {
-      "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUrl",
-      "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUrl",
-      "title" : "casSrvMetaDataOptionsUrl"
+      "_nodes" : [
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUrl",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUrl",
+            "title" : "casSrvMetaDataOptionsUrl"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsRenew",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsRenew",
+            "title" : "casSrvMetaDataOptionsRenew",
+            "type" : "bool"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsGateway",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsGateway",
+            "title" : "casSrvMetaDataOptionsGateway",
+            "type" : "bool"
+         },
+         {
+            "cnodes" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsProxiedServices",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsProxiedServices",
+            "title" : "casSrvMetaDataOptionsProxiedServices",
+            "type" : "keyTextContainer"
+         }
+      ],
+      "id" : "casSrvMetaDataOptions",
+      "title" : "casSrvMetaDataOptions"
+   },
+   {
+      "cnodes" : tpl+"s/"+key+"/"+"casSrvMetaDataExportedVars",
+      "default" : [
+         {
+            "data" : "cn",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataExportedVars/cn",
+            "title" : "cn",
+            "type" : "keyText"
+         },
+         {
+            "data" : "mail",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataExportedVars/mail",
+            "title" : "mail",
+            "type" : "keyText"
+         },
+         {
+            "data" : "uid",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataExportedVars/uid",
+            "title" : "uid",
+            "type" : "keyText"
+         }
+      ],
+      "id" : tpl+"s/"+key+"/"+"casSrvMetaDataExportedVars",
+      "title" : "casSrvMetaDataExportedVars",
+      "type" : "keyTextContainer"
    }
 ]
 ;
