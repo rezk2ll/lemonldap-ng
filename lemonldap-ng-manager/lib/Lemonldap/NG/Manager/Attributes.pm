@@ -640,6 +640,9 @@ sub attributes {
         'casAppMetaDataOptions' => {
             'type' => 'subContainer'
         },
+        'casAppMetaDataOptionsService' => {
+            'type' => 'url'
+        },
         'casAttr' => {
             'type' => 'text'
         },

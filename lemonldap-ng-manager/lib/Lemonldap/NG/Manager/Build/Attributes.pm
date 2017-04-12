@@ -1236,6 +1236,26 @@ sub attributes {
             documentation => 'CAS server rule',
         },
 
+        # Partners
+        casAppMetaDataOptions => { type => 'subContainer', },
+        casAppMetaDataExportedVars => {
+            type          => 'keyTextContainer',
+            default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
+            documentation => 'CAS exported variables',
+        },
+        casAppMetaDataOptionsService => {
+            type => 'url',
+            documentation => 'CAS App service',
+        },
+
+        # Fake attribute: used by manager REST API to agglomerate all nodes
+        # related to a SAML SP partner
+        casAppMetaDataNodes => {
+            type     => 'casAppMetaDataNodeContainer',
+            template => 'casAppMetaDataNode',
+            help     => 'idpcas.html',
+        },
+
         # OpenID Issuer
         issuerDBOpenIDActivation => {
             default       => 0,
@@ -2077,27 +2097,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             msgFail => '__badUrl__',
         },
 
-        casAppMetaDataOptions => { type => 'subContainer', },
-        casAppMetaDataExportedVars => {
-            type          => 'keyTextContainer',
-            default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
-            documentation => 'CAS exported variables',
-        },
-
         # Fake attribute: used by manager REST API to agglomerate all nodes
         # related to a SAML IDP partner
         casSrvMetaDataNodes => {
             type     => 'casSrvMetaDataNodeContainer',
             template => 'casSrvMetaDataNode',
             help     => 'authcas.html',
-        },
-
-        # Fake attribute: used by manager REST API to agglomerate all nodes
-        # related to a SAML SP partner
-        casAppMetaDataNodes => {
-            type     => 'casAppMetaDataNodeContainer',
-            template => 'casAppMetaDataNode',
-            help     => 'idpcas.html',
         },
 
         # PAM

@@ -229,7 +229,7 @@ sub cTrees {
         casAppMetaDataNode => [
             {
                 title => 'casAppMetaDataOptions',
-                nodes => []
+                nodes => ['casAppMetaDataOptionsService']
             },
             'casAppMetaDataExportedVars',
         ],

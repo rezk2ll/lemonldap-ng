@@ -11,7 +11,13 @@ function templates(tpl,key) {
   case 'casAppMetaDataNode':
     return [
    {
-      "_nodes" : [],
+      "_nodes" : [
+         {
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsService",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsService",
+            "title" : "casAppMetaDataOptionsService"
+         }
+      ],
       "id" : "casAppMetaDataOptions",
       "title" : "casAppMetaDataOptions"
    },
