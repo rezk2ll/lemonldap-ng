@@ -373,6 +373,12 @@ llapp.controller 'TreeCtrl', [
 		$scope.addOidcRp = ->
 			$scope.newTemplateNode 'oidcRPMetaDataNode', 'oidcRPName', 'rp-example'
 
+		$scope.addCasSrv = ->
+			$scope.newTemplateNode 'casSrvMetaDataNode', 'casPartnerName', 'srv-example'
+
+		$scope.addCasApp = ->
+			$scope.newTemplateNode 'casAppMetaDataNode', 'casPartnerName', 'app-example'
+
 		$scope.newTemplateNode = (type, title, init) ->
 			$scope.message =
 				title: title

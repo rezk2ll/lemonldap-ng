@@ -446,6 +446,12 @@ This file contains:
       $scope.addOidcRp = function() {
         return $scope.newTemplateNode('oidcRPMetaDataNode', 'oidcRPName', 'rp-example');
       };
+      $scope.addCasSrv = function() {
+        return $scope.newTemplateNode('casSrvMetaDataNode', 'casPartnerName', 'srv-example');
+      };
+      $scope.addCasApp = function() {
+        return $scope.newTemplateNode('casAppMetaDataNode', 'casPartnerName', 'app-example');
+      };
       $scope.newTemplateNode = function(type, title, init) {
         $scope.message = {
           title: title,

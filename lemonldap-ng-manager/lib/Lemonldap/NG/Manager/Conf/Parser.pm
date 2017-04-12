@@ -426,6 +426,23 @@ sub _scanNodes {
                 }
                 next;
             }
+
+            # CAS
+            elsif ( $base =~ /^cas(?:App|Srv)MetaDataNodes$/ ) {
+                my $optKey = $&;
+                hdebug('CAS');
+                if ( $target =~
+                    /^(?:$casSrvMetaDataNodeKeys|$casAppMetaDataNodeKeys)/o )
+                {
+                    $self->set( $optKey, [ $oldName, $key ],
+                        $target, $leaf->{data} );
+                }
+                else {
+                    push @{ $self->errors },
+                      { message => "Unknown OIDC metadata option $target" };
+                    return 0;
+                }
+            }
             else {
                 push @{ $self->errors },
                   { message => "Fatal: unknown special sub node $base" };
@@ -752,7 +769,8 @@ sub _scanNodes {
                     @oldKeys = keys %{ $self->refConf->{$name}->{$host} };
                 }
                 foreach my $prm ( @{ $getHost->{h} } ) {
-                    $self->newConf->{$name}->{$host}->{ $prm->{k} } = $prm->{v};
+                    $self->newConf->{$name}->{$host}->{ $prm->{k} } =
+                      $prm->{v};
                     if (
                         !$change
                         and (

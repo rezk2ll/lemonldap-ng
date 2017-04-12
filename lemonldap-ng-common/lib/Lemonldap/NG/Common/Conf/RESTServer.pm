@@ -444,6 +444,65 @@ sub oidcRPMetaDataNodes {
     return $self->_oidcMetaDataNodes( 'RP', $req, @path );
 }
 
+# 314 - CAS
+#       ---
+
+sub _casMetaDataNodes {
+    my ( $self, $type, $req, @path ) = @_;
+    my $refKey =
+      ( $type eq 'App' ? 'casAppMetaDataOptions' : 'casSrvMetaDataOptions' );
+    return $self->complexNodesRoot( $req, $refKey, "oidc${type}MetaDataNode" )
+      unless (@path);
+
+    my $partner = shift @path;
+    my $query   = shift @path;
+    unless ($query) {
+        return $self->sendError( $req,
+            "Bad request: oidc${type}MetaDataNode query must ask for a key",
+            400 );
+    }
+
+    # setDefault response for new partners
+    return $self->sendError( $req, 'setDefault', 200 )
+      if ( $partner =~ /^new__/ );
+
+    # Reject unknown partners
+    return $self->sendError( $req, "Unknown CAS partner ($partner)", 400 )
+      unless ( defined eval { $self->getConfKey( $req, $refKey )->{$partner}; }
+      );
+
+    my ( $id, $resp ) = ( 1, [] );
+
+    # Options
+    if (
+        $query =~ {
+            App => qr/^$casAppMetaDataNodeKeys$/o,
+            Srv => qr/^$casSrvMetaDataNodeKeys$/o
+        }->{$type}
+      )
+    {
+        my $value = eval {
+            $self->getConfKey( $req, "cas${type}MetaDataOptions" )->{$partner}
+              ->{$query};
+        } // undef;
+        return $self->sendJSONresponse( $req, { value => $value } );
+    }
+    else {
+        return $self->sendError( $req,
+            "Bad key for cas${type}MetaDataNode ($query)", 400 );
+    }
+}
+
+sub casSrvMetaDataNodes {
+    my ( $self, $req, @path ) = @_;
+    return $self->_oidcMetaDataNodes( 'Srv', $req, @path );
+}
+
+sub casAppMetaDataNodes {
+    my ( $self, $req, @path ) = @_;
+    return $self->_oidcMetaDataNodes( 'App', $req, @path );
+}
+
 # 32 - Other special nodes
 #      -------------------
 
@@ -654,7 +713,9 @@ sub metadatas {
         my $id = -1;
         my ($ind) = map { $id++; $_ == $res->{cfgNum} ? ($id) : () } @a;
         if ($ind) { $res->{prev} = $a[ $ind - 1 ]; }
-        if ( defined $ind and $ind < $#a ) { $res->{next} = $a[ $ind + 1 ]; }
+        if ( defined $ind and $ind < $#a ) {
+            $res->{next} = $a[ $ind + 1 ];
+        }
         if ( $self->can('userId') ) {
             $self->userLogger->info( 'User '
                   . $self->userId($req)
@@ -664,7 +725,8 @@ sub metadatas {
         }
         else {
             $self->logger->info(
-                "REST request to get configuration metadatas ($res->{cfgNum})");
+                "REST request to get configuration metadatas ($res->{cfgNum})"
+            );
         }
         return $self->sendJSONresponse( $req, $res );
     }
@@ -730,7 +792,8 @@ sub getKey {
     # When scalar
     return $self->sendError( $req, "Key $key is not a hash", 400 )
       if ($subkey);
-    return $self->sendError( $req, 'setDefault', 200 ) unless defined($value);
+    return $self->sendError( $req, 'setDefault', 200 )
+      unless defined($value);
     return $self->sendJSONresponse( $req, { value => $value } );
 
     # TODO authParam key

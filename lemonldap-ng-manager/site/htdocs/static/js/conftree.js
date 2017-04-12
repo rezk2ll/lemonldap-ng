@@ -8,6 +8,18 @@ function templates(tpl,key) {
     };
   };
   switch(tpl){
+  case 'casAppMetaDataNode':
+    return []
+;
+  case 'casSrvMetaDataNode':
+    return [
+   {
+      "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUrl",
+      "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUrl",
+      "title" : "casSrvMetaDataOptionsUrl"
+   }
+]
+;
   case 'oidcOPMetaDataNode':
     return [
    {

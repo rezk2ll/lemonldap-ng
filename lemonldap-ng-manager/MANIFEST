@@ -82,6 +82,10 @@ site/htdocs/static/forms/authParamsTextContainer.html
 site/htdocs/static/forms/blackWhiteList.html
 site/htdocs/static/forms/bool.html
 site/htdocs/static/forms/boolOrExpr.html
+site/htdocs/static/forms/casAppMetaDataNode.html
+site/htdocs/static/forms/casAppMetaDataNodeContainer.html
+site/htdocs/static/forms/casSrvMetaDataNode.html
+site/htdocs/static/forms/casSrvMetaDataNodeContainer.html
 site/htdocs/static/forms/catAndAppList.html
 site/htdocs/static/forms/cmbModule.html
 site/htdocs/static/forms/cmbModuleContainer.html

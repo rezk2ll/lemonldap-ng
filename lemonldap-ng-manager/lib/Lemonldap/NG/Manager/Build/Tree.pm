@@ -122,9 +122,9 @@ sub tree {
                             title => 'casParams',
                             help  => 'authcas.html',
                             nodes => [
-                                'CAS_authnLevel', 'CAS_url',
-                                'CAS_CAFile',     'CAS_renew',
-                                'CAS_gateway',    'CAS_proxiedServices'
+                                'CAS_authnLevel', 'CAS_CAFile',
+                                'CAS_renew',      'CAS_gateway',
+                                'CAS_proxiedServices'
                             ]
                         },
                         {
@@ -911,6 +911,8 @@ sub tree {
         },
         'oidcOPMetaDataNodes',
         'oidcRPMetaDataNodes',
+        'casSrvMetaDataNodes',
+        'casAppMetaDataNodes',
     ];
 }
 

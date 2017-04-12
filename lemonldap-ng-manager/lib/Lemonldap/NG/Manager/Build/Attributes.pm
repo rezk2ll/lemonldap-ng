@@ -2065,11 +2065,27 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             keyMsgFail => '__badCasProxyId__',
         },
         CAS_renew   => { type => 'bool', },
-        CAS_url => {
+        casSrvMetaDataOptionsUrl => {
             type    => 'text',
             test    => $url,
             msgFail => '__badUrl__',
         },
+
+        # Fake attribute: used by manager REST API to agglomerate all nodes
+        # related to a SAML IDP partner
+        casSrvMetaDataNodes => {
+            type     => 'casSrvMetaDataNodeContainer',
+            template => 'casSrvMetaDataNode',
+        },
+
+        # Fake attribute: used by manager REST API to agglomerate all nodes
+        # related to a SAML SP partner
+        casAppMetaDataNodes => {
+            type     => 'casAppMetaDataNodeContainer',
+            help     => 'authsaml.html',
+            template => 'casAppMetaDataNode',
+        },
+
 
         # PAM
         pamAuthnLevel => {

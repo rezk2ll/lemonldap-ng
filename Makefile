@@ -183,6 +183,7 @@ MANAGERJSONSRC= scripts/jsongenerator.pl \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Attributes.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Tree.pm \
+		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/CTrees.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Conf/Zero.pm
 MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
 		$(SRCMANAGERDIR)/site/htdocs/static/js/conftree.js \

@@ -43,6 +43,7 @@ sub addRoutes {
             ':cfgNum' => [
                 qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
                   applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
+                  casSrvMetaDataNodes casAppMetaDataNodes
                   authChoiceModules grantSessionRules combModules
                   openIdIDPList)
             ]
