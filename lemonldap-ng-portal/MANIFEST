@@ -204,12 +204,6 @@ site/htdocs/static/common/icons/key.png
 site/htdocs/static/common/icons/ok.png
 site/htdocs/static/common/icons/vcard_edit.png
 site/htdocs/static/common/icons/warning.png
-site/htdocs/static/common/js/browserid.js
-site/htdocs/static/common/js/browserid.min.js
-site/htdocs/static/common/js/browseridlogin.js
-site/htdocs/static/common/js/browseridlogin.min.js
-site/htdocs/static/common/js/browseridlogout.js
-site/htdocs/static/common/js/browseridlogout.min.js
 site/htdocs/static/common/js/confirm.js
 site/htdocs/static/common/js/confirm.min.js
 site/htdocs/static/common/js/info.js
@@ -232,7 +226,6 @@ site/htdocs/static/common/js/u2fregistration.js
 site/htdocs/static/common/js/u2fregistration.min.js
 site/htdocs/static/common/logos/logo_llng_400px.png
 site/htdocs/static/common/modules/Apache.png
-site/htdocs/static/common/modules/BrowserID.png
 site/htdocs/static/common/modules/CAS.png
 site/htdocs/static/common/modules/Facebook.png
 site/htdocs/static/common/modules/Google.png

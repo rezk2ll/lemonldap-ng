@@ -6,9 +6,6 @@
  <meta http-equiv="Content-Script-Type" content="text/javascript" />
  <meta http-equiv="cache-control" content="no-cache" />
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <TMPL_IF NAME="browserIdEnabled">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
- </TMPL_IF>
 <!-- //if:usedebianlibs
  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap-theme.min.css" />

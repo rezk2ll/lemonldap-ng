@@ -16,36 +16,6 @@
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery-ui/jquery-ui.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery.cookie/jquery.cookie.js"></script>
  <!-- //endif -->
- <TMPL_IF NAME="browserIdEnabled">
-   <script type="text/javascript" src="https://login.persona.org/include.js"></script>
-  <!-- //endif -->
- </TMPL_IF>
- <TMPL_IF NAME="browserIdLoadLoginScript">
-  <script type="application/init">
-  {
-  "browserIdSiteName":"<TMPL_VAR NAME="browserIdSiteName">",
-  "browserIdSiteLogo":"<TMPL_VAR NAME="browserIdSiteLogo">",
-  "browserIdBackgroundColor":"<TMPL_VAR NAME="browserIdBackgroundColor">",
-  "browserIdAutoLogin":"<TMPL_VAR NAME="browserIdAutoLogin">"
-  }
-  </script>
-  <!-- //if:jsminified
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/browserid.min.js"></script>
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/browseridlogin.min.js"></script>
-  //else -->
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/browserid.js"></script>
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/browseridlogin.js"></script>
-  <!-- //endif -->
- </TMPL_IF>
- <TMPL_IF NAME="browserIdLoadLogoutScript">
-  <!-- //if:jsminified
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/browserid.min.js"></script>
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/browseridlogout.min.js"></script>
-  //else -->
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/browserid.js"></script>
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/browseridlogout.js"></script>
-  <!-- //endif -->
- </TMPL_IF>
  <script type="application/init">
  {
  "displaytab":"<TMPL_VAR NAME="DISPLAY_TAB">",
