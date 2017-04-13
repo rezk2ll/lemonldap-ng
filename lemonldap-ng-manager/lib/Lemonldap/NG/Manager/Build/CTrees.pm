@@ -222,6 +222,8 @@ sub cTrees {
                     'casSrvMetaDataOptionsRenew',
                     'casSrvMetaDataOptionsGateway',
                     'casSrvMetaDataOptionsProxiedServices',
+                    'casSrvMetaDataOptionsDisplayName',
+                    'casSrvMetaDataOptionsIcon',
                 ]
             },
             'casSrvMetaDataExportedVars',

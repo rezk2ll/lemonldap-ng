@@ -2096,6 +2096,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             test    => $url,
             msgFail => '__badUrl__',
         },
+        casSrvMetaDataOptionsDisplayName => {
+            type => 'text',
+            documentation => 'Name to display for CAS server',
+        },
+        casSrvMetaDataOptionsIcon => {
+            type => 'text',
+            documentation => 'Path of CAS Server Icon',
+        },
 
         # Fake attribute: used by manager REST API to agglomerate all nodes
         # related to a SAML IDP partner
