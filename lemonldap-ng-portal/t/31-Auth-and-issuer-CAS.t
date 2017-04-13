@@ -82,6 +82,15 @@ count(1);
 expectOK($res);
 expectAuthenticatedAs( $res, 'french' );
 
+# Test attributes
+ok( $res = $sp->_get("/sessions/global/$spId"), 'Get UTF-8' );
+expectOK($res);
+ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+or print STDERR $@;
+ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
+or explain( $res, 'cn => Frédéric Accents' );
+count(3);
+
 # Logout initiated by SP
 ok(
     $res = $sp->_get(
@@ -227,7 +236,7 @@ sub sp {
                 domain                => 'sp.com',
                 portal                => 'http://auth.sp.com',
                 authentication        => 'CAS',
-                userDB                => 'Null',
+                userDB                => 'CAS',
                 restSessionServer     => 1,
                 issuerDBCASActivation => 0,
                 multiValuesSeparator  => ';',

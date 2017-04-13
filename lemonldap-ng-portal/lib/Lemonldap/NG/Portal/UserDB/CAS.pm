@@ -1,0 +1,53 @@
+package Lemonldap::NG::Portal::UserDB::CAS;
+
+use strict;
+use Mouse;
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_ERROR
+  PE_OK
+);
+
+our $VERSION = '2.0.0';
+
+extends 'Lemonldap::NG::Common::Module';
+
+# INITIALIZATION
+
+sub init {
+    return 1;
+}
+
+# RUNNING METHODS
+
+sub getUser {
+    my ( $self, $req ) = @_;
+    return PE_OK;
+}
+
+# Get all required attributes
+sub setSessionInfo {
+    my ( $self, $req ) = @_;
+    my $srv;
+    unless ( $srv = $req->datas->{_casSrvCurrent} ) {
+        $self->logger->error('UserDB::CAS must be used with Auth::CAS');
+        return PE_ERROR;
+    }
+    my %ev = (
+        %{
+            $self->conf->{casSrvMetaDataOptions}->{$srv}
+              ->{casSrvMetaDataOptionsExportedVars} || {}
+        },
+        %{ $self->conf->{exportedVars} }
+    );
+    foreach ( keys %ev ) {
+        $req->{sessionInfo}->{$_} = $req->datas->{casAttrs}->{$_};
+    }
+    PE_OK;
+}
+
+# Does nothing
+sub setGroups {
+    PE_OK;
+}
+
+1;

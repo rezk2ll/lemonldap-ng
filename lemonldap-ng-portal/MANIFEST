@@ -103,6 +103,7 @@ lib/Lemonldap/NG/Portal/Register/Demo.pm
 lib/Lemonldap/NG/Portal/Register/LDAP.pm
 lib/Lemonldap/NG/Portal/Register/U2F.pm
 lib/Lemonldap/NG/Portal/UserDB/AD.pm
+lib/Lemonldap/NG/Portal/UserDB/CAS.pm
 lib/Lemonldap/NG/Portal/UserDB/Choice.pm
 lib/Lemonldap/NG/Portal/UserDB/Combination.pm
 lib/Lemonldap/NG/Portal/UserDB/Custom.pm
