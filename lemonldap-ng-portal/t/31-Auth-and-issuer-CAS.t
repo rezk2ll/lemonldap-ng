@@ -1,4 +1,4 @@
-use Test::More skip_all => 'CAS is in rebuild';
+use Test::More;    # skip_all => 'CAS is in rebuild';
 use strict;
 use IO::String;
 use MIME::Base64;
@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $debug = 'error';
+my $debug = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -230,11 +230,22 @@ sub sp {
                 userDB                => 'Null',
                 restSessionServer     => 1,
                 issuerDBCASActivation => 0,
-                CAS_url               => 'http://auth.idp.com/cas',
-                CAS_CAFile            => 't/caFile.pem',
                 multiValuesSeparator  => ';',
                 exportedVars          => {
                     cn => 'cn',
+                },
+                casSrvMetaDataExportedVars => {
+                    idp => {
+                        cn   => 'cn',
+                        mail => 'mail',
+                        uid  => 'uid',
+                    }
+                },
+                casSrvMetaDataOptions => {
+                    idp => {
+                        casSrvMetaDataOptionsUrl => 'http://auth.idp.com/cas',
+                        casSrvMetaDataOptionsGateway => 0,
+                    }
                 },
             },
         }

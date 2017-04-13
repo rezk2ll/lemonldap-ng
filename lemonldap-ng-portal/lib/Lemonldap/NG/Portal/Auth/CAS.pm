@@ -161,7 +161,7 @@ sub extractFormInfo {
 
         # Auto select provider if there is only one
         if ( $self->srvNumber == 1 ) {
-            $srv = ( keys %{ $self->casSrvList } );
+            ($srv) = keys %{ $self->casSrvList };
             $self->logger->debug("Selecting the only defined CAS server: $srv");
         }
 
@@ -179,7 +179,7 @@ sub extractFormInfo {
         }
     }
 
-    my $srvConf = $self->conf->{casAppMetaDataOptions}->{$srv};
+    my $srvConf = $self->conf->{casSrvMetaDataOptions}->{$srv};
     unless ($srvConf) {
         $self->userLogger->error("CAS server $srv not configured");
         return PE_ERROR;
@@ -192,8 +192,8 @@ sub extractFormInfo {
 
     # Build login URL
     my $login_url = $self->getServerLoginURL( $local_url, $srvConf );
-    $login_url .= '&renew=true'   if $srvConf->{casAppMetaDataOptionsRenew};
-    $login_url .= '&gateway=true' if $srvConf->{casAppMetaDataOptionsGateway};
+    $login_url .= '&renew=true'   if $srvConf->{casSrvMetaDataOptionsRenew};
+    $login_url .= '&gateway=true' if $srvConf->{casSrvMetaDataOptionsGateway};
 
     # Unless a ticket has been found, we redirect the user
     unless ($ticket) {
@@ -268,7 +268,7 @@ sub authenticate {
 # Set authenticationLevel.
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{CAS_authnLevel};
+    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{casAuthnLevel};
     $req->{sessionInfo}->{_casSrv}             = $req->datas->{_casSrvCurrent};
     PE_OK;
 }
@@ -277,9 +277,11 @@ sub authLogout {
     my ( $self, $req ) = @_;
 
     # Build CAS logout URL
-    my $logout_url =
-      $self->getServerLogoutURL( uri_escape( $self->p->fullUrl($req) ),
-        $req->userData->{_casSrv} );
+    my $logout_url = $self->getServerLogoutURL(
+        uri_escape( $self->p->fullUrl($req) ),
+        $self->conf->{casSrvMetaDataOptions}->{ $req->userData->{_casSrv} }
+          ->{casSrvMetaDataOptionsUrl}
+    );
 
     $self->logger->debug("Build CAS logout URL: $logout_url");
 
