@@ -52,7 +52,7 @@ override_dh_auto_install:
 	$(MAKE) install_fr_doc_site \
 			DESTDIR=$(CURDIR)/debian/tmp \
 			DOCDIR=/usr/share/doc/lemonldap-ng-fr-doc \
-			USEDEBIANLIBS=yes
+			PROD=yes
 	for i in handler portal manager test; do \
 		mv $(TMP)/etc/lemonldap-ng/$$i-apache2.X.conf $(TMP)/etc/lemonldap-ng/$$i-apache2.conf; \
 	done
