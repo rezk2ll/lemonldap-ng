@@ -620,7 +620,7 @@ sub attributes {
             documentation => 'Display register button in portal',
         },
         portalDisplayResetPassword => {
-            default       => 1,
+            default       => 0,
             type          => 'bool',
             documentation => 'Display reset password button in portal',
         },

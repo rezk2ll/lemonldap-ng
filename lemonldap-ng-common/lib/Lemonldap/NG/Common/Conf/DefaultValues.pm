@@ -160,7 +160,6 @@ sub defaultValues {
         'portalDisplayLoginHistory'          => 1,
         'portalDisplayLogout'                => 1,
         'portalDisplayRegister'              => 1,
-        'portalDisplayResetPassword'         => 1,
         'portalForceAuthnInterval'           => 5,
         'portalPingInterval'                 => 60000,
         'portalRequireOldPassword'           => 1,
