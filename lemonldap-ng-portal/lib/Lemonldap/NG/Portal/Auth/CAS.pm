@@ -18,19 +18,6 @@ extends 'Lemonldap::NG::Portal::Auth::Base', 'Lemonldap::NG::Portal::Lib::CAS';
 
 # PROPERTIES
 
-# Act as a proxy if proxied services configured
-has proxy => (
-    is      => 'rw',
-    lazy    => 1,
-    builder => sub {
-        return
-          ref( $_[0]->conf->{CAS_proxiedServices} ) eq 'HASH'
-          ? ( %{ $_[0]->conf->{CAS_proxiedServices} } ? 1 : 0 )
-          : 0;
-    }
-);
-
-has proxyUrl  => ( is => 'rw' );
 has srvNumber => ( is => 'rw', default => 0 );
 has srvList   => ( is => 'rw', default => sub { [] } );
 
@@ -104,21 +91,6 @@ sub extractFormInfo {
         $self->logger->debug("Add hidden values to CAS redirect URL\n");
         $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
           . build_urlencoded( %{ $req->{portalHiddenFormValues} } );
-    }
-
-    if ( $self->proxy ) {
-        $self->logger->debug("CAS: Proxy mode activated");
-        my $proxy_url = $self->p->fullUrl($req) . '?casProxy=1';
-
-        if ( $self->conf->{authChoiceParam}
-            and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )
-        {
-            $proxy_url .= '&' . $self->conf->{authChoiceParam} . "=$tmp";
-        }
-
-        $self->logger->debug("CAS Proxy URL: $proxy_url");
-
-        $self->proxyUrl = $proxy_url;
     }
 
     # Catch proxy callback
@@ -226,7 +198,8 @@ sub extractFormInfo {
     }
 
     # Request proxy tickets for proxied services
-    if ( $self->proxy ) {
+    my $proxied = $srvConf->{casSrvMetaDataOptionsProxiedServices}->{$_} || {};
+    if ( %$proxied ) {
 
         # Check we received a PGT
         my $pgtId = $req->datas->{pgtId};
@@ -238,9 +211,8 @@ sub extractFormInfo {
         }
 
         # Get a proxy ticket for each proxied service
-        foreach ( keys %{ $srvConf->{casSrvMetaDataOptionsProxiedServices} } ) {
-            my $service =
-              $srvConf->{casSrvMetaDataOptionsProxiedServices}->{$_};
+        foreach ( keys %$proxied ) {
+            my $service = $proxied->{$_};
             my $pt = $self->retrievePT( $service, $srvConf );
 
             unless ($pt) {

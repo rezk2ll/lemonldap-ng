@@ -305,14 +305,30 @@ sub getServerLogoutURL {
 # Validate ST
 sub validateST {
     my ( $self, $req, $service, $ticket, $srvConf ) = @_;
+    my $proxyUrl;
 
     my $serviceValidateUrl =
         $srvConf->{casSrvMetaDataOptionsUrl}
       . "/serviceValidate?service="
       . uri_escape($service);
     $serviceValidateUrl .= "&ticket=$ticket";
-    $serviceValidateUrl .= "&pgtUrl=" . uri_escape( $self->proxyUrl )
-      if ( $self->proxyUrl );
+
+    my $proxied = $srvConf->{casSrvMetaDataOptionsProxiedServices} || {};
+    my $proxy_url;
+    if(%$proxied) {
+        $proxy_url = $self->p->fullUrl($req) . '?casProxy=1';
+        if ( $self->conf->{authChoiceParam}
+            and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )
+        {
+            $proxy_url .= '&' . $self->conf->{authChoiceParam} . "=$tmp";
+        }
+
+        $self->logger->debug("CAS Proxy URL: $proxy_url");
+
+        $req->datas->{casProxyUrl} = $proxy_url;
+
+        $serviceValidateUrl .= "&pgtUrl=" . uri_escape( $proxy_url );
+    }
 
     my $response = $self->ua->get($serviceValidateUrl);
 
@@ -332,7 +348,7 @@ sub validateST {
     }
 
     # Get proxy data and store pgtId
-    if ( $self->proxyUrl ) {
+    if ( $proxy_url ) {
         my $pgtIou =
           $xml->{'cas:authenticationSuccess'}->{'cas:proxyGrantingTicket'};
 
