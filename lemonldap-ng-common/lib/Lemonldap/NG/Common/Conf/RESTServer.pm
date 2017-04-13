@@ -473,6 +473,25 @@ sub _casMetaDataNodes {
 
     my ( $id, $resp ) = ( 1, [] );
 
+    # Return all exported attributes if asked
+    if ( $query =~
+        /^(?:cas${type}MetaDataExportedVars)$/
+      )
+    {
+        my $pk = eval { $self->getConfKey( $req, $query )->{$partner} } // {};
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+        foreach my $h ( sort keys %$pk ) {
+            push @$resp,
+              {
+                id    => "cas${type}MetaDataNodes/$partner/$query/" . $id++,
+                title => $h,
+                data  => $pk->{$h},
+                type  => 'keyText',
+              };
+        }
+        return $self->sendJSONresponse( $req, $resp );
+    }
+
     # Options
     if (
         $query =~ {
