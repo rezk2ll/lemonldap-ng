@@ -47,39 +47,9 @@
 
 <h1 class="sectionedit1" id="fastcgi_support">Support FastCGI</h1>
 <div class="level1">
-<div class="noteimportant">Le manager répond désormais nativement au protocole FastCGI. Le portail suivra d'ici la version 2.0
+<div class="noteimportant">Since 2.0, all LLNG components run under FastCGI
+
 </div>
-<p>
-Le portail <abbr title="LemonLDAP::NG">LL::NG</abbr> peut être utilisé dans un <a href="http://en.wikipedia.org/wiki/FastCGI" class="urlextern" title="http://en.wikipedia.org/wiki/FastCGI"  rel="nofollow">système FastCGI</a> très facilement. Il suffit de charger le support FastCGI de &lt;a3&gt;LL::NG&lt;/a3&gt; et d'écrire une boucle dans la &lt;a4&gt;CGI&lt;/a4&gt;. Exemple avec le portail :
-
-</p><pre class="code perl"><span class="co1">#!/usr/bin/perl</span>
-<b>use Lemonldap::NG::Common::CGI qw(fastcgi);</b>
-<span class="me2">use Lemonldap::NG::Portal::SharedConf;</span>
-<span class="re0"># ...</span>
-
-<b><span style="color:#500;">LMAUTH:</span> while ( my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new({}) ) </b>{
-    <span class="re0"># ...</span>
-}
-</pre>
-
-</p>
-
-<p>
-Etapes clefs :
-</p>
-<ul>
-<li class="level1"><div class="li"> Charger <strong>“Lemonldap::NG::Common::CGI qw(fastcgi)“</strong> avant toute autre librairie &lt;a2&gt;LL::NG&lt;/a2&gt;</div>
-</li>
-<li class="level1"><div class="li"> insérer une boucle autour de l'affichage <abbr title="HyperText Markup Language">HTML</abbr>, démarrant avec la création de l'objet <em>(→new)</em></div>
-</li>
-<li class="level1"><div class="li"> insérer le label <strong>“LMAUTH”</strong> en tête de la boucle</div>
-</li>
-</ul>
-
-<p>
-Un exemple est disponible dans l'arborescence des sources : lemonldap-ng-portal/example/index.fcgi
-</p>
-
 </div>
 </div>
 </body>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:performances</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,performances"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="performances.html"/>
@@ -301,34 +301,45 @@ This test isn&#039;t a “only-backend” test but embed some LLNG methods, so r
 		<td class="col0 leftalign"> Apache::Session::<strong>MySQL</strong>             </td><td class="col1"> No lock </td><td class="col2 centeralign">  87.20  </td><td class="col3 centeralign">  <strong>0.0039</strong>  </td><td class="col4 centeralign">  23.14  </td><td class="col5 centeralign">  0.0281  </td><td class="col6 centeralign">  0.0252  </td><td class="col7 centeralign">  0.0235  </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0"> Apache::Session::<strong>Browseable::MySQL</strong> </td><td class="col1 leftalign">      </td><td class="col2 centeralign">  91.79  </td><td class="col3 centeralign">  <strong>0.0039</strong>  </td><td class="col4 centeralign">   <strong>0.139</strong> (*)  </td><td class="col5 centeralign">  0.0272  </td><td class="col6 centeralign">  <strong>0.0036</strong>  </td><td class="col7 centeralign">  <strong>0.0026</strong>  </td>
+		<td class="col0"> Apache::Session::<strong>Browseable::MySQL</strong> </td><td class="col1 leftalign">      </td><td class="col2 centeralign">  91.79  </td><td class="col3 centeralign">  <strong>0.0039</strong>  </td><td class="col4 centeralign">   <strong>0.139</strong> <em>(1)</em>  </td><td class="col5 centeralign">  0.0272  </td><td class="col6 centeralign">  <strong>0.0036</strong>  </td><td class="col7 centeralign">  <strong>0.0026</strong>  </td>
 	</tr>
 	<tr class="row5 rowodd">
-		<td class="col0 leftalign"> Apache::Session::<strong>Postgres</strong>          </td><td class="col1 leftalign">      </td><td class="col2 centeralign">  18.31  </td><td class="col3 centeralign">  0.0095  </td><td class="col4 centeralign">  13.40  </td><td class="col5 centeralign">  0.0323  </td><td class="col6 centeralign">  0.0277  </td><td class="col7 centeralign">  0.0264  </td>
+		<td class="col0"> Apache::Session::<strong>Browseable::MySQLJSON</strong> </td><td class="col1 leftalign">  </td><td class="col2 centeralign">  86.06  </td><td class="col3 centeralign">  0.0145  </td><td class="col4 centeralign">  <strong> 0.151</strong> <em>(2)</em>  </td><td class="col5 centeralign">  <strong>0.0104</strong>  </td><td class="col6 centeralign">  0.0137  </td><td class="col7 centeralign">  0.0038  </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0"> Apache::Session::<strong>Postgres</strong> </td><td class="col1"> Unlogged table </td><td class="col2 centeralign">  9.16  </td><td class="col3 centeralign">  0.0095  </td><td class="col4 centeralign">  7.91  </td><td class="col5 centeralign">  0.0318  </td><td class="col6 centeralign">  0.0270  </td><td class="col7 centeralign">  0.0254  </td>
+		<td class="col0 leftalign"> Apache::Session::<strong>Postgres</strong>          </td><td class="col1 leftalign">      </td><td class="col2 centeralign">  18.31  </td><td class="col3 centeralign">  0.0095  </td><td class="col4 centeralign">  13.40  </td><td class="col5 centeralign">  0.0323  </td><td class="col6 centeralign">  0.0277  </td><td class="col7 centeralign">  0.0264  </td>
 	</tr>
 	<tr class="row7 rowodd">
-		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::Postgres</strong>  </td><td class="col1"> Unlogged table with indexes </td><td class="col2 centeralign">  9.24  </td><td class="col3 centeralign">  0.0094  </td><td class="col4 centeralign">  <strong>0.103</strong> (*)  </td><td class="col5 centeralign">  0.0301  </td><td class="col6 centeralign">  <strong>0.0037</strong>  </td><td class="col7 centeralign">  <strong>0.0028</strong>  </td>
+		<td class="col0"> Apache::Session::<strong>Postgres</strong> </td><td class="col1"> Unlogged table </td><td class="col2 centeralign">  9.16  </td><td class="col3 centeralign">  0.0095  </td><td class="col4 centeralign">  7.91  </td><td class="col5 centeralign">  0.0318  </td><td class="col6 centeralign">  0.0270  </td><td class="col7 centeralign">  0.0254  </td>
 	</tr>
 	<tr class="row8 roweven">
-		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::PgJSON</strong>  </td><td class="col1"> Unlogged table, json field </td><td class="col2 centeralign">  9.25  </td><td class="col3 centeralign">  0.0091  </td><td class="col4 centeralign">  <strong>0.108</strong> (*)  </td><td class="col5 centeralign">  0.0247  </td><td class="col6 centeralign">  0.0061  </td><td class="col7 centeralign">  <strong>0.0029</strong>  </td>
+		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::Postgres</strong>  </td><td class="col1"> Unlogged table with indexes </td><td class="col2 centeralign">  9.24  </td><td class="col3 centeralign">  0.0094  </td><td class="col4 centeralign">  <strong>0.103</strong> <em>(1)</em>  </td><td class="col5 centeralign">  0.0301  </td><td class="col6 centeralign">  <strong>0.0036</strong>  </td><td class="col7 centeralign">  <strong>0.0028</strong>  </td>
 	</tr>
 	<tr class="row9 rowodd">
-		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::PgHstore</strong>  </td><td class="col1"> Unlogged table, hstore field </td><td class="col2 centeralign">  9.62  </td><td class="col3 centeralign">  0.0111  </td><td class="col4 centeralign">  <strong>0.105</strong> (*)  </td><td class="col5 centeralign">  <strong>0.0125</strong>  </td><td class="col6 centeralign">  <strong>0.0031</strong>  </td><td class="col7 centeralign">  <strong>0.0029</strong>  </td>
+		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::PgJSON</strong>  </td><td class="col1"> Unlogged table, json field </td><td class="col2 centeralign">  9.25  </td><td class="col3 centeralign">  0.0091  </td><td class="col4 centeralign">  <strong>0.108</strong> <em>(1)</em>  </td><td class="col5 centeralign">  0.0247  </td><td class="col6 centeralign">  <strong>0.0035</strong>  </td><td class="col7 centeralign">  <strong>0.0029</strong>  </td>
 	</tr>
 	<tr class="row10 roweven">
-		<td class="col0 leftalign"> Apache::Session::<strong>Redis</strong>  </td><td class="col1 leftalign">  </td><td class="col2 centeralign">  <strong>2.13</strong>  </td><td class="col3 centeralign">  <strong>0.0033</strong>  </td><td class="col4 centeralign">  1.158  </td><td class="col5 centeralign">  0.0623  </td><td class="col6 centeralign">  0.0570  </td><td class="col7 centeralign">  0.0550  </td>
+		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::PgJSON</strong>  </td><td class="col1"> Unlogged table, jsonb field </td><td class="col2 centeralign">  9.25  </td><td class="col3 centeralign">  0.0091  </td><td class="col4 centeralign">  <strong>0.105</strong> <em>(1)</em>  </td><td class="col5 centeralign">  <strong>0.0126</strong>  </td><td class="col6 centeralign">  <strong>0.0034</strong>  </td><td class="col7 centeralign">  <strong>0.0029</strong>  </td>
 	</tr>
 	<tr class="row11 rowodd">
-		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::Redis</strong>  </td><td class="col1 leftalign">  </td><td class="col2 centeralign">  <strong>2.36</strong>  </td><td class="col3 centeralign">  <strong>0.0033</strong>  </td><td class="col4 centeralign">  1.154  </td><td class="col5 centeralign">  0.0643  </td><td class="col6 centeralign">  0.1048  </td><td class="col7 centeralign">  0.0024  </td>
+		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::PgHstore</strong>  </td><td class="col1"> Unlogged table, hstore field </td><td class="col2 centeralign">  9.62  </td><td class="col3 centeralign">  0.0111  </td><td class="col4 centeralign">  <strong>0.105</strong> <em>(1)</em>  </td><td class="col5 centeralign">  <strong>0.0125</strong>  </td><td class="col6 centeralign">  <strong>0.0033</strong>  </td><td class="col7 centeralign">  <strong>0.0029</strong>  </td>
+	</tr>
+	<tr class="row12 roweven">
+		<td class="col0 leftalign"> Apache::Session::<strong>Redis</strong>  </td><td class="col1 leftalign">  </td><td class="col2 centeralign">  <strong>2.13</strong>  </td><td class="col3 centeralign">  <strong>0.0033</strong>  </td><td class="col4 centeralign">  1.158  </td><td class="col5 centeralign">  0.0623  </td><td class="col6 centeralign">  0.0570  </td><td class="col7 centeralign">  0.0550  </td>
+	</tr>
+	<tr class="row13 rowodd">
+		<td class="col0 leftalign"> Apache::Session::<strong>Browseable::Redis</strong>  </td><td class="col1 leftalign">  </td><td class="col2 centeralign">  <strong>2.36</strong>  </td><td class="col3 centeralign">  <strong>0.0033</strong>  </td><td class="col4 centeralign">  1.154  </td><td class="col5 centeralign">  0.0643  </td><td class="col6 centeralign">  0.1048  </td><td class="col7 centeralign">  <strong>0.0024</strong>  </td>
+	</tr>
+	<tr class="row14 roweven">
+		<td class="col0 centeralign" colspan="8">  <em>The source of this test is available in sources: e2e-tests/sbperf.pl</em>  </td>
 	</tr>
 </table></div>
-<!-- EDIT9 TABLE [7534-9034] -->
-<p>
-<em><strong>(*) :</strong> “purge” test is done with Apache::Session::Browseable-1.2.5 and LLG-2.0. Earlier results are not so good.</em>
-</p>
+<!-- EDIT9 TABLE [7534-9437] --><ul>
+<li class="level1"><div class="li"> <em><strong>(1) :</strong> “purge” test is done with Apache::Session::Browseable-1.2.5 and LLG-2.0. Earlier results are not so good.</em></div>
+</li>
+<li class="level1"><div class="li"> <em><strong>(2) :</strong> “purge” test is done with Apache::Session::Browseable-1.2.6 and LLG-2.0.</em></div>
+</li>
+</ul>
 
 <p>
 Analysis:
@@ -347,7 +358,7 @@ Analysis:
 </ul>
 
 </div>
-<!-- EDIT8 SECTION "Apache::Session performances" [4644-9717] -->
+<!-- EDIT8 SECTION "Apache::Session performances" [4644-10215] -->
 <h3 class="sectionedit10" id="ldap_performances">LDAP performances</h3>
 <div class="level3">
 
@@ -384,12 +395,12 @@ Now ldapgroups contains “admin su”
 
 </div>
 </div>
-<!-- EDIT10 SECTION "LDAP performances" [9718-10847] -->
+<!-- EDIT10 SECTION "LDAP performances" [10216-11345] -->
 <h2 class="sectionedit11" id="manager_performances">Manager performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT11 SECTION "Manager performances" [10848-10881] -->
+<!-- EDIT11 SECTION "Manager performances" [11346-11379] -->
 <h3 class="sectionedit12" id="disable_unused_modules">Disable unused modules</h3>
 <div class="level3">
 
@@ -400,7 +411,7 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
 </div>
-<!-- EDIT12 SECTION "Disable unused modules" [10882-11128] -->
+<!-- EDIT12 SECTION "Disable unused modules" [11380-11626] -->
 <h3 class="sectionedit13" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
@@ -427,6 +438,6 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Use static HTML files" [11129-] --></div>
+<!-- EDIT13 SECTION "Use static HTML files" [11627-] --></div>
 </body>
 </html>

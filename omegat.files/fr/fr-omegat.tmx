@@ -562,16 +562,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s2&gt;DocumentRoot&lt;/s2&gt; /var/lib/lemonldap-ng/portal/
- </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T155332Z" changeid="xavier">
-        <seg>&lt;s2&gt;DocumentRoot&lt;/s2&gt; /var/lib/lemonldap-ng/portal/
- </seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>http://search.cpan.org/search?query=Safe&amp;mode=module</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T203909Z" changeid="xavier">
@@ -2744,14 +2734,6 @@ make debian-packages</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>First, copy the current portal virtual host definition into a new one.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T213756Z" changeid="xavier">
-        <seg>Premièrement, copier l'actuelle définition de l'hôte virtuel du portail dans une nouvelle.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>This will bypass the authentication module for request from APPLICATIONS_&lt;a0&gt;IP&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T130617Z" changeid="xavier">
@@ -3254,14 +3236,6 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T045646Z" changeid="xavier">
         <seg>Ensuite, aller dans les &lt;c0&gt;paramètres Proxy&lt;/c0&gt; :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Key steps :</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T075604Z" changeid="xavier">
-        <seg>Etapes clefs :</seg>
       </tuv>
     </tu>
     <tu>
@@ -4558,14 +4532,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>This virtual host will be used by clients that fail to use the Kerberos protocol.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T213922Z" changeid="xavier">
-        <seg>Cet hôte virtuel sera utilisé par les clients qui ne réussiront pas à utiliser le protocole Kerberos.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>It should be possible to have the same account for all SPN, but this may require some manipulations on AD (command setspn) that are not documented here.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T212224Z" changeid="xavier">
@@ -5022,34 +4988,10 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>tar zxvf AuthCAS-1.4.tar.gz 
-cd AuthCAS-1.4/
-perl Makefile.PL
-make
-make test</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160126Z" changeid="xavier">
-        <seg>tar zxvf AuthCAS-1.4.tar.gz 
-cd AuthCAS-1.4/
-perl Makefile.PL
-make
-make test</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;how to deploy them&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T080352Z" changeid="xavier">
         <seg>Voir &lt;a0&gt;comment les déployer&lt;/a0&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Download the latest version:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160104Z" changeid="xavier">
-        <seg>Télécharger la dernière version :</seg>
       </tuv>
     </tu>
     <tu>
@@ -5346,14 +5288,6 @@ make test</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T055534Z" changeid="xavier">
         <seg>skip</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;CA file&lt;/s0&gt;: CA certificate used to validate &lt;a1&gt;CAS&lt;/a1&gt; server certificate</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160412Z" changeid="xavier">
-        <seg>&lt;s0&gt;Fichier CA&lt;/s0&gt; : certificat de la CA utilisée pour valider le certificat du serveur &lt;a1&gt;CAS&lt;/a1&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -5714,14 +5648,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T210327Z" changeid="xavier">
         <seg>&lt;s0&gt;PROD&lt;/s0&gt; : utiliser les fichiers JS et &lt;a1&gt;CSS&lt;/a1&gt; compactés</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Krb5KeyTab /etc/lemonldap-ng/auth.keytab</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T155342Z" changeid="xavier">
-        <seg>Krb5KeyTab /etc/lemonldap-ng/auth.keytab</seg>
       </tuv>
     </tu>
     <tu>
@@ -7306,14 +7232,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You just have to load &lt;a2&gt;LL::NG&lt;/a2&gt; FastCGI support and write a loop in the CGI.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T163101Z" changeid="xavier">
-        <seg>Il suffit de charger le support FastCGI de &lt;a3&gt;LL::NG&lt;/a3&gt; et d'écrire une boucle dans la &lt;a4&gt;CGI&lt;/a4&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>✔</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7654,14 +7572,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172106Z" changeid="xavier">
         <seg>OBM_USERPASSWORD</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>See &lt;a0&gt;Apache authentication module configuration&lt;/a0&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T213647Z" changeid="xavier">
-        <seg>Voir la &lt;a0&gt;configuration du module d'authentification Apache&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8146,14 +8056,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Apache (Kerberos, NTLM, OTP, ...)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120505T081247Z" changeid="xavier">
-        <seg>Apache (Kerberos, NTLM, OTP, ...)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>As described in &lt;a0&gt;performances chapter&lt;/a0&gt;, you can use macros, local macros,…</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T061326Z" changeid="xavier">
@@ -8462,14 +8364,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T075947Z" changeid="xavier">
         <seg>Pour définir un paramètre, par exemple le domaine :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;&lt;s3&gt;Directory&lt;/s3&gt; /var/lib/lemonldap-ng/portal/&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T155334Z" changeid="xavier">
-        <seg>&lt;&lt;s3&gt;Directory&lt;/s3&gt; /var/lib/lemonldap-ng/portal/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -9216,14 +9110,6 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>An example is given under the source tree : lemonldap-ng-portal/example/index.fcgi</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T075812Z" changeid="xavier">
-        <seg>Un exemple est disponible dans l'arborescence des sources : lemonldap-ng-portal/example/index.fcgi</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Finally, just ensure that at least:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T221804Z" changeid="xavier">
@@ -9316,14 +9202,6 @@ description: {whatToTrace}'$uid'
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073754Z" changeid="xavier">
         <seg>documentation:liferay_5.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;&lt;a1&gt;PGT&lt;/a1&gt; file&lt;/s0&gt;: temporary file where proxy tickets are stored (by default, &lt;c2&gt;/tmp/pgt.txt&lt;/c2&gt;)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160611Z" changeid="xavier">
-        <seg>&lt;s0&gt;Fichier &lt;a1&gt;PGT&lt;/a1&gt;&lt;/s0&gt; : fichier temporaire où les tickets de proxy sont stockés (par défaut, &lt;c2&gt;/tmp/pgt.txt&lt;/c2&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -10430,14 +10308,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172009Z" changeid="xavier">
         <seg>default</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Server &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;CAS&lt;/a2&gt; server &lt;a3&gt;URL&lt;/a3&gt; (must use https://)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160330Z" changeid="xavier">
-        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; du serveur&lt;/s0&gt; : &lt;a3&gt;URL&lt;/a3&gt; du serveur &lt;a2&gt;CAS&lt;/a2&gt; (doit utiliser https://)</seg>
       </tuv>
     </tu>
     <tu>
@@ -11920,14 +11790,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Renew authentication&lt;/s0&gt;: force authentication renewal on &lt;a1&gt;CAS&lt;/a1&gt; server</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160449Z" changeid="xavier">
-        <seg>&lt;s0&gt;Renouveler l'authentification&lt;/s0&gt; : force le renouvellement de l'authentification sur le serveur &lt;a1&gt;CAS&lt;/a1&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Then, go in &lt;c0&gt;SSL parameters&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T213104Z" changeid="xavier">
@@ -12314,14 +12176,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://perldoc.perl.org/functions/exit.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T053608Z" changeid="xavier">
-        <seg>http://perldoc.perl.org/functions/exit.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Check &lt;a0&gt;XSS&lt;/a0&gt; Attacks</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065933Z" changeid="guimard">
@@ -12414,14 +12268,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T134326Z" changeid="guimard">
         <seg>Le menu est affiché si l'authentification est réussie.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>http://en.wikipedia.org/wiki/FastCGI</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T075303Z" changeid="xavier">
-        <seg>http://en.wikipedia.org/wiki/FastCGI</seg>
       </tuv>
     </tu>
     <tu>
@@ -12618,14 +12464,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>touch /tmp/pgt.txt</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160925Z" changeid="xavier">
-        <seg>touch /tmp/pgt.txt</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>A known problematic is that many browser (Firefox, Chrome) remembers the fact that the certificate is not available at a certain time.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T213253Z" changeid="xavier">
@@ -12686,14 +12524,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051532Z" changeid="guimard">
         <seg>&lt;a0&gt;Utiliser Apache::Session::Browseable::MySQL&lt;/a0&gt; (recommandé pour de meilleures performances)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>AuthApache authentication</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120107T150224Z" changeid="xavier">
-        <seg>Authentification AuthApache</seg>
       </tuv>
     </tu>
     <tu>
@@ -13478,14 +13308,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T114155Z" changeid="xavier">
         <seg>tous les serveurs Apache ont été rechargés après un changement du nom de cookie ou du domaine</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Databases (DBI)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120505T081257Z" changeid="xavier">
-        <seg>Bases de données (DBI)</seg>
       </tuv>
     </tu>
     <tu>
@@ -16264,14 +16086,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Portal will follow in 2.0</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T162942Z" changeid="xavier">
-        <seg>Le portail suivra d'ici la version 2.0</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>groups</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061622Z" changeid="guimard">
@@ -17204,16 +17018,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s6&gt;# ...&lt;/s6&gt;
-}</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T075556Z" changeid="xavier">
-        <seg>&lt;s6&gt;# ...&lt;/s6&gt;
-}</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;UI locales&lt;/s0&gt;: Value of ui_locales parameter (example: en-&lt;a1&gt;GB&lt;/a1&gt; en fr-FR fr)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T202911Z" changeid="xavier">
@@ -17654,14 +17458,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T051719Z" changeid="xavier">
         <seg>Il est possible d'ajouter un lien dans le &lt;a0&gt;menu application&lt;/a0&gt; pour afficher Google Apps.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>sudo make install</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>sudo make install</seg>
       </tuv>
     </tu>
     <tu>
@@ -18110,14 +17906,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T162422Z" changeid="xavier">
         <seg>Ce message peut contenir des données de session tels les attributs ou les macros.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Example with the portal:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T075547Z" changeid="xavier">
-        <seg>Exemple avec le portail :</seg>
       </tuv>
     </tu>
     <tu>
@@ -18738,14 +18526,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>wget https://sourcesup.cru.fr/frs/download.php/2476/AuthCAS-1.4.tar.gz</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160105Z" changeid="xavier">
-        <seg>wget https://sourcesup.cru.fr/frs/download.php/2476/AuthCAS-1.4.tar.gz</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Mail charset</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063357Z" changeid="guimard">
@@ -18966,14 +18746,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Manager</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Then, modify the main portal virtual host to load the Apache Kerberos authentication module :</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214014Z" changeid="xavier">
-        <seg>Modifier ensuite l'hôte virtuel du portail principal pour charger le module d'authentification Kerberos d'Apache :</seg>
       </tuv>
     </tu>
     <tu>
@@ -19622,14 +19394,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Load &lt;s0&gt;“Lemonldap::NG::Common::CGI qw(fastcgi)“&lt;/s0&gt; before any other &lt;a1&gt;LL::NG&lt;/a1&gt; library</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T163125Z" changeid="xavier">
-        <seg>Charger &lt;s0&gt;“Lemonldap::NG::Common::CGI qw(fastcgi)“&lt;/s0&gt; avant toute autre librairie &lt;a2&gt;LL::NG&lt;/a2&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>To avoid problems, &lt;a0&gt;LL::NG&lt;/a0&gt; decode them using &lt;a1&gt;http://search.cpan.org/perldoc?Apache2::URI#unescape_url&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T134414Z" changeid="xavier">
@@ -19854,14 +19618,6 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112255Z" changeid="xavier">
         <seg>&lt;s21&gt;&quot;url_logout&quot;&lt;/s21&gt;            &lt;s22&gt;=&gt;&lt;/s22&gt; &lt;s23&gt;&quot;https://OBMURL/logout&quot;&lt;/s23&gt;&lt;s24&gt;,&lt;/s24&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s9&gt;Options&lt;/s9&gt; +ExecCGI +&lt;s10&gt;FollowSymLinks&lt;/s10&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T053716Z" changeid="xavier">
-        <seg>&lt;s9&gt;Options&lt;/s9&gt; +ExecCGI +&lt;s10&gt;FollowSymLinks&lt;/s10&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -20902,16 +20658,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;/&lt;s11&gt;Directory&lt;/s11&gt;&gt;
- </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T053721Z" changeid="xavier">
-        <seg>&lt;/&lt;s11&gt;Directory&lt;/s11&gt;&gt;
- </seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>radiusAuthnLevel</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065903Z" changeid="guimard">
@@ -21462,26 +21208,10 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>insert a label &lt;s0&gt;“LMAUTH”&lt;/s0&gt; ahead of the loop</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T075736Z" changeid="xavier">
-        <seg>insérer le label &lt;s0&gt;“LMAUTH”&lt;/s0&gt; en tête de la boucle</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;+3M&lt;/s0&gt;: three months from session creation</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120502T041912Z" changeid="xavier">
         <seg>&lt;s0&gt;+3M&lt;/s0&gt; : trois mois après la création de la session</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>If no proxied services defined, &lt;a0&gt;CAS&lt;/a0&gt; authentication will not activate the &lt;a1&gt;CAS&lt;/a1&gt; proxy mode.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160843Z" changeid="xavier">
-        <seg>Si aucun service proxifié n'est défini, l'authentification &lt;a0&gt;CAS&lt;/a0&gt; n'activera pas le mode proxy &lt;a1&gt;CAS&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22006,14 +21736,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>LemonLDAP::NG can be used as a proxy between those protocols</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120505T082644Z" changeid="xavier">
-        <seg>LemonLDAP::NG peut être utilisé comme proxy entre ces protocoles</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Authentication module</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194613Z" changeid="xavier">
@@ -22484,14 +22206,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; Portal can be used under a &lt;a1&gt;FastCGI system&lt;/a1&gt; very easily.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T163052Z" changeid="xavier">
-        <seg>Le portail &lt;a0&gt;LL::NG&lt;/a0&gt; peut être utilisé dans un &lt;a1&gt;système FastCGI&lt;/a1&gt; très facilement.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s10&gt;&lt;s11&gt;&lt;role&lt;/s11&gt; &lt;s12&gt;rolename&lt;/s12&gt;=&lt;s13&gt;&quot;tomcat&quot;&lt;/s13&gt;&lt;s14&gt;/&gt;&lt;/s14&gt;&lt;/s10&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190303Z" changeid="xavier">
@@ -22512,14 +22226,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T205151Z" changeid="xavier">
         <seg>Configurer l'hôte virtuel Sympa comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt; mais utiliser l'agent jeton sécurisé au lieu de l'agent par défaut.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Perl-CAS module installation</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160052Z" changeid="xavier">
-        <seg>Installation du module Perl-CAS</seg>
       </tuv>
     </tu>
     <tu>
@@ -23888,14 +23594,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>KrbServiceName HTTP/auth.example.com</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T053001Z" changeid="xavier">
-        <seg>KrbServiceName HTTP/auth.example.com</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>applications:mediawiki_logo.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074439Z" changeid="xavier">
@@ -24384,14 +24082,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Extract and build the module:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160124Z" changeid="xavier">
-        <seg>Extraire et compiler le module:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;User attribute&lt;/s0&gt;: which session attribute will be used to display &lt;c1&gt;Connected as&lt;/c1&gt; in the menu</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T075908Z" changeid="guimard">
@@ -24600,14 +24290,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>vi /var/lib/lemonldap-ng/portal/login.pl</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T053603Z" changeid="xavier">
-        <seg>vi /var/lib/lemonldap-ng/portal/login.pl</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Adapt it to configure the index you need.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T055204Z" changeid="xavier">
@@ -24740,14 +24422,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous pouvez entrer un mot de passe de protection de la clef privée.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;&lt;s0&gt;VirtualHost&lt;/s0&gt; *&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111222T180809Z" changeid="xavier">
-        <seg>&lt;&lt;s0&gt;VirtualHost&lt;/s0&gt; *&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -24892,14 +24566,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060005Z" changeid="xavier">
         <seg>&lt;s0&gt;Format&lt;/s0&gt; (optionnel) : format de l'attribut &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Create a redirection script, called login.pl:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T053600Z" changeid="xavier">
-        <seg>Créer un script de redirection, appelé login.pl:</seg>
       </tuv>
     </tu>
     <tu>
@@ -25296,14 +24962,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Use &lt;c0&gt;authpwd&lt;/c0&gt; server name for this virtual host:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T213822Z" changeid="xavier">
-        <seg>Utiliser le nom de serveur &lt;c0&gt;authpwd&lt;/c0&gt; pour cet hôte virtuel :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>LemonLDAP::NG implements partially the policy:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T060749Z" changeid="xavier">
@@ -25316,24 +24974,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063836Z" changeid="guimard">
         <seg>port</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;#!/usr/bin/perl&lt;/s0&gt;
-&lt;b1&gt;use Lemonldap::NG::Common::CGI qw(fastcgi);&lt;/b1&gt;
-&lt;s2&gt;use Lemonldap::NG::Portal::SharedConf;&lt;/s2&gt;
-&lt;s3&gt;# ...&lt;/s3&gt;
-
-&lt;b4&gt;&lt;s5&gt;LMAUTH:&lt;/s5&gt; while ( my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new({}) ) &lt;/b4&gt;{</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T075552Z" changeid="xavier">
-        <seg>&lt;s0&gt;#!/usr/bin/perl&lt;/s0&gt;
-&lt;b1&gt;use Lemonldap::NG::Common::CGI qw(fastcgi);&lt;/b1&gt;
-&lt;s2&gt;use Lemonldap::NG::Portal::SharedConf;&lt;/s2&gt;
-&lt;s3&gt;# ...&lt;/s3&gt;
-
-&lt;b4&gt;&lt;s5&gt;LMAUTH:&lt;/s5&gt; while ( my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new({}) ) &lt;/b4&gt;{</seg>
       </tuv>
     </tu>
     <tu>
@@ -25466,14 +25106,6 @@ a2ensite test-apache2.conf</seg>
         <seg>&lt;s33&gt;&quot;debug_level&quot;&lt;/s33&gt;           &lt;s34&gt;=&gt;&lt;/s34&gt; &lt;s35&gt;&quot;NONE&quot;&lt;/s35&gt;&lt;s36&gt;,&lt;/s36&gt;
 &lt;s37&gt;//                &quot;debug_header_name&quot;     =&gt; &quot;HTTP_OBM_UID&quot;,&lt;/s37&gt;
 &lt;s38&gt;//                &quot;group_header_name&quot;     =&gt; &quot;HTTP_OBM_GROUPS&quot;,&lt;/s38&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Install the module:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160133Z" changeid="xavier">
-        <seg>Installer le module :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26710,14 +26342,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>KrbAuthRealms EXAMPLE.COM</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T155342Z" changeid="xavier">
-        <seg>KrbAuthRealms EXAMPLE.COM</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Auth-User&lt;/s0&gt;: $uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114201Z" changeid="xavier">
@@ -27050,14 +26674,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T172647Z" changeid="xavier">
         <seg>noms and valeurs des champs à contrôler</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Gateways authentication&lt;/s0&gt;: force transparent authentication on &lt;a1&gt;CAS&lt;/a1&gt; server</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160523Z" changeid="xavier">
-        <seg>&lt;s0&gt;Authentification des passerelles&lt;/s0&gt; : force l'authentification transparente sur le serveur &lt;a1&gt;CAS&lt;/a1&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -27788,14 +27404,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112932Z" changeid="xavier">
         <seg>login</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>The redirection script is needed if you use a failaback authentication.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214109Z" changeid="xavier">
-        <seg>Le script de redirection est nécessaire si l'authentification de secours est utilisée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -29794,14 +29402,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>The manager is now natively written for FastCGI.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T162927Z" changeid="xavier">
-        <seg>Le manager répond désormais nativement au protocole FastCGI.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>secureTokenMemcachedServers</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065746Z" changeid="guimard">
@@ -29950,18 +29550,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T080352Z" changeid="xavier">
         <seg>persistentStorage</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>...
- 
-&lt;/&lt;s2&gt;VirtualHost&lt;/s2&gt;&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T114012Z" changeid="xavier">
-        <seg>...
- 
-&lt;/&lt;s2&gt;VirtualHost&lt;/s2&gt;&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -30404,14 +29992,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>If you activate proxy mode, you must create the &lt;a0&gt;PGT&lt;/a0&gt; file on your system, for example:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160923Z" changeid="xavier">
-        <seg>Si le mode proxy est activé, il faut créer le fichier &lt;a0&gt;PGT&lt;/a0&gt; sur le système, par exemple :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You can map here the attribute names from the &lt;a0&gt;LL::NG&lt;/a0&gt; session to an &lt;a1&gt;OpenID Connect claim&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T202511Z" changeid="xavier">
@@ -30528,14 +30108,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061343Z" changeid="guimard">
         <seg>dbiAuthPassword</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>All &lt;a1&gt;Apache::Session&lt;/a1&gt; style modules are useable except for some features.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120505T082051Z" changeid="xavier">
-        <seg>Tous les modules de type &lt;a1&gt;Apache::Session&lt;/a1&gt; sont utilisables excepté pour quelques fonctionnalités.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31036,14 +30608,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Redirection script</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214035Z" changeid="xavier">
-        <seg>Script de redirection</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s153&gt;//&quot;userobm_samba_home&quot;          =&gt; ,&lt;/s153&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112328Z" changeid="xavier">
@@ -31422,16 +30986,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; auth.example.com
- </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T155331Z" changeid="xavier">
-        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; auth.example.com
- </seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Proxy backend to be used in conjunction with another configuration backend.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082452Z" changeid="xavier">
@@ -31484,14 +31038,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065446Z" changeid="guimard">
         <seg>secureTokenHeader</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>As &lt;a1&gt;LL::NG&lt;/a1&gt; works like classic WebSSO (like Siteminder™), many other applications are easy to integrate.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153422Z" changeid="xavier">
-        <seg>Comme &lt;a1&gt;LL::NG&lt;/a1&gt; fonctionne comme un WebSSO classique (tel Siteminder™), de nombreuses applications sont faciles à integrer.</seg>
       </tuv>
     </tu>
     <tu>
@@ -32178,14 +31724,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T080031Z" changeid="guimard">
         <seg>&lt;s0&gt;Protection anti-iframe&lt;/s0&gt; : ferme la frame parente pour éviter des attaques bien connues</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>insert a loop around the &lt;a0&gt;HTML&lt;/a0&gt; printing, starting with the object creation &lt;e1&gt;(→new)&lt;/e1&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T075720Z" changeid="xavier">
-        <seg>insérer une boucle autour de l'affichage &lt;a0&gt;HTML&lt;/a0&gt;, démarrant avec la création de l'objet &lt;e1&gt;(→new)&lt;/e1&gt;</seg>
       </tuv>
     </tu>
     <tu>

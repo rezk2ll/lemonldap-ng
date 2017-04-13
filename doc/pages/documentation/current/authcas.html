@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authcas</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authcas"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authcas.html"/>
@@ -43,19 +43,6 @@
 </head>
 <body>
 <div class="dokuwiki export container">
-<!-- TOC START -->
-<div id="dw__toc">
-<h3 class="toggle">Table of Contents</h3>
-<div>
-
-<ul class="toc">
-<li class="level1"><div class="li"><a href="#presentation">Presentation</a></div></li>
-<li class="level1"><div class="li"><a href="#perl-cas_module_installation">Perl-CAS module installation</a></div></li>
-<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div></li>
-</ul>
-</div>
-</div>
-<!-- TOC END -->
 
 <h1 class="sectionedit1" id="cas">CAS</h1>
 <div class="level1">
@@ -95,31 +82,7 @@ They can then be forwarded to applications trough <a href="writingrulesand_heade
 </div>
 </div>
 <!-- EDIT3 SECTION "Presentation" [71-832] -->
-<h2 class="sectionedit4" id="perl-cas_module_installation">Perl-CAS module installation</h2>
-<div class="level2">
-
-<p>
-Download the latest version:
-</p>
-<pre class="code">wget https://sourcesup.cru.fr/frs/download.php/2476/AuthCAS-1.4.tar.gz</pre>
-
-<p>
-Extract and build the module:
-</p>
-<pre class="code">tar zxvf AuthCAS-1.4.tar.gz 
-cd AuthCAS-1.4/
-perl Makefile.PL
-make
-make test</pre>
-
-<p>
-Install the module:
-</p>
-<pre class="code">sudo make install</pre>
-
-</div>
-<!-- EDIT4 SECTION "Perl-CAS module installation" [833-1166] -->
-<h2 class="sectionedit5" id="configuration">Configuration</h2>
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
@@ -133,15 +96,21 @@ Then, go in <code><abbr title="Central Authentication Service">CAS</abbr> parame
 <ul>
 <li class="level1"><div class="li"> <strong>Authentication level</strong>: authentication level for this module.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Server <abbr title="Uniform Resource Locator">URL</abbr></strong>: <abbr title="Central Authentication Service">CAS</abbr> server <abbr title="Uniform Resource Locator">URL</abbr> (must use https://)</div>
+</ul>
+
+<p>
+Then create the list of <abbr title="Central Authentication Service">CAS</abbr> servers in the manager. For each, set:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Server <abbr title="Uniform Resource Locator">URL</abbr></strong> <em>(required)</em>: <abbr title="Central Authentication Service">CAS</abbr> server <abbr title="Uniform Resource Locator">URL</abbr> (must use https://)</div>
 </li>
-<li class="level1"><div class="li"> <strong>CA file</strong>: CA certificate used to validate <abbr title="Central Authentication Service">CAS</abbr> server certificate</div>
+<li class="level1"><div class="li"> <strong>Renew authentication</strong> <em>(default: disabled)</em>: force authentication renewal on <abbr title="Central Authentication Service">CAS</abbr> server</div>
 </li>
-<li class="level1"><div class="li"> <strong>Renew authentication</strong>: force authentication renewal on <abbr title="Central Authentication Service">CAS</abbr> server</div>
+<li class="level1"><div class="li"> <strong>Gateways authentication</strong> <em>(default: disabled)</em>: force transparent authentication on <abbr title="Central Authentication Service">CAS</abbr> server</div>
 </li>
-<li class="level1"><div class="li"> <strong>Gateways authentication</strong>: force transparent authentication on <abbr title="Central Authentication Service">CAS</abbr> server</div>
+<li class="level1"><div class="li"> <strong>Display Name</strong>: Name to display. Required if you have more than 1 <abbr title="Central Authentication Service">CAS</abbr> server declared</div>
 </li>
-<li class="level1"><div class="li"> <strong><abbr title="Proxy Granting Ticket">PGT</abbr> file</strong>: temporary file where proxy tickets are stored (by default, <code>/tmp/pgt.txt</code>)</div>
+<li class="level1"><div class="li"> <strong>Icon</strong>: Path to <abbr title="Central Authentication Service">CAS</abbr> Server icon, used only if you have more than 1 <abbr title="Central Authentication Service">CAS</abbr> server declared</div>
 </li>
 <li class="level1"><div class="li"> <strong>Proxied services</strong>: list of services for which a proxy ticket is requested:</div>
 <ul>
@@ -152,12 +121,9 @@ Then, go in <code><abbr title="Central Authentication Service">CAS</abbr> parame
 </ul>
 </li>
 </ul>
-<div class="notetip">If no proxied services defined, <abbr title="Central Authentication Service">CAS</abbr> authentication will not activate the <abbr title="Central Authentication Service">CAS</abbr> proxy mode.
-</div><div class="noteimportant">If you activate proxy mode, you must create the <abbr title="Proxy Granting Ticket">PGT</abbr> file on your system, for example:
-<pre class="code">touch /tmp/pgt.txt</pre>
-
+<div class="notetip">If no proxied services defined, <abbr title="Central Authentication Service">CAS</abbr> authentication will not activate the <abbr title="Central Authentication Service">CAS</abbr> proxy mode with this <abbr title="Central Authentication Service">CAS</abbr> server.
 </div>
 </div>
-<!-- EDIT5 SECTION "Configuration" [1167-] --></div>
+<!-- EDIT4 SECTION "Configuration" [833-] --></div>
 </body>
 </html>

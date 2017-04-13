@@ -46,39 +46,8 @@
 
 <h1 class="sectionedit1" id="fastcgi_support">FastCGI support</h1>
 <div class="level1">
-<div class="noteimportant">The manager is now natively written for FastCGI. Portal will follow in 2.0
+<div class="noteimportant">Since 2.0, all LLNG components run under FastCGI
 </div>
-<p>
-<abbr title="LemonLDAP::NG">LL::NG</abbr> Portal can be used under a <a href="http://en.wikipedia.org/wiki/FastCGI" class="urlextern" title="http://en.wikipedia.org/wiki/FastCGI"  rel="nofollow">FastCGI system</a> very easily. You just have to load <abbr title="LemonLDAP::NG">LL::NG</abbr> FastCGI support and write a loop in the CGI. Example with the portal:
-
-<pre class="code perl"><span class="co1">#!/usr/bin/perl</span>
-<b>use Lemonldap::NG::Common::CGI qw(fastcgi);</b>
-<span class="me2">use Lemonldap::NG::Portal::SharedConf;</span>
-<span class="re0"># ...</span>
-
-<b><span style="color:#500;">LMAUTH:</span> while ( my $portal = Lemonldap::NG::Portal::SharedConf->new({}) ) </b>{
-    <span class="re0"># ...</span>
-}
-</pre>
-
-</p>
-
-<p>
-Key steps :
-</p>
-<ul>
-<li class="level1"><div class="li"> Load <strong>“Lemonldap::NG::Common::CGI qw(fastcgi)“</strong> before any other <abbr title="LemonLDAP::NG">LL::NG</abbr> library</div>
-</li>
-<li class="level1"><div class="li"> insert a loop around the <abbr title="HyperText Markup Language">HTML</abbr> printing, starting with the object creation <em>(→new)</em></div>
-</li>
-<li class="level1"><div class="li"> insert a label <strong>“LMAUTH”</strong> ahead of the loop</div>
-</li>
-</ul>
-
-<p>
-An example is given under the source tree : lemonldap-ng-portal/example/index.fcgi
-</p>
-
 </div>
 </div>
 </body>

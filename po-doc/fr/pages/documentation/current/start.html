@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,start"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="start.html"/>
@@ -60,11 +60,19 @@
 <li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#first_steps">Premiers pas</a></div></li>
-<li class="level2"><div class="li"><a href="#portal">Portail</a></div></li>
-<li class="level2"><div class="li"><a href="#authentication_users_and_password_databases">Bases de données d'authentification, des utilisateurs et des mots-de-passe</a></div></li>
-<li class="level2"><div class="li"><a href="#configuration_database">Base de données de la configuration</a></div></li>
-<li class="level2"><div class="li"><a href="#sessions_database">Base de données des sessions</a></div></li>
-<li class="level2"><div class="li"><a href="#identity_provider">Fournisseur d'identité</a></div></li>
+<li class="level2"><div class="li"><a href="#portal">Portail</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#authentication_users_and_password_databases">Bases de données d'authentification, des utilisateurs et des mots-de-passe</a></div></li>
+<li class="level3"><div class="li"><a href="#identity_provider">Fournisseur d'identité</a></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><a href="#handlers">Handlers</a></div></li>
+<li class="level2"><div class="li"><a href="#llng_databases">LLNG databases</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#configuration_database">Base de données de la configuration</a></div></li>
+<li class="level3"><div class="li"><a href="#sessions_database">Base de données des sessions</a></div></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#applications_protection">Protection des applications</a></div>
@@ -131,7 +139,7 @@
 </li>
 <li class="level1"><div class="li"> <a href="docker.html" class="wikilink1" title="documentation:2.0:docker">Run in LemonLDAP::NG in Docker</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Node.js handler</a></div>
+<li class="level1"><div class="li"> <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Node.js handler</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a></div>
 </li>
 </ul>
 
@@ -139,7 +147,7 @@
 </p></div></div>
 </p>
 
-</div><!-- EDIT4 SECTION "Installation" [343-862] -->
+</div><!-- EDIT4 SECTION "Installation" [343-885] -->
 
 <h3 class="sectionedit5" id="after_installation">After installation</h3>
 <div class="level3">
@@ -160,12 +168,12 @@
 </p></div></div>
 </p>
 
-</div><!-- EDIT5 SECTION "After installation" [863-1174] -->
+</div><!-- EDIT5 SECTION "After installation" [886-1197] -->
 
 <h2 class="sectionedit6" id="configuration">Configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT6 SECTION "Configuration" [1175-1201] -->
+</div><!-- EDIT6 SECTION "Configuration" [1198-1224] -->
 
 <h3 class="sectionedit7" id="first_steps">Premiers pas</h3>
 <div class="level3">
@@ -194,7 +202,7 @@
 </p></div></div>
 </p>
 
-</div><!-- EDIT7 SECTION "First steps" [1202-1661] -->
+</div><!-- EDIT7 SECTION "First steps" [1225-1684] -->
 
 <h3 class="sectionedit8" id="portal">Portail</h3>
 <div class="level3">
@@ -221,17 +229,17 @@
 </p></div></div>
 </p>
 
-</div><!-- EDIT8 SECTION "Portal" [1662-1986] -->
+</div>
 
-<h3 class="sectionedit9" id="authentication_users_and_password_databases">Bases de données d'authentification, des utilisateurs et des mots-de-passe</h3>
-<div class="level3">
+<h4 id="authentication_users_and_password_databases">Bases de données d'authentification, des utilisateurs et des mots-de-passe</h4>
+<div class="level4">
 
 <p>
 </p><div class="row"><div class="col-md-1">
 <a href="icons/gpg.png_documentation_2.0_start.html" class="media" title="icons:gpg.png"><img src="icons/gpg.png" class="media" alt="" /></a>
 </div><div class="col-md-11">
 </p>
-<div class="table sectionedit10"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit9"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0">  Official Backends  </th><th class="col1 centeralign">  Authentification  </th><th class="col2 centeralign">  Utilisateurs  </th><th class="col3 centeralign">  Mot-de-passe  </th>
@@ -241,13 +249,13 @@
 		<td class="col0"> <a href="authad.html" class="wikilink1" title="documentation:2.0:authad">Active Directory</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0"> <a href="authapache.html" class="wikilink1" title="documentation:2.0:authapache">Apache (Kerberos, NTLM, OTP, ...)</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authapache.html" class="wikilink1" title="documentation:2.0:authapache">Apache (Basic, NTLM, OTP, ...)</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0"> <a href="authcas.html" class="wikilink1" title="documentation:2.0:authcas">CAS</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authcas.html" class="wikilink1" title="documentation:2.0:authcas">CAS</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">  <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a>  </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0"> <a href="authdbi.html" class="wikilink1" title="documentation:2.0:authdbi">Bases de données (DBI)</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
+		<td class="col0"> <a href="authdbi.html" class="wikilink1" title="documentation:2.0:authdbi">SQL Databases</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
 	</tr>
 	<tr class="row5 rowodd">
 		<td class="col0"> <a href="authdemo.html" class="wikilink1" title="documentation:2.0:authdemo">Démonstration</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
@@ -256,87 +264,192 @@
 		<td class="col0"> <a href="authfacebook.html" class="wikilink1" title="documentation:2.0:authfacebook">Facebook</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
 	</tr>
 	<tr class="row7 rowodd">
-		<td class="col0"> <a href="authldap.html" class="wikilink1" title="documentation:2.0:authldap">LDAP</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
+		<td class="col0"> <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
 	</tr>
 	<tr class="row8 roweven">
-		<td class="col0"> <a href="authnull.html" class="wikilink1" title="documentation:2.0:authnull">Null</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
+		<td class="col0"> <a href="authldap.html" class="wikilink1" title="documentation:2.0:authldap">LDAP</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
 	</tr>
 	<tr class="row9 rowodd">
-		<td class="col0"> <a href="authopenidconnect.html" class="wikilink1" title="documentation:2.0:authopenidconnect">OpenID Connect</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authnull.html" class="wikilink1" title="documentation:2.0:authnull">Null</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
 	</tr>
 	<tr class="row10 roweven">
-		<td class="col0"> <a href="authpam.html" class="wikilink1" title="documentation:2.0:authpam">PAM</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authopenidconnect.html" class="wikilink1" title="documentation:2.0:authopenidconnect">OpenID Connect</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row11 rowodd">
-		<td class="col0"> <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">Proxy LL::NG</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authpam.html" class="wikilink1" title="documentation:2.0:authpam">PAM</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row12 roweven">
-		<td class="col0"> <a href="authradius.html" class="wikilink1" title="documentation:2.0:authradius">Radius</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">Proxy LL::NG</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row13 rowodd">
-		<td class="col0"> <a href="authrest.html" class="wikilink1" title="documentation:2.0:authrest">REST</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
+		<td class="col0"> <a href="authradius.html" class="wikilink1" title="documentation:2.0:authradius">Radius</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row14 roweven">
-		<td class="col0"> <a href="authsaml.html" class="wikilink1" title="documentation:2.0:authsaml">SAML 2.0 / Shibboleth</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authrest.html" class="wikilink1" title="documentation:2.0:authrest">REST</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
 	</tr>
 	<tr class="row15 rowodd">
-		<td class="col0"> <a href="authslave.html" class="wikilink1" title="documentation:2.0:authslave">Slave</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
+		<td class="col0"> <a href="authsaml.html" class="wikilink1" title="documentation:2.0:authsaml">SAML 2.0 / Shibboleth</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row16 roweven">
-		<td class="col0"> <a href="authssl.html" class="wikilink1" title="documentation:2.0:authssl">SSL</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authslave.html" class="wikilink1" title="documentation:2.0:authslave">Slave</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
 	</tr>
 	<tr class="row17 rowodd">
-		<td class="col0"> <a href="authtwitter.html" class="wikilink1" title="documentation:2.0:authtwitter">Twitter</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authssl.html" class="wikilink1" title="documentation:2.0:authssl">SSL</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row18 roweven">
-		<td class="col0"> <a href="authwebid.html" class="wikilink1" title="documentation:2.0:authwebid">WebID</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
+		<td class="col0"> <a href="authtwitter.html" class="wikilink1" title="documentation:2.0:authtwitter">Twitter</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row19 rowodd">
-		<td class="col0"> <a href="authyubikey.html" class="wikilink1" title="documentation:2.0:authyubikey">Yubikey</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authwebid.html" class="wikilink1" title="documentation:2.0:authwebid">WebID</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
 	</tr>
 	<tr class="row20 roweven">
-		<td class="col0"> <a href="authcustom.html" class="wikilink1" title="documentation:2.0:authcustom">Custom modules</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
+		<td class="col0"> <a href="authyubikey.html" class="wikilink1" title="documentation:2.0:authyubikey">Yubikey</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row21 rowodd">
-		<th class="col0">  Combo Backends  </th><th class="col1 centeralign">  Authentification  </th><th class="col2 centeralign">  Utilisateurs  </th><th class="col3 centeralign">  Mot-de-passe  </th>
+		<td class="col0"> <a href="authcustom.html" class="wikilink1" title="documentation:2.0:authcustom">Custom modules</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
 	</tr>
 	<tr class="row22 roweven">
-		<td class="col0"> <a href="authchoice.html" class="wikilink1" title="documentation:2.0:authchoice">Choice by users</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
+		<th class="col0">  Combo Backends  </th><th class="col1 centeralign">  Authentification  </th><th class="col2 centeralign">  Utilisateurs  </th><th class="col3 centeralign">  Mot-de-passe  </th>
 	</tr>
 	<tr class="row23 rowodd">
-		<td class="col0"> <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination of auth schemes</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
+		<td class="col0"> <a href="authchoice.html" class="wikilink1" title="documentation:2.0:authchoice">Choice by users</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
 	</tr>
 	<tr class="row24 roweven">
-		<td class="col0"> <del><a href="authmulti.html" class="wikilink1" title="documentation:2.0:authmulti">Empiler de multiples backends</a></del> </td><td class="col1 centeralign" colspan="3">  <em>Deprecated, replaced by Combination</em>  </td>
+		<td class="col0"> <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination of auth schemes</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
 	</tr>
 	<tr class="row25 rowodd">
-		<th class="col0">  Obsolete Backends  </th><th class="col1 centeralign">  Authentification  </th><th class="col2 centeralign">  Utilisateurs  </th><th class="col3 centeralign">  Mot-de-passe  </th>
+		<td class="col0"> <del><a href="authmulti.html" class="wikilink1" title="documentation:2.0:authmulti">Empiler de multiples backends</a></del> </td><td class="col1 centeralign" colspan="3">  <em>Deprecated, replaced by Combination</em>  </td>
 	</tr>
 	<tr class="row26 roweven">
-		<td class="col0"> <a href="authopenid.html" class="wikilink1" title="documentation:2.0:authopenid">OpenID</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+		<th class="col0">  Obsolete Backends  </th><th class="col1 centeralign">  Authentification  </th><th class="col2 centeralign">  Utilisateurs  </th><th class="col3 centeralign">  Mot-de-passe  </th>
 	</tr>
 	<tr class="row27 rowodd">
-		<td class="col0"> <a href="authremote.html" class="wikilink1" title="documentation:2.0:authremote">LL::NG distant</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authopenid.html" class="wikilink1" title="documentation:2.0:authopenid">OpenID</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row28 roweven">
-		<th class="col0">  Second factor  </th><th class="col1 centeralign">  Authentification  </th><td class="col2"></td><td class="col3"></td>
+		<td class="col0"> <a href="authremote.html" class="wikilink1" title="documentation:2.0:authremote">LL::NG distant</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row29 rowodd">
-		<td class="col0"> <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2"></td><td class="col3"></td>
+		<th class="col0">  Second factor  </th><th class="col1 centeralign">  Authentification  </th><td class="col2"></td><td class="col3"></td>
 	</tr>
 	<tr class="row30 roweven">
-		<td class="col0"> <a href="external2f.html" class="wikilink1" title="documentation:2.0:external2f">External Second Factor</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2"></td><td class="col3"></td>
+		<td class="col0"> <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">    ✔    </td><td class="col2"></td><td class="col3"></td>
 	</tr>
-</table></div><!-- EDIT10 TABLE [2160-3786] -->
+	<tr class="row31 rowodd">
+		<td class="col0"> <a href="external2f.html" class="wikilink1" title="documentation:2.0:external2f">External Second Factor</a> <em>(OTP, SMS,…)</em> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">    ✔    </td><td class="col2"></td><td class="col3"></td>
+	</tr>
+</table></div><!-- EDIT9 TABLE [2181-4058] -->
 
 <p>
 </p></div></div>
 </p>
 
-</div><!-- EDIT9 SECTION "Authentication, users and password databases" [1987-3814] -->
+</div>
 
-<h3 class="sectionedit11" id="configuration_database">Base de données de la configuration</h3>
+<h4 id="identity_provider">Fournisseur d'identité</h4>
+<div class="level4">
+<div class="notetip"><ul>
+<li class="level1"><div class="li"> Tous les protocoles de fournisseur d'identité peuvent être utilisés simultanément</div>
+</li>
+<li class="level1"><div class="li">  LemonLDAP::NG can be used as a <a href="federationproxy.html" class="wikilink1" title="documentation:2.0:federationproxy">proxy between those protocols</a></div>
+</li>
+</ul>
+
+</div>
+<p>
+</p><div class="row"><div class="col-md-1">
+<a href="icons/personal.png_documentation_2.0_start.html" class="media" title="icons:personal.png"><img src="icons/personal.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+<div class="table sectionedit10"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0">  Protocol  </th><th class="col1 centeralign">  Fournisseur de service  </th><th class="col2 centeralign">  Fournisseur d'identité  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0"> <a href="idpcas.html" class="wikilink1" title="documentation:2.0:idpcas">CAS 1.0 / 2.0 / 3.0  </a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> <a href="idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML 2.0 / Shibboleth</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0"> <a href="idpopenid.html" class="wikilink1" title="documentation:2.0:idpopenid">OpenID 2.0</a> <em>(obsolete)</em> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0"> <a href="idpopenidconnect.html" class="wikilink1" title="documentation:2.0:idpopenidconnect">OpenID Connect</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0"> <a href="issuerdbget.html" class="wikilink1" title="documentation:2.0:issuerdbget">Get parameters provider</a> <em>(for poor applications)</em> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">  </td>
+	</tr>
+</table></div><!-- EDIT10 TABLE [4404-4764] -->
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT8 SECTION "Portal" [1685-4792] -->
+
+<h3 class="sectionedit11" id="handlers">Handlers</h3>
 <div class="level3">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<a href="icons/gpg.png_documentation_2.0_start.html" class="media" title="icons:gpg.png"><img src="icons/gpg.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+
+<p>
+
+Handlers are software control agents to install on your web servers <em>(Nginx, Apache or Node.js)</em>.
+
+</p>
+<div class="table sectionedit12"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0">  Handler type  </th><th class="col1 centeralign">    Apache    </th><th class="col2 centeralign">    Nginx    </th><th class="col3 centeralign">    Node.js    </th><th class="col4 centeralign">  Commentaire  </th><td class="col5"></td>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0">  Main <em>(default handler)</em> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">  <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Partial</a> (*)    </td><td class="col4 leftalign">  </td><td class="col5"></td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> <a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">  </td><td class="col4">  Designed for some server-to-server applications  </td><td class="col5"></td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0"> <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">  </td><td class="col4">  For Cross Domain Authentication  </td><td class="col5"></td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0"> <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">  </td><td class="col4">  Allows application developers to define their rules within the application  </td><td class="col5"></td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0"> <a href="securetoken.html" class="wikilink1" title="documentation:2.0:securetoken">Secure Token</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">  </td><td class="col4">  Designed to secure dialog between a LLNG reverse-proxy and a remote app  </td><td class="col5"></td>
+	</tr>
+	<tr class="row6 roweven">
+		<td class="col0"> <a href="servertoserver.html" class="wikilink1" title="documentation:2.0:servertoserver">Service Token</a> <em>(Server-to-Server)</em> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">  </td><td class="col4">  Designed to permits underlying requests <em>(<abbr title="Interface de programmation">API</abbr>-Based Infrastructure)</em> </td><td class="col5"></td>
+	</tr>
+	<tr class="row7 rowodd">
+		<td class="col0"> <a href="applications/zimbra.html" class="wikilink1" title="documentation:2.0:applications:zimbra">Zimbra PreAuth</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td>
+	</tr>
+</table></div><!-- EDIT12 TABLE [5031-5864] -->
+
+<p>
+<em>(*): <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Node.js handler</a> has not yet reached the same level of functionality.</em>
+</p>
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT11 SECTION "Handlers" [4793-5987] -->
+
+<h3 class="sectionedit13" id="llng_databases">LLNG databases</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="configuration_database">Base de données de la configuration</h4>
+<div class="level4">
 
 <p>
 </p><div class="row"><div class="col-md-1">
@@ -347,7 +460,7 @@
 <p>
 <abbr title="LemonLDAP::NG">LL::NG</abbr> a besoin d'un dispositif de stockage de sa propre configuration (gérée par le manager). Choisir l'une des options suivantes :
 </p>
-<div class="table sectionedit12"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit14"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">    Backend    </th><th class="col1 centeralign">  Partageable  </th><th class="col2 centeralign">  Commentaire  </th>
@@ -357,28 +470,31 @@
 		<td class="col0 centeralign">  <a href="fileconfbackend.html" class="wikilink1" title="documentation:2.0:fileconfbackend">File (JSON)</a>  </td><td class="col1"> </td><td class="col2 leftalign">Not shareable between servers except if used in conjunction with <a href="soapconfbackend.html" class="wikilink1" title="documentation:2.0:soapconfbackend">SOAP</a> or with a shared file system (NFS,…). Sélectionné par défaut lors de l'installation.  </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  <a href="sqlconfbackend.html" class="wikilink1" title="documentation:2.0:sqlconfbackend">SQL (RDBI/CDBI)</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2"> </td>
+		<td class="col0 centeralign">  <a href="yamlconfbackend.html" class="wikilink1" title="documentation:2.0:yamlconfbackend">YAML</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a>  </td><td class="col1"> </td><td class="col2 leftalign">Same as <a href="fileconfbackend.html" class="wikilink1" title="documentation:2.0:fileconfbackend">File</a> in YAML format instead of JSON    </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 centeralign">  <a href="ldapconfbackend.html" class="wikilink1" title="documentation:2.0:ldapconfbackend">LDAP</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2"> </td>
+		<td class="col0 centeralign">  <a href="sqlconfbackend.html" class="wikilink1" title="documentation:2.0:sqlconfbackend">SQL (RDBI/CDBI)</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2">  Recommended for large-scale systems. Prefer CDBI.  </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0 centeralign">  <a href="mongodbconfbackend.html" class="wikilink1" title="documentation:2.0:mongodbconfbackend">MongoDB</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2"> </td>
+		<td class="col0 centeralign">  <a href="ldapconfbackend.html" class="wikilink1" title="documentation:2.0:ldapconfbackend">LDAP</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2"> </td>
 	</tr>
 	<tr class="row5 rowodd">
+		<td class="col0 centeralign">  <a href="mongodbconfbackend.html" class="wikilink1" title="documentation:2.0:mongodbconfbackend">MongoDB</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2"> </td>
+	</tr>
+	<tr class="row6 roweven">
 		<td class="col0 centeralign">  <a href="soapconfbackend.html" class="wikilink1" title="documentation:2.0:soapconfbackend">SOAP</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign"> Backend proxy à utiliser avec un autre backend de configuration. <br/><strong>Peut être utilisé pour sécuriser un autre backend</strong> pour des serveurs distants.  </td>
 	</tr>
-</table></div><!-- EDIT12 TABLE [4089-4678] -->
+</table></div><!-- EDIT14 TABLE [6286-7047] -->
 <div class="notetip">On ne peut démarrer avec une configuration vide, il faut donc lire <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">comment changer de backend de configuration</a> pour convertir une configuration existante en une autre.
 </div>
 <p>
 </p></div></div>
 </p>
 
-</div><!-- EDIT11 SECTION "Configuration database" [3815-4894] -->
+</div>
 
-<h3 class="sectionedit13" id="sessions_database">Base de données des sessions</h3>
-<div class="level3">
+<h4 id="sessions_database">Base de données des sessions</h4>
+<div class="level4">
 
 <p>
 </p><div class="row"><div class="col-md-1">
@@ -387,12 +503,16 @@
 </p>
 
 <p>
-Les sessions sont stockées en utilisant les modules de la famille <a href="http://search.cpan.org/perldoc?Apache::Session" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session"  rel="nofollow">Apache::Session</a>. Tous les modules de type <a href="http://search.cpan.org/perldoc?Apache::Session" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session"  rel="nofollow">Apache::Session</a> sont utilisables excepté pour quelques fonctionnalités.
+Les sessions sont stockées en utilisant les modules de la famille <a href="http://search.cpan.org/perldoc?Apache::Session" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session"  rel="nofollow">Apache::Session</a>. All <a href="http://search.cpan.org/perldoc?Apache::Session" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session"  rel="nofollow">Apache::Session</a> style modules are usable except for some features.
 </p>
-<div class="table sectionedit14"><table class="inline table table-bordered table-striped">
+<div class="noteimportant">If you plan to use LLNG in a large-scale system, take a look at <a href="performances.html#performance_test" class="wikilink1" title="documentation:2.0:performances">Performance Test</a> to choose the right backend. A <a href="browseablesessionbackend.html#browseable_sql" class="wikilink1" title="documentation:2.0:browseablesessionbackend">Browseable SQL backend</a> is generally a good choice.
+
+
+
+</div><div class="table sectionedit15"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
-		<th class="col0 centeralign">    Backend    </th><th class="col1 centeralign">  Partageable  </th><th class="col2 centeralign">   <a href="documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">Explorateur de sessions</a>  </th><th class="col3 centeralign">  <a href="documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">Resctriction d'ouverture de session</a>  </th><th class="col4 centeralign">  Expiration des sessions  </th><th class="col5 centeralign">  Commentaire  </th>
+		<th class="col0 centeralign">    Backend    </th><th class="col1 centeralign">  Partageable  </th><th class="col2 centeralign">  <a href="documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">Explorateur de sessions</a>  </th><th class="col3 centeralign">  <a href="documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">Resctriction d'ouverture de session</a>  </th><th class="col4 centeralign">  Expiration des sessions  </th><th class="col5 centeralign">  Commentaire  </th>
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
@@ -411,55 +531,21 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 		<td class="col0 centeralign">  <a href="mongodbsessionbackend.html" class="wikilink1" title="documentation:2.0:mongodbsessionbackend">MongoDB</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5 leftalign"> Doit être securisé par un contrôle d'accès réseau.  </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0 centeralign">  <a href="browseablesessionbackend.html" class="wikilink1" title="documentation:2.0:browseablesessionbackend">Browseable (SQL, Redis ou LDAP)</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5 leftalign"> <strong>Optimisé</strong> pour l'<a href="documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">explorateur de sessions</a> et les fonctionnalités de <a href="documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">session unique</a>.  </td>
+		<td class="col0 centeralign">  <a href="browseablesessionbackend.html" class="wikilink1" title="documentation:2.0:browseablesessionbackend">Browseable (SQL, Redis ou LDAP)</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5"> <strong>Optimisé</strong> pour l'<a href="documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">explorateur de sessions</a> et les fonctionnalités de <a href="documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">session unique</a>. </td>
 	</tr>
 	<tr class="row7 rowodd">
-		<td class="col0 centeralign">  <a href="restsessionbackend.html" class="wikilink1" title="documentation:2.0:restsessionbackend">REST</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5 leftalign"> Backend proxy à utiliser avec un autre backend de sessions. <br/> <strong>Peut être utilisé pour sécuriser un autre backend</strong> pour des serveurs distants.  </td>
+		<td class="col0 centeralign">  <a href="restsessionbackend.html" class="wikilink1" title="documentation:2.0:restsessionbackend">REST</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5 leftalign"> Backend proxy à utiliser avec un autre backend de sessions. <br/> <strong>Peut être utilisé pour sécuriser un autre backend</strong> pour des serveurs distants.  </td>
 	</tr>
 	<tr class="row8 roweven">
 		<td class="col0 centeralign">  <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5 leftalign"> Backend proxy à utiliser avec un autre backend de sessions. <br/> <strong>Peut être utilisé pour sécuriser un autre backend</strong> pour des serveurs distants.  </td>
 	</tr>
-</table></div><!-- EDIT14 TABLE [5280-6938] -->
+</table></div><!-- EDIT15 TABLE [7912-9591] -->
 
 <p>
 </p></div></div>
 </p>
 
-</div><!-- EDIT13 SECTION "Sessions database" [4895-6966] -->
-
-<h3 class="sectionedit15" id="identity_provider">Fournisseur d'identité</h3>
-<div class="level3">
-<div class="notetip"><ul>
-<li class="level1"><div class="li"> Tous les protocoles de fournisseur d'identité peuvent être utilisés simultanément</div>
-</li>
-<li class="level1"><div class="li"> <a href="federationproxy.html" class="wikilink1" title="documentation:2.0:federationproxy">LemonLDAP::NG peut être utilisé comme proxy entre ces protocoles</a></div>
-</li>
-</ul>
-
-</div>
-<p>
-</p><div class="row"><div class="col-md-1">
-<a href="icons/personal.png_documentation_2.0_start.html" class="media" title="icons:personal.png"><img src="icons/personal.png" class="media" alt="" /></a>
-</div><div class="col-md-11">
-</p>
-<ul>
-<li class="level1"><div class="li"> <a href="idpcas.html" class="wikilink1" title="documentation:2.0:idpcas">CAS 1.0 / 2.0 / 3.0  </a></div>
-</li>
-<li class="level1"><div class="li"> <a href="idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML 2.0 / Shibboleth</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="idpopenid.html" class="wikilink1" title="documentation:2.0:idpopenid">OpenID 2.0 (obsolete)</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="idpopenidconnect.html" class="wikilink1" title="documentation:2.0:idpopenidconnect">OpenID Connect</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="issuerdbget.html" class="wikilink1" title="documentation:2.0:issuerdbget">Get parameters provider</a></div>
-</li>
-</ul>
-
-<p>
-</p></div></div>
-</p>
-
-</div><!-- EDIT15 SECTION "Identity provider" [6967-7511] -->
+</div><!-- EDIT13 SECTION "LLNG databases" [5988-9619] -->
 
 <h2 class="sectionedit16" id="applications_protection">Protection des applications</h2>
 <div class="level2">
@@ -488,7 +574,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT16 SECTION "Applications protection" [7512-8002] -->
+</div><!-- EDIT16 SECTION "Applications protection" [9620-10110] -->
 
 <h3 class="sectionedit17" id="well_known_compatible_applications">Well known compatible applications</h3>
 <div class="level3">
@@ -569,7 +655,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div>
 </p>
 
-</div><!-- EDIT17 SECTION "Well known compatible applications" [8003-9776] -->
+</div><!-- EDIT17 SECTION "Well known compatible applications" [10111-11885] -->
 
 <h2 class="sectionedit18" id="advanced_features">Fonctionnalités avancées</h2>
 <div class="level2">
@@ -620,7 +706,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT18 SECTION "Advanced features" [9777-10714] -->
+</div><!-- EDIT18 SECTION "Advanced features" [11886-12823] -->
 
 <h2 class="sectionedit19" id="mini_howtos">Mini howtos</h2>
 <div class="level2">
@@ -651,7 +737,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT19 SECTION "Mini howtos" [10715-11384] -->
+</div><!-- EDIT19 SECTION "Mini howtos" [12824-13493] -->
 
 <h2 class="sectionedit20" id="exploitation">Exploitation</h2>
 <div class="level2">
@@ -684,7 +770,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT20 SECTION "Exploitation" [11385-11805] -->
+</div><!-- EDIT20 SECTION "Exploitation" [13494-13914] -->
 
 <h2 class="sectionedit21" id="developer_corner">Developer corner</h2>
 <div class="level2">
@@ -727,6 +813,8 @@ To add a new language <em>(XX must be replace by your language code)</em>:
 </li>
 <li class="level1"><div class="li">  Portal: translate <code>lemonldap-ng-portal/site/htdocs/static/languages/en.json</code> in <code>lemonldap-ng-portal/site/htdocs/static/languages/XX.json</code> and enable it in “lemonldap-ng.ini” file</div>
 </li>
+<li class="level1"><div class="li">  Portal Mails: translate <code>lemonldap-ng-portal/site/templates/common/mail/en.json</code> in <code>lemonldap-ng-portal/site/templates/common/mail/XX.json</code></div>
+</li>
 </ul>
 
 <p>
@@ -743,7 +831,7 @@ To translate this doc (Manager help):
 </li>
 </ul>
 
-</div><!-- EDIT21 SECTION "Developer corner" [11806-] -->
+</div><!-- EDIT21 SECTION "Developer corner" [13915-] -->
 </div>
 </body>
 </html>

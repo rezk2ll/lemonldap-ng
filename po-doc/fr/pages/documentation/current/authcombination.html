@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authcombination"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authcombination.html"/>
@@ -68,7 +68,7 @@
 <li class="level1"><div class="li"><a href="#known_problems">Problèmes connus</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#federation_protocols">Federation protocols</a></div></li>
-<li class="level2"><div class="li"><a href="#authapache_authentication">Authentification AuthApache</a></div></li>
+<li class="level2"><div class="li"><a href="#authapache_authentication">Auth::Apache authentication</a></div></li>
 <li class="level2"><div class="li"><a href="#ssl_authentication">Authentification SSL</a></div></li>
 </ul></li>
 </ul>
@@ -361,13 +361,15 @@ Combination module returns the form corresponding to the first authentication sc
 
 </div><!-- EDIT14 SECTION "Federation protocols" [4618-5250] -->
 
-<h3 class="sectionedit16" id="authapache_authentication">Authentification AuthApache</h3>
+<h3 class="sectionedit16" id="authapache_authentication">Auth::Apache authentication</h3>
 <div class="level3">
 
 <p>
-En utilisant ce module, le portail <abbr title="LemonLDAP::NG">LL::NG</abbr> est appelé uniquement si Apache ne retourne pas “401 Authentication required”, aucune bascule n'est donc possible. So Kerberos can be used only with a “and” boolean expression.
+En utilisant ce module, le portail <abbr title="LemonLDAP::NG">LL::NG</abbr> est appelé uniquement si Apache ne retourne pas “401 Authentication required”, aucune bascule n'est donc possible. So it can be used only with a “and” boolean expression.
 </p>
+<div class="notetip">The new <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos authentication module</a> solve this for Kerberos: you just have to use it instead of Apache and enable authentication by Ajax in Kerberos parameters.
 
+</div>
 <p>
 
 Example: <code>[ Apache and LDAP, LDAP ]</code>
@@ -377,7 +379,7 @@ Example: <code>[ Apache and LDAP, LDAP ]</code>
 Pour outrepasser ceci, suivre la documentation du <a href="authapache.html" class="wikilink1" title="documentation:2.0:authapache">module AuthApache</a>
 </p>
 
-</div><!-- EDIT16 SECTION "AuthApache authentication" [5251-5667] -->
+</div><!-- EDIT16 SECTION "Auth::Apache authentication" [5251-5862] -->
 
 <h3 class="sectionedit17" id="ssl_authentication">Authentification SSL</h3>
 <div class="level3">
@@ -386,7 +388,7 @@ Pour outrepasser ceci, suivre la documentation du <a href="authapache.html" clas
 Pour chaîner SSL, il est nécessaire de mettre “SSLRequire optional” dans le fichier de configuration Apache, sinon les utilisateurs ne seront authentifiés que par SSL.
 </p>
 
-</div><!-- EDIT17 SECTION "SSL authentication" [5668-] -->
+</div><!-- EDIT17 SECTION "SSL authentication" [5863-] -->
 </div>
 </body>
 </html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8" />
+  <title>documentation:2.0:authkerberos</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="keywords" content="documentation,2.0,authkerberos"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="authkerberos.html"/>
+<link rel="contents" href="authkerberos.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authkerberos","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
+</head>
+<body>
+<div class="dokuwiki export container"><!-- TOC START -->
+
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#presentation">Présentation</a></div></li>
+<li class="level1"><div class="li"><a href="#llng_configuration">LLNG Configuration</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#kerberos_configuration">Kerberos configuration</a></div></li>
+</ul></li>
+</ul>
+</div>
+</div><!-- TOC END -->
+
+
+<h1 class="sectionedit1" id="kerberos">Kerberos</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Authentification  </th><th class="col1 centeralign">  Utilisateurs  </th><th class="col2 centeralign">  Mot-de-passe  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">    ✔    </td><td class="col1"> </td><td class="col2"> </td>
+	</tr>
+</table></div><!-- EDIT2 TABLE [24-81] -->
+
+</div><!-- EDIT1 SECTION "Kerberos" [1-82] -->
+
+<h2 class="sectionedit3" id="presentation">Présentation</h2>
+<div class="level2">
+
+<p>
+<a href="https://en.wikipedia.org/wiki/Kerberos_(protocol)" class="urlextern" title="https://en.wikipedia.org/wiki/Kerberos_(protocol)"  rel="nofollow">Kerberos</a> is a network authentication protocol used to authenticate users based on their desktop session.
+
+</p>
+
+</div><!-- EDIT3 SECTION "Presentation" [83-268] -->
+
+<h2 class="sectionedit4" id="llng_configuration">LLNG Configuration</h2>
+<div class="level2">
+
+<p>
+
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose Kerberos for authentication. Then go to “Kerberos parameters” and configure the following parameters:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>keytab file</strong> (required): the Kerberos keytab file</div>
+</li>
+<li class="level1"><div class="li"> <strong> Use Ajax request</strong>: set to “enabled” if you want to use an Ajax request instead of a direct Kerberos attempt. <strong>This is required if you want to chain Kerberos in a <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">combination</a></strong></div>
+</li>
+<li class="level1"><div class="li"> <strong>Kerberos authentication level</strong>: default to 3</div>
+</li>
+</ul>
+
+</div><!-- EDIT4 SECTION "LLNG Configuration" [269-799] -->
+
+<h3 class="sectionedit5" id="kerberos_configuration">Kerberos configuration</h3>
+<div class="level3">
+
+<p>
+La configuration Kerberos est assez complexe. On peut trouver quelques éléments de configuration <a href="kerberos.html" class="wikilink1" title="documentation:2.0:kerberos">dans cette page</a>.
+</p>
+
+</div><!-- EDIT5 SECTION "Kerberos configuration" [800-] -->
+</div>
+</body>
+</html>

@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authssl"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authssl.html"/>
@@ -63,7 +63,9 @@
 <li class="level2"><div class="li"><a href="#with_nginx">With Nginx</a></div></li>
 <li class="level2"><div class="li"><a href="#configuration_of_lemonldapng">Configuration de LemonLDAP::NG</a></div></li>
 <li class="level2"><div class="li"><a href="#auto_reloading_ssl_certificates">Rechargement automatique des certificats SSL</a></div></li>
-</ul></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#ssl_by_ajax">SSL by Ajax</a></div></li>
 </ul>
 </div>
 </div><!-- TOC END -->
@@ -102,7 +104,13 @@
 <h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT4 SECTION "Configuration" [402-428] -->
+<p>
+
+By default, SSL is required before the portal is displayed (handled by webserver). If you want to display a button to connect to LLNG <em>(compatible with <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination</a>)</em>, you can activate “SSL by Ajax request” in the manager. See <a href="#ssl_by_ajax" title="documentation:2.0:authssl ↵" class="wikilink1">SSL by Ajax</a> below.
+
+</p>
+
+</div><!-- EDIT4 SECTION "Configuration" [402-713] -->
 
 <h3 class="sectionedit5" id="with_apache">With Apache</h3>
 <div class="level3">
@@ -183,7 +191,7 @@ Ci-dessous les principales options utilisées par <abbr title="LemonLDAP::NG">LL
 </li>
 </ul>
 
-</div><!-- EDIT5 SECTION "With Apache" [429-2399] -->
+</div><!-- EDIT5 SECTION "With Apache" [714-2684] -->
 
 <h3 class="sectionedit6" id="with_nginx">With Nginx</h3>
 <div class="level3">
@@ -212,7 +220,7 @@ You must also export SSL_CLIENT_S_<abbr title="Distinguished Name">DN</abbr>_CN 
       }
 fastcgi_param  SSL_CLIENT_S_DN_CN $ssl_client_s_dn_cn;</pre>
 
-</div><!-- EDIT6 SECTION "With Nginx" [2400-2961] -->
+</div><!-- EDIT6 SECTION "With Nginx" [2685-3246] -->
 
 <h3 class="sectionedit7" id="configuration_of_lemonldapng">Configuration de LemonLDAP::NG</h3>
 <div class="level3">
@@ -232,7 +240,7 @@ Aller ensuite dans <code>Paramètres SSL</code> :
 </li>
 </ul>
 
-</div><!-- EDIT7 SECTION "Configuration of LemonLDAP::NG" [2962-3387] -->
+</div><!-- EDIT7 SECTION "Configuration of LemonLDAP::NG" [3247-3672] -->
 
 <h3 class="sectionedit8" id="auto_reloading_ssl_certificates">Rechargement automatique des certificats SSL</h3>
 <div class="level3">
@@ -337,10 +345,32 @@ $('.enteteBouton').click( function (e) {
 });
 <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/script.html"><span class="kw2">script</span></a>&gt;</span>
 <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/body.html"><span class="kw2">body</span></a>&gt;</span></pre>
-<div class="notewarning">It is incompatible with authentication combination because of Apache parameter “SSLVerifyClient”, which must have the value “require”
-
+<div class="notewarning">It is incompatible with authentication combination because of Apache parameter “SSLVerifyClient”, which must have the value “require”. To enable SSL with <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination</a>, use <a href="#ssl_by_ajax" title="documentation:2.0:authssl ↵" class="wikilink1">SSL by Ajax</a>
 </div>
-</div><!-- EDIT8 SECTION "Auto reloading SSL Certificates" [3388-] -->
+</div><!-- EDIT8 SECTION "Auto reloading SSL Certificates" [3673-6936] -->
+
+<h2 class="sectionedit9" id="ssl_by_ajax">SSL by Ajax</h2>
+<div class="level2">
+
+<p>
+
+If you enable this feature, you must configure 2 portal virtual hosts:
+
+</p>
+<ul>
+<li class="level1"><div class="li">  the main <em>(which corresponds to portal <abbr title="Uniform Resource Locator">URL</abbr>)</em> with <code>SSLVerifyClient none</code></div>
+</li>
+<li class="level1"><div class="li">  the second with <code>SSLVerifyClient require</code> and a <code>Header set Allow-Control-Allow-Origin https://portal-main-url</code></div>
+</li>
+</ul>
+
+<p>
+
+then declare the second <abbr title="Uniform Resource Locator">URL</abbr> in SSL options in the Manager. That's all ! Then you can chain it in a <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">combination</a>.
+
+</p>
+
+</div><!-- EDIT9 SECTION "SSL by Ajax" [6937-] -->
 </div>
 </body>
 </html>

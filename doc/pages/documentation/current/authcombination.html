@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authcombination</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authcombination"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authcombination.html"/>
@@ -67,7 +67,7 @@
 <li class="level1"><div class="li"><a href="#known_problems">Known problems</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#federation_protocols">Federation protocols</a></div></li>
-<li class="level2"><div class="li"><a href="#authapache_authentication">AuthApache authentication</a></div></li>
+<li class="level2"><div class="li"><a href="#authapache_authentication">Auth::Apache authentication</a></div></li>
 <li class="level2"><div class="li"><a href="#ssl_authentication">SSL authentication</a></div></li>
 </ul></li>
 </ul>
@@ -333,13 +333,14 @@ Combination module returns the form corresponding to the first authentication sc
 <!-- EDIT15 TABLE [4917-5249] -->
 </div>
 <!-- EDIT14 SECTION "Federation protocols" [4618-5250] -->
-<h3 class="sectionedit16" id="authapache_authentication">AuthApache authentication</h3>
+<h3 class="sectionedit16" id="authapache_authentication">Auth::Apache authentication</h3>
 <div class="level3">
 
 <p>
-When using this module, <abbr title="LemonLDAP::NG">LL::NG</abbr> portal will be called only if Apache does not return “401 Authentication required”, but this is not the Apache behaviour: if the auth module fails, Apache returns 401. So Kerberos can be used only with a “and” boolean expression.
+When using this module, <abbr title="LemonLDAP::NG">LL::NG</abbr> portal will be called only if Apache does not return “401 Authentication required”, but this is not the Apache behaviour: if the auth module fails, Apache returns 401. So it can be used only with a “and” boolean expression.
 </p>
-
+<div class="notetip">The new <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos authentication module</a> solve this for Kerberos: you just have to use it instead of Apache and enable authentication by Ajax in Kerberos parameters.
+</div>
 <p>
 Example: <code>[ Apache and LDAP, LDAP ]</code>
 </p>
@@ -349,7 +350,7 @@ To bypass this, follow the documentation of <a href="authapache.html" class="wik
 </p>
 
 </div>
-<!-- EDIT16 SECTION "AuthApache authentication" [5251-5667] -->
+<!-- EDIT16 SECTION "Auth::Apache authentication" [5251-5862] -->
 <h3 class="sectionedit17" id="ssl_authentication">SSL authentication</h3>
 <div class="level3">
 
@@ -358,6 +359,6 @@ To chain SSL, you have to set “SSLRequire optional” in Apache configuration,
 </p>
 
 </div>
-<!-- EDIT17 SECTION "SSL authentication" [5668-] --></div>
+<!-- EDIT17 SECTION "SSL authentication" [5863-] --></div>
 </body>
 </html>

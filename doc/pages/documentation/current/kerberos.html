@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:kerberos</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,kerberos"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="kerberos.html"/>
@@ -70,8 +70,6 @@
 <li class="level2"><div class="li"><a href="#client_kerberos_configuration">Client Kerberos configuration</a></div></li>
 <li class="level2"><div class="li"><a href="#obtain_keytab_file">Obtain keytab file</a></div></li>
 <li class="level2"><div class="li"><a href="#configuration_of_lemonldapng">Configuration of LemonLDAP::NG</a></div></li>
-<li class="level2"><div class="li"><a href="#configuration_of_portal_virtual_host">Configuration of portal virtual host</a></div></li>
-<li class="level2"><div class="li"><a href="#redirection_script">Redirection script</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#llng_clustersingle_ad_domain">LL::NG Cluster / Single AD domain</a></div>
@@ -79,7 +77,7 @@
 <li class="level2"><div class="li"><a href="#client_kerberos_configuration1">Client Kerberos configuration</a></div></li>
 <li class="level2"><div class="li"><a href="#obtain_keytab_file1">Obtain keytab file</a></div></li>
 <li class="level2"><div class="li"><a href="#configuration_of_lemonldapng1">Configuration of LemonLDAP::NG</a></div></li>
-<li class="level2"><div class="li"><a href="#configuration_of_portal_virtual_host1">Configuration of portal virtual host</a></div></li>
+<li class="level2"><div class="li"><a href="#configuration_of_portal_virtual_host">Configuration of portal virtual host</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#llng_clustertwo_ad_domains">LL::NG Cluster / Two AD domains</a></div>
@@ -87,7 +85,7 @@
 <li class="level2"><div class="li"><a href="#client_kerberos_configuration2">Client Kerberos configuration</a></div></li>
 <li class="level2"><div class="li"><a href="#obtain_keytab_file2">Obtain keytab file</a></div></li>
 <li class="level2"><div class="li"><a href="#configuration_of_lemonldapng2">Configuration of LemonLDAP::NG</a></div></li>
-<li class="level2"><div class="li"><a href="#configuration_of_portal_virtual_host2">Configuration of portal virtual host</a></div></li>
+<li class="level2"><div class="li"><a href="#configuration_of_portal_virtual_host1">Configuration of portal virtual host</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#other_resources">Other resources</a></div></li>
@@ -373,84 +371,17 @@ The important things to check are:
 <div class="level3">
 
 <p>
-See <a href="authapache.html#llng" class="wikilink1" title="documentation:2.0:authapache">Apache authentication module configuration</a>.
+See <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos authentication module</a> <em>or <a href="authapache.html#llng" class="wikilink1" title="documentation:2.0:authapache">Apache authentication module configuration</a> (deprecated)</em>.
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Configuration of LemonLDAP::NG" [5682-5793] -->
-<h3 class="sectionedit14" id="configuration_of_portal_virtual_host">Configuration of portal virtual host</h3>
-<div class="level3">
-
-<p>
-First, copy the current portal virtual host definition into a new one. Use <code>authpwd</code> server name for this virtual host:
-</p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *&gt;
-    <span class="kw1">ServerName</span> authpwd.example.com
-&nbsp;
-    ...
-&nbsp;
-&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
-
-<p>
-This virtual host will be used by clients that fail to use the Kerberos protocol.
-</p>
-
-<p>
-Then, modify the main portal virtual host to load the Apache Kerberos authentication module :
-</p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *&gt;
-  <span class="kw1">ServerName</span> auth.example.com
-&nbsp;
-  <span class="kw1">DocumentRoot</span> /var/lib/lemonldap-ng/portal/
-&nbsp;
-  &lt;<span class="kw3">Directory</span> /var/lib/lemonldap-ng/portal/&gt;
-    <span class="kw1">Order</span> <span class="kw1">allow</span>,<span class="kw1">deny</span>
-    <span class="kw1">Allow</span> from <span class="kw2">all</span>
-    <span class="kw1">Options</span> +ExecCGI +<span class="kw2">FollowSymLinks</span>
-  &lt;/<span class="kw3">Directory</span>&gt;
-&nbsp;
-  <span class="kw1">ErrorDocument</span> <span class="nu0">401</span> /login.pl
-  &lt;<span class="kw3">LocationMatch</span> ^/(?!login.pl)&gt;
-    &lt;<span class="kw3">IfModule</span> auth_kerb_module&gt;
-      <span class="kw1">AuthType</span> Kerberos
-      KrbMethodNegotiate <span class="kw2">On</span>
-      KrbMethodK5Passwd <span class="kw2">Off</span>
-      KrbAuthRealms EXAMPLE.COM
-      Krb5KeyTab /etc/lemonldap-ng/auth.keytab
-      KrbVerifyKDC <span class="kw2">Off</span>
-      KrbServiceName HTTP/auth.example.com
-      <span class="kw1">require</span> valid-<span class="kw1">user</span>
-    &lt;/<span class="kw3">IfModule</span>&gt;
-  &lt;/<span class="kw3">LocationMatch</span>&gt;
-&nbsp;
-&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
-
-</div>
-<!-- EDIT14 SECTION "Configuration of portal virtual host" [5794-6901] -->
-<h3 class="sectionedit15" id="redirection_script">Redirection script</h3>
-<div class="level3">
-
-<p>
-Create a redirection script, called login.pl:
-</p>
-<pre class="code">vi /var/lib/lemonldap-ng/portal/login.pl</pre>
-<pre class="code file perl"><span class="co1">#!/usr/bin/perl</span>
-<span class="kw2">use</span> CGI <span class="st_h">':cgi-lib'</span><span class="sy0">;</span>
-<span class="kw2">use</span> strict<span class="sy0">;</span>
-<span class="kw2">use</span> CGI<span class="sy0">::</span><span class="me2">Carp</span> <span class="st_h">'fatalsToBrowser'</span><span class="sy0">;</span>
-<span class="kw1">my</span> <span class="re0">$uri</span> <span class="sy0">=</span> <span class="re0">$ENV</span><span class="br0">&#123;</span><span class="st0">&quot;REQUEST_URI&quot;</span><span class="br0">&#125;</span><span class="sy0">;</span>
-<a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> CGI<span class="sy0">::</span><span class="me2">header</span><span class="br0">&#40;</span><span class="sy0">-</span>Refresh <span class="sy0">=&gt;</span> <span class="st_h">'0; URL=https://authpwd.example.com'</span><span class="sy0">.</span><span class="re0">$uri</span><span class="br0">&#41;</span><span class="sy0">;</span>
-<a href="http://perldoc.perl.org/functions/exit.html"><span class="kw3">exit</span></a><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
-<div class="notetip">The redirection script is needed if you use a failaback authentication. If not, you can just  keep a single virtual host (the authentication will fail if Kerberos negotiation do not succeed).
-</div>
-</div>
-<!-- EDIT15 SECTION "Redirection script" [6902-7459] -->
-<h2 class="sectionedit16" id="llng_clustersingle_ad_domain">LL::NG Cluster / Single AD domain</h2>
+<!-- EDIT13 SECTION "Configuration of LemonLDAP::NG" [5682-5861] -->
+<h2 class="sectionedit14" id="llng_clustersingle_ad_domain">LL::NG Cluster / Single AD domain</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT16 SECTION "LL::NG Cluster / Single AD domain" [7460-7506] -->
-<h3 class="sectionedit17" id="client_kerberos_configuration1">Client Kerberos configuration</h3>
+<!-- EDIT14 SECTION "LL::NG Cluster / Single AD domain" [5862-5908] -->
+<h3 class="sectionedit15" id="client_kerberos_configuration1">Client Kerberos configuration</h3>
 <div class="level3">
 
 <p>
@@ -458,8 +389,8 @@ The client Kerberos configuration is the same as a single <abbr title="LemonLDAP
 </p>
 
 </div>
-<!-- EDIT17 SECTION "Client Kerberos configuration" [7507-7621] -->
-<h3 class="sectionedit18" id="obtain_keytab_file1">Obtain keytab file</h3>
+<!-- EDIT15 SECTION "Client Kerberos configuration" [5909-6023] -->
+<h3 class="sectionedit16" id="obtain_keytab_file1">Obtain keytab file</h3>
 <div class="level3">
 <div class="noteimportant">You need to get a keytab for each <abbr title="LemonLDAP::NG">LL::NG</abbr> node.
 </div>
@@ -481,8 +412,8 @@ chmod 600 /etc/lemonldap-ng/auth.keytab</pre>
 <div class="notetip">You can do the same check for the keytab as with the single <abbr title="LemonLDAP::NG">LL::NG</abbr> server. Just use node1.example.com and node2.example.com instead of auth.example.com.
 </div>
 </div>
-<!-- EDIT18 SECTION "Obtain keytab file" [7622-8555] -->
-<h3 class="sectionedit19" id="configuration_of_lemonldapng1">Configuration of LemonLDAP::NG</h3>
+<!-- EDIT16 SECTION "Obtain keytab file" [6024-6957] -->
+<h3 class="sectionedit17" id="configuration_of_lemonldapng1">Configuration of LemonLDAP::NG</h3>
 <div class="level3">
 
 <p>
@@ -490,8 +421,8 @@ The configuration is the same as a single <abbr title="LemonLDAP::NG">LL::NG</ab
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Configuration of LemonLDAP::NG" [8556-8656] -->
-<h3 class="sectionedit20" id="configuration_of_portal_virtual_host1">Configuration of portal virtual host</h3>
+<!-- EDIT17 SECTION "Configuration of LemonLDAP::NG" [6958-7058] -->
+<h3 class="sectionedit18" id="configuration_of_portal_virtual_host">Configuration of portal virtual host</h3>
 <div class="level3">
 
 <p>
@@ -500,13 +431,13 @@ The only change in Apache configuration is in the <code>KrbServiceName</code>, i
 <pre class="code file apache">    KrbServiceName Any</pre>
 
 </div>
-<!-- EDIT20 SECTION "Configuration of portal virtual host" [8657-8845] -->
-<h2 class="sectionedit21" id="llng_clustertwo_ad_domains">LL::NG Cluster / Two AD domains</h2>
+<!-- EDIT18 SECTION "Configuration of portal virtual host" [7059-7247] -->
+<h2 class="sectionedit19" id="llng_clustertwo_ad_domains">LL::NG Cluster / Two AD domains</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT21 SECTION "LL::NG Cluster / Two AD domains" [8846-8890] -->
-<h3 class="sectionedit22" id="client_kerberos_configuration2">Client Kerberos configuration</h3>
+<!-- EDIT19 SECTION "LL::NG Cluster / Two AD domains" [7248-7292] -->
+<h3 class="sectionedit20" id="client_kerberos_configuration2">Client Kerberos configuration</h3>
 <div class="level3">
 
 <p>
@@ -548,8 +479,8 @@ klist -e
 kdestroy</pre>
 
 </div>
-<!-- EDIT22 SECTION "Client Kerberos configuration" [8891-9635] -->
-<h3 class="sectionedit23" id="obtain_keytab_file2">Obtain keytab file</h3>
+<!-- EDIT20 SECTION "Client Kerberos configuration" [7293-8037] -->
+<h3 class="sectionedit21" id="obtain_keytab_file2">Obtain keytab file</h3>
 <div class="level3">
 
 <p>
@@ -582,8 +513,8 @@ You can then remove the original keytab files and protect the final keytab file:
 chmod 600 /etc/lemonldap-ng/auth.keytab</pre>
 
 </div>
-<!-- EDIT23 SECTION "Obtain keytab file" [9636-10297] -->
-<h3 class="sectionedit24" id="configuration_of_lemonldapng2">Configuration of LemonLDAP::NG</h3>
+<!-- EDIT21 SECTION "Obtain keytab file" [8038-8699] -->
+<h3 class="sectionedit22" id="configuration_of_lemonldapng2">Configuration of LemonLDAP::NG</h3>
 <div class="level3">
 
 <p>
@@ -591,8 +522,8 @@ The configuration is the same as a single <abbr title="LemonLDAP::NG">LL::NG</ab
 </p>
 
 </div>
-<!-- EDIT24 SECTION "Configuration of LemonLDAP::NG" [10298-10398] -->
-<h3 class="sectionedit25" id="configuration_of_portal_virtual_host2">Configuration of portal virtual host</h3>
+<!-- EDIT22 SECTION "Configuration of LemonLDAP::NG" [8700-8800] -->
+<h3 class="sectionedit23" id="configuration_of_portal_virtual_host1">Configuration of portal virtual host</h3>
 <div class="level3">
 
 <p>
@@ -600,8 +531,8 @@ The configuration is the same as with a single AD domain.
 </p>
 
 </div>
-<!-- EDIT25 SECTION "Configuration of portal virtual host" [10399-10505] -->
-<h2 class="sectionedit26" id="other_resources">Other resources</h2>
+<!-- EDIT23 SECTION "Configuration of portal virtual host" [8801-8907] -->
+<h2 class="sectionedit24" id="other_resources">Other resources</h2>
 <div class="level2">
 
 <p>
@@ -615,6 +546,6 @@ You can check these documentations to get more information:
 </ul>
 
 </div>
-<!-- EDIT26 SECTION "Other resources" [10506-] --></div>
+<!-- EDIT24 SECTION "Other resources" [8908-] --></div>
 </body>
 </html>
