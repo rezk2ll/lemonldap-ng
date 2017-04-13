@@ -667,8 +667,14 @@ sub attributes {
         'casSrvMetaDataOptions' => {
             'type' => 'subContainer'
         },
+        'casSrvMetaDataOptionsDisplayName' => {
+            'type' => 'text'
+        },
         'casSrvMetaDataOptionsGateway' => {
             'type' => 'bool'
+        },
+        'casSrvMetaDataOptionsIcon' => {
+            'type' => 'text'
         },
         'casSrvMetaDataOptionsProxiedServices' => {
             'keyMsgFail' => '__badCasProxyId__',

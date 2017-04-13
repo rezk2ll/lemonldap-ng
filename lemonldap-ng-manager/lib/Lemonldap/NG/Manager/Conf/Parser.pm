@@ -456,7 +456,23 @@ sub _scanNodes {
                 elsif ( $target =~ /^cas(?:Srv|App)MetaDataOptions/ ) {
                     my $optKey = $&;
                     hdebug "  $base sub key: $target";
-                    if ( $target =~
+                    if ( $target eq 'casSrvMetaDataOptionsProxiedServices' ) {
+                        if ( $leaf->{cnodes} ) {
+                            hdebug('    unopened');
+                            $self->newConf->{$target}->{$key} =
+                              $self->refConf->{$target}->{$oldName} // {};
+                        }
+                        elsif ($h) {
+                            hdebug('    opened');
+                            $self->set( $target, $key, $leaf->{title},
+                                $leaf->{data} );
+                        }
+                        else {
+                            hdebug("  $target: looking for subnodes");
+                            $self->_scanNodes($subNodes);
+                        }
+                    }
+                    elsif ( $target =~
                         /^(?:$casSrvMetaDataNodeKeys|$casAppMetaDataNodeKeys)/o )
                     {
                         $self->set( $optKey, [ $oldName, $key ],

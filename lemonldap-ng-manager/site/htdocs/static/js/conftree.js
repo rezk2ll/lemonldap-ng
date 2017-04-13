@@ -75,6 +75,16 @@ function templates(tpl,key) {
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsProxiedServices",
             "title" : "casSrvMetaDataOptionsProxiedServices",
             "type" : "keyTextContainer"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsDisplayName",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsDisplayName",
+            "title" : "casSrvMetaDataOptionsDisplayName"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsIcon",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsIcon",
+            "title" : "casSrvMetaDataOptionsIcon"
          }
       ],
       "id" : "casSrvMetaDataOptions",
