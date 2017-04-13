@@ -108,6 +108,7 @@
 "casAppMetaDataNodes": "Applications CAS",
 "casAppMetaDataOptions": "Options",
 "casAppMetaDataOptionsService": "URL du service",
+"casAppMetaDataOptionsRule": "Règle",
 "casAppName": "Nom de l'application CAS",
 "casAttr": "Identifiant CAS",
 "casAttributes": "Attributs CAS",

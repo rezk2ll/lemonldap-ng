@@ -25,6 +25,7 @@ has ua => (
 
 has casSrvList => ( is => 'rw', default => sub { {} }, );
 has casAppList => ( is => 'rw', default => sub { {} }, );
+has appRules   => ( is => 'rw', default => sub { {} }, );
 
 # RUNNING METHODS
 
@@ -50,9 +51,21 @@ sub loadApp {
     }
     foreach ( keys %{ $self->conf->{casAppMetaDataOptions} } ) {
         my $tmp =
-          $self->conf->{casAppMetaDataOptions}->{casAppMetaDataOptionsService};
+          $self->conf->{casAppMetaDataOptions}->{$_}
+          ->{casAppMetaDataOptionsService};
         $tmp =~ s#^(https?://[^/]+).*$#$1#;
         $self->casAppList->{$tmp} = $_;
+        my $rule = $self->conf->{casAppMetaDataOptions}->{$_}
+          ->{casAppMetaDataOptionsRule};
+        if ( length $rule ) {
+            $rule = $self->p->HANDLER->substitute($rule);
+            unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
+                $self->error( 'OIDC RP rule error: '
+                      . $self->p->HANDLER->tsv->{jail}->error );
+                return 0;
+            }
+            $self->appRules->{$_} = $rule;
+        }
     }
     return 1;
 }
@@ -315,7 +328,7 @@ sub validateST {
 
     my $proxied = $srvConf->{casSrvMetaDataOptionsProxiedServices} || {};
     my $proxy_url;
-    if(%$proxied) {
+    if (%$proxied) {
         $proxy_url = $self->p->fullUrl($req) . '?casProxy=1';
         if ( $self->conf->{authChoiceParam}
             and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )
@@ -327,7 +340,7 @@ sub validateST {
 
         $req->datas->{casProxyUrl} = $proxy_url;
 
-        $serviceValidateUrl .= "&pgtUrl=" . uri_escape( $proxy_url );
+        $serviceValidateUrl .= "&pgtUrl=" . uri_escape($proxy_url);
     }
 
     my $response = $self->ua->get($serviceValidateUrl);
@@ -348,7 +361,7 @@ sub validateST {
     }
 
     # Get proxy data and store pgtId
-    if ( $proxy_url ) {
+    if ($proxy_url) {
         my $pgtIou =
           $xml->{'cas:authenticationSuccess'}->{'cas:proxyGrantingTicket'};
 

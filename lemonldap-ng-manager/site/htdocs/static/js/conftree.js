@@ -16,6 +16,11 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsService",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsService",
             "title" : "casAppMetaDataOptionsService"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
+            "title" : "casAppMetaDataOptionsRule"
          }
       ],
       "id" : "casAppMetaDataOptions",

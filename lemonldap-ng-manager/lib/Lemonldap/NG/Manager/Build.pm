@@ -214,7 +214,7 @@ EOF
         }
         print F "$tmp};\n";
     }
-    foreach (qw(samlServiceParameters oidcServiceParameters casServiceParameters)) {
+    foreach (qw(samlServiceParameters oidcServiceParameters)) {
         no strict 'refs';
         $tmp = "our \$$_ = [qw(" . join( ' ', @$$_ ) . ")];\n";
         print F "$tmp";

@@ -1237,15 +1237,20 @@ sub attributes {
         },
 
         # Partners
-        casAppMetaDataOptions => { type => 'subContainer', },
+        casAppMetaDataOptions      => { type => 'subContainer', },
         casAppMetaDataExportedVars => {
             type          => 'keyTextContainer',
             default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
             documentation => 'CAS exported variables',
         },
         casAppMetaDataOptionsService => {
-            type => 'url',
+            type          => 'url',
             documentation => 'CAS App service',
+        },
+        casAppMetaDataOptionsRule => {
+            type          => 'text',
+            test          => $perlExpr,
+            documentation => 'CAS App rule',
         },
 
         # Fake attribute: used by manager REST API to agglomerate all nodes
@@ -2083,7 +2088,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
             documentation => 'CAS exported variables',
         },
-        casSrvMetaDataOptions => { type => 'subContainer', },
+        casSrvMetaDataOptions                => { type => 'subContainer', },
         casSrvMetaDataOptionsGateway         => { type => 'bool', },
         casSrvMetaDataOptionsProxiedServices => {
             type       => 'keyTextContainer',
@@ -2097,11 +2102,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             msgFail => '__badUrl__',
         },
         casSrvMetaDataOptionsDisplayName => {
-            type => 'text',
+            type          => 'text',
             documentation => 'Name to display for CAS server',
         },
         casSrvMetaDataOptionsIcon => {
-            type => 'text',
+            type          => 'text',
             documentation => 'Path of CAS Server Icon',
         },
 

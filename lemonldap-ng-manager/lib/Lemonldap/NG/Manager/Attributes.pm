@@ -640,6 +640,25 @@ sub attributes {
         'casAppMetaDataOptions' => {
             'type' => 'subContainer'
         },
+        'casAppMetaDataOptionsRule' => {
+            'test' => sub {
+                my ( $val, $conf ) = @_;
+                my $s = '';
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
+                }
+                eval "$s $val";
+                my $err = join(
+                    '',
+                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
+                        split( /\n/, $@, 0 ) )
+                );
+                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+            },
+            'type' => 'text'
+        },
         'casAppMetaDataOptionsService' => {
             'type' => 'url'
         },

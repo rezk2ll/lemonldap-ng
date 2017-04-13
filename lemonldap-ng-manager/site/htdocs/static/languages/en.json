@@ -108,6 +108,7 @@
 "casAppMetaDataNodes": "CAS Applications",
 "casAppMetaDataOptions": "Options",
 "casAppMetaDataOptionsService": "Service URL",
+"casAppMetaDataOptionsRule": "Rule",
 "casAppName": "CAS App Name",
 "casAttr": "CAS login",
 "casAttributes": "CAS exported attributes",

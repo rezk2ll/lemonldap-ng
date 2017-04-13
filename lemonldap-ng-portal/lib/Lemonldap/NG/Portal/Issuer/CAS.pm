@@ -27,6 +27,7 @@ sub init {
 
     # Launch parents initialization subroutines, then launch IdP en SP lists
     my $res = $self->Lemonldap::NG::Portal::Main::Issuer::init();
+    return 0 unless($self->loadApp);
     $self->addUnauthRoute(
         ( $self->path ) => {
             serviceValidate => 'serviceValidate',
@@ -108,35 +109,37 @@ sub run {
                 "CAS access control requested on service $service");
 
             ## HERE
-            unless ( $service =~ m#^https?://([^/]+)(/.*)?$# ) {
+            unless ( $service =~ m#^(https?://[^/]+)(/.*)?$# ) {
                 $self->logger->error("Bad service $service");
                 return PE_ERROR;
             }
             my ( $host, $uri ) = ( $1, $2 );
-            if (
-                $self->p->HANDLER->grant(
-                    $req, $req->sessionInfo, $1, undef, $2
-                )
-              )
-            {
-                $self->logger->debug("CAS service $service access allowed");
+            my $app;
+            unless($app = $self->casAppList->{$host} ) {
+                $self->userLogger->error('CAS service not configured');
+                return PE_CAS_SERVICE_NOT_ALLOWED;
             }
-
-            else {
-                $self->userLogger->error(
-                    "CAS service $service access not allowed");
-
-                if ( $casAccessControlPolicy =~ /^(error)$/i ) {
-                    $self->logger->debug(
-"Return error instead of redirecting user on CAS service"
-                    );
-                    return PE_CAS_SERVICE_NOT_ALLOWED;
+            if ( my $rule = $self->appRules->{$app} ) {
+                if($rule->($req, $req->sessionInfo ) ) {
+                    $self->logger->debug("CAS service $service access allowed");
                 }
 
                 else {
-                    $self->logger->debug(
-                        "Redirect user on CAS service with a fake ticket");
-                    $casServiceTicket = "ST-F4K3T1CK3T";
+                    $self->userLogger->error(
+                        "CAS service $service access not allowed");
+
+                    if ( $casAccessControlPolicy =~ /^(error)$/i ) {
+                        $self->logger->debug(
+    "Return error instead of redirecting user on CAS service"
+                        );
+                        return PE_CAS_SERVICE_NOT_ALLOWED;
+                    }
+
+                    else {
+                        $self->logger->debug(
+                            "Redirect user on CAS service with a fake ticket");
+                        $casServiceTicket = "ST-F4K3T1CK3T";
+                    }
                 }
             }
         }
