@@ -3,17 +3,21 @@ use strict;
 use IO::String;
 
 BEGIN {
-    require 't/test-lib.pm';
-    require 't/smtp.pm';
+    eval {
+        require 't/test-lib.pm';
+        require 't/smtp.pm';
+    };
 }
 
 my $maintests = 13;
-my ( $res, $user, $pwd, $host, $url, $query ) = my $mailSend = 0;
+my ( $res, $user, $pwd, $host, $url, $query );
+my $mailSend = 0;
 
 SKIP: {
-    eval 'use GD::SecurityImage;use Image::Magick;';
+    eval
+      'require Email::Sender::Simple;use GD::SecurityImage;use Image::Magick;';
     if ($@) {
-        skip 'Lasso not found', $maintests;
+        skip 'Missing dependencies', $maintests;
     }
 
     my $client = LLNG::Manager::Test->new(

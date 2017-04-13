@@ -55,6 +55,7 @@
   "notifications": 0,
   "passwordDB": "Null",
   "portal": "http://auth.example.com/",
+  "portalDisplayResetPassword": 0,
   "casStorage": "Apache::Session::File",
   "casStorageOptions": {
     "Directory": "t/sessions/saml",

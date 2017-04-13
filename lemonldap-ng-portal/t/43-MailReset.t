@@ -3,80 +3,87 @@ use strict;
 use IO::String;
 
 BEGIN {
-    require 't/test-lib.pm';
-    require 't/smtp.pm';
+    eval {
+        require 't/test-lib.pm';
+        require 't/smtp.pm';
+    };
 }
 
 my ( $res, $user, $pwd );
-my $mailSend = 0;
+my $maintests = 7;
+my $mailSend  = 0;
 
 my $mail2 = 0;
 
-my $client = LLNG::Manager::Test->new(
-    {
-        ini => {
-            logLevel                   => 'error',
-            useSafeJail                => 1,
-            portalDisplayRegister      => 1,
-            authentication             => 'Demo',
-            userDB                     => 'Same',
-            passwordDB                 => 'Demo',
-            captcha_mail_enabled       => 0,
-            portalDisplayResetPassword => 1,
-        }
+SKIP: {
+    eval
+      'require Email::Sender::Simple;use GD::SecurityImage;use Image::Magick;';
+    if ($@) {
+        skip 'Missing dependencies', $maintests;
     }
-);
 
-# Test form
-# ------------------------
-ok( $res = $client->_get( '/resetpwd', accept => 'text/html' ), 'Reset form', );
-count(1);
-my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'mail' );
+    my $client = LLNG::Manager::Test->new(
+        {
+            ini => {
+                logLevel                   => 'error',
+                useSafeJail                => 1,
+                portalDisplayRegister      => 1,
+                authentication             => 'Demo',
+                userDB                     => 'Same',
+                passwordDB                 => 'Demo',
+                captcha_mail_enabled       => 0,
+                portalDisplayResetPassword => 1,
+            }
+        }
+    );
 
-$query = 'mail=dwho%40badwolf.org';
+    # Test form
+    # ------------------------
+    ok( $res = $client->_get( '/resetpwd', accept => 'text/html' ),
+        'Reset form', );
+    my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'mail' );
 
-# Post email
-ok(
-    $res = $client->_post(
-        '/resetpwd', IO::String->new($query),
-        length => length($query),
-        accept => 'text/html'
-    ),
-    'Post mail'
-);
-count(1);
+    $query = 'mail=dwho%40badwolf.org';
 
-ok( mail() =~ m#a href="http://auth.example.com/resetpwd\?(.*?)"#,
-    'Found link in mail' );
-$query = $1;
-count(1);
+    # Post email
+    ok(
+        $res = $client->_post(
+            '/resetpwd', IO::String->new($query),
+            length => length($query),
+            accept => 'text/html'
+        ),
+        'Post mail'
+    );
 
-ok(
-    $res = $client->_get( '/resetpwd', query => $query, accept => 'text/html' ),
-    'Post mail token received by mail'
-);
-count(1);
-( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
-ok( $res->[2]->[0] =~ /newpassword/s, ' Ask for a new password' );
-count(1);
+    ok( mail() =~ m#a href="http://auth.example.com/resetpwd\?(.*?)"#,
+        'Found link in mail' );
+    $query = $1;
 
-$query .= '&newpassword=zz&confirmpassword=zz';
+    ok(
+        $res =
+          $client->_get( '/resetpwd', query => $query, accept => 'text/html' ),
+        'Post mail token received by mail'
+    );
+    ( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
+    ok( $res->[2]->[0] =~ /newpassword/s, ' Ask for a new password' );
 
-# Post new password
-ok(
-    $res = $client->_post(
-        '/resetpwd', IO::String->new($query),
-        length => length($query),
-        accept => 'text/html'
-    ),
-    'Post new password'
-);
-count(1);
+    $query .= '&newpassword=zz&confirmpassword=zz';
 
-ok( mail() =~ /Your password was changed/, 'Password was changed' );
-count(1);
+    # Post new password
+    ok(
+        $res = $client->_post(
+            '/resetpwd', IO::String->new($query),
+            length => length($query),
+            accept => 'text/html'
+        ),
+        'Post new password'
+    );
 
-#print STDERR Dumper($query);
+    ok( mail() =~ /Your password was changed/, 'Password was changed' );
+
+    #print STDERR Dumper($query);
+}
+count($maintests);
 
 clean_sessions();
 
