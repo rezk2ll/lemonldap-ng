@@ -312,7 +312,8 @@ t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Redirect.t
 t/30-SAML-ReAuth.t
 t/30-SAML-SP-rule.t
-t/31-Auth-and-issuer-CAS.t
+t/31-Auth-and-issuer-CAS-declared-app.t
+t/31-Auth-and-issuer-CAS-default.t
 t/32-Auth-and-issuer-OIDC-authorization_code-OP-logout.t
 t/32-Auth-and-issuer-OIDC-authorization_code.t
 t/32-Auth-and-issuer-OIDC-hybrid.t

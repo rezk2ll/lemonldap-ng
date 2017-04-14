@@ -33,10 +33,7 @@ sub setSessionInfo {
         return PE_ERROR;
     }
     my %ev = (
-        %{
-            $self->conf->{casSrvMetaDataOptions}->{$srv}
-              ->{casSrvMetaDataOptionsExportedVars} || {}
-        },
+        %{ $self->conf->{casSrvMetaDataOptionsExportedVars}->{$srv} || {} },
         %{ $self->conf->{exportedVars} }
     );
     foreach ( keys %ev ) {

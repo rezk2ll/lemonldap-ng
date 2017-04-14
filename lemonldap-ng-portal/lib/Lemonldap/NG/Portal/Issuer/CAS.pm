@@ -27,7 +27,7 @@ sub init {
 
     # Launch parents initialization subroutines, then launch IdP en SP lists
     my $res = $self->Lemonldap::NG::Portal::Main::Issuer::init();
-    return 0 unless($self->loadApp);
+    return 0 unless ( $self->loadApp );
     $self->addUnauthRoute(
         ( $self->path ) => {
             serviceValidate => 'serviceValidate',
@@ -101,6 +101,13 @@ sub run {
             return PE_OK;
         }
 
+        unless ( $service =~ m#^(https?://[^/]+)(/.*)?$# ) {
+            $self->logger->error("Bad service $service");
+            return PE_ERROR;
+        }
+        my ( $host, $uri ) = ( $1, $2 );
+        my $app = $self->casAppList->{$host};
+
         # Check access on the service
         my $casAccessControlPolicy = $self->conf->{casAccessControlPolicy};
 
@@ -108,19 +115,12 @@ sub run {
             $self->logger->debug(
                 "CAS access control requested on service $service");
 
-            ## HERE
-            unless ( $service =~ m#^(https?://[^/]+)(/.*)?$# ) {
-                $self->logger->error("Bad service $service");
-                return PE_ERROR;
-            }
-            my ( $host, $uri ) = ( $1, $2 );
-            my $app;
-            unless($app = $self->casAppList->{$host} ) {
+            unless ($app) {
                 $self->userLogger->error('CAS service not configured');
                 return PE_CAS_SERVICE_NOT_ALLOWED;
             }
             if ( my $rule = $self->appRules->{$app} ) {
-                if($rule->($req, $req->sessionInfo ) ) {
+                if ( $rule->( $req, $req->sessionInfo ) ) {
                     $self->logger->debug("CAS service $service access allowed");
                 }
 
@@ -130,7 +130,7 @@ sub run {
 
                     if ( $casAccessControlPolicy =~ /^(error)$/i ) {
                         $self->logger->debug(
-    "Return error instead of redirecting user on CAS service"
+"Return error instead of redirecting user on CAS service"
                         );
                         return PE_CAS_SERVICE_NOT_ALLOWED;
                     }
@@ -170,6 +170,7 @@ sub run {
             $Sinfos->{renew}   = $casRenewFlag;
             $Sinfos->{_cas_id} = $session_id;
             $Sinfos->{_utime}  = $time;
+            $Sinfos->{_casApp} = $app;
 
             my $casServiceSession = $self->getCasSession( undef, $Sinfos );
 
@@ -471,6 +472,7 @@ sub _validate2 {
         return $self->returnCasServiceValidateError( 'INVALID_TICKET',
             'Ticket not found' );
     }
+    my $app = $casServiceSession->data->{_casApp};
 
     $self->logger->debug("$urlType ticket session $ticket found");
 
@@ -536,6 +538,7 @@ sub _validate2 {
         $PGinfos->{service} = $service;
         $PGinfos->{_cas_id} = $casServiceSession->data->{_cas_id};
         $PGinfos->{_utime}  = $casServiceSession->data->{_utime};
+        $PGinfos->{_casApp} = $app;
 
         # Trace proxies
         $PGinfos->{proxies} = (
@@ -613,16 +616,18 @@ sub _validate2 {
 
     # Get attributes [CAS 3.0]
     my $attributes = {};
-    if ( defined $self->conf->{casAttributes}
-        and %{ $self->conf->{casAttributes} } )
-    {
-        foreach my $casAttribute ( keys %{ $self->conf->{casAttributes} } ) {
-            my $localSessionValue =
-              $localSession->data->{ $self->conf->{casAttributes}
-                  ->{$casAttribute} };
-            $attributes->{$casAttribute} = $localSessionValue
-              if defined $localSessionValue;
-        }
+    my $ev =
+      ( $app and $self->conf->{casAppMetaDataExportedVars}->{$app} )
+      ? $self->conf->{casAppMetaDataExportedVars}->{$app}
+      : {};
+    unless (%$ev) {
+        $ev = $self->conf->{casAttributes} || {};
+    }
+
+    foreach my $casAttribute ( keys %$ev ) {
+        my $localSessionValue = $localSession->data->{ $ev->{$casAttribute} };
+        $attributes->{$casAttribute} = $localSessionValue
+          if defined $localSessionValue;
     }
 
     # Return success message

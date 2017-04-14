@@ -171,7 +171,7 @@ sub expectReject {
           or explain( $res->{error}, $code );
     }
     else {
-        pass("Error code is $code");
+        pass("Error code is $res->{error}");
     }
     count(3);
 }

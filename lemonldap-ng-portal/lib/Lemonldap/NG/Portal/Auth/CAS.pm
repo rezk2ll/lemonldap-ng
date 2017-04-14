@@ -19,7 +19,7 @@ extends 'Lemonldap::NG::Portal::Auth::Base', 'Lemonldap::NG::Portal::Lib::CAS';
 # PROPERTIES
 
 has srvNumber => ( is => 'rw', default => 0 );
-has srvList   => ( is => 'rw', default => sub { [] } );
+has srvList => ( is => 'rw', default => sub { [] } );
 
 # INITIALIZATION
 
@@ -198,8 +198,9 @@ sub extractFormInfo {
     }
 
     # Request proxy tickets for proxied services
-    my $proxied = $srvConf->{casSrvMetaDataOptionsProxiedServices}->{$_} || {};
-    if ( %$proxied ) {
+    my $proxied =
+      $srvConf->{casSrvMetaDataOptionsProxiedServices}->{$srv} || {};
+    if (%$proxied) {
 
         # Check we received a PGT
         my $pgtId = $req->datas->{pgtId};

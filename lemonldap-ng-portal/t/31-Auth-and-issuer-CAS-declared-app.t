@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $debug = 'debug';
+my $debug = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -220,9 +220,20 @@ sub issuer {
                 userDB                 => 'Same',
                 issuerDBCASActivation  => 1,
                 casAttr                => 'uid',
-                casAttributes          => { cn => 'cn', uid => 'uid', },
-                casAccessControlPolicy => 'none',
+                casAccessControlPolicy => 'error',
                 multiValuesSeparator   => ';',
+                casAppMetaDataExportedVars => {
+                    sp => {
+                        cn   => 'cn',
+                        mail => 'mail',
+                        uid  => 'uid',
+                    }
+                },
+                casAppMetaDataOptions => {
+                    sp => {
+                        casAppMetaDataOptionsService => 'http://auth.sp.com',
+                    }
+                },
             }
         }
     );
