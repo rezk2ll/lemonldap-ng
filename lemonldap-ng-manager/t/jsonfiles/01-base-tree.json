@@ -78,7 +78,7 @@
           "title": "portalCheckLogins",
           "type": "bool"
         }, {
-          "default": 1,
+          "default": 0,
           "id": "portalDisplayResetPassword",
           "title": "portalDisplayResetPassword",
           "type": "boolOrExpr"
