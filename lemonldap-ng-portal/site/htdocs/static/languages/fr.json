@@ -105,6 +105,7 @@
 "chooseApp":"Choisissez une application à laquelle vous êtes autorisé à accéder",
 "clickHere":"Cliquez ici",
 "closeSSO":"Fermer votre Session SSO",
+"code": "Code",
 "confirmation":"Confirmation",
 "confirmLinkSent":"Un lien de confirmation a été envoyé, ce lien est valide jusqu'au ",
 "confirmPwd":"Confirmez le mot de passe",

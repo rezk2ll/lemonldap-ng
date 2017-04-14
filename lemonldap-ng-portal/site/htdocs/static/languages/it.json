@@ -105,6 +105,7 @@
 "chooseApp":"Choose an application your are allowed to access to",
 "clickHere":"Please click here",
 "closeSSO":"Close your SSO session",
+"code": "Code",
 "confirmation":"Confirmation",
 "confirmLinkSent":"A confirmation link has been sent, this link is valid until ",
 "confirmPwd":"Confirm password",
