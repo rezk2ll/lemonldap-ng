@@ -113,6 +113,7 @@
 "casAttr": "Identifiant CAS",
 "casAttributes": "Attributs CAS",
 "casParams": "Paramètres CAS",
+"casServiceMetadata": "Service CAS",
 "casSrv": "Serveur CAS",
 "casSrvMetaDataExportedVars": "Attributs exportés",
 "casSrvMetaDataOptions": "Options",

@@ -113,6 +113,7 @@
 "casAttr": "CAS login",
 "casAttributes": "CAS exported attributes",
 "casParams": "CAS parameters",
+"casServiceMetadata": "CAS service",
 "casSrv": "CAS Server",
 "casSrvMetaDataExportedVars": "Exported attributes",
 "casSrvMetaDataOptions": "Options",

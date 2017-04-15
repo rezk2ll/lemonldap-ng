@@ -160,7 +160,7 @@ no warnings 'redefine';
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
     ok( $req->uri =~ m#http://auth.((?:id|s)p).com([^\?]*)(?:\?(.*))?$#,
-        'SOAP request' );
+        ' SOAP request' );
     my $host  = $1;
     my $url   = $2;
     my $query = $3;
@@ -175,7 +175,7 @@ sub LWP::UserAgent::request {
                 query  => $query,
                 type   => 'application/xml',
             ),
-            "Execute POST request to $url"
+            " Execute POST request to $url"
         );
     }
     else {
@@ -185,7 +185,7 @@ sub LWP::UserAgent::request {
                 type  => 'application/xml',
                 query => $query,
             ),
-            "Execute request to $url"
+            " Execute request to $url"
         );
     }
     expectOK($res);

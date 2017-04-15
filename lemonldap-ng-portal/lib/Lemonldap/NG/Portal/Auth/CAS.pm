@@ -218,7 +218,7 @@ sub extractFormInfo {
 
             unless ($pt) {
                 $self->logger->error(
-                    "CAS: No proxy ticket recevied for service $service");
+                    "CAS: No proxy ticket received for service $service");
                 return PE_ERROR;
             }
 

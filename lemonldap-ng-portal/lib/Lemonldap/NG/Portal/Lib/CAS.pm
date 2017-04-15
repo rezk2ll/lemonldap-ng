@@ -35,7 +35,8 @@ sub loadSrv {
     unless ( $self->conf->{casSrvMetaDataOptions}
         and %{ $self->conf->{casSrvMetaDataOptions} } )
     {
-        $self->logger->warn("No CAS application found in configuration");
+        $self->logger->error("No CAS servers found in configuration");
+        return 0;
     }
     $self->casSrvList( $self->conf->{casSrvMetaDataOptions} );
     return 1;
@@ -47,7 +48,7 @@ sub loadApp {
     unless ( $self->conf->{casAppMetaDataOptions}
         and %{ $self->conf->{casAppMetaDataOptions} } )
     {
-        $self->logger->warn("No CAS server found in configuration");
+        $self->logger->info("No CAS apps found in configuration");
     }
     foreach ( keys %{ $self->conf->{casAppMetaDataOptions} } ) {
         my $tmp =
@@ -329,7 +330,9 @@ sub validateST {
     my $proxied = $srvConf->{casSrvMetaDataOptionsProxiedServices} || {};
     my $proxy_url;
     if (%$proxied) {
-        $proxy_url = $self->p->fullUrl($req) . '?casProxy=1';
+        $proxy_url = $self->p->fullUrl($req);
+        die if($proxy_url =~ /casProxy=1/);
+        $proxy_url .= ( $proxy_url =~ /\?/ ? '&' : '?' ) . 'casProxy=1';
         if ( $self->conf->{authChoiceParam}
             and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )
         {

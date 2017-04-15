@@ -121,7 +121,7 @@ sub tree {
                         {
                             title => 'casParams',
                             help  => 'authcas.html',
-                            nodes => [ 'casAuthnLevel' ]
+                            nodes => ['casAuthnLevel']
                         },
                         {
                             title => 'dbiParams',
@@ -405,8 +405,6 @@ sub tree {
                                         'casAttr',
                                         'casAttributes',
                                         'casAccessControlPolicy',
-                                        'casStorage',
-                                        'casStorageOptions'
                                     ]
                                 }
                             ]
@@ -907,6 +905,10 @@ sub tree {
         },
         'oidcOPMetaDataNodes',
         'oidcRPMetaDataNodes',
+        {
+            title => 'casServiceMetadata',
+            nodes => [ 'casStorage', 'casStorageOptions' ]
+        },
         'casSrvMetaDataNodes',
         'casAppMetaDataNodes',
     ];
