@@ -140,10 +140,10 @@ sub extractFormInfo {
         else {
 
             # Server list
-            my $portalPath = $self->{portal};
+            my $portalPath = $self->conf->{portal};
             $portalPath =~ s#^https?://[^/]+/?#/#;
 
-            $req->datas->{list}            = $self->opList;
+            $req->datas->{list}            = $self->casAppList;
             $req->datas->{confirmRemember} = 0;
 
             $req->datas->{login} = 1;

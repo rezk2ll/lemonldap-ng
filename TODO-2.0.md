@@ -1,4 +1,3 @@
-* CAS: use exportedVars in issuers (with casAttributes as default)
 * Add new SMTP params
 * unhandled parameters:
   * issuerDB\*Rule

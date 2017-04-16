@@ -232,7 +232,10 @@ sub issuer {
                 casAppMetaDataOptions => {
                     sp => {
                         casAppMetaDataOptionsService => 'http://auth.sp.com',
-                    }
+                    },
+                    sp2 => {
+                        casAppMetaDataOptionsService => 'http://auth.sp2.com',
+                    },
                 },
             }
         }

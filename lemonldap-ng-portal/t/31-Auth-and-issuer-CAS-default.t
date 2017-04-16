@@ -30,6 +30,8 @@ ok(
     'Unauth SP request'
 );
 count(1);
+ok( expectCookie( $res, 'llngcasserver' ) eq 'idp', 'Get CAS server cookie' );
+count(1);
 expectRedirection( $res,
     'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
 
@@ -71,13 +73,21 @@ my $idpId = expectCookie($res);
 
 # Back to SP
 switch ('sp');
-ok( $res = $sp->_get( '/', query => $query, accept => 'text/html' ),
-    'Query SP with ticket' );
+ok(
+    $res = $sp->_get(
+        '/',
+        query  => $query,
+        accept => 'text/html',
+        cookie => 'llngcasserver=idp',
+    ),
+    'Query SP with ticket'
+);
 count(1);
 my $spId = expectCookie($res);
 
 # Test authentication
-ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
+ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId,llngcasserver=idp" ),
+    'Get / on SP' );
 count(1);
 expectOK($res);
 expectAuthenticatedAs( $res, 'french' );
@@ -86,9 +96,9 @@ expectAuthenticatedAs( $res, 'french' );
 ok( $res = $sp->_get("/sessions/global/$spId"), 'Get UTF-8' );
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-or print STDERR $@;
+  or print STDERR $@;
 ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
-or explain( $res, 'cn => Frédéric Accents' );
+  or explain( $res, 'cn => Frédéric Accents' );
 count(3);
 
 # Logout initiated by SP
@@ -96,7 +106,7 @@ ok(
     $res = $sp->_get(
         '/',
         query  => 'logout',
-        cookie => "lemonldap=$spId",
+        cookie => "lemonldap=$spId,llngcasserver=idp",
         accept => 'text/html'
     ),
     'Query SP for logout'
@@ -143,8 +153,11 @@ expectReject($res);
 
 switch ('sp');
 ok(
-    $res =
-      $sp->_get( '/', accept => 'text/html', cookie => "lemonldap=$idpId" ),
+    $res = $sp->_get(
+        '/',
+        accept => 'text/html',
+        cookie => "lemonldap=$idpId,llngcasserver=idp"
+    ),
     'Query IdP'
 );
 count(1);
@@ -160,7 +173,7 @@ no warnings 'redefine';
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
     ok( $req->uri =~ m#http://auth.((?:id|s)p).com([^\?]*)(?:\?(.*))?$#,
-        ' SOAP request' );
+        ' Request to ' . $req->uri );
     my $host  = $1;
     my $url   = $2;
     my $query = $3;
