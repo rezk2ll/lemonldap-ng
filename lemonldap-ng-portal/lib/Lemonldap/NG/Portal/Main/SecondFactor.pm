@@ -54,6 +54,7 @@ sub _run {
           . ') for '
           . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
     $req->sessionInfo->{_2fRealSession} = $req->id;
+    $req->sessionInfo->{_2fUrldc}       = $req->urldc;
     my $token = $self->ott->createToken( $req->sessionInfo );
     $req->id(0);
     $self->p->rebuildCookies($req);
@@ -89,6 +90,7 @@ sub _verify {
     # Else restore session
     $req->sessionInfo($session);
     $req->id( delete $req->sessionInfo->{_2fRealSession} );
+    $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
     $self->p->rebuildCookies($req);
     $req->mustRedirect(1);
     $self->userLogger->notice( $self->prefix
