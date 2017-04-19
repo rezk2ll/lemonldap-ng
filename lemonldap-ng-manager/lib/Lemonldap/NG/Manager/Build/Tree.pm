@@ -188,8 +188,8 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'krbParams',
-                            help  => 'kerberos.html',
+                            title => 'kerberosParams',
+                            help  => 'authkerberos.html',
                             nodes => [ 'krbKeytab', 'krbByJs', 'krbAuthnLevel' ]
                         },
                         {

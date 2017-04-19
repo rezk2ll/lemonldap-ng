@@ -302,7 +302,7 @@
 "krbAuthnLevel": "Kerberos authn level",
 "krbByJs": "Use Ajax request",
 "krbKeytab": "keytab file",
-"krbParams": "Kerberos parameters",
+"kerberosParams": "Kerberos parameters",
 "languages": "Languages",
 "latest": "Latest",
 "ldap": "LDAP",
