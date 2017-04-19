@@ -2,6 +2,10 @@ package Lemonldap::NG::Portal::Plugins::CDA;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_APACHESESSIONERROR
+  PE_OK
+);
 
 our $VERSION = '2.0.0';
 
