@@ -151,15 +151,15 @@ sub saveConf {
 # @return Lemonldap::NG configuration
 sub getConf {
     my ( $self, $args ) = @_;
+    my $res;
 
     # Use only cache to get conf if $args->{local} is set
     if (    $>
         and $args->{local}
         and ref( $self->{refLocalStorage} )
-        and my $res = $self->{refLocalStorage}->get('conf') )
+        and $res = $self->{refLocalStorage}->get('conf') )
     {
         $msg .= "Get configuration from cache without verification.\n";
-        return $res;
     }
 
     # Check cfgNum in conf backend
@@ -205,20 +205,20 @@ sub getConf {
             }
         }
 
-        # Create cipher object
-        unless ( $args->{raw} ) {
-
-            eval {
-                $r->{cipher} = Lemonldap::NG::Common::Crypto->new( $r->{key} );
-            };
-            if ($@) {
-                $msg .= "Bad key: $@. \n";
-            }
-        }
-
         # Return configuration hash
-        return $r;
+        $res = $r;
     }
+
+    # Create cipher object
+    unless ( $args->{raw} ) {
+
+        eval { $res->{cipher} = Lemonldap::NG::Common::Crypto->new( $res->{key} ); };
+        if ($@) {
+            $msg .= "Bad key: $@. \n";
+        }
+    }
+
+    return $res;
 }
 
 # Set default values
