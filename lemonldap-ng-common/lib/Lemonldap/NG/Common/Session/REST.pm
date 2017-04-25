@@ -43,6 +43,7 @@ sub delSession {
       or return $self->sendError( $req, 'sessionId is missing', 400 );
     my $session = $self->getApacheSession( $mod, $id );
     $session->remove;
+    Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
     if ( $session->error ) {
         return $self->sendError( $req, $session->error, 200 );
     }
