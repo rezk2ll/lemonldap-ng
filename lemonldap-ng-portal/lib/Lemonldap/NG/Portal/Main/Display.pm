@@ -296,7 +296,7 @@ sub display {
         else {
 
             # Authentication loop
-            if ( $req->sessionInfo->{_choice}
+            if ( $self->conf->{authentication} eq 'Choice'
                 and my $authLoop = $self->_buildAuthLoop($req) )
             {
                 %templateParams = (
