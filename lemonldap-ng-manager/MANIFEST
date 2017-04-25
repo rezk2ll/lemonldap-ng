@@ -147,6 +147,7 @@ site/htdocs/static/js/sessions.js
 site/htdocs/static/js/sessions.min.js
 site/htdocs/static/languages/en.json
 site/htdocs/static/languages/fr.json
+site/htdocs/static/languages/vi.json
 site/htdocs/static/logos/bootstrap.png
 site/htdocs/static/logos/custom.png
 site/htdocs/static/logos/dark.png
