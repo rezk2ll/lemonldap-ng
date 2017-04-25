@@ -245,6 +245,7 @@ site/htdocs/static/languages/it.json
 site/htdocs/static/languages/nl.json
 site/htdocs/static/languages/pt.json
 site/htdocs/static/languages/ro.json
+site/htdocs/static/languages/vi.json
 site/templates/bootstrap/checklogins.tpl
 site/templates/bootstrap/confirm.tpl
 site/templates/bootstrap/customfooter.tpl
@@ -275,6 +276,7 @@ site/templates/common/bullet_go.png
 site/templates/common/key.png
 site/templates/common/mail/en.json
 site/templates/common/mail/fr.json
+site/templates/common/mail/vi.json
 site/templates/common/mail_confirm.tpl
 site/templates/common/mail_footer.tpl
 site/templates/common/mail_header.tpl
