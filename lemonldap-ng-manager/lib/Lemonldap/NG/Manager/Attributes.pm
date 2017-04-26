@@ -697,7 +697,7 @@ sub attributes {
         },
         'casSrvMetaDataOptionsProxiedServices' => {
             'keyMsgFail' => '__badCasProxyId__',
-            'keyTest'    => qr/^\w+$/,
+            'keyTest'    => qr/^\w/,
             'type'       => 'keyTextContainer'
         },
         'casSrvMetaDataOptionsRenew' => {

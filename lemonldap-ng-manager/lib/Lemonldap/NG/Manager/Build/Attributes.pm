@@ -2092,7 +2092,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         casSrvMetaDataOptionsGateway         => { type => 'bool', },
         casSrvMetaDataOptionsProxiedServices => {
             type       => 'keyTextContainer',
-            keyTest    => qr/^\w+$/,
+            keyTest    => qr/^\w/,
             keyMsgFail => '__badCasProxyId__',
         },
         casSrvMetaDataOptionsRenew => { type => 'bool', },
