@@ -28,6 +28,7 @@ REST-API.md
 scripts/lmConfigEditor
 scripts/testConfBackend.pl
 site/coffee/diff.coffee
+site/coffee/filterFunctions.coffee
 site/coffee/llApp.coffee
 site/coffee/manager.coffee
 site/coffee/notifications.coffee
