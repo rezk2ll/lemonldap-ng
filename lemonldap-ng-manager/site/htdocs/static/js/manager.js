@@ -599,7 +599,7 @@ This file contains:
         for (filter in ref) {
           func = ref[filter];
           if ($scope.filters.hasOwnProperty(filter)) {
-            return filterFunctions[filter](scope, $q, func);
+            return window.filterFunctions[filter](scope, $q, func);
           }
         }
         return false;

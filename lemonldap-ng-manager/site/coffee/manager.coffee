@@ -485,7 +485,7 @@ llapp.controller 'TreeCtrl', [
 			scope = if scope then scope else $scope
 			for filter,func of $scope.filters
 				if $scope.filters.hasOwnProperty(filter)
-					return filterFunctions[filter](scope, $q, func)
+					return window.filterFunctions[filter](scope, $q, func)
 			false
 
 		# To avoid binding all the tree, nodes are pushed in DOM only when opened
