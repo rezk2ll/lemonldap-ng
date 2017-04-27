@@ -131,6 +131,7 @@ site/coffee/info.coffee
 site/coffee/kerberos.coffee
 site/coffee/oidcchecksession.coffee
 site/coffee/portal.coffee
+site/coffee/redirect.coffee
 site/coffee/registerbrowser.coffee
 site/coffee/ssl.coffee
 site/coffee/u2fcheck.coffee
@@ -216,6 +217,8 @@ site/htdocs/static/common/js/oidcchecksession.js
 site/htdocs/static/common/js/oidcchecksession.min.js
 site/htdocs/static/common/js/portal.js
 site/htdocs/static/common/js/portal.min.js
+site/htdocs/static/common/js/redirect.js
+site/htdocs/static/common/js/redirect.min.js
 site/htdocs/static/common/js/registerbrowser.js
 site/htdocs/static/common/js/registerbrowser.min.js
 site/htdocs/static/common/js/ssl.js
