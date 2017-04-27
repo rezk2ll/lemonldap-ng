@@ -379,6 +379,10 @@ sub attributes {
                         'v' => 'Active Directory'
                     },
                     {
+                        'k' => 'CAS',
+                        'v' => 'Central Authentication Service (CAS)'
+                    },
+                    {
                         'k' => 'DBI',
                         'v' => 'Database (DBI)'
                     },
@@ -399,10 +403,6 @@ sub attributes {
                         'v' => 'LDAP'
                     },
                     {
-                        'k' => 'REST',
-                        'v' => 'REST'
-                    },
-                    {
                         'k' => 'Null',
                         'v' => 'None'
                     },
@@ -417,6 +417,10 @@ sub attributes {
                     {
                         'k' => 'Proxy',
                         'v' => 'Proxy'
+                    },
+                    {
+                        'k' => 'REST',
+                        'v' => 'REST'
                     },
                     {
                         'k' => 'Remote',
