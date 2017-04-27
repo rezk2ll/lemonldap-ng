@@ -8,13 +8,21 @@
   <meta http-equiv="cache-control" content="no-cache" />
   <link href="<TMPL_VAR NAME="STATIC_PREFIX">common/favicon.ico" rel="icon" type="image/x-icon" />
   <link href="<TMPL_VAR NAME="STATIC_PREFIX">common/favicon.ico" rel="shortcut icon" />
+ <!-- //if:jsminified
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/redirect.min.js"></script>
+ //else -->
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/redirect.js"></script>
+ <!-- //endif -->
 </head>
+<body>
 
+<script id="redirect" type="custom">
 <TMPL_IF NAME="HIDDEN_INPUTS">
-<body onload="document.getElementById('form').submit()">
+form
 <TMPL_ELSE>
-<body onload="document.location.href='<TMPL_VAR NAME="URL">'">
+<TMPL_VAR NAME="URL">
 </TMPL_IF>
+</script>
 
   <h1 trspan="redirectionInProgres">Redirection in progress...</h1>
   <noscript>
