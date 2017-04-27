@@ -78,7 +78,8 @@ sub tree {
                                         'portalUserAttr',
                                         'portalOpenLinkInNewWindow',
                                         'portalAntiFrame',
-                                        'portalPingInterval'
+                                        'portalPingInterval',
+                                        'portalErrorOnExpiredSession'
                                     ]
                                 }
                             ]

@@ -556,6 +556,7 @@
 "portalDisplayLogout": "Logout",
 "portalDisplayRegister": "Register new account",
 "portalDisplayResetPassword": "Reset password",
+"portalErrorOnExpiredSession": "Show error on expired session",
 "portalForceAuthn": "Force authentication",
 "portalForceAuthnInterval": "Force authentication interval",
 "portalMenu": "Menu",

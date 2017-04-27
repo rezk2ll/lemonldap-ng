@@ -351,7 +351,6 @@ sub attributes {
 
         # Menu
         activeTimer => {
-            default       => 0,
             type          => 'bool',
             default       => 1,
             documentation => 'Enable timers on portal pages',
@@ -364,6 +363,11 @@ sub attributes {
                 default => { catname => 'Default category', type => "category" }
             },
             documentation => 'Applications list',
+        },
+        portalErrorOnExpiredSession => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Show error if session is expired',
         },
         portalOpenLinkInNewWindow => {
             type          => 'bool',

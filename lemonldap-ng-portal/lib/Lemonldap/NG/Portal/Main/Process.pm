@@ -264,7 +264,9 @@ sub extractFormInfo {
                 expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
             )
         );
-        return PE_SESSIONEXPIRED;
+        if ( $self->conf->{portalErrorOnExpiredSession} ) {
+            $ret = PE_SESSIONEXPIRED;
+        }
     }
     return $ret;
 }
