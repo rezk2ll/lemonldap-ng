@@ -78,6 +78,7 @@ Description: OpenID-Connect, CAS and SAML compatible Web-SSO system
 Package: lemonldap-ng-doc
 Architecture: all
 Section: doc
+Pre-Depends: dpkg (>= 1.17.14)
 Depends: ${misc:Depends}
 Description: Lemonldap::NG Web-SSO system documentation
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
