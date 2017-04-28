@@ -24,9 +24,9 @@ form
 </TMPL_IF>
 </script>
 
-  <h1 trspan="redirectionInProgres">Redirection in progress...</h1>
+  <h1>Redirection in progress...</h1>
   <noscript>
-    <p>It appears that your browser<br/>does not support Javascript.</p>
+    <p>It appears that your browser does not support Javascript.</p>
   </noscript>
   <TMPL_IF NAME="HIDDEN_INPUTS">
     <form id="form" action="<TMPL_VAR NAME="URL">" method="<TMPL_VAR NAME="FORM_METHOD">" class="login">
@@ -37,7 +37,7 @@ form
     </form>
   <TMPL_ELSE>
     <noscript>
-      <p><a href="<TMPL_VAR NAME="URL">" trspan="clickHere">Please click here</a></p>
+      <p><a href="<TMPL_VAR NAME="URL">">Please click here</a></p>
     </noscript>
   </TMPL_IF>
 </body>
