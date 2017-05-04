@@ -175,6 +175,7 @@
 "resendConfirmMail":"Renvoyer le mail de confirmation ?",
 "resentConfirm":"Voulez-vous que le message de confirmation soit renvoyé ?",
 "resetPwd":"Réinitialiser mon mot de passe",
+"rightsReloadNeedsLogout": "Le rechargement des droits nécessite une déconnexion",
 "selectIdP":"Choisissez votre fournisseur d'identité",
 "sendPwd":"Envoyez-moi un nouveau mot de passe",
 "serverError":"Une erreur est survenue sur le serveur",

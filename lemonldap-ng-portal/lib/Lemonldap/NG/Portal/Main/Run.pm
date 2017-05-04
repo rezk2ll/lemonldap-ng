@@ -114,8 +114,7 @@ sub refresh {
     foreach ( keys %datas ) {
         delete $datas{$_} unless ( /^_/ or /^(?:startTime)$/ );
     }
-    return $self->do(
-        $req,
+    $req->steps(
         [
             'getUser',
             @{ $self->betweenAuthAndDatas },
@@ -131,6 +130,14 @@ sub refresh {
             'store',
         ]
     );
+    my $res = $req->error( $self->process($req) );
+    if ($res) {
+        $req->info(
+'<h3 trspan="rightsReloadNeedsLogout">Rights reloads need to logout and login again</h3>'
+        );
+        return $self->do( $req, [ sub { PE_INFO } ] );
+    }
+    return $self->do( $req, [ sub { PE_OK } ] );
 }
 
 sub logout {

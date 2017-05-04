@@ -175,6 +175,7 @@
 "resendConfirmMail":"Gửi lại thư xác nhận?",
 "resentConfirm":"Bạn có muốn gửi lại thư xác nhận không?",
 "resetPwd":"Đặt lại mật khẩu của tôi",
+"rightsReloadNeedsLogout": "Rights reloads need to logout and login again",
 "selectIdP":"Chọn bộ cung cấp danh tính của bạn",
 "sendPwd":"Gửi cho tôi một mật khẩu mới",
 "serverError":"Lỗi xảy ra trên máy chủ",

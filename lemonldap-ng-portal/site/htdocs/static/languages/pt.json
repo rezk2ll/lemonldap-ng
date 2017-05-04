@@ -175,6 +175,7 @@
 "resendConfirmMail":"Resend confirmation mail?",
 "resentConfirm":"Do you want the confirmation mail to be resent?",
 "resetPwd":"Reset my password",
+"rightsReloadNeedsLogout": "Rights reloads need to logout and login again",
 "selectIdP":"Select your Identity Provider",
 "sendPwd":"Send me a new password",
 "serverError":"Error occurs on the server",
