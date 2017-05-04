@@ -135,6 +135,7 @@ sub refresh {
         $req->info(
 '<h3 trspan="rightsReloadNeedsLogout">Rights reloads need to logout and login again</h3>'
         );
+        $req->urldc( $self->conf->{portal} );
         return $self->do( $req, [ sub { PE_INFO } ] );
     }
     return $self->do( $req, [ sub { PE_OK } ] );
