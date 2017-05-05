@@ -223,9 +223,11 @@ $(document).ready ->
 						langs.push al
 					else if al.substring(0, 1) == nl.substring(0, 1)
 						langs2.push al
-			lang = if langs[0] then langs[0] else if langs2[0] then langs2[0] else 'en'
+			lang = if langs[0] then langs[0] else if langs2[0] then langs2[0] else window.availableLanguages[0]
 		else
-			lang = 'en'
+			lang = window.availableLanguages[0]
+	else if lang not in window.availableLanguages
+		lang = window.availableLanguages[0]
 	setCookie 'llnglanguage', lang
 	translatePage(lang)
 

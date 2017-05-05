@@ -237,10 +237,12 @@ LemonLDAP::NG Portal jQuery scripts
             }
           }
         }
-        lang = langs[0] ? langs[0] : langs2[0] ? langs2[0] : 'en';
+        lang = langs[0] ? langs[0] : langs2[0] ? langs2[0] : window.availableLanguages[0];
       } else {
-        lang = 'en';
+        lang = window.availableLanguages[0];
       }
+    } else if (indexOf.call(window.availableLanguages, lang) < 0) {
+      lang = window.availableLanguages[0];
     }
     setCookie('llnglanguage', lang);
     translatePage(lang);
