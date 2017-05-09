@@ -306,6 +306,33 @@ sub tests {
             }
             return ( $res, join( ', ', @msg ) );
         },
+        samlSPEntityIdUniqueness => sub {
+            return 1
+              unless ( $conf->{samlSPMetaDataXML}
+                and %{ $conf->{samlSPMetaDataXML} } );
+            my @msg;
+            my $res = 1;
+            my %entityIds;
+            foreach my $spId ( keys %{ $conf->{samlSPMetaDataXML} } ) {
+                unless (
+                    $conf->{samlSPMetaDataXML}->{$spId}->{samlSPMetaDataXML}
+                    =~ /entityID=(['"])(.+?)\1/si )
+                {
+                    push @msg, "$spId SAML metadata has no EntityID";
+                    $res = 0;
+                    next;
+                }
+                my $eid = $2;
+                if ( defined $entityIds{$eid} ) {
+                    push @msg,
+                      "$spId and $entityIds{$eid} have the same SAML EntityID";
+                    $res = 0;
+                    next;
+                }
+                $entityIds{$eid} = $spId;
+            }
+            return ( $res, join( ', ', @msg ) );
+        },
 
         checkCombinations => sub {
             return 1 unless ( $conf->{authentication} eq 'Combination' );
