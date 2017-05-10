@@ -104,36 +104,87 @@
 
   </TMPL_IF>
 
+  <TMPL_IF NAME="DISPLAY_FORM">
   <div class="panel panel-default">
   <TMPL_IF NAME="module">
-  <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
+    <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
   <TMPL_ELSE>
-  <form id="lform" action="#" method="post" class="login" role="form">
+    <form id="lform" action="#" method="post" class="login" role="form">
   </TMPL_IF>
-   <!-- Hidden fields -->
-   <TMPL_VAR NAME="HIDDEN_INPUTS">
-   <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
-   <input type="hidden" name="timezone" />
-   <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
+    <!-- Hidden fields -->
+    <TMPL_VAR NAME="HIDDEN_INPUTS">
+    <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+    <input type="hidden" name="timezone" />
+    <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
+    <TMPL_INCLUDE NAME="standardform.tpl">
+    </form>
+  </div>
+  </TMPL_IF>
 
-   <TMPL_IF NAME="DISPLAY_FORM">
-      <TMPL_INCLUDE NAME="standardform.tpl">
-   </TMPL_IF>
+  <TMPL_IF NAME="DISPLAY_OPENID_FORM">
+  <div class="panel panel-default">
+  <TMPL_IF NAME="module">
+    <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
+  <TMPL_ELSE>
+    <form id="lform" action="#" method="post" class="login" role="form">
+  </TMPL_IF>
+    <!-- Hidden fields -->
+    <TMPL_VAR NAME="HIDDEN_INPUTS">
+    <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+    <input type="hidden" name="timezone" />
+    <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
+    <TMPL_INCLUDE NAME="openidform.tpl">
+    </form>
+  </div>
+  </TMPL_IF>
 
-   <TMPL_IF NAME="DISPLAY_OPENID_FORM">
-      <TMPL_INCLUDE NAME="openidform.tpl">
-   </TMPL_IF>
+  <TMPL_IF NAME="DISPLAY_SSL_FORM">
+  <div class="panel panel-default">
+  <TMPL_IF NAME="module">
+    <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
+  <TMPL_ELSE>
+    <form id="lform" action="#" method="post" class="login" role="form">
+  </TMPL_IF>
+    <!-- Hidden fields -->
+    <TMPL_VAR NAME="HIDDEN_INPUTS">
+    <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+    <input type="hidden" name="timezone" />
+    <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
+    <TMPL_INCLUDE NAME="sslform.tpl">
+    </form>
+  </div>
+  </TMPL_IF>
 
-   <TMPL_IF NAME="DISPLAY_SSL_FORM">
-      <TMPL_INCLUDE NAME="sslform.tpl">
-   </TMPL_IF>
+  <TMPL_IF NAME="DISPLAY_YUBIKEY_FORM">
+  <div class="panel panel-default">
+  <TMPL_IF NAME="module">
+    <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
+  <TMPL_ELSE>
+    <form id="lform" action="#" method="post" class="login" role="form">
+  </TMPL_IF>
+    <!-- Hidden fields -->
+    <TMPL_VAR NAME="HIDDEN_INPUTS">
+    <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+    <input type="hidden" name="timezone" />
+    <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
+    <TMPL_INCLUDE NAME="yubikeyform.tpl">
+    </form>
+  </div>
+  </TMPL_IF>
 
-   <TMPL_IF NAME="DISPLAY_YUBIKEY_FORM">
-      <TMPL_INCLUDE NAME="yubikeyform.tpl">
-   </TMPL_IF>
-
-   <TMPL_IF NAME="DISPLAY_LOGO_FORM">
-      <div class="form">
+  <TMPL_IF NAME="DISPLAY_LOGO_FORM">
+  <div class="panel panel-default">
+  <TMPL_IF NAME="module">
+    <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
+  <TMPL_ELSE>
+    <form id="lform" action="#" method="post" class="login" role="form">
+  </TMPL_IF>
+    <!-- Hidden fields -->
+    <TMPL_VAR NAME="HIDDEN_INPUTS">
+    <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+    <input type="hidden" name="timezone" />
+    <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
+    <div class="form">
       <TMPL_IF NAME="module">
         <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/modules/<TMPL_VAR NAME="module">.png" alt="<TMPL_VAR NAME="module">" class="img-thumbnail" />
       </TMPL_IF>
@@ -146,11 +197,10 @@
         <span trspan="connect">Connect</span>
       </button>
       </div>
-      </div>
-   </TMPL_IF>
-
-  </form>
+    </div>
+    </form>
   </div>
+  </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_PASSWORD">
     <div id="password" class="panel panel-default">
