@@ -207,6 +207,7 @@ site/htdocs/static/common/icons/key.png
 site/htdocs/static/common/icons/ok.png
 site/htdocs/static/common/icons/vcard_edit.png
 site/htdocs/static/common/icons/warning.png
+site/htdocs/static/common/it.png
 site/htdocs/static/common/js/confirm.js
 site/htdocs/static/common/js/confirm.min.js
 site/htdocs/static/common/js/info.js
@@ -278,8 +279,10 @@ site/templates/bootstrap/upgradesession.tpl
 site/templates/bootstrap/yubikeyform.tpl
 site/templates/common/bullet_go.png
 site/templates/common/key.png
+site/templates/common/mail/ar.json
 site/templates/common/mail/en.json
 site/templates/common/mail/fr.json
+site/templates/common/mail/it.json
 site/templates/common/mail/vi.json
 site/templates/common/mail_confirm.tpl
 site/templates/common/mail_footer.tpl
