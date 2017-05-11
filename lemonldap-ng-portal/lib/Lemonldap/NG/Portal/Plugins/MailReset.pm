@@ -183,6 +183,12 @@ sub _reset {
                 "Reset asked for a unvalid user ($req->{mail})");
 
             # To avoid mail enumeration, return OK
+            # unless portalErrorOnMailNotFound is set
+
+            if ( $self->conf->{portalErrorOnMailNotFound} ) {
+                return PE_MAILNOTFOUND;
+            }
+
             my $mailTimeout =
               $self->conf->{mailTimeout} || $self->conf->{timeout};
             my $expTimestamp = time() + $mailTimeout;

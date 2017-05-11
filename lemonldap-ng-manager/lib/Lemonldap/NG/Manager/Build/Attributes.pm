@@ -369,6 +369,11 @@ sub attributes {
             default       => 1,
             documentation => 'Show error if session is expired',
         },
+        portalErrorOnMailNotFound => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Show error if mail is not found in password reset process',
+        },
         portalOpenLinkInNewWindow => {
             type          => 'bool',
             default       => 0,

@@ -557,6 +557,7 @@
 "portalDisplayRegister": "Création d'un nouveau compte",
 "portalDisplayResetPassword": "Réinitialisation de mot de passe",
 "portalErrorOnExpiredSession": "Affiche une erreur si la session est expirée",
+"portalErrorOnMailNotFound": "Affiche une erreur si le mail n'est pas trouvé",
 "portalForceAuthn": "Authentication forcée",
 "portalForceAuthnInterval": "Interval d'authentication forcée",
 "portalMenu": "Menu",

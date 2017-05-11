@@ -79,7 +79,8 @@ sub tree {
                                         'portalOpenLinkInNewWindow',
                                         'portalAntiFrame',
                                         'portalPingInterval',
-                                        'portalErrorOnExpiredSession'
+                                        'portalErrorOnExpiredSession',
+                                        'portalErrorOnMailNotFound'
                                     ]
                                 }
                             ]
