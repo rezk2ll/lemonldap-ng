@@ -183,6 +183,13 @@ sub _reset {
                 "Reset asked for a unvalid user ($req->{mail})");
 
             # To avoid mail enumeration, return OK
+            my $mailTimeout =
+              $self->conf->{mailTimeout} || $self->conf->{timeout};
+            my $expTimestamp = time() + $mailTimeout;
+            $req->datas->{expMailDate} =
+              strftime( "%d/%m/%Y", localtime $expTimestamp );
+            $req->datas->{expMailTime} =
+              strftime( "%H:%M", localtime $expTimestamp );
             return PE_MAILCONFIRMOK;
         }
         return $error;
