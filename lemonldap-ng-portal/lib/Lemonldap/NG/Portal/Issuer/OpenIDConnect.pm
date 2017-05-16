@@ -167,36 +167,60 @@ sub run {
             }
             unless ( $oidc_request->{'scope'} ) {
                 $self->logger->error("Scope is required");
-                $self->returnRedirectError(
-                    $req,
-                    $oidc_request->{'redirect_uri'},
-                    'invalid_request',
-                    "scope required",
-                    undef,
-                    $oidc_request->{'state'},
-                    ( $flow ne "authorizationcode" )
-                );
+                return PE_ERROR;
             }
             unless ( $oidc_request->{'client_id'} ) {
                 $self->logger->error("Client ID is required");
-                return $self->returnRedirectError(
-                    $req,
-                    $oidc_request->{'redirect_uri'},
-                    'invalid_request',
-                    "client_id required",
-                    undef,
-                    $oidc_request->{'state'},
-                    ( $flow ne "authorizationcode" )
-                );
+                return PE_ERROR;
             }
             if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} )
             {
                 $self->logger->error("Nonce is required for implicit flow");
-                return $self->returnRedirectError(
-                    $req, $oidc_request->{'redirect_uri'},
-                    'invalid_request', "nonce required",
-                    undef, $oidc_request->{'state'}, 1
+                return PE_ERROR;
+            }
+
+            # Check client_id
+            my $client_id = $oidc_request->{'client_id'};
+            $self->logger->debug("Request from client id $client_id");
+
+            # Verify that client_id is registered in configuration
+            my $rp = $self->getRP($client_id);
+
+            unless ($rp) {
+                $self->logger->error(
+"No registered Relying Party found with client_id $client_id"
                 );
+                return PE_UNAUTHORIZEDPARTNER;
+            }
+            else {
+                $self->logger->debug("Client id $client_id match RP $rp");
+            }
+
+            # Check if this RP is authorizated
+            if ( my $rule = $self->rpRules->{$rp} ) {
+                unless ( $rule->( $req, $req->sessionInfo ) ) {
+                    $self->userLogger->warn( 'User '
+                          . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                          . "was not authorizated to access to $rp" );
+                    return PE_UNAUTHORIZEDPARTNER;
+                }
+            }
+
+            # Check redirect_uri
+            my $redirect_uri  = $oidc_request->{'redirect_uri'};
+            my $redirect_uris = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+              ->{oidcRPMetaDataOptionsRedirectUris};
+
+            if ($redirect_uris) {
+                my $redirect_uri_allowed = 0;
+                foreach ( split( /\s+/, $redirect_uris ) ) {
+                    $redirect_uri_allowed = 1 if $redirect_uri eq $_;
+                }
+                unless ($redirect_uri_allowed) {
+                    $self->userLogger->error(
+                        "Redirect URI $redirect_uri not allowed");
+                    return PE_BADURL;
+                }
             }
 
             # Check if flow is allowed
@@ -268,41 +292,6 @@ sub run {
                 return PE_OK;
             }
 
-            # Check client_id
-            my $client_id = $oidc_request->{'client_id'};
-            $self->logger->debug("Request from client id $client_id");
-
-            # Verify that client_id is registered in configuration
-            my $rp = $self->getRP($client_id);
-
-            unless ($rp) {
-                $self->logger->error(
-"No registered Relying Party found with client_id $client_id"
-                );
-                return $self->returnRedirectError(
-                    $req,
-                    $oidc_request->{'redirect_uri'},
-                    'invalid_request',
-                    "client_id $client_id unknown",
-                    undef,
-                    $oidc_request->{'state'},
-                    ( $flow ne "authorizationcode" )
-                );
-            }
-            else {
-                $self->logger->debug("Client id $client_id match RP $rp");
-            }
-
-            # Check if this RP is authorizated
-            if ( my $rule = $self->rpRules->{$rp} ) {
-                unless ( $rule->( $req, $req->sessionInfo ) ) {
-                    $self->userLogger->warn( 'User '
-                          . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                          . "was not authorizated to access to $rp" );
-                    return PE_UNAUTHORIZEDPARTNER;
-                }
-            }
-
             # Check Request JWT signature
             if ( $oidc_request->{'request'} ) {
                 unless (
@@ -318,23 +307,6 @@ sub run {
                 }
                 else {
                     $self->logger->debug("Request JWT signature verified");
-                }
-            }
-
-            # Check redirect_uri
-            my $redirect_uri  = $oidc_request->{'redirect_uri'};
-            my $redirect_uris = $self->conf->{oidcRPMetaDataOptions}->{$rp}
-              ->{oidcRPMetaDataOptionsRedirectUris};
-
-            if ($redirect_uris) {
-                my $redirect_uri_allowed = 0;
-                foreach ( split( /\s+/, $redirect_uris ) ) {
-                    $redirect_uri_allowed = 1 if $redirect_uri eq $_;
-                }
-                unless ($redirect_uri_allowed) {
-                    $self->userLogger->error(
-                        "Redirect URI $redirect_uri not allowed");
-                    return PE_BADURL;
                 }
             }
 
