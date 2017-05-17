@@ -317,7 +317,8 @@ llapp.controller 'TreeCtrl', [
 			d.over.push ["new#{id++}", '']
 
 		# Add host
-		$scope.addHost = (cn,scope) ->
+		$scope.addHost = () ->
+			cn = $scope.currentNode
 			cn.data=[] unless cn.data
 			cn.data.push
 				k: "newHost"

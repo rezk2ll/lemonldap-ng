@@ -371,7 +371,9 @@ This file contains:
         }
         return d.over.push(["new" + (id++), '']);
       };
-      $scope.addHost = function(cn, scope) {
+      $scope.addHost = function() {
+        var cn;
+        cn = $scope.currentNode;
         if (!cn.data) {
           cn.data = [];
         }
