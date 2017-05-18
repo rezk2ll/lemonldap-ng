@@ -92,7 +92,7 @@ sub jsonBodyToObj {
         $self->error('No data');
         return undef;
     }
-    my $j = eval { from_json( $self->content ) };
+    my $j = eval { from_json( $self->content, { utf8 => 1 } ) };
     if ($@) {
         $self->error("$@$!");
         return undef;
