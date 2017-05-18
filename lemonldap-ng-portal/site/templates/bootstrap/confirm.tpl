@@ -61,17 +61,16 @@
       <TMPL_ELSE>
 
       <TMPL_IF NAME="ACTIVE_TIMER">
-
         <div class="alert alert-info">
           <p id="timer" trspan="autoAccept">Automatically accept in 30 seconds</p>
         </div>
-
-        <!-- //if:jsminified
-          <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/confirm.min.js"></script>
-        //else -->
-          <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/confirm.js"></script>
-        <!-- //endif -->
       </TMPL_IF>
+
+      <!-- //if:jsminified
+        <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/confirm.min.js"></script>
+      //else -->
+        <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/confirm.js"></script>
+      <!-- //endif -->
 
       <div class="buttons">
         <button type="submit" class="positive btn btn-success">
