@@ -2690,6 +2690,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
           { type => 'keyTextContainer', default => {} },
         oidcRPMetaDataOptionsBypassConsent =>
           { type => 'bool', help => 'openidconnectclaims.html', default => 0 },
+        oidcRPMetaDataOptionsPostLogoutRedirectUris => { type => 'text', },
         oidcRPMetaDataOptionsLogoutUrl => {
             type          => 'url',
             documentation => 'Logout URL',

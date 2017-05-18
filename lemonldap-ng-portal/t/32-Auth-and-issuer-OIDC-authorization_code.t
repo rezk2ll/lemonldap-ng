@@ -295,7 +295,8 @@ sub op {
                         oidcRPMetaDataOptionsBypassConsent     => 0,
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
                         oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsAccessTokenExpiration => 3600
+                        oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
+                        oidcRPMetaDataOptionsPostLogoutRedirectUris => "http://auth.rp.com"
                     }
                 },
                 oidcOPMetaDataOptions           => {},

@@ -204,6 +204,7 @@ sub cTrees {
                         title => 'logout',
                         form  => 'simpleInputContainer',
                         nodes => [
+                            'oidcRPMetaDataOptionsPostLogoutRedirectUris',
                             'oidcRPMetaDataOptionsLogoutUrl',
                             'oidcRPMetaDataOptionsLogoutType',
                             'oidcRPMetaDataOptionsLogoutSessionRequired',

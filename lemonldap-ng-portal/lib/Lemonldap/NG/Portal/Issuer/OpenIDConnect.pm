@@ -156,7 +156,8 @@ sub run {
 "Override $_ OIDC param by value present in request parameter"
                     );
                     $oidc_request->{$_} = $request->{$_};
-                    $self->p->setHiddenFormValue( $req, $_, $request->{$_}, '' );
+                    $self->p->setHiddenFormValue( $req, $_, $request->{$_},
+                        '' );
                 }
             }
 
@@ -794,6 +795,30 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
 
                 if ($post_logout_redirect_uri) {
 
+                    # Check redirect URI is allowed
+                    my $redirect_uri_allowed = 0;
+                    foreach ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
+                        my $logout_rp = $_;
+                        my $redirect_uris =
+                          $self->conf->{oidcRPMetaDataOptions}->{$logout_rp}
+                          ->{oidcRPMetaDataOptionsPostLogoutRedirectUris};
+
+                        foreach ( split( /\s+/, $redirect_uris ) ) {
+                            if ( $post_logout_redirect_uri eq $_ ) {
+                                $self->logger->debug(
+"$post_logout_redirect_uri is an allowed logout redirect URI for RP $logout_rp"
+                                );
+                                $redirect_uri_allowed = 1;
+                            }
+                        }
+                    }
+
+                    unless ($redirect_uri_allowed) {
+                        $self->logger->error(
+                            "$post_logout_redirect_uri is not allowed");
+                        return PE_BADURL;
+                    }
+
                     # Build Response
                     my $response_url =
                       $self->buildLogoutResponse( $post_logout_redirect_uri,
@@ -1167,6 +1192,29 @@ sub endSessionDone {
     my $state                    = $req->param('state');
 
     if ($post_logout_redirect_uri) {
+
+        # Check redirect URI is allowed
+        my $redirect_uri_allowed = 0;
+        foreach ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
+            my $logout_rp = $_;
+            my $redirect_uris =
+              $self->conf->{oidcRPMetaDataOptions}->{$logout_rp}
+              ->{oidcRPMetaDataOptionsPostLogoutRedirectUris};
+
+            foreach ( split( /\s+/, $redirect_uris ) ) {
+                if ( $post_logout_redirect_uri eq $_ ) {
+                    $self->logger->debug(
+"$post_logout_redirect_uri is an allowed logout redirect URI for RP $logout_rp"
+                    );
+                    $redirect_uri_allowed = 1;
+                }
+            }
+        }
+
+        unless ($redirect_uri_allowed) {
+            $self->logger->error("$post_logout_redirect_uri is not allowed");
+            return $self->p->login($req);
+        }
 
         # Build Response
         my $response_url =

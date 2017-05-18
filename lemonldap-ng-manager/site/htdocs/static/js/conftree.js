@@ -470,6 +470,11 @@ function templates(tpl,key) {
          {
             "_nodes" : [
                {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsPostLogoutRedirectUris",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsPostLogoutRedirectUris",
+                  "title" : "oidcRPMetaDataOptionsPostLogoutRedirectUris"
+               },
+               {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutUrl",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutUrl",
                   "title" : "oidcRPMetaDataOptionsLogoutUrl"
