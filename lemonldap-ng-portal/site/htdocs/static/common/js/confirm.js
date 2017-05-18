@@ -25,7 +25,7 @@
     $(".idploop").on('click', function() {
       return $("#idp").val($(this).attr("val"));
     });
-    $("#refuse").on('click', function() {
+    return $("#refuse").on('click', function() {
       return $("#confirm").attr("value", $(this).attr("val"));
     });
   });
