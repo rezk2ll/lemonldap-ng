@@ -1,0 +1,17 @@
+dn: dc=example,dc=com
+objectClass: top
+objectClass: organization
+objectClass: dcObject
+dc: example
+o: Example
+
+dn: ou=sessions,dc=example,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: sessions
+
+dn: ou=configurations,dc=example,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: configurations
+
