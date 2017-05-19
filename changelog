@@ -1,5 +1,18 @@
 lemonldap-ng (2.0.0) stable; urgency=low
 
+lemonldap-ng (1.9.10) stable; urgency=high
+
+    * [LEMONLDAP-1202] - CSS an JS not correctly loaded in FR offline doc
+    * [LEMONLDAP-1203] - NginX handler and CDA does not work
+    * [LEMONLDAP-1207] - GUI Error (HTTP 500) on Issuer module "GET"
+    * [LEMONLDAP-1214] - No display type selected when session expired and authentication done via Mutli or Choice
+    * [LEMONLDAP-1218] - Warning on expired session can break transparent authentication
+    * [LEMONLDAP-1231] - debian wheezy doc package not working
+    * [LEMONLDAP-1233] - redirect_uri parameter validity should be checked first to avoid unwanted redirections
+    * [LEMONLDAP-1211] - Provide error page / error message for error 404 and 502
+    * [LEMONLDAP-1219] - Reject same SAML EntityID for Service Providers
+    * [LEMONLDAP-1225] - Lost Password error message
+
 lemonldap-ng (1.9.9) stable; urgency=high
 
     * [LEMONLDAP-1081] - SAML artifact server double encode UTF-8 characters
