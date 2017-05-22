@@ -500,6 +500,7 @@
 "oidcOPMetaDataOptionsIDTokenMaxAge": "الحد الأقصى لعمر تعريف التوكن",
 "oidcOPMetaDataOptionsUseNonce": "استخدام نونس",
 "oidcRPMetaDataOptionsRedirectUris": "عناوين إعادة التوجيه",
+"oidcRPMetaDataOptionsPostLogoutRedirectUris": "Allowed redirection addresses for logout",
 "oidcRPMetaDataOptionsExtraClaims": "ادعاءات إضافي",
 "oidcServiceMetaDataIssuer": "تعريف المرسل",
 "oidcServiceMetaDataTokenURI": "التوكن",
