@@ -227,7 +227,7 @@ LemonLDAP::NG Portal jQuery scripts
         ref = window.availableLanguages;
         for (i = 0, len = ref.length; i < len; i++) {
           al = ref[i];
-          langdiv += "<img class=\"langicon\" src=\"" + window.staticPrefix + "common/" + al + ".png\" title=\"" + al + "\"> ";
+          langdiv += "<img class=\"langicon\" src=\"" + window.staticPrefix + "common/" + al + ".png\" title=\"" + al + "\" alt=\"[" + al + "]\"> ";
           for (l = 0, len1 = nlangs.length; l < len1; l++) {
             nl = nlangs[l];
             if (al === nl) {
@@ -250,7 +250,7 @@ LemonLDAP::NG Portal jQuery scripts
     ref1 = window.availableLanguages;
     for (m = 0, len2 = ref1.length; m < len2; m++) {
       al = ref1[m];
-      langdiv += "<img class=\"langicon\" src=\"" + window.staticPrefix + "common/" + al + ".png\" title=\"" + al + "\"> ";
+      langdiv += "<img class=\"langicon\" src=\"" + window.staticPrefix + "common/" + al + ".png\" title=\"" + al + "\" alt=\"[" + al + "]\"> ";
     }
     $('#languages').html(langdiv);
     $('.langicon').on('click', function() {

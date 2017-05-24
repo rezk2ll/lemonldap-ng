@@ -217,7 +217,7 @@ $(document).ready ->
 			if navigator.languages
 				nlangs = navigator.languages
 			for al in window.availableLanguages
-				langdiv += "<img class=\"langicon\" src=\"#{window.staticPrefix}common/#{al}.png\" title=\"#{al}\"> "
+				langdiv += "<img class=\"langicon\" src=\"#{window.staticPrefix}common/#{al}.png\" title=\"#{al}\" alt=\"[#{al}]\"> "
 				for nl in nlangs
 					if al == nl
 						langs.push al
@@ -234,7 +234,7 @@ $(document).ready ->
 	# Build language icons
 	langdiv = ''
 	for al in window.availableLanguages
-		langdiv += "<img class=\"langicon\" src=\"#{window.staticPrefix}common/#{al}.png\" title=\"#{al}\"> "
+		langdiv += "<img class=\"langicon\" src=\"#{window.staticPrefix}common/#{al}.png\" title=\"#{al}\" alt=\"[#{al}]\"> "
 	$('#languages').html langdiv
 	$('.langicon').on 'click', () ->
 		lang = $(this).attr 'title'
