@@ -112,6 +112,10 @@ p.notifCheck label {
   display: inline-block;
 }
 
+img.langicon {
+  cursor: pointer;
+}
+
 /* OpenID Connect */
 div.openidconnect button {
   height: 60px;
