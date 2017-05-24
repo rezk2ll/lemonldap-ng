@@ -157,9 +157,11 @@ sub display {
         %templateParams = (
             AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
             NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
-            LOGOUT_URL     => $self->conf->{portal} . "?logout=1",
-            APPSLIST_ORDER => $req->{sessionInfo}->{'appsListOrder'},
-            PING           => $self->conf->{portalPingInterval},
+            LOGOUT_URL          => $self->conf->{portal} . "?logout=1",
+            APPSLIST_ORDER      => $req->{sessionInfo}->{'appsListOrder'},
+            PING                => $self->conf->{portalPingInterval},
+            REQUIRE_OLDPASSWORD => $self->conf->{portalRequireOldPassword},
+            HIDE_OLDPASSWORD    => 0,
             $self->menu->params($req),
             (
                 $req->datas->{customScript}
