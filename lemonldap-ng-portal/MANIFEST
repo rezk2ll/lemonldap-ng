@@ -380,5 +380,6 @@ t/smtp.pm
 t/test-ldap.pm
 t/test-lib.pm
 t/test-psgi.pm
+t/testslapd/confs-sessions.ldif
 t/testslapd/slapd.ldif
 t/testslapd/users.ldif
