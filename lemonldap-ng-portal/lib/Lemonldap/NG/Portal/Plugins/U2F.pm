@@ -130,7 +130,7 @@ sub loadUser {
     }
     else {
         $self->userLogger->info("U2F: user not registered");
-        return 0;
+        return 1;
     }
 }
 
