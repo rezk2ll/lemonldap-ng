@@ -136,7 +136,7 @@
 "loginHistory":"Historique des connexions",
 "login":"Identifiant",
 "logout":"Déconnexion",
-"logoutConfirm":"Souhaitez-vous vous déconnecter&nbsp;?",
+"logoutConfirm":"Souhaitez-vous vous déconnecter ?",
 "logoutFromOtherApp":"Déconnexion des autres applications...",
 "mail":"Adresse mail",
 "mailSent2":"Un message a été envoyé à votre adresse mail.",
@@ -147,7 +147,7 @@
 "noHistory":"Ceci est votre première connexion, bienvenue !",
 "notFound": "Non trouvé: vous tentez d'accéder à une page non disponible",
 "oidcConsent":"L'application %s voudrait connaître :",
-"openidAp":"Consentez-vous à communiquer les paramètres suivants&nbsp;?",
+"openidAp":"Consentez-vous à communiquer les paramètres suivants ?",
 "openIdExample":"par exemple :http://myopenid.org/toto",
 "openidExchange":"Souhaitez-vous vous identifier sur le site %s ?",
 "openidPA":"La politique d'utilisation des données est disponible ici",
@@ -203,7 +203,7 @@
 "yourApps":"Vos applications",
 "yourEmail":"Votre adresse électronique",
 "yourIdentity":"Votre identité",
-"yourIdentityIs":"Votre identité est&nbsp;",
+"yourIdentityIs":"Votre identité est",
 "yourPhone":"Votre numéro de téléphone",
 "yourProfile":"Vos informations personnelles"
 }
