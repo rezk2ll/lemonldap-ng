@@ -27,6 +27,11 @@ has prefix => ( is => 'ro', default => 'u' );
 
 sub init {
     my ($self) = @_;
+    if (    $self->conf->{u2fSelfRegistration}
+        and $self->conf->{u2fActivation} eq '1' )
+    {
+        $self->conf->{u2fActivation} = '$_u2fKeyHandle and $_u2fUserKey';
+    }
     return 0
       unless ( $self->Lemonldap::NG::Portal::Main::SecondFactor::init()
         and $self->Lemonldap::NG::Portal::Lib::U2F::init() );
@@ -60,7 +65,7 @@ sub run {
         $req->response($tmp);
         return PE_SENDRESPONSE;
     }
-    return PE_OK;
+    return PE_U2FFAILED;
 }
 
 sub verify {
@@ -129,8 +134,8 @@ sub loadUser {
         return 1;
     }
     else {
-        $self->userLogger->info("U2F: user not registered");
-        return 1;
+        $self->userLogger->warn("U2F: user not registered");
+        return 0;
     }
 }
 
