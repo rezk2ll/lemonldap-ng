@@ -60,6 +60,10 @@ sub init {
     extends 'Lemonldap::NG::Handler::PSGI::Router', @enabledModules;
     my @working;
     my $conf = $self->confAcc->getConf;
+    unless ($conf) {
+        require Lemonldap::NG::Manager::Conf::Zero;
+        $conf = Lemonldap::NG::Manager::Conf::Zero::zeroConf();
+    }
     for ( my $i = 0 ; $i < @enabledModules ; $i++ ) {
         my $mod = $enabledModules[$i];
         no strict 'refs';
@@ -100,7 +104,11 @@ sub init {
     }
 
     $self->menuLinks( [] );
-    if ( my $portal = Lemonldap::NG::Handler::PSGI::Main->tsv->{portal}->() ) {
+    if ( my $portal =
+        $conf->{cfgNum}
+        ? Lemonldap::NG::Handler::PSGI::Main->tsv->{portal}->()
+        : $conf->{portal} )
+    {
         push @{ $self->menuLinks },
           {
             target => $portal,

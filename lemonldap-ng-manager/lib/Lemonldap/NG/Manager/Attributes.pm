@@ -27,7 +27,7 @@ sub types {
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -651,7 +651,7 @@ sub attributes {
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -1004,7 +1004,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 
                     BEGIN {
                         ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                     }
                     eval $s;
                     my $err = join(
@@ -1086,7 +1086,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -1109,7 +1109,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -1432,7 +1432,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 
                     BEGIN {
                         ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                     }
                     eval $s;
                     my $err = join(
@@ -1469,7 +1469,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -1820,7 +1820,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -2153,7 +2153,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -2823,7 +2823,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
