@@ -92,17 +92,21 @@ Upload dist and bundles
 - DEB:
 The DEB repository is hosted on http://lemonldap-ng.org/deb
 
-Copy all generated files (*.deb, *.dsc, *.changes, ...):
-$ scp *.deb *.dsc *.changes *.debian.tar.gz *.orig.tar.gz lemonldapng@lemonldap-ng.org:incoming/
+Copy all generated files (*.deb):
+$ scp *.deb lemonldapng@lemonldap-ng.org:incoming/
 
 Then connect on the server and launch reprepro:
 $ ssh lemonldapng@lemonldap-ng.org
 lemonldapng@lemonldap-ng.org$ cd deb/
-lemonldapng@lemonldap-ng.org$ reprepro --ask-passphrase -Vb . include squeeze ../incoming/lemonldap-ng_VERSION_i386.changes
-or
-lemonldapng@sd-22107:~/deb$ reprepro --ask-passphrase -Vb . includedeb squeeze ../incoming/*VERSION*deb
+lemonldapng@sd-22107:~/deb$ reprepro --ask-passphrase -Vb . includedeb stable ../incoming/*VERSION*deb
+lemonldapng@sd-22107:~/deb$ reprepro --ask-passphrase -Vb . includedeb 2.0 ../incoming/*VERSION*deb
 
 See also reprepro configuration file: 'distributions'
+
+- Docker:
+Build a new image from https://github.com/LemonLDAPNG/lemonldap-ng-docker
+Tag image to latest
+Upload on Docker hub
 
 Site
 ----
@@ -113,11 +117,10 @@ Site
 Spread the word
 ---------------
 
-- News on OW2 forge
-- Twitter account
-- Freshmeat
-- IRC channel subject
-- User mailing list
+- News on OW2 projects page: https://projects.ow2.org/bin/view/lemonldap-ng/
+- Twitter account / Facebook page
+- IRC channel subject and Mattermost
+- Mailing lists: lemonldap-ng-users / lemonldap-ng-announces
 - Optional: blogs and news sites (LinuxFR, etc.)
 
 After release
