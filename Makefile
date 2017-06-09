@@ -375,8 +375,8 @@ nox_full_test:	test prepare_test_server start_web_server
 	$(MAKE) stop_web_server
 
 prepare_test_server:
-	@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
-	@mkdir e2e-tests/conf/manager e2e-tests/conf/portal
+	-@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
+	-@mkdir e2e-tests/conf/manager e2e-tests/conf/portal
 	$(MAKE) install_webserver_conf install_test_site install_fastcgi_server \
 		CONFDIR=`pwd`/e2e-tests/conf \
 		RCONFDIR=e2e-tests/conf \

@@ -12,7 +12,7 @@ describe('Lemonldap::NG Manager', function() {
         "fr": "Paramètres généraux"
       };
       var els = element.all(by.css('[ng-click="getLanguage(lang)"]'));
-      expect(els.count()).toEqual(4);
+      expect(els.count()).toEqual(8);
       els.each(function(el) {
         el.isDisplayed().then(function(isVisible) {
           if (isVisible) {
