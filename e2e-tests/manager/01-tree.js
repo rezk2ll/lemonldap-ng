@@ -9,7 +9,7 @@ describe('Lemonldap::NG Manager', function() {
     it('should display 9 main nodes', function() {
       browser.get('/');
       var mainNodes = element.all(by.repeater('node in data track by node.id'));
-      expect(mainNodes.count()).toEqual(9);
+      expect(mainNodes.count()).toEqual(12);
     });
 
     it('should find a rule', function() {
