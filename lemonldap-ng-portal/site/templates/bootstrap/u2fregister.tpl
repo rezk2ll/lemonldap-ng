@@ -1,22 +1,31 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-  <div id="color" class="message message-positive alert"><span id="msg" trspan=""></span></div>
-  <p id="u2fPermission" trspan="u2fPermission">You may be prompted to allow the site permission to access your security keys. After granting permission, the device will start to blink.</p>
+  <main id="menucontent" class="container">
+  <div class="panel panel-info">
+  <div class="panel-body">
+  <div id="color" class="message message-positive alert"><span id="msg" trspan="u2fWelcome"></span></div>
+  <div id="u2fPermission" trspan="u2fPermission" class="alert alert-info">You may be prompted to allow the site permission to access your security keys. After granting permission, the device will start to blink.</div>
 
-<div class="buttons">
-  <span id="register" class="btn btn-primary" role="button">
-    <span class="glyphicon glyphicon-home"></span>&nbsp;
+  <div class="buttons">
+  <span id="register" class="btn btn-warning" role="button">
+    <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
     <span trspan="register">Register</span>
   </span>
-  <span id="verify" class="btn btn-primary" role="button">
-    <span class="glyphicon glyphicon-home"></span>&nbsp;
+  <span id="verify" class="btn btn-success" role="button">
+    <span class="glyphicon glyphicon-check"></span>&nbsp;
     <span trspan="verify">Verify</span>
   </span>
+  </div>
+  <div class="buttons">
   <a id="goback" href="" class="btn btn-primary" role="button">
     <span class="glyphicon glyphicon-home"></span>&nbsp;
     <span trspan="goToPortal">Go to portal</span>
   </a>
-</div>
+  </div>
+
+  </div>
+  </div>
+  </main>
 
   </script>
 <!-- //if:jsminified

@@ -189,6 +189,7 @@
 "u2fPermission": "Il est possible qu'on vous demande d'autoriser le site à accéder à votre clef. Après votre accord, la clef clignotera.",
 "u2fRegistered": "Votre clef est enregistrée. Cliquez sur vérifier",
 "u2fSuccess": "Votre clef est vérifiée",
+"u2fWelcome": "Gestion du périphérique U2F",
 "unableToGetU2FKey": "Impossible d'accéder à la clef, réessayez ou contactez votre administrateur",
 "updateCdc": "Mise à jour du cookie de domaine commun",
 "upgradeSession":"Se réauthentifier",

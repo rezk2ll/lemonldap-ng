@@ -189,6 +189,7 @@
 "u2fPermission": "È possibile che venga richiesto di consentire il permesso del sito per accedere alle chiavi di sicurezza. Dopo aver concesso il permesso, il dispositivo inizierà a lampeggiare.",
 "u2fRegistered": "La vostra chiave è registrata",
 "u2fSuccess": "La tua chiave é stata testata con successo",
+"u2fWelcome": "U2F device management",
 "unableToGetU2FKey": "Impossibile accedere alla chiave. Riprovare o contattare l'amministratore",
 "updateCdc": "Aggiorna il Cookie di Common Domain",
 "upgradeSession":"Sessione di aggiornamento",
