@@ -783,12 +783,12 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                         ]
                     );
                     $err = $req->error( $self->p->process($req) );
-                    if ( $err > 0 ) {
-                        $self->logger->error(
-                            "Logout process returns error code $err");
-                        return PE_ERROR;
-                    }
-                    elsif ($err) {
+                    if ( $err and $err != PE_LOGOUT_OK ) {
+                        if ( $err > 0 ) {
+                            $self->logger->error(
+                                "Logout process returns error code $err");
+                            return PE_ERROR;
+                        }
                         return $err;
                     }
                 }

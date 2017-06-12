@@ -139,22 +139,25 @@ ok(
         $url, IO::String->new($query),
         length => length($query),
         cookie => "lemonldap=$idpId",
+        accept => 'text/html',
     ),
     "Confirm logout,                endpoint $url"
 );
 count(1);
+
+( $url, $query ) = expectRedirection( $res, qr#.# );
 
 # Test logout endpoint without session
 ok(
     $res = $op->_get(
         '/oauth2/logout',
         accept => 'text/html',
-        query  => 'post_logout_redirect_uri=http://auth.rp.com'
+        query  => 'post_logout_redirect_uri=http://auth.rp.com/?logout=1'
     ),
     'logout endpoint with redirect, endpoint /oauth2/logout'
 );
 count(1);
-expectRedirection( $res, 'http://auth.rp.com' );
+expectRedirection( $res, 'http://auth.rp.com/?logout=1' );
 
 ok( $res = $op->_get('/oauth2/logout'),
     'logout endpoint,               endpoint /oauth2/logout' );
@@ -263,7 +266,7 @@ sub op {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
-                portal                          => 'http://auth.op.com',
+                portal                          => 'http://auth.op.com/',
                 authentication                  => 'Demo',
                 userDB                          => 'Same',
                 issuerDBOpenIDConnectActivation => "1",
@@ -274,7 +277,7 @@ sub op {
                         name        => "cn"
                     }
                 },
-                oidcServiceMetaDataIssuer             => "http://auth.op.com",
+                oidcServiceMetaDataIssuer             => "http://auth.op.com/",
                 oidcServiceMetaDataAuthorizeURI       => "authorize",
                 oidcServiceMetaDataCheckSessionURI    => "checksession.html",
                 oidcServiceMetaDataJWKSURI            => "jwks",
@@ -296,7 +299,8 @@ sub op {
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
                         oidcRPMetaDataOptionsUserIDAttr        => "",
                         oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
-                        oidcRPMetaDataOptionsPostLogoutRedirectUris => "http://auth.rp.com"
+                        oidcRPMetaDataOptionsPostLogoutRedirectUris =>
+                          "http://auth.rp.com/?logout=1"
                     }
                 },
                 oidcOPMetaDataOptions           => {},
@@ -360,7 +364,7 @@ sub rp {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'rp.com',
-                portal                     => 'http://auth.rp.com',
+                portal                     => 'http://auth.rp.com/',
                 authentication             => 'OpenIDConnect',
                 userDB                     => 'Same',
                 restSessionServer          => 1,
