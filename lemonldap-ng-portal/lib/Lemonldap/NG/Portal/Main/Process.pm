@@ -278,7 +278,13 @@ sub getUser {
 
 sub authenticate {
     my ( $self, $req ) = @_;
-    return $req->authResult( $self->_authentication->authenticate($req) );
+    my $ret = $req->authResult( $self->_authentication->authenticate($req) );
+
+    if ( $ret == PE_OK ) {
+        $req->{sessionInfo}->{_lastAuthnUTime} = time();
+    }
+
+    return $ret;
 }
 
 # Third block: Session data providing
