@@ -1,6 +1,9 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
+<div id="errorcontent" class="container">
+
 <div class="message message-positive alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
+
 <form action="/upgradesession" method="post" class="password" role="form">
   <div class="form">
     <div class="form-group input-group">
@@ -19,5 +22,7 @@
     </a>
   </div>
 </form>
+
+</div>
 
 <TMPL_INCLUDE NAME="footer.tpl">
