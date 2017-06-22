@@ -642,15 +642,24 @@ sub decodeJSON {
 # @return Lemonldap::NG::Common::Session object
 sub getOpenIDConnectSession {
     my ( $self, $id, $info ) = @_;
+    my %storage = (
+        storageModule        => $self->conf->{oidcStorage},
+        storageModuleOptions => $self->conf->{oidcStorageOptions},
+    );
+    unless ( $storage{storageModule} ) {
+        %storage = (
+            storageModule        => $self->conf->{globalStorage},
+            storageModuleOptions => $self->conf->{globalStorageOptions},
+        );
+    }
 
     my $oidcSession = Lemonldap::NG::Common::Session->new(
         {
-            storageModule        => $self->conf->{oidcStorage},
-            storageModuleOptions => $self->conf->{oidcStorageOptions},
-            cacheModule          => $self->conf->{localSessionStorage},
-            cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
-            id                   => $id,
-            kind                 => "OpenIDConnect",
+            %storage,
+            cacheModule        => $self->conf->{localSessionStorage},
+            cacheModuleOptions => $self->conf->{localSessionStorageOptions},
+            id                 => $id,
+            kind               => "OpenIDConnect",
             ( $info ? ( info => $info ) : () ),
         }
     );
