@@ -99,7 +99,7 @@ sub get_password {
     my @rows = ();
     eval {
         my $sth =
-          $dbh->prepare( "SELECT $passwordCol FROM $table WHERE $loginCol=?" );
+          $dbh->prepare("SELECT $passwordCol FROM $table WHERE $loginCol=?");
         $sth->execute($user);
         @rows = $sth->fetchrow_array();
     };

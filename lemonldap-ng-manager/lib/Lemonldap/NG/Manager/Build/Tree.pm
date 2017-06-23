@@ -171,7 +171,6 @@ sub tree {
                                 {
                                     title => 'dbiPassword',
                                     help  => 'authdbi.html#password',
-                                    form  => 'simpleInputContainer',
                                     nodes => [
                                         'dbiAuthPasswordHash',
                                         {
