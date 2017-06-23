@@ -71,6 +71,11 @@ Comment: downloaded from
  .
  Author is unknown and license may be W3C or public-domain
 
+Files: lemonldap-ng-portal/example/skins/common/LinkedIn.png
+Copyright: Public Domain
+Comment: downloaded from
+ https://commons.wikimedia.org/wiki/File:LinkedIn_logo_initials.png
+
 Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/*
 Copyright: Various artists
 License: CC-BY-NC-ND-3.0 or GFDL-1.3

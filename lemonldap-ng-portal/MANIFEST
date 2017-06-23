@@ -21,6 +21,7 @@ lib/Lemonldap/NG/Portal/Auth/Demo.pm
 lib/Lemonldap/NG/Portal/Auth/Facebook.pm
 lib/Lemonldap/NG/Portal/Auth/Kerberos.pm
 lib/Lemonldap/NG/Portal/Auth/LDAP.pm
+lib/Lemonldap/NG/Portal/Auth/LinkedIn.pm
 lib/Lemonldap/NG/Portal/Auth/Null.pm
 lib/Lemonldap/NG/Portal/Auth/OpenID.pm
 lib/Lemonldap/NG/Portal/Auth/OpenIDConnect.pm
@@ -236,6 +237,7 @@ site/htdocs/static/common/modules/CAS.png
 site/htdocs/static/common/modules/Facebook.png
 site/htdocs/static/common/modules/Google.png
 site/htdocs/static/common/modules/Kerberos.png
+site/htdocs/static/common/modules/LinkedIn.png
 site/htdocs/static/common/modules/OpenIDConnect.png
 site/htdocs/static/common/modules/SAML.png
 site/htdocs/static/common/modules/SSL.png
