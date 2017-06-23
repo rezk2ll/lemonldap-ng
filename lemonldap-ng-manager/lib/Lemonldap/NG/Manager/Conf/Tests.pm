@@ -315,8 +315,8 @@ sub tests {
             my %entityIds;
             foreach my $spId ( keys %{ $conf->{samlSPMetaDataXML} } ) {
                 unless (
-                    $conf->{samlSPMetaDataXML}->{$spId}->{samlSPMetaDataXML}
-                    =~ /entityID=(['"])(.+?)\1/si )
+                    $conf->{samlSPMetaDataXML}->{$spId}->{samlSPMetaDataXML} =~
+                    /entityID=(['"])(.+?)\1/si )
                 {
                     push @msg, "$spId SAML metadata has no EntityID";
                     $res = 0;

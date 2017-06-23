@@ -10,12 +10,12 @@ extends 'Lemonldap::NG::Portal::Password::Base';
 
 our $VERSION = '2.0.0';
 
-sub init {1}
+sub init { 1 }
 
-sub confirm {1}
+sub confirm { 1 }
 
 sub modifyPassword {
-    PE_PASSWORD_OK
+    PE_PASSWORD_OK;
 }
 
 1;

@@ -172,19 +172,20 @@ sub tree {
                                     title => 'dbiPassword',
                                     help  => 'authdbi.html#password',
                                     form  => 'simpleInputContainer',
-                                    nodes => ['dbiAuthPasswordHash',
-                                              {
-                                                  title => 'dbiDynamicHash',
-                                                  help  => 'authdbi.html#password',
-                                                  form => 'simpleInputContainer',
-                                                  nodes => [
-                                                      'dbiDynamicHashEnabled',
-                                                      'dbiDynamicHashValidSchemes',
-                                                      'dbiDynamicHashValidSaltedSchemes',
-                                                      'dbiDynamicHashNewPasswordScheme'
-                                                  ]
-                                              }
-                                             ]
+                                    nodes => [
+                                        'dbiAuthPasswordHash',
+                                        {
+                                            title => 'dbiDynamicHash',
+                                            help  => 'authdbi.html#password',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'dbiDynamicHashEnabled',
+                                                'dbiDynamicHashValidSchemes',
+'dbiDynamicHashValidSaltedSchemes',
+'dbiDynamicHashNewPasswordScheme'
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         },

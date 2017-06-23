@@ -245,14 +245,14 @@ sub sp {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel              => $debug,
-                domain                => 'sp.com',
-                portal                => 'http://auth.sp.com',
-                authentication        => 'CAS',
-                userDB                => 'CAS',
-                restSessionServer     => 1,
-                issuerDBCASActivation => 0,
-                multiValuesSeparator  => ';',
+                logLevel                   => $debug,
+                domain                     => 'sp.com',
+                portal                     => 'http://auth.sp.com',
+                authentication             => 'CAS',
+                userDB                     => 'CAS',
+                restSessionServer          => 1,
+                issuerDBCASActivation      => 0,
+                multiValuesSeparator       => ';',
                 casSrvMetaDataExportedVars => {
                     idp => {
                         cn   => 'cn',

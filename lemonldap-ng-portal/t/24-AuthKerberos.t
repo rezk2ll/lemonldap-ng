@@ -7,7 +7,7 @@ BEGIN {
 }
 
 my $maintests = 8;
-my $debug = 'error';
+my $debug     = 'error';
 
 SKIP: {
     eval "require GSSAPI";

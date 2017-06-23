@@ -331,7 +331,7 @@ sub validateST {
     my $proxy_url;
     if (%$proxied) {
         $proxy_url = $self->p->fullUrl($req);
-        die if($proxy_url =~ /casProxy=1/);
+        die if ( $proxy_url =~ /casProxy=1/ );
         $proxy_url .= ( $proxy_url =~ /\?/ ? '&' : '?' ) . 'casProxy=1';
         if ( $self->conf->{authChoiceParam}
             and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )

@@ -78,7 +78,8 @@ sub extractFormInfo {
         # another backend (Combination)
         # switch to another backend
         elsif ( defined $req->param('kerberos') ) {
-            $self->userLogger->warn('Kerberos authentication has failed, back to portal');
+            $self->userLogger->warn(
+                'Kerberos authentication has failed, back to portal');
             return PE_BADCREDENTIALS;
         }
 
@@ -110,16 +111,11 @@ sub extractFormInfo {
     $ENV{KRB5_KTNAME} = $self->keytab;
     my $gss_client_name;
     my $status = GSSAPI::Context::accept(
-        my $server_context,
-        GSS_C_NO_CREDENTIAL,
-        $data,
-        GSS_C_NO_CHANNEL_BINDINGS,
-        $gss_client_name,
-        undef,
-        my $gss_output_token,
-        my $out_flags,
-        my $out_time,
-        my $gss_delegated_cred
+        my $server_context,   GSS_C_NO_CREDENTIAL,
+        $data,                GSS_C_NO_CHANNEL_BINDINGS,
+        $gss_client_name,     undef,
+        my $gss_output_token, my $out_flags,
+        my $out_time,         my $gss_delegated_cred
     );
     unless ($status) {
         $self->logger->error('Unable to accept security context');

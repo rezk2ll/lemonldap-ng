@@ -212,7 +212,9 @@ sub getConf {
     # Create cipher object
     unless ( $args->{raw} ) {
 
-        eval { $res->{cipher} = Lemonldap::NG::Common::Crypto->new( $res->{key} ); };
+        eval {
+            $res->{cipher} = Lemonldap::NG::Common::Crypto->new( $res->{key} );
+        };
         if ($@) {
             $msg .= "Bad key: $@. \n";
         }

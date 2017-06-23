@@ -473,10 +473,13 @@ sub _scanNodes {
                         }
                     }
                     elsif ( $target =~
-                        /^(?:$casSrvMetaDataNodeKeys|$casAppMetaDataNodeKeys)/o )
+                        /^(?:$casSrvMetaDataNodeKeys|$casAppMetaDataNodeKeys)/o
+                      )
                     {
-                        $self->set( $optKey, [ $oldName, $key ],
-                            $target, $leaf->{data} );
+                        $self->set(
+                            $optKey, [ $oldName, $key ],
+                            $target, $leaf->{data}
+                        );
                     }
                     else {
                         push @{ $self->errors },

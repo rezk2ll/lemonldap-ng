@@ -105,7 +105,8 @@ sub unset_header_in {
                 my $h  = shift;
                 my $h2 = lc $h;
                 $h2 =~ s/-/_/g;
-                $request->env->{'psgi.r'}->headers_in->unset($h) if ( $h1 eq $h2 );
+                $request->env->{'psgi.r'}->headers_in->unset($h)
+                  if ( $h1 eq $h2 );
                 return 1;
             }
         );

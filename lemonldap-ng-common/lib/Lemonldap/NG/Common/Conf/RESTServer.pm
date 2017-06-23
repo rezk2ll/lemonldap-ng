@@ -475,7 +475,7 @@ sub _casMetaDataNodes {
 
     # Return all exported attributes if asked
     if ( $query =~
-        /^(?:cas${type}MetaDataExportedVars|casSrvMetaDataOptionsProxiedServices)$/
+/^(?:cas${type}MetaDataExportedVars|casSrvMetaDataOptionsProxiedServices)$/
       )
     {
         my $pk = eval { $self->getConfKey( $req, $query )->{$partner} } // {};

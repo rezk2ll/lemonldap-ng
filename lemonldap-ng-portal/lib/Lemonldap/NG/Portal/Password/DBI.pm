@@ -22,28 +22,30 @@ sub confirm {
 sub modifyPassword {
     my ( $self, $req, $pwd ) = @_;
 
-    my $userCol = $self->conf->{dbiAuthLoginCol};
+    my $userCol     = $self->conf->{dbiAuthLoginCol};
     my $passwordCol = $self->conf->{dbiAuthPasswordCol};
-    my $table = $self->conf->{dbiAuthTable};
+    my $table       = $self->conf->{dbiAuthTable};
     my $dynamicHash = $self->conf->{dbiDynamicHashEnabled} || 0;
 
     my $passwordsql;
     if ( $dynamicHash == 1 ) {
+
         # Dynamic password hashes
         $passwordsql =
-          $self->dynamic_hash_new_password( $self->dbh, $req->user, $pwd, $table, $userCol, $passwordCol );
+          $self->dynamic_hash_new_password( $self->dbh, $req->user, $pwd,
+            $table, $userCol, $passwordCol );
     }
-    else
-    {
+    else {
         # Static Password hash
-        $passwordsql = $self->hash_password( "?", $self->conf->{dbiAuthPasswordHash} );
+        $passwordsql =
+          $self->hash_password( "?", $self->conf->{dbiAuthPasswordHash} );
     }
 
     eval {
         my $sth = $self->dbh->prepare(
-                   "UPDATE $table SET $passwordCol=$passwordsql WHERE $userCol=?");
-        $sth->execute( $pwd, $req->user )     if $passwordsql =~ /.*\?.*/;
-        $sth->execute( $req->user )           unless $passwordsql =~ /.*\?.*/;
+            "UPDATE $table SET $passwordCol=$passwordsql WHERE $userCol=?");
+        $sth->execute( $pwd, $req->user ) if $passwordsql =~ /.*\?.*/;
+        $sth->execute( $req->user ) unless $passwordsql =~ /.*\?.*/;
     };
     if ($@) {
 

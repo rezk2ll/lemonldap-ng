@@ -370,9 +370,10 @@ sub attributes {
             documentation => 'Show error if session is expired',
         },
         portalErrorOnMailNotFound => {
-            type          => 'bool',
-            default       => 0,
-            documentation => 'Show error if mail is not found in password reset process',
+            type    => 'bool',
+            default => 0,
+            documentation =>
+              'Show error if mail is not found in password reset process',
         },
         portalOpenLinkInNewWindow => {
             type          => 'bool',
@@ -2699,7 +2700,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsBypassConsent =>
           { type => 'bool', help => 'openidconnectclaims.html', default => 0 },
         oidcRPMetaDataOptionsPostLogoutRedirectUris => { type => 'text', },
-        oidcRPMetaDataOptionsLogoutUrl => {
+        oidcRPMetaDataOptionsLogoutUrl              => {
             type          => 'url',
             documentation => 'Logout URL',
         },

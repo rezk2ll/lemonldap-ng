@@ -104,10 +104,12 @@ sub init {
     }
 
     $self->menuLinks( [] );
-    if ( my $portal =
+    if (
+        my $portal =
         $conf->{cfgNum}
         ? Lemonldap::NG::Handler::PSGI::Main->tsv->{portal}->()
-        : $conf->{portal} )
+        : $conf->{portal}
+      )
     {
         push @{ $self->menuLinks },
           {

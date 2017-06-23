@@ -86,9 +86,9 @@ expectAuthenticatedAs( $res, 'french' );
 ok( $res = $sp->_get("/sessions/global/$spId"), 'Get UTF-8' );
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-or print STDERR $@;
+  or print STDERR $@;
 ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
-or explain( $res, 'cn => Frédéric Accents' );
+  or explain( $res, 'cn => Frédéric Accents' );
 count(3);
 
 # Logout initiated by SP
@@ -212,16 +212,16 @@ sub issuer {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel               => $debug,
-                templatesDir           => 'site/htdocs/static',
-                domain                 => 'idp.com',
-                portal                 => 'http://auth.idp.com',
-                authentication         => 'Demo',
-                userDB                 => 'Same',
-                issuerDBCASActivation  => 1,
-                casAttr                => 'uid',
-                casAccessControlPolicy => 'error',
-                multiValuesSeparator   => ';',
+                logLevel                   => $debug,
+                templatesDir               => 'site/htdocs/static',
+                domain                     => 'idp.com',
+                portal                     => 'http://auth.idp.com',
+                authentication             => 'Demo',
+                userDB                     => 'Same',
+                issuerDBCASActivation      => 1,
+                casAttr                    => 'uid',
+                casAccessControlPolicy     => 'error',
+                multiValuesSeparator       => ';',
                 casAppMetaDataExportedVars => {
                     sp => {
                         cn   => 'cn',
