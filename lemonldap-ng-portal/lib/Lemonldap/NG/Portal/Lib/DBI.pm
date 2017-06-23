@@ -104,7 +104,7 @@ sub get_password {
         @rows = $sth->fetchrow_array();
     };
     if ($@) {
-        $self->lmLog( "DBI error while getting password: $@", 'error' );
+        $self->logger->error("DBI error while getting password: $@");
         return "";
     }
 
@@ -146,9 +146,8 @@ sub hash_password_from_database {
         @rows = $sth->fetchrow_array();
     };
     if ($@) {
-        $self->lmLog(
-            "DBI error while hashing with '$dbmethod' hash function: $@",
-            'error' );
+        $self->logger->error(
+            "DBI error while hashing with '$dbmethod' hash function: $@");
         $self->userLogger->warn("Unable to check password");
         return "";
     }
@@ -296,8 +295,7 @@ sub dynamic_hash_password {
 
     # no valid hash scheme
     else {
-        $self->lmLog( "No valid hash scheme: $dbscheme for user $user",
-            'error' );
+        $self->logger->error("No valid hash scheme: $dbscheme for user $user");
         $self->userLogger->warn("Unable to check password for $user");
         return "";
     }
@@ -372,8 +370,7 @@ sub dynamic_hash_new_password {
 
     # no valid hash scheme
     else {
-        $self->lmLog( "No selected hash scheme: $dbscheme is invalid",
-            'error' );
+        $self->logger->error("No selected hash scheme: $dbscheme is invalid");
         $self->userLogger->warn("Unable to store password for $user");
         return "";
     }
