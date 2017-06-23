@@ -1839,6 +1839,7 @@ sub attributes {
                 { k => 'Google',      v => 'Google' },
                 { k => 'Kerberos',    v => 'Kerberos' },
                 { k => 'LDAP',        v => 'LDAP' },
+                { k => 'LinkedIn',    v => 'LinkedIn' },
                 { k => 'PAM',         v => 'PAM' },
                 { k => 'Radius',      v => 'Radius' },
                 { k => 'REST',        v => 'REST' },
@@ -2233,6 +2234,22 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         twitterSecret  => { type => 'text', },
         twitterAppName => { type => 'text', },
 
+        # LinkedIn
+        linkedInAuthnLevel => {
+            type          => 'int',
+            default       => 1,
+            documentation => 'LinkedIn authentication level',
+        },
+        linkedInClientID     => { type => 'text', },
+        linkedInClientSecret => { type => 'password', },
+        linkedInFields       => {
+            type    => 'text',
+            default => 'id,first-name,last-name,email-address'
+        },
+        linkedInUserField => { type => 'text', default => 'emailAddress' },
+        linkedInScope =>
+          { type => 'text', default => 'r_basicprofile r_emailaddress' },
+
         # WebID
         webIDAuthnLevel => {
             type          => 'int',
@@ -2364,6 +2381,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Google',        v => 'Google' },
                     { k => 'Kerberos',      v => 'Kerberos' },
                     { k => 'LDAP',          v => 'LDAP' },
+                    { k => 'LinkedIn',      v => 'LinkedIn' },
                     { k => 'PAM',           v => 'PAM' },
                     { k => 'Null',          v => 'None' },
                     { k => 'OpenID',        v => 'OpenID' },

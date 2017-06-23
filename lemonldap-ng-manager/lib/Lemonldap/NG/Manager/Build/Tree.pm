@@ -265,6 +265,15 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'linkedinParams',
+                            help  => 'authlinkedin.html',
+                            nodes => [
+                                'linkedInAuthnLevel',   'linkedInClientID',
+                                'linkedInClientSecret', 'linkedInFields',
+                                'linkedInUserField',    'linkedInScope'
+                            ]
+                        },
+                        {
                             title => 'combinationParams',
                             help  => 'authcombination.html',
                             nodes => [ 'combination', 'combModules' ]

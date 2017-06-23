@@ -44,6 +44,7 @@ our $authParameters = {
   facebookParams => [qw(facebookAuthnLevel facebookExportedVars facebookAppId facebookAppSecret)],
   kerberosParams => [qw(krbKeytab krbByJs krbAuthnLevel)],
   ldapParams => [qw(ldapAuthnLevel ldapExportedVars ldapServer ldapPort ldapBase managerDn managerPassword ldapTimeout ldapVersion ldapRaw LDAPFilter AuthLDAPFilter mailLDAPFilter ldapSearchDeref ldapGroupBase ldapGroupObjectClass ldapGroupAttributeName ldapGroupAttributeNameUser ldapGroupAttributeNameSearch ldapGroupRecursive ldapGroupAttributeNameGroup ldapPpolicyControl ldapSetPassword ldapChangePasswordAsUser ldapPwdEnc ldapUsePasswordResetAttribute ldapPasswordResetAttribute ldapPasswordResetAttributeValue ldapAllowResetExpiredPassword)],
+  linkedinParams => [qw(linkedInAuthnLevel linkedInClientID linkedInClientSecret linkedInFields linkedInUserField linkedInScope)],
   nullParams => [qw(nullAuthnLevel)],
   oidcParams => [qw(oidcAuthnLevel oidcRPCallbackGetParam oidcRPStateTimeout)],
   openidParams => [qw(openIdAuthnLevel openIdExportedVars openIdSecret openIdIDPList)],

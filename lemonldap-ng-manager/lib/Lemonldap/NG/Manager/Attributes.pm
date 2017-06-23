@@ -17,14 +17,18 @@ sub types {
         },
         'bool' => {
             'msgFail' => '__notABoolean__',
-            'test'    => qr/(?^:^[01]$)/
+            'test'    => qr/^[01]$/
         },
         'boolOrExpr' => {
             'msgFail' => '__notAValidPerlExpression__',
             'test'    => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                BEGIN { ${^WARNING_BITS} = "TUUU\025UUUUUQUU\001" }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+                }
                 eval "$s $val";
                 my $err = join(
                     '',
@@ -48,33 +52,32 @@ sub types {
             'form'    => 'text',
             'msgFail' => '__badHostname__',
             'test' =>
-qr/(?^:^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))?$)/
+qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))?$/
         },
         'int' => {
             'msgFail' => '__notAnInteger__',
-            'test'    => qr/(?^:^\-?\d+$)/
+            'test'    => qr/^\-?\d+$/
         },
         'keyText' => {
-            'keyTest' => qr/(?^:^[a-zA-Z0-9_]+$)/,
+            'keyTest' => qr/^[a-zA-Z0-9_]+$/,
             'msgFail' => '__badValue__',
-            'test'    => qr/(?^:^.*$)/
+            'test'    => qr/^.*$/
         },
         'keyTextContainer' => {
             'keyMsgFail' => '__badKeyName__',
-            'keyTest'    => qr/(?^:^\w[\w\.\-]*$)/,
+            'keyTest'    => qr/^\w[\w\.\-]*$/,
             'msgFail'    => '__emptyValueNotAllowed__',
-            'test'       => qr/(?^:.)/
+            'test'       => qr/./
         },
         'lmAttrOrMacro' => {
             'form' => 'text',
             'test' => sub {
                 my ( $val, $conf ) = @_;
                 return 1
-                  if defined $$conf{'macros'}{$val}
-                  or $val eq '_timezone';
+                  if defined $conf->{'macros'}{$val} or $val eq '_timezone';
                 foreach $_ ( keys %$conf ) {
                     return 1
-                      if $_ =~ /exportedvars$/i and defined $$conf{$_}{$val};
+                      if $_ =~ /exportedvars$/i and defined $conf->{$_}{$val};
                 }
                 return 1, "__unknownAttrOrMacro__: $val";
               }
@@ -134,7 +137,7 @@ qr/(?^:^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z]
         'PerlModule' => {
             'form'    => 'text',
             'msgFail' => '__badPerlPackageName__',
-            'test' => qr/(?^:^[a-zA-Z][a-zA-Z0-9]*(?:::[a-zA-Z][a-zA-Z0-9]*)*$)/
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9]*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/
         },
         'portalskin' => {
             'test' => sub {
@@ -209,14 +212,14 @@ m[^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\
             'test' => sub {
                 my $test =
                   grep( { $_ eq $_[0]; }
-                    map( { $$_{'k'}; } @{ $_[2]{'select'}; } ) );
+                    map( { $_->{'k'}; } @{ $_[2]{'select'}; } ) );
                 return $test
                   ? 1
                   : ( 1, "Invalid value '$_[0]' for this select" );
               }
         },
         'subContainer' => {
-            'keyTest' => qr/(?^:\w)/,
+            'keyTest' => qr/\w/,
             'test'    => sub {
                 1;
               }
@@ -229,13 +232,13 @@ m[^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\
         },
         'trool' => {
             'msgFail' => '__authorizedValues__: -1, 0, 1',
-            'test'    => qr/(?^:^(?:-1|0|1)$)/
+            'test'    => qr/^(?:-1|0|1)$/
         },
         'url' => {
             'form'    => 'text',
             'msgFail' => '__badUrl__',
             'test' =>
-qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?))/
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/
         }
     };
 }
@@ -265,12 +268,12 @@ sub attributes {
                     'type'    => 'category'
                 }
             },
-            'keyTest' => qr/(?^:\w)/,
+            'keyTest' => qr/\w/,
             'type'    => 'catAndAppList'
         },
         'authChoiceModules' => {
             'keyMsgFail' => '__badChoiceKey__',
-            'keyTest'    => qr/(?^:^(\d*)?[a-zA-Z0-9_]+$)/,
+            'keyTest'    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
             'select'     => [
                 [
                     {
@@ -308,6 +311,10 @@ sub attributes {
                     {
                         'k' => 'LDAP',
                         'v' => 'LDAP'
+                    },
+                    {
+                        'k' => 'LinkedIn',
+                        'v' => 'LinkedIn'
                     },
                     {
                         'k' => 'PAM',
@@ -512,6 +519,10 @@ sub attributes {
                     'v' => 'LDAP'
                 },
                 {
+                    'k' => 'LinkedIn',
+                    'v' => 'LinkedIn'
+                },
+                {
                     'k' => 'PAM',
                     'v' => 'PAM'
                 },
@@ -645,7 +656,11 @@ sub attributes {
             'test' => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                BEGIN { ${^WARNING_BITS} = "TUUU\025UUUUUQUU\001" }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+                }
                 eval "$s $val";
                 my $err = join(
                     '',
@@ -694,7 +709,7 @@ sub attributes {
         },
         'casSrvMetaDataOptionsProxiedServices' => {
             'keyMsgFail' => '__badCasProxyId__',
-            'keyTest'    => qr/(?^:^\w)/,
+            'keyTest'    => qr/^\w/,
             'type'       => 'keyTextContainer'
         },
         'casSrvMetaDataOptionsRenew' => {
@@ -703,7 +718,7 @@ sub attributes {
         'casSrvMetaDataOptionsUrl' => {
             'msgFail' => '__badUrl__',
             'test' =>
-qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?))/,
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
             'type' => 'text'
         },
         'casStorage' => {
@@ -743,7 +758,7 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
             'type' => 'text'
         },
         'combModules' => {
-            'keyTest' => qr/(?^:^\w+$)/,
+            'keyTest' => qr/^\w+$/,
             'select'  => [
                 {
                     'k' => 'Apache',
@@ -867,7 +882,7 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
         'cookieName' => {
             'default' => 'lemonldap',
             'msgFail' => '__badCookieName__',
-            'test'    => qr/(?^:^[a-zA-Z][a-zA-Z0-9_-]*$)/,
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
             'type'    => 'text'
         },
         'cspConnect' => {
@@ -902,7 +917,7 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
         },
         'customFunctions' => {
             'msgFail' => '__badCustomFuncName__',
-            'test'    => qr/(?^:^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$)/,
+            'test'    => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,
             'type'    => 'text'
         },
         'customPassword' => {
@@ -954,9 +969,9 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
         'dbiExportedVars' => {
             'default'    => {},
             'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/(?^:^!?[a-zA-Z][a-zA-Z0-9_-]*$)/,
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
             'msgFail'    => '__badValue__',
-            'test'       => qr/(?^:^[a-zA-Z][a-zA-Z0-9_:\-]*$)/,
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
         },
         'dbiPasswordMailCol' => {
@@ -981,16 +996,16 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
                 'uid'  => 'uid'
             },
             'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/(?^:^!?[a-zA-Z][a-zA-Z0-9_-]*$)/,
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
             'msgFail'    => '__badValue__',
-            'test'       => qr/(?^:^[a-zA-Z][a-zA-Z0-9_:\-]*$)/,
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
         },
         'domain' => {
             'default' => 'example.com',
             'msgFail' => '__badDomainName__',
             'test' =>
-qr/(?^:^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$)/,
+qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
             'type' => 'text'
         },
         'exportedAttr' => {
@@ -999,14 +1014,18 @@ qr/(?^:^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a
         'exportedHeaders' => {
             'keyMsgFail' => '__badHostname__',
             'keyTest' =>
-qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$)/,
+qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
             'test' => {
                 'keyMsgFail' => '__badHeaderName__',
-                'keyTest'    => qr/(?^:^(?=[^\-])[\w\-]+(?<=[^-])$)/,
+                'keyTest'    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
                 'test'       => sub {
                     my ( $val, $conf ) = @_;
                     my $s = $val;
-                    BEGIN { ${^WARNING_BITS} = "TUUU\025UUUUUQUU\001" }
+
+                    BEGIN {
+                        ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+                    }
                     eval $s;
                     my $err = join(
                         '',
@@ -1023,9 +1042,9 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
                 'UA' => 'HTTP_USER_AGENT'
             },
             'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/(?^:^!?[_a-zA-Z][a-zA-Z0-9_]*$)/,
+            'keyTest'    => qr/^!?[_a-zA-Z][a-zA-Z0-9_]*$/,
             'msgFail'    => '__badValue__',
-            'test'       => qr/(?^:^[_a-zA-Z][a-zA-Z0-9_:\-]*$)/,
+            'test'       => qr/^[_a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
         },
         'ext2fActivation' => {
@@ -1054,9 +1073,9 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
         'facebookExportedVars' => {
             'default'    => {},
             'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/(?^:^!?[a-zA-Z][a-zA-Z0-9_-]*$)/,
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
             'msgFail'    => '__badValue__',
-            'test'       => qr/(?^:^[a-zA-Z][a-zA-Z0-9_:\-]*$)/,
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
         },
         'failedLoginNumber' => {
@@ -1084,7 +1103,11 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
             'keyTest' => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                BEGIN { ${^WARNING_BITS} = "TUUU\025UUUUUQUU\001" }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+                }
                 eval "$s $val";
                 my $err = join(
                     '',
@@ -1103,7 +1126,11 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
             'test'    => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                BEGIN { ${^WARNING_BITS} = "TUUU\025UUUUUQUU\001" }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+                }
                 eval "$s $val";
                 my $err = join(
                     '',
@@ -1164,19 +1191,18 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
             'default'    => {},
             'keyMsgFail' => '__badHostname__',
             'keyTest' =>
-qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$)/,
+qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
             'test' => {
                 'keyMsgFail' => '__badKeyName__',
-                'keyTest'    => qr/(?^:^(?=[^\-])[\w\-]+(?<=[^-])$)/,
+                'keyTest'    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
                 'test'       => sub {
                     my ( $val, $conf ) = @_;
                     return 1
-                      if defined $$conf{'macros'}{$val}
-                      or $val eq '_timezone';
+                      if defined $conf->{'macros'}{$val} or $val eq '_timezone';
                     foreach $_ ( keys %$conf ) {
                         return 1
                           if $_ =~ /exportedvars$/i
-                          and defined $$conf{$_}{$val};
+                          and defined $conf->{$_}{$val};
                     }
                     return 1, "__unknownAttrOrMacro__: $val";
                   }
@@ -1256,7 +1282,7 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
         'ldapBase' => {
             'default' => 'dc=example,dc=com',
             'msgFail' => '__badValue__',
-            'test'    => qr/(?^:^(?:\w+=.*|)$)/,
+            'test'    => qr/^(?:\w+=.*|)$/,
             'type'    => 'text'
         },
         'ldapChangePasswordAsUser' => {
@@ -1270,9 +1296,9 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
                 'uid'  => 'uid'
             },
             'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/(?^:^!?[a-zA-Z][a-zA-Z0-9_-]*$)/,
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
             'msgFail'    => '__badValue__',
-            'test'       => qr/(?^:^[a-zA-Z][a-zA-Z0-9_:\-]*$)/,
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
         },
         'LDAPFilter' => {
@@ -1324,7 +1350,7 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
         'ldapPwdEnc' => {
             'default' => 'utf-8',
             'msgFail' => '__badEncoding__',
-            'test'    => qr/(?^:^[a-zA-Z0-9_][a-zA-Z0-9_\-]*[a-zA-Z0-9_]$)/,
+            'test'    => qr/^[a-zA-Z0-9_][a-zA-Z0-9_\-]*[a-zA-Z0-9_]$/,
             'type'    => 'text'
         },
         'ldapRaw' => {
@@ -1356,7 +1382,7 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
             'default' => 'ldap://localhost',
             'test'    => sub {
                 my $l = shift();
-                my (@s) = split( /[\s,]+/, $l, 0 );
+                my @s = split( /[\s,]+/, $l, 0 );
                 foreach my $s (@s) {
                     return 0, qq[__badLdapUri__: "$s"]
                       unless $s =~
@@ -1382,6 +1408,28 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 3,
             'type'    => 'int'
         },
+        'linkedInAuthnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'linkedInClientID' => {
+            'type' => 'text'
+        },
+        'linkedInClientSecret' => {
+            'type' => 'password'
+        },
+        'linkedInFields' => {
+            'default' => 'id,first-name,last-name,email-address',
+            'type'    => 'text'
+        },
+        'linkedInScope' => {
+            'default' => 'r_basicprofile r_emailaddress',
+            'type'    => 'text'
+        },
+        'linkedInUserField' => {
+            'default' => 'emailAddress',
+            'type'    => 'text'
+        },
         'localSessionStorage' => {
             'default' => 'Cache::FileCache',
             'type'    => 'PerlModule'
@@ -1402,7 +1450,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             'keyMsgFail' => '__badHostname__',
             'keyTest' =>
-qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$)/,
+qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
             'test' => {
                 'keyMsgFail' => '__badRegexp__',
                 'keyTest'    => sub {
@@ -1423,7 +1471,11 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
                           : ( 0, '__badUrl__' );
                     }
                     $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
-                    BEGIN { ${^WARNING_BITS} = "TUUU\025UUUUUQUU\001" }
+
+                    BEGIN {
+                        ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+                    }
                     eval $s;
                     my $err = join(
                         '',
@@ -1452,11 +1504,15 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
         'macros' => {
             'default'    => {},
             'keyMsgFail' => '__badMacroName__',
-            'keyTest'    => qr/(?^:^[_a-zA-Z][a-zA-Z0-9_]*$)/,
+            'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
             'test'       => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                BEGIN { ${^WARNING_BITS} = "TUUU\025UUUUUQUU\001" }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+                }
                 eval "$s $val";
                 my $err = join(
                     '',
@@ -1516,13 +1572,13 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
         'managerDn' => {
             'default' => '',
             'msgFail' => '__badValue__',
-            'test'    => qr/(?^:^(?:\w+=.*)?$)/,
+            'test'    => qr/^(?:\w+=.*)?$/,
             'type'    => 'text'
         },
         'managerPassword' => {
             'default' => '',
             'msgFail' => '__badValue__',
-            'test'    => qr/(?^:^\S*$)/,
+            'test'    => qr/^\S*$/,
             'type'    => 'password'
         },
         'multiValuesSeparator' => {
@@ -1530,11 +1586,10 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
             'type'    => 'authParamsText'
         },
         'nginxCustomHandlers' => {
-            'keyTest' => qr/(?^:^\w+$)/,
+            'keyTest' => qr/^\w+$/,
             'msgFail' => '__badPerlPackageName__',
-            'test' =>
-              qr/(?^:^[a-zA-Z][a-zA-Z0-9]*(?:::[a-zA-Z][a-zA-Z0-9]*)*$)/,
-            'type' => 'keyTextContainer'
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9]*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/,
+            'type'    => 'keyTextContainer'
         },
         'noAjaxHook' => {
             'default' => 0,
@@ -1804,7 +1859,11 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
             'test' => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                BEGIN { ${^WARNING_BITS} = "TUUU\025UUUUUQUU\001" }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+                }
                 eval "$s $val";
                 my $err = join(
                     '',
@@ -1849,7 +1908,7 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
                 'loa-4' => 4,
                 'loa-5' => 5
             },
-            'keyTest' => qr/(?^:\w)/,
+            'keyTest' => qr/\w/,
             'type'    => 'keyTextContainer'
         },
         'oidcServiceMetaDataAuthorizeURI' => {
@@ -1918,9 +1977,9 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
         'openIdExportedVars' => {
             'default'    => {},
             'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/(?^:^!?[a-zA-Z][a-zA-Z0-9_-]*$)/,
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
             'msgFail'    => '__badValue__',
-            'test'       => qr/(?^:^[a-zA-Z][a-zA-Z0-9_:\-]*$)/,
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
         },
         'openIdIDPList' => {
@@ -2133,7 +2192,11 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
             'keyTest'    => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                BEGIN { ${^WARNING_BITS} = "TUUU\025UUUUUQUU\001" }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+                }
                 eval "$s $val";
                 my $err = join(
                     '',
@@ -2143,7 +2206,7 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
                 return $err ? ( 1, "__badExpression__: $err" ) : 1;
             },
             'msgFail' => '__badValue__',
-            'test'    => qr/(?^:^\w+$)/,
+            'test'    => qr/^\w+$/,
             'type'    => 'keyTextContainer'
         },
         'portalStatus' => {
@@ -2157,7 +2220,7 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
         'post' => {
             'keyMsgFail' => '__badHostname__',
             'keyTest' =>
-qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$)/,
+qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
             'test' => sub {
                 1;
             },
@@ -2166,7 +2229,7 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
         'protection' => {
             'default' => 'none',
             'msgFail' => '__authorizedValues__: none authenticate manager',
-            'test'    => qr/(?^:^(?:none|authenticate|manager|)$)/,
+            'test'    => qr/^(?:none|authenticate|manager|)$/,
             'type'    => 'text'
         },
         'proxyAuthnLevel' => {
@@ -2249,10 +2312,10 @@ qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA
         },
         'reloadUrls' => {
             'keyTest' =>
-qr/(?^:^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?$)/,
+qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?$/,
             'msgFail' => '__badUrl__',
             'test' =>
-qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?))/,
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
             'type' => 'keyTextContainer'
         },
         'remoteCookieName' => {
@@ -2325,19 +2388,19 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
         'samlCommonDomainCookieDomain' => {
             'msgFail' => '__badDomainName__',
             'test' =>
-qr/(?^:^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$)/,
+qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
             'type' => 'text'
         },
         'samlCommonDomainCookieReader' => {
             'msgFail' => '__badUrl__',
             'test' =>
-qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?))/,
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
             'type' => 'text'
         },
         'samlCommonDomainCookieWriter' => {
             'msgFail' => '__badUrl__',
             'test' =>
-qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?))/,
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
             'type' => 'text'
         },
         'samlEntityID' => {
@@ -2347,9 +2410,9 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
         'samlIDPMetaDataExportedAttributes' => {
             'default'    => {},
             'keyMsgFail' => '__badMetadataName__',
-            'keyTest'    => qr/(?^:^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$)/,
+            'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             'msgFail'    => '__badValue__',
-            'test'       => qr/(?^:\w)/,
+            'test'       => qr/\w/,
             'type'       => 'samlAttributeContainer'
         },
         'samlIDPMetaDataNodes' => {
@@ -2357,7 +2420,7 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
         },
         'samlIDPMetaDataOptions' => {
             'keyMsgFail' => '__badMetadataName__',
-            'keyTest'    => qr/(?^:^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$)/,
+            'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             'type'       => 'keyTextContainer'
         },
         'samlIDPMetaDataOptionsAdaptSessionUtime' => {
@@ -2562,7 +2625,7 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
                 my $res = 1;
                 my %entityIds;
                 foreach my $idpId ( keys %$v ) {
-                    unless ( $$v{$idpId}{'samlIDPMetaDataXML'} =~
+                    unless ( $v->{$idpId}{'samlIDPMetaDataXML'} =~
                         /entityID="(.+?)"/is )
                     {
                         push @msg, "$idpId SAML metadata has ne EntityID";
@@ -2691,9 +2754,9 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
         'samlSPMetaDataExportedAttributes' => {
             'default'    => {},
             'keyMsgFail' => '__badMetadataName__',
-            'keyTest'    => qr/(?^:^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$)/,
+            'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             'msgFail'    => '__badValue__',
-            'test'       => qr/(?^:\w)/,
+            'test'       => qr/\w/,
             'type'       => 'samlAttributeContainer'
         },
         'samlSPMetaDataNodes' => {
@@ -2701,7 +2764,7 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
         },
         'samlSPMetaDataOptions' => {
             'keyMsgFail' => '__badMetadataName__',
-            'keyTest'    => qr/(?^:^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$)/,
+            'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             'type'       => 'keyTextContainer'
         },
         'samlSPMetaDataOptionsCheckSLOMessageSignature' => {
@@ -2799,7 +2862,11 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
             'test' => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                BEGIN { ${^WARNING_BITS} = "TUUU\025UUUUUQUU\001" }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+                }
                 eval "$s $val";
                 my $err = join(
                     '',
@@ -2897,7 +2964,7 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
         },
         'sessionDataToRemember' => {
             'keyMsgFail' => '__invalidSessionData__',
-            'keyTest'    => qr/(?^:^[_a-zA-Z][a-zA-Z0-9_]*$)/,
+            'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
             'type'       => 'keyTextContainer'
         },
         'singleIP' => {
@@ -2923,9 +2990,9 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
         'slaveExportedVars' => {
             'default'    => {},
             'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/(?^:^!?[a-zA-Z][a-zA-Z0-9_-]*$)/,
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
             'msgFail'    => '__badValue__',
-            'test'       => qr/(?^:^[a-zA-Z][a-zA-Z0-9_:\-]*$)/,
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
         },
         'slaveHeaderContent' => {
@@ -2936,7 +3003,7 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
         },
         'slaveMasterIP' => {
             'msgFail' => '__badIPv4Address__',
-            'test'    => qr/(?^:^((?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)\s*)*$)/,
+            'test'    => qr/^((?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)\s*)*$/,
             'type'    => 'text'
         },
         'slaveUserHeader' => {
@@ -2954,7 +3021,7 @@ qr/(?^:(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]
         'SMTPServer' => {
             'default' => '',
             'test' =>
-qr/(?^:^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?)?$)/,
+qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?)?$/,
             'type' => 'text'
         },
         'SMTPTLS' => {
@@ -3194,9 +3261,9 @@ qr/(?^:^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z]
         'webIDExportedVars' => {
             'default'    => {},
             'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/(?^:^!?[a-zA-Z][a-zA-Z0-9_-]*$)/,
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
             'msgFail'    => '__badValue__',
-            'test'       => qr/(?^:^[a-zA-Z][a-zA-Z0-9_:\-]*$)/,
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
         },
         'webIDWhitelist' => {

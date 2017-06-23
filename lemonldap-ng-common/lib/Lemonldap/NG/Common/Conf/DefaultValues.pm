@@ -92,8 +92,12 @@ sub defaultValues {
         'ldapTimeout'                     => 120,
         'ldapUsePasswordResetAttribute'   => 1,
         'ldapVersion'                     => 3,
-        'localSessionStorage'             => 'Cache::FileCache',
-        'localSessionStorageOptions'      => {
+        'linkedInAuthnLevel'              => 1,
+        'linkedInFields'             => 'id,first-name,last-name,email-address',
+        'linkedInScope'              => 'r_basicprofile r_emailaddress',
+        'linkedInUserField'          => 'emailAddress',
+        'localSessionStorage'        => 'Cache::FileCache',
+        'localSessionStorageOptions' => {
             'cache_depth'        => 3,
             'cache_root'         => '/tmp',
             'default_expires_in' => 600,
