@@ -6,6 +6,7 @@
 package Lemonldap::NG::Portal::Lib::DBI;
 
 use DBI;
+use MIME::Base64;
 use strict;
 use Mouse;
 
@@ -82,6 +83,277 @@ sub hash_password_for_select {
     }
 }
 
+## @method protected Lemonldap::NG::Portal::_DBI get_password(ref dbh, string user)
+# Get password from database
+# @param dbh database handler
+# @param user user
+# @return password
+sub get_password {
+    my $self        = shift;
+    my $dbh         = shift;
+    my $user        = shift || $self->{user};
+    my $table       = $self->conf->{dbiAuthTable};
+    my $loginCol    = $self->conf->{dbiAuthLoginCol};
+    my $passwordCol = $self->conf->{dbiAuthPasswordCol};
+ 
+    my @rows = ();
+    eval {
+        my $sth = $dbh->prepare(
+"SELECT $passwordCol FROM $table WHERE $loginCol=?"
+        );
+        $sth->execute( $user);
+        @rows = $sth->fetchrow_array();
+    };
+    if ($@) {
+        $self->lmLog( "DBI error while getting password: $@", 'error' );
+        return "";
+    }
+ 
+    if ( @rows == 1 ) {
+        $self->logger->debug( "Successfully got password from database" );
+        return $rows[0];
+    }
+    else {
+        $self->userLogger->warn( "Unable to check password for $user" );
+        return "";
+    }
+}
+ 
+## @method protected Lemonldap::NG::Portal::_DBI hash_password_from_database
+##  (ref dbh, string dbmethod, string dbsalt, string password)
+# Hash the given password calling the dbmethod function in database
+# @param dbh database handler
+# @param dbmethod the database method for hashing
+# @param salt the salt used for hashing
+# @param password the password to hash
+# @return hashed password
+sub hash_password_from_database {
+    # Remark: database function must get hexadecimal input
+    # and send back hexadecimal output
+    my $self        = shift;
+    my $dbh         = shift;
+    my $dbmethod    = shift;
+    my $dbsalt      = shift;
+    my $password    = shift;
+ 
+    # convert password to hexa
+    my $passwordh = unpack "H*", $password;
+ 
+    my @rows = ();
+    eval {
+        my $sth = $dbh->prepare("SELECT $dbmethod('$passwordh$dbsalt')");
+        $sth->execute();
+        @rows = $sth->fetchrow_array();
+    };
+    if ($@) {
+        $self->lmLog( "DBI error while hashing with '$dbmethod' hash function: $@", 'error' );
+        $self->userLogger->warn( "Unable to check password" );
+        return "";
+    }
+ 
+    if ( @rows == 1 ) {
+        $self->logger->debug( "Successfully hashed password with $dbmethod hash function in database" );
+ 
+        # convert salt to binary
+        my $dbsaltb = pack 'H*', $dbsalt;
+ 
+        # convert result to binary
+        my $res = pack 'H*', $rows[0];
+ 
+        return encode_base64($res . $dbsaltb ,'');
+    }
+    else {
+        $self->userLogger->warn( "Unable to check password with '$dbmethod'" );
+        return "";
+    }
+ 
+# Return encode_base64(SQL_METHOD(password + salt) + salt)
+}
+ 
+## @method protected Lemonldap::NG::Portal::_DBI get_salt(string dbhash)
+# Return salt from salted hash password
+# @param dbhash hash password
+# @return extracted salt
+sub get_salt {
+    my $self     = shift;
+    my $dbhash   = shift;
+    my $dbsalt;
+    
+    # get rid of scheme ({sha256})
+    $dbhash =~ s/^\{[^}]+\}(.*)$/$1/;
+ 
+    # get binary hash
+    my $decoded = &decode_base64($dbhash);
+ 
+    # get last 8 bytes
+    $dbsalt = substr $decoded, -8;
+ 
+    # get hexadecimal version of salt
+    $dbsalt = unpack "H*", $dbsalt;
+ 
+    return $dbsalt;
+}
+ 
+## @method protected Lemonldap::NG::Portal::_DBI gen_salt()
+# Generate 8 bytes of hexadecimal random salt
+# @return generated salt
+sub gen_salt {
+    my $self     = shift;
+    my $dbsalt;
+    my @set = ('0' ..'9', 'A' .. 'F');
+    
+    $dbsalt = join '' => map $set[rand @set], 1 .. 16;
+ 
+    return $dbsalt;
+}
+ 
+## @method protected Lemonldap::NG::Portal::_DBI dynamic_hash_password(ref dbh,
+##  string user, string password, string table, string loginCol, string passwordCol)
+# Return hashed password for use in SQL statement
+# @param dbh database handler
+# @param user connected user
+# @param password clear password
+# @param table authentication table name
+# @param loginCol name of the row containing the login
+# @param passwordCol name of the row containing the password
+# @return hashed password
+sub dynamic_hash_password {
+    my $self     = shift;
+    my $dbh      = shift;
+    my $user     = shift;
+    my $password = shift;
+    my $table    = shift;
+    my $loginCol = shift;
+    my $passwordCol = shift;
+    # Authorized hash schemes and salted hash schemes
+    my @validSchemes = split / /, $self->conf->{dbiDynamicHashValidSchemes};
+    my @validSaltedSchemes = split / /, $self->conf->{dbiDynamicHashValidSaltedSchemes};
+ 
+    my $dbhash;    # hash currently stored in database
+    my $dbscheme;  # current hash scheme stored in database
+    my $dbmethod;  # static hash method corresponding to a database function
+    my $dbsalt;    # current salt stored in database
+    my $hash;      # hash to compute from user password
+ 
+    # Search hash from database
+    $self->logger->debug( "Hash scheme is to be found in database" );
+    $dbhash = $self->get_password($dbh, $user, $table, $loginCol, $passwordCol);
+ 
+    # Get the scheme
+    $dbscheme = $dbhash;
+    $dbscheme =~ s/^\{([^}]+)\}.*/$1/;
+    $dbscheme = "" if $dbscheme eq $dbhash;
+ 
+    # no hash scheme => assume clear text
+    if($dbscheme eq "") {
+        $self->logger->info( "Password has no hash scheme" );
+        return "?";
+        
+    }
+    # salted hash scheme
+    elsif(grep( /^$dbscheme$/, @validSaltedSchemes )) {
+        $self->logger->info( "Valid salted hash scheme: $dbscheme found for user $user" );
+ 
+        # extract non salted hash scheme
+        $dbmethod = $dbscheme;
+        $dbmethod =~ s/^s//i;
+ 
+        # extract the salt
+        $dbsalt = $self->get_salt($dbhash);
+        $self->logger->debug( "Get salt from password: $dbsalt");
+ 
+        # Hash password with given hash scheme and salt
+        $hash = $self->hash_password_from_database($dbh, $dbmethod, $dbsalt, $password);
+        $hash = "{$dbscheme}$hash";
+ 
+        return "'$hash'";
+ 
+    }
+    # static hash scheme
+    elsif(grep( /^$dbscheme$/, @validSchemes )) {
+        $self->logger->info( "Valid hash scheme: $dbscheme found for user $user" );
+ 
+        # Hash given password with given hash scheme and no salt
+        $hash = $self->hash_password_from_database($dbh, $dbscheme, "", $password);
+        $hash = "{$dbscheme}$hash";
+ 
+        return "'$hash'";
+    }
+    # no valid hash scheme
+    else {
+        $self->lmLog( "No valid hash scheme: $dbscheme for user $user", 'error' );
+        $self->userLogger->warn( "Unable to check password for $user" );
+        return "";
+    }
+ 
+}
+ 
+## @method protected Lemonldap::NG::Portal::_DBI dynamic_hash_new_password(ref dbh,
+##  string user, string password)
+# Return hashed password for use in SQL statement
+# @param dbh database handler
+# @param user connected user
+# @param password clear password
+# @param dbscheme the scheme to use for hashing
+# @return hashed password
+sub dynamic_hash_new_password {
+    my $self     = shift;
+    my $dbh      = shift;
+    my $user     = shift;
+    my $password = shift;
+    my $dbscheme = $self->conf->{dbiDynamicHashNewPasswordScheme}  || "";
+    # Authorized hash schemes and salted hash schemes
+    my @validSchemes = split / /, $self->conf->{dbiDynamicHashValidSchemes};
+    my @validSaltedSchemes = split / /, $self->conf->{dbiDynamicHashValidSaltedSchemes};
+ 
+    my $dbmethod;  # static hash method corresponding to a database function
+    my $dbsalt;    # salt to generate for new hashed password
+    my $hash;      # hash to compute from user password
+ 
+    # no hash scheme => assume clear text
+    if($dbscheme eq "") {
+        $self->logger->info( "No hash scheme selected, storing password in clear text" );
+        return "?";
+        
+    }
+    # salted hash scheme
+    elsif(grep( /^$dbscheme$/, @validSaltedSchemes )) {
+        $self->logger->info( "Selected salted hash scheme: $dbscheme" );
+ 
+        # extract non salted hash scheme
+        $dbmethod = $dbscheme;
+        $dbmethod =~ s/^s//i;
+ 
+        # generate the salt
+        $dbsalt = $self->gen_salt();
+        $self->logger->debug( "Generated salt: $dbsalt" );
+ 
+        # Hash given password with given hash scheme and salt
+        $hash = $self->hash_password_from_database($dbh, $dbmethod, $dbsalt, $password);
+        $hash = "{$dbscheme}$hash";
+ 
+        return "'$hash'";
+ 
+    }
+    # static hash scheme
+    elsif(grep( /^$dbscheme$/, @validSchemes )) {
+        $self->logger->info( "Selected hash scheme: $dbscheme" );
+ 
+        # Hash given password with given hash scheme and no salt
+        $hash = $self->hash_password_from_database($dbh, $dbscheme, "", $password);
+        $hash = "{$dbscheme}$hash";
+ 
+        return "'$hash'";
+    }
+    # no valid hash scheme
+    else {
+        $self->lmLog( "No selected hash scheme: $dbscheme is invalid", 'error' );
+        $self->userLogger->warn( "Unable to store password for $user" );
+        return "";
+    }
+ 
+}
+
 # Verify user and password with SQL SELECT
 # @param user user
 # @param password password
@@ -98,18 +370,28 @@ sub check_password {
     my $table       = $self->conf->{dbiAuthTable};
     my $loginCol    = $self->conf->{dbiAuthLoginCol};
     my $passwordCol = $self->conf->{dbiAuthPasswordCol};
+    my $dynamicHash = $self->conf->{dbiDynamicHashEnabled} || 0;
 
-    # Password hash
-    my $passwordsql =
-      $self->hash_password_for_select( "?",
-        $self->conf->{dbiAuthPasswordHash} );
+    my $passwordsql;
+    if ( $dynamicHash == 1 ) {
+        # Dynamic password hashes
+        $passwordsql =
+          $self->dynamic_hash_password( $self->dbh, $user, $password, $table, $loginCol, $passwordCol );
+    }
+    else
+    {
+        # Static Password hashes
+        $passwordsql =
+          $self->hash_password_for_select( "?", $self->conf->{dbiAuthPasswordHash} );
+    }
 
     my @rows = ();
     eval {
         my $sth = $self->dbh->prepare(
 "SELECT $loginCol FROM $table WHERE $loginCol=? AND $passwordCol=$passwordsql"
         );
-        $sth->execute( $user, $password );
+        $sth->execute( $user, $password )       if $passwordsql =~ /.*\?.*/;
+        $sth->execute( $user )              unless $passwordsql =~ /.*\?.*/;
         @rows = $sth->fetchrow_array();
     };
     if ($@) {

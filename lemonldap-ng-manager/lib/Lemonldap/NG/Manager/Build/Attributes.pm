@@ -2269,6 +2269,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         userPivot          => { type => 'text', },
         dbiAuthPasswordHash =>
           { type => 'text', help => 'authdbi.html#password', },
+        dbiDynamicHashEnabled =>
+          { type => 'bool', help => 'authdbi.html#password', },
+        dbiDynamicHashValidSchemes =>
+          { type => 'text', help => 'authdbi.html#password', },
+        dbiDynamicHashValidSaltedSchemes =>
+          { type => 'text', help => 'authdbi.html#password', },
+        dbiDynamicHashNewPasswordScheme =>
+          { type => 'text', help => 'authdbi.html#password', },
         dbiExportedVars => {
             type          => 'keyTextContainer',
             keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
