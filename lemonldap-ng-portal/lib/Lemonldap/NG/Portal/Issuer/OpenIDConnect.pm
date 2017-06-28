@@ -470,7 +470,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                             my $message = $scope_messages->{$requested_scope}
                               || 'anotherInformation';
                             $req->info(
-                                qq'<li trspan="$message ">$message</li>');
+                                qq'<li trspan="$message">$message</li>');
                         }
                         $req->info('</ul></div>');
                         $req->datas->{activeTimer} = 0;
