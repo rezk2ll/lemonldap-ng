@@ -13,7 +13,7 @@ translatePage = (lang) ->
 			args = $(this).attr('trspan').split(',')
 			txt = translate args.shift()
 			for v in args
-				txt.replace /%[ds]/, v
+				txt = txt.replace /%[sd]/, v
 			$(this).text txt
 		$("[trmsg]").each ->
 			$(this).text translate "PE#{$(this).attr 'trmsg'}"

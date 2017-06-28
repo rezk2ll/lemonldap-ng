@@ -19,7 +19,7 @@ LemonLDAP::NG Portal jQuery scripts
         txt = translate(args.shift());
         for (i = 0, len = args.length; i < len; i++) {
           v = args[i];
-          txt.replace(/%[ds]/, v);
+          txt = txt.replace(/%[sd]/, v);
         }
         return $(this).text(txt);
       });
