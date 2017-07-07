@@ -440,22 +440,6 @@ sub retrieveSession {
 
         $class->logger->debug("Get session $id");
 
-        # Verify that session is valid
-        if (
-            $now - $session->data->{_utime} > $class->tsv->{timeout}
-            or (    $class->tsv->{timeoutActivity}
-                and $session->data->{_lastSeen}
-                and $now - $session->data->{_lastSeen} >
-                $class->tsv->{timeoutActivity} )
-          )
-        {
-            $class->logger->info("Session $id expired");
-
-            # Clean cached data
-            $class->datas( {} );
-            return 0;
-        }
-
         # Update the session to notify activity, if necessary
         if (
             $class->tsv->{timeoutActivity}
@@ -472,6 +456,22 @@ sub retrieveSession {
             else {
                 $class->logger->debug("Update _lastSeen with $now");
             }
+        }
+
+        # Verify that session is valid
+        if (
+            $now - $session->data->{_utime} > $class->tsv->{timeout}
+            or (    $class->tsv->{timeoutActivity}
+                and $session->data->{_lastSeen}
+                and $now - $session->data->{_lastSeen} >
+                $class->tsv->{timeoutActivity} )
+          )
+        {
+            $class->logger->info("Session $id expired");
+
+            # Clean cached data
+            $class->datas( {} );
+            return 0;
         }
 
         $class->datasUpdate($now);
