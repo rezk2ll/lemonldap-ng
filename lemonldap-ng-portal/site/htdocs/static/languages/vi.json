@@ -146,6 +146,7 @@
 "newPwdSentTo":"Một xác nhận đã được gửi đến địa chỉ thư của bạn.",
 "noHistory":"Đây là kết nối đầu tiên của bạn, chào mừng!",
 "notFound": "Không tìm thấy: bạn cố gắng truy cập vào một trang không có sẵn",
+"noU2FKeyFound": "No U2F key found",
 "oidcConsent":"Ứng dụng % s muốn biết:",
 "openidAp":"Bạn đồng ý cung cấp các thông số sau?",
 "openIdExample":"ví dụ: http: //myopenid.org/toto",

@@ -146,6 +146,7 @@
 "newPwdSentTo":"تم إرسال تأكيد إلى عنوان بريدك الإلكتروني.",
 "noHistory":"هذا هو أول اتصال، مرحبا بك!",
 "notFound": "لم يتم العثور: محاولة الدخول إلى صفحة غير متوفرة",
+"noU2FKeyFound": "No U2F key found",
 "oidcConsent":"التطبيق ٪s هل ترغب في معرفة:",
 "openidAp":"هل توافق على تقديم الإعدادات التالية؟",
 "openIdExample":"فمثلا:http://myopenid.org/toto",

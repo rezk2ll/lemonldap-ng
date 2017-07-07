@@ -146,6 +146,7 @@
 "newPwdSentTo":"Une confirmation a été envoyée à votre adresse mail.",
 "noHistory":"Ceci est votre première connexion, bienvenue !",
 "notFound": "Non trouvé: vous tentez d'accéder à une page non disponible",
+"noU2FKeyFound": "Aucune clef U2F trouvée",
 "oidcConsent":"L'application %s voudrait connaître :",
 "openidAp":"Consentez-vous à communiquer les paramètres suivants ?",
 "openIdExample":"par exemple :http://myopenid.org/toto",

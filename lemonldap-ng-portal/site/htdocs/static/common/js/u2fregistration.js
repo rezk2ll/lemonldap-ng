@@ -5,7 +5,7 @@ LemonLDAP::NG U2F registration script
  */
 
 (function() {
-  var register, setMsg, verify;
+  var displayError, register, setMsg, verify;
 
   setMsg = function(msg, level) {
     $('#msg').html(window.translate(msg));
@@ -17,15 +17,24 @@ LemonLDAP::NG U2F registration script
     return $('#color').addClass("alert-" + level);
   };
 
+  displayError = function(j, status, err) {
+    var res;
+    console.log('Error', err);
+    res = JSON.parse(j.responseText);
+    if (res && res.error) {
+      res = res.error.replace(/.* /, '');
+      console.log('Returned error', res);
+      return setMsg(res, 'warning');
+    }
+  };
+
   register = function() {
     return $.ajax({
       type: "POST",
       url: portal + "u2fregister/register",
       data: {},
       dataType: 'json',
-      error: function(j, status, err) {
-        return console.log('Error', err);
-      },
+      error: displayError,
       success: function(ch) {
         var request;
         request = [
@@ -55,9 +64,7 @@ LemonLDAP::NG U2F registration script
                   return setMsg('u2fRegistered', 'positive');
                 }
               },
-              error: function(j, status, err) {
-                return console.log('error', err);
-              }
+              error: displayError
             });
           }
         });
@@ -71,9 +78,7 @@ LemonLDAP::NG U2F registration script
       url: portal + "u2fregister/verify",
       data: {},
       dataType: 'json',
-      error: function(j, status, err) {
-        return console.log('Error', err);
-      },
+      error: displayError,
       success: function(ch) {
         var request;
         request = [

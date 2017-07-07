@@ -9,6 +9,14 @@ setMsg = (msg, level) ->
 	level = 'success' if level == 'positive'
 	$('#color').addClass "alert-#{level}"
 
+displayError = (j, status, err) ->
+	console.log 'Error', err
+	res = JSON.parse j.responseText
+	if res and res.error
+		res = res.error.replace /.* /, ''
+		console.log 'Returned error', res
+		setMsg res, 'warning'
+
 register = ->
 	# 1 get registration token
 	$.ajax
@@ -16,8 +24,7 @@ register = ->
 		url: "#{portal}u2fregister/register"
 		data: {}
 		dataType: 'json'
-		error: (j, status, err) ->
-			console.log 'Error', err
+		error: displayError
 		success: (ch) ->
 			# 2 build response
 			request = [
@@ -44,8 +51,7 @@ register = ->
 								setMsg 'u2fFailed', 'warning'
 							else if resp.result
 								setMsg 'u2fRegistered', 'positive'
-						error: (j, status, err) ->
-							console.log 'error', err
+						error: displayError
 
 verify = ->
 	# 1 get challenge
@@ -54,8 +60,7 @@ verify = ->
 		url: "#{portal}u2fregister/verify"
 		data: {}
 		dataType: 'json'
-		error: (j, status, err) ->
-			console.log 'Error', err
+		error: displayError
 		success: (ch) ->
 			# 2 build response
 			request = [
