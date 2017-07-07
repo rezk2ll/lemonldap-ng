@@ -1,9 +1,12 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
+  <div class="container">
+  <div id="color" class="message message-positive alert"><span id="msg" trspan="u2fWelcome"></span></div>
+  </div>
+
   <main id="menucontent" class="container">
   <div class="panel panel-info">
   <div class="panel-body">
-  <div id="color" class="message message-positive alert"><span id="msg" trspan="u2fWelcome"></span></div>
   <div id="u2fPermission" trspan="u2fPermission" class="alert alert-info">You may be prompted to allow the site permission to access your security keys. After granting permission, the device will start to blink.</div>
 
   <div class="buttons">
@@ -16,6 +19,10 @@
     <span trspan="verify">Verify</span>
   </span>
   </div>
+  </div>
+  </div>
+  </main>
+
   <div class="buttons">
   <a id="goback" href="" class="btn btn-primary" role="button">
     <span class="glyphicon glyphicon-home"></span>&nbsp;
@@ -23,11 +30,6 @@
   </a>
   </div>
 
-  </div>
-  </div>
-  </main>
-
-  </script>
 <!-- //if:jsminified
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/u2f-api.min.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/u2fregistration.min.js"></script>

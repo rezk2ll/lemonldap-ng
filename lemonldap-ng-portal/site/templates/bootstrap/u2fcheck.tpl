@@ -1,5 +1,7 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
+<div class="container">
+
 <TMPL_IF NAME="AUTH_ERROR">
   <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
 </TMPL_IF>
@@ -25,6 +27,8 @@
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/u2fcheck.js"></script>
 <!-- //endif -->
 </TMPL_IF>
+
+</div>
 
 <div class="buttons">
   <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
