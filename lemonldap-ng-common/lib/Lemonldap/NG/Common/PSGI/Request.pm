@@ -57,6 +57,7 @@ sub languages     { $_[0]->env->{HTTP_ACCEPT_LANGUAGE} }
 sub authorization { $_[0]->env->{HTTP_AUTHORIZATION} }
 sub hostname      { $_[0]->env->{HTTP_HOST} }
 sub referer       { $_[0]->env->{REFERER} }
+sub query_string { $_[0]->env->{QUERY_STRING} }
 
 sub error {
     my ( $self, $err ) = @_;
