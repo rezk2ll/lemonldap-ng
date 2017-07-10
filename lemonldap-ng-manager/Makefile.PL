@@ -20,8 +20,8 @@ WriteMakefile(
     PREREQ_PM => {
         'Convert::PEM'           => 0,
         'Crypt::OpenSSL::RSA'    => 0,
-        'Lemonldap::NG::Common'  => '2.0.0',
-        'Lemonldap::NG::Handler' => '2.0.0',
+        'Lemonldap::NG::Common'  => '2.0.0-alpha1',
+        'Lemonldap::NG::Handler' => '2.0.0-alpha1',
         'LWP::UserAgent'         => 0,
     },    # e.g., Module::Name => 1.1
     (
@@ -30,9 +30,8 @@ WriteMakefile(
           (
             ABSTRACT_FROM =>
               'lib/Lemonldap/NG/Manager.pm',    # retrieve abstract from module
-            AUTHOR => 'Xavier Guimard <x.guimard@free.fr>'
-              . ', Clément Oudot <clement@oodo.net>'
-              . ', Thomas Chemineau <thomas.chemineau@gmail.com>'
+            AUTHOR =>
+'Xavier Guimard <x.guimard@free.fr>, Clément Oudot <clement@oodo.net>'
           )
         : ()
     ),

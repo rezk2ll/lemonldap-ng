@@ -1,9 +1,9 @@
-lemonldap-ng (2.0.0-1) UNRELEASED; urgency=medium
+lemonldap-ng (2.0.0-alpha1) unstable; urgency=medium
 
-  * New release. See changes on our website:
+  * Alpha release. See changes on our website:
     http://jira.ow2.org/browse/LEMONLDAP/ 
 
- -- Clement OUDOT <clement@oudot.me>  Wed, 02 Mar 2016 15:47:12 +0100
+ -- Clement OUDOT <clement@oodo.net>  Mon, 10 Jul 2017 12:00:00 +0100
 
 lemonldap-ng (1.9.10-1) unstable; urgency=medium
 

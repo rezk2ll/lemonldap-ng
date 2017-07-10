@@ -41,7 +41,7 @@ WriteMakefile(
     },
     PREREQ_PM => {
         'Clone'                  => 0,
-        'Lemonldap::NG::Handler' => '2.0.0',
+        'Lemonldap::NG::Handler' => '2.0.0-alpha1',
         'Regexp::Assemble'       => 0,
     },
     (
@@ -50,10 +50,8 @@ WriteMakefile(
           (
             ABSTRACT_FROM =>
               'lib/Lemonldap/NG/Portal.pm',    # retrieve abstract from module
-            AUTHOR => 'Xavier Guimard <x.guimard@free.fr>'
-              . ', Clément Oudot <clement@oodo.net>'
-              . ', Thomas Chemineau <thomas.chemineau@gmail.com>'
-              . ', Mikael Ates <mikael.ates@univ-st-etienne.fr>'
+            AUTHOR =>
+'Xavier Guimard <x.guimard@free.fr>, Clément Oudot <clement@oodo.net>'
           )
         : ()
     ),

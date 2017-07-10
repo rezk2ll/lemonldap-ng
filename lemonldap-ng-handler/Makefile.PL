@@ -24,7 +24,7 @@ WriteMakefile(
         },
     },
     PREREQ_PM => {
-        'Lemonldap::NG::Common' => '2.0.0',
+        'Lemonldap::NG::Common' => '2.0.0-alpha1',
         'LWP::UserAgent'        => 0,
         'Mouse'                 => 0,
         'URI'                   => 0,
@@ -35,7 +35,8 @@ WriteMakefile(
           (
             ABSTRACT_FROM =>
               'lib/Lemonldap/NG/Handler.pm',    # retrieve abstract from module
-            AUTHOR => 'Xavier Guimard <x.guimard@free.fr>'
+            AUTHOR =>
+'Xavier Guimard <x.guimard@free.fr>, Clément Oudot <clement@oodo.net>'
           )
         : ()
     ),
