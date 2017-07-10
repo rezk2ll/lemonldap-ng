@@ -40,5 +40,5 @@ requires:
   Plack: '0'
   Test::Pod: '1'
   URI: '0'
-version: v2.0.0-alpha1
+version: v2.0.0
 x_serialization_backend: 'CPAN::Meta::YAML version 0.012'

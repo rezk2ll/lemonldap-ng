@@ -28,8 +28,8 @@ recommends:
   SOAP::Lite: '0'
 requires:
   LWP::UserAgent: '0'
-  Lemonldap::NG::Common: '0'
+  Lemonldap::NG::Common: v2.0.0
   Mouse: '0'
   URI: '0'
-version: v2.0.0-apha1
+version: v2.0.0
 x_serialization_backend: 'CPAN::Meta::YAML version 0.012'

@@ -45,7 +45,7 @@ recommends:
   Web::ID: '0'
 requires:
   Clone: '0'
-  Lemonldap::NG::Handler: '0'
+  Lemonldap::NG::Handler: v2.0.0
   Regexp::Assemble: '0'
-version: v2.0.0-alpha1
+version: v2.0.0
 x_serialization_backend: 'CPAN::Meta::YAML version 0.012'

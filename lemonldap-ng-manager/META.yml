@@ -25,7 +25,7 @@ requires:
   Convert::PEM: '0'
   Crypt::OpenSSL::RSA: '0'
   LWP::UserAgent: '0'
-  Lemonldap::NG::Common: '0'
-  Lemonldap::NG::Handler: '0'
-version: v2.0.0-alpha1
+  Lemonldap::NG::Common: v2.0.0
+  Lemonldap::NG::Handler: v2.0.0
+version: v2.0.0
 x_serialization_backend: 'CPAN::Meta::YAML version 0.012'
