@@ -363,7 +363,6 @@ rm -rf %{buildroot}
 	DOCUMENTROOT=%{lm_vardir} \
 	EXAMPLESDIR=%{lm_examplesdir} \
 	HANDLERDIR=%{lm_vardir}/handler \
-	PORTALSKINSDIR=%{lm_sharedir}/portal-skins \
 	MANAGERDIR=%{lm_sharedir}/manager \
 	STORAGECONFFILE=%{lm_storagefile} \
 	TOOLSDIR=%{lm_sharedir}/ressources \
@@ -536,7 +535,7 @@ rm -rf %{buildroot}
 %dir %{lm_vardir}/psessions/lock
 %dir %{lm_vardir}/notifications
 %defattr(640,%{lm_apacheuser},%{lm_apachegroup},-)
-%config(noreplace) %{lm_vardir}/conf/lmConf-1.js
+%config(noreplace) %{lm_vardir}/conf/lmConf-1.json
 
 %files -n lemonldap-ng-doc
 %defattr(-,root,root,-)
@@ -568,7 +567,6 @@ rm -rf %{buildroot}
 %{lm_sharedir}/bin/purgeCentralCache
 %{_sysconfdir}/cron.d/lemonldap-ng-portal
 %{lm_examplesdir}/portal
-%{lm_sharedir}/portal-skins
 %defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir %{lm_vardir}/captcha
 
@@ -611,12 +609,13 @@ rm -rf %{buildroot}
 %doc %{_mandir}/man3/Lemonldap::NG::Portal*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Portal.pm
 %{perl_vendorlib}/Lemonldap/NG/Portal/
-%{perl_vendorlib}/auto/Lemonldap/NG/Portal/
 
 #==============================================================================
 # Changelog
 #==============================================================================
 %changelog
+* Mon Jul 10 2017 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha1-1
+- First alpha version for 2.0.0
 * Fri May 19 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.10-1
 - Update to 1.9.10
 * Thu Mar 16 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.9-1
