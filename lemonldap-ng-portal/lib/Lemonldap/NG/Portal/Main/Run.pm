@@ -577,6 +577,7 @@ sub setHiddenFormValue {
     # Default values
     $prefix = "lmhidden_" unless defined $prefix;
     $base64 = 1           unless defined $base64;
+    $val    = ''          unless defined $val;
 
     # Store value
     if ( $val or !( $val & ~$val ) ) {

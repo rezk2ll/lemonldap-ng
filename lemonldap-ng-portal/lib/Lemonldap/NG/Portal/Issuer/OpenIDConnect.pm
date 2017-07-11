@@ -469,8 +469,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                         {
                             my $message = $scope_messages->{$requested_scope}
                               || 'anotherInformation';
-                            $req->info(
-                                qq'<li trspan="$message">$message</li>');
+                            $req->info(qq'<li trspan="$message">$message</li>');
                         }
                         $req->info('</ul></div>');
                         $req->datas->{activeTimer} = 0;
@@ -799,16 +798,18 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                     my $redirect_uri_allowed = 0;
                     foreach ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
                         my $logout_rp = $_;
-                        my $redirect_uris =
-                          $self->conf->{oidcRPMetaDataOptions}->{$logout_rp}
-                          ->{oidcRPMetaDataOptionsPostLogoutRedirectUris};
+                        if ( my $redirect_uris =
+                            $self->conf->{oidcRPMetaDataOptions}->{$logout_rp}
+                            ->{oidcRPMetaDataOptionsPostLogoutRedirectUris} )
+                        {
 
-                        foreach ( split( /\s+/, $redirect_uris ) ) {
-                            if ( $post_logout_redirect_uri eq $_ ) {
-                                $self->logger->debug(
+                            foreach ( split( /\s+/, $redirect_uris ) ) {
+                                if ( $post_logout_redirect_uri eq $_ ) {
+                                    $self->logger->debug(
 "$post_logout_redirect_uri is an allowed logout redirect URI for RP $logout_rp"
-                                );
-                                $redirect_uri_allowed = 1;
+                                    );
+                                    $redirect_uri_allowed = 1;
+                                }
                             }
                         }
                     }
