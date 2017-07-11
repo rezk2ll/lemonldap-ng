@@ -171,7 +171,7 @@ sub get_key_from_all_sessions {
           \&Lemonldap::NG::Common::Apache::Session::Serialize::JSON::_unserialize;
     }
     if ( $backend =~
-/^Apache::Session::(MySQL|MySQL::NoLock|Postgres|Oracle|Sybase|Informix)$/
+/^Apache::Session::(SQLite\d?|MySQL|MySQL::NoLock|Postgres|Oracle|Sybase|Informix)$/
       )
     {
         return $class->_dbiGKFAS( $1, @_ );
