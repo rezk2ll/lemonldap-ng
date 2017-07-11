@@ -448,6 +448,7 @@ sub retrieveSession {
           )
         {
             $req->datas->{session}->update( { '_lastSeen' => $now } );
+            $class->datas( $session->data );
 
             if ( $session->error ) {
                 $class->logger->error("Cannot update session $id");
