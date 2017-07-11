@@ -1,6 +1,7 @@
 package Lemonldap::NG::Common::PSGI::Request;
 
 use strict;
+use 5.14.0;
 use Mouse;
 use JSON;
 use Plack::Request;
@@ -93,7 +94,7 @@ sub jsonBodyToObj {
         $self->error('No data');
         return undef;
     }
-    my $j = eval { from_json( $self->content, { utf8 => 1 } ) };
+    my $j = eval { from_json( $self->content ) };
     if ($@) {
         $self->error("$@$!");
         return undef;
