@@ -658,12 +658,18 @@ sub run {
             my @authn_statements = $response_assertions[0]->AuthnStatement();
 
             # Set sessionIndex
-            # sessionIndex is the encrypted session_id
-            my $sessionIndex = $self->conf->{cipher}->encrypt($session_id);
+            my $sessionIndexSession = $self->getSamlSession();
+            return PE_SAML_SESSION_ERROR unless $sessionIndexSession;
+
+            $sessionIndexSession->update(
+                { '_utime' => time, '_saml_id' => $session_id } );
+            my $sessionIndex = $sessionIndexSession->id;
+
             $authn_statements[0]->SessionIndex($sessionIndex);
 
             $self->logger->debug(
-                "Set sessionIndex $sessionIndex (encrypted from $session_id)");
+                "Set sessionIndex $sessionIndex (linked to session $session_id)"
+            );
 
             # Set SessionNotOnOrAfter
             my $sessionNotOnOrAfterTimeout =
@@ -1053,11 +1059,17 @@ sub soapSloServer {
                 "No session index in SLO request from $spConfKey SP", 400 );
         }
 
-        # Decrypt session index
-        my $local_session_id = $self->conf->{cipher}->decrypt($session_index);
+        # Get session index
+        my $sessionIndexSession = $self->getSamlSession($session_index);
+        return PE_SAML_SESSION_ERROR unless $sessionIndexSession;
+
+        my $local_session_id = $sessionIndexSession->data->{_saml_id};
+
+        $sessionIndexSession->remove;
 
         $self->logger->debug(
-            "Get session id $local_session_id (decrypted from $session_index)");
+"Get session id $local_session_id (from session index $session_index)"
+        );
 
         # Open local session
         my $local_session = $self->p->getApacheSession($local_session_id);
@@ -1398,9 +1410,17 @@ sub sloServer {
                 "No session index in SLO request from $spConfKey SP");
             return $self->sendSLOErrorResponse( $logout, $method );
         }
-        $local_session_id = $self->conf->{cipher}->decrypt($session_index);
+
+        my $sessionIndexSession = $self->getSamlSession($session_index);
+        return PE_SAML_SESSION_ERROR unless $sessionIndexSession;
+
+        $local_session_id = $sessionIndexSession->data->{_saml_id};
+
+        $sessionIndexSession->remove;
+
         $self->logger->debug(
-            "Get session id $local_session_id (decrypted from $session_index)");
+"Get session id $local_session_id (from session index $session_index)"
+        );
 
         if ( $req->{sessionInfo} ) {
             $session  = $req->{sessionInfo}->{_lassoSessionDump};
