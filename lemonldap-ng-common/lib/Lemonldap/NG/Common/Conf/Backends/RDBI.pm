@@ -17,8 +17,6 @@ sub store {
     my $req;
     my $lastCfg = $self->lastCfg;
 
-    $self->_dbh->begin_work;
-    eval { $self->_dbh->do("BEGIN") };
     if ( $lastCfg == $cfgNum ) {
         $req = $self->_dbh->prepare(
 "UPDATE $self->{dbiTable} SET field=?, value=? WHERE cfgNum=? AND field=?"
@@ -46,7 +44,6 @@ sub store {
             return UNKNOWN_ERROR;
         }
     }
-    eval { $self->_dbh->do("COMMIT") };
     return $cfgNum;
 }
 
