@@ -150,6 +150,7 @@ sub loadCustomHandlers {
             return $v->run( {} );
         };
     }
+    return 1;
 }
 __END__
 
