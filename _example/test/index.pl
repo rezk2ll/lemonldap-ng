@@ -56,7 +56,7 @@ print
 print
 "<link href=\"$portal_url/static/bwr/bootstrap/dist/css/bootstrap.css\" rel=\"stylesheet\">\n";
 print
-"<link href=\"$portal_url/static/bwr/bootstrap/dist/css/bootstrap-theme.css" rel=\"stylesheet\">\n";
+"<link href=\"$portal_url/static/bwr/bootstrap/dist/css/bootstrap-theme.css\" rel=\"stylesheet\">\n";
 print "<style>\n";
 print "$css\n";
 print "</style>\n";
