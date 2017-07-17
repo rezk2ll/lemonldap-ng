@@ -52,20 +52,20 @@
       <td>
         <div class="input-group-solid" role="radiogroup">
           <label class="radio-inline">
-            <input id="iOn" type="radio" value="on" ng-model="currentNode.data.display" role="radio" aria-label="On"/>
-            <span trspan="enabled"></span>
+            <input id="iOn" type="radio" value="on" ng-model="currentNode.data.display" role="radio" aria-labelledby="onl"/>
+            <label id="onl" for="iOn" trspan="enabled"></label>
           </label>
           <label class="radio-inline">
-            <input id="iOff" type="radio" value="off" ng-model="currentNode.data.display" role="radio" aria-label="Off"/>
-            <span trspan="disabled">
+            <input id="iOff" type="radio" value="off" ng-model="currentNode.data.display" role="radio" aria-labelledby="offl"/>
+            <label id="offl" for="iOff" trspan="disabled"></label>
           </label>
           <label class="radio-inline">
-            <input id="iAuto" type="radio" value="auto" ng-model="currentNode.data.display" role="radio" aria-label="Auto"/>
-            <span trspan="auto">
+            <input id="iAuto" type="radio" value="auto" ng-model="currentNode.data.display" role="radio" aria-labelledby="autol"/>
+            <label id="autol" for="iAuto" trspan="auto"></label>
           </label>
           <label class="radio-inline">
-            <input id="iExpr" type="radio" value="rule" ng-click="currentNode.data.display=''" ng-checked="currentNode.data.display!=='on'&&currentNode.data.display!=='off'&&currentNode.data.display!=='auto'" aria-label="Rule" role="radio"/>
-            <label id="rulel" for="bopeExpr" trspan="specialRule"></label>
+            <input id="iExpr" type="radio" value="rule" ng-click="currentNode.data.display=''" ng-checked="currentNode.data.display!=='on'&&currentNode.data.display!=='off'&&currentNode.data.display!=='auto'" aria-labelledby="rulel" role="radio"/>
+            <label id="rulel" for="iExpr" trspan="specialRule"></label>
           </label>
         </div>
       </td>
