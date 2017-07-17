@@ -461,11 +461,18 @@ sub _filterHash {
             # Keep node if display is "yes" or "on"
             next if ( $appdisplay =~ /^(yes|on)$/ );
 
+            my $cond = undef;
+            if ( $appdisplay !~ /^auto$/i ) {
+                $cond =
+                  $self->p->HANDLER->buildSub(
+                    $self->p->HANDLER->substitute($appdisplay) );
+            }
+
             # Check grant function if display is "auto" (this is the default)
             delete $apphash->{$key}
               unless (
                 $self->p->HANDLER->grant(
-                    $req, $req->sessionInfo, $appuri, undef, $vhost
+                    $req, $req->sessionInfo, $appuri, $cond, $vhost
                 )
               );
             next;

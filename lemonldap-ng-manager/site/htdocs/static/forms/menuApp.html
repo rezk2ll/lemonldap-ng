@@ -63,10 +63,17 @@
             <input id="iAuto" type="radio" value="auto" ng-model="currentNode.data.display" role="radio" aria-label="Auto"/>
             <span trspan="auto">
           </label>
+          <label class="radio-inline">
+            <input id="iExpr" type="radio" value="rule" ng-click="currentNode.data.display=''" ng-checked="currentNode.data.display!=='on'&&currentNode.data.display!=='off'&&currentNode.data.display!=='auto'" aria-label="Rule" role="radio"/>
+            <label id="rulel" for="bopeExpr" trspan="specialRule"></label>
+          </label>
         </div>
       </td>
     </tr>
   </table>
+  <div class="panel-body input-group maxw" ng-if="currentNode.data.display!=='on'&&currentNode.data.display!=='off'&&currentNode.data.display!=='auto'">
+    <textarea id="iValue" class="form-control" rows="2" ng-model="currentNode.data.display" aria-label="Rule expression"/>
+  </div>
 </div>
 <script type="text/ng-template" id="logoChoice.html">
   <div class="modal-header">
