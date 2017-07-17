@@ -54,17 +54,17 @@ print "<meta http-equiv=\"cache-control\" content=\"no-cache\" />\n";
 print
 "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n";
 print
-"<link href=\"$portal_url/skins/bootstrap/css/bootstrap.css\" rel=\"stylesheet\">\n";
+"<link href=\"$portal_url/static/bwr/bootstrap/dist/css/bootstrap.css\" rel=\"stylesheet\">\n";
 print
-"<link href=\"$portal_url/skins/bootstrap/css/bootstrap-theme.css\" rel=\"stylesheet\">\n";
+"<link href=\"$portal_url/static/bwr/bootstrap/dist/css/bootstrap-theme.css" rel=\"stylesheet\">\n";
 print "<style>\n";
 print "$css\n";
 print "</style>\n";
 print
-"<script type=\"text/javascript\" src=\"$portal_url/skins/common/js/jquery-1.10.2.js\"></script>\n";
+"<script type=\"text/javascript\" src=\"$portal_url/static/bwr/jquery/dist/jquery.js\"></script>\n";
 print
-"<script type=\"text/javascript\" src=\"$portal_url/skins/common/js/jquery-ui-1.10.3.custom.js\"></script>\n";
-print "<script src=\"$portal_url/skins/bootstrap/js/bootstrap.js\"></script>\n";
+"<script type=\"text/javascript\" src=\"$portal_url/static/bwr/jquery-ui/jquery-ui.js\"></script>\n";
+print "<script src=\"$portal_url/static/bwr/bootstrap/dist/js/bootstrap.js\"></script>\n";
 print "</head>\n";
 print "<body>\n";
 
