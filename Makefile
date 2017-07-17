@@ -395,6 +395,7 @@ prepare_test_server:
 		INITDIR=`pwd`/e2e-tests/conf/init \
 		ETCDEFAULTDIR=`pwd`/e2e-tests/conf/def
 	#@cp -f e2e-tests/index.* e2e-tests/conf/
+	@perl -i -pe 's/example\.com/example.com:19876/g' e2e-tests/conf/site/index.pl
 	@cp -f $(SRCMANAGERDIR)/site/htdocs/manager* e2e-tests/conf/manager
 	@cp -f $(SRCPORTALDIR)/site/htdocs/index* e2e-tests/conf/portal
 	@for f in $$(find e2e-tests/conf -name '*.fcgi'); do \
