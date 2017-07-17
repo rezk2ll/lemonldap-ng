@@ -588,7 +588,7 @@ sub searchGroups {
     }
     $searchFilter .= "))";
 
-    $self->{p}->logger->debug("Group search filter: $searchFilter");
+    $self->{portal}->logger->debug("Group search filter: $searchFilter");
 
     # Search
     my $mesg = $self->search(
@@ -602,7 +602,7 @@ sub searchGroups {
 
         foreach my $entry ( $mesg->all_entries ) {
 
-            $self->{p}
+            $self->{portal}
               ->logger->debug( "Matching group " . $entry->dn() . " found" );
 
             # If recursive search is activated, do it here
@@ -616,7 +616,7 @@ sub searchGroups {
                 # Launch group search
                 if ($group_value) {
 
-                    $self->{p}
+                    $self->{portal}
                       ->logger->debug("Recursive search for $group_value");
 
                     my $recursive_groups =
@@ -643,7 +643,7 @@ sub searchGroups {
                 my $data = $entry->get_value( $_, asref => 1 );
 
                 if ($data) {
-                    $self->{p}
+                    $self->{portal}
                       ->logger->debug("Store values of $_ in group $groupName");
                     $groups->{$groupName}->{$_} = $data;
                 }
