@@ -11,7 +11,7 @@
 ### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=__SBINDIR__/llgn-fastcgi-server
+DAEMON=__SBINDIR__/llng-fastcgi-server
 NAME=llng-fastcgi-server
 DESC=llng-fastcgi-server
 
