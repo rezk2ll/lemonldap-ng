@@ -225,7 +225,8 @@ sub loadPlugin {
     }
     return 0
       unless ( $obj = $self->p->loadModule( "$plugin", $nc ) );
-    $obj = $self->p->findEP( $plugin, $obj );
+    return 0
+      unless $obj = $self->p->findEP( $plugin, $obj );
     $obj->{userLogger} = $self->wrapUserLogger;
     weaken $obj->{userLogger};
     return $obj;
