@@ -79,9 +79,10 @@ sub status {
     my ( $class, $args ) = @_;
     $args //= {};
     my $self = $class->new($args);
+    $self->init($args);
 
     # Check if main handler initialization has been done
-    unless ( %$self->api->tsv ) {
+    unless ( %{ $self->api->tsv } ) {
         eval { $self->api->checkConf() };
         $self->logger->error($@) if ($@);
     }
@@ -96,9 +97,10 @@ sub reload {
     my ( $class, $args ) = @_;
     $args //= {};
     my $self = $class->new($args);
+    $self->init($args);
 
     # Check if main handler initialization has been done
-    unless ( %$self->api->tsv ) {
+    unless ( %{ $self->api->tsv } ) {
         eval { $self->api->checkConf() };
         $self->logger->error($@) if ($@);
     }
