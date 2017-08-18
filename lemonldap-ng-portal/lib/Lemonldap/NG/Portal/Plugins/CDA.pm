@@ -17,6 +17,8 @@ sub afterDatas {
     return 'changeUrldc';
 }
 
+sub init { 1 }
+
 # RUNNING METHOD
 
 sub changeUrldc {
