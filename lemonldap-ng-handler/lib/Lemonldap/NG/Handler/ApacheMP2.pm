@@ -22,6 +22,11 @@ sub logout {
     return launch( 'unlog', @_ );
 }
 
+sub reload {
+    shift if ($#_);
+    return launch( 'reload', @_ );
+}
+
 sub status {
     shift if ($#_);
     return launch( 'getStatus', @_ );
