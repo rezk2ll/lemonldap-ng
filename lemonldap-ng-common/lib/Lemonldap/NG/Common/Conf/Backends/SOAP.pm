@@ -86,7 +86,16 @@ sub store {
 
 sub load {
     my $self = shift;
-    return $self->_soapCall( 'getConfig', @_ );
+    my $conf = $self->_soapCall( 'getConfig', @_ );
+
+    # Force empty hash that are not converted by SOAP
+    foreach ( keys %{ $conf || {} } ) {
+        if ( $_ =~ /$hashParameters/ ) {
+            $conf->{$_} ||= {};
+        }
+    }
+
+    return $conf;
 }
 
 1;
