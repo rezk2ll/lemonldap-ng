@@ -5,7 +5,7 @@ Source: http://forge.objectweb.org/project/showfiles.php?group_id=274
 
 Files: *
 Copyright: 2005-2017, Xavier Guimard <x.guimard@free.fr>
- 2006-2016, Clement Oudot <clem.oudot@gmail.com>
+ 2006-2017, Clement Oudot <clem.oudot@gmail.com>
  2008-2011, Thomas Chemineau <thomas.chemineau@gmail.com>
  2012-2015, François-Xavier Deltombe <fxdeltombe@gmail.com>
  2012-2013, Sandro Cazzaniga <cazzaniga.sandro@gmail.com>
@@ -22,14 +22,14 @@ Comment: idea taken from Authen::Simple::PAM (copyright Christian Hansen
  <chansen@cpan.org>
 
 Files: *.js
-Copyright: 2005-2016, Xavier Guimard <x.guimard@free.fr>
- 2006-2016, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2017, Xavier Guimard <x.guimard@free.fr>
+ 2006-2017, Clement Oudot <clem.oudot@gmail.com>
  2008-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
 License: GPL-2+
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/js/portal.js
-Copyright: 2005-2016, Xavier Guimard <x.guimard@free.fr>
- 2006-2016, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2017, Xavier Guimard <x.guimard@free.fr>
+ 2006-2017, Clement Oudot <clem.oudot@gmail.com>
  2008-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
 License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
