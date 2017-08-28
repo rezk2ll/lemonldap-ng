@@ -156,7 +156,6 @@ Group:          Applications/System
 %else
 Group:          Monitoring
 %endif
-Requires(post):  httpd
 
 %description -n lemonldap-ng-conf
 This package contains the main storage configuration.
