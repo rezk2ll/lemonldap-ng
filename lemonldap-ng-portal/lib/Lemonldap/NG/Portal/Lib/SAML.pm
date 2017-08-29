@@ -184,6 +184,11 @@ sub loadService {
         $serviceCertificate
     );
 
+    # Signature method
+    my $method = $self->conf->{samlServiceSignatureMethod} || 'SHA1';
+    $server->signature_method( $self->getSignatureMethod($method) );
+    $self->logger->debug("Set $method as SAML server signature method ");
+
     # Log
     unless ($server) {
         $self->error('Unable to create Lasso server');
@@ -3046,6 +3051,20 @@ sub metadata {
     return $self->p->sendError( $req, 'Unable to build Metadata', 500 );
 }
 
+## @method int getSignatureMethod(string signature_method)
+# Return Lasso signature method
+# @param signature_method Signature method string
+# @return Lasso signature method
+sub getSignatureMethod {
+    my ( $self, $signature_method ) = @_;
+
+    return Lasso::Constants::SIGNATURE_METHOD_RSA_SHA1
+      if ( $signature_method =~ /^SHA1$/i );
+    return Lasso::Constants::SIGNATURE_METHOD_RSA_SHA256
+      if ( $signature_method =~ /^SHA256$/i );
+    return Lasso::Constants::SIGNATURE_METHOD_NONE;
+}
+
 1;
 
 __END__
@@ -3406,6 +3425,10 @@ Send an SLO error response
 =head2 getQueryString
 
 Get query string with or without CGI query_string() method
+
+=head2 getSignatureMethod
+
+Return Lasso signature method
 
 =head1 SEE ALSO
 
