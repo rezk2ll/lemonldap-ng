@@ -2780,14 +2780,24 @@ sub checkDestination {
 sub getSamlSession {
     my ( $self, $id, $info ) = @_;
 
+    my %storage = (
+        storageModule        => $self->conf->{samlStorage},
+        storageModuleOptions => $self->conf->{samlStorageOptions},
+    );
+    unless ( $storage{storageModule} ) {
+        %storage = (
+            storageModule        => $self->conf->{globalStorage},
+            storageModuleOptions => $self->conf->{globalStorageOptions},
+        );
+    }
+
     my $samlSession = Lemonldap::NG::Common::Session->new(
         {
-            storageModule        => $self->conf->{samlStorage},
-            storageModuleOptions => $self->conf->{samlStorageOptions},
-            cacheModule          => $self->conf->{localSessionStorage},
-            cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
-            id                   => $id,
-            kind                 => "SAML",
+            %storage,
+            cacheModule        => $self->conf->{localSessionStorage},
+            cacheModuleOptions => $self->conf->{localSessionStorageOptions},
+            id                 => $id,
+            kind               => "SAML",
             ( $info ? ( info => $info ) : () ),
         }
     );
