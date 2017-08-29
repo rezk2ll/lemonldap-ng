@@ -88,14 +88,24 @@ sub sendSoapResponse {
 sub getCasSession {
     my ( $self, $id, $info ) = @_;
 
+    my %storage = (
+        storageModule        => $self->conf->{casStorage},
+        storageModuleOptions => $self->conf->{casStorageOptions},
+    );
+    unless ( $storage{storageModule} ) {
+        %storage = (
+            storageModule        => $self->conf->{globalStorage},
+            storageModuleOptions => $self->conf->{globalStorageOptions},
+        );
+    }
+
     my $casSession = Lemonldap::NG::Common::Session->new(
         {
-            storageModule        => $self->conf->{casStorage},
-            storageModuleOptions => $self->conf->{casStorageOptions},
-            cacheModule          => $self->conf->{localSessionStorage},
-            cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
-            id                   => $id,
-            kind                 => "CAS",
+            %storage,
+            cacheModule        => $self->conf->{localSessionStorage},
+            cacheModuleOptions => $self->conf->{localSessionStorageOptions},
+            id                 => $id,
+            kind               => "CAS",
             ( $info ? ( info => $info ) : () ),
         }
     );
