@@ -3,6 +3,7 @@ package Lemonldap::NG::Common::Conf::Backends::SOAP;
 use strict;
 use utf8;
 use SOAP::Lite;
+use Lemonldap::NG::Common::Conf::Constants;
 
 our $VERSION = '2.0.0';
 
