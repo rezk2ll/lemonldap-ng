@@ -38,7 +38,9 @@ sub store {
             @execValues = ( $k, $v, $cfgNum, $k );
         }
         else { @execValues = ( $cfgNum, $k, $v ); }
-        unless ( $req->execute(@execValues) ) {
+        my $execute;
+        eval { $execute = $req->execute(@execValues); };
+        unless ($execute) {
             $self->logError;
             $self->_dbh->do("ROLLBACK");
             return UNKNOWN_ERROR;

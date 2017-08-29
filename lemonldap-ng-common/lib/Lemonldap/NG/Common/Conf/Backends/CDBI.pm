@@ -28,7 +28,9 @@ sub store {
         $self->logError;
         return UNKNOWN_ERROR;
     }
-    unless ( $req->execute( $fields, $cfgNum ) ) {
+    my $execute;
+    eval { $execute = $req->execute( $fields, $cfgNum ); };
+    unless ($execute) {
         $self->logError;
         return UNKNOWN_ERROR;
     }
