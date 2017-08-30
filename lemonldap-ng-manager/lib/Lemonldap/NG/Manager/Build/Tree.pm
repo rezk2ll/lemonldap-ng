@@ -546,6 +546,7 @@ sub tree {
                         'portalStatus',
                         {
                             title => 'portalServers',
+                            help  => 'portalservers.html',
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'restSessionServer', 'restConfigServer',
