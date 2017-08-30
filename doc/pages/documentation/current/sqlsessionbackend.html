@@ -57,7 +57,11 @@
 <li class="level3"><div class="li"><a href="#postgresql">PostgreSQL</a></div></li>
 </ul>
 </li>
-<li class="level2"><div class="li"><a href="#manager">Manager</a></div></li>
+<li class="level2"><div class="li"><a href="#manager">Manager</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#utf8_support">UTF8 support</a></div></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#security">Security</a></div></li>
@@ -206,8 +210,33 @@ If you choose to use MySQL, read <a href="performances.html#apachesession_perfor
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Manager" [2238-3554] -->
-<h2 class="sectionedit6" id="security">Security</h2>
+
+<h4 id="utf8_support">UTF8 support</h4>
+<div class="level4">
+
+<p>
+If you may store some non-<abbr title="American Standard Code for Information Interchange">ASCII</abbr> characters, you must add the parameter corresponding to your database.
+</p>
+<div class="table sectionedit6"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Database  </th><th class="col1 centeralign">  Parameter name  </th><th class="col2 centeralign">  Value  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  MySQL  </td><td class="col1 centeralign">  mysql_enable_utf8  </td><td class="col2 centeralign">  1  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  PostgreSQL  </td><td class="col1 centeralign">  pg_enable_utf8  </td><td class="col2 centeralign">  1  </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 centeralign">  SQLite  </td><td class="col1 centeralign">  sqlite_unicode  </td><td class="col2 centeralign">  1  </td>
+	</tr>
+</table></div>
+<!-- EDIT6 TABLE [3681-3844] -->
+</div>
+<!-- EDIT4 SECTION "Manager" [2238-3845] -->
+<h2 class="sectionedit7" id="security">Security</h2>
 <div class="level2">
 
 <p>
@@ -219,6 +248,6 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Security" [3555-] --></div>
+<!-- EDIT7 SECTION "Security" [3846-] --></div>
 </body>
 </html>

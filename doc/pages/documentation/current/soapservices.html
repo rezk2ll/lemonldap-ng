@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:soapservices</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,soapservices"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="soapservices.html"/>
@@ -48,42 +48,18 @@
 <div class="level1">
 
 <p>
-Lemonldap::NG portal provide a SOAP server that can be enable to give configuration and/or session. These features can be enabled using the manager.
+<abbr title="LemonLDAP::NG">LL::NG</abbr> portal provide a SOAP server that can be enable to give configuration and/or session. These features can be enabled using the manager.
 </p>
 
 </div>
-<!-- EDIT1 SECTION "SOAP services" [1-179] -->
+<!-- EDIT1 SECTION "SOAP services" [1-172] -->
 <h2 class="sectionedit2" id="portal_soap_services">Portal SOAP services</h2>
 <div class="level2">
 
 <p>
-SOAP functions are not accessible by network by default. SOAP functions are protected by Apache, you can change this in <a href="configlocation.html#portal" class="wikilink1" title="documentation:2.0:configlocation">Apache portal configuration</a>:
+SOAP functions are not accessible by network by default. SOAP functions are protected by Web Server, you can change this in <a href="configlocation.html#portal" class="wikilink1" title="documentation:2.0:configlocation">portal configuration</a>.
 </p>
-<pre class="code file apache">    <span class="co1"># SOAP functions for sessions management (disabled by default)</span>
-    &lt;<span class="kw3">Location</span> /index.pl/adminSessions&gt;
-        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-        <span class="kw1">Allow</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Location</span>&gt;
-&nbsp;
-    <span class="co1"># SOAP functions for sessions access (disabled by default)</span>
-    &lt;<span class="kw3">Location</span> /index.pl/sessions&gt;
-        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-        <span class="kw1">Allow</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Location</span>&gt;
-&nbsp;
-    <span class="co1"># SOAP functions for configuration access (disabled by default)</span>
-    &lt;<span class="kw3">Location</span> /index.pl/config&gt;
-        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-        <span class="kw1">Allow</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Location</span>&gt;
-&nbsp;
-    <span class="co1"># SOAP functions for notification insertion (disabled by default)</span>
-    &lt;<span class="kw3">Location</span> /index.pl/notification&gt;
-        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-        <span class="kw1">Allow</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Location</span>&gt;</pre>
-<div class="notetip">You can create a SOAP only portal by setting “soapOnly = 1” in lemonldap-ng.ini (section PORTAL)
-</div><ul>
+<ul>
 <li class="level1"><div class="li"> Read-only functions (index.pl/sessions or index.pl/adminSessions paths):</div>
 <ul>
 <li class="level2"><div class="li"> <strong>getCookies(user,password)</strong>: authentication system. Returns cookie(s) name and values</div>
@@ -121,10 +97,10 @@ SOAP functions are not accessible by network by default. SOAP functions are prot
 </ul>
 </li>
 </ul>
-<div class="noteimportant">When you use <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP sessions backend</a>, it is recommended to use read-only <abbr title="Uniform Resource Locator">URL</abbr> (<a href="http://portal/index.pl/sessions" class="urlextern" title="http://portal/index.pl/sessions"  rel="nofollow">http://portal/index.pl/sessions</a>). Write session path is needed only if you use a remote session explorer or a remote portal
+<div class="noteimportant">When you use <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP sessions backend</a>, it is recommended to use read-only <abbr title="Uniform Resource Locator">URL</abbr> (/index.fcgi/sessions). Write session path is needed only if you use a remote session explorer or a remote portal
 
 </div>
 </div>
-<!-- EDIT2 SECTION "Portal SOAP services" [180-] --></div>
+<!-- EDIT2 SECTION "Portal SOAP services" [173-] --></div>
 </body>
 </html>

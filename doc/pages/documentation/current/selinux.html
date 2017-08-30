@@ -50,6 +50,7 @@
 
 <ul class="toc">
 <li class="level1"><div class="li"><a href="#disk_cache_sessions_an_configuration">Disk cache (sessions an configuration)</a></div></li>
+<li class="level1"><div class="li"><a href="#access_to_ldap">Access to LDAP</a></div></li>
 <li class="level1"><div class="li"><a href="#memcache">Memcache</a></div></li>
 <li class="level1"><div class="li"><a href="#proxy_http">Proxy HTTP</a></div></li>
 </ul>
@@ -72,17 +73,23 @@ To make LemonLDAP::NG work with SELinux, you may need to set up some options.
 
 </div>
 <!-- EDIT2 SECTION "Disk cache (sessions an configuration)" [103-208] -->
-<h2 class="sectionedit3" id="memcache">Memcache</h2>
+<h2 class="sectionedit3" id="access_to_ldap">Access to LDAP</h2>
+<div class="level2">
+<pre class="code">setsebool -P httpd_can_connect_ldap on</pre>
+
+</div>
+<!-- EDIT3 SECTION "Access to LDAP" [209-289] -->
+<h2 class="sectionedit4" id="memcache">Memcache</h2>
 <div class="level2">
 <pre class="code">setsebool -P httpd_can_network_memcache 1</pre>
 
 </div>
-<!-- EDIT3 SECTION "Memcache" [209-286] -->
-<h2 class="sectionedit4" id="proxy_http">Proxy HTTP</h2>
+<!-- EDIT4 SECTION "Memcache" [290-367] -->
+<h2 class="sectionedit5" id="proxy_http">Proxy HTTP</h2>
 <div class="level2">
 <pre class="code">setsebool -P httpd_can_network_relay 1</pre>
 
 </div>
-<!-- EDIT4 SECTION "Proxy HTTP" [287-] --></div>
+<!-- EDIT5 SECTION "Proxy HTTP" [368-] --></div>
 </body>
 </html>

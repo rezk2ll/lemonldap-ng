@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:restsessionbackend</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,restsessionbackend"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="restsessionbackend.html"/>
@@ -140,7 +140,7 @@ Then, set <code>Lemonldap::NG::Common::Apache::Session::REST</code> in <code>Gen
 	</tr>
 	</thead>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  <strong>baseUrl</strong>  </td><td class="col1"> <abbr title="Uniform Resource Locator">URL</abbr> of sessions REST end point </td><td class="col2"> http://auth.example.com/sessions/global </td>
+		<td class="col0 centeralign">  <strong>baseUrl</strong>  </td><td class="col1"> <abbr title="Uniform Resource Locator">URL</abbr> of sessions REST end point </td><td class="col2"> http://auth.example.com/index.fcgi/sessions/global </td>
 	</tr>
 	<tr class="row3 rowodd">
 		<th class="col0 centeralign" colspan="3">  Optional parameters  </th>
@@ -152,9 +152,9 @@ Then, set <code>Lemonldap::NG::Common::Apache::Session::REST</code> in <code>Gen
 		<td class="col0 centeralign">  <strong>password</strong>  </td><td class="col1"> Password to use for auth basic mechanism </td><td class="col2 leftalign">   </td>
 	</tr>
 </table></div>
-<!-- EDIT4 TABLE [1758-2073] -->
+<!-- EDIT4 TABLE [1758-2084] -->
 </div>
-<!-- EDIT3 SECTION "Manager" [1410-2074] -->
+<!-- EDIT3 SECTION "Manager" [1410-2085] -->
 <h3 class="sectionedit5" id="apache">Apache</h3>
 <div class="level3">
 
@@ -167,7 +167,7 @@ Sessions REST end points access must be allowed in Apache portal configuration (
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT5 SECTION "Apache" [2075-2364] -->
+<!-- EDIT5 SECTION "Apache" [2086-2375] -->
 <h3 class="sectionedit6" id="real_session_backend">Real session backend</h3>
 <div class="level3">
 
@@ -184,6 +184,6 @@ For example, if real sessions are stored in <a href="filesessionbackend.html" cl
 <div class="notetip">Session explorer and “single session” features can&#039;t be used using this backend. Session explorer and portal must be launched with real backend.
 </div>
 </div>
-<!-- EDIT6 SECTION "Real session backend" [2365-] --></div>
+<!-- EDIT6 SECTION "Real session backend" [2376-] --></div>
 </body>
 </html>

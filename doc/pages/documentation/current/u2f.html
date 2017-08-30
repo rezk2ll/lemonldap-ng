@@ -90,14 +90,15 @@ In the manager (advanced parameters), you just have to enable it:
 <ul>
 <li class="level1"><div class="li"> U2F ⇒ Activation: set it to “on”</div>
 </li>
-<li class="level1"><div class="li"> U2F ⇒ Self registration: set it to “on” <em>(to display this application on the menu, create an application that points to <a href="http://auth.your.domain/u2fregister" class="urlextern" title="http://auth.your.domain/u2fregister"  rel="nofollow">http://auth.your.domain/u2fregister</a>)</em></div>
+<li class="level1"><div class="li"> U2F ⇒ Self registration: set it to “on” <em>(to display this application on the menu, create an application that points to <a href="http://auth.your.domain/u2fregister.html" class="urlextern" title="http://auth.your.domain/u2fregister.html"  rel="nofollow">http://auth.your.domain/u2fregister.html</a>)</em></div>
 </li>
 <li class="level1"><div class="li"> U2F ⇒ Authentication level: you can overwrite here auth level for U2F registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em></div>
 </li>
 </ul>
-
+<div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule: <code>$_u2fKeyHandle and $_u2fUserKey</code>, else U2F will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
 </div>
-<!-- EDIT3 SECTION "Configuration" [812-1322] -->
+</div>
+<!-- EDIT3 SECTION "Configuration" [812-1637] -->
 <h2 class="sectionedit4" id="assistance">Assistance</h2>
 <div class="level2">
 
@@ -106,7 +107,7 @@ If a user lost its key, you may remove it&#039;s persistent session using the se
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Assistance" [1323-1438] -->
+<!-- EDIT4 SECTION "Assistance" [1638-1753] -->
 <h2 class="sectionedit5" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -126,12 +127,12 @@ If you have another U2F registration interface, you have to populate session (us
 		<td class="col0"> _u2fUserKey </td><td class="col1"> user key value, base64 encoded </td>
 	</tr>
 </table></div>
-<!-- EDIT6 TABLE [1593-1711] -->
+<!-- EDIT6 TABLE [1908-2026] -->
 <p>
 Note that both “origin” and “appId” are fixed to portal <abbr title="Uniform Resource Locator">URL</abbr>.
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Developer corner" [1439-] --></div>
+<!-- EDIT5 SECTION "Developer corner" [1754-] --></div>
 </body>
 </html>
