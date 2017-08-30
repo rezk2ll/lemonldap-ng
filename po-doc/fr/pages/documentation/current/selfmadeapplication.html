@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,selfmadeapplication"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="selfmadeapplication.html"/>
@@ -114,69 +114,65 @@ Exemples avec un <a href="writingrulesand_headers.html#headers" class="wikilink1
 <div class="level2">
 
 <p>
-
-Using this feature, you don't have to use virtual host protection: protection is embedded in Lemonldap::NG::Handler::CGI.
+<abbr title="LemonLDAP::NG">LL::NG</abbr> now uses FastCGI instead of CGI, but you still can write your own protected CGI.
 
 </p>
 
 <p>
 
-Lemonldap::NG::Handler::CGI adds some functions to <a href="http://search.cpan.org/perldoc?CGI" class="urlextern" title="http://search.cpan.org/perldoc?CGI"  rel="nofollow">CGI</a>:
+First create a PSGI module based on Lemonldap::NG::Handler:
 
 </p>
-<ul>
-<li class="level1"><div class="li"> authenticate : vérifie que l'utilisateur est authentifié ; sinon, il est redirigé vers le portail</div>
-</li>
-<li class="level1"><div class="li"> authorize : vérifie si l'utilisateur est autorisé à accèder à cette <abbr title="Uniform Resource Locator">URL</abbr></div>
-</li>
-</ul>
-
-<p>
-Exemple :
-</p>
-<ul>
-<li class="level1"><div class="li"> Code à remplacer :</div>
-</li>
-</ul>
-<pre class="code perl"><span class="kw1">my</span> <span class="re0">$cgi</span> <span class="sy0">=</span> <span class="kw2">new</span> CGI<span class="sy0">;</span>
-<span class="sy0">...</span></pre>
-<ul>
-<li class="level1"><div class="li"> Nouveau code:</div>
-</li>
-</ul>
-<pre class="code perl"><span class="kw1">my</span> <span class="re0">$cgi</span> <span class="sy0">=</span> Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Handler</span><span class="sy0">::</span><span class="me2">CGI</span><span class="sy0">-&gt;</span><span class="kw2">new</span> <span class="br0">(</span><span class="br0">{</span><span class="br0">}</span><span class="br0">)</span><span class="sy0">;</span>
-<span class="re0">$cgi</span><span class="sy0">-&gt;</span><span class="me1">authenticate</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span>
-<span class="re0">$cgi</span><span class="sy0">-&gt;</span><span class="me1">authorize</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span>
-<span class="sy0">...</span></pre>
-
-<p>
-On peut ensuite accéder aux données de l'utilisateur
-</p>
-<pre class="code perl"><span class="co1"># Obtenir des attributs (ou macros)</span>
-<span class="kw1">my</span> <span class="re0">$cn</span> <span class="sy0">=</span> <span class="re0">$cgi</span><span class="sy0">-&gt;</span><span class="me1">user</span><span class="sy0">-&gt;</span><span class="br0">{</span>cn<span class="br0">}</span>
+<pre class="code perl">  <a href="http://perldoc.perl.org/functions/package.html"><span class="kw3">package</span></a> My<span class="sy0">::</span><span class="me2">PSGI</span><span class="sy0">;</span>
 &nbsp;
-<span class="co1"># Tester si l'utilisateur est membre d'un groupe Lemonldap::NG (ou d'un groupe LDAP translaté)</span>
-<span class="kw1">if</span><span class="br0">(</span> <span class="re0">$cgi</span><span class="sy0">-&gt;</span><span class="me1">group</span><span class="br0">(</span><span class="st_h">'admin'</span><span class="br0">)</span> <span class="br0">)</span> <span class="br0">{</span>
-  <span class="co1"># code html spécial pour les administrateurs</span>
-<span class="br0">}</span>
-<span class="kw1">else</span> <span class="br0">{</span>
-  <span class="co1"># autre code HTML</span>
-<span class="br0">}</span></pre>
+  <span class="kw2">use</span> base Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Handler</span><span class="sy0">;</span>
+&nbsp;
+  <span class="kw2">sub</span> init <span class="br0">{</span>
+    <span class="kw1">my</span> <span class="br0">(</span><span class="re0">$self</span><span class="sy0">,</span><span class="re0">$args</span><span class="br0">)</span> <span class="sy0">=</span> <span class="co5">@_</span><span class="sy0">;</span>
+    <span class="re0">$self</span><span class="sy0">-&gt;</span><span class="me1">protection</span><span class="br0">(</span><span class="st_h">'manager'</span><span class="br0">)</span><span class="sy0">;</span>
+    <span class="co1"># See Lemonldap::NG::Common::PSGI for more</span>
+    <span class="sy0">...</span>
+    <span class="co1"># Return a boolean. If false, then error message has to be stored in</span>
+    <span class="co1"># $self-&gt;error</span>
+    <a href="http://perldoc.perl.org/functions/return.html"><span class="kw3">return</span></a> <span class="nu0">1</span><span class="sy0">;</span>
+  <span class="br0">}</span>
+&nbsp;
+  <span class="kw2">sub</span> handler <span class="br0">{</span>
+    <span class="kw1">my</span> <span class="br0">(</span> <span class="re0">$self</span><span class="sy0">,</span> <span class="re0">$req</span> <span class="br0">)</span> <span class="sy0">=</span> <span class="co5">@_</span><span class="sy0">;</span>
+&nbsp;
+    <span class="co1"># Will be called only if authorisated</span>
+    <span class="kw1">my</span> <span class="re0">$userId</span> <span class="sy0">=</span> <span class="re0">$self</span><span class="sy0">-&gt;</span><span class="me1">userId</span><span class="sy0">;</span>
+    <span class="sy0">...</span>
+    <span class="re0">$self</span><span class="sy0">-&gt;</span><span class="me1">sendJSONresponse</span><span class="br0">(</span><span class="sy0">...</span><span class="br0">)</span><span class="sy0">;</span>
+  <span class="br0">}</span></pre>
 
 <p>
-On peut tester toute <abbr title="Uniform Resource Locator">URL</abbr> pour voir si elle est protégée en utilisant testUri(). Elle retourne :
+
+Then call this module in a CGI script:
+
+</p>
+<pre class="code perl">  <span class="co1">#!/usr/bin/env perl</span>
+&nbsp;
+  <span class="kw2">use</span> My<span class="sy0">::</span><span class="me2">PSGI</span><span class="sy0">;</span>
+  <span class="kw2">use</span> Plack<span class="sy0">::</span><span class="me2">Handler</span><span class="sy0">::</span><span class="me2">FCGI</span><span class="sy0">;</span> <span class="co1"># or Plack::Handler::CGI</span>
+&nbsp;
+  Plack<span class="sy0">::</span><span class="me2">Handler</span><span class="sy0">::</span><span class="me2">FCGI</span><span class="sy0">-&gt;</span><span class="me1">new</span><span class="sy0">-&gt;</span><span class="me1">run</span><span class="br0">(</span> My<span class="sy0">::</span><span class="me2">PSGI</span><span class="sy0">-&gt;</span><span class="me1">run</span><span class="br0">(</span><span class="br0">)</span> <span class="br0">)</span><span class="sy0">;</span></pre>
+
+<p>
+
+The protection parameter must be set when calling the init() method:
+
 </p>
 <ul>
-<li class="level1"><div class="li"> 1 si l'utilisateur est autorisé à y accéder</div>
+<li class="level1"><div class="li"> <code>none</code>: no protection</div>
 </li>
-<li class="level1"><div class="li"> 0 sinon</div>
+<li class="level1"><div class="li"> <code>authenticate</code>: check authentication but do not manage authorization</div>
 </li>
-<li class="level1"><div class="li"> -1 si cette <abbr title="Uniform Resource Locator">URL</abbr> n'est pas connue de la configuration de <abbr title="LemonLDAP::NG">LL::NG</abbr></div>
+<li class="level1"><div class="li"> <code>manager</code>: rely on virtual host configuration in Manager</div>
+</li>
+<li class="level1"><div class="li"> <code>rule: xxx</code>: apply a specific rule  </div>
 </li>
 </ul>
-<pre class="code perl"><span class="kw1">if</span><span class="br0">(</span><span class="re0">$cgi</span><span class="sy0">-&gt;</span><span class="me1">testUri</span><span class="br0">(</span><span class="st_h">'http://test3.example.com/'</span><span class="br0">)</span> <span class="br0">{</span>
-  <a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> <span class="st_h">'&lt;a href="http://test3.example.com/"&gt;click here&lt;/a&gt;'</span><span class="sy0">;</span>
-<span class="br0">}</span></pre>
 
 </div><!-- EDIT6 SECTION "Perl auto-protected CGI" [831-] -->
 </div>

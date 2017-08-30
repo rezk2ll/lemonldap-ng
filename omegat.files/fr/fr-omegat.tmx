@@ -166,14 +166,6 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s13&gt;# OpenID Issuer&lt;/s13&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064415Z" changeid="xavier">
-        <seg>&lt;s13&gt;# Fournisseur d'identité OpenID&lt;/s13&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Installation on RHEL/CentOS with packages</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T080859Z" changeid="xavier">
@@ -308,14 +300,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T163523Z" changeid="xavier">
         <seg>Pour activer le serveur FastCGI au démarrage, copie le script &lt;c0&gt;llng-fastcgi-server&lt;/c0&gt; installé dans INITDIR (défaut &lt;c1&gt;/usr/local/lemonldap-ng/etc/init.d/&lt;/c1&gt;) dans &lt;c2&gt;/etc/init.d&lt;/c2&gt; et l'activer (liens vers &lt;c3&gt;/etc/rc&lt;e4&gt;x&lt;/e4&gt;.d&lt;/c3&gt;).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>AuthCAS</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T140916Z" changeid="guimard">
-        <seg>AuthCAS</seg>
       </tuv>
     </tu>
     <tu>
@@ -526,14 +510,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T062223Z" changeid="guimard">
         <seg>ldapGroupBase</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg># SAML2 Issuer</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T081807Z" changeid="xavier">
-        <seg># Fournisseur d'identité SAML2</seg>
       </tuv>
     </tu>
     <tu>
@@ -986,14 +962,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Issuer rewrite rules:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T081757Z" changeid="xavier">
-        <seg>Régles de réécriture des IdP</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>They will be tested in the specified order.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184457Z" changeid="xavier">
@@ -1062,14 +1030,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T115226Z" changeid="xavier">
         <seg>dwho</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg># OpenID Issuer</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T081829Z" changeid="xavier">
-        <seg># Fournisseur d'identité OpenID</seg>
       </tuv>
     </tu>
     <tu>
@@ -1234,14 +1194,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s4&gt;RewriteRule&lt;/s4&gt; ^/saml/metadata /metadata.pl</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064350Z" changeid="xavier">
-        <seg>&lt;s4&gt;RewriteRule&lt;/s4&gt; ^/saml/metadata /metadata.pl</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You can find some configuration tips &lt;a0&gt;on this page&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T130222Z" changeid="xavier">
@@ -1298,30 +1250,10 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Net::OpenID::Consumer &gt; 1.00</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T140919Z" changeid="guimard">
-        <seg>Net::OpenID::Consumer &gt; 1.00</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>ldapPasswordResetAttribute</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063230Z" changeid="guimard">
         <seg>ldapPasswordResetAttribute</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg># LemonLDAP::NG repository
-deb     http://lemonldap-ng.org/deb stable main
-deb-src http://lemonldap-ng.org/deb stable main</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T205552Z" changeid="xavier">
-        <seg># Dépôt LemonLDAP::NG
-deb     http://lemonldap-ng.org/deb stable main
-deb-src http://lemonldap-ng.org/deb stable main</seg>
       </tuv>
     </tu>
     <tu>
@@ -2508,14 +2440,6 @@ make debian-packages</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg># SOAP functions for sessions access (disabled by default)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T081719Z" changeid="xavier">
-        <seg># Fonctions SOAP pour l'accès aux sessions (désactivées par défaut)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s168&gt;)&lt;/s168&gt;&lt;s169&gt;;&lt;/s169&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112335Z" changeid="xavier">
@@ -2544,16 +2468,6 @@ make debian-packages</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072340Z" changeid="xavier">
         <seg>lemonldapng</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;# SOAP functions for configuration access (disabled by default)&lt;/s0&gt;
-&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/config&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T170633Z" changeid="xavier">
-        <seg>&lt;s0&gt;# SOAP functions for configuration access (disabled by default)&lt;/s0&gt;
-&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/config&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -2686,14 +2600,6 @@ make debian-packages</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;&lt;s9&gt;Location&lt;/s9&gt; /index.pl/sessions&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064139Z" changeid="xavier">
-        <seg>&lt;&lt;s9&gt;Location&lt;/s9&gt; /index.pl/sessions&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>$authenticationLevel &gt; 2</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T054120Z" changeid="xavier">
@@ -2774,16 +2680,6 @@ make debian-packages</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;/&lt;s6&gt;IfModule&lt;/s6&gt;&gt;
- </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064352Z" changeid="xavier">
-        <seg>&lt;/&lt;s6&gt;IfModule&lt;/s6&gt;&gt;
- </seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>The servers and URLs can be configured in Manager, &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;reload configuration URLs&lt;/c1&gt;: keys are server names or &lt;a2&gt;IP&lt;/a2&gt; the requests will be sent to, and values are the requested URLs.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T082723Z" changeid="xavier">
@@ -2848,14 +2744,6 @@ make debian-packages</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>The new password is sent to user</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T145904Z" changeid="guimard">
-        <seg>Le nouveau mot-de-passe est envoyé à l'utilisateur</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>##################################
  </seg>
       </tuv>
@@ -2878,16 +2766,6 @@ make debian-packages</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111210T073647Z" changeid="xavier">
         <seg>Liferay</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s4&gt;RewriteRule&lt;/s4&gt; ^/saml/.* /index.pl
-&lt;/&lt;s5&gt;IfModule&lt;/s5&gt;&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>&lt;s4&gt;RewriteRule&lt;/s4&gt; ^/saml/.* /index.pl
-&lt;/&lt;s5&gt;IfModule&lt;/s5&gt;&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3048,14 +2926,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s3&gt;RewriteRule&lt;/s3&gt; ^/saml/metadata /metadata.pl</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>&lt;s3&gt;RewriteRule&lt;/s3&gt; ^/saml/metadata /metadata.pl</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Configuration database</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T081400Z" changeid="xavier">
@@ -3076,22 +2946,6 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081020Z" changeid="xavier">
         <seg>Aller dans le manager et &lt;a0&gt;créer un nouvel hôte virtuel&lt;/a0&gt; pour Sympa.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Issuer rewrite rules (requires &lt;c0&gt;mod_rewrite&lt;/c0&gt;):</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064327Z" changeid="xavier">
-        <seg>Règles de réécriture pour la fourniture d'identité (requiert &lt;c0&gt;mod_rewrite&lt;/c0&gt;):</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;/&lt;s31&gt;Location&lt;/s31&gt;&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064243Z" changeid="xavier">
-        <seg>&lt;/&lt;s31&gt;Location&lt;/s31&gt;&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3680,14 +3534,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Then you can access to user datas</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141135Z" changeid="xavier">
-        <seg>On peut ensuite accéder aux données de l'utilisateur</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Handler</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4140,14 +3986,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s21&gt;Allow&lt;/s21&gt; from &lt;s22&gt;all&lt;/s22&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T171640Z" changeid="xavier">
-        <seg>&lt;s21&gt;Allow&lt;/s21&gt; from &lt;s22&gt;all&lt;/s22&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Prefer then the other solutions (see below).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093342Z" changeid="xavier">
@@ -4344,14 +4182,6 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous devez utiliser une version récente de Lasso (&gt;= 2.3.0).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s5&gt;Allow&lt;/s5&gt; from &lt;s6&gt;all&lt;/s6&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064858Z" changeid="xavier">
-        <seg>&lt;s5&gt;Allow&lt;/s5&gt; from &lt;s6&gt;all&lt;/s6&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -4868,14 +4698,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Rewrite rules must have been activated in &lt;a0&gt;Apache portal configuration&lt;/a0&gt; or in &lt;a1&gt;Nginx portal configuration&lt;/a1&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T200541Z" changeid="xavier">
-        <seg>Le module Rewrite d'Apache doit être activé dans la &lt;a0&gt;configuration Apache du portail&lt;/a0&gt; ou dans la &lt;a1&gt;configuration du portail Nginx&lt;/a1&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Logo&lt;/s0&gt;: file name to use as logo</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T135155Z" changeid="guimard">
@@ -4960,14 +4782,6 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T083924Z" changeid="xavier">
         <seg>'namespace' =&gt; 'MyNamespace'?</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>SOAP end points (inactivated by default):</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T080433Z" changeid="xavier">
-        <seg>Points d'accès SOAP (désactivés par défaut) :</seg>
       </tuv>
     </tu>
     <tu>
@@ -5340,14 +5154,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s11&gt;RewriteRule&lt;/s11&gt; ^/cas/.* /index.pl</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064404Z" changeid="xavier">
-        <seg>&lt;s11&gt;RewriteRule&lt;/s11&gt; ^/cas/.* /index.pl</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Register LemonLDAP::NG on partner Identity Provider</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220915Z" changeid="xavier">
@@ -5684,16 +5490,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;/&lt;s23&gt;Location&lt;/s23&gt;&gt;
- </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064212Z" changeid="xavier">
-        <seg>&lt;/&lt;s23&gt;Location&lt;/s23&gt;&gt;
- </seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T161731Z" changeid="xavier">
@@ -5992,22 +5788,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Some Perl optimizations:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T080454Z" changeid="xavier">
-        <seg>Quelques optimisations Perl :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You can test any &lt;a0&gt;URL&lt;/a0&gt; to see if it's protected using testUri().</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141553Z" changeid="xavier">
-        <seg>On peut tester toute &lt;a0&gt;URL&lt;/a0&gt; pour voir si elle est protégée en utilisant testUri().</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Local cache parameters</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063326Z" changeid="guimard">
@@ -6274,14 +6054,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>It returns:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141602Z" changeid="xavier">
-        <seg>Elle retourne :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Zimbra Handler parameters</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T180851Z" changeid="xavier">
@@ -6318,14 +6090,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113027Z" changeid="xavier">
         <seg>Il est nécessaire d'exporter le mot-de-passe, qui peut être le mot-de-passe principal de l'utilisateur (si &lt;a0&gt;le mot-de-passe est stocké dans la session&lt;/a0&gt;, ou n'importe quel attribut utilisateur (si d'autres mots-de-passe sont stockés dans la base de données des utilisateurs).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>https://github.com/9h37/django-lemonldap</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120507T182638Z" changeid="xavier">
-        <seg>https://github.com/9h37/django-lemonldap</seg>
       </tuv>
     </tu>
     <tu>
@@ -6422,14 +6186,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Déconnexion</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s7&gt;# Uncomment this line if you use portal SOAP capabilities&lt;/s7&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064705Z" changeid="xavier">
-        <seg>&lt;s7&gt;# Décommenter cette ligne si les fonctions SOAP du portail sont utilisées&lt;/s7&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -7024,14 +6780,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s4&gt;Order&lt;/s4&gt; &lt;s5&gt;allow&lt;/s5&gt;,&lt;s6&gt;deny&lt;/s6&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T155335Z" changeid="xavier">
-        <seg>&lt;s4&gt;Order&lt;/s4&gt; &lt;s5&gt;allow&lt;/s5&gt;,&lt;s6&gt;deny&lt;/s6&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>The content of the SVN tarball is not the same as the official tarball.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160155Z" changeid="xavier">
@@ -7168,26 +6916,10 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s1&gt;RewriteEngine&lt;/s1&gt; &lt;s2&gt;On&lt;/s2&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>&lt;s1&gt;RewriteEngine&lt;/s1&gt; &lt;s2&gt;On&lt;/s2&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Optimized&lt;/s0&gt; for &lt;a1&gt;session explorer&lt;/a1&gt; and &lt;a2&gt;single session&lt;/a2&gt; features.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082351Z" changeid="xavier">
         <seg>&lt;s0&gt;Optimisé&lt;/s0&gt; pour l'&lt;a1&gt;explorateur de sessions&lt;/a1&gt; et les fonctionnalités de &lt;a2&gt;session unique&lt;/a2&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>authorize: check if user is authorizated to access to this &lt;a0&gt;URL&lt;/a0&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141102Z" changeid="xavier">
-        <seg>authorize : vérifie si l'utilisateur est autorisé à accèder à cette &lt;a0&gt;URL&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -7816,14 +7548,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;&lt;s0&gt;IfModule&lt;/s0&gt; mod_rewrite.c&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>&lt;&lt;s0&gt;IfModule&lt;/s0&gt; mod_rewrite.c&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;a63&gt;&lt;s64&gt;print&lt;/s64&gt;&lt;/a63&gt; &lt;s65&gt;&quot;$res notification(s) have been inserted&lt;s66&gt;\n&lt;/s66&gt;&quot;&lt;/s65&gt;&lt;s67&gt;;&lt;/s67&gt;
 &lt;s68&gt;}&lt;/s68&gt;</seg>
       </tuv>
@@ -7854,14 +7578,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190453Z" changeid="xavier">
         <seg>Copier &lt;c0&gt;ValveLemonLDAPNG.jar&lt;/c0&gt; dans &lt;c1&gt;&lt;TOMCAT_HOME&gt;/server/lib&lt;/c1&gt;:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>screenshots:1.1:mailreset:mailreset_step1.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T145520Z" changeid="guimard">
-        <seg>screenshots:1.1:mailreset:mailreset_step1.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -8332,14 +8048,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T134456Z" changeid="guimard">
         <seg>&lt;s0&gt;Changement de mot-de-passe&lt;/s0&gt; : formulaire de changement de mot-de-passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s18&gt;Order&lt;/s18&gt; &lt;s19&gt;deny&lt;/s19&gt;,&lt;s20&gt;allow&lt;/s20&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064210Z" changeid="xavier">
-        <seg>&lt;s18&gt;Order&lt;/s18&gt; &lt;s19&gt;deny&lt;/s19&gt;,&lt;s20&gt;allow&lt;/s20&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -9142,14 +8850,6 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s11&gt;# Perl script&lt;/s11&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T063917Z" changeid="xavier">
-        <seg>&lt;s11&gt;# Perl script&lt;/s11&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Crypt::OpenSSL::RSA</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140849Z" changeid="guimard">
@@ -9542,14 +9242,6 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s18&gt;DirectoryIndex&lt;/s18&gt; index.pl index.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T063925Z" changeid="xavier">
-        <seg>&lt;s18&gt;DirectoryIndex&lt;/s18&gt; index.pl index.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;a0&gt;SAML&lt;/a0&gt; token</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T131306Z" changeid="xavier">
@@ -9840,18 +9532,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;# Best performance under ModPerl::Registry&lt;/s0&gt;
-&lt;s1&gt;# Uncomment this to increase performance of Portal&lt;/s1&gt;
-&lt;Perl&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064535Z" changeid="xavier">
-        <seg>&lt;s0&gt;# Meilleures performances sous ModPerl::Registry&lt;/s0&gt;
-&lt;s1&gt;# A décommenter pour augmenter les performances du portail&lt;/s1&gt;
-&lt;Perl&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Authorizated domain&lt;/s0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050124Z" changeid="xavier">
@@ -9904,6 +9584,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T054048Z" changeid="xavier">
         <seg>&lt;s0&gt;Règle d'utilisation&lt;/s0&gt; : une règle pour autoriser l'usage de ce module, mettre 1 pour toujours l'autoriser.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;/&lt;s8&gt;Directory&lt;/s8&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T142942Z" changeid="xavier">
+        <seg>&lt;/&lt;s8&gt;Directory&lt;/s8&gt;&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -9968,14 +9656,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T210554Z" changeid="xavier">
         <seg>Pour Debian/Ubuntu avec Apache2, utiliser :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s7&gt;# CAS Issuer&lt;/s7&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064402Z" changeid="xavier">
-        <seg>&lt;s7&gt;# Fournisseur d'identité CAS&lt;/s7&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -10060,14 +9740,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T084417Z" changeid="xavier">
         <seg>_lastAuthnUTime</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>authenticate: check if user is authenticated; if not, redirect it to the portal</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141033Z" changeid="xavier">
-        <seg>authenticate : vérifie que l'utilisateur est authentifié ; sinon, il est redirigé vers le portail</seg>
       </tuv>
     </tu>
     <tu>
@@ -10364,14 +10036,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095009Z" changeid="xavier">
         <seg>Les fichiers de configuration Apache se trouvent dans /etc/lemonldap-ng et liés dans /etc/apache2/sites-available</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Be sure that mod_rewrite is installed and that SAML2 rewrite rules are activated in &lt;a0&gt;Apache portal configuration&lt;/a0&gt;:</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Assurez-vous que mod_rewrite est installé et que les règles de réécriture SAML2 sont activées dans la &lt;a0&gt;configuration Apache du portail&lt;/a0&gt;:</seg>
       </tuv>
     </tu>
     <tu>
@@ -10684,14 +10348,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T151828Z" changeid="guimard">
         <seg>&lt;s0&gt;Clef de session contenant l'adresse mail&lt;/s0&gt; : nom de la clef de session contenant l'adresse de courriel.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s7&gt;Allow&lt;/s7&gt; from &lt;s8&gt;all&lt;/s8&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T155336Z" changeid="xavier">
-        <seg>&lt;s7&gt;Allow&lt;/s7&gt; from &lt;s8&gt;all&lt;/s8&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -11312,14 +10968,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;&lt;s1&gt;IfModule&lt;/s1&gt; mod_rewrite.c&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064349Z" changeid="xavier">
-        <seg>&lt;&lt;s1&gt;IfModule&lt;/s1&gt; mod_rewrite.c&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Configure local cache first.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112917Z" changeid="xavier">
@@ -11684,16 +11332,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;type&lt;/s0&gt;         &lt;s1&gt;=&lt;/s1&gt;&lt;s2&gt; SOAP&lt;/s2&gt;
-&lt;s3&gt;proxy&lt;/s3&gt;        &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; https://auth.example.com/index.pl/config&lt;/s5&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T170704Z" changeid="xavier">
-        <seg>&lt;s0&gt;type&lt;/s0&gt;         &lt;s1&gt;=&lt;/s1&gt;&lt;s2&gt; SOAP&lt;/s2&gt;
-&lt;s3&gt;proxy&lt;/s3&gt;        &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; https://auth.example.com/index.pl/config&lt;/s5&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>mailOnPasswordChange</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065853Z" changeid="guimard">
@@ -12000,14 +11638,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;&lt;s17&gt;Location&lt;/s17&gt; /index.pl/config&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064210Z" changeid="xavier">
-        <seg>&lt;&lt;s17&gt;Location&lt;/s17&gt; /index.pl/config&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;ldapAttributeId&lt;/s0&gt;: RDN attribute of configuration entry (optional)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160302T061017Z" changeid="xavier">
@@ -12244,22 +11874,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120502T041956Z" changeid="xavier">
         <seg>&lt;s0&gt;Thursday, 25-Apr-1999 00:40:33 GMT&lt;/s0&gt; : jusqu'à la date indiquée (généralement une mauvaise idée)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;# SAML2 Issuer&lt;/s0&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064349Z" changeid="xavier">
-        <seg>&lt;s0&gt;# Fournisseur d'identité SAML2&lt;/s0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s29&gt;Allow&lt;/s29&gt; from &lt;s30&gt;all&lt;/s30&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T171643Z" changeid="xavier">
-        <seg>&lt;s29&gt;Allow&lt;/s29&gt; from &lt;s30&gt;all&lt;/s30&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12556,14 +12170,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T213054Z" changeid="xavier">
         <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir SSL pour l'authentification.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;&lt;s25&gt;Location&lt;/s25&gt; /index.pl/notification&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064240Z" changeid="xavier">
-        <seg>&lt;&lt;s25&gt;Location&lt;/s25&gt; /index.pl/notification&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13400,14 +13006,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>qw(delete &lt;s3&gt;header&lt;/s3&gt; cache read_from_client cookie &lt;s4&gt;redirect&lt;/s4&gt; unescapeHTML));</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064546Z" changeid="xavier">
-        <seg>qw(delete &lt;s3&gt;header&lt;/s3&gt; cache read_from_client cookie &lt;s4&gt;redirect&lt;/s4&gt; unescapeHTML));</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>X509</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13558,14 +13156,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Nom affiché (display name)&lt;/s0&gt; : peut être affiché par le fournisseur d'identité (IDP), this is often your society name</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;&lt;s17&gt;IfModule&lt;/s17&gt; mod_dir.c&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T063925Z" changeid="xavier">
-        <seg>&lt;&lt;s17&gt;IfModule&lt;/s17&gt; mod_dir.c&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -14002,14 +13592,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>screenshots:1.1:mailreset:mailreset_step4.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T145743Z" changeid="guimard">
-        <seg>screenshots:1.1:mailreset:mailreset_step4.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Apache &lt;a0&gt;SetEnvIf module&lt;/a0&gt; will let you transform the Auth-User HTTP header in &lt;c1&gt;REMOTE_USER&lt;/c1&gt; environment variable:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T200126Z" changeid="xavier">
@@ -14222,14 +13804,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Code to replace:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141110Z" changeid="xavier">
-        <seg>Code à remplacer :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>The &lt;a0&gt;SSO&lt;/a0&gt; cookie is build by the portal (as described in the &lt;a1&gt;login kinematic&lt;/a1&gt;), or by the Handler for cross domain authentication (see &lt;a2&gt;CDA kinematic&lt;/a2&gt;).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120424T040421Z" changeid="xavier">
@@ -14306,22 +13880,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T211840Z" changeid="xavier">
         <seg>Il est recommandé d'utilisé NTP à cet effet.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s10&gt;Order&lt;/s10&gt; &lt;s11&gt;deny&lt;/s11&gt;,&lt;s12&gt;allow&lt;/s12&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064140Z" changeid="xavier">
-        <seg>&lt;s10&gt;Order&lt;/s10&gt; &lt;s11&gt;deny&lt;/s11&gt;,&lt;s12&gt;allow&lt;/s12&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>CAS (authentication module)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T140913Z" changeid="guimard">
-        <seg>CAS (module d'authentification)</seg>
       </tuv>
     </tu>
     <tu>
@@ -14734,14 +14292,6 @@ server {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>New code:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141116Z" changeid="xavier">
-        <seg>Nouveau code:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Handler performance</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14770,14 +14320,6 @@ server {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T085527Z" changeid="xavier">
         <seg>Si certains des serveurs ne se trouvent pas sur le même réseau (securisé) que la même base de données, il est recommandé d'utiliser &lt;a3&gt;l'accès SOAP&lt;/a3&gt; pour ces serveurs.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg># SOAP functions for configuration access (disabled by default)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T081647Z" changeid="xavier">
-        <seg># Fonctions SOAP pour accéder à la configuration (désactivées par défaut)</seg>
       </tuv>
     </tu>
     <tu>
@@ -15256,20 +14798,6 @@ server {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;my&lt;/s0&gt; &lt;s1&gt;$cgi&lt;/s1&gt; &lt;s2&gt;=&lt;/s2&gt; Lemonldap&lt;s3&gt;::&lt;/s3&gt;&lt;s4&gt;NG&lt;/s4&gt;&lt;s5&gt;::&lt;/s5&gt;&lt;s6&gt;Handler&lt;/s6&gt;&lt;s7&gt;::&lt;/s7&gt;&lt;s8&gt;CGI&lt;/s8&gt;&lt;s9&gt;-&gt;&lt;/s9&gt;&lt;s10&gt;new&lt;/s10&gt; &lt;s11&gt;(&lt;/s11&gt;&lt;s12&gt;{&lt;/s12&gt;&lt;s13&gt;}&lt;/s13&gt;&lt;s14&gt;)&lt;/s14&gt;&lt;s15&gt;;&lt;/s15&gt;
-&lt;s16&gt;$cgi&lt;/s16&gt;&lt;s17&gt;-&gt;&lt;/s17&gt;&lt;s18&gt;authenticate&lt;/s18&gt;&lt;s19&gt;(&lt;/s19&gt;&lt;s20&gt;)&lt;/s20&gt;&lt;s21&gt;;&lt;/s21&gt;
-&lt;s22&gt;$cgi&lt;/s22&gt;&lt;s23&gt;-&gt;&lt;/s23&gt;&lt;s24&gt;authorize&lt;/s24&gt;&lt;s25&gt;(&lt;/s25&gt;&lt;s26&gt;)&lt;/s26&gt;&lt;s27&gt;;&lt;/s27&gt;
-&lt;s28&gt;...&lt;/s28&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141119Z" changeid="xavier">
-        <seg>&lt;s0&gt;my&lt;/s0&gt; &lt;s1&gt;$cgi&lt;/s1&gt; &lt;s2&gt;=&lt;/s2&gt; Lemonldap&lt;s3&gt;::&lt;/s3&gt;&lt;s4&gt;NG&lt;/s4&gt;&lt;s5&gt;::&lt;/s5&gt;&lt;s6&gt;Handler&lt;/s6&gt;&lt;s7&gt;::&lt;/s7&gt;&lt;s8&gt;CGI&lt;/s8&gt;&lt;s9&gt;-&gt;&lt;/s9&gt;&lt;s10&gt;new&lt;/s10&gt; &lt;s11&gt;(&lt;/s11&gt;&lt;s12&gt;{&lt;/s12&gt;&lt;s13&gt;}&lt;/s13&gt;&lt;s14&gt;)&lt;/s14&gt;&lt;s15&gt;;&lt;/s15&gt;
-&lt;s16&gt;$cgi&lt;/s16&gt;&lt;s17&gt;-&gt;&lt;/s17&gt;&lt;s18&gt;authenticate&lt;/s18&gt;&lt;s19&gt;(&lt;/s19&gt;&lt;s20&gt;)&lt;/s20&gt;&lt;s21&gt;;&lt;/s21&gt;
-&lt;s22&gt;$cgi&lt;/s22&gt;&lt;s23&gt;-&gt;&lt;/s23&gt;&lt;s24&gt;authorize&lt;/s24&gt;&lt;s25&gt;(&lt;/s25&gt;&lt;s26&gt;)&lt;/s26&gt;&lt;s27&gt;;&lt;/s27&gt;
-&lt;s28&gt;...&lt;/s28&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You can also find on this page the SVN tarball if you want to test latest features.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160118Z" changeid="xavier">
@@ -15450,14 +14978,6 @@ server {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T115325Z" changeid="xavier">
         <seg>Comme on peut le voir, ces comptes sont les fameux caractères du show TV &lt;a0&gt;Doctor Who&lt;/a0&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s26&gt;Order&lt;/s26&gt; &lt;s27&gt;deny&lt;/s27&gt;,&lt;s28&gt;allow&lt;/s28&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064240Z" changeid="xavier">
-        <seg>&lt;s26&gt;Order&lt;/s26&gt; &lt;s27&gt;deny&lt;/s27&gt;,&lt;s28&gt;allow&lt;/s28&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -15694,22 +15214,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101135Z" changeid="xavier">
         <seg>(&amp;(sAMAccountName=$user)(objectClass=person))</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;# Get attributes (or macros)&lt;/s0&gt;
-&lt;s1&gt;my&lt;/s1&gt; &lt;s2&gt;$cn&lt;/s2&gt; &lt;s3&gt;=&lt;/s3&gt; &lt;s4&gt;$cgi&lt;/s4&gt;&lt;s5&gt;-&gt;&lt;/s5&gt;&lt;s6&gt;user&lt;/s6&gt;&lt;s7&gt;-&gt;&lt;/s7&gt;&lt;s8&gt;{&lt;/s8&gt;cn&lt;s9&gt;}&lt;/s9&gt;
- 
-&lt;s10&gt;# Test if user is member of a Lemonldap::NG group (or LDAP mapped group)&lt;/s10&gt;
-&lt;s11&gt;if&lt;/s11&gt;&lt;s12&gt;(&lt;/s12&gt; &lt;s13&gt;$cgi&lt;/s13&gt;&lt;s14&gt;-&gt;&lt;/s14&gt;&lt;s15&gt;group&lt;/s15&gt;&lt;s16&gt;(&lt;/s16&gt;&lt;s17&gt;'admin'&lt;/s17&gt;&lt;s18&gt;)&lt;/s18&gt; &lt;s19&gt;)&lt;/s19&gt; &lt;s20&gt;{&lt;/s20&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141252Z" changeid="xavier">
-        <seg>&lt;s0&gt;# Obtenir des attributs (ou macros)&lt;/s0&gt;
-&lt;s1&gt;my&lt;/s1&gt; &lt;s2&gt;$cn&lt;/s2&gt; &lt;s3&gt;=&lt;/s3&gt; &lt;s4&gt;$cgi&lt;/s4&gt;&lt;s5&gt;-&gt;&lt;/s5&gt;&lt;s6&gt;user&lt;/s6&gt;&lt;s7&gt;-&gt;&lt;/s7&gt;&lt;s8&gt;{&lt;/s8&gt;cn&lt;s9&gt;}&lt;/s9&gt;
- 
-&lt;s10&gt;# Tester si l'utilisateur est membre d'un groupe Lemonldap::NG (ou d'un groupe LDAP translaté)&lt;/s10&gt;
-&lt;s11&gt;if&lt;/s11&gt;&lt;s12&gt;(&lt;/s12&gt; &lt;s13&gt;$cgi&lt;/s13&gt;&lt;s14&gt;-&gt;&lt;/s14&gt;&lt;s15&gt;group&lt;/s15&gt;&lt;s16&gt;(&lt;/s16&gt;&lt;s17&gt;'admin'&lt;/s17&gt;&lt;s18&gt;)&lt;/s18&gt; &lt;s19&gt;)&lt;/s19&gt; &lt;s20&gt;{&lt;/s20&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -16074,14 +15578,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T053854Z" changeid="xavier">
         <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules fournisseurs&lt;/c1&gt; et configurer :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;&lt;s8&gt;IfModule&lt;/s8&gt; mod_rewrite.c&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064403Z" changeid="xavier">
-        <seg>&lt;&lt;s8&gt;IfModule&lt;/s8&gt; mod_rewrite.c&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -16776,16 +16272,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;/&lt;s12&gt;IfModule&lt;/s12&gt;&gt;
- </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064405Z" changeid="xavier">
-        <seg>&lt;/&lt;s12&gt;IfModule&lt;/s12&gt;&gt;
- </seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>To allow the manager to reload the configuration, register the reload virtual host name in the hosts of the server:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T042401Z" changeid="xavier">
@@ -16846,14 +16332,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073729Z" changeid="xavier">
         <seg>Aller dans &lt;c0&gt;Portal&lt;/c0&gt; » &lt;c1&gt;Settings&lt;/c1&gt;:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>0 if not</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141630Z" changeid="xavier">
-        <seg>0 sinon</seg>
       </tuv>
     </tu>
     <tu>
@@ -17338,14 +16816,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Mod Perl must be loaded before LemonLDAP::NG, so include configuration after the mod_perl &lt;c0&gt;LoadModule&lt;/c0&gt; directive.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T080417Z" changeid="xavier">
-        <seg>Mod Perl doit être chargé avant LemonLDAP::NG, donc les inclusions aprèsla directive &lt;c0&gt;LoadModule&lt;/c0&gt; de mod_perl.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Local macros</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17678,14 +17148,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You can also use caFile and caPath parameters.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120101T184733Z" changeid="xavier">
-        <seg>On peut également utiliser les paramètres caFile et caPath.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>If the message contains check boxes, the user has to check all of them else he can not access to the portal and get his session cookie.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051949Z" changeid="guimard">
@@ -17786,14 +17248,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063314Z" changeid="guimard">
         <seg>Cache local</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s29&gt;Deny&lt;/s29&gt; from &lt;s30&gt;all&lt;/s30&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064241Z" changeid="xavier">
-        <seg>&lt;s29&gt;Deny&lt;/s29&gt; from &lt;s30&gt;all&lt;/s30&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -17938,14 +17392,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141001Z" changeid="guimard">
         <seg>String::Random</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>1 if user is authorizated to access to it</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141617Z" changeid="xavier">
-        <seg>1 si l'utilisateur est autorisé à y accéder</seg>
       </tuv>
     </tu>
     <tu>
@@ -18366,14 +17812,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s21&gt;Deny&lt;/s21&gt; from &lt;s22&gt;all&lt;/s22&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064211Z" changeid="xavier">
-        <seg>&lt;s21&gt;Deny&lt;/s21&gt; from &lt;s22&gt;all&lt;/s22&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>generic_sso</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081454Z" changeid="xavier">
@@ -18474,14 +17912,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220146Z" changeid="xavier">
         <seg>Dans ce cas, &lt;a1&gt;LL::NG&lt;/a1&gt; agit comme un fournisseur de service SAML2 (SP).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>POD unit tests</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T140936Z" changeid="guimard">
-        <seg>Tests unitaires POD</seg>
       </tuv>
     </tu>
     <tu>
@@ -19086,14 +18516,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Lemonldap::NG::Portal::SharedConf-&gt;compile(</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Lemonldap::NG::Portal::SharedConf-&gt;compile(</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Application parameters:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T135114Z" changeid="guimard">
@@ -19106,14 +18528,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T162756Z" changeid="xavier">
         <seg>Paramètres de la fonction :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s9&gt;RewriteEngine&lt;/s9&gt; &lt;s10&gt;On&lt;/s10&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064403Z" changeid="xavier">
-        <seg>&lt;s9&gt;RewriteEngine&lt;/s9&gt; &lt;s10&gt;On&lt;/s10&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -20146,14 +19560,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s6&gt;require&lt;/s6&gt; Lemonldap::NG::Portal::Menu;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064626Z" changeid="xavier">
-        <seg>&lt;s6&gt;require&lt;/s6&gt; Lemonldap::NG::Portal::Menu;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Core Perl subroutines (split, pop, map, etc.)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T161808Z" changeid="xavier">
@@ -20166,14 +19572,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141539Z" changeid="guimard">
         <seg>Celà signifie qu'on gère les autorisations d'accès aux applications en examinant le(s) rôle(s) de l'utilisateur et en fournissant ce(s) rôle(s) à l'application.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s13&gt;SetHandler&lt;/s13&gt; perl-&lt;s14&gt;script&lt;/s14&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T063921Z" changeid="xavier">
-        <seg>&lt;s13&gt;SetHandler&lt;/s13&gt; perl-&lt;s14&gt;script&lt;/s14&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -20526,14 +19924,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T203859Z" changeid="xavier">
         <seg>Utilisation de IssuerDB</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Digest::HMAC</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T140848Z" changeid="guimard">
-        <seg>Digest::HMAC</seg>
       </tuv>
     </tu>
     <tu>
@@ -20942,14 +20332,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s2&gt;require&lt;/s2&gt; Lemonldap::NG::Portal::SharedConf;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064541Z" changeid="xavier">
-        <seg>&lt;s2&gt;require&lt;/s2&gt; Lemonldap::NG::Portal::SharedConf;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Server host&lt;/s0&gt;: LDAP server hostname or &lt;a1&gt;URI&lt;/a1&gt; (by default: localhost).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T165106Z" changeid="xavier">
@@ -21006,16 +20388,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s8&gt;require&lt;/s8&gt; SOAP::Lite;
-&lt;/Perl&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064708Z" changeid="xavier">
-        <seg>&lt;s8&gt;require&lt;/s8&gt; SOAP::Lite;
-&lt;/Perl&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Radius for authentication.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T120522Z" changeid="xavier">
@@ -21060,14 +20432,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T045902Z" changeid="xavier">
         <seg>Une requête à la base de données des sessions principale est effectuée (via le  &lt;a1&gt;backend de session SOAP&lt;/a1&gt;) pour être sûr que la session existe.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>The Django connector is available on GitHub: &lt;a0&gt;https://github.com/9h37/django-lemonldap&lt;/a0&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120507T182658Z" changeid="xavier">
-        <seg>Le connecteur Django est disponible sur GitHub : &lt;a0&gt;https://github.com/9h37/django-lemonldap&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -21172,14 +20536,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T201309Z" changeid="xavier">
         <seg>Les champs obligatoires sont :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;portal-nginx.conf&lt;/s0&gt;: Portal virtual host, with SOAP and Issuer end points</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T081415Z" changeid="xavier">
-        <seg>&lt;s0&gt;portal-nginx.conf&lt;/s0&gt; : hôte virtuel du portail, incluant les points d'accès SOAP et fournisseur d'identité</seg>
       </tuv>
     </tu>
     <tu>
@@ -21308,14 +20664,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070517Z" changeid="guimard">
         <seg>Stocker le mot-de-passe utilisateur dans la session</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s13&gt;Allow&lt;/s13&gt; from &lt;s14&gt;all&lt;/s14&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T171637Z" changeid="xavier">
-        <seg>&lt;s13&gt;Allow&lt;/s13&gt; from &lt;s14&gt;all&lt;/s14&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -21656,14 +21004,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;# SOAP functions for sessions management (disabled by default)&lt;/s0&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064055Z" changeid="xavier">
-        <seg>&lt;s0&gt;# Gestion des fonctions SOAP functions pour la gestion des sessions (désactivée par défaut)&lt;/s0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Local &lt;a1&gt;SSO&lt;/a1&gt; &lt;a2&gt;URL&lt;/a2&gt; pattern&lt;/s0&gt;: regular expression to match the &lt;a3&gt;SSO&lt;/a3&gt; &lt;a4&gt;URL&lt;/a4&gt; (by default: ^/zimbrasso$)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T181723Z" changeid="xavier">
@@ -21740,14 +21080,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194613Z" changeid="xavier">
         <seg>Module d'authentication</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s16&gt;# Directory index&lt;/s16&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T063924Z" changeid="xavier">
-        <seg>&lt;s16&gt;# Directory index&lt;/s16&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -21902,14 +21234,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>PerlResponseHandler ModPerl::Registry</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T063922Z" changeid="xavier">
-        <seg>PerlResponseHandler ModPerl::Registry</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Postal code</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083113Z" changeid="xavier">
@@ -21994,14 +21318,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T212238Z" changeid="xavier">
         <seg>Configuration du navigateur web</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s16&gt;# SOAP functions for configuration access (disabled by default)&lt;/s16&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064209Z" changeid="xavier">
-        <seg>&lt;s16&gt;# Fonctions SOAP pour accéder à la configuration (désactivées par défaut)&lt;/s16&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -22326,14 +21642,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;if&lt;/s0&gt;&lt;s1&gt;(&lt;/s1&gt;&lt;s2&gt;$cgi&lt;/s2&gt;&lt;s3&gt;-&gt;&lt;/s3&gt;&lt;s4&gt;testUri&lt;/s4&gt;&lt;s5&gt;(&lt;/s5&gt;&lt;s6&gt;'http://test3.example.com/'&lt;/s6&gt;&lt;s7&gt;)&lt;/s7&gt; &lt;s8&gt;{&lt;/s8&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141706Z" changeid="xavier">
-        <seg>&lt;s0&gt;if&lt;/s0&gt;&lt;s1&gt;(&lt;/s1&gt;&lt;s2&gt;$cgi&lt;/s2&gt;&lt;s3&gt;-&gt;&lt;/s3&gt;&lt;s4&gt;testUri&lt;/s4&gt;&lt;s5&gt;(&lt;/s5&gt;&lt;s6&gt;'http://test3.example.com/'&lt;/s6&gt;&lt;s7&gt;)&lt;/s7&gt; &lt;s8&gt;{&lt;/s8&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>sp: SP entity ID</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T205419Z" changeid="xavier">
@@ -22366,14 +21674,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/adminSessions&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064057Z" changeid="xavier">
-        <seg>&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/adminSessions&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;passThrough&lt;/s0&gt; (optional): Allow anonymous access or not.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191206Z" changeid="xavier">
@@ -22382,26 +21682,10 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;&lt;s14&gt;IfModule&lt;/s14&gt; mod_rewrite.c&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064415Z" changeid="xavier">
-        <seg>&lt;&lt;s14&gt;IfModule&lt;/s14&gt; mod_rewrite.c&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>To add these attributes, go in Manager, &lt;c0&gt;Variables&lt;/c0&gt; » &lt;c1&gt;Exported Variables&lt;/c1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T113006Z" changeid="xavier">
         <seg>Pour ajouter ces attributs, aller dans le manager, &lt;c0&gt;Variables&lt;/c0&gt; » &lt;c1&gt;Variables exportées&lt;/c1&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Net::OpenID::Server &gt; 1.00</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T140920Z" changeid="guimard">
-        <seg>Net::OpenID::Server &gt; 1.00</seg>
       </tuv>
     </tu>
     <tu>
@@ -22426,14 +21710,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T082002Z" changeid="xavier">
         <seg>https://metacpan.org/module/Apache::Session::Browseable::Redis</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>-1 if this &lt;a0&gt;URL&lt;/a0&gt; is not known by &lt;a1&gt;LL::NG&lt;/a1&gt; configuration</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141655Z" changeid="xavier">
-        <seg>-1 si cette &lt;a0&gt;URL&lt;/a0&gt; n'est pas connue de la configuration de &lt;a1&gt;LL::NG&lt;/a1&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -22858,14 +22134,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://portal/index.pl/sessions</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T172427Z" changeid="xavier">
-        <seg>http://portal/index.pl/sessions</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;a0&gt;CAS&lt;/a0&gt; force authentication renewal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061120Z" changeid="guimard">
@@ -23002,14 +22270,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;portal-apache2.conf&lt;/s0&gt;: Portal virtual host, with SOAP and Issuer end points</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T080332Z" changeid="xavier">
-        <seg>&lt;s0&gt;portal-apache2.conf&lt;/s0&gt; : hôte virtuel du portail, incluant les points d'accès SOAP et fournisseur d'identité</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>apacheAuthnLevel</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23122,14 +22382,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>screenshots:1.1:mailreset:mailreset_step3.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T145716Z" changeid="guimard">
-        <seg>screenshots:1.1:mailreset:mailreset_step3.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Configure user and password</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120422T100018Z" changeid="xavier">
@@ -23190,14 +22442,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220423Z" changeid="xavier">
         <seg>Certains peuvent être obligatoires, et s'ils ne sont pas retournés par l'IDP, la session n'est pas ouverte.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s17&gt;RewriteRule&lt;/s17&gt; ^/openidserver/.* /index.pl</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064416Z" changeid="xavier">
-        <seg>&lt;s17&gt;RewriteRule&lt;/s17&gt; ^/openidserver/.* /index.pl</seg>
       </tuv>
     </tu>
     <tu>
@@ -23354,14 +22598,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s13&gt;Deny&lt;/s13&gt; from &lt;s14&gt;all&lt;/s14&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064142Z" changeid="xavier">
-        <seg>&lt;s13&gt;Deny&lt;/s13&gt; from &lt;s14&gt;all&lt;/s14&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Chain&lt;/s0&gt;: &lt;a1&gt;DBI&lt;/a1&gt; chain, including database driver name and database name (for example: dbi:mysql:database=lemonldapng;host=localhost).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200714Z" changeid="xavier">
@@ -23470,14 +22706,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T150939Z" changeid="guimard">
         <seg>&lt;s0&gt;Jeu de caractères du courriel&lt;/s0&gt; : jeu de caractère utilisé pour le corps du message (défaut : utf-8)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Email::Date::Format</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T140959Z" changeid="guimard">
-        <seg>Email::Date::Format</seg>
       </tuv>
     </tu>
     <tu>
@@ -24914,14 +24142,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s24&gt;# SOAP functions for notification insertion (disabled by default)&lt;/s24&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064237Z" changeid="xavier">
-        <seg>&lt;s24&gt;# Fonctions SOAP pour insérer des notifications (désactivées par défaut)&lt;/s24&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Debian/Ubuntu</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -25412,14 +24632,6 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s5&gt;RewriteRule&lt;/s5&gt; ^/saml/.* /index.pl</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064351Z" changeid="xavier">
-        <seg>&lt;s5&gt;RewriteRule&lt;/s5&gt; ^/saml/.* /index.pl</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>/usr/share/lemonldap-ng/bin/lemonldap-ng-cli help</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131103T202809Z" changeid="xavier">
@@ -25772,14 +24984,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s15&gt;RewriteEngine&lt;/s15&gt; &lt;s16&gt;On&lt;/s16&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064416Z" changeid="xavier">
-        <seg>&lt;s15&gt;RewriteEngine&lt;/s15&gt; &lt;s16&gt;On&lt;/s16&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>To configure the user identifier in access log, go in Manager, &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Logging&lt;/c1&gt; &gt; &lt;c2&gt;REMOTE_USER&lt;/c2&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T201237Z" changeid="guimard">
@@ -25856,14 +25060,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T181739Z" changeid="xavier">
         <seg>Applications connues pour être supportées</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>screenshots:1.1:mailreset:mailreset_step5.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T145906Z" changeid="guimard">
-        <seg>screenshots:1.1:mailreset:mailreset_step5.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -26076,14 +25272,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s5&gt;# Uncomment this line if you use Lemonldap::NG menu&lt;/s5&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064625Z" changeid="xavier">
-        <seg>&lt;s5&gt;# Décommenter cette ligne si le menu Lemonldap::NG est utilisé&lt;/s5&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Configuration can be stored in several formats (&lt;a0&gt;SQL&lt;/a0&gt;, &lt;a1&gt;File&lt;/a1&gt;, &lt;a2&gt;LDAP&lt;/a2&gt;) but must be shared over the network if you use more than 1 server.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T085411Z" changeid="xavier">
@@ -26250,14 +25438,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064451Z" changeid="guimard">
         <seg>trustedDomains</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg># OpenID Connect Issuer</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T081840Z" changeid="xavier">
-        <seg># Fournisseur d'identité OpenID-Connect</seg>
       </tuv>
     </tu>
     <tu>
@@ -26936,14 +26116,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg># SOAP functions for sessions management (disabled by default)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T081700Z" changeid="xavier">
-        <seg># Fonctions SOAP pour la gestion des sessions (désactivée par défaut)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Yubikey public ID size</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064924Z" changeid="guimard">
@@ -27316,6 +26488,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155206Z" changeid="xavier">
         <seg>http://blog.zimbra.com/blog/archives/2010/06/using-saml-assertions-to-access-zimbra.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Database</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Base de données</seg>
       </tuv>
     </tu>
     <tu>
@@ -28504,14 +27684,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>When you use &lt;a0&gt;SOAP sessions backend&lt;/a0&gt;, it is recommended to use read-only &lt;a1&gt;URL&lt;/a1&gt; (&lt;a2&gt;http://portal/index.pl/sessions&lt;/a2&gt;).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T172514Z" changeid="xavier">
-        <seg>Lorsqu'on utilise le &lt;a0&gt;backend de session SOAP&lt;/a0&gt;, il est recommandé d'utiliser l'&lt;a1&gt;URL&lt;/a1&gt; en lecture seule (&lt;a2&gt;http://portal/index.pl/sessions&lt;/a2&gt;).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Using notification system</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T054116Z" changeid="guimard">
@@ -29410,14 +28582,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;SOAP based&lt;/a0&gt; for client-server software, specific development, …</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T072247Z" changeid="guimard">
-        <seg>&lt;a0&gt;Basé sur SOAP&lt;/a0&gt; pour les logiciels client-serveur, les développements spécifiques, …</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Remote Session backend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064029Z" changeid="guimard">
@@ -29470,14 +28634,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111129T061400Z" changeid="xavier">
         <seg>applications:drupal_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s8&gt;# SOAP functions for sessions access (disabled by default)&lt;/s8&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064138Z" changeid="xavier">
-        <seg>&lt;s8&gt;# Fonctions SOAP pour l'accès aux sessions (désactivées par défaut)&lt;/s8&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -29678,16 +28834,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a9&gt;&lt;s10&gt;print&lt;/s10&gt;&lt;/a9&gt; &lt;s11&gt;'&lt;a href=&quot;http://test3.example.com/&quot;&gt;click here&lt;/a&gt;'&lt;/s11&gt;&lt;s12&gt;;&lt;/s12&gt;
-&lt;s13&gt;}&lt;/s13&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141708Z" changeid="xavier">
-        <seg>&lt;a9&gt;&lt;s10&gt;print&lt;/s10&gt;&lt;/a9&gt; &lt;s11&gt;'&lt;a href=&quot;http://test3.example.com/&quot;&gt;click here&lt;/a&gt;'&lt;/s11&gt;&lt;s12&gt;;&lt;/s12&gt;
-&lt;s13&gt;}&lt;/s13&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You have to grant read/write access for the manager component.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120422T100202Z" changeid="xavier">
@@ -29836,14 +28982,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083112Z" changeid="xavier">
         <seg>Date of birth</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg># CAS Issuer</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T081819Z" changeid="xavier">
-        <seg># Fournisseur d'identité CAS</seg>
       </tuv>
     </tu>
     <tu>
@@ -30208,16 +29346,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;/&lt;s10&gt;Directory&lt;/s10&gt;&gt;
- </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T063916Z" changeid="xavier">
-        <seg>&lt;/&lt;s10&gt;Directory&lt;/s10&gt;&gt;
- </seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Go to the Manager and &lt;a0&gt;create a new virtual host&lt;/a0&gt; for Drupal.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111201T125025Z" changeid="xavier">
@@ -30262,18 +29390,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T062836Z" changeid="xavier">
         <seg>&lt;s0&gt;Forcer l'UTF-8&lt;/s0&gt; : force la conversion UTF-8 des valeurs d'attributs collectées depuis l'IDP.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s21&gt;# special html code for admins&lt;/s21&gt;
-&lt;s22&gt;}&lt;/s22&gt;
-&lt;s23&gt;else&lt;/s23&gt; &lt;s24&gt;{&lt;/s24&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141320Z" changeid="xavier">
-        <seg>&lt;s21&gt;# code html spécial pour les administrateurs&lt;/s21&gt;
-&lt;s22&gt;}&lt;/s22&gt;
-&lt;s23&gt;else&lt;/s23&gt; &lt;s24&gt;{&lt;/s24&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -30482,14 +29598,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172135Z" changeid="xavier">
         <seg>Ne pas oblier d'ajouter OBM dans le &lt;a0&gt;menu des applications&lt;/a0&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;&lt;s12&gt;Files&lt;/s12&gt; *.pl&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T063918Z" changeid="xavier">
-        <seg>&lt;&lt;s12&gt;Files&lt;/s12&gt; *.pl&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -30968,16 +30076,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;my&lt;/s0&gt; &lt;s1&gt;$cgi&lt;/s1&gt; &lt;s2&gt;=&lt;/s2&gt; &lt;s3&gt;new&lt;/s3&gt; CGI&lt;s4&gt;;&lt;/s4&gt;
-&lt;s5&gt;...&lt;/s5&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141111Z" changeid="xavier">
-        <seg>&lt;s0&gt;my&lt;/s0&gt; &lt;s1&gt;$cgi&lt;/s1&gt; &lt;s2&gt;=&lt;/s2&gt; &lt;s3&gt;new&lt;/s3&gt; CGI&lt;s4&gt;;&lt;/s4&gt;
-&lt;s5&gt;...&lt;/s5&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s15&gt;# Uncomment this to activate status module&lt;/s15&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T081248Z" changeid="xavier">
@@ -31018,14 +30116,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s2&gt;RewriteEngine&lt;/s2&gt; &lt;s3&gt;On&lt;/s3&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064350Z" changeid="xavier">
-        <seg>&lt;s2&gt;RewriteEngine&lt;/s2&gt; &lt;s3&gt;On&lt;/s3&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Reply address</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063340Z" changeid="guimard">
@@ -31038,14 +30128,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065446Z" changeid="guimard">
         <seg>secureTokenHeader</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;/&lt;s19&gt;IfModule&lt;/s19&gt;&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T063926Z" changeid="xavier">
-        <seg>&lt;/&lt;s19&gt;IfModule&lt;/s19&gt;&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -31094,14 +30176,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T061249Z" changeid="xavier">
         <seg>Voir &lt;a0&gt;https://developers.facebook.com/apps&lt;/a0&gt; pour en savoir plus.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Authen::SASL</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T141004Z" changeid="guimard">
-        <seg>Authen::SASL</seg>
       </tuv>
     </tu>
     <tu>
@@ -31502,14 +30576,6 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>screenshots:1.1:mailreset:mailreset_step2.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T145623Z" changeid="guimard">
-        <seg>screenshots:1.1:mailreset:mailreset_step2.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Configuration objects use standard object class: &lt;c0&gt;applicationProcess&lt;/c0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120411T042152Z" changeid="xavier">
@@ -31602,16 +30668,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T221013Z" changeid="xavier">
         <seg>http://auth.example.com/saml/metadata</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s25&gt;# another HTML code&lt;/s25&gt;
-&lt;s26&gt;}&lt;/s26&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T141343Z" changeid="xavier">
-        <seg>&lt;s25&gt;# autre code HTML&lt;/s25&gt;
-&lt;s26&gt;}&lt;/s26&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -31724,24 +30780,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T080031Z" changeid="guimard">
         <seg>&lt;s0&gt;Protection anti-iframe&lt;/s0&gt; : ferme la frame parente pour éviter des attaques bien connues</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg># SOAP functions for notification insertion (disabled by default)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T081739Z" changeid="xavier">
-        <seg># Fonctions SOAP pour insérer des notifications (désactivées par défaut)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;/&lt;s15&gt;Files&lt;/s15&gt;&gt;
- </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T063923Z" changeid="xavier">
-        <seg>&lt;/&lt;s15&gt;Files&lt;/s15&gt;&gt;
- </seg>
       </tuv>
     </tu>
     <tu>
@@ -31974,16 +31012,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T143817Z" changeid="guimard">
         <seg>&lt;s0&gt;Port&lt;/s0&gt; : port de l'application (par défaut, 80 pour http, 443 pour https)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;/&lt;s7&gt;Location&lt;/s7&gt;&gt;
- </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064100Z" changeid="xavier">
-        <seg>&lt;/&lt;s7&gt;Location&lt;/s7&gt;&gt;
- </seg>
       </tuv>
     </tu>
     <tu>
@@ -32272,16 +31300,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T182719Z" changeid="xavier">
         <seg>Voir le README pour l'installer et le configurer.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;/&lt;s15&gt;Location&lt;/s15&gt;&gt;
- </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064143Z" changeid="xavier">
-        <seg>&lt;/&lt;s15&gt;Location&lt;/s15&gt;&gt;
- </seg>
       </tuv>
     </tu>
     <tu>

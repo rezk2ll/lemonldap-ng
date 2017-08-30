@@ -136,7 +136,21 @@ Ajouter ces dépôts YUM pour obtenir les paquets récents :
 <pre class="code">vi /etc/yum.repos.d/lemonldap-ng.repo</pre>
 <pre class="file">[lemonldap-ng]
 name=LemonLDAP::NG packages
-baseurl=http://lemonldap-ng.org/rpm7/
+baseurl=https://lemonldap-ng.org/redhat/stable/$releasever/noarch
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</pre>
+<div class="notetip">Replace <code>stable</code> by <code>2.0</code> to avoid upgrade to next major version
+
+</div>
+<p>
+
+You may also need some extras packages, available here:
+
+</p>
+<pre class="file">[lemonldap-ng-extras]
+name=LemonLDAP::NG extra packages
+baseurl=https://lemonldap-ng.org/redhat/extras/$releasever
 enabled=1
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</pre>
@@ -148,7 +162,7 @@ Lancer ceci pour rafraîchir le cache :
 <div class="notewarning">Il faut également installer le dépôt EPEL pour les dépendances ne faisant pas partie du core. Voir le chapître <a href="prereq.html#yum" class="wikilink1" title="documentation:2.0:prereq">pré-requis et dépendances</a>.
 
 </div>
-</div><!-- EDIT4 SECTION "YUM repository" [1083-1606] -->
+</div><!-- EDIT4 SECTION "YUM repository" [1083-1976] -->
 
 <h3 class="sectionedit5" id="manual_download">Téléchargement manuel</h3>
 <div class="level3">
@@ -157,7 +171,7 @@ Lancer ceci pour rafraîchir le cache :
 Les paquets RPM sont disponibles sur la <a href="download.html" class="wikilink1" title="Téléchargement">page de téléchargement</a>.
 </p>
 
-</div><!-- EDIT5 SECTION "Manual download" [1607-1689] -->
+</div><!-- EDIT5 SECTION "Manual download" [1977-2059] -->
 
 <h2 class="sectionedit6" id="package_gpg_signature">Signature GPG des paquets</h2>
 <div class="level2">
@@ -171,12 +185,12 @@ L'installer pour certifier les RPMs:
 </p>
 <pre class="code">rpm --import rpm-gpg-key-ow2</pre>
 
-</div><!-- EDIT6 SECTION "Package GPG signature" [1690-1855] -->
+</div><!-- EDIT6 SECTION "Package GPG signature" [2060-2225] -->
 
 <h2 class="sectionedit7" id="install_packages">Installer les paquets</h2>
 <div class="level2">
 
-</div><!-- EDIT7 SECTION "Install packages" [1856-1885] -->
+</div><!-- EDIT7 SECTION "Install packages" [2226-2255] -->
 
 <h3 class="sectionedit8" id="with_yum">Avec YUM</h3>
 <div class="level3">
@@ -191,7 +205,7 @@ On peut aussi utiliser yum sur des fichiers RPMs locaux :
 </p>
 <pre class="code">yum localinstall lemonldap-ng-* perl-Lemonldap-NG-*</pre>
 
-</div><!-- EDIT8 SECTION "With YUM" [1886-2109] -->
+</div><!-- EDIT8 SECTION "With YUM" [2256-2479] -->
 
 <h3 class="sectionedit9" id="with_rpm">Avec RPM</h3>
 <div class="level3">
@@ -210,12 +224,12 @@ Installer le paquet <code>lemonldap-ng-conf</code> sur tous les serveurs qui con
 </p>
 
 </div>
-</div><!-- EDIT9 SECTION "With RPM" [2110-2577] -->
+</div><!-- EDIT9 SECTION "With RPM" [2480-2947] -->
 
 <h2 class="sectionedit10" id="first_configuration_steps">Premiers pas de configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT10 SECTION "First configuration steps" [2578-2616] -->
+</div><!-- EDIT10 SECTION "First configuration steps" [2948-2986] -->
 
 <h3 class="sectionedit11" id="change_default_dns_domain">Changer le domaine DNS par défaut</h3>
 <div class="level3">
@@ -223,9 +237,9 @@ Installer le paquet <code>lemonldap-ng-conf</code> sur tous les serveurs qui con
 <p>
 Par défaut, le domaine <abbr title="Domain Name System">DNS</abbr> est <code>example.com</code>. On peut le changer rapidement par une commande sed. Par exemple, pour le changer en <code>ow2.org</code>:
 </p>
-<pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1.js /var/lib/lemonldap-ng/test/index.pl</pre>
+<pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1.json /var/lib/lemonldap-ng/test/index.pl</pre>
 
-</div><!-- EDIT11 SECTION "Change default DNS domain" [2617-2934] -->
+</div><!-- EDIT11 SECTION "Change default DNS domain" [2987-3306] -->
 
 <h3 class="sectionedit12" id="reload_virtual_host">Recharger l'hôte virtuel</h3>
 <div class="level3">
@@ -236,7 +250,7 @@ Pour autoriser le manager à recharger la configuration, enregistrer le nom d'h�
 <pre class="code shell">echo "127.0.0.1 reload.example.com" &gt;&gt; /etc/hosts</pre>
 <div class="notetip">Adapter le nom d'hôte virtuel de rechargement au domaine configuré.
 </div>
-</div><!-- EDIT12 SECTION "Reload virtual host" [2935-3236] -->
+</div><!-- EDIT12 SECTION "Reload virtual host" [3307-3608] -->
 
 <h3 class="sectionedit13" id="upgrade">Mise à jour</h3>
 <div class="level3">
@@ -245,7 +259,7 @@ Pour autoriser le manager à recharger la configuration, enregistrer le nom d'h�
 Pour mettre à jour <abbr title="LemonLDAP::NG">LL::NG</abbr>, lisez toutes les <a href="upgrade.html" class="wikilink1" title="documentation:2.0:upgrade">notes de mise à jour</a>.
 </p>
 
-</div><!-- EDIT13 SECTION "Upgrade" [3237-3317] -->
+</div><!-- EDIT13 SECTION "Upgrade" [3609-3689] -->
 
 <h3 class="sectionedit14" id="dns">DNS</h3>
 <div class="level3">
@@ -261,7 +275,7 @@ Configurer le serveur <abbr title="Domain Name System">DNS</abbr> pour résoudre
 Suivre les <a href="start.html#configuration" class="wikilink1" title="documentation:2.0:start">étapes suivantes</a>
 </p>
 
-</div><!-- EDIT14 SECTION "DNS" [3318-3590] -->
+</div><!-- EDIT14 SECTION "DNS" [3690-3962] -->
 
 <h2 class="sectionedit15" id="file_location">Emplacement du fichier</h2>
 <div class="level2">
@@ -278,7 +292,7 @@ Suivre les <a href="start.html#configuration" class="wikilink1" title="documenta
 </li>
 </ul>
 
-</div><!-- EDIT15 SECTION "File location" [3591-3947] -->
+</div><!-- EDIT15 SECTION "File location" [3963-4319] -->
 
 <h2 class="sectionedit16" id="build_your_packages">Construire les paquets</h2>
 <div class="level2">
@@ -307,7 +321,7 @@ Si besoin, on peut reconstruire les RPMs :
 </ul>
 <pre class="code">rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz</pre>
 
-</div><!-- EDIT16 SECTION "Build your packages" [3948-] -->
+</div><!-- EDIT16 SECTION "Build your packages" [4320-] -->
 </div>
 </body>
 </html>

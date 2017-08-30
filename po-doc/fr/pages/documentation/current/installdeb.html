@@ -135,14 +135,17 @@ Pour les utilisateurs de Debian testing ou unstable, les paquets sont directemen
 Ajouter ce dépôt pour avoir les paquets les plus récents :
 </p>
 <pre class="code">vi /etc/apt/sources.list.d/lemonldap-ng.list</pre>
-<pre class="file"># Dépôt LemonLDAP::NG
-deb     http://lemonldap-ng.org/deb stable main
-deb-src http://lemonldap-ng.org/deb stable main</pre>
-<div class="notetip">Use the <code>oldstable</code> repository to get packages from previous major version:
-
 <pre class="file"># LemonLDAP::NG repository
-deb     http://lemonldap-ng.org/deb oldstable main
-deb-src http://lemonldap-ng.org/deb oldstable main</pre>
+deb     https://lemonldap-ng.org/deb stable main
+deb-src https://lemonldap-ng.org/deb stable main</pre>
+<div class="notetip"><ul>
+<li class="level1"><div class="li">  Use the <code>oldstable</code> repository to get packages from previous major version</div>
+</li>
+<li class="level1"><div class="li">  Use the <code>testing</code> repository to get packages from next major version</div>
+</li>
+<li class="level1"><div class="li">  Use the <code>2.0</code> repository to avoid upgrade to next major version</div>
+</li>
+</ul>
 
 </div>
 <p>
@@ -150,7 +153,7 @@ Lancer ceci pour rafraîchir le cache :
 </p>
 <pre class="code">apt-get update</pre>
 
-</div><!-- EDIT5 SECTION "LL::NG repository" [1000-1589] -->
+</div><!-- EDIT5 SECTION "LL::NG repository" [1000-1595] -->
 
 <h3 class="sectionedit6" id="manual_download">Téléchargement manuel</h3>
 <div class="level3">
@@ -159,7 +162,7 @@ Lancer ceci pour rafraîchir le cache :
 Les paquets sont disponibles sur la <a href="download.html" class="wikilink1" title="Téléchargement">page de téléchargement</a>.
 </p>
 
-</div><!-- EDIT6 SECTION "Manual download" [1590-1676] -->
+</div><!-- EDIT6 SECTION "Manual download" [1596-1682] -->
 
 <h2 class="sectionedit7" id="package_gpg_signature">Signature GPG des paquets</h2>
 <div class="level2">
@@ -173,18 +176,18 @@ L'installer pour certifier les paquets :
 </p>
 <pre class="code">apt-key add rpm-gpg-key-ow2</pre>
 
-</div><!-- EDIT7 SECTION "Package GPG signature" [1677-1845] -->
+</div><!-- EDIT7 SECTION "Package GPG signature" [1683-1851] -->
 
 <h2 class="sectionedit8" id="install_packages">Installer les paquets</h2>
 <div class="level2">
 
-</div><!-- EDIT8 SECTION "Install packages" [1846-1875] -->
+</div><!-- EDIT8 SECTION "Install packages" [1852-1881] -->
 
 <h3 class="sectionedit9" id="with_aptitude">Avec aptitude</h3>
 <div class="level3">
 <pre class="code">aptitude install lemonldap-ng</pre>
 
-</div><!-- EDIT9 SECTION "With aptitude" [1876-1946] -->
+</div><!-- EDIT9 SECTION "With aptitude" [1882-1952] -->
 
 <h3 class="sectionedit10" id="with_dpkg">Avec dpkg</h3>
 <div class="level3">
@@ -198,12 +201,12 @@ Ensuite :
 </p>
 <pre class="code">dpkg -i liblemonldap-ng-* lemonldap-ng*</pre>
 
-</div><!-- EDIT10 SECTION "With dpkg" [1947-2095] -->
+</div><!-- EDIT10 SECTION "With dpkg" [1953-2101] -->
 
 <h2 class="sectionedit11" id="first_configuration_steps">Premiers pas de configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT11 SECTION "First configuration steps" [2096-2134] -->
+</div><!-- EDIT11 SECTION "First configuration steps" [2102-2140] -->
 
 <h3 class="sectionedit12" id="change_default_dns_domain">Changer le domaine DNS par défaut</h3>
 <div class="level3">
@@ -211,9 +214,9 @@ Ensuite :
 <p>
 Par défaut, le domaine <abbr title="Domain Name System">DNS</abbr> est <code>example.com</code>. On peut le changer rapidement par une commande sed. Par exemple, pour le changer en <code>ow2.org</code>:
 </p>
-<pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1.js /var/lib/lemonldap-ng/test/index.pl</pre>
+<pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1.json /var/lib/lemonldap-ng/test/index.pl</pre>
 
-</div><!-- EDIT12 SECTION "Change default DNS domain" [2135-2452] -->
+</div><!-- EDIT12 SECTION "Change default DNS domain" [2141-2460] -->
 
 <h3 class="sectionedit13" id="reload_virtual_host">Recharger l'hôte virtuel</h3>
 <div class="level3">
@@ -224,7 +227,7 @@ Pour autoriser le manager à recharger la configuration, enregistrer le nom d'h�
 <pre class="code shell">echo "127.0.0.1 reload.example.com" &gt;&gt; /etc/hosts</pre>
 <div class="notetip">Adapter le nom d'hôte virtuel de rechargement au domaine configuré.
 </div>
-</div><!-- EDIT13 SECTION "Reload virtual host" [2453-2754] -->
+</div><!-- EDIT13 SECTION "Reload virtual host" [2461-2762] -->
 
 <h3 class="sectionedit14" id="upgrade">Mise à jour</h3>
 <div class="level3">
@@ -233,7 +236,7 @@ Pour autoriser le manager à recharger la configuration, enregistrer le nom d'h�
 Pour mettre à jour <abbr title="LemonLDAP::NG">LL::NG</abbr>, lisez toutes les <a href="upgrade.html" class="wikilink1" title="documentation:2.0:upgrade">notes de mise à jour</a>.
 </p>
 
-</div><!-- EDIT14 SECTION "Upgrade" [2755-2835] -->
+</div><!-- EDIT14 SECTION "Upgrade" [2763-2843] -->
 
 <h3 class="sectionedit15" id="dns">DNS</h3>
 <div class="level3">
@@ -249,7 +252,7 @@ Configurer le serveur <abbr title="Domain Name System">DNS</abbr> pour résoudre
 Suivre les <a href="start.html#configuration" class="wikilink1" title="documentation:2.0:start">étapes suivantes</a>
 </p>
 
-</div><!-- EDIT15 SECTION "DNS" [2836-3108] -->
+</div><!-- EDIT15 SECTION "DNS" [2844-3116] -->
 
 <h2 class="sectionedit16" id="file_location">Emplacement du fichier</h2>
 <div class="level2">
@@ -270,7 +273,7 @@ Suivre les <a href="start.html#configuration" class="wikilink1" title="documenta
 </li>
 </ul>
 
-</div><!-- EDIT16 SECTION "File location" [3109-3645] -->
+</div><!-- EDIT16 SECTION "File location" [3117-3653] -->
 
 <h2 class="sectionedit17" id="build_your_packages">Construire les paquets</h2>
 <div class="level2">
@@ -282,7 +285,7 @@ On peut également construire les paquets à partir de l'<a href="download.html"
 cd lemonldap-ng-*
 make debian-packages</pre>
 
-</div><!-- EDIT17 SECTION "Build your packages" [3646-] -->
+</div><!-- EDIT17 SECTION "Build your packages" [3654-] -->
 </div>
 </body>
 </html>

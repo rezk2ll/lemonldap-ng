@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,public_pages"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="public_pages.html"/>
@@ -43,20 +43,7 @@
 
 </head>
 <body>
-<div class="dokuwiki export container"><!-- TOC START -->
-
-<div id="dw__toc">
-<h3 class="toggle">Table of Contents</h3>
-<div>
-
-<ul class="toc">
-<li class="level1"><div class="li"><a href="#presentation">Présentation</a></div></li>
-<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div></li>
-<li class="level1"><div class="li"><a href="#page_creation">Page creation</a></div></li>
-</ul>
-</div>
-</div><!-- TOC END -->
-
+<div class="dokuwiki export container">
 
 <h1 class="sectionedit1" id="public_pages">Public pages</h1>
 <div class="level1">
@@ -79,27 +66,9 @@ Public pages are an easy way to build pages based on <abbr title="LemonLDAP::NG"
 A public page is just a template created in portal/skins<em>/yourskin</em>/public/ directory, for example test.tpl. This page can then be displayed with this <abbr title="Uniform Resource Locator">URL</abbr>: <a href="http://auth.example.com/public?page=test" class="urlextern" title="http://auth.example.com/public?page=test"  rel="nofollow">http://auth.example.com/public?page=test</a>
 </p>
 
-</div><!-- EDIT2 SECTION "Presentation" [91-467] -->
+</div><!-- EDIT2 SECTION "Presentation" [91-469] -->
 
-<h2 class="sectionedit3" id="configuration">Configuration</h2>
-<div class="level2">
-
-<p>
-
-Just be sure that Apache or Nginx rewrite rule is set:
-
-</p>
-<pre class="code file apache">    <span class="co1"># Public pages</span>
-    &lt;<span class="kw3">IfModule</span> mod_rewrite.c&gt;
-        <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
-        <span class="kw1">RewriteRule</span> ^/public* /public.pl
-    &lt;/<span class="kw3">IfModule</span>&gt;</pre>
-<pre class="code file nginx">  # Public pages
-  rewrite ^/public.* /public.pl;</pre>
-
-</div><!-- EDIT3 SECTION "Configuration" [468-773] -->
-
-<h2 class="sectionedit4" id="page_creation">Page creation</h2>
+<h2 class="sectionedit3" id="page_creation">Page creation</h2>
 <div class="level2">
 
 <p>
@@ -130,7 +99,7 @@ Create the new page:
 Display the page: <a href="http://auth.example.com/public?page=test" class="urlextern" title="http://auth.example.com/public?page=test"  rel="nofollow">http://auth.example.com/public?page=test</a>
 </p>
 
-</div><!-- EDIT4 SECTION "Page creation" [774-] -->
+</div><!-- EDIT3 SECTION "Page creation" [470-] -->
 </div>
 </body>
 </html>

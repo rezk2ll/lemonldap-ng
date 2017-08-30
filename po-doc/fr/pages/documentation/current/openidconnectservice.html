@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,openidconnectservice"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="openidconnectservice.html"/>
@@ -50,12 +50,6 @@
 <div>
 
 <ul class="toc">
-<li class="level1"><div class="li"><a href="#rewrite_rules">Rewrite rules</a></div>
-<ul class="toc">
-<li class="level2"><div class="li"><a href="#apache">Apache</a></div></li>
-<li class="level2"><div class="li"><a href="#nginx">Nginx</a></div></li>
-</ul>
-</li>
 <li class="level1"><div class="li"><a href="#service_configuration">Configuration du service</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#issuer_identifier">Issuer identifier</a></div></li>
@@ -77,47 +71,7 @@
 
 </div><!-- EDIT1 SECTION "OpenID Connect service configuration" [1-52] -->
 
-<h2 class="sectionedit2" id="rewrite_rules">Rewrite rules</h2>
-<div class="level2">
-
-</div><!-- EDIT2 SECTION "Rewrite rules" [53-79] -->
-
-<h3 class="sectionedit3" id="apache">Apache</h3>
-<div class="level3">
-
-<p>
-
-Be sure that mod_rewrite is installed and that OpenID Connect rewrite rules are activated in <a href="configlocation.html#portal" class="wikilink1" title="documentation:2.0:configlocation">Apache portal configuration</a>:
-
-</p>
-<pre class="code file apache">    <span class="co1"># OpenID Connect Issuer</span>
-    &lt;<span class="kw3">IfModule</span> mod_rewrite.c&gt;
-        <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
-        <span class="co1">#RewriteCond %{HTTP:Authorization} .</span>
-        <span class="co1">#RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]</span>
-        <span class="kw1">RewriteRule</span> ^/oauth2/.* /index.pl
-        <span class="kw1">RewriteRule</span> ^/.well-known/openid-configuration$ /openid-configuration.pl
-    &lt;/<span class="kw3">IfModule</span>&gt;</pre>
-<div class="notetip">You need to uncomment rewrite rule on Authorization header if you only have CGI enabled in your Apache server.
-
-</div>
-</div><!-- EDIT3 SECTION "Apache" [80-735] -->
-
-<h3 class="sectionedit4" id="nginx">Nginx</h3>
-<div class="level3">
-
-<p>
-
-Be sure that OpenID Connect rewrite rules are activated <a href="configlocation.html#portal1" class="wikilink1" title="documentation:2.0:configlocation">Nginx portal configuration</a>:
-
-</p>
-<pre class="code file nginx">  # Fournisseur d'identité OpenID-Connect
-  rewrite ^/oauth2/.* /index.pl last;
-  rewrite ^/.well-known/openid-configuration$ /openid-configuration.pl last;</pre>
-
-</div><!-- EDIT4 SECTION "Nginx" [736-1025] -->
-
-<h2 class="sectionedit5" id="service_configuration">Configuration du service</h2>
+<h2 class="sectionedit2" id="service_configuration">Configuration du service</h2>
 <div class="level2">
 
 <p>
@@ -126,9 +80,9 @@ Go in Manager and click on <code>OpenID Connect Service</code> node.
 
 </p>
 
-</div><!-- EDIT5 SECTION "Service configuration" [1026-1121] -->
+</div><!-- EDIT2 SECTION "Service configuration" [53-148] -->
 
-<h3 class="sectionedit6" id="issuer_identifier">Issuer identifier</h3>
+<h3 class="sectionedit3" id="issuer_identifier">Issuer identifier</h3>
 <div class="level3">
 
 <p>
@@ -142,9 +96,9 @@ Set the issuer identifier, which should be the portal <abbr title="Uniform Resou
 For example: <a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a>
 </p>
 
-</div><!-- EDIT6 SECTION "Issuer identifier" [1122-1248] -->
+</div><!-- EDIT3 SECTION "Issuer identifier" [149-275] -->
 
-<h3 class="sectionedit7" id="end_points">End points</h3>
+<h3 class="sectionedit4" id="end_points">End points</h3>
 <div class="level3">
 
 <p>
@@ -171,9 +125,9 @@ Name of different OpenID Connect endpoints. You can keep the default values unle
 <div class="notetip">The end points are published inside JSON metadata.
 
 </div>
-</div><!-- EDIT7 SECTION "End points" [1249-1598] -->
+</div><!-- EDIT4 SECTION "End points" [276-625] -->
 
-<h3 class="sectionedit8" id="authentication_context">Authentication context</h3>
+<h3 class="sectionedit5" id="authentication_context">Authentication context</h3>
 <div class="level3">
 
 <p>
@@ -182,9 +136,9 @@ You can associate here an authentication context to an authentication level.
 
 </p>
 
-</div><!-- EDIT8 SECTION "Authentication context" [1599-1710] -->
+</div><!-- EDIT5 SECTION "Authentication context" [626-737] -->
 
-<h3 class="sectionedit9" id="security">Sécurité</h3>
+<h3 class="sectionedit6" id="security">Sécurité</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> <strong>Keys</strong> : define public/private key pair to do asymmetric signature</div>
@@ -201,9 +155,9 @@ You can associate here an authentication context to an authentication level.
 </li>
 </ul>
 
-</div><!-- EDIT9 SECTION "Security" [1711-2361] -->
+</div><!-- EDIT6 SECTION "Security" [738-1388] -->
 
-<h3 class="sectionedit10" id="sessions">Sessions</h3>
+<h3 class="sectionedit7" id="sessions">Sessions</h3>
 <div class="level3">
 
 <p>
@@ -212,9 +166,9 @@ It is recommended to use a separate sessions storage for OpenID Connect sessions
 
 </p>
 
-</div><!-- EDIT10 SECTION "Sessions" [2362-2516] -->
+</div><!-- EDIT7 SECTION "Sessions" [1389-1543] -->
 
-<h2 class="sectionedit11" id="key_rotation_script">Key rotation script</h2>
+<h2 class="sectionedit8" id="key_rotation_script">Key rotation script</h2>
 <div class="level2">
 
 <p>
@@ -232,9 +186,9 @@ The script is <code>/usr/share/lemonldap-ng/bin/rotateOidcKeys</code>. It can be
 <div class="notetip">Set the correct Apache user, else generated configuration will not be readable by <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 
 </div>
-</div><!-- EDIT11 SECTION "Key rotation script" [2517-2990] -->
+</div><!-- EDIT8 SECTION "Key rotation script" [1544-2017] -->
 
-<h2 class="sectionedit12" id="session_management">Gestion de session</h2>
+<h2 class="sectionedit9" id="session_management">Gestion de session</h2>
 <div class="level2">
 
 <p>
@@ -249,7 +203,7 @@ A <code>changed</code> state will be sent if the user is disconnected from <abbr
 <div class="notetip">To work, the <abbr title="LemonLDAP::NG">LL::NG</abbr> cookie must not be protected against javascript (<code>httpOnly</code> option should be set to <code>0</code>).
 
 </div>
-</div><!-- EDIT12 SECTION "Session management" [2991-] -->
+</div><!-- EDIT9 SECTION "Session management" [2018-] -->
 </div>
 </body>
 </html>

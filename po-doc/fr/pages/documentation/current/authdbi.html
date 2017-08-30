@@ -303,8 +303,31 @@ Liste de colonnes à interroger pour trouver la session utilisateur. Voir aussi 
 <ul>
 <li class="level1"><div class="li"> <strong>Schéma de hachage</strong> : méthode SQL pour hacher les mots-de-passe. Peut être vide pour le stockage des mots-de-passe en clair.</div>
 </li>
+<li class="level1"><div class="li"> <strong>Dynamic hash activation</strong>: Activate dynamic hashing. With dynamic hashing, the hash scheme is recovered from the user password in the database during authentication.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Supported non-salted schemes</strong>: List of whitespace separated hash schemes. Every hash scheme MUST match a non-salted hash function in the database. LemonLDAP::NG relies on this hashing function for computing user password hashes. These hashes MUST NOT be salted (no random data used in conjunction with the password).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Supported salted schemes</strong>: List of whitespace separated salted hash schemes, of the form “<strong>s</strong>scheme”, where scheme MUST match a non-salted hash function in the database. LemonLDAP::NG relies on this hashing function for computing user password hashes. Salted and non-salted scheme lists are not necessarily equivalent. (for example: non-salted=“sha256” and salted=“ssha ssha512” is valid)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Dynamic hash scheme for new passwords</strong>: LemonLDAP::NG is able to store new passwords in the database (while modifying or reinitializing the password). You can choose a salted or non salted dynamic hashed password. The value must be an element of “Supported non-salted schemes” or “Supported salted schemes”.</div>
+</li>
 </ul>
+<div class="noteimportant">The SQL function MUST have hexadecimal values as input AND output
 
+</div><div class="notetip">Here is an example for creating a postgreSQL SHA256 function.
+1. Install postgresql-contrib.
+2. Activate extension:  <pre class="code">CREATE EXTENSION pgcrypto;</pre>
+
+<p>
+
+3. Create the hash function:
+
+</p>
+<pre class="code">CREATE OR REPLACE FUNCTION sha256(varchar) returns text AS $$
+SELECT encode(digest(decode($1, 'hex'), 'sha256'), 'hex')
+$$ LANGUAGE SQL STRICT IMMUTABLE;</pre>
+
+</div>
 </div><!-- EDIT15 SECTION "Password" [3489-] -->
 </div>
 </body>

@@ -54,13 +54,11 @@
 <li class="level1"><div class="li"><a href="#perl">Perl</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#core">Core</a></div></li>
-<li class="level2"><div class="li"><a href="#old_notifications_format">Old Notifications format</a></div></li>
+<li class="level2"><div class="li"><a href="#deprecated_features">Deprecated features</a></div></li>
 <li class="level2"><div class="li"><a href="#saml2">SAML2</a></div></li>
-<li class="level2"><div class="li"><a href="#cas_authentication_module">CAS (module d'authentification)</a></div></li>
-<li class="level2"><div class="li"><a href="#openid">OpenID</a></div></li>
-<li class="level2"><div class="li"><a href="#twitter">Twitter</a></div></li>
-<li class="level2"><div class="li"><a href="#pod_unit_tests">Tests unitaires POD</a></div></li>
+<li class="level2"><div class="li"><a href="#specific_authentication_backends">Specific authentication backends</a></div></li>
 <li class="level2"><div class="li"><a href="#smtpreset_password_by_mail">SMTP / réinitialisation de mot-de-passe par courriel</a></div></li>
+<li class="level2"><div class="li"><a href="#unit_tests">Unit tests</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#other">Autres</a></div></li>
@@ -88,9 +86,11 @@ To use LemonLDAP::NG, you have the choice of the Web Server :
 
 </p>
 <ul>
-<li class="level1"><div class="li">  Apache 2 with mod_perl</div>
+<li class="level1"><div class="li">  Apache 2</div>
 </li>
-<li class="level1"><div class="li">  Nginx with fastcgi</div>
+<li class="level1"><div class="li">  Nginx</div>
+</li>
+<li class="level1"><div class="li">  Any FastCGI compatible Web Server</div>
 </li>
 </ul>
 
@@ -98,13 +98,13 @@ To use LemonLDAP::NG, you have the choice of the Web Server :
 For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-worker est plus rapide et LemonLDAP::NG utilise le système de threads pour de meilleures performances. If you have to use mpm-prefork (for example if you use PHP), LemonLDAP::NG will work anyway.
 </p>
 
-</div><!-- EDIT2 SECTION "Web Server" [48-440] -->
+</div><!-- EDIT2 SECTION "Web Server" [48-451] -->
 
 <h2 class="sectionedit3" id="perl">Perl</h2>
 <div class="level2">
 <div class="noteclassic">Here is the list of Perl modules used in LemonLDAP::NG. Les modules "core" doivent être installés sur le système. Les autres modules ne doivent être installés que s'il est prévu d'utiliser les fonctionnalités associées.
 </div>
-</div><!-- EDIT3 SECTION "Perl" [441-654] -->
+</div><!-- EDIT3 SECTION "Perl" [452-665] -->
 
 <h3 class="sectionedit4" id="core">Core</h3>
 <div class="level3">
@@ -129,11 +129,11 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 <li class="level1"><div class="li"> <abbr title="Database Interface">DBI</abbr></div>
 </li>
-<li class="level1"><div class="li">  Digest::HMAC</div>
+<li class="level1"><div class="li">  Digest::HMAC_SHA1</div>
+</li>
+<li class="level1"><div class="li">  Digest::MD5</div>
 </li>
 <li class="level1"><div class="li">  Digest::SHA</div>
-</li>
-<li class="level1"><div class="li">  Email::Sender</div>
 </li>
 <li class="level1"><div class="li">  GD::SecurityImage</div>
 </li>
@@ -153,10 +153,6 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 <li class="level1"><div class="li">  Mouse</div>
 </li>
-<li class="level1"><div class="li">  Net::CIDR</div>
-</li>
-<li class="level1"><div class="li">  Net::CIDR::Lite</div>
-</li>
 <li class="level1"><div class="li">  Net::LDAP</div>
 </li>
 <li class="level1"><div class="li">  Plack</div>
@@ -167,28 +163,38 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 <li class="level1"><div class="li">  SOAP::Lite</div>
 </li>
-<li class="level1"><div class="li">  String::Random</div>
-</li>
-<li class="level1"><div class="li">  Test::Pod</div>
-</li>
 <li class="level1"><div class="li">  Unicode::String</div>
 </li>
 <li class="level1"><div class="li"> <abbr title="Uniform Resource Identifier">URI</abbr></div>
 </li>
+<li class="level1"><div class="li">  YAML</div>
+</li>
 </ul>
 
-</div><!-- EDIT4 SECTION "Core" [655-1238] -->
+</div><!-- EDIT4 SECTION "Core" [666-1194] -->
 
-<h3 class="sectionedit5" id="old_notifications_format">Old Notifications format</h3>
+<h3 class="sectionedit5" id="deprecated_features">Deprecated features</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li">  XML::LibXML</div>
+<li class="level1"><div class="li">  Old notifications format:</div>
+<ul>
+<li class="level2"><div class="li">  XML::LibXML</div>
 </li>
-<li class="level1"><div class="li">  XML::LibXSLT</div>
+<li class="level2"><div class="li">  XML::LibXSLT</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  OpenID 2.0:</div>
+<ul>
+<li class="level2"><div class="li">  Net::OpenID::Server</div>
+</li>
+<li class="level2"><div class="li">  Net::OpenID::Consumer</div>
+</li>
+</ul>
 </li>
 </ul>
 
-</div><!-- EDIT5 SECTION "Old Notifications format" [1239-1308] -->
+</div><!-- EDIT5 SECTION "Deprecated features" [1195-1363] -->
 
 <h3 class="sectionedit6" id="saml2">SAML2</h3>
 <div class="level3">
@@ -201,38 +207,63 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT6 SECTION "SAML2" [1309-1394] -->
+</div><!-- EDIT6 SECTION "SAML2" [1364-1449] -->
 
-<h3 class="sectionedit7" id="cas_authentication_module">CAS (module d'authentification)</h3>
+<h3 class="sectionedit7" id="specific_authentication_backends">Specific authentication backends</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li"> <a href="http://sourcesup.cru.fr/projects/perlcas/" class="urlextern" title="http://sourcesup.cru.fr/projects/perlcas/"  rel="nofollow">AuthCAS</a></div>
+<li class="level1"><div class="li">  Facebook:</div>
+<ul>
+<li class="level2"><div class="li">  Net::Facebook::Oauth2</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  Kerberos:</div>
+<ul>
+<li class="level2"><div class="li">  GSSAPI</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  PAM:</div>
+<ul>
+<li class="level2"><div class="li">  Authen::PAM</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  Radius:</div>
+<ul>
+<li class="level2"><div class="li">  Authen::Radius</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  Twitter:</div>
+<ul>
+<li class="level2"><div class="li">  Net::OAuth</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  WebID:</div>
+<ul>
+<li class="level2"><div class="li">  Web::ID</div>
+</li>
+</ul>
 </li>
 </ul>
 
-</div><!-- EDIT7 SECTION "CAS (authentication module)" [1395-1492] -->
+</div><!-- EDIT7 SECTION "Specific authentication backends" [1450-1678] -->
 
-<h3 class="sectionedit8" id="openid">OpenID</h3>
+<h3 class="sectionedit8" id="smtpreset_password_by_mail">SMTP / réinitialisation de mot-de-passe par courriel</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li">  Net::OpenID::Consumer &gt; 1.00</div>
+<li class="level1"><div class="li">  Email::Sender</div>
 </li>
-<li class="level1"><div class="li">  Net::OpenID::Server &gt; 1.00</div>
+<li class="level1"><div class="li">  String::Random</div>
 </li>
 </ul>
 
-</div><!-- EDIT8 SECTION "OpenID" [1493-1575] -->
+</div><!-- EDIT8 SECTION "SMTP / Reset password by mail" [1679-1757] -->
 
-<h3 class="sectionedit9" id="twitter">Twitter</h3>
-<div class="level3">
-<ul>
-<li class="level1"><div class="li">  Net::OAuth</div>
-</li>
-</ul>
-
-</div><!-- EDIT9 SECTION "Twitter" [1576-1610] -->
-
-<h3 class="sectionedit10" id="pod_unit_tests">Tests unitaires POD</h3>
+<h3 class="sectionedit9" id="unit_tests">Unit tests</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li">  Test::POD</div>
@@ -241,28 +272,9 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT10 SECTION "POD unit tests" [1611-1672] -->
+</div><!-- EDIT9 SECTION "Unit tests" [1758-1815] -->
 
-<h3 class="sectionedit11" id="smtpreset_password_by_mail">SMTP / réinitialisation de mot-de-passe par courriel</h3>
-<div class="level3">
-<ul>
-<li class="level1"><div class="li">  MIME::Lite</div>
-</li>
-<li class="level1"><div class="li">  Email::Date::Format</div>
-</li>
-<li class="level1"><div class="li">  String::Random</div>
-</li>
-<li class="level1"><div class="li">  Net::SMTP</div>
-</li>
-<li class="level1"><div class="li">  MIME::Base64</div>
-</li>
-<li class="level1"><div class="li">  Authen::SASL</div>
-</li>
-</ul>
-
-</div><!-- EDIT11 SECTION "SMTP / Reset password by mail" [1673-1820] -->
-
-<h2 class="sectionedit12" id="other">Autres</h2>
+<h2 class="sectionedit10" id="other">Autres</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Jquery (framework javascript) est inclus dans l'archive et les RPMs, mais est une dépendance des versions officielles Debian</div>
@@ -271,14 +283,14 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT12 SECTION "Other" [1821-2037] -->
+</div><!-- EDIT10 SECTION "Other" [1816-2032] -->
 
-<h2 class="sectionedit13" id="install_dependencies_on_your_system">Installer les dépendances sur le système</h2>
+<h2 class="sectionedit11" id="install_dependencies_on_your_system">Installer les dépendances sur le système</h2>
 <div class="level2">
 
-</div><!-- EDIT13 SECTION "Install dependencies on your system" [2038-2087] -->
+</div><!-- EDIT11 SECTION "Install dependencies on your system" [2033-2082] -->
 
-<h3 class="sectionedit14" id="apt-get">APT-GET</h3>
+<h3 class="sectionedit12" id="apt-get">APT-GET</h3>
 <div class="level3">
 
 <p>
@@ -286,21 +298,21 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 Perl dependencies:
 
 </p>
-<pre class="code">apt-get install libapache-session-perl, libcache-cache-perl, libclone-perl, libconfig-inifiles-perl, libconvert-pem-perl, libcrypt-openssl-bignum-perl, libcrypt-openssl-rsa-perl, libcrypt-openssl-x509-perl, libcrypt-rijndael-perl, libdbd-sqlite3-perl, libdbi-perl, libdigest-hmac-perl, libemail-sender-perl, libgd-securityimage-perl, libglib-perl, libhtml-template-perl, libimage-magick-perl, libio-string-perl, libjson-perl, liblasso-perl, libmime-tools-perl, libmouse-perl, libnet-cidr-lite-perl, libnet-ldap-perl, libnet-openid-consumer-perl, libnet-openid-server-perl, libplack-perl, libregexp-assemble-perl, libregexp-common-perl, libsoap-lite-perl, libstring-random-perl, libtest-mockobject-perl, libtest-pod-perl, libunicode-string-perl, liburi-perl, libwww-perl, libxml-libxml-perl, libxml-libxslt-perl, libxml-simple-perl</pre>
+<pre class="code">apt install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhtml-template-perl libio-string-perl, libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl</pre>
 
 <p>
 Pour Apache:
 </p>
-<pre class="code">apt-get install apache2 libapache2-mod-perl2 libapache2-mod-fcgid</pre>
+<pre class="code">apt install apache2 libapache2-mod-fcgid libapache2-mod-perl</pre>
 
 <p>
 Pour Nginx:
 </p>
-<pre class="code">apt-get install nginx nginx-extras</pre>
+<pre class="code">apt install nginx nginx-extras</pre>
 
-</div><!-- EDIT14 SECTION "APT-GET" [2088-3123] -->
+</div><!-- EDIT12 SECTION "APT-GET" [2083-2845] -->
 
-<h3 class="sectionedit15" id="yum">YUM</h3>
+<h3 class="sectionedit13" id="yum">YUM</h3>
 <div class="level3">
 <div class="notetip">You need  <a href="http://fedoraproject.org/wiki/EPEL/" class="urlextern" title="http://fedoraproject.org/wiki/EPEL/"  rel="nofollow">EPEL</a> repository. See how you can activate this repository: <a href="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse" class="urlextern" title="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse"  rel="nofollow">http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</a>
 </div>
@@ -309,12 +321,12 @@ Pour Nginx:
 Perl dependencies:
 
 </p>
-<pre class="code">yum install perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Regexp-Common perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC perl-Digest-SHA perl-String-Random perl-MIME-Lite perl-Email-Date-Format perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Clone perl-Authen-SASL perl-Log-Log4perl perl-Unicode-String perl-Net-CIDR-Lite perl-Cache-Memcached perl-Convert-PEM perl-Mouse perl-Plack perl-GD-SecurityImage</pre>
+<pre class="code">yum install perl-Apache-Session perl-Cache-Cache perl-Clone perl-Config-IniFiles perl-Convert-PEM perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Crypt-Rijndael perl-Digest-HMAC perl-Digest-SHA perl-GD-SecurityImage perl-HTML-Template perl-IO-String perl-JSON perl-LDAP perl-Mouse perl-Plack perl-Regexp-Assemble perl-Regexp-Common perl-SOAP-Lite perl-String-Random perl-Unicode-String perl-version perl-XML-Simple</pre>
 
 <p>
 Pour Apache:
 </p>
-<pre class="code">yum install httpd mod_perl mod_fcgid</pre>
+<pre class="code">yum install httpd mod_fcgid mod_perl</pre>
 
 <p>
 Pour Nginx:
@@ -323,7 +335,7 @@ Pour Nginx:
 <div class="noteimportant">As you need a recent version of Nginx, the best is to install <a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-red-hat-centos-packages" class="urlextern" title="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-red-hat-centos-packages"  rel="nofollow">Nginx official packages</a>.
 
 </div>
-</div><!-- EDIT15 SECTION "YUM" [3124-] -->
+</div><!-- EDIT13 SECTION "YUM" [2846-] -->
 </div>
 </body>
 </html>
