@@ -98,7 +98,6 @@ BuildRequires:  perl(Crypt::OpenSSL::X509)
 BuildRequires:  perl(Class::Inspector)
 BuildRequires:  perl(Test::MockObject)
 BuildRequires:  perl(Clone)
-BuildRequires:  perl(Net::CIDR::Lite)
 BuildRequires:  perl(Unicode::String)
 BuildRequires:  perl(Mouse)
 BuildRequires:  perl(Digest::SHA)
@@ -106,7 +105,7 @@ BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Env)
 BuildRequires:  systemd
 %else
-BuildRequires:  perl-Regexp-Assemble, perl-Regexp-Common, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-Bignum, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Net-CIDR-Lite, perl-Unicode-String, perl-Mouse, perl-Digest-SHA, perl-ExtUtims-MakeMaker, perl-Env, systemd
+BuildRequires:  perl-Regexp-Assemble, perl-Regexp-Common, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-Bignum, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Unicode-String, perl-Mouse, perl-Digest-SHA, perl-ExtUtims-MakeMaker, perl-Env, systemd
 %endif
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
@@ -115,8 +114,8 @@ Requires: perl(IO::String)
 Requires: mod_perl
 Requires: mod_fcgid
 %else
-Requires: cron, apache2, apache2-mod_perl, apache2-mod_fcgid
-Requires: perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String
+Requires: cron
+Requires: perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-XML-Simple, perl-Crypt-Rijndael, perl-IO-String
 Requires: perl-ldap, perl-MIME-Base64, perl-CGI, perl-CGI-Session, perl-DBI, perl-HTML-Template, perl-SOAP-Lite, perl-IPC-ShareLite, perl-Convert-ASN1, perl-Error, perl-Unicode-String
 %endif
 
@@ -322,14 +321,16 @@ This package installs the authentication portal.
 %setup -n %{real_name}-%{real_version} -q
 
 # Remove unwanted provides/requires
-# We remove Lemonldap::NG requires because the requires are set in the header
 
 cat << \EOF > %{name}-req
 #!/bin/sh
 %{__perl_requires} $* |\
 sed -e '/perl(lasso)/d' |\
-sed -e '/perl(Apache::Log)/d' |\
-sed -e '/perl(Net::OpenID::Server)/d'
+sed -e '/perl(Net::OpenID::Consumer)/d' |\
+sed -e '/perl(Net::OpenID::Server)/d' |\
+sed -e '/perl(Web::ID)/d' |\
+sed -e '/perl(XML::LibXML)/d' |\
+sed -e '/perl(XML::LibXSLT)/d'
 EOF
 
 %define __perl_requires %{_builddir}/%{name}-%{real_version}/%{name}-req
@@ -337,7 +338,7 @@ chmod +x %{__perl_requires}
 
 %if 0%{?rhel} >= 7
 %{?perl_default_filter}
-%global __requires_exclude perl\\(lasso|perl\\(Net::OpenID::Server|perl\\(Apache::Log
+%global __requires_exclude perl\\(lasso|perl\\(Net::OpenID|perl\\(Web::ID|perl\\(XML::LibXML|perl\\(XML::LibXSLT
 %endif
 
 #==============================================================================
