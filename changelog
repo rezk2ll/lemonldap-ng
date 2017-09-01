@@ -1,5 +1,22 @@
 lemonldap-ng (2.0.0~alpha1) testing; urgency=low
 
+lemonldap-ng (1.9.11) stable; urgency=high
+
+    * [LEMONLDAP-1244] - CGIPassAuth not usable in CentOS 7.3.1611 because of old Apache version
+    * [LEMONLDAP-1255] - Issue with openid-configuration.pl when updating Perl
+    * [LEMONLDAP-1262] - Session expired on Handler
+    * [LEMONLDAP-1277] - Missing screen shot in documentation
+    * [LEMONLDAP-1288] - Empty hash configuration parameters are converted to empty scalar trough SOAP
+    * [LEMONLDAP-1289] - Proxy authentication module does not catch authentication error
+    * [LEMONLDAP-1245] - adding salt feature for database backend
+    * [LEMONLDAP-1254] - APT warning on weak digest algo on lemonldap repository
+    * [LEMONLDAP-1256] - Avoid 'forcedSAML' in Choice module
+    * [LEMONLDAP-1261] - SAML SessionIndex may leak SSO data and cause interoperability issues
+    * [LEMONLDAP-1263] - No error message when backend is in ReadOnly
+    * [LEMONLDAP-1270] - Logout_*
+    * [LEMONLDAP-1243] - LinkedIn authentication module
+    * [LEMONLDAP-1286] - httpd dependency
+
 lemonldap-ng (1.9.10) stable; urgency=high
 
     * [LEMONLDAP-1202] - CSS an JS not correctly loaded in FR offline doc
