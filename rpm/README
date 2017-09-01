@@ -21,11 +21,13 @@ This RPM can be built for several distribution like RedHat, CentOS, Fedora, Open
 The YUM repository is hosted on http://lemonldap-ng.org/rpm7
 
 First copy RPM files (they must be signed!) and source RPM:
-$ scp *.noarch.rpm lemonldapng@lemonldap-ng.org:rpm7/noarch/
-$ scp *.src.rpm lemonldapng@lemonldap-ng.org:rpm7/SRPMS/
+$ scp *.noarch.rpm lemonldapng@lemonldap-ng.org:redhat/2.0/7/noarch/
+$ scp *.src.rpm lemonldapng@lemonldap-ng.org:redhat/2.0/7/SRPMS/
 
 Then connect on server and launch repodata:
 $ ssh lemonldapng@lemonldap-ng.org
-lemonldapng@lemonldap-ng.org$ createrepo rpm7/
+lemonldapng@lemonldap-ng.org$ cd redhat/2.0/7/
+lemonldapng@lemonldap-ng.org$ createrepo noarch
+lemonldapng@lemonldap-ng.org$ createrepo SRPMS
 
 That's all!
