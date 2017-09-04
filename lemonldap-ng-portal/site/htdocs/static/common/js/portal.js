@@ -97,7 +97,7 @@ LemonLDAP::NG Portal jQuery scripts
     for (l = 0, len1 = IDs.length; l < len1; l++) {
       itemID = IDs[l];
       if (indexOf.call(rebuild, itemID) >= 0) {
-        item = rebuild[itemID];
+        item = IDs[itemID];
         child = $(setSelector + ".ui-sortable").children("#" + item);
         savedOrd = $(setSelector + ".ui-sortable").children("#" + itemID);
         child.remove();

@@ -76,7 +76,7 @@ restoreOrder = ->
 		if itemID in rebuild
 
 			# select item id from current order
-			item = rebuild[itemID]
+			item = IDs[itemID]
 
 			# select the item according to current order
 			child = $(setSelector + ".ui-sortable").children "#" + item
