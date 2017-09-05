@@ -73,10 +73,10 @@ restoreOrder = ->
 		rebuild[v] = v
 
 	for itemID in IDs
-		if itemID in rebuild
+		if rebuild[itemID]
 
 			# select item id from current order
-			item = IDs[itemID]
+			item = rebuild[itemID]
 
 			# select the item according to current order
 			child = $(setSelector + ".ui-sortable").children "#" + item
