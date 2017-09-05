@@ -317,6 +317,7 @@ sub _scanNodes {
                     }
                     elsif ($h) {
                         hdebug("  $target: opened node");
+                        $self->confChanged(1);
                         $self->set( $target, $key, $leaf->{title},
                             $leaf->{data} );
                     }
