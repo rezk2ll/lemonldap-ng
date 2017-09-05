@@ -14,7 +14,7 @@ ok( $issuer = issuer(), 'Issuer portal' );
 $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
 
 # Test REST config backend
-ok( $res = $issuer->_get('/confs/latest'), 'Get latest conf metadatas' );
+ok( $res = $issuer->_get('/config/latest'), 'Get latest conf metadatas' );
 count(1);
 expectOK($res);
 
@@ -195,7 +195,7 @@ sub sp {
                 userDB         => 'Same',
                 configStorage  => {
                     type    => 'REST',
-                    baseUrl => 'http://auth.idp.com/confs',
+                    baseUrl => 'http://auth.idp.com/config',
                 },
             },
         }
