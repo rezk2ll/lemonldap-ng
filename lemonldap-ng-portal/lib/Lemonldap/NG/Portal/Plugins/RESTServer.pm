@@ -22,11 +22,11 @@
 #      calls and generate JSON response instead of web page.
 #
 # - Configuration (if restConfigServer is on)
-#   * GET /confs/latest                          : get the last config metadata
-#   * GET /confs/<cfgNum>                        : get the metadata for config
+#   * GET /config/latest                          : get the last config metadata
+#   * GET /config/<cfgNum>                        : get the metadata for config
 #                                                  n° <cfgNum>
-#   * GET /confs/<latest|cfgNum>/<key>           : get conf key value
-#   * GET /confs/<latest|cfgNum>?full            : get the full configuration
+#   * GET /config/<latest|cfgNum>/<key>           : get conf key value
+#   * GET /config/<latest|cfgNum>?full            : get the full configuration
 #   where <type> is the session type ("global" for SSO session)
 #
 # - Authorizations for connected users (always):
@@ -100,7 +100,7 @@ sub init {
 
         # Methods inherited from Lemonldap::NG::Common::Conf::RESTServer
         $self->addUnauthRoute(
-            confs => {
+            config => {
                 ':cfgNum' => [
                     qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
                       applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
@@ -110,7 +110,7 @@ sub init {
             ['GET'],
         );
         $self->addUnauthRoute(
-            confs => { ':cfgNum' => { '*' => 'getKey' } },
+            config => { ':cfgNum' => { '*' => 'getKey' } },
             ['GET']
         );
     }
