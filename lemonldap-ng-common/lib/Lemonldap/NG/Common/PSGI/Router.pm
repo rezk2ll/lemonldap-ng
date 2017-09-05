@@ -59,21 +59,28 @@ sub genRoute {
             $dest = $transform->($dest);
         }
         if ( my $t = ref $dest ) {
-            if ( $t eq 'CODE' ) {
-                $routes->{$word} = $dest;
-            }
-            elsif ( $t eq 'HASH' ) {
+            if ( $t eq 'HASH' ) {
                 $routes->{$word} ||= {};
                 foreach my $w ( keys %$dest ) {
                     $self->genRoute( $routes->{$word}, $w, $dest->{$w},
                         $transform );
                 }
+                return;
             }
             elsif ( $t eq 'ARRAY' ) {
                 $routes->{$word} ||= {};
                 foreach my $w ( @{$dest} ) {
                     $self->genRoute( $routes->{$word}, $w, $transform );
                 }
+                return;
+            }
+        }
+        if ( $routes->{$word} ) {
+            eval { $self->logger->warn(qq'Route "$word" redefined'); };
+        }
+        if ( my $t = ref $dest ) {
+            if ( $t eq 'CODE' ) {
+                $routes->{$word} = $dest;
             }
             else {
                 die "Type $t unauthorizated in routes";
