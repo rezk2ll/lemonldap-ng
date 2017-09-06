@@ -30,6 +30,11 @@ sub addRoute {
 
 sub genRoute {
     my ( $self, $routes, $word, $dest, $transform ) = @_;
+    unless ( ref $routes eq 'HASH' ) {
+        $self->logger->error(
+            'Conflict detected between 2 extensions, aborting 1 route');
+        return;
+    }
     if ( ref $word eq 'ARRAY' ) {
         foreach my $w (@$word) {
             $self->genRoute( $routes, $w, $dest, $transform );
