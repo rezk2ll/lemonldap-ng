@@ -75,17 +75,26 @@ sub init {
     }
     $self->server( Lemonldap::NG::Common::PSGI::SOAPServer->new );
     if ( $self->conf->{soapSessionServer} ) {
-        $self->addUnauthRoute( sessions => 'unauthSessions', ['POST'] );
+        $self->addUnauthRoute(
+            sessions => { '*' => 'unauthSessions' },
+            ['POST']
+        );
         $self->addUnauthRoute(
             adminSessions => 'unauthAdminSessions',
             ['POST']
         );
-        $self->addAuthRoute( sessions      => 'badSoapRequest', ['POST'] );
-        $self->addAuthRoute( adminSessions => 'badSoapRequest', ['POST'] );
+        $self->addAuthRoute(
+            sessions => { '*' => 'badSoapRequest' },
+            ['POST']
+        );
+        $self->addAuthRoute(
+            adminSessions => { '*' => 'badSoapRequest' },
+            ['POST']
+        );
     }
     if ( $self->conf->{soapConfigServer} ) {
-        $self->addUnauthRoute( config => 'config', ['POST'] );
-        $self->addAuthRoute( config => 'badSoapRequest', ['POST'] );
+        $self->addUnauthRoute( config => { '*' => 'config' }, ['POST'] );
+        $self->addAuthRoute( config => { '*' => 'badSoapRequest' }, ['POST'] );
     }
     1;
 }
