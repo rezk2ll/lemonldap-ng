@@ -972,7 +972,7 @@ sub set {
 
 sub defaultValue {
     my ( $self, $target ) = @_;
-    hdebug("# defautValue($target)");
+    hdebug("# defaultValue($target)");
     die unless ($target);
     my $res = eval {
         &Lemonldap::NG::Manager::Attributes::attributes()->{$target}
