@@ -246,6 +246,7 @@ sub checkXSSAttack {
 
 sub extractFormInfo {
     my ( $self, $req ) = @_;
+    return PE_ERROR unless ( $self->_authentication );
     my $ret = $self->_authentication->extractFormInfo($req);
     if ( $ret == PE_OK and not( $req->user or $req->continue ) ) {
         $self->logger->error(
@@ -273,6 +274,7 @@ sub extractFormInfo {
 
 sub getUser {
     my ( $self, $req ) = @_;
+    return PE_ERROR unless ( $self->_userDB );
     return $self->_userDB->getUser($req);
 }
 
