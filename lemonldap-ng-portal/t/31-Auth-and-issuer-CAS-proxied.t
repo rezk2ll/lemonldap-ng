@@ -139,7 +139,7 @@ ok(
     'Get iframe from IdP'
 );
 count(1);
-expectOK($res);
+expectRedirection( $res, 'http://auth.sp.com/?logout' );
 ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancestors/,
     ' Frame can be embedded' )
   or explain( $res->[1],

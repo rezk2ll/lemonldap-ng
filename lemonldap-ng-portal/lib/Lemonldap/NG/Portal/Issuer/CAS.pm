@@ -212,7 +212,8 @@ sub run {
         $req->frame(1);
 
         # GET parameters
-        my $logout_url = $req->param('url');
+        my $logout_url     = $req->param('url');        # CAS 2.0
+        my $logout_service = $req->param('service');    # CAS 3.0
 
         # Delete linked CAS sessions
         $self->deleteCasSecondarySessions($session_id);
@@ -236,6 +237,13 @@ sub run {
                 $req->datas->{activeTimer} = 0;
 
                 return PE_CONFIRM;
+            }
+
+            if ($logout_service) {
+                $self->logger->debug("User will be redirected to $logout_service");
+                $req->{urldc} = $logout_service;
+                $req->steps( [] );
+                return PE_OK;
             }
         }
         else {

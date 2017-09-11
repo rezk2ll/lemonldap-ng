@@ -250,11 +250,9 @@ sub authLogout {
     my ( $self, $req ) = @_;
 
     # Build CAS logout URL
-    my $logout_url = $self->getServerLogoutURL(
-        uri_escape( $self->p->fullUrl($req) ),
+    my $logout_url = $self->getServerLogoutURL( $self->p->fullUrl($req),
         $self->conf->{casSrvMetaDataOptions}->{ $req->userData->{_casSrv} }
-          ->{casSrvMetaDataOptionsUrl}
-    );
+          ->{casSrvMetaDataOptionsUrl} );
 
     $self->logger->debug("Build CAS logout URL: $logout_url");
 
