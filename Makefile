@@ -201,7 +201,7 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
 # Javascript and CSS to minify
 JSSRCFILES:=$(shell find */site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
 		$(SRCMANAGERDIR)/site/htdocs/static/bwr/file-saver.js/FileSaver.js
-CSSSRCFILES:=$(shell find */site/htdocs/static/css  $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.css' ! -name '*.min.css')
+CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/htdocs/static  $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.css' ! -name '*.min.css')
 
 # Coffee files
 MANAGERCOFFEESRCFILES:=$(shell find lemonldap-ng-manager/site/coffee -type f -name '*.coffee')
