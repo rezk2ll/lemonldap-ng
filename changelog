@@ -1,5 +1,14 @@
 lemonldap-ng (2.0.0~alpha1) testing; urgency=low
 
+lemonldap-ng (1.9.12) stable; urgency=high
+
+    * [LEMONLDAP-1293] - Unable to delete "Exported Attributes" in SAML SP
+    * [LEMONLDAP-1294] - Debian - JSON - Apache::Session module failed
+    * [LEMONLDAP-1295] - Bad UserInfo response wihen attribute values are Perl references
+    * [LEMONLDAP-1297] - Restrict reload url to the localhost
+    * [LEMONLDAP-1299] - Unable to use LemonLDAP on Debian Stretch - Portal issue
+    * [LEMONLDAP-1298] - CAS logout redirect service
+
 lemonldap-ng (1.9.11) stable; urgency=high
 
     * [LEMONLDAP-1244] - CGIPassAuth not usable in CentOS 7.3.1611 because of old Apache version
