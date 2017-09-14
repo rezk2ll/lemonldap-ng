@@ -14,7 +14,7 @@
 %define perl_vendorarch %(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
 
 %define real_name lemonldap-ng
-%define real_version 2.0.0~alpha1
+%define real_version 2.0.0~alpha2
 %define cpan_common_version  %{real_version}
 %define cpan_handler_version %{real_version}
 %define cpan_manager_version %{real_version}
@@ -614,6 +614,8 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
+* Thu Sep 14 2017 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha2-1
+- Second alpha version for 2.0.0
 * Mon Jul 10 2017 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha1-1
 - First alpha version for 2.0.0
 * Tue Sep 12 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.12-1
