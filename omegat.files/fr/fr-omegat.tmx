@@ -30076,14 +30076,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s15&gt;# Uncomment this to activate status module&lt;/s15&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T081248Z" changeid="xavier">
-        <seg>&lt;s15&gt;# Décommenter ceci pour activer le module de statut&lt;/s15&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Proxy backend to be used in conjunction with another configuration backend.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082452Z" changeid="xavier">

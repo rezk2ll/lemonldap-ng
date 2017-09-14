@@ -147,14 +147,14 @@ LLNG portal now embeds the following features:
 
 <h2 class="sectionedit7" id="handlers">Handlers</h2>
 <div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a>, <a href="documentation/latest/applications/zimbra.html" class="wikilink1" title="documentation:latest:applications:zimbra">ZimbraPreAuth</a>, <a href="securetoken.html" class="wikilink1" title="documentation:2.0:securetoken">SecureToken</a> and <a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic</a> are now <a href="handlerarch.html" class="wikilink1" title="documentation:2.0:handlerarch">Handler Types</a>. So there is no more special file to load: you just have to choose “VirtualHost type” in the manager/VirtualHosts.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Apache only</strong>: because of an Apache behaviour change, PerlHeaderParserHandler must no more be used with “reload” URLs <em>(replaced by PerlResponseHandler)</em>. Any “reload url” that are inside a protected vhost must be unprotected in vhost rules <em>(protection has to be done by web server configuration)</em>.</div>
+</li>
+</ul>
 
-<p>
-
-Now, <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a>, <a href="documentation/latest/applications/zimbra.html" class="wikilink1" title="documentation:latest:applications:zimbra">ZimbraPreAuth</a>, <a href="securetoken.html" class="wikilink1" title="documentation:2.0:securetoken">SecureToken</a> and <a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic</a> are <a href="handlerarch.html" class="wikilink1" title="documentation:2.0:handlerarch">Handler Types</a>. So there is no more special file to load: you just have to choose “VirtualHost type” in the manager/VirtualHosts.
-
-</p>
-
-</div><!-- EDIT7 SECTION "Handlers" [2071-2419] -->
+</div><!-- EDIT7 SECTION "Handlers" [2071-2731] -->
 
 <h2 class="sectionedit8" id="rules_and_headers">Rules and headers</h2>
 <div class="level2">
@@ -167,7 +167,7 @@ Now, <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a>,
 </li>
 </ul>
 
-</div><!-- EDIT8 SECTION "Rules and headers" [2420-2738] -->
+</div><!-- EDIT8 SECTION "Rules and headers" [2732-3050] -->
 
 <h2 class="sectionedit9" id="supported_servers">Supported servers</h2>
 <div class="level2">
@@ -176,7 +176,7 @@ Now, <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a>,
 </li>
 </ul>
 
-</div><!-- EDIT9 SECTION "Supported servers" [2739-2884] -->
+</div><!-- EDIT9 SECTION "Supported servers" [3051-3196] -->
 
 <h2 class="sectionedit10" id="ajax_requests">Ajax requests</h2>
 <div class="level2">
@@ -186,7 +186,7 @@ Now, <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a>,
 Before 2.0, an Ajax query that was launched after session timeout received a 302 code. Now a response 401 is given. The <code>WWW-Authenticate</code> header contains: <code><abbr title="Authentification unique (Single Sign On)">SSO</abbr> &lt;portal-<abbr title="Uniform Resource Locator">URL</abbr>&gt;</code>
 </p>
 
-</div><!-- EDIT10 SECTION "Ajax requests" [2885-3091] -->
+</div><!-- EDIT10 SECTION "Ajax requests" [3197-3403] -->
 
 <h2 class="sectionedit11" id="soaprest_services">SOAP/REST services</h2>
 <div class="level2">
@@ -203,12 +203,12 @@ Before 2.0, an Ajax query that was launched after session timeout received a 302
 <div class="noteimportant"><a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic Handler</a> uses now REST services instead of SOAP.
 
 </div>
-</div><!-- EDIT11 SECTION "SOAP/REST services" [3092-3690] -->
+</div><!-- EDIT11 SECTION "SOAP/REST services" [3404-4002] -->
 
 <h2 class="sectionedit12" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
-</div><!-- EDIT12 SECTION "Developer corner" [3691-3720] -->
+</div><!-- EDIT12 SECTION "Developer corner" [4003-4032] -->
 
 <h3 class="sectionedit13" id="apis">APIs</h3>
 <div class="level3">
@@ -219,7 +219,7 @@ Portal has now many REST features and includes a plugin <abbr title="Interface d
 
 </p>
 
-</div><!-- EDIT13 SECTION "APIs" [3721-3878] -->
+</div><!-- EDIT13 SECTION "APIs" [4033-4190] -->
 
 <h3 class="sectionedit14" id="portal_overview">Portal overview</h3>
 <div class="level3">
@@ -245,7 +245,7 @@ The request is a separated object based on Lemonldap::NG::Portal::Main::Request 
 
 </p>
 
-</div><!-- EDIT14 SECTION "Portal overview" [3879-4326] -->
+</div><!-- EDIT14 SECTION "Portal overview" [4191-4638] -->
 
 <h3 class="sectionedit15" id="handler">Agent (Handler)</h3>
 <div class="level3">
@@ -262,7 +262,7 @@ If you had auto protected CGI, you also need to rewrite them, see <a href="selfm
 
 </p>
 
-</div><!-- EDIT15 SECTION "Handler" [4327-] -->
+</div><!-- EDIT15 SECTION "Handler" [4639-] -->
 </div>
 </body>
 </html>
