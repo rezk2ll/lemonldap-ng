@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:restconfbackend</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,restconfbackend"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="restconfbackend.html"/>
@@ -43,6 +43,21 @@
 </head>
 <body>
 <div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#first_configure_your_real_backend">First, configure your real backend</a></div></li>
+<li class="level2"><div class="li"><a href="#next_configure_rest_for_your_remote_servers">Next, configure REST for your remote servers</a></div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
 
 <h1 class="sectionedit1" id="rest_configuration_backend">REST configuration backend</h1>
 <div class="level1">
@@ -53,6 +68,47 @@ You can share your configuration over the network using REST proxy system.
 <div class="notetip">Note that REST is not a real configuration backend, but just a proxy system to access to your configuration over the network
 </div>
 </div>
+<!-- EDIT1 SECTION "REST configuration backend" [1-261] -->
+<h2 class="sectionedit2" id="configuration">Configuration</h2>
+<div class="level2">
+
 </div>
+<!-- EDIT2 SECTION "Configuration" [262-288] -->
+<h3 class="sectionedit3" id="first_configure_your_real_backend">First, configure your real backend</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> On your main server, configure a <a href="documentation/1.0/fileconfbackend.html" class="wikilink1" title="documentation:1.0:fileconfbackend">File</a>, <a href="documentation/1.0/sqlconfbackend.html" class="wikilink1" title="documentation:1.0:sqlconfbackend">SQL</a> or <a href="documentation/1.0/ldapconfbackend.html" class="wikilink1" title="documentation:1.0:ldapconfbackend">LDAP</a> backend</div>
+</li>
+<li class="level1"><div class="li"> Enable REST server in the configuration using the manager (in portal plugins)</div>
+</li>
+<li class="level1"><div class="li"> Configure Apache to allow remote access: in <code>portal-apache2.conf</code>, remote REST access is disabled by default. Change it:</div>
+</li>
+</ul>
+<pre class="code apache"><span class="co1"># SOAP functions for configuration access (disabled by default)</span>
+&lt;<span class="kw3">Location</span> /index.fcgi/config&gt;
+    <span class="kw1">Require</span> ip 192.168.2.0/<span class="nu0">24</span>
+&lt;/<span class="kw3">Location</span>&gt;</pre>
+
+</div>
+<!-- EDIT3 SECTION "First, configure your real backend" [289-878] -->
+<h3 class="sectionedit4" id="next_configure_rest_for_your_remote_servers">Next, configure REST for your remote servers</h3>
+<div class="level3">
+
+<p>
+Change configuration in lemonldap-ng.ini :
+</p>
+<pre class="code file ini"><span class="re1">type</span>         <span class="sy0">=</span><span class="re2"> REST</span>
+<span class="re1">baseUrl</span>      <span class="sy0">=</span><span class="re2"> https://auth.example.com/index.fcgi/config</span></pre>
+
+<p>
+You can also add some other parameters
+</p>
+<pre class="code file ini"><span class="re1">User</span>         <span class="sy0">=</span><span class="re2"> lemonldap</span>
+<span class="re1">Password</span>     <span class="sy0">=</span><span class="re2"> mypassword</span>
+# LWP::UserAgent parameters
+<span class="re1">proxyOptions</span> <span class="sy0">=</span><span class="re2"> <span class="br0">&#123;</span> timeout <span class="sy0">=</span>&gt; 5 <span class="br0">&#125;</span></span></pre>
+
+</div>
+<!-- EDIT4 SECTION "Next, configure REST for your remote servers" [879-] --></div>
 </body>
 </html>

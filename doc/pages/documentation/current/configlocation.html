@@ -447,7 +447,8 @@ PerlModule Lemonldap::NG::Handler</pre>
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
         <span class="kw1">Deny</span> from <span class="kw2">all</span>
         <span class="kw1">Allow</span> from 127.0.0.0/<span class="nu0">8</span>
-        PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;reload
+        <span class="kw1">SetHandler</span> perl-<span class="kw1">script</span>
+        PerlResponseHandler Lemonldap::NG::Handler-&gt;reload
     &lt;/<span class="kw3">Location</span>&gt;
 &nbsp;
     <span class="co1"># Uncomment this to activate status module</span>
@@ -455,7 +456,8 @@ PerlModule Lemonldap::NG::Handler</pre>
     <span class="co1">#    Order deny,allow</span>
     <span class="co1">#    Deny from all</span>
     <span class="co1">#    Allow from 127.0.0.0/8</span>
-    <span class="co1">#    PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;status</span>
+    <span class="co1">#    SetHandler perl-script</span>
+    <span class="co1">#    PerlResponseHandler Lemonldap::NG::Handler-&gt;status</span>
     <span class="co1">#&lt;/Location&gt;</span>
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
@@ -466,7 +468,7 @@ Then, to protect a standard virtual host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
 
 </div>
-<!-- EDIT9 SECTION "Handler" [10340-11643] -->
+<!-- EDIT9 SECTION "Handler" [10340-11698] -->
 <h2 class="sectionedit10" id="nginx">Nginx</h2>
 <div class="level2">
 <div class="noteimportant">LemonLDAP::NG does not manage Nginx configuration
@@ -489,7 +491,7 @@ See <a href="confignginx.html" class="wikilink1" title="documentation:2.0:config
 <div class="notewarning"><a href="fastcgiserver.html" class="wikilink1" title="documentation:2.0:fastcgiserver">LL::NG FastCGI</a> server must be loaded separately.
 </div>
 </div>
-<!-- EDIT10 SECTION "Nginx" [11644-12097] -->
+<!-- EDIT10 SECTION "Nginx" [11699-12152] -->
 <h3 class="sectionedit11" id="portal1">Portal</h3>
 <div class="level3">
 
@@ -561,7 +563,7 @@ In Portal virtual host, you will find several configuration parts:
   }</pre>
 
 </div>
-<!-- EDIT11 SECTION "Portal" [12098-13889] -->
+<!-- EDIT11 SECTION "Portal" [12153-13944] -->
 <h3 class="sectionedit12" id="manager2">Manager</h3>
 <div class="level3">
 
@@ -595,7 +597,7 @@ By default, configuration interface access is not protected by Nginx but by Lemo
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Manager" [13890-14642] -->
+<!-- EDIT12 SECTION "Manager" [13945-14697] -->
 <h3 class="sectionedit13" id="handler1">Handler</h3>
 <div class="level3">
 
@@ -625,6 +627,7 @@ error_page 503 http://auth.example.com/?lmError=503;</pre>
     deny all;
     include /etc/nginx/fastcgi_params;
     fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    fastcgi_param LLTYPE reload;
   } 
 &nbsp;
   # Other requests                                                    
@@ -694,7 +697,7 @@ Then, to protect a standard virtual host, you must insert this (or create an inc
     # Insert then your configuration (fastcgi_* or proxy_*)</pre>
 
 </div>
-<!-- EDIT13 SECTION "Handler" [14643-17696] -->
+<!-- EDIT13 SECTION "Handler" [14698-17784] -->
 <h2 class="sectionedit14" id="configuration_reload">Configuration reload</h2>
 <div class="level2">
 <div class="noteclassic">As Handlers keep configuration in cache, when configuration change, it should be updated in Handlers. An Apache restart will work, but LemonLDAP::NG offers the mean to reload them through an HTTP request. Configuration reload will then be effective in less than 10 minutes.
@@ -714,7 +717,7 @@ The <code>reload</code> target is managed in Apache or Nginx configuration, insi
 <div class="noteimportant">You must allow access to declared URLs to your Manager <abbr title="Internet Protocol">IP</abbr>.
 </div>
 </div>
-<!-- EDIT14 SECTION "Configuration reload" [17697-18866] -->
+<!-- EDIT14 SECTION "Configuration reload" [17785-18954] -->
 <h2 class="sectionedit15" id="local_file">Local file</h2>
 <div class="level2">
 
@@ -748,6 +751,6 @@ For example, to override configured skin for portal:
 <div class="notetip">You need to know the technical name of configuration parameter to do this. You can refer to <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">parameter list</a> to find it.
 </div>
 </div>
-<!-- EDIT15 SECTION "Local file" [18867-] --></div>
+<!-- EDIT15 SECTION "Local file" [18955-] --></div>
 </body>
 </html>
