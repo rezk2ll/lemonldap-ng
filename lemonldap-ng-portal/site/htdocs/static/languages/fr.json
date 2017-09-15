@@ -180,6 +180,7 @@
 "resetPwd":"Réinitialiser mon mot de passe",
 "rightsReloadNeedsLogout": "Le rechargement des droits nécessite une déconnexion",
 "selectIdP":"Choisissez votre fournisseur d'identité",
+"service":"Service",
 "sendPwd":"Envoyez-moi un nouveau mot de passe",
 "serverError":"Une erreur est survenue sur le serveur",
 "serviceProvidedBy":"Ce service est fourni par",

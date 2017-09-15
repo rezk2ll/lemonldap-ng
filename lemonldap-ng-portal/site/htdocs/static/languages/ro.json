@@ -180,6 +180,7 @@
 "resetPwd":"Reset my password",
 "rightsReloadNeedsLogout": "Rights reloads need to logout and login again",
 "selectIdP":"Select your Identity Provider",
+"service":"Service",
 "sendPwd":"Send me a new password",
 "serverError":"Error occurs on the server",
 "serviceProvidedBy":"Service provided by",

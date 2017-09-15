@@ -180,6 +180,7 @@
 "resetPwd":"Đặt lại mật khẩu của tôi",
 "rightsReloadNeedsLogout": "Tải lại quyền cần đăng xuất và đăng nhập lại",
 "selectIdP":"Chọn bộ cung cấp danh tính của bạn",
+"service":"Service",
 "sendPwd":"Gửi cho tôi một mật khẩu mới",
 "serverError":"Lỗi xảy ra trên máy chủ",
 "serviceProvidedBy":"Dịch vụ được cung cấp bởi",

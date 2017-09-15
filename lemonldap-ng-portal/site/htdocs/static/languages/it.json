@@ -180,6 +180,7 @@
 "resetPwd":"Reimpostare la password",
 "rightsReloadNeedsLogout": "Le ricariche dei diritti necessitano di disconnettersi e di riconnettersi",
 "selectIdP":"Seleziona il tuo provider di identità",
+"service":"Service",
 "sendPwd":"Inviami una nuova password",
 "serverError":"Un, errore si verifica sul server",
 "serviceProvidedBy":"Servizio offerto da",

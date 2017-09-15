@@ -126,6 +126,10 @@ sub displayModules {
                     $req->{sessionInfo}->{_loginHistory}->{failedLogin},
                     "", 0, 1 );
             }
+            elsif ( $module->[0] eq 'OidcConsents' ) {
+                $moduleHash->{'OIDC_CONSENTS'} =
+                  $self->p->mkOidcConsent( $req->sessionInfo );
+            }
             push @$displayModules, $moduleHash;
         }
     }

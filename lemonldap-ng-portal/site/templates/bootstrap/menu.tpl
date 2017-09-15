@@ -211,6 +211,7 @@
               <h3 class="panel-title" trspan="oidcConsentsFull">OpenID-Connect Consents</h3>
               </div>
               <div class="panel-body">
+              <TMPL_VAR NAME="OIDC_CONSENTS">
               </div>
             </div>
         </div>

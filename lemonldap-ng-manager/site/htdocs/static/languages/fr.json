@@ -568,6 +568,7 @@
 "portalDisplayLoginHistory": "Historique des connexions",
 "portalDisplayLogout": "Déconnexion",
 "portalDisplayRegister": "Création d'un nouveau compte",
+"portalDisplayOidcConsents": "Accords OIDC",
 "portalDisplayResetPassword": "Réinitialisation de mot de passe",
 "portalErrorOnExpiredSession": "Affiche une erreur si la session est expirée",
 "portalErrorOnMailNotFound": "Affiche une erreur si le mail n'est pas trouvé",

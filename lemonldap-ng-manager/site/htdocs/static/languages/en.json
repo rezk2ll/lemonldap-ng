@@ -568,6 +568,7 @@
 "portalDisplayLoginHistory": "Login History",
 "portalDisplayLogout": "Logout",
 "portalDisplayRegister": "Register new account",
+"portalDisplayOidcConsents": "OIDC Consents",
 "portalDisplayResetPassword": "Reset password",
 "portalErrorOnExpiredSession": "Show error on expired session",
 "portalErrorOnMailNotFound": "Show error on mail not found",

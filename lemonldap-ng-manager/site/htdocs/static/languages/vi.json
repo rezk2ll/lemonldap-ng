@@ -568,6 +568,7 @@
 "portalDisplayLoginHistory": "Lịch sử đăng nhập",
 "portalDisplayLogout": "Đăng xuất",
 "portalDisplayRegister": "Đăng ký tài khoản mới",
+"portalDisplayOidcConsents": "OIDC Consents",
 "portalDisplayResetPassword": "Đặt lại mật khẩu",
 "portalErrorOnExpiredSession": "Show error on expired session",
 "portalErrorOnMailNotFound": "Show error on mail not found",

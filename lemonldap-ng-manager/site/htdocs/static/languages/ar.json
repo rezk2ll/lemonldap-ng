@@ -567,6 +567,7 @@
 "portalDisplayChangePassword": "تغيير كلمة المرور",
 "portalDisplayLoginHistory": "سجل تسجيل الدخول",
 "portalDisplayLogout": "تسجيل الخروج",
+"portalDisplayOidcConsents": "OIDC Consents",
 "portalDisplayRegister": "تسجيل حساب جديد",
 "portalDisplayResetPassword": "إعادة تعيين كلمة المرور",
 "portalErrorOnExpiredSession": "عرض الخطأ في الجلسة المنتهية صلحيتها",

@@ -461,4 +461,17 @@ sub mkSessionArray {
     return $tmp;
 }
 
+sub mkOidcConsent {
+    my ( $self, $session ) = @_;
+    my $tmp .=
+        '<table class="info"><thead><tr><th trspan="service"></th></tr></thead>'
+      . '<tbody><tr>';
+
+    # TODO: add JS to remove consent
+    $tmp .= "<tr><td>$_</td></tr>"
+      foreach ( split /,/, $session->{_oidcConnectedRP} );
+    $tmp .= '</tbody></table>';
+    return $tmp;
+}
+
 1;
