@@ -2111,7 +2111,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'boolOrExpr'
         },
         'portalDisplayOidcConsents' => {
-            'default' => 1,
+            'default' => '$_oidcConnectedRP',
             'type'    => 'boolOrExpr'
         },
         'portalDisplayRegister' => {

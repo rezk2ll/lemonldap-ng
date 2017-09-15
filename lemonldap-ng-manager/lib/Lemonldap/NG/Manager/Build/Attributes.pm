@@ -636,7 +636,7 @@ sub attributes {
         },
         portalDisplayOidcConsents => {
             type          => 'boolOrExpr',
-            default       => 1,
+            default       => '$_oidcConnectedRP',
             documentation => 'Display OIDC consent tab in portal',
         },
 
