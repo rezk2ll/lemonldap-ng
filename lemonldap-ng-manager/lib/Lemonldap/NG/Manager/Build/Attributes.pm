@@ -634,6 +634,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Display reset password button in portal',
         },
+        portalDisplayOidcConsents => {
+            type          => 'boolOrExpr',
+            default       => 1,
+            documentation => 'Display OIDC consent tab in portal',
+        },
 
         # Cookies
         cookieExpiration =>

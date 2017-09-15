@@ -148,6 +148,8 @@
 "notFound": "Non trovato: si tenta di accedere ad una pagina non disponibile",
 "noU2FKeyFound": "No U2F key found",
 "oidcConsent":"L'applicazione %s vorrebbe sapere:",
+"oidcConsents": "OIDC consents",
+"oidcConsentsFull":"OpenID-Connect consents",
 "openidAp":"Accetti di fornire i seguenti parametri?",
 "openIdExample":"per esempio:http://myopenid.org/toto",
 "openidExchange":"Vuoi autenticarti su% s?",

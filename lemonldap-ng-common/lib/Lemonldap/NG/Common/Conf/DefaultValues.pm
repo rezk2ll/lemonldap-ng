@@ -163,6 +163,7 @@ sub defaultValues {
         'portalDisplayChangePassword'        => '$_auth =~ /^(LDAP|DBI|Demo)$/',
         'portalDisplayLoginHistory'          => 1,
         'portalDisplayLogout'                => 1,
+        'portalDisplayOidcConsents'          => 1,
         'portalDisplayRegister'              => 1,
         'portalErrorOnExpiredSession'        => 1,
         'portalForceAuthnInterval'           => 5,

@@ -51,6 +51,13 @@
               <span trspan="loginHistory">Login history</span>
             </span></a></li>
           </TMPL_IF>
+          <TMPL_IF NAME="OidcConsents">
+            <li><a href="#oidcConsents"><span>
+              <!-- TODO: change logo -->
+              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/calendar.png" width="16" height="16" alt="login history" />
+              <span trspan="oidcConsents">OIDC Consent</span>
+            </span></a></li>
+          </TMPL_IF>
           <TMPL_IF NAME="Logout">
             <li><a href="#logout"><span>
               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/door_out.png" width="16" height="16" alt="logout" />
@@ -194,6 +201,18 @@
               </div>
             </div>
             </TMPL_IF>
+        </div>
+      </TMPL_IF>
+
+      <TMPL_IF NAME="OidcConsents">
+        <div id="oidcConsents">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+              <h3 class="panel-title" trspan="oidcConsentsFull">OpenID-Connect Consents</h3>
+              </div>
+              <div class="panel-body">
+              </div>
+            </div>
         </div>
       </TMPL_IF>
 

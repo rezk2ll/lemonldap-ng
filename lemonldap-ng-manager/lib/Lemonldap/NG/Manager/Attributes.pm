@@ -2110,6 +2110,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 1,
             'type'    => 'boolOrExpr'
         },
+        'portalDisplayOidcConsents' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
         'portalDisplayRegister' => {
             'default' => 1,
             'type'    => 'bool'

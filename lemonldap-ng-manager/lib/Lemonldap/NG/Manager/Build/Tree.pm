@@ -40,7 +40,8 @@ sub tree {
                                         'portalDisplayLogout',
                                         'portalDisplayChangePassword',
                                         'portalDisplayAppslist',
-                                        'portalDisplayLoginHistory'
+                                        'portalDisplayLoginHistory',
+                                        'portalDisplayOidcConsents',
                                     ]
                                 },
                                 'applicationList'

@@ -148,6 +148,8 @@
 "notFound": "لم يتم العثور: محاولة الدخول إلى صفحة غير متوفرة",
 "noU2FKeyFound": "No U2F key found",
 "oidcConsent":"التطبيق ٪s هل ترغب في معرفة:",
+"oidcConsents": "OIDC consents",
+"oidcConsentsFull":"OpenID-Connect consents",
 "openidAp":"هل توافق على تقديم الإعدادات التالية؟",
 "openIdExample":"فمثلا:http://myopenid.org/toto",
 "openidExchange":"هل تريد مصادقة نفسك على٪ s؟",
