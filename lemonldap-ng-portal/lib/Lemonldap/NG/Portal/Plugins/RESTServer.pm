@@ -88,6 +88,17 @@ has exportedAttr => (
     }
 );
 
+has ott => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->conf->{formTimeout} );
+        return $ott;
+    }
+);
+
 # INITIALIZATION
 
 sub init {
@@ -294,6 +305,11 @@ sub mysession {
             { result => $req->userData->{ $self->conf->{whatToTrace} } } );
     }
 
+    if ( defined $req->param('gettoken') ) {
+        return $self->p->sendJSONresponse( $req,
+            { token => $self->ott->createToken() } );
+    }
+
     # Verify authorizationfor arg
     elsif ( my $url = $req->param('authorizationfor') ) {
 
@@ -338,14 +354,26 @@ sub updateMySession {
     my ( $self, $req ) = @_;
     my $res   = 0;
     my $mKeys = [];
-    if ( $req->param('sessionType') eq 'persistent' ) {
-        foreach my $key (qw(_appsListOrder)) {
-            if ( my $v = $req->param($key) ) {
-                $res++;
-                push @$mKeys, $key;
-                $self->p->updatePersistentSession( $req, { $key => $v } );
+    if ( my $token = $req->param('token') ) {
+        if ( $self->ott->getToken($token) ) {
+            if ( $req->param('sessionType') eq 'persistent' ) {
+                foreach my $key (qw(_appsListOrder _oidcConnectedRP)) {
+                    my $v = $req->param($key);
+                    if ( defined $v ) {
+                        $res++;
+                        push @$mKeys, $key;
+                        $self->p->updatePersistentSession( $req,
+                            { $key => $v } );
+                    }
+                }
             }
         }
+        else {
+            $self->logger->error('Update session request with invalid token');
+        }
+    }
+    else {
+        $self->logger->error('Update session request without token');
     }
     unless ($res) {
         return $self->p->sendError( $req, 'Modification refused', 403 );

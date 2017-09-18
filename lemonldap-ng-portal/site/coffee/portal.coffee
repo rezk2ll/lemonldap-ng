@@ -49,12 +49,28 @@ setSelector = "#appslist"
 
 # function that writes the list order to session
 setOrder = ->
+	setKey '_appsListOrder', $(setSelector).sortable("toArray").join()
+
+removeOidcConsent = (partner) ->
+	r = new RegExp partner, 'g'
+	datas['oidcConsents'] = datas['oidcConsents'].replace(r,'').replace(',+',',')
+	setKey '_oidcConnectedRP', datas['oidcConsents']
+	$(this).text()
+
+setKey = (key,val) ->
 	$.ajax
-		type: "PUT"
-		url: datas['scriptname'] + '/mysession/persistent'
-		data:
-			_appsListOrder: $(setSelector).sortable("toArray").join()
+		type: "GET"
+		url: datas['scriptname'] + '/mysession/?gettoken'
 		dataType: 'json'
+		success: (data) ->
+			d =
+				token: data.token
+			d[key] = val
+			$.ajax
+				type: "PUT"
+				url: datas['scriptname'] + '/mysession/persistent'
+				dataType: 'json'
+				data: d
 
 # function that restores the list order from session
 restoreOrder = ->
@@ -250,3 +266,5 @@ $(document).ready ->
 		s = new Date($(this).attr("val")*1000)
 		$(this).text s.toLocaleString()
 
+	$('.oidcConsent').on 'click', () ->
+		removeOidcConsent $(this).attr 'partner'

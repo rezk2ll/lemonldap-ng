@@ -6,6 +6,7 @@ our $VERSION = '2.0.0';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
+use Mouse;
 
 has skinRules => ( is => 'rw' );
 
@@ -468,9 +469,16 @@ sub mkOidcConsent {
       . '<tbody><tr>';
 
     # TODO: add JS to remove consent
-    $tmp .= "<tr><td>$_</td></tr>"
-      foreach ( split /,/, $session->{_oidcConnectedRP} );
-    $tmp .= '</tbody></table>';
+    if ( $session->{_oidcConnectedRP} ) {
+        $tmp .=
+qq'<tr><td>$_ <a class="oidcConsent" partner="$_">remove</a></td></tr>'
+          foreach ( split /,/, $session->{_oidcConnectedRP} );
+        $tmp .= qq'</tbody></table><script type="application/init">
+{
+"oidcConsents":"$session->{_oidcConnectedRP}"
+}
+</script>';
+    }
     return $tmp;
 }
 

@@ -5,7 +5,7 @@ LemonLDAP::NG Portal jQuery scripts
  */
 
 (function() {
-  var datas, getCookie, getValues, isHiddenFormValueSet, ping, restoreOrder, setCookie, setOrder, setSelector, translate, translatePage, translationFields,
+  var datas, getCookie, getValues, isHiddenFormValueSet, ping, removeOidcConsent, restoreOrder, setCookie, setKey, setOrder, setSelector, translate, translatePage, translationFields,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   translationFields = {};
@@ -71,13 +71,35 @@ LemonLDAP::NG Portal jQuery scripts
   setSelector = "#appslist";
 
   setOrder = function() {
+    return setKey('_appsListOrder', $(setSelector).sortable("toArray").join());
+  };
+
+  removeOidcConsent = function(partner) {
+    var r;
+    r = new RegExp(partner, 'g');
+    datas['oidcConsents'] = datas['oidcConsents'].replace(r, '').replace(',+', ',');
+    setKey('_oidcConnectedRP', datas['oidcConsents']);
+    return $(this).text();
+  };
+
+  setKey = function(key, val) {
     return $.ajax({
-      type: "PUT",
-      url: datas['scriptname'] + '/mysession/persistent',
-      data: {
-        _appsListOrder: $(setSelector).sortable("toArray").join()
-      },
-      dataType: 'json'
+      type: "GET",
+      url: datas['scriptname'] + '/mysession/?gettoken',
+      dataType: 'json',
+      success: function(data) {
+        var d;
+        d = {
+          token: data.token
+        };
+        d[key] = val;
+        return $.ajax({
+          type: "PUT",
+          url: datas['scriptname'] + '/mysession/persistent',
+          dataType: 'json',
+          data: d
+        });
+      }
     });
   };
 
@@ -261,10 +283,13 @@ LemonLDAP::NG Portal jQuery scripts
     if (datas['pingInterval'] && datas['pingInterval'] > 0) {
       window.setTimeout(ping, datas['pingInterval']);
     }
-    return $(".localeDate").each(function() {
+    $(".localeDate").each(function() {
       var s;
       s = new Date($(this).attr("val") * 1000);
       return $(this).text(s.toLocaleString());
+    });
+    return $('.oidcConsent').on('click', function() {
+      return removeOidcConsent($(this).attr('partner'));
     });
   });
 
