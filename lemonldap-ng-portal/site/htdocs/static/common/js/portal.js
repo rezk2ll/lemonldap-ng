@@ -5,7 +5,7 @@ LemonLDAP::NG Portal jQuery scripts
  */
 
 (function() {
-  var datas, getCookie, getOrder, getValues, isHiddenFormValueSet, ping, restoreOrder, setCookie, setSelector, translate, translatePage, translationFields,
+  var datas, getCookie, getValues, isHiddenFormValueSet, ping, restoreOrder, setCookie, setOrder, setSelector, translate, translatePage, translationFields,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   translationFields = {};
@@ -70,7 +70,7 @@ LemonLDAP::NG Portal jQuery scripts
 
   setSelector = "#appslist";
 
-  getOrder = function() {
+  setOrder = function() {
     return $.ajax({
       type: "PUT",
       url: datas['scriptname'] + '/mysession/persistent',
@@ -172,7 +172,7 @@ LemonLDAP::NG Portal jQuery scripts
       revert: true,
       items: "> div.category",
       update: function() {
-        return getOrder();
+        return setOrder();
       }
     });
     restoreOrder();

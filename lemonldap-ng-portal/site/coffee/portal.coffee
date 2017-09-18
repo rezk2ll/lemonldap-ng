@@ -48,7 +48,7 @@ getValues = () ->
 setSelector = "#appslist"
 
 # function that writes the list order to session
-getOrder = ->
+setOrder = ->
 	$.ajax
 		type: "PUT"
 		url: datas['scriptname'] + '/mysession/persistent'
@@ -153,7 +153,7 @@ $(document).ready ->
 		revert: true
 		items: "> div.category"
 		update: ->
-			getOrder()
+			setOrder()
 
 	restoreOrder()
 
