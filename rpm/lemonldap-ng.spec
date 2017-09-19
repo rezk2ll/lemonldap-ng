@@ -76,7 +76,6 @@ BuildRequires:  perl(Regexp::Common)
 BuildRequires:  perl(Cache::Cache)
 BuildRequires:  perl(Apache::Session)
 BuildRequires:  perl(Net::LDAP)
-BuildRequires:  perl(CGI::Session)
 BuildRequires:  perl(Test::Pod) >= 1.00
 BuildRequires:  perl(IO::String)
 BuildRequires:  perl(Email::Sender)
@@ -105,7 +104,7 @@ BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Env)
 BuildRequires:  systemd
 %else
-BuildRequires:  perl-Regexp-Assemble, perl-Regexp-Common, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-Bignum, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Unicode-String, perl-Mouse, perl-Digest-SHA, perl-ExtUtims-MakeMaker, perl-Env, systemd
+BuildRequires:  perl-Regexp-Assemble, perl-Regexp-Common, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-Bignum, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Unicode-String, perl-Mouse, perl-Digest-SHA, perl-ExtUtims-MakeMaker, perl-Env, systemd
 %endif
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
@@ -116,7 +115,7 @@ Requires: mod_fcgid
 %else
 Requires: cron
 Requires: perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-XML-Simple, perl-Crypt-Rijndael, perl-IO-String
-Requires: perl-ldap, perl-MIME-Base64, perl-CGI, perl-CGI-Session, perl-DBI, perl-HTML-Template, perl-SOAP-Lite, perl-IPC-ShareLite, perl-Convert-ASN1, perl-Error, perl-Unicode-String
+Requires: perl-ldap, perl-MIME-Base64, perl-DBI, perl-HTML-Template, perl-SOAP-Lite, perl-IPC-ShareLite, perl-Convert-ASN1, perl-Error, perl-Unicode-String
 %endif
 
 Requires: lemonldap-ng-conf >= %{real_version}
