@@ -24,14 +24,14 @@ sub run {
         $req->info(
             (
                 $req->sessionInfo->{_loginHistory}->{successLogin}
-                ? $self->mkSessionArray(
+                ? $self->p->mkSessionArray(
                     $req->sessionInfo->{_loginHistory}->{successLogin},
                     'lastLogins', 0, 0 )
                 : ""
             )
             . (
                 $req->sessionInfo->{_loginHistory}->{failedLogin}
-                ? $self->mkSessionArray(
+                ? $self->p->mkSessionArray(
                     $req->sessionInfo->{_loginHistory}->{failedLogin},
                     'lastFailedLogins', 0, 1 )
                 : ""

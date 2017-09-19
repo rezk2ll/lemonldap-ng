@@ -437,7 +437,7 @@ sub mkSessionArray {
 
     return "" unless ( ref $sessions eq "ARRAY" and @$sessions );
 
-    my $tmp = $title ? "<h3>$title</h3>" : "";
+    my $tmp = $title ? qq'<h3 trspan="$title">$title</h3>' : '';
     $tmp .=
         '<table class="info"><tbody><tr>'
       . ( $displayUser ? '<th trspan="user">User</th>' : '' )

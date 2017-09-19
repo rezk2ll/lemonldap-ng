@@ -57,9 +57,9 @@ sub run {
             }
         }
     }
-    $req->info( $self->mkSessionArray( $deleted, 'sessionsDeleted', 1 ) )
+    $req->info( $self->p->mkSessionArray( $deleted, 'sessionsDeleted', 1 ) )
       if ( $self->conf->{notifyDeleted} and @$deleted );
-    $req->info( $self->mkSessionArray( $otherSessions, 'otherSessions', 1 )
+    $req->info( $self->p->mkSessionArray( $otherSessions, 'otherSessions', 1 )
           . $self->_mkRemoveOtherLink() )
       if ( $self->conf->{notifyOther} and @$otherSessions );
 
