@@ -51,7 +51,7 @@ LemonLDAP::NG Portal jQuery scripts
     var values;
     values = {};
     $("script[type='application/init']").each(function() {
-      var e, error, k, results, tmp;
+      var e, error1, k, results, tmp;
       try {
         tmp = JSON.parse($(this).text());
         results = [];
@@ -59,8 +59,8 @@ LemonLDAP::NG Portal jQuery scripts
           results.push(values[k] = tmp[k]);
         }
         return results;
-      } catch (error) {
-        e = error;
+      } catch (error1) {
+        e = error1;
         console.log('Parsing error', e);
         return console.log('JSON', $(this).text());
       }
@@ -78,15 +78,19 @@ LemonLDAP::NG Portal jQuery scripts
     var r;
     r = new RegExp(partner, 'g');
     datas['oidcConsents'] = datas['oidcConsents'].replace(r, '').replace(/,+/, ',').replace(/^,/, '').replace(/,$/, '');
-    setKey('_oidcConnectedRP', datas['oidcConsents']);
-    return $("tr[partner='" + partner + "']").hide();
+    return setKey('_oidcConnectedRP', datas['oidcConsents'], function() {
+      return $("[partner='" + partner + "']").hide();
+    }, function(j, s, e) {
+      return alert(s + " " + e);
+    });
   };
 
-  setKey = function(key, val) {
+  setKey = function(key, val, success, error) {
     return $.ajax({
       type: "GET",
       url: datas['scriptname'] + '/mysession/?gettoken',
       dataType: 'json',
+      error: error,
       success: function(data) {
         var d;
         d = {
@@ -97,7 +101,9 @@ LemonLDAP::NG Portal jQuery scripts
           type: "PUT",
           url: datas['scriptname'] + '/mysession/persistent',
           dataType: 'json',
-          data: d
+          data: d,
+          success: success,
+          error: error
         });
       }
     });

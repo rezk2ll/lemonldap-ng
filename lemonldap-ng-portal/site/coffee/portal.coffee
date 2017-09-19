@@ -47,21 +47,32 @@ getValues = () ->
 # ----------------------------------------
 setSelector = "#appslist"
 
-# function that writes the list order to session
+# Function that writes the list order to session (network errors ignored)
 setOrder = ->
 	setKey '_appsListOrder', $(setSelector).sortable("toArray").join()
 
+# Function used to remove an OIDC consent
 removeOidcConsent = (partner) ->
 	r = new RegExp partner, 'g'
 	datas['oidcConsents'] = datas['oidcConsents'].replace(r,'').replace(/,+/,',').replace(/^,/,'').replace(/,$/,'')
 	setKey '_oidcConnectedRP', datas['oidcConsents']
-	$("tr[partner='#{partner}']").hide()
+		# Success
+		, () ->
+			$("[partner='#{partner}']").hide()
+		# Error
+		, (j,s,e) ->
+			alert "#{s} #{e}"
 
-setKey = (key,val) ->
+# Function used by setOrder() and removeOidcConsent() to push new values
+# For security reason, modification is rejected unless a valid token is given
+setKey = (key,val,success,error) ->
+	# First request to get token
 	$.ajax
 		type: "GET"
 		url: datas['scriptname'] + '/mysession/?gettoken'
 		dataType: 'json'
+		error: error
+		# On success, value is set
 		success: (data) ->
 			d =
 				token: data.token
@@ -71,6 +82,8 @@ setKey = (key,val) ->
 				url: datas['scriptname'] + '/mysession/persistent'
 				dataType: 'json'
 				data: d
+				success: success
+				error: error
 
 # function that restores the list order from session
 restoreOrder = ->
