@@ -81,7 +81,7 @@ sub _modifyPassword {
         $req->{passwordWasChanged} = 1;
 
         #  Continue process if password change is ok
-        return PE_OK;
+        return PE_PASSWORD_OK;
     }
     return $res;
 }

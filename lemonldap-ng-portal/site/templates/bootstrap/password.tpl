@@ -1,4 +1,4 @@
-  <form action="#" method="post" class="password" role="form">
+  <form id="formpass" action="#" method="post" class="password" role="form">
   <div class="form">
     <TMPL_VAR NAME="HIDDEN_INPUTS">
 
@@ -22,11 +22,11 @@
     <TMPL_IF NAME="REQUIRE_OLDPASSWORD">
 
       <TMPL_IF NAME="HIDE_OLDPASSWORD">
-        <input name="oldpassword" type="hidden" value="<TMPL_VAR NAME=OLDPASSWORD>" aria-required="true">
+        <input id="oldpassword" name="oldpassword" type="hidden" value="<TMPL_VAR NAME=OLDPASSWORD>" aria-required="true">
       <TMPL_ELSE>
         <div class="form-group input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>
-          <input name="oldpassword" type="password" value="<TMPL_VAR NAME=OLDPASSWORD>" class="form-control" trplaceholder="currentPwd" required/ aria-required="true">
+          <input id="oldpassword" name="oldpassword" type="password" value="<TMPL_VAR NAME=OLDPASSWORD>" class="form-control" trplaceholder="currentPwd" required/ aria-required="true">
         </div>
       </TMPL_IF>
 
@@ -34,11 +34,11 @@
 
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>
-      <input name="newpassword" type="password" class="form-control" trplaceholder="newPassword" required aria-required="true"/>
+      <input id="newpassword" name="newpassword" type="password" class="form-control" trplaceholder="newPassword" required aria-required="true"/>
     </div>
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>
-      <input name="confirmpassword" type="password" class="form-control" trplaceholder="confirmPwd" required aria-required="true"/>
+      <input id="confirmpassword" name="confirmpassword" type="password" class="form-control" trplaceholder="confirmPwd" required aria-required="true"/>
     </div>
 
     <button type="submit" class="btn btn-success" >

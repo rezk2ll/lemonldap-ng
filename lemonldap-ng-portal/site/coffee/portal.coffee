@@ -166,6 +166,21 @@ setCookie = (name, value, exdays) ->
 	d.setTime d.getTime() + exdays*86400000
 	document.cookie = "#{name}=#{value}; expires=#{d.toUTCString()}; path=/"
 
+# Function to change password using Ajax (instead of POST)
+# TODO
+#changePwd = (event) ->
+#	event.preventDefault();
+#	$.ajax
+#		type: 'POST'
+#		url: datas['scriptname']
+#		dataType: 'json'
+#		data:
+#			oldpassword: $('#oldpassword').val()
+#			newpassword: $('#newpassword').val()
+#			confirmpassword: $('#confirmpassword').val()
+#		success: (data) ->
+#			console.log "R", data
+
 # Initialization
 datas = {}
 $(document).ready ->
@@ -281,3 +296,5 @@ $(document).ready ->
 
 	$('.oidcConsent').on 'click', () ->
 		removeOidcConsent $(this).attr 'partner'
+
+	#$('#formpass').on 'submit', changePwd
