@@ -471,7 +471,7 @@ sub mkOidcConsent {
     # TODO: add JS to remove consent
     if ( $session->{_oidcConnectedRP} ) {
         $tmp .=
-qq'<tr><td>$_ <a class="oidcConsent" partner="$_">remove</a></td></tr>'
+qq'<tr partner="$_"><td>$_ <a class="oidcConsent" partner="$_">remove</a></td></tr>'
           foreach ( split /,/, $session->{_oidcConnectedRP} );
         $tmp .= qq'</tbody></table><script type="application/init">
 {

@@ -53,9 +53,9 @@ setOrder = ->
 
 removeOidcConsent = (partner) ->
 	r = new RegExp partner, 'g'
-	datas['oidcConsents'] = datas['oidcConsents'].replace(r,'').replace(',+',',')
+	datas['oidcConsents'] = datas['oidcConsents'].replace(r,'').replace(/,+/,',').replace(/^,/,'').replace(/,$/,'')
 	setKey '_oidcConnectedRP', datas['oidcConsents']
-	$(this).text()
+	$("tr[partner='#{partner}']").hide()
 
 setKey = (key,val) ->
 	$.ajax
