@@ -22,10 +22,10 @@ use Lemonldap::NG::Common::Crypto
   ;    #link protected cipher Object "cypher" in configuration hash
 use Config::IniFiles;
 
-#inherits Lemonldap::NG::Common::Conf::File
-#inherits Lemonldap::NG::Common::Conf::DBI
-#inherits Lemonldap::NG::Common::Conf::SOAP
-#inherits Lemonldap::NG::Common::Conf::LDAP
+#inherits Lemonldap::NG::Common::Conf::Backends::File
+#inherits Lemonldap::NG::Common::Conf::Backends::DBI
+#inherits Lemonldap::NG::Common::Conf::Backends::SOAP
+#inherits Lemonldap::NG::Common::Conf::Backends::LDAP
 
 our $VERSION = '2.0.0';
 our $msg     = '';
