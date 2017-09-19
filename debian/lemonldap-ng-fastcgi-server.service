@@ -1,7 +1,7 @@
 [Unit]
 Description=FastCGI server for Lemonldap::NG websso system
 After=network.target
-Documentation=http://lemonldap-ng.org/documentation/latest/fastcgiserver
+Documentation=https://lemonldap-ng.org/documentation/latest/fastcgiserver
 
 [Service]
 Type=forking
