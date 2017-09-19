@@ -162,3 +162,7 @@ div.oidc_consent_message > ul {
 .max {
   width: 100%;
 }
+
+.link {
+  cursor: pointer;
+}
