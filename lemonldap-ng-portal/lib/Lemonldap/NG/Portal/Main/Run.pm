@@ -434,7 +434,7 @@ sub updateSession {
     return () unless ( ref $infos eq 'HASH' and %$infos );
 
     # Recover session ID unless given
-    $id ||= $req->{id};
+    $id ||= $req->{id} || $req->userData->{_session_id};
 
     if ($id) {
 
