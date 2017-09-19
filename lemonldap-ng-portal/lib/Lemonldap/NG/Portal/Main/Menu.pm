@@ -17,7 +17,7 @@ has menuModules => (
     is      => 'rw',
     lazy    => 1,
     builder => sub {
-        my $conf = $_[0]->{conf}->{menuModule};
+        my $conf = $_[0]->{conf};
         my @res;
         foreach (qw(Appslist ChangePassword LoginHistory Logout OidcConsents)) {
             my $cond = $conf->{"portalDisplay$_"} // 1;
