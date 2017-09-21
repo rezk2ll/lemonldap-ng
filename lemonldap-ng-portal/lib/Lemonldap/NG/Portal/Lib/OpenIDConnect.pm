@@ -628,7 +628,7 @@ sub decodeJSON {
     my ( $self, $json ) = @_;
     my $json_hash;
 
-    eval { $json_hash = from_json $json; };
+    eval { $json_hash = from_json( $json, { allow_nonref => 1 } ); };
 
     if ($@) {
         $json_hash->{error} = "parse_error";
