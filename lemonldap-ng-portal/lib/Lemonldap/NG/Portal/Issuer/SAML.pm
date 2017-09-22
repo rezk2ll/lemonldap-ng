@@ -23,6 +23,8 @@ has ssoUrlRe => ( is => 'rw' );
 
 has ssoUrlArtifact => ( is => 'rw' );
 
+has ssoGetUrl => ( is => 'rw' );
+
 # INTERFACE
 
 # Simply store SP in $req->env
@@ -34,8 +36,11 @@ sub init {
     my ($self) = @_;
 
     # Prepare SSO URL catching
-    my $saml_sso_get_url = $self->getMetaDataURL(
-        "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect", 1 );
+    my $saml_sso_get_url = $self->ssoGetUrl(
+        $self->getMetaDataURL(
+            "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect", 1
+        )
+    );
     my $saml_sso_get_url_ret = $self->getMetaDataURL(
         "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect", 2 );
     my $saml_sso_post_url =
@@ -174,6 +179,10 @@ sub run {
     my $idp_initiated           = $req->param('IDPInitiated');
     my $idp_initiated_sp        = $req->param('sp');
     my $idp_initiated_spConfKey = $req->param('spConfKey');
+
+    # Normalize URL to be tolerant to SAML Path
+    $url = $self->normalize_url( $url, $self->conf->{issuerDBSAMLPath},
+        $self->ssoGetUrl );
 
     # 1.1. SSO (SSO URL or Proxy Mode)
     if ( $url =~ $self->ssoUrlRe or $req->datas->{_proxiedRequest} ) {
@@ -1855,6 +1864,37 @@ sub imgnok {
 sub sendImage {
     my ( $self, $req,, $img ) = @_;
     return $self->p->staticFile( $req, "common/$img", 'image/png' );
+}
+
+# Normalize url to be tolerant to SAML Path
+# Usefull if SAML Path is a regex
+# @return normalized url
+sub normalize_url {
+    my ( $self, $url, $samlPath, $metadataUrl ) = @_;
+
+    my $initialPath = "";
+    my $finalPath   = "";
+
+    # Get current (bad) path
+    if ( $url =~ m/($samlPath)/ ) {
+        $initialPath = $1;
+    }
+
+    # Get destination (good) path
+    if ( $metadataUrl =~ m/($samlPath)/ ) {
+        $finalPath = $1;
+    }
+
+    if (    $initialPath ne ""
+        and $finalPath ne ""
+        and $initialPath ne $finalPath )
+    {
+        $self->logger->debug(
+            "Normalizing url path form $initialPath to $finalPath");
+        $url =~ s/$initialPath/$finalPath/;
+    }
+
+    return $url;
 }
 
 1;
