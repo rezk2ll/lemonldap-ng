@@ -187,7 +187,7 @@ sub do {
                 [qq'{"result":0,"error":$err}']
             ];
         }
-        elsif ( $err > 0 ) {
+        elsif ( $err > 0 and $err != PE_PASSWORD_OK ) {
             return $self->sendJSONresponse(
                 $req,
                 { result => 0, error => $err },
