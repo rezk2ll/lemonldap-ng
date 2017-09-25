@@ -12,7 +12,6 @@ Build-Depends-Indep: libapache-session-perl,
                      libclone-perl,
                      libconfig-inifiles-perl,
                      libconvert-pem-perl,
-                     libcrypt-openssl-bignum-perl,
                      libcrypt-openssl-rsa-perl,
                      libcrypt-openssl-x509-perl,
                      libcrypt-rijndael-perl,
@@ -47,7 +46,7 @@ Build-Depends-Indep: libapache-session-perl,
                      libxml-libxslt-perl,
                      libxml-simple-perl,
                      perl
-Standards-Version: 3.9.8
+Standards-Version: 4.1.0
 Vcs-Browser: https://anonscm.debian.org/cgit/pkg-perl/packages/lemonldap-ng.git
 Vcs-Git: https://anonscm.debian.org/git/pkg-perl/packages/lemonldap-ng.git
 Homepage: https://lemonldap-ng.org/
@@ -78,7 +77,7 @@ Description: OpenID-Connect, CAS and SAML compatible Web-SSO system
 Package: lemonldap-ng-doc
 Architecture: all
 Section: doc
-Pre-Depends: dpkg (>= 1.17.14)
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}
 Description: Lemonldap::NG Web-SSO system documentation
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
@@ -139,7 +138,7 @@ Description: Lemonldap::NG FastCGI server
 Package: lemonldap-ng-handler
 Architecture: all
 Depends: ${misc:Depends},
-         libapache2-mod-perl2 | lemonldap-ng-fastcgi-server (= ${binary:Version}),
+         lemonldap-ng-fastcgi-server (= ${binary:Version}) | libapache2-mod-perl2,
          liblemonldap-ng-handler-perl (= ${binary:Version})
 Breaks: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
 Replaces: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
@@ -242,7 +241,7 @@ Depends: ${misc:Depends},
          libwww-perl
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libapache-session-browseable-perl,
-            libapache2-mod-fcgid | libapache2-mod-fastcgi | lemonldap-ng-fastcgi-server (= ${binary:Version}),
+            lemonldap-ng-fastcgi-server (= ${binary:Version}) | libapache2-mod-fcgid | libapache2-mod-fastcgi,
             libjson-xs-perl,
             libhttp-parser-xs-perl,
             liblwp-protocol-https-perl,
@@ -268,7 +267,7 @@ Package: liblemonldap-ng-portal-perl
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
-         apache2 | nginx | httpd-cgi,
+         nginx | apache2 | httpd-cgi,
          libclone-perl,
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libregexp-assemble-perl
@@ -276,12 +275,12 @@ Recommends: libcrypt-openssl-bignum-perl,
             libemail-sender-perl (>=1.300027) | libemail-sender-transport-smtps-perl,
             libmime-tools-perl,
             libnet-ldap-perl,
-            libnet-facebook-oauth2-perl | libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl | libnet-oauth-perl | libweb-id-perl,
             libstring-random-perl,
             libunicode-string-perl,
             libwww-perl
 Suggests: libauthcas-perl,
           libauthen-captcha-perl,
+          libcrypt-u2f-server-perl,
           libdbi-perl,
           libgd-securityimage-perl,
           libglib-perl,
