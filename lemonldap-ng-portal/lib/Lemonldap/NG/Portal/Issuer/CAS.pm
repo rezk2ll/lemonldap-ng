@@ -25,7 +25,7 @@ sub beforeAuth { 'exportRequestParameters' }
 sub init {
     my ($self) = @_;
 
-    unless($self->conf->{casStorage}) {
+    unless ( $self->conf->{casStorage} ) {
         $self->logger->error("CAS storage isn't defined");
         return 0;
     }
@@ -245,7 +245,8 @@ sub run {
             }
 
             if ($logout_service) {
-                $self->logger->debug("User will be redirected to $logout_service");
+                $self->logger->debug(
+                    "User will be redirected to $logout_service");
                 $req->{urldc} = $logout_service;
                 $req->steps( [] );
                 return PE_OK;

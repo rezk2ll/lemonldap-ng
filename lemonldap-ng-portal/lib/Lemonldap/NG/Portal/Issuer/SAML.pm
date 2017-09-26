@@ -35,7 +35,7 @@ use constant beforeAuth => 'storeEnv';
 sub init {
     my ($self) = @_;
 
-    unless($self->conf->{samlStorage}) {
+    unless ( $self->conf->{samlStorage} ) {
         $self->logger->error("SAML storage isn't defined");
         return 0;
     }

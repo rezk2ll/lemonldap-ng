@@ -52,7 +52,7 @@ has configStorage => (
 sub init {
     my ($self) = @_;
 
-    unless($self->conf->{oidcStorage}) {
+    unless ( $self->conf->{oidcStorage} ) {
         $self->logger->error("OIDC storage isn't defined");
         return 0;
     }

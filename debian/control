@@ -2,10 +2,8 @@ Source: lemonldap-ng
 Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
 Uploaders: Xavier Guimard <x.guimard@free.fr>
 Section: perl
-Testsuite: autopkgtest
 Priority: optional
-Build-Depends: debhelper (>= 9),
-               dh-systemd,
+Build-Depends: debhelper (>= 9.20160709),
                po-debconf
 Build-Depends-Indep: libapache-session-perl,
                      libcache-cache-perl,
