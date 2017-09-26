@@ -115,9 +115,9 @@ TESTWEBSERVER=apache
 TESTWEBSERVERPORT=19876
 
 # LDAP backend test
-LLNGTESTLDAP_SLAPD_BIN:=/usr/sbin/slapd
-LLNGTESTLDAP_SLAPADD_BIN:=/usr/sbin/slapdadd
-LLNGTESTLDAP_SCHEMA_DIR:=/etc/slapd/schema
+LLNGTESTLDAP_SLAPD_BIN=/usr/sbin/slapd
+LLNGTESTLDAP_SLAPADD_BIN=/usr/sbin/slapdadd
+LLNGTESTLDAP_SCHEMA_DIR=/etc/slapd/schema
 
 # Other
 SRCCOMMONDIR=lemonldap-ng-common
@@ -430,7 +430,7 @@ start_web_server:	all prepare_test_server
 				addKey globalStorageOptions DataSource 'dbi:SQLite:dbname='`pwd`'/e2e-tests/conf/sessions.db'; \
 	fi
 	@# Debian: make start_web_server TESTBACKEND=LDAP LLNGTESTLDAP_SCHEMA_DIR=/etc/ldap/schema LLNGTESTLDAP_SLAPADD_BIN=/usr/sbin/slapadd
-	@if test "$(TESTBACKEND)" = "LDAP"; then \
+	if test "$(TESTBACKEND)" = "LDAP"; then \
 		cp lemonldap-ng-portal/t/testslapd/slapd.ldif e2e-tests/conf/; \
 		mkdir e2e-tests/conf/slapd.d; \
 		mkdir e2e-tests/conf/data; \

@@ -245,12 +245,6 @@ sub setDefault {
         delete $conf->{useXForwardedForIP};
     }
 
-    # Force Choice backend
-    if ( $conf->{authentication} eq "Choice" ) {
-        $conf->{userDB}     = "Choice";
-        $conf->{passwordDB} = "Choice";
-    }
-
     # Some parameters expect key name (example), not variable ($example)
     if ( defined $conf->{whatToTrace} ) {
         $conf->{whatToTrace} =~ s/^\$//;
