@@ -81,6 +81,10 @@ sub setId {
 
 sub searchOn {
     my ( $class, $args, $selectField, $value, @fields ) = splice @_;
+    unless ( $args->{backend} ) {
+        die "SearchOn called without backend. " . join( ', ', caller(0) );
+    }
+
     return $args->{backend}->searchOn( $args, $selectField, $value, @fields )
       if ( _load( $args->{backend}, 'searchOn' ) );
     my %res = ();
