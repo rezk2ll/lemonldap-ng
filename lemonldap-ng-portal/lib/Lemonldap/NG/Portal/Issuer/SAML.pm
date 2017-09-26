@@ -1634,8 +1634,15 @@ sub attributeServer {
 
     # Get sessionInfo for the given NameID
     my $sessionInfo;
-    my $moduleOptions = $self->conf->{samlStorageOptions} || {};
-    $moduleOptions->{backend} = $self->conf->{samlStorage};
+    my $moduleOptions;
+    if ( $self->conf->{samlStorage} ) {
+        $moduleOptions = $self->conf->{samlStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{samlStorage};
+    }
+    else {
+        $moduleOptions = $self->conf->{globalStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{globalStorage};
+    }
     my $module = "Lemonldap::NG::Common::Apache::Session";
 
     my $saml_sessions =

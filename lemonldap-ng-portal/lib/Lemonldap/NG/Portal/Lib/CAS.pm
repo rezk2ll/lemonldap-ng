@@ -240,8 +240,15 @@ sub deleteCasSecondarySessions {
     my $result = 1;
 
     # Find CAS sessions
-    my $moduleOptions = $self->conf->{casStorageOptions} || {};
-    $moduleOptions->{backend} = $self->conf->{casStorage};
+    my $moduleOptions;
+    if ( $self->conf->{casStorage} ) {
+        $moduleOptions = $self->conf->{casStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{casStorage};
+    }
+    else {
+        $moduleOptions = $self->conf->{globalStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{globalStorage};
+    }
     my $module = "Lemonldap::NG::Common::Apache::Session";
 
     my $cas_sessions =
@@ -379,8 +386,15 @@ sub validateST {
           $xml->{'cas:authenticationSuccess'}->{'cas:proxyGrantingTicket'};
 
         if ($pgtIou) {
-            my $moduleOptions = $self->conf->{casStorageOptions} || {};
-            $moduleOptions->{backend} = $self->conf->{casStorage};
+            my $moduleOptions;
+            if ( $self->conf->{casStorage} ) {
+                $moduleOptions = $self->conf->{casStorageOptions} || {};
+                $moduleOptions->{backend} = $self->conf->{casStorage};
+            }
+            else {
+                $moduleOptions = $self->conf->{globalStorageOptions} || {};
+                $moduleOptions->{backend} = $self->conf->{globalStorage};
+            }
             my $module = "Lemonldap::NG::Common::Apache::Session";
 
             my $pgtIdSessions =

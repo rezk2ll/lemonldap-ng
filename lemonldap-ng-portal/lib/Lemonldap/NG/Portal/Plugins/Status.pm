@@ -55,15 +55,17 @@ sub status {
                 %{ $self->conf->{"${type}StorageOptions"} },
                 backend => $self->conf->{"${type}Storage"}
             );
-            my $sessions = Lemonldap::NG::Common::Apache::Session->searchOn(
-                \%modOpts,
-                _session_kind => 'SSO',
-                '_session_id'
-            );
-            if (%$sessions) {
-                my @s = keys %$sessions;
-                $res->{storage}->{$type} = @s;
-            }
+            eval {
+                my $sessions = Lemonldap::NG::Common::Apache::Session->searchOn(
+                    \%modOpts,
+                    _session_kind => 'SSO',
+                    '_session_id'
+                );
+                if (%$sessions) {
+                    my @s = keys %$sessions;
+                    $res->{storage}->{$type} = @s;
+                }
+            };
         }
     }
     return $self->p->sendJSONresponse( $req, $res );

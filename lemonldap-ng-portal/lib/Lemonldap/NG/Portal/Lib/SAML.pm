@@ -1633,8 +1633,15 @@ sub replayProtection {
         return 0;
     }
 
-    my $moduleOptions = $self->conf->{samlStorageOptions} || {};
-    $moduleOptions->{backend} = $self->conf->{samlStorage};
+    my $moduleOptions;
+    if ( $self->conf->{samlStorage} ) {
+        $moduleOptions = $self->conf->{samlStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{samlStorage};
+    }
+    else {
+        $moduleOptions = $self->conf->{globalStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{globalStorage};
+    }
     my $module = "Lemonldap::NG::Common::Apache::Session";
 
     my $sessions = $module->searchOn( $moduleOptions, "_assert_id", $samlID );
@@ -1759,8 +1766,15 @@ sub loadArtifact {
         return;
     }
 
-    my $moduleOptions = $self->conf->{samlStorageOptions} || {};
-    $moduleOptions->{backend} = $self->conf->{samlStorage};
+    my $moduleOptions;
+    if ( $self->conf->{samlStorage} ) {
+        $moduleOptions = $self->conf->{samlStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{samlStorage};
+    }
+    else {
+        $moduleOptions = $self->conf->{globalStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{globalStorage};
+    }
     my $module = "Lemonldap::NG::Common::Apache::Session";
 
     my $sessions = $module->searchOn( $moduleOptions, "_art_id", $id );
@@ -2932,8 +2946,15 @@ sub deleteSAMLSecondarySessions {
     my $result = 1;
 
     # Find SAML sessions
-    my $moduleOptions = $self->conf->{samlStorageOptions} || {};
-    $moduleOptions->{backend} = $self->conf->{samlStorage};
+    my $moduleOptions;
+    if ( $self->conf->{samlStorage} ) {
+        $moduleOptions = $self->conf->{samlStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{samlStorage};
+    }
+    else {
+        $moduleOptions = $self->conf->{globalStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{globalStorage};
+    }
     my $module = "Lemonldap::NG::Common::Apache::Session";
 
     my $saml_sessions =
