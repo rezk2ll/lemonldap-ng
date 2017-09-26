@@ -25,6 +25,11 @@ sub beforeAuth { 'exportRequestParameters' }
 sub init {
     my ($self) = @_;
 
+    unless($self->conf->{casStorage}) {
+        $self->logger->error("CAS storage isn't defined");
+        return 0;
+    }
+
     # Launch parents initialization subroutines, then launch IdP en SP lists
     my $res = $self->Lemonldap::NG::Portal::Main::Issuer::init();
     return 0 unless ( $self->loadApp );
