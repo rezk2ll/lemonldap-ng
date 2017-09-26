@@ -25,11 +25,6 @@ has path     => ( is => 'rw', default => 'oauth2' );
 sub init {
     my ($self) = @_;
 
-    unless ( $self->conf->{oidcStorage} ) {
-        $self->logger->error("OIDC storage isn't defined");
-        return 0;
-    }
-
     return 0 unless ( $self->loadOPs and $self->refreshJWKSdata );
     my @tab = ( sort keys %{ $self->oidcOPList } );
     unless (@tab) {

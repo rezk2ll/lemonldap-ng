@@ -26,11 +26,6 @@ has srvList => ( is => 'rw', default => sub { [] } );
 sub init {
     my ($self) = @_;
 
-    unless ( $self->conf->{casStorage} ) {
-        $self->logger->error("CAS storage isn't defined");
-        return 0;
-    }
-
     return 0 unless ( $self->loadSrv );
     my @tab = ( keys %{ $self->casSrvList } );
     unless (@tab) {

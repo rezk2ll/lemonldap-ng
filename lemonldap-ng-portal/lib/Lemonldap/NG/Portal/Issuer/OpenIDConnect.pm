@@ -52,11 +52,6 @@ has configStorage => (
 sub init {
     my ($self) = @_;
 
-    unless ( $self->conf->{oidcStorage} ) {
-        $self->logger->error("OIDC storage isn't defined");
-        return 0;
-    }
-
     # Initialize RP list
     return 0
       unless ( $self->Lemonldap::NG::Portal::Main::Issuer::init()

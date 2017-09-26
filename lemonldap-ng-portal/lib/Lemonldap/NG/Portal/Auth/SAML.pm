@@ -37,11 +37,6 @@ sub forAuthUser { 'handleAuthRequests' }
 sub init {
     my ($self) = @_;
 
-    unless ( $self->conf->{samlStorage} ) {
-        $self->logger->error("SAML storage isn't defined");
-        return 0;
-    }
-
     my $saml_acs_art_url = $self->getMetaDataURL(
         "samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact");
     my $saml_acs_post_url = $self->getMetaDataURL(

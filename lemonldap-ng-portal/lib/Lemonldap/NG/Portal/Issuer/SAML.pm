@@ -35,11 +35,6 @@ use constant beforeAuth => 'storeEnv';
 sub init {
     my ($self) = @_;
 
-    unless ( $self->conf->{samlStorage} ) {
-        $self->logger->error("SAML storage isn't defined");
-        return 0;
-    }
-
     # Prepare SSO URL catching
     my $saml_sso_get_url = $self->ssoGetUrl(
         $self->getMetaDataURL(
