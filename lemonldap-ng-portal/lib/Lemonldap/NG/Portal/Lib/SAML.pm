@@ -42,6 +42,10 @@ has ua => (
     }
 );
 
+# SAML storage
+has aModule => ( is => 'rw' );
+has amOpts  => ( is => 'rw' );
+
 # INITIALIZATION
 
 BEGIN {
@@ -94,6 +98,19 @@ BEGIN {
 
 sub init {
     my ($self) = @_;
+
+    # Initialize SAML storage
+    my $moduleOptions;
+    if ( $self->conf->{samlStorage} ) {
+        $moduleOptions = $self->conf->{samlStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{samlStorage};
+    }
+    else {
+        $moduleOptions = $self->conf->{globalStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{globalStorage};
+    }
+    $self->aModule( $moduleOptions->{backend} );
+    $self->amOpts($moduleOptions);
 
     # Check for Lasso errors/messages (see BEGIN)
     unless (LASSO) {
@@ -1633,18 +1650,9 @@ sub replayProtection {
         return 0;
     }
 
-    my $moduleOptions;
-    if ( $self->conf->{samlStorage} ) {
-        $moduleOptions = $self->conf->{samlStorageOptions} || {};
-        $moduleOptions->{backend} = $self->conf->{samlStorage};
-    }
-    else {
-        $moduleOptions = $self->conf->{globalStorageOptions} || {};
-        $moduleOptions->{backend} = $self->conf->{globalStorage};
-    }
-    my $module = "Lemonldap::NG::Common::Apache::Session";
-
-    my $sessions = $module->searchOn( $moduleOptions, "_assert_id", $samlID );
+    my $sessions =
+      Lemonldap::NG::Common::Apache::Session->searchOn( $self->amOpts,
+        "_assert_id", $samlID );
 
     if ( my @keys = keys %$sessions ) {
 
@@ -1766,18 +1774,9 @@ sub loadArtifact {
         return;
     }
 
-    my $moduleOptions;
-    if ( $self->conf->{samlStorage} ) {
-        $moduleOptions = $self->conf->{samlStorageOptions} || {};
-        $moduleOptions->{backend} = $self->conf->{samlStorage};
-    }
-    else {
-        $moduleOptions = $self->conf->{globalStorageOptions} || {};
-        $moduleOptions->{backend} = $self->conf->{globalStorage};
-    }
-    my $module = "Lemonldap::NG::Common::Apache::Session";
-
-    my $sessions = $module->searchOn( $moduleOptions, "_art_id", $id );
+    my $sessions =
+      Lemonldap::NG::Common::Apache::Session->searchOn( $self->amOpts,
+        "_art_id", $id );
 
     if ( my @keys = keys %$sessions ) {
 
@@ -2794,24 +2793,14 @@ sub checkDestination {
 sub getSamlSession {
     my ( $self, $id, $info ) = @_;
 
-    my %storage = (
-        storageModule        => $self->conf->{samlStorage},
-        storageModuleOptions => $self->conf->{samlStorageOptions},
-    );
-    unless ( $storage{storageModule} ) {
-        %storage = (
-            storageModule        => $self->conf->{globalStorage},
-            storageModuleOptions => $self->conf->{globalStorageOptions},
-        );
-    }
-
     my $samlSession = Lemonldap::NG::Common::Session->new(
         {
-            %storage,
-            cacheModule        => $self->conf->{localSessionStorage},
-            cacheModuleOptions => $self->conf->{localSessionStorageOptions},
-            id                 => $id,
-            kind               => "SAML",
+            storageModule        => $self->aModule,
+            storageModuleOptions => $self->amOpts,
+            cacheModule          => $self->conf->{localSessionStorage},
+            cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
+            id                   => $id,
+            kind                 => "SAML",
             ( $info ? ( info => $info ) : () ),
         }
     );
@@ -2946,19 +2935,9 @@ sub deleteSAMLSecondarySessions {
     my $result = 1;
 
     # Find SAML sessions
-    my $moduleOptions;
-    if ( $self->conf->{samlStorage} ) {
-        $moduleOptions = $self->conf->{samlStorageOptions} || {};
-        $moduleOptions->{backend} = $self->conf->{samlStorage};
-    }
-    else {
-        $moduleOptions = $self->conf->{globalStorageOptions} || {};
-        $moduleOptions->{backend} = $self->conf->{globalStorage};
-    }
-    my $module = "Lemonldap::NG::Common::Apache::Session";
-
     my $saml_sessions =
-      $module->searchOn( $moduleOptions, "_saml_id", $session_id );
+      Lemonldap::NG::Common::Apache::Session->searchOn( $self->amOpts,
+        "_saml_id", $session_id );
 
     if ( my @saml_sessions_keys = keys %$saml_sessions ) {
 

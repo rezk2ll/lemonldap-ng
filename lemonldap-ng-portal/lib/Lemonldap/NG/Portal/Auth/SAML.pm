@@ -311,20 +311,10 @@ sub extractFormInfo {
 
             # Restore initial SAML request in case of proxying
             if ($assertion_responded) {
-                my $moduleOptions;
-                if ( $self->conf->{samlStorage} ) {
-                    $moduleOptions = $self->conf->{samlStorageOptions} || {};
-                    $moduleOptions->{backend} = $self->conf->{samlStorage};
-                }
-                else {
-                    $moduleOptions = $self->conf->{globalStorageOptions} || {};
-                    $moduleOptions->{backend} = $self->conf->{globalStorage};
-                }
-                my $module = "Lemonldap::NG::Common::Apache::Session";
 
                 my $saml_sessions =
-                  $module->searchOn( $moduleOptions, "ProxyID",
-                    $assertion_responded );
+                  Lemonldap::NG::Common::Apache::Session->searchOn(
+                    $self->amOpts, "ProxyID", $assertion_responded );
 
                 if ( my @saml_sessions_keys = keys %$saml_sessions ) {
 
@@ -561,19 +551,10 @@ sub extractFormInfo {
             $self->logger->debug("Logout request NameID content: $user");
 
             # Get SAML sessions with the same NameID
-            my $moduleOptions;
-            if ( $self->conf->{samlStorage} ) {
-                $moduleOptions = $self->conf->{samlStorageOptions} || {};
-                $moduleOptions->{backend} = $self->conf->{samlStorage};
-            }
-            else {
-                $moduleOptions = $self->conf->{globalStorageOptions} || {};
-                $moduleOptions->{backend} = $self->conf->{globalStorage};
-            }
-            my $module = "Lemonldap::NG::Common::Apache::Session";
 
             my $local_sessions =
-              $module->searchOn( $moduleOptions, "_nameID", $name_id->dump );
+              Lemonldap::NG::Common::Apache::Session->searchOn( $self->amOpts,
+                "_nameID", $name_id->dump );
 
             if ( my @local_sessions_keys = keys %$local_sessions ) {
 
