@@ -96,7 +96,7 @@ sub getToken {
             return undef;
         }
         $self->cache->remove($id);
-        return from_json($data);
+        return from_json( $data, { allow_nonref => 1 } );
     }
     else {
 

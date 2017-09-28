@@ -93,7 +93,7 @@ sub translate {
     open F, $json or die $!;
     $json = join '', <F>;
     close F;
-    $lang = from_json($json);
+    $lang = from_json( $json, { allow_nonref => 1 } );
     return sub {
         ($_) = @_;
         $$_ =~ s/\s+trspan="(\w+?)"(.*?)>.*?</"$2>".($lang->{$1}||$1).'<'/gse;

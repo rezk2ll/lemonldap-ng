@@ -9,7 +9,7 @@ our $VERSION = '2.0.0';
 sub newNotification {
     my ( $self, $jsonString ) = @_;
     my $json;
-    eval { $json = from_json($jsonString) };
+    eval { $json = from_json( $jsonString, { allow_nonref => 1 } ) };
     if ( my $err = $@ ) {
         eval { $self->logger->error("Unable to decode JSON file: $err") };
         return 0;
@@ -66,7 +66,7 @@ sub deleteNotification {
     my $count = 0;
 
     foreach my $ref ( keys %$user ) {
-        my $json = from_json( $user->{$ref} );
+        my $json = from_json( $user->{$ref}, { allow_nonref => 1 } );
 
         # Browse notification in file
         foreach my $notif (@$json) {

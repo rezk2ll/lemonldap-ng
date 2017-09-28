@@ -38,7 +38,7 @@ sub loadVhostConfig {
         $get->header( Host => $vhost );
         my $resp = $class->ua->request($get);
         if ( $resp->is_success ) {
-            eval { $json = from_json( $resp->content ) };
+            eval { $json = from_json( $resp->content, { allow_nonref => 1 } ) };
             if ($@) {
                 $class->logger->error(
                     "Bad rules.json for $vhost, skipping ($@)");

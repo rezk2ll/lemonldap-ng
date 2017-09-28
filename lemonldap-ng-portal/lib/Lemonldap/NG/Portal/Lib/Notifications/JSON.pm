@@ -36,8 +36,8 @@ sub checkForNotifications {
     # Transform notifications
     my $i = 0;    #Files count
     foreach my $file ( values %$notifs ) {
-        my $json = from_json($file);
-        my $j    = 0;                  #Notifications count
+        my $json = from_json( $file, { allow_nonref => 1 } );
+        my $j = 0;    #Notifications count
         my @res;
         $json = [$json] unless ( ref $json eq 'ARRAY' );
       LOOP: foreach my $notif ( @{$json} ) {
@@ -117,7 +117,7 @@ sub getNotifBack {
         foreach my $fileName ( keys %$notifs ) {
             my $file       = $notifs->{$fileName};
             my $fileResult = 1;
-            my $json       = from_json($file);
+            my $json       = from_json( $file, { allow_nonref => 1 } );
             $json = [$json] unless ( ref $json eq 'ARRAY' );
 
             # Get pending notifications and verify that they have been accepted

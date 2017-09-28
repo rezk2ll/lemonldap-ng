@@ -45,7 +45,7 @@ sub getUser {
         return PE_ERROR;
     }
     $self->logger->debug('Proxy gets a response');
-    my $res = eval { JSON::from_json( $resp->content ) };
+    my $res = eval { JSON::from_json( $resp->content, { allow_nonref => 1 } ) };
     if ($@) {
         $self->logger->error("Bad content: $@");
         return PE_ERROR;
@@ -81,7 +81,7 @@ sub setSessionInfo {
         return PE_ERROR;
     }
     $self->logger->debug('Proxy gets a response');
-    my $res = eval { JSON::from_json( $resp->content ) };
+    my $res = eval { JSON::from_json( $resp->content, { allow_nonref => 1 } ) };
     if ($@) {
         $self->logger->error("Bad content: $@");
         return PE_ERROR;

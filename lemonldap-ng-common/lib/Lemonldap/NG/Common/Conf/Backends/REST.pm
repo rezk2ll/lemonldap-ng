@@ -50,7 +50,7 @@ sub getJson {
     my $resp = $self->ua->get( $self->base . $url, @_ );
     if ( $resp->is_success ) {
         my $res;
-        eval { $res = from_json( $resp->content ) };
+        eval { $res = from_json( $resp->content, { allow_nonref => 1 } ) };
         if ($@) {
             $Lemonldap::NG::Common::Conf::msg .= "Request failed: $@\n";
             return undef;
@@ -109,7 +109,7 @@ sub store {
     my $resp = $self->ua->request($req);
     if ( $resp->is_success ) {
         my $res;
-        eval { $res = from_json( $resp->content ) };
+        eval { $res = from_json( $resp->content, { allow_nonref => 1 } ) };
         if ($@) {
             $Lemonldap::NG::Common::Conf::msg .= "Unknown error: $@";
             return undef;

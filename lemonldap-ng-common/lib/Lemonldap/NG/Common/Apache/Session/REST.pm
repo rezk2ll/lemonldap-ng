@@ -120,7 +120,7 @@ sub getJson {
     my $resp = $self->ua->get( $self->base . $url, @_ );
     if ( $resp->is_success ) {
         my $res;
-        eval { $res = from_json( $resp->content ) };
+        eval { $res = from_json( $resp->content, { allow_nonref => 1 } ) };
         if ($@) {
             print STDERR "Unable to decode session: $@\n";
             return 0;
@@ -177,7 +177,7 @@ sub newSession {
     #my $resp = $self->ua->request($req);
     #if ( $resp->is_success ) {
     #    my $res;
-    #    eval { $res = from_json( $resp->content ) };
+    #    eval { $res = from_json( $resp->content, { allow_nonref => 1 } ) };
     #    if ( $@ or !$res->{result} ) {
     #        die "Unable to create session: bad REST response $@";
     #    }
@@ -229,7 +229,7 @@ sub save {
 
     if ( $resp->is_success ) {
         my $res;
-        eval { $res = from_json( $resp->content ) };
+        eval { $res = from_json( $resp->content, { allow_nonref => 1 } ) };
         if ($@) {
             die "Bad REST response: $@";
         }

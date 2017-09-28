@@ -1269,7 +1269,8 @@ sub getIDTokenSub {
 sub getJWTJSONData {
     my ( $self, $jwt ) = @_;
     my $jwt_parts = $self->extractJWT($jwt);
-    return from_json( decode_base64url( $jwt_parts->[1] ) );
+    return from_json(
+        decode_base64url( $jwt_parts->[1], { allow_nonref => 1 } ) );
 }
 
 # Return JWKS representation of a key

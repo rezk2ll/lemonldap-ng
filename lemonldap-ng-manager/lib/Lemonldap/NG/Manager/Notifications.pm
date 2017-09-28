@@ -286,7 +286,7 @@ sub newNotification {
     }
     else {
         eval {
-            my $tmp = from_json( $json->{xml} );
+            my $tmp = from_json( $json->{xml}, { allow_nonref => 1 } );
             $json->{$_} = $tmp->{$_} foreach ( keys %$tmp );
             delete $json->{xml};
         };

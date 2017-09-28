@@ -35,7 +35,7 @@ sub status {
             $buf .= $_;
         }
         if ($buf) {
-            eval { $res = from_json($buf) };
+            eval { $res = from_json( $buf, { allow_nonref => 1 } ) };
             if ($@) {
                 $self->logger->error("JSON error: $@");
                 $self->logger->error("JSON: $buf");

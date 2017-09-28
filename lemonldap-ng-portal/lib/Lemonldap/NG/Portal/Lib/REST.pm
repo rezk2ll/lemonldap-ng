@@ -24,7 +24,7 @@ sub restCall {
     unless ( $resp->is_success ) {
         die $resp->status_line;
     }
-    my $res = eval { from_json( $resp->content ) };
+    my $res = eval { from_json( $resp->content, { allow_nonref => 1 } ) };
     die "Bad REST response: $@" if ($@);
     return $res;
 }

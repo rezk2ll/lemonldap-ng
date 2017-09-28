@@ -119,7 +119,7 @@ sub extractFormInfo {
 
         my $json_hash;
 
-        eval { $json_hash = from_json $content; };
+        eval { $json_hash = from_json( $content, { allow_nonref => 1 } ); };
 
         if ($@) {
             $self->logger->error("Unable to decode JSON $content");
@@ -148,7 +148,9 @@ sub extractFormInfo {
 
         my $people_content = $people_response->decoded_content;
 
-        eval { $json_hash = from_json $people_content; };
+        eval {
+            $json_hash = from_json( $people_content, { allow_nonref => 1 } );
+        };
         if ($@) {
             $self->logger->error("Unable to decode JSON $people_content");
             return PE_ERROR;
