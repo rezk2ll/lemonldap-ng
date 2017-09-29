@@ -2,6 +2,12 @@ lemonldap-ng (2.0.0~alpha2) testing; urgency=low
 
 lemonldap-ng (2.0.0~alpha1) testing; urgency=low
 
+lemonldap-ng (1.9.13) stable; urgency=high
+
+    * [LEMONLDAP-1209] - [UTF8-Enconding] Issues with mysql backend and saml attributes
+    * [LEMONLDAP-1303] - Debian 9 and JSON parsing error - OpenID Connect
+    * [LEMONLDAP-1304] - make saml tolerant to issuerDBSAMLPath
+
 lemonldap-ng (1.9.12) stable; urgency=high
 
     * [LEMONLDAP-1293] - Unable to delete "Exported Attributes" in SAML SP
