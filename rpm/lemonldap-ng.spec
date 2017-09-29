@@ -613,6 +613,8 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
+* Fri Sep 29 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.13-1
+- Update to 1.9.13
 * Thu Sep 14 2017 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha2-1
 - Second alpha version for 2.0.0
 * Tue Sep 12 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.12-1
