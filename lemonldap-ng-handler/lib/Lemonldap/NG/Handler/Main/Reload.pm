@@ -167,11 +167,11 @@ sub jailInit {
 
     $class->tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new(
         {
-            'useSafeJail'     => $conf->{useSafeJail},
-            'customFunctions' => $conf->{customFunctions}
+            useSafeJail     => $conf->{useSafeJail},
+            customFunctions => $conf->{customFunctions},
         }
     );
-    $class->tsv->{jail}->build_jail($class);
+    $class->tsv->{jail}->build_jail( $class, $conf->{require} );
 }
 
 ## @imethod protected void defaultValuesInit(hashRef args)

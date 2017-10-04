@@ -10,6 +10,8 @@ has customFunctions => ( is => 'rw', isa => 'Maybe[Str]' );
 
 has useSafeJail => ( is => 'rw', isa => 'Maybe[Int]' );
 
+has require => ( is => 'rw', isa => 'Maybe[Int]' );
+
 has jail => ( is => 'rw' );
 
 has error => ( is => 'rw' );
@@ -20,7 +22,7 @@ our $VERSION = '2.0.0';
 # Build and return the security jail used to compile rules and headers.
 # @return Safe object
 sub build_jail {
-    my ( $self, $api ) = @_;
+    my ( $self, $api, $require ) = @_;
 
     return $self->jail
       if (  $self->jail
@@ -29,6 +31,20 @@ sub build_jail {
         and $self->jail->useSafeJail == $self->useSafeJail );
 
     $self->useSafeJail(1) unless defined $self->useSafeJail;
+
+    if($require) {
+        foreach my $f (split /[, ]+/, $require) {
+            if($f =~ /^[\w\:]+$/) {
+                eval "require $f";
+            }
+            else {
+                eval "require '$f'";
+            }
+            if($@) {
+                die "Unable to load required files: $@";
+            }
+        }
+    }
 
     my @t =
       $self->customFunctions ? split( /\s+/, $self->customFunctions ) : ();
