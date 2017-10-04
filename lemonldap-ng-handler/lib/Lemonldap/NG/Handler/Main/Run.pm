@@ -678,7 +678,7 @@ sub postJavascript {
         use bytes;
         my $value = "x" x bytes::length( $data->{$name} );
         $filler .=
-"form.find('input[name=$name], select[name=$name], textarea[name=$name]').val('$value')\n";
+"form.find('input[name=\"$name\"], select[name=\"$name\"], textarea[name=\"$name\"]').val('$value')\n";
     }
 
     my $submitter =
