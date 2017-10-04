@@ -506,7 +506,6 @@ plackup:
 			-I`pwd`/lemonldap-ng-portal/blib/lib/ \
 			-I`pwd`/lemonldap-ng-manager/blib/lib/ \
 		e2e-tests/conf/sbin/llng-fastcgi-server \
-			-f e2e-tests/custom.pm \
 			-F >e2e-tests/conf/fastcgi.log 2>&1 &
 
 install_test:

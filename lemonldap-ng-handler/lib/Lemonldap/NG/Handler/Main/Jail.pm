@@ -32,16 +32,16 @@ sub build_jail {
 
     $self->useSafeJail(1) unless defined $self->useSafeJail;
 
-    if($require) {
-        foreach my $f (split /[, ]+/, $require) {
-            if($f =~ /^[\w\:]+$/) {
+    if ($require) {
+        foreach my $f ( split /[, ]+/, $require ) {
+            if ( $f =~ /^[\w\:]+$/ ) {
                 eval "require $f";
             }
             else {
-                eval "require '$f'";
+                eval { require $f; };
             }
-            if($@) {
-                die "Unable to load required files: $@";
+            if ($@) {
+                die "Unable to load '$f': $@";
             }
         }
     }
