@@ -10,8 +10,6 @@ has customFunctions => ( is => 'rw', isa => 'Maybe[Str]' );
 
 has useSafeJail => ( is => 'rw', isa => 'Maybe[Int]' );
 
-has require => ( is => 'rw', isa => 'Maybe[Int]' );
-
 has jail => ( is => 'rw' );
 
 has error => ( is => 'rw' );
