@@ -273,7 +273,7 @@ all:	configure common handler manager portal
 # Configure targets
 # -----------------
 
-configure:	json common_conf handler_conf portal_conf manager_conf
+configure:	common_conf handler_conf portal_conf manager_conf
 
 js: $(COFFEEDSTFILES)
 
