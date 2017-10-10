@@ -17,6 +17,7 @@ displayError = (j, status, err) ->
 		console.log 'Returned error', res
 		setMsg res, 'warning'
 
+# Registration function (launched by "register" button)
 register = ->
 	# 1 get registration token
 	$.ajax
@@ -53,6 +54,7 @@ register = ->
 								setMsg 'u2fRegistered', 'positive'
 						error: displayError
 
+# Verification function (launched by "verify" button)
 verify = ->
 	# 1 get challenge
 	$.ajax
@@ -88,6 +90,7 @@ verify = ->
 						error: (j, status, err) ->
 							console.log 'error', err
 
+# Register "click" events
 $(document).ready ->
 	$('#u2fPermission').hide()
 	$('#register').on 'click', register

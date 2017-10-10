@@ -3,12 +3,12 @@
 $(document).ready ->
 	$.ajax portal + '?kerberos=1',
 		dataType: 'json'
-		# Called if browser can't find Kerberos ticket will display
+		# Called if browser can't find Kerberos ticket, will display
 		# PE_BADCREDENTIALS
 		statusCode:
 			401: () ->
 				$('#lform').submit()
-		# If request succeed, cookie is set, posting form to get redirection
+		# If request succeed cookie is set, posting form to get redirection
 		# or menu
 		success: (data) ->
 			$('#lform').submit()

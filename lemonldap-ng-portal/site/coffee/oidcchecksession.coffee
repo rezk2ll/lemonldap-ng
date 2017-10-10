@@ -1,5 +1,7 @@
 values = {}
+
 $(document).ready ->
+	# Import application/init variables
 	$("script[type='application/init']").each ->
 		try
 			tmp = JSON.parse $(this).text()
@@ -7,8 +9,10 @@ $(document).ready ->
 				values[k] = tmp[k]
 		catch e
 			console.log 'Parsing error', e
+	# Initialize JS communication channel
 	window.addEventListener "message", receiveMessage, false
 
+# Eval message response
 receiveMessage (e) ->
 	message = e.data
 	client_id = decodeURIComponent message.split(' ')[0]

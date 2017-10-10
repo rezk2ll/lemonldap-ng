@@ -6,6 +6,13 @@ LemonLDAP::NG Portal jQuery scripts
 
 translationFields = {}
 
+# Launched at startup: download language JSON and translate all HTML tags that
+# contains one of the following attributes using translate() function:
+#  - trspan       : set result in tag content
+#  - trmsg        : get error number and set result of PE<number> result in tag
+#                   content
+#  - trplaceholder: set result in "placeholder" attribute
+#  - localtime    : transform time (in ms)ing translate()
 translatePage = (lang) ->
 	$.getJSON "#{window.staticPrefix}languages/#{lang}.json", (data) ->
 		translationFields = data
@@ -23,12 +30,14 @@ translatePage = (lang) ->
 			d = new Date $(this).attr('localtime') * 1000
 			$(this).text d.toLocaleString()
 
+# Translate a string
 translate = (str) ->
 	return if translationFields[str] then translationFields[str] else str
 
 window.translate = translate
 
-# Initialization variables
+# Initialization variables: read all <script type="application/init"> tags and
+# return JSON parsing result. This is set in window.data variable
 getValues = () ->
 	values = {}
 	$("script[type='application/init']").each ->
@@ -40,8 +49,6 @@ getValues = () ->
 			console.log 'Parsing error', e
 			console.log 'JSON', $(this).text()
 	values
-
-# Set default values
 
 # Code from http://snipplr.com/view/29434/
 # ----------------------------------------
@@ -151,6 +158,7 @@ ping = ->
 
 window.ping = ping
 
+# Functions to get/set a cookie value
 getCookie = (cname) ->
 	name = cname + "="
 	ca = decodeURIComponent(document.cookie).split ';'
@@ -167,7 +175,7 @@ setCookie = (name, value, exdays) ->
 	document.cookie = "#{name}=#{value}; expires=#{d.toUTCString()}; path=/"
 
 # Function to change password using Ajax (instead of POST)
-# TODO
+# NOT USED FOR NOW
 #changePwd = (event) ->
 #	event.preventDefault();
 #	$.ajax
@@ -184,6 +192,7 @@ setCookie = (name, value, exdays) ->
 # Initialization
 datas = {}
 $(document).ready ->
+	# Get application/init variables
 	datas = getValues()
 	# Export datas for other scripts
 	window.datas = datas
@@ -230,7 +239,7 @@ $(document).ready ->
 		# Focus on first visible input
 		$("input[type!=hidden]:first").focus()
 
-	# Open links in new windows
+	# Open links in new windows if required
 	if datas['newwindow']
 		$('#appslist a').attr "target", "_blank"
 
@@ -251,7 +260,10 @@ $(document).ready ->
 		link = $("p.removeOther a").attr("href") + "&method=" + method + "&url=" + btoa(back_url)
 		$("p.removeOther a").attr "href", link
 
-	# Language detection
+	# Language detection. Priority order:
+	#  1 - cookie value
+	#  2 - first navigator.languages item that exists in window.availableLanguages
+	#  3 - first value of window.availableLanguages
 	lang = getCookie 'llnglanguage'
 	if !lang
 		if navigator
