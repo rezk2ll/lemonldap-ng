@@ -206,22 +206,7 @@ sub toForm {
         $_->{id} = "1x$i";
         $_;
     } @notifs;
-    require HTML::Template;
-    my $file =
-        $self->conf->{templateDir} . '/'
-      . $self->conf->{portalSkin}
-      . '/notifinclude.tpl';
-    $file = $self->conf->{templateDir} . '/common/notifinclude.tpl'
-      unless ( -e $file );
-    my $tpl = HTML::Template->new(
-        filename               => $file,
-        die_on_bad_params      => 0,
-        die_on_missing_include => 1,
-        cache                  => 1,
-        global_vars            => 0,
-    );
-    $tpl->param( notifications => \@notifs );
-    return $tpl->output;
+    return $self->loadTemplate('notifinclude', params => {notifications => \@notifs});
 }
 
 sub notificationServer {

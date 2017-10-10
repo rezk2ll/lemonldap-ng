@@ -2,7 +2,6 @@ package Lemonldap::NG::Portal::Plugins::Register;
 
 use strict;
 use Encode;
-use HTML::Template;
 use Mouse;
 use POSIX qw(strftime);
 use Lemonldap::NG::Portal::Main::Constants qw(
@@ -300,18 +299,7 @@ sub _register {
         my $html = 1;
 
         # Use HTML template
-        my $tplfile =
-            $self->conf->{templateDir} . '/'
-          . $self->conf->{portalSkin}
-          . '/mail_register_confirm.tpl';
-        $tplfile =
-          $self->conf->{templateDir} . '/common/mail_register_confirm.tpl'
-          unless ( -e $tplfile );
-        my $template = HTML::Template->new(
-            filename => $tplfile,
-            filter   => $tr,
-        );
-        $body = $template->output();
+        $body = $self->loadTemplate( 'mail_register_confirm', filter => $tr );
 
         # Replace variables in body
         $body =~ s/\$expMailDate/$req->datas->{expMailDate}/g;
@@ -365,17 +353,7 @@ sub _register {
     my $html = 1;
 
     # Use HTML template
-    my $tplfile =
-        $self->conf->{templateDir} . '/'
-      . $self->conf->{portalSkin}
-      . "/mail_register_done.tpl";
-    $tplfile = $self->conf->{templateDir} . "/common/mail_register_done.tpl"
-      unless ( -e $tplfile );
-    my $template = HTML::Template->new(
-        filename => $tplfile,
-        filter   => $tr,
-    );
-    $body = $template->output();
+    $body = $self->loadTemplate( 'mail_register_done', filter => $tr );
 
     # Replace variables in body
     $body =~ s/\$(\w+)/decode("utf8",$req->datas->{registerInfo}->{$1})/ge;

@@ -2,7 +2,6 @@ package Lemonldap::NG::Portal::Plugins::MailReset;
 
 use strict;
 use Encode;
-use HTML::Template;
 use Mouse;
 use POSIX qw(strftime);
 use Lemonldap::NG::Portal::Main::Constants qw(
@@ -312,17 +311,7 @@ sub _reset {
         else {
 
             # Use HTML template
-            my $tplfile =
-                $self->conf->{templateDir} . '/'
-              . $self->conf->{portalSkin}
-              . '/mail_confirm.tpl';
-            $tplfile = $self->conf->{templateDir} . '/common/mail_confirm.tpl'
-              unless ( -e $tplfile );
-            my $template = HTML::Template->new(
-                filename => $tplfile,
-                filter   => $tr,
-            );
-            $body = $template->output();
+            $body = $self->loadTemplate( 'mail_confirm', filter => $tr );
             $html = 1;
         }
 
@@ -442,17 +431,7 @@ sub changePwd {
     else {
 
         # Use HTML template
-        my $tplfile =
-            $self->conf->{templateDir} . '/'
-          . $self->conf->{portalSkin}
-          . '/mail_password.tpl';
-        $tplfile = $self->conf->{templateDir} . '/common/mail_password.tpl'
-          unless ( -e $tplfile );
-        my $template = HTML::Template->new(
-            filename => $tplfile,
-            filter   => $tr,
-        );
-        $body = $template->output();
+        $body = $self->loadTemplate( 'mail_password', filter => $tr );
         $html = 1;
     }
 
