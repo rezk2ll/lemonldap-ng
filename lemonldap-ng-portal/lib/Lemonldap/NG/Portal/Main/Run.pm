@@ -133,7 +133,9 @@ sub refresh {
     my $res = $req->error( $self->process($req) );
     if ($res) {
         $req->info(
-'<h3 trspan="rightsReloadNeedsLogout">Rights reloads need to logout and login again</h3>'
+            $self->loadTemplate(
+                'simpleInfo', params => { trspan => 'rightsReloadNeedsLogout' }
+            )
         );
         $req->urldc( $self->conf->{portal} );
         return $self->do( $req, [ sub { PE_INFO } ] );
@@ -825,6 +827,32 @@ sub _sumUpSession {
       foreach ( "_utime", "ipAddr",
         keys %{ $self->conf->{sessionDataToRemember} } );
     return $res;
+}
+
+# Temlate loader
+sub loadTemplate {
+    my ( $self, $name, %prm ) = @_;
+    $name .= '.tpl';
+    my $file =
+        $self->conf->{templateDir} . '/'
+      . $self->conf->{portalSkin} . '/'
+      . $name;
+    $file = $self->conf->{templateDir} . '/common/' . $name unless ( -e $file );
+    unless ( -e $file ) {
+        die "Unable to find $name in $self->conf->{templateDir}";
+    }
+    my $tpl = HTML::Template->new(
+        filename               => $file,
+        die_on_bad_params      => 0,
+        die_on_missing_include => 1,
+        cache                  => 1,
+        global_vars            => 0,
+        ( $prm{filter} ? ( filter => $prm{filter} ) : () ),
+    );
+    if ( $prm{params} ) {
+        $tpl->param( %{ $prm{params} } );
+    }
+    return $tpl->output;
 }
 
 1;

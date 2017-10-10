@@ -437,49 +437,45 @@ sub mkSessionArray {
 
     return "" unless ( ref $sessions eq "ARRAY" and @$sessions );
 
-    my $tmp = $title ? qq'<h3 trspan="$title">$title</h3>' : '';
-    $tmp .=
-        '<table class="info"><tbody><tr>'
-      . ( $displayUser ? '<th trspan="user">User</th>' : '' )
-      . '<th trspan="date">Date</th><th trspan="ipAddr">IP address</th>';
-    $tmp .= "<th>" . $self->conf->{sessionDataToRemember}->{$_} . "</th>"
-      foreach ( keys %{ $self->conf->{sessionDataToRemember} } );
-    $tmp .= '<th trspan="errorMsg">Error message</th>'
-      if ($displayError);
-    $tmp .= '</tr>';
-
-    foreach my $session (@$sessions) {
-        $tmp .= "<tr>"
-          . ( $displayUser ? "<td>$session->{user}</td>" : '' )
-          . qq'<td class="localeDate" val="$session->{_utime}"></td>'
-          . "<td>$session->{ipAddr}</td>";
-        $tmp .= "<td>" . ( $session->{$_} || "" ) . "</td>"
-          foreach ( keys %{ $self->conf->{sessionDataToRemember} } );
-        $tmp .= "<td>$session->{error}</td>" if ($displayError);
-        $tmp .= "</tr>";
-    }
-    $tmp .= '</tbody></table>';
-    return $tmp;
+    my @fields = sort keys %{ $self->conf->{sessionDataToRemember} };
+    return $self->loadTemplate(
+        'sessionArray',
+        params => {
+            title        => $title,
+            displayUser  => $displayUser,
+            displayError => $displayError,
+            fields       => [
+                map { { name => $self->conf->{sessionDataToRemember}->{$_} } }
+                  @fields
+            ],
+            sessions => [
+                map {
+                    my $session = $_;
+                    {
+                        user   => $session->{user},
+                        utime  => $session->{_utime},
+                        ip     => $session->{ipAddr},
+                        values => [ map { { v => $session->{$_} } } @fields ],
+                        error  => $session->{error},
+                    }
+                } @$sessions
+            ],
+        }
+    );
 }
 
 sub mkOidcConsent {
     my ( $self, $session ) = @_;
-    my $tmp .=
-        '<table class="info"><thead><tr><th trspan="service"></th></tr></thead>'
-      . '<tbody><tr>';
-
-    # TODO: add JS to remove consent
-    if ( $session->{_oidcConnectedRP} ) {
-        $tmp .=
-qq'<tr partner="$_"><td>$_ <a partner="$_" class="oidcConsent link text-danger glyphicon glyphicon-minus-sign"></a></td></tr>'
-          foreach ( split /,/, $session->{_oidcConnectedRP} );
-        $tmp .= qq'</tbody></table><script type="application/init">
-{
-"oidcConsents":"$session->{_oidcConnectedRP}"
-}
-</script>';
-    }
-    return $tmp;
+    return $self->loadTemplate(
+        'oidcConsents',
+        params => {
+            partners => [
+                map { { name => $_ } }
+                  ( split /,/, $session->{_oidcConnectedRP} )
+            ],
+            consents => $session->{_oidcConnectedRP},
+        }
+    );
 }
 
 1;

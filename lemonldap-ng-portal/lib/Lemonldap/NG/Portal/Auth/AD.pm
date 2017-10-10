@@ -112,14 +112,20 @@ sub authenticate {
             # calculating remaining time before password expiration
             my $remainingTime = $_pwdExpire - $timestamp;
             $req->info(
-                '<h3 trspan="pwdWillExpire,'
-                  . join(
-                    ',',
-                    $self->ldap->convertSec(
-                        substr( $remainingTime, 0, length($remainingTime) - 7 )
-                    )
-                  )
-                  . '"></h3>'
+                $self->loadTemplate(
+                    'pwdWillExpire',
+                    params => {
+                        time => join(
+                            ',',
+                            $self->ldap->convertSec(
+                                substr(
+                                    $remainingTime, 0,
+                                    length($remainingTime) - 7
+                                )
+                            )
+                        )
+                    }
+                )
             );
         }
 

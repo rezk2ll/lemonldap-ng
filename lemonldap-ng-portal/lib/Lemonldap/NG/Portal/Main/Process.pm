@@ -172,7 +172,11 @@ sub deleteSession {
 
         $self->logger->debug("Create iFrames to forward logout to services");
 
-        $req->info('<h3 trmsg="logoutFromOtherApp"></h3>');
+        $req->info(
+            $self->loadTemplate(
+                'simpleInfo', params => { trspan => 'logoutFromOtherApp' }
+            )
+        );
 
         foreach ( keys %{ $req->datas->{logoutServices} } ) {
             my $logoutServiceName = $_;

@@ -206,16 +206,28 @@ sub userBind {
             if ( $resp->grace_authentications_remaining ) {
 
                 # TODO
-                $req->info( '<h3>'
-                      . $resp->grace_authentications_remaining
-                      . ' <span trmsg="ppGrace">authentications remaining, change your password!</span></h3>'
+                $self->info(
+                    $self->loadTemplate(
+                        'ldapPpGrace',
+                        params => {
+                            number => $resp->grace_authentications_remaining
+                        }
+                    )
                 );
             }
 
             if ( $resp->time_before_expiration ) {
-                $req->info( '<h3 trspan="authRemaining,'
-                      . $self->convertSec( $resp->time_before_expiration )
-                      . '"></h3>' );
+                $req->info(
+                    $self->loadTemplate(
+                        'simpleInfo',
+                        params => {
+                            trspan => 'authRemaining,'
+                              . $self->convertSec(
+                                $resp->time_before_expiration
+                              )
+                        }
+                    )
+                );
             }
 
             return PE_OK;

@@ -857,8 +857,10 @@ sub run {
                   . ' width="0" height="0" frameborder="0"></iframe>';
 
                 $req->info(
-                    '<h3 trspan="updateCdc">Update Common Domain Cookie</h3>'
-                      . $cdc_iframe );
+                    $self->loadTemplate( 'simpleInfo',
+                        params => { trspan => 'updateCdc' } )
+                      . $cdc_iframe
+                );
             }
 
             # HTTP-POST

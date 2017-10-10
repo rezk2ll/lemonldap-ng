@@ -52,28 +52,8 @@ sub _addRoute {
 }
 
 sub loadTemplate {
-    my ( $self, $name, %prm ) = @_;
-    $name .= '.tpl';
-    my $file =
-        $self->conf->{templateDir} . '/'
-      . $self->conf->{portalSkin} . '/'
-      . $name;
-    $file = $self->conf->{templateDir} . '/common/' . $name unless ( -e $file );
-    unless ( -e $file ) {
-        die "Unable to find $name in $self->conf->{templateDir}";
-    }
-    my $tpl = HTML::Template->new(
-        filename               => $file,
-        die_on_bad_params      => 0,
-        die_on_missing_include => 1,
-        cache                  => 1,
-        global_vars            => 0,
-        ($prm{filter} ? (filter => $prm{filter}) : () ),
-    );
-    if ( $prm{params} ) {
-        $tpl->param( %{ $prm{params} } );
-    }
-    return $tpl->output;
+    my $self = shift;
+    return $self->p->loadTemplate(@_);
 }
 
 1;

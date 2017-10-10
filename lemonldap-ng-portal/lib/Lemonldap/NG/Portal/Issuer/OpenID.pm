@@ -209,7 +209,12 @@ sub _openIDResponse {
         {
 
             # TODO
-            $req->info('<h3 trspan="openidExchange,$data->{trust_root}"></h3>');
+            $req->info(
+                $self->loadTemplate(
+                    'simpleInfo',
+                    params => { trspan => "openidExchange,$data->{trust_root}" }
+                )
+            );
             $req->info( $req->datas->{_openIdTrustExtMsg} )
               if ( $req->datas->{_openIdTrustExtMsg} );
             $self->logger->debug('OpenID confirmation');

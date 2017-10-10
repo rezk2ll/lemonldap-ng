@@ -38,7 +38,7 @@ sub run {
             )
         );
         unless ( $req->info ) {
-            $req->info('<p trspan="noHistory"></p>');
+            $req->info( $self->loadTemplate('noHistory') );
         }
         return PE_INFO;
     }

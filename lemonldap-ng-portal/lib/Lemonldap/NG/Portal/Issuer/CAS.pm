@@ -231,9 +231,10 @@ sub run {
                     "Logout URL $logout_url will be displayed");
 
                 $req->info(
-'<h3 trmsg="back2CasUrl">The application you just logged out of has provided a link it would like you to follow</h3>'
+                    $self->loadTemplate(
+                        'casBack2Url', params => { url => $logout_url }
+                    )
                 );
-                $req->info("<p><a href=\"$logout_url\">$logout_url</a></p>");
                 $req->datas->{activeTimer} = 0;
 
                 return PE_CONFIRM;

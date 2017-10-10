@@ -72,11 +72,13 @@ sub run {
 sub _mkRemoveOtherLink {
     my $self = shift;
 
-    my $link = $self->conf->{portal} . "?removeOther=1";
-
     # TODO: remove this
-    return
-qq'<p class="removeOther"><a href="$link" onclick="_go=0" trspan="removeOtherSessions></a></p>';
+    return $self->loadTemplate(
+        'removeOther',
+        params => {
+            link => $self->conf->{portal} . "?removeOther=1"
+        }
+    );
 }
 
 1;

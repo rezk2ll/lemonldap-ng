@@ -853,21 +853,16 @@ sub extractFormInfo {
         return $urlcheck unless ( $urlcheck == PE_OK );
 
         # Choosen IDP
-        my $html =
-'<h3 trspan="redirectionToIdp">Redirection to your Identity Provider</h3><h4>'
-          . $self->idpList->{$idp}->{name}
-          . "</h4>\n"
-          . "<p><i>"
-          . $idp
-          . "</i></p>\n"
-          . (
-            $req->param("url")
-            ? "<input type=\"hidden\" name=\"url\" value=\""
-              . $req->param("url") . "\" />"
-            : ''
-          ) . "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
-
-        $req->info($html);
+        $req->info(
+            $self->loadTemplate(
+                'samlRedirectToIdp',
+                params => {
+                    name => $self->idpList->{$idp}->{name},
+                    idp  => $idp,
+                    ( $req->param("url") ? ( url => $req->param("url") ) : () ),
+                }
+            )
+        );
 
         $req->datas->{login} = 1;
         return PE_CONFIRM;
