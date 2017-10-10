@@ -1,5 +1,4 @@
 Changes
-example/menu.pl
 example/scripts/purgeLocalCache
 example/scripts/purgeLocalCache.cron.d
 lib/Lemonldap/NG/Handler.pm
