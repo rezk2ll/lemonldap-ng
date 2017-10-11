@@ -138,6 +138,7 @@
 "logout":"Logout",
 "logoutConfirm":"Vuoi uscire?",
 "logoutFromOtherApp":"Disconnetti da altre applicazioni ...",
+"logoutFromSP":"Logout from service providers...",
 "mail":"Mail",
 "mailSent2":"Vi é stato inviato un messaggio via mail",
 "maintenanceMode":"Questa applicazione è in manutenzione, prova a connetterti più tardi",

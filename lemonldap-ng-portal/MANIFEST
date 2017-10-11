@@ -284,6 +284,9 @@ site/templates/bootstrap/redirect.tpl
 site/templates/bootstrap/register.tpl
 site/templates/bootstrap/removeOther.tpl
 site/templates/bootstrap/samlRedirectToIdp.tpl
+site/templates/bootstrap/samlSpLogout.tpl
+site/templates/bootstrap/samlSpsLogout.tpl
+site/templates/bootstrap/samlSpSoapLogout.tpl
 site/templates/bootstrap/sessionArray.tpl
 site/templates/bootstrap/simpleInfo.tpl
 site/templates/bootstrap/sslform.tpl

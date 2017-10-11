@@ -138,6 +138,7 @@
 "logout":"Logout",
 "logoutConfirm":"Do you want to logout?",
 "logoutFromOtherApp":"Logout from other applications...",
+"logoutFromSP":"Logout from service providers...",
 "mail":"Mail",
 "mailSent2":"A message has been sent to your mail address.",
 "maintenanceMode":"This application is in maintenance, please try to connect later",

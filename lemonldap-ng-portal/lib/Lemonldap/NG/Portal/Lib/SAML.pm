@@ -2517,12 +2517,14 @@ sub sendLogoutRequestToProvider {
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
 
-        $info .=
-            qq'<tr><td><iframe src="$slo_url" alt="" marginwidth="0"'
-          . ' marginheight="0" scrolling="no" class="noborder"'
-          . ' width="10px" height="10px" frameborder="0">'
-          . qq'</iframe></td><td>$providerName</td></tr>';
-
+        # Create iFrame
+        $info .= $self->loadTemplate(
+            'samlSpLogout',
+            params => {
+                url  => $slo_url,
+                name => $providerName,
+            }
+        );
     }
 
     # HTTP-POST
@@ -2548,12 +2550,13 @@ sub sendLogoutRequestToProvider {
         my $slo_url = $portal . '/saml/relaySingleLogoutPOST?relay=' . $relayID;
 
         # Create iFrame
-        $info .=
-            qq'<tr><td><iframe src="$slo_url" alt="" marginwidth="0"'
-          . ' marginheight="0" scrolling="no" class="noborder"'
-          . ' width="10px" height="10px" frameborder="0">'
-          . qq'</iframe></td><td>$providerName</td></tr>';
-
+        $info .= $self->loadTemplate(
+            'samlSpLogout',
+            params => {
+                url  => $slo_url,
+                name => $providerName,
+            }
+        );
     }
 
     # HTTP-SOAP
@@ -2585,12 +2588,13 @@ sub sendLogoutRequestToProvider {
               $portal . '/saml/relaySingleLogoutSOAP?relay=' . $relayID;
 
             # Display information to the user
-            $info .= '<tr>'
-              . '<td><img src="'
-              . $slo_url
-              . '" width="10px" height="10px" />' . '</td>' . '<td>'
-              . $providerName . '</td>' . '</tr>';
-
+            $info .= $self->loadTemplate(
+                'samlSpSoapLogout',
+                params => {
+                    imgUrl => $slo_url,
+                    name   => $providerName,
+                }
+            );
         }
 
         # Send the request directly
@@ -2654,17 +2658,10 @@ sub sendLogoutRequestToProviders {
     my ( $self, $req, $logout, $relayState ) = @_;
     my $server         = $self->lassoServer;
     my $providersCount = 0;
-    my $info           = '';
+    my $content        = '';
 
     # Reset providerID into Lasso::Logout object
     $self->resetProviderIdIndex($logout);
-
-    # Header of the block which will be displayed to the user, if needed.
-    #TODO: Replace this
-    $info .= '<h3>'
-
-      #. $self->msg(Lemonldap::NG::Portal::Simple::PM_SAML_SPLOGOUT) . '</h3>'
-      . '<table class="sloState">';
 
     # Foreach SP found in session, get it from configuration, and send the
     # appropriate logout request (HTTP,POST,SOAP).
@@ -2682,16 +2679,17 @@ sub sendLogoutRequestToProviders {
 
         # Add information if necessary
         if ($rinfo) {
-            $info .= $rinfo;
+            $content .= $rinfo;
         }
 
     }
 
-    # End of information block to be displayed to the user.
-    $info .= '</table>';
-
     # Print some information to the user.
-    $req->info($info) if $providersCount;
+    $req->info(
+        $self->loadTemplate(
+            'samlSpsLogout', params => { content => $content }
+        )
+    ) if $providersCount;
 
     return $providersCount;
 }

@@ -138,6 +138,7 @@
 "logout":"Déconnexion",
 "logoutConfirm":"Souhaitez-vous vous déconnecter ?",
 "logoutFromOtherApp":"Déconnexion des autres applications...",
+"logoutFromSP":"Déconnexion des services...",
 "mail":"Adresse mail",
 "mailSent2":"Un message a été envoyé à votre adresse mail.",
 "maintenanceMode":"Cette application est en maintenance, merci de réessayer plus tard",

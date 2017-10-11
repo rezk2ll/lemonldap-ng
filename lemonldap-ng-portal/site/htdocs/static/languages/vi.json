@@ -138,6 +138,7 @@
 "logout":"Đăng xuất",
 "logoutConfirm":"Bạn có muốn đăng xuất?",
 "logoutFromOtherApp":"Đăng xuất khỏi các ứng dụng khác ...",
+"logoutFromSP":"Logout from service providers...",
 "mail":"Thư",
 "mailSent2":"Một tin nhắn đã được gửi đến địa chỉ thư của bạn.",
 "maintenanceMode":"Ứng dụng này đang trong quá trình bảo trì, hãy thử kết nối sau",
