@@ -1,5 +1,5 @@
 <TMPL_IF NAME="title">
-<h3 trspan="<TMPL_VAR NAME="title">">
+<h3 trspan="<TMPL_VAR NAME="title">"></h3>
 </TMPL_IF>
 <table class="info">
  <thead>
