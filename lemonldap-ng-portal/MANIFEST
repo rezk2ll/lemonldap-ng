@@ -279,6 +279,8 @@ site/templates/bootstrap/oidcGiveConsent.tpl
 site/templates/bootstrap/oidcLogout.tpl
 site/templates/bootstrap/openid.tpl
 site/templates/bootstrap/openidform.tpl
+site/templates/bootstrap/openIdPol.tpl
+site/templates/bootstrap/openIdTrust.tpl
 site/templates/bootstrap/password.tpl
 site/templates/bootstrap/public/test.tpl
 site/templates/bootstrap/pwdWillExpire.tpl

@@ -36,14 +36,13 @@ sub sregHook {
     my $accepted = 1;
 
     # Check all parameters
+    my @pol;
     while ( my ( $k, $v ) = each %$prm ) {
 
         # Store policy if provided
         if ( $k eq 'policy_url' ) {
             if ( $v =~ Lemonldap::NG::Common::Regexp::HTTP_URI ) {
-                $req->datas->{_openIdTrustExtMsg} .=
-                    '<dl><dt trspan="openidPA">'
-                  . "&nbsp;:</dt><dd><a href=\"$v\">$v</a></dd></dl>";
+                push @pol, { url => $v };
 
                 # Question: is it important to notify policy changes ?
                 # if yes, uncomment this
@@ -73,6 +72,12 @@ sub sregHook {
             $self->logger->error("Unknown OpenID SREG request $k");
         }
     }
+    $req->datas->{_openIdTrustExtMsg} .= $self->loadTemplate(
+        'openIdPol',
+        params => {
+            policies => \@pol,
+        }
+    ) if (@pol);
 
     # Check if required keys are valid SREG requests
     # Question: reject bad SREG request ? Not done yet
@@ -89,7 +94,11 @@ sub sregHook {
 "Parameter $k is required by $trust_root but not defined in configuration"
             );
 
-            $req->info(qq'<h3 trspan="openidRpns,$k"></h3>');
+            $req->info(
+                $self->loadTemplate(
+                    'simpleInfo', params => { trspan => "openidRpns,$k" }
+                )
+            );
             return ( 0, {} );
         }
     }
@@ -169,41 +178,24 @@ sub sregHook {
 
     # else build message and return 0
     else {
-
-        $req->datas->{_openIdTrustExtMsg} .= qq'<h3 trspan="openidAp"></h3>';
-
-        $req->datas->{_openIdTrustExtMsg} .= "<table class=\"openidsreg\">\n";
+        my (@mopt,@mreq);
 
         # No choice for requested parameters: just an information
         foreach my $k (@req) {
             utf8::decode( $msg{req}->{$k} );
-            $req->datas->{_openIdTrustExtMsg} .=
-                "<tr class=\"required\">\n" . "<td>"
-              . "<input type=\"checkbox\" disabled=\"disabled\" checked=\"checked\"/>"
-              . "</td>\n"
-              . "<td>$k</td>\n" . "<td>"
-              . $msg{req}->{$k}
-              . "</td>\n"
-              . "</tr>\n";
+            push @mreq, {k=>$k,m=>$msg{req}->{$k}};
         }
 
         # For optional parameters: checkboxes are displayed
         foreach my $k (@opt) {
             utf8::decode( $msg{opt}->{$k} );
-            $req->datas->{_openIdTrustExtMsg} .=
-                "<tr class=\"optional\">\n"
-              . "<td>\n"
-              . "<input type=\"checkbox\" value=\"OK\""
-              . ( $ag{$k} ? 'checked="checked"' : '' )
-              . " name=\"sreg_$k\" />"
-              . "</td>\n"
-              . "<td>$k</td>\n" . "<td>"
-              . $msg{opt}->{$k}
-              . "</td>\n"
-              . "</tr>\n";
+            push @mopt,{k=>$k,m=>$msg{opt}->{$k},c=>( $ag{$k} ? 'checked' : '' )};
         }
 
-        $req->datas->{_openIdTrustExtMsg} .= "</table>\n";
+        $req->datas->{_openIdTrustExtMsg} .= $self->loadTemplate('openIdTrust',params => {
+            required => \@mreq,
+            optional => \@mopt,
+        });
 
         $self->logger->debug('Building validation form');
         return ( 0, $prm );
