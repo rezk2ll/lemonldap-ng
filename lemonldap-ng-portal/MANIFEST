@@ -275,6 +275,8 @@ site/templates/bootstrap/menuCat.tpl
 site/templates/bootstrap/noHistory.tpl
 site/templates/bootstrap/notification.tpl
 site/templates/bootstrap/oidcConsents.tpl
+site/templates/bootstrap/oidcGiveConsent.tpl
+site/templates/bootstrap/oidcLogout.tpl
 site/templates/bootstrap/openid.tpl
 site/templates/bootstrap/openidform.tpl
 site/templates/bootstrap/password.tpl

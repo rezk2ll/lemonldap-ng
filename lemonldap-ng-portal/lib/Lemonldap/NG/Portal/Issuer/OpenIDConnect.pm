@@ -440,22 +440,14 @@ sub run {
                           ->{oidcRPMetaDataOptionsDisplayName};
                         my $icon = $self->conf->{oidcRPMetaDataOptions}->{$rp}
                           ->{oidcRPMetaDataOptionsIcon};
-                        my $img_src;
+                        my $imgSrc;
 
                         if ($icon) {
-                            $img_src =
+                            $imgSrc =
                               ( $icon =~ m#^https?://# )
                               ? $icon
                               : $self->p->staticPrefic . "/common/" . $icon;
                         }
-
-                        # HERE
-                        $req->info('<div class="oidc_consent_message">');
-                        $req->info( '<img src="' . $img_src . '" />' )
-                          if $img_src;
-                        $req->info(
-qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would like to know:</h3><ul>'
-                        );
 
                         my $scope_messages = {
                             openid  => 'yourIdentity',
@@ -464,14 +456,32 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                             address => 'yourAddress',
                             phone   => 'yourPhone',
                         };
+                        my @list;
                         foreach my $requested_scope (
                             split( /\s/, $oidc_request->{'scope'} ) )
                         {
-                            my $message = $scope_messages->{$requested_scope}
-                              || 'anotherInformation';
-                            $req->info(qq'<li trspan="$message">$message</li>');
+                            if ( my $message =
+                                $scope_messages->{$requested_scope} )
+                            {
+                                push @list, { m => $message };
+                            }
+                            else {
+                                push @list,
+                                  {
+                                    m => 'anotherInformation',
+                                    n => $requested_scope
+                                  };
+                            }
                         }
-                        $req->info('</ul></div>');
+                        $req->info(
+                            $self->loadTemplate(
+                                'oidcGiveConsent',
+                                params => {
+                                    imgUrl => $imgSrc,
+                                    list   => \@list,
+                                }
+                            )
+                        );
                         $req->datas->{activeTimer} = 0;
                         return PE_CONFIRM;
                     }
@@ -834,9 +844,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                   : PE_OK;
             }
 
-            $req->info(
-'<div class="oidc_logout_message"><h3 trspan="logoutConfirm">Do you want to logout?</h3></div>'
-            );
+            $req->info( $self->loadTemplate('oidcLogout') );
             $req->datas->{activeTimer} = 0;
             return PE_CONFIRM;
         }
