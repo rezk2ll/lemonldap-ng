@@ -258,60 +258,54 @@ sub _buildApplicationHash {
 }
 
 ## @method string _displayConfCategory(string catname, hashref cathash, int catlevel)
-# Creates and returns HTML code for a category.
+# Creates and returns HTML code for a category (recursive).
 # @param catname Category name
 # @param cathash Hash of category elements
 # @param catlevel Category level
 # @return HTML string
 sub _displayConfCategory {
     my ( $self, $catname, $cathash, $catlevel ) = @_;
-    my $html;
     my $key;
-
-    # Init HTML list
-    $html .= "<ul class=\"category cat-level-$catlevel\">\n";
-    $html .= "<li class=\"catname\">\n";
-    $html .= "<span>$catname</span>\n" if $catname;
+    my $subcat  = '';
+    my $apps    = '';
+    my $apphash = {};
 
     # Increase category level
     $catlevel++;
 
-    # Extract applications from hash
-    my $apphash;
-    foreach $key ( keys %$cathash ) {
+    # Search for subcategory or applications
+    foreach $key ( sort keys %$cathash ) {
         next if $key =~ /(type|options|catname)/;
-        if (    $cathash->{$key}->{type}
-            and $cathash->{$key}->{type} eq "application" )
-        {
-            $apphash->{$key} = $cathash->{$key};
+        if ( $cathash->{$key}->{type} ) {
+            if ( $cathash->{$key}->{type} eq "category" ) {
+                $subcat .=
+                  $self->_displayConfCategory( $key, $cathash->{$key},
+                    $catlevel );
+            }
+
+            # Extract applications from hash
+            elsif ( $cathash->{$key}->{type} eq "application" ) {
+                $apphash->{$key} = $cathash->{$key};
+            }
         }
     }
 
-    # display applications first
+    # applications list
     if ( scalar keys %$apphash > 0 ) {
-        $html .= "<ul>";
-        foreach $key ( keys %$apphash ) {
-            $html .= $self->_displayConfApplication( $key, $apphash->{$key} );
-        }
-        $html .= "</ul>";
-    }
-
-    # Display subcategories
-    foreach $key ( keys %$cathash ) {
-        next if $key =~ /(type|options|catname)/;
-        if (    $cathash->{$key}->{type}
-            and $cathash->{$key}->{type} eq "category" )
-        {
-            $html .=
-              $self->_displayConfCategory( $key, $cathash->{$key}, $catlevel );
+        foreach $key ( sort keys %$apphash ) {
+            $apps .= $self->_displayConfApplication( $key, $apphash->{$key} );
         }
     }
 
-    # Close HTML list
-    $html .= "</li>\n";
-    $html .= "</ul>\n";
-
-    return $html;
+    return $self->loadTemplate(
+        'menuCat',
+        params => {
+            class   => "cat-level-$catlevel",
+            catname => $catname // '',
+            apps    => $apps,
+            subcat  => $subcat,
+        }
+    );
 }
 
 ## @method private string _displayConfApplication(string appid, hashref apphash)
@@ -320,24 +314,17 @@ sub _displayConfCategory {
 # @param $apphash Hash of application elements
 # @return HTML string
 sub _displayConfApplication {
-    my $self = shift;
-    my ( $appid, $apphash ) = @_;
-    my $html;
+    my ( $self, $appid, $apphash ) = @_;
+    my $subapp;
+    my $subapphash = {};
     my $key;
 
     # Get application items
     my $appname = $apphash->{options}->{name} || $appid;
     my $appuri  = $apphash->{options}->{uri}  || "";
 
-    # Display application
-    $html .=
-        "<li title=\"$appid\" class=\"appname $appid\"><span>"
-      . ( $appuri ? "<a href=\"$appuri\">$appname</a>" : "<a>$appname</a>" )
-      . "</span>\n";
-
     # Detect sub applications
-    my $subapphash;
-    foreach $key ( keys %$apphash ) {
+    foreach $key ( sort keys %$apphash ) {
         next if $key =~ /(type|options|catname)/;
         if ( $apphash->{$key}->{type} eq "application" ) {
             $subapphash->{$key} = $apphash->{$key};
@@ -346,56 +333,21 @@ sub _displayConfApplication {
 
     # Display sub applications
     if ( scalar keys %$subapphash > 0 ) {
-        $html .= "<ul>";
-        foreach $key ( keys %$subapphash ) {
-            $html .=
+        foreach $key ( sort keys %$subapphash ) {
+            $subapp .=
               $self->_displayConfApplication( $key, $subapphash->{$key} );
         }
-        $html .= "</ul>";
     }
 
-    $html .= "</li>";
-    return $html;
-}
-
-## @method private string _displayConfDescription(string appid, hashref apphash)
-# Create HTML code for application description.
-# @param $appid Application ID
-# @param $apphash Hash
-# @return HTML string
-sub _displayConfDescription {
-    my $self = shift;
-    my ( $appid, $apphash ) = @_;
-    my $html = "";
-    my $key;
-
-    if ( defined $apphash->{type} and $apphash->{type} eq "application" ) {
-
-        # Get application items
-        my $appname = $apphash->{options}->{name} || $appid;
-        my $appuri  = $apphash->{options}->{uri}  || "";
-        my $appdesc = $apphash->{options}->{description};
-        my $applogofile = $apphash->{options}->{logo};
-        my $applogo     = $self->imgPath . $applogofile
-          if $applogofile;
-
-        # Display application description
-        $html .= "<div id=\"$appid\" class=\"appsdesc\">\n";
-        $html .=
-"<a href=\"$appuri\"><img src=\"$applogo\" alt=\"$appid logo\" /></a>\n"
-          if $applogofile;
-        $html .= "<p class=\"appname\">$appname</p>\n" if defined $appname;
-        $html .= "<p class=\"appdesc\">$appdesc</p>\n" if defined $appdesc;
-        $html .= "</div>\n";
-    }
-
-    # Sublevels
-    foreach $key ( keys %$apphash ) {
-        next if $key =~ /(type|options|catname)/;
-        $html .= $self->_displayConfDescription( $key, $apphash->{$key} );
-    }
-
-    return $html;
+    return $self->loadTemplate(
+        'menuApp',
+        params => {
+            id     => $appid,
+            uri    => $apphash->{options}->{uri} // '',
+            name   => $apphash->{options}->{name} || $appid,
+            subapp => $subapp,
+        }
+    );
 }
 
 ## @method private string _filter(hashref apphash)

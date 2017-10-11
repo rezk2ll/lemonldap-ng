@@ -270,6 +270,8 @@ site/templates/bootstrap/ldapPpGrace.tpl
 site/templates/bootstrap/login.tpl
 site/templates/bootstrap/mail.tpl
 site/templates/bootstrap/menu.tpl
+site/templates/bootstrap/menuApp.tpl
+site/templates/bootstrap/menuCat.tpl
 site/templates/bootstrap/noHistory.tpl
 site/templates/bootstrap/notification.tpl
 site/templates/bootstrap/oidcConsents.tpl
