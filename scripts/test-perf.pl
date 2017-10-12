@@ -13,10 +13,10 @@ $ua->requests_redirectable( [] );
 my ( $request, @get, @post, @menu, @cookies, @handler );
 
 # Fake request to be sure that all is compiled
-$request = new HTTP::Request( 'GET', 'http://lemonldap-ng.org/' );
+$request = new HTTP::Request( 'GET', 'http://127.0.0.1/' );
 $ua->request( $request, \&cb_content );
 
-$request = new HTTP::Request( 'GET', 'http://127.0.0.1/' );
+$request = new HTTP::Request( 'GET', 'http://127.0.0.1:19876/' );
 $request->header( Host => 'auth.example.com' );
 for ( my $i = 0 ; $i < NB ; $i++ ) {
     my $time = time();
@@ -25,12 +25,12 @@ for ( my $i = 0 ; $i < NB ; $i++ ) {
     push @get, $time2;
 }
 
-$request = new HTTP::Request( 'POST', 'http://127.0.0.1/' );
+$request = new HTTP::Request( 'POST', 'http://127.0.0.1:19876/' );
 $request->header( Host             => 'auth.example.com' );
 $request->header( 'Content-Lenght' => '42' );
 $request->header( 'Content-Type'   => 'application/x-www-form-urlencoded' );
 
-$request->content('url=&user=user&password=password');
+$request->content('url=&user=dwho&password=dwho');
 for ( my $i = 0 ; $i < NB ; $i++ ) {
     my $time     = time();
     my $response = $ua->request( $request, \&cb_content );
@@ -54,7 +54,7 @@ for ( my $i = 0 ; $i < NB ; $i++ ) {
 }
 
 for ( my $i = 0 ; $i < NB ; $i++ ) {
-    $request = new HTTP::Request( 'GET', 'http://127.0.0.1/' );
+    $request = new HTTP::Request( 'GET', 'http://127.0.0.1:19876/' );
     $request->header( Host => 'auth.example.com' );
     my $cookie = shift @cookies;
     $request->header( "Cookie", $cookie );
@@ -62,7 +62,7 @@ for ( my $i = 0 ; $i < NB ; $i++ ) {
     my $response = $ua->request( $request, \&cb_content );
     my $time2    = time() - $time;
     push @menu, $time2;
-    $request = new HTTP::Request( 'GET', 'http://127.0.0.1/' );
+    $request = new HTTP::Request( 'GET', 'http://127.0.0.1:19876/' );
     $request->header( Host => 'test.example.com' );
     $request->header( "Cookie", $cookie );
 
