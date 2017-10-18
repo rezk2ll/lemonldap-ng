@@ -103,7 +103,7 @@ sub setGroups {
             $self->conf->{ldapGroupAttributeNameUser} );
 
         $self->logger->debug( "Searching LDAP groups in "
-              . $self->{ldapGroupBase}
+              . $self->conf->{ldapGroupBase}
               . " for $group_value" );
 
         # Call searchGroups
