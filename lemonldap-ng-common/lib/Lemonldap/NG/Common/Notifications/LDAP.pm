@@ -226,7 +226,7 @@ sub getDone {
 sub _search {
     my ( $self, $filter ) = @_;
 
-    my $ldap = _ldap($self) or return 0;
+    my $ldap = _ldap($self) or return ();
 
     my $search = $ldap->search(
         base   => $self->{ldapConfBase},
