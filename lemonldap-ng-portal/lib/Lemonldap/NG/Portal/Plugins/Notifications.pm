@@ -13,7 +13,11 @@ package Lemonldap::NG::Portal::Plugins::Notifications;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_NOTIFICATION);
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_ERROR
+  PE_NOTIFICATION
+  PE_OK
+);
 
 our $VERSION = '2.0.0';
 
@@ -104,9 +108,15 @@ sub init {
 
 sub checkNotifDuringAuth {
     my ( $self, $req ) = @_;
-    if ( $req->{datas}->{notification} =
-        $self->module->checkForNotifications($req) )
-    {
+    eval {
+        $req->{datas}->{notification} =
+          $self->module->checkForNotifications($req);
+    };
+    if ($@) {
+        $self->logger->error($@);
+        return PE_ERROR;
+    }
+    if ( $req->{datas}->{notification} ) {
         $self->p->rebuildCookies($req);
 
         # Restore and cipher cookies

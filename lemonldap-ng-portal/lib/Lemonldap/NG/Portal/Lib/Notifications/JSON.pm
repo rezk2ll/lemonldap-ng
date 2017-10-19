@@ -87,17 +87,20 @@ sub getNotifBack {
         return $self->p->sendError( $req, 'No cookie found', 401 );
     }
     $id = $self->p->HANDLER->tsv->{cipher}->decrypt($id)
-      or return $self->sendError( $req, 'Unable to decrypt', 500 );
+      or return $self->p->sendError( $req, 'Unable to decrypt', 400 );
 
     # Verify that session exists
     $req->userData( $self->p->HANDLER->retrieveSession( $req, $id ) )
-      or return $self->sendError( $req, 'Unknown session', 401 );
+      or return $self->p->sendError( $req, 'Unknown session', 401 );
 
     # Restore datas
     $self->p->importHandlerDatas($req);
     my $uid = $req->sessionInfo->{ $self->notifObject->notifField };
 
-    my ( $notifs, $forUser ) = $self->notifObject->getNotifications($uid);
+    my ( $notifs, $forUser );
+    eval { ( $notifs, $forUser ) = $self->notifObject->getNotifications($uid) };
+    return $self->p->sendError( $req, $@, 500 ) if ($@);
+
     if ($notifs) {
 
         # Get accepted notifications
@@ -206,14 +209,16 @@ sub toForm {
         $_->{id} = "1x$i";
         $_;
     } @notifs;
-    return $self->loadTemplate('notifinclude', params => {notifications => \@notifs});
+    return $self->loadTemplate( 'notifinclude',
+        params => { notifications => \@notifs } );
 }
 
 sub notificationServer {
     my ( $self, $req ) = @_;
     return $self->p->sendError( $req, 'Only JSON requests here', 400 )
       unless ( $req->wantJSON );
-    my $res = $self->notifObject->newNotification( $req->content );
+    my $res = eval { $self->notifObject->newNotification( $req->content ) };
+    return $self->p->sendError( $req, $@, 500 ) if ($@);
     return $self->p->sendError( $req, 'Bad request', 400 ) unless ($res);
     return $self->p->sendJSONresponse( $req, { result => $res } );
 }

@@ -48,7 +48,7 @@ has _dbh => (
         my $self = shift;
         my $r    = DBI->connect_cached(
             $self->{dbiChain}, $self->{dbiUser},
-            $self->{dbiPassword}, { RaiseError => 0 }
+            $self->{dbiPassword}, { RaiseError => 1 }
         );
         $self->logger->error($DBI::errstr) unless ($r);
         return $r;
@@ -196,7 +196,7 @@ sub getDone {
 # @return number of lines touched or 1 if select succeed
 sub _execute {
     my ( $self, $query, @args ) = @_;
-    my $dbh = $self->_dbh or return 0;
+    my $dbh = $self->_dbh or die "DB connection unavailable";
     unless ( $self->sth( $dbh->prepare($query) ) ) {
         $self->logger->warn( $dbh->errstr() );
         return 0;

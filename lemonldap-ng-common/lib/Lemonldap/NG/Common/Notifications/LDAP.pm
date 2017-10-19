@@ -226,7 +226,7 @@ sub getDone {
 sub _search {
     my ( $self, $filter ) = @_;
 
-    my $ldap = _ldap($self) or return ();
+    my $ldap = _ldap($self);
 
     my $search = $ldap->search(
         base   => $self->{ldapConfBase},
@@ -386,8 +386,7 @@ sub _ldap {
     );
 
     unless ($ldap) {
-        $self->logger->error( 'connexion failed: ' . $@ );
-        return;
+        die 'connexion failed: ' . $@;
     }
 
     # Start TLS if needed
@@ -397,8 +396,7 @@ sub _ldap {
         $h{capath} = $self->{caPath} if ( $self->{caPath} );
         my $start_tls = $ldap->start_tls(%h);
         if ( $start_tls->code ) {
-            $self->logger->error( 'tls failed: ' . $start_tls->error );
-            return;
+            die 'tls failed: ' . $start_tls->error;
         }
     }
 
@@ -406,8 +404,7 @@ sub _ldap {
     my $bind =
       $ldap->bind( $self->{ldapBindDN}, password => $self->{ldapBindPassword} );
     if ( $bind->code ) {
-        $self->logger->error( 'bind failed: ' . $bind->error );
-        return;
+        die 'bind failed: ' . $bind->error;
     }
 
     $self->{ldap} = $ldap;
