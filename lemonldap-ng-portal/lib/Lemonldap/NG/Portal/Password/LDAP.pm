@@ -49,7 +49,7 @@ sub modifyPassword {
 
         unless ( $result->code == 0 ) {
             $self->logger->error( "LDAP modify "
-                  . $self->{ldapPasswordResetAttribute}
+                  . $self->conf->{ldapPasswordResetAttribute}
                   . " error: "
                   . $result->code );
             $self->ldap->unbind;
