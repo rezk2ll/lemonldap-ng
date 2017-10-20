@@ -179,17 +179,7 @@ Description: Lemonldap::NG handler common libraries
  .
  Lemonldap::NG::Handler provides Perl libraries used by web server handlers.
 
-Package: liblemonldap-ng-conf-perl
-Depends: ${misc:Depends},
-         liblemonldap-ng-common-perl
-Architecture: all
-Section: oldlibs
-Description: transitional dummy package
- This is a transitional dummy package. It can safely be removed.
-
 Package: liblemonldap-ng-common-perl
-Replaces: liblemonldap-ng-conf-perl (<< 1.3.3~)
-Breaks: liblemonldap-ng-conf-perl (<< 1.3.3~)
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
