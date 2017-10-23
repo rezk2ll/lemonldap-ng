@@ -572,7 +572,15 @@ sub resolveAlias {
     my $vhost = $req->{env}->{HTTP_HOST};
 
     $vhost =~ s/:\d+//;
-    return $class->tsv->{vhostAlias}->{$vhost} || $vhost;
+    return $class->tsv->{vhostAlias}->{$vhost}
+      if ( $class->tsv->{vhostAlias}->{$vhost} );
+    return $vhost if ( $class->tsv->{defaultCondition}->{$vhost} );
+    my $v = $vhost;
+    while ( $v =~ s/[\w\-]+/\*/ ) {
+        return $v if ( $class->tsv->{defaultCondition}->{$v} );
+        $v =~ s/^\*\.*//;
+    }
+    return $vhost;
 }
 
 #__END__

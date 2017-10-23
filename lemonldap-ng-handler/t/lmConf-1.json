@@ -18,6 +18,9 @@
     },
     "test2.example.com": {
       "Auth-User": "$uid"
+    },
+    "*.example.org": {
+      "Auth-User": "$uid"
     }
   },
   "exportedVars": {
@@ -44,6 +47,10 @@
     },
     "test2.example.com": {
       "^/logout": "logout_sso",
+      "default": "accept"
+    },
+    "*.example.org": {
+      "^/orgdeny": "deny",
       "default": "accept"
     }
   },
