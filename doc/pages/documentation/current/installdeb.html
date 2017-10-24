@@ -60,7 +60,7 @@
 <li class="level1"><div class="li"><a href="#package_gpg_signature">Package GPG signature</a></div></li>
 <li class="level1"><div class="li"><a href="#install_packages">Install packages</a></div>
 <ul class="toc">
-<li class="level2"><div class="li"><a href="#with_aptitude">With aptitude</a></div></li>
+<li class="level2"><div class="li"><a href="#with_apt">With apt</a></div></li>
 <li class="level2"><div class="li"><a href="#with_dpkg">With dpkg</a></div></li>
 </ul>
 </li>
@@ -148,12 +148,12 @@ deb-src https://lemonldap-ng.org/deb stable main</pre>
 
 </div>
 <p>
-Run this to update packages cache:
+You may need to install this package to access HTTPS repositories:
 </p>
-<pre class="code">apt-get update</pre>
+<pre class="code">apt install apt-transport-https</pre>
 
 </div>
-<!-- EDIT5 SECTION "LL::NG repository" [1000-1595] -->
+<!-- EDIT5 SECTION "LL::NG repository" [1000-1644] -->
 <h3 class="sectionedit6" id="manual_download">Manual download</h3>
 <div class="level3">
 
@@ -162,7 +162,7 @@ Packages are available on the <a href="download.html" class="wikilink1" title="d
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Manual download" [1596-1682] -->
+<!-- EDIT6 SECTION "Manual download" [1645-1731] -->
 <h2 class="sectionedit7" id="package_gpg_signature">Package GPG signature</h2>
 <div class="level2">
 
@@ -173,21 +173,26 @@ The GPG key can be downloaded here: <a href="rpm-gpg-key-ow2" class="media media
 <p>
 Install it to trust packages:
 </p>
-<pre class="code">apt-key add rpm-gpg-key-ow2</pre>
+<pre class="code">wget -O - https://lemonldap-ng.org/_media/rpm-gpg-key-ow2 | apt-key add -</pre>
+
+<p>
+Update cache:
+</p>
+<pre class="code">apt update</pre>
 
 </div>
-<!-- EDIT7 SECTION "Package GPG signature" [1683-1851] -->
+<!-- EDIT7 SECTION "Package GPG signature" [1732-1986] -->
 <h2 class="sectionedit8" id="install_packages">Install packages</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT8 SECTION "Install packages" [1852-1881] -->
-<h3 class="sectionedit9" id="with_aptitude">With aptitude</h3>
+<!-- EDIT8 SECTION "Install packages" [1987-2016] -->
+<h3 class="sectionedit9" id="with_apt">With apt</h3>
 <div class="level3">
-<pre class="code">aptitude install lemonldap-ng</pre>
+<pre class="code">apt install lemonldap-ng</pre>
 
 </div>
-<!-- EDIT9 SECTION "With aptitude" [1882-1952] -->
+<!-- EDIT9 SECTION "With apt" [2017-2077] -->
 <h3 class="sectionedit10" id="with_dpkg">With dpkg</h3>
 <div class="level3">
 
@@ -201,12 +206,12 @@ Then:
 <pre class="code">dpkg -i liblemonldap-ng-* lemonldap-ng*</pre>
 
 </div>
-<!-- EDIT10 SECTION "With dpkg" [1953-2101] -->
+<!-- EDIT10 SECTION "With dpkg" [2078-2226] -->
 <h2 class="sectionedit11" id="first_configuration_steps">First configuration steps</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT11 SECTION "First configuration steps" [2102-2140] -->
+<!-- EDIT11 SECTION "First configuration steps" [2227-2265] -->
 <h3 class="sectionedit12" id="change_default_dns_domain">Change default DNS domain</h3>
 <div class="level3">
 
@@ -216,7 +221,7 @@ By default, <abbr title="Domain Name System">DNS</abbr> domain is <code>example.
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1.json /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- EDIT12 SECTION "Change default DNS domain" [2141-2460] -->
+<!-- EDIT12 SECTION "Change default DNS domain" [2266-2585] -->
 <h3 class="sectionedit13" id="reload_virtual_host">Reload virtual host</h3>
 <div class="level3">
 
@@ -227,7 +232,7 @@ To allow the manager to reload the configuration, register the reload virtual ho
 <div class="notetip">Adapt the reload virtual host name to the domain you configured.
 </div>
 </div>
-<!-- EDIT13 SECTION "Reload virtual host" [2461-2762] -->
+<!-- EDIT13 SECTION "Reload virtual host" [2586-2887] -->
 <h3 class="sectionedit14" id="upgrade">Upgrade</h3>
 <div class="level3">
 
@@ -236,7 +241,7 @@ If you upgraded <abbr title="LemonLDAP::NG">LL::NG</abbr>, check all <a href="up
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Upgrade" [2763-2843] -->
+<!-- EDIT14 SECTION "Upgrade" [2888-2968] -->
 <h3 class="sectionedit15" id="dns">DNS</h3>
 <div class="level3">
 
@@ -252,7 +257,7 @@ Follow the <a href="start.html#configuration" class="wikilink1" title="documenta
 </p>
 
 </div>
-<!-- EDIT15 SECTION "DNS" [2844-3116] -->
+<!-- EDIT15 SECTION "DNS" [2969-3241] -->
 <h2 class="sectionedit16" id="file_location">File location</h2>
 <div class="level2">
 <ul>
@@ -273,7 +278,7 @@ Follow the <a href="start.html#configuration" class="wikilink1" title="documenta
 </ul>
 
 </div>
-<!-- EDIT16 SECTION "File location" [3117-3653] -->
+<!-- EDIT16 SECTION "File location" [3242-3778] -->
 <h2 class="sectionedit17" id="build_your_packages">Build your packages</h2>
 <div class="level2">
 
@@ -285,6 +290,6 @@ cd lemonldap-ng-*
 make debian-packages</pre>
 
 </div>
-<!-- EDIT17 SECTION "Build your packages" [3654-] --></div>
+<!-- EDIT17 SECTION "Build your packages" [3779-] --></div>
 </body>
 </html>

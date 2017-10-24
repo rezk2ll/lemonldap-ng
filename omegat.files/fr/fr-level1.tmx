@@ -1138,14 +1138,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>apt-get update</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120303T093609Z" changeid="xavier">
-        <seg>apt-get update</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Display: As Google Apps is not a protected application, set to On to always display it</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T052021Z" changeid="xavier">
@@ -8264,14 +8256,6 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200333Z" changeid="xavier">
         <seg>chacune a 2 portails:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>aptitude install lemonldap-ng</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120324T155910Z" changeid="xavier">
-        <seg>aptitude install lemonldap-ng</seg>
       </tuv>
     </tu>
     <tu>
@@ -20404,14 +20388,6 @@ $lemonldap_config = Array(</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>With aptitude</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120324T155908Z" changeid="xavier">
-        <seg>Avec aptitude</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>documentation:1.0:ldapconfbackend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125402Z" changeid="xavier">
@@ -22338,14 +22314,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T052614Z" changeid="xavier">
         <seg>Active Directory</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>An apache virtual host protected by LemonLDAP::NG Handler must be registered in LemonLDAP::NG configuration.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T073356Z" changeid="xavier">
-        <seg>Un hôte virtuel apache protégé par un agent LemonLDAP::NG doit être enregistré dans la configuration LemonLDAP::NG.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28506,14 +28474,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T061131Z" changeid="xavier">
         <seg>Donne l'uid (pour la traçabilité)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>apt-key add rpm-gpg-key-ow2</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120620T042138Z" changeid="xavier">
-        <seg>apt-key add rpm-gpg-key-ow2</seg>
       </tuv>
     </tu>
     <tu>

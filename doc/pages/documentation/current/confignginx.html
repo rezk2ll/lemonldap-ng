@@ -74,11 +74,11 @@
 <div class="level2">
 
 <p>
-To use Nginx, you must install LemonLDAP::NG FastCGI server, which is not installed by default lemonldap-ng metapackage.
+To use Nginx, you must install LemonLDAP::NG FastCGI server, which is not installed by lemonldap-ng metapackage.
 </p>
 
 </div>
-<!-- EDIT2 SECTION "FastCGI server" [43-192] -->
+<!-- EDIT2 SECTION "FastCGI server" [43-184] -->
 <h3 class="sectionedit3" id="debianubuntu">Debian/Ubuntu</h3>
 <div class="level3">
 <pre class="code">apt install lemonldap-ng-fastcgi-server</pre>
@@ -90,7 +90,7 @@ Enable and start the service :
 systemctl start llng-fastcgi-server</pre>
 
 </div>
-<!-- EDIT3 SECTION "Debian/Ubuntu" [193-393] -->
+<!-- EDIT3 SECTION "Debian/Ubuntu" [185-385] -->
 <h3 class="sectionedit4" id="red_hatcentos">Red Hat/CentOS</h3>
 <div class="level3">
 <pre class="code">yum install lemonldap-ng-fastcgi-server</pre>
@@ -102,7 +102,7 @@ Enable and start the service :
 systemctl start llng-fastcgi-server</pre>
 
 </div>
-<!-- EDIT4 SECTION "Red Hat/CentOS" [394-595] -->
+<!-- EDIT4 SECTION "Red Hat/CentOS" [386-587] -->
 <h2 class="sectionedit5" id="files">Files</h2>
 <div class="level2">
 
@@ -115,7 +115,7 @@ You have to include them in Nginx main configuration.
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Files" [596-818] -->
+<!-- EDIT5 SECTION "Files" [588-810] -->
 <h3 class="sectionedit6" id="debianubuntu1">Debian/Ubuntu</h3>
 <div class="level3">
 
@@ -136,7 +136,7 @@ ln -s /etc/nginx/sites-available/portal-nginx.conf /etc/nginx/sites-enabled/
 ln -s /etc/nginx/sites-available/test-nginx.conf /etc/nginx/sites-enabled/</pre>
 
 </div>
-<!-- EDIT6 SECTION "Debian/Ubuntu" [819-1577] -->
+<!-- EDIT6 SECTION "Debian/Ubuntu" [811-1569] -->
 <h3 class="sectionedit7" id="red_hatcentos1">Red Hat/CentOS</h3>
 <div class="level3">
 
@@ -149,6 +149,6 @@ ln -s /etc/lemonldap-ng/portal-nginx.conf /etc/nginx/conf.d/
 ln -s /etc/lemonldap-ng/test-nginx.conf /etc/nginx/conf.d/</pre>
 
 </div>
-<!-- EDIT7 SECTION "Red Hat/CentOS" [1578-] --></div>
+<!-- EDIT7 SECTION "Red Hat/CentOS" [1570-] --></div>
 </body>
 </html>

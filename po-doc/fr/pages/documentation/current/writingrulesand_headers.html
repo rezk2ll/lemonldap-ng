@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,writingrulesand_headers"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="writingrulesand_headers.html"/>
@@ -58,6 +58,7 @@
 </li>
 <li class="level1"><div class="li"><a href="#headers">En-têtes</a></div></li>
 <li class="level1"><div class="li"><a href="#available_functions">Available functions</a></div></li>
+<li class="level1"><div class="li"><a href="#wildcards_in_hostnames">Wildcards in hostnames</a></div></li>
 </ul>
 </div>
 </div><!-- TOC END -->
@@ -287,7 +288,33 @@ In addition to macros and name, you can use some functions in rules and headers:
 </li>
 </ul>
 
-</div><!-- EDIT9 SECTION "Available functions" [5743-] -->
+</div><!-- EDIT9 SECTION "Available functions" [5743-5953] -->
+
+<h2 class="sectionedit10" id="wildcards_in_hostnames">Wildcards in hostnames</h2>
+<div class="level2">
+
+<p>
+<a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a>  Since 2.0, a wildcard can be used in virtualhost name (not in aliases !): <code>*.example.com</code> matches all hostnames that belong to <code>example.com</code> domain.
+
+</p>
+
+<p>
+
+Even if a wildcard exists, if a virtualhost is explicitly declared, this rule is applied. Example with precedence order:
+
+</p>
+<ol>
+<li class="level1"><div class="li">  test.sub.example.com</div>
+</li>
+<li class="level1"><div class="li">  *.sub.example.com</div>
+</li>
+<li class="level1"><div class="li">  test.example.com</div>
+</li>
+<li class="level1"><div class="li">  *.example.com</div>
+</li>
+</ol>
+
+</div><!-- EDIT10 SECTION "Wildcards in hostnames" [5954-] -->
 </div>
 </body>
 </html>

@@ -55,8 +55,8 @@
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#declare_module_in_handler_server">Declarer le module dans le serveur « handler »</a></div>
 <ul class="toc">
-<li class="level3"><div class="li"><a href="#apache">Apache</a></div></li>
-<li class="level3"><div class="li"><a href="#fastcgi_server_nginx">Serveur FastCGI (Nginx)</a></div></li>
+<li class="level3"><div class="li"><a href="#new_method">New method</a></div></li>
+<li class="level3"><div class="li"><a href="#old_method">Old method</a></div></li>
 </ul>
 </li>
 <li class="level2"><div class="li"><a href="#declare_custom_functions">Declarer les fonctions personnalisées</a></div></li>
@@ -109,8 +109,30 @@ Créer un module Perl avec des fonctions personnalisées. Le module peut être a
 
 </div>
 
-<h4 id="apache">Apache</h4>
+<h4 id="new_method">New method</h4>
 <div class="level4">
+
+<p>
+
+Just declare files or Perl module that must be loaded:
+
+</p>
+<pre class="code file :ini"><span class="re0"><span class="br0">[</span>all<span class="br0">]</span></span>
+<span class="re1">require</span> <span class="sy0">=</span><span class="re2"> /path/to/functions.pl, /path/to/func2.pm</span>
+# OR
+<span class="re1">require</span> <span class="sy0">=</span><span class="re2"> My::Func1, My::Func2</span></pre>
+
+</div>
+
+<h4 id="old_method">Old method</h4>
+<div class="level4">
+<div class="notewarning">This method is available but unusable by Portal under Apache. So if your rule may be used by the menu, use the new method.
+
+</div>
+</div>
+
+<h5 id="apache">Apache</h5>
+<div class="level5">
 
 <p>
 Le module doit être chargé par Apache (par exemple après le chargement de l'agent) :
@@ -122,8 +144,8 @@ PerlOptions +GlobalRequest</pre>
 
 </div>
 
-<h4 id="fastcgi_server_nginx">Serveur FastCGI (Nginx)</h4>
-<div class="level4">
+<h5 id="fastcgi_server_nginx">Serveur FastCGI (Nginx)</h5>
+<div class="level5">
 
 <p>
 Il faut indiquer au <a href="fastcgiserver.html" class="wikilink1" title="documentation:2.0:fastcgiserver">serveur FastCGI de LLNG</a> le fichier à lire en utilisant l'option <code>-f</code> ou la variable d'environnement <code>CUSTOM_FUNCTIONS_FILE</code>. En utilisant les packages, il suffit de modifier le fichier <code>/etc/default/llng-fastcgi-server</code> (ou <code>/etc/default/lemonldap-ng-fastcgi-server</code>) :
@@ -144,7 +166,7 @@ GROUP=www-data
 # Fichier éventuel de fonctions personnalisées
 CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</pre>
 
-</div><!-- EDIT4 SECTION "Declare module in handler server" [609-1543] -->
+</div><!-- EDIT4 SECTION "Declare module in handler server" [609-1892] -->
 
 <h3 class="sectionedit5" id="declare_custom_functions">Declarer les fonctions personnalisées</h3>
 <div class="level3">
@@ -155,7 +177,7 @@ Aller dans le manager, <code>Paramètres généraux</code> » <code>Paramètres 
 <pre class="code">SSOExtensions::function1</pre>
 <div class="noteimportant">Si la fonction n'est pas compatible avec la <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">cage saine</a>, il faut désactiver la mise en cage.
 </div>
-</div><!-- EDIT5 SECTION "Declare custom functions" [1544-1840] -->
+</div><!-- EDIT5 SECTION "Declare custom functions" [1893-2189] -->
 
 <h2 class="sectionedit6" id="use_it">Les utiliser</h2>
 <div class="level2">
@@ -165,7 +187,7 @@ Les fonctions peuvent être utilisées dans une macro, un en-tête ou une règle
 </p>
 <pre class="code">Custom-Header =&gt; function1( $uid, $ENV{REMOTE_ADDR} )</pre>
 
-</div><!-- EDIT6 SECTION "Use it" [1841-] -->
+</div><!-- EDIT6 SECTION "Use it" [2190-] -->
 </div>
 </body>
 </html>

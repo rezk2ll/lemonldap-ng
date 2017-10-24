@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,configvhost"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="configvhost.html"/>
@@ -370,11 +370,13 @@ server {
 <div class="level2">
 
 <p>
-Un hôte virtuel apache protégé par un agent LemonLDAP::NG doit être enregistré dans la configuration LemonLDAP::NG.
+
+A virtual host protected by LemonLDAP::NG Handler must be registered in LemonLDAP::NG configuration.
+
 </p>
 
 <p>
-Pour ce faire, utiliser le manager, et aller dans la branche <code>Virtual Hosts</code>. Il est possible d'ajouter, effacer ou modifier un hôte virtuel ici.
+Pour ce faire, utiliser le manager, et aller dans la branche <code>Virtual Hosts</code>. Il est possible d'ajouter, effacer ou modifier un hôte virtuel ici. Enter the exact virtual host name (for example <code>test.example.com</code>) or use a wildcard (for example <code>*.example.com</code>).
 </p>
 
 <p>
@@ -391,7 +393,7 @@ Un hôte vituel contient :
 </li>
 </ul>
 
-</div><!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7862-8349] -->
+</div><!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7862-8461] -->
 
 <h3 class="sectionedit10" id="access_rules_and_http_headers">Règles d'accès et en-têtes HTTP</h3>
 <div class="level3">
@@ -400,7 +402,7 @@ Un hôte vituel contient :
 Voir <strong><a href="writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Écrire des règles et des en-têtes</a></strong> pour savoir comment configurer le contrôle d'accès et les en-têtes HTTP transmis à l'application par <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </p>
 
-</div><!-- EDIT10 SECTION "Access rules and HTTP headers" [8350-8542] -->
+</div><!-- EDIT10 SECTION "Access rules and HTTP headers" [8462-8654] -->
 
 <h3 class="sectionedit11" id="post_data">Données POST</h3>
 <div class="level3">
@@ -409,7 +411,7 @@ Voir <strong><a href="writingrulesand_headers.html" class="wikilink1" title="doc
 Voir <strong><a href="formreplay.html" class="wikilink1" title="documentation:2.0:formreplay">Rejeu des formulaires</a></strong> pour savoir comment configurer le rejeu des formulaires pour poster des données à une applications protégée.
 </p>
 
-</div><!-- EDIT11 SECTION "POST data" [8543-8677] -->
+</div><!-- EDIT11 SECTION "POST data" [8655-8789] -->
 
 <h3 class="sectionedit12" id="options">Options</h3>
 <div class="level3">
@@ -430,7 +432,7 @@ Quelques options sont disponibles :
 Ces options sont utilisées dans la construction des <abbr title="Uniform Resource Locator">URL</abbr> de redirection (lorsque l'utilisateur n'est pas connecté ou pour les requêtes <abbr title="Authentification inter-domaines">CDA</abbr>). Sauf modification, les valeurs par défaut sont utilisées. Ces options ne sont à utiliser que pour surcharger les valeurs par défaut.
 </p>
 
-</div><!-- EDIT12 SECTION "Options" [8678-] -->
+</div><!-- EDIT12 SECTION "Options" [8790-] -->
 </div>
 </body>
 </html>

@@ -135,9 +135,15 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 <li class="level1"><div class="li">  Digest::SHA</div>
 </li>
+<li class="level1"><div class="li">  Email::Sender</div>
+</li>
 <li class="level1"><div class="li">  GD::SecurityImage</div>
 </li>
 <li class="level1"><div class="li"> <abbr title="HyperText Markup Language">HTML</abbr>::Template</div>
+</li>
+<li class="level1"><div class="li">  HTTP::Headers</div>
+</li>
+<li class="level1"><div class="li">  HTTP::Request</div>
 </li>
 <li class="level1"><div class="li">  IO::String</div>
 </li>
@@ -161,17 +167,19 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 <li class="level1"><div class="li">  Regexp::Common</div>
 </li>
-<li class="level1"><div class="li">  SOAP::Lite</div>
+<li class="level1"><div class="li">  SOAP::Lite <em>(optional)</em></div>
+</li>
+<li class="level1"><div class="li">  String::Random</div>
 </li>
 <li class="level1"><div class="li">  Unicode::String</div>
 </li>
 <li class="level1"><div class="li"> <abbr title="Uniform Resource Identifier">URI</abbr></div>
 </li>
-<li class="level1"><div class="li">  YAML</div>
+<li class="level1"><div class="li"> <abbr title="Uniform Resource Identifier">URI</abbr>::Escape</div>
 </li>
 </ul>
 
-</div><!-- EDIT4 SECTION "Core" [666-1194] -->
+</div><!-- EDIT4 SECTION "Core" [666-1289] -->
 
 <h3 class="sectionedit5" id="deprecated_features">Deprecated features</h3>
 <div class="level3">
@@ -194,7 +202,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT5 SECTION "Deprecated features" [1195-1363] -->
+</div><!-- EDIT5 SECTION "Deprecated features" [1290-1458] -->
 
 <h3 class="sectionedit6" id="saml2">SAML2</h3>
 <div class="level3">
@@ -207,7 +215,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT6 SECTION "SAML2" [1364-1449] -->
+</div><!-- EDIT6 SECTION "SAML2" [1459-1544] -->
 
 <h3 class="sectionedit7" id="specific_authentication_backends">Specific authentication backends</h3>
 <div class="level3">
@@ -250,7 +258,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT7 SECTION "Specific authentication backends" [1450-1678] -->
+</div><!-- EDIT7 SECTION "Specific authentication backends" [1545-1773] -->
 
 <h3 class="sectionedit8" id="smtpreset_password_by_mail">SMTP / réinitialisation de mot-de-passe par courriel</h3>
 <div class="level3">
@@ -261,7 +269,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT8 SECTION "SMTP / Reset password by mail" [1679-1757] -->
+</div><!-- EDIT8 SECTION "SMTP / Reset password by mail" [1774-1852] -->
 
 <h3 class="sectionedit9" id="unit_tests">Unit tests</h3>
 <div class="level3">
@@ -270,9 +278,11 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 <li class="level1"><div class="li">  Test::MockObject</div>
 </li>
+<li class="level1"><div class="li">  YAML</div>
+</li>
 </ul>
 
-</div><!-- EDIT9 SECTION "Unit tests" [1758-1815] -->
+</div><!-- EDIT9 SECTION "Unit tests" [1853-1919] -->
 
 <h2 class="sectionedit10" id="other">Autres</h2>
 <div class="level2">
@@ -283,12 +293,12 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT10 SECTION "Other" [1816-2032] -->
+</div><!-- EDIT10 SECTION "Other" [1920-2136] -->
 
 <h2 class="sectionedit11" id="install_dependencies_on_your_system">Installer les dépendances sur le système</h2>
 <div class="level2">
 
-</div><!-- EDIT11 SECTION "Install dependencies on your system" [2033-2082] -->
+</div><!-- EDIT11 SECTION "Install dependencies on your system" [2137-2186] -->
 
 <h3 class="sectionedit12" id="apt-get">APT-GET</h3>
 <div class="level3">
@@ -310,7 +320,7 @@ Pour Nginx:
 </p>
 <pre class="code">apt install nginx nginx-extras</pre>
 
-</div><!-- EDIT12 SECTION "APT-GET" [2083-2845] -->
+</div><!-- EDIT12 SECTION "APT-GET" [2187-2949] -->
 
 <h3 class="sectionedit13" id="yum">YUM</h3>
 <div class="level3">
@@ -335,7 +345,7 @@ Pour Nginx:
 <div class="noteimportant">As you need a recent version of Nginx, the best is to install <a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-red-hat-centos-packages" class="urlextern" title="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-red-hat-centos-packages"  rel="nofollow">Nginx official packages</a>.
 
 </div>
-</div><!-- EDIT13 SECTION "YUM" [2846-] -->
+</div><!-- EDIT13 SECTION "YUM" [2950-] -->
 </div>
 </body>
 </html>
