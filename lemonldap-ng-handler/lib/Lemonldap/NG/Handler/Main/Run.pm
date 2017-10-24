@@ -569,7 +569,7 @@ sub cleanHeaders {
 # returns vhost whose current hostname is an alias
 sub resolveAlias {
     my ( $class, $req ) = @_;
-    my $vhost = $req->{env}->{HTTP_HOST};
+    my $vhost = ref $req ? $req->{env}->{HTTP_HOST} : $req;
 
     $vhost =~ s/:\d+//;
     return $class->tsv->{vhostAlias}->{$vhost}

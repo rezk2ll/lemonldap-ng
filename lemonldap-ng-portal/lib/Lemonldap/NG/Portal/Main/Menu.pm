@@ -409,6 +409,7 @@ sub _filterHash {
             my ( $vhost, $appuri ) =
               $apphash->{$key}->{options}->{uri} =~ m#^https?://([^/]*)(.*)#;
             $vhost =~ s/:\d+$//;
+            $vhost = $self->p->HANDLER->resolveAlias($vhost);
             $appuri ||= '/';
 
             # Remove if display is "no" or "off"
