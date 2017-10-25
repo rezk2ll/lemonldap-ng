@@ -267,7 +267,6 @@ Recommends: libcrypt-openssl-bignum-perl,
             libunicode-string-perl,
             libwww-perl
 Suggests: libauthcas-perl,
-          libauthen-captcha-perl,
           libcrypt-u2f-server-perl,
           libdbi-perl,
           libgd-securityimage-perl,
