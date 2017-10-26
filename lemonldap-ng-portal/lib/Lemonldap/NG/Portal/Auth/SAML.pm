@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Auth::SAML;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Portal::Lib::SAML;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_CONFIRM
   PE_LOGOUT_OK
