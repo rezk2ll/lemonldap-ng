@@ -2,7 +2,7 @@
  <TMPL_IF NAME="imgUrl">
   <img src="<TMPL_VAR NAME="imgUrl">" />
  </TMPL_IF>
- <h3 trspan="oidcConsent,$display_name"></h3>
+ <h3 trspan="oidcConsent,<TMPL_VAR NAME="displayName">"></h3>
  <ul>
   <TMPL_LOOP NAME="list">
    <li>

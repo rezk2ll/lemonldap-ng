@@ -477,8 +477,9 @@ sub run {
                             $self->loadTemplate(
                                 'oidcGiveConsent',
                                 params => {
-                                    imgUrl => $imgSrc,
-                                    list   => \@list,
+                                    displayName => $display_name,
+                                    imgUrl      => $imgSrc,
+                                    list        => \@list,
                                 }
                             )
                         );
