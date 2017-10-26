@@ -113,6 +113,7 @@ sub _forAuthUser {
     if ( my $r = $req->param( 'issuerRequest' . $self->path ) ) {
         $self->restoreRequest( $req, $r );
     }
+    $req->urlNotBase64(1) if ( ref($self) =~ /::CAS$/ );
     return $self->p->do(
         $req,
         [
