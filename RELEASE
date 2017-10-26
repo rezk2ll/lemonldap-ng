@@ -29,6 +29,9 @@ $ make fr-doc
 - Update debian/changelog
   launch just `dch -r` and force save (":w" and ot ":x")
 
+- Check Debian packages quality
+$ cme check dpkg
+
 For minor release
 -----------------
 
