@@ -332,7 +332,6 @@ t/23-Auth-and-password-REST.t
 t/24-AuthApache.t
 t/24-AuthKerberos.t
 t/25-AuthSlave.t
-t/25-AutoSignin.t
 t/26-AuthRemote.t
 t/27-AuthProxy.t
 t/28-AuthChoice.t
@@ -391,6 +390,7 @@ t/61-GrantSession.t
 t/62-SingleSession.t
 t/63-History.t
 t/64-StayConnected.t
+t/65-AutoSignin.t
 t/90-Translations.t
 t/99-pod.t
 t/lmConf-1.js
