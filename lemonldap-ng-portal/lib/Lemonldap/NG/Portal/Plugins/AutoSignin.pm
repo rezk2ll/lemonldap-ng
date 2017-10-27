@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::AutoLogin;
+package Lemonldap::NG::Portal::Plugins::AutoSignin;
 
 use strict;
 use Mouse;
