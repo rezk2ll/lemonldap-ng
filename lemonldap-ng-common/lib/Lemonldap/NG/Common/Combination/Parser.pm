@@ -199,7 +199,7 @@ sub findB {
 sub buildSub {
     my ( $self, $cond ) = @_;
     my $safe = Safe->new;
-    my $res  = $safe->reval("sub{my(\$env)=@\_;return ($cond)}");
+    my $res  = $safe->reval("sub{my(\$env)=\@_;return ($cond)}");
     die "Bad condition $cond: $@" if ($@);
     return $res;
 }
