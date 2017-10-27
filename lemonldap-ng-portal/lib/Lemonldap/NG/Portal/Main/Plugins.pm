@@ -24,6 +24,7 @@ our @pList = (
     stayConnected              => '::Plugins::StayConnected',
     grantSessionRule           => '::Plugins::GrantSession',
     upgradeSession             => '::Plugins::Upgrade',
+    autoSigninRules            => '::Plugins::AutoSignin',
 );
 
 ##@method list enabledPlugins

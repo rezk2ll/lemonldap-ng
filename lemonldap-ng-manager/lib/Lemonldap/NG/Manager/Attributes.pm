@@ -604,6 +604,9 @@ sub attributes {
         'AuthLDAPFilter' => {
             'type' => 'text'
         },
+        'autoSigninRules' => {
+            'type' => 'keyTextContainer'
+        },
         'captcha_login_enabled' => {
             'default' => 0,
             'type'    => 'bool'

@@ -21,17 +21,16 @@ has rules => ( is => 'rw', default => sub { [] } );
 
 sub init {
     my ($self) = @_;
-    if ( my $rules = $self->conf->{autoLoginRules} ) {
+    if ( my $rules = $self->conf->{autoSigninRules} ) {
         my $safe = Safe->new;
-        foreach my $r ( sort keys %$rules ) {
-            my $sub = $safe->reval("sub{my(\$env)=\@_;return ($r)}");
+        foreach my $id ( sort keys %$rules ) {
+            my $sub = $safe->reval('sub{my($env)=@_;return ('.$rules->{$id}.')}');
             if ($@) {
-                $self->error(qq'Bad Autologin rule "$r": $@');
+                $self->error('Bad Autologin rule "'.$rules->{$id}.': $@');
                 return 0;
             }
-            my $name = $rules->{$r};
-            $name =~ s/^\s*([\w\-\@]+)\s*/$1/;
-            push @{ $self->rules }, [ $sub, $name ];
+            $id =~ s/^\s*([\w\-\@]+)\s*/$1/;
+            push @{ $self->rules }, [ $sub, $id ];
         }
     }
     return 1;
@@ -44,12 +43,14 @@ sub check {
 
     foreach ( @{ $self->rules } ) {
         my ( $test, $name ) = @$_;
+        $self->logger->debug("Autosignin: testing user $name");
         if ( $test->( $req->env ) ) {
             $req->user($name);
             my @steps =
               grep { !ref $_ and $_ !~ /^(?:extractFormInfo|authenticate)$/ }
               @{ $req->steps };
             $req->steps( \@steps );
+            $self->userLogger->notice("Autosignin for $name");
             return PE_OK;
         }
     }

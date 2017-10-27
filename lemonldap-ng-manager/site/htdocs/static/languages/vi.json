@@ -63,6 +63,8 @@
 "authorizedValues": "Các giá trị được ủy quyền",
 "authParams": "Thông số xác thực",
 "auto": "Tự động",
+"autoSignin": "Auto Signin",
+"autoSigninRules": "Rules",
 "backtoportal": "Quay lại cổng thông tin",
 "badCasProxyId": "Dịch vụ định danh đệm bởi CAS không hợp lệ",
 "badChoiceKey": "Tên khoá không hợp lệ trong trình đơn Chọn",

@@ -632,6 +632,11 @@ sub tree {
                         },
                         'upgradeSession',
                         {
+                            title => 'autoSignin',
+                            help  => 'autoSignin.html',
+                            nodes => ['autoSigninRules'],
+                        },
+                        {
                             title => 'u2f',
                             help  => 'u2f.html',
                             form  => 'simpleInputContainer',

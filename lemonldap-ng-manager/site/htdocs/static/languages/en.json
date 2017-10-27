@@ -63,6 +63,8 @@
 "authorizedValues": "Authorized values",
 "authParams": "Authentication parameters",
 "auto": "Automatic",
+"autoSignin": "Auto Signin",
+"autoSigninRules": "Rules",
 "backtoportal": "Back to portal",
 "badCasProxyId": "Bad CAS proxied service identifier",
 "badChoiceKey": "Bad key name in Choice menu",

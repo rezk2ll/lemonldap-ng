@@ -332,6 +332,7 @@ t/23-Auth-and-password-REST.t
 t/24-AuthApache.t
 t/24-AuthKerberos.t
 t/25-AuthSlave.t
+t/25-AutoSignin.t
 t/26-AuthRemote.t
 t/27-AuthProxy.t
 t/28-AuthChoice.t

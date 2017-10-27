@@ -63,6 +63,8 @@
 "authorizedValues": "القيم المعتمدة",
 "authParams": "معايير إثبات الهوية",
 "auto": "تلقائي",
+"autoSignin": "Auto Signin",
+"autoSigninRules": "Rules",
 "backtoportal": "العودة إلى البوابة",
 "badCasProxyId": "معرف خدمة بروكسي كاس غير صالح",
 "badChoiceKey": "اسم مفتاح سيئ في قائمة الاختيارات",

@@ -63,6 +63,8 @@
 "authorizedValues": "Valori autorizzati",
 "authParams": "Parametri di autenticazione",
 "auto": "Automatico",
+"autoSignin": "Auto Signin",
+"autoSigninRules": "Rules",
 "backtoportal": "Torna al portale",
 "badCasProxyId": "Identificatore di servizio difettoso CAS proxy",
 "badChoiceKey": "Nome chiave errato nel menu Scelta",

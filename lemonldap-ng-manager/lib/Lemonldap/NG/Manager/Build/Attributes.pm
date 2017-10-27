@@ -1108,6 +1108,12 @@ sub attributes {
               'List of attributes to export by SOAP or REST servers',
         },
 
+        # AutoSignin
+        autoSigninRules => {
+            type          => 'keyTextContainer',
+            documentation => 'List of auto signin rules',
+        },
+
         ## Virtualhosts
 
         # Fake attribute: used by manager REST API to agglomerate all other
@@ -1145,7 +1151,7 @@ sub attributes {
                 },
                 msgFail => '__badExpression__',
             },
-            keyTest    => qr/^(?:\*\.)?$Regexp::Common::URI::RFC2396::hostname$/,
+            keyTest => qr/^(?:\*\.)?$Regexp::Common::URI::RFC2396::hostname$/,
             keyMsgFail => '__badHostname__',
             default    => {
                 default => 'deny',
@@ -1153,9 +1159,9 @@ sub attributes {
             documentation => 'Virtualhost rules',
         },
         exportedHeaders => {
-            type       => 'keyTextContainer',
-            help       => 'writingrulesand_headers.html#headers',
-            keyTest    => qr/^(?:\*\.)?$Regexp::Common::URI::RFC2396::hostname$/,
+            type    => 'keyTextContainer',
+            help    => 'writingrulesand_headers.html#headers',
+            keyTest => qr/^(?:\*\.)?$Regexp::Common::URI::RFC2396::hostname$/,
             keyMsgFail => '__badHostname__',
             test       => {
                 keyTest    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
@@ -1174,10 +1180,10 @@ sub attributes {
             documentation => 'Virtualhost headers',
         },
         post => {
-            type          => 'postContainer',
-            help          => 'formreplay.html',
-            test          => sub { 1 },
-            keyTest       => qr/^(?:\*\.)?$Regexp::Common::URI::RFC2396::hostname$/,
+            type    => 'postContainer',
+            help    => 'formreplay.html',
+            test    => sub { 1 },
+            keyTest => qr/^(?:\*\.)?$Regexp::Common::URI::RFC2396::hostname$/,
             keyMsgFail    => '__badHostname__',
             documentation => 'Virtualhost urls/Datas to post',
         },

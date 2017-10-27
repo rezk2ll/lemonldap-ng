@@ -334,10 +334,12 @@ sub _get {
               'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
             'PATH_INFO' => $path,
             ( $args{referer} ? ( REFERER => $args{referer} ) : () ),
-            'REMOTE_ADDR' => '127.0.0.1',
             (
-                $args{remote_user}
-                ? ( 'REMOTE_USER' => $args{remote_user} )
+                $args{ip} ? ( 'REMOTE_ADDR' => $args{ip} )
+                : ( 'REMOTE_ADDR' => '127.0.0.1' )
+            ),
+            (
+                $args{remote_user} ? ( 'REMOTE_USER' => $args{remote_user} )
                 : ()
             ),
             'REQUEST_METHOD' => $args{method} || 'GET',
