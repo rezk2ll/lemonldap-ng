@@ -678,7 +678,6 @@ sub extractFormInfo {
 
             # Send response depending on request method
             # HTTP-REDIRECT
-            no strict 'subs';
             if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
 
                 # Redirect user to response URL
@@ -928,7 +927,6 @@ sub extractFormInfo {
 
     # If no method defined, get first HTTP method
     unless ( defined $method ) {
-        no strict 'subs';
         my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_SIGN_ON;
         $method =
           $self->getFirstHttpMethod( $self->lassoServer, $idp, $protocolType );
@@ -1227,7 +1225,6 @@ sub authLogout {
     $method = $self->getHttpMethod($method);
 
     # If no method defined, get first HTTP method
-    no strict 'subs';
     unless ( defined $method ) {
         my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
         $method =
