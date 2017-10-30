@@ -18,11 +18,12 @@ init();
 ok(
     $app->init(
         {
-            configStorage => { type => 'File', dirName => 't' },
-            logLevel      => 'warn',
-            cookieName    => 'lemonldap',
-            securedCookie => 0,
-            https         => 0,
+            configStorage       => { type => 'File', dirName => 't' },
+            localSessionStorage => '',
+            logLevel            => 'warn',
+            cookieName          => 'lemonldap',
+            securedCookie       => 0,
+            https               => 0,
         }
     ),
     'initialization'
