@@ -306,7 +306,6 @@ sub op {
                 oidcOPMetaDataOptions           => {},
                 oidcOPMetaDataJSON              => {},
                 oidcOPMetaDataJWKS              => {},
-                oidcStorageOptions              => {},
                 oidcServiceMetaDataAuthnContext => {
                     'loa-4' => 4,
                     'loa-1' => 1,
