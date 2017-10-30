@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Auth::Demo;
+package Lemonldap::NG::Portal::Auth::Twitter;
 
 use strict;
 use Mouse;
