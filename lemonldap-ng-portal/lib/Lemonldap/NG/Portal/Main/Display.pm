@@ -470,8 +470,17 @@ sub mkOidcConsent {
         'oidcConsents',
         params => {
             partners => [
-                map { { name => $_ } }
-                  ( split /,/, $session->{_oidcConnectedRP} )
+                map {
+                          $self->conf->{oidcRPMetaDataOptions}
+                      and $self->conf->{oidcRPMetaDataOptions}->{$_}
+                      ? {
+                        name => $_,
+                        displayName =>
+                          $self->conf->{oidcRPMetaDataOptions}->{$_}
+                          ->{oidcRPMetaDataOptionsDisplayName},
+                      }
+                      : ()
+                } ( split /,/, $session->{_oidcConnectedRP} )
             ],
             consents => $session->{_oidcConnectedRP},
         }
