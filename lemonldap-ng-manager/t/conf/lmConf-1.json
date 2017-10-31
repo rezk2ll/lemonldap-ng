@@ -109,6 +109,7 @@
   "globalStorage": "Apache::Session::File",
   "globalStorageOptions": {
     "Directory": "t/sessions",
+    "LockDirectory": "t/sessions",
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
   "groups": {},
@@ -139,7 +140,8 @@
   "passwordDB": "Demo",
   "persistentStorage": "Apache::Session::File",
   "persistentStorageOptions": {
-    "Directory": "__PSESSIONDIR__"
+    "Directory": "t/sessions",
+    "LockDirectory": "t/sessions"
   },
   "portal": "http://auth.example.com/",
   "reloadUrls": {},

@@ -19,7 +19,8 @@ sub newSession {
             {
                 storageModule        => 'Apache::Session::File',
                 storageModuleOptions => {
-                    Directory => 't/sessions',
+                    Directory     => 't/sessions',
+                    LockDirectory => 't/sessions',
                     generateModule =>
 'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
                 },
@@ -127,7 +128,7 @@ $res = &client->jsonResponse( '/sessions/global', 'orderBy=uid' );
 ok( $res->{values}->[0]->{uid} eq 'dwho',  '1st user is dwho' );
 ok( $res->{values}->[1]->{uid} eq 'dwho2', '2nd user is dwho2' );
 ok( $res->{values}->[2]->{uid} eq 'foo',   '3rd user is foo' );
-ok( $res->{values}->[3]->{uid} eq 'foo',   '4rd user is foo' );
+ok( $res->{values}->[3]->{uid} eq 'foo',   '4th user is foo' );
 count(4);
 
 # IPv4 networks
@@ -145,7 +146,7 @@ ok( $res->{count} == 4,                        '4 sessions ordered' );
 ok( $res->{values}->[0]->{session} eq $ids[1], '1st is id[1]' );
 ok( $res->{values}->[1]->{session} eq $ids[2], '2nd is id[2]' );
 ok( $res->{values}->[2]->{session} eq $ids[3], '3rd is id[3]' );
-ok( $res->{values}->[3]->{session} eq $ids[0], '4rd is id[0]' );
+ok( $res->{values}->[3]->{session} eq $ids[0], '4th is id[0]' );
 count(5);
 
 #print STDERR Dumper($res);
@@ -161,7 +162,7 @@ foreach (@ids) {
 }
 
 opendir D, 't/sessions' or die 'Unknown dir';
-my @files = grep { not /^\./ } readdir D;
+my @files = grep { not /(?:^\.|.lock$)/ } readdir D;
 ok( @files == 0, "Session directory is empty" );
 count(1);
 
