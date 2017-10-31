@@ -1,0 +1,284 @@
+use Test::More;    # skip_all => 'CAS is in rebuild';
+use strict;
+use IO::String;
+use MIME::Base64;
+
+BEGIN {
+    require 't/test-lib.pm';
+}
+eval { unlink 't/userdb.db' };
+
+my $mainTests = 14;
+my $debug     = 'error';
+my ( $issuer, $sp, $res );
+my %handlerOR = ( issuer => [], sp => [] );
+
+no warnings 'redefine';
+
+SKIP: {
+    eval { require DBI; require DBD::SQLite; };
+    if ($@) {
+        skip 'DBD::SQLite not found', $mainTests;
+    }
+    my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
+    $dbh->do(
+'CREATE TABLE users (user text,password text,name text,uid text,cn text,mail text)'
+    );
+    $dbh->do(
+"INSERT INTO users VALUES ('dwho','dwho','Doctor who','dwho','Doctor who','dwho\@badwolf.org')"
+    );
+
+    ok( $issuer = issuer(), 'Issuer portal' );
+    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
+    switch ('sp');
+
+    ok( $sp = sp(), 'SP portal' );
+    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
+
+    # Simple SP access
+    ok(
+        $res = $sp->_get(
+            '/', accept => 'text/html',
+        ),
+        'Unauth SP request'
+    );
+    ok( expectCookie( $res, 'llngcasserver' ) eq 'idp',
+        'Get CAS server cookie' );
+    expectRedirection( $res,
+        'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
+
+    # Query IdP
+    switch ('issuer');
+    ok(
+        $res = $issuer->_get(
+            '/cas/login',
+            query  => 'service=http://auth.sp.com/',
+            accept => 'text/html'
+        ),
+        'Query CAS server'
+    );
+    expectOK($res);
+
+    # Try to authenticate to IdP
+    my $body = $res->[2]->[0];
+    $body =~ s/^.*?<form.*?>//s;
+    $body =~ s#</form>.*$##s;
+    my %fields =
+      ( $body =~ /<input type="hidden".+?name="(.+?)".+?value="(.*?)"/sg );
+    $fields{user} = $fields{password} = 'dwho';
+    $fields{test} = 'sql';
+    use URI::Escape;
+    my $s = join( '&', map { "$_=" . uri_escape( $fields{$_} ) } keys %fields );
+    ok(
+        $res = $issuer->_post(
+            '/cas/login',
+            IO::String->new($s),
+            accept => 'text/html',
+            length => length($s),
+        ),
+        'Post authentication'
+    );
+    my ($query) =
+      expectRedirection( $res, qr#^http://auth.sp.com/\?(ticket=[^&]+)$# );
+    my $idpId = expectCookie($res);
+
+    # Back to SP
+    switch ('sp');
+    ok(
+        $res = $sp->_get(
+            '/',
+            query  => $query,
+            accept => 'text/html',
+            cookie => 'llngcasserver=idp',
+        ),
+        'Query SP with ticket'
+    );
+    my $spId = expectCookie($res);
+
+    # Test authentication
+    ok(
+        $res = $sp->_get( '/', cookie => "lemonldap=$spId,llngcasserver=idp" ),
+        'Get / on SP'
+    );
+    expectOK($res);
+    expectAuthenticatedAs( $res, 'dwho' );
+
+    # Logout initiated by SP
+    ok(
+        $res = $sp->_get(
+            '/',
+            query  => 'logout',
+            cookie => "lemonldap=$spId,llngcasserver=idp",
+            accept => 'text/html'
+        ),
+        'Query SP for logout'
+    );
+    expectOK($res);
+    ok(
+        $res->[2]->[0] =~
+          m#iframe src="http://auth.idp.com(/cas/logout)\?(.+?)"#s,
+        'Found iframe'
+    );
+
+    # Query IdP with iframe src
+    my $url = $1;
+    $query = $2;
+    ok(
+        getHeader( $res, 'Content-Security-Policy' ) =~
+          /child-src auth.idp.com/,
+        'Frame is authorizated'
+      )
+      or explain( $res->[1],
+        'Content-Security-Policy => ...child-src auth.idp.com' );
+
+    switch ('issuer');
+    ok(
+        $res = $issuer->_get(
+            $url,
+            query  => $query,
+            accept => 'text/html',
+            cookie => "lemonldap=$idpId"
+        ),
+        'Get iframe from IdP'
+    );
+    expectRedirection( $res, 'http://auth.sp.com/?logout' );
+
+    # Verify that user has been disconnected
+    ok( $res = $issuer->_get( '/', cookie => "lemonldap=$idpId" ),
+        'Query IdP' );
+    expectReject($res);
+
+    switch ('sp');
+    ok(
+        $res = $sp->_get(
+            '/',
+            accept => 'text/html',
+            cookie => "lemonldap=$idpId,llngcasserver=idp"
+        ),
+        'Query IdP'
+    );
+    expectRedirection( $res,
+        'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
+
+    clean_sessions();
+}
+
+count($mainTests);
+eval { unlink 't/userdb.db' };
+done_testing( count() );
+
+# Redefine LWP methods for tests
+no warnings 'redefine';
+
+sub LWP::UserAgent::request {
+    my ( $self, $req ) = @_;
+    ok( $req->uri =~ m#http://auth.((?:id|s)p).com([^\?]*)(?:\?(.*))?$#,
+        ' Request to ' . $req->uri );
+    my $host  = $1;
+    my $url   = $2;
+    my $query = $3;
+    my $res;
+    my $client = ( $host eq 'idp' ? $issuer : $sp );
+    if ( $req->method eq 'POST' ) {
+        my $s = $req->content;
+        ok(
+            $res = $client->_post(
+                $url, IO::String->new($s),
+                length => length($s),
+                query  => $query,
+                type   => 'application/xml',
+            ),
+            " Execute POST request to $url"
+        );
+    }
+    else {
+        ok(
+            $res = $client->_get(
+                $url,
+                type  => 'application/xml',
+                query => $query,
+            ),
+            " Execute request to $url"
+        );
+    }
+    expectOK($res);
+    ok( getHeader( $res, 'Content-Type' ) =~ m#xml#, 'Content is XML' )
+      or explain( $res->[1], 'Content-Type => application/xml' );
+    my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
+
+    while ( my $name = shift @{ $res->[1] } ) {
+        $httpResp->header( $name, shift( @{ $res->[1] } ) );
+    }
+    $httpResp->content( join( '', @{ $res->[2] } ) );
+    count(3);
+    return $httpResp;
+}
+
+sub switch {
+    my $type = shift;
+    @Lemonldap::NG::Handler::Main::_onReload = @{
+        $handlerOR{$type};
+    };
+}
+
+sub issuer {
+    return LLNG::Manager::Test->new(
+        {
+            ini => {
+                logLevel          => $debug,
+                templatesDir      => 'site/htdocs/static',
+                domain            => 'idp.com',
+                portal            => 'http://auth.idp.com',
+                authentication    => 'Choice',
+                userDB            => 'Same',
+                authChoiceParam   => 'test',
+                authChoiceModules => {
+                    demo => 'Demo;Demo;Demo',
+                    sql  => 'DBI;DBI;DBI',
+                },
+                dbiAuthChain           => 'dbi:SQLite:dbname=t/userdb.db',
+                dbiAuthUser            => '',
+                dbiAuthPassword        => '',
+                dbiAuthTable           => 'users',
+                dbiAuthLoginCol        => 'user',
+                dbiAuthPasswordCol     => 'password',
+                dbiAuthPasswordHash    => '',
+                issuerDBCASActivation  => 1,
+                casAttr                => 'uid',
+                casAttributes          => { cn => 'cn', uid => 'uid', },
+                casAccessControlPolicy => 'none',
+                multiValuesSeparator   => ';',
+            }
+        }
+    );
+}
+
+sub sp {
+    return LLNG::Manager::Test->new(
+        {
+            ini => {
+                logLevel                   => $debug,
+                domain                     => 'sp.com',
+                portal                     => 'http://auth.sp.com',
+                authentication             => 'CAS',
+                userDB                     => 'CAS',
+                restSessionServer          => 1,
+                issuerDBCASActivation      => 0,
+                multiValuesSeparator       => ';',
+                casSrvMetaDataExportedVars => {
+                    idp => {
+                        cn   => 'cn',
+                        mail => 'mail',
+                        uid  => 'uid',
+                    }
+                },
+                casSrvMetaDataOptions => {
+                    idp => {
+                        casSrvMetaDataOptionsUrl => 'http://auth.idp.com/cas',
+                        casSrvMetaDataOptionsGateway => 0,
+                    }
+                },
+            },
+        }
+    );
+}
