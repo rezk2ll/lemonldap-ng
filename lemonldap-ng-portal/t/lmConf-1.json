@@ -22,6 +22,7 @@
   },
   "exportedVars": {
     "mail": "mail",
+    "uid": "uid",
     "cn": "cn"
   },
   "globalStorage": "Apache::Session::File",
