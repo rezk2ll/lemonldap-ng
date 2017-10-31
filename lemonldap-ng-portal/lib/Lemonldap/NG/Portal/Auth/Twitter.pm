@@ -5,6 +5,8 @@ use Mouse;
 use URI::Escape;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
 
+extends 'Lemonldap::NG::Portal::Auth::Base';
+
 our $VERSION = '2.0.0';
 
 # INITIALIZATION
