@@ -162,12 +162,12 @@ sub openIDServer {
                 return 1;
             }
             elsif ( $req->param("confirm") and $req->param("confirm") == 1 ) {
-                $self->p->updatePersistentSession(
+                $self->p->updatePersistentSession( $req,
                     { "_openidTrust$trust_root" => 1 } );
                 return 1;
             }
             elsif ( $req->param("confirm") and $req->param("confirm") == -1 ) {
-                $self->p->updatePersistentSession(
+                $self->p->updatePersistentSession( $req,
                     { "_openidTrust$trust_root" => 0 } );
                 return 0;
             }

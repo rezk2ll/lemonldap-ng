@@ -24,7 +24,7 @@ sub sregHook {
         $h{$_} = undef foreach (
             qw(fullname nickname language postcode timezone country gender email dob)
         );
-        $self->p->updatePersistentSession( \%h );
+        $self->p->updatePersistentSession( $req, \%h );
         return 0;
     }
 
@@ -166,7 +166,7 @@ sub sregHook {
             $ag{$k} = 0;
         }
     }
-    $self->p->updatePersistentSession( \%toStore ) if (%toStore);
+    $self->p->updatePersistentSession( $req, \%toStore ) if (%toStore);
 
     # Check if user has agreed request
     if ($accepted) {

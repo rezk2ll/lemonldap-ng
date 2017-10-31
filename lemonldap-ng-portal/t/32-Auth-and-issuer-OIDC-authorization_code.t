@@ -185,7 +185,33 @@ ok(
     'Test if user is reject on SP'
 );
 count(1);
-expectRedirection( $res, qr#^http://auth.op.com/oauth2/authorize# );
+( $url, $query ) =
+  expectRedirection( $res, qr#^http://auth.op.com(/oauth2/authorize)\?(.*)$# );
+
+# Test if consent was saved
+# -------------------------
+
+# Push request to OP
+switch ('op');
+ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
+    "Push request to OP,         endpoint $url" );
+count(1);
+expectOK($res);
+
+# Try to authenticate to OP
+$query = "user=french&password=french&$query";
+ok(
+    $res = $op->_post(
+        $url,
+        IO::String->new($query),
+        accept => 'text/html',
+        length => length($query),
+    ),
+    "Post authentication,        endpoint $url"
+);
+count(1);
+$idpId = expectCookie($res);
+expectRedirection( $res, qr#^http://auth.rp.com/# );
 
 #print STDERR Dumper($res);
 

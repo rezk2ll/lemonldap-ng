@@ -384,15 +384,17 @@ sub run {
                     }
 
                     # Check prompt parameter
-                    $ask_for_consent = 1 if ( $prompt =~ /\bconsent\b/ );
+                    $ask_for_consent = 1
+                      if ( $prompt and $prompt =~ /\bconsent\b/ );
                 }
                 if ($ask_for_consent) {
                     if (    $req->param('confirm')
                         and $req->param('confirm') == 1 )
                     {
-                        $self->p->updatePersistentSession(
+                        $self->p->updatePersistentSession( $req,
                             { "_oidc_consent_time_$rp" => time } );
                         $self->p->updatePersistentSession(
+                            $req,
                             {
                                 "_oidc_consent_scope_$rp" =>
                                   $oidc_request->{'scope'}
