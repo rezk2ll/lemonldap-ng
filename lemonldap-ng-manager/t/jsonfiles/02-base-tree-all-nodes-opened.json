@@ -1262,7 +1262,7 @@
           "title": "Directory",
           "type": "keyText"
         }, {
-          "data": "/var/lib/lemonldap-ng/sessions/lock/",
+          "data": "t/sessions",
           "id": "globalStorageOptions/LockDirectory",
           "title": "LockDirectory",
           "type": "keyText"
@@ -1280,6 +1280,11 @@
           "title": "Directory",
           "type": "keyText",
           "id": "globalStorageOptions/Directory"
+        }, {
+          "data": "t/sessions",
+          "title": "LockDirectory",
+          "type": "keyText",
+          "id": "globalStorageOptions/LockDirectory"
         }, {
           "data": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256",
           "type": "keyText",
@@ -1348,7 +1353,12 @@
           "title": "Directory",
           "id": "persistentStorageOptions/Directory",
           "type": "keyText",
-          "data": "__PSESSIONDIR__"
+          "data": "t/sessions"
+	}, {
+          "data": "t/sessions",
+          "id": "persistentStorageOptions/LockDirectory",
+          "title": "LockDirectory",
+          "type": "keyText"
         }]
       }]
     }]

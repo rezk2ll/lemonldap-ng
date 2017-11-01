@@ -1109,7 +1109,7 @@
           "title": "Directory",
           "type": "keyText"
         }, {
-          "data": "/var/lib/lemonldap-ng/sessions/lock/",
+          "data": "t/sessions",
           "id": "globalStorageOptions/LockDirectory",
           "title": "LockDirectory",
           "type": "keyText"
