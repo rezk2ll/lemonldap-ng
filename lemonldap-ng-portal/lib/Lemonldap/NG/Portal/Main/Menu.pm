@@ -31,6 +31,8 @@ has menuModules => (
     }
 );
 
+has specific => ( is => 'rw', default => sub { {} } );
+
 has imgPath => (
     is      => 'rw',
     lazy    => 1,
@@ -419,10 +421,17 @@ sub _filterHash {
             next if ( $appdisplay =~ /^(yes|on)$/ );
 
             my $cond = undef;
+
+            # If a specific rule exists, get it from cache or compile it
             if ( $appdisplay !~ /^auto$/i ) {
-                $cond =
-                  $self->p->HANDLER->buildSub(
-                    $self->p->HANDLER->substitute($appdisplay) );
+                if ( $self->specific->{$appuri} ) {
+                    $cond = $self->specific->{$appuri};
+                }
+                else {
+                    $cond = $self->specific->{$appuri} =
+                      $self->p->HANDLER->buildSub(
+                        $self->p->HANDLER->substitute($appdisplay) );
+                }
             }
 
             # Check grant function if display is "auto" (this is the default)
