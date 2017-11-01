@@ -18,13 +18,13 @@ sub init {
 sub confirm {
     my ( $self, $req, $pwd ) = @_;
     $self->checkChoice($req) or return PE_ERROR;
-    return $req->datas->{enabledMod2}->[0]->confirm( $req, $pwd );
+    return $req->datas->{enabledMods2}->[0]->confirm( $req, $pwd );
 }
 
 sub modifyPassword {
     my ( $self, $req, $pwd ) = @_;
     $self->checkChoice($req) or return PE_ERROR;
-    return $req->datas->{enabledMod2}->[0]->modifyPassword( $req, $pwd );
+    return $req->datas->{enabledMods2}->[0]->modifyPassword( $req, $pwd );
 }
 
 1;
