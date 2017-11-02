@@ -831,7 +831,7 @@ sub attributes {
         # OpenID-Connect issuer
         issuerDBOpenIDConnectActivation => {
             type          => 'bool',
-            default       => '0',
+            default       => 0,
             documentation => 'OpenID Connect server activation',
         },
         issuerDBOpenIDConnectPath => {
@@ -848,7 +848,7 @@ sub attributes {
         # GET issuer
         issuerDBGetActivation => {
             type          => 'bool',
-            default       => '0',
+            default       => 0,
             documentation => 'Get issuer activation',
         },
         issuerDBGetPath => {
@@ -999,6 +999,11 @@ sub attributes {
             default       => 0,
             type          => 'int',
             documentation => 'Register session timeout',
+        },
+        registerUrl => {
+            type          => 'text',
+            default       => 'http://auth.example.com/register.pl',
+            documentation => 'URL of register page',
         },
 
         # Upgrade session
@@ -2602,22 +2607,22 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         oidcServiceAllowDynamicRegistration => {
             type          => 'bool',
-            default       => '0',
+            default       => 0,
             documentation => 'OpenID Connect allow dynamic client registration',
         },
         oidcServiceAllowAuthorizationCodeFlow => {
             type          => 'bool',
-            default       => '1',
+            default       => 1,
             documentation => 'OpenID Connect allow authorization code flow',
         },
         oidcServiceAllowImplicitFlow => {
             type          => 'bool',
-            default       => '0',
+            default       => 0,
             documentation => 'OpenID Connect allow implicit flow',
         },
         oidcServiceAllowHybridFlow => {
             type          => 'bool',
-            default       => '0',
+            default       => 0,
             documentation => 'OpenID Connect allow hybrid flow',
         },
         oidcStorage        => { type => 'PerlModule', },

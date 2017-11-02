@@ -618,6 +618,7 @@
 "registerDB": "الوحدات",
 "registerDoneSubject": "عنوان البريد الذي تم القيام به",
 "registerTimeout": "مدة صلاحية طلب التسجيل",
+"registerUrl": "Page URL",
 "reloadUrls": "إعادة تحميل الإعدادات",
 "remoteCookieName": "اسم ملف تعريف الارتباط",
 "remoteGlobalStorage": "وحدة الجلسات",
