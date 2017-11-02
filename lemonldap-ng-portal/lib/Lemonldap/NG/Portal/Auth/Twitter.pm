@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Auth::Twitter;
 use strict;
 use Mouse;
 use URI::Escape;
+use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
 
 extends 'Lemonldap::NG::Portal::Auth::Base';
@@ -38,6 +39,19 @@ has twitterAccessTokenURL => (
     }
 );
 
+# return LWP::UserAgent object
+has ua => (
+    is      => 'rw',
+    lazy    => 1,
+    builder => sub {
+
+        # TODO : LWP options to use a proxy for example
+        my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
+        $ua->env_proxy();
+        return $ua;
+    }
+);
+
 sub init {
     my ($self) = @_;
     unless ( $self->conf->{twitterKey} and $self->conf->{twitterSecret} ) {
@@ -64,7 +78,7 @@ sub extractFormInfo {
         $self->logger->debug('Redirection to Twitter');
 
         # 1.1 Try to get token to dialog with Twitter
-        my $callback_url = $self->url();
+        my $callback_url = $self->p->fullUrl($req);
 
         # Twitter callback parameter
         $callback_url .=
@@ -121,7 +135,7 @@ sub extractFormInfo {
 
             # 1.2 Store token key and secret in cookies (available 180s)
             $req->addCookie(
-                $self->cookie(
+                $self->p->cookie(
                     name    => '_twitSec',
                     value   => $response->token_secret,
                     max_age => 180,
@@ -129,10 +143,13 @@ sub extractFormInfo {
             );
 
             # 1.3 Redirect user to Twitter
-            my $authorize_url =
-              $self->twitterAuthorizeURL . "?oauth_token=" . $response->token;
-            $self->redirect( -uri => $authorize_url );
-            $self->quit();
+            $req->urldc( $self->twitterAuthorizeURL
+                  . "?oauth_token="
+                  . $response->token );
+            $self->logger->debug( "Redirect user to " . $req->{urldc} );
+            $req->continue(1);
+            $req->steps( [] );
+            return PE_OK;
         }
         else {
             $self->logger->error(
@@ -161,7 +178,7 @@ sub extractFormInfo {
         signature_method => 'HMAC-SHA1',
         verifier         => $verifier,
         token            => $request_token,
-        token_secret     => $self->cookie('_twitSec'),
+        token_secret     => $self->p->cookie( name => '_twitSec' ),
         timestamp        => time,
         nonce            => $nonce,
     );
@@ -203,7 +220,7 @@ sub extractFormInfo {
 
     # Clean temporaries cookies
     $req->addCookie(
-        $self->cookie(
+        $self->p->cookie(
             name    => '_twitSec',
             value   => 0,
             expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
