@@ -1002,7 +1002,7 @@ sub attributes {
         },
         registerUrl => {
             type          => 'text',
-            default       => 'http://auth.example.com/register.pl',
+            default       => 'http://auth.example.com/register',
             documentation => 'URL of register page',
         },
 
