@@ -38,7 +38,14 @@ sub extractFormInfo {
 
     # 1.1 Good responses
     if ( my $code = $req->param('code') ) {
-        if ( my $access_token = $fb->get_access_token( code => $code ) ) {
+        $self->logger->debug("Get code $code from Facebook");
+        my $access_token;
+        eval { $access_token = $fb->get_access_token( code => $code ); };
+        if ($@) {
+            $self->logger->error("Error while getting access token: $@");
+            return PE_ERROR;
+        }
+        if ($access_token) {
             $req->{sessionInfo}->{_facebookToken} = $access_token;
 
      # Get mandatory fields (see https://developers.facebook.com/tools/explorer)
@@ -79,11 +86,12 @@ sub extractFormInfo {
                 return PE_ERROR;
             }
 
-            # Use id fieldto trace user
-            unless ( $req->{user} = $datas->{id} ) {
+            # Use id field to trace user
+            unless ( $datas->{id} ) {
                 $self->logger->error('Unable to get Facebook id');
                 return PE_ERROR;
             }
+            $req->user( $datas->{id} );
             $req->datas->{_facebookDatas} = $datas;
 
             # Force redirection to avoid displaying Oauth datas
@@ -110,6 +118,8 @@ sub extractFormInfo {
         display => 'page',
     );
     $req->urldc($check_url);
+    $self->logger->debug( "Redirect user to " . $req->{urldc} );
+    $req->continue(1);
     $req->steps( [] );
     PE_OK;
 }
