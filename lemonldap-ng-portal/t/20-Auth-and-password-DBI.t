@@ -31,13 +31,14 @@ SKIP: {
                 dbiAuthLoginCol          => 'user',
                 dbiAuthPasswordCol       => 'password',
                 dbiAuthPasswordHash      => '',
+                dbiDynamicHashEnabled    => 0,
                 passwordDB               => 'DBI',
                 portalRequireOldPassword => 1,
             }
         }
     );
 
-    # Try yo authenticate
+    # Try to authenticate
     # -------------------
     ok(
         $res = $client->_post(
