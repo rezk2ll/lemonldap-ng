@@ -81,7 +81,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $mainTests = 3;
+my $mainTests = 6;
 
 eval { unlink 't/userdb.db' };
 
@@ -164,7 +164,42 @@ SKIP: {
     );
     expectOK($res);
     $id = expectCookie($res);
+
+    # Try to modify password
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new(
+                'oldpassword=secret3&newpassword=secret4&confirmpassword=secret4'),
+            cookie => "lemonldap=$id",
+            accept => 'application/json',
+            length => 63
+        ),
+        'Change password'
+    );
+    expectOK($res);
     $client->logout($id);
+
+    # Try to authenticate against new salted password
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=jsmith&password=secret4'),
+            length => 28
+        ),
+        'Authentication against newly-modified password'
+    );
+    expectOK($res);
+    my $id = expectCookie($res);
+
+    # Verify that password is hashed with correct scheme (dbiDynamicHashNewPasswordScheme)
+    my $sth = $dbh->prepare("SELECT password FROM users WHERE user='jsmith';");
+    $sth->execute();
+    my $row = $sth->fetchrow_array;
+    ok(
+        $row =~ /^{ssha256}/,
+        'Verify that password is hashed with correct scheme'
+    );
 
     clean_sessions();
 }
