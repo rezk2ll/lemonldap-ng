@@ -170,7 +170,8 @@ SKIP: {
         $res = $client->_post(
             '/',
             IO::String->new(
-                'oldpassword=secret3&newpassword=secret4&confirmpassword=secret4'),
+'oldpassword=secret3&newpassword=secret4&confirmpassword=secret4'
+            ),
             cookie => "lemonldap=$id",
             accept => 'application/json',
             length => 63
@@ -183,8 +184,7 @@ SKIP: {
     # Try to authenticate against new salted password
     ok(
         $res = $client->_post(
-            '/',
-            IO::String->new('user=jsmith&password=secret4'),
+            '/', IO::String->new('user=jsmith&password=secret4'),
             length => 28
         ),
         'Authentication against newly-modified password'
@@ -192,14 +192,12 @@ SKIP: {
     expectOK($res);
     my $id = expectCookie($res);
 
-    # Verify that password is hashed with correct scheme (dbiDynamicHashNewPasswordScheme)
+# Verify that password is hashed with correct scheme (dbiDynamicHashNewPasswordScheme)
     my $sth = $dbh->prepare("SELECT password FROM users WHERE user='jsmith';");
     $sth->execute();
     my $row = $sth->fetchrow_array;
-    ok(
-        $row =~ /^{ssha256}/,
-        'Verify that password is hashed with correct scheme'
-    );
+    ok( $row =~ /^{ssha256}/,
+        'Verify that password is hashed with correct scheme' );
 
     clean_sessions();
 }
