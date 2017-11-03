@@ -1063,7 +1063,7 @@ sub soapSloServer {
         my $session_index;
         eval { $session_index = $logout->request()->SessionIndex; };
 
-        # SLO requests without session index are not accepted
+        # SLO requests without session index are not accepted in SOAP mode
         unless ( defined $session_index ) {
             $self->p->sendError( $req,
                 "No session index in SLO request from $spConfKey SP", 400 );
@@ -1413,24 +1413,29 @@ sub sloServer {
 
         eval { $session_index = $logout->request()->SessionIndex; };
 
-        # SLO requests without session index are not accepted
+        # SLO requests without session index can be accepted
         unless ( defined $session_index ) {
-            $self->logger->error(
+            $self->logger->warn(
                 "No session index in SLO request from $spConfKey SP");
-            return $self->sendSLOErrorResponse( $logout, $method );
         }
 
-        my $sessionIndexSession = $self->getSamlSession($session_index);
-        return PE_SAML_SESSION_ERROR unless $sessionIndexSession;
+        if ($session_index) {
+            my $sessionIndexSession = $self->getSamlSession($session_index);
+            return PE_SAML_SESSION_ERROR unless $sessionIndexSession;
 
-        $local_session_id = $sessionIndexSession->data->{_saml_id};
+            $local_session_id = $sessionIndexSession->data->{_saml_id};
 
-        $sessionIndexSession->remove;
+            $sessionIndexSession->remove;
 
-        $self->logger->debug(
+            $self->logger->debug(
 "Get session id $local_session_id (from session index $session_index)"
-        );
-
+            );
+        }
+        else {
+            $local_session_id = $req->id;
+            $self->logger->debug(
+                "Get session id $local_session_id (from cookie)" );
+        }
         if ( $req->{sessionInfo} ) {
             $session  = $req->{sessionInfo}->{_lassoSessionDump};
             $identity = $req->{sessionInfo}->{_lassoIdentityDump};
