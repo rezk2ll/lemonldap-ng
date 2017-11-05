@@ -2,7 +2,7 @@
 # It may be included only by batch files, never in portal or handler chain
 # for performances reasons
 
-# DON'T FORGET TO RUN jsongenerator.pl AFTER EACH CHANGE
+# DON'T FORGET TO RUN "make json" AFTER EACH CHANGE
 
 package Lemonldap::NG::Manager::Build::Attributes;
 

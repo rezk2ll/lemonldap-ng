@@ -10,7 +10,7 @@
 #
 # All other ideas have to be set in Manager/Build/Attributes.pm !
 
-# DON'T FORGET TO RUN jsongenerator.pl AFTER EACH CHANGE
+# DON'T FORGET TO RUN "make json" AFTER EACH CHANGE
 
 package Lemonldap::NG::Manager::Build::CTrees;
 
