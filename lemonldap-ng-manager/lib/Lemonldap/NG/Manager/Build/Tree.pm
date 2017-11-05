@@ -7,6 +7,10 @@
 #
 # Conf parameters are just strings in the `nodes` array
 #
+# Important point: fields preceded by '*' are downloaded during manager
+# initialization and available directly in $scope array. Example: '*portal'
+# implies that portal value is available in $scope.portal
+#
 # All other ideas have to be set in Manager/Build/Attributes.pm !
 
 # DON'T FORGET TO RUN "make json" AFTER EACH CHANGE
