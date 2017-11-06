@@ -582,7 +582,7 @@ sub setHiddenFormValue {
     $val    = ''          unless defined $val;
 
     # Store value
-    if ( $val or !( $val & ~$val ) ) {
+    if ( defined $val or !( $val & ~$val ) ) {
         $key = $prefix . $key;
         $val =~ s/\+/%2B/g;
         $req->{portalHiddenFormValues}->{$key} = $val;
@@ -606,10 +606,11 @@ sub getHiddenFormValue {
     $key = $prefix . $key;
 
     # Get value
-    if ( my $val = $req->param($key) ) {
+    my $val = $req->param($key);
+    if ( defined $val ) {
         $val = decode_base64($val) if $base64;
-        return $val;
         $self->logger->debug("Hidden value $val found for key $key");
+        return $val;
     }
 
     # No value found
