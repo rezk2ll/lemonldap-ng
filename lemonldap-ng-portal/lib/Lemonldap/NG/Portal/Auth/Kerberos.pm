@@ -80,13 +80,13 @@ sub extractFormInfo {
         elsif ( defined $req->param('kerberos') ) {
             $self->userLogger->warn(
                 'Kerberos authentication has failed, back to portal');
+            $self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );
             return PE_BADCREDENTIALS;
         }
 
         # Case 3: Display kerberos auth page (with javascript)
         else {
             $self->logger->debug('Send Kerberos javascript');
-            $self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );
             $req->datas->{customScript} .=
                 '<script type="text/javascript" src="'
               . $self->p->staticPrefix
