@@ -185,6 +185,13 @@ sub run {
     $url = $self->normalize_url( $url, $self->conf->{issuerDBSAMLPath},
         $self->ssoGetUrl );
 
+    # Get domain GET attribute
+    my $domain = $req->param('domain');
+
+    if ($domain) {
+        $self->logger->debug("Found domain $domain in SAML GET parameter");
+    }
+
     # 1.1. SSO (SSO URL or Proxy Mode)
     if ( $url =~ $self->ssoUrlRe or $req->datas->{_proxiedRequest} ) {
 
@@ -621,6 +628,16 @@ sub run {
             unless ( $response_assertions[0] ) {
                 $self->logger->error("Unable to get response assertion");
                 return PE_SAML_SSO_ERROR;
+            }
+
+            # Rewrite Issuer with domain
+            if ($domain) {
+                my $original_issuer = $login->response->Issuer->content;
+                $self->logger->debug(
+                    "Add domain $domain to Issuer $original_issuer");
+                my $new_issuer = $original_issuer . "?domain=$domain";
+                $login->response->Issuer->content($new_issuer);
+                $login->response->Assertion->Issuer->content($new_issuer);
             }
 
             # Set subject NameID
@@ -1434,7 +1451,7 @@ sub sloServer {
         else {
             $local_session_id = $req->id;
             $self->logger->debug(
-                "Get session id $local_session_id (from cookie)" );
+                "Get session id $local_session_id (from cookie)");
         }
         if ( $req->{sessionInfo} ) {
             $session  = $req->{sessionInfo}->{_lassoSessionDump};
