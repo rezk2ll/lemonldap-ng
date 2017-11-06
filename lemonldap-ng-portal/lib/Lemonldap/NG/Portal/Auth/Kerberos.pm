@@ -131,6 +131,10 @@ sub extractFormInfo {
         return PE_ERROR;
     }
     $self->userLogger->notice("$client_name authentified by Kerberos");
+    $req->{_krbUser} = $client_name;
+    if ( $self->conf->{krbRemoveDomain} ) {
+        $client_name =~ s/^(.*)@.*$/$1/;
+    }
     $req->user($client_name);
     return PE_OK;
 }
@@ -146,6 +150,7 @@ sub authLogout {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     $req->{sessionInfo}->{authenticationLevel} = $self->conf->{krbAuthnLevel};
+    $req->{sessionInfo}->{_krbUser}            = $req->{_krbUser};
     PE_OK;
 }
 

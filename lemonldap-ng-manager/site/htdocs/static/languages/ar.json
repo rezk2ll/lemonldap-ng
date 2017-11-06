@@ -309,6 +309,7 @@
 "krbAuthnLevel": "مستوى مصادقة كيربيروس",
 "krbByJs": "استخدام طلب أجاكس",
 "krbKeytab": "كيتاب",
+"krbRemoveDomain": "Remove domain from Kerberos username",
 "kerberosParams": "معايير كيربيروس",
 "languages": "اللغات",
 "latest": "الأحدث",

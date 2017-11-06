@@ -309,6 +309,7 @@
 "krbAuthnLevel": "Livello Kerberos authn",
 "krbByJs": "Utilizzare la richiesta Ajax",
 "krbKeytab": "File keytab",
+"krbRemoveDomain": "Remove domain from Kerberos username",
 "kerberosParams": "Parametri di Kerberos",
 "languages": "Lingue",
 "latest": "Più recente",

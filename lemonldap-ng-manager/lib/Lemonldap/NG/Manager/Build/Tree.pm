@@ -209,7 +209,7 @@ sub tree {
                         {
                             title => 'kerberosParams',
                             help  => 'authkerberos.html',
-                            nodes => [ 'krbKeytab', 'krbByJs', 'krbAuthnLevel' ]
+                            nodes => [ 'krbKeytab', 'krbByJs', 'krbAuthnLevel', 'krbRemoveDomain' ]
                         },
                         {
                             title => 'ldapParams',

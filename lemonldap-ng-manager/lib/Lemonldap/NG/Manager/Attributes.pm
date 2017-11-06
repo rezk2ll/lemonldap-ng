@@ -1274,6 +1274,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'krbKeytab' => {
             'type' => 'text'
         },
+        'krbRemoveDomain' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'ldapAllowResetExpiredPassword' => {
             'default' => 0,
             'type'    => 'bool'

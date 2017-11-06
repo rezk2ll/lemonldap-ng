@@ -2350,6 +2350,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 3,
             documentation => 'Null authentication level',
         },
+        krbRemoveDomain => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Remove domain in Kerberos username',
+        },
 
         # Slave
         slaveAuthnLevel => {

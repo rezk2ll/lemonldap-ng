@@ -309,6 +309,7 @@
 "krbAuthnLevel": "Cấp authn Kerberos",
 "krbByJs": "Sử dụng yêu cầu Ajax",
 "krbKeytab": "tệp keytab",
+"krbRemoveDomain": "Remove domain from Kerberos username",
 "kerberosParams": "Tham số Kerberos",
 "languages": "Ngôn ngữ",
 "latest": "Mới nhất",
