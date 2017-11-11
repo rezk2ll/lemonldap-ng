@@ -61,7 +61,7 @@ sub loadApp {
         if ( length $rule ) {
             $rule = $self->p->HANDLER->substitute($rule);
             unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-                $self->error( 'OIDC RP rule error: '
+                $self->error( 'CAS App rule error: '
                       . $self->p->HANDLER->tsv->{jail}->error );
                 return 0;
             }

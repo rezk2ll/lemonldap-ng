@@ -65,6 +65,11 @@ has beforeLogout => (
     default => sub { [] }
 );
 
+has spRules => (
+    is      => 'rw',
+    default => sub { {} }
+);
+
 # Custom template parameters
 has customParameters => ( is => 'rw', default => sub { {} } );
 
@@ -313,6 +318,8 @@ sub findEP {
             }
         }
     }
+    ( $obj and $obj->init ) or return 0;
+    $self->logger->debug("Plugin $plugin initializated");
 
     # Rules for menu
     if ( $obj->can('spRules') ) {
@@ -323,8 +330,6 @@ sub findEP {
             $self->spRules->{$k} = $obj->{spRules}->{$k};
         }
     }
-    ( $obj and $obj->init ) or return 0;
-    $self->logger->debug("Plugin $plugin initializated");
     return $obj;
 }
 

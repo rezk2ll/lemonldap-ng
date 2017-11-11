@@ -425,10 +425,10 @@ sub _filterHash {
             # Handle partner rules (SAML, CAS or OIDC)
             if ( $appdisplay =~ /^partner:\s*(.*)$/ ) {
                 my $p = $1;
-                if ( my $sub = $self->spRules->{$p} ) {
+                if ( my $sub = $self->p->spRules->{$p} ) {
                     eval {
                         delete $apphash->{$key}
-                          unless ( $p->( $req, $req->sessionInfo ) );
+                          unless ( $sub->( $req, $req->sessionInfo ) );
                     };
                     if ($@) {
                         $self->logger->error("Partner rule $p returns: $@");
