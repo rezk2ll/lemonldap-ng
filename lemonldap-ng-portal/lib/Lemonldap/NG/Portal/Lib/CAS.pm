@@ -25,7 +25,7 @@ has ua => (
 
 has casSrvList => ( is => 'rw', default => sub { {} }, );
 has casAppList => ( is => 'rw', default => sub { {} }, );
-has appRules   => ( is => 'rw', default => sub { {} }, );
+has spRules    => ( is => 'rw', default => sub { {} }, );
 
 # RUNNING METHODS
 
@@ -65,7 +65,7 @@ sub loadApp {
                       . $self->p->HANDLER->tsv->{jail}->error );
                 return 0;
             }
-            $self->appRules->{$_} = $rule;
+            $self->spRules->{$_} = $rule;
         }
     }
     return 1;

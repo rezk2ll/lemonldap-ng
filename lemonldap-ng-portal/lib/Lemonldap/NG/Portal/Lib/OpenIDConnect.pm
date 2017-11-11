@@ -36,7 +36,7 @@ use constant PHONE => [qw/phone_number phone_number_verified/];
 has oidcOPList   => ( is => 'rw', default => sub { {} }, );
 has oidcRPList   => ( is => 'rw', default => sub { {} }, );
 has rpAttributes => ( is => 'rw', default => sub { {} }, );
-has rpRules      => ( is => 'rw', default => sub { {} } );
+has spRules      => ( is => 'rw', default => sub { {} } );
 
 # return LWP::UserAgent object
 has ua => (
@@ -128,7 +128,7 @@ sub loadRPs {
                       . $self->p->HANDLER->tsv->{jail}->error );
                 return 0;
             }
-            $self->rpRules->{$rp} = $rule;
+            $self->spRules->{$rp} = $rule;
         }
     }
     return 1;

@@ -198,7 +198,7 @@ sub run {
             }
 
             # Check if this RP is authorizated
-            if ( my $rule = $self->rpRules->{$rp} ) {
+            if ( my $rule = $self->spRules->{$rp} ) {
                 unless ( $rule->( $req, $req->sessionInfo ) ) {
                     $self->userLogger->warn( 'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }

@@ -119,7 +119,7 @@ sub run {
                 $self->userLogger->error('CAS service not configured');
                 return PE_CAS_SERVICE_NOT_ALLOWED;
             }
-            if ( my $rule = $self->appRules->{$app} ) {
+            if ( my $rule = $self->spRules->{$app} ) {
                 if ( $rule->( $req, $req->sessionInfo ) ) {
                     $self->logger->debug("CAS service $service access allowed");
                 }
