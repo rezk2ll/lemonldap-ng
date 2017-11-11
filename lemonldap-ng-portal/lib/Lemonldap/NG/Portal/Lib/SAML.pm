@@ -3453,7 +3453,7 @@ L<Lemonldap::NG::Portal::Auth::SAML>, L<Lemonldap::NG::Portal::UserDBSAML>
 =head1 BUG REPORT
 
 Use OW2 system to report bug or ask for features:
-L<http://jira.ow2.org>
+L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 
 =head1 DOWNLOAD
 

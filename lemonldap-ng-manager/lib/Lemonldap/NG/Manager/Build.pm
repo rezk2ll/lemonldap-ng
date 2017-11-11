@@ -828,7 +828,7 @@ L<http://lemonldap-ng.org/>
 =head1 BUG REPORT
 
 Use OW2 system to report bug or ask for features:
-L<http://jira.ow2.org>
+L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 
 Note that if you want to post a ticket for a conf upload problem, please
 see L<Lemonldap::NG::Manager::Conf::Parser> before.

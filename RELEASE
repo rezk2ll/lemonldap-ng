@@ -5,7 +5,7 @@ The version
 -----------
 
 - The release version should be updated in the following location:
-* changelog (add a changelog from JIRA for the target version)
+* changelog (add a changelog from GitLab for the target version)
 * Main modules (Common.pm/Handler.pm/Portal.pm/Manager.pm)
 * Makefile.PL for cross-dependencies
 * Doxyfile

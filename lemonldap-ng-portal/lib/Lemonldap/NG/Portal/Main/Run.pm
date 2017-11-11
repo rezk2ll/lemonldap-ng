@@ -442,7 +442,7 @@ sub updateSession {
 
         # Update sessionInfo data
         ## sessionInfo updated if $id defined : quite strange !!
-        ## See http://jira.ow2.org/browse/LEMONLDAP-430
+        ## See https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/430
         foreach ( keys %$infos ) {
             $self->logger->debug(
                 "Update sessionInfo $_ with " . $infos->{$_} );
