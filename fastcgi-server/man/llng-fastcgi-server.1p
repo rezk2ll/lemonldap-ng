@@ -129,7 +129,7 @@
 .\" ========================================================================
 .\"
 .IX Title "llng-fastcgi-server 1"
-.TH llng-fastcgi-server 1 "2017-10-26" "perl v5.26.0" "User Contributed Perl Documentation"
+.TH llng-fastcgi-server 1 "2017-11-11" "perl v5.26.1" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -185,7 +185,7 @@ Each parameter can be set by an option or a environment variable.
 .SH "BUG REPORT"
 .IX Header "BUG REPORT"
 Use \s-1OW2\s0 system to report bug or ask for features:
-<http://jira.ow2.org>
+<https://gitlab.ow2.org/lemonldap\-ng/lemonldap\-ng/issues>
 .SH "DOWNLOAD"
 .IX Header "DOWNLOAD"
 Lemonldap::NG is available at

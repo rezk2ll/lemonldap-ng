@@ -288,6 +288,7 @@ sub reloadConf {
     1;
 }
 
+# Method used to load plugins
 sub loadPlugin {
     my ( $self, $plugin ) = @_;
     my $obj;
@@ -296,8 +297,11 @@ sub loadPlugin {
     return $self->findEP( $plugin, $obj );
 }
 
+# Insert declared entry points into corresponding arrays
 sub findEP {
     my ( $self, $plugin, $obj ) = @_;
+
+    # Standards entry points
     foreach my $sub (
         qw(beforeAuth betweenAuthAndDatas afterDatas forAuthUser beforeLogout))
     {
@@ -307,6 +311,16 @@ sub findEP {
                 push @{ $self->{$sub} }, sub { $obj->$callback( $_[0] ) };
                 $self->logger->debug("  -> $callback");
             }
+        }
+    }
+
+    # Rules for menu
+    if ( $obj->can('spRules') ) {
+        foreach my $k ( keys %{ $obj->{spRules} } ) {
+            $self->logger->info(
+"$k is defined more than one time, it can have some bad effect on Menu display"
+            ) if ( $self->spRules->{$k} );
+            $self->spRules->{$k} = $obj->{spRules}->{$k};
         }
     }
     ( $obj and $obj->init ) or return 0;
