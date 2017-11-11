@@ -1215,7 +1215,7 @@ Use OW2 system to report bug or ask for features:
 L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 
 If you want to report a bug concerning configuration upload, please change
-HIGHDEBUG constant value to produce more logs. Then post them in the Jira
+HIGHDEBUG constant value to produce more logs. Then post them in the Gitlab
 ticket.
 
 =head1 DOWNLOAD
