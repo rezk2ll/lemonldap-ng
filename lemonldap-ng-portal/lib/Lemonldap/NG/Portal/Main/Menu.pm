@@ -423,7 +423,7 @@ sub _filterHash {
             my $cond = undef;
 
             # Handle partner rules (SAML, CAS or OIDC)
-            if ( $appdisplay =~ /^partner:\s*(.*)$/ ) {
+            if ( $appdisplay =~ /^sp:\s*(.*)$/ ) {
                 my $p = $1;
                 if ( my $sub = $self->p->spRules->{$p} ) {
                     eval {
