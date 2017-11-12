@@ -152,6 +152,7 @@ sub reloadConf {
     {
         $self->{$_} = [];
     }
+    $self->spRules( {} );
 
     # Load conf in portal object
     foreach my $key ( keys %$conf ) {
