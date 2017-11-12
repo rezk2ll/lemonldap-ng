@@ -398,6 +398,7 @@ prepare_test_server:
 	@perl -i -pe 's/example\.com/example.com:19876/g' e2e-tests/conf/site/index.pl
 	@cp -f $(SRCMANAGERDIR)/site/htdocs/manager* e2e-tests/conf/manager
 	@cp -f $(SRCPORTALDIR)/site/htdocs/index* e2e-tests/conf/portal
+	@cp e2e-tests/saml-sp.xml e2e-tests/conf/site/saml-sp.xml
 	@for f in $$(find e2e-tests/conf -name '*.fcgi'); do \
 		perl -i -pe 'if($$.==2){print "BEGIN{\n"; print qq(use lib q('`pwd`'/lemonldap-ng-$$_/blib/lib);\n) foreach qw(common handler portal manager); print "}\n"; }' $$f; \
 	done

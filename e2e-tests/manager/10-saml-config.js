@@ -39,6 +39,18 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('t-samlOrganizationName')).click();
       element(by.id('textinput')).clear().sendKeys('Org1');
     });
+    it('should accept new SP', function() {
+      element(by.id('t-samlSPMetaDataNodes')).click();
+      element(by.css('.glyphicon-plus-sign')).click();
+      element(by.id('promptinput')).clear();
+      element(by.id('promptinput')).sendKeys('mysp');
+      element(by.id('promptok')).click();
+      element(by.id('a-samlSPMetaDataNodes/new__mysp')).click();
+      element(by.id('t-samlSPMetaDataNodes/new__mysp/samlSPMetaDataXML')).click();
+      element(by.id('urlinput')).sendKeys('http://test1.example.com:' + process.env.TESTWEBSERVERPORT + '/saml-sp.xml');
+      element(by.id('urlload')).click();
+      browser.sleep(500);
+    });
     it('should save new configuration', function() {
       element(by.id('save')).click();
       element(by.id('longtextinput')).sendKeys('Activate SAML');
