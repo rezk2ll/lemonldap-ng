@@ -3066,11 +3066,17 @@ sub metadata {
 sub getSignatureMethod {
     my ( $self, $signature_method ) = @_;
 
-    return Lasso::Constants::SIGNATURE_METHOD_RSA_SHA1
+    my $signature_method_rsa_sha1 =
+      eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA1';
+    my $signature_method_rsa_sha256 =
+      eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA256';
+    my $signature_method_none = eval 'Lasso::Constants::SIGNATURE_METHOD_NONE';
+
+    return $signature_method_rsa_sha1
       if ( $signature_method =~ /^SHA1$/i );
-    return Lasso::Constants::SIGNATURE_METHOD_RSA_SHA256
+    return $signature_method_rsa_sha256
       if ( $signature_method =~ /^SHA256$/i );
-    return Lasso::Constants::SIGNATURE_METHOD_NONE;
+    return $signature_method_none;
 }
 
 1;
