@@ -35,17 +35,14 @@ $ cme check dpkg
 For minor release
 -----------------
 
-- Tag the version on SVN from the branch:
-$ svn cp branches/lemonldap-ng_version_VERSION-bugfixes tags/lemonldap-ng_version_VERSION
+- Go on gitlab and create a new tag: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tags/new
 
 For major release
 -----------------
 
-- Create a branch on SVN from the trunk:
-$ svn cp trunk branches/lemonldap-ng_version_VERSION-bugfixes
+- Go on gitlab and create a new branch: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/branches/new
 
-- Tag the version on SVN from the branch:
-$ svn cp branches/lemonldap-ng_version_VERSION-bugfixes tags/lemonldap-ng_version_VERSION
+- Go on gitlab and create a new tag: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tags/new
 
 - Change "latest" symlink in dokuwiki 
 
@@ -115,7 +112,7 @@ Site
 ----
 
 - Update links on the download page
-- Close the version on JIRA and create a new one
+- Close the milestone on Gitlab and create a new one
 
 Spread the word
 ---------------
