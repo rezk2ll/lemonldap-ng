@@ -129,6 +129,7 @@ sub setGroups {
     }
 
     $req->{sessionInfo}->{groups} = $groups;
+    $req->{sessionInfo}->{hGroups} = $hGroups;
     PE_OK;
 }
 
