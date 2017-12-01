@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 use Plack::Handler::CGI;
 use Lemonldap::NG::Portal::Main;
