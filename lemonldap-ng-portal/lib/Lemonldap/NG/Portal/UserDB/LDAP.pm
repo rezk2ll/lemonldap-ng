@@ -13,19 +13,14 @@ has ldapGroupAttributeNameSearch => (
     is      => 'rw',
     lazy    => 1,
     builder => sub {
-        return $_[0]->{conf}->{ldapGroupAttributeNameSearch}
-          ? [
-            split( /\s+/, $_[0]->{conf}->{ldapGroupAttributeNameSearch} ),
-
-            # Push group attribute value for recursive search
-            (
-                $_[0]->{conf}->{ldapGroupRecursive}
-                  and $_[0]->{conf}->{ldapGroupAttributeNameGroup} ne "dn"
-                ? $_[0]->{conf}->{ldapGroupAttributeNameGroup}
-                : ()
-            )
-          ]
-          : [];
+        my $attributes = [];
+        @$attributes =
+          split( /\s+/, $_[0]->{conf}->{ldapGroupAttributeNameSearch} )
+          if $_[0]->{conf}->{ldapGroupAttributeNameSearch};
+        push( @$attributes, $_[0]->{conf}->{ldapGroupAttributeNameGroup} )
+          if (  $_[0]->{conf}->{ldapGroupRecursive}
+            and $_[0]->{conf}->{ldapGroupAttributeNameGroup} ne "dn" );
+        return $attributes;
     }
 );
 
@@ -122,13 +117,13 @@ sub setGroups {
                 my $firstValue = $ldapGroups->{$groupName}->{$_}->[0];
                 push @$groupValues, $firstValue;
             }
-            $groups .=
-              $self->conf->{multiValuesSeparator} . join( '|', @$groupValues );
+            $groups .= $self->conf->{multiValuesSeparator} if $groups;
+            $groups .= join( '|', @$groupValues );
         }
 
     }
 
-    $req->{sessionInfo}->{groups} = $groups;
+    $req->{sessionInfo}->{groups}  = $groups;
     $req->{sessionInfo}->{hGroups} = $hGroups;
     PE_OK;
 }
