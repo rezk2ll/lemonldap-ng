@@ -134,6 +134,8 @@ sub _register {
         if ( my $datas =
             $self->mailott->getToken( $req->datas->{register_token} ) )
         {
+            $self->logger->debug(
+                'Token ' . $req->datas->{register_token} . ' found' );
             foreach (qw(mail firstname lastname ipAddr)) {
                 $req->datas->{registerInfo}->{$_} = $datas->{$_};
             }
@@ -236,6 +238,7 @@ sub _register {
                 _type     => 'register',
             }
         );
+        $self->logger->debug("Token $register_session created");
     }
 
     # Send confirmation mail
@@ -250,8 +253,6 @@ sub _register {
         $req->id($register_session) unless $req->id;
 
         $self->logger->debug("Register session found: $register_session");
-
-        my $registerSessionObj = $self->mailott->getToken($register_session);
 
         # Mail session expiration date
         my $expTimestamp =
