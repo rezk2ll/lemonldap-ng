@@ -2,6 +2,20 @@ lemonldap-ng (2.0.0~alpha2) testing; urgency=low
 
 lemonldap-ng (2.0.0~alpha1) testing; urgency=low
 
+lemonldap-ng (1.9.14) stable; urgency=high
+
+    * #707: Kerberos authentication module
+    * #1308: make saml work with POST sso binding and multiple authentication
+    * #1310: Form replay javascript generates error for fields with a dot
+    * #1315: Missing Mouse dependency in Debian packages
+    * #1316: In docs, for Alfresco, said they need to add an exclusion for
+      ressources path
+    * #1324: Allow SAML with Office365 multidomains
+    * #1326: SessionIndex should not be mandatory in SAML SingleLogoutRequest
+    * #1328: Value 0 can not be set in hidden field
+    * #1329: No need to 'warn' if no IDP or SP is present in configuration
+    * #1331: Manage UTF-8 values in HTTP headers
+
 lemonldap-ng (1.9.13) stable; urgency=high
 
     * [LEMONLDAP-1209] - [UTF8-Enconding] Issues with mysql backend and saml attributes
