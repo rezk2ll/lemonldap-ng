@@ -49,6 +49,7 @@ has mailott => (
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        $ott->cache(0);
         $ott->timeout( $_[0]->conf->{registerTimeout}
               || $_[0]->conf->{timeout} );
         return $ott;
@@ -250,7 +251,7 @@ sub _register {
 
         $self->logger->debug("Register session found: $register_session");
 
-        my $registerSessionObj = $self->p->getApacheSession($register_session);
+        my $registerSessionObj = $self->mailott->getToken($register_session);
 
         # Mail session expiration date
         my $expTimestamp =
