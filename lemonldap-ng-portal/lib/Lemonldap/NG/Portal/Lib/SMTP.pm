@@ -90,7 +90,10 @@ sub translate {
     my $json = $self->conf->{templateDir} . "/common/mail/$lang.json";
     $json = $self->conf->{templateDir} . '/common/mail/en.json'
       unless ( -f $json );
-    open F, $json or die $!;
+    open F, $json
+      or die 'Installation error: '
+      . $!
+      . " ($self->{conf}->{templateDir}/$lang.json or $self->{conf}->{templateDir}/common/mail/en.json)";
     $json = join '', <F>;
     close F;
     $lang = from_json( $json, { allow_nonref => 1 } );
