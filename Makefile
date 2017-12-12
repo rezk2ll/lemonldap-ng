@@ -685,7 +685,7 @@ install_portal_site:	install_conf_dir
 		$(RCRONDIR) $(RCONFDIR)
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/index.* $(RPORTALSITEDIR)
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/static/* $(RPORTALSTATICDIR)
-	cd $(SRCPORTALDIR)/site/templates; for f in `find * -type f`; do \
+	@cd $(SRCPORTALDIR)/site/templates; for f in `find * -type f -name '*.tpl'`; do \
 		echo "$$f => $(RPORTALTEMPLATESDIR)/$$f"; \
 		mkdir -p $(RPORTALTEMPLATESDIR)/`dirname $$f`; \
 		../../../scripts/transform-templates \
@@ -695,7 +695,11 @@ install_portal_site:	install_conf_dir
 			cssminified $(CSSCOMPRESS) <$$f \
 			>$(RPORTALTEMPLATESDIR)/$$f; \
 	done; cd -
-	cd $(SRCPORTALDIR)/site/templates; for l in `find * -type l`; do \
+	@cd $(SRCPORTALDIR)/site/templates; for f in `find * -type f ! -name '*.tpl'`; do \
+		mkdir -p $(RPORTALTEMPLATESDIR)/`dirname $$f`; \
+		install -v $$f $(RPORTALTEMPLATESDIR)/$$f; \
+	done; cd -
+	@cd $(SRCPORTALDIR)/site/templates; for l in `find * -type l`; do \
 		echo link to do $$l `readlink $$l`; \
 		target=`readlink $$l`; \
 		cd $(RPORTALTEMPLATESDIR); \
