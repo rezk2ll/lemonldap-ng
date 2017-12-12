@@ -685,7 +685,7 @@ install_portal_site:	install_conf_dir
 		$(RCRONDIR) $(RCONFDIR)
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/index.* $(RPORTALSITEDIR)
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/static/* $(RPORTALSTATICDIR)
-	cd $(SRCPORTALDIR)/site/templates; for f in `find * -type f -name '*.tpl'`; do \
+	cd $(SRCPORTALDIR)/site/templates; for f in `find * -type f`; do \
 		echo "$$f => $(RPORTALTEMPLATESDIR)/$$f"; \
 		mkdir -p $(RPORTALTEMPLATESDIR)/`dirname $$f`; \
 		../../../scripts/transform-templates \
