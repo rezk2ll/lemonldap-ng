@@ -115,10 +115,9 @@ Depends: ${misc:Depends},
          lsb-base,
          libfcgi-procmanager-perl,
          liblemonldap-ng-handler-perl (= ${binary:Version}),
-         libplack-perl,
-         nginx-extras | nginx
-Recommends: libhttp-parser-xs-perl
-Suggests: nginx-extras
+         libplack-perl
+Recommends: libhttp-parser-xs-perl,
+            nginx-extras | nginx
 Section: web
 Description: Lemonldap::NG FastCGI server
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
