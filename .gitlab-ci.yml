@@ -1,0 +1,27 @@
+stages:
+  - build
+
+build-debian:
+  stage: build
+  image: debian:stretch
+  script: |
+    echo "Installing build dependencies..."
+    apt-get update
+    apt-get install -y build-essential
+    apt-get build-dep -y .
+
+    echo "Converting to native package..."
+    suffix="~$CI_COMMIT_SHA"
+    sed -i "1{s/-1) /$suffix) /}" debian/changelog
+    sed -i 's/3.0 (quilt)/3.0 (native)/' debian/source/format
+
+    echo "Building LemonLDAP..."
+    dpkg-buildpackage
+
+    echo "Moving artifacts..."
+    mkdir artifacts
+    mv ../*.tar.xz ../*.dsc ../*.changes ../*.deb artifacts
+  artifacts:
+    paths:
+    - 'artifacts/*'
+    expire_in: 1 week
