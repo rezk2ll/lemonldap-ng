@@ -12,7 +12,8 @@ our $VERSION = '2.0.0';
 our (
     $foreground, $engine,              $nproc,
     $pidFile,    $socket,              $user,
-    $group,      $customFunctionsFile, %plackOptions
+    $listen,     $group,               $customFunctionsFile,
+    %plackOptions
 );
 my %_apps;
 
@@ -24,6 +25,7 @@ $engine  ||= $ENV{ENGINE} || 'FCGI';
 $nproc   ||= $ENV{NPROC}  || 7;
 $pidFile ||= $ENV{PID}    || '__FASTCGISOCKDIR__/llng-fastcgi.pid';
 $socket  ||= $ENV{SOCKET} || '__FASTCGISOCKDIR__/llng-fastcgi.sock';
+$listen  ||= $ENV{LISTEN} || undef;
 $user    ||= $ENV{USER};
 $group   ||= $ENV{GROUP};
 $customFunctionsFile ||= $ENV{CUSTOM_FUNCTIONS_FILE};
@@ -35,6 +37,7 @@ GetOptions(
     'proc|n=s'                => \$nproc,
     'pid|p=s'                 => \$pidFile,
     'socket|s=s'              => \$socket,
+    'listen|l=s'              => \$listen,
     'user|u=s'                => \$user,
     'group|g=s'               => \$group,
     'customFunctionsFile|f=s' => \$customFunctionsFile,
@@ -120,6 +123,7 @@ $server->parse_options(
     '--pid'        => $pidFile,
     '--nproc'      => $nproc,
     '--socket'     => $socket,
+    ( $listen ? ('--listen', $listen) : ()),
     '--proc-title' => 'llng-fastcgi-server',
     ( $foreground ? () : '--daemonize' ),
     '--no-default-middleware',
@@ -190,6 +194,8 @@ Each parameter can be set by an option or a environment variable.
 =item --engine -e ($ENV{ENGINE}): Plack::Handler engine, default to FCGI
 
 =item --socket -s ($ENV{SOCKET}): Unix socket
+
+=item --listen -l ($ENV{LISTEN}): Listening address (HOST:PORT, :PORT, or PATH)
 
 =item --customFunctionsFile -f ($ENV{CUSTOM_FUNCTIONS_FILE}): file to load for
 custom functions
