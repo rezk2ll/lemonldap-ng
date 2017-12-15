@@ -307,7 +307,7 @@ sub _register {
         $body =~ s/\$expMailDate/$req->datas->{expMailDate}/g;
         $body =~ s/\$expMailTime/$req->datas->{expMailTime}/g;
         $body =~ s/\$url/$url/g;
-        $body =~ s/\$(\w+)/decode("utf8",$req->datas->{registerInfo}->{$1})/ge;
+        $body =~ s/\$(\w+)/$req->datas->{registerInfo}->{$1}/eg;
 
         # Send mail
         return PE_MAILERROR
@@ -358,7 +358,7 @@ sub _register {
     $body = $self->loadTemplate( 'mail_register_done', filter => $tr );
 
     # Replace variables in body
-    $body =~ s/\$(\w+)/decode("utf8",$req->datas->{registerInfo}->{$1})/ge;
+    $body =~ s/\$(\w+)/$req->datas->{registerInfo}->{$1}/ge;
 
     # Send mail
     return PE_MAILERROR

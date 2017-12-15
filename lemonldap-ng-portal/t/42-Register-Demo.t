@@ -9,7 +9,7 @@ BEGIN {
     };
 }
 
-my $maintests = 8;
+my $maintests = 9;
 my ( $res, $user, $pwd );
 
 SKIP: {
@@ -45,18 +45,20 @@ SKIP: {
         $res = $client->_post(
             '/register',
             IO::String->new(
-                'firstname=foo&lastname=bar&mail=foobar%40badwolf.org'),
-            length => 52,
+                'firstname=fôo&lastname=bar&mail=foobar%40badwolf.org'),
+            length => 53,
             accept => 'text/html'
         ),
         'Ask to create account'
     );
     expectOK($res);
 
-    ok( mail() =~ m#a href="http://auth.example.com/register\?(.*?)"#,
+    my $mail = mail();
+    ok( $mail =~ m#a href="http://auth.example.com/register\?(.*?)"#,
         'Found register token' );
     $query = $1;
     ok( $query =~ /register_token=/, 'Found register_token' );
+    ok( $mail =~ /fôo/, 'UTF-8 works' ) or explain( $mail, 'fôo' );
 
     ok(
         $res =
