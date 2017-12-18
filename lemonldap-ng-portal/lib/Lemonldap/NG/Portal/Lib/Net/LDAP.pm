@@ -239,8 +239,7 @@ sub userBind {
             return PE_OK;
         }
     }
-    $self->{portal}
-      ->userLogger->warn("Bad password for $self->{portal}->{user}");
+    $self->{portal}->userLogger->warn("Bad password for $req->{user}");
     return PE_BADCREDENTIALS;
 }
 
