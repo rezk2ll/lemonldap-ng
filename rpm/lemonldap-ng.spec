@@ -70,42 +70,38 @@ Source0:        http://lemonldap-ng.org/download/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildArch:      noarch
 
-%if 0%{?rhl}%{?rhel}%{?fedora}
-BuildRequires:  perl(Regexp::Assemble)
-BuildRequires:  perl(Regexp::Common)
-BuildRequires:  perl(Cache::Cache)
 BuildRequires:  perl(Apache::Session)
-BuildRequires:  perl(Net::LDAP)
-BuildRequires:  perl(Test::Pod) >= 1.00
-BuildRequires:  perl(IO::String)
-BuildRequires:  perl(Email::Sender)
-BuildRequires:  perl(MIME::Entity)
-BuildRequires:  perl(SOAP::Lite)
-BuildRequires:  perl(XML::Simple)
-BuildRequires:  perl(XML::LibXSLT)
 BuildRequires:  perl(Authen::Captcha)
-BuildRequires:  perl(String::Random)
-BuildRequires:  perl(Email::Date::Format)
-BuildRequires:  perl(Crypt::Rijndael)
-BuildRequires:  perl(HTML::Template)
-BuildRequires:  perl(JSON)
+BuildRequires:  perl(Cache::Cache)
+BuildRequires:  perl(Class::Inspector)
+BuildRequires:  perl(Clone)
 BuildRequires:  perl(Config::IniFiles)
 BuildRequires:  perl(Convert::PEM)
 BuildRequires:  perl(Crypt::OpenSSL::Bignum)
 BuildRequires:  perl(Crypt::OpenSSL::RSA)
 BuildRequires:  perl(Crypt::OpenSSL::X509)
-BuildRequires:  perl(Class::Inspector)
-BuildRequires:  perl(Test::MockObject)
-BuildRequires:  perl(Clone)
-BuildRequires:  perl(Unicode::String)
-BuildRequires:  perl(Mouse)
+BuildRequires:  perl(Crypt::Rijndael)
 BuildRequires:  perl(Digest::SHA)
-BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl(Email::Date::Format)
+BuildRequires:  perl(Email::Sender)
 BuildRequires:  perl(Env)
+BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl(HTML::Template)
+BuildRequires:  perl(IO::String)
+BuildRequires:  perl(JSON)
+BuildRequires:  perl(MIME::Entity)
+BuildRequires:  perl(Mouse)
+BuildRequires:  perl(Net::LDAP)
+BuildRequires:  perl(Regexp::Assemble)
+BuildRequires:  perl(Regexp::Common)
+BuildRequires:  perl(SOAP::Lite)
+BuildRequires:  perl(String::Random)
+BuildRequires:  perl(Test::MockObject)
+BuildRequires:  perl(Test::Pod) >= 1.00
+BuildRequires:  perl(Unicode::String)
+BuildRequires:  perl(XML::LibXSLT)
+BuildRequires:  perl(XML::Simple)
 BuildRequires:  systemd
-%else
-BuildRequires:  perl-Regexp-Assemble, perl-Regexp-Common, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-Bignum, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Unicode-String, perl-Mouse, perl-Digest-SHA, perl-ExtUtims-MakeMaker, perl-Env, systemd
-%endif
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
 Requires: perl(Apache::Session)
