@@ -83,10 +83,11 @@ SKIP: {
     $pwd  = $2;
     ok( $user eq 'fbar', 'Get good login' );
 
+    my $postString = 'user='.$user.'&password='.$pwd;
     ok(
         $res = $client->_post(
-            '/', IO::String->new('user=fbar&password=fbar'),
-            length => 23,
+            '/', IO::String->new($postString),
+            length => length($postString),
             accept => 'text/html'
         ),
         'Try to authenticate'
