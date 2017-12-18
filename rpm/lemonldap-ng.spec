@@ -59,11 +59,6 @@ Name:           %{real_name}
 Version:        %{real_version}
 Release:        1%{?dist}
 Summary:        LemonLDAP-NG WebSSO
-%if 0%{?rhl}%{?rhel}%{?fedora}
-Group:          Applications/System
-%else
-Group:          Monitoring
-%endif
 License:        GPL v2
 URL:            http://lemonldap-ng.org
 Source0:        http://lemonldap-ng.org/download/%{name}-%{version}.tar.gz
@@ -145,11 +140,6 @@ So you can have a full AAA protection for your web space as described below.
 #==============================================================================
 %package -n lemonldap-ng-conf
 Summary:        LemonLDAP-NG configuration
-%if 0%{?rhl}%{?rhel}%{?fedora}
-Group:          Applications/System
-%else
-Group:          Monitoring
-%endif
 
 %description -n lemonldap-ng-conf
 This package contains the main storage configuration.
@@ -159,11 +149,6 @@ This package contains the main storage configuration.
 #==============================================================================
 %package -n lemonldap-ng-doc
 Summary:        LemonLDAP-NG documentation
-%if 0%{?rhl}%{?rhel}%{?fedora}
-Group:          Applications/System
-%else
-Group:          Monitoring
-%endif
 
 %description -n lemonldap-ng-doc
 This package contains html documentation.
@@ -173,11 +158,6 @@ This package contains html documentation.
 #==============================================================================
 %package -n lemonldap-ng-fr-doc
 Summary:        LemonLDAP-NG French documentation
-%if 0%{?rhl}%{?rhel}%{?fedora}
-Group:          Applications/System
-%else
-Group:          Monitoring
-%endif
 
 %description -n lemonldap-ng-fr-doc
 This package contains html documentation translated in French.
@@ -186,12 +166,6 @@ This package contains html documentation translated in French.
 # Handler
 #==============================================================================
 %package -n lemonldap-ng-handler
-Summary:        LemonLDAP-NG Handler
-%if 0%{?rhl}%{?rhel}%{?fedora}
-Group:          Applications/System
-%else
-Group:          Monitoring
-%endif
 
 %description -n lemonldap-ng-handler
 This package deploys the Apache Handler.
@@ -201,11 +175,6 @@ This package deploys the Apache Handler.
 #==============================================================================
 %package -n lemonldap-ng-manager
 Summary:        LemonLDAP-NG administration interface
-%if 0%{?rhl}%{?rhel}%{?fedora}
-Group:          Applications/System
-%else
-Group:          Monitoring
-%endif
 
 %description -n lemonldap-ng-manager
 This package deploys the adminsitration interface and sessions explorer.
@@ -215,7 +184,6 @@ This package deploys the adminsitration interface and sessions explorer.
 #==============================================================================
 %package -n lemonldap-ng-portal
 Summary:        LemonLDAP-NG authentication portal
-Group:          Applications/System
 
 %description -n lemonldap-ng-portal
 This package deploys the authentication portal.
@@ -225,11 +193,6 @@ This package deploys the authentication portal.
 #==============================================================================
 %package -n lemonldap-ng-test
 Summary:        LemonLDAP-NG test applications
-%if 0%{?rhl}%{?rhel}%{?fedora}
-Group:          Applications/System
-%else
-Group:          Monitoring
-%endif
 
 %description -n lemonldap-ng-test
 This package deploys small test applications.
@@ -239,11 +202,6 @@ This package deploys small test applications.
 #==============================================================================
 %package -n lemonldap-ng-fastcgi-server
 Summary:        LemonLDAP-NG FastCGI Server
-%if 0%{?rhl}%{?rhel}%{?fedora}
-Group:          Applications/System
-%else
-Group:          Monitoring
-%endif
 Requires:	perl-FCGI-ProcManager
 
 %description -n lemonldap-ng-fastcgi-server
@@ -255,11 +213,6 @@ This package deploys files needed to start a FastCGI server.
 %package -n perl-Lemonldap-NG-Common
 Summary:        LemonLDAP-NG Common Modules
 Version:        %{cpan_common_version}
-%if 0%{?rhl}%{?rhel}%{?fedora}
-Group:          Applications/System
-%else
-Group:          Monitoring
-%endif
 
 %description -n perl-Lemonldap-NG-Common
 This package installs the configuration libraries used by other LemonLDAP::NG modules.
@@ -270,11 +223,6 @@ This package installs the configuration libraries used by other LemonLDAP::NG mo
 %package -n perl-Lemonldap-NG-Handler
 Summary:        LemonLDAP-NG Handler Modules
 Version:        %{cpan_handler_version}
-%if 0%{?rhl}%{?rhel}%{?fedora}
-Group:          Applications/System
-%else
-Group:          Monitoring
-%endif
 
 %description -n perl-Lemonldap-NG-Handler
 This package installs the Apache module part (handler) used to protect web areas.
@@ -285,11 +233,6 @@ This package installs the Apache module part (handler) used to protect web areas
 %package -n perl-Lemonldap-NG-Manager
 Summary:        LemonLDAP-NG Manager Modules
 Version:        %{cpan_manager_version}
-%if 0%{?rhl}%{?rhel}%{?fedora}
-Group:          Applications/System
-%else
-Group:          Monitoring
-%endif
 
 %description -n perl-Lemonldap-NG-Manager
 This package installs the administration interface (manager).
@@ -300,11 +243,6 @@ This package installs the administration interface (manager).
 %package -n perl-Lemonldap-NG-Portal
 Summary:        LemonLDAP-NG Portal Modules
 Version:        %{cpan_portal_version}
-%if 0%{?rhl}%{?rhel}%{?fedora}
-Group:          Applications/System
-%else
-Group:          Monitoring
-%endif
 
 %description -n perl-Lemonldap-NG-Portal
 This package installs the authentication portal.
