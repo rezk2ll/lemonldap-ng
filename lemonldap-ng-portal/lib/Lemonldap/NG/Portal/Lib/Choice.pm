@@ -57,7 +57,8 @@ sub init {
 sub checkChoice {
     my ( $self, $req ) = @_;
     my $name =
-         $req->sessionInfo->{_choice}
+         $req->userData->{_choice}
+      || $req->sessionInfo->{_choice}
       || $req->param( $self->conf->{authChoiceParam} )
       or return 0;
     return $name if ( $req->datas->{ "enabledMods" . $self->type } );

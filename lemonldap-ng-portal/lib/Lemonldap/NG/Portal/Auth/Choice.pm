@@ -31,7 +31,9 @@ sub authenticate {
 }
 
 sub setAuthSessionInfo {
-    return $_[1]->datas->{enabledMods0}->[0]->setAuthSessionInfo( $_[1] );
+    my ( $self, $req ) = @_;
+    $self->checkChoice($req) unless ( $req->datas->{enabledMods0} );
+    return $req->datas->{enabledMods0}->[0]->setAuthSessionInfo($req);
 }
 
 sub authLogout {
