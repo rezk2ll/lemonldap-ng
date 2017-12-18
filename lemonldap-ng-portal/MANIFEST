@@ -323,6 +323,7 @@ t/01-AuthDemo.t
 t/02-Password-Demo.t
 t/03-XSS-protection.t
 t/19-Auth-Null.t
+t/20-Auth-and-password-DBI-dynamic-hash.t
 t/20-Auth-and-password-DBI.t
 t/20-Auth-DBI-utf8.t
 t/21-Auth-and-password-LDAP.t
@@ -384,6 +385,7 @@ t/41-Token.t
 t/42-Register-Demo-with-captcha.t
 t/42-Register-Demo-with-token.t
 t/42-Register-Demo.t
+t/42-Register-LDAP.t
 t/43-MailReset-with-captcha.t
 t/43-MailReset-with-token.t
 t/43-MailReset.t
