@@ -62,7 +62,6 @@ Summary:        LemonLDAP-NG WebSSO
 License:        GPL v2
 URL:            http://lemonldap-ng.org
 Source0:        http://lemonldap-ng.org/download/%{name}-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildArch:      noarch
 
 BuildRequires:  perl(Apache::Session)
@@ -285,8 +284,6 @@ chmod +x %{__perl_requires}
 # Installation
 #============================================================================
 %install
-rm -rf %{buildroot}
-
 %{__make} %{?_smp_mflags} install \
 	DESTDIR=%{buildroot} \
 	PREFIX=%{lm_prefix} \
@@ -421,9 +418,6 @@ if [ $1 -eq 1 ] ; then
 	# Remove old symlink in Apache configuration
 	rm -f %{apache_confdir}/z-lemonldap-ng.conf 2>&1 > /dev/null || :
 fi
-
-%clean
-rm -rf %{buildroot}
 
 
 %files
