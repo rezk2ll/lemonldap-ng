@@ -108,12 +108,12 @@ Requires: perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-XML-
 Requires: perl-ldap, perl-MIME-Base64, perl-DBI, perl-HTML-Template, perl-SOAP-Lite, perl-IPC-ShareLite, perl-Convert-ASN1, perl-Error, perl-Unicode-String
 %endif
 
-Requires: lemonldap-ng-conf >= %{real_version}
-Requires: lemonldap-ng-doc >= %{real_version}
-Requires: lemonldap-ng-handler >= %{real_version}
-Requires: lemonldap-ng-manager >= %{real_version}
-Requires: lemonldap-ng-portal >= %{real_version}
-Requires: lemonldap-ng-test >= %{real_version}
+Requires: lemonldap-ng-conf = %{real_version}-%{release}
+Requires: lemonldap-ng-doc = %{real_version}-%{release}
+Requires: lemonldap-ng-handler = %{real_version}-%{release}
+Requires: lemonldap-ng-manager = %{real_version}-%{release}
+Requires: lemonldap-ng-portal = %{real_version}-%{release}
+Requires: lemonldap-ng-test = %{real_version}-%{release}
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
 Requires: perl(Lemonldap::NG::Common) >= %{cpan_common_version}
