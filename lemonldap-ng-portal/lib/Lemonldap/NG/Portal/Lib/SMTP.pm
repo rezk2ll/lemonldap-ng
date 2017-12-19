@@ -252,7 +252,9 @@ sub getRegisterSession {
     foreach my $id ( keys %$sessions ) {
         my $registerSession = $self->p->getApacheSession($id);
         next unless ($registerSession);
-        return $id if ( $registerSession->data->{_type} =~ /^register$/ );
+        return $id
+          if (  $registerSession->data->{_type}
+            and $registerSession->data->{_type} =~ /^register$/ );
     }
 
     # No register session found, return empty string

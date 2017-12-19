@@ -213,7 +213,7 @@ sub _register {
 
     # Search for user using UserDB module
     # If the user already exists, register is forbidden
-    $req->datas->{mail} = $req->{registerInfo}->{mail};
+    $req->datas->{mail} = $req->datas->{registerInfo}->{mail};
     if ( $self->p->_userDB->getUser($req) == PE_OK ) {
         $self->userLogger->error(
 "Register: refuse mail $req->{mail} because already exists in UserDB"

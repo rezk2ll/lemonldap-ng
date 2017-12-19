@@ -57,7 +57,7 @@ sub getUser {
         return PE_BADCREDENTIALS;
     }
     unless ( $req->datas->{entry} = $mesg->entry(0) ) {
-        my $user = $req->{mail} || $req->{user};
+        my $user = $req->datas->{mail} || $req->{user};
         $self->userLogger->warn("$user was not found in LDAP directory");
         eval { $self->p->_authentication->setSecurity($req) };
         return PE_BADCREDENTIALS;
