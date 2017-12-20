@@ -421,14 +421,20 @@ sub getSkin {
 
     # Check skin GET/POST parameter
     my $skinParam = $req->param('skin');
-    if ( defined $skinParam and !$self->checkXSSAttack( 'skin', $skinParam ) ) {
-        if ( -d $self->conf->{templateDir} . '/' . $skinParam ) {
-            $skin = $skinParam;
-            $self->logger->debug("Skin $skin selected from GET/POST parameter");
+    if ( defined $skinParam ) {
+        if ( $skinParam =~ /^[\w\-]$/ ) {
+            if ( -d $self->conf->{templateDir} . '/' . $skinParam ) {
+                $skin = $skinParam;
+                $self->logger->debug(
+                    "Skin $skin selected from GET/POST parameter");
+            }
+            else {
+                $self->userLogger->error(
+                    "User tries to access to unexistent skin dir $skinParam");
+            }
         }
         else {
-            $self->userLogger->error(
-                "User tries to access to unexistent skin dir $skinParam");
+            $self->userLogger->error("Strange skin parameter: $skinParam");
         }
     }
 
