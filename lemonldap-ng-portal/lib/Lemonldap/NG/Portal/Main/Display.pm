@@ -409,18 +409,27 @@ sub getSkin {
     $req->{sessionInfo}->{ipAddr} ||= $req->address;
 
     # Load specific skin from skinRules
-    foreach my $rule ( @{ $self->conf->{skinRules} } ) {
+    foreach my $rule ( @{ $self->{skinRules} } ) {
         if ( $rule->[1]->( $req, $req->sessionInfo ) ) {
-            $skin = $rule->[0];
-            $self->logger->debug("Skin $skin selected from skin rule");
+            if ( -d $self->conf->{templateDir} . '/' . $rule->[0] ) {
+                $skin = $rule->[0];
+                $self->logger->debug("Skin $skin selected from skin rule");
+                last;
+            }
         }
     }
 
     # Check skin GET/POST parameter
     my $skinParam = $req->param('skin');
-    if ( defined $skinParam && !$self->checkXSSAttack( 'skin', $skinParam ) ) {
-        $skin = $skinParam;
-        $self->logger->debug("Skin $skin selected from GET/POST parameter");
+    if ( defined $skinParam and !$self->checkXSSAttack( 'skin', $skinParam ) ) {
+        if ( -d $self->conf->{templateDir} . '/' . $skinParam ) {
+            $skin = $skinParam;
+            $self->logger->debug("Skin $skin selected from GET/POST parameter");
+        }
+        else {
+            $self->userLogger->error(
+                "User tries to access to unexistent skin dir $skinParam");
+        }
     }
 
     return $skin;

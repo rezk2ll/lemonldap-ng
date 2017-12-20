@@ -170,6 +170,10 @@ sub reloadConf {
     # Initialize templateDir
     $self->{templateDir} =
       $self->conf->{templateDir} . '/' . $self->conf->{portalSkin};
+    unless ( -d $self->{templateDir} ) {
+        $self->error("Template dir $self->{templateDir} doesn't exist");
+        return $self->fail;
+    }
 
     $self->{staticPrefix} = $self->conf->{staticPrefix} || '/static';
     $self->{languages}    = $self->conf->{languages}    || '/';
