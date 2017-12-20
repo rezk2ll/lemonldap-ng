@@ -96,6 +96,7 @@ SKIP: {
 }
 count($maintests);
 stopLdapServer() if $ENV{LLNGTESTLDAP};
+clean_sessions();
 
 done_testing( count() );
 
