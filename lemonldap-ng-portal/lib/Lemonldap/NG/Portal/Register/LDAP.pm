@@ -45,17 +45,22 @@ sub createUser {
     my ( $self, $req ) = @_;
 
     # LDAP connection has been verified by computeLogin
+    my $sn = uc $req->datas->{registerInfo}->{lastname};
+    my $gn = ucfirst $req->datas->{registerInfo}->{firstname};
+    my $cn = "$gn $sn";
+    utf8::decode($cn);
+    utf8::decode($sn);
+    utf8::decode($gn);
     my $mesg = $self->ldap->add(
         "uid="
           . $req->datas->{registerInfo}->{login} . ","
           . $self->conf->{ldapBase},
         attrs => [
-            objectClass => [qw/top person organizationalPerson inetOrgPerson/],
-            uid         => $req->datas->{registerInfo}->{login},
-            cn => ucfirst $req->datas->{registerInfo}->{firstname} . " "
-              . uc $req->datas->{registerInfo}->{lastname},
-            sn           => uc $req->datas->{registerInfo}->{lastname},
-            givenName    => ucfirst $req->datas->{registerInfo}->{firstname},
+            objectClass  => [qw/top person organizationalPerson inetOrgPerson/],
+            uid          => $req->datas->{registerInfo}->{login},
+            cn           => $cn,
+            sn           => $sn,
+            givenName    => $gn,
             userPassword => $req->datas->{registerInfo}->{password},
             mail         => $req->datas->{registerInfo}->{mail},
         ]

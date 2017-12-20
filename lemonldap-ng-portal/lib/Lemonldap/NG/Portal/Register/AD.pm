@@ -18,14 +18,18 @@ sub createUser {
       ucfirst $req->datas->{registerInfo}->{firstname} . " "
       . uc $req->datas->{registerInfo}->{lastname};
 
+    my $sn = uc $req->datas->{registerInfo}->{lastname};
+    my $gn = ucfirst $req->datas->{registerInfo}->{firstname};
+    utf8::decode($sn);
+    utf8::decode($gn);
     my $mesg = $self->ldap->add(
         "cn=$name," . $self->conf->{ldapBase},
         attrs => [
             objectClass    => [qw/top person organizationalPerson user/],
             sAMAccountName => $req->datas->{registerInfo}->{login},
             cn             => $name,
-            sn             => uc $req->datas->{registerInfo}->{lastname},
-            givenName      => ucfirst $req->datas->{registerInfo}->{firstname},
+            sn             => $sn,
+            givenName      => $gn,
             unicodePwd     => utf8(
                 chr(34) . $req->datas->{registerInfo}->{password} . chr(34)
               )->utf16le(),
