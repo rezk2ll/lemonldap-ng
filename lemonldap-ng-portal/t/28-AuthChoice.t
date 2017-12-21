@@ -14,9 +14,8 @@ SKIP: {
     if ($@) {
         skip 'DBD::SQLite not found', $mainTests;
     }
-    elsif ( !$ENV{LDAPSERVER} ) {
-        skip 'No LDAP server given', $mainTests;
-    }
+    skip 'LLNGTESTLDAP is not set', $mainTests unless ( $ENV{LLNGTESTLDAP} );
+    require 't/test-ldap.pm';
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
     $dbh->do("INSERT INTO users VALUES ('dwho','dwho','Doctor who')");
@@ -43,22 +42,17 @@ SKIP: {
                 dbiAuthPasswordCol  => 'password',
                 dbiAuthPasswordHash => '',
 
-                LDAPFilter      => $ENV{LDAPFILTER}      || '(cn=$user)',
-                ldapServer      => $ENV{LDAPSERVER},
-                ldapBase        => $ENV{LDAPBASE},
-                managerDn       => $ENV{MANAGERDN}       || '',
-                managerPassword => $ENV{MANAGERPASSWORD} || '',
+                ldapServer      => 'ldap://127.0.0.1:19389/',
+                ldapBase        => 'ou=users,dc=example,dc=com',
+                managerDn       => 'cn=admin,dc=example,dc=com',
+                managerPassword => 'admin',
             }
         }
     );
 
     # Test LDAP and SQL
     foreach my $postString (
-          'user='
-        . ( $ENV{LDAPACCOUNT} || 'dwho' )
-        . '&password='
-        . ( $ENV{LDAPPWD} || 'dwho' )
-        . '&test=ldap',
+        'user=dwho&password=dwho&test=ldap',
         'user=dwho&password=dwho&test=sql'
       )
     {
@@ -81,4 +75,6 @@ SKIP: {
 }
 count($mainTests);
 eval { unlink 't/userdb.db' };
+stopLdapServer() if $ENV{LLNGTESTLDAP};
+clean_sessions();
 done_testing( count() );
