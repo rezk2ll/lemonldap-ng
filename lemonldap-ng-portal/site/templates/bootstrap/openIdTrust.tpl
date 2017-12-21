@@ -1,5 +1,6 @@
 <h3 trspan="openidAp"></h3>
 <table class="openidsreg">
+ <tbody>
  <TMPL_LOOP NAME="required">
   <tr class="required">
    <td>
@@ -26,4 +27,5 @@
    </td>
   </tr>
  </TMPL_LOOP>
+ </tbody>
 </table>
