@@ -100,6 +100,7 @@ BuildRequires:  systemd
 %if 0%{?rhl}%{?rhel}%{?fedora}
 Requires: perl(Apache::Session)
 Requires: perl(IO::String)
+Requires: perl(LWP::Protocol::https)
 Requires: mod_perl
 Requires: mod_fcgid
 %else
