@@ -70,6 +70,8 @@ sub init {
 sub resetPwd {
     my ( $self, $req ) = @_;
 
+    $self->p->controlUrl($req);
+
     # Check parameters
     $req->error( $self->_reset($req) );
 
@@ -293,6 +295,7 @@ sub _reset {
           . $self->conf->{authChoiceParam} . '='
           . $req->datas->{_authChoice}
           if ( $req->datas->{_authChoice} );
+        $url .= '&url=' . $req->datas->{_url} if ( $req->datas->{_url} );
 
         # Build mail content
         my $tr      = $self->translate($req);
@@ -467,6 +470,7 @@ sub display {
         SKIN_BG         => $self->conf->{portalSkinBackground},
         AUTH_ERROR      => $req->error,
         AUTH_ERROR_TYPE => $req->error_type,
+        AUTH_URL        => $req->datas->{_url},
         CHOICE_PARAM    => $self->conf->{authChoiceParam},
         CHOICE_VALUE    => $req->{_authChoice},
         EXPMAILDATE     => $req->datas->{expMailDate},
