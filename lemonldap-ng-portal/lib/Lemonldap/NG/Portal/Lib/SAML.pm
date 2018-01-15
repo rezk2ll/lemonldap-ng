@@ -1582,7 +1582,7 @@ sub processLogoutRequestMsg {
 
     my $expirationTime = $self->samldate2timestamp($notOnOrAfter);
 
-    return ( time > $expirationTime );
+    return ( time < $expirationTime );
 }
 
 ## @method boolean validateLogoutRequest(Lasso::Logout logout)
