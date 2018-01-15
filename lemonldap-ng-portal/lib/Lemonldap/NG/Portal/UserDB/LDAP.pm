@@ -105,7 +105,9 @@ sub setGroups {
         my $ldapGroups = $self->ldap->searchGroups(
             $self->conf->{ldapGroupBase},
             $self->conf->{ldapGroupAttributeName},
-            $group_value, $self->ldapGroupAttributeNameSearch
+            $group_value,
+            $self->ldapGroupAttributeNameSearch,
+            $req->{ldapGroupDuplicateCheck}
         );
 
         foreach ( keys %$ldapGroups ) {

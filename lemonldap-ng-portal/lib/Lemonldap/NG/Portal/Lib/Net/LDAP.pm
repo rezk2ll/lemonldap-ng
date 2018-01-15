@@ -579,16 +579,18 @@ sub ldap {
     return 0;
 }
 
-## @method string searchGroups(string base, string key, string value, string attributes)
+## @method string searchGroups(string base, string key, string value, string attributes, hashref dupcheck)
 # Get groups from LDAP directory
 # @param base LDAP search base
 # @param key Attribute name in group containing searched value
 # @param value Searched value
 # @param attributes to get from found groups (array ref)
+# @param dupcheck to get from found groups (hash ref)
 # @return hashRef groups
 sub searchGroups {
-    my ( $self, $base, $key, $value, $attributes ) = @_;
+    my ( $self, $base, $key, $value, $attributes, $dupcheck ) = @_;
 
+    $dupcheck ||= {};
     my $groups = {};
 
     # Creating search filter
@@ -627,16 +629,25 @@ sub searchGroups {
                 # Launch group search
                 if ($group_value) {
 
-                    $self->{portal}
-                      ->logger->debug("Recursive search for $group_value");
+                    if ( $dupcheck->{$group_value} ) {
+                        $self->{portal}->logger->debug(
+"Disable search for $group_value, as it was already searched"
+                        );
+                    }
+                    else {
+                        $dupcheck->{$group_value} = 1;
+                        $self->{portal}
+                          ->logger->debug("Recursive search for $group_value");
 
-                    my $recursive_groups =
-                      $self->searchGroups( $base, $key, $group_value,
-                        $attributes );
+                        my $recursive_groups =
+                          $self->searchGroups( $base, $key, $group_value,
+                            $attributes, $dupcheck );
 
-                    my %allGroups = ( %$groups, %$recursive_groups )
-                      if ( ref $recursive_groups );
-                    $groups = \%allGroups;
+                        my %allGroups = ( %$groups, %$recursive_groups )
+                          if ( ref $recursive_groups );
+                        $groups = \%allGroups;
+
+                    }
                 }
             }
 
