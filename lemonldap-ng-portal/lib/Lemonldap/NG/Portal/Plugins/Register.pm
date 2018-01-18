@@ -97,6 +97,8 @@ sub init {
 sub register {
     my ( $self, $req ) = @_;
 
+    $self->p->controlUrl($req);
+
     # Check parameters
     $req->error( $self->_register($req) );
 
@@ -289,6 +291,7 @@ sub _register {
           . $self->conf->{authChoiceParam} . '='
           . $req->datas->{_authChoice}
           if ( $req->datas->{_authChoice} );
+        $url .= '&url=' . $req->datas->{_url} if ( $req->datas->{_url} );
 
         # Build mail content
         my $tr      = $self->translate($req);
@@ -357,7 +360,17 @@ sub _register {
     # Use HTML template
     $body = $self->loadTemplate( 'mail_register_done', filter => $tr );
 
+    # Build portal url
+    my $url = $self->conf->{portal};
+    $url =~ s#/*$##;
+    $url .= '/?skin=' . $self->p->getSkin($req);
+    $url .=
+      '&' . $self->conf->{authChoiceParam} . '=' . $req->datas->{_authChoice}
+      if ( $req->datas->{_authChoice} );
+    $url .= '&url=' . $req->datas->{_url} if ( $req->datas->{_url} );
+
     # Replace variables in body
+    $body =~ s/\$url/$url/g;
     $body =~ s/\$(\w+)/$req->datas->{registerInfo}->{$1}/ge;
 
     # Send mail
@@ -376,6 +389,7 @@ sub display {
         SKIN_BG         => $self->conf->{portalSkinBackground},
         AUTH_ERROR      => $req->error,
         AUTH_ERROR_TYPE => $req->error_type,
+        AUTH_URL        => $req->datas->{_url},
         CHOICE_PARAM    => $self->conf->{authChoiceParam},
         CHOICE_VALUE    => $req->datas->{_authChoice},
         EXPMAILDATE     => $req->datas->{expMailDate},
