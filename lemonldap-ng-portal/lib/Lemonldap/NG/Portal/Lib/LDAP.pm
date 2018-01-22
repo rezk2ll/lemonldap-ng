@@ -50,12 +50,24 @@ has filter => (
 );
 
 sub buildFilter {
+    $_[0]->_buildFilter( $_[0]->conf->{AuthLDAPFilter} );
+}
+
+has mailFilter => (
+    is      => 'rw',
+    lazy    => 1,
+    builder => 'buildMailFilter',
+);
+
+sub buildMailFilter {
+    $_[0]->_buildFilter( $_[0]->conf->{mailLDAPFilter} );
+}
+
+sub _buildFilter {
     my $conf = $_[0]->{conf};
     $_[0]->{p}->logger->debug("LDAP Search base: $_[0]->{conf}->{ldapBase}");
-
-    # TODO : mailLDAPFilter
     my $filter =
-         $conf->{AuthLDAPFilter}
+         $_[1]
       || $conf->{LDAPFilter}
       || '(&(uid=$user)(objectClass=inetOrgPerson))';
     $filter =~ s/"/\\"/g;

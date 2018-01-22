@@ -28,9 +28,17 @@ sub init {
 # RUNNING METHODS
 
 sub getUser {
-    my ( $self, $req ) = @_;
-    my $res = eval {
-        $self->restCall( $self->conf->{restUserDBUrl}, { user => $req->user } );
+    my ( $self, $req, %args ) = @_;
+    my $res;
+    $res = eval {
+        $self->restCall(
+            (
+                  $args{useMail}
+                ? $self->conf->{restMailDBUrl} || $self->conf->{restUserDBUrl}
+                : $self->conf->{restUserDBUrl}
+            ),
+            { user => $req->user }
+        );
     };
     if ($@) {
         $self->logger->error("UserDB REST error: $@");

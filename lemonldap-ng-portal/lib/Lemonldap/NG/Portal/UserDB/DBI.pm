@@ -28,6 +28,18 @@ has pivot => (
     }
 );
 
+has mailField => (
+    is      => 'rw',
+    lazy    => 1,
+    builder => sub {
+        my $conf = $_[0]->{conf};
+        return
+             $conf->{dbiMailCol}
+          || $conf->{userPivot}
+          || $conf->{dbiAuthLoginCol};
+    }
+);
+
 has exportedVars => (
     is      => 'rw',
     lazy    => 1,
@@ -40,9 +52,9 @@ has exportedVars => (
 # RUNNING METHODS
 
 sub getUser {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, %args ) = @_;
     my $table = $self->table;
-    my $pivot = $self->pivot;
+    my $pivot = $args{useMail} ? $self->mailField : $self->pivot;
     my $user  = $req->{user};
     my $sth;
     eval {

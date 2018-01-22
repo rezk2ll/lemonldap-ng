@@ -178,7 +178,7 @@ sub _reset {
             'setPersistentSessionInfo', 'setLocalGroups'
         ]
     );
-    if ( my $error = $self->p->process($req) ) {
+    if ( my $error = $self->p->process( $req, useMail => 1 ) ) {
         if ( $error == PE_USERNOTFOUND or $error = PE_BADCREDENTIALS ) {
             $self->userLogger->warn(
                 "Reset asked for a unvalid user ($req->{mail})");

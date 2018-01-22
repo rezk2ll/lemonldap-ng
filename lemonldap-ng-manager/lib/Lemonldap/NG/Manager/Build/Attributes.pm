@@ -2169,6 +2169,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         # REST
         restAuthUrl       => { type => 'url' },
         restUserDBUrl     => { type => 'url' },
+        # TODO: add restMailDBUrl
         restPwdConfirmUrl => { type => 'url' },
         restPwdModifyUrl  => { type => 'url' },
 
@@ -2297,6 +2298,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         dbiUserPassword    => { type => 'password', },
         dbiAuthTable       => { type => 'text', },
         dbiUserTable       => { type => 'text', },
+
+        # TODO: add dbiMailCol
         dbiAuthLoginCol    => { type => 'text', },
         dbiAuthPasswordCol => { type => 'text', },
         dbiPasswordMailCol => { type => 'text', },

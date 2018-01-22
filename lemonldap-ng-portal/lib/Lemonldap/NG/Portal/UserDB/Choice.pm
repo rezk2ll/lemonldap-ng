@@ -17,9 +17,9 @@ sub init {
 # RUNNING METHODS
 
 sub getUser {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, %args ) = @_;
     $self->checkChoice($req) or return PE_FIRSTACCESS;
-    return $req->datas->{enabledMods1}->[0]->getUser($req);
+    return $req->datas->{enabledMods1}->[0]->getUser( $req, %args );
 }
 
 sub setSessionInfo {

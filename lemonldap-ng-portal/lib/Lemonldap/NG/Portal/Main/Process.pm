@@ -15,18 +15,18 @@ use POSIX qw(strftime);
 # to a subroutine (see Lemonldap::NG::Portal::Main::Run.pm)
 
 sub process {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, %args ) = @_;
 
     #$req->error(PE_OK);
     my $err = PE_OK;
     while ( my $sub = shift @{ $req->steps } ) {
         if ( ref $sub ) {
             $self->logger->debug("Processing code ref");
-            last if ( $err = $sub->($req) );
+            last if ( $err = $sub->( $req, %args ) );
         }
         else {
             $self->logger->debug("Processing $sub");
-            last if ( $err = $self->$sub($req) );
+            last if ( $err = $self->$sub( $req, %args ) );
         }
     }
     $self->logger->debug("Returned error: $err") if ($err);

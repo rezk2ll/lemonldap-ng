@@ -38,14 +38,18 @@ has attrs => (
 # RUNNING METHODS
 
 sub getUser {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, %args ) = @_;
     return PE_LDAPCONNECTFAILED unless $self->ldap and $self->bind();
     my $mesg = $self->ldap->search(
         base   => $self->conf->{ldapBase},
         scope  => 'sub',
-        filter => $self->filter->($req),
-        defer  => $self->conf->{ldapSearchDeref} || 'find',
-        attrs  => $self->attrs,
+        filter => (
+              $args{useMail}
+            ? $self->mailFilter($req)
+            : $self->filter->($req)
+        ),
+        defer => $self->conf->{ldapSearchDeref} || 'find',
+        attrs => $self->attrs,
     );
     if ( $mesg->code() != 0 ) {
         $self->logger->error( 'LDAP Search error: ' . $mesg->error );
@@ -57,8 +61,7 @@ sub getUser {
         return PE_BADCREDENTIALS;
     }
     unless ( $req->datas->{entry} = $mesg->entry(0) ) {
-        my $user = $req->datas->{mail} || $req->{user};
-        $self->userLogger->warn("$user was not found in LDAP directory");
+        $self->userLogger->warn("$req->{user} was not found in LDAP directory");
         eval { $self->p->_authentication->setSecurity($req) };
         return PE_BADCREDENTIALS;
     }
