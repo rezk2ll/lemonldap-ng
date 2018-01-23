@@ -179,7 +179,7 @@ be pushed in response (see L<Lemonldap::NG::Common::PSGI>).
 Be careful, it contains an array reference, not a hash one because headers
 can be multi-valued.
 
-Exemple:
+Example:
 
   # Set headers
   $req->respHeaders( "Location" => "http://x.y.z/", Etag => "XYZ", );
