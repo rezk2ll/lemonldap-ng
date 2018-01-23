@@ -18,7 +18,7 @@ llapp = angular.module 'llApp', ['ngAria']
 #    * translate(word)
 #    * translateP(paragraph): only __words__ are translated
 #    * translateField(object, property)
-#  - an HTML attribute called 'trspan'. Exemple: <h3 trspan="portal"/>
+#  - an HTML attribute called 'trspan'. Example: <h3 trspan="portal"/>
 
 # $translator provider
 
