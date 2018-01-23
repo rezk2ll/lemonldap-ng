@@ -44,22 +44,19 @@ sub init {
 # Check known accounts
 # @return Lemonldap::NG::Portal constant
 sub getUser {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, %args ) = @_;
 
-    # Search by login
-    if ( $req->user ) {
-        return PE_OK
-          if ( defined $demoAccounts{ $req->user } );
-    }
-
-    # Search by mail
-    if ( $req->{mail} ) {
+    if ( $args{useMail} ) {
         return PE_OK
           if (
             ( $req->{user} ) =
-            grep { $demoAccounts{$_}->{mail} eq $req->{mail} }
+            grep { $demoAccounts{$_}->{mail} eq $req->{user} }
             keys %demoAccounts
           );
+    }
+    else {
+        return PE_OK
+          if ( defined $demoAccounts{ $req->user } );
     }
 
     eval { $self->p->_authentication->setSecurity($req) };
