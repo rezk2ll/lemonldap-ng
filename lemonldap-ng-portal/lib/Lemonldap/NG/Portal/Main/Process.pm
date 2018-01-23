@@ -276,9 +276,9 @@ sub extractFormInfo {
 }
 
 sub getUser {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, %args ) = @_;
     return PE_ERROR unless ( $self->_userDB );
-    return $self->_userDB->getUser($req);
+    return $self->_userDB->getUser( $req, %args );
 }
 
 sub authenticate {

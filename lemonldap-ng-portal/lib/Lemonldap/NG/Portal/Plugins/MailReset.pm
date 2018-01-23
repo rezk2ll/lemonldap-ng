@@ -99,6 +99,8 @@ sub _reset {
         return PE_MAILFORMEMPTY;
     }
 
+    my $searchByMail = 1;
+
     # OTHER FORMS
     if ($mailToken) {
         $self->logger->debug( "Token given for password reset: " . $mailToken );
@@ -110,18 +112,19 @@ sub _reset {
             return PE_BADMAILTOKEN;
         }
 
-        $req->{mail} = $mailSession->data->{user};
+        $req->{user} = $mailSession->data->{user};
         $req->datas->{mailAddress} =
           $mailSession->data->{ $self->conf->{mailSessionKey} };
-        $self->logger->debug( 'User associated to: ' . $req->{mail} );
+        $self->logger->debug( 'User associated to: ' . $req->{user} );
         $mailSession->remove;
+        $searchByMail = 0;
     }
 
     # Check for values posted
     else {
 
         # Use submitted value
-        $req->{mail} = $req->param('mail');
+        $req->{user} = $req->param('mail');
 
         # Check if token exists
         my $token;
@@ -163,7 +166,7 @@ sub _reset {
                 return PE_TOKENEXPIRED;
             }
         }
-        unless ( $req->{mail} =~ /$self->{conf}->{userControl}/o ) {
+        unless ( $req->{user} =~ /$self->{conf}->{userControl}/o ) {
             $self->setSecurity($req);
             return PE_MALFORMEDUSER;
         }
@@ -178,10 +181,10 @@ sub _reset {
             'setPersistentSessionInfo', 'setLocalGroups'
         ]
     );
-    if ( my $error = $self->p->process( $req, useMail => 1 ) ) {
+    if ( my $error = $self->p->process( $req, useMail => $searchByMail ) ) {
         if ( $error == PE_USERNOTFOUND or $error = PE_BADCREDENTIALS ) {
             $self->userLogger->warn(
-                "Reset asked for a unvalid user ($req->{mail})");
+                "Reset asked for a unvalid user ($req->{user})");
 
             # To avoid mail enumeration, return OK
             # unless portalErrorOnMailNotFound is set
@@ -203,7 +206,7 @@ sub _reset {
     }
 
     # Build temporary session
-    my $mailSession = $self->getMailSession( $req->{mail} );
+    my $mailSession = $self->getMailSession( $req->{user} );
     unless ( $mailSession or $mailToken ) {
 
         # Create a new session
@@ -230,7 +233,7 @@ sub _reset {
             $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
 
         # Store user
-        $infos->{user} = $req->{mail};
+        $infos->{user} = $req->{user};
 
         # Store type
         $infos->{_type} = "mail";
@@ -272,7 +275,7 @@ sub _reset {
             and !$req->param('resendconfirmation') )
         {
             $self->userLogger->notice(
-                'Reset mail already sent to ' . $req->{mail} );
+                'Reset mail already sent to ' . $req->{user} );
 
             # To avoid enumeration, return OK
             return PE_MAILCONFIRMOK;
@@ -404,7 +407,6 @@ sub changePwd {
         # Populate $req->{user} for logging purpose
         my $tmp = $self->conf->{portalRequireOldPassword};
         $self->conf->{portalRequireOldPassword} = 0;
-        $req->{user} = $req->{mail};
         my $result = $self->p->_passwordDB->modifyPassword($req);
         $req->{user} = undef;
 
@@ -479,9 +481,9 @@ sub display {
         STARTMAILTIME   => $req->datas->{startMailTime},
         MAILALREADYSENT => $req->datas->{mailAlreadySent},
         MAIL            => (
-            $self->p->checkXSSAttack( 'mail', $req->{mail} )
+            $self->p->checkXSSAttack( 'mail', $req->{user} )
             ? ""
-            : $self->{mail}
+            : $req->{user}
         ),
         DISPLAY_FORM            => 0,
         DISPLAY_RESEND_FORM     => 0,
