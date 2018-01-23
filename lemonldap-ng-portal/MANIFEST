@@ -8,6 +8,7 @@ example/soapconfigtest.pl
 example/soaperrortest.pl
 example/soaptest.pl
 lib/Lemonldap/NG/Portal.pm
+lib/Lemonldap/NG/Portal/Auth.pod
 lib/Lemonldap/NG/Portal/Auth/_WebForm.pm
 lib/Lemonldap/NG/Portal/Auth/AD.pm
 lib/Lemonldap/NG/Portal/Auth/Apache.pm
@@ -105,6 +106,7 @@ lib/Lemonldap/NG/Portal/Register/Custom.pm
 lib/Lemonldap/NG/Portal/Register/Demo.pm
 lib/Lemonldap/NG/Portal/Register/LDAP.pm
 lib/Lemonldap/NG/Portal/Register/U2F.pm
+lib/Lemonldap/NG/Portal/UserDB.pod
 lib/Lemonldap/NG/Portal/UserDB/AD.pm
 lib/Lemonldap/NG/Portal/UserDB/CAS.pm
 lib/Lemonldap/NG/Portal/UserDB/Choice.pm
