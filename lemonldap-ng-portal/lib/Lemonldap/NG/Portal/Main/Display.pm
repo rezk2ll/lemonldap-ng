@@ -422,7 +422,7 @@ sub getSkin {
     # Check skin GET/POST parameter
     my $skinParam = $req->param('skin');
     if ( defined $skinParam ) {
-        if ( $skinParam =~ /^[\w\-]$/ ) {
+        if ( $skinParam =~ /^[\w\-]+$/ ) {
             if ( -d $self->conf->{templateDir} . '/' . $skinParam ) {
                 $skin = $skinParam;
                 $self->logger->debug(
