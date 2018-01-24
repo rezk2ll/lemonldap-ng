@@ -49,27 +49,29 @@ has filter => (
     builder => 'buildFilter',
 );
 
-sub buildFilter {
-    $_[0]->_buildFilter( $_[0]->conf->{AuthLDAPFilter} );
-}
-
 has mailFilter => (
     is      => 'rw',
     lazy    => 1,
     builder => 'buildMailFilter',
 );
 
+sub buildFilter {
+    return $_[0]->_buildFilter( $_[0]->conf->{AuthLDAPFilter}
+          || $_[0]->conf->{LDAPFilter}
+          || '(&(uid=$user)(objectClass=inetOrgPerson))' );
+}
+
 sub buildMailFilter {
-    $_[0]->_buildFilter( $_[0]->conf->{mailLDAPFilter} );
+    my $f = $_[0]->conf->{mailLDAPFilter}
+      || '(&(mail=$user)(objectClass=inetOrgPerson))';
+    $f =~ s/\$mail\b/\$user/g;
+    return $_[0]->_buildFilter($f);
 }
 
 sub _buildFilter {
     my $conf = $_[0]->{conf};
     $_[0]->{p}->logger->debug("LDAP Search base: $_[0]->{conf}->{ldapBase}");
-    my $filter =
-         $_[1]
-      || $conf->{LDAPFilter}
-      || '(&(uid=$user)(objectClass=inetOrgPerson))';
+    my $filter = $_[1];
     $filter =~ s/"/\\"/g;
     $filter =~ s/\$(\w+)/".\$req->{sessionInfo}->{$1}."/g;
     $filter =~ s/\$req->\{sessionInfo\}->\{user\}/\$req->{user}/g;

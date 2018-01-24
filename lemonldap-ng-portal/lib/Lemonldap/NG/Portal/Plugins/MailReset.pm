@@ -117,7 +117,7 @@ sub _reset {
           $mailSession->data->{ $self->conf->{mailSessionKey} };
         $self->logger->debug( 'User associated to: ' . $req->{user} );
         $mailSession->remove;
-        $searchByMail = 0;
+        $searchByMail = 0 unless ( $req->{user} =~ /\@/ );
     }
 
     # Check for values posted

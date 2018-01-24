@@ -45,7 +45,7 @@ sub getUser {
         scope  => 'sub',
         filter => (
               $args{useMail}
-            ? $self->mailFilter($req)
+            ? $self->mailFilter->($req)
             : $self->filter->($req)
         ),
         defer => $self->conf->{ldapSearchDeref} || 'find',
