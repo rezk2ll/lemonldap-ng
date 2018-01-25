@@ -35,7 +35,7 @@ SKIP: {
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel                   => 'debug',
+                logLevel                   => 'error',
                 useSafeJail                => 1,
                 portalDisplayRegister      => 1,
                 authentication             => 'DBI',
@@ -102,8 +102,8 @@ SKIP: {
 
     #print STDERR Dumper($query);
 }
+
+eval { unlink 't/userdb.db' };
 count($maintests);
-
 clean_sessions();
-
 done_testing( count() );

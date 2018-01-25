@@ -2,7 +2,8 @@ package Lemonldap::NG::Portal::Password::LDAP;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_PASSWORD_OK PE_LDAPERROR);
+use Lemonldap::NG::Portal::Main::Constants
+  qw(PE_PASSWORD_OK PE_LDAPERROR PE_ERROR);
 
 extends 'Lemonldap::NG::Portal::Lib::LDAP',
   'Lemonldap::NG::Portal::Password::Base';
@@ -23,10 +24,15 @@ sub confirm {
 
 sub modifyPassword {
     my ( $self, $req, $pwd ) = @_;
+    my $dn = $req->userData->{_dn} || $req->sessionInfo->{_dn};
+    unless ($dn) {
+        $self->logger->error('"dn" is not set, aborting password modification');
+        return PE_ERROR;
+    }
 
     # Call the modify password method
-    my $code = $self->ldap->userModifyPassword( $req->userData->{_dn},
-        $pwd, $req->datas->{oldpassword} );
+    my $code =
+      $self->ldap->userModifyPassword( $dn, $pwd, $req->datas->{oldpassword} );
 
     unless ( $code == PE_PASSWORD_OK ) {
         $self->ldap->unbind;
@@ -40,7 +46,7 @@ sub modifyPassword {
         and $self->conf->{ldapUsePasswordResetAttribute} )
     {
         my $result = $self->ldap->modify(
-            $req->datas->{dn},
+            $dn,
             replace => {
                 $self->conf->{ldapPasswordResetAttribute} =>
                   $self->conf->{ldapPasswordResetAttributeValue}

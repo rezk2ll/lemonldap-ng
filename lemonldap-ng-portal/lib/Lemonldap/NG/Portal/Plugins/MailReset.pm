@@ -325,7 +325,7 @@ sub _reset {
         $body =~ s/\$expMailDate/$req->datas->{expMailDate}/ge;
         $body =~ s/\$expMailTime/$req->datas->{expMailTime}/ge;
         $body =~ s/\$url/$url/g;
-        $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1}/ge;
+        $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
         # Send mail
         unless (
@@ -443,7 +443,7 @@ sub changePwd {
     # Replace variables in body
     my $password = $req->datas->{newpassword};
     $body =~ s/\$password/$password/g;
-    $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1}/ge;
+    $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
     # Send mail
     return PE_MAILERROR
