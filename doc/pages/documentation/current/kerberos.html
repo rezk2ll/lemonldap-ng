@@ -55,37 +55,25 @@
 <li class="level2"><div class="li"><a href="#example_values">Example values</a></div></li>
 <li class="level2"><div class="li"><a href="#server_time">Server time</a></div></li>
 <li class="level2"><div class="li"><a href="#dns">DNS</a></div></li>
-<li class="level2"><div class="li"><a href="#ad_accounts">AD accounts</a></div></li>
+<li class="level2"><div class="li"><a href="#ssl">SSL</a></div></li>
 <li class="level2"><div class="li"><a href="#web_browser_configuration">Web browser configuration</a></div>
 <ul class="toc">
 <li class="level3"><div class="li"><a href="#firefox">Firefox</a></div></li>
 <li class="level3"><div class="li"><a href="#internet_explorer">Internet Explorer</a></div></li>
 </ul>
 </li>
-<li class="level2"><div class="li"><a href="#apache_kerberos_module_installation">Apache Kerberos module installation</a></div></li>
 </ul>
 </li>
-<li class="level1"><div class="li"><a href="#single_llng_serversingle_ad_domain">Single LL::NG Server / Single AD domain</a></div>
+<li class="level1"><div class="li"><a href="#single_ad_domain">Single AD domain</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#client_kerberos_configuration">Client Kerberos configuration</a></div></li>
 <li class="level2"><div class="li"><a href="#obtain_keytab_file">Obtain keytab file</a></div></li>
-<li class="level2"><div class="li"><a href="#configuration_of_lemonldapng">Configuration of LemonLDAP::NG</a></div></li>
 </ul>
 </li>
-<li class="level1"><div class="li"><a href="#llng_clustersingle_ad_domain">LL::NG Cluster / Single AD domain</a></div>
+<li class="level1"><div class="li"><a href="#multiple_ad_domains">Multiple AD domains</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#client_kerberos_configuration1">Client Kerberos configuration</a></div></li>
 <li class="level2"><div class="li"><a href="#obtain_keytab_file1">Obtain keytab file</a></div></li>
-<li class="level2"><div class="li"><a href="#configuration_of_lemonldapng1">Configuration of LemonLDAP::NG</a></div></li>
-<li class="level2"><div class="li"><a href="#configuration_of_portal_virtual_host">Configuration of portal virtual host</a></div></li>
-</ul>
-</li>
-<li class="level1"><div class="li"><a href="#llng_clustertwo_ad_domains">LL::NG Cluster / Two AD domains</a></div>
-<ul class="toc">
-<li class="level2"><div class="li"><a href="#client_kerberos_configuration2">Client Kerberos configuration</a></div></li>
-<li class="level2"><div class="li"><a href="#obtain_keytab_file2">Obtain keytab file</a></div></li>
-<li class="level2"><div class="li"><a href="#configuration_of_lemonldapng2">Configuration of LemonLDAP::NG</a></div></li>
-<li class="level2"><div class="li"><a href="#configuration_of_portal_virtual_host1">Configuration of portal virtual host</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#other_resources">Other resources</a></div></li>
@@ -103,28 +91,26 @@
 <div class="level2">
 
 <p>
-This documentation will explain how to use Active Directory as Kerberos server, and provide transparent authentication to AD domain users to <abbr title="LemonLDAP::NG">LL::NG</abbr>.
+This documentation will explain how to use Active Directory as Kerberos server, and provide transparent authentication for one or multiple AD domains.
 </p>
 
 <p>
-We will present several architectures:
+You can use Kerberos  in <abbr title="LemonLDAP::NG">LL::NG</abbr> with the following authentication modules:
 </p>
 <ul>
-<li class="level1"><div class="li"> Single <abbr title="LemonLDAP::NG">LL::NG</abbr> server linked to one AD domain</div>
+<li class="level1"><div class="li"> <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos</a> (recommended): use Perl GSSAPI module, compatible with Apache and Nginx</div>
 </li>
-<li class="level1"><div class="li"> <abbr title="LemonLDAP::NG">LL::NG</abbr> cluster linked to one AD domain</div>
-</li>
-<li class="level1"><div class="li"> <abbr title="LemonLDAP::NG">LL::NG</abbr> cluster linked to two AD domains</div>
+<li class="level1"><div class="li"> <a href="authapache.html" class="wikilink1" title="documentation:2.0:authapache">Apache</a>: use mod_auth_kerb or mod_auth_gssapi in Apache</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Presentation" [25-376] -->
+<!-- EDIT2 SECTION "Presentation" [25-454] -->
 <h2 class="sectionedit3" id="prerequisites">Prerequisites</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Prerequisites" [377-403] -->
+<!-- EDIT3 SECTION "Prerequisites" [455-481] -->
 <h3 class="sectionedit4" id="example_values">Example values</h3>
 <div class="level3">
 
@@ -138,26 +124,12 @@ We will use the following values in our examples
 </li>
 <li class="level1"><div class="li"> <strong>auth.example.com</strong>: <abbr title="Domain Name System">DNS</abbr> of the <abbr title="LemonLDAP::NG">LL::NG</abbr> portal</div>
 </li>
-<li class="level1"><div class="li"> <strong>authpwd.example.com</strong>: <abbr title="Domain Name System">DNS</abbr> of the <abbr title="LemonLDAP::NG">LL::NG</abbr> portal (to failback to a form based authentication)</div>
-</li>
-<li class="level1"><div class="li"> <strong>node1.example.com</strong>: <abbr title="Domain Name System">DNS</abbr> of the first <abbr title="LemonLDAP::NG">LL::NG</abbr> portal server (in cluster mode)</div>
-</li>
-<li class="level1"><div class="li"> <strong>node2.example.com</strong>: <abbr title="Domain Name System">DNS</abbr> of the second <abbr title="LemonLDAP::NG">LL::NG</abbr> portal server (in cluster mode)</div>
-</li>
-<li class="level1"><div class="li"> <strong>ad.example.com</strong>: <abbr title="Domain Name System">DNS</abbr> of First Active Directory</div>
-</li>
-<li class="level1"><div class="li"> <strong>ad.acme.com</strong>: <abbr title="Domain Name System">DNS</abbr> of Second Active Directory</div>
-</li>
-<li class="level1"><div class="li"> <strong>KERB_AUTH</strong>: AD account to generate the keytab for <abbr title="LemonLDAP::NG">LL::NG</abbr> server (in single mode)</div>
-</li>
-<li class="level1"><div class="li"> <strong>KERB_NODE1</strong>: AD account to generate the keytab for the first <abbr title="LemonLDAP::NG">LL::NG</abbr> server (in cluster mode)</div>
-</li>
-<li class="level1"><div class="li"> <strong>KERB_NODE2</strong>: AD account to generate the keytab for the second <abbr title="LemonLDAP::NG">LL::NG</abbr> server (in cluster mode)</div>
+<li class="level1"><div class="li"> <strong>KERB_AUTH</strong>: AD account to generate the keytab for <abbr title="LemonLDAP::NG">LL::NG</abbr> server</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Example values" [404-1263] -->
+<!-- EDIT4 SECTION "Example values" [482-751] -->
 <h3 class="sectionedit5" id="server_time">Server time</h3>
 <div class="level3">
 
@@ -166,26 +138,26 @@ It is mandatory that <abbr title="LemonLDAP::NG">LL::NG</abbr> servers and AD se
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Server time" [1264-1399] -->
+<!-- EDIT5 SECTION "Server time" [752-887] -->
 <h3 class="sectionedit6" id="dns">DNS</h3>
 <div class="level3">
 
 <p>
-All names must be registered in the <abbr title="Domain Name System">DNS</abbr> server (which is Active Directory). The reverse <abbr title="Domain Name System">DNS</abbr> should also work for all the names.
+The auth.example.com must be registered in the <abbr title="Domain Name System">DNS</abbr> server (which is Active Directory). The reverse <abbr title="Domain Name System">DNS</abbr> of auth.example.com <strong>must</strong> return the portal <abbr title="Internet Protocol">IP</abbr>.
 </p>
-
+<div class="notetip">If you have a <abbr title="Single Sign On">SSO</abbr> cluster, you must setup a Virtual <abbr title="Internet Protocol">IP</abbr> in cluster and register this <abbr title="Internet Protocol">IP</abbr> in <abbr title="Domain Name System">DNS</abbr>.
 </div>
-<!-- EDIT6 SECTION "DNS" [1400-1543] -->
-<h3 class="sectionedit7" id="ad_accounts">AD accounts</h3>
+</div>
+<!-- EDIT6 SECTION "DNS" [888-1170] -->
+<h3 class="sectionedit7" id="ssl">SSL</h3>
 <div class="level3">
 
 <p>
-It is recommended to create an AD account for each <abbr title="LemonLDAP::NG">LL::NG</abbr> server. Each account will hold the Service Principal Name (SPN) of  the <abbr title="LemonLDAP::NG">LL::NG</abbr> server.
+SSL is not mandatory, but it is strongly recommended. Your portal <abbr title="Uniform Resource Locator">URL</abbr> should be <a href="https://auth.example.com" class="urlextern" title="https://auth.example.com"  rel="nofollow">https://auth.example.com</a>.
 </p>
-<div class="notetip">It should be possible to have the same account for all SPN, but this may require some manipulations on AD (command setspn) that are not documented here.
+
 </div>
-</div>
-<!-- EDIT7 SECTION "AD accounts" [1544-1884] -->
+<!-- EDIT7 SECTION "SSL" [1171-1292] -->
 <h3 class="sectionedit8" id="web_browser_configuration">Web browser configuration</h3>
 <div class="level3">
 
@@ -212,32 +184,13 @@ Check into security parameters that Kerberos authentication is allowed.
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Web browser configuration" [1885-2244] -->
-<h3 class="sectionedit9" id="apache_kerberos_module_installation">Apache Kerberos module installation</h3>
-<div class="level3">
-
-<p>
-On CentOS/RHEL:
-</p>
-<pre class="code shell">yum install mod_auth_kerb</pre>
-
-<p>
-On Debian/Ubuntu:
-</p>
-<pre class="code shell">apt-get install libapache2-mod-auth-kerb</pre>
-
-<p>
-The module must be loaded by Apache (LoadModule directive).
-</p>
-
-</div>
-<!-- EDIT9 SECTION "Apache Kerberos module installation" [2245-2497] -->
-<h2 class="sectionedit10" id="single_llng_serversingle_ad_domain">Single LL::NG Server / Single AD domain</h2>
+<!-- EDIT8 SECTION "Web browser configuration" [1293-1652] -->
+<h2 class="sectionedit9" id="single_ad_domain">Single AD domain</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT10 SECTION "Single LL::NG Server / Single AD domain" [2498-2550] -->
-<h3 class="sectionedit11" id="client_kerberos_configuration">Client Kerberos configuration</h3>
+<!-- EDIT9 SECTION "Single AD domain" [1653-1682] -->
+<h3 class="sectionedit10" id="client_kerberos_configuration">Client Kerberos configuration</h3>
 <div class="level3">
 
 <p>
@@ -284,8 +237,8 @@ You can then close the Kerberos session:
 <pre class="code">kdestroy</pre>
 
 </div>
-<!-- EDIT11 SECTION "Client Kerberos configuration" [2551-3552] -->
-<h3 class="sectionedit12" id="obtain_keytab_file">Obtain keytab file</h3>
+<!-- EDIT10 SECTION "Client Kerberos configuration" [1683-2684] -->
+<h3 class="sectionedit11" id="obtain_keytab_file">Obtain keytab file</h3>
 <div class="level3">
 
 <p>
@@ -366,78 +319,13 @@ The important things to check are:
 </ul>
 
 </div>
-<!-- EDIT12 SECTION "Obtain keytab file" [3553-5681] -->
-<h3 class="sectionedit13" id="configuration_of_lemonldapng">Configuration of LemonLDAP::NG</h3>
-<div class="level3">
-
-<p>
-See <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos authentication module</a> <em>or <a href="authapache.html#llng" class="wikilink1" title="documentation:2.0:authapache">Apache authentication module configuration</a> (deprecated)</em>.
-</p>
-
-</div>
-<!-- EDIT13 SECTION "Configuration of LemonLDAP::NG" [5682-5861] -->
-<h2 class="sectionedit14" id="llng_clustersingle_ad_domain">LL::NG Cluster / Single AD domain</h2>
+<!-- EDIT11 SECTION "Obtain keytab file" [2685-4814] -->
+<h2 class="sectionedit12" id="multiple_ad_domains">Multiple AD domains</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT14 SECTION "LL::NG Cluster / Single AD domain" [5862-5908] -->
-<h3 class="sectionedit15" id="client_kerberos_configuration1">Client Kerberos configuration</h3>
-<div class="level3">
-
-<p>
-The client Kerberos configuration is the same as a single <abbr title="LemonLDAP::NG">LL::NG</abbr> server.
-</p>
-
-</div>
-<!-- EDIT15 SECTION "Client Kerberos configuration" [5909-6023] -->
-<h3 class="sectionedit16" id="obtain_keytab_file1">Obtain keytab file</h3>
-<div class="level3">
-<div class="noteimportant">You need to get a keytab for each <abbr title="LemonLDAP::NG">LL::NG</abbr> node.
-</div>
-<p>
-Commands on Active Directory will be:
-</p>
-<pre class="code">ktpass -princ HTTP/node1.example.com@EXAMPLE.COM -mapuser KERB_NODE1@EXAMPLE.COM -crypto DES-CBC-MD5 -ptype KRB5_NT_PRINCIPAL -mapOp set -pass &lt;PASSWORD&gt; -out c:\authnode1.keytab
-ktpass -princ HTTP/node2.example.com@EXAMPLE.COM -mapuser KERB_NODE2@EXAMPLE.COM -crypto DES-CBC-MD5 -ptype KRB5_NT_PRINCIPAL -mapOp set -pass &lt;PASSWORD&gt; -out c:\authnode2.keytab</pre>
-
-<p>
-Copy the generated keytab on each node (rename it as auth.keytab to have the same Apache configuration on each node). 
-</p>
-
-<p>
-Change rights on keytab file:
-</p>
-<pre class="code">chown apache /etc/lemonldap-ng/auth.keytab
-chmod 600 /etc/lemonldap-ng/auth.keytab</pre>
-<div class="notetip">You can do the same check for the keytab as with the single <abbr title="LemonLDAP::NG">LL::NG</abbr> server. Just use node1.example.com and node2.example.com instead of auth.example.com.
-</div>
-</div>
-<!-- EDIT16 SECTION "Obtain keytab file" [6024-6957] -->
-<h3 class="sectionedit17" id="configuration_of_lemonldapng1">Configuration of LemonLDAP::NG</h3>
-<div class="level3">
-
-<p>
-The configuration is the same as a single <abbr title="LemonLDAP::NG">LL::NG</abbr> server.
-</p>
-
-</div>
-<!-- EDIT17 SECTION "Configuration of LemonLDAP::NG" [6958-7058] -->
-<h3 class="sectionedit18" id="configuration_of_portal_virtual_host">Configuration of portal virtual host</h3>
-<div class="level3">
-
-<p>
-The only change in Apache configuration is in the <code>KrbServiceName</code>, it should be set to Any:
-</p>
-<pre class="code file apache">    KrbServiceName Any</pre>
-
-</div>
-<!-- EDIT18 SECTION "Configuration of portal virtual host" [7059-7247] -->
-<h2 class="sectionedit19" id="llng_clustertwo_ad_domains">LL::NG Cluster / Two AD domains</h2>
-<div class="level2">
-
-</div>
-<!-- EDIT19 SECTION "LL::NG Cluster / Two AD domains" [7248-7292] -->
-<h3 class="sectionedit20" id="client_kerberos_configuration2">Client Kerberos configuration</h3>
+<!-- EDIT12 SECTION "Multiple AD domains" [4815-4847] -->
+<h3 class="sectionedit13" id="client_kerberos_configuration1">Client Kerberos configuration</h3>
 <div class="level3">
 
 <p>
@@ -479,8 +367,8 @@ klist -e
 kdestroy</pre>
 
 </div>
-<!-- EDIT20 SECTION "Client Kerberos configuration" [7293-8037] -->
-<h3 class="sectionedit21" id="obtain_keytab_file2">Obtain keytab file</h3>
+<!-- EDIT13 SECTION "Client Kerberos configuration" [4848-5592] -->
+<h3 class="sectionedit14" id="obtain_keytab_file1">Obtain keytab file</h3>
 <div class="level3">
 
 <p>
@@ -513,26 +401,8 @@ You can then remove the original keytab files and protect the final keytab file:
 chmod 600 /etc/lemonldap-ng/auth.keytab</pre>
 
 </div>
-<!-- EDIT21 SECTION "Obtain keytab file" [8038-8699] -->
-<h3 class="sectionedit22" id="configuration_of_lemonldapng2">Configuration of LemonLDAP::NG</h3>
-<div class="level3">
-
-<p>
-The configuration is the same as a single <abbr title="LemonLDAP::NG">LL::NG</abbr> server.
-</p>
-
-</div>
-<!-- EDIT22 SECTION "Configuration of LemonLDAP::NG" [8700-8800] -->
-<h3 class="sectionedit23" id="configuration_of_portal_virtual_host1">Configuration of portal virtual host</h3>
-<div class="level3">
-
-<p>
-The configuration is the same as with a single AD domain.
-</p>
-
-</div>
-<!-- EDIT23 SECTION "Configuration of portal virtual host" [8801-8907] -->
-<h2 class="sectionedit24" id="other_resources">Other resources</h2>
+<!-- EDIT14 SECTION "Obtain keytab file" [5593-6254] -->
+<h2 class="sectionedit15" id="other_resources">Other resources</h2>
 <div class="level2">
 
 <p>
@@ -546,6 +416,6 @@ You can check these documentations to get more information:
 </ul>
 
 </div>
-<!-- EDIT24 SECTION "Other resources" [8908-] --></div>
+<!-- EDIT15 SECTION "Other resources" [6255-] --></div>
 </body>
 </html>

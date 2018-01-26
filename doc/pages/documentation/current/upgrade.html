@@ -49,11 +49,8 @@
 <div>
 
 <ul class="toc">
-<li class="level1"><div class="li"><a href="#installation">Installation</a></div>
-<ul class="toc">
-<li class="level2"><div class="li"><a href="#debian_wheezy">Debian Wheezy</a></div></li>
-</ul>
-</li>
+<li class="level1"><div class="li"><a href="#upgrade_order_from_19">Upgrade order from 1.9.*</a></div></li>
+<li class="level1"><div class="li"><a href="#installation">Installation</a></div></li>
 <li class="level1"><div class="li"><a href="#configuration">Configuration</a></div></li>
 <li class="level1"><div class="li"><a href="#kerberos_or_ssl_usage">Kerberos or SSL usage</a></div></li>
 <li class="level1"><div class="li"><a href="#logs">Logs</a></div></li>
@@ -80,20 +77,47 @@
 </div>
 </div>
 <!-- EDIT1 SECTION "Upgrade from 1.9 to 2.0" [1-162] -->
-<h2 class="sectionedit2" id="installation">Installation</h2>
+<h2 class="sectionedit2" id="upgrade_order_from_19">Upgrade order from 1.9.*</h2>
 <div class="level2">
 
+<p>
+As usual, if you use more than 1 server and don&#039;t want to stop the <abbr title="Single Sign On">SSO</abbr> service AND IF YOU HAVE NO INCOMPATIBILITY MENTIONED IN THIS DOCUMENT, upgrade must be done in the following order:
+</p>
+<ol>
+<li class="level1"><div class="li"> servers that have only handlers;</div>
+</li>
+<li class="level1"><div class="li"> portal servers <em>(all together if your load balancer doesn&#039;t keep state by user or client <abbr title="Internet Protocol">IP</abbr> and if users use the menu)</em>;</div>
+</li>
+<li class="level1"><div class="li"> manager server</div>
+</li>
+</ol>
+<div class="noteimportant">You must revalidate your configuration using the manager.
 </div>
-<!-- EDIT2 SECTION "Installation" [163-188] -->
-<h3 class="sectionedit3" id="debian_wheezy">Debian Wheezy</h3>
-<div class="level3">
+</div>
+<!-- EDIT2 SECTION "Upgrade order from 1.9.*" [163-653] -->
+<h2 class="sectionedit3" id="installation">Installation</h2>
+<div class="level2">
 
 <p>
-To build Debian package with Wheezy, remove <code>debian/lemonldap-ng-doc.maintscript</code> file.
+This release of <abbr title="LemonLDAP::NG">LL::NG</abbr> requires these minimal versions of GNU/Linux distributions:
+</p>
+<ul>
+<li class="level1"><div class="li"> Debian 9 (stretch)</div>
+</li>
+<li class="level1"><div class="li"> Ubuntu 16.04 LTS</div>
+</li>
+<li class="level1"><div class="li"> CentOS 7</div>
+</li>
+<li class="level1"><div class="li"> RHEL 7</div>
+</li>
+</ul>
+
+<p>
+For <abbr title="Security Assertion Markup Language">SAML</abbr> features, we require Lasso 2.5.
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Debian Wheezy" [189-304] -->
+<!-- EDIT3 SECTION "Installation" [654-872] -->
 <h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 <ul>
@@ -103,15 +127,19 @@ To build Debian package with Wheezy, remove <code>debian/lemonldap-ng-doc.maints
 </li>
 <li class="level1"><div class="li"> Apache and Nginx configurations must updated to use the FastCGI portal</div>
 </li>
+<li class="level1"><div class="li"> URLs for mail reset and register pages have changed, you must update configuration parameters. For example:</div>
+</li>
 </ul>
-<div class="noteimportant">Apache-ModPerl is no longer usable since version 2.4 <em>(many segfaults,…)</em>, especially when using mpm-worker. That&#039;s why LLNG doesn&#039;t use anymore ModPerl::Registry: all is now handle by FastCGI <em>(portal and manager)</em>.
+<pre class="code :perl">  mailUrl <span class="sy0">=&gt;</span> <span class="st_h">'http://auth.example.com/resetpwd'</span><span class="sy0">,</span>
+  registerUrl <span class="sy0">=&gt;</span> <span class="st_h">'http://auth.example.com/register'</span><span class="sy0">,</span></pre>
+<div class="noteimportant">Apache mod_perl has a lot of issues since version 2.4 <em>(many segfaults,…)</em>, especially when using mpm-worker. That&#039;s why <abbr title="LemonLDAP::NG">LL::NG</abbr> doesn&#039;t use anymore ModPerl::Registry: all is now handled by FastCGI <em>(portal and manager)</em>.
 <p>
-<strong>For handlers, it is now recommended to migrate to Nginx</strong>, but Apache-2.X is still supported
+<strong>For Handlers, it is now recommended to migrate to Nginx</strong>, but Apache 2 is still supported
 </p>
 
 </div>
 </div>
-<!-- EDIT4 SECTION "Configuration" [305-1090] -->
+<!-- EDIT4 SECTION "Configuration" [873-1894] -->
 <h2 class="sectionedit5" id="kerberos_or_ssl_usage">Kerberos or SSL usage</h2>
 <div class="level2">
 <ul>
@@ -122,7 +150,7 @@ To build Debian package with Wheezy, remove <code>debian/lemonldap-ng-doc.maints
 </ul>
 
 </div>
-<!-- EDIT5 SECTION "Kerberos or SSL usage" [1091-1599] -->
+<!-- EDIT5 SECTION "Kerberos or SSL usage" [1895-2403] -->
 <h2 class="sectionedit6" id="logs">Logs</h2>
 <div class="level2">
 <ul>
@@ -133,7 +161,7 @@ To build Debian package with Wheezy, remove <code>debian/lemonldap-ng-doc.maints
 </ul>
 
 </div>
-<!-- EDIT6 SECTION "Logs" [1600-2012] -->
+<!-- EDIT6 SECTION "Logs" [2404-2816] -->
 <h2 class="sectionedit7" id="security">Security</h2>
 <div class="level2">
 
@@ -148,7 +176,7 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT7 SECTION "Security" [2013-2580] -->
+<!-- EDIT7 SECTION "Security" [2817-3384] -->
 <h2 class="sectionedit8" id="handlers">Handlers</h2>
 <div class="level2">
 <ul>
@@ -159,7 +187,7 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT8 SECTION "Handlers" [2581-3242] -->
+<!-- EDIT8 SECTION "Handlers" [3385-4046] -->
 <h2 class="sectionedit9" id="rules_and_headers">Rules and headers</h2>
 <div class="level2">
 <ul>
@@ -172,7 +200,7 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "Rules and headers" [3243-3561] -->
+<!-- EDIT9 SECTION "Rules and headers" [4047-4365] -->
 <h2 class="sectionedit10" id="supported_servers">Supported servers</h2>
 <div class="level2">
 <ul>
@@ -181,7 +209,7 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT10 SECTION "Supported servers" [3562-3707] -->
+<!-- EDIT10 SECTION "Supported servers" [4366-4511] -->
 <h2 class="sectionedit11" id="ajax_requests">Ajax requests</h2>
 <div class="level2">
 
@@ -190,7 +218,7 @@ Before 2.0, an Ajax query that was launched after session timeout received a 302
 </p>
 
 </div>
-<!-- EDIT11 SECTION "Ajax requests" [3708-3927] -->
+<!-- EDIT11 SECTION "Ajax requests" [4512-4731] -->
 <h2 class="sectionedit12" id="soaprest_services">SOAP/REST services</h2>
 <div class="level2">
 <ul>
@@ -206,12 +234,12 @@ Before 2.0, an Ajax query that was launched after session timeout received a 302
 <div class="noteimportant"><a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic Handler</a> uses now REST services instead of SOAP.
 </div>
 </div>
-<!-- EDIT12 SECTION "SOAP/REST services" [3928-4526] -->
+<!-- EDIT12 SECTION "SOAP/REST services" [4732-5330] -->
 <h2 class="sectionedit13" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT13 SECTION "Developer corner" [4527-4556] -->
+<!-- EDIT13 SECTION "Developer corner" [5331-5360] -->
 <h3 class="sectionedit14" id="apis">APIs</h3>
 <div class="level3">
 
@@ -220,7 +248,7 @@ Portal has now many REST features and includes a plugin <abbr title="Application
 </p>
 
 </div>
-<!-- EDIT14 SECTION "APIs" [4557-4714] -->
+<!-- EDIT14 SECTION "APIs" [5361-5518] -->
 <h3 class="sectionedit15" id="portal_overview">Portal overview</h3>
 <div class="level3">
 
@@ -242,7 +270,7 @@ The request is a separated object based on Lemonldap::NG::Portal::Main::Request 
 </p>
 
 </div>
-<!-- EDIT15 SECTION "Portal overview" [4715-5162] -->
+<!-- EDIT15 SECTION "Portal overview" [5519-5966] -->
 <h3 class="sectionedit16" id="handler">Handler</h3>
 <div class="level3">
 
@@ -255,6 +283,6 @@ If you had auto protected CGI, you also need to rewrite them, see <a href="selfm
 </p>
 
 </div>
-<!-- EDIT16 SECTION "Handler" [5163-] --></div>
+<!-- EDIT16 SECTION "Handler" [5967-] --></div>
 </body>
 </html>

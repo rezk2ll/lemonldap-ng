@@ -99,9 +99,11 @@ LemonLDAP::NG provides these packages:
 </li>
 <li class="level1"><div class="li"> lemonldap-ng-fr-doc: French translation for <abbr title="HyperText Markup Language">HTML</abbr> documentation</div>
 </li>
+<li class="level1"><div class="li"> lemonldap-ng-handler: Handler files</div>
+</li>
 <li class="level1"><div class="li"> liblemonldap-ng-common-perl: configuration and common files</div>
 </li>
-<li class="level1"><div class="li"> liblemonldap-ng-handler-perl: Handler files</div>
+<li class="level1"><div class="li"> liblemonldap-ng-handler-perl: Handler common libraries</div>
 </li>
 <li class="level1"><div class="li"> liblemonldap-ng-manager-perl: Manager files</div>
 </li>
@@ -110,12 +112,12 @@ LemonLDAP::NG provides these packages:
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Organization" [60-630] -->
+<!-- EDIT2 SECTION "Organization" [60-681] -->
 <h2 class="sectionedit3" id="get_the_packages">Get the packages</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Get the packages" [631-660] -->
+<!-- EDIT3 SECTION "Get the packages" [682-711] -->
 <h3 class="sectionedit4" id="official_repository">Official repository</h3>
 <div class="level3">
 
@@ -126,7 +128,7 @@ If you run Debian testing or unstable, the packages are directly installable:
 <div class="noteimportant">Packages from <a href="http://packages.debian.org/search?keywords=lemonldap-ng" class="urlextern" title="http://packages.debian.org/search?keywords=lemonldap-ng"  rel="nofollow">Debian repository</a> may not be up to date. Prefer then the other solutions (see below).
 </div>
 </div>
-<!-- EDIT4 SECTION "Official repository" [661-999] -->
+<!-- EDIT4 SECTION "Official repository" [712-1050] -->
 <h3 class="sectionedit5" id="llng_repository">LL::NG repository</h3>
 <div class="level3">
 
@@ -153,7 +155,7 @@ You may need to install this package to access HTTPS repositories:
 <pre class="code">apt install apt-transport-https</pre>
 
 </div>
-<!-- EDIT5 SECTION "LL::NG repository" [1000-1644] -->
+<!-- EDIT5 SECTION "LL::NG repository" [1051-1695] -->
 <h3 class="sectionedit6" id="manual_download">Manual download</h3>
 <div class="level3">
 
@@ -162,7 +164,7 @@ Packages are available on the <a href="download.html" class="wikilink1" title="d
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Manual download" [1645-1731] -->
+<!-- EDIT6 SECTION "Manual download" [1696-1782] -->
 <h2 class="sectionedit7" id="package_gpg_signature">Package GPG signature</h2>
 <div class="level2">
 
@@ -181,18 +183,18 @@ Update cache:
 <pre class="code">apt update</pre>
 
 </div>
-<!-- EDIT7 SECTION "Package GPG signature" [1732-1986] -->
+<!-- EDIT7 SECTION "Package GPG signature" [1783-2037] -->
 <h2 class="sectionedit8" id="install_packages">Install packages</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT8 SECTION "Install packages" [1987-2016] -->
+<!-- EDIT8 SECTION "Install packages" [2038-2067] -->
 <h3 class="sectionedit9" id="with_apt">With apt</h3>
 <div class="level3">
 <pre class="code">apt install lemonldap-ng</pre>
 
 </div>
-<!-- EDIT9 SECTION "With apt" [2017-2077] -->
+<!-- EDIT9 SECTION "With apt" [2068-2128] -->
 <h3 class="sectionedit10" id="with_dpkg">With dpkg</h3>
 <div class="level3">
 
@@ -206,12 +208,12 @@ Then:
 <pre class="code">dpkg -i liblemonldap-ng-* lemonldap-ng*</pre>
 
 </div>
-<!-- EDIT10 SECTION "With dpkg" [2078-2226] -->
+<!-- EDIT10 SECTION "With dpkg" [2129-2277] -->
 <h2 class="sectionedit11" id="first_configuration_steps">First configuration steps</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT11 SECTION "First configuration steps" [2227-2265] -->
+<!-- EDIT11 SECTION "First configuration steps" [2278-2316] -->
 <h3 class="sectionedit12" id="change_default_dns_domain">Change default DNS domain</h3>
 <div class="level3">
 
@@ -221,7 +223,7 @@ By default, <abbr title="Domain Name System">DNS</abbr> domain is <code>example.
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1.json /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- EDIT12 SECTION "Change default DNS domain" [2266-2585] -->
+<!-- EDIT12 SECTION "Change default DNS domain" [2317-2636] -->
 <h3 class="sectionedit13" id="reload_virtual_host">Reload virtual host</h3>
 <div class="level3">
 
@@ -232,7 +234,7 @@ To allow the manager to reload the configuration, register the reload virtual ho
 <div class="notetip">Adapt the reload virtual host name to the domain you configured.
 </div>
 </div>
-<!-- EDIT13 SECTION "Reload virtual host" [2586-2887] -->
+<!-- EDIT13 SECTION "Reload virtual host" [2637-2938] -->
 <h3 class="sectionedit14" id="upgrade">Upgrade</h3>
 <div class="level3">
 
@@ -241,7 +243,7 @@ If you upgraded <abbr title="LemonLDAP::NG">LL::NG</abbr>, check all <a href="up
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Upgrade" [2888-2968] -->
+<!-- EDIT14 SECTION "Upgrade" [2939-3019] -->
 <h3 class="sectionedit15" id="dns">DNS</h3>
 <div class="level3">
 
@@ -257,7 +259,7 @@ Follow the <a href="start.html#configuration" class="wikilink1" title="documenta
 </p>
 
 </div>
-<!-- EDIT15 SECTION "DNS" [2969-3241] -->
+<!-- EDIT15 SECTION "DNS" [3020-3292] -->
 <h2 class="sectionedit16" id="file_location">File location</h2>
 <div class="level2">
 <ul>
@@ -278,7 +280,7 @@ Follow the <a href="start.html#configuration" class="wikilink1" title="documenta
 </ul>
 
 </div>
-<!-- EDIT16 SECTION "File location" [3242-3778] -->
+<!-- EDIT16 SECTION "File location" [3293-3829] -->
 <h2 class="sectionedit17" id="build_your_packages">Build your packages</h2>
 <div class="level2">
 
@@ -290,6 +292,6 @@ cd lemonldap-ng-*
 make debian-packages</pre>
 
 </div>
-<!-- EDIT17 SECTION "Build your packages" [3779-] --></div>
+<!-- EDIT17 SECTION "Build your packages" [3830-] --></div>
 </body>
 </html>

@@ -50,10 +50,10 @@
 
 <ul class="toc">
 <li class="level1"><div class="li"><a href="#presentation">Presentation</a></div></li>
-<li class="level1"><div class="li"><a href="#installation">Installation</a></div></li>
-<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
+<li class="level1"><div class="li"><a href="#http_headers">HTTP headers</a></div>
 <ul class="toc">
-<li class="level2"><div class="li"><a href="#dokuwiki_local_configuration">Dokuwiki local configuration</a></div></li>
+<li class="level2"><div class="li"><a href="#plugin_installation">Plugin installation</a></div></li>
+<li class="level2"><div class="li"><a href="#dokuwiki_configuration">Dokuwiki configuration</a></div></li>
 <li class="level2"><div class="li"><a href="#dokuwiki_virtual_host">Dokuwiki virtual host</a></div></li>
 <li class="level2"><div class="li"><a href="#dokuwiki_virtual_host_in_manager">Dokuwiki virtual host in Manager</a></div></li>
 </ul></li>
@@ -79,46 +79,52 @@
 </p>
 <div class="notetip">LemonLDAP::NG wiki uses Dokuwiki!
 </div>
-<p>
-You will need to install a Dokuwiki plugin, available on <a href="../download.html#contributions" class="wikilink1" title="download">download page</a>. The plugin will check the <code>REMOTE_USER</code> environment variable to get the connected user.
-</p>
-
 </div>
-<!-- EDIT2 SECTION "Presentation" [65-750] -->
-<h2 class="sectionedit3" id="installation">Installation</h2>
+<!-- EDIT2 SECTION "Presentation" [65-559] -->
+<h2 class="sectionedit3" id="http_headers">HTTP headers</h2>
 <div class="level2">
 
 <p>
-<a href="../download.html#contributions" class="wikilink1" title="download">Download</a> the plugin and copy the files in dokuwiki <code>inc/auth/</code> directory:
+You need to install a Dokuwiki plugin, available on <a href="https://www.dokuwiki.org/plugins" class="urlextern" title="https://www.dokuwiki.org/plugins"  rel="nofollow">Dokuwiki plugins registry</a>: <a href="https://www.dokuwiki.org/plugin:authlemonldap" class="urlextern" title="https://www.dokuwiki.org/plugin:authlemonldap"  rel="nofollow">https://www.dokuwiki.org/plugin:authlemonldap</a>
 </p>
-<pre class="code">cp lemonldap.class.php inc/auth/
-cp lemonldapuserdatabackend.class.php inc/auth/</pre>
 
 </div>
-<!-- EDIT3 SECTION "Installation" [751-977] -->
-<h2 class="sectionedit4" id="configuration">Configuration</h2>
-<div class="level2">
-
-</div>
-<!-- EDIT4 SECTION "Configuration" [978-1004] -->
-<h3 class="sectionedit5" id="dokuwiki_local_configuration">Dokuwiki local configuration</h3>
+<!-- EDIT3 SECTION "HTTP headers" [560-748] -->
+<h3 class="sectionedit4" id="plugin_installation">Plugin installation</h3>
 <div class="level3">
 
 <p>
-Edit Dokuwiki local configuration (<code>conf/local.php</code>) and set <code>lemonldap</code> as authentication type:
+Install the plugin using the <a href="https://www.dokuwiki.org/plugin:plugin" class="urlextern" title="https://www.dokuwiki.org/plugin:plugin"  rel="nofollow">Plugin Manager</a>.
 </p>
-<pre class="code file php"><span class="re0">$conf</span><span class="br0">&#91;</span>authtype<span class="br0">&#93;</span> <span class="sy0">=</span> lemonldap<span class="sy0">;</span></pre>
 
 </div>
-<!-- EDIT5 SECTION "Dokuwiki local configuration" [1005-1194] -->
+<!-- EDIT4 SECTION "Plugin installation" [749-868] -->
+<h3 class="sectionedit5" id="dokuwiki_configuration">Dokuwiki configuration</h3>
+<div class="level3">
+
+<p>
+As administrator, go in Dokuwiki parameters and set:
+</p>
+<ul>
+<li class="level1"><div class="li"> Authentication backend: authlemonldap</div>
+</li>
+<li class="level1"><div class="li"> Manager: set which users and/or groups will be admin</div>
+</li>
+</ul>
+
+<p>
+<a href="screenshot_dokuwiki_configuration.png_documentation_2.0_applications_dokuwiki.html" class="media" title="applications:screenshot_dokuwiki_configuration.png"><img src="screenshot_dokuwiki_configuration.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Dokuwiki configuration" [869-1114] -->
 <h3 class="sectionedit6" id="dokuwiki_virtual_host">Dokuwiki virtual host</h3>
 <div class="level3">
 
 <p>
 Configure Dokuwiki virtual host like other <a href="../configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a>.
 </p>
-<div class="noteimportant">If you are protecting Dokuwiki with <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, <a href="../header_remote_user_conversion.html" class="wikilink1" title="documentation:2.0:header_remote_user_conversion">convert header into REMOTE_USER environment variable</a>.
-</div><ul>
+<ul>
 <li class="level1"><div class="li"> For Apache:</div>
 </li>
 </ul>
@@ -170,7 +176,7 @@ Configure Dokuwiki virtual host like other <a href="../configvhost.html" class="
 }</pre>
 
 </div>
-<!-- EDIT6 SECTION "Dokuwiki virtual host" [1195-2630] -->
+<!-- EDIT6 SECTION "Dokuwiki virtual host" [1115-2376] -->
 <h3 class="sectionedit7" id="dokuwiki_virtual_host_in_manager">Dokuwiki virtual host in Manager</h3>
 <div class="level3">
 
@@ -179,14 +185,25 @@ Go to the Manager and <a href="../configvhost.html#lemonldapng_configuration" cl
 </p>
 
 <p>
-Just configure the <a href="../writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">access rules</a>.
+Configure the <a href="../writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">access rules</a>.
 </p>
 
 <p>
-If using <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, configure the <code>Auth-User</code> <a href="../writingrulesand_headers.html#headers" class="wikilink1" title="documentation:2.0:writingrulesand_headers">header</a>, else no headers are needed.
+Configure the <a href="../writingrulesand_headers.html#headers" class="wikilink1" title="documentation:2.0:writingrulesand_headers">headers</a>:
 </p>
-
+<ul>
+<li class="level1"><div class="li"> Auth-User $uid</div>
+</li>
+<li class="level1"><div class="li"> Auth-Cn: $cn</div>
+</li>
+<li class="level1"><div class="li"> Auth-Mail: $mail</div>
+</li>
+<li class="level1"><div class="li"> Auth-Groups: encode_base64($groups,&#039;&#039;)</div>
+</li>
+</ul>
+<div class="noteimportant">To allow execution of encode_base64() method, you must deactivate the <a href="../safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>.
 </div>
-<!-- EDIT7 SECTION "Dokuwiki virtual host in Manager" [2631-] --></div>
+</div>
+<!-- EDIT7 SECTION "Dokuwiki virtual host in Manager" [2377-] --></div>
 </body>
 </html>
