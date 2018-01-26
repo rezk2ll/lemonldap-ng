@@ -425,7 +425,7 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc changelog COPYING INSTALL README
+%doc changelog COPYING INSTALL README.md
 
 %files -n lemonldap-ng-conf
 %defattr(-,root,root,-)
@@ -470,7 +470,7 @@ fi
 %files -n lemonldap-ng-doc
 %defattr(-,root,root,-)
 %doc %{lm_vardir}/doc
-%doc changelog COPYING INSTALL README
+%doc changelog COPYING INSTALL README.md
 
 %files -n lemonldap-ng-fr-doc
 %defattr(-,root,root,-)
