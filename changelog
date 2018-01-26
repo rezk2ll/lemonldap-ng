@@ -1,6 +1,26 @@
+lemonldap-ng (2.0.0~alpha3) testing; urgency=low
+
 lemonldap-ng (2.0.0~alpha2) testing; urgency=low
 
 lemonldap-ng (2.0.0~alpha1) testing; urgency=low
+
+lemonldap-ng (1.9.15) stable; urgency=high
+
+    * #1358: Encoding issues with LDAP configuration backend
+    * #1357: Wrong return status for processLogoutRequestMsg in SAML module
+    * #1356: Prevent infinite loop in LDAP group recursive search
+    * #1355: local session storage not being cleaned up
+    * #1352: Encoding issues with MySQL configuration backend
+    * #1351: missing dependency LWP::Protocol::https on CentOS 7 packaging
+    * #1349: Initial url lost during reset password workflow
+    * #1347: Do not allow "/" or ".." in skin parameter to avoid directory
+      traversal attack
+    * #1346: Check that skin directory exists before trying to open it
+    * #1345: Autoredirect does not work after session expiration
+    * #1343: Captcha code not removed after successful verification
+    * #1341: llng-fastcgi-server: Allow to listen on TCP
+    * #1337: mailFrom and mailReplyTo directives : bad default address
+    * #1281: purgeLocalCache should use conf from manager
 
 lemonldap-ng (1.9.14) stable; urgency=high
 
