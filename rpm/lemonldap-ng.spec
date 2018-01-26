@@ -166,6 +166,7 @@ This package contains html documentation translated in French.
 # Handler
 #==============================================================================
 %package -n lemonldap-ng-handler
+Summary:        LemonLDAP-NG Handler
 
 %description -n lemonldap-ng-handler
 This package deploys the Apache Handler.
