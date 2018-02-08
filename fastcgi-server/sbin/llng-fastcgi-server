@@ -10,10 +10,9 @@ use Lemonldap::NG::Handler::Main::Reload;
 our $VERSION = '2.0.0';
 
 our (
-    $foreground, $engine,              $nproc,
-    $pidFile,    $socket,              $user,
-    $listen,     $group,               $customFunctionsFile,
-    %plackOptions
+    $foreground,          $engine, $nproc,  $pidFile,
+    $socket,              $user,   $listen, $group,
+    $customFunctionsFile, %plackOptions
 );
 my %_apps;
 
@@ -92,6 +91,9 @@ my %builder = (
             my $script = $_[0]->{SCRIPT_FILENAME};
             return $_apps{$script}->(@_) if ( $_apps{$script} );
             $_apps{$script} = do $script;
+            unless ( $_apps{$script} and ref $_apps{$script} ) {
+                die "Unable to load $_[0]->{SCRIPT_FILENAME}";
+            }
             return $_apps{$script}->(@_);
           }
     },
@@ -118,12 +120,12 @@ Lemonldap::NG::Handler::Main->onReload(
 
 my $server = Plack::Runner->new();
 $server->parse_options(
-    '-s'           => $engine,
-    '-E'           => 'deployment',
-    '--pid'        => $pidFile,
-    '--nproc'      => $nproc,
-    '--socket'     => $socket,
-    ( $listen ? ('--listen', $listen) : ()),
+    '-s'       => $engine,
+    '-E'       => 'deployment',
+    '--pid'    => $pidFile,
+    '--nproc'  => $nproc,
+    '--socket' => $socket,
+    ( $listen ? ( '--listen', $listen ) : () ),
     '--proc-title' => 'llng-fastcgi-server',
     ( $foreground ? () : '--daemonize' ),
     '--no-default-middleware',

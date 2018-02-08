@@ -8,14 +8,14 @@ BEGIN {
 }
 
 my $debug     = 'error';
-my $mainTests = 18;
+my $maintests = 18;
 my ( $op, $rp, $res );
 my %handlerOR = ( op => [], rp => [] );
 
 SKIP: {
     eval { require DBI; require DBD::SQLite; };
     if ($@) {
-        skip 'DBD::SQLite not found', $mainTests;
+        skip 'DBD::SQLite not found', $maintests;
     }
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
@@ -182,7 +182,7 @@ SKIP: {
 
 #print STDERR Dumper($res);
 
-count($mainTests);
+count($maintests);
 eval { unlink 't/userdb.db' };
 done_testing( count() );
 

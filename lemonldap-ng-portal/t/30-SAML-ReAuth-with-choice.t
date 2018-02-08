@@ -9,7 +9,7 @@ BEGIN {
 }
 eval { unlink 't/userdb.db' };
 
-my $mainTests = 16;
+my $maintests = 16;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -17,11 +17,11 @@ my %handlerOR = ( issuer => [], sp => [] );
 SKIP: {
     eval "use Lasso";
     if ($@) {
-        skip 'Lasso not found', $mainTests;
+        skip 'Lasso not found', $maintests;
     }
     eval { require DBI; require DBD::SQLite; };
     if ($@) {
-        skip 'DBD::SQLite not found', $mainTests;
+        skip 'DBD::SQLite not found', $maintests;
     }
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do('CREATE TABLE users (user text,password text,name text,uid text,cn text,mail text)');
@@ -176,7 +176,7 @@ SKIP: {
     clean_sessions();
 }
 
-count($mainTests);
+count($maintests);
 eval { unlink 't/userdb.db' };
 done_testing( count() );
 

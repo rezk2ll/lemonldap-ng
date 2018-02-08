@@ -4,7 +4,7 @@ use IO::String;
 
 my $res;
 my $file      = 't/notifications.db';
-my $mainTests = 6;
+my $maintests = 6;
 eval { unlink $file };
 require 't/test-lib.pm';
 
@@ -16,7 +16,7 @@ SKIP: {
         require XML::LibXSLT;
     };
     if ($@) {
-        skip 'DBD::SQLite or XML::Lib* not found', $mainTests;
+        skip 'DBD::SQLite or XML::Lib* not found', $maintests;
     }
 
     my $dbh = DBI->connect("dbi:SQLite:dbname=$file");
@@ -121,6 +121,6 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
 
 }
 
-count($mainTests);
+count($maintests);
 done_testing( count() );
 

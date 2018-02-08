@@ -5,10 +5,10 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $mainTests = 8;
+my $maintests = 8;
 
 SKIP: {
-    skip 'LLNGTESTLDAP is not set', $mainTests unless ( $ENV{LLNGTESTLDAP} );
+    skip 'LLNGTESTLDAP is not set', $maintests unless ( $ENV{LLNGTESTLDAP} );
     require 't/test-ldap.pm';
 
     my $client = LLNG::Manager::Test->new(
@@ -78,6 +78,6 @@ SKIP: {
 
     clean_sessions();
 }
-count($mainTests);
+count($maintests);
 stopLdapServer() if $ENV{LLNGTESTLDAP};
 done_testing( count() );
