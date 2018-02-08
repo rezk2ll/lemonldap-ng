@@ -81,14 +81,14 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $mainTests = 6;
+my $maintests = 6;
 
 eval { unlink 't/userdb.db' };
 
 SKIP: {
     eval { require DBI; require DBD::SQLite; use Digest::SHA };
     if ($@) {
-        skip 'DBD::SQLite not found', $mainTests;
+        skip 'DBD::SQLite not found', $maintests;
     }
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
 
@@ -202,5 +202,5 @@ SKIP: {
     clean_sessions();
 }
 eval { unlink 't/userdb.db' };
-count($mainTests);
+count($maintests);
 done_testing( count() );

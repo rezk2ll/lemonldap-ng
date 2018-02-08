@@ -6,12 +6,12 @@ require 't/test-lib.pm';
 
 my $res;
 my $file      = 't/20160530_dwho_dGVzdHJlZg==.xml';
-my $mainTests = 6;
+my $maintests = 6;
 
 SKIP: {
     eval { require XML::LibXML; require XML::LibXSLT; };
     if ($@) {
-        skip 'XML::LibX* not found', $mainTests;
+        skip 'XML::LibX* not found', $maintests;
     }
 
     open F, "> $file" or die($!);
@@ -108,5 +108,5 @@ SKIP: {
 
 }
 
-count($mainTests);
+count($maintests);
 done_testing( count() );

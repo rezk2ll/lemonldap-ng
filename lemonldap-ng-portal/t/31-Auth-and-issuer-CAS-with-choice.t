@@ -8,7 +8,7 @@ BEGIN {
 }
 eval { unlink 't/userdb.db' };
 
-my $mainTests = 14;
+my $maintests = 14;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -18,7 +18,7 @@ no warnings 'redefine';
 SKIP: {
     eval { require DBI; require DBD::SQLite; };
     if ($@) {
-        skip 'DBD::SQLite not found', $mainTests;
+        skip 'DBD::SQLite not found', $maintests;
     }
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do(
@@ -163,7 +163,7 @@ SKIP: {
     clean_sessions();
 }
 
-count($mainTests);
+count($maintests);
 eval { unlink 't/userdb.db' };
 done_testing( count() );
 

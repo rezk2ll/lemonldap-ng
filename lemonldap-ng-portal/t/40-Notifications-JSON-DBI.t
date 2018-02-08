@@ -4,14 +4,14 @@ use IO::String;
 
 my $res;
 my $file      = 't/notifications.db';
-my $mainTests = 6;
+my $maintests = 6;
 eval { unlink $file };
 require 't/test-lib.pm';
 
 SKIP: {
     eval { require DBI; require DBD::SQLite; };
     if ($@) {
-        skip 'DBD::SQLite not found', $mainTests;
+        skip 'DBD::SQLite not found', $maintests;
     }
 
     my $dbh = DBI->connect("dbi:SQLite:dbname=$file");
@@ -122,6 +122,6 @@ q{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00',?,nul
 
 }
 
-count($mainTests);
+count($maintests);
 done_testing( count() );
 

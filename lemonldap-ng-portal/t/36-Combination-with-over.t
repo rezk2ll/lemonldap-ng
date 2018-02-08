@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $mainTests = 0;
+my $maintests = 0;
 my $client;
 
 eval { unlink 't/userdb.db' };
@@ -13,7 +13,7 @@ eval { unlink 't/userdb.db' };
 SKIP: {
     eval { require DBI; require DBD::SQLite; };
     if ($@) {
-        skip 'DBD::SQLite not found', $mainTests;
+        skip 'DBD::SQLite not found', $maintests;
     }
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
@@ -24,7 +24,7 @@ SKIP: {
     expectCookie( try('dwho') );
     expectCookie( try('dvador') );
 }
-count($mainTests);
+count($maintests);
 clean_sessions();
 eval { unlink 't/userdb.db' };
 done_testing( count() );
