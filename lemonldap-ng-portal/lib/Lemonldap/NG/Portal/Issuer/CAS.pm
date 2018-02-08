@@ -33,7 +33,11 @@ sub init {
             serviceValidate => 'serviceValidate',
             validate        => 'validate',
             proxyValidate   => 'proxyValidate',
-            proxy           => 'proxy'
+            proxy           => 'proxy',
+            p3              => {
+                serviceValidate => 'serviceValidate',
+                proxyValidate   => 'proxyValidate'
+            }
         },
         ['GET']
     );
@@ -47,12 +51,14 @@ sub run {
     my ( $self, $req, $target ) = @_;
 
     # CAS URL
-    my $cas_login           = 'login';
-    my $cas_logout          = 'logout';
-    my $cas_validate        = 'validate';
-    my $cas_serviceValidate = 'serviceValidate';
-    my $cas_proxyValidate   = 'proxyValidate';
-    my $cas_proxy           = 'proxy';
+    my $cas_login              = 'login';
+    my $cas_logout             = 'logout';
+    my $cas_validate           = 'validate';
+    my $cas_serviceValidate    = 'serviceValidate';
+    my $cas_p3_serviceValidate = 'p3/serviceValidate';
+    my $cas_proxyValidate      = 'proxyValidate';
+    my $cas_p3_proxyValidate   = 'p3/proxyValidate';
+    my $cas_proxy              = 'proxy';
 
     # Called URL
     my $url = $req->uri();
@@ -269,7 +275,8 @@ sub run {
     }
 
     # 4. SERVICE VALIDATE [CAS 2.0]
-    if ( $target eq $cas_serviceValidate ) {
+    if ( $target eq $cas_serviceValidate || $target eq $cas_p3_serviceValidate )
+    {
 
         $self->logger->debug(
             "URL $url detected as an CAS SERVICE VALIDATE URL");
@@ -282,7 +289,7 @@ sub run {
     }
 
     # 5. PROXY VALIDATE [CAS 2.0]
-    if ( $target eq $cas_proxyValidate ) {
+    if ( $target eq $cas_proxyValidate || $target eq $cas_p3_proxyValidate ) {
 
         $self->logger->debug("URL $url detected as an CAS PROXY VALIDATE URL");
 
