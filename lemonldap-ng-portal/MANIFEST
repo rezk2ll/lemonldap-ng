@@ -367,6 +367,7 @@ t/35-REST-config-backend.t
 t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-config-backend.t
 t/35-SOAP-sessions-with-SOAP-server.t
+t/36-Combination-Kerberos-or-Demo.t
 t/36-Combination-with-over.t
 t/36-Combination-with-token.t
 t/36-Combination.t
@@ -388,6 +389,8 @@ t/42-Register-Demo-with-captcha.t
 t/42-Register-Demo-with-token.t
 t/42-Register-Demo.t
 t/42-Register-LDAP.t
+t/43-MailReset-DBI.t
+t/43-MailReset-LDAP.t
 t/43-MailReset-with-captcha.t
 t/43-MailReset-with-token.t
 t/43-MailReset.t

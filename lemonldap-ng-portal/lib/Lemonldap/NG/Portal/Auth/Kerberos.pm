@@ -91,6 +91,7 @@ sub extractFormInfo {
                 '<script type="text/javascript" src="'
               . $self->p->staticPrefix
               . '/common/js/kerberos.js"></script>';
+            $self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );
             return PE_FIRSTACCESS;
         }
     }
