@@ -5,16 +5,16 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $mainTests = 2;
+my $maintests = 2;
 
 eval { unlink 't/userdb.db' };
 
 SKIP: {
     eval { require DBI; require DBD::SQLite; };
     if ($@) {
-        skip 'DBD::SQLite not found', $mainTests;
+        skip 'DBD::SQLite not found', $maintests;
     }
-    skip 'LLNGTESTLDAP is not set', $mainTests unless ( $ENV{LLNGTESTLDAP} );
+    skip 'LLNGTESTLDAP is not set', $maintests unless ( $ENV{LLNGTESTLDAP} );
     require 't/test-ldap.pm';
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
@@ -73,7 +73,7 @@ SKIP: {
 
     clean_sessions();
 }
-count($mainTests);
+count($maintests);
 eval { unlink 't/userdb.db' };
 stopLdapServer() if $ENV{LLNGTESTLDAP};
 clean_sessions();

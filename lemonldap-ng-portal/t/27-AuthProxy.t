@@ -3,11 +3,11 @@ use strict;
 use IO::String;
 
 my $res;
-my $mainTests = 2;
+my $maintests = 2;
 require 't/test-lib.pm';
 
 SKIP: {
-    skip 'REMOTELLNG is not set', $mainTests unless ( $ENV{REMOTELLNG} );
+    skip 'REMOTELLNG is not set', $maintests unless ( $ENV{REMOTELLNG} );
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
@@ -33,5 +33,5 @@ SKIP: {
     $client->logout($id);
     clean_sessions();
 }
-count($mainTests);
+count($maintests);
 done_testing( count() );

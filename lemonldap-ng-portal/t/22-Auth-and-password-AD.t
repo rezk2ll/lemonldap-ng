@@ -5,10 +5,10 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $mainTests = 1;
+my $maintests = 1;
 
 SKIP: {
-    skip 'No AD server given', $mainTests unless ( $ENV{ADSERVER} );
+    skip 'No AD server given', $maintests unless ( $ENV{ADSERVER} );
 
     my $client = LLNG::Manager::Test->new(
         {
@@ -45,5 +45,5 @@ SKIP: {
 
     clean_sessions();
 }
-count($mainTests);
+count($maintests);
 done_testing( count() );
