@@ -460,6 +460,9 @@ sub retrieveSession {
         }
 
         # Verify that session is valid
+        $class->logger->error(
+"_utime is not defined. This should not happen. Verify it is transmitted correctly to handler"
+        ) unless $session->data->{_utime};
         if (
             $now - $session->data->{_utime} > $class->tsv->{timeout}
             or (    $class->tsv->{timeoutActivity}
