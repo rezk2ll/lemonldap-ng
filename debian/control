@@ -4,7 +4,7 @@ Uploaders: Xavier Guimard <x.guimard@free.fr>
 Section: perl
 Priority: optional
 Rules-Requires-Root: binary-targets
-Build-Depends: debhelper (>= 9.20160709),
+Build-Depends: debhelper (>= 10),
                po-debconf
 Build-Depends-Indep: libapache-session-perl,
                      libcache-cache-perl,
