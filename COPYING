@@ -1,11 +1,11 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: lemonldap-ng
 Upstream-Contact: Xavier Guimard <x.guimard@free.fr>
-Source: http://forge.objectweb.org/project/showfiles.php?group_id=274
+Source: https://forge.objectweb.org/project/showfiles.php?group_id=274
 
 Files: *
-Copyright: 2005-2017, Xavier Guimard <x.guimard@free.fr>
- 2006-2017, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2018, Xavier Guimard <x.guimard@free.fr>
+ 2006-2018, Clement Oudot <clem.oudot@gmail.com>
  2008-2011, Thomas Chemineau <thomas.chemineau@gmail.com>
  2012-2015, François-Xavier Deltombe <fxdeltombe@gmail.com>
  2012-2013, Sandro Cazzaniga <cazzaniga.sandro@gmail.com>
@@ -16,20 +16,20 @@ Copyright: 2005-2017, Xavier Guimard <x.guimard@free.fr>
 License: GPL-2+
 
 Files: lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Auth/PAM.pm
-Copyright: 2017, Xavier Guimard <x.guimard@free.fr>
+Copyright: 2017-2018, Xavier Guimard <x.guimard@free.fr>
 License: GPL-2+
 Comment: idea taken from Authen::Simple::PAM (copyright Christian Hansen
  <chansen@cpan.org>
 
 Files: *.js
-Copyright: 2005-2017, Xavier Guimard <x.guimard@free.fr>
- 2006-2017, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2018, Xavier Guimard <x.guimard@free.fr>
+ 2006-2018, Clement Oudot <clem.oudot@gmail.com>
  2008-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
 License: GPL-2+
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/js/portal.js
-Copyright: 2005-2017, Xavier Guimard <x.guimard@free.fr>
- 2006-2017, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2018, Xavier Guimard <x.guimard@free.fr>
+ 2006-2018, Clement Oudot <clem.oudot@gmail.com>
  2008-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
 License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
@@ -74,9 +74,12 @@ Comment: downloaded from
  Author is unknown and license may be W3C or public-domain
 
 Files: lemonldap-ng-portal/example/skins/common/LinkedIn.png
-Copyright: Public Domain
+Copyright: unknown
+License: W3C
 Comment: downloaded from
  https://commons.wikimedia.org/wiki/File:LinkedIn_logo_initials.png
+ .
+ Author is unknown and license may be W3C or public-domain
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/*
 Copyright: Various artists
@@ -148,7 +151,7 @@ Copyright: 2004, Entr'ouvert <http://www.entrouvert.com/>
 License: GPL-2+
 
 Files: debian/*
-Copyright: 2005-2017, Xavier Guimard <x.guimard@free.fr>
+Copyright: 2005-2018, Xavier Guimard <x.guimard@free.fr>
 License: GPL-2+
 
 License: Apache-2.0
