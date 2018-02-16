@@ -113,6 +113,7 @@ PORT=80
 VHOSTLISTEN="*:$(PORT)"
 TESTWEBSERVER=apache
 TESTWEBSERVERPORT=19876
+TESTUSESSL=0
 
 # LDAP backend test
 LLNGTESTLDAP_SLAPD_BIN=/usr/sbin/slapd
@@ -409,6 +410,10 @@ prepare_test_server:
 		e2e-tests/conf/lmConf-1.json \
 		e2e-tests/conf/env.conf \
 		e2e-tests/conf/test-nginx.conf
+	@if test "$(TESTUSESSL)" = "1"; then \
+		perl -i -pe 's#http://(test|mana|auth)#https://$$1#' e2e-tests/conf/lmConf-1.json e2e-tests/conf/handler-apache2.X.conf e2e-tests/conf/site/index.pl; \
+		perl -i -pe 's#"https": 0#"https": 1#' e2e-tests/conf/lmConf-1.json; \
+	fi
 
 e2e-tests/conf/apache2.pid: start_web_server
 
@@ -451,7 +456,12 @@ start_web_server:	all prepare_test_server
 	-@[ -e e2e-tests/conf/llng-fastcgi.pid ] && kill `cat e2e-tests/conf/llng-fastcgi.pid` && rm -f e2e-tests/conf/llng-fastcgi.pid || true
 	# Start web server (designed for Debian, path may be broken else)
 	@if test "$(TESTWEBSERVER)" = "apache"; then \
-		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start; \
+		if test "$(TESTUSESSL)" = "1"; then \
+			APACHEARGS=-DUseSSL; \
+		else \
+			APACHEARGS=; \
+		fi; \
+		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf $$APACHEARGS -k start; \
 	elif test "$(TESTWEBSERVER)" = "nginx"; then \
 		echo "Testing nginx conf"; \
 		$(NGINX) -t -p `pwd`/e2e-tests \
@@ -1153,3 +1163,15 @@ spelling:
 			if [ "$$text" != "" ]; then echo "### $$i ###"; echo $$text; fi \
 		fi \
 	done
+
+e2e_cert:
+	openssl req -x509 \
+		-newkey rsa:2048 \
+		-keyout e2e-tests/key.pem \
+		-out e2e-tests/cert.pem \
+		-days 3650 \
+		-nodes \
+		-subj "/C=PL/ST=Programming Republic of Perl/O=Security Dept/CN=auth.example.com" \
+		-reqexts SAN \
+		-extensions SAN \
+		-config e2e-tests/openssl.cnf
