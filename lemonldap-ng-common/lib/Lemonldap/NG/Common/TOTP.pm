@@ -2,6 +2,8 @@ package Lemonldap::NG::Common::TOTP;
 
 use strict;
 use Mouse;
+use Convert::Base32 'decode_base32';
+use Digest::HMAC_SHA1 'hmac_sha1_hex';
 
 our $VERSION = '2.0.0';
 

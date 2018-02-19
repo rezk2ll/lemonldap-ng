@@ -31,6 +31,7 @@ WriteMakefile(
     META_MERGE => {
         'recommends' => {
             'Apache::Session::Browseable' => 0,
+            'Convert::Base32'             => 0,
             'DBI'                         => 0,
             'Net::LDAP'                   => 0,
             'SOAP::Lite'                  => 0,
