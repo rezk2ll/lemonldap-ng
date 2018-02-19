@@ -8,6 +8,10 @@ example/soapconfigtest.pl
 example/soaperrortest.pl
 example/soaptest.pl
 lib/Lemonldap/NG/Portal.pm
+lib/Lemonldap/NG/Portal/2F/External2F.pm
+lib/Lemonldap/NG/Portal/2F/Register/U2F.pm
+lib/Lemonldap/NG/Portal/2F/TOTP.pm
+lib/Lemonldap/NG/Portal/2F/U2F.pm
 lib/Lemonldap/NG/Portal/Auth.pod
 lib/Lemonldap/NG/Portal/Auth/_WebForm.pm
 lib/Lemonldap/NG/Portal/Auth/AD.pm
@@ -87,7 +91,6 @@ lib/Lemonldap/NG/Portal/Password/Null.pm
 lib/Lemonldap/NG/Portal/Password/REST.pm
 lib/Lemonldap/NG/Portal/Plugins/AutoSignin.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
-lib/Lemonldap/NG/Portal/Plugins/External2F.pm
 lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
 lib/Lemonldap/NG/Portal/Plugins/History.pm
 lib/Lemonldap/NG/Portal/Plugins/MailReset.pm
@@ -99,13 +102,11 @@ lib/Lemonldap/NG/Portal/Plugins/SingleSession.pm
 lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
 lib/Lemonldap/NG/Portal/Plugins/Status.pm
 lib/Lemonldap/NG/Portal/Plugins/StayConnected.pm
-lib/Lemonldap/NG/Portal/Plugins/U2F.pm
 lib/Lemonldap/NG/Portal/Plugins/Upgrade.pm
 lib/Lemonldap/NG/Portal/Register/AD.pm
 lib/Lemonldap/NG/Portal/Register/Custom.pm
 lib/Lemonldap/NG/Portal/Register/Demo.pm
 lib/Lemonldap/NG/Portal/Register/LDAP.pm
-lib/Lemonldap/NG/Portal/Register/U2F.pm
 lib/Lemonldap/NG/Portal/UserDB.pod
 lib/Lemonldap/NG/Portal/UserDB/AD.pm
 lib/Lemonldap/NG/Portal/UserDB/CAS.pm
