@@ -16,7 +16,6 @@ lib/Lemonldap/NG/Portal/Auth.pod
 lib/Lemonldap/NG/Portal/Auth/_WebForm.pm
 lib/Lemonldap/NG/Portal/Auth/AD.pm
 lib/Lemonldap/NG/Portal/Auth/Apache.pm
-lib/Lemonldap/NG/Portal/Auth/Base.pm
 lib/Lemonldap/NG/Portal/Auth/CAS.pm
 lib/Lemonldap/NG/Portal/Auth/Choice.pm
 lib/Lemonldap/NG/Portal/Auth/Combination.pm
@@ -70,6 +69,7 @@ lib/Lemonldap/NG/Portal/Lib/SOAPProxy.pm
 lib/Lemonldap/NG/Portal/Lib/U2F.pm
 lib/Lemonldap/NG/Portal/Lib/Wrapper.pm
 lib/Lemonldap/NG/Portal/Main.pm
+lib/Lemonldap/NG/Portal/Main/Auth.pm
 lib/Lemonldap/NG/Portal/Main/Constants.pm
 lib/Lemonldap/NG/Portal/Main/Display.pm
 lib/Lemonldap/NG/Portal/Main/Init.pm

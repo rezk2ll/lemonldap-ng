@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Auth::Base;
+package Lemonldap::NG::Portal::Main::Auth;
 
 use strict;
 use Mouse;

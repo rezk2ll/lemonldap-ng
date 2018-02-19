@@ -14,7 +14,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Auth::Base', 'Lemonldap::NG::Portal::Lib::CAS';
+extends 'Lemonldap::NG::Portal::Main::Auth', 'Lemonldap::NG::Portal::Lib::CAS';
 
 # PROPERTIES
 

@@ -17,7 +17,7 @@ Lemonldap:NG::Portal::Auth - Writing authentication modules for LemonLDAP::NG.
   
   our $VERSION = '0.1';
   
-  extends 'Lemonldap::NG::Portal::Auth::Base';
+  extends 'Lemonldap::NG::Portal::Main::Auth';
 
   sub init {
       ...
@@ -51,13 +51,13 @@ Lemonldap:NG::Portal::Auth - Writing authentication modules for LemonLDAP::NG.
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Auth::Base must be used to build Lemonldap::NG authentication
+Lemonldap::NG::Main::Auth must be used to build Lemonldap::NG authentication
 modules. Authentication modules are independent objects that are instantiated
 by Lemonldap::NG portal. They must provides methods described below.
 
 =head1 METHODS
 
-=head2 Accessors and methods provided by Lemonldap::NG::Portal::Auth::Base
+=head2 Accessors and methods provided by Lemonldap::NG::Portal::Main::Auth
 
 =over
 
@@ -78,7 +78,7 @@ by Lemonldap::NG portal. They must provides methods described below.
 =head3 "Routes" management
 
 Like any module that inherits from Lemonldap::NG::Portal::Plugin,
-Lemonldap::NG::Portal::Auth::Base provides URI path functions:
+Lemonldap::NG::Portal::Main::Auth provides URI path functions:
 
 =over
 

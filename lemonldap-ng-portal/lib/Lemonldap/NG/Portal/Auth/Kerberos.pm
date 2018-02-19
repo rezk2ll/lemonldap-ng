@@ -14,7 +14,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Auth::Base';
+extends 'Lemonldap::NG::Portal::Main::Auth';
 
 has keytab => ( is => 'rw' );
 

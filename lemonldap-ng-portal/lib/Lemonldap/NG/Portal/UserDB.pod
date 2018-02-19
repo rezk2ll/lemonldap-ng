@@ -65,7 +65,7 @@ provides methods described below.
 =head3 "Routes" management
 
 Like any module that inherits from Lemonldap::NG::Portal::Plugin,
-Lemonldap::NG::Portal::Auth::Base provides URI path functions:
+Lemonldap::NG::Portal::Main::Auth provides URI path functions:
 
 =over
 
