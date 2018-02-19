@@ -2,7 +2,7 @@
 #
 # This plugin handle authentications to ask U2F second factor for users that
 # have registered their U2F key
-package Lemonldap::NG::Portal::Plugins::U2F;
+package Lemonldap::NG::Portal::2F::U2F;
 
 use 5.16.0;
 use strict;
@@ -27,9 +27,7 @@ has prefix => ( is => 'ro', default => 'u' );
 
 sub init {
     my ($self) = @_;
-    if (    $self->conf->{u2fSelfRegistration}
-        and $self->conf->{u2fActivation} eq '1' )
-    {
+    if ( $self->conf->{u2fActivation} eq '1' ) {
         $self->conf->{u2fActivation} = '$_u2fKeyHandle and $_u2fUserKey';
     }
     return 0

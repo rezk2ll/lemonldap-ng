@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::External2F;
+package Lemonldap::NG::Portal::2F::External2F;
 
 use strict;
 use Mouse;
@@ -51,7 +51,7 @@ sub run {
             TOKEN => $token
         }
     );
-    $self->logger->debug("Prepare U2F verification");
+    $self->logger->debug("Prepare external 2F verification");
 
     $req->response($tmp);
     return PE_SENDRESPONSE;

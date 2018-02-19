@@ -1,5 +1,5 @@
 # Self U2F registration
-package Lemonldap::NG::Portal::Register::U2F;
+package Lemonldap::NG::Portal::2F::Register::U2F;
 
 use strict;
 use Mouse;
