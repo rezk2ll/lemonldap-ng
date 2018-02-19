@@ -12,7 +12,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Main::SecondFactor';
+extends 'Lemonldap::NG::Portal::Main::SecondFactor',
+  'Lemonldap::NG::Common::TOTP';
 
 # INITIALIZATION
 
@@ -56,45 +57,22 @@ sub verify {
         return PE_FORMEMPTY;
     }
 
-    my $s = eval { decode_base32( $session->{_totp2fSecret} ) };
-    if ($@) {
-        $self->logger->error("Bad characters in secret, aborting");
-        return PE_ERROR;
-    }
-    for ( 0 .. $self->conf->{totp2fRange} ) {
-        if ( $code eq $self->code( $s, $_ ) ) {
-            $self->userLogger->info('TOTP verified');
-            return PE_OK;
-        }
-    }
-    $self->userLogger->notice(
-        'Invalid TOTP for ' . $session->{ $self->conf->{whatToTrace} } . ')' );
-    return PE_BADCREDENTIALS;
-}
-
-sub code {
-    my ( $self, $secret, $r ) = @_;
-    my $hmac = hmac_sha1_hex(
-        pack(
-            'H*',
-            sprintf(
-                '%016x',
-                int(
-                    ( time + $r * $self->conf->{totp2fInterval} ) /
-                      $self->conf->{totp2fInterval}
-                )
-            )
-        ),
-        _decode_base32($secret),
+    my $r = $self->verifyCode(
+        $self->conf->{totp2fInterval},
+        $self->conf->{totp2fRange},
+        $session->{_totp2fSecret}, $code
     );
-
-    return sprintf(
-        '%06d',
-        (
-            hex( substr( $hmac, hex( substr( $hmac, -1 ) ) * 2, 8 ) ) &
-              0x7fffffff
-        ) % 1000000
-    );
+    if ( $r == -1 ) { return PE_ERROR; }
+    elsif ($r) {
+        $self->userLogger->info('TOTP succeed');
+        return PE_OK;
+    }
+    else {
+        $self->userLogger->notice( 'Invalid TOTP for '
+              . $session->{ $self->conf->{whatToTrace} }
+              . ')' );
+        return PE_BADCREDENTIALS;
+    }
 }
 
 1;
