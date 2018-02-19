@@ -116,7 +116,7 @@ L<Lemonldap::NG::Portal> second factor plugins.
 
 =head1 SYNOPSIS
 
-  package Lemonldap::NG::Portal::My::Plugin;
+  package Lemonldap::NG::Portal::2F::MySecondFactor;
   use Mouse;
   use Lemonldap::NG::Portal::Main::Constants qw(
     PE_OK
@@ -170,7 +170,7 @@ authenticated by this plugin
 Example:
 
   [portal]
-  customPlugins = Lemonldap::NG::Portal::My::Plugin
+  customPlugins = Lemonldap::NG::Portal::2F::MyPlugin
   my2fActivation = 1
   my2fAuthnLevel = 4
 
@@ -190,9 +190,15 @@ L<http://lemonldap-ng.org>
 
 =over
 
-=item Writing an authentication module: L<Lemonldap::NG::Portal::Auth::Base>
+=item Writing an authentication module: L<Lemonldap::NG::Portal::Auth>
+
+=item Writing a UserDB module: L<Lemonldap::NG::Portal::UserDB>
+
+=item Writing a second factor module: L<Lemonldap::NG::Portal::Main::SecondFactor>
 
 =item Writing an issuer module: L<Lemonldap::NG::Portal::Main::Issuer>
+
+=item Writing an other plugin: L<Lemonldap::NG::Portal::Main::Plugin>
 
 =item Request object: L<Lemonldap::NG::Portal::Main::Request>
 

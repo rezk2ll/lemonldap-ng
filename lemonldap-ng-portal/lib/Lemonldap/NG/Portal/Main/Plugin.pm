@@ -179,9 +179,15 @@ L<http://lemonldap-ng.org>
 
 =over
 
-=item Writing an authentication module: L<Lemonldap::NG::Portal::Auth::Base>
+=item Writing an authentication module: L<Lemonldap::NG::Portal::Auth>
+
+=item Writing a UserDB module: L<Lemonldap::NG::Portal::UserDB>
+
+=item Writing a second factor module: L<Lemonldap::NG::Portal::Main::SecondFactor>
 
 =item Writing an issuer module: L<Lemonldap::NG::Portal::Main::Issuer>
+
+=item Writing an other plugin: L<Lemonldap::NG::Portal::Main::Plugin>
 
 =item Request object: L<Lemonldap::NG::Portal::Main::Request>
 
