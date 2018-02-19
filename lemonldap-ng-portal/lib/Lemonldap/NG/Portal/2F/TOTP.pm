@@ -16,13 +16,15 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 
 # INITIALIZATION
 
+has prefix => ( is => 'ro', default => 'totp' );
+
 sub init {
     my ($self) = @_;
-    if ( $self->conf->{totpActivation} eq '1' ) {
-        $self->conf->{totpActivation} = '$_totpSecret';
+    if ( $self->conf->{totp2fActivation} eq '1' ) {
+        $self->conf->{totp2fActivation} = '$_totp2fSecret';
     }
-    $self->conf->{totpInterval} ||= 30;
-    $self->conf->{totpRange}    ||= 1;
+    $self->conf->{totp2fInterval} ||= 30;
+    $self->conf->{totp2fRange}    ||= 1;
     return $self->SUPER::init();
 }
 
@@ -54,12 +56,12 @@ sub verify {
         return PE_FORMEMPTY;
     }
 
-    my $s = eval { decode_base32( $session->{_totpSecret} ) };
+    my $s = eval { decode_base32( $session->{_totp2fSecret} ) };
     if ($@) {
         $self->logger->error("Bad characters in secret, aborting");
         return PE_ERROR;
     }
-    for ( 0 .. $self->conf->{totpRange} ) {
+    for ( 0 .. $self->conf->{totp2fRange} ) {
         if ( $code eq $self->code( $s, $_ ) ) {
             $self->userLogger->info('TOTP verified');
             return PE_OK;
@@ -78,8 +80,8 @@ sub code {
             sprintf(
                 '%016x',
                 int(
-                    ( time + $r * $self->conf->{totpInterval} ) /
-                      $self->conf->{totpInterval}
+                    ( time + $r * $self->conf->{totp2fInterval} ) /
+                      $self->conf->{totp2fInterval}
                 )
             )
         ),
