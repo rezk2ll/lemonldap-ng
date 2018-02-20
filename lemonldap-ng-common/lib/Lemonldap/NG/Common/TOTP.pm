@@ -1,5 +1,8 @@
 package Lemonldap::NG::Common::TOTP;
 
+# This module is inspired by Auth::GoogleAuth written by Gryphon Shafer
+# <gryphon@cpan.org>
+
 use strict;
 use Mouse;
 use Convert::Base32 'decode_base32';
@@ -7,6 +10,7 @@ use Digest::HMAC_SHA1 'hmac_sha1_hex';
 
 our $VERSION = '2.0.0';
 
+# Verify that TOTP $code match with $secret
 sub verifyCode {
     my ( $self, $interval, $range, $secret, $code ) = @_;
     my $s = eval { decode_base32($secret) };
@@ -22,6 +26,7 @@ sub verifyCode {
     return 0;
 }
 
+# Internal subroutine that calculates TOTP code using $secret and $interval
 sub _code {
     my ( $self, $secret, $r, $interval ) = @_;
     my $hmac = hmac_sha1_hex(
@@ -37,6 +42,13 @@ sub _code {
               0x7fffffff
         ) % 1000000
     );
+}
+
+# Simply generate new base32 secret
+sub newSecret {
+    my ($self) = @_;
+    my @chars = ( 'a' .. 'z', 2 .. 7 );
+    return join( '', @chars[ map { int( rand(32) ) } 1 .. 16 ] );
 }
 
 1;
