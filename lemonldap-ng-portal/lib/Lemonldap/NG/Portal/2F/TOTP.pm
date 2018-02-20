@@ -33,11 +33,12 @@ sub init {
 
 sub run {
     my ( $self, $req, $token ) = @_;
+    $self->logger->debug('Generate TOTP form');
 
     # Prepare form
     my $tmp = $self->p->sendHtml(
         $req,
-        'ext2fcheck',
+        'totp2fcheck',
         params => {
             SKIN  => $self->conf->{portalSkin},
             TOKEN => $token
@@ -51,6 +52,7 @@ sub run {
 
 sub verify {
     my ( $self, $req, $session ) = @_;
+    $self->logger->debug('TOTP verification');
     my $code;
     unless ( $code = $req->param('code') ) {
         $self->userLogger->error('TOTP 2F: no code');

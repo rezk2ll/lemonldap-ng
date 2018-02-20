@@ -34,7 +34,8 @@ has prefix => ( is => 'rw' );
 
 sub init {
     my ($self) = @_;
-    $self->addUnauthRoute( $self->prefix . '2fcheck', '_verify', ['POST'] );
+    $self->addUnauthRoute( $self->prefix . '2fcheck' => '_verify',   ['POST'] );
+    $self->addUnauthRoute( $self->prefix . '2fcheck' => '_redirect', ['GET'] );
     my $rule = $self->conf->{ $self->prefix . '2fActivation' };
     $rule = $self->p->HANDLER->substitute($rule);
     unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
@@ -44,6 +45,14 @@ sub init {
     }
     $self->rule($rule);
     1;
+}
+
+sub _redirect {
+    my ( $self, $req ) = @_;
+    my $arg = $req->env->{QUERY_STRING};
+    return [
+        302, [ Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' ) ], []
+    ];
 }
 
 sub _run {
@@ -70,6 +79,7 @@ sub _verify {
     my $token;
     unless ( $token = $req->param('token') ) {
         $self->userLogger->error( $self->prefix . ' 2F access without token' );
+        $req->mustRedirect(1);
         return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
     }
 
@@ -84,6 +94,7 @@ sub _verify {
 
     # Case error
     if ($res) {
+        $req->noLoginDisplay(1);
         return $self->p->do( $req, [ sub { $res } ] );
     }
 

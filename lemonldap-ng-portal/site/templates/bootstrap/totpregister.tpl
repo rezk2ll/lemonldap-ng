@@ -13,7 +13,7 @@
       </pre>
      </div>
      <div class="form-group">
-      <input name="code" type="number" />
+      <input id="code" name="code" type="number" />
      </div>
      <div class="buttons">
       <span id="changekey" class="btn btn-success" role="button">

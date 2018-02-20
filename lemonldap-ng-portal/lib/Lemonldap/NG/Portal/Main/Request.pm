@@ -37,6 +37,10 @@ has customParameters => ( is => 'rw' );
 # Boolean to indicate that response must be a redirection
 has mustRedirect => ( is => 'rw' );
 
+# Boolean to indicate that login form must not be displayed (used to reset
+# authentication)
+has noLoginDisplay => ( is => 'rw' );
+
 # Store URL for redirections
 has urldc                  => ( is => 'rw' );
 has postUrl                => ( is => 'rw' );

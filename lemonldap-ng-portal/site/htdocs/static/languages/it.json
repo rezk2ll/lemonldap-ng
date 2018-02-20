@@ -98,6 +98,7 @@
 "autoAccept":"Accetta automaticamente in 30 secondi",
 "back2CasUrl":"L'applicazione dalla quale ti sei appena sconnesso ha fornito un link che dovresti seguire",
 "back2Portal":"Torna al portale",
+"badCode":"Bad code",
 "cancel":"Cancella",
 "captcha":"Captcha",
 "changeKey": "Generate new key",
@@ -119,8 +120,10 @@
 "enterCred":"Inserisci le tue credenziali",
 "enterExt2fCode":"Un codice vi é stato inviato. Inseritelo",
 "enterOpenIDLogin":"Inserisci il tuo login OpenID",
+"enterTotpCode":"Enter TOTP code",
 "enterYubikey":"Utilizza il tuo Yubikey",
 "errorMsg":"Messaggio di errore",
+"fillTheForm":"Fill the form",
 "firstName":"Nome",
 "forgotPwd":"Password dimenticata?",
 "generatePwd":"Generare automaticamente la password",
@@ -211,6 +214,9 @@
 "yourEmail":"E-mail",
 "yourIdentity":"Identità",
 "yourIdentityIs":"La tua identità é",
+"yourKeyIsRegistered":"Your key is registered",
+"yourNewTotpKey":"Your new TOTP key, please test it and enter the code",
 "yourPhone":"Numero di telefono",
-"yourProfile":"Il tuo profilo"
+"yourProfile":"Il tuo profilo",
+"yourTotpKey":"Your TOTP key"
 }

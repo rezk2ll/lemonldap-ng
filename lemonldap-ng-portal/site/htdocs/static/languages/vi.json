@@ -98,6 +98,7 @@
 "autoAccept":"Tự động chấp nhận trong 30 giây",
 "back2CasUrl":"Ứng dụng bạn vừa đăng xuất đã cung cấp một liên kết mà bạn muốn theo dõi",
 "back2Portal":"Quay lại cổng thông tin",
+"badCode":"Bad code",
 "cancel":"Hủy",
 "captcha":"Captcha",
 "changeKey": "Generate new key",
@@ -119,8 +120,10 @@
 "enterCred":"Vui lòng nhập thông tin đăng nhập của bạn",
 "enterExt2fCode":"Một mã đã được gửi cho bạn. Hãy nhập nó",
 "enterOpenIDLogin":"Hãy nhập thông tin đăng nhập OpenID của bạn",
+"enterTotpCode":"Enter TOTP code",
 "enterYubikey":"Vui lòng sử dụng Yubikey của bạn",
 "errorMsg":"Thông báo lỗi",
+"fillTheForm":"Fill the form",
 "firstName":"Tên",
 "forgotPwd":"Quên mật khẩu của bạn?",
 "generatePwd":"Tạo mật khẩu tự động",
@@ -211,6 +214,9 @@
 "yourEmail":"Email của bạn",
 "yourIdentity":"Nhận dạng của bạn",
 "yourIdentityIs":"Nhận dạng của bạn là",
+"yourKeyIsRegistered":"Your key is registered",
+"yourNewTotpKey":"Your new TOTP key, please test it and enter the code",
 "yourPhone":"Số điện thoại của bạn",
-"yourProfile":"Profile của bạn"
+"yourProfile":"Profile của bạn",
+"yourTotpKey":"Your TOTP key"
 }

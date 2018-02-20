@@ -66,7 +66,7 @@ sub selfRegister {
         my $code = $req->param('code');
         unless ($code) {
             $self->logger->userInfo('TOTP registration: empty validation form');
-            return $self->p->sendError( $req, 'missingCode', 400 );
+            return $self->p->sendError( $req, 'missingCode', 200 );
         }
         my $r = $self->verifyCode(
             $self->conf->{totp2fInterval},
@@ -89,7 +89,7 @@ sub selfRegister {
         # Now code is verified, let's store the master key in persistent data
         $self->p->updatePersistentSession( $req,
             { _totp2fSecret => $token->{_totp2fSecret} } );
-        $self->userLogger->logger('TOTP registration succeed');
+        $self->userLogger->notice('TOTP registration succeed');
         return [ 200, [ 'Content-Type' => 'application/json' ],
             ['{"result":1}'] ];
     }

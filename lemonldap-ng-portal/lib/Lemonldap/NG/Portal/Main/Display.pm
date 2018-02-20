@@ -188,9 +188,12 @@ sub display {
     }
 
     # 2.3 Case : user authenticated but an error was returned (bas url,...)
-    elsif ( not $req->datas->{noerror}
-        and $req->userData
-        and %{ $req->userData } )
+    elsif (
+        $req->noLoginDisplay
+        or (    not $req->datas->{noerror}
+            and $req->userData
+            and %{ $req->userData } )
+      )
     {
         $skinfile       = 'error';
         %templateParams = (

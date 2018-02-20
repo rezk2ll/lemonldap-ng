@@ -98,6 +98,7 @@
 "autoAccept":"Acceptation automatique dans 30 secondes",
 "back2CasUrl":"Le service duquel vous arrivez a fourni un lien que vous êtes invité à suivre",
 "back2Portal":"Retourner au portail",
+"badCode":"Mauvais code",
 "cancel":"Annuler",
 "captcha":"Captcha",
 "changeKey": "Générer une nouvelle clef",
@@ -119,8 +120,10 @@
 "enterCred":"Merci de vous authentifier",
 "enterExt2fCode":"Un code vous a été envoyé, entrez-le ici",
 "enterOpenIDLogin":"Entrez votre identifiant OpenID",
+"enterTotpCode":"Entrez le code TOTP",
 "enterYubikey":"Utilisez votre Yubikey",
 "errorMsg":"Message d'erreur",
+"fillTheForm":"Remplissez le formulaire",
 "firstName":"Prénom",
 "forgotPwd":"Mot de passe oublié ?",
 "generatePwd":"Générer le mot de passe automatiquement",
@@ -211,6 +214,9 @@
 "yourEmail":"Votre adresse électronique",
 "yourIdentity":"Votre identité",
 "yourIdentityIs":"Votre identité est",
+"yourKeyIsRegistered":"Votre clef est enregistrée",
+"yourNewTotpKey":"Votre nouvelle clef TOTP, testez-la et entrez le code",
 "yourPhone":"Votre numéro de téléphone",
-"yourProfile":"Vos informations personnelles"
+"yourProfile":"Vos informations personnelles",
+"yourTotpKey":"Votre clef TOTP"
 }

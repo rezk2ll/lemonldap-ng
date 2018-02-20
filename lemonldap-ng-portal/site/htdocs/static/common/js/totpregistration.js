@@ -5,7 +5,7 @@ LemonLDAP::NG TOTP registration script
  */
 
 (function() {
-  var displayError, getKey, setMsg, token;
+  var displayError, getKey, setMsg, token, verify;
 
   setMsg = function(msg, level) {
     $('#msg').html(window.translate(msg));
@@ -34,13 +34,13 @@ LemonLDAP::NG TOTP registration script
     return $.ajax({
       type: "POST",
       url: portal + "/totpregister/getkey",
+      dataType: 'json',
       data: {
         newkey: reset
       },
       error: displayError,
       success: function(data) {
         var qr, s;
-        console.log(data);
         s = "otpauth://totp/" + (escape(data.portal)) + ":" + (escape(data.user)) + "?secret=" + data.secret + "&issuer=" + (escape(data.portal));
         qr = new QRious({
           element: document.getElementById('qr'),
@@ -51,15 +51,51 @@ LemonLDAP::NG TOTP registration script
         if (data.newkey) {
           setMsg('yourNewTotpKey', 'warning');
         } else {
-          setMsg('yourTotpKey', 'info');
+          setMsg('yourTotpKey', 'success');
         }
         return token = data.token;
       }
     });
   };
 
+  verify = function() {
+    var val;
+    val = $('#code').val();
+    if (!val) {
+      return setMsg('fillTheForm', 'danger');
+    } else {
+      return $.ajax({
+        type: "POST",
+        url: portal + "/totpregister/verify",
+        dataType: 'json',
+        data: {
+          token: token,
+          code: val
+        },
+        error: displayError,
+        success: function(data) {
+          if (data.error) {
+            if (data.error.match(/badCode/)) {
+              return setMsg('badCode', 'warning');
+            } else {
+              return setMsg(data.error, 'danger');
+            }
+          } else {
+            return setMsg('yourKeyIsRegistered', 'success');
+          }
+        }
+      });
+    }
+  };
+
   $(document).ready(function() {
-    return getKey(0);
+    getKey(0);
+    $('#changekey').on('click', function() {
+      return getKey(1);
+    });
+    return $('#verify').on('click', function() {
+      return verify();
+    });
   });
 
 }).call(this);

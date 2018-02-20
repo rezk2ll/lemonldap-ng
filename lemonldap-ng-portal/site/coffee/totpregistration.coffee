@@ -23,12 +23,12 @@ getKey = (reset) ->
 	$.ajax
 		type: "POST",
 		url: "#{portal}/totpregister/getkey"
+		dataType: 'json'
 		data:
 			newkey: reset
 		error: displayError
 		# Display key and QR code
 		success: (data) ->
-			console.log data
 			# Generate OTP url
 			s = "otpauth://totp/#{escape(data.portal)}:#{escape(data.user)}?secret=#{data.secret}&issuer=#{escape(data.portal)}"
 			# Generate QR code
@@ -42,8 +42,34 @@ getKey = (reset) ->
 			if data.newkey
 				setMsg 'yourNewTotpKey', 'warning'
 			else
-				setMsg 'yourTotpKey', 'info'
+				setMsg 'yourTotpKey', 'success'
 			token = data.token
+
+verify = ->
+	val = $('#code').val()
+	unless val
+		setMsg 'fillTheForm', 'danger'
+	else
+		$.ajax
+			type: "POST",
+			url: "#{portal}/totpregister/verify"
+			dataType: 'json'
+			data:
+				token: token
+				code: val
+			error: displayError
+			success: (data) ->
+				if data.error
+					if data.error.match /badCode/
+						setMsg 'badCode', 'warning'
+					else
+						setMsg data.error, 'danger'
+				else
+					setMsg 'yourKeyIsRegistered', 'success'
 
 $(document).ready ->
 	getKey(0)
+	$('#changekey').on 'click', () ->
+		getKey(1)
+	$('#verify').on 'click', () ->
+		verify()

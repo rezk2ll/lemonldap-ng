@@ -48,7 +48,7 @@ sub _code {
 sub newSecret {
     my ($self) = @_;
     my @chars = ( 'a' .. 'z', 2 .. 7 );
-    return join( '', @chars[ map { int( rand(32) ) } 1 .. 16 ] );
+    return join( '', @chars[ map { int( rand(32) ) } 1 .. 32 ] );
 }
 
 1;

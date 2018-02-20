@@ -98,6 +98,7 @@
 "autoAccept":"تقبل تلقائيا في 30 ثانية",
 "back2CasUrl":"التطبيق الذي قمت بتسجيل الخروج منه للتو قد وفرت وصلة قد ترغب في أن تتبعها",
 "back2Portal":"العودة إلى البوابة",
+"badCode":"Bad code",
 "cancel":"إلغاء",
 "captcha":"كلمة التحقق أو الكابتشا ",
 "changeKey": "Generate new key",
@@ -120,7 +121,9 @@
 "enterExt2fCode":"تم إرسال رمز إليك. الرجاء إدخاله",
 "enterOpenIDLogin":"الرجاء إدخال تسجيل الدخول الأوبين إيدي الخاص بك",
 "enterYubikey":"يرجى استخدام يوبي كي الخاص بك",
+"enterTotpCode":"Enter TOTP code",
 "errorMsg":"رسالة خاطئة",
+"fillTheForm":"Fill the form",
 "firstName":"الاسم الاول",
 "forgotPwd":"نسيت كلمة المرور؟",
 "generatePwd":"إنشاء كلمة المرور تلقائيا",
@@ -211,6 +214,9 @@
 "yourEmail":"بريدك الالكتروني",
 "yourIdentity":"هويتك",
 "yourIdentityIs":"هويتك هي",
+"yourKeyIsRegistered":"Your key is registered",
+"yourNewTotpKey":"Your new TOTP key, please test it and enter the code",
 "yourPhone":"رقم هاتفك",
-"yourProfile":"ملفك الشخصي"
+"yourProfile":"ملفك الشخصي",
+"yourTotpKey":"Your TOTP key"
 }

@@ -98,6 +98,7 @@
 "autoAccept":"Automatically accept in 30 seconds",
 "back2CasUrl":"The application you just logged out of has provided a link it would like you to follow",
 "back2Portal":"Go back to portal",
+"badCode":"Bad code",
 "cancel":"Cancel",
 "captcha":"Captcha",
 "changeKey": "Generate new key",
@@ -119,8 +120,10 @@
 "enterCred":"Please enter your credentials",
 "enterExt2fCode":"A code has been sent to you. Please enter it",
 "enterOpenIDLogin":"Please enter your OpenID login",
+"enterTotpCode":"Enter TOTP code",
 "enterYubikey":"Please use your Yubikey",
 "errorMsg":"Error Message",
+"fillTheForm":"Fill the form",
 "firstName":"First name",
 "forgotPwd":"Forgot your password?",
 "generatePwd":"Generate the password automatically",
@@ -211,6 +214,9 @@
 "yourEmail":"Your email",
 "yourIdentity":"Your identity",
 "yourIdentityIs":"Your identity is",
+"yourKeyIsRegistered":"Your key is registered",
+"yourNewTotpKey":"Your new TOTP key, please test it and enter the code",
 "yourPhone":"Your phone number",
-"yourProfile":"Your profile"
+"yourProfile":"Your profile",
+"yourTotpKey":"Your TOTP key"
 }
