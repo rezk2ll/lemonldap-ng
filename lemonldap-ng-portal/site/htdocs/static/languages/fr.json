@@ -100,6 +100,7 @@
 "back2Portal":"Retourner au portail",
 "cancel":"Annuler",
 "captcha":"Captcha",
+"changeKey": "Générer une nouvelle clef",
 "changePwd":"Changez votre mot de passe",
 "checkLastLogins":"Voir mes dernières connexions",
 "chooseApp":"Choisissez une application à laquelle vous êtes autorisé à accéder",
