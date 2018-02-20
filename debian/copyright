@@ -131,6 +131,11 @@ Files: lemonldap-ng-portal/site/htdocs/static/bwr/jquery-ui/*
 Copyright: 2007, 2014 jQuery Foundation and other contributors
 License: Expat
 
+Files: lemonldap-ng-portal/site/htdocs/static/bwr/qrious/*
+Copyright: 2017, Alasdair Mercer
+ 2010, Tom Zerucha
+License: GPL-3+
+
 Files: lemonldap-ng-portal/site/htdocs/static/common/js/u2f-api.*
 Copyright: 2014-2015, Google Inc.
 License: Expat
@@ -167,8 +172,8 @@ License: Apache-2.0
  See the License for the specific language governing permissions and
  limitations under the License.
  .
- On Debian systems, the complete text of the Apache License 2.0 can
- be found in "/usr/share/common-licenses/Apache-2.0"
+ On Debian systems, the complete text of the Apache License 2.0 can be
+ found in "/usr/share/common-licenses/Apache-2.0"
 
 License: CC-3
  CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE LEGAL
@@ -749,6 +754,15 @@ License: GPL-2+
  .
  On Debian systems, the complete text of version 2 of the GNU General
  Public License can be found in `/usr/share/common-licenses/GPL-2'
+
+License: GPL-3+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 3, or (at your option)
+ any later version.
+ .
+ On Debian systems, the complete text of version 3 of the GNU General
+ Public License can be found in `/usr/share/common-licenses/GPL-3'
 
 License: LGPL-3
  This program is free software; you can redistribute it and/or modify

@@ -11,6 +11,7 @@
     "fingerprintjs2": "x",
     "jquery": "2.x",
     "jquery-ui": "x",
-    "jquery.cookie": "x"
+    "jquery.cookie": "x",
+    "qrious": "^4.0.2"
   }
 }
