@@ -129,7 +129,7 @@
 .\" ========================================================================
 .\"
 .IX Title "llng-fastcgi-server 1"
-.TH llng-fastcgi-server 1 "2017-11-11" "perl v5.26.1" "User Contributed Perl Documentation"
+.TH llng-fastcgi-server 1 "2018-02-18" "perl v5.26.1" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -165,6 +165,8 @@ Each parameter can be set by an option or a environment variable.
 .IX Item "--engine -e ($ENV{ENGINE}): Plack::Handler engine, default to FCGI"
 .IP "\-\-socket \-s ($ENV{\s-1SOCKET\s0}): Unix socket" 4
 .IX Item "--socket -s ($ENV{SOCKET}): Unix socket"
+.IP "\-\-listen \-l ($ENV{\s-1LISTEN\s0}): Listening address (\s-1HOST:PORT, :PORT,\s0 or \s-1PATH\s0)" 4
+.IX Item "--listen -l ($ENV{LISTEN}): Listening address (HOST:PORT, :PORT, or PATH)"
 .IP "\-\-customFunctionsFile \-f ($ENV{\s-1CUSTOM_FUNCTIONS_FILE\s0}): file to load for custom functions" 4
 .IX Item "--customFunctionsFile -f ($ENV{CUSTOM_FUNCTIONS_FILE}): file to load for custom functions"
 .ie n .IP "\-\-plackOptions: other options to pass to Plack. This multi-valued parameter must have ""key=value"" values." 4

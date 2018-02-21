@@ -209,7 +209,10 @@ sub tree {
                         {
                             title => 'kerberosParams',
                             help  => 'authkerberos.html',
-                            nodes => [ 'krbKeytab', 'krbByJs', 'krbAuthnLevel', 'krbRemoveDomain' ]
+                            nodes => [
+                                'krbKeytab',     'krbByJs',
+                                'krbAuthnLevel', 'krbRemoveDomain'
+                            ]
                         },
                         {
                             title => 'ldapParams',
@@ -641,6 +644,11 @@ sub tree {
                             help  => 'autoSignin.html',
                             nodes => ['autoSigninRules'],
                         },
+                    ]
+                },
+                {
+                    title => 'secondFactors',
+                    nodes => [
                         {
                             title => 'u2f',
                             help  => 'u2f.html',
@@ -648,6 +656,16 @@ sub tree {
                             nodes => [
                                 'u2fActivation', 'u2fSelfRegistration',
                                 'u2fAuthnLevel'
+                            ]
+                        },
+                        {
+                            title => 'totp',
+                            help  => 'totp.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'totp2fActivation', 'totpSelfRegistration',
+                                'totp2fAuthnLevel', 'totp2fInterval',
+                                'totp2fRange',
                             ]
                         },
                         {

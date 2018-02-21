@@ -3123,6 +3123,25 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'bool'
         },
+        'totp2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'totp2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'totp2fInterval' => {
+            'default' => 30,
+            'type'    => 'int'
+        },
+        'totp2fRange' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'totpSelfRegistration' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'trustedDomains' => {
             'type' => 'text'
         },

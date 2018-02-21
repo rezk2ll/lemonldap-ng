@@ -106,8 +106,8 @@ sub types {
         select => {
             test => sub {
                 my $test =
-                  grep (
-                    { $_ eq $_[0] } map ( { $_->{k} } @{ $_[2]->{select} } ) );
+                  grep ( { $_ eq $_[0] }
+                    map ( { $_->{k} } @{ $_[2]->{select} } ) );
                 return $test
                   ? 1
                   : ( 1, "Invalid value '$_[0]' for this select" );
@@ -1030,6 +1030,33 @@ sub attributes {
               'Authentication level for users authentified by password+U2F'
         },
 
+        # TOTP second factor
+        totp2fActivation => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'TOTP activation',
+        },
+        totpSelfRegistration => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'TOTP self registration activation',
+        },
+        totp2fAuthnLevel => {
+            type => 'int',
+            documentation =>
+              'Authentication level for users authentified by password+TOTP'
+        },
+        totp2fInterval => {
+            type          => 'int',
+            default       => 30,
+            documentation => 'TOTP interval',
+        },
+        totp2fRange => {
+            type          => 'int',
+            default       => 1,
+            documentation => 'TOTP range (number of interval to test)',
+        },
+
         # External second factor
         ext2fActivation => {
             type          => 'boolOrExpr',
@@ -1180,7 +1207,7 @@ sub attributes {
                         grep { $_ =~ /Undefined subroutine/ ? () : $_ }
                           split( /\n/, $@ ) );
                     return $err ? ( 1, "__badExpression__: $err" ) : (1);
-                  }
+                }
             },
             documentation => 'Virtualhost headers',
         },
@@ -2167,8 +2194,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         radiusServer => { type => 'text', },
 
         # REST
-        restAuthUrl       => { type => 'url' },
-        restUserDBUrl     => { type => 'url' },
+        restAuthUrl   => { type => 'url' },
+        restUserDBUrl => { type => 'url' },
+
         # TODO: add restMailDBUrl
         restPwdConfirmUrl => { type => 'url' },
         restPwdModifyUrl  => { type => 'url' },
@@ -2290,14 +2318,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 2,
             documentation => 'DBI authentication level',
         },
-        dbiAuthChain       => { type => 'text', },
-        dbiAuthUser        => { type => 'text', },
-        dbiAuthPassword    => { type => 'password', },
-        dbiUserChain       => { type => 'text', },
-        dbiUserUser        => { type => 'text', },
-        dbiUserPassword    => { type => 'password', },
-        dbiAuthTable       => { type => 'text', },
-        dbiUserTable       => { type => 'text', },
+        dbiAuthChain    => { type => 'text', },
+        dbiAuthUser     => { type => 'text', },
+        dbiAuthPassword => { type => 'password', },
+        dbiUserChain    => { type => 'text', },
+        dbiUserUser     => { type => 'text', },
+        dbiUserPassword => { type => 'password', },
+        dbiAuthTable    => { type => 'text', },
+        dbiUserTable    => { type => 'text', },
 
         # TODO: add dbiMailCol
         dbiAuthLoginCol    => { type => 'text', },
