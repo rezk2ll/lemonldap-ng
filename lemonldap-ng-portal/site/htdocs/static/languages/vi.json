@@ -198,6 +198,7 @@
 "u2fFailed": "Xác minh U2F không thành công. Thử lại hoặc liên hệ với quản trị viên của bạn ",
 "u2fPermission": "Bạn có thể được nhắc cho phép trang web được phép truy cập vào các khóa bảo mật của bạn. Sau khi cho phép, thiết bị sẽ bắt đầu nhấp nháy. ",
 "u2fRegistered": "Khóa của bạn đã được đăng ký",
+"u2fUnregistered": "Khóa của bạn đã bị xóa",
 "u2fSuccess": "Chìa khóa của bạn đã được kiểm tra thành công",
 "u2fWelcome": "U2F device management",
 "unableToGetU2FKey": "Không thể truy cập khóa của bạn. Thử lại hoặc liên hệ với quản trị viên của bạn ",

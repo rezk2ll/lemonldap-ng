@@ -198,6 +198,7 @@
 "u2fFailed": "La vérification U2F a échoué, réessayez ou contactez votre administrateur",
 "u2fPermission": "Il est possible qu'on vous demande d'autoriser le site à accéder à votre clef. Après votre accord, la clef clignotera.",
 "u2fRegistered": "Votre clef est enregistrée. Cliquez sur vérifier",
+"u2fUnregistered": "Votre clef a été supprimée.",
 "u2fSuccess": "Votre clef est vérifiée",
 "u2fWelcome": "Gestion du périphérique U2F",
 "unableToGetU2FKey": "Impossible d'accéder à la clef, réessayez ou contactez votre administrateur",
