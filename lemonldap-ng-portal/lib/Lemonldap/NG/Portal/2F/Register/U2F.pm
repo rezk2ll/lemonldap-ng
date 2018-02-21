@@ -61,7 +61,7 @@ sub run {
     }
     if ( $action eq 'unregistration' ) {
         my $resp;
-        unless ( $resp = $req->param('unregistration') ) {
+        unless ( $resp = $req->param('registration') ) {
             return $self->p->sendError( $req, 'Missing unregistration parameter',
                 400 );
         }
@@ -71,8 +71,8 @@ sub run {
             $self->p->updatePersistentSession(
                 $req,
                 {
-                    _u2fKeyHandle => 'NULL',
-                    _u2fUserKey   => 'NULL'
+                    _u2fKeyHandle => '',
+                    _u2fUserKey   => ''
                 }
             );
             return [
