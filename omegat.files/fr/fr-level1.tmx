@@ -14,14 +14,6 @@
   <body>
     <tu>
       <tuv lang="EN-US">
-        <seg>'create_user' =&gt;  $_SERVER['HTTP_AUTH_SUPERADMIN'],</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101919Z" changeid="xavier">
-        <seg>'create_user' =&gt;  $_SERVER['HTTP_AUTH_SUPERADMIN'],</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Go to the SAML Single Sign On settings, and fill these information:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T222405Z" changeid="xavier">
@@ -336,14 +328,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>SQL configuration</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120422T100113Z" changeid="xavier">
-        <seg>Configuration SQL</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You can then access to the configuration of this OP.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T200954Z" changeid="xavier">
@@ -462,14 +446,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       <tuv lang="FR-FR">
         <seg>...
 &lt;/AttributeAuthorityDescriptor&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>MySQL example (suppose that our servers are in 10.0.0.0/24 network):</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120423T204507Z" changeid="xavier">
-        <seg>Exemple MySQL (on suppose que les serveurs sont sur le réseau 10.0.0.0/24):</seg>
       </tuv>
     </tu>
     <tu>
@@ -842,14 +818,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Edit Dokuwiki local configuration (conf/local.php) and set lemonldap as authentication type:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T115315Z" changeid="xavier">
-        <seg>Éditer la configuration locale Dokuwiki (conf/local.php) et indiquer lemonldap comme type d'authentification :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Install Webserver Auth module, by downloading it, and unarchive it in the drupal modules/ directory.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111201T124728Z" changeid="xavier">
@@ -894,14 +862,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T220711Z" changeid="xavier">
         <seg>Ajouter un nouvel hôte virtuel webmail.domain.tld</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>All names must be registered in the DNS server (which is Active Directory).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T211916Z" changeid="xavier">
-        <seg>Tous les noms doivent être enregistrés dans le serveur DNS (qui est Active Directory).</seg>
       </tuv>
     </tu>
     <tu>
@@ -2356,14 +2316,6 @@ dirName = /usr/local/lemonldap-ng/data/conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Frameworks</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120507T182723Z" changeid="xavier">
-        <seg>Frameworks</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>jQuery form selector: #loginForm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T173506Z" changeid="xavier">
@@ -2564,14 +2516,6 @@ make debian-packages</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T182442Z" changeid="xavier">
         <seg>Cette fonction examine la date de la requête en cours et la compare avec une date de début et de fin.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>ad.example.com: DNS of First Active Directory</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T211444Z" changeid="xavier">
-        <seg>ad.example.com : DNS du premier Active Directory</seg>
       </tuv>
     </tu>
     <tu>
@@ -3150,14 +3094,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>This documentation will explain how to use Active Directory as Kerberos server, and provide transparent authentication to AD domain users to LL::NG.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T210935Z" changeid="xavier">
-        <seg>Cette documentation explique comment utiliser Active Directory comme serveur Kerberos, et fournir une authentification transparente aux utilisateurs du domaine AD à LL::NG.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Roles as entries in the directory</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T142056Z" changeid="guimard">
@@ -3210,22 +3146,6 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172102Z" changeid="xavier">
         <seg>OBM_UID</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>action=logout$</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T102351Z" changeid="xavier">
-        <seg>action=logout$</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>There are packages available here: http://deb.entrouvert.org/.</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Les paquets sont disponibles ici : http://deb.entrouvert.org/.</seg>
       </tuv>
     </tu>
     <tu>
@@ -3338,14 +3258,6 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T145841Z" changeid="guimard">
         <seg>L'utilisateur peut choisir un nouveau mot de passe ou demander sa génération</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>To have a stronger integration, we will configure LimeSurvey to autocreate unknown users and use HTTP headers to fill name, mail and roles.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160228T165413Z" changeid="xavier">
-        <seg>Pour une meilleure integration, LimeSurvey doit être configuré pour créer automatiquement les utilisateurs inconnus et utiliser les en-têtes HTTP pour remplir le nom, le mail et les rôles.</seg>
       </tuv>
     </tu>
     <tu>
@@ -3662,14 +3574,6 @@ SSLCACertificateFile /etc/httpd/certs/ow2-ca.cert</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>The module must be loaded by Apache (LoadModule directive).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T154504Z" changeid="xavier">
-        <seg>Ce module doit être chargé par Apache (directive LoadModule).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;OrganizationDisplayName xml:lang=&quot;en&quot;&gt;Example&lt;/OrganizationDisplayName&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -3814,26 +3718,6 @@ SSLCACertificateFile /etc/httpd/certs/ow2-ca.cert</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>//==================================
-// WebSSO
-//==================================
- 
-$useWebserverAuth = true;
-$WebserverAuth_autocreateUser = true;
-$WebserverAuth_autouserprofile = Array(</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101914Z" changeid="xavier">
-        <seg>//==================================
-// WebSSO
-//==================================
- 
-$useWebserverAuth = true;
-$WebserverAuth_autocreateUser = true;
-$WebserverAuth_autouserprofile = Array(</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>To configure requested attributes, edit Exported variables and define attributes:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T172309Z" changeid="xavier">
@@ -3878,14 +3762,6 @@ $WebserverAuth_autouserprofile = Array(</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Exiger des assertions signées : mettre à « activé » pour exiger de recevoir des assertions signées.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Wiki</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153533Z" changeid="xavier">
-        <seg>Wiki</seg>
       </tuv>
     </tu>
     <tu>
@@ -4170,14 +4046,6 @@ $WebserverAuth_autouserprofile = Array(</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You will need a very recent version of Lasso (&gt;= 2.3.0).</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Vous devez utiliser une version récente de Lasso (&gt;= 2.3.0).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>For now, Zimbra isn't supported by Nginx handler.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T060118Z" changeid="xavier">
@@ -4306,14 +4174,6 @@ $WebserverAuth_autouserprofile = Array(</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>The configuration is the same as a single LL::NG server.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214624Z" changeid="xavier">
-        <seg>La configuration est la même qie pour un serveur LL::NG unique.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>A Zimbra Handler is called</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155348Z" changeid="xavier">
@@ -4350,14 +4210,6 @@ $WebserverAuth_autouserprofile = Array(</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T122004Z" changeid="xavier">
         <seg>Dimanche est le premier jour.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>It should be possible to have the same account for all SPN, but this may require some manipulations on AD (command setspn) that are not documented here.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T212224Z" changeid="xavier">
-        <seg>Il devrait être possible d'avoir le même compte pour tous les SPN, mais ça nécessite certaines manipulations de l'AD (commande setspn) non documentées ici.</seg>
       </tuv>
     </tu>
     <tu>
@@ -4694,22 +4546,6 @@ $WebserverAuth_autouserprofile = Array(</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T135155Z" changeid="guimard">
         <seg>Logo : nom de fichier à utiliser comme logo</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>vi /var/www/html/limesurvey/config.php</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101912Z" changeid="xavier">
-        <seg>vi /var/www/html/limesurvey/config.php</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>If you are protecting Dokuwiki with LL::NG as reverse proxy, convert header into REMOTE_USER environment variable.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T115535Z" changeid="xavier">
-        <seg>Si Dokuwiki est protégé par un reverse-proxy LL::NG, convertir l'en-tête en variable d'environnement REMOTE_USER.</seg>
       </tuv>
     </tu>
     <tu>
@@ -5450,6 +5286,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Krb5KeyTab /etc/lemonldap-ng/auth.keytab</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T155342Z" changeid="xavier">
+        <seg>Krb5KeyTab /etc/lemonldap-ng/auth.keytab</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>zimbraUrl</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064848Z" changeid="guimard">
@@ -6166,14 +6010,6 @@ cda = 1</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>KERB_AUTH: AD account to generate the keytab for LL::NG server (in single mode)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T211602Z" changeid="xavier">
-        <seg>KERB_AUTH : compte AD pour générer la table de clefs du serveur LL::NG (en mode serveur seul)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Logout</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6386,14 +6222,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>The configuration is the same as with a single AD domain.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T215144Z" changeid="xavier">
-        <seg>La configuration est la même que pour un domaine AD unique.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Before installing the packages, install dependencies.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093737Z" changeid="xavier">
@@ -6470,14 +6298,6 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120422T100307Z" changeid="xavier">
         <seg>On peut également utiliser le même compte pour tous.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>'lang' =&gt; 'en',</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101917Z" changeid="xavier">
-        <seg>'lang' =&gt; 'en',</seg>
       </tuv>
     </tu>
     <tu>
@@ -6676,14 +6496,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Applications listed below are known to be easy to integrate in LL::NG.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T060457Z" changeid="xavier">
-        <seg>Les applications listées ci-dessous sont connues pour être faciles à intégrer à LL::NG.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>CAS attributes: list of attributes that will be transmitted in validate response.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T200730Z" changeid="xavier">
@@ -6744,14 +6556,6 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093650Z" changeid="xavier">
         <seg>Les paquets sont disponibles sur la page de téléchargement.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You can manage roles with the RBAC model or by using groups.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T102339Z" changeid="xavier">
-        <seg>On peut gérer les rôles avec le modèle RBAC ou en utilisant les groupes.</seg>
       </tuv>
     </tu>
     <tu>
@@ -6824,14 +6628,6 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T172640Z" changeid="xavier">
         <seg>Une connexion est considérée comme réussie si l'utilisateur est authentifié et autorisé à ouvrir une session ; comme échouée, sinon.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You can use different dbiUser strings :</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120423T204341Z" changeid="xavier">
-        <seg>Plusieurs chaînes dbiUser sont utilisables :</seg>
       </tuv>
     </tu>
     <tu>
@@ -7452,14 +7248,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Configure the connection string (see DBI manual page)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120422T100001Z" changeid="xavier">
-        <seg>Configurer la chaîne de connexion (voir la page de manuel DBI)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Tips</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T130135Z" changeid="xavier">
@@ -8004,14 +7792,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>apt-get install libapache2-mod-auth-kerb</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T154442Z" changeid="xavier">
-        <seg>apt-get install libapache2-mod-auth-kerb</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Hash schema: SQL method for hashing password.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T135215Z" changeid="xavier">
@@ -8538,14 +8318,6 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>User: can answer to surveys</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101758Z" changeid="xavier">
-        <seg>User : peut répondre aux surveillances</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>The portal is the main component of LL::NG.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T071702Z" changeid="guimard">
@@ -8686,14 +8458,6 @@ description: {whatToTrace}'$uid'
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T072014Z" changeid="guimard">
         <seg>utilisant le système d'authentification d'Apache (utilisé pour SSL, Kerberos, l'authentification HTTP basique, …)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Auth-Admin</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T102230Z" changeid="xavier">
-        <seg>Auth-Admin</seg>
       </tuv>
     </tu>
     <tu>
@@ -9130,14 +8894,6 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>RDBI : triple store storage</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120421T174513Z" changeid="xavier">
-        <seg>RDBI : stockage en triplets</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Login field name in user table: name of user table column hosting login</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201139Z" changeid="xavier">
@@ -9460,14 +9216,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>'templatelist' =&gt; 'default,basic,MyOrgTemplate',</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101918Z" changeid="xavier">
-        <seg>'templatelist' =&gt; 'default,basic,MyOrgTemplate',</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>An example of its content:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T202100Z" changeid="xavier">
@@ -9652,14 +9400,6 @@ dirName = /var/lib/lemonldap-ng/conf</seg>
         <seg>[configuration]
 type  = JSONFile
 dirName = /var/lib/lemonldap-ng/conf</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>'full_name' =&gt; $_SERVER['HTTP_AUTH_CN'],</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101915Z" changeid="xavier">
-        <seg>'full_name' =&gt; $_SERVER['HTTP_AUTH_CN'],</seg>
       </tuv>
     </tu>
     <tu>
@@ -10872,14 +10612,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Allow only admin and superadmin roles</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T102746Z" changeid="xavier">
-        <seg>Autorisé seulement pour les rôles admin et superadmin</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>If enabled, if the user group is a member of another group (group of groups), all parents groups will be stored as user's groups.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T115014Z" changeid="xavier">
@@ -10932,14 +10664,6 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073633Z" changeid="xavier">
         <seg>documentation:liferay_1.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>'manage_template' =&gt;  $_SERVER['HTTP_AUTH_SUPERADMIN'],</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101921Z" changeid="xavier">
-        <seg>'manage_template' =&gt;  $_SERVER['HTTP_AUTH_SUPERADMIN'],</seg>
       </tuv>
     </tu>
     <tu>
@@ -11054,14 +10778,6 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T201128Z" changeid="xavier">
         <seg>L'OP peut publier sa métadonnée dans un fichier JSON (voir par exemple la métadonnée Google).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>It is recommended to create an AD account for each LL::NG server.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T212037Z" changeid="xavier">
-        <seg>Il est recommandé de créer un compte AD pour chaque serveur LL::NG.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11678,14 +11394,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Choose DBI type (RDBI, CDBI or DBI)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120422T095938Z" changeid="xavier">
-        <seg>Choisir le type DBI (RDBI, CDBI or DBI)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Local file</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071119Z" changeid="xavier">
@@ -11830,14 +11538,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Superadmin: no one can stop him!</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101826Z" changeid="xavier">
-        <seg>Superadmin : personne ne peut l'arrêter !</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>By default, the main session module is used to store SAML temporary data (like relay-states), but SAML sessions need to use a session module compatible with the sessions restrictions feature.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -11938,14 +11638,6 @@ portalSkin = dark</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T151135Z" changeid="xavier">
         <seg>Le module peut être appelé à la diligence du rédacteur, par exemple SSOExtensions.pm :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>yum install mod_auth_kerb</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T154436Z" changeid="xavier">
-        <seg>yum install mod_auth_kerb</seg>
       </tuv>
     </tu>
     <tu>
@@ -12230,14 +11922,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>The client Kerberos configuration is the same as a single LL::NG server.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214306Z" changeid="xavier">
-        <seg>La configuration du client Kerberos est la même qie pour un serveur LL::NG unique.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>cn=admin,dc=example,dc=password</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T171856Z" changeid="xavier">
@@ -12318,14 +12002,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://fr.lutece.paris.fr</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153724Z" changeid="xavier">
-        <seg>http://fr.lutece.paris.fr</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>-force: set it to 1 to save a configuration earlier than latest.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T080302Z" changeid="xavier">
@@ -12346,14 +12022,6 @@ portalSkin = dark</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T134435Z" changeid="xavier">
         <seg>Il faut donc écrire les règles en utilisant les caractères normaux.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You just need to choose if the authenticated user will be a “user” or a “guest”.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160228T165038Z" changeid="xavier">
-        <seg>Il suffit de choisir si l'utilisateur authentifié sera un &quot;utilisateur&quot; ou un &quot;invité&quot;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12918,14 +12586,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>1 if user is superadmin</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T102256Z" changeid="xavier">
-        <seg>1 si l'utilisateur est super-administrateur</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>By default, Tomcat provides a file called users.xml to manage authentication:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190300Z" changeid="xavier">
@@ -13480,24 +13140,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>cp lemonldap.class.php inc/auth/
-cp lemonldapuserdatabackend.class.php inc/auth/</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T115227Z" changeid="xavier">
-        <seg>cp lemonldap.class.php inc/auth/
-cp lemonldapuserdatabackend.class.php inc/auth/</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>'configurator' =&gt;  $_SERVER['HTTP_AUTH_SUPERADMIN'],</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101921Z" changeid="xavier">
-        <seg>'configurator' =&gt;  $_SERVER['HTTP_AUTH_SUPERADMIN'],</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You can change default parameters using the “notificationStorage” and “notificationStorageOptions” parameters with the same syntax as configuration storage parameters.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T052619Z" changeid="guimard">
@@ -13556,14 +13198,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120423T204640Z" changeid="xavier">
         <seg>http://search.cpan.org/perldoc?Apache::Session::Postgres</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Download the plugin and copy the files in dokuwiki inc/auth/ directory:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T115225Z" changeid="xavier">
-        <seg>Télécharger le plugin et le copier dans le répertoire dokuwiki inc/auth/ :</seg>
       </tuv>
     </tu>
     <tu>
@@ -14042,14 +13676,6 @@ sub function1 {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T045349Z" changeid="xavier">
         <seg>Ceci requiert le module client OpenID pour Perl, version au moins supérieure ou égale à 1.0.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>KERB_NODE1: AD account to generate the keytab for the first LL::NG server (in cluster mode)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T211643Z" changeid="xavier">
-        <seg>KERB_NODE1 : compte AD pour générer la table de clefs du premier serveur LL::NG (en mode cluster)</seg>
       </tuv>
     </tu>
     <tu>
@@ -14604,14 +14230,6 @@ server {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You need to set the PHP_AUTH_USER variable to have the Webserver authentication mode working.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160228T165505Z" changeid="xavier">
-        <seg>Il faut renseigner la variable PHP_AUTH_USER pour faire fonctionner le mode d'authentification par serveur web.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>deleteSession: delete a session</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T172255Z" changeid="xavier">
@@ -14930,14 +14548,6 @@ if ( $r-&gt;fault ) {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T061136Z" changeid="xavier">
         <seg>En interdisant ceci, on risque d'interdire aussi les authentification directe des IDP car la restriction est indiquée dans la requête d'authentification.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You can do the same check for the keytab as with the single LL::NG server.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214546Z" changeid="xavier">
-        <seg>On peut faire le même contrôle que pour un serveur LL::NG isolé.</seg>
       </tuv>
     </tu>
     <tu>
@@ -15266,26 +14876,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>[configuration]
-type = RDBI
-dbiChain    = DBI:mysql:database=lemonldap-ng;host=1.2.3.4
-dbiUser     = lemonldap
-dbiPassword = password
-; optional
-dbiTable    = mytablename</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120422T100056Z" changeid="xavier">
-        <seg>[configuration]
-type = RDBI
-dbiChain    = DBI:mysql:database=lemonldap-ng;host=1.2.3.4
-dbiUser     = lemonldap
-dbiPassword = password
-; optional
-dbiTable    = mytablename</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Go in Manager, General Parameters » Advanced Parameters » Custom functions and set:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112212Z" changeid="xavier">
@@ -15310,26 +14900,10 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>$conf[authtype] = lemonldap;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T115320Z" changeid="xavier">
-        <seg>$conf[authtype] = lemonldap;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>To do this, go in Manager &gt; General Parameters &gt; Advanced Parameters &gt; Security &gt; Use Safe Jail and disable it.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T204210Z" changeid="xavier">
         <seg>Pour ce faire, aller dans le manager &gt; Paramètres généraux &gt; Paramètres avancés &gt; Sécurité &gt; Utiliser la cage sécurisée et la désactiver.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>The configuration is done in config.php:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101911Z" changeid="xavier">
-        <seg>La configuration est effectuée via config.php:</seg>
       </tuv>
     </tu>
     <tu>
@@ -15394,14 +14968,6 @@ dbiTable    = mytablename</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T085317Z" changeid="xavier">
         <seg>Securiser l'accès à la configuration</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>LL::NG Cluster / Two AD domains</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214716Z" changeid="xavier">
-        <seg>Cluster LL::NG / Deux domaines AD</seg>
       </tuv>
     </tu>
     <tu>
@@ -15966,14 +15532,6 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>For example, we will use 3 roles:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101743Z" changeid="xavier">
-        <seg>Par exemple, en utilisant 3 rôles :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>http://search.cpan.org/perldoc?DBD::Pg</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120423T205030Z" changeid="xavier">
@@ -16018,14 +15576,6 @@ dbiTable    = mytablename</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080500Z" changeid="xavier">
         <seg>Utilisateurs : ne collecte aucune donnée (mais il est possible d'enregistrer des variables d'environement dans la session)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Lemonldap-ng.ini parameters</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120422T095900Z" changeid="xavier">
-        <seg>Paramètres lemonldap-ng.ini</seg>
       </tuv>
     </tu>
     <tu>
@@ -16192,26 +15742,10 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Just use node1.example.com and node2.example.com instead of auth.example.com.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214605Z" changeid="xavier">
-        <seg>Utiliser simplement node1.example.com et node2.example.com au lieu de auth.example.com.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>DBI UserDB table</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061542Z" changeid="guimard">
         <seg>Table UserDB DBI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>^/limesurvey/admin/</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T102646Z" changeid="xavier">
-        <seg>^/limesurvey/admin/</seg>
       </tuv>
     </tu>
     <tu>
@@ -16328,14 +15862,6 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://en.wikipedia.org/wiki/IBM_Lotus_iNotes</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153719Z" changeid="xavier">
-        <seg>http://en.wikipedia.org/wiki/IBM_Lotus_iNotes</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>SSLVerifyClient: set to optional to allow user with a bad certificate to access to LL::NG portal page.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20121005T040033Z" changeid="xavier">
@@ -16376,14 +15902,6 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>CDBI : very simple storage</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120421T174446Z" changeid="xavier">
-        <seg>CDBI : stockage très simple</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>persistentStorageOptions</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T080412Z" changeid="xavier">
@@ -16412,14 +15930,6 @@ dbiTable    = mytablename</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T171915Z" changeid="xavier">
         <seg>Retourne nom(s) et valeur(s) du(des) cookie(s)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>SAML connectors</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153735Z" changeid="xavier">
-        <seg>Connecteurs SAML</seg>
       </tuv>
     </tu>
     <tu>
@@ -16548,14 +16058,6 @@ dbiTable    = mytablename</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061246Z" changeid="guimard">
         <seg>CustomSOAPServices</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Copy the generated keytab on each node (rename it as auth.keytab to have the same Apache configuration on each node).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214509Z" changeid="xavier">
-        <seg>Copier les tables de clefs générés sur chaque nœud (en la renommant en auth.keytab pour avoir la même configuration Apache sur chaque nœud).</seg>
       </tuv>
     </tu>
     <tu>
@@ -17092,14 +16594,6 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Apache Kerberos module installation</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T212438Z" changeid="xavier">
-        <seg>Installation du module Kerberos d'Apache</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Datas around the authentication process.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T123136Z" changeid="xavier">
@@ -17460,14 +16954,6 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Single LL::NG Server / Single AD domain</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T212503Z" changeid="xavier">
-        <seg>Serveur LL::NG unique / Domaine AD unique</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>SAML2</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140852Z" changeid="guimard">
@@ -17556,14 +17042,6 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>This requires to configure LL::NG as an SAML Identity Provider.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153808Z" changeid="xavier">
-        <seg>Ceci nécessite de configurer LL::NG comme fournisseur d'identité SAML.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Since MySQL does not have always transaction feature, Apache::Session::MySQL has been designed to use MySQL locks.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17616,14 +17094,6 @@ dbiTable    = mytablename</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T221435Z" changeid="xavier">
         <seg>Pour utiliser le mode initié par le SP, il faut créer le domaine salesforce.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>AD accounts</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T212007Z" changeid="xavier">
-        <seg>Comptes AD</seg>
       </tuv>
     </tu>
     <tu>
@@ -17776,14 +17246,6 @@ dbiTable    = mytablename</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T145741Z" changeid="guimard">
         <seg>L'utilisateur clique sur le lien dans le courriel</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Bugtracker, Service Management</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153612Z" changeid="xavier">
-        <seg>Bugtracker, gestion de services</seg>
       </tuv>
     </tu>
     <tu>
@@ -18052,14 +17514,6 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Python (Django)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120507T182727Z" changeid="xavier">
-        <seg>Python (Django)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Reverse proxy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T155628Z" changeid="xavier">
@@ -18116,14 +17570,6 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>LL::NG cluster linked to two AD domains</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T211054Z" changeid="xavier">
-        <seg>Un cluster LL::NG lié à 2 domaines AD</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>When you set a parameter in lemonldap-ng.ini, it will override the parameter from the global configuration.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071530Z" changeid="xavier">
@@ -18172,14 +17618,6 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>We directly use HTTP headers to fill default user profile.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160228T165429Z" changeid="xavier">
-        <seg>On utilise les en-têtes HTTP pour trouver le profil utilisateur par défaut.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Example 2: single table</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195446Z" changeid="xavier">
@@ -18208,14 +17646,6 @@ dbiTable    = mytablename</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T084102Z" changeid="xavier">
         <seg>Identifiant de session (porté par le cookie)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>If you use an older version, you need to refer to the following documentation: https://wiki.alfresco.com/wiki/SSO</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160227T183340Z" changeid="xavier">
-        <seg>Pour les versions plus anciennes, se référer à cette documentation : https://wiki.alfresco.com/wiki/SSO</seg>
       </tuv>
     </tu>
     <tu>
@@ -18324,26 +17754,10 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You need to get a keytab for each LL::NG node.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214337Z" changeid="xavier">
-        <seg>Il faut obtenir une table de clef pour chaque nœud LL::NG.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>dirName: directory where notifications are stored.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T053143Z" changeid="guimard">
         <seg>dirName : répertoire dans lequel sont stockées les notifications.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>We will present several architectures:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T210953Z" changeid="xavier">
-        <seg>On présente ici plusieurs architectures:</seg>
       </tuv>
     </tu>
     <tu>
@@ -18524,10 +17938,10 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Dokuwiki local configuration</seg>
+        <seg>The first will allow to configure SSO for the alfresco webapp, and the other for the share webapp.</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20111119T115239Z" changeid="xavier">
-        <seg>Configuration locale Dokuwiki</seg>
+      <tuv lang="FR-FR" changedate="20160227T183546Z" changeid="xavier">
+        <seg>Le premier autorise la configuration du SSO pour la webapp Alfresco et l'autre pour la webapp partagée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18976,14 +18390,6 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T065600Z" changeid="xavier">
         <seg>Comme les agents gardent leur configuration en cache, lorsque la configuration est changée elle doit être mise à jour dans les agents.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>LL::NG Cluster / Single AD domain</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214229Z" changeid="xavier">
-        <seg>Cluster LL::NG / domaine AD unique</seg>
       </tuv>
     </tu>
     <tu>
@@ -19536,14 +18942,6 @@ notification = 1</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>liblemonldap-ng-handler-perl: Handler files</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120303T093026Z" changeid="xavier">
-        <seg>liblemonldap-ng-handler-perl : fichiers des agents</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Core Perl subroutines (split, pop, map, etc.)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T161808Z" changeid="xavier">
@@ -19596,14 +18994,6 @@ notification = 1</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T051709Z" changeid="xavier">
         <seg>Utiliser “Active Directory” comme systèmes d'authentification, de gestion des utilisateurs et des mots-de-passe,</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>1 if user is admin</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T102245Z" changeid="xavier">
-        <seg>1 si l'utilisateur est administrateur</seg>
       </tuv>
     </tu>
     <tu>
@@ -19692,14 +19082,6 @@ notification = 1</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113733Z" changeid="xavier">
         <seg>Utiliser LDAP pour les sessions</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>'superadmin' =&gt; $_SERVER['HTTP_AUTH_SUPERADMIN'],</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101920Z" changeid="xavier">
-        <seg>'superadmin' =&gt; $_SERVER['HTTP_AUTH_SUPERADMIN'],</seg>
       </tuv>
     </tu>
     <tu>
@@ -19872,14 +19254,6 @@ notification = 1</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You can intercept the logout with this rule: ^/share/page/dologout ⇒ logout_app_sso</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160227T184131Z" changeid="xavier">
-        <seg>On peut intercepter les déconnexions avec cette règle : ^/share/page/dologout ⇒ logout_app_sso</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>-yes: do not prompt for confirmation before saving new configuration.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T080139Z" changeid="xavier">
@@ -19892,14 +19266,6 @@ notification = 1</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20121005T041925Z" changeid="xavier">
         <seg>Si ce n'est pas le cas (ou si l'authentification est forcée) tente de le trouver (module userDB) et de l'authentifier (module d'authentification), crée la session, calcule les groupes et macros et les stocke</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>The chosen logo file must be in portal applications logos directory (portal/skins/common/apps/).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T135443Z" changeid="guimard">
-        <seg>Le logo choisi doit se trouver dans le répertoire des logos des applications (portal/skins/common/apps/).</seg>
       </tuv>
     </tu>
     <tu>
@@ -20212,14 +19578,6 @@ $lemonldap_config = Array(</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>The plugin will check the REMOTE_USER environment variable to get the connected user.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T115132Z" changeid="xavier">
-        <seg>Ce plugin utilise la variable d'environnement REMOTE_USER pour récupérer le nom d'utilisateur connecté.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>But as Google rotate their keys, we will also configure a refresh interval on JKWS data.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T192636Z" changeid="xavier">
@@ -20432,14 +19790,6 @@ $lemonldap_config = Array(</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T074025Z" changeid="xavier">
         <seg>HTTPS</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Probe </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153727Z" changeid="xavier">
-        <seg>Probe </seg>
       </tuv>
     </tu>
     <tu>
@@ -21394,14 +20744,6 @@ tpl_myparam = world</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Single LL::NG server linked to one AD domain</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T211017Z" changeid="xavier">
-        <seg>Un seul serveur LL::NG lié à un seul domaine AD</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>twitterSecret</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064531Z" changeid="guimard">
@@ -22254,14 +21596,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Lutece</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153728Z" changeid="xavier">
-        <seg>Lutece</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>LL::NG is compatible with the CAS protocol versions 1.0, 2.0 and part of 3.0 (attributes exchange).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T200417Z" changeid="xavier">
@@ -22290,14 +21624,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR">
         <seg>Options du module de stockage des sessions</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>This requires to configure LL::NG as an SAML Identity Provider.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120303T091521Z" changeid="xavier">
-        <seg>Ceci nécessite de configurer LL::NG comme fournisseur d'identité SAML.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22346,14 +21672,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T134302Z" changeid="xavier">
         <seg>Caractères encodés</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Configure user and password</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120422T100018Z" changeid="xavier">
-        <seg>Configurer le nom de compte et le mot-de-passe</seg>
       </tuv>
     </tu>
     <tu>
@@ -22422,14 +21740,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>node1.example.com: DNS of the first LL::NG portal server (in cluster mode)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T211351Z" changeid="xavier">
-        <seg>node1.example.com : DNS du second portail LL::NG (en mode cluster)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You can do it either by uploading the file, or get it from SP metadata URL (this require a network link between your server and the SP).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T092138Z" changeid="xavier">
@@ -22450,14 +21760,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T063959Z" changeid="xavier">
         <seg>*.partenaire.com</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>KERB_NODE2: AD account to generate the keytab for the second LL::NG server (in cluster mode)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T211724Z" changeid="xavier">
-        <seg>KERB_NODE2 : compte AD pour générer la table de clef du second serveur LL::NG (en mode cluster)</seg>
       </tuv>
     </tu>
     <tu>
@@ -22570,14 +21872,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200714Z" changeid="xavier">
         <seg>Chaîne : chaîne DBI, contenant le nom de driver et le nom de la base de données (par exemple : dbi:mysql:database=lemonldapng;host=localhost).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>IBM Lotus iNotes</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153722Z" changeid="xavier">
-        <seg>IBM Lotus iNotes</seg>
       </tuv>
     </tu>
     <tu>
@@ -22778,14 +22072,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065911Z" changeid="guimard">
         <seg>radiusServer</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>'create_survey' =&gt; $_SERVER['HTTP_AUTH_ADMIN'] || $_SERVER['HTTP_AUTH_SUPERADMIN'],</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101918Z" changeid="xavier">
-        <seg>'create_survey' =&gt; $_SERVER['HTTP_AUTH_ADMIN'] || $_SERVER['HTTP_AUTH_SUPERADMIN'],</seg>
       </tuv>
     </tu>
     <tu>
@@ -23090,14 +22376,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081457Z" changeid="xavier">
         <seg>internal_email_by_netid    1</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>'email' =&gt; $_SERVER['HTTP_AUTH_MAIL'],</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101916Z" changeid="xavier">
-        <seg>'email' =&gt; $_SERVER['HTTP_AUTH_MAIL'],</seg>
       </tuv>
     </tu>
     <tu>
@@ -23510,14 +22788,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Configure your SQL database</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120422T100107Z" changeid="xavier">
-        <seg>Configurer la base de données SQL</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You can use it to build up a database with an inventory for your company (computer, software, printers…).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160227T185845Z" changeid="xavier">
@@ -23602,14 +22872,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061226Z" changeid="guimard">
         <seg>configStorage</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Configuration of portal virtual host</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T213703Z" changeid="xavier">
-        <seg>Configuration de l'hôte virtuel du portail</seg>
       </tuv>
     </tu>
     <tu>
@@ -23742,22 +23004,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://www.lambdaprobe.org</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153722Z" changeid="xavier">
-        <seg>http://www.lambdaprobe.org</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Each account will hold the Service Principal Name (SPN) of the LL::NG server.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T212134Z" changeid="xavier">
-        <seg>Chaque compte tiendra le nom principal de service (SPN) du serveur LL::NG.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Format (optional): SAML attribute format.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060005Z" changeid="xavier">
@@ -23798,14 +23044,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Auth-SuperAdmin</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T102247Z" changeid="xavier">
-        <seg>Auth-SuperAdmin</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>When a user access a Handler without a cookie, he is redirected on portal, and the target URL is encoded in redirection URL (to redirect user after authentication process).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T143528Z" changeid="guimard">
@@ -23842,14 +23080,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T111053Z" changeid="xavier">
         <seg>Lancer ensuite la commande ant :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>The only change in Apache configuration is in the KrbServiceName, it should be set to Any:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214656Z" changeid="xavier">
-        <seg>Le seul chagement dans la configuration d'Apache est le the KrbServiceName qui doit être mis à Any:</seg>
       </tuv>
     </tu>
     <tu>
@@ -24426,14 +23656,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Any SAML Service Provider, for example:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120303T091443Z" changeid="xavier">
-        <seg>Tout fournisseur de service SAML, par exemple:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>XML file is no more accepted.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T151959Z" changeid="xavier">
@@ -24920,14 +24142,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Connectors</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153639Z" changeid="xavier">
-        <seg>Connecteurs</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>For CentOS/RHEL, We advice to disable the default SSL virtual host configured in /etc/httpd/conf.d/ssl.conf.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T212913Z" changeid="xavier">
@@ -25020,14 +24234,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T055040Z" changeid="xavier">
         <seg>Sans index, LL::NG doit récupérer toutes les sessions stockées dans le backend et les examiner pour trouver les sessions demandées.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Known supported applications</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111222T181739Z" changeid="xavier">
-        <seg>Applications connues pour être supportées</seg>
       </tuv>
     </tu>
     <tu>
@@ -25490,6 +24696,14 @@ protection = manager</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>KrbAuthRealms EXAMPLE.COM</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T155342Z" changeid="xavier">
+        <seg>KrbAuthRealms EXAMPLE.COM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Auth-User: $uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114201Z" changeid="xavier">
@@ -25906,16 +25120,6 @@ protection = manager</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>'manage_label' =&gt;  $_SERVER['HTTP_AUTH_SUPERADMIN']
-);</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101923Z" changeid="xavier">
-        <seg>'manage_label' =&gt;  $_SERVER['HTTP_AUTH_SUPERADMIN']
-);</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>//&quot;userobm_photo_id&quot;            =&gt; ,</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112311Z" changeid="xavier">
@@ -26000,14 +25204,6 @@ protection = manager</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T143357Z" changeid="xavier">
         <seg>Fournisseurs d'identité SAML : IDP enregistrés</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Some applications using it</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153717Z" changeid="xavier">
-        <seg>Quelques applications l'utilisant</seg>
       </tuv>
     </tu>
     <tu>
@@ -26244,14 +25440,6 @@ protection = manager</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>'htmleditormode' =&gt; 'inline',</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101917Z" changeid="xavier">
-        <seg>'htmleditormode' =&gt; 'inline',</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Choice modules</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26392,14 +25580,6 @@ protection = manager</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T184529Z" changeid="xavier">
         <seg>Par défaut, seul le backend configuré est accessible aux utilisateurs.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>LL::NG cluster linked to one AD domain</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T211038Z" changeid="xavier">
-        <seg>Un cluster LL::NG lié à un seul domaine AD</seg>
       </tuv>
     </tu>
     <tu>
@@ -26868,14 +26048,6 @@ protection = manager</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Grant LemonLDAP::NG access</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120422T100135Z" changeid="xavier">
-        <seg>Autoriser l'accès pour LemonLDAP::NG</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Give display name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T061219Z" changeid="xavier">
@@ -26888,14 +26060,6 @@ protection = manager</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160302T060800Z" changeid="xavier">
         <seg>Il est recommandé de créer un compte LDAP spécifique qui peut écrire dans la branche de configuration.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>The reverse DNS should also work for all the names.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T212002Z" changeid="xavier">
-        <seg>Il est préférable que le DNS inverse soit capable de résoudre tous les noms.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26928,14 +26092,6 @@ protection = manager</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T172157Z" changeid="xavier">
         <seg>getMenuApplications(cookieValue): retourne une liste des applications autorisées (basée sur le calcul du menu)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Example for MySQL :</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120422T100050Z" changeid="xavier">
-        <seg>Exemple pour MySQL :</seg>
       </tuv>
     </tu>
     <tu>
@@ -27158,14 +26314,6 @@ my $lite = SOAP::Lite</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>On Debian/Ubuntu:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T154440Z" changeid="xavier">
-        <seg>Sur Debian/Ubuntu :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>And the mail filter is:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T063355Z" changeid="xavier">
@@ -27302,14 +26450,6 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120411T042526Z" changeid="xavier">
         <seg>Il faut juste retenir le DN pour la configuration de LemonLDAP::NG.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Java (Spring)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120507T182726Z" changeid="xavier">
-        <seg>Java (Spring)</seg>
       </tuv>
     </tu>
     <tu>
@@ -27684,14 +26824,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>ad.acme.com: DNS of Second Active Directory</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T211440Z" changeid="xavier">
-        <seg>ad.acme.com : DNS du second Active Directory</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Please use lmMigrateConfFiles2ini to migrate your menu configuration</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T114402Z" changeid="xavier">
@@ -27776,14 +26908,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T131749Z" changeid="xavier">
         <seg>Ordre des catégories dans le menu</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>If your table is not named lmConfig, set it's name in dbiTable parameter.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120422T100042Z" changeid="xavier">
-        <seg>Si la table ne se nomme pas lmConfig, mettre son nom dans le paramètre dbiTable.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28390,14 +27514,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://en.wikipedia.org/wiki/Outlook_Web_App</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153718Z" changeid="xavier">
-        <seg>http://en.wikipedia.org/wiki/Outlook_Web_App</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Edit also OBM configuration to enable LL::NG Handler:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T165836Z" changeid="xavier">
@@ -28458,14 +27574,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T073153Z" changeid="guimard">
         <seg>Il a besoin de 4 modules pour fonctionner :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>See how to change configuration backend.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120422T095849Z" changeid="xavier">
-        <seg>Voir comment changer de backend de configuration.</seg>
       </tuv>
     </tu>
     <tu>
@@ -29242,14 +28350,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>DBI which has been deprecated: it is a read-only backend that exists just for compatibility with older versions of LemonLDAP::NG.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120421T174605Z" changeid="xavier">
-        <seg>DBI devenu obsolète : il reste un backend en lecture seule qui n'existe que pour la compatibilité avec les anciennes versions de LemonLDAP::NG.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>To bypass this, follow the documentation of AuthApache module</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T063439Z" changeid="xavier">
@@ -29414,14 +28514,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T214927Z" changeid="xavier">
         <seg>Ce qui signifie que la commande ktpass doit être lancée dans les deux AD.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You will need to install a Dokuwiki plugin, available on download page.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T115056Z" changeid="xavier">
-        <seg>Il faut installer le plugin Dokuwiki disponible sur la page de téléchargement.</seg>
       </tuv>
     </tu>
     <tu>
@@ -29732,26 +28824,10 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>On CentOS/RHEL:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T154434Z" changeid="xavier">
-        <seg>Sur CentOS/RHEL :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Please see the next chapter to learn how build an official tarball from SVN files.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160255Z" changeid="xavier">
         <seg>Voir le chapître suivant pour savoir comment construire une archive officielle depuis les fichiers SVN.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Mail, Agenda, Groupware</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153525Z" changeid="xavier">
-        <seg>Mail, Agenda, Groupware</seg>
       </tuv>
     </tu>
     <tu>
@@ -29944,14 +29020,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064522Z" changeid="guimard">
         <seg>twitterKey</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Admin: can create surveys</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101813Z" changeid="xavier">
-        <seg>Admin : peut créer des surveillances</seg>
       </tuv>
     </tu>
     <tu>
@@ -30240,26 +29308,10 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>'delete_user' =&gt;  $_SERVER['HTTP_AUTH_SUPERADMIN'],</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101919Z" changeid="xavier">
-        <seg>'delete_user' =&gt;  $_SERVER['HTTP_AUTH_SUPERADMIN'],</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Some examples:</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Quelques exemples:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>node2.example.com: DNS of the second LL::NG portal server (in cluster mode)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T211415Z" changeid="xavier">
-        <seg>node2.example.com : DNS du second portail LL::NG (en mode cluster)</seg>
       </tuv>
     </tu>
     <tu>
@@ -30428,14 +29480,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T162139Z" changeid="xavier">
         <seg>Yubikey est un petit matériel d'authentification vendu par Yubico.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Commands on Active Directory will be:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214402Z" changeid="xavier">
-        <seg>Les commandes sur Active Directory :</seg>
       </tuv>
     </tu>
     <tu>
@@ -30772,14 +29816,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081457Z" changeid="xavier">
         <seg>netid_http_header             HTTP_AUTH_USER</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Outlook Web App </seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153720Z" changeid="xavier">
-        <seg>Outlook Web App </seg>
       </tuv>
     </tu>
     <tu>
@@ -31370,14 +30406,6 @@ $ldapservers-&gt;SetValue($i,'login','pass','secret');</seg>
         <seg>$ldapservers-&gt;SetValue($i,'server','auth_type','config');
 $ldapservers-&gt;SetValue($i,'login','dn','cn=Manager,dc=example,dc=com');
 $ldapservers-&gt;SetValue($i,'login','pass','secret');</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>authpwd.example.com: DNS of the LL::NG portal (to failback to a form based authentication)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T211324Z" changeid="xavier">
-        <seg>authpwd.example.com : DNS du portail LL::NG (pour retomber sur un formulaire d'authentification)</seg>
       </tuv>
     </tu>
     <tu>

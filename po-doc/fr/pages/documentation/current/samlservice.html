@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,samlservice"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="samlservice.html"/>
@@ -138,7 +138,7 @@ Cette documentation explique comment configurer le service <abbr title="Security
 </p>
 
 <p>
-L'implementation SAML est basée sur <a href="http://lasso.entrouvert.org" class="urlextern" title="http://lasso.entrouvert.org"  rel="nofollow">Lasso</a>. Vous devez utiliser une version récente de Lasso (&gt;= 2.3.0).
+L'implementation SAML est basée sur <a href="http://lasso.entrouvert.org" class="urlextern" title="http://lasso.entrouvert.org"  rel="nofollow">Lasso</a>. You will need a very recent version of Lasso (&gt;= 2.5.0).
 </p>
 
 </div>
@@ -147,7 +147,9 @@ L'implementation SAML est basée sur <a href="http://lasso.entrouvert.org" class
 <div class="level4">
 
 <p>
-Les paquets sont disponibles ici : <a href="http://deb.entrouvert.org/" class="urlextern" title="http://deb.entrouvert.org/"  rel="nofollow">http://deb.entrouvert.org/</a>.
+
+You can use official Debian packages or those available here: <a href="http://deb.entrouvert.org/" class="urlextern" title="http://deb.entrouvert.org/"  rel="nofollow">http://deb.entrouvert.org/</a>.
+
 </p>
 
 <p>
@@ -164,7 +166,7 @@ You will only need to install liblasso-perl package:
 
 <p>
 
-RPMs are available in <abbr title="LemonLDAP::NG">LL::NG</abbr> RPM repository (see <a href="installrpm.html#yum_repository" class="wikilink1" title="documentation:2.0:installrpm">yum_repository</a>)
+RPMs are available in <abbr title="LemonLDAP::NG">LL::NG</abbr> RPM “extras” repository (see <a href="installrpm.html#yum_repository" class="wikilink1" title="documentation:2.0:installrpm">yum_repository</a>)
 
 </p>
 
@@ -174,7 +176,7 @@ Then install lasso and lasso-perl packages:
 
 </p>
 <pre class="code">yum install lasso lasso-perl</pre>
-<div class="noteimportant">Only EL6 64bits and EL7 64bits package are available.
+<div class="noteimportant">Only 64bits package are available.
 
 </div>
 </div>
@@ -186,7 +188,7 @@ Then install lasso and lasso-perl packages:
 <a href="http://lasso.entrouvert.org/download/" class="urlextern" title="http://lasso.entrouvert.org/download/"  rel="nofollow">Téléchargez l'archive Lasso</a> et compilez là sur votre système.
 </p>
 
-</div><!-- EDIT4 SECTION "Lasso" [717-1485] -->
+</div><!-- EDIT4 SECTION "Lasso" [717-1502] -->
 
 <h2 class="sectionedit5" id="service_configuration">Configuration du service</h2>
 <div class="level2">
@@ -196,7 +198,7 @@ Allez dans le Manager et cliquez sur le nœud <code>Service <abbr title="Securit
 </p>
 <div class="notetip">Vous pouvez utiliser le mot clef #PORTAL# dans les valeurs pour remplacer l'<abbr title="Uniform Resource Locator">URL</abbr> du portail.
 </div>
-</div><!-- EDIT5 SECTION "Service configuration" [1486-1649] -->
+</div><!-- EDIT5 SECTION "Service configuration" [1503-1666] -->
 
 <h3 class="sectionedit6" id="entry_identifier">Identifiant d'entrée</h3>
 <div class="level3">
@@ -211,7 +213,7 @@ Votre EntityID, souvent utilisé comme <abbr title="Uniform Resource Locator">UR
 
 </div><div class="notewarning">Si vous modifiez le suffixe <code>/saml/metadata</code>, vous devez changer la règle de réécriture d'Apache.
 </div>
-</div><!-- EDIT6 SECTION "Entry Identifier" [1650-2047] -->
+</div><!-- EDIT6 SECTION "Entry Identifier" [1667-2064] -->
 
 <h3 class="sectionedit7" id="security_parameters">Paramètres de sécurité</h3>
 <div class="level3">
@@ -250,7 +252,7 @@ You can force <abbr title="LemonLDAP::NG">LL::NG</abbr> to use this certificate 
 $ openssl x509 -req -days 3650 -in cert.csr -signkey private.key -out cert.pem</pre>
 
 </div>
-</div><!-- EDIT7 SECTION "Security parameters" [2048-3310] -->
+</div><!-- EDIT7 SECTION "Security parameters" [2065-3327] -->
 
 <h3 class="sectionedit8" id="nameid_formats">Formats de NameID</h3>
 <div class="level3">
@@ -287,7 +289,7 @@ Les autres formats de NameID sont automatiquement gérés :
 </li>
 </ul>
 
-</div><!-- EDIT8 SECTION "NameID formats" [3311-4069] -->
+</div><!-- EDIT8 SECTION "NameID formats" [3328-4086] -->
 
 <h3 class="sectionedit9" id="authentication_contexts">Contextes d'authentification</h3>
 <div class="level3">
@@ -311,7 +313,7 @@ Les formats de NameID personnalisables sont :
 </li>
 </ul>
 
-</div><!-- EDIT9 SECTION "Authentication contexts" [4070-4793] -->
+</div><!-- EDIT9 SECTION "Authentication contexts" [4087-4810] -->
 
 <h3 class="sectionedit10" id="organization">Organisation</h3>
 <div class="level3">
@@ -331,7 +333,7 @@ Les formats de NameID personnalisables sont :
 </li>
 </ul>
 
-</div><!-- EDIT10 SECTION "Organization" [4794-5305] -->
+</div><!-- EDIT10 SECTION "Organization" [4811-5322] -->
 
 <h3 class="sectionedit11" id="service_provider">Fournisseur de service</h3>
 <div class="level3">
@@ -414,7 +416,7 @@ Les déclarations disponibles sont :
 The only authorized binding is SOAP. Peut être défini par défaut.
 </p>
 
-</div><!-- EDIT11 SECTION "Service Provider" [5306-6360] -->
+</div><!-- EDIT11 SECTION "Service Provider" [5323-6377] -->
 
 <h3 class="sectionedit12" id="identity_provider">Fournisseur d'identité</h3>
 <div class="level3">
@@ -499,7 +501,7 @@ Les déclarations disponibles sont :
 The only authorized binding is SOAP. Peut être défini par défaut.
 </p>
 
-</div><!-- EDIT12 SECTION "Identity Provider" [6361-7349] -->
+</div><!-- EDIT12 SECTION "Identity Provider" [6378-7366] -->
 
 <h3 class="sectionedit13" id="attribute_authority">Autorité d'attributs</h3>
 <div class="level3">
@@ -526,7 +528,7 @@ Response Location should be empty, as SOAP responses are directly returned (sync
 
 </p>
 
-</div><!-- EDIT13 SECTION "Attribute Authority" [7350-7761] -->
+</div><!-- EDIT13 SECTION "Attribute Authority" [7367-7778] -->
 
 <h3 class="sectionedit14" id="advanced">Avancé</h3>
 <div class="level3">
@@ -585,7 +587,7 @@ Les paramètres de configuration sont :
 </li>
 </ul>
 
-</div><!-- EDIT14 SECTION "Advanced" [7762-] -->
+</div><!-- EDIT14 SECTION "Advanced" [7779-] -->
 </div>
 </body>
 </html>

@@ -43,184 +43,158 @@
 
 </head>
 <body>
-<div class="dokuwiki export container"><!-- TOC START -->
-
-<div id="dw__toc">
-<h3 class="toggle">Table of Contents</h3>
-<div>
-
-<ul class="toc">
-<li class="level1"><div class="li"><a href="#known_supported_applications">Applications connues pour être supportées</a></div>
-<ul class="toc">
-<li class="level2"><div class="li"><a href="#mail_agenda_groupware">Mail, Agenda, Groupware</a></div></li>
-<li class="level2"><div class="li"><a href="#wiki">Wiki</a></div></li>
-<li class="level2"><div class="li"><a href="#cms_portal_ecm">CMS, Portal, ECM</a></div></li>
-<li class="level2"><div class="li"><a href="#bugtracker_service_management">Bugtracker, gestion de services</a></div></li>
-<li class="level2"><div class="li"><a href="#other">Autres</a></div></li>
-</ul>
-</li>
-<li class="level1"><div class="li"><a href="#frameworks">Frameworks</a></div></li>
-<li class="level1"><div class="li"><a href="#connectors">Connecteurs</a></div></li>
-<li class="level1"><div class="li"><a href="#saml_connectors">Connecteurs SAML</a></div></li>
-</ul>
-</div>
-</div><!-- TOC END -->
-
+<div class="dokuwiki export container">
 
 <h1 class="sectionedit1" id="applications">Applications</h1>
 <div class="level1">
 
 </div><!-- EDIT1 SECTION "Applications" [1-28] -->
 
-<h2 class="sectionedit2" id="known_supported_applications">Applications connues pour être supportées</h2>
+<h2 class="sectionedit2" id="how_to_integrate">How to integrate</h2>
 <div class="level2">
 
 <p>
-Les applications listées ci-dessous sont connues pour être faciles à intégrer à <abbr title="LemonLDAP::NG">LL::NG</abbr>. As <abbr title="LemonLDAP::NG">LL::NG</abbr> works like classic WebSSO (like Siteminder™), <strong>many other applications are easy to integrate</strong>.
+
+To integrate a Web application in <abbr title="LemonLDAP::NG">LL::NG</abbr>, you have the following possibilities:
+
 </p>
+<ul>
+<li class="level1"><div class="li">  Protect the application with the Handler, and push user identity trough HTTP headers. This is how main Access Manager products, like CA SiteMinder, are working. This also how Apache authentication modules are working, so if your application is compatible with Apache authentication (often called “external authentifcation”), then you can use the Handler.</div>
+</li>
+<li class="level1"><div class="li">  Specific Handler: some applications can require a specific Handler, to manage preauthentication process for example.</div>
+</li>
+<li class="level1"><div class="li"> <abbr title="Central Authentication Service">CAS</abbr>: your application is a <abbr title="Central Authentication Service">CAS</abbr> client, you can configure <abbr title="LemonLDAP::NG">LL::NG</abbr> as a <a href="idpcas.html" class="wikilink1" title="documentation:2.0:idpcas">CAS server</a>.</div>
+</li>
+<li class="level1"><div class="li"> <abbr title="Security Assertion Markup Language">SAML</abbr>: your application is a <abbr title="Security Assertion Markup Language">SAML</abbr> Service Provider, you can configure <abbr title="LemonLDAP::NG">LL::NG</abbr> as a <a href="idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML Identity Provider</a>.</div>
+</li>
+<li class="level1"><div class="li">  OpenID Connect: your application is a OpenID Connect Relying Party, you can configure <abbr title="LemonLDAP::NG">LL::NG</abbr> as a <a href="idpopenidconnect.html" class="wikilink1" title="documentation:2.0:idpopenidconnect">OpenID Connect Provider</a>.</div>
+</li>
+</ul>
 
-</div><!-- EDIT2 SECTION "Known supported applications" [29-252] -->
+<p>
 
-<h3 class="sectionedit3" id="mail_agenda_groupware">Mail, Agenda, Groupware</h3>
-<div class="level3">
+If none of above methods is available, you can try:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="applications/authbasic.html" class="wikilink1" title="documentation:2.0:applications:authbasic">HTTP Auth-Basic</a>: replay Auth Basic authentication</div>
+</li>
+<li class="level1"><div class="li"> <a href="formreplay.html" class="wikilink1" title="documentation:2.0:formreplay">Form replay</a>: replay form based authentication</div>
+</li>
+</ul>
+
+</div><!-- EDIT2 SECTION "How to integrate" [29-1191] -->
+
+<h2 class="sectionedit3" id="application_list">Application list</h2>
+<div class="level2">
 <div class="table sectionedit4"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
-		<th class="col0 centeralign">    OBM    </th><th class="col1 centeralign">    Sympa    </th><th class="col2 centeralign">    Zimbra    </th><th class="col3 centeralign">    RoundCube    </th>
+		<th class="col0 leftalign">  </th><th class="col1 leftalign">  </th><th class="col2 centeralign">    HTTP headers    </th><th class="col3 centeralign">    Specific Handler    </th><th class="col4 centeralign">  <abbr title="Central Authentication Service">CAS</abbr>  </th><th class="col5 leftalign"> <abbr title="Security Assertion Markup Language">SAML</abbr>  </th><th class="col6 centeralign">    OpenID Connect    </th>
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  <a href="applications/obm.html" class="media" title="documentation:2.0:applications:obm"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/sympa.html" class="media" title="documentation:2.0:applications:sympa"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col2 centeralign">  <a href="applications/zimbra.html" class="media" title="documentation:2.0:applications:zimbra"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col3 centeralign">  <a href="applications/roundcube.html" class="media" title="documentation:2.0:applications:roundcube"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td>
-	</tr>
-</table></div><!-- EDIT4 TABLE [288-584] -->
-
-</div><!-- EDIT3 SECTION "Mail, Agenda, Groupware" [253-585] -->
-
-<h3 class="sectionedit5" id="wiki">Wiki</h3>
-<div class="level3">
-<div class="table sectionedit6"><table class="inline table table-bordered table-striped">
-	<thead>
-	<tr class="row0 roweven">
-		<th class="col0 centeralign">    Dokuwiki    </th><th class="col1 centeralign">    Mediawiki    </th>
-	</tr>
-	</thead>
-	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  <a href="applications/dokuwiki.html" class="media" title="documentation:2.0:applications:dokuwiki"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/mediawiki.html" class="media" title="documentation:2.0:applications:mediawiki"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td>
-	</tr>
-</table></div><!-- EDIT6 TABLE [602-768] -->
-
-</div><!-- EDIT5 SECTION "Wiki" [586-769] -->
-
-<h3 class="sectionedit7" id="cms_portal_ecm">CMS, Portal, ECM</h3>
-<div class="level3">
-<div class="table sectionedit8"><table class="inline table table-bordered table-striped">
-	<thead>
-	<tr class="row0 roweven">
-		<th class="col0 centeralign">    Drupal    </th><th class="col1 centeralign">    Liferay    </th><th class="col2 centeralign">    Alfresco    </th>
-	</tr>
-	</thead>
-	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  <a href="applications/drupal.html" class="media" title="documentation:2.0:applications:drupal"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">   <a href="applications/liferay.html" class="media" title="documentation:2.0:applications:liferay"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col2 centeralign">  <a href="applications/alfresco.html" class="media" title="documentation:2.0:applications:alfresco"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td>
-	</tr>
-</table></div><!-- EDIT8 TABLE [798-1033] -->
-
-</div><!-- EDIT7 SECTION "CMS, Portal, ECM" [770-1034] -->
-
-<h3 class="sectionedit9" id="bugtracker_service_management">Bugtracker, gestion de services</h3>
-<div class="level3">
-<div class="table sectionedit10"><table class="inline table table-bordered table-striped">
-	<thead>
-	<tr class="row0 roweven">
-		<th class="col0 centeralign">    Bugzilla    </th><th class="col1 centeralign">    GLPI    </th>
-	</tr>
-	</thead>
-	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  <a href="applications/bugzilla.html" class="media" title="documentation:2.0:applications:bugzilla"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/glpi.html" class="media" title="documentation:2.0:applications:glpi"><img src="icons/kmultiple.png" class="media" alt="" width="100" /></a>  </td>
-	</tr>
-</table></div><!-- EDIT10 TABLE [1077-1233] -->
-
-</div><!-- EDIT9 SECTION "Bugtracker, Service Management" [1035-1234] -->
-
-<h3 class="sectionedit11" id="other">Autres</h3>
-<div class="level3">
-<div class="table sectionedit12"><table class="inline table table-bordered table-striped">
-	<thead>
-	<tr class="row0 roweven">
-		<th class="col0 centeralign">    GRR    </th><th class="col1 centeralign">    phpLDAPadmin    </th><th class="col2 centeralign">    LimeSurvey    </th><th class="col3 centeralign">    SAP    </th>
-	</tr>
-	</thead>
-	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  <a href="applications/grr.html" class="media" title="documentation:2.0:applications:grr"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/phpldapadmin.html" class="media" title="documentation:2.0:applications:phpldapadmin"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col2 centeralign">  <a href="applications/limesurvey.html" class="media" title="documentation:2.0:applications:limesurvey"><img src="icons/kmultiple.png" class="media" title="LimeSurvey" alt="LimeSurvey" width="120" /></a>  </td><td class="col3 centeralign">  <a href="http://help.sap.com/saphelp_nw70/helpdata/en/d0/a3d940c2653126e10000000a1550b0/frameset.htm" class="media" title="http://help.sap.com/saphelp_nw70/helpdata/en/d0/a3d940c2653126e10000000a1550b0/frameset.htm"  rel="nofollow"><img src="icons/kmultiple.png" class="media" title="SAP" alt="SAP" /></a>  </td>
+		<td class="col0 centeralign">  <a href="applications/adfs.html" class="media" title="documentation:2.0:applications:adfs"><img src="icons/kmultiple.png" class="media" alt="" width="200" /></a>  </td><td class="col1 centeralign">  <a href="applications/adfs.html" class="wikilink1" title="documentation:2.0:applications:adfs">ADFS</a>  </td><td class="col2"> </td><td class="col3"> </td><td class="col4"> </td><td class="col5 centeralign">    ✔    </td><td class="col6"> </td>
 	</tr>
 	<tr class="row2 roweven">
-		<th class="col0 centeralign">    FusionDirectory    </th><th class="col1"> </th><th class="col2"> </th><th class="col3"> </th>
+		<td class="col0 centeralign">  <a href="applications/alfresco.html" class="media" title="documentation:2.0:applications:alfresco"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/alfresco.html" class="wikilink1" title="documentation:2.0:applications:alfresco">Alfresco</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5 centeralign">    ✔    </td><td class="col6"> </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 centeralign">  <a href="applications/fusiondirectory.html" class="media" title="documentation:2.0:applications:fusiondirectory"><img src="icons/kmultiple.png" class="media" title="fusiondirectory-logo.jpg" alt="fusiondirectory-logo.jpg" width="120" /></a>  </td><td class="col1"> </td><td class="col2"> </td><td class="col3"> </td>
+		<td class="col0 centeralign">  <a href="applications/aws.html" class="media" title="documentation:2.0:applications:aws"><img src="icons/kmultiple.png" class="media" title="logo_amazon_web_services.jpg" alt="logo_amazon_web_services.jpg" /></a>  </td><td class="col1 centeralign">  <a href="applications/aws.html" class="wikilink1" title="documentation:2.0:applications:aws">Amazon Web Services</a>  </td><td class="col2"> </td><td class="col3"> </td><td class="col4"> </td><td class="col5 centeralign">    ✔    </td><td class="col6"> </td>
 	</tr>
-</table></div><!-- EDIT12 TABLE [1252-1777] -->
+	<tr class="row4 roweven">
+		<td class="col0 centeralign">  <a href="applications/bugzilla.html" class="media" title="documentation:2.0:applications:bugzilla"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/bugzilla.html" class="wikilink1" title="documentation:2.0:applications:bugzilla">Bugzilla</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0 centeralign">  <a href="applications/cornerstone.html" class="media" title="documentation:2.0:applications:cornerstone"><img src="icons/kmultiple.png" class="media" alt="" width="200" /></a>  </td><td class="col1 centeralign">  <a href="applications/cornerstone.html" class="wikilink1" title="documentation:2.0:applications:cornerstone">Cornerstone</a>  </td><td class="col2"> </td><td class="col3"> </td><td class="col4"> </td><td class="col5 centeralign">    ✔    </td><td class="col6"> </td>
+	</tr>
+	<tr class="row6 roweven">
+		<td class="col0 centeralign">  <a href="applications/django.html" class="media" title="documentation:2.0:applications:django"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/django.html" class="wikilink1" title="documentation:2.0:applications:django">Django</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row7 rowodd">
+		<th class="col0 leftalign">  </th><th class="col1 leftalign">  </th><th class="col2 centeralign">    HTTP headers    </th><th class="col3 centeralign">    Specific Handler    </th><th class="col4 centeralign">  <abbr title="Central Authentication Service">CAS</abbr>  </th><th class="col5 leftalign"> <abbr title="Security Assertion Markup Language">SAML</abbr>  </th><th class="col6 centeralign">    OpenID Connect    </th>
+	</tr>
+	<tr class="row8 roweven">
+		<td class="col0 centeralign">  <a href="applications/dokuwiki.html" class="media" title="documentation:2.0:applications:dokuwiki"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/dokuwiki.html" class="wikilink1" title="documentation:2.0:applications:dokuwiki">Dokuwiki</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row9 rowodd">
+		<td class="col0 centeralign">  <a href="applications/drupal.html" class="media" title="documentation:2.0:applications:drupal"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/drupal.html" class="wikilink1" title="documentation:2.0:applications:drupal">Drupal</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row10 roweven">
+		<td class="col0 centeralign">  <a href="applications/fusiondirectory.html" class="media" title="documentation:2.0:applications:fusiondirectory"><img src="icons/kmultiple.png" class="media" title="fusiondirectory-logo.jpg" alt="fusiondirectory-logo.jpg" width="120" /></a>  </td><td class="col1 centeralign">  <a href="applications/fusiondirectory.html" class="wikilink1" title="documentation:2.0:applications:fusiondirectory">FusionDirectory</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row11 rowodd">
+		<td class="col0 centeralign">  <a href="applications/glpi.html" class="media" title="documentation:2.0:applications:glpi"><img src="icons/kmultiple.png" class="media" alt="" width="100" /></a>  </td><td class="col1 centeralign">  <a href="applications/glpi.html" class="wikilink1" title="documentation:2.0:applications:glpi">GLPI</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row12 roweven">
+		<td class="col0 centeralign">  <a href="applications/googleapps.html" class="media" title="documentation:2.0:applications:googleapps"><img src="icons/kmultiple.png" class="mediacenter" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/googleapps.html" class="wikilink1" title="documentation:2.0:applications:googleapps">Google Apps</a>  </td><td class="col2"> </td><td class="col3"> </td><td class="col4"> </td><td class="col5 centeralign">    ✔    </td><td class="col6"> </td>
+	</tr>
+	<tr class="row13 rowodd">
+		<th class="col0 leftalign">  </th><th class="col1 leftalign">  </th><th class="col2 centeralign">    HTTP headers    </th><th class="col3 centeralign">    Specific Handler    </th><th class="col4 centeralign">  <abbr title="Central Authentication Service">CAS</abbr>  </th><th class="col5 leftalign"> <abbr title="Security Assertion Markup Language">SAML</abbr>  </th><th class="col6 centeralign">    OpenID Connect    </th>
+	</tr>
+	<tr class="row14 roweven">
+		<td class="col0 centeralign">  <a href="applications/grr.html" class="media" title="documentation:2.0:applications:grr"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/grr.html" class="wikilink1" title="documentation:2.0:applications:grr">GRR</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row15 rowodd">
+		<td class="col0 centeralign">  <a href="applications/liferay.html" class="media" title="documentation:2.0:applications:liferay"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/liferay.html" class="wikilink1" title="documentation:2.0:applications:liferay">Liferay</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"></td>
+	</tr>
+	<tr class="row16 roweven">
+		<td class="col0 centeralign">  <a href="applications/limesurvey.html" class="media" title="documentation:2.0:applications:limesurvey"><img src="icons/kmultiple.png" class="media" title="LimeSurvey" alt="LimeSurvey" width="120" /></a>  </td><td class="col1 centeralign">  <a href="applications/limesurvey.html" class="wikilink1" title="documentation:2.0:applications:limesurvey">LimeSurvey</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"></td>
+	</tr>
+	<tr class="row17 rowodd">
+		<td class="col0 centeralign">  <a href="applications/mediawiki.html" class="media" title="documentation:2.0:applications:mediawiki"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/mediawiki.html" class="wikilink1" title="documentation:2.0:applications:mediawiki">Mediawiki</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row18 roweven">
+		<td class="col0 centeralign">  <a href="applications/nextcloud.html" class="media" title="documentation:2.0:applications:nextcloud"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/nextcloud.html" class="wikilink1" title="documentation:2.0:applications:nextcloud">NextCloud</a>  </td><td class="col2"> </td><td class="col3"> </td><td class="col4"> </td><td class="col5 centeralign">    ✔    </td><td class="col6"> </td>
+	</tr>
+	<tr class="row19 rowodd">
+		<th class="col0 leftalign">  </th><th class="col1 leftalign">  </th><th class="col2 centeralign">    HTTP headers    </th><th class="col3 centeralign">    Specific Handler    </th><th class="col4 centeralign">  <abbr title="Central Authentication Service">CAS</abbr>  </th><th class="col5 leftalign"> <abbr title="Security Assertion Markup Language">SAML</abbr>  </th><th class="col6 centeralign">    OpenID Connect    </th>
+	</tr>
+	<tr class="row20 roweven">
+		<td class="col0 centeralign">  <a href="applications/obm.html" class="media" title="documentation:2.0:applications:obm"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/obm.html" class="wikilink1" title="documentation:2.0:applications:obm">OBM</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row21 rowodd">
+		<td class="col0 centeralign">  <a href="applications/office365.html" class="media" title="documentation:2.0:applications:office365"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/office365.html" class="wikilink1" title="documentation:2.0:applications:office365">Office 365</a>  </td><td class="col2"> </td><td class="col3"> </td><td class="col4"> </td><td class="col5 centeralign">    ✔    </td><td class="col6"> </td>
+	</tr>
+	<tr class="row22 roweven">
+		<td class="col0 centeralign">  <a href="applications/phpldapadmin.html" class="media" title="documentation:2.0:applications:phpldapadmin"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/phpldapadmin.html" class="wikilink1" title="documentation:2.0:applications:phpldapadmin">phpLDAPAdmin</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row23 rowodd">
+		<td class="col0 centeralign">  <a href="applications/roundcube.html" class="media" title="documentation:2.0:applications:roundcube"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/roundcube.html" class="wikilink1" title="documentation:2.0:applications:roundcube">Roundcube</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row24 roweven">
+		<td class="col0 centeralign">  <a href="applications/salesforce.html" class="media" title="documentation:2.0:applications:salesforce"><img src="icons/kmultiple.png" class="mediacenter" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/salesforce.html" class="wikilink1" title="documentation:2.0:applications:salesforce">SalesForce</a>  </td><td class="col2"> </td><td class="col3"> </td><td class="col4"> </td><td class="col5 centeralign">    ✔    </td><td class="col6"> </td>
+	</tr>
+	<tr class="row25 rowodd">
+		<td class="col0 centeralign">  <a href="applications/sap.html" class="media" title="documentation:2.0:applications:sap"><img src="icons/kmultiple.png" class="media" title="SAP" alt="SAP" /></a>  </td><td class="col1 centeralign">  <a href="applications/sap.html" class="wikilink1" title="documentation:2.0:applications:sap">SAP</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5 centeralign">    ✔    </td><td class="col6"> </td>
+	</tr>
+	<tr class="row26 roweven">
+		<td class="col0 centeralign">  <a href="applications/simplesamlphp.html" class="media" title="documentation:2.0:applications:simplesamlphp"><img src="icons/kmultiple.png" class="media" alt="" width="200" /></a>  </td><td class="col1 centeralign">  <a href="applications/simplesamlphp.html" class="wikilink1" title="documentation:2.0:applications:simplesamlphp">simpleSAMLphp</a>  </td><td class="col2"> </td><td class="col3"> </td><td class="col4"> </td><td class="col5 centeralign">    ✔    </td><td class="col6"> </td>
+	</tr>
+	<tr class="row27 rowodd">
+		<th class="col0 leftalign">  </th><th class="col1 leftalign">  </th><th class="col2 centeralign">    HTTP headers    </th><th class="col3 centeralign">    Specific Handler    </th><th class="col4 centeralign">  <abbr title="Central Authentication Service">CAS</abbr>  </th><th class="col5 leftalign"> <abbr title="Security Assertion Markup Language">SAML</abbr>  </th><th class="col6 centeralign">    OpenID Connect    </th>
+	</tr>
+	<tr class="row28 roweven">
+		<td class="col0 centeralign">  <a href="applications/spring.html" class="media" title="documentation:2.0:applications:spring"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/spring.html" class="wikilink1" title="documentation:2.0:applications:spring">Spring</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row29 rowodd">
+		<td class="col0 centeralign">  <a href="applications/sympa.html" class="media" title="documentation:2.0:applications:sympa"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/sympa.html" class="wikilink1" title="documentation:2.0:applications:sympa">Sympa</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row30 roweven">
+		<td class="col0 centeralign">  <a href="applications/tomcat.html" class="media" title="documentation:2.0:applications:tomcat"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/tomcat.html" class="wikilink1" title="documentation:2.0:applications:tomcat">Tomcat</a>  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row31 rowodd">
+		<td class="col0 centeralign">  <a href="applications/wordpress.html" class="media" title="documentation:2.0:applications:wordpress"><img src="icons/kmultiple.png" class="media" alt="" width="100" /></a>  </td><td class="col1 centeralign">  <a href="applications/wordpress.html" class="wikilink1" title="documentation:2.0:applications:wordpress">Wordpress</a>  </td><td class="col2"> </td><td class="col3"> </td><td class="col4 centeralign">      ✔    </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row32 roweven">
+		<td class="col0 centeralign">  <a href="applications/zimbra.html" class="media" title="documentation:2.0:applications:zimbra"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/zimbra.html" class="wikilink1" title="documentation:2.0:applications:zimbra">Zimbra</a>  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td>
+	</tr>
+	<tr class="row33 rowodd">
+		<th class="col0 leftalign">  </th><th class="col1 leftalign">  </th><th class="col2 centeralign">    HTTP headers    </th><th class="col3 centeralign">    Specific Handler    </th><th class="col4 centeralign">  <abbr title="Central Authentication Service">CAS</abbr>  </th><th class="col5 leftalign"> <abbr title="Security Assertion Markup Language">SAML</abbr>  </th><th class="col6 centeralign">    OpenID Connect    </th>
+	</tr>
+</table></div><!-- EDIT4 TABLE [1223-5260] -->
 
-</div><!-- EDIT11 SECTION "Other" [1235-1777] -->
-
-<h2 class="sectionedit13" id="frameworks">Frameworks</h2>
-<div class="level2">
-<div class="table sectionedit14"><table class="inline table table-bordered table-striped">
-	<thead>
-	<tr class="row0 roweven">
-		<th class="col0 centeralign">    Java (Spring)    </th><th class="col1 centeralign">    Python (Django)    </th>
-	</tr>
-	</thead>
-	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  <a href="applications/spring.html" class="media" title="documentation:2.0:applications:spring"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/django.html" class="media" title="documentation:2.0:applications:django"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td>
-	</tr>
-</table></div><!-- EDIT14 TABLE [1802-1969] -->
-
-</div><!-- EDIT13 SECTION "Frameworks" [1778-1970] -->
-
-<h2 class="sectionedit15" id="connectors">Connecteurs</h2>
-<div class="level2">
-<div class="table sectionedit16"><table class="inline table table-bordered table-striped">
-	<thead>
-	<tr class="row0 roweven">
-		<th class="col0 centeralign">    HTTP Auth-Basic    </th><th class="col1 centeralign">    Tomcat    </th><th class="col2 centeralign">    Nginx    </th>
-	</tr>
-	</thead>
-	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  <a href="applications/authbasic.html" class="media" title="documentation:2.0:applications:authbasic"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/tomcat.html" class="media" title="documentation:2.0:applications:tomcat"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col2 centeralign">  <a href="applications/nginx.html" class="media" title="documentation:2.0:applications:nginx"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td>
-	</tr>
-	<tr class="row2 roweven">
-		<th class="col0 centeralign" colspan="3">  Quelques applications l'utilisant  </th>
-	</tr>
-	<tr class="row3 rowodd">
-		<td class="col0 centeralign">  <a href="http://en.wikipedia.org/wiki/Outlook_Web_App" class="urlextern" title="http://en.wikipedia.org/wiki/Outlook_Web_App"  rel="nofollow">Outlook Web App</a> <br/>
-<a href="http://en.wikipedia.org/wiki/IBM_Lotus_iNotes" class="urlextern" title="http://en.wikipedia.org/wiki/IBM_Lotus_iNotes"  rel="nofollow">IBM Lotus iNotes</a>  </td><td class="col1 centeralign">  <a href="http://www.lambdaprobe.org" class="urlextern" title="http://www.lambdaprobe.org"  rel="nofollow">Probe</a> <br/>
-<a href="http://fr.lutece.paris.fr" class="urlextern" title="http://fr.lutece.paris.fr"  rel="nofollow">Lutece</a>  </td><td class="col2"> </td>
-	</tr>
-</table></div><!-- EDIT16 TABLE [1995-2486] -->
-
-</div><!-- EDIT15 SECTION "Connectors" [1971-2487] -->
-
-<h2 class="sectionedit17" id="saml_connectors">Connecteurs SAML</h2>
-<div class="level2">
-<div class="noteclassic">Ceci nécessite de configurer <abbr title="LemonLDAP::NG">LL::NG</abbr> comme <a href="idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">fournisseur d'identité SAML</a>.
-</div><div class="table sectionedit18"><table class="inline table table-bordered table-striped">
-	<thead>
-	<tr class="row0 roweven">
-		<th class="col0 centeralign">    Google Apps    </th><th class="col1 centeralign">    Cornerstone    </th><th class="col2 centeralign">    SalesForce    </th><th class="col3 centeralign">    simpleSAMLphp    </th>
-	</tr>
-	</thead>
-	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  <a href="applications/googleapps.html" class="media" title="documentation:2.0:applications:googleapps"><img src="icons/kmultiple.png" class="mediacenter" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/cornerstone.html" class="media" title="documentation:2.0:applications:cornerstone"><img src="icons/kmultiple.png" class="mediacenter" alt="" /></a>  </td><td class="col2 centeralign">  <a href="applications/salesforce.html" class="media" title="documentation:2.0:applications:salesforce"><img src="icons/kmultiple.png" class="mediacenter" alt="" /></a>  </td><td class="col3 centeralign">  <a href="applications/simplesamlphp.html" class="media" title="documentation:2.0:applications:simplesamlphp"><img src="icons/kmultiple.png" class="mediacenter" alt="" /></a>  </td>
-	</tr>
-	<tr class="row2 roweven">
-		<th class="col0 centeralign">    NextCloud    </th><th class="col1 centeralign">    ADFS    </th><th class="col2 leftalign">  </th><th class="col3 leftalign">  </th>
-	</tr>
-	<tr class="row3 rowodd">
-		<td class="col0 centeralign">  <a href="applications/nextcloud.html" class="media" title="documentation:2.0:applications:nextcloud"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="applications/adfs.html" class="media" title="documentation:2.0:applications:adfs"><img src="icons/kmultiple.png" class="media" alt="" /></a>  </td><td class="col2 leftalign">  </td><td class="col3 leftalign">  </td>
-	</tr>
-</table></div><!-- EDIT18 TABLE [2607-3149] -->
-
-</div><!-- EDIT17 SECTION "SAML connectors" [2488-] -->
+</div><!-- EDIT3 SECTION "Application list" [1192-] -->
 </div>
 </body>
 </html>

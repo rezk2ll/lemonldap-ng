@@ -51,7 +51,7 @@
 
 <ul class="toc">
 <li class="level1"><div class="li"><a href="#presentation">Présentation</a></div></li>
-<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
+<li class="level1"><div class="li"><a href="#http_headers">HTTP Headers</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#limesurvey_configuration">Configuration de LimeSurvey</a></div></li>
 <li class="level2"><div class="li"><a href="#limesurvey_virtual_host">Hôte virtuel LimeSurvey</a></div></li>
@@ -79,59 +79,80 @@
 <div class="level2">
 
 <p>
-<a href="http://www.limesurvey.org" class="urlextern" title="http://www.limesurvey.org"  rel="nofollow">LimeSurvey</a> est un logiciel de sondage écrit en PHP. LimeSurvey has a webserver authentication mode that allows one to integrate it directly into LemonLDAP::NG.
+<a href="http://www.limesurvey.org" class="urlextern" title="http://www.limesurvey.org"  rel="nofollow">LimeSurvey</a> est un logiciel de sondage écrit en PHP. 
+</p>
+
+</div><!-- EDIT2 SECTION "Presentation" [71-180] -->
+
+<h2 class="sectionedit3" id="http_headers">HTTP Headers</h2>
+<div class="level2">
+
+<p>
+
+LimeSurvey has a webserver authentication mode that allows one to integrate it directly into LemonLDAP::NG.
+
 </p>
 
 <p>
-Pour une meilleure integration, LimeSurvey doit être configuré pour créer automatiquement les utilisateurs inconnus et utiliser les en-têtes HTTP pour remplir le nom, le mail et les rôles. Par exemple, en utilisant 3 rôles :
+
+To have a stronger integration, we will configure LimeSurvey to autocreate unknown users and use HTTP headers to fill name and mail.
+
 </p>
-<ul>
-<li class="level1"><div class="li"> User : peut répondre aux surveillances</div>
-</li>
-<li class="level1"><div class="li"> Admin : peut créer des surveillances</div>
-</li>
-<li class="level1"><div class="li"> Superadmin : personne ne peut l'arrêter !</div>
-</li>
-</ul>
-
-</div><!-- EDIT2 SECTION "Presentation" [71-561] -->
-
-<h2 class="sectionedit3" id="configuration">Configuration</h2>
-<div class="level2">
 <div class="noteclassic">On suppose que LimeSurvey est installé dans /var/www/html/limesurvey
 </div>
-</div><!-- EDIT3 SECTION "Configuration" [562-670] -->
+</div><!-- EDIT3 SECTION "HTTP Headers" [181-531] -->
 
 <h3 class="sectionedit4" id="limesurvey_configuration">Configuration de LimeSurvey</h3>
 <div class="level3">
 
 <p>
-La configuration est effectuée via config.php:
+
+In Administration panel, go in Configuration &gt; Parameters &gt; Extensions manager. Select the WebServer module and configure it.
+
 </p>
-<pre class="code">vi /var/www/html/limesurvey/config.php</pre>
-<pre class="code file php"><span class="co1">//==================================</span>
-<span class="co1">// WebSSO</span>
-<span class="co1">//==================================</span>
-&nbsp;
-<span class="re0">$useWebserverAuth</span> <span class="sy0">=</span> <span class="kw4">true</span><span class="sy0">;</span>
-<span class="re0">$WebserverAuth_autocreateUser</span> <span class="sy0">=</span> <span class="kw4">true</span><span class="sy0">;</span>
-<span class="re0">$WebserverAuth_autouserprofile</span> <span class="sy0">=</span> <a href="http://www.php.net/array"><span class="kw3">Array</span></a><span class="br0">(</span>
- <span class="st_h">'full_name'</span> <span class="sy0">=&gt;</span> <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st_h">'HTTP_AUTH_CN'</span><span class="br0">]</span><span class="sy0">,</span>
- <span class="st_h">'email'</span> <span class="sy0">=&gt;</span> <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st_h">'HTTP_AUTH_MAIL'</span><span class="br0">]</span><span class="sy0">,</span>
- <span class="st_h">'lang'</span> <span class="sy0">=&gt;</span> <span class="st_h">'en'</span><span class="sy0">,</span>
- <span class="st_h">'htmleditormode'</span> <span class="sy0">=&gt;</span> <span class="st_h">'inline'</span><span class="sy0">,</span>
- <span class="st_h">'templatelist'</span> <span class="sy0">=&gt;</span> <span class="st_h">'default,basic,MyOrgTemplate'</span><span class="sy0">,</span>
- <span class="st_h">'create_survey'</span> <span class="sy0">=&gt;</span> <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st_h">'HTTP_AUTH_ADMIN'</span><span class="br0">]</span> <span class="sy0">||</span> <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">]</span><span class="sy0">,</span>
- <span class="st_h">'create_user'</span> <span class="sy0">=&gt;</span>  <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">]</span><span class="sy0">,</span>
- <span class="st_h">'delete_user'</span> <span class="sy0">=&gt;</span>  <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">]</span><span class="sy0">,</span>
- <span class="st_h">'superadmin'</span> <span class="sy0">=&gt;</span> <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">]</span><span class="sy0">,</span>
- <span class="st_h">'configurator'</span> <span class="sy0">=&gt;</span>  <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">]</span><span class="sy0">,</span>
- <span class="st_h">'manage_template'</span> <span class="sy0">=&gt;</span>  <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">]</span><span class="sy0">,</span>
- <span class="st_h">'manage_label'</span> <span class="sy0">=&gt;</span>  <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">]</span>
-<span class="br0">)</span><span class="sy0">;</span></pre>
-<div class="notetip">On utilise les en-têtes HTTP pour trouver le profil utilisateur par défaut.
+
+<p>
+<img src="screenshot_limesurvey_configuration.png" class="mediacenter" title="
+" alt="
+" />
+</p>
+
+<p>
+
+This is enough for the authentication part.
+
+</p>
+<div class="notetip">If you are blocked, you can deactivate the plugin with this request in database:
+
+<pre class="code">update lime_plugins SET active=0 where name="Authwebserver";</pre>
+
 </div>
-</div><!-- EDIT4 SECTION "LimeSurvey configuration" [671-1676] -->
+<p>
+
+To configure account autocreation, you need to edit application/config/config.php:
+The configuration is done in config.php:
+
+</p>
+<pre class="code">vi /var/www/html/limesurvey/application/config/config.php</pre>
+<pre class="code file php">        <span class="st_h">'config'</span><span class="sy0">=&gt;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">(</span>
+        <span class="co1">// debug: Set this to 1 if you are looking for errors. If you still get no errors after enabling this</span>
+        <span class="co1">// then please check your error-logs - either in your hosting provider admin panel or in some /logs directory</span>
+        <span class="co1">// on your webspace.</span>
+        <span class="co1">// LimeSurvey developers: Set this to 2 to additionally display STRICT PHP error messages and get full access to standard templates</span>
+                <span class="st_h">'debug'</span><span class="sy0">=&gt;</span><span class="nu0">0</span><span class="sy0">,</span>
+                <span class="st_h">'debugsql'</span><span class="sy0">=&gt;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="co1">// Set this to 1 to enanble sql logging, only active when debug = 2</span>
+                <span class="co1">// Update default LimeSurvey config here</span>
+                <span class="st_h">'auth_webserver_autocreate_user'</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="sy0">,</span>
+                <span class="st_h">'auth_webserver_autocreate_profile'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">Array</span></a><span class="br0">(</span><span class="st_h">'full_name'</span> <span class="sy0">=&gt;</span> <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st_h">'HTTP_AUTH_CN'</span><span class="br0">]</span><span class="sy0">,</span><span class="st_h">'email'</span> <span class="sy0">=&gt;</span> <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st_h">'HTTP_AUTH_MAIL'</span><span class="br0">]</span><span class="sy0">,</span><span class="st_h">'lang'</span><span class="sy0">=&gt;</span><span class="st_h">'en'</span><span class="br0">)</span><span class="sy0">,</span>
+                <span class="st_h">'auth_webserver_autocreate_permissions'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">Array</span></a><span class="br0">(</span><span class="st_h">'surveys'</span> <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">(</span><span class="st_h">'create'</span><span class="sy0">=&gt;</span><span class="kw4">true</span><span class="sy0">,</span><span class="st_h">'read'</span><span class="sy0">=&gt;</span><span class="kw4">false</span><span class="sy0">,</span><span class="st_h">'update'</span><span class="sy0">=&gt;</span><span class="kw4">false</span><span class="sy0">,</span><span class="st_h">'delete'</span><span class="sy0">=&gt;</span><span class="kw4">false</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">,</span>
+                <span class="br0">)</span></pre>
+
+<p>
+
+See also <a href="https://manual.limesurvey.org/Optional_settings#Authentication_delegation_with_automatic_user_import" class="urlextern" title="https://manual.limesurvey.org/Optional_settings#Authentication_delegation_with_automatic_user_import"  rel="nofollow">https://manual.limesurvey.org/Optional_settings#Authentication_delegation_with_automatic_user_import</a>
+</p>
+
+</div><!-- EDIT4 SECTION "LimeSurvey configuration" [532-2298] -->
 
 <h3 class="sectionedit5" id="limesurvey_virtual_host">Hôte virtuel LimeSurvey</h3>
 <div class="level3">
@@ -139,62 +160,8 @@ La configuration est effectuée via config.php:
 <p>
 Configurer l'hôte virtuel LimeSurvey comme n'importe quel autre <a href="../configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">hôte virtuel protégé</a>.
 </p>
-<ul>
-<li class="level1"><div class="li"> Pour Apache:</div>
-</li>
-</ul>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
-       <span class="kw1">ServerName</span> limesurvey.example.com
-&nbsp;
-       PerlHeaderParserHandler Lemonldap::NG::Handler
-&nbsp;
-       <span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">"(.*)"</span> PHP_AUTH_USER=$1
-&nbsp;
-       <span class="kw1">Alias</span> /limesurvey /var/www/html/limesurvey
-      <span class="kw1">DocumentRoot</span> /var/www/html/limesurvey
-&nbsp;
-&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
-<div class="noteimportant">Il faut renseigner la variable PHP_AUTH_USER pour faire fonctionner le mode d'authentification par serveur web.
-</div><ul>
-<li class="level1"><div class="li"> Pour Nginx:</div>
-</li>
-</ul>
-<pre class="code file nginx">server {
-  listen 80;
-  server_name limesurvey.example.com;
-  root /path/to/application;
-  # Requête interne d'authentification
-  location = /lmauth {
-    internal;
-    include /etc/nginx/fastcgi_params;
-    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
-    # Ignorer les données postées
-    fastcgi_pass_request_body  off;
-    fastcgi_param CONTENT_LENGTH "";
-    # Conserver le nom d'hôte original
-    fastcgi_param HOST $http_host;
-    # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
-    fastcgi_param X_ORIGINAL_URI  $request_uri;
-  } 
-&nbsp;
-  # Requêtes clients
-  location / {
-    auth_request /lmauth;
-    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
-    auth_request_set $lmlocation $upstream_http_location;
-    error_page 401 $lmlocation;
-    try_files $uri $uri/ =404;
-&nbsp;
-    ...
-&nbsp;
-    include /etc/lemonldap-ng/nginx-lua-headers.conf;
-  }
-  location / {
-    try_files $uri $uri/ =404;
-  }
-}</pre>
 
-</div><!-- EDIT5 SECTION "LimeSurvey virtual host" [1677-3196] -->
+</div><!-- EDIT5 SECTION "LimeSurvey virtual host" [2299-2422] -->
 
 <h3 class="sectionedit6" id="limesurvey_virtual_host_in_manager">Hôte virtuel LimeSurvey dans le manager</h3>
 <div class="level3">
@@ -222,15 +189,8 @@ Aller dans le manager et <a href="../configvhost.html#lemonldapng_configuration"
 	<tr class="row3 rowodd">
 		<td class="col0 centeralign">    Auth-Mail    </td><td class="col1 centeralign">  Email de l'utilisateur  </td>
 	</tr>
-	<tr class="row4 roweven">
-		<td class="col0 centeralign">    Auth-Admin    </td><td class="col1 centeralign">  1 si l'utilisateur est administrateur  </td>
-	</tr>
-	<tr class="row5 rowodd">
-		<td class="col0 centeralign">    Auth-SuperAdmin    </td><td class="col1 centeralign">  1 si l'utilisateur est super-administrateur  </td>
-	</tr>
-</table></div><!-- EDIT7 TABLE [3369-3587] -->
-<div class="notetip">On peut gérer les rôles avec le <a href="../rbac.html" class="wikilink1" title="documentation:2.0:rbac">modèle RBAC</a> ou en utilisant les groupes.
-</div>
+</table></div><!-- EDIT7 TABLE [2595-2723] -->
+
 </div>
 
 <h4 id="rules">Règles</h4>
@@ -242,15 +202,15 @@ Aller dans le manager et <a href="../configvhost.html#lemonldapng_configuration"
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  Déconnexion  </td><td class="col1 centeralign">    action=logout$    </td><td class="col2 centeralign">  Règle de déconnexion (par exemple logout_app_sso)  </td>
+		<td class="col0 centeralign">  Déconnexion  </td><td class="col1 centeralign">    /sa/logout$    </td><td class="col2 centeralign">  Règle de déconnexion (par exemple logout_app_sso)  </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">    Admin      </td><td class="col1 centeralign">    ^/limesurvey/admin/    </td><td class="col2 centeralign">  Autorisé seulement pour les rôles admin et superadmin  </td>
+		<td class="col0 centeralign">    Admin      </td><td class="col1 centeralign">    ^/(index\.php/)?admin    </td><td class="col2 centeralign">    Allow only admin and superadmin users    </td>
 	</tr>
 	<tr class="row3 rowodd">
 		<td class="col0 centeralign">  Défaut  </td><td class="col1 centeralign">    default    </td><td class="col2 centeralign">  Autorise seulement les utilisateurs avec un rôle LimeSurvey  </td>
 	</tr>
-</table></div><!-- EDIT8 TABLE [3694-3979] -->
+</table></div><!-- EDIT8 TABLE [2740-3024] -->
 <div class="notetip">Il est possible de mettre l'accès par défaut à :<ul>
 <li class="level1"><div class="li"> <strong>accept</strong> : tous les utilisateurs authentifiés peuvent accéder aux surveillances</div>
 </li>
@@ -259,7 +219,7 @@ Aller dans le manager et <a href="../configvhost.html#lemonldapng_configuration"
 </ul>
 
 </div>
-</div><!-- EDIT6 SECTION "LimeSurvey virtual host in Manager" [3197-] -->
+</div><!-- EDIT6 SECTION "LimeSurvey virtual host in Manager" [2423-] -->
 </div>
 </body>
 </html>
