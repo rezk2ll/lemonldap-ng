@@ -660,7 +660,7 @@ sub tree {
                         },
                         {
                             title => 'totp',
-                            help  => 'totp.html',
+                            help  => 'totp2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'totp2fActivation', 'totpSelfRegistration',
