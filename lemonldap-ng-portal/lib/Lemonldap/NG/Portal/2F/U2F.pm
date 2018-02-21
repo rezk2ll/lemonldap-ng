@@ -27,7 +27,12 @@ has prefix => ( is => 'ro', default => 'u' );
 
 sub init {
     my ($self) = @_;
-    if ( $self->conf->{u2fActivation} eq '1' ) {
+
+    # If self registration is enabled and "activation" is simply set to
+    # "enabled", replace the rule to detect if user has register its key
+    if (    $self->conf->{u2fSelfRegistration}
+        and $self->conf->{u2fActivation} eq '1' )
+    {
         $self->conf->{u2fActivation} = '$_u2fKeyHandle and $_u2fUserKey';
     }
     return 0

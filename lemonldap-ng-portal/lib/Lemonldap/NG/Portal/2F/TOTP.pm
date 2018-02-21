@@ -21,7 +21,12 @@ has prefix => ( is => 'ro', default => 'totp' );
 
 sub init {
     my ($self) = @_;
-    if ( $self->conf->{totp2fActivation} eq '1' ) {
+
+    # If self registration is enabled and "activation" is simply set to
+    # "enabled", replace the rule to detect if user has register its key
+    if (    $self->conf->{totpSelfRegistration}
+        and $self->conf->{totp2fActivation} eq '1' )
+    {
         $self->conf->{totp2fActivation} = '$_totp2fSecret';
     }
     $self->conf->{totp2fInterval} ||= 30;
