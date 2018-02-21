@@ -18,6 +18,10 @@
     <span class="glyphicon glyphicon-check"></span>&nbsp;
     <span trspan="verify">Verify</span>
   </span>
+  <span id="unregister" class="btn btn-danger" role="button">
+    <span class="glyphicon glyphicon-minus-sign"></span>&nbsp;
+    <span trspan="unregister">Unregister</span>
+  </span>
   </div>
   </div>
   </div>

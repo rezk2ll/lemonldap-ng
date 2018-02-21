@@ -177,6 +177,7 @@
 "refreshrights": "Refresh my rights",
 "refuse":"Refuse",
 "register": "Register",
+"unregister": "Unregister",
 "registerRequestAlreadyIssued":"A register request for this account was already issued on ",
 "rememberChoice":"Remember my choice",
 "removeOtherSessions":"Remove other sessions",

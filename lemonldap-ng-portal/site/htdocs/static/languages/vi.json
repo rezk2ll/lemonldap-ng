@@ -177,6 +177,7 @@
 "refreshrights": "Làm mới lại quyền của tôi",
 "refuse":"Từ chối",
 "register": "Đăng ký",
+"unregister": "Hủy đăng ký",
 "registerRequestAlreadyIssued":"Yêu cầu đăng ký cho tài khoản này đã được cấp phát",
 "rememberChoice":"Hãy nhớ sự lựa chọn của tôi",
 "removeOtherSessions":"Xóa các phiên khác",

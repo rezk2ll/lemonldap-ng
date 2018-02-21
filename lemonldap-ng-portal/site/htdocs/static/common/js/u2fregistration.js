@@ -5,7 +5,7 @@ LemonLDAP::NG U2F registration script
  */
 
 (function() {
-  var displayError, register, setMsg, verify;
+  var displayError, register, setMsg, verify, unregister;
 
   setMsg = function(msg, level) {
     $('#msg').html(window.translate(msg));
@@ -72,6 +72,50 @@ LemonLDAP::NG U2F registration script
     });
   };
 
+  unregister = function() {
+    return $.ajax({
+      type: "POST",
+      url: portal + "u2fregister/unregister",
+      data: {},
+      dataType: 'json',
+      error: displayError,
+      success: function(ch) {
+        var request;
+        request = [
+          {
+            challenge: ch.challenge,
+            version: ch.version
+          }
+        ];
+        setMsg('touchU2fDevice', 'positive');
+        $('#u2fPermission').show();
+        return u2f.register(ch.appId, request, [], function(data) {
+          $('#u2fPermission').hide();
+          if (data.errorCode) {
+            return setMsg('unableToGetU2FKey', 'warning');
+          } else {
+            return $.ajax({
+              type: "POST",
+              url: portal + "u2fregister/unregistration",
+              data: {
+                registration: JSON.stringify(data)
+              },
+              dataType: 'json',
+              success: function(resp) {
+                if (resp.error) {
+                  return setMsg('u2fFailed', 'warning');
+                } else if (resp.result) {
+                  return setMsg('u2fUnregistered', 'positive');
+                }
+              },
+              error: displayError
+            });
+          }
+        });
+      }
+    });
+  };
+
   verify = function() {
     return $.ajax({
       type: "POST",
@@ -120,6 +164,7 @@ LemonLDAP::NG U2F registration script
     $('#u2fPermission').hide();
     $('#register').on('click', register);
     $('#verify').on('click', verify);
+    $('#unregister').on('click', unregister);
     return $('#goback').attr('href', portal);
   });
 
