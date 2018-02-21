@@ -67,6 +67,7 @@ sub verify {
     my $r = $self->verifyCode(
         $self->conf->{totp2fInterval},
         $self->conf->{totp2fRange},
+        $self->conf->{totp2fDigits},
         $session->{_totp2fSecret}, $code
     );
     if ( $r == -1 ) { return PE_ERROR; }

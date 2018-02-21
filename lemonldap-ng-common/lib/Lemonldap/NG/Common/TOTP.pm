@@ -12,14 +12,14 @@ our $VERSION = '2.0.0';
 
 # Verify that TOTP $code match with $secret
 sub verifyCode {
-    my ( $self, $interval, $range, $secret, $code ) = @_;
+    my ( $self, $interval, $range, $digits, $secret, $code ) = @_;
     my $s = eval { decode_base32($secret) };
     if ($@) {
         $self->logger->error('Bad characters in TOTP secret');
         return -1;
     }
     for ( 0 .. $range ) {
-        if ( $code eq $self->_code( $s, $_, $interval ) ) {
+        if ( $code eq $self->_code( $s, $_, $interval, $digits ) ) {
             return 1;
         }
     }
@@ -28,7 +28,8 @@ sub verifyCode {
 
 # Internal subroutine that calculates TOTP code using $secret and $interval
 sub _code {
-    my ( $self, $secret, $r, $interval ) = @_;
+    my ( $self, $secret, $r, $interval, $digits ) = @_;
+    $digits ||= 6;
     my $hmac = hmac_sha1_hex(
         pack( 'H*',
             sprintf( '%016x', int( ( time + $r * $interval ) / $interval ) ) ),
@@ -36,7 +37,7 @@ sub _code {
     );
 
     return sprintf(
-        '%06d',
+        '%0' . $digits . 'd',
         (
             hex( substr( $hmac, hex( substr( $hmac, -1 ) ) * 2, 8 ) ) &
               0x7fffffff

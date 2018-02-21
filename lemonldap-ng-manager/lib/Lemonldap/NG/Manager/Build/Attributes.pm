@@ -1046,6 +1046,10 @@ sub attributes {
             documentation =>
               'Authentication level for users authentified by password+TOTP'
         },
+        totp2fIssuer => {
+            type          => 'text',
+            documentation => 'TOTP Issuer',
+        },
         totp2fInterval => {
             type          => 'int',
             default       => 30,
@@ -1055,6 +1059,11 @@ sub attributes {
             type          => 'int',
             default       => 1,
             documentation => 'TOTP range (number of interval to test)',
+        },
+        totp2fDigits => {
+            type          => 'int',
+            default       => 6,
+            documentation => 'Number of digits for TOTP code',
         },
 
         # External second factor

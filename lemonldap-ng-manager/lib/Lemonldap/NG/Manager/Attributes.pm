@@ -3130,9 +3130,16 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'totp2fAuthnLevel' => {
             'type' => 'int'
         },
+        'totp2fDigits' => {
+            'default' => 6,
+            'type'    => 'int'
+        },
         'totp2fInterval' => {
             'default' => 30,
             'type'    => 'int'
+        },
+        'totp2fIssuer' => {
+            'type' => 'text'
         },
         'totp2fRange' => {
             'default' => 1,

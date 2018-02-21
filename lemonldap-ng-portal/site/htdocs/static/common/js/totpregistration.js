@@ -42,6 +42,12 @@ LemonLDAP::NG TOTP registration script
       success: function(data) {
         var qr, s;
         s = "otpauth://totp/" + (escape(data.portal)) + ":" + (escape(data.user)) + "?secret=" + data.secret + "&issuer=" + (escape(data.portal));
+        if (data.digits !== 6) {
+          s += "&digits=" + data.digits;
+        }
+        if (data.interval !== 30) {
+          s += "&period=" + data.interval;
+        }
         qr = new QRious({
           element: document.getElementById('qr'),
           value: s,

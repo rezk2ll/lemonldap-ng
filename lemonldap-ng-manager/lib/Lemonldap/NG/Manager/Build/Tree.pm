@@ -664,8 +664,9 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'totp2fActivation', 'totpSelfRegistration',
-                                'totp2fAuthnLevel', 'totp2fInterval',
-                                'totp2fRange',
+                                'totp2fAuthnLevel', 'totp2fIssuer',
+                                'totp2fInterval',   'totp2fRange',
+                                'totp2fDigits',
                             ]
                         },
                         {
