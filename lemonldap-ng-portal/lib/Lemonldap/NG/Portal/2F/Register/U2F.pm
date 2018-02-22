@@ -54,6 +54,37 @@ sub run {
         $self->userLogger->warn("U2F Registration failed: $err");
         return $self->p->sendError( $req, $err, 200 );
     }
+
+    if ( $action eq 'unregister' ) {
+        my $challenge = $self->crypter->registrationChallenge;
+        return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
+    }
+    if ( $action eq 'unregistration' ) {
+        my $resp;
+        unless ( $resp = $req->param('registration') ) {
+            return $self->p->sendError( $req, 'Missing unregistration parameter',
+                400 );
+        }
+        $self->logger->debug("Get unregistration data $resp");
+        my ( $keyHandle, $userKey ) = $self->crypter->registrationVerify($resp);
+        if ( $keyHandle and $userKey ) {
+            $self->p->updatePersistentSession(
+                $req,
+                {
+                    _u2fKeyHandle => '',
+                    _u2fUserKey   => ''
+                }
+            );
+            return [
+                200, [ 'Content-Type' => 'application/json' ],
+                ['{"result":1}']
+            ];
+        }
+        my $err = Crypt::U2F::Server::Simple::lastError();
+        $self->userLogger->warn("U2F Unregistration failed: $err");
+        return $self->p->sendError( $req, $err, 200 );
+    }
+
     if ( $action eq 'verify' ) {
         my ( $err, $error ) = $self->loadUser($req);
         if ( $err == -1 ) {

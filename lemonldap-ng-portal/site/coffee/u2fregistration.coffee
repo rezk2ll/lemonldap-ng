@@ -54,6 +54,43 @@ register = ->
 								setMsg 'u2fRegistered', 'positive'
 						error: displayError
 
+# Registration function (launched by "register" button)
+unregister = ->
+	# 1 get registration token
+	$.ajax
+		type: "POST",
+		url: "#{portal}u2fregister/unregister"
+		data: {}
+		dataType: 'json'
+		error: displayError
+		success: (ch) ->
+			# 2 build response
+			request = [
+				challenge: ch.challenge
+				version: ch.version
+			]
+			setMsg 'touchU2fDevice', 'positive'
+			$('#u2fPermission').show()
+			u2f.register ch.appId, request, [], (data) ->
+				$('#u2fPermission').hide()
+				# Handle errors
+				if data.errorCode
+					setMsg 'unableToGetU2FKey', 'warning'
+				else
+					# 3 send response
+					$.ajax
+						type: "POST"
+						url: "#{portal}u2fregister/unregistration"
+						data:
+							registration: JSON.stringify data
+						dataType: 'json'
+						success: (resp) ->
+							if resp.error
+								setMsg 'u2fFailed', 'warning'
+							else if resp.result
+								setMsg 'u2fUnregistered', 'positive'
+						error: displayError
+
 # Verification function (launched by "verify" button)
 verify = ->
 	# 1 get challenge
@@ -94,5 +131,6 @@ verify = ->
 $(document).ready ->
 	$('#u2fPermission').hide()
 	$('#register').on 'click', register
+	$('#unregister').on 'click', unregister
 	$('#verify').on 'click', verify
 	$('#goback').attr 'href', portal
