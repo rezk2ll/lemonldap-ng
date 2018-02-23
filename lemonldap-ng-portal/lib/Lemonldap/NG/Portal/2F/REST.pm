@@ -106,7 +106,10 @@ sub verify {
     # Prepare args
     my $args;
     foreach my $k ( keys %{ $self->{vrfyAttrs} } ) {
-        $args->{$k} = $req->sessionInfo->{ $self->{vrfyAttrs}->{$k} };
+        $args->{$k} =
+          (   $k eq 'code'
+            ? $code
+            : $req->sessionInfo->{ $self->{vrfyAttrs}->{$k} } );
     }
 
     # Launch REST request
