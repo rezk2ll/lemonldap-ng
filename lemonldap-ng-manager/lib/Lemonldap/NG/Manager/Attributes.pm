@@ -2363,24 +2363,24 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'int'
         },
         'rest2fInitArgs' => {
-            'keyTest' => qr/^\S+$/,
-            'test'    => sub {
-                1;
-            },
-            'type' => 'keyTextContainer'
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^\w+$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^\w+$/,
+            'type'       => 'keyTextContainer'
         },
         'rest2fInitUrl' => {
             'type' => 'url'
         },
         'rest2fVerifyArgs' => {
-            'keyTest' => qr/^\S+$/,
-            'test'    => sub {
-                1;
-            },
             'type' => 'keyTextContainer'
         },
         'rest2fVerifyUrl' => {
-            'type' => 'url'
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^\w+$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^\w+$/,
+            'type'       => 'url'
         },
         'restAuthUrl' => {
             'type' => 'url'
