@@ -185,7 +185,8 @@ sub defaultValues {
               'http://auth.example.com/Lemonldap/NG/Common/PSGI/SOAPService',
             'proxy' => 'http://auth.example.com/sessions'
         },
-        'requireToken' => 1,
+        'requireToken'     => 1,
+        'rest2fActivation' => 0,
         'samlAttributeAuthorityDescriptorAttributeServiceSOAP' =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
         'samlAuthnContextMapKerberos'                   => 4,

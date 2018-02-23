@@ -112,7 +112,7 @@ sub verify {
     # Launch REST request
     $self->logger->debug('Call REST vrfy URL');
     my $res =
-      eval { $self->restCall( $self->conf->{rest2fVrfyUrl}, $args ); };
+      eval { $self->restCall( $self->conf->{rest2fVerifyUrl}, $args ); };
     if ($@) {
         $self->logger->error("REST 2F error: $@");
         return PE_ERROR;
