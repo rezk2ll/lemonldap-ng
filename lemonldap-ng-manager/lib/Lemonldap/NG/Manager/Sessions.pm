@@ -7,7 +7,6 @@ use Mouse;
 
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Conf::Constants;
-use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
 use Lemonldap::NG::Common::IPv6;
