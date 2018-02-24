@@ -119,7 +119,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.translate = $translator.translate
 	$scope.translateTitle = (node) ->
 		$translator.translateField node, 'title'
-	sessionType = 'global'
+	sessionType = 'Persistent'
 
 	# Handle menu items
 	$scope.menuClick = (button) ->

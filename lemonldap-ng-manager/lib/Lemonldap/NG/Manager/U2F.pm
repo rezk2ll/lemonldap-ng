@@ -22,7 +22,7 @@ our $VERSION = '2.0.0';
 # I. INITIALIZATION METHODS #
 #############################
 
-use constant defaultRoute => 'u2f.html';
+use constant defaultRoute => 'u2f.html#/persistent';
 
 sub addRoutes {
     my ( $self, $conf ) = @_;
