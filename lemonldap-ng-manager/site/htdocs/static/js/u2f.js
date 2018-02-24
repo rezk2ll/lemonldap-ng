@@ -141,7 +141,7 @@
       $scope.translateTitle = function(node) {
         return $translator.translateField(node, 'title');
       };
-      sessionType = 'global';
+      sessionType = 'Persistent';
       $scope.menuClick = function(button) {
         if (button.popup) {
           window.open(button.popup);

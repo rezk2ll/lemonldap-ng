@@ -201,6 +201,7 @@
 "deleteEntry": "Xóa",
 "deleteNotification": "Xóa",
 "deleteSession": "Xóa phiên",
+"deleteU2fKey":"Delete U2F key"
 "demoExportedVars": "Xuất khẩu biến",
 "demoParams": "Tham số trình diễn",
 "description": "Mô tả",
