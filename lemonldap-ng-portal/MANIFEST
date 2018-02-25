@@ -411,6 +411,7 @@ t/62-SingleSession.t
 t/63-History.t
 t/64-StayConnected.t
 t/65-AutoSignin.t
+t/70-2F-TOTP.t
 t/90-Translations.t
 t/99-pod.t
 t/lmConf-1.json
