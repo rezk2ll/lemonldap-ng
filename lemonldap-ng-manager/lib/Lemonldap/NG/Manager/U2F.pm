@@ -33,17 +33,17 @@ sub addRoutes {
       # READ
       ->addRoute( sessions => { ':sessionType' => 'sessions' }, ['GET'] )
       
-       # UPDATE
+       # DELETEU2FKey
       ->addRoute(
-        sessions => { ':sessionType' => { ':sessionId' => 'delSession' } },
-        ['PUT']
-      )
+        sessions => { ':sessionType' => { ':sessionId' => 'delU2FKey' } },
+        ['POST']
+      );
 
       # DELETE
-      ->addRoute(
-        sessions => { ':sessionType' => { ':sessionId' => 'delSession' } },
-        ['DELETE']
-      );
+      #~ ->addRoute(
+        #~ sessions => { ':sessionType' => { ':sessionId' => 'delSession' } },
+        #~ ['DELETE']
+      #);
 
     $self->setTypes($conf);
 

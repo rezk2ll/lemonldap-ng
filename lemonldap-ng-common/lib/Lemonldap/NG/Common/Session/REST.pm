@@ -50,6 +50,35 @@ sub delSession {
     return $self->sendJSONresponse( $req, { result => 1 } );
 }
 
+sub delU2FKey {
+    my ( $self, $req ) = @_;
+    return $self->sendJSONresponse( $req, { result => 1 } )
+      if ( $self->{demoMode} );
+    my $mod = $self->getMod($req)
+      or return $self->sendError( $req, undef, 400 );
+    my $id = $req->params('sessionId')
+      or return $self->sendError( $req, 'sessionId is missing', 400 );
+
+        
+    # Try to read session
+    my $apacheSession = $self->getApacheSession( $mod, $id )
+      or return $self->sendError( $req, undef, 400 );
+
+    my %session = %{ $apacheSession->data };        
+    $session{_session_uid} = 'TOTO';
+
+    $apacheSession->update(\%session);
+    
+    #return $self->sendError( $req, $session->data->{_session_uid}, 666 );
+    
+    
+    Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
+    if ( $apacheSession->error ) {
+        return $self->sendError( $req, $apacheSession->error, 200 );
+    }
+    return $self->sendJSONresponse( $req, { result => 1 } );
+}
+
 sub session {
     my ( $self, $req, $id, $skey ) = @_;
     my ( %h, $res );

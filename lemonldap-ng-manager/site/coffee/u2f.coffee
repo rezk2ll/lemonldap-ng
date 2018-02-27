@@ -138,16 +138,16 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 	# SESSION MANAGEMENT
 
-	# Delete
+	# Delete U2F Key
 	$scope.deleteU2FKey = ->
 		$scope.waiting = true
-		$http['put']("#{scriptname}sessions/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
-		#	$scope.currentSession = null
-		#	$scope.currentScope.remove()
+		$http['post']("#{scriptname}sessions/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
+			$scope.currentSession = null
+			$scope.currentScope.remove()
 			$scope.waiting = false
 		, (resp) ->
-		#	$scope.currentSession = null
-		#	$scope.currentScope.remove()
+			$scope.currentSession = null
+			$scope.currentScope.remove()
 			$scope.waiting = false
 
 	# Open node
