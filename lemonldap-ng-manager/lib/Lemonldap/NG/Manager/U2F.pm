@@ -31,19 +31,19 @@ sub addRoutes {
     $self->addRoute( 'u2f.html', undef, ['GET'] )
 
       # READ
-      ->addRoute( sessions => { ':sessionType' => 'sessions' }, ['GET'] )
+      ->addRoute( u2f => { ':sessionType' => 'sessions' }, ['GET'] )
       
-       # DELETEU2FKey
+       # DELETE U2F KEY ATTRIBUTS
       ->addRoute(
-        sessions => { ':sessionType' => { ':sessionId' => 'delU2FKey' } },
-        ['POST']
+        u2f => { ':sessionType' => { ':sessionId' => 'delU2FKey' } },
+        ['DELETE']
       );
 
-      # DELETE
-      #~ ->addRoute(
-        #~ sessions => { ':sessionType' => { ':sessionId' => 'delSession' } },
-        #~ ['DELETE']
-      #);
+      # UPDATE U2F KEY ATTRIBUTS
+    # ->addRoute(
+      # u2f => { ':sessionType' => { ':sessionId' => { ':updateSession' } },
+      # ['PUT']
+     #);
 
     $self->setTypes($conf);
 
@@ -56,7 +56,7 @@ sub addRoutes {
 # II. DISPLAY METHODS #
 #######################
 
-sub sessions {
+sub u2f {
     my ( $self, $req, $session, $skey ) = @_;
 
     # Case 1: only one session is required

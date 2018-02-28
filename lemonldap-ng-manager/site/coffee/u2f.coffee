@@ -1,5 +1,5 @@
 ###
-# U2F manager
+# Session explorer
 ###
 
 # Max number of session to display (see overScheme)
@@ -119,7 +119,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.translate = $translator.translate
 	$scope.translateTitle = (node) ->
 		$translator.translateField node, 'title'
-	sessionType = 'Persistent'
+	sessionType = 'global'
 
 	# Handle menu items
 	$scope.menuClick = (button) ->
@@ -138,10 +138,10 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 	# SESSION MANAGEMENT
 
-	# Delete U2F Key
+	# Delete
 	$scope.deleteU2FKey = ->
 		$scope.waiting = true
-		$http['post']("#{scriptname}sessions/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
+		$http['delete']("#{scriptname}u2f/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
 			$scope.currentSession = null
 			$scope.currentScope.remove()
 			$scope.waiting = false

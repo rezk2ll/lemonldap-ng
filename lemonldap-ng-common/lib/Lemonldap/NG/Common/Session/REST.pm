@@ -33,6 +33,8 @@ sub hAttr {
     $_[0]->{hiddenAttributes} || $_[0]->conf->{hiddenAttributes};
 }
 
+### SEE LEMONLDAP::NG::COMMON::SESSION FOR AVAILABLE FUNCTIONS
+
 sub delSession {
     my ( $self, $req ) = @_;
     return $self->sendJSONresponse( $req, { result => 1 } )
@@ -61,20 +63,17 @@ sub delU2FKey {
 
         
     # Try to read session
-    my $apacheSession = $self->getApacheSession( $mod, $id )
+    my $session = $self->getApacheSession( $mod, $id )
       or return $self->sendError( $req, undef, 400 );
-
-    my %session = %{ $apacheSession->data };        
-    $session{_session_uid} = 'TOTO';
-
-    $apacheSession->update(\%session);
-    
-    #return $self->sendError( $req, $session->data->{_session_uid}, 666 );
-    
-    
+      
+    # Delete U2F key attributs and update session
+    $session->data->{_u2fKeyHandle}   = 'TOF';
+    $session->data->{_u2fUserKey}     = 'TOF';      
+    $session->update( \%{$session->data} );
+        
     Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
-    if ( $apacheSession->error ) {
-        return $self->sendError( $req, $apacheSession->error, 200 );
+    if ( $session->error ) {
+        return $self->sendError( $req, $session->error, 200 );
     }
     return $self->sendJSONresponse( $req, { result => 1 } );
 }

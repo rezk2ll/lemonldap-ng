@@ -1,6 +1,6 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-  <title>LemonLDAP::NG U2F manager</title>
+  <title>LemonLDAP::NG sessions explorer</title>
 </head>
 
 <body ng-app="llngSessionsExplorer" ng-controller="SessionsExplorerCtrl" ng-csp>
@@ -15,7 +15,6 @@
       <div class="navbar navbar-default">
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" role="grid">
-			<!--  
             <li uib-dropdown>
               <a id="navsso" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-user"></i> {{translate('ssoSessions')}} <span class="caret"></span></a>
               <ul uib-dropdown-menu aria-labelled-by="navsso">
@@ -26,7 +25,6 @@
                 <li><a id="a-updatetime" href="#/_updateTime" role="row"><i class="glyphicon glyphicon-hourglass"></i> {{translate('_updateTime')}}</a></li>
               </ul>
             </li>
-            -->
             <li><a id="a-persistent" href="#/persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('persistentSessions')}}</a></li>
           </ul>
         </div>

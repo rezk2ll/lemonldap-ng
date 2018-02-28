@@ -90,7 +90,7 @@ sub init {
     $self->defaultRoute( $working[0]->defaultRoute );
 
     my $linksIcons =
-      { 'conf' => 'cog', 'sessions' => 'duplicate', 'notifications' => 'bell' };
+      { 'conf' => 'cog', 'sessions' => 'duplicate', 'notifications' => 'bell', 'U2F' => 'wrench' };
 
     $self->links( [] );
     for ( my $i = 0 ; $i < @links ; $i++ ) {
