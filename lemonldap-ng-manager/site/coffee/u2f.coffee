@@ -138,18 +138,19 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 	# SESSION MANAGEMENT
 
-	# Delete
+	# Delete U2F key attributs
 	$scope.deleteU2FKey = ->
 		$scope.waiting = true
 		$http['delete']("#{scriptname}u2f/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
 			$scope.currentSession = null
-			$scope.currentScope.remove()
+			#$scope.currentScope.remove()
 			$scope.waiting = false
 		, (resp) ->
 			$scope.currentSession = null
-			$scope.currentScope.remove()
+			#$scope.currentScope.remove()
 			$scope.waiting = false
-
+		$scope.showT = true
+			
 	# Open node
 	$scope.stoggle = (scope) ->
 		node = scope.$modelValue
@@ -198,7 +199,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							session[key] = _stToStr value
 			res = []
 
-			# 2. Push session keys in reuslt, grouped by categories
+			# 2. Push session keys in result, grouped by categories
 			for category, attrs of categories
 				subres = []
 				for attr in attrs

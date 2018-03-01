@@ -67,8 +67,8 @@ sub delU2FKey {
       or return $self->sendError( $req, undef, 400 );
       
     # Delete U2F key attributs and update session
-    $session->data->{_u2fKeyHandle}   = 'TOF';
-    $session->data->{_u2fUserKey}     = 'TOF';      
+    $session->data->{_u2fKeyHandle}   = '';
+    $session->data->{_u2fUserKey}     = '';      
     $session->update( \%{$session->data} );
         
     Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );

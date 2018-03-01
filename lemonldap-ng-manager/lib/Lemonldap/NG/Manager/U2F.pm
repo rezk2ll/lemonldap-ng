@@ -27,11 +27,14 @@ use constant defaultRoute => 'u2f.html#/persistent';
 sub addRoutes {
     my ( $self, $conf ) = @_;
 
+
+# Remote Procedure Call are defined in Lemonldap::NG::Common::Session::REST
     # HTML template
     $self->addRoute( 'u2f.html', undef, ['GET'] )
 
       # READ
-      ->addRoute( u2f => { ':sessionType' => 'sessions' }, ['GET'] )
+      ->addRoute( u2f => { ':sessionType' => 'sessions' },
+        ['GET'] )
       
        # DELETE U2F KEY ATTRIBUTS
       ->addRoute(

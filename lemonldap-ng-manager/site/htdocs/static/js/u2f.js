@@ -164,15 +164,14 @@
       };
       $scope.deleteU2FKey = function() {
         $scope.waiting = true;
-        return $http['delete'](scriptname + "u2f/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
+        $http['delete'](scriptname + "u2f/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
           $scope.currentSession = null;
-          $scope.currentScope.remove();
           return $scope.waiting = false;
         }, function(resp) {
           $scope.currentSession = null;
-          $scope.currentScope.remove();
           return $scope.waiting = false;
         });
+        return $scope.showT = true;
       };
       $scope.stoggle = function(scope) {
         var node;
