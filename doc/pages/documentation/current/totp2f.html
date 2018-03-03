@@ -50,6 +50,7 @@
 
 <ul class="toc">
 <li class="level1"><div class="li"><a href="#configuration">Configuration</a></div></li>
+<li class="level1"><div class="li"><a href="#enrollment">Enrollment</a></div></li>
 <li class="level1"><div class="li"><a href="#assistance">Assistance</a></div></li>
 <li class="level1"><div class="li"><a href="#developer_corner">Developer corner</a></div></li>
 </ul>
@@ -82,7 +83,7 @@ In the manager (advanced parameters), you just have to enable it:
 </li>
 <li class="level1"><div class="li"> TOTP ⇒ Self registration: set it to “on” <em>(to display this application on the menu, create an application that points to <a href="https://auth.your.domain/totpregister.html" class="urlextern" title="https://auth.your.domain/totpregister.html"  rel="nofollow">https://auth.your.domain/totpregister.html</a>)</em></div>
 </li>
-<li class="level1"><div class="li"> TOTP ⇒ Authentication level: you can overwrite here auth level for TOTP registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em></div>
+<li class="level1"><div class="li"> TOTP ⇒ Authentication level: you can overwrite here auth level for TOTP registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only to users enrolled</strong></div>
 </li>
 <li class="level1"><div class="li"> TOTP ⇒ Issuer: default to portal hostname</div>
 </li>
@@ -96,8 +97,17 @@ In the manager (advanced parameters), you just have to enable it:
 <div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule that <code>$_totp2fSecret</code> is set, else TOTP will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
 </div>
 </div>
-<!-- EDIT2 SECTION "Configuration" [634-1701] -->
-<h2 class="sectionedit3" id="assistance">Assistance</h2>
+<!-- EDIT2 SECTION "Configuration" [634-1815] -->
+<h2 class="sectionedit3" id="enrollment">Enrollment</h2>
+<div class="level2">
+
+<p>
+If you&#039;ve enabled self registration, users can get their key using <a href="https://portal/totpregister.html" class="urlextern" title="https://portal/totpregister.html"  rel="nofollow">https://portal/totpregister.html</a>
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Enrollment" [1816-1940] -->
+<h2 class="sectionedit4" id="assistance">Assistance</h2>
 <div class="level2">
 
 <p>
@@ -105,14 +115,14 @@ If a user lost its key, you may remove it&#039;s persistent session using the se
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Assistance" [1702-1817] -->
-<h2 class="sectionedit4" id="developer_corner">Developer corner</h2>
+<!-- EDIT4 SECTION "Assistance" [1941-2056] -->
+<h2 class="sectionedit5" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
 <p>
 If you have another TOTP registration interface, you have to populate session (using exported variables) to set these keys:
 </p>
-<div class="table sectionedit5"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit6"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0"> Name </th><th class="col1"> Value </th>
@@ -125,8 +135,8 @@ If you have another TOTP registration interface, you have to populate session (u
 		<td class="col0"> _u2fUserKey </td><td class="col1"> user key value, base64 encoded </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [1973-2091] -->
+<!-- EDIT6 TABLE [2212-2330] -->
 </div>
-<!-- EDIT4 SECTION "Developer corner" [1818-] --></div>
+<!-- EDIT5 SECTION "Developer corner" [2057-] --></div>
 </body>
 </html>
