@@ -678,6 +678,16 @@ sub tree {
                                 'ext2FValidateCommand', 'ext2fAuthnLevel',
                             ]
                         },
+                        {
+                            title => 'rest2f',
+                            help  => 'rest2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'rest2fActivation', 'rest2fInitUrl',
+                                'rest2fInitArgs',   'rest2fVerifyUrl',
+                                'rest2fVerifyArgs', 'rest2fAuthnLevel',
+                            ]
+                        },
                     ]
                 },
                 {

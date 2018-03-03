@@ -1086,6 +1086,42 @@ sub attributes {
 'Authentication level for users authentified by External second factor'
         },
 
+        #  REST External second factor
+        rest2fActivation => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'REST second factor activation',
+        },
+        rest2fInitUrl => {
+            type          => 'url',
+            documentation => 'REST 2F init URL',
+        },
+        rest2fInitArgs => {
+            type          => 'keyTextContainer',
+            keyTest       => qr/^\w+$/,
+            keyMsgFail    => '__badKeyName__',
+            test          => qr/^\w+$/,
+            msgFail       => '__badValue__',
+            documentation => 'Args for REST 2F init',
+        },
+        rest2fVerifyUrl => {
+            type          => 'url',
+            keyTest       => qr/^\w+$/,
+            keyMsgFail    => '__badKeyName__',
+            test          => qr/^\w+$/,
+            msgFail       => '__badValue__',
+            documentation => 'REST 2F init URL',
+        },
+        rest2fVerifyArgs => {
+            type          => 'keyTextContainer',
+            documentation => 'Args for REST 2F init',
+        },
+        rest2fAuthnLevel => {
+            type => 'int',
+            documentation =>
+'Authentication level for users authentified by REST second factor'
+        },
+
         # Single session
         notifyDeleted => {
             default       => 1,

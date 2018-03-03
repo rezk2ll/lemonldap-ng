@@ -11,6 +11,7 @@ lib/Lemonldap/NG/Portal.pm
 lib/Lemonldap/NG/Portal/2F/External2F.pm
 lib/Lemonldap/NG/Portal/2F/Register/TOTP.pm
 lib/Lemonldap/NG/Portal/2F/Register/U2F.pm
+lib/Lemonldap/NG/Portal/2F/REST.pm
 lib/Lemonldap/NG/Portal/2F/TOTP.pm
 lib/Lemonldap/NG/Portal/2F/U2F.pm
 lib/Lemonldap/NG/Portal/Auth.pod
@@ -410,6 +411,7 @@ t/62-SingleSession.t
 t/63-History.t
 t/64-StayConnected.t
 t/65-AutoSignin.t
+t/70-2F-TOTP.t
 t/90-Translations.t
 t/99-pod.t
 t/lmConf-1.json
