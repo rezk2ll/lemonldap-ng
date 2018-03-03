@@ -61,16 +61,15 @@ sub delU2FKey {
     my $id = $req->params('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
 
-        
     # Try to read session
     my $session = $self->getApacheSession( $mod, $id )
       or return $self->sendError( $req, undef, 400 );
-      
+
     # Delete U2F key attributs and update session
-    $session->data->{_u2fKeyHandle}   = '';
-    $session->data->{_u2fUserKey}     = '';      
-    $session->update( \%{$session->data} );
-        
+    $session->data->{_u2fKeyHandle} = '';
+    $session->data->{_u2fUserKey}   = '';
+    $session->update( \%{ $session->data } );
+
     Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
     if ( $session->error ) {
         return $self->sendError( $req, $session->error, 200 );

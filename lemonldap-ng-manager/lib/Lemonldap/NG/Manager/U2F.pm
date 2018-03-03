@@ -27,26 +27,27 @@ use constant defaultRoute => 'u2f.html#/persistent';
 sub addRoutes {
     my ( $self, $conf ) = @_;
 
-
-# Remote Procedure Call are defined in Lemonldap::NG::Common::Session::REST
+    # Remote Procedure Call are defined in Lemonldap::NG::Common::Session::REST
     # HTML template
     $self->addRoute( 'u2f.html', undef, ['GET'] )
 
       # READ
-      ->addRoute( u2f => { ':sessionType' => 'sessions' },
-        ['GET'] )
-      
-       # DELETE U2F KEY ATTRIBUTS
+      ->addRoute(
+        u2f => { ':sessionType' => 'sessions' },
+        ['GET']
+      )
+
+      # DELETE U2F KEY ATTRIBUTS
       ->addRoute(
         u2f => { ':sessionType' => { ':sessionId' => 'delU2FKey' } },
         ['DELETE']
       );
 
-      # UPDATE U2F KEY ATTRIBUTS
+    # UPDATE U2F KEY ATTRIBUTS
     # ->addRoute(
-      # u2f => { ':sessionType' => { ':sessionId' => { ':updateSession' } },
-      # ['PUT']
-     #);
+    # u2f => { ':sessionType' => { ':sessionId' => { ':updateSession' } },
+    # ['PUT']
+    #);
 
     $self->setTypes($conf);
 

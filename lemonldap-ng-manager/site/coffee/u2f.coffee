@@ -150,7 +150,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			#$scope.currentScope.remove()
 			$scope.waiting = false
 		$scope.showT = true
-			
+
 	# Open node
 	$scope.stoggle = (scope) ->
 		node = scope.$modelValue
