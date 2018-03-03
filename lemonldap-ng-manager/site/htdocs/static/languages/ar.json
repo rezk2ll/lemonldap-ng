@@ -201,6 +201,7 @@
 "deleteEntry":"حذف",
 "deleteNotification":"حذف",
 "deleteSession":"حذف الجلسة",
+"deleteU2FKey":"Delete U2F key",
 "demoExportedVars":"المتغيرات المصدرة",
 "demoParams":"إثبات المعايير",
 "description":"التفاصيل",

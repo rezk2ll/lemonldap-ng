@@ -201,6 +201,7 @@
 "deleteEntry":"Delete",
 "deleteNotification":"Delete",
 "deleteSession":"Delete session",
+"deleteU2FKey":"Delete U2F key",
 "demoExportedVars":"Exported variables",
 "demoParams":"Demonstration parameters",
 "description":"Description",

@@ -318,7 +318,7 @@ Examples:
 
   $self->addRoute( books => { ':bookId' => 'book' }, ['GET'] );
 
-booId parameter will be stored in $req->params('bookId');
+bookId parameter will be stored in $req->params('bookId');
 
 =item to manage http://.../books/127/pages/5 with page(), use:
 
