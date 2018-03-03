@@ -40,8 +40,10 @@
       <!-- Menu buttons -->
       <div class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
         <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
-          <ul class="nav navbar-nav">
-            <li ng-if="currentSession" ng-repeat="button in menu.session" ng-include="'menubutton.html'"></li>
+          <ul class="nav navbar-nav">            
+            <li ng-if="currentSession" ng-repeat="button in menu.addU2FKey" ng-include="'menubutton.html'"></li>
+            <li ng-if="currentSession" ng-repeat="button in menu.verifyU2FKey" ng-include="'menubutton.html'"></li>
+            <li ng-if="currentSession" ng-repeat="button in menu.delU2FKey" ng-include="'menubutton.html'"></li>
             <li ng-if="currentSession===null" ng-repeat="button in menu.home" ng-include="'menubutton.html'"></li>
             <li uib-dropdown class="visible-xs">
               <a id="langmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>

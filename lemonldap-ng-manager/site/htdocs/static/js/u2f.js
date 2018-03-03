@@ -104,10 +104,22 @@
   };
 
   menu = {
-    session: [
+    delU2FKey: [
       {
         title: 'deleteU2FKey',
         icon: 'trash'
+      }
+    ],
+    addU2FKey: [
+      {
+        title: 'addU2FKey',
+        icon: 'plus'
+      }
+    ],
+    verifyU2FKey: [
+      {
+        title: 'verifyU2FKey',
+        icon: 'check'
       }
     ],
     home: []
@@ -173,6 +185,28 @@
         });
         return $scope.showT = true;
       };
+      $scope.addU2FKey = function() {
+        $scope.waiting = true;
+        $http['put'](scriptname + "u2f/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
+          $scope.currentSession = null;
+          return $scope.waiting = false;
+        }, function(resp) {
+          $scope.currentSession = null;
+          return $scope.waiting = false;
+        });
+        return $scope.showT = true;
+      };
+      $scope.verifyU2FKey = function() {
+        $scope.waiting = true;
+        $http['post'](scriptname + "u2f/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
+          $scope.currentSession = null;
+          return $scope.waiting = false;
+        }, function(resp) {
+          $scope.currentSession = null;
+          return $scope.waiting = false;
+        });
+        return $scope.showT = true;
+      };
       $scope.stoggle = function(scope) {
         var node;
         node = scope.$modelValue;
@@ -226,8 +260,6 @@
                   session[key] = $scope.localeDate(value);
                 } else if (key.match(/^(_startTime|_updateTime)$/)) {
                   session[key] = _stToStr(value);
-                } else if (key.match(/^(_u2fKeyHandle|_u2fUserKey)$/)) {
-                  session[key] = '########';
                 }
               }
             }

@@ -37,17 +37,23 @@ sub addRoutes {
         ['GET']
       )
 
-      # DELETE U2F KEY ATTRIBUTS
+      # DELETE U2F KEY
       ->addRoute(
-        u2f => { ':sessionType' => { ':sessionId' => 'delU2FKey' } },
+        u2f => { ':sessionType' => { ':sessionId' => 'deleteU2FKey' } },
         ['DELETE']
-      );
+      )
 
-    # UPDATE U2F KEY ATTRIBUTS
-    # ->addRoute(
-    # u2f => { ':sessionType' => { ':sessionId' => { ':updateSession' } },
-    # ['PUT']
-    #);
+      # ADD U2F KEY
+      ->addRoute(
+        u2f => { ':sessionType' => { ':sessionId' => 'addU2FKey' } },
+        ['PUT']
+      )
+    
+      # VERIFY U2F KEY
+      ->addRoute(
+        u2f => { ':sessionType' => { ':sessionId' => 'verifyU2FKey' } },
+        ['POST']
+      );
 
     $self->setTypes($conf);
 
