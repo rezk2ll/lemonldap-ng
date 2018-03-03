@@ -197,6 +197,8 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							session[key] = $scope.localeDate value
 						else if key.match /^(_startTime|_updateTime)$/
 							session[key] = _stToStr value
+						else if key.match /^(_u2fKeyHandle|_u2fUserKey)$/
+							session[key] = '########'
 			res = []
 
 			# 2. Push session keys in result, grouped by categories

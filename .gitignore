@@ -1,5 +1,5 @@
 node_modules
-e2e-tests/conf/
+e2e-tests/
 lemonldap-ng-common/MYMETA.json
 lemonldap-ng-common/MYMETA.yml
 lemonldap-ng-common/Makefile
@@ -22,4 +22,3 @@ lemonldap-ng-portal/blib/
 lemonldap-ng-portal/t/
 .gitignore
 lemonldap-ng-portal/pm_to_blib
-e2e-tests/lemonldap-ng.ini
