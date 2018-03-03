@@ -22,7 +22,7 @@ our $specialNodeHash = {
 };
 
 our $doubleHashKeys = 'issuerDBGetParameters';
-our $simpleHashKeys = '(?:(?:l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar|wp(?:Ssl)?Opt)|c(?:as(?:StorageOption|Attribute)|ustomAddParam|ombModule)|(?:(?:d(?:emo|bi)|facebook|webID)E|e)xportedVar|g(?:r(?:antSessionRule|oup)|lobalStorageOption)|n(?:otificationStorageOption|ginxCustomHandler)|p(?:ersistentStorageOption|ortalSkinRule)|re(?:moteGlobalStorageOption|loadUrl)|macro)s|o(?:idcS(?:erviceMetaDataAuthnContext|torageOptions)|penIdExportedVars)|s(?:(?:amlStorageOption|laveExportedVar)s|essionDataToRemember)|a(?:ut(?:hChoiceMod|oSigninR)ules|pplicationList)|S(?:MTPTLSOpts|SLVarIf))';
+our $simpleHashKeys = '(?:(?:l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar|wp(?:Ssl)?Opt)|re(?:moteGlobalStorageOption|st2f(?:Verify|Init)Arg|loadUrl)|c(?:as(?:StorageOption|Attribute)|ustomAddParam|ombModule)|(?:(?:d(?:emo|bi)|facebook|webID)E|e)xportedVar|g(?:r(?:antSessionRule|oup)|lobalStorageOption)|n(?:otificationStorageOption|ginxCustomHandler)|p(?:ersistentStorageOption|ortalSkinRule)|macro)s|o(?:idcS(?:erviceMetaDataAuthnContext|torageOptions)|penIdExportedVars)|s(?:(?:amlStorageOption|laveExportedVar)s|essionDataToRemember)|a(?:ut(?:hChoiceMod|oSigninR)ules|pplicationList)|S(?:MTPTLSOpts|SLVarIf))';
 our $specialNodeKeys = '(?:(?:(?:saml(?:ID|S)|oidc[OR])P|cas(?:App|Srv))MetaDataNode|virtualHost)s';
 our $casAppMetaDataNodeKeys = 'casAppMetaData(?:Options(?:Servic|Rul)e|ExportedVars)';
 our $casSrvMetaDataNodeKeys = 'casSrvMetaData(?:Options(?:ProxiedServices|DisplayName|Gateway|Renew|Icon|Url)|ExportedVars)';

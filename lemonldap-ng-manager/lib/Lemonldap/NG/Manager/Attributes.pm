@@ -2355,6 +2355,33 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 1,
             'type'    => 'bool'
         },
+        'rest2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'rest2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'rest2fInitArgs' => {
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^\w+$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^\w+$/,
+            'type'       => 'keyTextContainer'
+        },
+        'rest2fInitUrl' => {
+            'type' => 'url'
+        },
+        'rest2fVerifyArgs' => {
+            'type' => 'keyTextContainer'
+        },
+        'rest2fVerifyUrl' => {
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^\w+$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^\w+$/,
+            'type'       => 'url'
+        },
         'restAuthUrl' => {
             'type' => 'url'
         },
