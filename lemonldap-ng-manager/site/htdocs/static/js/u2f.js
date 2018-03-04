@@ -349,7 +349,7 @@
         };
         $scope.currentScope = scope;
         sessionId = scope.$modelValue.session;
-        $http.get(scriptname + "sessions/" + sessionType + "/" + sessionId).then(function(response) {
+        $http.get(scriptname + "u2f/" + sessionType + "/" + sessionId).then(function(response) {
           return $scope.currentSession = transformSession(response.data);
         });
         return $scope.showT = false;

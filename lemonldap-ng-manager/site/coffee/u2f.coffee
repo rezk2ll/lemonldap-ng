@@ -297,7 +297,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 		$scope.currentScope = scope
 		sessionId = scope.$modelValue.session
-		$http.get("#{scriptname}sessions/#{sessionType}/#{sessionId}").then (response) ->
+		$http.get("#{scriptname}u2f/#{sessionType}/#{sessionId}").then (response) ->
 			$scope.currentSession = transformSession response.data
 		$scope.showT = false
 
@@ -361,7 +361,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			over = 0
 
 		# Launch HTTP query
-		$http.get("#{scriptname}sessions/#{sessionType}?#{query}").then (response) ->
+		$http.get("#{scriptname}u2f/#{sessionType}?#{query}").then (response) ->
 			data = response.data
 			if data.result
 				for n in data.values
