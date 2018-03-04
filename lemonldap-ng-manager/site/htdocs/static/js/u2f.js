@@ -397,7 +397,7 @@
         } else {
           over = 0;
         }
-        return $http.get(scriptname + "sessions/" + sessionType + "?" + query).then(function(response) {
+        return $http.get(scriptname + "u2f/" + sessionType + "?" + query).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;
           if (data.result) {

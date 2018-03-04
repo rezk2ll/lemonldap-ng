@@ -4,6 +4,8 @@ use 5.10.0;
 use utf8;
 use strict;
 use Mouse;
+use MIME::Base64 qw(encode_base64 decode_base64);
+use Crypt::U2F::Server::Simple;
 
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Conf::Constants;
@@ -33,7 +35,7 @@ sub addRoutes {
 
       # READ
       ->addRoute(
-        u2f => { ':sessionType' => 'sessions' },
+        u2f => { ':sessionType' => 'u2f' },
         ['GET']
       )
 
@@ -71,6 +73,8 @@ sub u2f {
 
     # Case 1: only one session is required
     if ($session) {
+		#return $self->sendError( $req, 'on rentre dans la boucle', 666 );
+
         return $self->session( $req, $session, $skey );
     }
 
@@ -81,6 +85,51 @@ sub u2f {
     $type = $type eq 'global' ? 'SSO' : ucfirst($type);
 
     my $res;
+    
+    
+		
+		
+		#if ( $mod =~ /\b(?:PUT|POST)\b/ ) {
+			#eval 'use Crypt::U2F::Server::Simple';
+			#if ($@) {
+				#$self->error("Can't load U2F library: $@");
+				#return 0;
+			#}
+		#}
+		
+		
+		
+		#if ( $mod =~ /PUT/ ) {
+			 #my $challenge = $self->crypter->registrationChallenge;
+		#}
+		
+		#my $resp;
+        #unless ( $resp = $req->param('registration') ) {
+            #return $self->p->sendError( $req, 'Missing registration parameter',
+                #400 );
+        #}
+        #$self->logger->debug("Get registration data $resp");
+        #my ( $keyHandle, $userKey ) = $self->crypter->registrationVerify($resp);
+        #if ( $keyHandle and $userKey ) {
+            #$self->p->updatePersistentSession(
+                #$req,
+                #{
+                    #_u2fKeyHandle => $self->encode_base64url( $keyHandle, '' ),
+                    #_u2fUserKey   => $self->encode_base64url( $userKey,   '' )
+                #}
+            #);
+		#}
+		
+		
+		
+		
+    
+    
+    
+    
+    
+    
+    
 
     # Case 2: list of sessions
 
