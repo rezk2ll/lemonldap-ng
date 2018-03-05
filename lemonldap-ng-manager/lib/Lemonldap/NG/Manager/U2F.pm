@@ -73,8 +73,12 @@ sub u2f {
 
     # Case 1: only one session is required
     if ($session) {
-		#return $self->sendError( $req, 'on rentre dans la boucle', 666 );
 
+		my $params = $req->parameters();
+		
+		$self->sendError( $req, $self, 666 );
+		$self->sendError( $req, $self, 666 );
+		
         return $self->session( $req, $session, $skey );
     }
 
@@ -89,13 +93,14 @@ sub u2f {
     
 		
 		
-		#if ( $mod =~ /\b(?:PUT|POST)\b/ ) {
-			#eval 'use Crypt::U2F::Server::Simple';
-			#if ($@) {
-				#$self->error("Can't load U2F library: $@");
-				#return 0;
-			#}
+	#if ( $mod =~ /\b(?:PUT|POST)\b/ ) {
+		#$self->sendError( 'On rentre dand la boucle' );
+		#eval 'use Crypt::U2F::Server::Simple';
+		#if ($@) {
+			#$self->error("Can't load U2F library: $@");
+			#return 0;
 		#}
+	#}
 		
 		
 		
