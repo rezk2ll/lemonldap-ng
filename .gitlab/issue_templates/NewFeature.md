@@ -1,6 +1,6 @@
 ### Summary
 
-Summarize the bug encountered concisely
+Summarize the new feature encountered concisely
 
 ### Design proposition
 
