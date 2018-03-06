@@ -99,7 +99,8 @@ LemonLDAP::NG U2F registration script
               type: "POST",
               url: portal + "u2fregister/unregistration",
               data: {
-                registration: JSON.stringify(data)
+                registration: JSON.stringify(data),
+                challenge: JSON.stringify(ch)
               },
               dataType: 'json',
               success: function(resp) {
