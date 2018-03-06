@@ -46,6 +46,7 @@ register = ->
 						url: "#{portal}u2fregister/registration"
 						data:
 							registration: JSON.stringify data
+							challenge: JSON.stringify ch
 						dataType: 'json'
 						success: (resp) ->
 							if resp.error
