@@ -50,10 +50,10 @@ sub run {
     my ( $kh, $uk );
 
     # Check if user is registered
-    if ( my $res = $self->loadUser( $req->sessionInfo ) ) {
+    if ( my $res = $self->loadUser( $req, $req->sessionInfo ) ) {
         return PE_ERROR if ( $res == -1 );
 
-        my $challenge = $self->crypter->authenticationChallenge;
+        my $challenge = $req->datas->{crypter}->authenticationChallenge;
         my $tmp       = $self->p->sendHtml(
             $req,
             'u2fcheck',
@@ -75,12 +75,22 @@ sub verify {
     my ( $self, $req, $session ) = @_;
 
     # Check U2F signature
-    if ( my $resp = $req->param('signature') ) {
-        unless ( $self->loadUser($session) == 1 ) {
+    if (    my $resp = $req->param('signature')
+        and my $challenge = $req->param('challenge') )
+    {
+        unless ( $self->loadUser( $req, $session ) == 1 ) {
             $req->error(PE_ERROR);
             return $self->fail($req);
         }
-        if ( $self->crypter->authenticationVerify($resp) ) {
+        $self->logger->debug("Get challenge: $challenge");
+        #eval { $challenge = JSON::from_json($challenge)->{challenge} };
+        if ( not $req->datas->{crypter}->setChallenge($challenge) ) {
+            $self->logger->error(
+                $@ ? $@ : Crypt::U2F::Server::Simple::lastError() );
+            $req->error(PE_ERROR);
+            return $self->fail($req);
+        }
+        if ( $req->datas->{crypter}->authenticationVerify($resp) ) {
             $self->userLogger->info('U2F signature verified');
             return PE_OK;
         }
@@ -95,7 +105,7 @@ sub verify {
         }
     }
     else {
-        $self->userLogger->notice( 'No U2F response for user'
+        $self->userLogger->notice( 'No valid U2F response for user'
               . $session->{ $self->conf->{whatToTrace} } );
         $req->authResult(PE_U2FFAILED);
         return $self->fail($req);
@@ -120,16 +130,16 @@ sub fail {
 }
 
 sub loadUser {
-    my ( $self, $session ) = @_;
+    my ( $self, $req, $session ) = @_;
     my ( $kh, $uk );
     if (    ( $kh = $session->{_u2fKeyHandle} )
         and ( $uk = $session->{_u2fUserKey} ) )
     {
-        $self->crypter->{keyHandle} = $self->decode_base64url($kh);
-        $self->crypter->{publicKey} = $self->decode_base64url($uk);
-        unless ($self->crypter->setKeyHandle
-            and $self->crypter->setPublicKey )
-        {
+        $req->datas->{crypter} = $self->crypter(
+            keyHandle => $self->decode_base64url($kh),
+            publicKey => $self->decode_base64url($uk)
+        );
+        unless ( $req->datas->{crypter} ) {
             $self->logger->error(
                 'U2F error: ' . Crypt::U2F::Server::u2fclib_getError() );
             return -1;

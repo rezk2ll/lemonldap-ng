@@ -8,8 +8,6 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-has crypter => ( is => 'rw' );
-
 has origin => ( is => 'rw', );
 
 sub init {
@@ -22,12 +20,12 @@ sub init {
     my $p = $_[0]->{conf}->{portal};
     $p =~ s#^(https?://[^/]+).*$#$1#;
     $self->origin($p);
+
+    # Test if a new object can be created
     unless (
-        $self->crypter(
-            Crypt::U2F::Server::Simple->new(
-                appId  => $self->origin,
-                origin => $self->origin,
-            )
+        Crypt::U2F::Server::Simple->new(
+            appId  => $self->origin,
+            origin => $self->origin,
         )
       )
     {
@@ -35,6 +33,15 @@ sub init {
         return 0;
     }
     return 1;
+}
+
+sub crypter {
+    my ( $self, %args ) = @_;
+    return Crypt::U2F::Server::Simple->new(
+        appId  => $self->origin,
+        origin => $self->origin,
+        %args,
+    );
 }
 
 sub encode_base64url {

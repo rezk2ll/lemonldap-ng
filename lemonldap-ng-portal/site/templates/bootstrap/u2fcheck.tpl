@@ -14,6 +14,7 @@
   <div class="message message-positive alert"><span trspan="touchU2fDevice"></span></div>
   <form id="verify-form" action="/u2fcheck" method="post">
     <input type="hidden" id="verify-data" name="signature" value="">
+    <input type="hidden" id="verify-challenge" name="challenge" value="">
     <input type="hidden" id="token" name="token" value="<TMPL_VAR NAME="TOKEN">">
   </form>
   <script type="application/init">
