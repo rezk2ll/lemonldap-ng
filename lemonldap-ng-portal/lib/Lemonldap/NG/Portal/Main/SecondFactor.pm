@@ -151,8 +151,8 @@ L<Lemonldap::NG::Portal> second factor plugins.
       # $token must be inserted in a hidden input in your form with the name
       # "token"
       ...
-      # A LLNG constant must be returned. Example
-      $req->response($my_html_form_page)
+      # A LLNG constant must be returned. Example:
+      $req->response($my_psgi_response)
       return PE_SENDRESPONSE;
   }
   sub verify {
