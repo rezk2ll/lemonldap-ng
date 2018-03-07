@@ -11,7 +11,7 @@ use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
-use Lemonldap::NG::Common::IPv6;
+#use Lemonldap::NG::Common::IPv6;
 
 use feature 'state';
 
@@ -47,7 +47,7 @@ sub addRoutes {
 
       # ADD U2F KEY
       ->addRoute(
-        u2f => { ':sessionType' => { ':sessionId' => 'addU2FKey' } },
+        u2f => { ':sessionType' => { ':sessionId' => 'registerU2FKey' } },
         ['PUT']
       )
     
@@ -64,21 +64,34 @@ sub addRoutes {
     $self->{hiddenAttributes} //= "_password";
 }
 
-#######################
-# II. DISPLAY METHODS #
-#######################
+
+############################
+# II. REGISTRATION METHODS #
+############################
+
+sub registerU2FKey {
+
+	my ( $self, $req, $session, $skey ) = @_;
+
+	eval 'use Crypt::U2F::Server::Simple';
+	if ($@) {
+		$self->error("Can't load U2F library: $@");
+		return 0;
+	}
+		
+	return $self->addU2FKey( $req, $session, $skey );
+}
+
+
+########################
+# III. DISPLAY METHODS #
+########################
 
 sub u2f {
     my ( $self, $req, $session, $skey ) = @_;
 
     # Case 1: only one session is required
     if ($session) {
-
-		my $params = $req->parameters();
-		
-		$self->sendError( $req, $self, 666 );
-		$self->sendError( $req, $self, 666 );
-		
         return $self->session( $req, $session, $skey );
     }
 
@@ -86,72 +99,20 @@ sub u2f {
       or return $self->sendError( $req, undef, 400 );
     my $params = $req->parameters();
     my $type   = delete $params->{sessionType};
-    $type = $type eq 'global' ? 'SSO' : ucfirst($type);
+    $type = ucfirst($type);
 
     my $res;
     
-    
-		
-		
-	#if ( $mod =~ /\b(?:PUT|POST)\b/ ) {
-		#$self->sendError( 'On rentre dand la boucle' );
-		#eval 'use Crypt::U2F::Server::Simple';
-		#if ($@) {
-			#$self->error("Can't load U2F library: $@");
-			#return 0;
-		#}
-	#}
-		
-		
-		
-		#if ( $mod =~ /PUT/ ) {
-			 #my $challenge = $self->crypter->registrationChallenge;
-		#}
-		
-		#my $resp;
-        #unless ( $resp = $req->param('registration') ) {
-            #return $self->p->sendError( $req, 'Missing registration parameter',
-                #400 );
-        #}
-        #$self->logger->debug("Get registration data $resp");
-        #my ( $keyHandle, $userKey ) = $self->crypter->registrationVerify($resp);
-        #if ( $keyHandle and $userKey ) {
-            #$self->p->updatePersistentSession(
-                #$req,
-                #{
-                    #_u2fKeyHandle => $self->encode_base64url( $keyHandle, '' ),
-                    #_u2fUserKey   => $self->encode_base64url( $userKey,   '' )
-                #}
-            #);
-		#}
-		
-		
-		
-		
-    
-    
-    
-    
-    
-    
-    
-
     # Case 2: list of sessions
 
     my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
 
     # 2.1 Get fields to require
-    my @fields = ( '_httpSessionType', $self->{ipField}, $whatToTrace );
+    my @fields = ( '_httpSessionType', $self->{ipField}, $whatToTrace, '_u2fKeyHandle' );
     if ( my $groupBy = $params->{groupBy} ) {
-        $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/
-          or $groupBy =~ s/^net(?:4|6|)\(([\w:]+),\d+(?:,\d+)?\)$/$1/;
+        $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/;
         $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
           or push @fields, $groupBy;
-    }
-    elsif ( my $order = $params->{orderBy} ) {
-        $order =~ s/^net(?:4|6|)\(([\w:]+)\)$/$1/;
-        $order =~ s/^_whatToTrace$/$whatToTrace/o
-          or push @fields, split( /, /, $order );
     }
     else {
         push @fields, '_utime';
@@ -169,10 +130,12 @@ sub u2f {
           : ( $s => $params->{$_} );
     } keys %$params;
     $filters{_session_kind} = $type;
+   # $filters{_u2fKeyHandle} = '';
     push @fields, keys(%filters);
     {
         my %seen;
         @fields = grep { !$seen{$_}++ } @fields;
+      #  @fields = grep { !/\w+/ } @fields;
     }
 
     # For now, only one argument can be passed to
@@ -232,62 +195,15 @@ sub u2f {
         }
     }
 
+	# Display sessions with U2F key registered only
+	foreach my $session ( keys %$res ) {
+		delete $res->{$session}
+		  unless ( defined $res->{$session}->{_u2fKeyHandle} and length $res->{$session}->{_u2fKeyHandle} )
+		}
+		
     my $total = ( keys %$res );
 
-    # 2.4 Special case doubleIp (users connected from more than 1 IP)
-    if ( defined $params->{doubleIp} ) {
-        my %r;
-
-        # 2.4.1 Store user IP addresses in %r
-        foreach my $id ( keys %$res ) {
-            my $entry = $res->{$id};
-            next if ( $entry->{_httpSessionType} );
-            $r{ $entry->{$whatToTrace} }->{ $entry->{ $self->{ipField} } }++;
-        }
-
-   # 2.4.2 Store sessions owned by users that has more than one IP address in $r
-        my $r;
-        $total = 0;
-        foreach my $k ( keys %$res ) {
-            my @tmp = keys %{ $r{ $res->{$k}->{$whatToTrace} } };
-            if ( @tmp > 1 ) {
-                $total += 1;
-                $res->{$k}->{_sessionId} = $k;
-                push @{ $r->{ $res->{$k}->{$whatToTrace} } }, $res->{$k};
-            }
-        }
-
-        # 2.4.3 Store these session in an array. Array elements are :
-        #       {
-        #           uid      => whatToTraceFieldValue,
-        #           sessions => [
-        #               { session => <session-id-1>, date => <_utime> },
-        #               { session => <session-id-2>, date => <_utime> },
-        #           ]
-        #       }
-        $res = [];
-        foreach my $uid ( sort keys %$r ) {
-            push @$res, {
-                value    => $uid,
-                count    => scalar( @{ $r->{$uid} } ),
-                sessions => [
-                    map {
-                        {
-                            session => $_->{_sessionId},
-                            date    => $_->{_utime}
-                        }
-                    } @{ $r->{$uid} }
-                ]
-            };
-        }
-    }
-
- # 2.4 Order and group by
- # $res will become an array ref here (except for doubleIp, already done below).
-
-    # If "groupBy" is asked, elements will be like:
-    #   { uid => 'foo.bar', count => 3 }
-    elsif ( my $group = $req->params('groupBy') ) {
+    if ( my $group = $req->params('groupBy') ) {
         my $r;
         $group =~ s/\b_whatToTrace\b/$whatToTrace/o;
 
@@ -301,46 +217,6 @@ sub u2f {
                   if ( $res->{$k}->{$field} );
             }
             $group = $field;
-        }
-
-        # Subnets IPv4
-        elsif ( $group =~ /^net4\((\w+),(\d)\)$/ ) {
-            my $field = $1;
-            my $nb    = $2 - 1;
-            foreach my $k ( keys %$res ) {
-                if ( $res->{$k}->{$field} =~ /^((((\d+)\.\d+)\.\d+)\.\d+)$/ ) {
-                    my @d = ( $4, $3, $2, $1 );
-                    $r->{ $d[$nb] }++;
-                }
-            }
-            $group = $field;
-        }
-
-        # Subnets IPv6
-        elsif ( $group =~ /^net6\(([\w:]+),(\d)\)$/ ) {
-            my $field = $1;
-            my $bits  = $2;
-            foreach my $k ( keys %$res ) {
-                $r->{ net6( $res->{$k}->{$field}, $bits ) . "/$bits" }++
-                  if ( isIPv6( $res->{$k}->{$field} ) );
-            }
-        }
-
-        # Both IPv4 and IPv6
-        elsif ( $group =~ /^net\(([\w:]+),(\d+),(\d+)\)$/ ) {
-            my $field = $1;
-            my $bits  = $2;
-            my $nb    = $3 - 1;
-            foreach my $k ( keys %$res ) {
-                if ( isIPv6( $res->{$k}->{$field} ) ) {
-                    $r->{ net6( $res->{$k}->{$field}, $bits ) . "/$bits" }++;
-                }
-                elsif ( $res->{$k}->{$field} =~ /^((((\d+)\.\d+)\.\d+)\.\d+)$/ )
-                {
-                    my @d = ( $4, $3, $2, $1 );
-                    $r->{ $d[$nb] }++;
-                }
-            }
         }
 
         # Simple field groupBy query
@@ -376,47 +252,6 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
         ];
     }
 
-    # Else if "orderBy" is asked, $res elements will be like:
-    #   { uid => 'foo.bar', session => <sessionId> }
-    elsif ( my $f = $req->params('orderBy') ) {
-        my @fields = split /,/, $f;
-        my @r = map {
-            my $tmp = { session => $_ };
-            foreach my $f (@fields) {
-                my $s = $f;
-                $s =~ s/^net(?:4|6|)\(([\w:]+)\)$/$1/;
-                $tmp->{$s} = $res->{$_}->{$s};
-            }
-            $tmp
-        } keys %$res;
-        while ( my $f = pop @fields ) {
-            if ( $f =~ s/^net4\((\w+)\)$/$1/ ) {
-                @r = sort { cmpIPv4( $a->{$f}, $b->{$f} ); } @r;
-            }
-            elsif ( $f =~ s/^net6\(([:\w]+)\)$/$1/ ) {
-                @r = sort { expand6( $a->{$f} ) cmp expand6( $b->{$f} ); } @r;
-            }
-            elsif ( $f =~ s/^net\(([:\w]+)\)$/$1/ ) {
-                @r = sort {
-                    my $ip1 = $a->{$f};
-                    my $ip2 = $b->{$f};
-                    isIPv6($ip1)
-                      ? (
-                          isIPv6($ip2)
-                        ? expand6($ip1) cmp expand6($ip2)
-                        : -1
-                      )
-                      : isIPv6($ip2) ? 1
-                      :                cmpIPv4( $ip1, $ip2 );
-                } @r;
-            }
-            else {
-                @r = sort { $a->{$f} cmp $b->{$f} } @r;
-            }
-        }
-        $res = [@r];
-    }
-
     # Else, $res elements will be like:
     #   { session => <sessionId>, date => <timestamp> }
     else {
@@ -436,19 +271,6 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
             values => $res
         }
     );
-}
-
-sub cmpIPv4 {
-    my @a = split /\./, $_[0];
-    my @b = split /\./, $_[1];
-    my $cmp = 0;
-  F: for ( my $i = 0 ; $i < 4 ; $i++ ) {
-        if ( $a[$i] != $b[$i] ) {
-            $cmp = $a[$i] <=> $b[$i];
-            last F;
-        }
-    }
-    $cmp;
 }
 
 1;
