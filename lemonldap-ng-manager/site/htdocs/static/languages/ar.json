@@ -729,6 +729,7 @@
 "u2fActivation":"تفعيل",
 "u2fAuthnLevel":"U2F  مستوى إثبات الهوية",
 "u2fSelfRegistration":"التسجيل الذاتي",
+"u2fSessions":"U2F sessions explorer",
 "uid":"المعرف",
 "unknownAttrOrMacro":"سمة غير معروفة أو ماكرو",
 "unknownError":"خطأ غير معروف",

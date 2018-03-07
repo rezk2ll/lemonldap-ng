@@ -729,6 +729,7 @@
 "u2fActivation":"Activation",
 "u2fAuthnLevel":"U2F authentication level",
 "u2fSelfRegistration":"Self registration",
+"u2fSessions":"U2F sessions explorer",
 "uid":"Identifier",
 "unknownAttrOrMacro":"Unknown attribute or macro",
 "unknownError":"Unknown error",

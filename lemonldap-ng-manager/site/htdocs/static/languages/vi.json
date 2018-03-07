@@ -729,6 +729,7 @@
 "u2fActivation":"Kích hoạt",
 "u2fAuthnLevel":"Mức xác thực U2F",
 "u2fSelfRegistration":"Tự đăng ký ",
+"u2fSessions":"U2F sessions explorer",
 "uid":"Trình định danh",
 "unknownAttrOrMacro":"Thuộc tính hoặc macro chưa xác định",
 "unknownError":"Lỗi không xác định",
