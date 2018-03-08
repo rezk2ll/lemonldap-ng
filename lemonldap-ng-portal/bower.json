@@ -6,12 +6,12 @@
   "license": "GPL2",
   "private": true,
   "dependencies": {
-    "bootstrap": "x",
+    "bootstrap": "3.x",
     "crypto-js": "x",
     "fingerprintjs2": "x",
     "jquery": "2.x",
     "jquery-ui": "x",
     "jquery.cookie": "x",
-    "qrious": "^4.0.2"
+    "qrious": "x"
   }
 }

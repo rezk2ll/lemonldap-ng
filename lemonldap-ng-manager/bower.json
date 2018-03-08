@@ -12,9 +12,10 @@
     "angular-bootstrap": "x",
     "angular-cookies": "1.5.x",
     "angular-ui-tree": "x",
-    "bootstrap": "x",
+    "bootstrap": "3.x",
     "es5-shim": "x",
     "file-saver.js": "x",
-    "jquery": "x"
+    "jquery": "x",
+    "jquery-ui": "x"
   }
 }
