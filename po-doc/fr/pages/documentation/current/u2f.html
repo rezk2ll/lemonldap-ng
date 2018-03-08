@@ -35,11 +35,11 @@
 //elsif:useexternallibs
   <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 //elsif:jsminified
-  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.min.js"></script>
 //else -->
 
 
-  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.js"></script><!-- //endif -->
 
 </head>
 <body>
@@ -53,6 +53,7 @@
 <li class="level1"><div class="li"><a href="#prerequisites_and_dependencies">Pré-requis et dépendances</a></div></li>
 <li class="level1"><div class="li"><a href="#configuration">Configuration</a></div></li>
 <li class="level1"><div class="li"><a href="#browser_compatibility">Browser compatibility</a></div></li>
+<li class="level1"><div class="li"><a href="#enrollment">Enrollment</a></div></li>
 <li class="level1"><div class="li"><a href="#assistance">Assistance</a></div></li>
 <li class="level1"><div class="li"><a href="#developer_corner">Developer corner</a></div></li>
 </ul>
@@ -104,13 +105,13 @@ In the manager (advanced parameters), you just have to enable it:
 </li>
 <li class="level1"><div class="li">  U2F ⇒ Self registration: set it to “on” <em>(to display this application on the menu, create an application that points to <a href="https://auth.your.domain/u2fregister.html" class="urlextern" title="https://auth.your.domain/u2fregister.html"  rel="nofollow">https://auth.your.domain/u2fregister.html</a>)</em></div>
 </li>
-<li class="level1"><div class="li">  U2F ⇒ Authentication level: you can overwrite here auth level for U2F registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em></div>
+<li class="level1"><div class="li">  U2F ⇒ Authentication level: you can overwrite here auth level for U2F registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only to users enrolled</strong></div>
 </li>
 </ul>
 <div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule: <code>$_u2fKeyHandle and $_u2fUserKey</code>, else U2F will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
 
 </div>
-</div><!-- EDIT3 SECTION "Configuration" [874-1701] -->
+</div><!-- EDIT3 SECTION "Configuration" [874-1815] -->
 
 <h2 class="sectionedit4" id="browser_compatibility">Browser compatibility</h2>
 <div class="level2">
@@ -131,9 +132,19 @@ In the manager (advanced parameters), you just have to enable it:
 </li>
 </ul>
 
-</div><!-- EDIT4 SECTION "Browser compatibility" [1702-2139] -->
+</div><!-- EDIT4 SECTION "Browser compatibility" [1816-2253] -->
 
-<h2 class="sectionedit5" id="assistance">Assistance</h2>
+<h2 class="sectionedit5" id="enrollment">Enrollment</h2>
+<div class="level2">
+
+<p>
+
+If you've enabled self registration, users can register their FIDO key using <a href="https://portal/u2fregister.html" class="urlextern" title="https://portal/u2fregister.html"  rel="nofollow">https://portal/u2fregister.html</a>
+</p>
+
+</div><!-- EDIT5 SECTION "Enrollment" [2254-2387] -->
+
+<h2 class="sectionedit6" id="assistance">Assistance</h2>
 <div class="level2">
 
 <p>
@@ -142,9 +153,9 @@ If a user lost its key, you may remove it's persistent session using the session
 
 </p>
 
-</div><!-- EDIT5 SECTION "Assistance" [2140-2255] -->
+</div><!-- EDIT6 SECTION "Assistance" [2388-2503] -->
 
-<h2 class="sectionedit6" id="developer_corner">Developer corner</h2>
+<h2 class="sectionedit7" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
 <p>
@@ -152,7 +163,7 @@ If a user lost its key, you may remove it's persistent session using the session
 If you have another U2F registration interface, you have to populate session (using exported variables) to set these keys:
 
 </p>
-<div class="table sectionedit7"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit8"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0"> Nom </th><th class="col1">  Value  </th>
@@ -164,7 +175,7 @@ If you have another U2F registration interface, you have to populate session (us
 	<tr class="row2 roweven">
 		<td class="col0">  _u2fUserKey  </td><td class="col1">  user key value, base64 encoded  </td>
 	</tr>
-</table></div><!-- EDIT7 TABLE [2410-2528] -->
+</table></div><!-- EDIT8 TABLE [2658-2776] -->
 
 <p>
 
@@ -172,7 +183,7 @@ Note that both “origin” and “appId” are fixed to portal <abbr title="Uni
 
 </p>
 
-</div><!-- EDIT6 SECTION "Developer corner" [2256-] -->
+</div><!-- EDIT7 SECTION "Developer corner" [2504-] -->
 </div>
 </body>
 </html>

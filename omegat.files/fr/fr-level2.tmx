@@ -15188,6 +15188,14 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>References</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Références</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>This concerns all parameters for the Organization metadata section:</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
