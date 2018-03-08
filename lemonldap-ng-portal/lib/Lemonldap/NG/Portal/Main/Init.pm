@@ -217,6 +217,11 @@ sub reloadConf {
           unless ( $self->{"_$type"} = $self->loadPlugin($module) );
     }
 
+    # Load second-factor engine
+    $self->conf->{'sfEngine'} ||= '::2F::Engines::Default';
+    return $self->fail
+      unless $self->{sfEngine} = $self->loadPlugin( $self->conf->{'sfEngine'} );
+
     # Initialize trusted domain regexp
     if (    $self->conf->{trustedDomains}
         and $self->conf->{trustedDomains} =~ /^\s*\*\s*$/ )

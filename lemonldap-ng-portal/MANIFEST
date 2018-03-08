@@ -8,6 +8,7 @@ example/soapconfigtest.pl
 example/soaperrortest.pl
 example/soaptest.pl
 lib/Lemonldap/NG/Portal.pm
+lib/Lemonldap/NG/Portal/2F/Engines/Default.pm
 lib/Lemonldap/NG/Portal/2F/External2F.pm
 lib/Lemonldap/NG/Portal/2F/Register/TOTP.pm
 lib/Lemonldap/NG/Portal/2F/Register/U2F.pm

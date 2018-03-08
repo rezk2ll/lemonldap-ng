@@ -1981,6 +1981,13 @@ sub attributes {
             documentation => 'Password module',
         },
 
+        # Seconf Factor Engine
+        sfEngine => {
+            type    => 'text',
+            default => '::2F::Engine::Default',
+            documentation => 'Second factor engine',
+        },
+
         # DEMO
         demoExportedVars => {
             type          => 'keyTextContainer',
