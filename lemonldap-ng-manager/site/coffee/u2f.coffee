@@ -87,9 +87,17 @@ categories =
 
 # Menu entries
 menu =
-	session: [
+	delU2FKey: [
 		title: 'deleteU2FKey'
 		icon:  'trash'
+	]
+	addU2FKey: [
+		title: 'addU2FKey'
+		icon:  'plus'
+	]
+	verifyU2FKey: [
+		title: 'verifyU2FKey'
+		icon:  'check'
 	]
 	home: []
 
@@ -138,10 +146,36 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 	# SESSION MANAGEMENT
 
-	# Delete U2F key attributs
+	# Delete U2F key
 	$scope.deleteU2FKey = ->
 		$scope.waiting = true
 		$http['delete']("#{scriptname}u2f/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
+			$scope.currentSession = null
+			#$scope.currentScope.remove()
+			$scope.waiting = false
+		, (resp) ->
+			$scope.currentSession = null
+			#$scope.currentScope.remove()
+			$scope.waiting = false
+		$scope.showT = true
+
+	# Add U2F key
+	$scope.addU2FKey = ->
+		$scope.waiting = true
+		$http['put']("#{scriptname}u2f/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
+			$scope.currentSession = null
+			#$scope.currentScope.remove()
+			$scope.waiting = false
+		, (resp) ->
+			$scope.currentSession = null
+			#$scope.currentScope.remove()
+			$scope.waiting = false
+		$scope.showT = true
+
+	# Verify U2F key
+	$scope.verifyU2FKey = ->
+		$scope.waiting = true
+		$http['post']("#{scriptname}u2f/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
 			$scope.currentSession = null
 			#$scope.currentScope.remove()
 			$scope.waiting = false
@@ -197,6 +231,8 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							session[key] = $scope.localeDate value
 						else if key.match /^(_startTime|_updateTime)$/
 							session[key] = _stToStr value
+						else if key.match /^(_u2fKeyHandle|_u2fUserKey)$/
+							session[key] = '########'
 			res = []
 
 			# 2. Push session keys in result, grouped by categories
@@ -261,7 +297,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 		$scope.currentScope = scope
 		sessionId = scope.$modelValue.session
-		$http.get("#{scriptname}sessions/#{sessionType}/#{sessionId}").then (response) ->
+		$http.get("#{scriptname}u2f/#{sessionType}/#{sessionId}").then (response) ->
 			$scope.currentSession = transformSession response.data
 		$scope.showT = false
 
@@ -325,7 +361,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			over = 0
 
 		# Launch HTTP query
-		$http.get("#{scriptname}sessions/#{sessionType}?#{query}").then (response) ->
+		$http.get("#{scriptname}u2f/#{sessionType}?#{query}").then (response) ->
 			data = response.data
 			if data.result
 				for n in data.values

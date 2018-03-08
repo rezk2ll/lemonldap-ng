@@ -116,7 +116,7 @@ sub run {
         elsif ( $err == 0 ) {
             return $self->p->sendError( $req, "noU2FKeyFound" );
         }
-        my $challenge = $req->data->{crypter}->authenticationChallenge;
+        my $challenge = $req->datas->{crypter}->authenticationChallenge;
         return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
     }
     if ( $action eq 'signature' ) {
@@ -133,7 +133,7 @@ sub run {
             return $self->p->sendError( $req, "noU2FKeyFound" );
         }
         my $res =
-          ( $req->data->{crypter}->authenticationVerify($resp) ? 1 : 0 );
+          ( $req->datas->{crypter}->authenticationVerify($resp) ? 1 : 0 );
         return [
             200, [ 'Content-Type' => 'application/json' ],
             [qq'{"result":$res}']
@@ -150,11 +150,11 @@ sub loadUser {
     unless ( $kh and $uk ) {
         return 0;
     }
-    $req->data->{crypter} = $self->crypter(
+    $req->datas->{crypter} = $self->crypter(
         keyHandle => $self->decode_base64url($kh),
         publicKey => $self->decode_base64url($uk)
     );
-    unless ( $req->data->{crypter} ) {
+    unless ( $req->datas->{crypter} ) {
         my $error = Crypt::U2F::Server::Simple::lastError();
         return ( -1, $error );
     }

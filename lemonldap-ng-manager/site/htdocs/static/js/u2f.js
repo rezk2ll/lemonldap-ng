@@ -104,10 +104,22 @@
   };
 
   menu = {
-    session: [
+    delU2FKey: [
       {
         title: 'deleteU2FKey',
         icon: 'trash'
+      }
+    ],
+    addU2FKey: [
+      {
+        title: 'addU2FKey',
+        icon: 'plus'
+      }
+    ],
+    verifyU2FKey: [
+      {
+        title: 'verifyU2FKey',
+        icon: 'check'
       }
     ],
     home: []
@@ -173,6 +185,28 @@
         });
         return $scope.showT = true;
       };
+      $scope.addU2FKey = function() {
+        $scope.waiting = true;
+        $http['put'](scriptname + "u2f/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
+          $scope.currentSession = null;
+          return $scope.waiting = false;
+        }, function(resp) {
+          $scope.currentSession = null;
+          return $scope.waiting = false;
+        });
+        return $scope.showT = true;
+      };
+      $scope.verifyU2FKey = function() {
+        $scope.waiting = true;
+        $http['post'](scriptname + "u2f/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
+          $scope.currentSession = null;
+          return $scope.waiting = false;
+        }, function(resp) {
+          $scope.currentSession = null;
+          return $scope.waiting = false;
+        });
+        return $scope.showT = true;
+      };
       $scope.stoggle = function(scope) {
         var node;
         node = scope.$modelValue;
@@ -226,6 +260,8 @@
                   session[key] = $scope.localeDate(value);
                 } else if (key.match(/^(_startTime|_updateTime)$/)) {
                   session[key] = _stToStr(value);
+                } else if (key.match(/^(_u2fKeyHandle|_u2fUserKey)$/)) {
+                  session[key] = '########';
                 }
               }
             }
@@ -315,7 +351,7 @@
         };
         $scope.currentScope = scope;
         sessionId = scope.$modelValue.session;
-        $http.get(scriptname + "sessions/" + sessionType + "/" + sessionId).then(function(response) {
+        $http.get(scriptname + "u2f/" + sessionType + "/" + sessionId).then(function(response) {
           return $scope.currentSession = transformSession(response.data);
         });
         return $scope.showT = false;
@@ -363,7 +399,7 @@
         } else {
           over = 0;
         }
-        return $http.get(scriptname + "sessions/" + sessionType + "?" + query).then(function(response) {
+        return $http.get(scriptname + "u2f/" + sessionType + "?" + query).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;
           if (data.result) {

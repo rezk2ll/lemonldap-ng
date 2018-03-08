@@ -1,6 +1,6 @@
 .gitignore
 node_modules
-e2e-tests/conf/
+e2e-tests/conf
 lemonldap-ng-common/MYMETA.json
 lemonldap-ng-common/MYMETA.yml
 lemonldap-ng-common/Makefile
