@@ -77,7 +77,7 @@ sub init {
     }
 
     # Enable REST request only if more than 1 2F module is enabled
-    if ( $#{ $self->{sfModules} } ) {
+    if ( @{ $self->{sfModules} } > 1 ) {
         $self->addUnauthRoute( '2fchoice' => 'choice',   ['POST'] );
         $self->addUnauthRoute( '2fchoice' => 'redirect', ['GET'] );
     }
