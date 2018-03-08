@@ -92,9 +92,9 @@ my $jqueryui = '<!-- //if:usedebianlibs
 //elsif:useexternallibs
   <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 //elsif:jsminified
-  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.min.js"></script>
 //else -->
-  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.js"></script>
 <!-- //endif -->';
 
 open CMD, "find . -name '*.html'|";
