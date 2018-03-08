@@ -76,6 +76,12 @@ sub init {
         }
     }
 
+    # Enable REST request only if more than 1 2F module is enabled
+    if ( $#{ $self->{sfModules} } ) {
+        $self->addUnauthRoute( '2fchoice' => 'choice',   ['POST'] );
+        $self->addUnauthRoute( '2fchoice' => 'redirect', ['GET'] );
+    }
+
     return 1;
 }
 
@@ -119,8 +125,32 @@ sub run {
     }
 
     # More than 1 2F has been found, display choice
-    # TODO
+    $self->logger->debug("Prepare 2F choice");
+    my $tpl = $self->p->sendHtml(
+        $req,
+        '2fchoice',
+        params => {
+            SKIN    => $self->conf->{portalSkin},
+            TOKEN   => $token,
+            MODULES => JSON::to_json(
+                [ map { { code => $_->prefix, logo => $_->logo } } @am ]
+            ),
+        }
+    );
     return PE_OK;
+
+    # TODO:
+    # - 2fchoice.tpl
+    # - choice() which launch choosenModule->run($req,$token)
+    # - add logos for 2F modules
+}
+
+sub _redirect {
+    my ( $self, $req ) = @_;
+    my $arg = $req->env->{QUERY_STRING};
+    return [
+        302, [ Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' ) ], []
+    ];
 }
 
 1;

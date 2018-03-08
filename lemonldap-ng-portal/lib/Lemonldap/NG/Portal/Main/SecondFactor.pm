@@ -26,6 +26,8 @@ has ott => (
 
 has prefix => ( is => 'rw' );
 
+has logo => ( is => 'rw', default => '2f' );
+
 sub init {
     my ($self) = @_;
     $self->addUnauthRoute( $self->prefix . '2fcheck' => '_verify',   ['POST'] );
