@@ -477,4 +477,9 @@ sub buildCookie {
     PE_OK;
 }
 
+sub secondFactor {
+    my ( $self, $req ) = @_;
+    return $self->_sfEngine->run($req);
+}
+
 1;

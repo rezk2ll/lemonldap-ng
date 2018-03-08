@@ -27,6 +27,7 @@ has menu        => ( is => 'rw', default => sub { {} } );
 has _authentication => ( is => 'rw' );
 has _userDB         => ( is => 'rw' );
 has _passwordDB     => ( is => 'rw' );
+has _sfEngine       => ( is => 'rw' );
 
 has loadedModules => ( is => 'rw' );
 
@@ -220,7 +221,8 @@ sub reloadConf {
     # Load second-factor engine
     $self->conf->{'sfEngine'} ||= '::2F::Engines::Default';
     return $self->fail
-      unless $self->{sfEngine} = $self->loadPlugin( $self->conf->{'sfEngine'} );
+      unless $self->{_sfEngine} =
+      $self->loadPlugin( $self->conf->{'sfEngine'} );
 
     # Initialize trusted domain regexp
     if (    $self->conf->{trustedDomains}

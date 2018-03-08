@@ -20,7 +20,7 @@ sub authProcess { qw(extractFormInfo getUser authenticate) }
 
 sub sessionDatas {
     qw(setAuthSessionInfo setSessionInfo setMacros setGroups setPersistentSessionInfo
-      setLocalGroups store buildCookie);
+      setLocalGroups store buildCookie secondFactor);
 }
 
 # RESPONSE HANDLER

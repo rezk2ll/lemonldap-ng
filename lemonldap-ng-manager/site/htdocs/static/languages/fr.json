@@ -716,7 +716,7 @@
 "totp2fInterval":"Intervalle",
 "totp2fIssuer":"Nom du fournisseur TOTP",
 "totp2fRange":"Nombre d'intervalles à tester",
-"totpSelfRegistration":"Auto-enregistrement",
+"totp2fSelfRegistration":"Auto-enregistrement",
 "trustedDomains":"Domaines approuvés",
 "trustedProxies":"IP des proxys de confiance",
 "twitterAppName":"Nom de l'application",

@@ -12,10 +12,6 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-# INTERFACE
-
-sub afterDatas { '_run' }
-
 # INITIALIZATION
 
 has ott => (
@@ -28,22 +24,12 @@ has ott => (
     }
 );
 
-has rule => ( is => 'rw' );
-
 has prefix => ( is => 'rw' );
 
 sub init {
     my ($self) = @_;
     $self->addUnauthRoute( $self->prefix . '2fcheck' => '_verify',   ['POST'] );
     $self->addUnauthRoute( $self->prefix . '2fcheck' => '_redirect', ['GET'] );
-    my $rule = $self->conf->{ $self->prefix . '2fActivation' };
-    $rule = $self->p->HANDLER->substitute($rule);
-    unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-        $self->error( 'External 2F rule error: '
-              . $self->p->HANDLER->tsv->{jail}->error );
-        return 0;
-    }
-    $self->rule($rule);
     1;
 }
 
@@ -53,23 +39,6 @@ sub _redirect {
     return [
         302, [ Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' ) ], []
     ];
-}
-
-sub _run {
-    my ( $self, $req ) = @_;
-    return PE_OK unless ( $self->rule->( $req, $req->sessionInfo ) );
-    $self->userLogger->info( 'Second factor required ('
-          . $self->prefix
-          . ') for '
-          . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
-    $req->sessionInfo->{_2fRealSession} = $req->id;
-    $req->sessionInfo->{_2fUrldc}       = $req->urldc;
-    my $token = $self->ott->createToken( $req->sessionInfo );
-    $req->id(0);
-    $self->p->rebuildCookies($req);
-    my $res = $self->run( $req, $token );
-    delete $req->{authResult} if ($res);
-    return $res;
 }
 
 sub _verify {

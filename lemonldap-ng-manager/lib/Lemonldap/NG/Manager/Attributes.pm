@@ -3010,7 +3010,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'       => 'keyTextContainer'
         },
         'sfEngine' => {
-            'default' => '::2F::Engine::Default'
+            'default' => '::2F::Engine::Default',
+            'type'    => 'text'
         },
         'singleIP' => {
             'default' => 0,
@@ -3175,7 +3176,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 1,
             'type'    => 'int'
         },
-        'totpSelfRegistration' => {
+        'totp2fSelfRegistration' => {
             'default' => 0,
             'type'    => 'bool'
         },

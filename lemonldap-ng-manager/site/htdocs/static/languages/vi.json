@@ -716,7 +716,7 @@
 "totp2fInterval":"Interval",
 "totp2fIssuer":"TOTP Issuer name",
 "totp2fRange":"Range of attempts",
-"totpSelfRegistration":"Self registration",
+"totp2fSelfRegistration":"Self registration",
 "trustedDomains":"Miền tin cậy",
 "trustedProxies":"proxies IP tin cậy",
 "twitterAppName":"Tên ứng dụng",

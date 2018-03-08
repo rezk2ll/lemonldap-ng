@@ -16,6 +16,16 @@ has sfModules => ( is => 'rw', default => sub { [] } );
 
 has sfRModules => ( is => 'rw', default => sub { [] } );
 
+has ott => (
+    is      => 'rw',
+    default => sub {
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->{conf}->{formTimeout} );
+        return $ott;
+    }
+);
+
 sub init {
     my ($self) = @_;
 
@@ -26,7 +36,7 @@ sub init {
     # Load 2F modules
     for my $i ( 0 .. 1 ) {
         foreach (
-            split /,\s+/,
+            split /,\s*/,
             $self->conf->{ $i ? 'available2FSelfRegistration' : 'available2F' }
           )
         {
@@ -34,10 +44,11 @@ sub init {
             $prefix =~ s/2f$//i;
 
             # Activation parameter
-            my $ap = $prefix. ( $i ? '2fSelfRegistration' : '2fActivation' );
+            my $ap = $prefix . ( $i ? '2fSelfRegistration' : '2fActivation' );
+            $self->logger->debug("Checking $ap");
 
             # Unless $rule, skip loading
-            if ($self->conf->{$ap}) {
+            if ( $self->conf->{$ap} ) {
                 $self->logger->debug("Trying to load $_ 2F");
                 my $m =
                   $self->p->loadPlugin( $i ? "::2F::Register::$_" : "::2F::$_" )
@@ -59,6 +70,9 @@ sub init {
                 push @{ $self->{ $i ? 'sfRModules' : 'sfModules' } },
                   { m => $m, r => $rule };
             }
+            else {
+                $self->logger->debug(' -> not enabled');
+            }
         }
     }
 
@@ -69,40 +83,44 @@ sub init {
 
 # run is called at each authentication, just after sesionInfo populate
 sub run {
-    my($self,$req)=@_;
+    my ( $self, $req ) = @_;
 
     # Skip 2F unless a module has been registered
-    return PE_OK unless(@{$self->sfModules});
+    return PE_OK unless ( @{ $self->sfModules } );
 
     # Search for authorizated modules for this user
     my @am;
-    foreach my $m (@{$self->sfModules}) {
-        $self->logger->debug('Looking if '.$m->{m}->prefix.'2F is available');
-        if($m->{r}->( $req, $req->sessionInfo ) ) {
+    foreach my $m ( @{ $self->sfModules } ) {
+        $self->logger->debug(
+            'Looking if ' . $m->{m}->prefix . '2F is available' );
+        if ( $m->{r}->( $req, $req->sessionInfo ) ) {
             $self->logger->debug(' -> OK');
-            push @am,$m->{m};
+            push @am, $m->{m};
         }
     }
 
     # If no 2F modules are authorizated, skipping 2F
     # Note that a rule may forbid access after (GrantSession plugin)
-    return PE_OK unless(@am);
+    return PE_OK unless (@am);
 
-    # If only one 2F is authorizated, display it
     $self->userLogger->info( 'Second factor required for '
           . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+
+    # Store user data in a token
     $req->sessionInfo->{_2fRealSession} = $req->id;
     $req->sessionInfo->{_2fUrldc}       = $req->urldc;
     my $token = $self->ott->createToken( $req->sessionInfo );
-    unless($#am) {
-        my $res = $am[0]->run($req, $token);
+
+    # If only one 2F is authorizated, display it
+    unless ($#am) {
+        my $res = $am[0]->run( $req, $token );
         delete $req->{authResult} if ($res);
         return $res;
     }
 
     # More than 1 2F has been found, display choice
     # TODO
-    return PE_OK
+    return PE_OK;
 }
 
 1;

@@ -10,6 +10,8 @@ extends 'Lemonldap::NG::Portal::Main::Plugin', 'Lemonldap::NG::Common::TOTP';
 
 # INITIALIZATION
 
+has prefix => ( is => 'rw', default => 'totp' );
+
 has ott => (
     is      => 'rw',
     lazy    => 1,

@@ -24,7 +24,7 @@ sub init {
 
     # If self registration is enabled and "activation" is simply set to
     # "enabled", replace the rule to detect if user has register its key
-    if (    $self->conf->{totpSelfRegistration}
+    if (    $self->conf->{totp2fSelfRegistration}
         and $self->conf->{totp2fActivation} eq '1' )
     {
         $self->conf->{totp2fActivation} = '$_totp2fSecret';

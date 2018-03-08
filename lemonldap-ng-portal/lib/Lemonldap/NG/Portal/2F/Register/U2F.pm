@@ -10,6 +10,8 @@ extends 'Lemonldap::NG::Portal::Lib::U2F';
 
 # INITIALIZATION
 
+has prefix => ( is => 'rw', default => 'u' );
+
 sub init {
     my ($self) = @_;
     return 0 unless $self->SUPER::init;

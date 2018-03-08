@@ -1036,7 +1036,7 @@ sub attributes {
             default       => 0,
             documentation => 'TOTP activation',
         },
-        totpSelfRegistration => {
+        totp2fSelfRegistration => {
             type          => 'bool',
             default       => 0,
             documentation => 'TOTP self registration activation',

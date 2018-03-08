@@ -663,7 +663,7 @@ sub tree {
                             help  => 'totp2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'totp2fActivation', 'totpSelfRegistration',
+                                'totp2fActivation', 'totp2fSelfRegistration',
                                 'totp2fAuthnLevel', 'totp2fIssuer',
                                 'totp2fInterval',   'totp2fRange',
                                 'totp2fDigits',
