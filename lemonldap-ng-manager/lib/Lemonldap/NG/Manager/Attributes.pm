@@ -607,6 +607,12 @@ sub attributes {
         'autoSigninRules' => {
             'type' => 'keyTextContainer'
         },
+        'available2F' => {
+            'type' => 'text'
+        },
+        'available2FSelfRegistration' => {
+            'type' => 'text'
+        },
         'captcha_login_enabled' => {
             'default' => 0,
             'type'    => 'bool'

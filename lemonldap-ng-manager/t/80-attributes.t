@@ -18,7 +18,10 @@ my @notManagedAttributes = (
     # Complex nodes
     'samlSPMetaDataOptions', 'samlIDPMetaDataOptions', 'oidcRPMetaDataOptions',
     'oidcOPMetaDataOptions', 'casSrvMetaDataOptions',  'casAppMetaDataOptions',
-    'vhostOptions',          'sfEngine',
+    'vhostOptions',
+
+    # Second factor engine and lists of 2F modules
+    'sfEngine', 'available2FSelfRegistration', 'available2F',
 
     # Metadatas (added by manager itself)
     'cfgAuthor', 'cfgAuthorIP', 'cfgNum', 'cfgDate', 'cfgLog', 'cfgVersion',

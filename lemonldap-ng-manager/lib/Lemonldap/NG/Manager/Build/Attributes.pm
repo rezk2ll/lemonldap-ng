@@ -1983,9 +1983,18 @@ sub attributes {
 
         # Seconf Factor Engine
         sfEngine => {
-            type    => 'text',
-            default => '::2F::Engine::Default',
+            type          => 'text',
+            default       => '::2F::Engine::Default',
             documentation => 'Second factor engine',
+        },
+        available2F => {
+            type          => 'text',
+            documentation => 'Available second factor modules',
+        },
+        available2FSelfRegistration => {
+            type => 'text',
+            documentation =>
+              'Available self-registration modules for second factor',
         },
 
         # DEMO
