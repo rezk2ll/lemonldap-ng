@@ -200,7 +200,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							session[key] = '########'
 			res = []
 
-			# 2. Push session keys in reuslt, grouped by categories
+			# 2. Push session keys in result, grouped by categories
 			for category, attrs of categories
 				subres = []
 				for attr in attrs

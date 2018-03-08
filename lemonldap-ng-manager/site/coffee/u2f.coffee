@@ -151,39 +151,46 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		$scope.waiting = true
 		$http['delete']("#{scriptname}u2f/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
 			$scope.currentSession = null
-			#$scope.currentScope.remove()
+			$scope.currentScope.remove()
 			$scope.waiting = false
 		, (resp) ->
 			$scope.currentSession = null
-			#$scope.currentScope.remove()
+			$scope.currentScope.remove()
 			$scope.waiting = false
-		$scope.showT = true
+		$scope.showT = false
+		
 
 	# Add U2F key
 	$scope.addU2FKey = ->
 		$scope.waiting = true
 		$http['put']("#{scriptname}u2f/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
-			$scope.currentSession = null
+			#$scope.currentSession = null
 			#$scope.currentScope.remove()
 			$scope.waiting = false
 		, (resp) ->
-			$scope.currentSession = null
+			#$scope.currentSession = null
 			#$scope.currentScope.remove()
 			$scope.waiting = false
-		$scope.showT = true
+		$scope.showT = false
+		$http.get("#{scriptname}u2f/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
+			$scope.currentSession = transformSession response.data
+		$scope.showT = false
 
 	# Verify U2F key
 	$scope.verifyU2FKey = ->
 		$scope.waiting = true
 		$http['post']("#{scriptname}u2f/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
-			$scope.currentSession = null
+			#$scope.currentSession = null
 			#$scope.currentScope.remove()
 			$scope.waiting = false
 		, (resp) ->
-			$scope.currentSession = null
+			#$scope.currentSession = null
 			#$scope.currentScope.remove()
 			$scope.waiting = false
 		$scope.showT = true
+		$http.get("#{scriptname}u2f/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
+			$scope.currentSession = transformSession response.data
+		$scope.showT = false
 
 	# Open node
 	$scope.stoggle = (scope) ->
@@ -231,8 +238,8 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							session[key] = $scope.localeDate value
 						else if key.match /^(_startTime|_updateTime)$/
 							session[key] = _stToStr value
-						else if key.match /^(_u2fKeyHandle|_u2fUserKey)$/
-							session[key] = '########'
+						#else if key.match /^(_u2fKeyHandle|_u2fUserKey)$/
+						#	session[key] = '########'
 			res = []
 
 			# 2. Push session keys in result, grouped by categories

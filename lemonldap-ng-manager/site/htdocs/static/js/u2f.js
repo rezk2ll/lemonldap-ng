@@ -178,34 +178,40 @@
         $scope.waiting = true;
         $http['delete'](scriptname + "u2f/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
           $scope.currentSession = null;
+          $scope.currentScope.remove();
           return $scope.waiting = false;
         }, function(resp) {
           $scope.currentSession = null;
+          $scope.currentScope.remove();
           return $scope.waiting = false;
         });
-        return $scope.showT = true;
+        return $scope.showT = false;
       };
       $scope.addU2FKey = function() {
         $scope.waiting = true;
         $http['put'](scriptname + "u2f/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
-          $scope.currentSession = null;
           return $scope.waiting = false;
         }, function(resp) {
-          $scope.currentSession = null;
           return $scope.waiting = false;
         });
-        return $scope.showT = true;
+        $scope.showT = false;
+        $http.get(scriptname + "u2f/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
+          return $scope.currentSession = transformSession(response.data);
+        });
+        return $scope.showT = false;
       };
       $scope.verifyU2FKey = function() {
         $scope.waiting = true;
         $http['post'](scriptname + "u2f/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
-          $scope.currentSession = null;
           return $scope.waiting = false;
         }, function(resp) {
-          $scope.currentSession = null;
           return $scope.waiting = false;
         });
-        return $scope.showT = true;
+        $scope.showT = true;
+        $http.get(scriptname + "u2f/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
+          return $scope.currentSession = transformSession(response.data);
+        });
+        return $scope.showT = false;
       };
       $scope.stoggle = function(scope) {
         var node;
@@ -260,8 +266,6 @@
                   session[key] = $scope.localeDate(value);
                 } else if (key.match(/^(_startTime|_updateTime)$/)) {
                   session[key] = _stToStr(value);
-                } else if (key.match(/^(_u2fKeyHandle|_u2fUserKey)$/)) {
-                  session[key] = '########';
                 }
               }
             }
