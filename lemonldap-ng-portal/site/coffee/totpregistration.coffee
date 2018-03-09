@@ -52,7 +52,7 @@ getKey = (reset) ->
 verify = ->
 	val = $('#code').val()
 	unless val
-		setMsg 'fillTheForm', 'danger'
+		setMsg 'fillTheForm', 'warning'
 	else
 		$.ajax
 			type: "POST",
@@ -70,10 +70,22 @@ verify = ->
 						setMsg data.error, 'danger'
 				else
 					setMsg 'yourKeyIsRegistered', 'success'
-
+					
+unregister = ->
+	$.ajax
+		type: "POST",
+		url: "#{portal}/totpregister/unregister"
+		data: {}
+		dataType: 'json'
+		error: displayError
+		success: (data) ->
+		setMsg 'yourKeyIsUnregistered', 'success'					
+					
 $(document).ready ->
 	getKey(0)
 	$('#changekey').on 'click', () ->
 		getKey(1)
 	$('#verify').on 'click', () ->
 		verify()
+	$('#unregister').on 'click', () ->
+		unregister()

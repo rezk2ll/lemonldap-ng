@@ -137,6 +137,24 @@ sub selfRegister {
             }
         );
     }
+    
+        # Get or generate master key
+    elsif ( $action eq 'unregister' ) {        
+        $self->p->updatePersistentSession( $req,
+            { _totp2fSecret => '' }
+        );
+        $self->userLogger->notice('TOTP unregistration succeed');
+        return [ 200, [ 'Content-Type' => 'application/json' ],
+            ['{"result":1}'] ];
+        
+        
+        
+        
+        
+    }
+    
+    
+    
 }
 
 1;

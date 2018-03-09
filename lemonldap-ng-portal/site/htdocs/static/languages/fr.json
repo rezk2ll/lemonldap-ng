@@ -218,6 +218,7 @@
 "yourIdentity":"Votre identité",
 "yourIdentityIs":"Votre identité est",
 "yourKeyIsRegistered":"Votre clef est enregistrée",
+"yourKeyIsUnregistered":"Votre clef a été supprimée",
 "yourNewTotpKey":"Votre nouvelle clef TOTP, testez-la et entrez le code",
 "yourPhone":"Votre numéro de téléphone",
 "yourProfile":"Vos informations personnelles",
