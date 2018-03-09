@@ -31,15 +31,26 @@ The attribute key name can be used directly in ''lemonldap-ng.ini'' or in Perl s
 ===== Main parameters =====
 
 <sortable 2>
-^  Key name  ^  Documentation  ^  ini file only  ^
+^  Key name  ^  Documentation  ^  Portal  ^  Handler  ^  Manager  ^  ini file only  ^
 EOF
 
 #| Activate auto accept timer | activeTimer |  ✔  | | |
 
 foreach my $k ( sort keys %$prm ) {
     next if $k =~ $ignore;
-    print "| $k | $prm->{$k}->{documentation} | "
-      . ( ( $managed->{$k} or $k =~ $rmg ) ? '' : $ok ) . " |\n";
+    my $p = $prm->{$k};
+    $p->{flags} ||= 'p';
+    print "| $k | $p->{documentation}"
+      # Portal flag
+      .' | '.( $p->{flags} =~ /p/ ? $ok : '')
+      # Handler flag
+      .' | '.( $p->{flags} =~ /h/ ? $ok : '')
+      # Manager flag
+      .' | '.( $p->{flags} =~ /m/ ? $ok : '')
+      # Ini-only flag
+      .' | ' . ( ( $managed->{$k} or $k =~ $rmg ) ? '' : $ok )
+      # End of line
+      . " |\n";
 }
 
 print <<EOF;
