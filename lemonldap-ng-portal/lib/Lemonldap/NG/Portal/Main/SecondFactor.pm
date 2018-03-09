@@ -26,7 +26,7 @@ has ott => (
 
 has prefix => ( is => 'rw' );
 
-has logo => ( is => 'rw', default => '2f' );
+has logo => ( is => 'rw', default => '2f.png' );
 
 sub init {
     my ($self) = @_;

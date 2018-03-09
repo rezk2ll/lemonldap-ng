@@ -25,6 +25,8 @@ has rule => ( is => 'rw' );
 
 has prefix => ( is => 'ro', default => 'u' );
 
+has logo => ( is => 'rw', default => 'u2f.png' );
+
 sub init {
     my ($self) = @_;
 

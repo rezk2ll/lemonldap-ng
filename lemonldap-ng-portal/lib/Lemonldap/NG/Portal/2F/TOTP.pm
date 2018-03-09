@@ -19,6 +19,8 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor',
 
 has prefix => ( is => 'ro', default => 'totp' );
 
+has logo => ( is => 'rw', default => 'totp.png' );
+
 sub init {
     my ($self) = @_;
 
