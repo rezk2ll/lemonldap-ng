@@ -38,6 +38,7 @@ EOF
 
 foreach my $k ( sort keys %$prm ) {
     next if $k =~ $ignore;
+    next if $k =~ $rmg;
     my $p = $prm->{$k};
     $p->{flags} ||= 'p';
     print "| $k | $p->{documentation}"
