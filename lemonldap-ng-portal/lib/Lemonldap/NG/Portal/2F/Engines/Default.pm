@@ -3,7 +3,11 @@ package Lemonldap::NG::Portal::2F::Engines::Default;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_ERROR
+  PE_NOTOKEN
   PE_OK
+  PE_SENDRESPONSE
+  PE_TOKENEXPIRED
 );
 
 our $VERSION = '2.0.0';
@@ -68,7 +72,7 @@ sub init {
 
                 # Store module
                 push @{ $self->{ $i ? 'sfRModules' : 'sfModules' } },
-                  { m => $m, r => $rule };
+                  { p => $prefix, m => $m, r => $rule };
             }
             else {
                 $self->logger->debug(' -> not enabled');
@@ -116,11 +120,12 @@ sub run {
     $req->sessionInfo->{_2fRealSession} = $req->id;
     $req->sessionInfo->{_2fUrldc}       = $req->urldc;
     my $token = $self->ott->createToken( $req->sessionInfo );
+    delete $req->{authResult};
 
     # If only one 2F is authorizated, display it
     unless ($#am) {
         my $res = $am[0]->run( $req, $token );
-        delete $req->{authResult} if ($res);
+        $req->authResult($res);
         return $res;
     }
 
@@ -135,12 +140,53 @@ sub run {
             MODULES => [ map { { CODE => $_->prefix, LOGO => $_->logo } } @am ],
         }
     );
-    return PE_OK;
+    $req->response($tpl);
+    return PE_SENDRESPONSE;
 
     # TODO:
     # - 2fchoice.tpl
     # - choice() which launch choosenModule->run($req,$token)
     # - add logos for 2F modules
+}
+
+sub choice {
+    my ( $self, $req ) = @_;
+    my $token;
+
+    # Restore session
+    unless ( $token = $req->param('token') ) {
+        $self->userLogger->error( $self->prefix . ' 2F access without token' );
+        $req->mustRedirect(1);
+        return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
+    }
+
+    my $session;
+    unless ( $session = $self->ott->getToken($token) ) {
+        $self->userLogger->info('Token expired');
+        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+    }
+
+    $req->sessionInfo($session);
+
+    # New token
+    $token = $self->ott->createToken($session);
+
+    my $ch = $req->param('sf');
+    foreach my $m ( @{ $self->sfModules } ) {
+        if ( $m->{m}->prefix eq $ch ) {
+            my $res = $m->{m}->run( $req, $token );
+            $req->authResult($res);
+            return $self->p->do(
+                $req,
+                [
+                    sub { $res }, 'controlUrl',
+                    'buildCookie', @{ $self->p->afterDatas },
+                ]
+            );
+        }
+    }
+    $self->userLogger->error('Bd 2F choice');
+    return $self->p->lmError( $req, 500 );
 }
 
 sub _redirect {
