@@ -215,6 +215,21 @@ sub attributes {
     return {
 
         # Other
+        configStorage => {
+            type          => 'text',
+            documentation => 'Configuration storage',
+            flags         => 'hmp',
+        },
+        localStorage => {
+            type          => 'text',
+            documentation => 'Local cache',
+            flags         => 'hmp',
+        },
+        localStorageOptions => {
+            type          => 'keyTextContainer',
+            documentation => 'Local cache',
+            flags         => 'hmp',
+        },
         cfgNum => {
             type          => 'int',
             default       => 0,
@@ -240,6 +255,11 @@ sub attributes {
             type          => 'text',
             documentation => 'Version of LLNG which build configuration',
         },
+        status => {
+            type          => 'bool',
+            documentation => 'Status daemon activation',
+            flags         => 'h',
+        },
         confirmFormMethod => {
             type => "select",
             select =>
@@ -251,12 +271,14 @@ sub attributes {
             type          => 'text',
             test          => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,
             msgFail       => "__badCustomFuncName__",
-            documentation => 'List of custom functions'
+            documentation => 'List of custom functions',
+            flags         => 'hmp',
         },
         https => {
             default       => 0,
             type          => 'bool',
             documentation => 'Use HTTPS for redirection from portal',
+            flags         => 'h',
         },
         infoFormMethod => {
             type => "select",
@@ -265,7 +287,11 @@ sub attributes {
             default       => 'get',
             documentation => 'HTTP method for info page form',
         },
-        port => { type => 'int', documentation => 'Force port in redirection' },
+        port => {
+            type          => 'int',
+            documentation => 'Force port in redirection',
+            flags         => 'h',
+        },
         jsRedirect => {
             type          => 'boolOrExpr',
             default       => 0,
@@ -281,6 +307,7 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Maintenance mode for all virtual hosts',
+            flags         => 'h',
         },
         nginxCustomHandlers => {
             type    => 'keyTextContainer',
@@ -298,6 +325,7 @@ sub attributes {
             type          => 'url',
             default       => 'http://auth.example.com/',
             documentation => 'Portal URL',
+            flags         => 'hmp',
         },
         portalStatus => {
             type          => 'bool',
@@ -334,6 +362,7 @@ sub attributes {
             type          => 'authParamsText',
             default       => '; ',
             documentation => 'Separator for multiple values',
+            flags         => 'hmp',
         },
         stayConnected => {
             type          => 'bool',
@@ -347,6 +376,7 @@ sub attributes {
             msgFail       => '__authorizedValues__: none authenticate manager',
             default       => 'none',
             documentation => 'Manager protection method',
+            flags         => 'hm',
         },
 
         # Menu
@@ -447,6 +477,7 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Enable Cross Domain Authentication',
+            flags         => 'hp',
         },
         checkXSS => {
             default       => 1,
@@ -560,6 +591,7 @@ sub attributes {
             type          => 'bool',
             default       => 1,
             documentation => 'Use 302 redirect code for error (500)',
+            flags         => 'h',
         },
         useRedirectOnForbidden => {
             default       => 0,
@@ -571,11 +603,13 @@ sub attributes {
             type          => 'bool',
             help          => 'safejail.html',
             documentation => 'Activate Safe jail',
+            flags         => 'hp',
         },
         whatToTrace => {
             type          => 'lmAttrOrMacro',
             default       => 'uid',
             documentation => 'Session parameter used to fill REMOTE_USER',
+            flags         => 'hp',
         },
         lwpOpts => {
             type          => 'keyTextContainer',
@@ -641,14 +675,18 @@ sub attributes {
         },
 
         # Cookies
-        cookieExpiration =>
-          { type => 'text', documentation => 'Cookie expiration', },
+        cookieExpiration => {
+            type          => 'text',
+            documentation => 'Cookie expiration',
+            flags         => 'hp',
+        },
         cookieName => {
             type          => 'text',
             test          => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
             msgFail       => '__badCookieName__',
             default       => 'lemonldap',
             documentation => 'Name of the main cookie',
+            flags         => 'hp',
         },
         domain => {
             type          => 'text',
@@ -656,11 +694,13 @@ sub attributes {
             msgFail       => '__badDomainName__',
             default       => 'example.com',
             documentation => 'DNS domain',
+            flags         => 'hp',
         },
         httpOnly => {
             default       => 1,
             type          => 'bool',
             documentation => 'Enable httpOnly flag in cookie',
+            flags         => 'hp',
         },
         securedCookie => {
             type   => 'select',
@@ -672,6 +712,7 @@ sub attributes {
             ],
             default       => 0,
             documentation => 'Cookie securisation method',
+            flags         => 'hp',
         },
 
         # Notification
@@ -767,6 +808,7 @@ sub attributes {
             type          => 'PerlModule',
             default       => 'Apache::Session::File',
             documentation => 'Session backend module',
+            flags         => 'hp',
         },
         globalStorageOptions => {
             type    => 'keyTextContainer',
@@ -777,6 +819,7 @@ sub attributes {
                   'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
             },
             documentation => 'Session backend module options',
+            flags         => 'hp',
         },
         localSessionStorage => {
             type          => 'PerlModule',
@@ -1234,6 +1277,7 @@ sub attributes {
                 default => 'deny',
             },
             documentation => 'Virtualhost rules',
+            flags         => 'h',
         },
         exportedHeaders => {
             type    => 'keyTextContainer',
@@ -1255,6 +1299,7 @@ sub attributes {
                 }
             },
             documentation => 'Virtualhost headers',
+            flags         => 'h',
         },
         post => {
             type    => 'postContainer',
@@ -1299,6 +1344,70 @@ sub attributes {
         },
         vhostAuthnLevel => {
             type => 'int',
+        },
+
+        # SecureToken parameters
+        secureTokenAllowOnError => {
+            type          => 'text',
+            documentation => 'Secure Token allow requests in error',
+            flags         => 'h',
+        },
+        secureTokenAttribute => {
+            type          => 'text',
+            documentation => 'Secure Token attribute',
+            flags         => 'h',
+            default       => 'uid',
+        },
+        secureTokenExpiration => {
+            type          => 'text',
+            documentation => 'Secure Token expiration',
+            flags         => 'h',
+            default       => 60,
+        },
+        secureTokenHeader => {
+            type          => 'text',
+            documentation => 'Secure Token header',
+            flags         => 'h',
+            default       => 'Auth-Token',
+        },
+        secureTokenMemcachedServers => {
+            type          => 'text',
+            documentation => 'Secure Token Memcached servers',
+            flags         => 'h',
+            default       => '',
+        },
+        secureTokenUrls => {
+            type          => 'text',
+            documentation => '',
+            flags         => 'h',
+            default       => '.*',
+        },
+
+        # Zimbra handler parameters
+        zimbraAccountKey => {
+            type          => 'text',
+            flags         => 'h',
+            documentation => 'Zimbra account session key',
+        },
+        zimbraBy => {
+            type          => 'text',
+            flags         => 'h',
+            documentation => 'Zimbra account type',
+        },
+        zimbraPreAuthKey => {
+            type          => 'text',
+            flags         => 'h',
+            documentation => 'Zimbra preauthentication key',
+        },
+        zimbraSsoUrl => {
+            type          => 'text',
+            flags         => 'h',
+            documentation => 'Zimbra local SSO URL pattern',
+        },
+        zimbraUrl => {
+            type          => 'text',
+            flags         => 'h',
+            documentation => 'Zimbra preauthentication URL',
         },
 
         # CAS IDP

@@ -871,6 +871,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             },
             'type' => 'cmbModuleContainer'
         },
+        'configStorage' => {
+            'type' => 'text'
+        },
         'confirmFormMethod' => {
             'default' => 'post',
             'select'  => [
@@ -1455,6 +1458,12 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'directory_umask'    => '007',
                 'namespace'          => 'lemonldap-ng-sessions'
             },
+            'type' => 'keyTextContainer'
+        },
+        'localStorage' => {
+            'type' => 'text'
+        },
+        'localStorageOptions' => {
             'type' => 'keyTextContainer'
         },
         'locationRules' => {
@@ -3010,6 +3019,29 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             ],
             'type' => 'select'
         },
+        'secureTokenAllowOnError' => {
+            'type' => 'text'
+        },
+        'secureTokenAttribute' => {
+            'default' => 'uid',
+            'type'    => 'text'
+        },
+        'secureTokenExpiration' => {
+            'default' => 60,
+            'type'    => 'text'
+        },
+        'secureTokenHeader' => {
+            'default' => 'Auth-Token',
+            'type'    => 'text'
+        },
+        'secureTokenMemcachedServers' => {
+            'default' => '',
+            'type'    => 'text'
+        },
+        'secureTokenUrls' => {
+            'default' => '.*',
+            'type'    => 'text'
+        },
         'sessionDataToRemember' => {
             'keyMsgFail' => '__invalidSessionData__',
             'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
@@ -3123,6 +3155,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'staticPrefix' => {
             'type' => 'text'
+        },
+        'status' => {
+            'type' => 'bool'
         },
         'stayConnected' => {
             'type' => 'bool'
@@ -3363,6 +3398,21 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'int'
         },
         'yubikeySecretKey' => {
+            'type' => 'text'
+        },
+        'zimbraAccountKey' => {
+            'type' => 'text'
+        },
+        'zimbraBy' => {
+            'type' => 'text'
+        },
+        'zimbraPreAuthKey' => {
+            'type' => 'text'
+        },
+        'zimbraSsoUrl' => {
+            'type' => 'text'
+        },
+        'zimbraUrl' => {
             'type' => 'text'
         }
     };
