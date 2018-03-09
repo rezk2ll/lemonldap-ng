@@ -74,38 +74,18 @@ sub run {
         return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
     }
     if ( $action eq 'unregistration' ) {
-        #my ( $resp, $challenge );
-        #unless ($resp = $req->param('registration')
-            #and $challenge = $req->param('challenge') )
-        #{
-            #return $self->p->sendError( $req, 'Missing registration parameter',
-                #400 );
-        #}
-        #$self->logger->debug("Get unregistration data $resp");
-        #$self->logger->debug("Get challenge $challenge");
-        #eval { $challenge = JSON::from_json($challenge)->{challenge} };
-        #if ($@) {
-            #$self->userLogger->error("Bad challenge: $@");
-            #return $self->p->sendError( $req, 'Bad challenge', 400 );
-        #}
-        #my $c = $self->crypter;
-        #if ( $c->setChallenge($challenge) ) {
-            #my ( $keyHandle, $userKey ) = $c->registrationVerify($resp);
-            #if ( $keyHandle and $userKey ) {
-                $self->p->updatePersistentSession(
-                    $req,
-                    {
-                        _u2fKeyHandle => '',
-                        _u2fUserKey   => ''
-                    }
-                );
-                $self->userLogger->notice('U2F key unregistration succeed');
-                return [
-                    200, [ 'Content-Type' => 'application/json' ],
-                    ['{"result":1}']
-                ];
-            #}
-        #}
+         $self->p->updatePersistentSession(
+             $req,
+                {
+                    _u2fKeyHandle => '',
+                    _u2fUserKey   => ''
+                }
+             );
+         $self->userLogger->notice('U2F key unregistration succeed');
+         return [
+                200, [ 'Content-Type' => 'application/json' ],
+                ['{"result":1}']
+         ];
         my $err = Crypt::U2F::Server::Simple::lastError();
         $self->userLogger->warn("U2F Unregistration failed: $err");
         return $self->p->sendError( $req, $err, 200 );
@@ -137,6 +117,7 @@ sub run {
         }
         my $res =
           ( $req->datas->{crypter}->authenticationVerify($resp) ? 1 : 0 );
+        #$self->userLogger->notice("res=$res");
         return [
             200, [ 'Content-Type' => 'application/json' ],
             [qq'{"result":$res}']
