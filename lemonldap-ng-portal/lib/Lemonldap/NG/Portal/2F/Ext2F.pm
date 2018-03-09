@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::2F::External2F;
+package Lemonldap::NG::Portal::2F::Ext2F;
 
 use strict;
 use Mouse;

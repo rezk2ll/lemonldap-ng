@@ -132,9 +132,7 @@ sub run {
         params => {
             SKIN    => $self->conf->{portalSkin},
             TOKEN   => $token,
-            MODULES => JSON::to_json(
-                [ map { { code => $_->prefix, logo => $_->logo } } @am ]
-            ),
+            MODULES => [ map { { CODE => $_->prefix, LOGO => $_->logo } } @am ],
         }
     );
     return PE_OK;
