@@ -118,7 +118,15 @@ sub _buildAuthLoop {
         if ( $auth and $userDB and $passwordDB ) {
 
             # Default URL
-            $url = ( defined $url ? $url .= $req->env->{'REQUEST_URI'} : '#' );
+            if ( defined $url
+                and not $self->p->checkXSSAttack( 'URI',
+                    $req->env->{'REQUEST_URI'} ) )
+            {
+                $url .= $req->env->{'REQUEST_URI'};
+            }
+            else {
+                $url = '#';
+            }
             $self->logger->debug("Use URL $url");
 
             # Options to store in the loop
