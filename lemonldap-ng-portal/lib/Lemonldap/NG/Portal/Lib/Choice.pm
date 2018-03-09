@@ -125,7 +125,7 @@ sub _buildAuthLoop {
                 $url .= $req->env->{'REQUEST_URI'};
             }
             else {
-                $url = '#';
+                $url .= '#';
             }
             $self->logger->debug("Use URL $url");
 
