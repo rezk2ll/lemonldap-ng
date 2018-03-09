@@ -31,6 +31,17 @@ my @notManagedAttributes = (
 
     # PSGI/CGI protection (must be set in lemonldap-ng.ini)
     'protection',
+
+    # SecureToken handler
+    'secureTokenAllowOnError', 'secureTokenAttribute', 'secureTokenExpiration',
+    'secureTokenHeader', 'secureTokenMemcachedServers', 'secureTokenUrls',
+
+    # Zimbra handler
+    'zimbraAccountKey', 'zimbraBy', 'zimbraPreAuthKey',
+    'zimbraSsoUrl',     'zimbraUrl',
+
+    # Other ini-only prms
+    'configStorage', 'status', 'localStorageOptions', 'localStorage',
 );
 
 # Words used either as attribute name and node title

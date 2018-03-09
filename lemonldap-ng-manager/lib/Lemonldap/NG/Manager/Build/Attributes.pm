@@ -1382,12 +1382,6 @@ sub attributes {
             flags         => 'h',
             default       => '.*',
         },
-        secureTokenAllowOnError => {
-            type          => 'text',
-            documentation => '',
-            flags         => 'h',
-            default       => '',
-        },
 
         # Zimbra handler parameters
         zimbraAccountKey => {

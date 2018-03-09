@@ -30,7 +30,7 @@ The attribute key name can be used directly in ''lemonldap-ng.ini'' or in Perl s
 
 ===== Main parameters =====
 
-<sortable 2>
+<sortable 1>
 ^  Key name  ^  Documentation  ^  Portal  ^  Handler  ^  Manager  ^  ini file only  ^
 EOF
 
@@ -54,6 +54,7 @@ foreach my $k ( sort keys %$prm ) {
 }
 
 print <<EOF;
+</sortable>
 
 ===== Configuration backend parameters =====
 
