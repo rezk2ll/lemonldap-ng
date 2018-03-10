@@ -462,6 +462,7 @@ sub checkMessage {
 
                 # Response in body part
                 $response = $req->param('SAMLResponse');
+                $response =~ s/ /+/g;
                 $self->logger->debug("HTTP-POST: SAML Response $response");
 
             }
