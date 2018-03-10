@@ -5,13 +5,12 @@ use utf8;
 use strict;
 use Mouse;
 use MIME::Base64 qw(encode_base64 decode_base64);
-use Crypt::U2F::Server::Simple;
+#use Crypt::U2F::Server::Simple;
 
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
-#use Lemonldap::NG::Common::IPv6;
 
 use feature 'state';
 
@@ -130,12 +129,11 @@ sub u2f {
           : ( $s => $params->{$_} );
     } keys %$params;
     $filters{_session_kind} = $type;
-   # $filters{_u2fKeyHandle} = '';
+
     push @fields, keys(%filters);
     {
         my %seen;
         @fields = grep { !$seen{$_}++ } @fields;
-      #  @fields = grep { !/\w+/ } @fields;
     }
 
     # For now, only one argument can be passed to
@@ -195,7 +193,7 @@ sub u2f {
         }
     }
 
-	# Display sessions with U2F key registered only
+	# Display sessions with registered U2F key only
 	foreach my $session ( keys %$res ) {
 		delete $res->{$session}
 		  unless ( defined $res->{$session}->{_u2fKeyHandle} and length $res->{$session}->{_u2fKeyHandle} )

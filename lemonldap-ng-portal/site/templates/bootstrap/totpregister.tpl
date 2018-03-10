@@ -16,13 +16,17 @@
       <input id="code" name="code" type="number" />
      </div>
      <div class="buttons">
-      <span id="changekey" class="btn btn-success" role="button">
-        <span class="glyphicon glyphicon-check"></span>&nbsp;
+      <span id="changekey" class="btn btn-warning" role="button">
+        <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
         <span trspan="changeKey">Change key</span>
       </span>
       <span id="verify" class="btn btn-success" role="button">
         <span class="glyphicon glyphicon-check"></span>&nbsp;
         <span trspan="verify">Verify</span>
+      </span>
+      <span id="unregister" class="btn btn-danger" role="button">
+        <span class="glyphicon glyphicon-minus-sign"></span>&nbsp;
+        <span trspan="unregister">Unregister</span>
       </span>
      </div>
     </div>

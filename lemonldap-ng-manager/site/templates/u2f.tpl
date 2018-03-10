@@ -15,7 +15,7 @@
       <div class="navbar navbar-default">
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" role="grid">
-            <li><a id="a-persistent" href="#/persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('u2fSessions')}}</a></li>
+            <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('u2fSessions')}}</a></li>
           </ul>
         </div>
       </div>
@@ -41,10 +41,10 @@
       <div class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
         <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
           <ul class="nav navbar-nav">            
-            <!--
+         
             <li ng-if="currentSession" ng-repeat="button in menu.addU2FKey" ng-include="'menubutton.html'"></li>
             <li ng-if="currentSession" ng-repeat="button in menu.verifyU2FKey" ng-include="'menubutton.html'"></li>
-            -->
+          
             <li ng-if="currentSession" ng-repeat="button in menu.delU2FKey" ng-include="'menubutton.html'"></li>
             
             <li ng-if="currentSession===null" ng-repeat="button in menu.home" ng-include="'menubutton.html'"></li>

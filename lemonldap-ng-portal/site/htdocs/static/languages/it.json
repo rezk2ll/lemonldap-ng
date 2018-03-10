@@ -218,6 +218,7 @@
 "yourIdentity":"Identità",
 "yourIdentityIs":"La tua identità é",
 "yourKeyIsRegistered":"Your key is registered",
+"yourKeyIsUnregistered":"Your key has been unregistered",
 "yourNewTotpKey":"Your new TOTP key, please test it and enter the code",
 "yourPhone":"Numero di telefono",
 "yourProfile":"Il tuo profilo",

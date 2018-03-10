@@ -218,6 +218,7 @@
 "yourIdentity":"هويتك",
 "yourIdentityIs":"هويتك هي",
 "yourKeyIsRegistered":"Your key is registered",
+"yourKeyIsUnregistered":"Your key has been unregistered",
 "yourNewTotpKey":"Your new TOTP key, please test it and enter the code",
 "yourPhone":"رقم هاتفك",
 "yourProfile":"ملفك الشخصي",
