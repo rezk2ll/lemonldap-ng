@@ -6,11 +6,12 @@ Source: https://forge.objectweb.org/project/showfiles.php?group_id=274
 Files: *
 Copyright: 2005-2018, Xavier Guimard <x.guimard@free.fr>
  2006-2018, Clement Oudot <clem.oudot@gmail.com>
- 2008-2011, Thomas Chemineau <thomas.chemineau@gmail.com>
- 2012-2015, François-Xavier Deltombe <fxdeltombe@gmail.com>
- 2012-2013, Sandro Cazzaniga <cazzaniga.sandro@gmail.com>
- 2012-2015, David Coutadeur <david.coutadeur@gmail.com>
  2008, Mikael Ates <mikael.ates@univ-st-etienne.fr>
+ 2008-2011, Thomas Chemineau <thomas.chemineau@gmail.com>
+ 2012-2013, Sandro Cazzaniga <cazzaniga.sandro@gmail.com>
+ 2012-2015, François-Xavier Deltombe <fxdeltombe@gmail.com>
+ 2012-2015, David Coutadeur <david.coutadeur@gmail.com>
+ 2018, Christophe Maudoux <chrmdx@gmail.com>
  2006-2015, LINAGORA <info@linagora.com>
  2015-2017, Savoir-faire Linux <contac@savoirfairelinux.com>
 License: GPL-2+
