@@ -5,7 +5,28 @@
  */
 
 (function() {
-  var categories, hiddenAttributes, llapp, max, menu, overScheme, schemes;
+  var categories, displayError, hiddenAttributes, llapp, max, menu, overScheme, schemes, setMsg;
+
+  setMsg = function(msg, level) {
+    $('#msg').html(window.translate(msg));
+    $('#color').removeClass('message-positive message-warning alert-success alert-warning');
+    $('#color').addClass("message-" + level);
+    if (level === 'positive') {
+      level = 'success';
+    }
+    return $('#color').addClass("alert-" + level);
+  };
+
+  displayError = function(j, status, err) {
+    var res;
+    console.log('Error', err);
+    res = JSON.parse(j.responseText);
+    if (res && res.error) {
+      res = res.error.replace(/.* /, '');
+      console.log('Returned error', res);
+      return setMsg(res, 'warning');
+    }
+  };
 
   max = 25;
 
@@ -17,30 +38,6 @@
         return t + "=" + v + "*&groupBy=" + t;
       }, function(t, v) {
         return t + "=" + v;
-      }
-    ],
-    ipAddr: [
-      function(t, v) {
-        return "groupBy=net(" + t + ",16,1)";
-      }, function(t, v) {
-        if (!v.match(/:/)) {
-          v = v + '.';
-        }
-        return t + "=" + v + "*&groupBy=net(" + t + ",32,2)";
-      }, function(t, v) {
-        if (!v.match(/:/)) {
-          v = v + '.';
-        }
-        return t + "=" + v + "*&groupBy=net(" + t + ",48,3)";
-      }, function(t, v) {
-        if (!v.match(/:/)) {
-          v = v + '.';
-        }
-        return t + "=" + v + "*&groupBy=net(" + t + ",128,4)";
-      }, function(t, v) {
-        return t + "=" + v + "&groupBy=_whatToTrace";
-      }, function(t, v, q) {
-        return q.replace(/\&groupBy.*$/, '') + ("&_whatToTrace=" + v);
       }
     ],
     _startTime: [
@@ -59,15 +56,6 @@
         console.log(v);
         console.log(q);
         return q.replace(/\&groupBy.*$/, '') + ("&_whatToTrace=" + v);
-      }
-    ],
-    doubleIp: [
-      function(t, v) {
-        return t;
-      }, function(t, v) {
-        return "_whatToTrace=" + v + "&groupBy=ipAddr";
-      }, function(t, v, q) {
-        return q.replace(/\&groupBy.*$/, '') + ("&ipAddr=" + v);
       }
     ]
   };
@@ -122,6 +110,24 @@
         icon: 'check'
       }
     ],
+    delTOTPKey: [
+      {
+        title: 'deleteTOTPKey',
+        icon: 'trash'
+      }
+    ],
+    addTOTPKey: [
+      {
+        title: 'addTOTPKey',
+        icon: 'plus'
+      }
+    ],
+    verifyTOTPKey: [
+      {
+        title: 'verifyTOTPKey',
+        icon: 'check'
+      }
+    ],
     home: []
   };
 
@@ -134,7 +140,7 @@
 
   llapp.controller('SessionsExplorerCtrl', [
     '$scope', '$translator', '$location', '$q', '$http', function($scope, $translator, $location, $q, $http) {
-      var autoId, c, pathEvent, sessionType;
+      var autoId, c, pathEvent, sessionType, totpcheck, u2fcheck;
       $scope.links = links;
       $scope.menulinks = menulinks;
       $scope.staticPrefix = staticPrefix;
@@ -176,7 +182,20 @@
       };
       $scope.deleteU2FKey = function() {
         $scope.waiting = true;
-        $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
+        $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
+          $scope.currentSession = null;
+          $scope.currentScope.remove();
+          return $scope.waiting = false;
+        }, function(resp) {
+          $scope.currentSession = null;
+          $scope.currentScope.remove();
+          return $scope.waiting = false;
+        });
+        return $scope.showT = false;
+      };
+      $scope.deleteTOTPKey = function() {
+        $scope.waiting = true;
+        $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=TOTP").then(function(response) {
           $scope.currentSession = null;
           $scope.currentScope.remove();
           return $scope.waiting = false;
@@ -189,29 +208,55 @@
       };
       $scope.addU2FKey = function() {
         $scope.waiting = true;
-        $http['put'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
+        $http['put'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
+          $scope.currentSession = null;
+          $scope.currentScope.remove();
           return $scope.waiting = false;
         }, function(resp) {
+          $scope.currentSession = null;
+          $scope.currentScope.remove();
           return $scope.waiting = false;
         });
-        $scope.showT = false;
-        $http.get(scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
-          return $scope.currentSession = transformSession(response.data);
+        return $scope.showT = false;
+      };
+      $scope.addTOTPKey = function() {
+        $scope.waiting = true;
+        $http['put'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=TOTP").then(function(response) {
+          $scope.currentSession = null;
+          $scope.currentScope.remove();
+          return $scope.waiting = false;
+        }, function(resp) {
+          $scope.currentSession = null;
+          $scope.currentScope.remove();
+          return $scope.waiting = false;
         });
         return $scope.showT = false;
       };
       $scope.verifyU2FKey = function() {
         $scope.waiting = true;
-        $http['post'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
+        $http['post'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
+          $scope.currentSession = null;
+          $scope.currentScope.remove();
           return $scope.waiting = false;
         }, function(resp) {
+          $scope.currentSession = null;
+          $scope.currentScope.remove();
           return $scope.waiting = false;
         });
-        $scope.showT = true;
-        $http.get(scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
-          return $scope.currentSession = transformSession(response.data);
+        return $scope.showT = true;
+      };
+      $scope.verifyTOTPKey = function() {
+        $scope.waiting = true;
+        $http['post'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=TOTP").then(function(response) {
+          $scope.currentSession = null;
+          $scope.currentScope.remove();
+          return $scope.waiting = false;
+        }, function(resp) {
+          $scope.currentSession = null;
+          $scope.currentScope.remove();
+          return $scope.waiting = false;
         });
-        return $scope.showT = false;
+        return $scope.showT = true;
       };
       $scope.stoggle = function(scope) {
         var node;
@@ -224,7 +269,7 @@
       $scope.displaySession = function(scope) {
         var sessionId, transformSession;
         transformSession = function(session) {
-          var _insert, _stToStr, attr, attrs, category, i, id, j, k, key, l, len, len1, len2, ref, ref1, res, subres, time, tmp, value;
+          var _insert, _stToStr, attr, attrs, category, i, id, k, key, l, len, len1, len2, m, ref, ref1, res, subres, time, tmp, value;
           _stToStr = function(s) {
             return s;
           };
@@ -266,6 +311,8 @@
                   session[key] = $scope.localeDate(value);
                 } else if (key.match(/^(_startTime|_updateTime)$/)) {
                   session[key] = _stToStr(value);
+                } else if (key.match(/^(_u2fKeyHandle|_u2fUserKey|_totp2fSecret)$/)) {
+                  session[key] = '##########';
                 }
               }
             }
@@ -297,8 +344,8 @@
             tmp = [];
             if (session._loginHistory.successLogin) {
               ref = session._loginHistory.successLogin;
-              for (j = 0, len1 = ref.length; j < len1; j++) {
-                l = ref[j];
+              for (k = 0, len1 = ref.length; k < len1; k++) {
+                l = ref[k];
                 tmp.push({
                   t: l._utime,
                   title: $scope.localeDate(l._utime),
@@ -308,8 +355,8 @@
             }
             if (session._loginHistory.failedLogin) {
               ref1 = session._loginHistory.failedLogin;
-              for (k = 0, len2 = ref1.length; k < len2; k++) {
-                l = ref1[k];
+              for (m = 0, len2 = ref1.length; m < len2; m++) {
+                l = ref1[m];
                 tmp.push({
                   t: l._utime,
                   title: $scope.localeDate(l._utime),
@@ -442,7 +489,51 @@
         });
       };
       c = $location.path().match(/^\/(\w+)/);
-      return $scope.type = c ? c[1] : '_whatToTrace';
+      $scope.type = c ? c[1] : '_whatToTrace';
+      u2fcheck = function() {
+        $scope.currentSession = null;
+        $scope.currentScope.remove();
+        $scope.showT = false;
+        return $.ajax({
+          type: "GET",
+          url: "https://manager.example.com:19876/sfa.html?U2FCheck=1",
+          data: {},
+          dataType: 'json',
+          error: displayError,
+          success: function(resp) {
+            if (resp.error) {
+              return setMsg('u2fFailed', 'warning');
+            } else if (resp.result) {
+              return setMsg('u2fUnregistered', 'positive');
+            }
+          },
+          error: displayError
+        });
+      };
+      totpcheck = function() {
+        $scope.currentSession = null;
+        $scope.currentScope.remove();
+        $scope.showT = false;
+        return $.ajax({
+          type: "GET",
+          url: "https://manager.example.com:19876/sfa.html?U2FCheck=1",
+          data: {},
+          dataType: 'json',
+          error: displayError,
+          success: function(resp) {
+            if (resp.error) {
+              return setMsg('u2fFailed', 'warning');
+            } else if (resp.result) {
+              return setMsg('u2fUnregistered', 'positive');
+            }
+          },
+          error: displayError
+        });
+      };
+      return $(document).ready(function() {
+        $('#U2FCheck').on('click', u2fcheck);
+        return $('#TOTPCheck').on('click', totpcheck);
+      });
     }
   ]);
 

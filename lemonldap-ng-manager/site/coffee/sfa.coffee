@@ -2,6 +2,26 @@
 # Session explorer
 ###
 
+
+setMsg = (msg, level) ->
+	$('#msg').html window.translate msg
+	$('#color').removeClass 'message-positive message-warning alert-success alert-warning'
+	$('#color').addClass "message-#{level}"
+	level = 'success' if level == 'positive'
+	$('#color').addClass "alert-#{level}"
+
+displayError = (j, status, err) ->
+	console.log 'Error', err
+	res = JSON.parse j.responseText
+	if res and res.error
+		res = res.error.replace /.* /, ''
+		console.log 'Returned error', res
+		setMsg res, 'warning'
+
+
+
+
+
 # Max number of session to display (see overScheme)
 max = 25
 
@@ -16,23 +36,6 @@ schemes =
 		(t,v) ->
 			"#{t}=#{v}"
 	]
-	#~ ipAddr: [
-		#~ (t,v) ->
-			#~ "groupBy=net(#{t},16,1)"
-		#~ (t,v) ->
-			#~ v = v + '.' unless v.match /:/
-			#~ "#{t}=#{v}*&groupBy=net(#{t},32,2)"
-		#~ (t,v) ->
-			#~ v = v + '.' unless v.match /:/
-			#~ "#{t}=#{v}*&groupBy=net(#{t},48,3)"
-		#~ (t,v) ->
-			#~ v = v + '.' unless v.match /:/
-			#~ "#{t}=#{v}*&groupBy=net(#{t},128,4)"
-		#~ (t,v) ->
-			#~ "#{t}=#{v}&groupBy=_whatToTrace"
-		#~ (t,v,q) ->
-			#~ q.replace(/\&groupBy.*$/, '') + "&_whatToTrace=#{v}"
-	#~ ]
 	_startTime: [
 		(t,v) ->
 			"groupBy=substr(#{t},8)"
@@ -50,14 +53,6 @@ schemes =
 			console.log q
 			q.replace(/\&groupBy.*$/, '') + "&_whatToTrace=#{v}"
 	]
-	#doubleIp: [
-		#(t,v) ->
-			#t
-		#(t,v) ->
-			#"_whatToTrace=#{v}&groupBy=ipAddr"
-		#(t,v,q) ->
-			#q.replace(/\&groupBy.*$/, '') + "&ipAddr=#{v}"
-	#]
 
 overScheme =
 	_whatToTrace: (t,v,level,over) ->
@@ -71,9 +66,7 @@ overScheme =
 		else
 			null
 
-#hiddenAttributes = '_password _u2fKeyHandle _u2fUserKey _totp2fSecret'
-hiddenAttributes = '_password _u2fKeyHandle _u2fUserKey _totp2fSecret'
-
+hiddenAttributes = '_password'
 
 # Attributes to group in session display
 categories =
@@ -104,6 +97,14 @@ menu =
 	delTOTPKey: [
 		title: 'deleteTOTPKey'
 		icon:  'trash'
+	]
+	addTOTPKey: [
+		title: 'addTOTPKey'
+		icon:  'plus'
+	]
+	verifyTOTPKey: [
+		title: 'verifyTOTPKey'
+		icon:  'check'
 	]
 	home: []
 
@@ -151,11 +152,10 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		$scope.showM = false
 
 	# SESSION MANAGEMENT
-
 	# Delete U2F key
 	$scope.deleteU2FKey = ->
 		$scope.waiting = true
-		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}/U2F").then (response) ->
+		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=U2F").then (response) ->
 			$scope.currentSession = null
 			$scope.currentScope.remove()
 			$scope.waiting = false
@@ -168,7 +168,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	# Delete TOTP key
 	$scope.deleteTOTPKey = ->
 		$scope.waiting = true
-		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}/TOTP").then (response) ->
+		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=TOTP").then (response) ->
 			$scope.currentSession = null
 			$scope.currentScope.remove()
 			$scope.waiting = false
@@ -181,34 +181,54 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	# Add U2F key
 	$scope.addU2FKey = ->
 		$scope.waiting = true
-		$http['put']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
-			#$scope.currentSession = null
-			#$scope.currentScope.remove()
+		$http['put']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=U2F").then (response) ->
+			$scope.currentSession = null
+			$scope.currentScope.remove()
 			$scope.waiting = false
 		, (resp) ->
-			#$scope.currentSession = null
-			#$scope.currentScope.remove()
+			$scope.currentSession = null
+			$scope.currentScope.remove()
 			$scope.waiting = false
 		$scope.showT = false
-		$http.get("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
-			$scope.currentSession = transformSession response.data
+		
+	# Add TOTP key
+	$scope.addTOTPKey = ->
+		$scope.waiting = true
+		$http['put']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=TOTP").then (response) ->
+			$scope.currentSession = null
+			$scope.currentScope.remove()
+			$scope.waiting = false
+		, (resp) ->
+			$scope.currentSession = null
+			$scope.currentScope.remove()
+			$scope.waiting = false
 		$scope.showT = false
 
 	# Verify U2F key
 	$scope.verifyU2FKey = ->
 		$scope.waiting = true
-		$http['post']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
-			#$scope.currentSession = null
-			#$scope.currentScope.remove()
+		$http['post']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=U2F").then (response) ->
+			$scope.currentSession = null
+			$scope.currentScope.remove()
 			$scope.waiting = false
 		, (resp) ->
-			#$scope.currentSession = null
-			#$scope.currentScope.remove()
+			$scope.currentSession = null
+			$scope.currentScope.remove()
 			$scope.waiting = false
 		$scope.showT = true
-		$http.get("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
-			$scope.currentSession = transformSession response.data
-		$scope.showT = false
+
+	# Verify TOTP key
+	$scope.verifyTOTPKey = ->
+		$scope.waiting = true
+		$http['post']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=TOTP").then (response) ->
+			$scope.currentSession = null
+			$scope.currentScope.remove()
+			$scope.waiting = false
+		, (resp) ->
+			$scope.currentSession = null
+			$scope.currentScope.remove()
+			$scope.waiting = false
+		$scope.showT = true
 
 	# Open node
 	$scope.stoggle = (scope) ->
@@ -256,6 +276,9 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							session[key] = $scope.localeDate value
 						else if key.match /^(_startTime|_updateTime)$/
 							session[key] = _stToStr value
+						else if key.match /^(_u2fKeyHandle|_u2fUserKey|_totp2fSecret)$/
+							session[key] = '##########'
+							
 			res = []
 
 			# 2. Push session keys in result, grouped by categories
@@ -432,4 +455,48 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	# Default to '_whatToTrace'
 	c = $location.path().match /^\/(\w+)/
 	$scope.type = if c then c[1] else '_whatToTrace'
+	
+	
+	
+	
+# Unregistration function (launched by "unregister" button)
+	u2fcheck = ->
+		$scope.currentSession = null
+		$scope.currentScope.remove()
+		$scope.showT = false
+		$.ajax
+			type: "GET"
+			url: "https://manager.example.com:19876/sfa.html?U2FCheck=1"
+			data: {}
+			dataType: 'json'
+			error: displayError
+			success: (resp) ->
+				if resp.error
+					setMsg 'u2fFailed', 'warning'
+				else if resp.result
+					setMsg 'u2fUnregistered', 'positive'
+			error: displayError
+
+	totpcheck = ->
+		$scope.currentSession = null
+		$scope.currentScope.remove()
+		$scope.showT = false
+		$.ajax
+			type: "GET"
+			url: "https://manager.example.com:19876/sfa.html?U2FCheck=1"
+			data: {}
+			dataType: 'json'
+			error: displayError
+			success: (resp) ->
+				if resp.error
+					setMsg 'u2fFailed', 'warning'
+				else if resp.result
+					setMsg 'u2fUnregistered', 'positive'
+			error: displayError
+
+# CheckBox "click" events
+	$(document).ready ->
+		$('#U2FCheck').on 'click', u2fcheck
+		$('#TOTPCheck').on 'click', totpcheck
 ]
+

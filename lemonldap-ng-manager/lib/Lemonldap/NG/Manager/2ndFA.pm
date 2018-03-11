@@ -1,4 +1,4 @@
-package Lemonldap::NG::Manager::SFA;
+package Lemonldap::NG::Manager::2ndFA;
 
 use 5.10.0;
 use utf8;
@@ -37,21 +37,21 @@ sub addRoutes {
         ['GET']
       )
 
-      # DELETE U2F KEY
+      # DELETE 2FA KEY
       ->addRoute(
-        sfa => { ':sessionType' => { ':sessionId' => 'deleteU2FKey' } },
+        sfa => { ':sessionType' => { ':sessionId' => 'delete2FAKey' } },
         ['DELETE']
       )
 
-      # ADD U2F KEY
+      # ADD 2FA KEY
       ->addRoute(
-        sfa => { ':sessionType' => { ':sessionId' => 'registerU2FKey' } },
+        sfa => { ':sessionType' => { ':sessionId' => 'add2FAKey' } },
         ['PUT']
       )
     
-      # VERIFY U2F KEY
+      # VERIFY 2FA KEY
       ->addRoute(
-        sfa => { ':sessionType' => { ':sessionId' => 'verifyU2FKey' } },
+        sfa => { ':sessionType' => { ':sessionId' => 'verify2FAKey' } },
         ['POST']
       );
 
@@ -63,23 +63,51 @@ sub addRoutes {
 }
 
 
-############################
-# II. REGISTRATION METHODS #
-############################
+###################
+# II. 2FA METHODS #
+###################
 
-sub registerU2FKey {
+sub delete2FAKey {
+
+	my ( $self, $req, $session, $skey ) = @_;
+	
+	my $mod = $self->getMod($req)
+      or return $self->sendError( $req, undef, 400 );
+    
+    my $params = $req->parameters();
+    my $Key = $params->{Key};
+	
+	if ( $Key =~ /\bU2F\b/ ) {
+		return $self->deleteU2FKey( $req, $session, $skey );
+	}
+	elsif ( $Key =~ /\bTOTP\b/ ) {
+		return $self->deleteTOTPKey( $req, $session, $skey );
+	}
+	else {
+		return $self->sendError( $req, undef, 666 );
+	}	
+}
+
+sub add2FAKey {
 
 	my ( $self, $req, $session, $skey ) = @_;
 
 	eval 'use Crypt::U2F::Server::Simple';
 	if ($@) {
 		$self->error("Can't load U2F library: $@");
+
 		return 0;
 	}
 		
 	return $self->addU2FKey( $req, $session, $skey );
 }
 
+sub verify2FAKey {
+
+	my ( $self, $req, $session, $skey ) = @_;
+		
+	return $self->addU2FKey( $req, $session, $skey );
+}
 
 ########################
 # III. DISPLAY METHODS #
@@ -90,14 +118,16 @@ sub sfa {
 
     # Case 1: only one session is required
     if ($session) {
+		$self->error("Can't load U2F library: $session");
         return $self->session( $req, $session, $skey );
     }
-
+	
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
     my $params = $req->parameters();
     my $type   = delete $params->{sessionType};
     $type = ucfirst($type);
+    my $Key = $params->{sessionType};
 
     my $res;
     
@@ -106,7 +136,7 @@ sub sfa {
     my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
 
     # 2.1 Get fields to require
-    my @fields = ( '_httpSessionType', $self->{ipField}, $whatToTrace, '_u2fKeyHandle' );
+    my @fields = ( '_httpSessionType', $self->{ipField}, $whatToTrace, '_u2fKeyHandle', '_totp2fSecret' );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/;
         $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
@@ -195,7 +225,8 @@ sub sfa {
 	# Display sessions with registered U2F key only
 	foreach my $session ( keys %$res ) {
 		delete $res->{$session}
-		  unless ( defined $res->{$session}->{_u2fKeyHandle} and length $res->{$session}->{_u2fKeyHandle} )
+		  unless ( ( defined $res->{$session}->{_u2fKeyHandle} and length $res->{$session}->{_u2fKeyHandle} ) 
+					or ( defined $res->{$session}->{_totp2fSecret} and length $res->{$session}->{_totp2fSecret} ) )
 		}
 		
     my $total = ( keys %$res );
