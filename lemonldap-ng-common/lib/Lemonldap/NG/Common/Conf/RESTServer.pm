@@ -211,7 +211,7 @@ sub virtualHosts {
         }
         return $self->sendJSONresponse( $req, $resp );
     }
-    elsif ( $query =~ $virtualHostKeys ) {
+    elsif ( $query =~ qr/^$virtualHostKeys$/o ) {
         $self->logger->debug("Query for $vh/$query key");
 
         # TODO: verify how this is done actually
