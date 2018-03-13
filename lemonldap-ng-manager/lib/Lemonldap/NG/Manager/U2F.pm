@@ -5,6 +5,7 @@ use utf8;
 use strict;
 use Mouse;
 use MIME::Base64 qw(encode_base64 decode_base64);
+
 #use Crypt::U2F::Server::Simple;
 
 use Lemonldap::NG::Common::Session;
@@ -49,7 +50,7 @@ sub addRoutes {
         u2f => { ':sessionType' => { ':sessionId' => 'registerU2FKey' } },
         ['PUT']
       )
-    
+
       # VERIFY U2F KEY
       ->addRoute(
         u2f => { ':sessionType' => { ':sessionId' => 'verifyU2FKey' } },
@@ -63,24 +64,22 @@ sub addRoutes {
     $self->{hiddenAttributes} //= "_password";
 }
 
-
 ############################
 # II. REGISTRATION METHODS #
 ############################
 
 sub registerU2FKey {
 
-	my ( $self, $req, $session, $skey ) = @_;
+    my ( $self, $req, $session, $skey ) = @_;
 
-	eval 'use Crypt::U2F::Server::Simple';
-	if ($@) {
-		$self->error("Can't load U2F library: $@");
-		return 0;
-	}
-		
-	return $self->addU2FKey( $req, $session, $skey );
+    eval 'use Crypt::U2F::Server::Simple';
+    if ($@) {
+        $self->error("Can't load U2F library: $@");
+        return 0;
+    }
+
+    return $self->addU2FKey( $req, $session, $skey );
 }
-
 
 ########################
 # III. DISPLAY METHODS #
@@ -101,13 +100,14 @@ sub u2f {
     $type = ucfirst($type);
 
     my $res;
-    
+
     # Case 2: list of sessions
 
     my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
 
     # 2.1 Get fields to require
-    my @fields = ( '_httpSessionType', $self->{ipField}, $whatToTrace, '_u2fKeyHandle' );
+    my @fields =
+      ( '_httpSessionType', $self->{ipField}, $whatToTrace, '_u2fKeyHandle' );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/;
         $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
@@ -193,12 +193,13 @@ sub u2f {
         }
     }
 
-	# Display sessions with registered U2F key only
-	foreach my $session ( keys %$res ) {
-		delete $res->{$session}
-		  unless ( defined $res->{$session}->{_u2fKeyHandle} and length $res->{$session}->{_u2fKeyHandle} )
-		}
-		
+    # Display sessions with registered U2F key only
+    foreach my $session ( keys %$res ) {
+        delete $res->{$session}
+          unless ( defined $res->{$session}->{_u2fKeyHandle}
+            and length $res->{$session}->{_u2fKeyHandle} );
+    }
+
     my $total = ( keys %$res );
 
     if ( my $group = $req->params('groupBy') ) {

@@ -95,7 +95,7 @@ sub getToken {
             $self->logger->notice("Bad (or expired) token $id");
             return undef;
         }
-        $self->cache->remove($id) unless($keep);
+        $self->cache->remove($id) unless ($keep);
         return from_json( $data, { allow_nonref => 1 } );
     }
     else {

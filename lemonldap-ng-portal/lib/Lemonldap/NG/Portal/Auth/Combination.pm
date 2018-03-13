@@ -177,8 +177,7 @@ sub try {
 
         # On error, restart authentication with next scheme
         if ( $res > PE_OK ) {
-            $self->logger->info(
-                qq'Scheme "$name" returned $res, trying next');
+            $self->logger->info(qq'Scheme "$name" returned $res, trying next');
             $req->datas->{dataKeep}->{combinationTry}++;
             $req->steps( [ @{ $req->datas->{combinationSteps} } ] );
             $req->continue(1);

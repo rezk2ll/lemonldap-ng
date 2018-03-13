@@ -733,7 +733,7 @@ sub extractFormInfo {
                             my $res = $self->p->deleteSession($req);
                             return (
                                 $res eq PE_LOGOUT_OK ? PE_SENDRESPONSE : $res );
-                          }
+                        }
                     ]
                 );
 

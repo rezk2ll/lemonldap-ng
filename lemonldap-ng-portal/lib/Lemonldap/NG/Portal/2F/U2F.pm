@@ -85,6 +85,7 @@ sub verify {
             return $self->fail($req);
         }
         $self->logger->debug("Get challenge: $challenge");
+
         #eval { $challenge = JSON::from_json($challenge)->{challenge} };
         if ( not $req->datas->{crypter}->setChallenge($challenge) ) {
             $self->logger->error(

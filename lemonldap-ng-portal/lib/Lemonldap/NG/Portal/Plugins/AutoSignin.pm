@@ -24,9 +24,10 @@ sub init {
     if ( my $rules = $self->conf->{autoSigninRules} ) {
         my $safe = Safe->new;
         foreach my $id ( sort keys %$rules ) {
-            my $sub = $safe->reval('sub{my($env)=@_;return ('.$rules->{$id}.')}');
+            my $sub =
+              $safe->reval( 'sub{my($env)=@_;return (' . $rules->{$id} . ')}' );
             if ($@) {
-                $self->error('Bad Autologin rule "'.$rules->{$id}.': $@');
+                $self->error( 'Bad Autologin rule "' . $rules->{$id} . ': $@' );
                 return 0;
             }
             $id =~ s/^\s*([\w\-\@]+)\s*/$1/;
