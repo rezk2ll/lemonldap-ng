@@ -33,6 +33,13 @@ sub init {
 
 sub extractFormInfo {
     my ( $self, $req ) = @_;
+
+    if ( $req->datas->{_krbUser} ) {
+        $self->logger->debug( 'Kerberos ticket already validated for '
+              . $req->datas->{_krbUser} );
+        return PE_OK;
+    }
+
     my $auth = $req->env->{HTTP_AUTHORIZATION};
     unless ($auth) {
 
@@ -138,7 +145,7 @@ sub extractFormInfo {
         return PE_ERROR;
     }
     $self->userLogger->notice("$client_name authentified by Kerberos");
-    $req->{_krbUser} = $client_name;
+    $req->datas->{_krbUser} = $client_name;
     if ( $self->conf->{krbRemoveDomain} ) {
         $client_name =~ s/^(.*)@.*$/$1/;
     }
@@ -157,7 +164,7 @@ sub authLogout {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     $req->{sessionInfo}->{authenticationLevel} = $self->conf->{krbAuthnLevel};
-    $req->{sessionInfo}->{_krbUser}            = $req->{_krbUser};
+    $req->{sessionInfo}->{_krbUser}            = $req->datas->{_krbUser};
     PE_OK;
 }
 
