@@ -342,16 +342,7 @@ llapp.controller 'TreeCtrl', [
 			$scope.showModal('prompt.html', name).then ->
 				n= $scope.result
 				if n
-					node = $scope.addTemplateNode n, 'virtualHost'
-					delete node.nodes[0].cnodes
-					node.nodes[0].nodes = [
-						id: "virtualHosts/new__#{n}/locationRules/default",
-						type: "rule",
-						title: "default",
-						comment: "",
-						re: "default",
-						data: "deny"
-					]
+					$scope.addTemplateNode n, 'virtualHost'
 
 		$scope.duplicateVhost = ->
 			name = if $scope.domain then ".#{$scope.domain.data}" else '.example.com'
@@ -398,9 +389,21 @@ llapp.controller 'TreeCtrl', [
 				title: name
 				type: type
 				nodes: templates type, "new__#{name}"
+			setDefault t.nodes
 			cs.$modelValue.nodes.push t
 			cs.expand()
 			return t
+
+		setDefault = (node) ->
+			for n in node
+				if n.cnodes and n.default
+					delete n.cnodes
+					n._nodes = n.default
+				if n._nodes
+					setDefault n._nodes
+				else if n.default or n.default == 0
+					n.data = n.default
+			node
 
 		_getAll = (node) ->
 			d = $q.defer()
