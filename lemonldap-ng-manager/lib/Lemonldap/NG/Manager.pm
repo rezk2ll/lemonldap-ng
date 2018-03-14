@@ -84,14 +84,18 @@ sub init {
     my $portal = $conf->{portal};
     $portal =~ s#https?://([^/]*).*#$1#;
     $self->csp(
-"default-src 'self' $portal;frame-ancestors 'none';form-action 'self';"
+        "default-src 'self' $portal;frame-ancestors 'none';form-action 'self';"
     );
 
     $self->defaultRoute( $working[0]->defaultRoute );
 
 # Find out more glyphicones at https://www.w3schools.com/icons/bootstrap_icons_glyphicons.asp
-    my $linksIcons =
-      { 'conf' => 'cog', 'sessions' => 'duplicate', 'notifications' => 'bell', '2ndFA' => 'wrench' };
+    my $linksIcons = {
+        'conf'          => 'cog',
+        'sessions'      => 'duplicate',
+        'notifications' => 'bell',
+        '2ndFA'         => 'wrench'
+    };
 
     $self->links( [] );
     for ( my $i = 0 ; $i < @links ; $i++ ) {

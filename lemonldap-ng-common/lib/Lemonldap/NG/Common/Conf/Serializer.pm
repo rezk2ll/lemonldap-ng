@@ -98,10 +98,11 @@ sub unserialize {
             unless ( utf8::is_utf8($v) ) {
                 $v = encode( 'UTF-8', $v );
             }
-            $conf->{$k} =
-              ( $v =~ /./
+            $conf->{$k} = (
+                $v =~ /./
                 ? eval { from_json( $v, { allow_nonref => 1 } ) }
-                : {} );
+                : {}
+            );
             if ($@) {
                 $Lemonldap::NG::Common::Conf::msg .=
                   "Unable to decode $k, switching to old format.\n";

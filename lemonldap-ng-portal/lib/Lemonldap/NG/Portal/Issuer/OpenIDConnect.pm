@@ -901,7 +901,7 @@ sub token {
 
     unless ($codeSession) {
         $self->logger->error("Unable to find OIDC session $code");
-        $self->p->sendError( $req, 'invalid_request', 400 );
+        return $self->p->sendError( $req, 'invalid_request', 400 );
     }
 
     # Check we have the same redirect_uri value
@@ -909,7 +909,7 @@ sub token {
     {
         $self->userLogger->error( "Provided redirect_uri is different from "
               . $codeSession->{redirect_uri} );
-        $self->p->sendError( $req, 'invalid_request', 400 );
+        return $self->p->sendError( $req, 'invalid_request', 400 );
     }
 
     # Get user identifier
@@ -921,7 +921,7 @@ sub token {
         $self->userLogger->error(
             "Unable to find user session linked to OIDC session $code");
         $codeSession->remove();
-        $self->p->sendError( $req, 'invalid_request', 400 );
+        return $self->p->sendError( $req, 'invalid_request', 400 );
     }
 
     my $user_id_attribute =
@@ -947,7 +947,7 @@ sub token {
         $self->userLogger->error(
             "Unable to create OIDC session for access_token");
         $codeSession->remove();
-        $self->p->sendError( $req, 'invalid_request', 400 );
+        return $self->p->sendError( $req, 'invalid_request', 400 );
     }
 
     my $access_token = $accessTokenSession->id;
@@ -1102,7 +1102,7 @@ sub registration {
     # Check dynamic registration is allowed
     unless ( $self->conf->{oidcServiceAllowDynamicRegistration} ) {
         $self->logger->error("Dynamic registration is not allowed");
-        $self->p->sendError( $req, 'server_error' );
+        return $self->p->sendError( $req, 'server_error' );
     }
 
     # Get client metadata

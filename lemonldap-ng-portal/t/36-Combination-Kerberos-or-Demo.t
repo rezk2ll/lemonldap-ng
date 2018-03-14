@@ -37,11 +37,12 @@ SKIP: {
                 krbByJs          => 1,
             }
         }
-      );
-      ok( $res = $client->_get( '/', accept => 'text/html' ), 'Simple access' );
-      ok( $res->[2]->[0] =~ /script.*kerberos\.js/s, 'Found Kerberos JS' );
-      my ( $host, $url, $query ) = expectForm( $res, '#');
-      # TODO
+    );
+    ok( $res = $client->_get( '/', accept => 'text/html' ), 'Simple access' );
+    ok( $res->[2]->[0] =~ /script.*kerberos\.js/s, 'Found Kerberos JS' );
+    my ( $host, $url, $query ) = expectForm( $res, '#' );
+
+    # TODO
 }
 count($maintests);
 clean_sessions();

@@ -24,8 +24,12 @@ SKIP: {
         skip 'DBD::SQLite not found', $maintests;
     }
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
-    $dbh->do('CREATE TABLE users (user text,password text,name text,uid text,cn text,mail text)');
-    $dbh->do("INSERT INTO users VALUES ('dwho','dwho','Doctor who','dwho','Doctor who','dwho\@badwolf.org')");
+    $dbh->do(
+'CREATE TABLE users (user text,password text,name text,uid text,cn text,mail text)'
+    );
+    $dbh->do(
+"INSERT INTO users VALUES ('dwho','dwho','Doctor who','dwho','Doctor who','dwho\@badwolf.org')"
+    );
 
     # Initialization
     ok( $issuer = issuer(), 'Issuer portal' );

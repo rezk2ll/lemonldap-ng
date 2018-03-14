@@ -97,6 +97,7 @@ sub bind {
     unless ($self->ldap
         and $self->ldap->root_dse( attrs => ['supportedLDAPVersion'] ) )
     {
+        $self->ldap->DESTROY if ( $self->ldap );
         $self->ldap( $self->newLdap );
     }
     return undef unless ( $self->ldap );

@@ -21,16 +21,22 @@ Before release
 --------------
 
 - Update documentation:
-$ make documentation
+
+  $ ./script/parameters-for-wiki.pl >/tmp/prmlist.txt
+
+  Replace https://lemonldap-ng.org/documentation/X.X/parameterlist by
+  /tmp/prmlist.txt content
+  
+  $ make documentation
 
 - Translate documentation
-$ make fr-doc
+  $ make fr-doc
 
 - Update debian/changelog
   launch just `dch -r` and force save (":w" and ot ":x")
 
 - Check Debian packages quality
-$ cme check dpkg
+  $ cme check dpkg
 
 For minor release
 -----------------

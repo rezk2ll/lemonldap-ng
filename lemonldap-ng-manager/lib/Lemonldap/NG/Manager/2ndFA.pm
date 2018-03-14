@@ -62,7 +62,6 @@ sub addRoutes {
     $self->{hiddenAttributes} //= "_password";
 }
 
-
 ###################
 # II. 2FA METHODS #
 ###################
@@ -84,18 +83,17 @@ sub delete2FAKey {
 		return $self->deleteTOTPKey( $req, $session, $skey );
 	}
 	else {
-		return $self->sendError( $req, undef, 666 );
+		return $self->sendError( $req, undef, 400 );
 	}	
 }
 
 sub add2FAKey {
 
-	my ( $self, $req, $session, $skey ) = @_;
+    my ( $self, $req, $session, $skey ) = @_;
 
 	eval 'use Crypt::U2F::Server::Simple';
 	if ($@) {
 		$self->error("Can't load U2F library: $@");
-
 		return 0;
 	}
 		
@@ -129,7 +127,7 @@ sub sfa {
     my $Key = $params->{sessionType};
 
     my $res;
-    
+
     # Case 2: list of sessions
 
     my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};

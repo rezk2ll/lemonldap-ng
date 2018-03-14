@@ -46,7 +46,7 @@ Log      : $conf->{cfgLog}
 
 sub updateCache {
     my $self = shift;
-    my $conf = $self->confAccess->getConf( { noCache => 1, raw => 1 } );
+    my $conf = $self->confAccess->getConf( { noCache => 2 } );
     die "Must not be launched as root" unless ($>);
     print STDERR
       qq{Cache updated to configuration $conf->{cfgNum} for user $>\n};

@@ -178,24 +178,32 @@ sub sregHook {
 
     # else build message and return 0
     else {
-        my (@mopt,@mreq);
+        my ( @mopt, @mreq );
 
         # No choice for requested parameters: just an information
         foreach my $k (@req) {
             utf8::decode( $msg{req}->{$k} );
-            push @mreq, {k=>$k,m=>$msg{req}->{$k}};
+            push @mreq, { k => $k, m => $msg{req}->{$k} };
         }
 
         # For optional parameters: checkboxes are displayed
         foreach my $k (@opt) {
             utf8::decode( $msg{opt}->{$k} );
-            push @mopt,{k=>$k,m=>$msg{opt}->{$k},c=>( $ag{$k} ? 'checked' : '' )};
+            push @mopt,
+              {
+                k => $k,
+                m => $msg{opt}->{$k},
+                c => ( $ag{$k} ? 'checked' : '' )
+              };
         }
 
-        $req->datas->{_openIdTrustExtMsg} .= $self->loadTemplate('openIdTrust',params => {
-            required => \@mreq,
-            optional => \@mopt,
-        });
+        $req->datas->{_openIdTrustExtMsg} .= $self->loadTemplate(
+            'openIdTrust',
+            params => {
+                required => \@mreq,
+                optional => \@mopt,
+            }
+        );
 
         $self->logger->debug('Building validation form');
         return ( 0, $prm );

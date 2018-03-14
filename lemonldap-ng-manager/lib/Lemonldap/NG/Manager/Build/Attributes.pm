@@ -227,7 +227,7 @@ sub attributes {
         },
         localStorageOptions => {
             type          => 'keyTextContainer',
-            documentation => 'Local cache',
+            documentation => 'Local cache parameters',
             flags         => 'hmp',
         },
         cfgNum => {
@@ -824,7 +824,7 @@ sub attributes {
         localSessionStorage => {
             type          => 'PerlModule',
             default       => 'Cache::FileCache',
-            documentation => 'Sessions cache module',
+            documentation => 'Local sessions cache module',
         },
         localSessionStorageOptions => {
             type    => 'keyTextContainer',
@@ -1411,8 +1411,12 @@ sub attributes {
         },
 
         # CAS IDP
-        casAttr                => { type => 'text', },
-        casAttributes          => { type => 'keyTextContainer', },
+        casAttr =>
+          { type => 'text', documentation => 'Pivot attribute for CAS', },
+        casAttributes => {
+            type          => 'keyTextContainer',
+            documentation => 'CAS exported attributes',
+        },
         casAccessControlPolicy => {
             type   => 'select',
             select => [
@@ -1423,9 +1427,13 @@ sub attributes {
             default       => 'none',
             documentation => 'CAS access control policy',
         },
-        casStorage        => { type => 'PerlModule', },
+        casStorage => {
+            type          => 'PerlModule',
+            documentation => 'Apache::Session module to store CAS user data',
+        },
         casStorageOptions => {
-            type => 'keyTextContainer',
+            type          => 'keyTextContainer',
+            documentation => 'Apache::Session module parameters',
         },
         issuerDBCASActivation => {
             default       => 0,
@@ -1444,7 +1452,10 @@ sub attributes {
         },
 
         # Partners
-        casAppMetaDataOptions      => { type => 'subContainer', },
+        casAppMetaDataOptions => {
+            type          => 'subContainer',
+            documentation => 'Root of CAS app options',
+        },
         casAppMetaDataExportedVars => {
             type          => 'keyTextContainer',
             default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
@@ -1605,8 +1616,14 @@ sub attributes {
             type          => 'bool',
             documentation => 'SAML force metadata UTF8 conversion',
         },
-        samlStorage                 => { type => 'PerlModule', },
-        samlStorageOptions          => { type => 'keyTextContainer', },
+        samlStorage => {
+            type          => 'PerlModule',
+            documentation => 'Apache::Session module to store SAML user data',
+        },
+        samlStorageOptions => {
+            type          => 'keyTextContainer',
+            documentation => 'Apache::Session module parameters',
+        },
         samlAuthnContextMapPassword => {
             type          => 'int',
             default       => 2,
@@ -2231,9 +2248,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'find',
             documentation => '"deref" param of Net::LDAP::search()',
         },
-        mailLDAPFilter     => { type => 'text', },
-        LDAPFilter         => { type => 'text', },
-        AuthLDAPFilter     => { type => 'text', },
+        mailLDAPFilter =>
+          { type => 'text', documentation => 'LDAP filter for mail search' },
+        LDAPFilter =>
+          { type => 'text', documentation => 'Default LDAP filter' },
+        AuthLDAPFilter =>
+          { type => 'text', documentation => 'LDAP filter for auth search' },
         ldapGroupRecursive => {
             default       => 0,
             type          => 'bool',
@@ -2312,7 +2332,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
             documentation => 'CAS exported variables',
         },
-        casSrvMetaDataOptions                => { type => 'subContainer', },
+        casSrvMetaDataOptions => {
+            type          => 'subContainer',
+            documentation => 'Root of CAS server options',
+        },
         casSrvMetaDataOptionsGateway         => { type => 'bool', },
         casSrvMetaDataOptionsProxiedServices => {
             type       => 'keyTextContainer',
@@ -2385,7 +2408,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 ns =>
 'http://auth.example.com/Lemonldap/NG/Common/PSGI/SOAPService',
             },
-            documentation => 'Demo exported variables',
+            documentation => 'Apache::Session module parameters',
         },
 
         # Proxy
@@ -2649,6 +2672,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'Custom', v => 'customModule' },
                 ]
             ],
+            documentation => 'Hash list of Choice strings',
         },
 
         # Combination
@@ -2831,8 +2855,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 0,
             documentation => 'OpenID Connect allow hybrid flow',
         },
-        oidcStorage        => { type => 'PerlModule', },
-        oidcStorageOptions => { type => 'keyTextContainer', },
+        oidcStorage => {
+            type          => 'PerlModule',
+            documentation => 'Apache::Session module to store OIDC user data',
+        },
+        oidcStorageOptions => {
+            type          => 'keyTextContainer',
+            documentation => 'Apache::Session module parameters',
+        },
 
         # OpenID Connect metadata nodes
         oidcOPMetaDataNodes => {

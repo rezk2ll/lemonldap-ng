@@ -83,7 +83,7 @@ SKIP: {
     $pwd  = $2;
     ok( $user eq 'fbar', 'Get good login' );
 
-    my $postString = 'user='.$user.'&password='.$pwd;
+    my $postString = 'user=' . $user . '&password=' . $pwd;
     ok(
         $res = $client->_post(
             '/', IO::String->new($postString),
