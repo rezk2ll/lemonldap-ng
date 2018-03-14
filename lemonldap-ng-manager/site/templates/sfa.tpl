@@ -16,7 +16,7 @@
       <div class="navbar navbar-default">
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" role="grid">
-            <li><a  id="a-persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('2faSessions')}}</a></li>
+            <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('2faSessions')}}</a></li>
             <div class="form-check ">&nbsp;&nbsp;&nbsp;
               <input type="checkbox" class="form-check-input" id="U2FCheck" value="1">
               <label class="form-check-label" for="U2FCheck">U2F</label>&nbsp;&nbsp;

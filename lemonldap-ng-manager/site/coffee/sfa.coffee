@@ -1,5 +1,5 @@
 ###
-# Session explorer
+# 2ndFA Session explorer
 ###
 
 
@@ -455,48 +455,5 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	# Default to '_whatToTrace'
 	c = $location.path().match /^\/(\w+)/
 	$scope.type = if c then c[1] else '_whatToTrace'
-	
-	
-	
-	
-# Unregistration function (launched by "unregister" button)
-	u2fcheck = ->
-		$scope.currentSession = null
-		$scope.currentScope.remove()
-		$scope.showT = false
-		$.ajax
-			type: "GET"
-			url: "https://manager.example.com:19876/sfa.html?U2FCheck=1"
-			data: {}
-			dataType: 'json'
-			error: displayError
-			success: (resp) ->
-				if resp.error
-					setMsg 'u2fFailed', 'warning'
-				else if resp.result
-					setMsg 'u2fUnregistered', 'positive'
-			error: displayError
-
-	totpcheck = ->
-		$scope.currentSession = null
-		$scope.currentScope.remove()
-		$scope.showT = false
-		$.ajax
-			type: "GET"
-			url: "https://manager.example.com:19876/sfa.html?U2FCheck=1"
-			data: {}
-			dataType: 'json'
-			error: displayError
-			success: (resp) ->
-				if resp.error
-					setMsg 'u2fFailed', 'warning'
-				else if resp.result
-					setMsg 'u2fUnregistered', 'positive'
-			error: displayError
-
-# CheckBox "click" events
-	$(document).ready ->
-		$('#U2FCheck').on 'click', u2fcheck
-		$('#TOTPCheck').on 'click', totpcheck
 ]
 

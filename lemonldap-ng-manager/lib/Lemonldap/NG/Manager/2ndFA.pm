@@ -117,8 +117,7 @@ sub sfa {
     my ( $self, $req, $session, $skey ) = @_;
 
     # Case 1: only one session is required
-    if ($session) {
-		$self->error("Can't load U2F library: $session");
+    if ($session) {;
         return $self->session( $req, $session, $skey );
     }
 	
@@ -153,7 +152,7 @@ sub sfa {
     my %filters = map {
         my $s = $_;
         $s =~ s/\b_whatToTrace\b/$whatToTrace/o;
-        /^(?:(?:group|order)By|doubleIp)$/
+        /^groupBy$/
           ? ()
           : ( $s => $params->{$_} );
     } keys %$params;
