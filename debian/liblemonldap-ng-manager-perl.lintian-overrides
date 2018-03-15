@@ -1,0 +1,2 @@
+# Script not executable by default. Launched by FastCGI engine
+liblemonldap-ng-manager-perl: script-not-executable usr/share/lemonldap-ng/manager/htdocs/manager.psgi
