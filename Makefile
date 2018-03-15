@@ -707,7 +707,7 @@ install_portal_site:	install_conf_dir
 	done; cd -
 	@cd $(SRCPORTALDIR)/site/templates; for f in `find * -type f ! -name '*.tpl'`; do \
 		mkdir -p $(RPORTALTEMPLATESDIR)/`dirname $$f`; \
-		install -v $$f $(RPORTALTEMPLATESDIR)/$$f; \
+		install -m 644 -v $$f $(RPORTALTEMPLATESDIR)/$$f; \
 	done; cd -
 	@cd $(SRCPORTALDIR)/site/templates; for l in `find * -type l`; do \
 		echo link to do $$l `readlink $$l`; \
@@ -716,7 +716,7 @@ install_portal_site:	install_conf_dir
 		ln -s $$target $$l; \
 		cd -; \
 	done
-	if test "$(USEEXTERNALLIBS)" = "yes"; then \
+	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
 		rm -rvf $(PORTALEXTERNALLIBS); \
 	elif test "$(USEDEBIANLIBS)" = "yes"; then \
 		rm -rvf $(PORTALLIBSTOREMOVEFORDEBIAN); \
