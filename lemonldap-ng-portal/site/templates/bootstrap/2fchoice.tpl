@@ -7,7 +7,7 @@
       <input type="hidden" name="token" id="token" value="<TMPL_VAR NAME="TOKEN">" />
       <TMPL_LOOP NAME="MODULES">
        <button type="submit" name="sf" value="<TMPL_VAR NAME="CODE">">
-         <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" />
+         <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2F" />
        </button>
       </TMPL_LOOP>
     </form>
