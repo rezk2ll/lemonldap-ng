@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 15;
+my $maintests = 16;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -38,7 +38,16 @@ SKIP: {
     # TOTP form
     ok(
         $res = $client->_get(
-            '/totpregister.html',
+            '/2fregisters',
+            cookie => "lemonldap=$id",
+            accept => 'text/html',
+        ),
+        'Form registration'
+    );
+    expectRedirection( $res, qr#/2fregisters/totp$# );
+    ok(
+        $res = $client->_get(
+            '/2fregisters/totp',
             cookie => "lemonldap=$id",
             accept => 'text/html',
         ),
@@ -49,7 +58,7 @@ SKIP: {
     # JS query
     ok(
         $res = $client->_post(
-            '/totpregister/getkey', IO::String->new(''),
+            '/2fregisters/totp/getkey', IO::String->new(''),
             cookie => "lemonldap=$id",
             length => 0,
         ),
@@ -71,7 +80,7 @@ SKIP: {
     my $s = "code=$code&token=$token";
     ok(
         $res = $client->_post(
-            '/totpregister/verify',
+            '/2fregisters/totp/verify',
             IO::String->new($s),
             length => length($s),
             cookie => "lemonldap=$id",
