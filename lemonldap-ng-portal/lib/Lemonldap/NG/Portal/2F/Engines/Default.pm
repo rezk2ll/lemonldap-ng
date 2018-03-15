@@ -240,7 +240,7 @@ sub displayRegister {
         }
     }
     if ( @am == 1 ) {
-        return [ 302, [ Location => $self->conf->{portal} . $am[0]->{url} ],
+        return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ],
             [] ];
     }
     return $self->p->sendHtml(
