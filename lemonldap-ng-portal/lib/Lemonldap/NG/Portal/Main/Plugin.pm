@@ -187,7 +187,7 @@ L<http://lemonldap-ng.org>
 
 =item Writing an issuer module: L<Lemonldap::NG::Portal::Main::Issuer>
 
-=item Writing an other plugin: L<Lemonldap::NG::Portal::Main::Plugin>
+=item Writing another plugin: L<Lemonldap::NG::Portal::Main::Plugin>
 
 =item Request object: L<Lemonldap::NG::Portal::Main::Request>
 
