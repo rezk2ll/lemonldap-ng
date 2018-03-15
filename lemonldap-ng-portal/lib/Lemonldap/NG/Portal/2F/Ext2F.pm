@@ -26,6 +26,7 @@ sub init {
             return 0;
         }
     }
+    $self->logo( $self->conf->{ext2fLogo} ) if ( $self->conf->{ext2fLogo} );
     return $self->SUPER::init();
 }
 

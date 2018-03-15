@@ -1128,6 +1128,10 @@ sub attributes {
             documentation =>
 'Authentication level for users authentified by External second factor'
         },
+        ext2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for External 2F',
+        },
 
         #  REST External second factor
         rest2fActivation => {
@@ -1163,6 +1167,10 @@ sub attributes {
             type => 'int',
             documentation =>
 'Authentication level for users authentified by REST second factor'
+        },
+        rest2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for REST 2F',
         },
 
         # Single session
