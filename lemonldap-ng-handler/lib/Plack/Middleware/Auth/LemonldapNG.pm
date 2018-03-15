@@ -85,28 +85,7 @@ family server.
 
 =head1 SEE ALSO
 
-Most of the documentation is available on the website
-L<http://lemonldap-ng.org>
-
-=head2 OTHER POD FILES
-
-=over
-
-=item Writing an authentication module: L<Lemonldap::NG::Portal::Auth>
-
-=item Writing a UserDB module: L<Lemonldap::NG::Portal::UserDB>
-
-=item Writing a second factor module: L<Lemonldap::NG::Portal::Main::SecondFactor>
-
-=item Writing an issuer module: L<Lemonldap::NG::Portal::Main::Issuer>
-
-=item Writing an other plugin: L<Lemonldap::NG::Portal::Main::Plugin>
-
-=item Request object: L<Lemonldap::NG::Portal::Main::Request>
-
-=item Adding parameters in the manager: L<Lemonldap::NG::Manager::Build>
-
-=back
+L<http://lemonldap-ng.org>, L<Plack>, L<Plack::Middleware>
 
 =head1 AUTHORS
 
