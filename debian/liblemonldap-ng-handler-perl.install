@@ -1,4 +1,6 @@
 /usr/share/perl5/Lemonldap/NG/Handler*
 /usr/share/perl5/auto/Lemonldap/NG/Handler*
+/usr/share/perl5/Plack/*
 /usr/share/man/man3/Lemonldap::NG::Handler*
+/usr/share/man/man3/Plack::Middleware::Auth::LemonldapNG*
 /usr/share/lemonldap-ng/bin/purgeLocalCache
