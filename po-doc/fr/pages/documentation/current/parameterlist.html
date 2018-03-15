@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,parameterlist"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="parameterlist.html"/>
@@ -54,540 +54,1239 @@
 
 <h2 class="sectionedit2" id="main_parameters">Paramètres principaux</h2>
 <div class="level2">
-<div class="sortable sort2"><div class="table sectionedit3"><table class="inline table table-bordered table-striped">
+<div class="sortable sort1"><div class="table sectionedit3"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
-		<th class="col0 centeralign">  Nom complet  </th><th class="col1 centeralign">  Nom de la clef  </th><th class="col2 centeralign">  Portail  </th><th class="col3 leftalign"> Agent (Handler)  </th><th class="col4 leftalign">  Manager    </th>
+		<th class="col0 centeralign">  Nom de la clef  </th><th class="col1 centeralign">    Documentation    </th><th class="col2 centeralign">  Portail  </th><th class="col3 centeralign">  Agent (Handler)  </th><th class="col4 centeralign">    Manager    </th><th class="col5 centeralign">    ini file only    </th>
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0"> Activer le compte-à-rebours d'acceptation automatique </td><td class="col1">  activeTimer  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ADPwdExpireWarning  </td><td class="col1">  AD password expire warning  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0"> Niveau d'authentification d'Apache </td><td class="col1">  apacheAuthnLevel  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ADPwdMaxAge  </td><td class="col1">  AD password max age  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0"> Modules de "Choice" </td><td class="col1">  authChoiceModules  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  AuthLDAPFilter  </td><td class="col1">  LDAP filter for auth search  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0"> Paramètre d'<abbr title="Uniform Resource Locator">URL</abbr> pour "Choice" </td><td class="col1">  authChoiceParam  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  LDAPFilter  </td><td class="col1">  Default LDAP filter  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row5 rowodd">
-		<td class="col0"> Module d'authentification </td><td class="col1"> authentification </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  SMTPAuthPass  </td><td class="col1">  Password to use to send mails  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0">  LDAP authentication search filter  </td><td class="col1">  AuthLDAPFilter  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  SMTPAuthUser  </td><td class="col1">  Login to use to send mails  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row7 rowodd">
-		<td class="col0"> Niveau d'authentification <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col1"> <abbr title="Central Authentication Service">CAS</abbr>_authnLevel  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  SMTPPort  </td><td class="col1">  Fix SMTP port  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row8 roweven">
-		<td class="col0"> Fichier d'AC de <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col1"> <abbr title="Central Authentication Service">CAS</abbr>_CAFile  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  SMTPServer  </td><td class="col1">  SMTP Server  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row9 rowodd">
-		<td class="col0"> Forcer l'authentification de passerelle <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col1"> <abbr title="Central Authentication Service">CAS</abbr>_gateway  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  SMTPTLS  </td><td class="col1">  TLS protocol to use with SMTP  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row10 roweven">
-		<td class="col0"> Fichier temporaire <abbr title="Proxy Granting Ticket">PGT</abbr> de <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col1"> <abbr title="Central Authentication Service">CAS</abbr>_pgtFile  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  SMTPTLSOpts  </td><td class="col1">  TLS/SSL options for SMTP  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row11 rowodd">
-		<td class="col0"> Services mandatés de <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col1"> <abbr title="Central Authentication Service">CAS</abbr>_proxiedServices  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  SSLAuthnLevel  </td><td class="col1">  SSL authentication level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row12 roweven">
-		<td class="col0"> Forcer le renouvellement d'authentification <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col1"> <abbr title="Central Authentication Service">CAS</abbr>_renew  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  SSLVar  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row13 rowodd">
-		<td class="col0"> <abbr title="Uniform Resource Locator">URL</abbr> du serveur <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col1"> <abbr title="Central Authentication Service">CAS</abbr>_url  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  SSLVarIf  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row14 roweven">
-		<td class="col0"> Attribut <abbr title="Central Authentication Service">CAS</abbr> pour le nom de connexion </td><td class="col1">  casAttr  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  activeTimer  </td><td class="col1">  Enable timers on portal pages  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row15 rowodd">
-		<td class="col0"> Politique de contrôle d'accès <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col1">  casAccessControlPolicy  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  apacheAuthnLevel  </td><td class="col1"> Niveau d'authentification d'Apache </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row16 roweven">
-		<td class="col0"> Module de stockage <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col1">  casStorage  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  applicationList  </td><td class="col1">  Applications list  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row17 rowodd">
-		<td class="col0"> Options du module de stockage <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col1">  casStorageOptions  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  authChoiceModules  </td><td class="col1">  Hash list of Choice strings  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row18 roweven">
-		<td class="col0"> Activation du <abbr title="Authentification inter-domaines">CDA</abbr> </td><td class="col1">  cda  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  authChoiceParam  </td><td class="col1">  Applications list  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row19 rowodd">
-		<td class="col0"> Stockage de la configuration </td><td class="col1">  configStorage  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td>
+		<td class="col0"> authentification </td><td class="col1"> Module d'authentication </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row20 roweven">
-		<td class="col0"> Expiration du cookie </td><td class="col1">  cookieExpiration  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  autoSigninRules  </td><td class="col1">  List of auto signin rules  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row21 rowodd">
-		<td class="col0"> Nom du cookie </td><td class="col1">  cookieName  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  available2F  </td><td class="col1">  Available second factor modules  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row22 roweven">
-		<td class="col0"> Fonctions personnalisées </td><td class="col1">  customFunctions  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td>
+		<td class="col0">  available2FSelfRegistration  </td><td class="col1">  Available self-registration modules for second factor  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row23 rowodd">
-		<td class="col0">  Custom SOAP Services  </td><td class="col1">  CustomSOAPServices  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  captcha_login_enabled  </td><td class="col1">  Captcha on login page  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row24 roweven">
-		<td class="col0"> Chaîne de connexion <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiAuthChain  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  captcha_mail_enabled  </td><td class="col1">  Captcha on password reset page  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row25 rowodd">
-		<td class="col0"> Colonne de nom de connexion <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiAuthLoginCol  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  captcha_register_enabled  </td><td class="col1">  Captcha on account creation page  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row26 roweven">
-		<td class="col0"> Niveau d'authentification <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiAuthnLevel  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  captcha_size  </td><td class="col1">  Captcha size  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row27 rowodd">
-		<td class="col0"> Mot-de-passe de connexion <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiAuthPassword  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  casAccessControlPolicy  </td><td class="col1"> Politique de contrôle d'accès <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row28 roweven">
-		<td class="col0"> Colonne du mot-de-passe <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiAuthPasswordCol  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  casAppMetaDataOptions  </td><td class="col1">  Root of <abbr title="Central Authentication Service">CAS</abbr> app options  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row29 rowodd">
-		<td class="col0"> Hachage de mot-de-passe <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiAuthPasswordHash  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  casAttr  </td><td class="col1">  Pivot attribute for <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row30 roweven">
-		<td class="col0"> Table d'authentification <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiAuthTable  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  casAttributes  </td><td class="col1"> <abbr title="Central Authentication Service">CAS</abbr> exported attributes  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row31 rowodd">
-		<td class="col0"> Nom de connexion <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiAuthUser</td><td class="col2 centeralign">      ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  casAuthnLevel  </td><td class="col1"> Niveau d'authentification <abbr title="Central Authentication Service">CAS</abbr> </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row32 roweven">
-		<td class="col0"> Colonne mail <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiPasswordMailCol  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  casSrvMetaDataOptions  </td><td class="col1">  Root of <abbr title="Central Authentication Service">CAS</abbr> server options  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row33 rowodd">
-		<td class="col0"> Chaîne de connexion UserDB <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiUserChain  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  casStorage  </td><td class="col1">  Apache::Session module to store <abbr title="Central Authentication Service">CAS</abbr> user data  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row34 roweven">
-		<td class="col0"> Mot-de-passe de connexion UserDB <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiUserPassword  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  casStorageOptions  </td><td class="col1">  Apache::Session module parameters  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row35 rowodd">
-		<td class="col0"> Table UserDB <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiUserTable  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  cda  </td><td class="col1">  Enable Cross Domain Authentication  </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row36 roweven">
-		<td class="col0"> Compte de connexion UserDB <abbr title="Database Interface">DBI</abbr> </td><td class="col1">  dbiUserUser  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  cfgAuthor  </td><td class="col1">  Name of the author of the current configuration  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row37 rowodd">
-		<td class="col0"> Domaine <abbr title="Domain Name System">DNS</abbr> principal </td><td class="col1">  domain  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  cfgAuthorIP  </td><td class="col1">  Uploader <abbr title="Internet Protocol">IP</abbr> address of the current configuration  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row38 roweven">
-		<td class="col0">  Attributes exported in SOAP  </td><td class="col1 leftalign">  exportedAttr    </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  cfgDate  </td><td class="col1">  Timestamp of the current configuration  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row39 rowodd">
-		<td class="col0 leftalign"> En-têtes envoyés	</td><td class="col1">  exportedHeaders  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  cfgLog  </td><td class="col1">  Configuration update log  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row40 roweven">
-		<td class="col0"> Attributs récupérés du module utilisateur </td><td class="col1">  exportedVars  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  cfgNum  </td><td class="col1">  Enable Cross Domain Authentication  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row41 rowodd">
-		<td class="col0"> Module de stockage des sessions </td><td class="col1">  globalStorage  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  cfgVersion  </td><td class="col1">  Version of LLNG which build configuration  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row42 roweven">
-		<td class="col0"> Options du module de stockage des sessions </td><td class="col1">  globalStorageOptions  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  checkXSS  </td><td class="col1">  Check <abbr title="Cross Site Scripting">XSS</abbr> </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row43 rowodd">
-		<td class="col0"> Règle pour l'autorisation d'ouverture de session </td><td class="col1">  grantSessionRule  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  combModules  </td><td class="col1">  Combination module description  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row44 roweven">
-		<td class="col0"> Groupes locaux </td><td class="col1 leftalign">  groups    </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  combination  </td><td class="col1">  Combination rule  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row45 rowodd">
-		<td class="col0"> Indicateur HTTPS pour les redirections </td><td class="col1">  https  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  configStorage  </td><td class="col1">  Configuration storage  </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4">  ✔  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row46 roweven">
-		<td class="col0">  LDAP authentication level  </td><td class="col1">  ldapAuthnLevel  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  confirmFormMethod  </td><td class="col1">  HTTP method for confirm page form  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row47 rowodd">
-		<td class="col0">  LDAP search base  </td><td class="col1">  ldapBase  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  cookieExpiration  </td><td class="col1"> Expiration du cookie </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row48 roweven">
-		<td class="col0">  LDAP change password as user  </td><td class="col1">  ldapChangePasswordAsUser  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  cookieName  </td><td class="col1">  Name of the main cookie  </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row49 rowodd">
-		<td class="col0">  LDAP main search filter  </td><td class="col1">  LDAPFilter  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  cspConnect  </td><td class="col1">  Authorizated Ajax destination for Content-Security-Policy  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row50 roweven">
-		<td class="col0">  LDAP groups member attribute  </td><td class="col1">  ldapGroupAttributeName  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  cspDefault  </td><td class="col1">  Default value for Content-Security-Policy  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row51 rowodd">
-		<td class="col0">  LDAP group link attribute name  </td><td class="col1">  ldapGroupAttributeNameGroup  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  cspFont  </td><td class="col1">  Font source for Content-Security-Policy  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row52 roweven">
-		<td class="col0">  LDAP groups name attribute  </td><td class="col1">  ldapGroupAttributeNameSearch  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  cspImg  </td><td class="col1">  Image source for Content-Security-Policy  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row53 rowodd">
-		<td class="col0">  LDAP groups member link value  </td><td class="col1">  ldapGroupAttributeNameUser  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  cspScript  </td><td class="col1">  Javascript source for Content-Security-Policy  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row54 roweven">
-		<td class="col0">  LDAP groups base  </td><td class="col1">  ldapGroupBase  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  cspStyle  </td><td class="col1">  Style source for Content-Security-Policy  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row55 rowodd">
-		<td class="col0">  LDAP groups objectClass  </td><td class="col1">  ldapGroupObjectClass  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  customAddParams  </td><td class="col1">  Custom additional parameters  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row56 roweven">
-		<td class="col0">  LDAP activate recursive groups  </td><td class="col1">  ldapGroupRecursive  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  customAuth  </td><td class="col1">  Custom auth module  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row57 rowodd">
-		<td class="col0">  LDAP Port  </td><td class="col1">  ldapPort  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  customFunctions  </td><td class="col1">  List of custom functions  </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4">  ✔  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row58 roweven">
-		<td class="col0">  LDAP password policy control  </td><td class="col1">  ldapPpolicyControl  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  customPassword  </td><td class="col1">  Custom password module  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row59 rowodd">
-		<td class="col0">  LDAP password encoding  </td><td class="col1">  ldapPwdEnc  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  customRegister  </td><td class="col1">  Custom register module  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row60 roweven">
-		<td class="col0">  LDAP binary attributes  </td><td class="col1">  ldapRaw  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  customUserDB  </td><td class="col1">  Custom user DB module  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row61 rowodd">
-		<td class="col0">  LDAP server or Net::LDAP connexion string  </td><td class="col1">  ldapServer  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiAuthChain  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row62 roweven">
-		<td class="col0">  LDAP extended SetPassword modify  </td><td class="col1">  ldapSetPassword  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiAuthLoginCol  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row63 rowodd">
-		<td class="col0">  LDAP timeout  </td><td class="col1">  ldapTimeout  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiAuthPassword  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row64 roweven">
-		<td class="col0">  LDAP version  </td><td class="col1">  ldapVersion  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiAuthPasswordCol  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row65 rowodd">
-		<td class="col0">  LDAP modify password reset attribute  </td><td class="col1">  ldapUsePasswordResetAttribute  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiAuthPasswordHash  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row66 roweven">
-		<td class="col0">  LDAP password reset attribute name  </td><td class="col1">  ldapPasswordResetAttribute  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiAuthTable  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row67 rowodd">
-		<td class="col0">  LDAP password reset attribute true value  </td><td class="col1">  ldapPasswordResetAttributeValue  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiAuthUser  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row68 roweven">
-		<td class="col0"> Module du cache local </td><td class="col1">  localStorage  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td>
+		<td class="col0">  dbiAuthnLevel  </td><td class="col1"> Niveau d'authentification <abbr title="Database Interface">DBI</abbr> </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row69 rowodd">
-		<td class="col0"> Cache local </td><td class="col1">  localStorage  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td>
+		<td class="col0">  dbiDynamicHashEnabled  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row70 roweven">
-		<td class="col0"> Options du module du cache local </td><td class="col1">  localStorageOptions  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td>
+		<td class="col0">  dbiDynamicHashNewPasswordScheme  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row71 rowodd">
-		<td class="col0"> Paramètres du cache local </td><td class="col1">  localStorageOptions  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td>
+		<td class="col0">  dbiDynamicHashValidSaltedSchemes  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row72 roweven">
-		<td class="col0"> Règles d'accès </td><td class="col1">  locationRules  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  dbiDynamicHashValidSchemes  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row73 rowodd">
-		<td class="col0">  Macros  </td><td class="col1 leftalign">  macros    </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiExportedVars  </td><td class="col1"> <abbr title="Database Interface">DBI</abbr> exported variables  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row74 roweven">
-		<td class="col0"> Corps du message de changement de mot-de-passe </td><td class="col1">  mailBody  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiPasswordMailCol  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row75 rowodd">
-		<td class="col0"> Corps du message de confirmation </td><td class="col1">  mailConfirmBody  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiUserChain  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row76 roweven">
-		<td class="col0"> Sujet du message de confirmation </td><td class="col1">  mailConfirmSubject  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiUserPassword  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row77 rowodd">
-		<td class="col0 leftalign"> Adresse source des messages	</td><td class="col1">  mailFrom  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiUserTable  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row78 roweven">
-		<td class="col0 leftalign"> Adresse de réponse	</td><td class="col1">  mailReplyTo  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  dbiUserUser  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row79 rowodd">
-		<td class="col0"> Table de caractères des mails </td><td class="col1">  mailCharset  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  demoExportedVars  </td><td class="col1">  Demo exported variables  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row80 roweven">
-		<td class="col0">  LDAP mail search filter  </td><td class="col1">  mailLDAPFilter  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  domain  </td><td class="col1"> <abbr title="Domain Name System">DNS</abbr> domain  </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row81 rowodd">
-		<td class="col0"> Sujet du message de changement de mot de passe </td><td class="col1">  mailSubject  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  exportedAttr  </td><td class="col1">  List of attributes to export by SOAP or REST servers  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row82 roweven">
-		<td class="col0"> Délai maximal des requêtes de réinitialisation des mails </td><td class="col1">  mailTimeout  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  exportedVars  </td><td class="col1">  Main exported variables  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row83 rowodd">
-		<td class="col0"> <abbr title="Uniform Resource Locator">URL</abbr> pour la réinitialisation par courriel </td><td class="col1">  mailUrl  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ext2FSendCommand  </td><td class="col1">  Send command of External second factor  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row84 roweven">
-		<td class="col0"> La clef de session contient l'adresse mail </td><td class="col1">  mailSessionKey  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ext2FValidateCommand  </td><td class="col1">  Validation command of External second factor  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row85 rowodd">
-		<td class="col0">  LDAP Bind <abbr title="Distinguished Name">DN</abbr> </td><td class="col1">  managerDn  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ext2fActivation  </td><td class="col1">  External second factor activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row86 roweven">
-		<td class="col0">  LDAP Bind Password  </td><td class="col1">  managerPassword  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ext2fAuthnLevel  </td><td class="col1">  Authentication level for users authentified by External second factor  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row87 rowodd">
-		<td class="col0"> Paramètres surchargés pour "Multi" </td><td class="col1">  multi  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  facebookAppId  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row88 roweven">
-		<td class="col0"> Séparateur des multiples valeurs </td><td class="col1 leftalign">  multiValuesSeparator    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td>
+		<td class="col0">  facebookAppSecret  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row89 rowodd">
-		<td class="col0"> Activation des notifications </td><td class="col1">  notification  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4 centeralign">    ✔    </td>
+		<td class="col0">  facebookAuthnLevel  </td><td class="col1">  Facebook authentication level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row90 roweven">
-		<td class="col0"> Module de stockage des notifications </td><td class="col1">  notificationStorage  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4 centeralign">    ✔    </td>
+		<td class="col0">  facebookExportedVars  </td><td class="col1">  Facebook exported variables  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row91 rowodd">
-		<td class="col0"> Options du module de stockage des notifications </td><td class="col1">  notificationStorageOptions  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4 centeralign">    ✔    </td>
+		<td class="col0">  failedLoginNumber  </td><td class="col1">  Number of failures stored in login history  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row92 roweven">
-		<td class="col0 leftalign"> Nom de compte de notification pour tous les utilisateurs  </td><td class="col1">  notificationWildcard  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4 centeralign">    ✔    </td>
+		<td class="col0">  formTimeout  </td><td class="col1">  Token timeout for forms  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row93 rowodd">
-		<td class="col0"> Affiche les sessions effacées </td><td class="col1">  notifyDeleted  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  globalStorage  </td><td class="col1">  Session backend module  </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row94 roweven">
-		<td class="col0"> Affiche les autres sessions </td><td class="col1">  notifyOther  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  globalStorageOptions  </td><td class="col1">  Session backend module options  </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row95 rowodd">
-		<td class="col0"> Niveau d'authentification de Null </td><td class="col1">  nullAuthnLevel  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  grantSessionRules  </td><td class="col1">  Rules to grant sessions  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row96 roweven">
-		<td class="col0"> Niveau d'authentification d'OpenID </td><td class="col1">  openIdAuthnLevel  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  groups  </td><td class="col1"> Groupes </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row97 rowodd">
-		<td class="col0"> Domaines autorisés pour OpenID </td><td class="col1">  openIdIDPList  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  hiddenAttributes  </td><td class="col1">  Name of attributes to hide in logs  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row98 roweven">
-		<td class="col0"> Secret OpenID </td><td class="col1">  openIdSecret  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  hideOldPassword  </td><td class="col1">  Hide old password in portal  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row99 rowodd">
-		<td class="col0"> Module de gestion de mots-de-passe </td><td class="col1">  passwordDB  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  httpOnly  </td><td class="col1">  Enable httpOnly flag in cookie  </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row100 roweven">
-		<td class="col0"> Force le port dans les redirections </td><td class="col1">  port  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  https  </td><td class="col1">  Use HTTPS for redirection from portal  </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row101 rowodd">
-		<td class="col0"> <abbr title="Uniform Resource Locator">URL</abbr> du portail </td><td class="col1"> portail </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  infoFormMethod  </td><td class="col1">  HTTP method for info page form  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row102 roweven">
-		<td class="col0"> Protection anti-frame </td><td class="col1">  portalAntiFrame  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBCASActivation  </td><td class="col1"> <abbr title="Central Authentication Service">CAS</abbr> server activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row103 rowodd">
-		<td class="col0"> Affiche la liste des applications </td><td class="col1">  portalDisplayAppslist  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBCASPath  </td><td class="col1"> <abbr title="Central Authentication Service">CAS</abbr> server request path  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row104 roweven">
-		<td class="col0"> Affiche le module de changement de mot-de-passe </td><td class="col1">  portalDisplayChangePassword  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBCASRule  </td><td class="col1"> <abbr title="Central Authentication Service">CAS</abbr> server rule  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row105 rowodd">
-		<td class="col0"> Affiche le module de déconnexion </td><td class="col1">  portalDisplayLogout  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBGetActivation  </td><td class="col1">  Get issuer activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row106 roweven">
-		<td class="col0"> Affiche le module de réinitialisation de mot-de-passe </td><td class="col1">  portalDisplayResetPassword  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBGetParameters  </td><td class="col1">  List of virtualHosts with their get parameters  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row107 rowodd">
-		<td class="col0"> Ouvre les liens dans une nouvelle fenêtre </td><td class="col1">  portalOpenLinkInNewWindow  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBGetPath  </td><td class="col1">  Get issuer request path  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row108 roweven">
-		<td class="col0">  Ping interval  </td><td class="col1">  portalPingInterval  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBGetRule  </td><td class="col1">  Get issuer rule  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row109 rowodd">
-		<td class="col0"> Impose la présentation de l'ancien mot-de-passe dans les changements </td><td class="col1">  portalRequireOldPassword  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBOpenIDActivation  </td><td class="col1">  OpenID server activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row110 roweven">
-		<td class="col0"> Nom du thème </td><td class="col1">  portalSkin  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBOpenIDConnectActivation  </td><td class="col1">  OpenID Connect server activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row111 rowodd">
-		<td class="col0"> Champ de session stockant le nom d'utilisateur </td><td class="col1">  portalUserAttr  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBOpenIDConnectPath  </td><td class="col1">  OpenID Connect server request path  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row112 roweven">
-		<td class="col0"> Schéma de protection </td><td class="col1">  protection  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td>
+		<td class="col0">  issuerDBOpenIDConnectRule  </td><td class="col1">  OpenID Connect server rule  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row113 rowodd">
-		<td class="col0"> Expression rationnelle pour la génération aléatoire des mots-de-passe </td><td class="col1">  randomPasswordRegexp  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBOpenIDPath  </td><td class="col1">  OpenID server request path  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row114 roweven">
-		<td class="col0"> Delai entre 2 examens de la configuration locale </td><td class="col1">  reloadTime  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  issuerDBOpenIDRule  </td><td class="col1">  OpenID server rule  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row115 rowodd">
-		<td class="col0"> Nom du cookie distant </td><td class="col1">  remoteCookieName  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBSAMLActivation  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row116 roweven">
-		<td class="col0"> Nom du cookie du proxy </td><td class="col1">  remoteCookieName  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBSAMLPath  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP request path  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row117 rowodd">
-		<td class="col0"> Backend de sessions distant </td><td class="col1">  remoteGlobalStorage  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  issuerDBSAMLRule  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP rule  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row118 roweven">
-		<td class="col0"> Options du backend de sessions distant </td><td class="col1">  remoteGlobalStorageOptions  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  jsRedirect  </td><td class="col1">  Use javascript for redirections  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row119 rowodd">
-		<td class="col0"> Portail distant </td><td class="col1">  remotePortal  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  key  </td><td class="col1">  Secret key  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row120 roweven">
-		<td class="col0"> Module de stockage <abbr title="Security Assertion Markup Language">SAML</abbr> </td><td class="col1">  samlStorage  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  krbAuthnLevel  </td><td class="col1"> Niveau d'authentification de Null </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row121 rowodd">
-		<td class="col0"> Options du module de stockage <abbr title="Security Assertion Markup Language">SAML</abbr> </td><td class="col1">  samlStorageOptions  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  krbByJs  </td><td class="col1">  Launch Kerberos authentication by Ajax  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row122 roweven">
-		<td class="col0"> Sécurité du cookie </td><td class="col1">  securedCookie  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  krbKeytab  </td><td class="col1">  Kerberos keytab  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row123 rowodd">
-		<td class="col0"> Efface les autres sessions de l'utilisateur si les adresses <abbr title="Internet Protocol">IP</abbr> diffèrent </td><td class="col1">  singleIP  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  krbRemoveDomain  </td><td class="col1">  Remove domain in Kerberos username  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row124 roweven">
-		<td class="col0"> Efface les autres sessions (session unique par utilisateur) </td><td class="col1">  singleSession  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapAllowResetExpiredPassword  </td><td class="col1">  Allow a user to reset his expired password  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row125 rowodd">
-		<td class="col0"> Ne pas autoriser plusieurs utilisateurs venant de la même adresse <abbr title="Internet Protocol">IP</abbr> </td><td class="col1">  singleUserByIP  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapAuthnLevel  </td><td class="col1">  LDAP authentication level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row126 roweven">
-		<td class="col0">  SMTP server  </td><td class="col1">  SMTPServer  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapBase  </td><td class="col1">  LDAP search base  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row127 rowodd">
-		<td class="col0">  SMTP user  </td><td class="col1">  SMTPAuthUser  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapChangePasswordAsUser  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row128 roweven">
-		<td class="col0">  SMTP password  </td><td class="col1">  SMTPAuthPass  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapExportedVars  </td><td class="col1">  LDAP exported variables  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row129 rowodd">
-		<td class="col0">  SOAP activation  </td><td class="col1">  Soap  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapGroupAttributeName  </td><td class="col1">  LDAP attribute name for member in groups  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row130 roweven">
-		<td class="col0"> <abbr title="Uniform Resource Locator">URL</abbr> du portail mandataire </td><td class="col1">  soapAuthService  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapGroupAttributeNameGroup  </td><td class="col1">  LDAP attribute name in group entry referenced as member in groups  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row131 rowodd">
-		<td class="col0">  Proxy session SOAP end point  </td><td class="col1">  soapSessionService  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapGroupAttributeNameSearch  </td><td class="col1">  LDAP attributes to search in groups  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row132 roweven">
-		<td class="col0">  SSL authentication level  </td><td class="col1">  SSLAuthnLevel  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapGroupAttributeNameUser  </td><td class="col1">  LDAP attribute name in user entry referenced as member in groups  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row133 rowodd">
-		<td class="col0">  SSL user field in certificate  </td><td class="col1">  SSLVar  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapGroupBase  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row134 roweven">
-		<td class="col0"> Activation du module de statut </td><td class="col1">  status  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  ldapGroupObjectClass  </td><td class="col1">  LDAP object class of groups  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row135 rowodd">
-		<td class="col0"> Stockage du mot-de-passe en session </td><td class="col1">  storePassword  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapGroupRecursive  </td><td class="col1">  LDAP recursive search in groups  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row136 roweven">
-		<td class="col0"> Clef de session mail pour Sympa </td><td class="col1">  sympaMailKey  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapPasswordResetAttribute  </td><td class="col1">  LDAP password reset attribute  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row137 rowodd">
-		<td class="col0"> Secret partagé de Sympa </td><td class="col1">  sympaSecret  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapPasswordResetAttributeValue  </td><td class="col1">  LDAP password reset value  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row138 roweven">
-		<td class="col0"> Facilité syslog </td><td class="col1">  syslog  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapPort  </td><td class="col1">  LDAP port  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row139 rowodd">
-		<td class="col0"> Durée de vie des sessions pour la tâche planifiée </td><td class="col1">  timeout  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapPpolicyControl  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row140 roweven">
-		<td class="col0"> Domaines agréés </td><td class="col1">  trustedDomains  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapPwdEnc  </td><td class="col1">  LDAP password encoding  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row141 rowodd">
-		<td class="col0"> Nom d'application Twitter </td><td class="col1">  twitterAppName  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapRaw  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row142 roweven">
-		<td class="col0"> Niveau d'authentification de Twitter </td><td class="col1">  twitterAuthnLevel  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapSearchDeref  </td><td class="col1">  “deref” param of Net::LDAP::search()  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row143 rowodd">
-		<td class="col0"> Clef d'application de Twitter </td><td class="col1">  twitterKey  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapServer  </td><td class="col1">  LDAP server (host or <abbr title="Uniform Resource Identifier">URI</abbr>)  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row144 roweven">
-		<td class="col0"> Secret d'application Twitter </td><td class="col1">  twitterSecret  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapSetPassword  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row145 rowodd">
-		<td class="col0"> Module utilisateurs </td><td class="col1">  userDB  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  ldapTimeout  </td><td class="col1">  LDAP connection timeout  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row146 roweven">
-		<td class="col0"> Utiliser les redirections en cas d'erreur </td><td class="col1">  useRedirectOnError  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  ldapUsePasswordResetAttribute  </td><td class="col1">  LDAP store reset flag in an attribute  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row147 rowodd">
-		<td class="col0"> Utiliser la cage sécurisée </td><td class="col1">  useSafeJail  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  ldapVersion  </td><td class="col1">  LDAP protocol version  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row148 roweven">
-		<td class="col0"> Pivot <abbr title="Database Interface">DBI</abbr> pour la table utilisateur </td><td class="col1">  userPivot  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  linkedInAuthnLevel  </td><td class="col1">  LinkedIn authentication level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row149 rowodd">
-		<td class="col0"> Utiliser XForwardedFor comme <abbr title="Internet Protocol">IP</abbr> cliente </td><td class="col1">  useXForwardedForIP  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  linkedInClientID  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row150 roweven">
-		<td class="col0"> Donnée à utiliser comme REMOTE_USER (également utilisée dans les journaux d'Apache) </td><td class="col1">  whatToTrace  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  linkedInClientSecret  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row151 rowodd">
-		<td class="col0"> Clef de session de compte Zimbra </td><td class="col1">  zimbraAccountKey  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  linkedInFields  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row152 roweven">
-		<td class="col0"> Type de compte Zimbra </td><td class="col1">  zimbraBy  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  linkedInScope  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row153 rowodd">
-		<td class="col0"> Clef de pré-authentification Zimbra </td><td class="col1">  zimbraPreAuthKey  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  linkedInUserField  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row154 roweven">
-		<td class="col0"> Expression d'<abbr title="Uniform Resource Locator">URL</abbr> <abbr title="Authentification unique (Single Sign On)">SSO</abbr> locale pour Zimbra </td><td class="col1">  zimbraSsoUrl  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  localSessionStorage  </td><td class="col1">  Local sessions cache module  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row155 rowodd">
-		<td class="col0"> <abbr title="Uniform Resource Locator">URL</abbr> de pré-authentification Zimbra </td><td class="col1">  zimbraUrl  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  localSessionStorageOptions  </td><td class="col1">  Sessions cache module options  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row156 roweven">
-		<td class="col0"> ID client Yubikey </td><td class="col1">  yubikeyClientID  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  localStorage  </td><td class="col1"> Cache local </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4">  ✔  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row157 rowodd">
-		<td class="col0"> Clef secrète Yubikey </td><td class="col1">  yubikeySecretKey  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  localStorageOptions  </td><td class="col1"> Paramètres du cache local </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4">  ✔  </td><td class="col5">  ✔  </td>
 	</tr>
 	<tr class="row158 roweven">
-		<td class="col0"> Taille de l'ID public Yubikey </td><td class="col1">  yubikeyPublicIDSize  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  loginHistoryEnabled  </td><td class="col1">  Enable login history  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row159 rowodd">
-		<td class="col0"> Niveau d'authentification de Yubikey </td><td class="col1">  yubikeyAuthnLevel  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  logoutServices  </td><td class="col1">  Send logout trough GET request to these services  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row160 roweven">
-		<td class="col0"> Masquer l'ancien mot-de-passe dans le formulaire de réinitialisation </td><td class="col1">  hideOldPassword  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  lwpOpts  </td><td class="col1">  Options given to LWP::UserAgent  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row161 rowodd">
-		<td class="col0"> Le jeton sécurisé autorise les requêtes en cas d'erreur </td><td class="col1">  secureTokenAllowOnError  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  lwpSslOpts  </td><td class="col1">  SSL options given to LWP::UserAgent  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row162 roweven">
-		<td class="col0"> Attribut du jeton sécurisé </td><td class="col1">  secureTokenAttribute  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  macros  </td><td class="col1">  Macros  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row163 rowodd">
-		<td class="col0"> Expiration du jeton sécurisé </td><td class="col1">  secureTokenExpiration  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  mailBody  </td><td class="col1">  Custom mail body  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row164 roweven">
-		<td class="col0"> En-tête du jeton sécurisé </td><td class="col1">  secureTokenHeader  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  mailCharset  </td><td class="col1"> Table de caractères des mails </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row165 rowodd">
-		<td class="col0"> Serveurs Memcached pour le jeton sécurisé </td><td class="col1">  secureTokenMemcachedServers  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  mailConfirmBody  </td><td class="col1">  Custom confirm mail body  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row166 roweven">
-		<td class="col0"> URL protégées du jeton sécurisé </td><td class="col1">  secureTokenUrls  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  mailConfirmSubject  </td><td class="col1">  Mail subject for reset confirmation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row167 rowodd">
-		<td class="col0"> Protection Javascript du cookie </td><td class="col1">  httpOnly  </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  mailFrom  </td><td class="col1">  Sender email  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row168 roweven">
-		<td class="col0"> Envoyer des courriels lors des changements de mots-de-passe </td><td class="col1">  mailOnPasswordChange  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  mailLDAPFilter  </td><td class="col1">  LDAP filter for mail search  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row169 rowodd">
-		<td class="col0"> Niveau d'authentification de Radius </td><td class="col1">  radiusAuthnLevel  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  mailOnPasswordChange  </td><td class="col1">  Send a mail when password is changed  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row170 roweven">
-		<td class="col0"> Serveur Radius </td><td class="col1">  radiusServer  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  mailReplyTo  </td><td class="col1">  Reply-To address  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row171 rowodd">
-		<td class="col0"> Secret Radius </td><td class="col1">  radiusSecret  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  mailSessionKey  </td><td class="col1">  Session parameter where mail is stored  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row172 roweven">
-		<td class="col0"> Recherche les attaques <abbr title="Cross Site Scripting">XSS</abbr> </td><td class="col1">  checkXSS  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  mailSubject  </td><td class="col1">  Mail subject for new password email  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row173 rowodd">
-		<td class="col0"> Mode maintenance </td><td class="col1">  maintenance  </td><td class="col2"> </td><td class="col3 centeralign">    ✔    </td><td class="col4"> </td>
+		<td class="col0">  mailTimeout  </td><td class="col1">  Mail session timeout  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row174 roweven">
-		<td class="col0"> Backend des sessions persistantes </td><td class="col1">  persistentStorage  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  mailUrl  </td><td class="col1"> <abbr title="Uniform Resource Locator">URL</abbr> of password reset page  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 	<tr class="row175 rowodd">
-		<td class="col0"> Options du backend des sessions persistantes </td><td class="col1">  persistentStorageOptions  </td><td class="col2 centeralign">    ✔    </td><td class="col3"> </td><td class="col4"> </td>
+		<td class="col0">  maintenance  </td><td class="col1">  Maintenance mode for all virtual hosts  </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
-</table></div><!-- EDIT3 TABLE [306-10483] -->
+	<tr class="row176 roweven">
+		<td class="col0">  managerDn  </td><td class="col1">  LDAP manager <abbr title="Distinguished Name">DN</abbr> </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row177 rowodd">
+		<td class="col0">  managerPassword  </td><td class="col1">  LDAP manager Password  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row178 roweven">
+		<td class="col0">  multiValuesSeparator  </td><td class="col1">  Separator for multiple values  </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4">  ✔  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row179 rowodd">
+		<td class="col0">  nginxCustomHandlers  </td><td class="col1">  Custom Nginx handler (deprecated)  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row180 roweven">
+		<td class="col0">  noAjaxHook  </td><td class="col1">  Avoid replacing 302 by 401 for Ajax responses  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row181 rowodd">
+		<td class="col0">  notification  </td><td class="col1"> Activation des notifications </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row182 roweven">
+		<td class="col0">  notificationServer  </td><td class="col1">  Notification server activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row183 rowodd">
+		<td class="col0">  notificationStorage  </td><td class="col1"> Module de stockage des notifications </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row184 roweven">
+		<td class="col0">  notificationStorageOptions  </td><td class="col1"> Options du module de stockage des notifications </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row185 rowodd">
+		<td class="col0">  notificationWildcard  </td><td class="col1">  Notification string to match all users  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row186 roweven">
+		<td class="col0">  notificationXSLTfile  </td><td class="col1">  Custom XSLT document for notifications  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row187 rowodd">
+		<td class="col0">  notifyDeleted  </td><td class="col1">  Show deleted sessions in portal  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row188 roweven">
+		<td class="col0">  notifyOther  </td><td class="col1">  Show other sessions in portal  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row189 rowodd">
+		<td class="col0">  nullAuthnLevel  </td><td class="col1"> Niveau d'authentification de Null </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row190 roweven">
+		<td class="col0">  oidcAuthnLevel  </td><td class="col1">  OpenID Connect authentication level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row191 rowodd">
+		<td class="col0">  oidcOPMetaDataOptions  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row192 roweven">
+		<td class="col0">  oidcRPCallbackGetParam  </td><td class="col1">  OpenID Connect Callback GET URLparameter  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row193 rowodd">
+		<td class="col0">  oidcRPMetaDataOptions  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row194 roweven">
+		<td class="col0">  oidcRPStateTimeout  </td><td class="col1">  OpenID Connect Timeout of state sessions  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row195 rowodd">
+		<td class="col0">  oidcServiceAllowAuthorizationCodeFlow  </td><td class="col1">  OpenID Connect allow authorization code flow  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row196 roweven">
+		<td class="col0">  oidcServiceAllowDynamicRegistration  </td><td class="col1">  OpenID Connect allow dynamic client registration  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row197 rowodd">
+		<td class="col0">  oidcServiceAllowHybridFlow  </td><td class="col1">  OpenID Connect allow hybrid flow  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row198 roweven">
+		<td class="col0">  oidcServiceAllowImplicitFlow  </td><td class="col1">  OpenID Connect allow implicit flow  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row199 rowodd">
+		<td class="col0">  oidcServiceKeyIdSig  </td><td class="col1">  OpenID Connect Signature Key ID  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row200 roweven">
+		<td class="col0">  oidcServiceMetaDataAuthnContext  </td><td class="col1">  OpenID Connect Authentication Context Class Ref  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row201 rowodd">
+		<td class="col0">  oidcServiceMetaDataAuthorizeURI  </td><td class="col1">  OpenID Connect authorizaton endpoint  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row202 roweven">
+		<td class="col0">  oidcServiceMetaDataBackChannelURI  </td><td class="col1">  OpenID Connect Front-Channel logout endpoint  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row203 rowodd">
+		<td class="col0">  oidcServiceMetaDataCheckSessionURI  </td><td class="col1">  OpenID Connect check session iframe  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row204 roweven">
+		<td class="col0">  oidcServiceMetaDataEndSessionURI  </td><td class="col1">  OpenID Connect end session endpoint  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row205 rowodd">
+		<td class="col0">  oidcServiceMetaDataFrontChannelURI  </td><td class="col1">  OpenID Connect Front-Channel logout endpoint  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row206 roweven">
+		<td class="col0">  oidcServiceMetaDataIssuer  </td><td class="col1">  OpenID Connect issuer  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row207 rowodd">
+		<td class="col0">  oidcServiceMetaDataJWKSURI  </td><td class="col1">  OpenID Connect JWKS endpoint  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row208 roweven">
+		<td class="col0">  oidcServiceMetaDataRegistrationURI  </td><td class="col1">  OpenID Connect registration endpoint  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row209 rowodd">
+		<td class="col0">  oidcServiceMetaDataTokenURI  </td><td class="col1">  OpenID Connect token endpoint  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row210 roweven">
+		<td class="col0">  oidcServiceMetaDataUserInfoURI  </td><td class="col1">  OpenID Connect user info endpoint  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row211 rowodd">
+		<td class="col0">  oidcServicePrivateKeySig  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row212 roweven">
+		<td class="col0">  oidcServicePublicKeySig  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row213 rowodd">
+		<td class="col0">  oidcStorage  </td><td class="col1">  Apache::Session module to store OIDC user data  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row214 roweven">
+		<td class="col0">  oidcStorageOptions  </td><td class="col1">  Apache::Session module parameters  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row215 rowodd">
+		<td class="col0">  oldNotifFormat  </td><td class="col1">  Use old XML format for notifications  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row216 roweven">
+		<td class="col0">  openIdAttr  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row217 rowodd">
+		<td class="col0">  openIdAuthnLevel  </td><td class="col1"> Niveau d'authentification d'OpenID </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row218 roweven">
+		<td class="col0">  openIdExportedVars  </td><td class="col1">  OpenID exported variables  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row219 rowodd">
+		<td class="col0">  openIdIDPList  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row220 roweven">
+		<td class="col0">  openIdIssuerSecret  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row221 rowodd">
+		<td class="col0">  openIdSPList  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row222 roweven">
+		<td class="col0">  openIdSecret  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row223 rowodd">
+		<td class="col0">  openIdSreg_country  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row224 roweven">
+		<td class="col0">  openIdSreg_dob  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row225 rowodd">
+		<td class="col0">  openIdSreg_email  </td><td class="col1">  OpenID SREG email session parameter  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row226 roweven">
+		<td class="col0">  openIdSreg_fullname  </td><td class="col1">  OpenID SREG fullname session parameter  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row227 rowodd">
+		<td class="col0">  openIdSreg_gender  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row228 roweven">
+		<td class="col0">  openIdSreg_language  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row229 rowodd">
+		<td class="col0">  openIdSreg_nickname  </td><td class="col1">  OpenID SREG nickname session parameter  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row230 roweven">
+		<td class="col0">  openIdSreg_postcode  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row231 rowodd">
+		<td class="col0">  openIdSreg_timezone  </td><td class="col1">  OpenID SREG timezone session parameter  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row232 roweven">
+		<td class="col0">  pamAuthnLevel  </td><td class="col1">  PAM authentication level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row233 rowodd">
+		<td class="col0">  pamService  </td><td class="col1">  PAM service  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row234 roweven">
+		<td class="col0">  passwordDB  </td><td class="col1"> Module mots-de-passe </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row235 rowodd">
+		<td class="col0">  persistentStorage  </td><td class="col1">  Storage module for persistent sessions  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row236 roweven">
+		<td class="col0">  persistentStorageOptions  </td><td class="col1">  Options for persistent sessions storage module  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row237 rowodd">
+		<td class="col0">  port  </td><td class="col1"> Force le port dans les redirections </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row238 roweven">
+		<td class="col0"> portail </td><td class="col1"> <abbr title="Uniform Resource Locator">URL</abbr> du portail </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4">  ✔  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row239 rowodd">
+		<td class="col0">  portalAntiFrame  </td><td class="col1">  Avoid portal to be displayed inside frames  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row240 roweven">
+		<td class="col0">  portalCheckLogins  </td><td class="col1">  Display login history checkbox in portal  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row241 rowodd">
+		<td class="col0">  portalDisplayAppslist  </td><td class="col1">  Display applications tab in portal  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row242 roweven">
+		<td class="col0">  portalDisplayChangePassword  </td><td class="col1">  Display password tab in portal  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row243 rowodd">
+		<td class="col0">  portalDisplayLoginHistory  </td><td class="col1">  Display login history tab in portal  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row244 roweven">
+		<td class="col0">  portalDisplayLogout  </td><td class="col1">  Display logout tab in portal  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row245 rowodd">
+		<td class="col0">  portalDisplayOidcConsents  </td><td class="col1">  Display OIDC consent tab in portal  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row246 roweven">
+		<td class="col0">  portalDisplayRegister  </td><td class="col1">  Display register button in portal  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row247 rowodd">
+		<td class="col0">  portalDisplayResetPassword  </td><td class="col1">  Display reset password button in portal  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row248 roweven">
+		<td class="col0">  portalErrorOnExpiredSession  </td><td class="col1">  Show error if session is expired  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row249 rowodd">
+		<td class="col0">  portalErrorOnMailNotFound  </td><td class="col1">  Show error if mail is not found in password reset process  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row250 roweven">
+		<td class="col0">  portalForceAuthnInterval  </td><td class="col1">  Minimum number of seconds since last authentifcation to force reauthentication  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row251 rowodd">
+		<td class="col0">  portalOpenLinkInNewWindow  </td><td class="col1">  Open applications in new windows  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row252 roweven">
+		<td class="col0">  portalPingInterval  </td><td class="col1 leftalign">  Interval in ms between portal Ajax pings    </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row253 rowodd">
+		<td class="col0">  portalRequireOldPassword  </td><td class="col1">  Old password is required to change the password  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row254 roweven">
+		<td class="col0">  portalSkin  </td><td class="col1">  Name of portal skin  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row255 rowodd">
+		<td class="col0">  portalSkinBackground  </td><td class="col1">  Background image of portal skin  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row256 roweven">
+		<td class="col0">  portalSkinRules  </td><td class="col1">  Rules to choose portal skin  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row257 rowodd">
+		<td class="col0">  portalStatus  </td><td class="col1">  Enable portal status  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row258 roweven">
+		<td class="col0">  portalUserAttr  </td><td class="col1">  Session parameter to display connected user in portal  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row259 rowodd">
+		<td class="col0">  protection  </td><td class="col1">  Manager protection method  </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4">  ✔  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row260 roweven">
+		<td class="col0">  proxyAuthService  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row261 rowodd">
+		<td class="col0">  proxyAuthnLevel  </td><td class="col1">  Proxy authentication level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row262 roweven">
+		<td class="col0">  proxySessionService  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row263 rowodd">
+		<td class="col0">  proxyUseSoap  </td><td class="col1">  Use SOAP instead of REST  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row264 roweven">
+		<td class="col0">  radiusAuthnLevel  </td><td class="col1"> Niveau d'authentification de Radius </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row265 rowodd">
+		<td class="col0">  radiusSecret  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row266 roweven">
+		<td class="col0">  radiusServer  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row267 rowodd">
+		<td class="col0">  randomPasswordRegexp  </td><td class="col1">  Regular expression to create a random password  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row268 roweven">
+		<td class="col0">  redirectFormMethod  </td><td class="col1">  HTTP method for redirect page form  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row269 rowodd">
+		<td class="col0">  registerConfirmSubject  </td><td class="col1">  Mail subject for register confirmation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row270 roweven">
+		<td class="col0">  registerDB  </td><td class="col1">  Register module  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row271 rowodd">
+		<td class="col0">  registerDoneSubject  </td><td class="col1">  Mail subject when register is done  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row272 roweven">
+		<td class="col0">  registerTimeout  </td><td class="col1">  Register session timeout  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row273 rowodd">
+		<td class="col0">  registerUrl  </td><td class="col1"> <abbr title="Uniform Resource Locator">URL</abbr> of register page  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row274 roweven">
+		<td class="col0">  reloadUrls  </td><td class="col1"> <abbr title="Uniform Resource Locator">URL</abbr> to call on reload  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row275 rowodd">
+		<td class="col0">  remoteCookieName  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row276 roweven">
+		<td class="col0">  remoteGlobalStorage  </td><td class="col1">  Remote session backend  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row277 rowodd">
+		<td class="col0">  remoteGlobalStorageOptions  </td><td class="col1">  Apache::Session module parameters  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row278 roweven">
+		<td class="col0">  remotePortal  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row279 rowodd">
+		<td class="col0">  requireToken  </td><td class="col1">  Enable token for forms  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row280 roweven">
+		<td class="col0">  rest2fActivation  </td><td class="col1">  REST second factor activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row281 rowodd">
+		<td class="col0">  rest2fAuthnLevel  </td><td class="col1">  Authentication level for users authentified by REST second factor  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row282 roweven">
+		<td class="col0">  rest2fInitArgs  </td><td class="col1">  Args for REST 2F init  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row283 rowodd">
+		<td class="col0">  rest2fInitUrl  </td><td class="col1">  REST 2F init <abbr title="Uniform Resource Locator">URL</abbr> </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row284 roweven">
+		<td class="col0">  rest2fVerifyArgs  </td><td class="col1">  Args for REST 2F init  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row285 rowodd">
+		<td class="col0">  rest2fVerifyUrl  </td><td class="col1">  REST 2F init <abbr title="Uniform Resource Locator">URL</abbr> </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row286 roweven">
+		<td class="col0">  restAuthUrl  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row287 rowodd">
+		<td class="col0">  restConfigServer  </td><td class="col1">  Enable REST config server  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row288 roweven">
+		<td class="col0">  restPwdConfirmUrl  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row289 rowodd">
+		<td class="col0">  restPwdModifyUrl  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row290 roweven">
+		<td class="col0">  restSessionServer  </td><td class="col1">  Enable REST session server  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row291 rowodd">
+		<td class="col0">  restUserDBUrl  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row292 roweven">
+		<td class="col0">  samlAttributeAuthorityDescriptorAttributeServiceSOAP  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> Attribute Authority SOAP  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row293 rowodd">
+		<td class="col0">  samlAuthnContextMapKerberos  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> authn context kerberos level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row294 roweven">
+		<td class="col0">  samlAuthnContextMapPassword  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> authn context password level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row295 rowodd">
+		<td class="col0">  samlAuthnContextMapPasswordProtectedTransport  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> authn context password protected transport level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row296 roweven">
+		<td class="col0">  samlAuthnContextMapTLSClient  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> authn context TLS client level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row297 rowodd">
+		<td class="col0">  samlCommonDomainCookieActivation  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> CDC activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row298 roweven">
+		<td class="col0">  samlCommonDomainCookieDomain  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row299 rowodd">
+		<td class="col0">  samlCommonDomainCookieReader  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row300 roweven">
+		<td class="col0">  samlCommonDomainCookieWriter  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row301 rowodd">
+		<td class="col0">  samlEntityID  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> service entityID  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row302 roweven">
+		<td class="col0">  samlIDPMetaDataOptions  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row303 rowodd">
+		<td class="col0">  samlIDPSSODescriptorArtifactResolutionServiceArtifact  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP artifact resolution service  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row304 roweven">
+		<td class="col0">  samlIDPSSODescriptorSingleLogoutServiceHTTPPost  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP SLO HTTP POST  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row305 rowodd">
+		<td class="col0">  samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP SLO HTTP Redirect  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row306 roweven">
+		<td class="col0">  samlIDPSSODescriptorSingleLogoutServiceSOAP  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP SLO SOAP  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row307 rowodd">
+		<td class="col0">  samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP <abbr title="Authentification unique (Single Sign On)">SSO</abbr> HTTP Artifact  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row308 roweven">
+		<td class="col0">  samlIDPSSODescriptorSingleSignOnServiceHTTPPost  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP <abbr title="Authentification unique (Single Sign On)">SSO</abbr> HTTP POST  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row309 rowodd">
+		<td class="col0">  samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP <abbr title="Authentification unique (Single Sign On)">SSO</abbr> HTTP Redirect  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row310 roweven">
+		<td class="col0">  samlIDPSSODescriptorWantAuthnRequestsSigned  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP want authn request signed  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row311 rowodd">
+		<td class="col0">  samlIdPResolveCookie  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP resolution cookie  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row312 roweven">
+		<td class="col0">  samlMetadataForceUTF8  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> force metadata UTF8 conversion  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row313 rowodd">
+		<td class="col0">  samlNameIDFormatMapEmail  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> session parameter for NameID email  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row314 roweven">
+		<td class="col0">  samlNameIDFormatMapKerberos  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> session parameter for NameID kerberos  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row315 rowodd">
+		<td class="col0">  samlNameIDFormatMapWindows  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> session parameter for NameID windows  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row316 roweven">
+		<td class="col0">  samlNameIDFormatMapX509  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> session parameter for NameID x509  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row317 rowodd">
+		<td class="col0">  samlOrganizationDisplayName  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> service organization display name  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row318 roweven">
+		<td class="col0">  samlOrganizationName  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> service organization name  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row319 rowodd">
+		<td class="col0">  samlOrganizationURL  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> service organization <abbr title="Uniform Resource Locator">URL</abbr> </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row320 roweven">
+		<td class="col0">  samlRelayStateTimeout  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> timeout of relay state  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row321 rowodd">
+		<td class="col0">  samlSPMetaDataOptions  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row322 roweven">
+		<td class="col0">  samlSPSSODescriptorArtifactResolutionServiceArtifact  </td><td class="col1 leftalign"> <abbr title="Security Assertion Markup Language">SAML</abbr> SP artifact resolution service    </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row323 rowodd">
+		<td class="col0">  samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> SP ACS HTTP artifact  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row324 roweven">
+		<td class="col0">  samlSPSSODescriptorAssertionConsumerServiceHTTPPost  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> SP ACS HTTP POST  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row325 rowodd">
+		<td class="col0">  samlSPSSODescriptorAuthnRequestsSigned  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> SP AuthnRequestsSigned  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row326 roweven">
+		<td class="col0">  samlSPSSODescriptorSingleLogoutServiceHTTPPost  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> SP SLO HTTP POST  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row327 rowodd">
+		<td class="col0">  samlSPSSODescriptorSingleLogoutServiceHTTPRedirect  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> SP SLO HTTP Redirect  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row328 roweven">
+		<td class="col0">  samlSPSSODescriptorSingleLogoutServiceSOAP  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> SP SLO SOAP  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row329 rowodd">
+		<td class="col0">  samlSPSSODescriptorWantAssertionsSigned  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> SP WantAssertionsSigned  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row330 roweven">
+		<td class="col0">  samlServicePrivateKeyEnc  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> encryption private key  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row331 rowodd">
+		<td class="col0">  samlServicePrivateKeyEncPwd  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row332 roweven">
+		<td class="col0">  samlServicePrivateKeySig  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> signature private key  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row333 rowodd">
+		<td class="col0">  samlServicePrivateKeySigPwd  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> signature private key password  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row334 roweven">
+		<td class="col0">  samlServicePublicKeyEnc  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> encryption public key  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row335 rowodd">
+		<td class="col0">  samlServicePublicKeySig  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> signature public key  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row336 roweven">
+		<td class="col0">  samlServiceUseCertificateInResponse  </td><td class="col1">  Use certificate instead of public key in <abbr title="Security Assertion Markup Language">SAML</abbr> responses  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row337 rowodd">
+		<td class="col0">  samlStorage  </td><td class="col1">  Apache::Session module to store <abbr title="Security Assertion Markup Language">SAML</abbr> user data  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row338 roweven">
+		<td class="col0">  samlStorageOptions  </td><td class="col1">  Apache::Session module parameters  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row339 rowodd">
+		<td class="col0">  samlUseQueryStringSpecific  </td><td class="col1"> <abbr title="Security Assertion Markup Language">SAML</abbr> use specific method for query_string  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row340 roweven">
+		<td class="col0">  secureTokenAllowOnError  </td><td class="col1"> Le jeton sécurisé autorise les requêtes en cas d'erreur </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row341 rowodd">
+		<td class="col0">  secureTokenAttribute  </td><td class="col1"> Attribut du jeton sécurisé </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row342 roweven">
+		<td class="col0">  secureTokenExpiration  </td><td class="col1"> Expiration du jeton sécurisé </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row343 rowodd">
+		<td class="col0">  secureTokenHeader  </td><td class="col1"> En-tête du jeton sécurisé </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row344 roweven">
+		<td class="col0">  secureTokenMemcachedServers  </td><td class="col1"> Serveurs Memcached pour le jeton sécurisé </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row345 rowodd">
+		<td class="col0">  secureTokenUrls  </td><td class="col1 leftalign">  </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row346 roweven">
+		<td class="col0">  securedCookie  </td><td class="col1">  Cookie securisation method  </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row347 rowodd">
+		<td class="col0">  sessionDataToRemember  </td><td class="col1">  Data to remember in login history  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row348 roweven">
+		<td class="col0">  sfEngine  </td><td class="col1">  Second factor engine  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row349 rowodd">
+		<td class="col0">  singleIP  </td><td class="col1">  Allow only one session per <abbr title="Internet Protocol">IP</abbr> </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row350 roweven">
+		<td class="col0">  singleSession  </td><td class="col1"> N'autoriser qu'une session par utilisateur </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row351 rowodd">
+		<td class="col0">  singleSessionUserByIP  </td><td class="col1">  Allow only one session per user on an <abbr title="Internet Protocol">IP</abbr> </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row352 roweven">
+		<td class="col0">  singleUserByIP  </td><td class="col1">  Allow only one user per <abbr title="Internet Protocol">IP</abbr> </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row353 rowodd">
+		<td class="col0">  slaveAuthnLevel  </td><td class="col1">  Slave authentication level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row354 roweven">
+		<td class="col0">  slaveExportedVars  </td><td class="col1">  Slave exported variables  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row355 rowodd">
+		<td class="col0">  slaveHeaderContent  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row356 roweven">
+		<td class="col0">  slaveHeaderName  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row357 rowodd">
+		<td class="col0">  slaveMasterIP  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row358 roweven">
+		<td class="col0">  slaveUserHeader  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row359 rowodd">
+		<td class="col0">  soapConfigServer  </td><td class="col1">  Enable SOAP config server  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row360 roweven">
+		<td class="col0">  soapSessionServer  </td><td class="col1">  Enable SOAP session server  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row361 rowodd">
+		<td class="col0">  sslByAjax  </td><td class="col1">  Use Ajax request for SSL  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row362 roweven">
+		<td class="col0">  sslHost  </td><td class="col1"> <abbr title="Uniform Resource Locator">URL</abbr> for SSL Ajax request  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row363 rowodd">
+		<td class="col0">  staticPrefix  </td><td class="col1">  Prefix of static files for <abbr title="HyperText Markup Language">HTML</abbr> templates  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row364 roweven">
+		<td class="col0">  status  </td><td class="col1">  Status daemon activation  </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row365 rowodd">
+		<td class="col0">  stayConnected  </td><td class="col1">  Enable StayConnected plugin  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row366 roweven">
+		<td class="col0">  storePassword  </td><td class="col1"> Stockage du mot-de-passe en session </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row367 rowodd">
+		<td class="col0">  successLoginNumber  </td><td class="col1">  Number of success stored in login history  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row368 roweven">
+		<td class="col0">  timeout  </td><td class="col1">  Session timeout on server side  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row369 rowodd">
+		<td class="col0">  timeoutActivity  </td><td class="col1">  Session activity timeout on server side  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row370 roweven">
+		<td class="col0">  timeoutActivityInterval  </td><td class="col1">  Update session timeout interval on server side  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row371 rowodd">
+		<td class="col0">  tokenUseGlobalStorage  </td><td class="col1">  Enable global token storage  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row372 roweven">
+		<td class="col0">  totp2fActivation  </td><td class="col1">  TOTP activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row373 rowodd">
+		<td class="col0">  totp2fAuthnLevel  </td><td class="col1">  Authentication level for users authentified by password+TOTP  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row374 roweven">
+		<td class="col0">  totp2fDigits  </td><td class="col1">  Number of digits for TOTP code  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row375 rowodd">
+		<td class="col0">  totp2fInterval  </td><td class="col1">  TOTP interval  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row376 roweven">
+		<td class="col0">  totp2fIssuer  </td><td class="col1">  TOTP Issuer  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row377 rowodd">
+		<td class="col0">  totp2fRange  </td><td class="col1">  TOTP range (number of interval to test)  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row378 roweven">
+		<td class="col0">  totp2fSelfRegistration  </td><td class="col1">  TOTP self registration activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row379 rowodd">
+		<td class="col0">  trustedDomains  </td><td class="col1"> Domaines agréés </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row380 roweven">
+		<td class="col0">  trustedProxies  </td><td class="col1">  Trusted proxies  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row381 rowodd">
+		<td class="col0">  twitterAppName  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row382 roweven">
+		<td class="col0">  twitterAuthnLevel  </td><td class="col1"> Niveau d'authentification de Twitter </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row383 rowodd">
+		<td class="col0">  twitterKey  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row384 roweven">
+		<td class="col0">  twitterSecret  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row385 rowodd">
+		<td class="col0">  u2fActivation  </td><td class="col1">  U2F activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row386 roweven">
+		<td class="col0">  u2fAuthnLevel  </td><td class="col1">  Authentication level for users authentified by password+U2F  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row387 rowodd">
+		<td class="col0">  u2fSelfRegistration  </td><td class="col1">  U2F self registration activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row388 roweven">
+		<td class="col0">  upgradeSession  </td><td class="col1">  Upgrade session activation  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row389 rowodd">
+		<td class="col0">  useRedirectOnError  </td><td class="col1">  Use 302 redirect code for error (500)  </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row390 roweven">
+		<td class="col0">  useRedirectOnForbidden  </td><td class="col1">  Use 302 redirect code for forbidden (403)  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row391 rowodd">
+		<td class="col0">  useSafeJail  </td><td class="col1">  Activate Safe jail  </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row392 roweven">
+		<td class="col0">  userControl  </td><td class="col1">  Regular expression to validate login  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row393 rowodd">
+		<td class="col0">  userDB  </td><td class="col1"> Module utilisateurs </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row394 roweven">
+		<td class="col0">  userPivot  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row395 rowodd">
+		<td class="col0">  vhostOptions  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row396 roweven">
+		<td class="col0">  webIDAuthnLevel  </td><td class="col1">  WebID authentication level  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row397 rowodd">
+		<td class="col0">  webIDExportedVars  </td><td class="col1">  WebID exported variables  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row398 roweven">
+		<td class="col0">  webIDWhitelist  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row399 rowodd">
+		<td class="col0">  whatToTrace  </td><td class="col1">  Session parameter used to fill REMOTE_USER  </td><td class="col2">  ✔  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row400 roweven">
+		<td class="col0">  yubikeyAuthnLevel  </td><td class="col1"> Niveau d'authentification de Yubikey </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row401 rowodd">
+		<td class="col0">  yubikeyClientID  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row402 roweven">
+		<td class="col0">  yubikeyPublicIDSize  </td><td class="col1"> Taille de l'ID public Yubikey </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row403 rowodd">
+		<td class="col0">  yubikeySecretKey  </td><td class="col1 leftalign">  </td><td class="col2">  ✔  </td><td class="col3 leftalign">  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
+	</tr>
+	<tr class="row404 roweven">
+		<td class="col0">  zimbraAccountKey  </td><td class="col1"> Clef de session de compte Zimbra </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row405 rowodd">
+		<td class="col0">  zimbraBy  </td><td class="col1"> Type de compte Zimbra </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row406 roweven">
+		<td class="col0">  zimbraPreAuthKey  </td><td class="col1"> Clef de pré-authentification Zimbra </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row407 rowodd">
+		<td class="col0">  zimbraSsoUrl  </td><td class="col1"> Expression d'<abbr title="Uniform Resource Locator">URL</abbr> <abbr title="Authentification unique (Single Sign On)">SSO</abbr> locale pour Zimbra </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+	<tr class="row408 roweven">
+		<td class="col0">  zimbraUrl  </td><td class="col1"> <abbr title="Uniform Resource Locator">URL</abbr> de pré-authentification Zimbra </td><td class="col2 leftalign">  </td><td class="col3">  ✔  </td><td class="col4 leftalign">  </td><td class="col5">  ✔  </td>
+	</tr>
+</table></div><!-- EDIT3 TABLE [306-27137] -->
 </div>
-</div><!-- EDIT2 SECTION "Main parameters" [264-10496] -->
+</div><!-- EDIT2 SECTION "Main parameters" [264-27150] -->
 
 <h2 class="sectionedit4" id="configuration_backend_parameters">Paramètres des backends de configuration</h2>
 <div class="level2">
@@ -639,9 +1338,9 @@
 	<tr class="row14 roweven">
 		<td class="col0"> Paramètre <a href="http://search.cpan.org/perldoc?LWP::UserAgent" class="urlextern" title="http://search.cpan.org/perldoc?LWP::UserAgent"  rel="nofollow">LWP::UserAgent</a> </td><td class="col1">  proxyOptions  </td>
 	</tr>
-</table></div><!-- EDIT5 TABLE [10543-11302] -->
+</table></div><!-- EDIT5 TABLE [27197-27956] -->
 
-</div><!-- EDIT4 SECTION "Configuration backend parameters" [10497-] -->
+</div><!-- EDIT4 SECTION "Configuration backend parameters" [27151-] -->
 </div>
 </body>
 </html>

@@ -1099,6 +1099,7 @@ test_omegat_%_dir:
 	fi
 
 omegat-configuration-file:
+	-@mkdir -p po-doc/$(LANGCODE)/pages
 	@perl -pe 'BEGIN{$$p=`pwd`;chomp $$p;}s/__LANG__/$(OMEGATCODE)/;s/__PWD__/$$p/o;' omegat.files/_base.project >omegat.files/$(LANGCODE)/omegat.project
 
 translation: omegat-configuration-file

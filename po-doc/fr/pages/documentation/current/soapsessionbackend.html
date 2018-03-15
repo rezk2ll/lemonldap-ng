@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,soapsessionbackend"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="soapsessionbackend.html"/>
@@ -129,7 +129,25 @@ Then, set <code>Lemonldap::NG::Common::Apache::Session::SOAP</code> in <code>Gen
 </table></div><!-- EDIT4 TABLE [1163-1324] -->
 <div class="notetip">Utiliser /adminSessions si l'agent doit modifier la session, par exemple si on configure un délai d'inactivité des sessions.
 </div>
-</div><!-- EDIT3 SECTION "Manager" [852-1452] -->
+<p>
+
+By default, only few sessions keys are shared by SOAP (ipAddr, _utime, _session_id), you need to define which other keys you want to share in <code>General parameters</code> » <code>Advanced parameters</code> » <code>SOAP</code> » <code>Exported attributes</code>.
+
+</p>
+
+<p>
+You must start with <code>+</code> to keep default keys, else they will not be shared. Par exemple :
+</p>
+<pre class="code">+ uid cn mail</pre>
+
+<p>
+
+To share only the listed attributes:
+
+</p>
+<pre class="code">_utime _session_id uid cn mail</pre>
+
+</div><!-- EDIT3 SECTION "Manager" [852-1889] -->
 
 <h3 class="sectionedit5" id="apache">Apache</h3>
 <div class="level3">
@@ -149,7 +167,7 @@ Sessions SOAP end points access must be allowed in Apache portal configuration (
     <span class="kw1">Require</span> 192.168.2.0/<span class="nu0">24</span>
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
-</div><!-- EDIT5 SECTION "Apache" [1453-1878] -->
+</div><!-- EDIT5 SECTION "Apache" [1890-2315] -->
 
 <h3 class="sectionedit6" id="real_session_backend">Backend de session réel</h3>
 <div class="level3">
@@ -168,7 +186,7 @@ Par exemple, si les sessions réelels sont stockées dans des <a href="filesessi
 <span class="re1">globalStorageOptions</span> <span class="sy0">=</span><span class="re2"> <span class="br0">{</span> 'Directory' <span class="sy0">=</span>&gt; '/var/lib/lemonldap-ng/sessions/', 'LockDirectory' <span class="sy0">=</span>&gt; '/var/lib/lemonldap-ng/sessions/lock/', <span class="br0">}</span></span></pre>
 <div class="notetip">Si l'explorateur de sessions est sur le même serveur que le portail, utiliser soit la terminaison <strong>adminSessions</strong> dans la configuration eu manager, ou surcharger les paramètres <code>globalStorage</code> et <code>globalStorageOptions</code> dans la section all (et pas portal) de <code>lemonldap-ng.ini</code>. 
 </div>
-</div><!-- EDIT6 SECTION "Real session backend" [1879-] -->
+</div><!-- EDIT6 SECTION "Real session backend" [2316-] -->
 </div>
 </body>
 </html>
