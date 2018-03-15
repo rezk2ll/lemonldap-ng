@@ -39,6 +39,10 @@ sub call {
 __PACKAGE__;
 __END__
 
+=pod
+
+=encoding utf8
+
 =head1 NAME
 
 Plack::Middleware::Auth::LemonldapNG - authentication middleware for Lemonldap-NG
@@ -66,3 +70,77 @@ Plack::Middleware::Auth::LemonldapNG - authentication middleware for Lemonldap-N
     #  on_reject => \&on_reject;
     $app;
   };
+
+=head1 DESCRIPTION
+
+Lemonldap::NG is a modular Web-SSO based on Apache::Session modules. It
+simplifies the build of a protected area with a few changes in the application.
+
+It manages both authentication and authorization and provides headers for
+accounting. So you can have a full AAA protection for your web space as
+described below.
+
+Plack::Middleware::Auth::LemonldapNG provides the module to protect a L<Plack>
+family server.
+
+=head1 SEE ALSO
+
+Most of the documentation is available on the website
+L<http://lemonldap-ng.org>
+
+=head2 OTHER POD FILES
+
+=over
+
+=item Writing an authentication module: L<Lemonldap::NG::Portal::Auth>
+
+=item Writing a UserDB module: L<Lemonldap::NG::Portal::UserDB>
+
+=item Writing a second factor module: L<Lemonldap::NG::Portal::Main::SecondFactor>
+
+=item Writing an issuer module: L<Lemonldap::NG::Portal::Main::Issuer>
+
+=item Writing an other plugin: L<Lemonldap::NG::Portal::Main::Plugin>
+
+=item Request object: L<Lemonldap::NG::Portal::Main::Request>
+
+=item Adding parameters in the manager: L<Lemonldap::NG::Manager::Build>
+
+=back
+
+=head1 AUTHORS
+
+=over
+
+=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+
+=head1 COPYRIGHT AND LICENSE
+
+See COPYING file for details.
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut
