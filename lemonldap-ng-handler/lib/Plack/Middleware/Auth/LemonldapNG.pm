@@ -31,7 +31,11 @@ sub call {
             return $res;
         }
     }
-    my $app = $self->app;
+    my $app  = $self->app;
+    my %hdrs = @{ $res->[1] };
+    foreach ( keys %hdrs ) {
+        $env->{$_} = 'HTTP_' . uc( $hdrs{$_} ) foreach ( keys %hdrs );
+    }
     @_ = $env;
     goto $app;
 }
