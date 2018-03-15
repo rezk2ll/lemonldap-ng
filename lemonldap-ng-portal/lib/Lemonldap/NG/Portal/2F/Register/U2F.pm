@@ -14,6 +14,8 @@ has prefix => ( is => 'rw', default => 'u' );
 
 has template => ( is => 'ro', default => 'u2fregister' );
 
+has logo => ( is => 'rw', default => 'u2f.png' );
+
 sub init {
     my ($self) = @_;
     return 0 unless $self->SUPER::init;
