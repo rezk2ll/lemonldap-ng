@@ -12,6 +12,8 @@ extends 'Lemonldap::NG::Portal::Main::Plugin', 'Lemonldap::NG::Common::TOTP';
 
 has prefix => ( is => 'rw', default => 'totp' );
 
+has template => ( is => 'ro', default => 'totpregister' );
+
 has ott => (
     is      => 'rw',
     lazy    => 1,
@@ -24,18 +26,11 @@ has ott => (
 );
 
 sub init {
-    my ($self) = @_;
-    $self->addAuthRoute(
-        totpregister => { ':action' => 'selfRegister' },
-        ['POST']
-    );
-    $self->addAuthRoute( 'totpregister.html' => undef, ['GET'] );
     return 1;
 }
 
-sub selfRegister {
-    my ( $self, $req ) = @_;
-    my $action = $req->param('action');
+sub run {
+    my ( $self, $req, $action ) = @_;
     my $user   = $req->userData->{ $self->conf->{whatToTrace} };
     unless ($user) {
         return $self->p->sendError( $req,

@@ -201,6 +201,11 @@ sub reloadConf {
     }
     $self->conf->{domain} =~ s/^([^\.])/.$1/;
 
+    # Load menu
+    # ---------
+    $self->menu( $self->loadPlugin('::Main::Menu') );
+    $self->displayInit;
+
     # Load authentication/userDB
     # --------------------------
     my $mod;
@@ -293,9 +298,6 @@ sub reloadConf {
       HANDLER->buildSub( HANDLER->substitute( $self->conf->{jsRedirect} ) )
       or $self->logger->error(
         'jsRedirect returns an error: ' . HANDLER->tsv->{jail}->error );
-
-    $self->menu( $self->loadPlugin('::Main::Menu') );
-    $self->displayInit;
 
     # Load plugins
     foreach my $plugin ( $self->enabledPlugins ) {
