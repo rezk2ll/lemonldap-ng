@@ -9,7 +9,7 @@ example/soaperrortest.pl
 example/soaptest.pl
 lib/Lemonldap/NG/Portal.pm
 lib/Lemonldap/NG/Portal/2F/Engines/Default.pm
-lib/Lemonldap/NG/Portal/2F/External2F.pm
+lib/Lemonldap/NG/Portal/2F/Ext2F.pm
 lib/Lemonldap/NG/Portal/2F/Register/TOTP.pm
 lib/Lemonldap/NG/Portal/2F/Register/U2F.pm
 lib/Lemonldap/NG/Portal/2F/REST.pm
@@ -149,10 +149,13 @@ site/cron/purgeCentralCache
 site/cron/purgeCentralCache.cron.d
 site/htdocs/index.fcgi
 site/htdocs/index.psgi
+site/htdocs/static/bootstrap/2f.png
 site/htdocs/static/bootstrap/css/styles.css
 site/htdocs/static/bootstrap/css/styles.min.css
 site/htdocs/static/bootstrap/js/skin.js
 site/htdocs/static/bootstrap/js/skin.min.js
+site/htdocs/static/bootstrap/totp.png
+site/htdocs/static/bootstrap/u2f.png
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.css.map
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.min.css
@@ -269,6 +272,7 @@ site/htdocs/static/languages/nl.json
 site/htdocs/static/languages/pt.json
 site/htdocs/static/languages/ro.json
 site/htdocs/static/languages/vi.json
+site/templates/bootstrap/2fchoice.tpl
 site/templates/bootstrap/casBack2Url.tpl
 site/templates/bootstrap/checklogins.tpl
 site/templates/bootstrap/confirm.tpl

@@ -286,6 +286,7 @@ sub sendHtml {
 
 sub run {
     my ( $self, $args ) = @_;
+    $args //= {};
     unless ( ref $self ) {
         $self = $self->new($args);
         return $self->abort( $self->error ) unless ( $self->init($args) );

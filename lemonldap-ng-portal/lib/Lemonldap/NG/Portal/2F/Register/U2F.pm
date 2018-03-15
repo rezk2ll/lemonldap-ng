@@ -12,11 +12,11 @@ extends 'Lemonldap::NG::Portal::Lib::U2F';
 
 has prefix => ( is => 'rw', default => 'u' );
 
+has template => ( is => 'ro', default => 'u2fregister' );
+
 sub init {
     my ($self) = @_;
     return 0 unless $self->SUPER::init;
-    $self->addAuthRoute( u2fregister => { ':action' => 'run' }, ['POST'] );
-    $self->addAuthRoute( 'u2fregister.html' => undef, ['GET'] );
     return 1;
 }
 
@@ -24,8 +24,7 @@ sub init {
 
 # Main method
 sub run {
-    my ( $self, $req ) = @_;
-    my $action = $req->param('action');
+    my ( $self, $req, $action ) = @_;
 
     if ( $action eq 'register' ) {
         my $challenge = $self->crypter->registrationChallenge;

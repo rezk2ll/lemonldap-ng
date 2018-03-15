@@ -22,7 +22,7 @@ register = ->
 	# 1 get registration token
 	$.ajax
 		type: "POST",
-		url: "#{portal}u2fregister/register"
+		url: "#{portal}2fregisters/u/register"
 		data: {}
 		dataType: 'json'
 		error: displayError
@@ -43,7 +43,7 @@ register = ->
 					# 3 send response
 					$.ajax
 						type: "POST"
-						url: "#{portal}u2fregister/registration"
+						url: "#{portal}2fregisters/u/registration"
 						data:
 							registration: JSON.stringify data
 							challenge: JSON.stringify ch
@@ -59,7 +59,7 @@ register = ->
 unregister = ->
 		$.ajax
 			type: "POST"
-			url: "#{portal}u2fregister/unregistration"
+			url: "#{portal}2fregisters/u/unregistration"
 			data: {}
 			dataType: 'json'
 			error: displayError
@@ -75,7 +75,7 @@ verify = ->
 	# 1 get challenge
 	$.ajax
 		type: "POST",
-		url: "#{portal}u2fregister/verify"
+		url: "#{portal}2fregisters/u/verify"
 		data: {}
 		dataType: 'json'
 		error: displayError
@@ -94,7 +94,7 @@ verify = ->
 					# 3 send response
 					$.ajax
 						type: "POST"
-						url: "#{portal}u2fregister/signature"
+						url: "#{portal}2fregisters/u/signature"
 						data:
 							signature: JSON.stringify data
 						dataType: 'json'

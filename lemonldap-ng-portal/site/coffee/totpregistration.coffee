@@ -22,13 +22,16 @@ token=''
 getKey = (reset) ->
 	$.ajax
 		type: "POST",
-		url: "#{portal}/totpregister/getkey"
+		url: "#{portal}/2fregisters/totp/getkey"
 		dataType: 'json'
 		data:
 			newkey: reset
 		error: displayError
 		# Display key and QR code
 		success: (data) ->
+			unless data.portal and data.user and data.secret
+				return setMsg 'PE24', 'danger'
+
 			# Generate OTP url
 			s = "otpauth://totp/#{escape(data.portal)}:#{escape(data.user)}?secret=#{data.secret}&issuer=#{escape(data.portal)}"
 			if data.digits != 6
@@ -56,7 +59,7 @@ verify = ->
 	else
 		$.ajax
 			type: "POST",
-			url: "#{portal}/totpregister/verify"
+			url: "#{portal}/2fregisters/totp/verify"
 			dataType: 'json'
 			data:
 				token: token

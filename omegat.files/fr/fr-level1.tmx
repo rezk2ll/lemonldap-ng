@@ -46,14 +46,6 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>DBI Authentication table</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061429Z" changeid="guimard">
-        <seg>Table d'authentification DBI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>user email</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102229Z" changeid="xavier">
@@ -182,14 +174,6 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Remote portal</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064037Z" changeid="guimard">
-        <seg>Portail distant</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Then edit the property network.negotiate-auth.trusted-uris and set value example.com.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T212327Z" changeid="xavier">
@@ -264,26 +248,10 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Proxy Granting Ticket</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T160528Z" changeid="xavier">
-        <seg>Proxy Granting Ticket</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Reset password by mail (self service)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082911Z" changeid="xavier">
         <seg>Réinitialiser les mots-de-passe par mail (self-service)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Persistent Session backend</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T080349Z" changeid="xavier">
-        <seg>Backend des sessions persistantes</seg>
       </tuv>
     </tu>
     <tu>
@@ -542,14 +510,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102222Z" changeid="xavier">
         <seg>Nom complet de l'utilisateur</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>DBI Mail column</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061457Z" changeid="guimard">
-        <seg>Colonne mail DBI</seg>
       </tuv>
     </tu>
     <tu>
@@ -886,14 +846,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T065441Z" changeid="xavier">
         <seg>Rechargement de la configuration</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>CAS_proxiedServices</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061055Z" changeid="guimard">
-        <seg>CAS_proxiedServices</seg>
       </tuv>
     </tu>
     <tu>
@@ -1466,14 +1418,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Twitter application name</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064459Z" changeid="guimard">
-        <seg>Nom d'application Twitter</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Force NameID session key: if empty, the NameID mapping defined in SAML service configuration will be used.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T204749Z" changeid="xavier">
@@ -1652,14 +1596,6 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>reloadTime</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063917Z" changeid="guimard">
-        <seg>reloadTime</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>For example, we change it to ow2.org:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093855Z" changeid="xavier">
@@ -1768,14 +1704,6 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064712Z" changeid="guimard">
         <seg>whatToTrace</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Access rules</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Règles d'accès</seg>
       </tuv>
     </tu>
     <tu>
@@ -2910,14 +2838,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Yubikey secret key</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064908Z" changeid="guimard">
-        <seg>Clef secrète Yubikey</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>http://zimbra.lan/service/preauth</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T181428Z" changeid="xavier">
@@ -3654,14 +3574,6 @@ SSLCACertificateFile /etc/httpd/certs/ow2-ca.cert</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Remote Session backend options</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064022Z" changeid="guimard">
-        <seg>Options du backend de sessions distant</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Run this to update packages cache:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093608Z" changeid="xavier">
@@ -3782,14 +3694,6 @@ SSLCACertificateFile /etc/httpd/certs/ow2-ca.cert</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Do not allow several users for 1 IP</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Ne pas autoriser plusieurs utilisateurs venant de la même adresse IP</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Handle errors:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T082004Z" changeid="xavier">
@@ -3858,14 +3762,6 @@ SSLCACertificateFile /etc/httpd/certs/ow2-ca.cert</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093342Z" changeid="xavier">
         <seg>Si c'est le cas, utiliser une autre solution (voir ci-dessous).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>soapSessionService</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064202Z" changeid="guimard">
-        <seg>soapSessionService</seg>
       </tuv>
     </tu>
     <tu>
@@ -4166,14 +4062,6 @@ SSLCACertificateFile /etc/httpd/certs/ow2-ca.cert</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>useXForwardedForIP</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064630Z" changeid="guimard">
-        <seg>useXForwardedForIP</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>A Zimbra Handler is called</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155348Z" changeid="xavier">
@@ -4194,14 +4082,6 @@ SSLCACertificateFile /etc/httpd/certs/ow2-ca.cert</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T161009Z" changeid="xavier">
         <seg>Paramètres disponibles :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Force HTTPS in redirection</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Indicateur HTTPS pour les redirections</seg>
       </tuv>
     </tu>
     <tu>
@@ -4330,14 +4210,6 @@ SSLCACertificateFile /etc/httpd/certs/ow2-ca.cert</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T083317Z" changeid="xavier">
         <seg>Ci-dessous sont documentées les variables internes.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>CAS Session backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Module de stockage CAS</seg>
       </tuv>
     </tu>
     <tu>
@@ -4990,14 +4862,6 @@ SSLCACertificateFile /etc/httpd/certs/ow2-ca.cert</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Session key containing email address</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063511Z" changeid="guimard">
-        <seg>La clef de session contient l'adresse mail</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>This name is used in entry DN, for example cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160302T060736Z" changeid="xavier">
@@ -5490,14 +5354,6 @@ dirName = /var/lib/lemonldap-ng/conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Syslog facility</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Facilité syslog</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Add a new rule:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T220724Z" changeid="xavier">
@@ -5768,22 +5624,6 @@ include /usr/local/lemonldap-ng/etc/test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>CAS server URL</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061139Z" changeid="guimard">
-        <seg>URL du serveur CAS</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Delete other session if IP differs</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Efface les autres sessions de l'utilisateur si les adresses IP diffèrent</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Nginx is fully supported by LemonLDAP::NG since version 1.9.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T170108Z" changeid="xavier">
@@ -5846,14 +5686,6 @@ cda = 1</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Options et nom du module de sessions SAML</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>URL for mail reset</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>URL pour la réinitialisation par courriel</seg>
       </tuv>
     </tu>
     <tu>
@@ -5962,26 +5794,10 @@ cda = 1</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Persistent Session backend options</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T080410Z" changeid="xavier">
-        <seg>Options du backend des sessions persistantes</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>LL::NG can use a lot of databases as authentication, users and password backend:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194912Z" changeid="xavier">
         <seg>LL::NG peut utiliser de nombreuses bases de données comme backend d'authentification, d'utilisateurs et de mots de passe :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Skin name</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Nom du thème</seg>
       </tuv>
     </tu>
     <tu>
@@ -6326,14 +6142,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Multi overridden parameters</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063701Z" changeid="guimard">
-        <seg>Paramètres surchargés pour &quot;Multi&quot;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Cookie name (optional): name of the cookie of primary portal, if different from secondary portal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200020Z" changeid="xavier">
@@ -6416,14 +6224,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>DBI Login column</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061316Z" changeid="guimard">
-        <seg>Colonne de nom de connexion DBI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>casAccessControlPolicy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061217Z" changeid="guimard">
@@ -6460,22 +6260,6 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T205437Z" changeid="xavier">
         <seg>spConfKey : clef de configuration du SP</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Sympa shared secret</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064445Z" changeid="guimard">
-        <seg>Secret partagé de Sympa</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Sympa mail session key</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064434Z" changeid="guimard">
-        <seg>Clef de session mail pour Sympa</seg>
       </tuv>
     </tu>
     <tu>
@@ -7256,14 +7040,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Display logout module</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Affiche le module de déconnexion</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Redirection to the portal of the main area and normal authentication (if not done before)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050315Z" changeid="xavier">
@@ -7284,14 +7060,6 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T053200Z" changeid="guimard">
         <seg>DBI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Soap</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064108Z" changeid="guimard">
-        <seg>Soap</seg>
       </tuv>
     </tu>
     <tu>
@@ -7572,14 +7340,6 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T161957Z" changeid="xavier">
         <seg>Clef (nom LL::NG)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Use Safe Jail</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064605Z" changeid="guimard">
-        <seg>Utiliser la cage sécurisée</seg>
       </tuv>
     </tu>
     <tu>
@@ -8174,14 +7934,6 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>CAS proxied services</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061053Z" changeid="guimard">
-        <seg>Services mandatés de CAS</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>SQL configuration backends</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120421T174411Z" changeid="xavier">
@@ -8218,14 +7970,6 @@ description: {whatToTrace}'$uid'
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T212345Z" changeid="xavier">
         <seg>Ajouter https://auth.example.com comme site approuvé.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Use XForwardedFor for IP</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Utiliser XForwardedFor comme IP cliente</seg>
       </tuv>
     </tu>
     <tu>
@@ -8518,14 +8262,6 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>DBI UserDB connection user</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061606Z" changeid="guimard">
-        <seg>Compte de connexion UserDB DBI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>For now, ldapgroups contains “cn=admin,dmdName=groups,dc=example,dc=com cn=su,dmdName=groups,dc=example,dc=com”</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8554,14 +8290,6 @@ description: {whatToTrace}'$uid'
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T182509Z" changeid="xavier">
         <seg>L'extension de schéma LDAP peut être utilisée pour stocker ces valeurs.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Mail reset request timeout</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063440Z" changeid="guimard">
-        <seg>Délai maximal des requêtes de réinitialisation des mails</seg>
       </tuv>
     </tu>
     <tu>
@@ -8798,14 +8526,6 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Activate auto accept timer</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Activer le compte-à-rebours d'acceptation automatique</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Resolution Rule: rule that will be applied to preselect an IDP for a user.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060133Z" changeid="xavier">
@@ -8882,14 +8602,6 @@ description: {whatToTrace}'$uid'
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T201505Z" changeid="xavier">
         <seg>Enregistrement dynamique</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Display other sessions</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Affiche les autres sessions</seg>
       </tuv>
     </tu>
     <tu>
@@ -9096,14 +8808,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Rule for session granting</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Règle pour l'autorisation d'ouverture de session</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>When all is ok, click on Save.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160302T061945Z" changeid="xavier">
@@ -9300,14 +9004,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T131231Z" changeid="xavier">
         <seg>_idpConfKey</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Notification uid for all users</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063737Z" changeid="guimard">
-        <seg>Nom de compte de notification pour tous les utilisateurs</seg>
       </tuv>
     </tu>
     <tu>
@@ -9684,14 +9380,6 @@ dirName = /var/lib/lemonldap-ng/conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Protection scheme</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Schéma de protection</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>http://search.cpan.org/~massyn/Auth-Yubikey_WebClient/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T162227Z" changeid="xavier">
@@ -9884,14 +9572,6 @@ dirName = /var/lib/lemonldap-ng/conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>SAML Session backend options</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Options du module de stockage SAML</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Go in Manager, General parameters » Advanced parameters » Logout forward and click on Add a key, then fill:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T200346Z" changeid="guimard">
@@ -9948,14 +9628,6 @@ dirName = /var/lib/lemonldap-ng/conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Proxy portal URL</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064123Z" changeid="guimard">
-        <seg>URL du portail mandataire</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Reload the Manager to see the order that will be used</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095920Z" changeid="xavier">
@@ -9976,14 +9648,6 @@ dirName = /var/lib/lemonldap-ng/conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051325Z" changeid="guimard">
         <seg>Configurer LemonLDAP::NG pour utiliser MySQL comme base de données principale</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Display applications list</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Affiche la liste des applications</seg>
       </tuv>
     </tu>
     <tu>
@@ -10156,14 +9820,6 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T084400Z" changeid="xavier">
         <seg>On peut changer la directive Allow pour réserver l'adresse IP d'administration, ou utiliser une autre protection.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>soapAuthService</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064124Z" changeid="guimard">
-        <seg>soapAuthService</seg>
       </tuv>
     </tu>
     <tu>
@@ -10766,14 +10422,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>CDA activation</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Activation du CDA</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>The OP should publish its metadata in a JSON file (see for example Google metadata).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T201128Z" changeid="xavier">
@@ -11168,14 +10816,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>DBI Password column</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061356Z" changeid="guimard">
-        <seg>Colonne du mot-de-passe DBI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Connection settings can be configured differently for authentication process and user process.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200419Z" changeid="xavier">
@@ -11314,14 +10954,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>CAS Session backend options</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Options du module de stockage CAS</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>//&quot;userobm_local&quot;               =&gt; ,</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112310Z" changeid="xavier">
@@ -11434,14 +11066,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>sympaMailKey</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064435Z" changeid="guimard">
-        <seg>sympaMailKey</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>----</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112332Z" changeid="xavier">
@@ -11494,14 +11118,6 @@ portalSkin = dark</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082734Z" changeid="xavier">
         <seg>Identificant OpenID : la clef de session utilisée pour correspondre au login OpenID.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Check XSS Attacks</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T065933Z" changeid="guimard">
-        <seg>Recherche les attaques XSS</seg>
       </tuv>
     </tu>
     <tu>
@@ -12602,14 +12218,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Twitter application key</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064521Z" changeid="guimard">
-        <seg>Clef d'application de Twitter</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>when pwdLastSet = 0 in the user entry, it means that password has been reset, and a form is presented to the user for him to change his password.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T110839Z" changeid="xavier">
@@ -12638,14 +12246,6 @@ portalSkin = dark</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T042402Z" changeid="xavier">
         <seg>echo &quot;127.0.0.1 reload.example.com&quot; &gt;&gt; /etc/hosts</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Radius server</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T065910Z" changeid="guimard">
-        <seg>Serveur Radius</seg>
       </tuv>
     </tu>
     <tu>
@@ -12828,14 +12428,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Require old password (change)</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Impose la présentation de l'ancien mot-de-passe dans les changements</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Restart fail2ban</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T140226Z" changeid="xavier">
@@ -12856,14 +12448,6 @@ portalSkin = dark</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153613Z" changeid="xavier">
         <seg>GLPI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Display change password module</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Affiche le module de changement de mot-de-passe</seg>
       </tuv>
     </tu>
     <tu>
@@ -12952,14 +12536,6 @@ portalSkin = dark</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120423T204645Z" changeid="xavier">
         <seg>http://search.cpan.org/perldoc?Apache::Session::Informix</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>DBI Pivot from user table</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064628Z" changeid="guimard">
-        <seg>Pivot DBI pour la table utilisateur</seg>
       </tuv>
     </tu>
     <tu>
@@ -13294,14 +12870,6 @@ sub function1 {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Main DNS domain</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Domaine DNS principal</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>SP Initiated Binding: chose any of the supported binding (every one listed there is currently supported on LemonLDAP::NG) HTTP POST is a good choice</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T223806Z" changeid="xavier">
@@ -13378,14 +12946,6 @@ sub function1 {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T070000Z" changeid="xavier">
         <seg>SSLCertificateKeyFile : clef privée du serveur</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Radius secret</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T065916Z" changeid="guimard">
-        <seg>Secret Radius</seg>
       </tuv>
     </tu>
     <tu>
@@ -13774,14 +13334,6 @@ server {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Subject for password mail</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Sujet du message de changement de mot de passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>It will be the link between the SAML assertion coming from LemonLDAP::NG (the IdP) and a given user in Salesforce.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T224321Z" changeid="xavier">
@@ -14102,14 +13654,6 @@ server {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Hide old password in reset form</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T065005Z" changeid="guimard">
-        <seg>Masquer l'ancien mot-de-passe dans le formulaire de réinitialisation</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>It will get the user identity trough an ID Token, and grab user attributes trough UserInfo endpoint.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T193223Z" changeid="xavier">
@@ -14146,14 +13690,6 @@ server {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T205629Z" changeid="xavier">
         <seg>Tous les scripts/pages Perl se trouvent dans /var/lib/lemonldap-ng/</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>OpenID secret token</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063833Z" changeid="guimard">
-        <seg>Secret OpenID</seg>
       </tuv>
     </tu>
     <tu>
@@ -14334,14 +13870,6 @@ server {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Display reset password form</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Affiche le module de réinitialisation de mot-de-passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>The notifications module uses a wildcard to manage notifications for all users.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T053518Z" changeid="guimard">
@@ -14460,14 +13988,6 @@ if ( $r-&gt;fault ) {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T083033Z" changeid="xavier">
         <seg>Modifier la protection du manager</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Remote cookie name</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063929Z" changeid="guimard">
-        <seg>Nom du cookie distant</seg>
       </tuv>
     </tu>
     <tu>
@@ -15116,14 +14636,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>DBI Connection chain</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061254Z" changeid="guimard">
-        <seg>Chaîne de connexion DBI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>In the Manager, go in General Parameters » Issuer modules » CAS and configure:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T053854Z" changeid="xavier">
@@ -15572,14 +15084,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Session lifetime for cronjob</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Durée de vie des sessions pour la tâche planifiée</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Users: will not collect any data (but you can still register environment variables in session)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080500Z" changeid="xavier">
@@ -15746,22 +15250,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155549Z" changeid="xavier">
         <seg>Ensuite Zimbra génère son cookie SSO dans le navigateur de l'utilisateur</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>DBI UserDB table</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061542Z" changeid="guimard">
-        <seg>Table UserDB DBI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Cache backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Module du cache local</seg>
       </tuv>
     </tu>
     <tu>
@@ -16058,14 +15546,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160831Z" changeid="xavier">
         <seg>install_portal_libs</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>CustomSOAPServices</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061246Z" changeid="guimard">
-        <seg>CustomSOAPServices</seg>
       </tuv>
     </tu>
     <tu>
@@ -16754,14 +16234,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>CAS_authnLevel</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>CAS_authnLevel</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>LL::NG validate the token and propose a password change form</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T145810Z" changeid="guimard">
@@ -16902,14 +16374,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Une petite macro :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>CAS CA file</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T060845Z" changeid="guimard">
-        <seg>Fichier d'AC de CAS</seg>
       </tuv>
     </tu>
     <tu>
@@ -17414,14 +16878,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063357Z" changeid="guimard">
         <seg>Table de caractères des mails</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Multi values separator</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Séparateur des multiples valeurs</seg>
       </tuv>
     </tu>
     <tu>
@@ -18010,14 +17466,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>multi</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063701Z" changeid="guimard">
-        <seg>multi</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Goal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T055355Z" changeid="xavier">
@@ -18342,14 +17790,6 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T083921Z" changeid="xavier">
         <seg>'cache_depth' =&gt; 5,?</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>SAML Session backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Module de stockage SAML</seg>
       </tuv>
     </tu>
     <tu>
@@ -19014,14 +18454,6 @@ notification = 1</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Regular expression for random password</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Expression rationnelle pour la génération aléatoire des mots-de-passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Copy the content of this file in the textarea.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T201204Z" changeid="xavier">
@@ -19222,14 +18654,6 @@ notification = 1</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Session backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Module de stockage des sessions</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Variables can be used in rules and headers.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T082457Z" changeid="xavier">
@@ -19302,14 +18726,6 @@ notification = 1</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>CAS_url</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061141Z" changeid="guimard">
-        <seg>CAS_url</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Variables defined in the exported variables node of the module will be used only for that module.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T161328Z" changeid="xavier">
@@ -19370,14 +18786,6 @@ notification = 1</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T195532Z" changeid="xavier">
         <seg>Quelques exemples, avec leur documentation :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>CAS_pgtFile</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061032Z" changeid="guimard">
-        <seg>CAS_pgtFile</seg>
       </tuv>
     </tu>
     <tu>
@@ -19558,14 +18966,6 @@ $lemonldap_config = Array(</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112329Z" changeid="xavier">
         <seg>//&quot;userobm_samba_logon_script&quot;  =&gt; ,</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Data to store as REMOTE_USER (used also in Apache logs)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064711Z" changeid="guimard">
-        <seg>Donnée à utiliser comme REMOTE_USER (également utilisée dans les journaux d'Apache)</seg>
       </tuv>
     </tu>
     <tu>
@@ -19938,14 +19338,6 @@ $lemonldap_config = Array(</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Password backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Module de gestion de mots-de-passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>notifyDeleted</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063740Z" changeid="guimard">
@@ -19974,14 +19366,6 @@ $lemonldap_config = Array(</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081456Z" changeid="xavier">
         <seg>email_http_header            HTTP_MAIL</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Open links in new window</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Ouvre les liens dans une nouvelle fenêtre</seg>
       </tuv>
     </tu>
     <tu>
@@ -20070,14 +19454,6 @@ $lemonldap_config = Array(</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T165515Z" changeid="xavier">
         <seg>Nécessite une version de Net::LDAP égale ou supérieure à 0.38.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>User name session field</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Champ de session stockant le nom d'utilisateur</seg>
       </tuv>
     </tu>
     <tu>
@@ -20214,14 +19590,6 @@ $lemonldap_config = Array(</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T055301Z" changeid="xavier">
         <seg>Il est possible d'utiliser Redis comme expliqué dans Backend de sessions Redis.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Body for confirmation mail</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Corps du message de confirmation</seg>
       </tuv>
     </tu>
     <tu>
@@ -20458,14 +19826,6 @@ $lemonldap_config = Array(</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Attributes from user backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Attributs récupérés du module utilisateur</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Server port: TCP port used by LDAP server.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T165119Z" changeid="xavier">
@@ -20580,14 +19940,6 @@ tpl_myparam = world</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T200740Z" changeid="xavier">
         <seg>Déclarer le fournisseur OpenID Connect dans LL::NG</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Send mail on password change</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T065852Z" changeid="guimard">
-        <seg>Envoyer des courriels lors des changements de mots-de-passe</seg>
       </tuv>
     </tu>
     <tu>
@@ -21272,14 +20624,6 @@ tpl_myparam = world</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>CAS attribute for login</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061157Z" changeid="guimard">
-        <seg>Attribut CAS pour le nom de connexion</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You need to obtain a keytab for each node on each domain.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T214856Z" changeid="xavier">
@@ -21368,22 +20712,6 @@ tpl_myparam = world</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Name of the cookie</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Nom du cookie</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>locationRules</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063327Z" changeid="guimard">
-        <seg>locationRules</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Handler: user is redirected if he has no SSO cookie (or in CDA mode)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T080543Z" changeid="xavier">
@@ -21456,22 +20784,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
         <seg>[portal]
 globalStorage = Apache::Session::File
 globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'LockDirectory' =&gt; '/var/lib/lemonldap-ng/sessions/lock/', }</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>CAS force authentication renewal</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061120Z" changeid="guimard">
-        <seg>Forcer le renouvellement d'authentification CAS</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>DBI UserDB connection chain</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061512Z" changeid="guimard">
-        <seg>Chaîne de connexion UserDB DBI</seg>
       </tuv>
     </tu>
     <tu>
@@ -21628,14 +20940,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Session backend options</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Options du module de stockage des sessions</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Secret token: a secret token used to secure transmissions between OpenID client and server (see below).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082650Z" changeid="xavier">
@@ -21648,14 +20952,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T052614Z" changeid="xavier">
         <seg>Active Directory</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Cache backend options</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Options du module du cache local</seg>
       </tuv>
     </tu>
     <tu>
@@ -21940,14 +21236,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Secure Token protected URLs</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T065808Z" changeid="guimard">
-        <seg>URL protégées du jeton sécurisé</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>(&amp;(mail=$mail)(objectClass=person))</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114426Z" changeid="xavier">
@@ -21960,14 +21248,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T111524Z" changeid="xavier">
         <seg>Une variable “délai d'avertissement pour mot de passe avant expiration de celui-ci” peut être indiquée dans LemonLDAP::NG pour le faire.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>exportedHeaders</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061618Z" changeid="guimard">
-        <seg>exportedHeaders</seg>
       </tuv>
     </tu>
     <tu>
@@ -22112,14 +21392,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T195504Z" changeid="xavier">
         <seg>On peut utiliser ce module d'authentification pour lier un serveur LL::NG à n'importe quel fournisseur OpenID-Connect.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>DBI Connection password</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061343Z" changeid="guimard">
-        <seg>Mot-de-passe de connexion DBI</seg>
       </tuv>
     </tu>
     <tu>
@@ -22336,14 +21608,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082814Z" changeid="xavier">
         <seg>Contrôle d'accès basé sur les rôles (RBAC)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>OpenID allowed domains</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063818Z" changeid="guimard">
-        <seg>Domaines autorisés pour OpenID</seg>
       </tuv>
     </tu>
     <tu>
@@ -22948,26 +22212,10 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Body for password mail</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Corps du message de changement de mot-de-passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You can use 0 or 1 to disable/enable the module, or use a more complex rule.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T134736Z" changeid="guimard">
         <seg>On peut utiliser 0 ou 1 pour activer/désactiver chaque module ou utiliser une règle plus complexe.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Mail From address</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Adresse source des messages</seg>
       </tuv>
     </tu>
     <tu>
@@ -23428,14 +22676,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>User backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Module utilisateurs</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>icons:jabber_protocol.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T083021Z" changeid="xavier">
@@ -23456,14 +22696,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR">
         <seg>Nom du cookie de résolution de l'IDP: par défaut, c'est le nom du cookie LL::NG auquel est adjoint idp, par exemple: lemonldapidp.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Anti frame protection</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Protection anti-frame</seg>
       </tuv>
     </tu>
     <tu>
@@ -23632,14 +22864,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>CAS PGT temporary file</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061027Z" changeid="guimard">
-        <seg>Fichier temporaire PGT de CAS</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Path: keep ^/oauth2/ unless you need to use another path (in this case, you need to adapt Apache configuration)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T201802Z" changeid="xavier">
@@ -23676,14 +22900,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T144042Z" changeid="guimard">
         <seg>L'utilisateur ne dispose pas de droits d'accès : FORBIDDEN (403)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Choice URL parameter</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Paramètre d'URL pour &quot;Choice&quot;</seg>
       </tuv>
     </tu>
     <tu>
@@ -23794,22 +23010,6 @@ Display-Name -&gt; $displayName ||= $givenName.&quot; &quot;.$surName</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://deb.entrouvert.org/</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>DBI UserDB connection password</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061530Z" changeid="guimard">
-        <seg>Mot-de-passe de connexion UserDB DBI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>CAS force gateway authentication</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T060958Z" changeid="guimard">
-        <seg>Forcer l'authentification de passerelle CAS</seg>
       </tuv>
     </tu>
     <tu>
@@ -24018,14 +23218,6 @@ Display-Name -&gt; $displayName ||= $givenName.&quot; &quot;.$surName</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T213305Z" changeid="xavier">
         <seg>Le résultat de la commande doit être :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Twitter application secret</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064530Z" changeid="guimard">
-        <seg>Secret d'application Twitter</seg>
       </tuv>
     </tu>
     <tu>
@@ -24536,14 +23728,6 @@ protection = manager</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Proxy cookie name</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063948Z" changeid="guimard">
-        <seg>Nom du cookie du proxy</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>NTLM</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153916Z" changeid="xavier">
@@ -24692,14 +23876,6 @@ protection = manager</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T055520Z" changeid="xavier">
         <seg>Interdire l'accès au répertoire /config/</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Subject for confirmation mail</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Sujet du message de confirmation</seg>
       </tuv>
     </tu>
     <tu>
@@ -24868,14 +24044,6 @@ protection = manager</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T223842Z" changeid="xavier">
         <seg>C'est le point d'entrée de la cinématique de connexion.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Status module activation</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064415Z" changeid="guimard">
-        <seg>Activation du module de statut</seg>
       </tuv>
     </tu>
     <tu>
@@ -25104,14 +24272,6 @@ protection = manager</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Authentication backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Module d'authentification</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You need Web::ID package.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T063706Z" changeid="xavier">
@@ -25320,14 +24480,6 @@ protection = manager</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>grantSessionRule</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061621Z" changeid="guimard">
-        <seg>grantSessionRule</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>documentation:1.0:fileconfbackend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125400Z" changeid="xavier">
@@ -25444,14 +24596,6 @@ protection = manager</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112836Z" changeid="xavier">
         <seg>→ Le cache local ne peut être effacé, regarder les options localStorage and localStorageOptions ou les droits associés à ces fichiers</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Choice modules</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Modules de &quot;Choice&quot;</seg>
       </tuv>
     </tu>
     <tu>
@@ -25868,14 +25012,6 @@ protection = manager</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192006Z" changeid="xavier">
         <seg>LockDirectory</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Headers sent</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>En-têtes envoyés</seg>
       </tuv>
     </tu>
     <tu>
@@ -26616,14 +25752,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>DBI Connection user</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061446Z" changeid="guimard">
-        <seg>Nom de connexion DBI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>High Availability</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T083304Z" changeid="xavier">
@@ -26824,14 +25952,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Delay between check of local configuration</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063915Z" changeid="guimard">
-        <seg>Delai entre 2 examens de la configuration locale</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Please use lmMigrateConfFiles2ini to migrate your menu configuration</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T114402Z" changeid="xavier">
@@ -26844,14 +25964,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T204048Z" changeid="xavier">
         <seg>Safe peut être très gênant lorsqu'on utilise les fonctions étendues ou les fonctions personnalisées.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Cookie Javascript protection</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T065822Z" changeid="guimard">
-        <seg>Protection Javascript du cookie</seg>
       </tuv>
     </tu>
     <tu>
@@ -26952,14 +26064,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Local groups</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Groupes locaux</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>When you know the key of the variable, you just have to prefix it with the dollar sign to use it, for example to test if uid variable match coudot :</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T083219Z" changeid="xavier">
@@ -27012,14 +26116,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112300Z" changeid="xavier">
         <seg>&quot;userobm_login&quot;                 =&gt; &quot;HTTP_OBM_UID&quot;,</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>sympaSecret</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064446Z" changeid="guimard">
-        <seg>sympaSecret</seg>
       </tuv>
     </tu>
     <tu>
@@ -27264,14 +26360,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Delete other session</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Efface les autres sessions (session unique par utilisateur)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Custom Error URL: you can redirect the user to a special page when an error is happening</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T223652Z" changeid="xavier">
@@ -27366,22 +26454,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T053019Z" changeid="guimard">
         <seg>Le séparateur par défaut des noms de fichiers est _, ce qui peut poser problème si on enregistre des notifications pour des utilsateur ayant un caractère _ dans leur nom de connexion.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Cookie security</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Sécurité du cookie</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>CAS_gateway</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061000Z" changeid="guimard">
-        <seg>CAS_gateway</seg>
       </tuv>
     </tu>
     <tu>
@@ -27486,14 +26558,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Reportez-vous à la FAQ Twitter pour en savoir plus.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>CAS_CAFile</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T060848Z" changeid="guimard">
-        <seg>CAS_CAFile</seg>
       </tuv>
     </tu>
     <tu>
@@ -27658,14 +26722,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Remote Session backend</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064029Z" changeid="guimard">
-        <seg>Backend de sessions distant</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>So to improve performances, avoid too complex rules by using the macro or the groups or local macros.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27718,14 +26774,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140742Z" changeid="guimard">
         <seg>Les autres modules ne doivent être installés que s'il est prévu d'utiliser les fonctionnalités associées.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>CAS_renew</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061122Z" changeid="guimard">
-        <seg>CAS_renew</seg>
       </tuv>
     </tu>
     <tu>
@@ -28114,14 +27162,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T172408Z" changeid="xavier">
         <seg>L'historique des sessions est toujours visible dans l'explorateur de sessions pour les administrateurs.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>DBI Password hash</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T061416Z" changeid="guimard">
-        <seg>Hachage de mot-de-passe DBI</seg>
       </tuv>
     </tu>
     <tu>
@@ -28670,14 +27710,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>syslog</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064448Z" changeid="guimard">
-        <seg>syslog</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>In Protocol, adapt the scope to the exported attributes you want.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T191158Z" changeid="xavier">
@@ -29140,14 +28172,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les déclarations disponibles sont :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Reply address</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063340Z" changeid="guimard">
-        <seg>Adresse de réponse</seg>
       </tuv>
     </tu>
     <tu>
@@ -29620,14 +28644,6 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Yubikey client ID</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064857Z" changeid="guimard">
-        <seg>ID client Yubikey</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>LL::NG FastCGI server must be loaded separately.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T081523Z" changeid="xavier">
@@ -30012,14 +29028,6 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Use redirect on error</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064552Z" changeid="guimard">
-        <seg>Utiliser les redirections en cas d'erreur</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>HTTPS: use https as protocol</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T143754Z" changeid="guimard">
@@ -30180,18 +29188,18 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Display deleted sessions</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Affiche les sessions effacées</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>To view a configuration parameter, for example portal URL:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T075921Z" changeid="xavier">
         <seg>Pour voir un paramètre de configuration, par exemple l'URL du portail :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Allow only one session per user</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>N'autoriser qu'une session par utilisateur</seg>
       </tuv>
     </tu>
     <tu>

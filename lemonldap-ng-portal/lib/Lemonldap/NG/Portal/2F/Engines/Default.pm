@@ -86,6 +86,15 @@ sub init {
         $self->addUnauthRoute( '2fchoice' => 'redirect', ['GET'] );
     }
 
+    # Enable 2F registration URL only if a least 1 registration module
+    # is enabled
+    if ( @{ $self->{sfRModules} } ) {
+
+        # Registration base
+        $self->addAuthRoute( '2fregisters' => 'displayRegister', ['GET'] );
+        $self->addAuthRoute( '2fregisters' => 'register',        ['POST'] );
+    }
+
     return 1;
 }
 
@@ -195,6 +204,77 @@ sub _redirect {
     return [
         302, [ Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' ) ], []
     ];
+}
+
+sub displayRegister {
+    my ( $self, $req, $tpl ) = @_;
+
+    # After verifying rule:
+    #  - display template if $tpl
+    #  - else display choice template
+    if ($tpl) {
+        my ($m) = grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
+        unless ($m) {
+            return $self->p->sendError( $req, 'Unexistent register module',
+                400 );
+        }
+        unless ( $m->{r}->( $req, $req->userData ) ) {
+            return $self->p->sendError( $req, 'Registration unauthorizated',
+                403 );
+        }
+        return $self->p->sendHtml( $req, $m->{m}->template );
+    }
+
+    # If only one 2F is available, redirect to it
+    my @am;
+    foreach my $m ( @{ $self->sfRModules } ) {
+        $self->logger->debug(
+            'Looking if ' . $m->{m}->prefix . '2F register is available' );
+        if ( $m->{r}->( $req, $req->userData ) ) {
+            push @am, '/2fregisters/' . $m->{m}->prefix;
+        }
+    }
+    if ( @am == 1 ) {
+        return [ 302, [ Location => $self->conf->{portal} . $am[0] ], [] ];
+    }
+    return $self->p->sendHtml( $req, '2fregisters' );
+}
+
+# Check rule and display
+sub register {
+    my ( $self, $req, $tpl, @args ) = @_;
+
+    # After verifying rule:
+    #   - call register run method if $tpl
+    #   - else give JSON list of available registers for this user
+    if ($tpl) {
+        my ($m) = grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
+        unless ($m) {
+            return $self->p->sendError( $req, 'Unexistent register module',
+                400 );
+        }
+        unless ( $m->{r}->( $req, $req->userData ) ) {
+            $self->userLogger->error("$tpl 2F registration refused");
+            return $self->p->sendError( $req, 'Registration refused', 403 );
+        }
+        return $m->{m}->run( $req, @args );
+    }
+    my @am;
+    foreach my $m ( @{ $self->sfRModules } ) {
+        $self->logger->debug(
+            'Looking if ' . $m->{m}->prefix . '2F register is available' );
+        if ( $m->{r}->( $req, $req->userData ) ) {
+            $self->logger->debug(' -> OK');
+            my $name = $m->{m}->prefix;
+            push @am,
+              {
+                name => $name,
+                logo => $m->{m}->logo,
+                url  => "/2fregisters/$name"
+              };
+        }
+    }
+    return $self->p->sendJSONresponse( $req, \@am );
 }
 
 1;
