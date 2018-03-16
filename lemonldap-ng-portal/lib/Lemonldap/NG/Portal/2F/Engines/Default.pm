@@ -231,13 +231,26 @@ sub displayRegister {
         $self->logger->debug(
             'Looking if ' . $m->{m}->prefix . '2F register is available' );
         if ( $m->{r}->( $req, $req->userData ) ) {
-            push @am, '/2fregisters/' . $m->{m}->prefix;
+            push @am,
+              {
+                CODE => $m->{m}->prefix,
+                URL  => '/2fregisters/' . $m->{m}->prefix,
+                LOGO => $m->{m}->logo,
+              };
         }
     }
     if ( @am == 1 ) {
-        return [ 302, [ Location => $self->conf->{portal} . $am[0] ], [] ];
+        return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ],
+            [] ];
     }
-    return $self->p->sendHtml( $req, '2fregisters' );
+    return $self->p->sendHtml(
+        $req,
+        '2fregisters',
+        params => {
+            SKIN    => $self->conf->{portalSkin},
+            MODULES => \@am,
+        }
+    );
 }
 
 # Check rule and display

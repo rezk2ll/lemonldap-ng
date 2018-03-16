@@ -57,7 +57,7 @@ Plack::Middleware::Auth::LemonldapNG - authentication middleware for Lemonldap-N
   
   my $app   = sub { ... };
 
-  # Optionally ($proposedResponse is the PSGI response of Lemonldap::NG handler
+  # Optionally ($proposedResponse is the PSGI response of Lemonldap::NG handler)
   #sub on_reject {
   #    my($self,$env,$proposedResponse) = @_;
   #    ...

@@ -524,9 +524,11 @@ fi
 %files -n perl-Lemonldap-NG-Handler
 %defattr(-,root,root,-)
 %doc %{_mandir}/man3/Lemonldap::NG::Handler*.3pm.gz
+%doc %{_mandir}/man3/Plack::Middleware::Auth::LemonldapNG.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Handler.pm
 %{perl_vendorlib}/Lemonldap/NG/Handler/
 %{perl_vendorlib}/auto/Lemonldap/NG/Handler/
+%{perl_vendorlib}/Plack/Middleware/Auth/
 
 %files -n perl-Lemonldap-NG-Manager
 %defattr(-,root,root,-)

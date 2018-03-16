@@ -676,6 +676,7 @@ sub tree {
                             nodes => [
                                 'ext2fActivation',      'ext2FSendCommand',
                                 'ext2FValidateCommand', 'ext2fAuthnLevel',
+                                'ext2fLogo',
                             ]
                         },
                         {
@@ -686,6 +687,7 @@ sub tree {
                                 'rest2fActivation', 'rest2fInitUrl',
                                 'rest2fInitArgs',   'rest2fVerifyUrl',
                                 'rest2fVerifyArgs', 'rest2fAuthnLevel',
+                                'rest2fLogo',
                             ]
                         },
                     ]

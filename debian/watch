@@ -1,2 +1,3 @@
 version=3
-http://download.forge.objectweb.org/lemonldap/ lemonldap-ng-(\d[\d\.]+)\.(?:tar(?:\.gz|\.bz2)?|tgz|zip)$
+opts=filenamemangle=s/.*\/v(\d\S+)\/archive\.tar\.gz/lemonldap-ng-$1\.tar\.gz/g \
+  https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tags?sort=updated_desc .*v(\d\S+)/archive\.tar\.gz

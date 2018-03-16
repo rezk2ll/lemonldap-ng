@@ -14,6 +14,8 @@ has prefix => ( is => 'rw', default => 'totp' );
 
 has template => ( is => 'ro', default => 'totpregister' );
 
+has logo => ( is => 'rw', default => 'totp.png' );
+
 has ott => (
     is      => 'rw',
     lazy    => 1,

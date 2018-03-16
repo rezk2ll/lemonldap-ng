@@ -475,11 +475,29 @@ start_web_server:	all prepare_test_server
 			2>&1 | grep -v 'Permission denied' || true; \
 		echo "Launching plackup"; \
 		$(MAKE) plackup; \
+	elif test "$(TESTWEBSERVER)" = "starman"; then \
+		if test "$(TESTUSESSL)" = "1"; then \
+			ARGS="--ssl-cert-file e2e-tests/cert.pem --ssl-key-file e2e-tests/key.pem --enable-ssl"; \
+		else \
+			ARGS=; \
+		fi; \
+		echo "ARGS=$$ARGS"; \
+		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
+		PERL5LIB=`pwd`/lemonldap-ng-common/blib/lib/:`pwd`/lemonldap-ng-handler/blib/lib/:`pwd`/lemonldap-ng-portal/blib/lib/:`pwd`/lemonldap-ng-manager/blib/lib/ \
+		/usr/bin/start_server \
+			--log-file=e2e-tests/conf/starman.log \
+			--pid-file=e2e-tests/conf/server.pid \
+			--status-file=e2e-tests/conf/server-status.pid \
+			--daemonize \
+			-- starman \
+			--port=$(TESTWEBSERVERPORT) \
+			--workers 3 \
+			$$ARGS \
+			e2e-tests/llng.psgi; \
 	else \
 		echo "!!!!! Unknown test server: $(TESTWEBSERVER) !!!!!" >&2; \
 		exit 1; \
 	fi
-		
 
 reload_web_server:
 	@if [ -e e2e-tests/conf/apache2.pid ]; then \
@@ -489,6 +507,11 @@ reload_web_server:
 		kill -HUP `cat e2e-tests/conf/nginx.pid`; \
 		kill `cat e2e-tests/conf/llng-fastcgi.pid` || true; \
 		$(MAKE) plackup; \
+	elif [ -e e2e-tests/conf/server.pid ]; then \
+		/usr/bin/start_server\
+			--pid-file=e2e-tests/conf/server.pid \
+			--status-file=e2e-tests/conf/server-status.pid \
+			--restart; \
 	else \
 		$(MAKE) start_web_server; \
 	fi
@@ -505,6 +528,7 @@ stop_web_server:
 	-@[ -e e2e-tests/conf/nginx.pid ]   && kill `cat e2e-tests/conf/nginx.pid` ||true
 	-@[ -e e2e-tests/conf/llng-fastcgi.pid ] && kill `cat e2e-tests/conf/llng-fastcgi.pid` && rm -f e2e-tests/conf/llng-fastcgi.pid || true
 	-@[ -e e2e-tests/conf/slapd.pid ] && kill `cat e2e-tests/conf/slapd.pid` || true
+	-@[ -e e2e-tests/conf/server.pid ] && kill `cat e2e-tests/conf/server.pid` || true
 	# Clean
 	@rm -rf e2e-tests/conf
 
@@ -707,7 +731,7 @@ install_portal_site:	install_conf_dir
 	done; cd -
 	@cd $(SRCPORTALDIR)/site/templates; for f in `find * -type f ! -name '*.tpl'`; do \
 		mkdir -p $(RPORTALTEMPLATESDIR)/`dirname $$f`; \
-		install -v $$f $(RPORTALTEMPLATESDIR)/$$f; \
+		install -m 644 -v $$f $(RPORTALTEMPLATESDIR)/$$f; \
 	done; cd -
 	@cd $(SRCPORTALDIR)/site/templates; for l in `find * -type l`; do \
 		echo link to do $$l `readlink $$l`; \
@@ -716,7 +740,7 @@ install_portal_site:	install_conf_dir
 		ln -s $$target $$l; \
 		cd -; \
 	done
-	if test "$(USEEXTERNALLIBS)" = "yes"; then \
+	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
 		rm -rvf $(PORTALEXTERNALLIBS); \
 	elif test "$(USEDEBIANLIBS)" = "yes"; then \
 		rm -rvf $(PORTALLIBSTOREMOVEFORDEBIAN); \

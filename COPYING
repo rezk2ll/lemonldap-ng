@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: lemonldap-ng
 Upstream-Contact: Xavier Guimard <x.guimard@free.fr>
-Source: https://forge.objectweb.org/project/showfiles.php?group_id=274
+Source: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tags?sort=updated_desc
 
 Files: *
 Copyright: 2005-2018, Xavier Guimard <x.guimard@free.fr>
@@ -13,7 +13,7 @@ Copyright: 2005-2018, Xavier Guimard <x.guimard@free.fr>
  2012-2015, David Coutadeur <david.coutadeur@gmail.com>
  2018, Christophe Maudoux <chrmdx@gmail.com>
  2006-2015, LINAGORA <info@linagora.com>
- 2015-2018, Savoir-faire Linux <contac@savoirfairelinux.com>
+ 2015-2018, Savoir-faire Linux <contact@savoirfairelinux.com>
 License: GPL-2+
 
 Files: lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Auth/PAM.pm
@@ -74,9 +74,9 @@ Comment: downloaded from
  .
  Author is unknown and license may be W3C or public-domain
 
-Files: lemonldap-ng-portal/example/skins/common/LinkedIn.png
-Copyright: unknown
-License: W3C
+Files: lemonldap-ng-portal/site/htdocs/static/common/modules/LinkedIn.png
+Copyright: Public Domain
+License: Simple-Geo
 Comment: downloaded from
  https://commons.wikimedia.org/wiki/File:LinkedIn_logo_initials.png
  .
@@ -846,3 +846,8 @@ License: W3C
  publicity pertaining to the software without specific, written prior
  permission. Title to copyright in this software and any associated
  documentation will at all times remain with copyright holders.
+
+License: Simple-Geo
+ These images only consist of simple geometric shapes or text. It does not meet
+ the threshold of originality needed for copyright protection, and is therefore
+ in the public domain.

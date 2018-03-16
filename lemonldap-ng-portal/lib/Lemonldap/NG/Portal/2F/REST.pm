@@ -29,6 +29,7 @@ sub init {
         $self->logger->error('Missing REST verification URL');
         return 0;
     }
+    $self->logo( $self->conf->{rest2fLogo} ) if ( $self->conf->{rest2fLogo} );
     foreach my $k ( keys %{ $self->conf->{rest2fInitArgs} } ) {
         my $attr = $self->conf->{rest2fInitArgs}->{$k};
         $attr =~ s/^$//;
