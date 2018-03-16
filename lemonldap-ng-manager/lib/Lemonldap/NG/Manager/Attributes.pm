@@ -1066,6 +1066,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'ext2fAuthnLevel' => {
             'type' => 'int'
         },
+        'ext2fLogo' => {
+            'type' => 'text'
+        },
         'ext2FSendCommand' => {
             'type' => 'text'
         },
@@ -2386,6 +2389,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'rest2fInitUrl' => {
             'type' => 'url'
+        },
+        'rest2fLogo' => {
+            'type' => 'text'
         },
         'rest2fVerifyArgs' => {
             'type' => 'keyTextContainer'
