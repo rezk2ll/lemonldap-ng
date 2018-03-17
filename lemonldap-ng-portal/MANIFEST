@@ -15,6 +15,7 @@ lib/Lemonldap/NG/Portal/2F/Register/U2F.pm
 lib/Lemonldap/NG/Portal/2F/REST.pm
 lib/Lemonldap/NG/Portal/2F/TOTP.pm
 lib/Lemonldap/NG/Portal/2F/U2F.pm
+lib/Lemonldap/NG/Portal/2F/UTOTP.pm
 lib/Lemonldap/NG/Portal/Auth.pod
 lib/Lemonldap/NG/Portal/Auth/_WebForm.pm
 lib/Lemonldap/NG/Portal/Auth/AD.pm
@@ -273,6 +274,7 @@ site/htdocs/static/languages/pt.json
 site/htdocs/static/languages/ro.json
 site/htdocs/static/languages/vi.json
 site/templates/bootstrap/2fchoice.tpl
+site/templates/bootstrap/2fregisters.tpl
 site/templates/bootstrap/casBack2Url.tpl
 site/templates/bootstrap/checklogins.tpl
 site/templates/bootstrap/confirm.tpl
