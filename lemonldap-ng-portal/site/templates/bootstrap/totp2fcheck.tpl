@@ -6,7 +6,7 @@
 
 <div class="panel panel-default">
 
-<form action="/totp2fcheck" method="post" class="password" role="form">
+<form action="/2fregisters/totp" method="post" class="password" role="form">
   <div class="form">
     <input type="hidden" id="token" name="token" value="<TMPL_VAR NAME="TOKEN">">
     <div class="form-group input-group">
@@ -21,7 +21,7 @@
     </button>
   </div>
 
-</div>
+</form>
 
 </main>
 
