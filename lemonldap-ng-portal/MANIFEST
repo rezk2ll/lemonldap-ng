@@ -318,6 +318,7 @@ site/templates/bootstrap/totpregister.tpl
 site/templates/bootstrap/u2fcheck.tpl
 site/templates/bootstrap/u2fregister.tpl
 site/templates/bootstrap/upgradesession.tpl
+site/templates/bootstrap/utotp2fcheck.tpl
 site/templates/bootstrap/yubikeyform.tpl
 site/templates/common/bullet_go.png
 site/templates/common/key.png

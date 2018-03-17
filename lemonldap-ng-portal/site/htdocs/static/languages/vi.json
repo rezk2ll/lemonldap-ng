@@ -196,6 +196,7 @@
 "stayConnected": "Giữ kết nối trên thiết bị này",
 "submit":"Gửi",
 "touchU2fDevice": "Vui lòng chạm vào thiết bị U2F nhấp nháy ngay bây giờ.",
+"touchU2fDeviceOrEnterTotp": "Please touch the flashing U2F device or enter TOTP code.",
 "u2fFailed": "Xác minh U2F không thành công. Thử lại hoặc liên hệ với quản trị viên của bạn ",
 "u2fPermission": "Bạn có thể được nhắc cho phép trang web được phép truy cập vào các khóa bảo mật của bạn. Sau khi cho phép, thiết bị sẽ bắt đầu nhấp nháy. ",
 "u2fRegistered": "Khóa của bạn đã được đăng ký",

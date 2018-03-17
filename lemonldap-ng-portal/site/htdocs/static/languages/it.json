@@ -196,6 +196,7 @@
 "stayConnected": "Resta connesso su questo dispositivo",
 "submit":"Invia",
 "touchU2fDevice": "Adesso tocca il dispositivo U2F lampeggiante.",
+"touchU2fDeviceOrEnterTotp": "Please touch the flashing U2F device or enter TOTP code.",
 "u2fFailed": "Verifica U2F non riuscita. Riprovare o contattare l'amministratore",
 "u2fPermission": "È possibile che venga richiesto di consentire il permesso del sito per accedere alle chiavi di sicurezza. Dopo aver concesso il permesso, il dispositivo inizierà a lampeggiare.",
 "u2fRegistered": "La vostra chiave è registrata",

@@ -196,6 +196,7 @@
 "stayConnected": "ابق على اتصال على هذا الجهاز",
 "submit":"قدم",
 "touchU2fDevice": "يرجى لمس جهاز U2F وامض الآن.",
+"touchU2fDeviceOrEnterTotp": "Please touch the flashing U2F device or enter TOTP code.",
 "u2fFailed": "فشل التحقق من U2F. أعد محاولة الاتصال بالمشرف أو اتصل به",
 "u2fPermission": "قد تتم مطالبتك بالسماح للموقع  إذن الوصول إلى مفاتيح الأمان الخاصة بك.بعد منح الإذن، سيبدأ الجهاز في العملية.",
 "u2fRegistered": "المفتاح الخاص بك تم تسجيله",
