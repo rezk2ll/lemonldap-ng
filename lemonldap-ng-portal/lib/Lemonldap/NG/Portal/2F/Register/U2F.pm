@@ -30,16 +30,37 @@ sub run {
 
     if ( $action eq 'register' ) {
         my $challenge = $self->crypter->registrationChallenge;
-        return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/json',
+                'Content-Length' => length($challenge),
+            ],
+            [$challenge]
+        ];
     }
     if ( $action eq 'registration' ) {
-        my ( $resp, $challenge );
+        my ( $resp, $challenge, $kname, $data );
         unless ($resp = $req->param('registration')
             and $challenge = $req->param('challenge') )
         {
             return $self->p->sendError( $req, 'Missing registration parameter',
                 400 );
         }
+        $kname = $req->param('kname') || 'k1';
+        unless ( $kname =~ /^[\w\-\ ]{1,40}$/ ) {
+            $self->userLogger->warn(
+                $req->userData->{ $self->conf->{whatToTrace} }
+                  . ": bad U2F key name $kname" );
+            return $self->p->sendError( $req, 'Bad registration parameter',
+                400 );
+        }
+
+        # Key name
+        for ( '_u2fKeyHandle', '_u2fUserKey', 'u2fDevices' ) {
+            $data->{$_} = $req->userData($_) || '';
+        }
+        $data->{_u2fDevices} .= $req->param('kname') || 'k1';
         $self->logger->debug("Get registration data $resp");
         $self->logger->debug("Get challenge $challenge");
         eval { $challenge = JSON::from_json($challenge)->{challenge} };
@@ -49,18 +70,18 @@ sub run {
         }
         my $c = $self->crypter;
         if ( $c->setChallenge($challenge) ) {
-            my ( $keyHandle, $userKey ) = $c->registrationVerify($resp);
-            if ( $keyHandle and $userKey ) {
-                $self->p->updatePersistentSession(
-                    $req,
-                    {
-                        _u2fKeyHandle =>
-                          $self->encode_base64url( $keyHandle, '' ),
-                        _u2fUserKey => $self->encode_base64url( $userKey, '' )
-                    }
-                );
+            my @k = $c->registrationVerify($resp);
+            if ( $k[0] ) {
+                $k[$_] = $self->encode_base64url( $k[$_] ) foreach ( 0 .. 1 );
+                $data->{_u2fKeyHandle} .= $k[0];
+                $data->{_u2fUserKey}   .= $k[1];
+                $self->p->updatePersistentSession( $req, $data );
                 return [
-                    200, [ 'Content-Type' => 'application/json' ],
+                    200,
+                    [
+                        'Content-Type'   => 'application/json',
+                        'Content-Length' => 12,
+                    ],
                     ['{"result":1}']
                 ];
             }
@@ -72,9 +93,17 @@ sub run {
 
     if ( $action eq 'unregister' ) {
         my $challenge = $self->crypter->registrationChallenge;
-        return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/json',
+                'Content-Length' => length($challenge),
+            ],
+            [$challenge]
+        ];
     }
     if ( $action eq 'unregistration' ) {
+        # TODO: remove only 1 key
         $self->p->updatePersistentSession(
             $req,
             {
@@ -83,14 +112,19 @@ sub run {
             }
         );
         $self->userLogger->notice('U2F key unregistration succeed');
-        return [ 200, [ 'Content-Type' => 'application/json' ],
-            ['{"result":1}'] ];
+        return [
+            200,
+            [ 'Content-Type' => 'application/json', 'Content-Length' => 12 ],
+            ['{"result":1}']
+        ];
         my $err = Crypt::U2F::Server::Simple::lastError();
         $self->userLogger->warn("U2F Unregistration failed: $err");
         return $self->p->sendError( $req, $err, 200 );
     }
 
     if ( $action eq 'verify' ) {
+
+        # TODO: check the good key
         my ( $err, $error ) = $self->loadUser($req);
         if ( $err == -1 ) {
             return $self->p->sendError( $req, "U2F error: $error", 200 );
@@ -99,7 +133,14 @@ sub run {
             return $self->p->sendError( $req, "noU2FKeyFound" );
         }
         my $challenge = $req->datas->{crypter}->authenticationChallenge;
-        return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/json',
+                'Content-Length' => length($challenge)
+            ],
+            [$challenge]
+        ];
     }
     if ( $action eq 'signature' ) {
         my $resp;
@@ -119,7 +160,8 @@ sub run {
 
         #$self->userLogger->notice("res=$res");
         return [
-            200, [ 'Content-Type' => 'application/json' ],
+            200,
+            [ 'Content-Type' => 'application/json', 'Content-Length' => 12 ],
             [qq'{"result":$res}']
         ];
     }

@@ -196,7 +196,7 @@
 "stayConnected": "Rester connecté sur cet appareil",
 "submit":"Envoyer",
 "touchU2fDevice": "Posez votre doigt sur le périphérique U2F",
-"touchU2fDeviceOrEnterTotp": "Posez votre doigt sur le périphérique U2F ou entrer le code TOTP",
+"touchU2fDeviceOrEnterTotp": "Posez votre doigt sur le périphérique U2F ou entrez le code TOTP",
 "u2fFailed": "La vérification U2F a échoué, réessayez ou contactez votre administrateur",
 "u2fPermission": "Il est possible qu'on vous demande d'autoriser le site à accéder à votre clef. Après votre accord, la clef clignotera.",
 "u2fRegistered": "Votre clef a été enregistrée.",
