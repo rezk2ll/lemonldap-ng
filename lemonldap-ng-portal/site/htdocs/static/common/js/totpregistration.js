@@ -41,6 +41,9 @@ LemonLDAP::NG TOTP registration script
       error: displayError,
       success: function(data) {
         var qr, s;
+        if (data.error) {
+          return setMsg(data.error, 'warning');
+        }
         if (!(data.portal && data.user && data.secret)) {
           return setMsg('PE24', 'danger');
         }

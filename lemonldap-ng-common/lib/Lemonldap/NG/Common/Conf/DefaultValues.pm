@@ -255,6 +255,7 @@ sub defaultValues {
         'userDB'                                  => 'Same',
         'useRedirectOnError'                      => 1,
         'useSafeJail'                             => 1,
+        'utotp2fActivation'                       => 0,
         'webIDAuthnLevel'                         => 1,
         'webIDExportedVars'                       => {},
         'whatToTrace'                             => 'uid',

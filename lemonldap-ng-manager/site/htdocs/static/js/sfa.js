@@ -195,7 +195,7 @@
       };
       $scope.deleteU2FKey = function() {
         $scope.waiting = true;
-        $http['delete'](scriptname + "sfa/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
+        $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
           $scope.currentSession = null;
           $scope.currentScope.remove();
           return $scope.waiting = false;

@@ -195,7 +195,7 @@ sub group {
 sub sendError {
     my ( $self, $req, $err, $code ) = @_;
     $err ||= $req->error;
-    $err = '[' . $self->userId($req) . "] $err";
+    $self->userLogger->warn( '[' . $self->userId($req) . "] $err" );
     return $self->Lemonldap::NG::Common::PSGI::sendError( $req, $err, $code );
 }
 

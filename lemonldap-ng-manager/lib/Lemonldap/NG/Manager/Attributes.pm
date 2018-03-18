@@ -3212,6 +3212,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 6,
             'type'    => 'int'
         },
+        'totp2fDisplayExistingSecret' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'totp2fInterval' => {
             'default' => 30,
             'type'    => 'int'
@@ -3224,6 +3228,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'int'
         },
         'totp2fSelfRegistration' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'totp2fUserCanChangeKey' => {
             'default' => 0,
             'type'    => 'bool'
         },
@@ -3314,6 +3322,13 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'useSafeJail' => {
             'default' => 1,
             'type'    => 'bool'
+        },
+        'utotp2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'utotp2fAuthnLevel' => {
+            'type' => 'int'
         },
         'vhostAliases' => {
             'type' => 'text'

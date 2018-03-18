@@ -1108,6 +1108,29 @@ sub attributes {
             default       => 6,
             documentation => 'Number of digits for TOTP code',
         },
+        totp2fDisplayExistingSecret => {
+            type    => 'bool',
+            default => 0,
+            documentation =>
+              'Display existing TOTP secret in registration form',
+        },
+        totp2fUserCanChangeKey => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Authorize users to change existing TOTP secret',
+        },
+
+        # UTOTP 2F
+        utotp2fActivation => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'UTOTP activation (mixed U2F/TOTP module)',
+        },
+        utotp2fAuthnLevel => {
+            type => 'int',
+            documentation =>
+'Authentication level for users authentified by password+(U2F or TOTP)'
+        },
 
         # External second factor
         ext2fActivation => {

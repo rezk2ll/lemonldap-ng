@@ -29,8 +29,10 @@ getKey = (reset) ->
 		error: displayError
 		# Display key and QR code
 		success: (data) ->
+			if data.error
+				return setMsg data.error, 'warning'
 			unless data.portal and data.user and data.secret
-				return setMsg 'PE24', 'danger'
+				return setMsg('PE24', 'danger')
 
 			# Generate OTP url
 			s = "otpauth://totp/#{escape(data.portal)}:#{escape(data.user)}?secret=#{data.secret}&issuer=#{escape(data.portal)}"

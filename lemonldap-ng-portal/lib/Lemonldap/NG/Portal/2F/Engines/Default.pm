@@ -34,7 +34,7 @@ sub init {
     my ($self) = @_;
 
     # Set default 2F list
-    $self->conf->{available2F}                 ||= 'TOTP,U2F,REST,Ext2F';
+    $self->conf->{available2F}                 ||= 'UTOTP,TOTP,U2F,REST,Ext2F';
     $self->conf->{available2FSelfRegistration} ||= 'TOTP,U2F';
 
     # Load 2F modules

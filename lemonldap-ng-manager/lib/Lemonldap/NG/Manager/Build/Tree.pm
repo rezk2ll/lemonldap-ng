@@ -650,6 +650,15 @@ sub tree {
                     title => 'secondFactors',
                     nodes => [
                         {
+                            title => 'utotp2f',
+                            help  => 'utotp2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'utotp2fActivation',
+                                'utotp2fAuthnLevel'
+                            ]
+                        },
+                        {
                             title => 'u2f',
                             help  => 'u2f.html',
                             form  => 'simpleInputContainer',
@@ -663,10 +672,15 @@ sub tree {
                             help  => 'totp2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'totp2fActivation', 'totp2fSelfRegistration',
-                                'totp2fAuthnLevel', 'totp2fIssuer',
-                                'totp2fInterval',   'totp2fRange',
+                                'totp2fActivation',
+                                'totp2fSelfRegistration',
+                                'totp2fAuthnLevel',
+                                'totp2fIssuer',
+                                'totp2fInterval',
+                                'totp2fRange',
                                 'totp2fDigits',
+                                'totp2fDisplayExistingSecret',
+                                'totp2fUserCanChangeKey',
                             ]
                         },
                         {

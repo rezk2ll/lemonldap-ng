@@ -168,7 +168,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	# Delete U2F key
 	$scope.deleteU2FKey = ->
 		$scope.waiting = true
-		$http['delete']("#{scriptname}sfa/#{$scope.currentSession.id}?Key=U2F").then (response) ->
+		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=U2F").then (response) ->
 			$scope.currentSession = null
 			$scope.currentScope.remove()
 			$scope.waiting = false

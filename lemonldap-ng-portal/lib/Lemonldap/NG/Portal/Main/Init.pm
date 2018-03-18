@@ -348,7 +348,7 @@ sub findEP {
 }
 
 sub loadModule {
-    my ( $self, $module, $conf ) = @_;
+    my ( $self, $module, $conf, %args ) = @_;
     $conf //= $self->conf;
     my $obj;
     $module = "Lemonldap::NG::Portal$module" if ( $module =~ /^::/ );
@@ -359,7 +359,7 @@ sub loadModule {
         return 0;
     }
     eval {
-        $obj = $module->new( { p => $self, conf => $conf } );
+        $obj = $module->new( { p => $self, conf => $conf, %args } );
         $self->logger->debug("Module $module loaded");
     };
     if ($@) {
