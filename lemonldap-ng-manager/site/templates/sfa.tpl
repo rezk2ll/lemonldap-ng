@@ -17,12 +17,14 @@
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" role="grid">
             <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('2faSessions')}}</a></li>
+            <form name="filterForm" ng-controller="SessionsExplorerFilter">
             <div class="form-check ">&nbsp;&nbsp;&nbsp;
-              <input type="checkbox" class="form-check-input" id="U2FCheck" value="1">
+              <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="'2'" ng-false-value="'1'" ng-change="filter2FA()"/>
               <label class="form-check-label" for="U2FCheck">U2F</label>&nbsp;&nbsp;
-              <input type="checkbox" class="form-check-input" id="TOTPCheck" value="1">
+              <input type="checkbox" ng-model="TOTPCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="filter2FA()"/>
               <label class="form-check-label" for="TOTPCheck">TOTP</label>
             </div>
+            </form>
 		  </ul>
         </div>
       </div>

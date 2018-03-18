@@ -31,7 +31,6 @@ sub addRoutes {
     # HTML template
     $self->addRoute( 'sfa.html', undef, ['GET'] )
 
-      # READ
       ->addRoute(
         sfa => { ':sessionType' => 'sfa' },
         ['GET']
@@ -48,7 +47,7 @@ sub addRoutes {
         sfa => { ':sessionType' => { ':sessionId' => 'add2FAKey' } },
         ['PUT']
       )
-    
+
       # VERIFY 2FA KEY
       ->addRoute(
         sfa => { ':sessionType' => { ':sessionId' => 'verify2FAKey' } },
@@ -68,43 +67,43 @@ sub addRoutes {
 
 sub delete2FAKey {
 
-	my ( $self, $req, $session, $skey ) = @_;
-	
-	my $mod = $self->getMod($req)
+    my ( $self, $req, $session, $skey ) = @_;
+
+    my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
-    
+
     my $params = $req->parameters();
-    my $Key = $params->{Key};
-	
-	if ( $Key =~ /\bU2F\b/ ) {
-		return $self->deleteU2FKey( $req, $session, $skey );
-	}
-	elsif ( $Key =~ /\bTOTP\b/ ) {
-		return $self->deleteTOTPKey( $req, $session, $skey );
-	}
-	else {
-		return $self->sendError( $req, undef, 400 );
-	}	
+    my $Key    = $params->{Key};
+
+    if ( $Key =~ /\bU2F\b/ ) {
+        return $self->deleteU2FKey( $req, $session, $skey );
+    }
+    elsif ( $Key =~ /\bTOTP\b/ ) {
+        return $self->deleteTOTPKey( $req, $session, $skey );
+    }
+    else {
+        return $self->sendError( $req, undef, 400 );
+    }
 }
 
 sub add2FAKey {
 
     my ( $self, $req, $session, $skey ) = @_;
 
-	eval 'use Crypt::U2F::Server::Simple';
-	if ($@) {
-		$self->error("Can't load U2F library: $@");
-		return 0;
-	}
-		
-	return $self->addU2FKey( $req, $session, $skey );
+    eval 'use Crypt::U2F::Server::Simple';
+    if ($@) {
+        $self->error("Can't load U2F library: $@");
+        return 0;
+    }
+
+    return $self->addU2FKey( $req, $session, $skey );
 }
 
 sub verify2FAKey {
 
-	my ( $self, $req, $session, $skey ) = @_;
-		
-	return $self->addU2FKey( $req, $session, $skey );
+    my ( $self, $req, $session, $skey ) = @_;
+
+    return $self->addU2FKey( $req, $session, $skey );
 }
 
 ########################
@@ -115,17 +114,16 @@ sub sfa {
     my ( $self, $req, $session, $skey ) = @_;
 
     # Case 1: only one session is required
-    if ($session) {;
+    if ($session) {
+
         return $self->session( $req, $session, $skey );
     }
-	
+
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
     my $params = $req->parameters();
     my $type   = delete $params->{sessionType};
     $type = ucfirst($type);
-    my $Key = $params->{sessionType};
-
     my $res;
 
     # Case 2: list of sessions
@@ -133,7 +131,11 @@ sub sfa {
     my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
 
     # 2.1 Get fields to require
-    my @fields = ( '_httpSessionType', $self->{ipField}, $whatToTrace, '_u2fKeyHandle', '_totp2fSecret' );
+    my @fields = (
+        '_httpSessionType', $self->{ipField},
+        $whatToTrace,       '_u2fKeyHandle',
+        '_totp2fSecret'
+    );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/;
         $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
@@ -147,6 +149,13 @@ sub sfa {
     #     not a keyword)
     my $moduleOptions = $mod->{options};
     $moduleOptions->{backend} = $mod->{module};
+
+	# Select 2FA sessions to display
+    if ( defined $params->{TOTPCheck} ) {
+        $self->{TOTPCheck} = delete $params->{TOTPCheck};
+        $self->{U2FCheck}  = delete $params->{U2FCheck};
+    }
+
     my %filters = map {
         my $s = $_;
         $s =~ s/\b_whatToTrace\b/$whatToTrace/o;
@@ -219,13 +228,22 @@ sub sfa {
         }
     }
 
-	# Display sessions with registered U2F key only
-	foreach my $session ( keys %$res ) {
-		delete $res->{$session}
-		  unless ( ( defined $res->{$session}->{_u2fKeyHandle} and length $res->{$session}->{_u2fKeyHandle} ) 
-					or ( defined $res->{$session}->{_totp2fSecret} and length $res->{$session}->{_totp2fSecret} ) )
-		}
-		
+    # Filter 2FA sessions if needed
+    if ( $self->{U2FCheck} eq '2' ) {
+        foreach my $session ( keys %$res ) {
+            delete $res->{$session}
+              unless ( defined $res->{$session}->{_u2fKeyHandle}
+                and length $res->{$session}->{_u2fKeyHandle} );
+        }
+    }
+    if ( $self->{TOTPCheck} eq '2' ) {
+        foreach my $session ( keys %$res ) {
+            delete $res->{$session}
+              unless ( defined $res->{$session}->{_totp2fSecret}
+                and length $res->{$session}->{_totp2fSecret} );
+        }
+    }
+
     my $total = ( keys %$res );
 
     if ( my $group = $req->params('groupBy') ) {

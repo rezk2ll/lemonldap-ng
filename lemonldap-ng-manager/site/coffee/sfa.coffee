@@ -109,9 +109,22 @@ menu =
 	home: []
 
 ###
-# AngularJS application
+# AngularJS applications
 ###
 llapp = angular.module 'llngSessionsExplorer', ['ui.tree', 'ui.bootstrap', 'llApp']
+
+
+# Filter 2FA sessions controller
+llapp.controller 'SessionsExplorerFilter', ['$scope', '$location', '$q', '$http', ($scope, $location, $q, $http) ->
+	$scope.filter2FA = -> 	
+		$http.get("#{scriptname}sfa/persistent?groupBy=substr(_session_uid,1)&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}").then (response) ->
+	
+			$scope.waiting = true
+		, (resp) ->
+			$scope.waiting = false
+		$scope.updateTree '', $scope.data, 0, 0		
+]
+
 
 # Main controller
 llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', '$q', '$http', ($scope, $translator, $location, $q, $http) ->
@@ -151,11 +164,11 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 					console.log typeof button.action
 		$scope.showM = false
 
-	# SESSION MANAGEMENT
+	# SESSIONS MANAGEMENT
 	# Delete U2F key
 	$scope.deleteU2FKey = ->
 		$scope.waiting = true
-		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=U2F").then (response) ->
+		$http['delete']("#{scriptname}sfa/#{$scope.currentSession.id}?Key=U2F").then (response) ->
 			$scope.currentSession = null
 			$scope.currentScope.remove()
 			$scope.waiting = false

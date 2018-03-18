@@ -133,10 +133,23 @@
 
 
   /*
-   * AngularJS application
+   * AngularJS applications
    */
 
   llapp = angular.module('llngSessionsExplorer', ['ui.tree', 'ui.bootstrap', 'llApp']);
+
+  llapp.controller('SessionsExplorerFilter', [
+    '$scope', '$location', '$q', '$http', function($scope, $location, $q, $http) {
+      return $scope.filter2FA = function() {
+        $http.get(scriptname + "sfa/persistent?groupBy=substr(_session_uid,1)&U2FCheck=" + $scope.U2FCheck + "&TOTPCheck=" + $scope.TOTPCheck).then(function(response) {
+          return $scope.waiting = true;
+        }, function(resp) {
+          return $scope.waiting = false;
+        });
+        return $scope.updateTree('', $scope.data, 0, 0);
+      };
+    }
+  ]);
 
   llapp.controller('SessionsExplorerCtrl', [
     '$scope', '$translator', '$location', '$q', '$http', function($scope, $translator, $location, $q, $http) {
@@ -182,7 +195,7 @@
       };
       $scope.deleteU2FKey = function() {
         $scope.waiting = true;
-        $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
+        $http['delete'](scriptname + "sfa/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
           $scope.currentSession = null;
           $scope.currentScope.remove();
           return $scope.waiting = false;
