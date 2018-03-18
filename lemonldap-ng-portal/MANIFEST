@@ -157,6 +157,7 @@ site/htdocs/static/bootstrap/js/skin.js
 site/htdocs/static/bootstrap/js/skin.min.js
 site/htdocs/static/bootstrap/totp.png
 site/htdocs/static/bootstrap/u2f.png
+site/htdocs/static/bootstrap/utotp.png
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.css.map
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.min.css
@@ -420,6 +421,7 @@ t/63-History.t
 t/64-StayConnected.t
 t/65-AutoSignin.t
 t/70-2F-TOTP.t
+t/71-2F-UTOTP-TOTP-only.t
 t/90-Translations.t
 t/99-pod.t
 t/lmConf-1.json
