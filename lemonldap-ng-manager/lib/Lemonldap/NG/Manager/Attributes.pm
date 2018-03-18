@@ -3330,10 +3330,6 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'utotp2fAuthnLevel' => {
             'type' => 'int'
         },
-        'utotp2fSelfRegistration' => {
-            'default' => 0,
-            'type'    => 'bool'
-        },
         'vhostAliases' => {
             'type' => 'text'
         },

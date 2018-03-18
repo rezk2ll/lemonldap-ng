@@ -757,7 +757,6 @@
 "utotp2f":"TOTP-or-U2F",
 "utotp2fActivation":"Activation",
 "utotp2fAuthnLevel":"Authentication level",
-"utotp2fSelfRegistration":"Self registration",
 "value":"Giá trị",
 "values":"Giá trị",
 "variables":"biến",

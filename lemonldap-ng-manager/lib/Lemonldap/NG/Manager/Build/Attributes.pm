@@ -1126,11 +1126,6 @@ sub attributes {
             default       => 0,
             documentation => 'UTOTP activation (mixed U2F/TOTP module)',
         },
-        utotp2fSelfRegistration => {
-            type          => 'bool',
-            default       => 0,
-            documentation => 'UTOTP self registration activation',
-        },
         utotp2fAuthnLevel => {
             type => 'int',
             documentation =>

@@ -655,7 +655,6 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'utotp2fActivation',
-                                'utotp2fSelfRegistration',
                                 'utotp2fAuthnLevel'
                             ]
                         },
