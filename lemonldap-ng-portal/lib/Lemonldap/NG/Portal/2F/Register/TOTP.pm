@@ -33,7 +33,7 @@ sub init {
 
 sub run {
     my ( $self, $req, $action ) = @_;
-    my $user   = $req->userData->{ $self->conf->{whatToTrace} };
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
     unless ($user) {
         return $self->p->sendError( $req,
             'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 );
@@ -98,12 +98,20 @@ sub run {
     elsif ( $action eq 'getkey' ) {
         my $nk = 0;
         my $secret;
-        if ( $req->param('newkey') or not $req->userData->{_totp2fSecret} ) {
+        if ( ( $req->param('newkey') and $self->conf->{totp2fUserCanChangeKey} )
+            or not $req->userData->{_totp2fSecret} )
+        {
             $secret = $self->newSecret;
             $nk     = 1;
         }
-        else {
+        elsif ( $req->param('newkey') ) {
+            return $self->p->sendError( $req, 'notAutorizated', 200 );
+        }
+        elsif ( $self->conf->{totp2fDisplayExistingSecret} ) {
             $secret = $req->userData->{_totp2fSecret};
+        }
+        else {
+            return $self->p->sendError( $req, 'totpExistingKey', 200 );
         }
 
         # Secret is stored in a token: we choose to not accept secret returned
