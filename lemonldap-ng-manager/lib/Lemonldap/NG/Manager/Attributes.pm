@@ -3266,6 +3266,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'bool'
         },
+        'u2fUserCanRemoveKey' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'upgradeSession' => {
             'default' => 1,
             'type'    => 'bool'

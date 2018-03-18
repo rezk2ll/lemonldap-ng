@@ -250,6 +250,7 @@ sub defaultValues {
         'trustedProxies'                          => '',
         'twitterAuthnLevel'                       => 1,
         'u2fActivation'                           => 0,
+        'u2fUserCanRemoveKey'                     => 1,
         'upgradeSession'                          => 1,
         'userControl'                             => '^[\\w\\.\\-@]+$',
         'userDB'                                  => 'Same',

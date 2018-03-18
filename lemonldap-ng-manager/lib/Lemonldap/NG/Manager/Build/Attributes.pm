@@ -1072,6 +1072,11 @@ sub attributes {
             documentation =>
               'Authentication level for users authentified by password+U2F'
         },
+        u2fUserCanRemoveKey => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Authorize users to remove existing U2F key',
+        },
 
         # TOTP second factor
         totp2fActivation => {

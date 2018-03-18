@@ -70,27 +70,7 @@ sub run {
         return $self->p->sendError( $req, $err, 200 );
     }
 
-    if ( $action eq 'unregister' ) {
-        my $challenge = $self->crypter->registrationChallenge;
-        return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
-    }
-    if ( $action eq 'unregistration' ) {
-        $self->p->updatePersistentSession(
-            $req,
-            {
-                _u2fKeyHandle => '',
-                _u2fUserKey   => ''
-            }
-        );
-        $self->userLogger->notice('U2F key unregistration succeed');
-        return [ 200, [ 'Content-Type' => 'application/json' ],
-            ['{"result":1}'] ];
-        my $err = Crypt::U2F::Server::Simple::lastError();
-        $self->userLogger->warn("U2F Unregistration failed: $err");
-        return $self->p->sendError( $req, $err, 200 );
-    }
-
-    if ( $action eq 'verify' ) {
+    elsif ( $action eq 'verify' ) {
         my ( $err, $error ) = $self->loadUser($req);
         if ( $err == -1 ) {
             return $self->p->sendError( $req, "U2F error: $error", 200 );
@@ -101,7 +81,7 @@ sub run {
         my $challenge = $req->datas->{crypter}->authenticationChallenge;
         return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
     }
-    if ( $action eq 'signature' ) {
+    elsif ( $action eq 'signature' ) {
         my $resp;
         unless ( $resp = $req->param('signature') ) {
             return $self->p->sendError( $req, 'Missing signature parameter',
@@ -123,6 +103,32 @@ sub run {
             [qq'{"result":$res}']
         ];
     }
+
+    # Check if unregistration is allowed
+    unless ( $self->conf->{u2fUserCanRemoveKey} ) {
+        return $self->p->sendError( $req, 'notAutorizated', 200 );
+    }
+    if ( $action eq 'unregister' ) {
+        my $challenge = $self->crypter->registrationChallenge;
+        return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
+    }
+    elsif ( $action eq 'unregistration' ) {
+        $self->p->updatePersistentSession(
+            $req,
+            {
+                _u2fKeyHandle => '',
+                _u2fUserKey   => ''
+            }
+        );
+        $self->userLogger->notice('U2F key unregistration succeed');
+        return [ 200, [ 'Content-Type' => 'application/json' ],
+            ['{"result":1}'] ];
+        my $err = Crypt::U2F::Server::Simple::lastError();
+        $self->userLogger->warn("U2F Unregistration failed: $err");
+        return $self->p->sendError( $req, $err, 200 );
+    }
+    $self->logger->error("Unknown action $action");
+    return $self->p->sendError( $req, 'notAutorizated', 200 );
 }
 
 sub loadUser {

@@ -732,6 +732,7 @@
 "u2f":"U2F",
 "u2fActivation":"Kích hoạt",
 "u2fAuthnLevel":"Mức xác thực U2F",
+"u2fUserCanRemoveKey":"Authorize user to remove U2F key",
 "u2fSelfRegistration":"Tự đăng ký ",
 "u2fSessions":"U2F sessions explorer",
 "uid":"Trình định danh",

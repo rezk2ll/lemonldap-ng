@@ -653,10 +653,8 @@ sub tree {
                             title => 'utotp2f',
                             help  => 'utotp2f.html',
                             form  => 'simpleInputContainer',
-                            nodes => [
-                                'utotp2fActivation',
-                                'utotp2fAuthnLevel'
-                            ]
+                            nodes =>
+                              [ 'utotp2fActivation', 'utotp2fAuthnLevel' ]
                         },
                         {
                             title => 'u2f',
@@ -664,7 +662,7 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'u2fActivation', 'u2fSelfRegistration',
-                                'u2fAuthnLevel'
+                                'u2fAuthnLevel', 'u2fUserCanRemoveKey',
                             ]
                         },
                         {
