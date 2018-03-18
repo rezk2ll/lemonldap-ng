@@ -182,8 +182,7 @@ Example:
 Lemonldap::NG::Portal::Main::SecondFactor provides a simple framework to build
 Lemonldap::NG second authentication factor plugin.
 
-See Lemonldap::NG::Portal::Plugins::Ext2F or
-Lemonldap::NG::Portal::Plugins::2F::* for examples.
+See Lemonldap::NG::Portal::Plugins::2F::* packages for examples.
 
 =head1 SEE ALSO
 
