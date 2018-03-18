@@ -152,7 +152,7 @@ sub sfa {
     my $moduleOptions = $mod->{options};
     $moduleOptions->{backend} = $mod->{module};
 
-	# Select 2FA sessions to display
+    # Select 2FA sessions to display
     if ( defined $params->{TOTPCheck} and defined $params->{TOTPCheck} ) {
         $self->{TOTPCheck} = delete $params->{TOTPCheck};
         $self->{U2FCheck}  = delete $params->{U2FCheck};
