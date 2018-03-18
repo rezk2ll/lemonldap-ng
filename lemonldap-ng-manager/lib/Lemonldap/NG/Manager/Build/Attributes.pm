@@ -1109,6 +1109,23 @@ sub attributes {
             documentation => 'Number of digits for TOTP code',
         },
 
+        # UTOTP 2F
+        utotp2fActivation => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'UTOTP activation (mixed U2F/TOTP module)',
+        },
+        utotp2fSelfRegistration => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'UTOTP self registration activation',
+        },
+        utotp2fAuthnLevel => {
+            type => 'int',
+            documentation =>
+'Authentication level for users authentified by password+(U2F or TOTP)'
+        },
+
         # External second factor
         ext2fActivation => {
             type          => 'boolOrExpr',

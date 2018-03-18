@@ -1066,6 +1066,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'ext2fAuthnLevel' => {
             'type' => 'int'
         },
+        'ext2fLogo' => {
+            'type' => 'text'
+        },
         'ext2FSendCommand' => {
             'type' => 'text'
         },
@@ -2387,6 +2390,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'rest2fInitUrl' => {
             'type' => 'url'
         },
+        'rest2fLogo' => {
+            'type' => 'text'
+        },
         'rest2fVerifyArgs' => {
             'type' => 'keyTextContainer'
         },
@@ -3307,6 +3313,17 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'useSafeJail' => {
             'default' => 1,
+            'type'    => 'bool'
+        },
+        'utotp2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'utotp2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'utotp2fSelfRegistration' => {
+            'default' => 0,
             'type'    => 'bool'
         },
         'vhostAliases' => {

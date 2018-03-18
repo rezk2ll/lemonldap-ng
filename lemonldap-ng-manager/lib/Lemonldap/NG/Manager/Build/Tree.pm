@@ -650,6 +650,16 @@ sub tree {
                     title => 'secondFactors',
                     nodes => [
                         {
+                            title => 'utotp2f',
+                            help  => 'utotp2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'utotp2fActivation',
+                                'utotp2fSelfRegistration',
+                                'utotp2fAuthnLevel'
+                            ]
+                        },
+                        {
                             title => 'u2f',
                             help  => 'u2f.html',
                             form  => 'simpleInputContainer',
