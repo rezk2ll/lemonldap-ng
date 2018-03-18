@@ -140,6 +140,8 @@
 
   llapp.controller('SessionsExplorerFilter', [
     '$scope', '$location', '$q', '$http', function($scope, $location, $q, $http) {
+      $scope.U2FCheck = 1;
+      $scope.TOTPCheck = 1;
       return $scope.filter2FA = function() {
         $http.get(scriptname + "sfa/persistent?groupBy=substr(_session_uid,1)&U2FCheck=" + $scope.U2FCheck + "&TOTPCheck=" + $scope.TOTPCheck).then(function(response) {
           return $scope.waiting = true;

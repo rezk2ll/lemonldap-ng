@@ -116,6 +116,9 @@ llapp = angular.module 'llngSessionsExplorer', ['ui.tree', 'ui.bootstrap', 'llAp
 
 # Filter 2FA sessions controller
 llapp.controller 'SessionsExplorerFilter', ['$scope', '$location', '$q', '$http', ($scope, $location, $q, $http) ->
+	$scope.U2FCheck = 1
+	$scope.TOTPCheck = 1
+	#$scope.data = []
 	$scope.filter2FA = -> 	
 		$http.get("#{scriptname}sfa/persistent?groupBy=substr(_session_uid,1)&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}").then (response) ->
 	

@@ -22,7 +22,7 @@ our $VERSION = '2.0.0';
 # I. INITIALIZATION METHODS #
 #############################
 
-use constant defaultRoute => 'sfa.html#/persistent';
+use constant defaultRoute => 'sfa.html#/persistent?U2FCheck=1&TOTPCheck=1';
 
 sub addRoutes {
     my ( $self, $conf ) = @_;
@@ -59,6 +59,8 @@ sub addRoutes {
     $self->{ipField}              ||= 'ipAddr';
     $self->{multiValuesSeparator} ||= '; ';
     $self->{hiddenAttributes} //= "_password";
+    $self->{TOTPCheck} = '1';
+    $self->{U2FCheck}  = '1';
 }
 
 ###################
@@ -151,7 +153,7 @@ sub sfa {
     $moduleOptions->{backend} = $mod->{module};
 
 	# Select 2FA sessions to display
-    if ( defined $params->{TOTPCheck} ) {
+    if ( defined $params->{TOTPCheck} and defined $params->{TOTPCheck} ) {
         $self->{TOTPCheck} = delete $params->{TOTPCheck};
         $self->{U2FCheck}  = delete $params->{U2FCheck};
     }
