@@ -53,7 +53,8 @@ sub run {
 
     # Check if user is registered
     if ( my $res = $self->loadUser( $req, $req->sessionInfo ) ) {
-        return PE_ERROR if ( $res == -1 );
+        return PE_ERROR     if ( $res == -1 );
+        return PE_U2FFAILED if ( $res == 0 );
 
         my $challenge = $req->datas->{crypter}->authenticationChallenge;
         my $tmp       = $self->p->sendHtml(
@@ -150,7 +151,7 @@ sub loadUser {
         return 1;
     }
     else {
-        $self->userLogger->warn("U2F: user not registered");
+        $self->userLogger->info("U2F: user not registered");
         return 0;
     }
 }

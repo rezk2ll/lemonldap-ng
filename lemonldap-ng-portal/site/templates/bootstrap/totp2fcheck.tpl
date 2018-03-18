@@ -22,7 +22,7 @@
   </div>
 
 </form>
-
+</div>
 </main>
 
 <TMPL_INCLUDE NAME="footer.tpl">

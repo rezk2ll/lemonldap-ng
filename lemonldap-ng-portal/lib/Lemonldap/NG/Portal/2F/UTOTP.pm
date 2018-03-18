@@ -34,10 +34,12 @@ sub init {
           '$_totp2fSecret or $_u2fKeyHandle and $_u2fUserKey';
     }
     foreach (qw(U2F TOTP)) {
+
         # Arg "noRoute" is set for sub 2F modules to avoid enabling direct
         # REST routes
         unless ( $self->{ lc($_) } =
-            $self->p->loadModule( "::2F::$_", undef, noRoute => 1 ) )
+                $self->p->loadModule( "::2F::$_", undef, noRoute => 1 )
+            and $self->{ lc($_) }->init )
         {
             $self->error("Unable to load ::2F::$_");
             return 0;
@@ -52,16 +54,19 @@ sub run {
     my ( $self, $req, $token ) = @_;
     $self->logger->debug('Generate TOTP form');
 
-    # Prepare form
-    my $tmp = $self->p->sendHtml(
-        $req,
-        'utotp2fcheck',
-        params => {
-            SKIN  => $self->conf->{portalSkin},
-            TOKEN => $token
+    my %tplPrms = ( SKIN => $self->conf->{portalSkin}, TOKEN => $token );
+
+    if ( my $res = $self->u2f->loadUser( $req, $req->sessionInfo ) ) {
+        if ( $res > 0 ) {
+            $self->logger->debug('U2F key is registered');
+            my $challenge = $req->datas->{crypter}->authenticationChallenge;
+            $tplPrms{CHALLENGE} = $challenge;
         }
-    );
-    $self->logger->debug("Prepare TOTP 2F verification");
+    }
+
+    # Prepare form
+    my $tmp = $self->p->sendHtml( $req, 'utotp2fcheck', params => \%tplPrms, );
+    $self->logger->debug("Prepare U2F-or-TOTP 2F verification");
 
     $req->response($tmp);
     return PE_SENDRESPONSE;
