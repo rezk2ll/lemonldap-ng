@@ -6,7 +6,7 @@ require 't/test-lib.pm';
 my $maintests = 16;
 
 SKIP: {
-    eval { require Convert::Base32 };
+    eval { require Convert::Base32; require Crypt::U2F::Server::Simple; };
     if ($@) {
         skip 'Convert::Base32 is missing', $maintests;
     }
