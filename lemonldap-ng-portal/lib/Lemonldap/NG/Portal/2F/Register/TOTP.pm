@@ -145,11 +145,17 @@ sub run {
 
     # Get or generate master key
     elsif ( $action eq 'unregister' ) {
-        $self->p->updatePersistentSession( $req, { _totp2fSecret => '' } );
-        $self->userLogger->notice('TOTP unregistration succeed');
-        return [ 200, [ 'Content-Type' => 'application/json' ],
-            ['{"result":1}'] ];
-
+        if ( $self->conf->{totp2fUserCanChangeKey} ) {
+            $self->p->updatePersistentSession( $req, { _totp2fSecret => '' } );
+            $self->userLogger->notice('TOTP unregistration succeed');
+            return [
+                200, [ 'Content-Type' => 'application/json' ],
+                ['{"result":1}']
+            ];
+        }
+        else {
+            return $self->p->sendError( $req, 'notAutorizated', 200 );
+        }
     }
 
 }
