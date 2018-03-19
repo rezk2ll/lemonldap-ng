@@ -30,10 +30,20 @@ sub run {
 
     if ( $action eq 'register' ) {
         my $challenge = $self->crypter->registrationChallenge;
+        $self->logger->debug("Register challenge: $challenge");
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/json',
+                'Content-Length' => length($challenge),
+            ],
+            [$challenge]
+        ];
         return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
     }
     if ( $action eq 'registration' ) {
         my ( $resp, $challenge );
+        $self->logger->debug('Regististration response');
         unless ($resp = $req->param('registration')
             and $challenge = $req->param('challenge') )
         {
@@ -60,7 +70,11 @@ sub run {
                     }
                 );
                 return [
-                    200, [ 'Content-Type' => 'application/json' ],
+                    200,
+                    [
+                        'Content-Type'   => 'application/json',
+                        'Content-Length' => 12,
+                    ],
                     ['{"result":1}']
                 ];
             }
@@ -71,6 +85,7 @@ sub run {
     }
 
     elsif ( $action eq 'verify' ) {
+        $self->logger->debug('Verification challenge req');
         my ( $err, $error ) = $self->loadUser($req);
         if ( $err == -1 ) {
             return $self->p->sendError( $req, "U2F error: $error", 200 );
@@ -79,11 +94,21 @@ sub run {
             return $self->p->sendError( $req, "noU2FKeyFound" );
         }
         my $challenge = $req->datas->{crypter}->authenticationChallenge;
-        return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/json',
+                'Content-Length' => length($challenge),
+            ],
+            [$challenge]
+        ];
     }
     elsif ( $action eq 'signature' ) {
-        my $resp;
-        unless ( $resp = $req->param('signature') ) {
+        $self->logger->debug('Verification response');
+        my ( $challenge, $resp );
+        unless ($challenge = $req->param('challenge')
+            and $resp = $req->param('signature') )
+        {
             return $self->p->sendError( $req, 'Missing signature parameter',
                 400 );
         }
@@ -94,12 +119,15 @@ sub run {
         elsif ( $err == 0 ) {
             return $self->p->sendError( $req, "noU2FKeyFound" );
         }
+        $self->logger->debug("Get verify response $resp");
+        $req->datas->{crypter}->setChallenge($challenge);
         my $res =
           ( $req->datas->{crypter}->authenticationVerify($resp) ? 1 : 0 );
 
         #$self->userLogger->notice("res=$res");
         return [
-            200, [ 'Content-Type' => 'application/json' ],
+            200,
+            [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
             [qq'{"result":$res}']
         ];
     }
@@ -110,7 +138,14 @@ sub run {
     }
     if ( $action eq 'unregister' ) {
         my $challenge = $self->crypter->registrationChallenge;
-        return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/json',
+                'Content-Length' => length($challenge),
+            ],
+            [$challenge]
+        ];
     }
     elsif ( $action eq 'unregistration' ) {
         $self->p->updatePersistentSession(
@@ -121,8 +156,11 @@ sub run {
             }
         );
         $self->userLogger->notice('U2F key unregistration succeed');
-        return [ 200, [ 'Content-Type' => 'application/json' ],
-            ['{"result":1}'] ];
+        return [
+            200,
+            [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
+            ['{"result":1}']
+        ];
         my $err = Crypt::U2F::Server::Simple::lastError();
         $self->userLogger->warn("U2F Unregistration failed: $err");
         return $self->p->sendError( $req, $err, 200 );

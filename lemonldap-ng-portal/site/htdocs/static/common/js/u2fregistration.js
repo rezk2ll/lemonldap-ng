@@ -115,7 +115,8 @@ LemonLDAP::NG U2F registration script
               type: "POST",
               url: portal + "2fregisters/u/signature",
               data: {
-                signature: JSON.stringify(data)
+                signature: JSON.stringify(data),
+                challenge: ch.challenge
               },
               dataType: 'json',
               success: function(resp) {

@@ -97,6 +97,7 @@ verify = ->
 						url: "#{portal}2fregisters/u/signature"
 						data:
 							signature: JSON.stringify data
+							challenge: ch.challenge
 						dataType: 'json'
 						success: (resp) ->
 							if resp.error
