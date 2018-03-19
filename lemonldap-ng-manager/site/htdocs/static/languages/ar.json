@@ -735,6 +735,7 @@
 "u2f":"U2F",
 "u2fActivation":"تفعيل",
 "u2fAuthnLevel":"U2F  مستوى إثبات الهوية",
+"u2fUserCanRemoveKey":"Authorize user to remove U2F key",
 "u2fSelfRegistration":"التسجيل الذاتي",
 "uid":"المعرف",
 "unknownAttrOrMacro":"سمة غير معروفة أو ماكرو",

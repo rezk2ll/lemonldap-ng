@@ -17,11 +17,11 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor',
 
 # INITIALIZATION
 
-has prefix => ( is => 'ro', default => 'ext' );
+has prefix => ( is => 'ro', default => 'rest' );
 
-has initAttrs => ( is => 'ro', default => sub { {} } );
+has initAttrs => ( is => 'rw', default => sub { {} } );
 
-has vrfyAttrs => ( is => 'ro', default => sub { {} } );
+has vrfyAttrs => ( is => 'rw', default => sub { {} } );
 
 sub init {
     my ($self) = @_;
@@ -50,7 +50,7 @@ sub init {
         }
         $self->vrfyAttrs->{$k} = $attr;
     }
-    return 1;
+    return $self->SUPER::init();
 }
 
 sub run {
@@ -59,7 +59,7 @@ sub run {
     if ( $self->conf->{rest2fInitUrl} ) {
 
         # Prepare args
-        my $args;
+        my $args = {};
         foreach my $k ( keys %{ $self->{initAttrs} } ) {
             $args->{$k} = $req->sessionInfo->{ $self->{initAttrs}->{$k} };
         }
@@ -86,8 +86,9 @@ sub run {
         $req,
         'ext2fcheck',
         params => {
-            SKIN  => $self->conf->{portalSkin},
-            TOKEN => $token
+            SKIN   => $self->conf->{portalSkin},
+            TOKEN  => $token,
+            TARGET => '/rest2fcheck',
         }
     );
     $self->logger->debug("Prepare external REST verification");
@@ -105,7 +106,7 @@ sub verify {
     }
 
     # Prepare args
-    my $args;
+    my $args = {};
     foreach my $k ( keys %{ $self->{vrfyAttrs} } ) {
         $args->{$k} = (
               $k eq 'code'

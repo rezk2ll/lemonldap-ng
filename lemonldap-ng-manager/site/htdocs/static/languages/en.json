@@ -735,6 +735,7 @@
 "u2f":"U2F",
 "u2fActivation":"Activation",
 "u2fAuthnLevel":"U2F authentication level",
+"u2fUserCanRemoveKey":"Authorize user to remove U2F key",
 "u2fSelfRegistration":"Self registration",
 "uid":"Identifier",
 "unknownAttrOrMacro":"Unknown attribute or macro",

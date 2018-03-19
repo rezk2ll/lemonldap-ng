@@ -32,7 +32,7 @@ sub _code {
     $digits ||= 6;
     my $hmac = hmac_sha1_hex(
         pack( 'H*',
-            sprintf( '%016x', int( ( time + $r * $interval ) / $interval ) ) ),
+            sprintf( '%016x', int( ( time - $r * $interval ) / $interval ) ) ),
         $secret,
     );
 

@@ -27,8 +27,13 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 sub init {
     my ($self) = @_;
-    if (    $self->conf->{utotp2fSelfRegistration}
-        and $self->conf->{utotp2fActivation} eq '1' )
+    if (
+        (
+               $self->conf->{totp2fSelfRegistration}
+            or $self->conf->{u2fSelfRegistration}
+        )
+        and $self->conf->{utotp2fActivation} eq '1'
+      )
     {
         $self->conf->{utotp2fActivation} =
           '$_totp2fSecret or $_u2fKeyHandle and $_u2fUserKey';

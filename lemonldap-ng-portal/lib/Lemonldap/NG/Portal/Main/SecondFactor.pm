@@ -110,6 +110,7 @@ L<Lemonldap::NG::Portal> second factor plugins.
 
   package Lemonldap::NG::Portal::2F::MySecondFactor;
   use Mouse;
+  # Import used constants
   use Lemonldap::NG::Portal::Main::Constants qw(
     PE_OK
     PE_BADCREDENTIALS
@@ -117,15 +118,24 @@ L<Lemonldap::NG::Portal> second factor plugins.
   );
   extends 'Lemonldap::NG::Portal::Main::SecondFactor';
   
+  # INITIALIZATION
+  
   # Prefix that will be used in parameter names. The form used to enter the
   # second factor must post its result to "/my2fcheck" (if "my" is the prefix).
   has prefix => ( is => 'ro', default => 'my' );
+  # Optional logo
+  has logo => ( is => 'rw', default => 'mylogo.png' );
   
+  # Required init method
   sub init {
       my ($self) = @_;
       # Insert here initialization process
+      # Required call:
       return $self->SUPER::init();
   }
+
+  # RUNNING METHODS
+  
   # Required 2nd factor send method
   sub run {
       my ( $self, $req, $token ) = @_;
@@ -136,11 +146,12 @@ L<Lemonldap::NG::Portal> second factor plugins.
       $req->response($my_psgi_response)
       return PE_SENDRESPONSE;
   }
+  # Required 2nd factor verify method
   sub verify {
       my ( $self, $req, $session ) = @_;
       # Use $req->param('field') to get POST responses
       ...
-      if($req->param('result') eq $goodResult) {
+      if($result eq $goodResult) {
         return PE_OK;
       }
       else {
@@ -171,8 +182,7 @@ Example:
 Lemonldap::NG::Portal::Main::SecondFactor provides a simple framework to build
 Lemonldap::NG second authentication factor plugin.
 
-See Lemonldap::NG::Portal::Plugins::External2F or
-Lemonldap::NG::Portal::Plugins::U2F for examples.
+See Lemonldap::NG::Portal::Plugins::2F::* packages for examples.
 
 =head1 SEE ALSO
 
