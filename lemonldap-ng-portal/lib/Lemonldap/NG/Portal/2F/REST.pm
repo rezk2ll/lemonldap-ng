@@ -50,7 +50,7 @@ sub init {
         }
         $self->vrfyAttrs->{$k} = $attr;
     }
-    return 1;
+    return $self->SUPER::init();
 }
 
 sub run {
@@ -86,8 +86,8 @@ sub run {
         $req,
         'ext2fcheck',
         params => {
-            SKIN  => $self->conf->{portalSkin},
-            TOKEN => $token,
+            SKIN   => $self->conf->{portalSkin},
+            TOKEN  => $token,
             TARGET => '/rest2fcheck',
         }
     );
