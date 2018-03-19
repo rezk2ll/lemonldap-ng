@@ -19,9 +19,9 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor',
 
 has prefix => ( is => 'ro', default => 'ext' );
 
-has initAttrs => ( is => 'ro', default => sub { {} } );
+has initAttrs => ( is => 'rw', default => sub { {} } );
 
-has vrfyAttrs => ( is => 'ro', default => sub { {} } );
+has vrfyAttrs => ( is => 'rw', default => sub { {} } );
 
 sub init {
     my ($self) = @_;
@@ -59,7 +59,7 @@ sub run {
     if ( $self->conf->{rest2fInitUrl} ) {
 
         # Prepare args
-        my $args;
+        my $args = {};
         foreach my $k ( keys %{ $self->{initAttrs} } ) {
             $args->{$k} = $req->sessionInfo->{ $self->{initAttrs}->{$k} };
         }
@@ -105,7 +105,7 @@ sub verify {
     }
 
     # Prepare args
-    my $args;
+    my $args = {};
     foreach my $k ( keys %{ $self->{vrfyAttrs} } ) {
         $args->{$k} = (
               $k eq 'code'
