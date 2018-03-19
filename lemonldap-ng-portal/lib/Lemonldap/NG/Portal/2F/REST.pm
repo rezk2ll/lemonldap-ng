@@ -17,7 +17,7 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor',
 
 # INITIALIZATION
 
-has prefix => ( is => 'ro', default => 'ext' );
+has prefix => ( is => 'ro', default => 'rest' );
 
 has initAttrs => ( is => 'rw', default => sub { {} } );
 
@@ -87,7 +87,8 @@ sub run {
         'ext2fcheck',
         params => {
             SKIN  => $self->conf->{portalSkin},
-            TOKEN => $token
+            TOKEN => $token,
+            TARGET => '/rest2fcheck',
         }
     );
     $self->logger->debug("Prepare external REST verification");

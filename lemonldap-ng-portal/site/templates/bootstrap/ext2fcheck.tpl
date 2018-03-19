@@ -6,7 +6,7 @@
 
 <div class="panel panel-default">
 
-<form action="/ext2fcheck" method="post" class="password" role="form">
+<form action="<TMPL_IF "TARGET"><TMPL_VAR "TARGET"><TMPL_ELSE>/ext2fcheck</TMPL_IF>" method="post" class="password" role="form">
   <div class="form">
     <input type="hidden" id="token" name="token" value="<TMPL_VAR NAME="TOKEN">">
     <div class="form-group input-group">
