@@ -155,6 +155,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	
 	# Filter 2FA sessions
 	$scope.filter2FA = ->
+		$scope.currentSession = null
 		$scope.data = []
 		$scope.updateTree '', $scope.data, 0, 0
 	

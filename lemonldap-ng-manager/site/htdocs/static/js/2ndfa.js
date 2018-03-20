@@ -181,6 +181,7 @@
         return $scope.showM = false;
       };
       $scope.filter2FA = function() {
+        $scope.currentSession = null;
         $scope.data = [];
         return $scope.updateTree('', $scope.data, 0, 0);
       };

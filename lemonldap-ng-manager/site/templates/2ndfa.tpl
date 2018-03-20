@@ -49,9 +49,9 @@
     <div id="right" class="col-lg-8 col-md-8 col-sm-7 col-xs-12 scrollable" ng-class="{'hidden-xs':showT&&!showM}">
       <!-- Menu buttons -->
       
-      <div ng-if="currentSession" class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
+      <div ng-if="currentSession && U2FCheck=='2' || currentSession && U2FCheck!='2' && TOTPCheck!='2'" class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
         <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
-          <ul class="nav navbar-nav">
+          <ul ng-if="currentSession" class="nav navbar-nav">
 			<li ng-if="currentSession" ng-repeat="button in menu.delU2FKey" ng-include="'menubutton.html'"></li>
 			<li ng-if="currentSession" ng-repeat="button in menu.verifyU2FKey" ng-include="'menubutton.html'"></li>
             <li ng-if="currentSession" ng-repeat="button in menu.addU2FKey" ng-include="'menubutton.html'"></li>
@@ -68,9 +68,9 @@
         </div>
       </div>
       
-      <div ng-if="currentSession" class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
+      <div ng-if="currentSession && TOTPCheck=='2'|| currentSession && U2FCheck!='2' && TOTPCheck!='2'" class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
         <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
-          <ul class="nav navbar-nav">
+          <ul ng-if="currentSession" class="nav navbar-nav">
             <li ng-if="currentSession" ng-repeat="button in menu.delTOTPKey" ng-include="'menubutton.html'"></li>
             <li ng-if="currentSession" ng-repeat="button in menu.verifyTOTPKey" ng-include="'menubutton.html'"></li>
             <li ng-if="currentSession" ng-repeat="button in menu.addTOTPKey" ng-include="'menubutton.html'"></li>
