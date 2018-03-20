@@ -48,6 +48,11 @@ sub extractFormInfo {
         $self->conf->{yubikeySecretKey}
     );
 
+    if($result ne 'OK') {
+        $self->userLogger->warn('Yubikey verification failed');
+        return PE_BADCREDENTIALS;
+    }
+
     # Store user, which is the public ID part of the OTP
     $req->{user} = substr( $otp, 0, $self->conf->{yubikeyPublicIDSize} );
 
