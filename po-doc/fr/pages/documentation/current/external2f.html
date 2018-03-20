@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,external2f"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="external2f.html"/>
@@ -83,6 +83,8 @@ All parameters are configured in “General Parameters » Portal Parameters » E
 <li class="level1"><div class="li"> <strong>Validation command</strong>: you must also use <em>$code</em> which is the value entered by user; Example: <code>/usr/local/bin/verify –uid $uid –code $code</code></div>
 </li>
 <li class="level1"><div class="li"> <strong>Authentication Level</strong>: if you want to overwrite the value sent by your authentication module, you can define here the new authentication level. Example: 5</div>
+</li>
+<li class="level1"><div class="li">  Logo (Optional): logo file <em>(in static/&lt;skin&gt; directory)</em></div>
 </li>
 </ul>
 <div class="noteimportant">The command line is split in an array and launch with exec(). So you don't need to enclose arguments in “” and this protects your system against shell injection. However, you can not use any space except to separate arguments.

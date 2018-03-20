@@ -57,7 +57,9 @@
 
 <h2 class="sectionedit2" id="complete_example">Complete example</h2>
 <div class="level2">
-<pre class="code :perl"><span class="co1">#!/usr/bin/perl</span>
+<dl class="file">
+<dt><a href="_export/code/documentation/2.0/configplack/codeblock.0.code" title="Download Snippet" class="mediafile mf_psgi">llapp.psgi</a></dt>
+<dd><pre class="code file perl"><span class="co1">#!/usr/bin/perl</span>
 &nbsp;
 <span class="kw2">use</span> Data<span class="sy0">::</span><span class="me2">Dumper</span><span class="sy0">;</span>
 <span class="kw2">use</span> Plack<span class="sy0">::</span><span class="me2">Builder</span><span class="sy0">;</span>
@@ -108,6 +110,7 @@ builder <span class="br0">{</span>
     mount <span class="st_h">'http://auth.example.com/'</span>    <span class="sy0">=&gt;</span> <span class="re0">$portal</span><span class="sy0">;</span>
     mount <span class="st_h">'http://manager.example.com/'</span> <span class="sy0">=&gt;</span> <span class="re0">$manager</span><span class="sy0">;</span>
 <span class="br0">}</span><span class="sy0">;</span></pre>
+</dd></dl>
 
 <p>
 
