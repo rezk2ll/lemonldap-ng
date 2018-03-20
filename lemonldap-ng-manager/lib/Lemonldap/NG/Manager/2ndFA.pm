@@ -22,7 +22,7 @@ our $VERSION = '2.0.0';
 # I. INITIALIZATION METHODS #
 #############################
 
-use constant defaultRoute => '2ndfa.html#/persistent?U2FCheck=1&TOTPCheck=1';
+use constant defaultRoute => '2ndfa.html#/persistent';
 
 sub addRoutes {
     my ( $self, $conf ) = @_;
