@@ -138,14 +138,6 @@
 
   llapp = angular.module('llngSessionsExplorer', ['ui.tree', 'ui.bootstrap', 'llApp']);
 
-  llapp.controller('SessionsExplorerFilter', [
-    '$scope', '$location', '$q', '$http', function($scope, $location, $q, $http) {
-      return $scope.filter2FA = function() {
-        return $scope.updateTree('', $scope.data, 0, 0);
-      };
-    }
-  ]);
-
   llapp.controller('SessionsExplorerCtrl', [
     '$scope', '$translator', '$location', '$q', '$http', function($scope, $translator, $location, $q, $http) {
       var autoId, c, pathEvent, sessionType;
