@@ -13,10 +13,12 @@ lib/Lemonldap/NG/Portal/2F/Engines/Default.pm
 lib/Lemonldap/NG/Portal/2F/Ext2F.pm
 lib/Lemonldap/NG/Portal/2F/Register/TOTP.pm
 lib/Lemonldap/NG/Portal/2F/Register/U2F.pm
+lib/Lemonldap/NG/Portal/2F/Register/Yubikey.pm
 lib/Lemonldap/NG/Portal/2F/REST.pm
 lib/Lemonldap/NG/Portal/2F/TOTP.pm
 lib/Lemonldap/NG/Portal/2F/U2F.pm
 lib/Lemonldap/NG/Portal/2F/UTOTP.pm
+lib/Lemonldap/NG/Portal/2F/Yubikey.pm
 lib/Lemonldap/NG/Portal/Auth.pod
 lib/Lemonldap/NG/Portal/Auth/_WebForm.pm
 lib/Lemonldap/NG/Portal/Auth/AD.pm
@@ -321,6 +323,7 @@ site/templates/bootstrap/u2fcheck.tpl
 site/templates/bootstrap/u2fregister.tpl
 site/templates/bootstrap/upgradesession.tpl
 site/templates/bootstrap/utotp2fcheck.tpl
+site/templates/bootstrap/yubikey2fregister.tpl
 site/templates/bootstrap/yubikeyform.tpl
 site/templates/common/bullet_go.png
 site/templates/common/key.png

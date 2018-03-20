@@ -1063,7 +1063,7 @@ sub attributes {
             documentation => 'U2F activation',
         },
         u2fSelfRegistration => {
-            type          => 'bool',
+            type          => 'boolOrExpr',
             default       => 0,
             documentation => 'U2F self registration activation',
         },
@@ -1085,7 +1085,7 @@ sub attributes {
             documentation => 'TOTP activation',
         },
         totp2fSelfRegistration => {
-            type          => 'bool',
+            type          => 'boolOrExpr',
             default       => 0,
             documentation => 'TOTP self registration activation',
         },
@@ -1199,6 +1199,44 @@ sub attributes {
         rest2fLogo => {
             type          => 'text',
             documentation => 'Custom logo for REST 2F',
+        },
+
+        # Yubikey 2FA
+        yubikey2fActivation => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Yubikey second factor activation',
+        },
+        yubikey2fSelfRegistration => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Yubikey self registration activation',
+        },
+        yubikey2fAuthnLevel => {
+            type => 'int',
+            documentation =>
+'Authentication level for users authentified by Yubikey second factor'
+        },
+        yubikey2fClientID => {
+            type => 'text',
+            documentation => 'Yubico client ID',
+        },
+        yubikey2fSecretKey => {
+            type => 'text',
+            documentation => 'Yubico secret key',
+        },
+        yubikey2fNonce => {
+            type => 'text',
+            documentation => 'Yubico nonce',
+        },
+        yubikey2fUrl => {
+            type => 'text',
+            documentation => 'Yubico server',
+        },
+        yubikey2fPublicIDSize => {
+            type => 'int',
+            default => 12,
+            documentation => 'Yubikey public ID size',
         },
 
         # Single session

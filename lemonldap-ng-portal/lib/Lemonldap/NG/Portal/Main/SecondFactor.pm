@@ -33,6 +33,7 @@ has noRoute => ( is => 'ro' );
 sub init {
     my ($self) = @_;
     unless ( $self->noRoute ) {
+        $self->logger->debug('Adding '.$self->prefix . '2fcheck routes');
         $self->addUnauthRoute(
             $self->prefix . '2fcheck' => '_verify',
             ['POST']

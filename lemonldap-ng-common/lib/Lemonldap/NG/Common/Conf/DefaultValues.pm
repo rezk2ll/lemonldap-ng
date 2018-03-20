@@ -247,9 +247,11 @@ sub defaultValues {
         'totp2fDigits'                            => 6,
         'totp2fInterval'                          => 30,
         'totp2fRange'                             => 1,
+        'totp2fSelfRegistration'                  => 0,
         'trustedProxies'                          => '',
         'twitterAuthnLevel'                       => 1,
         'u2fActivation'                           => 0,
+        'u2fSelfRegistration'                     => 0,
         'u2fUserCanRemoveKey'                     => 1,
         'upgradeSession'                          => 1,
         'userControl'                             => '^[\\w\\.\\-@]+$',
@@ -260,6 +262,9 @@ sub defaultValues {
         'webIDAuthnLevel'                         => 1,
         'webIDExportedVars'                       => {},
         'whatToTrace'                             => 'uid',
+        'yubikey2fActivation'                     => 0,
+        'yubikey2fPublicIDSize'                   => 12,
+        'yubikey2fSelfRegistration'               => 0,
         'yubikeyAuthnLevel'                       => 3,
         'yubikeyPublicIDSize'                     => 12
     };

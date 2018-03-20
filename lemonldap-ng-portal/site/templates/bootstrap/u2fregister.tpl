@@ -7,22 +7,23 @@
   <main id="menucontent" class="container">
     <div class="panel panel-info">
      <div class="panel-body">
-       <div id="u2fPermission" trspan="u2fPermission" class="alert alert-info">You may be prompted to allow the site permission to access your security keys. After granting permission, the device will start to blink.</div>
-        <div class="buttons">
-          <span id="register" class="btn btn-warning" role="button">
-            <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
-            <span trspan="register">Register</span>
-          </span>
-          <span id="verify" class="btn btn-success" role="button">
-            <span class="glyphicon glyphicon-check"></span>&nbsp;
-            <span trspan="verify">Verify</span>
-          </span>
-          <span id="unregister" class="btn btn-danger" role="button">
-            <span class="glyphicon glyphicon-minus-sign"></span>&nbsp;
-            <span trspan="unregister">Unregister</span>
-          </span>
-        </div>
-      </div>
+       <div id="u2fPermission" trspan="u2fPermission" class="alert alert-info">You may be prompted to allow the site permission to access your security keys. After granting permission, the device will start to blink.
+       </div>
+       <div class="buttons">
+         <span id="register" class="btn btn-warning" role="button">
+           <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
+           <span trspan="register">Register</span>
+         </span>
+         <span id="verify" class="btn btn-success" role="button">
+           <span class="glyphicon glyphicon-check"></span>&nbsp;
+           <span trspan="verify">Verify</span>
+         </span>
+         <span id="unregister" class="btn btn-danger" role="button">
+           <span class="glyphicon glyphicon-minus-sign"></span>&nbsp;
+           <span trspan="unregister">Unregister</span>
+         </span>
+       </div>
+     </div>
     </div>
   </main>
 

@@ -702,6 +702,21 @@ sub tree {
                                 'rest2fLogo',
                             ]
                         },
+                        {
+                            title => 'yubikey2f',
+                            help  => 'yubikey2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'yubikey2fActivation',
+                                'yubikey2fSelfRegistration',
+                                'yubikey2fAuthnLevel',
+                                'yubikey2fClientID',
+                                'yubikey2fSecretKey',
+                                'yubikey2fNonce',
+                                'yubikey2fUrl',
+                                'yubikey2fPublicIDSize',
+                            ],
+                        },
                     ]
                 },
                 {

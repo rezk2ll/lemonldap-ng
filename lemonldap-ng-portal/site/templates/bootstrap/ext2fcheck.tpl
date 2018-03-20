@@ -2,7 +2,7 @@
 
 <main id="logincontent" class="container">
 
-<div class="message message-positive alert"><span trspan="enterExt2fCode"></span></div>
+<div class="message message-positive alert"><span trspan="<TMPL_IF "LEGEND"><TMPL_VAR "LEGEND"><TMPL_ELSE>enterExt2fCode</TMPL_IF>"></span></div>
 
 <div class="panel panel-default">
 

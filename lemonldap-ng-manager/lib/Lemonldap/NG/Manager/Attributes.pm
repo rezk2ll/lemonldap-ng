@@ -3229,7 +3229,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'totp2fSelfRegistration' => {
             'default' => 0,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'totp2fUserCanChangeKey' => {
             'default' => 0,
@@ -3264,7 +3264,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'u2fSelfRegistration' => {
             'default' => 0,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'u2fUserCanRemoveKey' => {
             'default' => 1,
@@ -3410,6 +3410,33 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'whatToTrace' => {
             'default' => 'uid',
             'type'    => 'lmAttrOrMacro'
+        },
+        'yubikey2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'yubikey2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'yubikey2fClientID' => {
+            'type' => 'text'
+        },
+        'yubikey2fNonce' => {
+            'type' => 'text'
+        },
+        'yubikey2fPublicIDSize' => {
+            'default' => 12,
+            'type'    => 'int'
+        },
+        'yubikey2fSecretKey' => {
+            'type' => 'text'
+        },
+        'yubikey2fSelfRegistration' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'yubikey2fUrl' => {
+            'type' => 'text'
         },
         'yubikeyAuthnLevel' => {
             'default' => 3,
