@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:u2f</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,u2f"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="u2f.html"/>
@@ -88,12 +88,12 @@ This feature uses <a href="https://metacpan.org/pod/Crypt::U2F::Server::Simple" 
 <div class="level2">
 
 <p>
-In the manager (advanced parameters), you just have to enable it:
+In the manager (second factors), you just have to enable it:
 </p>
 <ul>
 <li class="level1"><div class="li"> U2F ⇒ Activation: set it to “on”</div>
 </li>
-<li class="level1"><div class="li"> U2F ⇒ Self registration: set it to “on” <em>(to display this application on the menu, create an application that points to <a href="https://auth.your.domain/2fregisters" class="urlextern" title="https://auth.your.domain/2fregisters"  rel="nofollow">https://auth.your.domain/2fregisters</a>)</em></div>
+<li class="level1"><div class="li"> U2F ⇒ Self registration: set it to “on” if users are authorizated to register their keys</div>
 </li>
 <li class="level1"><div class="li"> U2F ⇒ Authentication level: you can overwrite here auth level for U2F registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only to users enrolled</strong></div>
 </li>
@@ -101,7 +101,7 @@ In the manager (advanced parameters), you just have to enable it:
 <div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule: <code>$_u2fKeyHandle and $_u2fUserKey</code>, else U2F will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
 </div>
 </div>
-<!-- EDIT3 SECTION "Configuration" [874-1815] -->
+<!-- EDIT3 SECTION "Configuration" [874-1733] -->
 <h2 class="sectionedit4" id="browser_compatibility">Browser compatibility</h2>
 <div class="level2">
 <ul>
@@ -111,9 +111,9 @@ In the manager (advanced parameters), you just have to enable it:
 <ul>
 <li class="level2"><div class="li"> 38 to 56 with <a href="https://addons.mozilla.org/fr/firefox/addon/u2f-support-add-on/" class="urlextern" title="https://addons.mozilla.org/fr/firefox/addon/u2f-support-add-on/"  rel="nofollow">U2F Support Add-on</a></div>
 </li>
-<li class="level2"><div class="li"> 57 to 58, with “security.webauth.u2f” set to “true” in “about:config” <em>(see <a href="https://www.yubico.com/2017/11/how-to-navigate-fido-u2f-in-firefox-quantum/" class="urlextern" title="https://www.yubico.com/2017/11/how-to-navigate-fido-u2f-in-firefox-quantum/"  rel="nofollow">Yubico explanations</a>)</em></div>
+<li class="level2"><div class="li"> 57 to 59, with “security.webauth.u2f” set to “true” in “about:config” <em>(see <a href="https://www.yubico.com/2017/11/how-to-navigate-fido-u2f-in-firefox-quantum/" class="urlextern" title="https://www.yubico.com/2017/11/how-to-navigate-fido-u2f-in-firefox-quantum/"  rel="nofollow">Yubico explanations</a>)</em></div>
 </li>
-<li class="level2"><div class="li"> probably enabled by default for versions &gt;= 59</div>
+<li class="level2"><div class="li"> probably enabled by default for versions &gt;= 60</div>
 </li>
 </ul>
 </li>
@@ -122,7 +122,7 @@ In the manager (advanced parameters), you just have to enable it:
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Browser compatibility" [1816-2253] -->
+<!-- EDIT4 SECTION "Browser compatibility" [1734-2171] -->
 <h2 class="sectionedit5" id="enrollment">Enrollment</h2>
 <div class="level2">
 
@@ -131,7 +131,7 @@ If you&#039;ve enabled self registration, users can register their FIDO key usin
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Enrollment" [2254-2387] -->
+<!-- EDIT5 SECTION "Enrollment" [2172-2305] -->
 <h2 class="sectionedit6" id="assistance">Assistance</h2>
 <div class="level2">
 
@@ -140,7 +140,7 @@ If a user lost its key, you may remove it&#039;s persistent session using the se
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Assistance" [2388-2503] -->
+<!-- EDIT6 SECTION "Assistance" [2306-2421] -->
 <h2 class="sectionedit7" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -160,12 +160,12 @@ If you have another U2F registration interface, you have to populate session (us
 		<td class="col0"> _u2fUserKey </td><td class="col1"> user key value, base64 encoded </td>
 	</tr>
 </table></div>
-<!-- EDIT8 TABLE [2658-2776] -->
+<!-- EDIT8 TABLE [2576-2694] -->
 <p>
 Note that both “origin” and “appId” are fixed to portal <abbr title="Uniform Resource Locator">URL</abbr>.
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Developer corner" [2504-] --></div>
+<!-- EDIT7 SECTION "Developer corner" [2422-] --></div>
 </body>
 </html>

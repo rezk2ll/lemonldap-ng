@@ -2172,14 +2172,6 @@ apachectl restart</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>uid: 123456789012</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120226T163048Z" changeid="xavier">
-        <seg>uid: 123456789012</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt><bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept> parameter<ept i='0'>&lt;/s0&gt;</ept>: parameter name used to set choice value (default: <bpt i='2' x='2'>&lt;c2&gt;</bpt>lmAuth<ept i='2'>&lt;/c2&gt;</ept>)</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111226T194444Z" changeid="xavier">
@@ -2284,14 +2276,6 @@ make debian-packages</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160301T172152Z" changeid="xavier">
         <seg>L'<bpt i='0' x='0'>&lt;a0&gt;</bpt>URI<ept i='0'>&lt;/a0&gt;</ept> de la page qui contient le formulaire</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt><bpt i='1' x='1'>&lt;a1&gt;</bpt>API<ept i='1'>&lt;/a1&gt;</ept> client ID<ept i='0'>&lt;/s0&gt;</ept>: <bpt i='2' x='2'>&lt;a2&gt;</bpt>API<ept i='2'>&lt;/a2&gt;</ept> client ID from Yubico</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120226T162521Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Identifiant client de l'<bpt i='1' x='1'>&lt;a1&gt;</bpt>API<ept i='1'>&lt;/a1&gt;</ept><ept i='0'>&lt;/s0&gt;</ept> : identifiant client de l'<bpt i='2' x='2'>&lt;a2&gt;</bpt>API<ept i='2'>&lt;/a2&gt;</ept> obtenu auprès de Yubico</seg>
       </tuv>
     </tu>
     <tu>
@@ -11186,14 +11170,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>uid: coudot</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120226T163046Z" changeid="xavier">
-        <seg>uid: coudot</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>This part is based on <bpt i='0' x='0'>&lt;a0&gt;</bpt>SimpleSAMLPHP documentation<ept i='0'>&lt;/a0&gt;</ept>.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111203T182726Z" changeid="xavier">
@@ -11302,14 +11278,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120418T203120Z" changeid="guimard">
         <seg>Si non, aller dans le manager et déclarer le manager comme un nouvel <bpt i='0' x='0'>&lt;a0&gt;</bpt>hôte virtuel<ept i='0'>&lt;/a0&gt;</ept>, par exemple <bpt i='1' x='1'>&lt;c1&gt;</bpt>manager.example.com<ept i='1'>&lt;/c1&gt;</ept>.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Then, go in <bpt i='0' x='0'>&lt;c0&gt;</bpt>Yubikey parameters<ept i='0'>&lt;/c0&gt;</ept>:</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120226T162410Z" changeid="xavier">
-        <seg>Ensuite, aller dans les <bpt i='0' x='0'>&lt;c0&gt;</bpt>paramètres Yubikey<ept i='0'>&lt;/c0&gt;</ept>:</seg>
       </tuv>
     </tu>
     <tu>
@@ -12388,14 +12356,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt><bpt i='1' x='1'>&lt;a1&gt;</bpt>API<ept i='1'>&lt;/a1&gt;</ept> secret key<ept i='0'>&lt;/s0&gt;</ept>: <bpt i='2' x='2'>&lt;a2&gt;</bpt>API<ept i='2'>&lt;/a2&gt;</ept> secret key from Yubico</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120226T162610Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Clef secrète de l'<bpt i='1' x='1'>&lt;a1&gt;</bpt>API<ept i='1'>&lt;/a1&gt;</ept><ept i='0'>&lt;/s0&gt;</ept> : clef secrète de l'<bpt i='2' x='2'>&lt;a2&gt;</bpt>API<ept i='2'>&lt;/a2&gt;</ept> obtenue auprès de Yubico</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Display Name<ept i='0'>&lt;/s0&gt;</ept>: should be displayed on IDP, this is often your society name</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -13156,14 +13116,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T193806Z" changeid="xavier">
         <seg>Rejeu de formulaires</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>In Manager, go in <bpt i='0' x='0'>&lt;c0&gt;</bpt>General Parameters<ept i='0'>&lt;/c0&gt;</ept> &gt; <bpt i='1' x='1'>&lt;c1&gt;</bpt>Authentication modules<ept i='1'>&lt;/c1&gt;</ept> and choose Yubikey for authentication module.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120226T162359Z" changeid="xavier">
-        <seg>Dans le manager, allez dans <bpt i='0' x='0'>&lt;c0&gt;</bpt>Paramètres generaux<ept i='0'>&lt;/c0&gt;</ept> &gt; <bpt i='1' x='1'>&lt;c1&gt;</bpt>Modules d'authentification<ept i='1'>&lt;/c1&gt;</ept> et choisissez Yubikey comme module d'authentication.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19054,14 +19006,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20131025T083936Z" changeid="xavier">
         <seg>_url</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>OTP public ID part size<ept i='0'>&lt;/s0&gt;</ept>: Part of Yubikey OTP that will be used as the media identifier (default: 12)</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120226T162843Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Taille de la partie publique de l'OTP<ept i='0'>&lt;/s0&gt;</ept> : Partie du mot-de-passe unique Yubikey utilisée pour identifier les matériels (défaut: 12)</seg>
       </tuv>
     </tu>
     <tu>
@@ -27018,14 +26962,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120420T135233Z" changeid="xavier">
         <seg>http://httpd.apache.org/docs/2.2/mod/mod_ssl.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>For example it can be stored as a second value of the uid attribute in the LDAP directory:</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T054824Z" changeid="xavier">
-        <seg>Par exemple il peut être stocké comme seconde valeur de l'attibut uid dans un annuaire LDAP :</seg>
       </tuv>
     </tu>
     <tu>

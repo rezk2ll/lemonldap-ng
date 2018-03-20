@@ -107,6 +107,7 @@
 "choose2f":"Choisissez votre second facteur",
 "chooseApp":"Choisissez une application à laquelle vous êtes autorisé à accéder",
 "clickHere":"Cliquez ici",
+"clickOnYubikey":"Cliquez sur votre Yubikey",
 "closeSSO":"Fermer votre Session SSO",
 "code": "Code",
 "confirmation":"Confirmation",

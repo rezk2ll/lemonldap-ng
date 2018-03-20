@@ -2172,14 +2172,6 @@ dirName = /usr/local/lemonldap-ng/data/conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>uid: 123456789012</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T163048Z" changeid="xavier">
-        <seg>uid: 123456789012</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>URL parameter: parameter name used to set choice value (default: lmAuth)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194444Z" changeid="xavier">
@@ -2284,14 +2276,6 @@ make debian-packages</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T172152Z" changeid="xavier">
         <seg>L'URI de la page qui contient le formulaire</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>API client ID: API client ID from Yubico</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T162521Z" changeid="xavier">
-        <seg>Identifiant client de l'API : identifiant client de l'API obtenu auprès de Yubico</seg>
       </tuv>
     </tu>
     <tu>
@@ -11186,14 +11170,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>uid: coudot</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T163046Z" changeid="xavier">
-        <seg>uid: coudot</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>This part is based on SimpleSAMLPHP documentation.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182726Z" changeid="xavier">
@@ -11302,14 +11278,6 @@ portalSkin = dark</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203120Z" changeid="guimard">
         <seg>Si non, aller dans le manager et déclarer le manager comme un nouvel hôte virtuel, par exemple manager.example.com.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Then, go in Yubikey parameters:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T162410Z" changeid="xavier">
-        <seg>Ensuite, aller dans les paramètres Yubikey:</seg>
       </tuv>
     </tu>
     <tu>
@@ -12388,14 +12356,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>API secret key: API secret key from Yubico</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T162610Z" changeid="xavier">
-        <seg>Clef secrète de l'API : clef secrète de l'API obtenue auprès de Yubico</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Display Name: should be displayed on IDP, this is often your society name</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13156,14 +13116,6 @@ sub function1 {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193806Z" changeid="xavier">
         <seg>Rejeu de formulaires</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>In Manager, go in General Parameters &gt; Authentication modules and choose Yubikey for authentication module.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T162359Z" changeid="xavier">
-        <seg>Dans le manager, allez dans Paramètres generaux &gt; Modules d'authentification et choisissez Yubikey comme module d'authentication.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19054,14 +19006,6 @@ $lemonldap_config = Array(</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T083936Z" changeid="xavier">
         <seg>_url</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>OTP public ID part size: Part of Yubikey OTP that will be used as the media identifier (default: 12)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T162843Z" changeid="xavier">
-        <seg>Taille de la partie publique de l'OTP : Partie du mot-de-passe unique Yubikey utilisée pour identifier les matériels (défaut: 12)</seg>
       </tuv>
     </tu>
     <tu>
@@ -27018,14 +26962,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T135233Z" changeid="xavier">
         <seg>http://httpd.apache.org/docs/2.2/mod/mod_ssl.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>For example it can be stored as a second value of the uid attribute in the LDAP directory:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T054824Z" changeid="xavier">
-        <seg>Par exemple il peut être stocké comme seconde valeur de l'attibut uid dans un annuaire LDAP :</seg>
       </tuv>
     </tu>
     <tu>

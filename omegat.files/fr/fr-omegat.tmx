@@ -2172,14 +2172,6 @@ apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>uid: 123456789012</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T163048Z" changeid="xavier">
-        <seg>uid: 123456789012</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; parameter&lt;/s0&gt;: parameter name used to set choice value (default: &lt;c2&gt;lmAuth&lt;/c2&gt;)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194444Z" changeid="xavier">
@@ -2284,14 +2276,6 @@ make debian-packages</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T172152Z" changeid="xavier">
         <seg>L'&lt;a0&gt;URI&lt;/a0&gt; de la page qui contient le formulaire</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;&lt;a1&gt;API&lt;/a1&gt; client ID&lt;/s0&gt;: &lt;a2&gt;API&lt;/a2&gt; client ID from Yubico</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T162521Z" changeid="xavier">
-        <seg>&lt;s0&gt;Identifiant client de l'&lt;a1&gt;API&lt;/a1&gt;&lt;/s0&gt; : identifiant client de l'&lt;a2&gt;API&lt;/a2&gt; obtenu auprès de Yubico</seg>
       </tuv>
     </tu>
     <tu>
@@ -11186,14 +11170,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>uid: coudot</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T163046Z" changeid="xavier">
-        <seg>uid: coudot</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>This part is based on &lt;a0&gt;SimpleSAMLPHP documentation&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182726Z" changeid="xavier">
@@ -11302,14 +11278,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203120Z" changeid="guimard">
         <seg>Si non, aller dans le manager et déclarer le manager comme un nouvel &lt;a0&gt;hôte virtuel&lt;/a0&gt;, par exemple &lt;c1&gt;manager.example.com&lt;/c1&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Then, go in &lt;c0&gt;Yubikey parameters&lt;/c0&gt;:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T162410Z" changeid="xavier">
-        <seg>Ensuite, aller dans les &lt;c0&gt;paramètres Yubikey&lt;/c0&gt;:</seg>
       </tuv>
     </tu>
     <tu>
@@ -12388,14 +12356,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;&lt;a1&gt;API&lt;/a1&gt; secret key&lt;/s0&gt;: &lt;a2&gt;API&lt;/a2&gt; secret key from Yubico</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T162610Z" changeid="xavier">
-        <seg>&lt;s0&gt;Clef secrète de l'&lt;a1&gt;API&lt;/a1&gt;&lt;/s0&gt; : clef secrète de l'&lt;a2&gt;API&lt;/a2&gt; obtenue auprès de Yubico</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Display Name&lt;/s0&gt;: should be displayed on IDP, this is often your society name</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13156,14 +13116,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193806Z" changeid="xavier">
         <seg>Rejeu de formulaires</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Yubikey for authentication module.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T162359Z" changeid="xavier">
-        <seg>Dans le manager, allez dans &lt;c0&gt;Paramètres generaux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisissez Yubikey comme module d'authentication.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19054,14 +19006,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T083936Z" changeid="xavier">
         <seg>_url</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;OTP public ID part size&lt;/s0&gt;: Part of Yubikey OTP that will be used as the media identifier (default: 12)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T162843Z" changeid="xavier">
-        <seg>&lt;s0&gt;Taille de la partie publique de l'OTP&lt;/s0&gt; : Partie du mot-de-passe unique Yubikey utilisée pour identifier les matériels (défaut: 12)</seg>
       </tuv>
     </tu>
     <tu>
@@ -27018,14 +26962,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T135233Z" changeid="xavier">
         <seg>http://httpd.apache.org/docs/2.2/mod/mod_ssl.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>For example it can be stored as a second value of the uid attribute in the LDAP directory:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T054824Z" changeid="xavier">
-        <seg>Par exemple il peut être stocké comme seconde valeur de l'attibut uid dans un annuaire LDAP :</seg>
       </tuv>
     </tu>
     <tu>

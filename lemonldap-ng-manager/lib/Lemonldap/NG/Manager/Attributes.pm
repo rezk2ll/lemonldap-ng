@@ -369,10 +369,6 @@ sub attributes {
                         'v' => 'WebID'
                     },
                     {
-                        'k' => 'Yubikey',
-                        'v' => 'Yubikey'
-                    },
-                    {
                         'k' => 'Custom',
                         'v' => 'customModule'
                     }
@@ -545,10 +541,6 @@ sub attributes {
                 {
                     'k' => 'WebID',
                     'v' => 'WebID'
-                },
-                {
-                    'k' => 'Yubikey',
-                    'v' => 'Yubikey'
                 },
                 {
                     'k' => 'Demo',
@@ -820,10 +812,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'WebID',
                     'v' => 'WebID'
-                },
-                {
-                    'k' => 'Yubikey',
-                    'v' => 'Yubikey'
                 },
                 {
                     'k' => 'Demo',
@@ -3229,7 +3217,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'totp2fSelfRegistration' => {
             'default' => 0,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'totp2fUserCanChangeKey' => {
             'default' => 0,
@@ -3264,7 +3252,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'u2fSelfRegistration' => {
             'default' => 0,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'u2fUserCanRemoveKey' => {
             'default' => 1,
@@ -3411,18 +3399,31 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 'uid',
             'type'    => 'lmAttrOrMacro'
         },
-        'yubikeyAuthnLevel' => {
-            'default' => 3,
-            'type'    => 'int'
+        'yubikey2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
         },
-        'yubikeyClientID' => {
+        'yubikey2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'yubikey2fClientID' => {
             'type' => 'text'
         },
-        'yubikeyPublicIDSize' => {
+        'yubikey2fNonce' => {
+            'type' => 'text'
+        },
+        'yubikey2fPublicIDSize' => {
             'default' => 12,
             'type'    => 'int'
         },
-        'yubikeySecretKey' => {
+        'yubikey2fSecretKey' => {
+            'type' => 'text'
+        },
+        'yubikey2fSelfRegistration' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'yubikey2fUrl' => {
             'type' => 'text'
         },
         'zimbraAccountKey' => {

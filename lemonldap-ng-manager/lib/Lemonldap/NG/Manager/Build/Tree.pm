@@ -389,15 +389,6 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'yubikeyParams',
-                            help  => 'authyubikey.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'yubikeyAuthnLevel', 'yubikeyClientID',
-                                'yubikeySecretKey',  'yubikeyPublicIDSize'
-                            ]
-                        },
-                        {
                             title => 'customParams',
                             help  => 'authcustom.html',
                             form  => 'simpleInputContainer',
@@ -701,6 +692,21 @@ sub tree {
                                 'rest2fVerifyArgs', 'rest2fAuthnLevel',
                                 'rest2fLogo',
                             ]
+                        },
+                        {
+                            title => 'yubikey2f',
+                            help  => 'yubikey2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'yubikey2fActivation',
+                                'yubikey2fSelfRegistration',
+                                'yubikey2fAuthnLevel',
+                                'yubikey2fClientID',
+                                'yubikey2fSecretKey',
+                                'yubikey2fNonce',
+                                'yubikey2fUrl',
+                                'yubikey2fPublicIDSize',
+                            ],
                         },
                     ]
                 },

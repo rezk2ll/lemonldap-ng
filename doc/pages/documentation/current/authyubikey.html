@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authyubikey</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authyubikey"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authyubikey.html"/>
@@ -46,67 +46,9 @@
 
 <h1 class="sectionedit1" id="yubikey">Yubikey</h1>
 <div class="level1">
-<div class="table sectionedit2"><table class="inline table table-bordered table-striped">
-	<thead>
-	<tr class="row0 roweven">
-		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
-	</tr>
-	</thead>
-	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  ✔  </td><td class="col1"> </td><td class="col2"> </td>
-	</tr>
-</table></div>
-<!-- EDIT2 TABLE [24-81] -->
-</div>
-<!-- EDIT1 SECTION "Yubikey" [1-82] -->
-<h2 class="sectionedit3" id="presentation">Presentation</h2>
-<div class="level2">
-
-<p>
-The <a href="http://www.yubico.com/yubikey" class="urlextern" title="http://www.yubico.com/yubikey"  rel="nofollow">Yubikey</a> is a small material token shipped by <a href="http://www.yubico.com" class="urlextern" title="http://www.yubico.com"  rel="nofollow">Yubico</a>. It sends an OTP, which is validated against Yubico server.
-</p>
-
-<p>
- You need <a href="http://search.cpan.org/~massyn/Auth-Yubikey_WebClient/" class="urlextern" title="http://search.cpan.org/~massyn/Auth-Yubikey_WebClient/"  rel="nofollow">Auth::Yubikey_WebClient</a> package.
-</p>
-
-<p>
-You need to get an client ID and a secret key from Yubico. See <a href="https://upgrade.yubico.com/getapikey/" class="urlextern" title="https://upgrade.yubico.com/getapikey/"  rel="nofollow">Yubico API</a> page.
-</p>
-<div class="notetip">To use your Yubikeys as “second factor”, use <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">Universal 2nd Factor Authentication (U2F)</a> instead of this module
+<div class="noteimportant">This module has been replaced by <a href="yubikey2f.html" class="wikilink1" title="documentation:2.0:yubikey2f">Yubikey Second Factor</a>
 </div>
 </div>
-<!-- EDIT3 SECTION "Presentation" [83-647] -->
-<h2 class="sectionedit4" id="configuration">Configuration</h2>
-<div class="level2">
-
-<p>
-In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose Yubikey for authentication module.
-</p>
-<div class="notetip">You can then choose any other module for users and password.
 </div>
-<p>
-Then, go in <code>Yubikey parameters</code>:
-</p>
-<ul>
-<li class="level1"><div class="li"> <strong>Authentication level</strong>: authentication level for this module.</div>
-</li>
-<li class="level1"><div class="li"> <strong><abbr title="Application Programming Interface">API</abbr> client ID</strong>: <abbr title="Application Programming Interface">API</abbr> client ID from Yubico</div>
-</li>
-<li class="level1"><div class="li"> <strong><abbr title="Application Programming Interface">API</abbr> secret key</strong>: <abbr title="Application Programming Interface">API</abbr> secret key from Yubico</div>
-</li>
-<li class="level1"><div class="li"> <strong>OTP public ID part size</strong>: Part of Yubikey OTP that will be used as the media identifier (default: 12)</div>
-</li>
-</ul>
-<div class="notetip">You have to register the media identifier in your user backend (LDAP or SQL) to match the yubikey with a real user. For example it can be stored as a second value of the uid attribute in the LDAP directory:<ul>
-<li class="level1"><div class="li"> uid: coudot</div>
-</li>
-<li class="level1"><div class="li"> uid: 123456789012 </div>
-</li>
-</ul>
-
-</div>
-</div>
-<!-- EDIT4 SECTION "Configuration" [648-] --></div>
 </body>
 </html>
