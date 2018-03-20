@@ -22,14 +22,14 @@ our $VERSION = '2.0.0';
 # I. INITIALIZATION METHODS #
 #############################
 
-use constant defaultRoute => 'sfa.html#/persistent?U2FCheck=1&TOTPCheck=1';
+use constant defaultRoute => '2ndfa.html#/persistent?U2FCheck=1&TOTPCheck=1';
 
 sub addRoutes {
     my ( $self, $conf ) = @_;
 
     # Remote Procedure Call are defined in Lemonldap::NG::Common::Session::REST
     # HTML template
-    $self->addRoute( 'sfa.html', undef, ['GET'] )
+    $self->addRoute( '2ndfa.html', undef, ['GET'] )
 
       ->addRoute(
         sfa => { ':sessionType' => 'sfa' },

@@ -28,13 +28,13 @@ README
 REST-API.md
 scripts/lmConfigEditor
 scripts/testConfBackend.pl
+site/coffee/2ndfa.coffee
 site/coffee/diff.coffee
 site/coffee/filterFunctions.coffee
 site/coffee/llApp.coffee
 site/coffee/manager.coffee
 site/coffee/notifications.coffee
 site/coffee/sessions.coffee
-site/coffee/sfa.coffee
 site/htdocs/manager.fcgi
 site/htdocs/manager.psgi
 site/htdocs/static/bwr/angular-animate/angular-animate.js
@@ -136,6 +136,8 @@ site/htdocs/static/forms/trool.html
 site/htdocs/static/forms/virtualHost.html
 site/htdocs/static/forms/virtualHostContainer.html
 site/htdocs/static/forms/white.html
+site/htdocs/static/js/2ndfa.js
+site/htdocs/static/js/2ndfa.min.js
 site/htdocs/static/js/conftree.js
 site/htdocs/static/js/conftree.min.js
 site/htdocs/static/js/diff.js
@@ -150,8 +152,6 @@ site/htdocs/static/js/notifications.js
 site/htdocs/static/js/notifications.min.js
 site/htdocs/static/js/sessions.js
 site/htdocs/static/js/sessions.min.js
-site/htdocs/static/js/sfa.js
-site/htdocs/static/js/sfa.min.js
 site/htdocs/static/languages/ar.json
 site/htdocs/static/languages/en.json
 site/htdocs/static/languages/fr.json
@@ -172,6 +172,7 @@ site/htdocs/static/logos/pastel.png
 site/htdocs/static/logos/vi.png
 site/htdocs/static/reverseTree.json
 site/htdocs/static/struct.json
+site/templates/2ndfa.tpl
 site/templates/diff.tpl
 site/templates/footer.tpl
 site/templates/header.tpl
@@ -180,7 +181,6 @@ site/templates/menubar.tpl
 site/templates/notifications.tpl
 site/templates/scripts.tpl
 site/templates/sessions.tpl
-site/templates/sfa.tpl
 site/templates/tree.tpl
 t/02-HTML-template.t
 t/03-HTML-forms.t
