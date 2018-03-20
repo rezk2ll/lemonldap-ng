@@ -794,11 +794,6 @@
 "yubikey2fSecretKey":"Khóa bí mật API",
 "yubikey2fSelfRegistration":"Tự đăng ký",
 "yubikey2fUrl":"Service URL",
-"yubikeyAuthnLevel":"Mức xác thực",
-"yubikeyClientID":"ID ứng dụng khách API",
-"yubikeyParams":"Tham số Yubikey",
-"yubikeyPublicIDSize":"Kích thước phần tử công khai OTP",
-"yubikeySecretKey":"Khóa bí mật API",
 "zeroConfExplanations":"Máy chủ không có cấu hình. Sử dụng mẫu để lưu đầu tiên. ",
 
 "saml":"SAML",

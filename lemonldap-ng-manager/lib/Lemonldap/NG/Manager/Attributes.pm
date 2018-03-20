@@ -369,10 +369,6 @@ sub attributes {
                         'v' => 'WebID'
                     },
                     {
-                        'k' => 'Yubikey',
-                        'v' => 'Yubikey'
-                    },
-                    {
                         'k' => 'Custom',
                         'v' => 'customModule'
                     }
@@ -545,10 +541,6 @@ sub attributes {
                 {
                     'k' => 'WebID',
                     'v' => 'WebID'
-                },
-                {
-                    'k' => 'Yubikey',
-                    'v' => 'Yubikey'
                 },
                 {
                     'k' => 'Demo',
@@ -820,10 +812,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'WebID',
                     'v' => 'WebID'
-                },
-                {
-                    'k' => 'Yubikey',
-                    'v' => 'Yubikey'
                 },
                 {
                     'k' => 'Demo',
@@ -3436,20 +3424,6 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'boolOrExpr'
         },
         'yubikey2fUrl' => {
-            'type' => 'text'
-        },
-        'yubikeyAuthnLevel' => {
-            'default' => 3,
-            'type'    => 'int'
-        },
-        'yubikeyClientID' => {
-            'type' => 'text'
-        },
-        'yubikeyPublicIDSize' => {
-            'default' => 12,
-            'type'    => 'int'
-        },
-        'yubikeySecretKey' => {
             'type' => 'text'
         },
         'zimbraAccountKey' => {

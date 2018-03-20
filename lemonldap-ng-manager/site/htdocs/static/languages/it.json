@@ -794,11 +794,6 @@
 "yubikey2fSecretKey":"Chiave segreta API",
 "yubikey2fSelfRegistration":"Auto-registrazione",
 "yubikey2fUrl":"Service URL",
-"yubikeyAuthnLevel":"Livello di autenticazione",
-"yubikeyClientID":"ID client API",
-"yubikeyParams":"Parametri Yubikey",
-"yubikeyPublicIDSize":"Dimensione della parte ID OTP pubblica",
-"yubikeySecretKey":"Chiave segreta API",
 "zeroConfExplanations":"Il server non ha alcuna configurazione. Utilizza il modello per salvare il primo.",
 
 "saml":"SAML",

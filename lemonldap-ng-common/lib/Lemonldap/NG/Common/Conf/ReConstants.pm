@@ -57,7 +57,6 @@ our $authParameters = {
   sslParams => [qw(SSLAuthnLevel SSLVar SSLVarIf sslByAjax sslHost)],
   twitterParams => [qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName)],
   webidParams => [qw(webIDAuthnLevel webIDExportedVars webIDWhitelist)],
-  yubikeyParams => [qw(yubikeyAuthnLevel yubikeyClientID yubikeySecretKey yubikeyPublicIDSize)],
 };
 our $issuerParameters = {
   issuerDBCAS => [qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule casAttr casAttributes casAccessControlPolicy)],

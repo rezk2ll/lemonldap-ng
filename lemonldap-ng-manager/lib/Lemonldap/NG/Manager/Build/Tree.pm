@@ -389,15 +389,6 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'yubikeyParams',
-                            help  => 'authyubikey.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'yubikeyAuthnLevel', 'yubikeyClientID',
-                                'yubikeySecretKey',  'yubikeyPublicIDSize'
-                            ]
-                        },
-                        {
                             title => 'customParams',
                             help  => 'authcustom.html',
                             form  => 'simpleInputContainer',

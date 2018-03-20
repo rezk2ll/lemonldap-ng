@@ -794,11 +794,6 @@
 "yubikey2fSecretKey":"مفتاح سرأل API",
 "yubikey2fSelfRegistration":"التسجيل الذاتي",
 "yubikey2fUrl":"Service URL",
-"yubikeyAuthnLevel":"مستوى إثبات الهوية",
-"yubikeyClientID":"API  العميل ID",
-"yubikeyParams":"معاييرYubikey",
-"yubikeyPublicIDSize":"حجم الجزء العام لي OTP آي دي",
-"yubikeySecretKey":"مفتاح سرأل API",
 "zeroConfExplanations":"لا يحتوي الخادم على إعدادات. استخدام قالب لحفظ الأول",
 
 "saml":"SAML",

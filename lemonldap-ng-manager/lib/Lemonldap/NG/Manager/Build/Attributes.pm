@@ -2134,7 +2134,6 @@ sub attributes {
                 { k => 'SSL',         v => 'SSL' },
                 { k => 'Twitter',     v => 'Twitter' },
                 { k => 'WebID',       v => 'WebID' },
-                { k => 'Yubikey',     v => 'Yubikey' },
                 { k => 'Demo',        v => 'Demonstration' },
                 { k => 'Choice',      v => 'authChoice' },
                 { k => 'Combination', v => 'combineMods' },
@@ -2714,7 +2713,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'SSL',           v => 'SSL' },
                     { k => 'Twitter',       v => 'Twitter' },
                     { k => 'WebID',         v => 'WebID' },
-                    { k => 'Yubikey',       v => 'Yubikey' },
                     { k => 'Custom',        v => 'customModule' },
                 ],
                 [
@@ -2773,7 +2771,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'SSL',      v => 'SSL' },
                 { k => 'Twitter',  v => 'Twitter' },
                 { k => 'WebID',    v => 'WebID' },
-                { k => 'Yubikey',  v => 'Yubikey' },
                 { k => 'Demo',     v => 'Demonstration' },
                 { k => 'CAS',    v => 'Central Authentication Service (CAS)' },
                 { k => 'OpenID', v => 'OpenID' },
@@ -2785,20 +2782,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'Null',          v => 'None' },
                 { k => 'Custom',        v => 'customModule' },
             ],
-        },
-
-        # Yubikey
-        yubikeyAuthnLevel => {
-            type          => 'int',
-            default       => 3,
-            documentation => 'Yubikey authentication level',
-        },
-        yubikeyClientID     => { type => 'text', },
-        yubikeySecretKey    => { type => 'text', },
-        yubikeyPublicIDSize => {
-            type          => 'int',
-            default       => 12,
-            documentation => 'Yubikey public ID size',
         },
 
         # Custom auth modules

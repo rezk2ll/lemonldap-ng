@@ -264,9 +264,7 @@ sub defaultValues {
         'whatToTrace'                             => 'uid',
         'yubikey2fActivation'                     => 0,
         'yubikey2fPublicIDSize'                   => 12,
-        'yubikey2fSelfRegistration'               => 0,
-        'yubikeyAuthnLevel'                       => 3,
-        'yubikeyPublicIDSize'                     => 12
+        'yubikey2fSelfRegistration'               => 0
     };
 }
 

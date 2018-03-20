@@ -794,11 +794,6 @@
 "yubikey2fSecretKey":"Clef secrète de l'API",
 "yubikey2fSelfRegistration":"Auto-enregistrement",
 "yubikey2fUrl":"URL du service",
-"yubikeyAuthnLevel":"Niveau d'authentification",
-"yubikeyClientID":"Identifiant client de l'API",
-"yubikeyParams":"Paramètres Yubikey",
-"yubikeyPublicIDSize":"Taille de la partie publique de l'OTP",
-"yubikeySecretKey":"Clef secrète de l'API",
 "zeroConfExplanations":"Le serveur ne dispose pas de configuration. Cette configuration de base vous permet d'en initialiser une.",
 
 "saml":"SAML",
