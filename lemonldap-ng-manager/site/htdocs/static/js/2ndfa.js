@@ -181,6 +181,7 @@
         return $scope.showM = false;
       };
       $scope.filter2FA = function() {
+        $scope.data = [];
         return $scope.updateTree('', $scope.data, 0, 0);
       };
       $scope.deleteU2FKey = function() {
