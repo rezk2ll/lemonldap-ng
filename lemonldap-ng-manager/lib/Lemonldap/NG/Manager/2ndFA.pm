@@ -1,12 +1,10 @@
-package Lemonldap::NG::Manager::U2F;
+package Lemonldap::NG::Manager::2ndFA;
 
 use 5.10.0;
 use utf8;
 use strict;
 use Mouse;
 use MIME::Base64 qw(encode_base64 decode_base64);
-
-#use Crypt::U2F::Server::Simple;
 
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Conf::Constants;
@@ -24,36 +22,35 @@ our $VERSION = '2.0.0';
 # I. INITIALIZATION METHODS #
 #############################
 
-use constant defaultRoute => 'u2f.html#/persistent';
+use constant defaultRoute => '2ndfa.html#/persistent';
 
 sub addRoutes {
     my ( $self, $conf ) = @_;
 
     # Remote Procedure Call are defined in Lemonldap::NG::Common::Session::REST
     # HTML template
-    $self->addRoute( 'u2f.html', undef, ['GET'] )
+    $self->addRoute( '2ndfa.html', undef, ['GET'] )
 
-      # READ
       ->addRoute(
-        u2f => { ':sessionType' => 'u2f' },
+        sfa => { ':sessionType' => 'sfa' },
         ['GET']
       )
 
-      # DELETE U2F KEY
+      # DELETE 2FA KEY
       ->addRoute(
-        u2f => { ':sessionType' => { ':sessionId' => 'deleteU2FKey' } },
+        sfa => { ':sessionType' => { ':sessionId' => 'delete2FAKey' } },
         ['DELETE']
       )
 
-      # ADD U2F KEY
+      # ADD 2FA KEY
       ->addRoute(
-        u2f => { ':sessionType' => { ':sessionId' => 'registerU2FKey' } },
+        sfa => { ':sessionType' => { ':sessionId' => 'add2FAKey' } },
         ['PUT']
       )
 
-      # VERIFY U2F KEY
+      # VERIFY 2FA KEY
       ->addRoute(
-        u2f => { ':sessionType' => { ':sessionId' => 'verifyU2FKey' } },
+        sfa => { ':sessionType' => { ':sessionId' => 'verify2FAKey' } },
         ['POST']
       );
 
@@ -62,13 +59,36 @@ sub addRoutes {
     $self->{ipField}              ||= 'ipAddr';
     $self->{multiValuesSeparator} ||= '; ';
     $self->{hiddenAttributes} //= "_password";
+    $self->{TOTPCheck} = '1';
+    $self->{U2FCheck}  = '1';
 }
 
-############################
-# II. REGISTRATION METHODS #
-############################
+###################
+# II. 2FA METHODS #
+###################
 
-sub registerU2FKey {
+sub delete2FAKey {
+
+    my ( $self, $req, $session, $skey ) = @_;
+
+    my $mod = $self->getMod($req)
+      or return $self->sendError( $req, undef, 400 );
+
+    my $params = $req->parameters();
+    my $Key    = $params->{Key};
+
+    if ( $Key =~ /\bU2F\b/ ) {
+        return $self->deleteU2FKey( $req, $session, $skey );
+    }
+    elsif ( $Key =~ /\bTOTP\b/ ) {
+        return $self->deleteTOTPKey( $req, $session, $skey );
+    }
+    else {
+        return $self->sendError( $req, undef, 400 );
+    }
+}
+
+sub add2FAKey {
 
     my ( $self, $req, $session, $skey ) = @_;
 
@@ -81,15 +101,23 @@ sub registerU2FKey {
     return $self->addU2FKey( $req, $session, $skey );
 }
 
+sub verify2FAKey {
+
+    my ( $self, $req, $session, $skey ) = @_;
+
+    return $self->addU2FKey( $req, $session, $skey );
+}
+
 ########################
 # III. DISPLAY METHODS #
 ########################
 
-sub u2f {
+sub sfa {
     my ( $self, $req, $session, $skey ) = @_;
 
     # Case 1: only one session is required
     if ($session) {
+
         return $self->session( $req, $session, $skey );
     }
 
@@ -98,7 +126,6 @@ sub u2f {
     my $params = $req->parameters();
     my $type   = delete $params->{sessionType};
     $type = ucfirst($type);
-
     my $res;
 
     # Case 2: list of sessions
@@ -106,8 +133,11 @@ sub u2f {
     my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
 
     # 2.1 Get fields to require
-    my @fields =
-      ( '_httpSessionType', $self->{ipField}, $whatToTrace, '_u2fKeyHandle' );
+    my @fields = (
+        '_httpSessionType', $self->{ipField},
+        $whatToTrace,       '_u2fKeyHandle',
+        '_totp2fSecret'
+    );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/;
         $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
@@ -121,10 +151,17 @@ sub u2f {
     #     not a keyword)
     my $moduleOptions = $mod->{options};
     $moduleOptions->{backend} = $mod->{module};
+
+    # Select 2FA sessions to display
+    if ( defined $params->{TOTPCheck} and defined $params->{TOTPCheck} ) {
+        $self->{TOTPCheck} = delete $params->{TOTPCheck};
+        $self->{U2FCheck}  = delete $params->{U2FCheck};
+    }
+
     my %filters = map {
         my $s = $_;
         $s =~ s/\b_whatToTrace\b/$whatToTrace/o;
-        /^(?:(?:group|order)By|doubleIp)$/
+        /^groupBy$/
           ? ()
           : ( $s => $params->{$_} );
     } keys %$params;
@@ -193,11 +230,20 @@ sub u2f {
         }
     }
 
-    # Display sessions with registered U2F key only
-    foreach my $session ( keys %$res ) {
-        delete $res->{$session}
-          unless ( defined $res->{$session}->{_u2fKeyHandle}
-            and length $res->{$session}->{_u2fKeyHandle} );
+    # Filter 2FA sessions if needed
+    if ( $self->{U2FCheck} eq '2' ) {
+        foreach my $session ( keys %$res ) {
+            delete $res->{$session}
+              unless ( defined $res->{$session}->{_u2fKeyHandle}
+                and length $res->{$session}->{_u2fKeyHandle} );
+        }
+    }
+    if ( $self->{TOTPCheck} eq '2' ) {
+        foreach my $session ( keys %$res ) {
+            delete $res->{$session}
+              unless ( defined $res->{$session}->{_totp2fSecret}
+                and length $res->{$session}->{_totp2fSecret} );
+        }
     }
 
     my $total = ( keys %$res );

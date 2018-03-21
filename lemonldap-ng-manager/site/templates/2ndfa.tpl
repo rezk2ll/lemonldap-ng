@@ -1,6 +1,6 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-  <title>LemonLDAP::NG sessions explorer</title>
+  <title>LemonLDAP::NG 2nd Factor sessions explorer</title>
 </head>
 
 <body ng-app="llngSessionsExplorer" ng-controller="SessionsExplorerCtrl" ng-csp>
@@ -12,11 +12,21 @@
 
     <!-- Tree -->
     <aside id="left" class="col-lg-4 col-md-4 col-sm-5 col-xs-12 scrollable " ng-class="{'hidden-xs':!showT}" role="complementary">
+
       <div class="navbar navbar-default">
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" role="grid">
-            <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('u2fSessions')}}</a></li>
-          </ul>
+            <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('2faSessions')}}</a></li>
+            <!--<form name="filterForm" ng-controller="SessionsExplorerFilter">-->
+            <form name="filterForm">
+              <div class="form-check ">&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="'2'" ng-false-value="'1'" ng-change="filter2FA()"/>
+                <label class="form-check-label" for="U2FCheck">U2F</label>&nbsp;&nbsp;
+                <input type="checkbox" ng-model="TOTPCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="filter2FA()"/>
+                <label class="form-check-label" for="TOTPCheck">TOTP</label>
+              </div>
+            </form>
+		  </ul>
         </div>
       </div>
       <div class="text-center"><p class="badge">{{total}} <span trspan="session_s"></span></p></div>
@@ -38,15 +48,32 @@
     <!-- Right(main) div -->
     <div id="right" class="col-lg-8 col-md-8 col-sm-7 col-xs-12 scrollable" ng-class="{'hidden-xs':showT&&!showM}">
       <!-- Menu buttons -->
-      <div class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
+      
+      <div ng-if="currentSession && U2FCheck=='2' || currentSession && U2FCheck!='2' && TOTPCheck!='2'" class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
         <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
-          <ul class="nav navbar-nav">            
-         
+          <ul ng-if="currentSession" class="nav navbar-nav">
+			<li ng-if="currentSession" ng-repeat="button in menu.delU2FKey" ng-include="'menubutton.html'"></li>
+			<li ng-if="currentSession" ng-repeat="button in menu.verifyU2FKey" ng-include="'menubutton.html'"></li>
             <li ng-if="currentSession" ng-repeat="button in menu.addU2FKey" ng-include="'menubutton.html'"></li>
-            <li ng-if="currentSession" ng-repeat="button in menu.verifyU2FKey" ng-include="'menubutton.html'"></li>
-          
-            <li ng-if="currentSession" ng-repeat="button in menu.delU2FKey" ng-include="'menubutton.html'"></li>
-            
+            <li ng-if="currentSession===null" ng-repeat="button in menu.home" ng-include="'menubutton.html'"></li>
+            <li uib-dropdown class="visible-xs">
+              <a id="langmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+              <ul uib-dropdown-menu aria-labelled-by="langmenu" role="grid">
+                <li ng-repeat="link in links"><a href="{{link.target}}" role="row"><i ng-if="link.icon" class="glyphicon glyphicon-{{link.icon}}"></i> {{translate(link.title)}}</a></li>
+                <li ng-repeat="menulink in menulinks"><a href="{{menulink.target}}" role="row"><i ng-if="menulink.icon" class="glyphicon glyphicon-{{menulink.icon}}"></i> {{translate(menulink.title)}}</a></li>
+                <li ng-include="'languages.html'"></li>
+              </ul>
+            </li>
+          </ul>    
+        </div>
+      </div>
+      
+      <div ng-if="currentSession && TOTPCheck=='2'|| currentSession && U2FCheck!='2' && TOTPCheck!='2'" class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
+        <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
+          <ul ng-if="currentSession" class="nav navbar-nav">
+            <li ng-if="currentSession" ng-repeat="button in menu.delTOTPKey" ng-include="'menubutton.html'"></li>
+            <li ng-if="currentSession" ng-repeat="button in menu.verifyTOTPKey" ng-include="'menubutton.html'"></li>
+            <li ng-if="currentSession" ng-repeat="button in menu.addTOTPKey" ng-include="'menubutton.html'"></li>
             <li ng-if="currentSession===null" ng-repeat="button in menu.home" ng-include="'menubutton.html'"></li>
             <li uib-dropdown class="visible-xs">
               <a id="langmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
@@ -58,7 +85,8 @@
             </li>
           </ul>
         </div>
-      </div>
+      </div> 
+      
       <div class="panel panel-default" ng-hide="currentSession===null">
         <div class="panel-heading">
           <h1 class="panel-title text-center">{{translate("sessionTitle")}} {{currentSession.id}}</h1>
@@ -115,9 +143,9 @@
   <TMPL_INCLUDE NAME="scripts.tpl">
 
   <!-- //if:jsminified
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/u2f.min.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/2ndfa.min.js"></script>
   //else -->
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/u2f.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/2ndfa.js"></script>
   <!-- //endif -->
 
 <TMPL_INCLUDE NAME="footer.tpl">

@@ -94,7 +94,7 @@ sub init {
         'conf'          => 'cog',
         'sessions'      => 'duplicate',
         'notifications' => 'bell',
-        'U2F'           => 'wrench'
+        '2ndFA'         => 'wrench'
     };
 
     $self->links( [] );

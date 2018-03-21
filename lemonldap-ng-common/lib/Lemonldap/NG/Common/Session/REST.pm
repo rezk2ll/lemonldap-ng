@@ -77,6 +77,30 @@ sub deleteU2FKey {
     return $self->sendJSONresponse( $req, { result => 1 } );
 }
 
+sub deleteTOTPKey {
+    my ( $self, $req ) = @_;
+    return $self->sendJSONresponse( $req, { result => 1 } )
+      if ( $self->{demoMode} );
+    my $mod = $self->getMod($req)
+      or return $self->sendError( $req, undef, 400 );
+    my $id = $req->params('sessionId')
+      or return $self->sendError( $req, 'sessionId is missing', 400 );
+
+    # Try to read session
+    my $session = $self->getApacheSession( $mod, $id )
+      or return $self->sendError( $req, undef, 400 );
+
+    # Delete U2F key attributs and update session
+    $session->data->{_totp2fSecret} = '';
+    $session->update( \%{ $session->data } );
+
+    Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
+    if ( $session->error ) {
+        return $self->sendError( $req, $session->error, 200 );
+    }
+    return $self->sendJSONresponse( $req, { result => 1 } );
+}
+
 sub addU2FKey {
     my ( $self, $req ) = @_;
     return $self->sendJSONresponse( $req, { result => 1 } )
