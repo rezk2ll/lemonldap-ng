@@ -48,7 +48,7 @@ LemonLDAP::NG U2F registration script
         return u2f.register(ch.appId, request, [], function(data) {
           $('#u2fPermission').hide();
           if (data.errorCode) {
-            return setMsg('unableToGetU2FKey', 'warning');
+            return setMsg('unableToGetKey', 'warning');
           } else {
             return $.ajax({
               type: "POST",
@@ -62,7 +62,7 @@ LemonLDAP::NG U2F registration script
                 if (resp.error) {
                   return setMsg('u2fFailed', 'warning');
                 } else if (resp.result) {
-                  return setMsg('u2fRegistered', 'positive');
+                  return setMsg('yourKeyIsRegistered', 'positive');
                 }
               },
               error: displayError
@@ -84,7 +84,7 @@ LemonLDAP::NG U2F registration script
         if (resp.error) {
           return setMsg('u2fFailed', 'warning');
         } else if (resp.result) {
-          return setMsg('u2fUnregistered', 'positive');
+          return setMsg('yourKeyIsUnregistered', 'positive');
         }
       },
       error: displayError
@@ -123,7 +123,7 @@ LemonLDAP::NG U2F registration script
                 if (resp.error) {
                   return setMsg('u2fFailed', 'warning');
                 } else if (resp.result) {
-                  return setMsg('u2fSuccess', 'positive');
+                  return setMsg('yourKeyIsVerified', 'positive');
                 }
               },
               error: function(j, status, err) {

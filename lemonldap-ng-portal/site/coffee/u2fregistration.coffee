@@ -38,7 +38,7 @@ register = ->
 				$('#u2fPermission').hide()
 				# Handle errors
 				if data.errorCode
-					setMsg 'unableToGetU2FKey', 'warning'
+					setMsg 'unableToGetKey', 'warning'
 				else
 					# 3 send response
 					$.ajax
@@ -52,7 +52,7 @@ register = ->
 							if resp.error
 								setMsg 'u2fFailed', 'warning'
 							else if resp.result
-								setMsg 'u2fRegistered', 'positive'
+								setMsg 'yourKeyIsRegistered', 'positive'
 						error: displayError
 
 # Unregistration function (launched by "unregister" button)
@@ -67,7 +67,7 @@ unregister = ->
 				if resp.error
 					setMsg 'u2fFailed', 'warning'
 				else if resp.result
-					setMsg 'u2fUnregistered', 'positive'
+					setMsg 'yourKeyIsUnregistered', 'positive'
 			error: displayError
 
 # Verification function (launched by "verify" button)
@@ -103,7 +103,7 @@ verify = ->
 							if resp.error
 								setMsg 'u2fFailed', 'warning'
 							else if resp.result
-								setMsg 'u2fSuccess', 'positive'
+								setMsg 'yourKeyIsVerified', 'positive'
 						error: (j, status, err) ->
 							console.log 'error', err
 
