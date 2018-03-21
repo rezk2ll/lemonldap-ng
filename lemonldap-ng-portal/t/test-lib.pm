@@ -133,6 +133,7 @@ m@<form.+?action="(?:(?:http://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
             ok( defined $fields{$f}, qq{ Field "$f" is defined} );
             count(1);
         }
+        exceptCspFormOK( $res, $host );
         return ( $host, $uri, $query, $method );
     }
     else {
@@ -187,6 +188,27 @@ sub expectCookie {
     ) or explain( $res->[1], "Set-Cookie: $cookieName=something" );
     count(1);
     return $id;
+}
+
+sub exceptCspFormOK {
+    my ( $res, $host ) = @_;
+    return 1 unless ($host);
+    my $csp = getHeader( $res, 'Content-Security-Policy' );
+    return 1 unless ($csp);
+    unless ( $csp =~ s/^.*form-action (.*?)(?:;.*)?$/$1/ ) {
+        $csp =~ s/^.*default-src (.*?)(?:;.*)?$/$1/;
+    }
+    if (   $csp =~ /\s\*(?:\s.*)?\s*$/
+        or ( $host eq '#' and $csp =~ /'self'/ )
+        or $csp =~ /\b$host\b/ )
+    {
+        pass(' CSP header authorize POST request');
+    }
+    else {
+        fail(' CSP header authorize POST request');
+        explain( $res->[1], "form-action ... $host" );
+    }
+    count(1);
 }
 
 sub getCookies {
