@@ -482,4 +482,12 @@ sub secondFactor {
     return $self->_sfEngine->run($req);
 }
 
+sub storeHistory {
+    my ( $self, $req ) = @_;
+    if ( $self->conf->{loginHistoryEnabled} ) {
+        $self->registerLogin($req);
+    }
+    PE_OK;
+}
+
 1;

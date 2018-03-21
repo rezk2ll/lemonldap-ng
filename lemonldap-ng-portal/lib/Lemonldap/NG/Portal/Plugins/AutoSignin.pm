@@ -48,8 +48,10 @@ sub check {
         if ( $test->( $req->env ) ) {
             $req->user($name);
             my @steps =
-              grep { !ref $_ and $_ !~ /^(?:extractFormInfo|authenticate)$/ }
-              @{ $req->steps };
+              grep {
+                !ref $_
+                  and $_ !~ /^(?:extractFormInfo|authenticate|secondFactor)$/
+              } @{ $req->steps };
             $req->steps( \@steps );
             $self->userLogger->notice("Autosignin for $name");
             return PE_OK;
