@@ -1,4 +1,5 @@
 Changes
+example/handler.psgi
 example/scripts/purgeLocalCache
 example/scripts/purgeLocalCache.cron.d
 lib/Lemonldap/NG/Handler.pm
