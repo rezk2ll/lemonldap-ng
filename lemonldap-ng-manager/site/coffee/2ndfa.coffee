@@ -159,18 +159,12 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		$scope.updateTree '', $scope.data, 0, 0
 	
 	# Search 2FA sessions
-	$scope.search2FA = ->
+	$scope.search2FA = (clear) ->
+		if clear
+			$scope.searchString =''
 		$scope.currentSession = null
 		$scope.data = []
 		$scope.updateTree2 '', $scope.data, 0, 0
-	
-	# Clear 2FA sessions searchString
-	$scope.clearSearch2FA = ->
-		$scope.currentSession = null
-		$scope.data = []
-		$scope.searchString =''
-		$scope.updateTree2 '', $scope.data, 0, 0
-	
 	
 	# Delete U2F key
 	$scope.deleteU2FKey = ->

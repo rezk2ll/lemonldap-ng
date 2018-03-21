@@ -185,15 +185,12 @@
         $scope.data = [];
         return $scope.updateTree('', $scope.data, 0, 0);
       };
-      $scope.search2FA = function() {
+      $scope.search2FA = function(clear) {
+        if (clear) {
+          $scope.searchString = '';
+        }
         $scope.currentSession = null;
         $scope.data = [];
-        return $scope.updateTree2('', $scope.data, 0, 0);
-      };
-      $scope.clearSearch2FA = function() {
-        $scope.currentSession = null;
-        $scope.data = [];
-        $scope.searchString = '';
         return $scope.updateTree2('', $scope.data, 0, 0);
       };
       $scope.deleteU2FKey = function() {
