@@ -29,10 +29,10 @@
             <ul uib-dropdown-menu aria-labelled-by="mainlangmenu" role="grid">
               <li ng-repeat="menulink in menulinks"><a href="{{menulink.target}}" role="row"><i ng-if="menulink.icon" class="glyphicon glyphicon-{{menulink.icon}}"></i> <span ng-bind="translate(menulink.title)"></span></a></li>
               <li role="separator" class="divider"></li>
-              <li class="dropdown-header">{{translate('languages')}}</li>
+              <li class="dropdown-header"><span ng-bind="translate('languages')"></span></li>
               <li ng-include="'languages.html'"/>
               <li role="separator" class="divider"></li>
-              <li class="dropdown-header">{{translate('version')}}</li>
+              <li class="dropdown-header"><span ng-bind="translate('version')"></span></li>
               <li><a name="version"><TMPL_VAR NAME="VERSION"></a></li>
             </ul>
           </li>

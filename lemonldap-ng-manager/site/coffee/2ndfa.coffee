@@ -159,6 +159,14 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		$scope.data = []
 		$scope.updateTree '', $scope.data, 0, 0
 	
+	# Filter 2FA sessions
+	$scope.search2FA = ->
+		$scope.currentSession = null
+		$scope.data = []
+		$scope.updateTree2 '', $scope.data, 0, 0
+	
+	
+	
 	# Delete U2F key
 	$scope.deleteU2FKey = ->
 		$scope.waiting = true
@@ -380,7 +388,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 	$scope.$on '$locationChangeSuccess', pathEvent
 
-	# Function to update tree: download value of opened subkey
+	# Functions to update tree: download value of opened subkey
 	autoId = 0
 	$scope.updateTree = (value, node, level, over, currentQuery, count) ->
 		$scope.waiting = true
@@ -414,8 +422,6 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			over = 0
 
 		# Launch HTTP query
-		#$scope.U2FCheck = 1
-		#$scope.TOTPCheck = 1
 		$http.get("#{scriptname}sfa/#{sessionType}?#{query}&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}").then (response) ->
 			data = response.data
 			if data.result
@@ -444,6 +450,78 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			$scope.waiting = false
 		, (resp) ->
 			$scope.waiting = false
+			
+			
+			
+			
+	$scope.updateTree2 = (value, node, level, over, currentQuery, count) ->
+		$scope.waiting = true
+
+		# Query scheme selection:
+
+		#  - if defined above
+		scheme = if schemes[$scope.type]
+			schemes[$scope.type]
+
+		#  - _updateTime must be displayed as startDate
+		else if $scope.type == '_updateTime'
+			schemes._startTime
+
+		#  - default to _whatToTrace scheme
+		else
+			schemes._whatToTrace
+
+		# Build query using schemes
+		query = scheme[level] $scope.type, value, currentQuery
+
+		# If number of session exceeds "max" and overScheme exists, call it
+		if count > max and overScheme[$scope.type]
+			if tmp = overScheme[$scope.type] $scope.type, value, level, over, currentQuery
+				over++
+				query = tmp
+				level = level - 1
+			else
+				over = 0
+		else
+			over = 0
+
+		# Launch HTTP query
+		$http.get("#{scriptname}sfa/#{sessionType}?_session_uid=#{$scope.searchString}*&groupBy=_session_uid&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}").then (response) ->
+			data = response.data
+			if data.result
+				for n in data.values
+					autoId++
+					n.id = "node#{autoId}"
+					if level < scheme.length - 1
+						n.nodes = []
+						n.level = level + 1
+						n.query = query
+						n.over  = over
+
+						# Date display in tree
+						if $scope.type.match /^(?:start|update)Time$/
+							n.title = n.value
+							# 12 digits -> 12:34
+							.replace(/^(\d{8})(\d{2})(\d{2})$/,'$2:$3')
+							# 11 digits -> 12:30
+							.replace(/^(\d{8})(\d{2})(\d)$/,'$2:$30')
+							# 10 digits -> 12h
+							.replace(/^(\d{8})(\d{2})$/,'$2h')
+							#  8 digits -> 2016-03-15
+							.replace(/^(\d{4})(\d{2})(\d{2})/,'$1-$2-$3')
+					node.push n
+				$scope.total = data.total if value == ''
+			$scope.waiting = false
+		, (resp) ->
+			$scope.waiting = false			
+		
+			
+			
+			
+			
+			
+
+	
 
 	# Intialization function
 	# Simply set $scope.waiting to false during $translator and tree root
