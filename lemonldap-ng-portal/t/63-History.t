@@ -32,8 +32,11 @@ ok(
 count(1);
 expectOK($res);
 my $id1 = expectCookie($res);
-ok( $res->[2]->[0] =~ /trspan="noHistory"/, 'No history found' );
-count(1);
+ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
+  or explain( $res->[2]->[0], 'trspan="noHistory"' );
+my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
+ok( @c == 1, 'One entry found' );
+count(2);
 
 ok( $res = $client->_get( '/', cookie => "lemonldap=$id1" ),
     'Verify connection' );
@@ -57,7 +60,9 @@ expectOK($res);
 $id1 = expectCookie($res);
 
 ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' );
-count(1);
+@c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
+ok( @c == 2, 'Two entries found' );
+count(2);
 
 clean_sessions();
 

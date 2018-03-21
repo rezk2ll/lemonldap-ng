@@ -20,7 +20,7 @@ sub authProcess { qw(extractFormInfo getUser authenticate) }
 
 sub sessionDatas {
     qw(setAuthSessionInfo setSessionInfo setMacros setGroups setPersistentSessionInfo
-      setLocalGroups store secondFactor buildCookie);
+      setLocalGroups store secondFactor storeHistory buildCookie);
 }
 
 # RESPONSE HANDLER
@@ -171,9 +171,6 @@ sub do {
     }
 
     # Update history
-    if ( $self->conf->{loginHistoryEnabled} ) {
-        $self->registerLogin($req);
-    }
     if ( $err == PE_SENDRESPONSE ) {
         return $req->response;
     }
