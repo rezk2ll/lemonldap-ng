@@ -190,6 +190,12 @@
         $scope.data = [];
         return $scope.updateTree2('', $scope.data, 0, 0);
       };
+      $scope.clearSearch2FA = function() {
+        $scope.currentSession = null;
+        $scope.data = [];
+        $scope.searchString = '';
+        return $scope.updateTree2('', $scope.data, 0, 0);
+      };
       $scope.deleteU2FKey = function() {
         $scope.waiting = true;
         $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
