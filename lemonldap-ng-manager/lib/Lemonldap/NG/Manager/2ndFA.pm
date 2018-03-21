@@ -78,9 +78,11 @@ sub delete2FAKey {
     my $Key    = $params->{Key};
 
     if ( $Key =~ /\bU2F\b/ ) {
+        $self->logger->debug("Call procedure deleteU2FKey");
         return $self->deleteU2FKey( $req, $session, $skey );
     }
     elsif ( $Key =~ /\bTOTP\b/ ) {
+        $self->logger->debug("Call procedure deleteTOTPKey");
         return $self->deleteTOTPKey( $req, $session, $skey );
     }
     else {
