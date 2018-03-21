@@ -200,12 +200,12 @@ sub exceptCspFormOK {
     }
     if (   $csp =~ /\s\*(?:\s.*)?\s*$/
         or ( $host eq '#' and $csp =~ /'self'/ )
-        or $csp =~ /\b$host\b/ )
+        or $csp =~ m#\bhttps?://$host\b# )
     {
-        pass(' CSP header authorize POST request');
+        pass(" CSP header authorize POST request to $host");
     }
     else {
-        fail(' CSP header authorize POST request');
+        fail(" CSP header authorize POST request to $host");
         explain( $res->[1], "form-action ... $host" );
     }
     count(1);

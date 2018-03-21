@@ -697,11 +697,11 @@ sub sendHtml {
     # Set authorizated URL for POST
     my $csp = $self->csp . "form-action 'self'";
     if ( my $url = $req->urldc ) {
-        $url =~ s#https?://([^/]+).*#$1#;
+        $url =~ s#(https?://[^/]+).*#$1#;
         $csp .= " $url";
     }
     my $url = $args{params}->{URL};
-    if ( $url and $url =~ s#https?://([^/]+).*#$1# ) {
+    if ( $url and $url =~ s#(https?://[^/]+).*#$1# ) {
         $csp .= " $url";
     }
     $csp .= ';';
