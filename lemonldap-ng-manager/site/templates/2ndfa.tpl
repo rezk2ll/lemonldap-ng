@@ -6,18 +6,13 @@
 <body ng-app="llngSessionsExplorer" ng-controller="SessionsExplorerCtrl" ng-csp>
 
   <TMPL_INCLUDE NAME="menubar.tpl">
-
   <div id="content" class="row container-fluid">
     <div id="pleaseWait" ng-show="waiting"><span trspan="waitingForDatas"></span></div>
-
-    <!-- Tree -->
     <aside id="left" class="col-lg-4 col-md-4 col-sm-5 col-xs-12 scrollable " ng-class="{'hidden-xs':!showT}" role="complementary">
-
       <div class="navbar navbar-default">
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" role="grid">
             <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('2faSessions')}}</a></li>
-            <!--<form name="filterForm" ng-controller="SessionsExplorerFilter">-->
             <form name="filterForm">
               <div class="form-check ">&nbsp;&nbsp;&nbsp;
                 <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="'2'" ng-false-value="'1'" ng-change="filter2FA()"/>
@@ -26,9 +21,22 @@
                 <label class="form-check-label" for="TOTPCheck">TOTP</label>
               </div>
             </form>
-		  </ul>
+          </ul>
+		  <div class="col-lg-6 col-md-6 col-sm-7 " >
+		    <form class="navbar-form" role="search">
+              <div class="input-group add-on">
+                <input class="form-control" placeholder="{{translate('search')}}" type="text" ng-model="searchString" ng-init="*" ng-keyup="search2FA()"/>
+                <div class="input-group-btn">
+                <button class="btn btn-default" ng-click="search2FA(1)"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+      </div>   
+        
+          <!-- Tree -->
+          
       <div class="text-center"><p class="badge">{{total}} <span trspan="session_s"></span></p></div>
       <div class="region region-sidebar-first">
         <section id="block-superfish-1" class="block block-superfish clearfix">
@@ -50,8 +58,10 @@
       <!-- Menu buttons -->
       
       <div ng-if="currentSession && U2FCheck=='2' || currentSession && U2FCheck!='2' && TOTPCheck!='2'" class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
+
         <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
           <ul ng-if="currentSession" class="nav navbar-nav">
+
 			<li ng-if="currentSession" ng-repeat="button in menu.delU2FKey" ng-include="'menubutton.html'"></li>
 			<li ng-if="currentSession" ng-repeat="button in menu.verifyU2FKey" ng-include="'menubutton.html'"></li>
             <li ng-if="currentSession" ng-repeat="button in menu.addU2FKey" ng-include="'menubutton.html'"></li>

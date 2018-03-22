@@ -185,6 +185,14 @@
         $scope.data = [];
         return $scope.updateTree('', $scope.data, 0, 0);
       };
+      $scope.search2FA = function(clear) {
+        if (clear) {
+          $scope.searchString = '';
+        }
+        $scope.currentSession = null;
+        $scope.data = [];
+        return $scope.updateTree2('', $scope.data, 0, 0);
+      };
       $scope.deleteU2FKey = function() {
         $scope.waiting = true;
         $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
@@ -456,6 +464,51 @@
           over = 0;
         }
         return $http.get(scriptname + "sfa/" + sessionType + "?" + query + "&U2FCheck=" + $scope.U2FCheck + "&TOTPCheck=" + $scope.TOTPCheck).then(function(response) {
+          var data, i, len, n, ref;
+          data = response.data;
+          if (data.result) {
+            ref = data.values;
+            for (i = 0, len = ref.length; i < len; i++) {
+              n = ref[i];
+              autoId++;
+              n.id = "node" + autoId;
+              if (level < scheme.length - 1) {
+                n.nodes = [];
+                n.level = level + 1;
+                n.query = query;
+                n.over = over;
+                if ($scope.type.match(/^(?:start|update)Time$/)) {
+                  n.title = n.value.replace(/^(\d{8})(\d{2})(\d{2})$/, '$2:$3').replace(/^(\d{8})(\d{2})(\d)$/, '$2:$30').replace(/^(\d{8})(\d{2})$/, '$2h').replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+                }
+              }
+              node.push(n);
+            }
+            if (value === '') {
+              $scope.total = data.total;
+            }
+          }
+          return $scope.waiting = false;
+        }, function(resp) {
+          return $scope.waiting = false;
+        });
+      };
+      $scope.updateTree2 = function(value, node, level, over, currentQuery, count) {
+        var query, scheme, tmp;
+        $scope.waiting = true;
+        scheme = schemes[$scope.type] ? schemes[$scope.type] : $scope.type === '_updateTime' ? schemes._startTime : schemes._whatToTrace;
+        query = scheme[level]($scope.type, value, currentQuery);
+        if (count > max && overScheme[$scope.type]) {
+          if (tmp = overScheme[$scope.type]($scope.type, value, level, over, currentQuery)) {
+            over++;
+            query = tmp;
+            level = level - 1;
+          } else {
+            over = 0;
+          }
+        } else {
+          over = 0;
+        }
+        return $http.get(scriptname + "sfa/" + sessionType + "?_session_uid=" + $scope.searchString + "*&groupBy=_session_uid&U2FCheck=" + $scope.U2FCheck + "&TOTPCheck=" + $scope.TOTPCheck).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;
           if (data.result) {
