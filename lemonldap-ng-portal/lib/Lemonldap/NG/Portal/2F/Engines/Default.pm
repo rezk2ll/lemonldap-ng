@@ -1,3 +1,12 @@
+# Default 2FA engine
+#
+# 2FA engine provides 3 functions and 1 interface:
+#  - init()
+#  - run($req): called during auth process after session populating
+#  - dysplay2fRegisters($req, $session): indicates if a 2F registration is
+#                                        available for this user
+#  - /2fregisters: the URL path that displays 2F registration menu
+
 package Lemonldap::NG::Portal::2F::Engines::Default;
 
 use strict;
@@ -100,7 +109,9 @@ sub init {
 
 # RUNNING METHODS
 
-# run is called at each authentication, just after sesionInfo populate
+# public PE_CODE run($req)
+#
+# run() is called at each authentication, just after sesionInfo populate
 sub run {
     my ( $self, $req ) = @_;
 
@@ -151,6 +162,18 @@ sub run {
     );
     $req->response($tpl);
     return PE_SENDRESPONSE;
+}
+
+# bool public dysplay2fRegisters($req, $session)
+#
+# Return true if at least 1 register module is available for this user. Used
+# by Menu to display or not /2fregisters page
+sub dysplay2fRegisters {
+    my($self,$req,$session) = @_;
+    foreach my $m ( @{ $self->sfRModules } ) {
+        return 1 if ( $m->{r}->( $req, $session) );
+    }
+    return 0;
 }
 
 sub _choice {
