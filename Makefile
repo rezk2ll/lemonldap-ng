@@ -504,7 +504,11 @@ reload_web_server:
 		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
 		/usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k graceful; \
 	elif [ -e e2e-tests/conf/nginx.pid ]; then \
-		kill -HUP `cat e2e-tests/conf/nginx.pid`; \
+		$(NGINX) -p `pwd`/e2e-tests \
+			-g 'error_log '`pwd`'/e2e-tests/conf/nginx.log;' \
+			-c `pwd`/e2e-tests/nginx.conf \
+			-s reload \
+			2>&1 | grep -v 'Permission denied' || true; \
 		kill `cat e2e-tests/conf/llng-fastcgi.pid` || true; \
 		$(MAKE) plackup; \
 	elif [ -e e2e-tests/conf/server.pid ]; then \
