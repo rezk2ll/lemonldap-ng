@@ -15,9 +15,9 @@
             <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('2faSessions')}}</a></li>
             <form name="filterForm">
               <div class="form-check ">&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="'2'" ng-false-value="'1'" ng-change="filter2FA()"/>
+                <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
                 <label class="form-check-label" for="U2FCheck">U2F</label>&nbsp;&nbsp;
-                <input type="checkbox" ng-model="TOTPCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="filter2FA()"/>
+                <input type="checkbox" ng-model="TOTPCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
                 <label class="form-check-label" for="TOTPCheck">TOTP</label>
               </div>
             </form>
@@ -25,7 +25,7 @@
 		  <div class="col-lg-6 col-md-6 col-sm-7 " >
 		    <form class="navbar-form" role="search">
               <div class="input-group add-on">
-                <input class="form-control" placeholder="{{translate('search')}}" type="text" ng-model="searchString" ng-init="*" ng-keyup="search2FA()"/>
+                <input class="form-control" placeholder="{{translate('search')}}" type="text" ng-model="searchString" ng-init="" ng-keyup="search2FA()"/>
                 <div class="input-group-btn">
                 <button class="btn btn-default" ng-click="search2FA(1)"><i class="glyphicon glyphicon-search"></i></button>
                 </div>

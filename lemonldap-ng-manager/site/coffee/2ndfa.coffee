@@ -128,6 +128,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.currentScope = null
 	$scope.currentSession = null
 	$scope.menu = menu
+	$scope.searchString = ''
 
 	# Import translations functions
 	$scope.translateP = $translator.translateP
@@ -151,17 +152,11 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 					console.log typeof button.action
 		$scope.showM = false
 
-	# SESSIONS MANAGEMENT
-	# Filter 2FA sessions
-	$scope.filter2FA = ->
-		$scope.currentSession = null
-		$scope.data = []
-		$scope.updateTree '', $scope.data, 0, 0
-	
+	## SESSIONS MANAGEMENT
 	# Search 2FA sessions
 	$scope.search2FA = (clear) ->
 		if clear
-			$scope.searchString =''
+			$scope.searchString = ''
 		$scope.currentSession = null
 		$scope.data = []
 		$scope.updateTree2 '', $scope.data, 0, 0
@@ -449,10 +444,8 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			$scope.waiting = false
 		, (resp) ->
 			$scope.waiting = false
-			
-			
-			
-			
+				
+	# Functions to filter U2F sessions tree : download value of opened subkey
 	$scope.updateTree2 = (value, node, level, over, currentQuery, count) ->
 		$scope.waiting = true
 
@@ -484,8 +477,8 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		else
 			over = 0
 
-		# Launch HTTP query
-		$http.get("#{scriptname}sfa/#{sessionType}?_session_uid=#{$scope.searchString}*&groupBy=_session_uid&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}").then (response) ->
+		# Launch HTTP
+		$http.get("#{scriptname}sfa/#{sessionType}?_session_uid=#{$scope.searchString}*&groupBy=substr(_session_uid,#{$scope.searchString.length})&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}").then (response) ->
 			data = response.data
 			if data.result
 				for n in data.values
@@ -512,15 +505,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 				$scope.total = data.total if value == ''
 			$scope.waiting = false
 		, (resp) ->
-			$scope.waiting = false			
-		
-			
-			
-			
-			
-			
-
-	
+			$scope.waiting = false
 
 	# Intialization function
 	# Simply set $scope.waiting to false during $translator and tree root

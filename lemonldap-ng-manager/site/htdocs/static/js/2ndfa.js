@@ -154,6 +154,7 @@
       $scope.currentScope = null;
       $scope.currentSession = null;
       $scope.menu = menu;
+      $scope.searchString = '';
       $scope.translateP = $translator.translateP;
       $scope.translate = $translator.translate;
       $scope.translateTitle = function(node) {
@@ -179,11 +180,6 @@
           }
         }
         return $scope.showM = false;
-      };
-      $scope.filter2FA = function() {
-        $scope.currentSession = null;
-        $scope.data = [];
-        return $scope.updateTree('', $scope.data, 0, 0);
       };
       $scope.search2FA = function(clear) {
         if (clear) {
@@ -508,7 +504,7 @@
         } else {
           over = 0;
         }
-        return $http.get(scriptname + "sfa/" + sessionType + "?_session_uid=" + $scope.searchString + "*&groupBy=_session_uid&U2FCheck=" + $scope.U2FCheck + "&TOTPCheck=" + $scope.TOTPCheck).then(function(response) {
+        return $http.get(scriptname + "sfa/" + sessionType + "?_session_uid=" + $scope.searchString + "*&groupBy=substr(_session_uid," + $scope.searchString.length + ")&U2FCheck=" + $scope.U2FCheck + "&TOTPCheck=" + $scope.TOTPCheck).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;
           if (data.result) {
