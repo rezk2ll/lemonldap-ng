@@ -137,10 +137,10 @@ Description: Lemonldap::NG FastCGI server
 Package: lemonldap-ng-handler
 Architecture: all
 Depends: ${misc:Depends},
-         lemonldap-ng-fastcgi-server (= ${binary:Version}) | libapache2-mod-perl2,
          liblemonldap-ng-handler-perl (= ${binary:Version})
 Breaks: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
 Replaces: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
+Recommends: lemonldap-ng-fastcgi-server (= ${binary:Version}) | libapache2-mod-perl2
 Description: Lemonldap::NG handler part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with

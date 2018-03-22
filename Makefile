@@ -787,6 +787,7 @@ install_examples_site:
 	@for i in portal manager; do \
 		cp -a -f lemonldap-ng-$$i/eg $(REXAMPLESDIR)/$$i; \
 	done
+	@cp -a -f fastcgi-server/psgi/llngapp.psgi $(REXAMPLESDIR)/$$i
 	@rm -rf $(REXAMPLESDIR)/portal/skins \
 		$(REXAMPLESDIR)/manager/skins \
 	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
