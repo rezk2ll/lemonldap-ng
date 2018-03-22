@@ -82,7 +82,7 @@ sub init {
 
     # Enable REST request only if more than 1 2F module is enabled
     if ( @{ $self->{sfModules} } > 1 ) {
-        $self->addUnauthRoute( '2fchoice' => 'choice',   ['POST'] );
+        $self->addUnauthRoute( '2fchoice' => '_choice',   ['POST'] );
         $self->addUnauthRoute( '2fchoice' => 'redirect', ['GET'] );
     }
 
@@ -91,7 +91,7 @@ sub init {
     if ( @{ $self->{sfRModules} } ) {
 
         # Registration base
-        $self->addAuthRoute( '2fregisters' => 'displayRegister', ['GET'] );
+        $self->addAuthRoute( '2fregisters' => '_displayRegister', ['GET'] );
         $self->addAuthRoute( '2fregisters' => 'register',        ['POST'] );
     }
 
@@ -151,14 +151,9 @@ sub run {
     );
     $req->response($tpl);
     return PE_SENDRESPONSE;
-
-    # TODO:
-    # - 2fchoice.tpl
-    # - choice() which launch choosenModule->run($req,$token)
-    # - add logos for 2F modules
 }
 
-sub choice {
+sub _choice {
     my ( $self, $req ) = @_;
     my $token;
 
@@ -206,7 +201,7 @@ sub _redirect {
     ];
 }
 
-sub displayRegister {
+sub _displayRegister {
     my ( $self, $req, $tpl ) = @_;
 
     # After verifying rule:
