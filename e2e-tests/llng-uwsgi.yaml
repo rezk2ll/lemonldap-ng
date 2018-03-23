@@ -1,0 +1,5 @@
+uwsgi:
+        plugins: psgi
+        socket: 127.0.0.1:5000
+        psgi: e2e-tests/llng-server.psgi
+        master: true
