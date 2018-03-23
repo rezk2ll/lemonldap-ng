@@ -136,7 +136,6 @@ Makefile.PL
 MANIFEST			This list of files
 META.yml
 README
-REST-API.md
 site/coffee/confirm.coffee
 site/coffee/info.coffee
 site/coffee/kerberos.coffee
