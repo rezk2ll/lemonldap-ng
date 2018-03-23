@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:status</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,status"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="status.html"/>
@@ -49,24 +49,62 @@
 <div>
 
 <ul class="toc">
-<li class="level1"><div class="li"><a href="#presentation">Presentation</a></div></li>
-<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
+<li class="level1"><div class="li"><a href="#portal_status_experimental">Portal Status (experimental)</a></div>
 <ul class="toc">
-<li class="level2"><div class="li"><a href="#apache">Apache</a></div></li>
-<li class="level2"><div class="li"><a href="#lemonldapng">LemonLDAP::NG</a></div></li>
+<li class="level2"><div class="li"><a href="#configuration">Configuration</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#handler_status">Handler Status</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#presentation">Presentation</a></div></li>
+<li class="level2"><div class="li"><a href="#configuration1">Configuration</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#apache">Apache</a></div></li>
+<li class="level3"><div class="li"><a href="#nginx">Nginx</a></div></li>
+<li class="level3"><div class="li"><a href="#lemonldapng">LemonLDAP::NG</a></div></li>
+</ul></li>
 </ul></li>
 </ul>
 </div>
 </div>
 <!-- TOC END -->
 
-<h1 class="sectionedit1" id="handler_status">Handler Status</h1>
+<h1 class="sectionedit1" id="status_pages">Status pages</h1>
 <div class="level1">
 
 </div>
-<!-- EDIT1 SECTION "Handler Status" [1-30] -->
-<h2 class="sectionedit2" id="presentation">Presentation</h2>
+<!-- EDIT1 SECTION "Status pages" [1-28] -->
+<h2 class="sectionedit2" id="portal_status_experimental">Portal Status (experimental)</h2>
 <div class="level2">
+
+<p>
+The portal displays in JSON format its activity. Unlike handler, this is not the full activity of the server, but for now just the activity of 1 thread. This can give a view to all returned codes.
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Portal Status (experimental)" [29-268] -->
+<h3 class="sectionedit3" id="configuration">Configuration</h3>
+<div class="level3">
+
+<p>
+*  Set <code>portalStatus = 1</code> in lemonldap-ng.ini file (section <code>[Portal]</code>)
+*  Protect <a href="http://portal/portalStatus" class="urlextern" title="http://portal/portalStatus"  rel="nofollow">http://portal/portalStatus</a> using your webserver configuration
+</p>
+
+<p>
+Status is displayed by calling this <abbr title="Uniform Resource Locator">URL</abbr>.
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Configuration" [269-485] -->
+<h2 class="sectionedit4" id="handler_status">Handler Status</h2>
+<div class="level2">
+<div class="noteimportant">Since 2.0, Handler status no more collects Portal returned codes.
+</div>
+</div>
+<!-- EDIT4 SECTION "Handler Status" [486-603] -->
+<h3 class="sectionedit5" id="presentation">Presentation</h3>
+<div class="level3">
 
 <p>
 When status feature is activated, Handlers and portal will collect statistics and save them in their local cache. This means that if several Handlers are deployed, each will manage its own statistics.
@@ -92,14 +130,14 @@ Example of status page:
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Presentation" [31-1206] -->
-<h2 class="sectionedit3" id="configuration">Configuration</h2>
-<div class="level2">
+<!-- EDIT5 SECTION "Presentation" [604-1777] -->
+<h3 class="sectionedit6" id="configuration1">Configuration</h3>
+<div class="level3">
 
 </div>
-<!-- EDIT3 SECTION "Configuration" [1207-1233] -->
-<h3 class="sectionedit4" id="apache">Apache</h3>
-<div class="level3">
+
+<h4 id="apache">Apache</h4>
+<div class="level4">
 
 <p>
 You need to give access to status path in the Handler Apache configuration:
@@ -117,9 +155,31 @@ Then restart Apache.
 <div class="notetip">You should change the <code>Allow</code> directive to match administration <abbr title="Internet Protocol">IP</abbr>, or use another Apache protection mean.
 </div>
 </div>
-<!-- EDIT4 SECTION "Apache" [1234-1705] -->
-<h3 class="sectionedit5" id="lemonldapng">LemonLDAP::NG</h3>
-<div class="level3">
+
+<h4 id="nginx">Nginx</h4>
+<div class="level4">
+
+<p>
+You need to give access to status path in the Handler Nginx configuration:
+</p>
+<pre class="code file nginx">server {
+  listen __PORT__;
+  server_name reload.__DNSDOMAIN__;
+  root /var/www/html;
+  ...
+  location = /status {
+    allow 127.0.0.1;
+    deny all;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:__FASTCGISOCKDIR__/llng-fastcgi.sock;
+    fastcgi_param LLTYPE status;
+  }
+}</pre>
+
+</div>
+
+<h4 id="lemonldapng">LemonLDAP::NG</h4>
+<div class="level4">
 
 <p>
 Edit <code>lemonldap-ng.ini</code>, and activate status in the <code>handler</code> section:
@@ -130,10 +190,10 @@ Edit <code>lemonldap-ng.ini</code>, and activate status in the <code>handler</co
 <span class="re1">status</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
 
 <p>
-Then restart Apache.
+Then restart webserver.
 </p>
 
 </div>
-<!-- EDIT5 SECTION "LemonLDAP::NG" [1706-] --></div>
+<!-- EDIT6 SECTION "Configuration" [1778-] --></div>
 </body>
 </html>
