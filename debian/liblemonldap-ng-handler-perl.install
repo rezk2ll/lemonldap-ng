@@ -4,3 +4,4 @@
 /usr/share/man/man3/Lemonldap::NG::Handler*
 /usr/share/man/man3/Plack::Middleware::Auth::LemonldapNG*
 /usr/share/lemonldap-ng/bin/purgeLocalCache
+/usr/share/lemonldap-ng/llng-server/llng-server.psgi

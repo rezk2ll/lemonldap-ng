@@ -102,6 +102,12 @@ FASTCGISOCKDIR=$(PREFIX)/run
 FASTCGIUSER=$(APACHEUSER)
 FASTCGIGROUP=$(APACHEGROUP)
 
+# uWSGI
+UWSGIYAMLDIR=$(LMPREFIX)/uwsgi
+LLNGAPPDIR=$(LMPREFIX)/llng-server
+UWSGIUSER=$(APACHEUSER)
+UWSGIGROUP=$(APACHEGROUP)
+
 # Apache version
 APACHEVERSION=2.X
 
@@ -133,6 +139,8 @@ ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
 RLMPREFIX=$(DESTDIR)/$(LMPREFIX)
 RBINDIR=$(DESTDIR)/$(BINDIR)
 RSBINDIR=$(DESTDIR)/$(SBINDIR)
+RUWSGIYAMLDIR=$(DESTDIR)/$(UWSGIYAMLDIR)
+RLLNGAPPDIR=$(DESTDIR)/$(LLNGAPPDIR)
 RINITDIR=$(DESTDIR)/$(INITDIR)
 RETCDEFAULTDIR=$(DESTDIR)/$(ETCDEFAULTDIR)
 RDATADIR=$(DESTDIR)/$(DATADIR)
@@ -255,8 +263,9 @@ all:	configure common handler manager portal
 	@echo "   - install_handler_libs"
 	@echo " * Binaries install :"
 	@echo "   - install_bin            ($(BINDIR))"
-	@echo " * FastCGI server install   (required for Nginx)"
+	@echo " * FastCGI (or uWSGI) server install (required for Nginx)"
 	@echo "   - install_fastcgi_server ($(SBINDIR))"
+	@echo "   - install_uwsgi_server   ($(UWSGIYAMLDIR))"
 	@echo " * Web sites install :"
 	@echo "   - install_site           (all sites including install_doc_site)"
 	@echo "   - install_portal_site    ($(PORTALDIR))"
@@ -552,7 +561,7 @@ install_test:
 
 # Install targets
 # ---------------
-install:	install_libs install_bin install_fastcgi_server install_site
+install:	install_libs install_bin install_fastcgi_server install_uwsgi_server install_site
 
 # Perl libraires install
 
@@ -574,7 +583,7 @@ install_bin:	install_conf_dir
 	# Binary install
 	@install -v -d $(RBINDIR)
 	@cp -f\
-		${SRCHANDLERDIR}/example/scripts/purgeLocalCache \
+		${SRCHANDLERDIR}/eg/scripts/purgeLocalCache \
 		${SRCPORTALDIR}/site/cron/purgeCentralCache \
 		${SRCCOMMONDIR}/scripts/convertConfig \
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
@@ -623,6 +632,12 @@ install_fastcgi_server:
 	else \
 		chmod 777 $(RFASTCGISOCKDIR); \
 	fi
+
+install_uwsgi_server:
+	@install -v -d $(RUWSGIYAMLDIR) $(RLLNGAPPDIR)
+	@install -m 644 -v fastcgi-server/uwsgi/llng-server.yaml $(RUWSGIYAMLDIR)/llng-server.yaml
+	@install -m 644 -v _example/plack-app/llng-server.psgi $(RLLNGAPPDIR)/llng-server.psgi
+	$(PERL) -pi -e 's#__APPDIR__#$(LLNGAPPDIR)#' $(RUWSGIYAMLDIR)/llng-server.yaml
 
 # Site install
 
@@ -765,7 +780,7 @@ install_portal_site:	install_conf_dir
 install_handler_site:	install_conf_dir
 	# Handler install
 	@install -v -d ${RHANDLERDIR}
-	@cp -f $(SRCHANDLERDIR)/example/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
+	@cp -f $(SRCHANDLERDIR)/eg/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-handler; \
 	else \
@@ -785,10 +800,7 @@ install_test_site:
 install_examples_site:
 	# Examples install
 	@install -v -d $(REXAMPLESDIR)
-	@for i in handler; do \
-		cp -a -f lemonldap-ng-$$i/example $(REXAMPLESDIR)/$$i; \
-	done
-	@for i in portal manager; do \
+	@for i in portal manager handler; do \
 		cp -a -f lemonldap-ng-$$i/eg $(REXAMPLESDIR)/$$i; \
 	done
 	@cp -a -f fastcgi-server/psgi/llngapp.psgi $(REXAMPLESDIR)/$$i
@@ -1060,37 +1072,6 @@ manager_cpan:	manager_conf
 
 documentation:
 	@cd doc/ && ../scripts/doc.pl
-
-diff: debian-diff
-
-# TODO: change this
-default-diff:
-	@# Portal
-	@$(DIFF) $(SRCPORTALDIR)/lib/Lemonldap/NG/Portal /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Portal ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/scripts/purgeCentralCache $(LMPREFIX)/bin/purgeCentralCache ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/skins $(LMPREFIX)/htdocs/portal/skins ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/index_skin.pl $(LMPREFIX)/htdocs/portal/index.pl ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/mail.pl $(LMPREFIX)/htdocs/portal/mail.pl ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/register.pl $(LMPREFIX)/htdocs/portal/register.pl ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/metadata.pl $(LMPREFIX)/htdocs/portal/metadata.pl ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/openid-configuration.pl $(LMPREFIX)/htdocs/portal/openid-configuration.pl ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/cdc.pl $(LMPREFIX)/htdocs/portal/cdc.pl ||true
-	@# Handler
-	@$(DIFF) $(SRCHANDLERDIR)/lib/Lemonldap/NG/Handler /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Handler ||true
-	@$(DIFF) $(SRCHANDLERDIR)/example/scripts/purgeLocalCache $(LMPREFIX)/bin/purgeLocalCache ||true
-	@# Common
-	@$(DIFF) $(SRCCOMMONDIR)/lib/Lemonldap/NG/Common /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Common ||true
-	@$(DIFF) $(SRCCOMMONDIR)/lib/Lemonldap/NG/Common.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Common.pm ||true
-	@$(DIFF) $(SRCCOMMONDIR)/scripts/lmMigrateConfFiles2ini $(LMPREFIX)/bin/lmMigrateConfFiles2ini ||true
-	@$(DIFF) $(SRCCOMMONDIR)/scripts/convertConfig $(LMPREFIX)/bin/convertConfig ||true
-	@$(DIFF) $(SRCCOMMONDIR)/scripts/rotateOidcKeys $(LMPREFIX)/bin/rotateOidcKeys ||true
-	@# Manager
-	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager ||true
-	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager.pm ||true
-	@$(DIFF) $(SRCMANAGERDIR)/site/htdocs/static $(LMPREFIX)/htdocs/manager/static ||true
-	@$(DIFF) $(SRCMANAGERDIR)/site/templates $(LMPREFIX)/htdocs/manager/templates ||true
-	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' $(SRCMANAGERDIR)/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
-	@$(DIFF) --ignore-matching-lines='set.*get.*' $(SRCCOMMONDIR)/scripts/lemonldap-ng-cli $(LMPREFIX)/bin/lemonldap-ng-cli ||true
 
 test-diff:
 	@for file in `find lemonldap-ng-*/lib -type f`; do \

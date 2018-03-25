@@ -48,6 +48,7 @@ override_dh_auto_install:
 			APACHEGROUP=www-data \
 			DEFDOCDIR=/usr/share/doc/lemonldap-ng-doc \
 			FRDOCDIR=/usr/share/doc/lemonldap-ng-fr-doc \
+			UWSGIYAMLDIR=/etc/uwsgi/apps-available \
 			PROD=yes
 	$(MAKE) install_fr_doc_site \
 			DESTDIR=$(CURDIR)/debian/tmp \
