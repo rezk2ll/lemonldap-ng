@@ -3,4 +3,4 @@ debian/tmp/etc/lemonldap-ng/handler-nginx.conf
 debian/tmp/etc/lemonldap-ng/test-apache2.conf
 debian/tmp/etc/lemonldap-ng/test-nginx.conf
 debian/tmp/var/lib/lemonldap-ng/test
-lemonldap-ng-handler/example/handler.psgi
+lemonldap-ng-handler/eg/*.psgi
