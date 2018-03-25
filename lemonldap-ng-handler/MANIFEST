@@ -1,7 +1,7 @@
 Changes
-example/handler.psgi
-example/scripts/purgeLocalCache
-example/scripts/purgeLocalCache.cron.d
+eg/handler.psgi
+eg/scripts/purgeLocalCache
+eg/scripts/purgeLocalCache.cron.d
 lib/Lemonldap/NG/Handler.pm
 lib/Lemonldap/NG/Handler/ApacheMP2.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/AuthBasic.pm

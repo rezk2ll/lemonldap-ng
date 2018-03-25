@@ -4,9 +4,6 @@ Changes
 eg/index.cgi
 eg/index.fcgi
 eg/index.psgi
-example/soapconfigtest.pl
-example/soaperrortest.pl
-example/soaptest.pl
 inc/LWP/Protocol/PSGI.pm
 lib/Lemonldap/NG/Portal.pm
 lib/Lemonldap/NG/Portal/2F/Engines/Default.pm
