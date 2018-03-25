@@ -48,13 +48,6 @@ Files: lemonldap-ng-portal/site/htdocs/static/common/modules/CAS.png
 Copyright: Jasig
 License: Apache-2.0
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/modules/BrowserID.png
-Copyright: 2013, Xavier Guimard <x.guimard@free.fr>
-License: CC-3
-Comment: created using images of YellowIcon and Innerer Schweinehund
- (http://findicons.com/icon/168665/firefox?id=292029 and
-  http://commons.wikimedia.org/wiki/File:Mail-closed.svg)
-
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Google.png lemonldap-ng-portal/site/htdocs/static/common/modules/Facebook.png
 Copyright: http://tempest.deviantart.com/
 License: CC-3

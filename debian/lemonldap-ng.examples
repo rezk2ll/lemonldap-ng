@@ -1,1 +1,2 @@
 fastcgi-server/psgi/llngapp.psgi
+lemonldap-ng-common/eg/*

@@ -636,7 +636,7 @@ install_fastcgi_server:
 install_uwsgi_server:
 	@install -v -d $(RUWSGIYAMLDIR) $(RLLNGAPPDIR)
 	@install -m 644 -v fastcgi-server/uwsgi/llng-server.yaml $(RUWSGIYAMLDIR)/llng-server.yaml
-	@install -m 644 -v _example/plack-app/llng-server.psgi $(RLLNGAPPDIR)/llng-server.psgi
+	@install -m 644 -v $(SRCHANDLERDIR)/eg/llng-server.psgi $(RLLNGAPPDIR)/llng-server.psgi
 	$(PERL) -pi -e 's#__APPDIR__#$(LLNGAPPDIR)#' $(RUWSGIYAMLDIR)/llng-server.yaml
 
 # Site install
