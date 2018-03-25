@@ -30,7 +30,7 @@ override_dh_auto_install:
 	$(MAKE) install \
 			DESTDIR=$(CURDIR)/debian/tmp \
 			PREFIX=/usr \
-			LMPREFIX=/usr/share/lemonldap-ng/ \
+			LMPREFIX=/usr/share/lemonldap-ng \
 			BINDIR=$(LMSHAREDIR)/bin \
 			SBINDIR=/usr/sbin \
 			FASTCGISOCKDIR=/var/run/llng-fastcgi-server \
