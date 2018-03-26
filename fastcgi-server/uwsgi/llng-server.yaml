@@ -3,3 +3,5 @@ uwsgi:
         socket: 127.0.0.1:5000
         psgi: __APPDIR__/llng-server.psgi
         master: true
+        uid: __UID__
+        gid: __GID__

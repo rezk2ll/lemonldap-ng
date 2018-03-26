@@ -3,7 +3,7 @@
 # 2FA engine provides 3 functions and 1 interface:
 #  - init()
 #  - run($req): called during auth process after session populating
-#  - dysplay2fRegisters($req, $session): indicates if a 2F registration is
+#  - display2fRegisters($req, $session): indicates if a 2F registration is
 #                                        available for this user
 #  - /2fregisters: the URL path that displays 2F registration menu
 
@@ -164,11 +164,11 @@ sub run {
     return PE_SENDRESPONSE;
 }
 
-# bool public dysplay2fRegisters($req, $session)
+# bool public display2fRegisters($req, $session)
 #
 # Return true if at least 1 register module is available for this user. Used
 # by Menu to display or not /2fregisters page
-sub dysplay2fRegisters {
+sub display2fRegisters {
     my($self,$req,$session) = @_;
     foreach my $m ( @{ $self->sfRModules } ) {
         return 1 if ( $m->{r}->( $req, $session) );
