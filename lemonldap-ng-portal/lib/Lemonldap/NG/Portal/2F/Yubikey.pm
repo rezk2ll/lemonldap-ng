@@ -36,8 +36,7 @@ sub init {
     unless ($self->conf->{yubikey2fClientID}
         and $self->conf->{yubikey2fSecretKey} )
     {
-        $self->logger->error(
-            "Missing mandatory parameters (Client ID and secret key)");
+        $self->error('Missing mandatory parameters (Client ID and secret key)');
         return 0;
     }
     $self->conf->{yubikey2fPublicIDSize} ||= 12;
@@ -92,8 +91,8 @@ sub verify {
 
     # Verify OTP
     if (
-        index( substr( $code, 0, $self->conf->{yubikey2fPublicIDSize} ),
-            $session->{_yubikeys} ) == -1
+        index( $session->{_yubikeys},
+            substr( $code, 0, $self->conf->{yubikey2fPublicIDSize} ) ) == -1
       )
     {
         $self->userLogger->warn('Yubikey not registered');
