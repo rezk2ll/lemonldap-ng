@@ -637,7 +637,7 @@ install_uwsgi_server:
 	@install -v -d $(RUWSGIYAMLDIR) $(RLLNGAPPDIR)
 	@install -m 644 -v fastcgi-server/uwsgi/llng-server.yaml $(RUWSGIYAMLDIR)/llng-server.yaml
 	@install -m 644 -v $(SRCHANDLERDIR)/eg/llng-server.psgi $(RLLNGAPPDIR)/llng-server.psgi
-	$(PERL) -pi -e 's#__APPDIR__#$(LLNGAPPDIR)#' $(RUWSGIYAMLDIR)/llng-server.yaml
+	$(PERL) -pi -e 's#__APPDIR__#$(LLNGAPPDIR)#;s#__UID__#$(UWSGIUSER)#;s#__GID__#$(UWSGIGROUP)#;' $(RUWSGIYAMLDIR)/llng-server.yaml
 
 # Site install
 

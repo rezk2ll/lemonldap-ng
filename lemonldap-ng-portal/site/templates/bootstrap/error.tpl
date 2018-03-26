@@ -3,6 +3,9 @@
   <TMPL_IF AUTH_ERROR>
     <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
   </TMPL_IF>
+  <TMPL_IF RAW_ERROR>
+    <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trspan="<TMPL_VAR NAME="RAW_ERROR">"></span></div>
+  </TMPL_IF>
   <TMPL_IF ERROR403>
     <div class="message message-negative alert">
       <span trspan="accessDenied">You have no access authorization for this application</span>

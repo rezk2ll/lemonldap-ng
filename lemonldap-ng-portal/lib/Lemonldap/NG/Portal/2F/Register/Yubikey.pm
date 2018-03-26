@@ -5,7 +5,6 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_FORMEMPTY
   PE_ERROR
-  PE_OK
 );
 
 our $VERSION = '2.0.0';
@@ -36,17 +35,36 @@ sub run {
         if ( $otp and length($otp) > 12 ) {
             my $keys = $req->userData->{_yubikeys} || '';
             $keys .= ( $keys ? ', ' : '' )
-              . substr( $otp, 0, $self->conf->{yubikeyPublicIDSize} );
+              . substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
             $self->p->updatePersistentSession( $req, { _yubikeys => $keys } );
+            return $self->p->sendHtml(
+                $req, 'error',
+                params => {
+                    RAW_ERROR      => 'yourKeyIsRegistered',
+                    AUTH_ERROR_TYPE => 'positive',
+                }
+            );
         }
         else {
             $self->userLogger->error('Yubikey 2F: no code');
-            return PE_FORMEMPTY;
+            return $self->p->sendHtml(
+                $req, 'error',
+                params => {
+                    AUTH_ERROR      => PE_FORMEMPTY,
+                    AUTH_ERROR_TYPE => 'positive',
+                }
+            );
         }
     }
     else {
         $self->userLogger->error("Unknown Yubikey action $action");
-        return PE_ERROR;
+        return $self->p->sendHtml(
+            $req, 'error',
+            params => {
+                AUTH_ERROR      => PE_ERROR,
+                AUTH_ERROR_TYPE => 'positive',
+            }
+        );
     }
 }
 
