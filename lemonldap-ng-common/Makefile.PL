@@ -74,4 +74,10 @@ WriteMakefile(
         'scripts/convertConfig'    => 'blib/man1/convertConfig.1p',
         'scripts/lemonldap-ng-cli' => 'blib/man1/lemonldap-ng-cli.1p',
     },
+    resources => {
+        repository  => 'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng',
+        MailingList => 'mailto:lemonldap-ng-dev@ow2.org',
+        license     => 'http://opensource.org/licenses/GPL-2.0',
+        homepage    => 'http://lemonldap-ng.org/',
+    },
 );

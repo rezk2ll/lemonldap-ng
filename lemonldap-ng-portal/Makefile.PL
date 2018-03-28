@@ -56,4 +56,10 @@ WriteMakefile(
           )
         : ()
     ),
+    resources => {
+        repository  => 'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng',
+        MailingList => 'mailto:lemonldap-ng-dev@ow2.org',
+        license     => 'http://opensource.org/licenses/GPL-2.0',
+        homepage    => 'http://lemonldap-ng.org/',
+    },
 );
