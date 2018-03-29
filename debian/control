@@ -288,6 +288,7 @@ Depends: ${misc:Depends},
          liburi-perl,
          libwww-perl
 Recommends: libapache-session-browseable-perl,
+            libcookie-baker-xs-perl,
             libdbi-perl,
             libhttp-parser-xs-perl,
             libjson-xs-perl,
