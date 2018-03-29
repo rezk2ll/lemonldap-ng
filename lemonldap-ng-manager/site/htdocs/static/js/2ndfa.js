@@ -320,8 +320,6 @@
                   session[key] = $scope.localeDate(value);
                 } else if (key.match(/^(_startTime|_updateTime)$/)) {
                   session[key] = _stToStr(value);
-                } else if (key.match(/^(_u2fKeyHandle|_u2fUserKey|_totp2fSecret)$/)) {
-                  session[key] = '##########';
                 }
               }
             }

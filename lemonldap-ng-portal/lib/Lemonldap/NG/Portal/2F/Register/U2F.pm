@@ -3,6 +3,8 @@ package Lemonldap::NG::Portal::2F::Register::U2F;
 
 use strict;
 use Mouse;
+use JSON qw(from_json to_json);
+
 
 our $VERSION = '2.0.0';
 
@@ -61,6 +63,34 @@ sub run {
         if ( $c->setChallenge($challenge) ) {
             my ( $keyHandle, $userKey ) = $c->registrationVerify($resp);
             if ( $keyHandle and $userKey ) {
+				
+				my $list2FDevices = eval { from_json($req->userData->{list2FDevices}, { allow_nonref => 1 } ) };
+				unless ($list2FDevices) {
+					$self->logger->debug("No 2F Device found");
+					$list2FDevices = [];
+				};
+				push $list2FDevices, { type => 'U2F', name => 'U2F_1', _userKey => $self->encode_base64url($userKey, ''), _keyHandle => $keyHandle, epoch => time() };
+				$self->logger->debug("Append 2F Device : { type => 'U2F', name => 'U2F_1' }" );
+				$self->p->updatePersistentSession( $req,
+					{ list2FDevices => to_json($list2FDevices) } );
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
                 $self->p->updatePersistentSession(
                     $req,
                     {

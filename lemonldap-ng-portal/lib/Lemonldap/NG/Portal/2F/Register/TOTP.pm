@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::2F::Register::TOTP;
 
 use strict;
 use Mouse;
+use JSON qw(from_json to_json);
 
 our $VERSION = '2.0.0';
 
@@ -89,6 +90,17 @@ sub run {
         # Now code is verified, let's store the master key in persistent data
         $self->p->updatePersistentSession( $req,
             { _totp2fSecret => $token->{_totp2fSecret} } );
+       
+        my $list2FDevices = eval { from_json($req->userData->{list2FDevices}, { allow_nonref => 1 } ) };
+		unless ($list2FDevices) {
+			$self->logger->debug("No 2F Device found");
+			$list2FDevices = [];
+		};
+        push $list2FDevices, { type => 'totp', name => 'TOTP_1', _secret => $token->{_totp2fSecret}, epoch => time() };
+        $self->logger->debug("Append 2F Device : { type => 'totp', name => 'TOTP1' }");
+        $self->p->updatePersistentSession( $req,
+         { list2FDevices => to_json($list2FDevices) } );
+        
         $self->userLogger->notice('TOTP registration succeed');
         return [ 200, [ 'Content-Type' => 'application/json' ],
             ['{"result":1}'] ];
