@@ -63,9 +63,11 @@ sub run {
         # ($token->{_totp2fSecret})
 
         # Now check TOTP code to verify that user has a valid TOTP app
-        my $code = $req->param('code');
-        unless ($code) {
-            $self->logger->userInfo('TOTP registration: empty validation form');
+        my $code     = $req->param('code');
+        my $TOTPName = $req->param('TOTPName');
+        unless ( $code and $TOTPName ) {
+            $self->logger->userInfo(
+                'TOTP registration: empty code or name in validation form');
             return $self->p->sendError( $req, 'missingCode', 200 );
         }
         my $r = $self->verifyCode(
@@ -90,17 +92,26 @@ sub run {
         # Now code is verified, let's store the master key in persistent data
         $self->p->updatePersistentSession( $req,
             { _totp2fSecret => $token->{_totp2fSecret} } );
-       
-        my $list2FDevices = eval { from_json($req->userData->{list2FDevices}, { allow_nonref => 1 } ) };
-		unless ($list2FDevices) {
-			$self->logger->debug("No 2F Device found");
-			$list2FDevices = [];
-		};
-        push $list2FDevices, { type => 'totp', name => 'TOTP_1', _secret => $token->{_totp2fSecret}, epoch => time() };
-        $self->logger->debug("Append 2F Device : { type => 'totp', name => 'TOTP1' }");
+
+        my $list2FDevices = eval {
+            from_json( $req->userData->{list2FDevices}, { allow_nonref => 1 } );
+        };
+        unless ($list2FDevices) {
+            $self->logger->debug("No 2F Device found");
+            $list2FDevices = [];
+        }
+        push $list2FDevices,
+          {
+            type    => 'totp',
+            name    => $TOTPName,
+            _secret => $token->{_totp2fSecret},
+            epoch   => time()
+          };
+        $self->logger->debug(
+            "Append 2F Device : { type => 'totp', name => $TOTPName }");
         $self->p->updatePersistentSession( $req,
-         { list2FDevices => to_json($list2FDevices) } );
-        
+            { list2FDevices => to_json($list2FDevices) } );
+
         $self->userLogger->notice('TOTP registration succeed');
         return [ 200, [ 'Content-Type' => 'application/json' ],
             ['{"result":1}'] ];

@@ -44,9 +44,10 @@ register = ->
 					$.ajax
 						type: "POST"
 						url: "#{portal}2fregisters/u/registration"
-						data:
+						data: 
 							registration: JSON.stringify data
 							challenge: JSON.stringify ch
+							keyName: $('#keyName').val()
 						dataType: 'json'
 						success: (resp) ->
 							if resp.error

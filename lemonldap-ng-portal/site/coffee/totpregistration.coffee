@@ -66,6 +66,7 @@ verify = ->
 			data:
 				token: token
 				code: val
+				TOTPName: $('#TOTPName').val()
 			error: displayError
 			success: (data) ->
 				if data.error

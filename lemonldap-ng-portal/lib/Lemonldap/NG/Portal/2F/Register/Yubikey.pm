@@ -32,41 +32,48 @@ sub init {
 sub run {
     my ( $self, $req, $action ) = @_;
     if ( $action eq 'register' ) {
-        my $otp = $req->param('otp');
-        if ( $otp and length($otp) > $self->conf->{yubikey2fPublicIDSize} ) {
+        my $otp     = $req->param('otp');
+        my $UBKName = $req->param('UBKName');
+        if (    $UBKName
+            and $otp
+            and length($otp) > $self->conf->{yubikey2fPublicIDSize} )
+        {
             my $keys = $req->userData->{_yubikeys} || '';
             $keys .= ( $keys ? ', ' : '' )
               . substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
-              
-              
-              
-              
+
             my $key = substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
-            my $list2FDevices = eval { from_json($req->userData->{list2FDevices}, { allow_nonref => 1 } ) };
-			unless ($list2FDevices) {
-					$self->logger->debug("No 2F Device found");
-					$list2FDevices = [];
-			};
-			push $list2FDevices, { type => 'UBK', name => 'UBK_1', _yubikey => $key, epoch => time() };
-			$self->logger->debug("Append 2F Device : { type => 'UBK', name => 'UBK_1' }" );
-			$self->p->updatePersistentSession( $req,
-				{ list2FDevices => to_json($list2FDevices) } );
-              
-              
-              
-              
-              
+            my $list2FDevices = eval {
+                from_json( $req->userData->{list2FDevices},
+                    { allow_nonref => 1 } );
+            };
+            unless ($list2FDevices) {
+                $self->logger->debug("No 2F Device found");
+                $list2FDevices = [];
+            }
+            push $list2FDevices,
+              {
+                type     => 'UBK',
+                name     => $UBKName,
+                _yubikey => $key,
+                epoch    => time()
+              };
+            $self->logger->debug(
+                "Append 2F Device : { type => 'UBK', name => $UBKName }");
+            $self->p->updatePersistentSession( $req,
+                { list2FDevices => to_json($list2FDevices) } );
+
             $self->p->updatePersistentSession( $req, { _yubikeys => $keys } );
             return $self->p->sendHtml(
                 $req, 'error',
                 params => {
-                    RAW_ERROR      => 'yourKeyIsRegistered',
+                    RAW_ERROR       => 'yourKeyIsRegistered',
                     AUTH_ERROR_TYPE => 'positive',
                 }
             );
         }
         else {
-            $self->userLogger->error('Yubikey 2F: no code');
+            $self->userLogger->error('Yubikey 2F: no code or name');
             return $self->p->sendHtml(
                 $req, 'error',
                 params => {

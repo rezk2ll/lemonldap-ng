@@ -10,6 +10,9 @@
        <div id="u2fPermission" trspan="u2fPermission" class="alert alert-info">You may be prompted to allow the site permission to access your security keys. After granting permission, the device will start to blink.
        </div>
        <div class="buttons">
+		 <span class="form-group">
+           <b>Nom : </b>&nbsp;<input type="text" id="keyName" name="keyName" value="MyU2FKey"/>
+		 </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <span id="register" class="btn btn-warning" role="button">
            <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
            <span trspan="register">Register</span>

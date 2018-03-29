@@ -13,7 +13,10 @@
       </pre>
      </div>
      <div class="form-group">
-      <input id="code" name="code" type="number" />
+       <b>Code&nbsp;: </b>&nbsp;<input id="code" name="code" type="number" />
+       <br>
+	   <br>
+       <b>Nom : </b>&nbsp;<input type="text" id="TOTPName" name="TOTPName" value="MyTOTP"/>
      </div>
      <div class="buttons">
       <span id="changekey" class="btn btn-warning" role="button">
