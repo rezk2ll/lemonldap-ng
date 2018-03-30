@@ -65,6 +65,7 @@ sub run {
             if ( $keyHandle and $userKey ) {
 
                 my $list2FDevices = eval {
+                    $self->logger->debug("Looking for 2F Devices ...");
                     from_json( $req->userData->{list2FDevices},
                         { allow_nonref => 1 } );
                 };
@@ -73,7 +74,7 @@ sub run {
                     $list2FDevices = [];
                 }
                 my $keyName = $req->param('keyName');
-                push $list2FDevices,
+                push @{$list2FDevices},
                   {
                     type       => 'U2F',
                     name       => $keyName,

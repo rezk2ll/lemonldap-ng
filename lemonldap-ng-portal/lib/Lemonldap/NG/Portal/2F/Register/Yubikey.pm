@@ -1,3 +1,4 @@
+# Self Yubikey registration
 package Lemonldap::NG::Portal::2F::Register::Yubikey;
 
 use strict;
@@ -44,6 +45,7 @@ sub run {
 
             my $key = substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
             my $list2FDevices = eval {
+                $self->logger->debug("Looking for 2F Devices ...");
                 from_json( $req->userData->{list2FDevices},
                     { allow_nonref => 1 } );
             };
@@ -51,7 +53,7 @@ sub run {
                 $self->logger->debug("No 2F Device found");
                 $list2FDevices = [];
             }
-            push $list2FDevices,
+            push @{$list2FDevices},
               {
                 type     => 'UBK',
                 name     => $UBKName,

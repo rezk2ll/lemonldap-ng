@@ -1,4 +1,4 @@
-# Self U2F registration
+# Self TOTP registration
 package Lemonldap::NG::Portal::2F::Register::TOTP;
 
 use strict;
@@ -94,13 +94,14 @@ sub run {
             { _totp2fSecret => $token->{_totp2fSecret} } );
 
         my $list2FDevices = eval {
+            $self->logger->debug("Looking for 2F Devices ...");
             from_json( $req->userData->{list2FDevices}, { allow_nonref => 1 } );
         };
         unless ($list2FDevices) {
             $self->logger->debug("No 2F Device found");
             $list2FDevices = [];
         }
-        push $list2FDevices,
+        push @{$list2FDevices},
           {
             type    => 'totp',
             name    => $TOTPName,
