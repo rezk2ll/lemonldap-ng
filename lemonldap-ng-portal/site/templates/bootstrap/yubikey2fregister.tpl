@@ -8,10 +8,10 @@
      <div class="panel-body">
       <form action="/2fregisters/yubikey/register" method="post">
        <div class="form-group">
-		<b>Nom : </b><input type="text" id="UBKName" name="UBKName" value="MyYubikey"/>
+		<b>Nom :&nbsp;</b><input type="text" id="UBKName" name="UBKName" value="MyYubikey"/>
         <br>
 	    <br>
-        <b>Id : </b><input type="text" id="otp" name="otp" />
+        <b>Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</b><input type="text" id="otp" name="otp" />
         <input type="submit" value="Submit">
        </div>
       </form>

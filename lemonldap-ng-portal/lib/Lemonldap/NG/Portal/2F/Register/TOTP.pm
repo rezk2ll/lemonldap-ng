@@ -65,11 +65,19 @@ sub run {
         # Now check TOTP code to verify that user has a valid TOTP app
         my $code     = $req->param('code');
         my $TOTPName = $req->param('TOTPName');
-        unless ( $code and $TOTPName ) {
-            $self->logger->userInfo(
-                'TOTP registration: empty code or name in validation form');
+        
+
+        unless ($code) {
+            $self->logger->userInfo('TOTP registration: empty validation form');
             return $self->p->sendError( $req, 'missingCode', 200 );
         }
+        
+        
+        #unless ( $code and $TOTPName ) {
+            #$self->logger->userInfo(
+                #'TOTP registration: empty code or name in validation form');
+            #return $self->p->sendError( $req, 'missingCode', 200 );
+        #}
         my $r = $self->verifyCode(
             $self->conf->{totp2fInterval},
             $self->conf->{totp2fRange},
@@ -108,8 +116,8 @@ sub run {
             _secret => $token->{_totp2fSecret},
             epoch   => time()
           };
-        $self->logger->debug(
-            "Append 2F Device : { type => 'totp', name => $TOTPName }");
+        #$self->logger->debug(
+            #"Append 2F Device : { type => 'totp', name => $TOTPName }");
         $self->p->updatePersistentSession( $req,
             { list2FDevices => to_json($list2FDevices) } );
 

@@ -3,6 +3,16 @@
 <div class="container">
   <div class="message message-positive alert" trspan="choose2f"></div>
   <div class="buttons">
+	  
+  
+    <TMPL_LOOP NAME="SFDEVICES">
+	  <br>
+
+        ****type****=<TMPL_VAR NAME="type">|****name****=<TMPL_VAR NAME="name">|****date***=<TMPL_VAR NAME="epoch">
+
+      <br>
+    </TMPL_LOOP>
+	  
     <TMPL_LOOP NAME="MODULES">
 	  &nbsp;&nbsp;
       <a href="<TMPL_VAR NAME="URL">">

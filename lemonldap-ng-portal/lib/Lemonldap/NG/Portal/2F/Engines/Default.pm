@@ -11,6 +11,7 @@ package Lemonldap::NG::Portal::2F::Engines::Default;
 
 use strict;
 use Mouse;
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_NOTOKEN
@@ -261,12 +262,52 @@ sub _displayRegister {
         return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ],
             [] ];
     }
+    
+    
+    
+    my $list2FDevices = eval {
+                from_json( $req->userData->{list2FDevices},
+                    { allow_nonref => 1 } );
+            };
+    
+    
+    unless ($list2FDevices) {
+                 $self->logger->debug("No 2F Device found");
+                    $list2FDevices = [];
+            };
+    
+    my $list3FDevices = [ {name => 'a', type => 'typea', epoch => '11111'}, {name => 'a', type => 'typea', epoch => '11111'}, {name => 'a', type => 'typea', epoch => '11111'}, ];
+    
+    
+    
+    #my @listClefsU2F = map {
+    #if ( $_->{type} eq "U2F" ) {
+        #return $_;
+    #}
+    #else {
+        #return ();
+    #}
+    #} @$req->userData->{list2FDevices};
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     return $self->p->sendHtml(
         $req,
         '2fregisters',
         params => {
             SKIN    => $self->conf->{portalSkin},
             MODULES => \@am,
+            SFDEVICES => $list2FDevices,
+            #SFDEVICES => @$list2FDevices,
         }
     );
 }
