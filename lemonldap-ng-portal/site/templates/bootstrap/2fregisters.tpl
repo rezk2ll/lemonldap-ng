@@ -2,17 +2,27 @@
 
 <div class="container">
   <div class="message message-positive alert" trspan="choose2f"></div>
-  <div class="buttons">
-	  
-  
-    <TMPL_LOOP NAME="SFDEVICES">
-	  <br>
-
-        ****type****=<TMPL_VAR NAME="type">|****name****=<TMPL_VAR NAME="name">|****date***=<TMPL_VAR NAME="epoch">
-
-      <br>
-    </TMPL_LOOP>
-	  
+    <div class="alert alert-info">
+	<table class="table table-hover table-condensed table-responsive">
+      <thead>
+        <tr>
+          <th>TYPE</th>
+          <th>NAME</th>
+          <th>DATE</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
+      <tbody>
+        <TMPL_LOOP NAME="SFDEVICES">
+          <tr>
+          <td><TMPL_VAR NAME="type"></td><td><TMPL_VAR NAME="name"></td><td><TMPL_VAR NAME="epoch"></td>
+          <td><button type="button" name="sup" class="btn btn-danger">Supprimer</button></td>
+          </tr>
+        </TMPL_LOOP>
+      </tbody>
+    </table>
+    </div>
+  <div class="buttons"> 
     <TMPL_LOOP NAME="MODULES">
 	  &nbsp;&nbsp;
       <a href="<TMPL_VAR NAME="URL">">
