@@ -11,7 +11,7 @@
        </div>
        <div class="buttons">
 		 <span class="form-group">
-           <b>Nom : </b>&nbsp;<input type="text" id="keyName" name="keyName" value="MyU2FKey"/>
+           <b><span trspan="name">Name</span></b> : <input type="text" id="keyName" name="keyName" value="MyU2FKey"/>
 		 </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <span id="register" class="btn btn-warning" role="button">
            <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;

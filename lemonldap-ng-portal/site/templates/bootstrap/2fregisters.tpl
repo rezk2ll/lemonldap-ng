@@ -19,8 +19,8 @@
 	          <td class="align-middle" style="vertical-align: middle"><TMPL_VAR NAME="type"></td><td class="align-middle"><TMPL_VAR NAME="name"></td><td class="align-middle"><TMPL_VAR NAME="epoch"></td>
 	          <td>
 	           <span id="unregister" class="btn btn-danger" role="button">
-	           <span class="glyphicon glyphicon-minus-sign"></span>&nbsp;
-	           <span trspan="unregister">Unregister</span>
+	             <span class="glyphicon glyphicon-minus-sign"></span>&nbsp;
+	             <span trspan="unregister">Unregister</span>
 	           </span>
 	          </td>
           </tr>

@@ -13,7 +13,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin', 'Lemonldap::NG::Common::TOTP';
 
 has prefix => ( is => 'rw', default => 'totp' );
 
-has template => ( is => 'ro', default => 'totpregister' );
+has template => ( is => 'ro', default => 'totp2fregister' );
 
 has logo => ( is => 'rw', default => 'totp.png' );
 
