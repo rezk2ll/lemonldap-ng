@@ -2,26 +2,34 @@
 
 <div class="container">
   <div class="message message-positive alert" trspan="choose2f"></div>
+  <TMPL_IF NAME="SFDEVICES">
     <div class="alert alert-info">
 	<table class="table table-hover table-condensed table-responsive">
       <thead>
         <tr>
-          <th>TYPE</th>
-          <th>NAME</th>
-          <th>DATE</th>
-          <th>ACTION</th>
+          <th><span trspan="type">Type</span></th>
+          <th><span trspan="name">Name</span></th>
+          <th><span trspan="date">Date</span></th>
+          <th><span trspan="action">Action</span></th>
         </tr>
       </thead>
       <tbody>
         <TMPL_LOOP NAME="SFDEVICES">
           <tr>
-          <td><TMPL_VAR NAME="type"></td><td><TMPL_VAR NAME="name"></td><td><TMPL_VAR NAME="epoch"></td>
-          <td><button type="button" name="sup" class="btn btn-danger">Supprimer</button></td>
+	          <td class="align-middle" style="vertical-align: middle"><TMPL_VAR NAME="type"></td><td class="align-middle"><TMPL_VAR NAME="name"></td><td class="align-middle"><TMPL_VAR NAME="epoch"></td>
+	          <td>
+	           <span id="unregister" class="btn btn-danger" role="button">
+	           <span class="glyphicon glyphicon-minus-sign"></span>&nbsp;
+	           <span trspan="unregister">Unregister</span>
+	           </span>
+	          </td>
           </tr>
         </TMPL_LOOP>
       </tbody>
     </table>
     </div>
+    <br>
+  </TMPL_IF>
   <div class="buttons"> 
     <TMPL_LOOP NAME="MODULES">
 	  &nbsp;&nbsp;

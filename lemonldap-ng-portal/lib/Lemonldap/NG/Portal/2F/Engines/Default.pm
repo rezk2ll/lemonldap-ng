@@ -274,11 +274,7 @@ sub _displayRegister {
     unless ($list2FDevices) {
                  $self->logger->debug("No 2F Device found");
                     $list2FDevices = [];
-            };
-    
-    my $list3FDevices = [ {name => 'a', type => 'typea', epoch => '11111'}, {name => 'a', type => 'typea', epoch => '11111'}, {name => 'a', type => 'typea', epoch => '11111'}, ];
-    
-    
+            };    
     
     #my @listClefsU2F = map {
     #if ( $_->{type} eq "U2F" ) {
