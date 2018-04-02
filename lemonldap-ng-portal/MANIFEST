@@ -133,6 +133,7 @@ Makefile.PL
 MANIFEST			This list of files
 META.yml
 README
+site/coffee/2fregistration.coffee
 site/coffee/confirm.coffee
 site/coffee/info.coffee
 site/coffee/kerberos.coffee
@@ -156,6 +157,7 @@ site/htdocs/static/bootstrap/js/skin.min.js
 site/htdocs/static/bootstrap/totp.png
 site/htdocs/static/bootstrap/u2f.png
 site/htdocs/static/bootstrap/utotp.png
+site/htdocs/static/bootstrap/yubikey.png
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.css.map
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.min.css
@@ -225,6 +227,8 @@ site/htdocs/static/common/icons/ok.png
 site/htdocs/static/common/icons/vcard_edit.png
 site/htdocs/static/common/icons/warning.png
 site/htdocs/static/common/it.png
+site/htdocs/static/common/js/2fregistration.js
+site/htdocs/static/common/js/2fregistration.min.js
 site/htdocs/static/common/js/confirm.js
 site/htdocs/static/common/js/confirm.min.js
 site/htdocs/static/common/js/info.js
@@ -313,7 +317,7 @@ site/templates/bootstrap/simpleInfo.tpl
 site/templates/bootstrap/sslform.tpl
 site/templates/bootstrap/standardform.tpl
 site/templates/bootstrap/totp2fcheck.tpl
-site/templates/bootstrap/totpregister.tpl
+site/templates/bootstrap/totp2fregister.tpl
 site/templates/bootstrap/u2fcheck.tpl
 site/templates/bootstrap/u2fregister.tpl
 site/templates/bootstrap/upgradesession.tpl
