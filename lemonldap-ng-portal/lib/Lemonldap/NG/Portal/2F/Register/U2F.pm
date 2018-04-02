@@ -217,6 +217,51 @@ sub run {
         $self->userLogger->warn("U2F Unregistration failed: $err");
         return $self->p->sendError( $req, $err, 200 );
     }
+    elsif ( $action eq 'delete' ) {
+		my $epoch = $req->param('epoch');
+		
+		my $list2FDevices = eval {
+            $self->logger->debug("Looking for 2F Devices ...");
+            # Read existing 2FDevices
+            from_json( $req->userData->{list2FDevices},
+                { allow_nonref => 1 } );
+        };
+		
+		my @keep = ();
+		while ( @$list2FDevices ) {
+		my $element = shift @$list2FDevices;
+		push @keep, $element unless ( $element->{epoch} eq $epoch );
+		}
+		
+		
+		
+		
+		
+		
+				
+		$self->logger->debug(
+        "Delete 2F Device : { type => 'U2F', epoch => $epoch }");
+        $self->p->updatePersistentSession( $req,
+        { list2FDevices => to_json(\@keep) } );
+		
+		
+        $self->p->updatePersistentSession(
+            $req,
+            {
+                _u2fKeyHandle => '',
+                _u2fUserKey   => ''
+            }
+        );
+        $self->userLogger->notice('U2F key unregistration succeed');
+        return [
+            200,
+            [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
+            ['{"result":1}']
+        ];
+        my $err = Crypt::U2F::Server::Simple::lastError();
+        $self->userLogger->warn("U2F Unregistration failed: $err");
+        return $self->p->sendError( $req, $err, 200 );
+    }
     $self->logger->error("Unknown action $action");
     return $self->p->sendError( $req, 'notAutorizated', 200 );
 }
