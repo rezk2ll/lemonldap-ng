@@ -18,7 +18,7 @@ displayError = (j, status, err) ->
 		setMsg res, 'warning'
 
 # Unregistration function (launched by "unregister" button)
-delete2F = (device) ->
+delete2F = (device, epoch) ->
 		if device == 'U2F'
 			device = 'u'
 		else if device == 'UBK'
@@ -29,7 +29,8 @@ delete2F = (device) ->
 		$.ajax
 			type: "POST"
 			url: "#{portal}2fregisters/#{device}/delete"
-			data: {}
+			data:
+				epoch: epoch
 			dataType: 'json'
 			error: displayError
 			success: (resp) ->
@@ -41,5 +42,6 @@ delete2F = (device) ->
 
 # Register "click" events
 $(document).ready ->
-	$('body').on 'click', '.btn-danger', () -> delete2F ( $(this).attr 'device' )
+	$('body').on 'click', '.btn-danger', () -> delete2F ( $(this).attr 'device' ), ( $(this).attr 'epoch' )
 	$('#goback').attr 'href', portal
+	#$('body').find 'td' moment-with-locales.unix( $(this) ).format('YYYY-MM-DD HH:mm:ss')

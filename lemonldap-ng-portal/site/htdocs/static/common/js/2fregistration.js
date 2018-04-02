@@ -28,7 +28,7 @@ LemonLDAP::NG 2F registration script
     }
   };
 
-  delete2F = function(device) {
+  delete2F = function(device, epoch) {
     if (device === 'U2F') {
       device = 'u';
     } else if (device === 'UBK') {
@@ -41,7 +41,9 @@ LemonLDAP::NG 2F registration script
     return $.ajax({
       type: "POST",
       url: portal + "2fregisters/" + device + "/delete",
-      data: {},
+      data: {
+        epoch: epoch
+      },
       dataType: 'json',
       error: displayError,
       success: function(resp) {
@@ -57,7 +59,7 @@ LemonLDAP::NG 2F registration script
 
   $(document).ready(function() {
     $('body').on('click', '.btn-danger', function() {
-      return delete2F($(this).attr('device'));
+      return delete2F($(this).attr('device'), $(this).attr('epoch'));
     });
     return $('#goback').attr('href', portal);
   });
