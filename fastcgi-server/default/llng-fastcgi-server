@@ -16,3 +16,6 @@ GROUP=__GROUP__
 
 # Engine (default to FCGI)
 #ENGINE=AnyEvent::FCGI
+#ENGINE=FCGI::Async
+#ENGINE=FCGI::EV
+#ENGINE=FCGI::Engine
