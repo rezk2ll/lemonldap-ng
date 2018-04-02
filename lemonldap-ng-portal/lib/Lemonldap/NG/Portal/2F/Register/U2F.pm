@@ -66,42 +66,40 @@ sub run {
 
                 my $list2FDevices = eval {
                     $self->logger->debug("Looking for 2F Devices ...");
+
                     # Read existing 2FDevices
                     from_json( $req->userData->{list2FDevices},
                         { allow_nonref => 1 } );
                 };
                 unless ($list2FDevices) {
                     $self->logger->debug("No 2F Device found");
+
                     # Set default value
                     $list2FDevices = [];
                 }
                 my $keyName = $req->param('keyName');
                 $self->logger->debug("Key name : $keyName");
-                
+
                 # Select U2F Devices only
                 #my @listU2FKeys = map {
-					#( $_->{type} eq "U2F" ) ? return $_ : return ();
-				#} @{$list2FDevices};
+                #( $_->{type} eq "U2F" ) ? return $_ : return ();
+                #} @{$list2FDevices};
                 #$self->logger->debug("Select U2F Devices only ...");
-                
+
                 # Search if U2F Key has been already registered
                 my $SameU2FKeyFound = 0;
-                foreach ( @$list2FDevices ) {
-					$self->logger->debug("Reading U2F Keys ...");
-					$SameU2FKeyFound ||= 1 if ( ( $_->{name} eq $keyName ) );
-				};
-				
-				$self->logger->debug("Same 2F Device found ? $SameU2FKeyFound");
-                
+                foreach (@$list2FDevices) {
+                    $self->logger->debug("Reading U2F Keys ...");
+                    $SameU2FKeyFound ||= 1 if ( ( $_->{name} eq $keyName ) );
+                }
+
+                $self->logger->debug("Same 2F Device found ? $SameU2FKeyFound");
 
                 if ($SameU2FKeyFound) {
-					$self->userLogger->error("U2F Key already registered !");
-					return $self->p->sendError( $req, 'Bad challenge', 400 );
-				}
-                
-                
-                
-                
+                    $self->userLogger->error("U2F Key already registered !");
+                    return $self->p->sendError( $req, 'Bad challenge', 400 );
+                }
+
                 push @{$list2FDevices},
                   {
                     type       => 'U2F',
@@ -218,33 +216,27 @@ sub run {
         return $self->p->sendError( $req, $err, 200 );
     }
     elsif ( $action eq 'delete' ) {
-		my $epoch = $req->param('epoch');
-		
-		my $list2FDevices = eval {
-            $self->logger->debug("Looking for 2F Devices ...");
+        my $epoch = $req->param('epoch');
+
+        my $list2FDevices = eval {
+            $self->logger->debug("Loading 2F Devices ...");
+
             # Read existing 2FDevices
-            from_json( $req->userData->{list2FDevices},
-                { allow_nonref => 1 } );
+            from_json( $req->userData->{list2FDevices}, { allow_nonref => 1 } );
         };
-		
-		my @keep = ();
-		while ( @$list2FDevices ) {
-		my $element = shift @$list2FDevices;
-		push @keep, $element unless ( $element->{epoch} eq $epoch );
-		}
-		
-		
-		
-		
-		
-		
-				
-		$self->logger->debug(
-        "Delete 2F Device : { type => 'U2F', epoch => $epoch }");
+
+        my @keep = ();
+        while (@$list2FDevices) {
+            my $element = shift @$list2FDevices;
+            $self->logger->debug("Looking for 2F Device to delete ...");
+            push @keep, $element unless ( $element->{epoch} eq $epoch );
+        }
+
+        $self->logger->debug(
+            "Delete 2F Device : { type => 'U2F', epoch => $epoch }");
         $self->p->updatePersistentSession( $req,
-        { list2FDevices => to_json(\@keep) } );
-		
-		
+            { list2FDevices => to_json( \@keep ) } );
+
         $self->p->updatePersistentSession(
             $req,
             {

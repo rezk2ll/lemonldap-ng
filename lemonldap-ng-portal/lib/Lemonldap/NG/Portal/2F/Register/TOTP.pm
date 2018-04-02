@@ -65,18 +65,16 @@ sub run {
         # Now check TOTP code to verify that user has a valid TOTP app
         my $code     = $req->param('code');
         my $TOTPName = $req->param('TOTPName');
-        
 
         unless ($code) {
             $self->logger->userInfo('TOTP registration: empty validation form');
             return $self->p->sendError( $req, 'missingCode', 200 );
         }
-        
-        
+
         #unless ( $code and $TOTPName ) {
-            #$self->logger->userInfo(
-                #'TOTP registration: empty code or name in validation form');
-            #return $self->p->sendError( $req, 'missingCode', 200 );
+        #$self->logger->userInfo(
+        #'TOTP registration: empty code or name in validation form');
+        #return $self->p->sendError( $req, 'missingCode', 200 );
         #}
         my $r = $self->verifyCode(
             $self->conf->{totp2fInterval},
@@ -111,13 +109,14 @@ sub run {
         }
         push @{$list2FDevices},
           {
-            type    => 'totp',
+            type    => 'TOTP',
             name    => $TOTPName,
             _secret => $token->{_totp2fSecret},
             epoch   => time()
           };
+
         #$self->logger->debug(
-            #"Append 2F Device : { type => 'totp', name => $TOTPName }");
+        #"Append 2F Device : { type => 'totp', name => $TOTPName }");
         $self->p->updatePersistentSession( $req,
             { list2FDevices => to_json($list2FDevices) } );
 
@@ -188,6 +187,33 @@ sub run {
         else {
             return $self->p->sendError( $req, 'notAutorizated', 200 );
         }
+    }
+
+    elsif ( $action eq 'delete' ) {
+        my $epoch = $req->param('epoch');
+
+        my $list2FDevices = eval {
+            $self->logger->debug("Loading 2F Devices ...");
+
+            # Read existing 2FDevices
+            from_json( $req->userData->{list2FDevices}, { allow_nonref => 1 } );
+        };
+
+        my @keep = ();
+        while (@$list2FDevices) {
+            my $element = shift @$list2FDevices;
+            $self->logger->debug("Looking for 2F Device to delete ...");
+            push @keep, $element unless ( $element->{epoch} eq $epoch );
+        }
+
+        $self->logger->debug(
+            "Delete 2F Device : { type => 'TOTP', epoch => $epoch }");
+        $self->p->updatePersistentSession( $req,
+            { list2FDevices => to_json( \@keep ) } );
+        $self->userLogger->notice('TOTP deletion succeed');
+        return [ 200, [ 'Content-Type' => 'application/json' ],
+            ['{"result":1}'] ];
+
     }
 
 }

@@ -85,6 +85,37 @@ sub run {
             );
         }
     }
+
+    elsif ( $action eq 'delete' ) {
+        my $epoch = $req->param('epoch');
+
+        my $list2FDevices = eval {
+            $self->logger->debug("Loading 2F Devices ...");
+
+            # Read existing 2FDevices
+            from_json( $req->userData->{list2FDevices}, { allow_nonref => 1 } );
+        };
+
+        my @keep = ();
+        while (@$list2FDevices) {
+            my $element = shift @$list2FDevices;
+            $self->logger->debug("Looking for 2F Device to delete ...");
+            push @keep, $element unless ( $element->{epoch} eq $epoch );
+        }
+
+        $self->logger->debug(
+            "Delete 2F Device : { type => 'UBK', epoch => $epoch }");
+        $self->p->updatePersistentSession( $req,
+            { list2FDevices => to_json( \@keep ) } );
+
+        $self->userLogger->notice('Yubikey deletion succeed');
+        return [
+            200,
+            [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
+            ['{"result":1}']
+        ];
+
+    }
     else {
         $self->userLogger->error("Unknown Yubikey action $action");
         return $self->p->sendHtml(
