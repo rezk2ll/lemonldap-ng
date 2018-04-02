@@ -1,7 +1,14 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
 <div class="container">
+	
+
+    <div id="color" class="message message-positive alert"><span id="msg" trspan="choose2f"></span></div>
+
+	
+  <!--
   <div class="message message-positive alert" trspan="choose2f"></div>
+  -->
   <TMPL_IF NAME="SFDEVICES">
     <div class="alert alert-info">
 	<table class="table table-hover table-condensed table-responsive">
@@ -16,9 +23,9 @@
       <tbody>
         <TMPL_LOOP NAME="SFDEVICES">
           <tr>
-	          <td class="align-middle" style="vertical-align: middle"><TMPL_VAR NAME="type"></td><td class="align-middle"><TMPL_VAR NAME="name"></td><td class="align-middle"><TMPL_VAR NAME="epoch"></td>
+	          <td class="align-middle" ><TMPL_VAR NAME="type"></td><td class="align-middle"><TMPL_VAR NAME="name"></td><td class="align-middle"><TMPL_VAR NAME="epoch"></td>
 	          <td>
-	           <span id="unregister" class="btn btn-danger" role="button">
+	           <span id="delete" device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
 	             <span class="glyphicon glyphicon-minus-sign"></span>&nbsp;
 	             <span trspan="unregister">Unregister</span>
 	           </span>
@@ -48,5 +55,10 @@
   </a>
 </div>
 
+<!-- //if:jsminified
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/2fregistration.min.js"></script>
+//else -->
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/2fregistration.js"></script>
+<!-- //endif -->
 <TMPL_INCLUDE NAME="footer.tpl">
 
