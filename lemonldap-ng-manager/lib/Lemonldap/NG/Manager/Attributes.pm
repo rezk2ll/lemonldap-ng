@@ -600,10 +600,12 @@ sub attributes {
             'type' => 'keyTextContainer'
         },
         'available2F' => {
-            'type' => 'text'
+            'default' => 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey',
+            'type'    => 'text'
         },
         'available2FSelfRegistration' => {
-            'type' => 'text'
+            'default' => 'TOTP,U2F,Yubikey',
+            'type'    => 'text'
         },
         'captcha_login_enabled' => {
             'default' => 0,
@@ -2244,7 +2246,6 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type' => 'postContainer'
         },
         'protection' => {
-            'default' => 'none',
             'msgFail' => '__authorizedValues__: none authenticate manager',
             'test'    => qr/^(?:none|authenticate|manager|)$/,
             'type'    => 'text'
@@ -3017,24 +3018,19 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'secureTokenAttribute' => {
-            'default' => 'uid',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'secureTokenExpiration' => {
-            'default' => 60,
-            'type'    => 'text'
+            'type' => 'text'
         },
         'secureTokenHeader' => {
-            'default' => 'Auth-Token',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'secureTokenMemcachedServers' => {
-            'default' => '',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'secureTokenUrls' => {
-            'default' => '.*',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'sessionDataToRemember' => {
             'keyMsgFail' => '__invalidSessionData__',
@@ -3042,7 +3038,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'       => 'keyTextContainer'
         },
         'sfEngine' => {
-            'default' => '::2F::Engine::Default',
+            'default' => '::2F::Engines::Default',
             'type'    => 'text'
         },
         'singleIP' => {

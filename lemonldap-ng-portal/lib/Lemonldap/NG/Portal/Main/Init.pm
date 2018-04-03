@@ -224,7 +224,6 @@ sub reloadConf {
     }
 
     # Load second-factor engine
-    $self->conf->{'sfEngine'} ||= '::2F::Engines::Default';
     return $self->fail
       unless $self->{_sfEngine} =
       $self->loadPlugin( $self->conf->{'sfEngine'} );
