@@ -47,7 +47,7 @@ sub run {
         $self->logger->debug('Registration response');
         unless ($resp = $req->param('registration')
             and $challenge = $req->param('challenge')
-            and $req->param('keyName') )
+             )
         {
             return $self->p->sendError( $req, 'Missing registration parameter',
                 400 );
@@ -78,6 +78,8 @@ sub run {
                     $list2FDevices = [];
                 }
                 my $keyName = $req->param('keyName');
+                my $epoch = time();
+                $keyName ||= $epoch;
                 $self->logger->debug("Key name : $keyName");
 
                 # Select U2F Devices only
@@ -106,7 +108,7 @@ sub run {
                     name       => $keyName,
                     _userKey   => $self->encode_base64url( $userKey, '' ),
                     _keyHandle => $keyHandle,
-                    epoch      => time()
+                    epoch      => $epoch
                   };
                 $self->logger->debug(
                     "Append 2F Device : { type => 'U2F', name => $keyName }");

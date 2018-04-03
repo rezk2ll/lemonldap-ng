@@ -173,21 +173,20 @@ sub run {
             }
         );
     }
+    
+    if ( $self->conf->{totp2fUserCanChangeKey} ) {
+		return $self->p->sendError( $req, 'notAutorizated', 200 );
+	}
 
     # Get or generate master key
-    elsif ( $action eq 'unregister' ) {
-        if ( $self->conf->{totp2fUserCanChangeKey} ) {
+    if ( $action eq 'unregister' ) {
             $self->p->updatePersistentSession( $req, { _totp2fSecret => '' } );
             $self->userLogger->notice('TOTP unregistration succeed');
             return [
                 200, [ 'Content-Type' => 'application/json' ],
                 ['{"result":1}']
             ];
-        }
-        else {
-            return $self->p->sendError( $req, 'notAutorizated', 200 );
-        }
-    }
+     }
 
     elsif ( $action eq 'delete' ) {
         my $epoch = $req->param('epoch');
