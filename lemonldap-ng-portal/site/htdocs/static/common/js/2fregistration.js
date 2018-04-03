@@ -48,7 +48,7 @@ LemonLDAP::NG 2F registration script
       error: displayError,
       success: function(resp) {
         if (resp.error) {
-          return setMsg('u2fFailed', 'warning');
+          return setMsg('notAuthorized', 'warning');
         } else if (resp.result) {
           return setMsg('yourKeyIsUnregistered', 'positive');
         }

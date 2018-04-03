@@ -35,7 +35,7 @@ delete2F = (device, epoch) ->
 			error: displayError
 			success: (resp) ->
 				if resp.error
-					setMsg 'u2fFailed', 'warning'
+					setMsg 'notAuthorized', 'warning'
 				else if resp.result
 					setMsg 'yourKeyIsUnregistered', 'positive'
 			error: displayError
