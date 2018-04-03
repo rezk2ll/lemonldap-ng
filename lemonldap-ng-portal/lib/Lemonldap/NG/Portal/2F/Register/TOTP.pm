@@ -135,7 +135,7 @@ sub run {
             $nk     = 1;
         }
         elsif ( $req->param('newkey') ) {
-            return $self->p->sendError( $req, 'notAutorizated', 200 );
+            return $self->p->sendError( $req, 'notAuthorized', 200 );
         }
         elsif ( $self->conf->{totp2fDisplayExistingSecret} ) {
             $secret = $req->userData->{_totp2fSecret};
@@ -174,8 +174,8 @@ sub run {
     }
 
     # Check if unregistration is allowed
-    unless ( $self->conf->{totp2fUserCanChangeKey} ) {
-        return $self->p->sendError( $req, 'notAutorizated', 200 );
+    unless ( $self->conf->{TOTP2fUserCanChangeKey} ) {
+        return $self->p->sendError( $req, 'notAuthorized', 400 );
     }
 
     # Get or generate master key
@@ -185,10 +185,8 @@ sub run {
         return [ 200, [ 'Content-Type' => 'application/json' ],
             ['{"result":1}'] ];
     }
-
     elsif ( $action eq 'delete' ) {
-        my $epoch = $req->param('epoch');
-
+        my $epoch         = $req->param('epoch');
         my $list2FDevices = eval {
             $self->logger->debug("Loading 2F Devices ...");
 

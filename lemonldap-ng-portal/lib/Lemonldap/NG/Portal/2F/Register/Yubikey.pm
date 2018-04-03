@@ -76,7 +76,8 @@ sub run {
             $self->logger->debug("Same 2F Device found ? $SameUBKFound");
             if ($SameUBKFound) {
                 $self->userLogger->error("Yubikey already registered !");
-                return $self->p->sendError( $req, 'Yubikey already registered', 200 );
+                return $self->p->sendError( $req, 'Yubikey already registered',
+                    200 );
             }
 
             push @{$list2FDevices},
@@ -114,8 +115,8 @@ sub run {
     }
 
     # Check if unregistration is allowed
-    unless ( $self->conf->{u2fUserCanRemoveKey} ) {
-        return $self->p->sendError( $req, 'notAutorizated', 200 );
+    unless ( $self->conf->{yubikey2fUserCanRemoveKey} ) {
+        return $self->p->sendError( $req, 'notAuthorized', 400 );
     }
 
     if ( $action eq 'delete' ) {

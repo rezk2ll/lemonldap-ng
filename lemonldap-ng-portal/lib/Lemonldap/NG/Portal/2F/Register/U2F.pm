@@ -167,8 +167,9 @@ sub run {
 
     # Check if unregistration is allowed
     unless ( $self->conf->{u2fUserCanRemoveKey} ) {
-        return $self->p->sendError( $req, 'notAutorizated', 200 );
+        return $self->p->sendError( $req, 'notAuthorized', 200 );
     }
+
     if ( $action eq 'unregister' ) {
         my $challenge = $self->crypter->registrationChallenge;
         return [
@@ -199,8 +200,7 @@ sub run {
         return $self->p->sendError( $req, $err, 200 );
     }
     elsif ( $action eq 'delete' ) {
-        my $epoch = $req->param('epoch');
-
+        my $epoch         = $req->param('epoch');
         my $list2FDevices = eval {
             $self->logger->debug("Loading 2F Devices ...");
 
@@ -238,7 +238,7 @@ sub run {
         return $self->p->sendError( $req, $err, 200 );
     }
     $self->logger->error("Unknown action $action");
-    return $self->p->sendError( $req, 'notAutorizated', 200 );
+    return $self->p->sendError( $req, 'notAuthorized', 200 );
 }
 
 sub loadUser {

@@ -238,7 +238,7 @@ sub _displayRegister {
                 400 );
         }
         unless ( $m->{r}->( $req, $req->userData ) ) {
-            return $self->p->sendError( $req, 'Registration unauthorizated',
+            return $self->p->sendError( $req, 'Registration not authorized',
                 403 );
         }
         return $self->p->sendHtml( $req, $m->{m}->template );
