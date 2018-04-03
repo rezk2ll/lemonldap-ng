@@ -374,7 +374,6 @@ sub attributes {
             type          => 'text',
             test          => qr/^(?:none|authenticate|manager|)$/,
             msgFail       => '__authorizedValues__: none authenticate manager',
-            default       => 'none',
             documentation => 'Manager protection method',
             flags         => 'hm',
         },
@@ -1218,24 +1217,24 @@ sub attributes {
 'Authentication level for users authentified by Yubikey second factor'
         },
         yubikey2fClientID => {
-            type => 'text',
+            type          => 'text',
             documentation => 'Yubico client ID',
         },
         yubikey2fSecretKey => {
-            type => 'text',
+            type          => 'text',
             documentation => 'Yubico secret key',
         },
         yubikey2fNonce => {
-            type => 'text',
+            type          => 'text',
             documentation => 'Yubico nonce',
         },
         yubikey2fUrl => {
-            type => 'text',
+            type          => 'text',
             documentation => 'Yubico server',
         },
         yubikey2fPublicIDSize => {
-            type => 'int',
-            default => 12,
+            type          => 'int',
+            default       => 12,
             documentation => 'Yubikey public ID size',
         },
 
@@ -1430,31 +1429,26 @@ sub attributes {
             type          => 'text',
             documentation => 'Secure Token attribute',
             flags         => 'h',
-            default       => 'uid',
         },
         secureTokenExpiration => {
             type          => 'text',
             documentation => 'Secure Token expiration',
             flags         => 'h',
-            default       => 60,
         },
         secureTokenHeader => {
             type          => 'text',
             documentation => 'Secure Token header',
             flags         => 'h',
-            default       => 'Auth-Token',
         },
         secureTokenMemcachedServers => {
             type          => 'text',
             documentation => 'Secure Token Memcached servers',
             flags         => 'h',
-            default       => '',
         },
         secureTokenUrls => {
             type          => 'text',
             documentation => '',
             flags         => 'h',
-            default       => '.*',
         },
 
         # Zimbra handler parameters
@@ -2183,15 +2177,17 @@ sub attributes {
         # Seconf Factor Engine
         sfEngine => {
             type          => 'text',
-            default       => '::2F::Engine::Default',
+            default       => '::2F::Engines::Default',
             documentation => 'Second factor engine',
         },
         available2F => {
             type          => 'text',
+            default       => 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey',
             documentation => 'Available second factor modules',
         },
         available2FSelfRegistration => {
-            type => 'text',
+            type    => 'text',
+            default => 'TOTP,U2F,Yubikey',
             documentation =>
               'Available self-registration modules for second factor',
         },
