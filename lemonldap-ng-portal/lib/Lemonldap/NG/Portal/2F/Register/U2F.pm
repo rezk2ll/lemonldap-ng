@@ -46,8 +46,7 @@ sub run {
         my ( $resp, $challenge );
         $self->logger->debug('Registration response');
         unless ($resp = $req->param('registration')
-            and $challenge = $req->param('challenge')
-             )
+            and $challenge = $req->param('challenge') )
         {
             return $self->p->sendError( $req, 'Missing registration parameter',
                 400 );
@@ -78,29 +77,11 @@ sub run {
                     $list2FDevices = [];
                 }
                 my $keyName = $req->param('keyName');
-                my $epoch = time();
+                my $epoch   = time();
+
+                # Set default name if empty
                 $keyName ||= $epoch;
                 $self->logger->debug("Key name : $keyName");
-
-                # Select U2F Devices only
-                #my @listU2FKeys = map {
-                #( $_->{type} eq "U2F" ) ? return $_ : return ();
-                #} @{$list2FDevices};
-                #$self->logger->debug("Select U2F Devices only ...");
-
-                # Search if U2F Key has been already registered
-                my $SameU2FKeyFound = 0;
-                foreach (@$list2FDevices) {
-                    $self->logger->debug("Reading U2F Keys ...");
-                    $SameU2FKeyFound ||= 1 if ( ( $_->{name} eq $keyName ) );
-                }
-
-                $self->logger->debug("Same 2F Device found ? $SameU2FKeyFound");
-
-                if ($SameU2FKeyFound) {
-                    $self->userLogger->error("U2F Key already registered !");
-                    return $self->p->sendError( $req, 'Bad challenge', 400 );
-                }
 
                 push @{$list2FDevices},
                   {
@@ -230,7 +211,7 @@ sub run {
         my @keep = ();
         while (@$list2FDevices) {
             my $element = shift @$list2FDevices;
-            $self->logger->debug("Looking for 2F Device to delete ...");
+            $self->logger->debug("Looking for 2F device to delete ...");
             push @keep, $element unless ( $element->{epoch} eq $epoch );
         }
 

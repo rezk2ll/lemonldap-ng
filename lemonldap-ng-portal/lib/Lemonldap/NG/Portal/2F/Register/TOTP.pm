@@ -65,17 +65,16 @@ sub run {
         # Now check TOTP code to verify that user has a valid TOTP app
         my $code     = $req->param('code');
         my $TOTPName = $req->param('TOTPName');
+        my $epoch    = time();
+
+        # Set default name if empty
+        $TOTPName ||= $epoch;
 
         unless ($code) {
             $self->logger->userInfo('TOTP registration: empty validation form');
             return $self->p->sendError( $req, 'missingCode', 200 );
         }
 
-        #unless ( $code and $TOTPName ) {
-        #$self->logger->userInfo(
-        #'TOTP registration: empty code or name in validation form');
-        #return $self->p->sendError( $req, 'missingCode', 200 );
-        #}
         my $r = $self->verifyCode(
             $self->conf->{totp2fInterval},
             $self->conf->{totp2fRange},
@@ -112,11 +111,11 @@ sub run {
             type    => 'TOTP',
             name    => $TOTPName,
             _secret => $token->{_totp2fSecret},
-            epoch   => time()
+            epoch   => $epoch
           };
 
-        #$self->logger->debug(
-        #"Append 2F Device : { type => 'totp', name => $TOTPName }");
+        $self->logger->debug(
+            "Append 2F Device : { type => 'totp', name => $TOTPName }");
         $self->p->updatePersistentSession( $req,
             { list2FDevices => to_json($list2FDevices) } );
 
@@ -173,20 +172,19 @@ sub run {
             }
         );
     }
-    
-    if ( $self->conf->{totp2fUserCanChangeKey} ) {
-		return $self->p->sendError( $req, 'notAutorizated', 200 );
-	}
+
+    # Check if unregistration is allowed
+    unless ( $self->conf->{totp2fUserCanChangeKey} ) {
+        return $self->p->sendError( $req, 'notAutorizated', 200 );
+    }
 
     # Get or generate master key
     if ( $action eq 'unregister' ) {
-            $self->p->updatePersistentSession( $req, { _totp2fSecret => '' } );
-            $self->userLogger->notice('TOTP unregistration succeed');
-            return [
-                200, [ 'Content-Type' => 'application/json' ],
-                ['{"result":1}']
-            ];
-     }
+        $self->p->updatePersistentSession( $req, { _totp2fSecret => '' } );
+        $self->userLogger->notice('TOTP unregistration succeed');
+        return [ 200, [ 'Content-Type' => 'application/json' ],
+            ['{"result":1}'] ];
+    }
 
     elsif ( $action eq 'delete' ) {
         my $epoch = $req->param('epoch');
@@ -201,7 +199,7 @@ sub run {
         my @keep = ();
         while (@$list2FDevices) {
             my $element = shift @$list2FDevices;
-            $self->logger->debug("Looking for 2F Device to delete ...");
+            $self->logger->debug("Looking for 2F device to delete ...");
             push @keep, $element unless ( $element->{epoch} eq $epoch );
         }
 

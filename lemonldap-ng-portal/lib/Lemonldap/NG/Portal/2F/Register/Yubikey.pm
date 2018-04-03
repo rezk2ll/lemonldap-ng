@@ -35,8 +35,11 @@ sub run {
     if ( $action eq 'register' ) {
         my $otp     = $req->param('otp');
         my $UBKName = $req->param('UBKName');
-        if (    $UBKName
-            and $otp
+        my $epoch   = time();
+
+        # Set default name if empty
+        $UBKName ||= $epoch;
+        if ( $otp
             and length($otp) > $self->conf->{yubikey2fPublicIDSize} )
         {
             my $keys = $req->userData->{_yubikeys} || '';
@@ -53,13 +56,37 @@ sub run {
                 $self->logger->debug("No 2F Device found");
                 $list2FDevices = [];
             }
+
+            # Select U2F Devices only
+            #my @listU2FKeys = map {
+            #( $_->{type} eq "U2F" ) ? return $_ : return ();
+            #} @{$list2FDevices};
+            #$self->logger->debug("Select U2F Devices only ...");
+
+            # Search if Yubikey has been already registered
+            my $SameUBKFound = 0;
+            foreach (@$list2FDevices) {
+                $self->logger->debug("Reading Yubikeys ...");
+                if ( $_->{_yubikey} eq $key ) {
+                    $SameUBKFound = 1;
+                    last;
+                }
+            }
+
+            $self->logger->debug("Same 2F Device found ? $SameUBKFound");
+            if ($SameUBKFound) {
+                $self->userLogger->error("Yubikey already registered !");
+                return $self->p->sendError( $req, 'Yubikey already registered', 200 );
+            }
+
             push @{$list2FDevices},
               {
                 type     => 'UBK',
                 name     => $UBKName,
                 _yubikey => $key,
-                epoch    => time()
+                epoch    => $epoch
               };
+
             $self->logger->debug(
                 "Append 2F Device : { type => 'UBK', name => $UBKName }");
             $self->p->updatePersistentSession( $req,
@@ -86,9 +113,13 @@ sub run {
         }
     }
 
-    elsif ( $action eq 'delete' ) {
-        my $epoch = $req->param('epoch');
+    # Check if unregistration is allowed
+    unless ( $self->conf->{u2fUserCanRemoveKey} ) {
+        return $self->p->sendError( $req, 'notAutorizated', 200 );
+    }
 
+    if ( $action eq 'delete' ) {
+        my $epoch         = $req->param('epoch');
         my $list2FDevices = eval {
             $self->logger->debug("Loading 2F Devices ...");
 
@@ -99,7 +130,7 @@ sub run {
         my @keep = ();
         while (@$list2FDevices) {
             my $element = shift @$list2FDevices;
-            $self->logger->debug("Looking for 2F Device to delete ...");
+            $self->logger->debug("Looking for 2F device to delete ...");
             push @keep, $element unless ( $element->{epoch} eq $epoch );
         }
 
