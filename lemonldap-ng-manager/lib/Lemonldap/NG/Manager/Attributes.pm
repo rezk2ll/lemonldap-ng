@@ -3219,6 +3219,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'bool'
         },
+        'totp2fUserCanRemoveKey' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'trustedDomains' => {
             'type' => 'text'
         },
@@ -3421,6 +3425,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'yubikey2fUrl' => {
             'type' => 'text'
+        },
+        'yubikey2fUserCanRemoveKey' => {
+            'default' => 1,
+            'type'    => 'bool'
         },
         'zimbraAccountKey' => {
             'type' => 'text'

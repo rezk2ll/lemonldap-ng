@@ -725,6 +725,7 @@
 "totp2fRange":"Range of attempts",
 "totp2fSelfRegistration":"التسجيل الذاتي",
 "totp2fUserCanChangeKey":"Change existing secret",
+"totp2fUserCanRemoveKey":"Authorize user to remove TOTP",
 "trustedDomains":"النطاقات الموثوق بها",
 "trustedProxies":"عناوين الآي بي البروكسي الموثوق بها",
 "twitterAppName":"اسم التطبيق",
@@ -798,6 +799,7 @@
 "yubikey2fSecretKey":"مفتاح سرأل API",
 "yubikey2fSelfRegistration":"التسجيل الذاتي",
 "yubikey2fUrl":"Service URL",
+"yubikey2fUserCanRemoveKey":"Authorize user to remove Yubikey",
 "zeroConfExplanations":"لا يحتوي الخادم على إعدادات. استخدام قالب لحفظ الأول",
 
 "saml":"SAML",

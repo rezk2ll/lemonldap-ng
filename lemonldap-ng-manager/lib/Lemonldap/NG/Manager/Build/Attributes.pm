@@ -1123,6 +1123,11 @@ sub attributes {
             default       => 0,
             documentation => 'Authorize users to change existing TOTP secret',
         },
+        totp2fUserCanRemoveKey => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Authorize users to remove existing TOTP secret',
+        },
 
         # UTOTP 2F
         utotp2fActivation => {
@@ -1236,6 +1241,11 @@ sub attributes {
             type          => 'int',
             default       => 12,
             documentation => 'Yubikey public ID size',
+        },
+        yubikey2fUserCanRemoveKey => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Authorize users to remove existing Yubikey',
         },
 
         # Single session

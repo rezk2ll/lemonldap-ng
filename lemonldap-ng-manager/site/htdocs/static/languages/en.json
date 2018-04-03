@@ -725,6 +725,7 @@
 "totp2fRange":"Range of attempts",
 "totp2fSelfRegistration":"Self registration",
 "totp2fUserCanChangeKey":"Change existing secret",
+"totp2fUserCanRemoveKey":"Authorize user to remove TOTP",
 "trustedDomains":"Trusted domains",
 "trustedProxies":"Trusted proxies IP",
 "twitterAppName":"Application name",
@@ -798,6 +799,7 @@
 "yubikey2fSecretKey":"API secret key",
 "yubikey2fSelfRegistration":"Self registration",
 "yubikey2fUrl":"Service URL",
+"yubikey2fUserCanRemoveKey":"Authorize user to remove Yubikey",
 "zeroConfExplanations":"Server has no configuration. Use template to save the first.",
 
 "saml":"SAML",

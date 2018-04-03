@@ -725,6 +725,7 @@
 "totp2fRange":"Range of attempts",
 "totp2fSelfRegistration":"Tự đăng ký",
 "totp2fUserCanChangeKey":"Change existing secret",
+"totp2fUserCanRemoveKey":"Authorize user to remove TOTP",
 "trustedDomains":"Miền tin cậy",
 "trustedProxies":"proxies IP tin cậy",
 "twitterAppName":"Tên ứng dụng",
@@ -798,6 +799,7 @@
 "yubikey2fSecretKey":"Khóa bí mật API",
 "yubikey2fSelfRegistration":"Tự đăng ký",
 "yubikey2fUrl":"Service URL",
+"yubikey2fUserCanRemoveKey":"Authorize user to remove Yubikey",
 "zeroConfExplanations":"Máy chủ không có cấu hình. Sử dụng mẫu để lưu đầu tiên. ",
 
 "saml":"SAML",
