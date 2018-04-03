@@ -35,13 +35,18 @@
     </div>
    </div>
   </main>
-
- <div class="buttons">
+  
+<div class="buttons">
+  <a href="<TMPL_VAR NAME="PORTAL_URL">/2fregisters" class="btn btn-warning" role="button">
+    <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+    <span trspan="2FManagment">2F managment</span>
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
   <a id="goback" href="<TMPL_VAR NAME="PORTAL_URL"><TMPL_IF NAME="AUTH_URL">/?url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
     <span class="glyphicon glyphicon-home"></span>&nbsp;
     <span trspan="goToPortal">Go to portal</span>
   </a>
- </div>
+</div>
 
 <!-- //if:jsminified
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/qrious/dist/qrious.min.js"></script>
