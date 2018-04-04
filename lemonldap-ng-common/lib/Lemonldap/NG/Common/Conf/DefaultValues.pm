@@ -119,6 +119,8 @@ sub defaultValues {
         'mailUrl'                    => 'http://auth.example.com/resetpwd',
         'managerDn'                  => '',
         'managerPassword'            => '',
+        'max2FDevices'               => 10,
+        'max2FDevicesNameLength'     => 20,
         'multiValuesSeparator'       => '; ',
         'notificationStorage'        => 'File',
         'notificationStorageOptions' => {

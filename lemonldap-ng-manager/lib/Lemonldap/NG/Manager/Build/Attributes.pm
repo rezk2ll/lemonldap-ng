@@ -1054,7 +1054,19 @@ sub attributes {
             default       => 1,
             documentation => 'Upgrade session activation',
         },
-
+        
+        # 2F
+        max2FDevices => {
+            default       => 10,
+            type          => 'int',
+            documentation => 'Register session timeout',
+        },
+        max2FDevicesNameLength => {
+            default       => 20,
+            type          => 'int',
+            documentation => 'Register session timeout',
+        },
+        
         # U2F
         u2fActivation => {
             type          => 'boolOrExpr',
