@@ -23,7 +23,7 @@
       <tbody>
         <TMPL_LOOP NAME="SFDEVICES">
           <tr id='delete-<TMPL_VAR NAME="epoch">'>
-	          <td class="align-middle" ><TMPL_VAR NAME="type"></td><td class="align-middle"><TMPL_VAR NAME="name"></td><td class="align-middle" id="data-epoch"><TMPL_VAR NAME="epoch"></td>
+	          <td class="align-middle" ><TMPL_VAR NAME="type"></td><td class="align-middle"><TMPL_VAR NAME="name"></td><td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
 	          <td>
 	           <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
 	             <span class="glyphicon glyphicon-minus-sign"></span>&nbsp;

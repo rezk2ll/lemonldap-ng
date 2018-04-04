@@ -47,4 +47,6 @@ delete2F = (device, epoch) ->
 $(document).ready ->
 	$('body').on 'click', '.btn-danger', () -> delete2F ( $(this).attr 'device' ), ( $(this).attr 'epoch' )
 	$('#goback').attr 'href', portal
-	$('#data-epoch').each => hide()
+	$(".data-epoch").each ->
+		myDate = new Date($(this).text() * 1000)
+		$(this).text(myDate.toLocaleString())
