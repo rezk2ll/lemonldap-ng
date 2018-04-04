@@ -200,7 +200,7 @@ sub run {
         return $self->p->sendError( $req, $err, 200 );
     }
     elsif ( $action eq 'delete' ) {
-        my $epoch         = $req->param('epoch');
+        my $epoch      = $req->param('epoch');
         my $_2FDevices = eval {
             $self->logger->debug("Loading 2F Devices ...");
 

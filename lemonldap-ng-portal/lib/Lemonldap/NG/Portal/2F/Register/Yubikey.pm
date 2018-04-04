@@ -77,12 +77,12 @@ sub run {
             if ($SameUBKFound) {
                 $self->userLogger->error("Yubikey already registered !");
                 return $self->p->sendHtml(
-                $req, 'error',
-                params => {
-                    RAW_ERROR       => 'yourKeyIsAlreadyRegistered',
-                    AUTH_ERROR_TYPE => 'warning',
-                }
-            );
+                    $req, 'error',
+                    params => {
+                        RAW_ERROR       => 'yourKeyIsAlreadyRegistered',
+                        AUTH_ERROR_TYPE => 'warning',
+                    }
+                );
             }
 
             push @{$_2FDevices},
@@ -125,7 +125,7 @@ sub run {
     }
 
     if ( $action eq 'delete' ) {
-        my $epoch         = $req->param('epoch');
+        my $epoch      = $req->param('epoch');
         my $_2FDevices = eval {
             $self->logger->debug("Loading 2F Devices ...");
 

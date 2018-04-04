@@ -44,7 +44,7 @@ sub init {
     my ($self) = @_;
 
     # Set default 2F list
-    $self->conf->{available2F}                 ||= 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey';
+    $self->conf->{available2F} ||= 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey';
     $self->conf->{available2FSelfRegistration} ||= 'TOTP,U2F,Yubikey';
 
     # Load 2F modules
@@ -92,7 +92,7 @@ sub init {
 
     # Enable REST request only if more than 1 2F module is enabled
     if ( @{ $self->{sfModules} } > 1 ) {
-        $self->addUnauthRoute( '2fchoice' => '_choice',   ['POST'] );
+        $self->addUnauthRoute( '2fchoice' => '_choice',  ['POST'] );
         $self->addUnauthRoute( '2fchoice' => 'redirect', ['GET'] );
     }
 
@@ -102,7 +102,7 @@ sub init {
 
         # Registration base
         $self->addAuthRoute( '2fregisters' => '_displayRegister', ['GET'] );
-        $self->addAuthRoute( '2fregisters' => 'register',        ['POST'] );
+        $self->addAuthRoute( '2fregisters' => 'register',         ['POST'] );
     }
 
     return 1;
@@ -170,9 +170,9 @@ sub run {
 # Return true if at least 1 register module is available for this user. Used
 # by Menu to display or not /2fregisters page
 sub display2fRegisters {
-    my($self,$req,$session) = @_;
+    my ( $self, $req, $session ) = @_;
     foreach my $m ( @{ $self->sfRModules } ) {
-        return 1 if ( $m->{r}->( $req, $session) );
+        return 1 if ( $m->{r}->( $req, $session ) );
     }
     return 0;
 }
@@ -262,24 +262,21 @@ sub _displayRegister {
         return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ],
             [] ];
     }
-    
-    my $_2FDevices = eval {
-                from_json( $req->userData->{_2FDevices},
-                    { allow_nonref => 1 } );
-            };
-    
-    
+
+    my $_2FDevices = eval { from_json( $req->userData->{_2FDevices},
+            { allow_nonref => 1 } ); };
+
     unless ($_2FDevices) {
-                 $self->logger->debug("No 2F Device found");
-                    $_2FDevices = [];
-            };    
-    
+        $self->logger->debug("No 2F Device found");
+        $_2FDevices = [];
+    }
+
     return $self->p->sendHtml(
         $req,
         '2fregisters',
         params => {
-            SKIN    => $self->conf->{portalSkin},
-            MODULES => \@am,
+            SKIN      => $self->conf->{portalSkin},
+            MODULES   => \@am,
             SFDEVICES => $_2FDevices,
         }
     );
