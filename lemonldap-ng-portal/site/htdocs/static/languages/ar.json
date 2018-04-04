@@ -224,6 +224,7 @@
 "yourIdentity":"هويتك",
 "yourIdentityIs":"هويتك هي",
 "yourKeyIsRegistered":"المفتاح الخاص بك تم تسجيله",
+"yourKeyIsAlreadyRegistered" : "Your key is ALREADY registered !!!",
 "yourKeyIsUnregistered":"تمت إزالة المفتاح",
 "yourKeyIsVerified":"تم اختبار المفتاح الخاص بك بنجاح",
 "yourNewTotpKey":"Your new TOTP key, please test it and enter the code",

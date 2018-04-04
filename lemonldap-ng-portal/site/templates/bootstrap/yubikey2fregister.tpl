@@ -9,10 +9,9 @@
       <form action="/2fregisters/yubikey/register" method="post">
        <div class="form-group">
 		<b><span trspan="name">Name</span></b> : <input type="text" id="UBKName" name="UBKName" value="MyYubikey"/>
-        <br>
-	    <br>
+		&nbsp;&nbsp;&nbsp;&nbsp;
         <b><span trspan="id">Id</span></b></b> : <input type="text" id="otp" name="otp" />
-        <input type="submit" value="Submit">
+        <input class ="hidden" type="submit" value="Submit">
        </div>
       </form>
      </div>

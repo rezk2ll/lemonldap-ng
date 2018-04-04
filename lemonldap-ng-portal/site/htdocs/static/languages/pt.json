@@ -224,6 +224,7 @@
 "yourIdentity":"Your identity",
 "yourIdentityIs":"Your identity is",
 "yourKeyIsRegistered":"Your key is registered",
+"yourKeyIsAlreadyRegistered" : "Your key is ALREADY registered !!!",
 "yourKeyIsUnregistered":"Your key has been unregistered",
 "yourKeyIsVerified":"Your key is verified",
 "yourNewTotpKey":"Your new TOTP key, please test it and enter the code",
