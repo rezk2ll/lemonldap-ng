@@ -17,7 +17,7 @@ displayError = (j, status, err) ->
 		console.log 'Returned error', res
 		setMsg res, 'warning'
 
-# Unregistration function (launched by "unregister" button)
+# Delete function (launched by "delete" button)
 delete2F = (device, epoch) ->
 		if device == 'U2F'
 			device = 'u'
@@ -26,6 +26,9 @@ delete2F = (device, epoch) ->
 			else if device == 'TOTP'
 					device = 'totp'
 				else setMsg 'u2fFailed', 'warning'
+		
+		$("#delete-#{epoch}").hide()
+		
 		$.ajax
 			type: "POST"
 			url: "#{portal}2fregisters/#{device}/delete"
@@ -44,4 +47,4 @@ delete2F = (device, epoch) ->
 $(document).ready ->
 	$('body').on 'click', '.btn-danger', () -> delete2F ( $(this).attr 'device' ), ( $(this).attr 'epoch' )
 	$('#goback').attr 'href', portal
-	#$('body').find 'td' moment-with-locales.unix( $(this) ).format('YYYY-MM-DD HH:mm:ss')
+	$('#data-epoch').each => hide()

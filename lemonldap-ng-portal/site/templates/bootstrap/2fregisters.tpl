@@ -22,10 +22,10 @@
       </thead>
       <tbody>
         <TMPL_LOOP NAME="SFDEVICES">
-          <tr>
-	          <td class="align-middle" ><TMPL_VAR NAME="type"></td><td class="align-middle"><TMPL_VAR NAME="name"></td><td class="align-middle" ><TMPL_VAR NAME="epoch"></td>
+          <tr id='delete-<TMPL_VAR NAME="epoch">'>
+	          <td class="align-middle" ><TMPL_VAR NAME="type"></td><td class="align-middle"><TMPL_VAR NAME="name"></td><td class="align-middle" id="data-epoch"><TMPL_VAR NAME="epoch"></td>
 	          <td>
-	           <span id="delete" device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
+	           <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
 	             <span class="glyphicon glyphicon-minus-sign"></span>&nbsp;
 	             <span trspan="unregister">Unregister</span>
 	           </span>
@@ -57,10 +57,7 @@
 
 <!-- //if:jsminified
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/2fregistration.min.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/moment-with-locales.min.js"></script>
-  
 //else -->
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/moment-with-locales.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/2fregistration.js"></script>
 <!-- //endif -->
 <TMPL_INCLUDE NAME="footer.tpl">
