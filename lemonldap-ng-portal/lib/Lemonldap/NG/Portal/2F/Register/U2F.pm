@@ -63,18 +63,18 @@ sub run {
             my ( $keyHandle, $userKey ) = $c->registrationVerify($resp);
             if ( $keyHandle and $userKey ) {
 
-                my $list2FDevices = eval {
+                my $_2FDevices = eval {
                     $self->logger->debug("Looking for 2F Devices ...");
 
                     # Read existing 2FDevices
-                    from_json( $req->userData->{list2FDevices},
+                    from_json( $req->userData->{_2FDevices},
                         { allow_nonref => 1 } );
                 };
-                unless ($list2FDevices) {
+                unless ($_2FDevices) {
                     $self->logger->debug("No 2F Device found");
 
                     # Set default value
-                    $list2FDevices = [];
+                    $_2FDevices = [];
                 }
                 my $keyName = $req->param('keyName');
                 my $epoch   = time();
@@ -83,7 +83,7 @@ sub run {
                 $keyName ||= $epoch;
                 $self->logger->debug("Key name : $keyName");
 
-                push @{$list2FDevices},
+                push @{$_2FDevices},
                   {
                     type       => 'U2F',
                     name       => $keyName,
@@ -94,7 +94,7 @@ sub run {
                 $self->logger->debug(
                     "Append 2F Device : { type => 'U2F', name => $keyName }");
                 $self->p->updatePersistentSession( $req,
-                    { list2FDevices => to_json($list2FDevices) } );
+                    { _2FDevices => to_json($_2FDevices) } );
 
                 $self->p->updatePersistentSession(
                     $req,
@@ -201,16 +201,16 @@ sub run {
     }
     elsif ( $action eq 'delete' ) {
         my $epoch         = $req->param('epoch');
-        my $list2FDevices = eval {
+        my $_2FDevices = eval {
             $self->logger->debug("Loading 2F Devices ...");
 
             # Read existing 2FDevices
-            from_json( $req->userData->{list2FDevices}, { allow_nonref => 1 } );
+            from_json( $req->userData->{_2FDevices}, { allow_nonref => 1 } );
         };
 
         my @keep = ();
-        while (@$list2FDevices) {
-            my $element = shift @$list2FDevices;
+        while (@$_2FDevices) {
+            my $element = shift @$_2FDevices;
             $self->logger->debug("Looking for 2F device to delete ...");
             push @keep, $element unless ( $element->{epoch} eq $epoch );
         }
@@ -218,7 +218,7 @@ sub run {
         $self->logger->debug(
             "Delete 2F Device : { type => 'U2F', epoch => $epoch }");
         $self->p->updatePersistentSession( $req,
-            { list2FDevices => to_json( \@keep ) } );
+            { _2FDevices => to_json( \@keep ) } );
 
         $self->p->updatePersistentSession(
             $req,

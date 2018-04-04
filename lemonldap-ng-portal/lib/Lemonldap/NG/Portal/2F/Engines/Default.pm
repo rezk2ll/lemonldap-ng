@@ -263,38 +263,16 @@ sub _displayRegister {
             [] ];
     }
     
-    
-    
-    my $list2FDevices = eval {
-                from_json( $req->userData->{list2FDevices},
+    my $_2FDevices = eval {
+                from_json( $req->userData->{_2FDevices},
                     { allow_nonref => 1 } );
             };
     
     
-    unless ($list2FDevices) {
+    unless ($_2FDevices) {
                  $self->logger->debug("No 2F Device found");
-                    $list2FDevices = [];
+                    $_2FDevices = [];
             };    
-    
-    #my @listClefsU2F = map {
-    #if ( $_->{type} eq "U2F" ) {
-        #return $_;
-    #}
-    #else {
-        #return ();
-    #}
-    #} @$req->userData->{list2FDevices};
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     return $self->p->sendHtml(
         $req,
@@ -302,8 +280,7 @@ sub _displayRegister {
         params => {
             SKIN    => $self->conf->{portalSkin},
             MODULES => \@am,
-            SFDEVICES => $list2FDevices,
-            #SFDEVICES => @$list2FDevices,
+            SFDEVICES => $_2FDevices,
         }
     );
 }
