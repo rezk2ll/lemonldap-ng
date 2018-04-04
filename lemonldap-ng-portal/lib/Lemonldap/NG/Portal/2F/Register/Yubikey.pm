@@ -24,6 +24,7 @@ has logo => ( is => 'rw', default => 'yubikey.png' );
 sub init {
     my ($self) = @_;
     $self->conf->{yubikey2fPublicIDSize} ||= 12;
+    $self->conf->{max2FDevices}          ||= 10;
     return 1;
 }
 
@@ -57,12 +58,6 @@ sub run {
                 $_2FDevices = [];
             }
 
-            # Select U2F Devices only
-            #my @listU2FKeys = map {
-            #( $_->{type} eq "U2F" ) ? return $_ : return ();
-            #} @{$_2FDevices};
-            #$self->logger->debug("Select U2F Devices only ...");
-
             # Search if Yubikey has been already registered
             my $SameUBKFound = 0;
             foreach (@$_2FDevices) {
@@ -80,6 +75,22 @@ sub run {
                     $req, 'error',
                     params => {
                         RAW_ERROR       => 'yourKeyIsAlreadyRegistered',
+                        AUTH_ERROR_TYPE => 'warning',
+                    }
+                );
+            }
+
+            # Check if user can register one more device
+            my $size = @$_2FDevices;
+            $self->logger->debug(
+                "Nbr 2FDevices = $size / $self->conf->{max2FDevices}");
+            if ( $size > $self->conf->{max2FDevices} ) {
+                $self->userLogger->error(
+                    "Max number of 2F devices is reached !!!");
+                return $self->p->sendHtml(
+                    $req, 'error',
+                    params => {
+                        RAW_ERROR       => 'MaxNumberof2FDevicesReached',
                         AUTH_ERROR_TYPE => 'warning',
                     }
                 );
