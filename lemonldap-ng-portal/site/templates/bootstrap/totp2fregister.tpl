@@ -13,10 +13,9 @@
       </pre>
      </div>
      <div class="form-group">
-       <b><span trspan="code">Code</span> : </b><input id="code" name="code" type="number" />
-       <br>
-	   <br>
        <b><span trspan="name">Name</span> : </b><input type="text" id="TOTPName" name="TOTPName" value="MyTOTP"/>
+       &nbsp;&nbsp;&nbsp;&nbsp;
+       <b><span trspan="code">Code</span> : </b><input id="code" name="code" type="number" />
      </div>
      <div class="buttons">
       <span id="changekey" class="btn btn-warning" role="button">
