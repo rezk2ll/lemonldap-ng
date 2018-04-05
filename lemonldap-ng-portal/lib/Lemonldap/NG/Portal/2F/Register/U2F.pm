@@ -30,6 +30,30 @@ sub run {
     my ( $self, $req, $action ) = @_;
 
     if ( $action eq 'register' ) {
+
+        # Check if user can register one more device
+        my $_2FDevices = eval {
+            $self->logger->debug("Looking for 2F Devices ...");
+
+            # Read existing 2FDevices
+            from_json( $req->userData->{_2FDevices}, { allow_nonref => 1 } );
+        };
+        unless ($_2FDevices) {
+            $self->logger->debug("No 2F Device found");
+
+            # Set default value
+            $_2FDevices = [];
+        }
+
+        my $size    = @$_2FDevices;
+        my $maxSize = $self->conf->{max2FDevices};
+        $self->logger->debug("Nbr 2FDevices = $size / $maxSize");
+        if ( $size >= $maxSize ) {
+            $self->userLogger->error("Max number of 2F devices is reached !!!");
+            return $self->p->sendError( $req, 'maxNumberof2FDevicesReached',
+                400 );
+        }
+
         my $challenge = $self->crypter->registrationChallenge;
         $self->logger->debug("Register challenge: $challenge");
         return [
@@ -75,17 +99,6 @@ sub run {
 
                     # Set default value
                     $_2FDevices = [];
-                }
-
-                # Check if user can register one more device
-                my $size = @$_2FDevices;
-                my $maxSize = $self->conf->{max2FDevices};
-                $self->logger->debug(
-                    "Nbr 2FDevices = $size / $maxSize");
-                if ( $size > $maxSize ) {
-                    $self->userLogger->error(
-                        "Max number of 2F devices is reached !!!");
-                    return $self->p->sendError( $req, 'MaxNumberof2FDevicesReached', 200 );
                 }
 
                 my $keyName = $req->param('keyName');

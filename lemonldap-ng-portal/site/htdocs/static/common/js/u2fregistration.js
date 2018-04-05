@@ -48,7 +48,7 @@ LemonLDAP::NG U2F registration script
         return u2f.register(ch.appId, request, [], function(data) {
           $('#u2fPermission').hide();
           if (data.errorCode) {
-            return setMsg('unableToGetKey', 'warning');
+            return setMsg(data.error, 'warning');
           } else {
             return $.ajax({
               type: "POST",

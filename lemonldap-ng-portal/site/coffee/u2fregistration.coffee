@@ -38,7 +38,7 @@ register = ->
 				$('#u2fPermission').hide()
 				# Handle errors
 				if data.errorCode
-					setMsg 'unableToGetKey', 'warning'
+					setMsg data.error, 'warning'
 				else
 					# 3 send response
 					$.ajax

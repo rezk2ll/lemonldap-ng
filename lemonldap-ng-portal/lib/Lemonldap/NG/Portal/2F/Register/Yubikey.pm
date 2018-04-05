@@ -80,15 +80,20 @@ sub run {
             }
 
             # Check if user can register one more device
-                my $size = @$_2FDevices;
-                my $maxSize = $self->conf->{max2FDevices};
-                $self->logger->debug(
-                    "Nbr 2FDevices = $size / $maxSize");
-                if ( $size > $maxSize ) {
-                    $self->userLogger->error(
-                        "Max number of 2F devices is reached !!!");
-                    return $self->p->sendError( $req, 'MaxNumberof2FDevicesReached', 200 );
-                }
+            my $size    = @$_2FDevices;
+            my $maxSize = $self->conf->{max2FDevices};
+            $self->logger->debug("Nbr 2FDevices = $size / $maxSize");
+            if ( $size >= $maxSize ) {
+                $self->userLogger->error(
+                    "Max number of 2F devices is reached !!!");
+                return $self->p->sendHtml(
+                    $req, 'error',
+                    params => {
+                        RAW_ERROR       => 'maxNumberof2FDevicesReached',
+                        AUTH_ERROR_TYPE => 'warning',
+                    }
+                );
+            }
 
             push @{$_2FDevices},
               {

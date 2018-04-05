@@ -151,6 +151,7 @@
 "mail":"Thư",
 "mailSent2":"Một tin nhắn đã được gửi đến địa chỉ thư của bạn.",
 "maintenanceMode":"Ứng dụng này đang trong quá trình bảo trì, hãy thử kết nối sau",
+"maxNumberof2FDevicesReached":"Maximum number of 2F devices reached !!!",
 "name":"Name",
 "newMessages":"(Các) tin nhắn mới",
 "newPassword":"Mật khẩu mới",
