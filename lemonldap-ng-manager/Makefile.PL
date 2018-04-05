@@ -15,7 +15,22 @@ WriteMakefile(
     META_MERGE => {
         recommends => {
             'LWP::Protocol::https' => 0,
-        }
+        },
+        resources => {
+            repository => {
+                url  => 'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng.git',
+                web  => 'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng',
+                type => 'git',
+            },
+            MailingList => 'mailto:lemonldap-ng-dev@ow2.org',
+            license     => 'http://opensource.org/licenses/GPL-2.0',
+            homepage    => 'http://lemonldap-ng.org/',
+            bugtracker  => {
+                web =>
+                  'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues',
+            },
+            x_twitter => 'https://twitter.com/lemonldapng',
+        },
     },
     PREREQ_PM => {
         'Convert::PEM'           => 0,
@@ -37,12 +52,6 @@ WriteMakefile(
     ),
     clean => {
         FILES => 't/conf/lmConf-2.json',
-    },
-    resources => {
-        repository  => 'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng',
-        MailingList => 'mailto:lemonldap-ng-dev@ow2.org',
-        license     => 'http://opensource.org/licenses/GPL-2.0',
-        homepage    => 'http://lemonldap-ng.org/',
     },
 );
 

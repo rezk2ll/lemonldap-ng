@@ -22,6 +22,21 @@ WriteMakefile(
             'HTTP::Message'     => 0,
             'SOAP::Lite'        => 0,
         },
+        resources => {
+            repository => {
+                url  => 'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng.git',
+                web  => 'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng',
+                type => 'git',
+            },
+            MailingList => 'mailto:lemonldap-ng-dev@ow2.org',
+            license     => 'http://opensource.org/licenses/GPL-2.0',
+            homepage    => 'http://lemonldap-ng.org/',
+            bugtracker  => {
+                web =>
+                  'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues',
+            },
+            x_twitter => 'https://twitter.com/lemonldapng',
+        },
     },
     PREREQ_PM => {
         'Lemonldap::NG::Common' => '2.0.0',
@@ -40,10 +55,4 @@ WriteMakefile(
           )
         : ()
     ),
-    resources => {
-        repository  => 'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng',
-        MailingList => 'mailto:lemonldap-ng-dev@ow2.org',
-        license     => 'http://opensource.org/licenses/GPL-2.0',
-        homepage    => 'http://lemonldap-ng.org/',
-    },
 );
