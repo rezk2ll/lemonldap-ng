@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::2F::Yubikey;
 
 use strict;
 use Mouse;
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_FORMEMPTY
@@ -39,7 +40,7 @@ sub init {
         $self->error('Missing mandatory parameters (Client ID and secret key)');
         return 0;
     }
-    $self->conf->{yubikey2fPublicIDSize} ||= 12;
+
     $self->yubi(
         Auth::Yubikey_WebClient->new(
             {
@@ -55,13 +56,27 @@ sub init {
 
 sub run {
     my ( $self, $req, $token ) = @_;
+    my $yubikey    = 0;
+    my $_2FDevices = eval {
+        $self->logger->debug("Looking for 2F Devices ...");
+        from_json( $req->{sessionInfo}->{_2FDevices}, { allow_nonref => 1 } );
+    };
 
-    unless ( $req->{sessionInfo}->{_yubikeys} ) {
+    foreach (@$_2FDevices) {
+        $self->logger->debug("Reading Yubikey ...");
+        if ( $_->{type} eq 'UBK' ) {
+            $yubikey = $_->{_yubikey};
+            last;
+        }
+    }
+
+    unless ($yubikey) {
         $self->userLogger->warn( 'User '
               . $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
               . ' has no Yubikey registered' );
         return PE_BADCREDENTIALS;
     }
+    $self->logger->debug("Found Yubikey : $yubikey");
 
     # Prepare form
     my $tmp = $self->p->sendHtml(
@@ -90,8 +105,22 @@ sub verify {
     }
 
     # Verify OTP
+    my $yubikey    = 0;
+    my $_2FDevices = eval {
+        $self->logger->debug("Looking for 2F Devices ...");
+        from_json( $session->{_2FDevices}, { allow_nonref => 1 } );
+    };
+
+    foreach (@$_2FDevices) {
+        $self->logger->debug("Reading Yubikey ...");
+        if ( $_->{type} eq 'UBK' ) {
+            $yubikey = $_->{_yubikey};
+            last;
+        }
+    }
+
     if (
-        index( $session->{_yubikeys},
+        index( $yubikey,
             substr( $code, 0, $self->conf->{yubikey2fPublicIDSize} ) ) == -1
       )
     {

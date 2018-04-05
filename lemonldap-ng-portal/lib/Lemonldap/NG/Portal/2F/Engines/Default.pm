@@ -44,8 +44,8 @@ sub init {
     my ($self) = @_;
 
     # Set default 2F list
-    $self->conf->{available2F} ||= 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey';
-    $self->conf->{available2FSelfRegistration} ||= 'TOTP,U2F,Yubikey';
+    #$self->conf->{available2F} ||= 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey';
+    #$self->conf->{available2FSelfRegistration} ||= 'TOTP,U2F,Yubikey';
 
     # Load 2F modules
     for my $i ( 0 .. 1 ) {
@@ -118,7 +118,7 @@ sub run {
 
     # Skip 2F unless a module has been registered
     return PE_OK unless ( @{ $self->sfModules } );
-
+########################################################################
     # Search for authorizated modules for this user
     my @am;
     foreach my $m ( @{ $self->sfModules } ) {
@@ -129,7 +129,7 @@ sub run {
             push @am, $m->{m};
         }
     }
-
+########################################################################
     # If no 2F modules are authorizated, skipping 2F
     # Note that a rule may forbid access after (GrantSession plugin)
     return PE_OK unless (@am);

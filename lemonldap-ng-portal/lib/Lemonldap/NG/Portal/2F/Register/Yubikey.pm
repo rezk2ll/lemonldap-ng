@@ -46,9 +46,9 @@ sub run {
         if ( $otp
             and length($otp) > $self->conf->{yubikey2fPublicIDSize} )
         {
-            my $keys = $req->userData->{_yubikeys} || '';
-            $keys .= ( $keys ? ', ' : '' )
-              . substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
+            #my $keys = $req->userData->{_yubikeys} || '';
+            #$keys .= ( $keys ? ', ' : '' )
+              #. substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
 
             my $key = substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
             my $_2FDevices = eval {
@@ -112,7 +112,7 @@ sub run {
             $self->p->updatePersistentSession( $req,
                 { _2FDevices => to_json($_2FDevices) } );
 
-            $self->p->updatePersistentSession( $req, { _yubikeys => $keys } );
+            #$self->p->updatePersistentSession( $req, { _yubikeys => $keys } );
             return $self->p->sendHtml(
                 $req, 'error',
                 params => {
