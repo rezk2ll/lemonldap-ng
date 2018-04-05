@@ -1059,12 +1059,12 @@ sub attributes {
         max2FDevices => {
             default       => 10,
             type          => 'int',
-            documentation => 'Register session timeout',
+            documentation => 'Maximum registered 2F devices',
         },
         max2FDevicesNameLength => {
             default       => 20,
             type          => 'int',
-            documentation => 'Register session timeout',
+            documentation => 'Maximum 2F devices name length',
         },
         
         # U2F

@@ -19,7 +19,6 @@ has logo => ( is => 'rw', default => 'u2f.png' );
 
 sub init {
     my ($self) = @_;
-    $self->conf->{max2FDevices} ||= 10;
     return 0 unless $self->SUPER::init;
     return 1;
 }
@@ -80,18 +79,13 @@ sub run {
 
                 # Check if user can register one more device
                 my $size = @$_2FDevices;
+                my $maxSize = $self->conf->{max2FDevices};
                 $self->logger->debug(
-                    "Nbr 2FDevices = $size / $self->conf->{max2FDevices}");
-                if ( $size > $self->conf->{max2FDevices} ) {
+                    "Nbr 2FDevices = $size / $maxSize");
+                if ( $size > $maxSize ) {
                     $self->userLogger->error(
                         "Max number of 2F devices is reached !!!");
-                    return $self->p->sendHtml(
-                        $req, 'error',
-                        params => {
-                            RAW_ERROR       => 'MaxNumberof2FDevicesReached',
-                            AUTH_ERROR_TYPE => 'warning',
-                        }
-                    );
+                    return $self->p->sendError( $req, 'MaxNumberof2FDevicesReached', 200 );
                 }
 
                 my $keyName = $req->param('keyName');
