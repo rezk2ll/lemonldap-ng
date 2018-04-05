@@ -104,8 +104,10 @@ sub run {
                 my $keyName = $req->param('keyName');
                 my $epoch   = time();
 
-                # Set default name if empty
+                # Set default name if empty and troncate name if too long
                 $keyName ||= $epoch;
+                $keyName =
+                  substr( $keyName, 0, $self->conf->{max2FDevicesNameLength} );
                 $self->logger->debug("Key name : $keyName");
 
                 push @{$_2FDevices},

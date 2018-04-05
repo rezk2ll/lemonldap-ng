@@ -67,8 +67,11 @@ sub run {
         my $TOTPName = $req->param('TOTPName');
         my $epoch    = time();
 
-        # Set default name if empty
+        # Set default name if empty and troncate name if too long
         $TOTPName ||= $epoch;
+        $TOTPName =
+          substr( $TOTPName, 0, $self->conf->{max2FDevicesNameLength} );
+        $self->logger->debug("TOTP name : $TOTPName");
 
         unless ($code) {
             $self->logger->userInfo('TOTP registration: empty validation form');

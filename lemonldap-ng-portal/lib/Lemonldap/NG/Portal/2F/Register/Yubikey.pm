@@ -23,7 +23,8 @@ has logo => ( is => 'rw', default => 'yubikey.png' );
 
 sub init {
     my ($self) = @_;
-    $self->conf->{yubikey2fPublicIDSize} ||= 12;
+
+    #$self->conf->{yubikey2fPublicIDSize} ||= 12;
     return 1;
 }
 
@@ -37,8 +38,11 @@ sub run {
         my $UBKName = $req->param('UBKName');
         my $epoch   = time();
 
-        # Set default name if empty
+        # Set default name if empty and troncate name if too long
         $UBKName ||= $epoch;
+        $UBKName = substr( $UBKName, 0, $self->conf->{max2FDevicesNameLength} );
+        $self->logger->debug("Yubikey name : $UBKName");
+
         if ( $otp
             and length($otp) > $self->conf->{yubikey2fPublicIDSize} )
         {
