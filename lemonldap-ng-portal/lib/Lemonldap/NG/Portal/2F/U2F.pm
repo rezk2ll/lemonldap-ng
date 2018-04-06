@@ -31,7 +31,7 @@ sub init {
     my ($self) = @_;
 
     # If self registration is enabled and "activation" is simply set to
-    # "enabled", replace the rule to detect if user has register its key
+    # "enabled", replace the rule to detect if user has registered its key
     if (    $self->conf->{u2fSelfRegistration}
         and $self->conf->{u2fActivation} eq '1' )
     {

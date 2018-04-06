@@ -96,7 +96,7 @@ sub init {
         $self->addUnauthRoute( '2fchoice' => 'redirect', ['GET'] );
     }
 
-    # Enable 2F registration URL only if a least 1 registration module
+    # Enable 2F registration URL only if at least 1 registration module
     # is enabled
     if ( @{ $self->{sfRModules} } ) {
 
@@ -112,14 +112,14 @@ sub init {
 
 # public PE_CODE run($req)
 #
-# run() is called at each authentication, just after sesionInfo populate
+# run() is called at each authentication, just after sessionInfo populated
 sub run {
     my ( $self, $req ) = @_;
 
     # Skip 2F unless a module has been registered
     return PE_OK unless ( @{ $self->sfModules } );
 ########################################################################
-    # Search for authorizated modules for this user
+    # Search for authorized modules for this user
     my @am;
     foreach my $m ( @{ $self->sfModules } ) {
         $self->logger->debug(
@@ -130,7 +130,7 @@ sub run {
         }
     }
 ########################################################################
-    # If no 2F modules are authorizated, skipping 2F
+    # If no 2F modules are authorized, skipping 2F
     # Note that a rule may forbid access after (GrantSession plugin)
     return PE_OK unless (@am);
 
@@ -143,7 +143,7 @@ sub run {
     my $token = $self->ott->createToken( $req->sessionInfo );
     delete $req->{authResult};
 
-    # If only one 2F is authorizated, display it
+    # If only one 2F is authorized, display it
     unless ($#am) {
         my $res = $am[0]->run( $req, $token );
         $req->authResult($res);
