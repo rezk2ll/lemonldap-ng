@@ -32,22 +32,22 @@ sub run {
     if ( $action eq 'register' ) {
 
         # Check if user can register one more device
-        my $_2FDevices = eval {
+        my $_2fDevices = eval {
             $self->logger->debug("Looking for 2F Devices ...");
 
             # Read existing 2FDevices
-            from_json( $req->userData->{_2FDevices}, { allow_nonref => 1 } );
+            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
         };
-        unless ($_2FDevices) {
+        unless ($_2fDevices) {
             $self->logger->debug("No 2F Device found");
 
             # Set default value
-            $_2FDevices = [];
+            $_2fDevices = [];
         }
 
-        my $size    = @$_2FDevices;
+        my $size    = @$_2fDevices;
         my $maxSize = $self->conf->{max2FDevices};
-        $self->logger->debug("Nbr 2FDevices = $size / $maxSize");
+        $self->logger->debug("Registered 2F Device(s) : $size / $maxSize");
         if ( $size >= $maxSize ) {
             $self->userLogger->error("Max number of 2F devices is reached !!!");
             return $self->p->sendError( $req, 'maxNumberof2FDevicesReached',
@@ -87,18 +87,18 @@ sub run {
             my ( $keyHandle, $userKey ) = $c->registrationVerify($resp);
             if ( $keyHandle and $userKey ) {
 
-                my $_2FDevices = eval {
+                my $_2fDevices = eval {
                     $self->logger->debug("Looking for 2F Devices ...");
 
                     # Read existing 2FDevices
-                    from_json( $req->userData->{_2FDevices},
+                    from_json( $req->userData->{_2fDevices},
                         { allow_nonref => 1 } );
                 };
-                unless ($_2FDevices) {
+                unless ($_2fDevices) {
                     $self->logger->debug("No 2F Device found");
 
                     # Set default value
-                    $_2FDevices = [];
+                    $_2fDevices = [];
                 }
 
                 my $keyName = $req->param('keyName');
@@ -110,7 +110,7 @@ sub run {
                   substr( $keyName, 0, $self->conf->{max2FDevicesNameLength} );
                 $self->logger->debug("Key name : $keyName");
 
-                push @{$_2FDevices},
+                push @{$_2fDevices},
                   {
                     type       => 'U2F',
                     name       => $keyName,
@@ -121,7 +121,7 @@ sub run {
                 $self->logger->debug(
                     "Append 2F Device : { type => 'U2F', name => $keyName }");
                 $self->p->updatePersistentSession( $req,
-                    { _2FDevices => to_json($_2FDevices) } );
+                    { _2fDevices => to_json($_2fDevices) } );
 
                 $self->p->updatePersistentSession(
                     $req,
@@ -165,6 +165,7 @@ sub run {
             [$challenge]
         ];
     }
+    
     elsif ( $action eq 'signature' ) {
         $self->logger->debug('Verification response');
         my ( $challenge, $resp );
@@ -228,16 +229,16 @@ sub run {
     }
     elsif ( $action eq 'delete' ) {
         my $epoch      = $req->param('epoch');
-        my $_2FDevices = eval {
+        my $_2fDevices = eval {
             $self->logger->debug("Loading 2F Devices ...");
 
             # Read existing 2FDevices
-            from_json( $req->userData->{_2FDevices}, { allow_nonref => 1 } );
+            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
         };
 
         my @keep = ();
-        while (@$_2FDevices) {
-            my $element = shift @$_2FDevices;
+        while (@$_2fDevices) {
+            my $element = shift @$_2fDevices;
             $self->logger->debug("Looking for 2F device to delete ...");
             push @keep, $element unless ( $element->{epoch} eq $epoch );
         }
@@ -245,7 +246,7 @@ sub run {
         $self->logger->debug(
             "Delete 2F Device : { type => 'U2F', epoch => $epoch }");
         $self->p->updatePersistentSession( $req,
-            { _2FDevices => to_json( \@keep ) } );
+            { _2fDevices => to_json( \@keep ) } );
 
         $self->p->updatePersistentSession(
             $req,

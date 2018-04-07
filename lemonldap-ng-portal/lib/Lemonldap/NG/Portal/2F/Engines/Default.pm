@@ -43,10 +43,6 @@ has ott => (
 sub init {
     my ($self) = @_;
 
-    # Set default 2F list
-    #$self->conf->{available2F} ||= 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey';
-    #$self->conf->{available2FSelfRegistration} ||= 'TOTP,U2F,Yubikey';
-
     # Load 2F modules
     for my $i ( 0 .. 1 ) {
         foreach (
@@ -118,7 +114,7 @@ sub run {
 
     # Skip 2F unless a module has been registered
     return PE_OK unless ( @{ $self->sfModules } );
-########################################################################
+    
     # Search for authorized modules for this user
     my @am;
     foreach my $m ( @{ $self->sfModules } ) {
@@ -129,8 +125,8 @@ sub run {
             push @am, $m->{m};
         }
     }
-########################################################################
-    # If no 2F modules are authorized, skipping 2F
+    
+    # If no 2F module is authorized, skipping 2F
     # Note that a rule may forbid access after (GrantSession plugin)
     return PE_OK unless (@am);
 
@@ -263,12 +259,12 @@ sub _displayRegister {
             [] ];
     }
 
-    my $_2FDevices = eval { from_json( $req->userData->{_2FDevices},
+    my $_2fDevices = eval { from_json( $req->userData->{_2fDevices},
             { allow_nonref => 1 } ); };
 
-    unless ($_2FDevices) {
+    unless ($_2fDevices) {
         $self->logger->debug("No 2F Device found");
-        $_2FDevices = [];
+        $_2fDevices = [];
     }
 
     return $self->p->sendHtml(
@@ -277,7 +273,7 @@ sub _displayRegister {
         params => {
             SKIN      => $self->conf->{portalSkin},
             MODULES   => \@am,
-            SFDEVICES => $_2FDevices,
+            SFDEVICES => $_2fDevices,
         }
     );
 }

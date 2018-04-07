@@ -83,7 +83,7 @@
 "PE81":"Invalid authentication attempt",
 "PE82":"Exceeded authentication timeout",
 "PE83":"U2F verification failed",
-"PE84":"You're not authorizated to access to this host",
+"PE84":"You're not authorized to access to this host",
 "PE85":"The remote site ask for a newer session (and UpgradeSession plugin isn't loaded). Logout and retry",
 "2FManagment":"Gestionnaire 2ndF",
 "accept":"Accept",

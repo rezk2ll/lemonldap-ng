@@ -51,19 +51,19 @@ sub run {
               #. substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
 
             my $key = substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
-            my $_2FDevices = eval {
+            my $_2fDevices = eval {
                 $self->logger->debug("Looking for 2F Devices ...");
-                from_json( $req->userData->{_2FDevices},
+                from_json( $req->userData->{_2fDevices},
                     { allow_nonref => 1 } );
             };
-            unless ($_2FDevices) {
+            unless ($_2fDevices) {
                 $self->logger->debug("No 2F Device found");
-                $_2FDevices = [];
+                $_2fDevices = [];
             }
 
             # Search if Yubikey has been already registered
             my $SameUBKFound = 0;
-            foreach (@$_2FDevices) {
+            foreach (@$_2fDevices) {
                 $self->logger->debug("Reading Yubikeys ...");
                 if ( $_->{_yubikey} eq $key ) {
                     $SameUBKFound = 1;
@@ -84,7 +84,7 @@ sub run {
             }
 
             # Check if user can register one more device
-            my $size    = @$_2FDevices;
+            my $size    = @$_2fDevices;
             my $maxSize = $self->conf->{max2FDevices};
             $self->logger->debug("Nbr 2FDevices = $size / $maxSize");
             if ( $size >= $maxSize ) {
@@ -99,7 +99,7 @@ sub run {
                 );
             }
 
-            push @{$_2FDevices},
+            push @{$_2fDevices},
               {
                 type     => 'UBK',
                 name     => $UBKName,
@@ -110,7 +110,7 @@ sub run {
             $self->logger->debug(
                 "Append 2F Device : { type => 'UBK', name => $UBKName }");
             $self->p->updatePersistentSession( $req,
-                { _2FDevices => to_json($_2FDevices) } );
+                { _2fDevices => to_json($_2fDevices) } );
 
             #$self->p->updatePersistentSession( $req, { _yubikeys => $keys } );
             return $self->p->sendHtml(
@@ -140,16 +140,16 @@ sub run {
 
     if ( $action eq 'delete' ) {
         my $epoch      = $req->param('epoch');
-        my $_2FDevices = eval {
+        my $_2fDevices = eval {
             $self->logger->debug("Loading 2F Devices ...");
 
             # Read existing 2FDevices
-            from_json( $req->userData->{_2FDevices}, { allow_nonref => 1 } );
+            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
         };
 
         my @keep = ();
-        while (@$_2FDevices) {
-            my $element = shift @$_2FDevices;
+        while (@$_2fDevices) {
+            my $element = shift @$_2fDevices;
             $self->logger->debug("Looking for 2F device to delete ...");
             push @keep, $element unless ( $element->{epoch} eq $epoch );
         }
@@ -157,7 +157,7 @@ sub run {
         $self->logger->debug(
             "Delete 2F Device : { type => 'UBK', epoch => $epoch }");
         $self->p->updatePersistentSession( $req,
-            { _2FDevices => to_json( \@keep ) } );
+            { _2fDevices => to_json( \@keep ) } );
 
         $self->userLogger->notice('Yubikey deletion succeed');
         return [

@@ -18,7 +18,7 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 
 has prefix => ( is => 'ro', default => 'yubikey' );
 
-has logo => ( is => 'rw', default => 'u2f.png' );
+has logo => ( is => 'rw', default => 'yubikey.png' );
 
 has yubi => ( is => 'rw' );
 
@@ -32,7 +32,8 @@ sub init {
     if (    $self->conf->{yubikey2fSelfRegistration}
         and $self->conf->{yubikey2fActivation} eq '1' )
     {
-        $self->conf->{yubikey2fActivation} = '$_yubikeys';
+        #$self->conf->{yubikey2fActivation} = '$_yubikeys';
+        $self->conf->{yubikey2fActivation} = '$_2fDevices';
     }
     unless ($self->conf->{yubikey2fClientID}
         and $self->conf->{yubikey2fSecretKey} )
@@ -57,12 +58,12 @@ sub init {
 sub run {
     my ( $self, $req, $token ) = @_;
     my $yubikey    = 0;
-    my $_2FDevices = eval {
+    my $_2fDevices = eval {
         $self->logger->debug("Looking for 2F Devices ...");
-        from_json( $req->{sessionInfo}->{_2FDevices}, { allow_nonref => 1 } );
+        from_json( $req->{sessionInfo}->{_2fDevices}, { allow_nonref => 1 } );
     };
 
-    foreach (@$_2FDevices) {
+    foreach (@$_2fDevices) {
         $self->logger->debug("Reading Yubikey ...");
         if ( $_->{type} eq 'UBK' ) {
             $yubikey = $_->{_yubikey};
@@ -106,12 +107,12 @@ sub verify {
 
     # Verify OTP
     my $yubikey    = 0;
-    my $_2FDevices = eval {
+    my $_2fDevices = eval {
         $self->logger->debug("Looking for 2F Devices ...");
-        from_json( $session->{_2FDevices}, { allow_nonref => 1 } );
+        from_json( $session->{_2fDevices}, { allow_nonref => 1 } );
     };
 
-    foreach (@$_2FDevices) {
+    foreach (@$_2fDevices) {
         $self->logger->debug("Reading Yubikey ...");
         if ( $_->{type} eq 'UBK' ) {
             $yubikey = $_->{_yubikey};

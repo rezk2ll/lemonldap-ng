@@ -36,7 +36,7 @@
   </main>
   
 <div class="buttons">
-  <a href="<TMPL_VAR NAME="PORTAL_URL">/2fregisters" class="btn btn-warning" role="button">
+  <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-warning" role="button">
     <span class="glyphicon glyphicon-pencil"></span>&nbsp;
     <span trspan="2FManagment">2F managment</span>
   </a>
