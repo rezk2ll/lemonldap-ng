@@ -123,14 +123,14 @@ sub run {
                 $self->p->updatePersistentSession( $req,
                     { _2fDevices => to_json($_2fDevices) } );
 
-                $self->p->updatePersistentSession(
-                    $req,
-                    {
-                        _u2fKeyHandle =>
-                          $self->encode_base64url( $keyHandle, '' ),
-                        _u2fUserKey => $self->encode_base64url( $userKey, '' )
-                    }
-                );
+                #$self->p->updatePersistentSession(
+                    #$req,
+                    #{
+                        #_u2fKeyHandle =>
+                          #$self->encode_base64url( $keyHandle, '' ),
+                        #_u2fUserKey => $self->encode_base64url( $userKey, '' )
+                    #}
+                #);
                 return [
                     200,
                     [
@@ -209,24 +209,24 @@ sub run {
             [$challenge]
         ];
     }
-    elsif ( $action eq 'unregistration' ) {
-        $self->p->updatePersistentSession(
-            $req,
-            {
-                _u2fKeyHandle => '',
-                _u2fUserKey   => ''
-            }
-        );
-        $self->userLogger->notice('U2F key unregistration succeed');
-        return [
-            200,
-            [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
-            ['{"result":1}']
-        ];
-        my $err = Crypt::U2F::Server::Simple::lastError();
-        $self->userLogger->warn("U2F Unregistration failed: $err");
-        return $self->p->sendError( $req, $err, 200 );
-    }
+    #elsif ( $action eq 'unregistration' ) {
+        #$self->p->updatePersistentSession(
+            #$req,
+            #{
+                #_u2fKeyHandle => '',
+                #_u2fUserKey   => ''
+            #}
+        #);
+        #$self->userLogger->notice('U2F key unregistration succeed');
+        #return [
+            #200,
+            #[ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
+            #['{"result":1}']
+        #];
+        #my $err = Crypt::U2F::Server::Simple::lastError();
+        #$self->userLogger->warn("U2F Unregistration failed: $err");
+        #return $self->p->sendError( $req, $err, 200 );
+    #}
     elsif ( $action eq 'delete' ) {
         my $epoch      = $req->param('epoch');
         my $_2fDevices = eval {
@@ -247,14 +247,13 @@ sub run {
             "Delete 2F Device : { type => 'U2F', epoch => $epoch }");
         $self->p->updatePersistentSession( $req,
             { _2fDevices => to_json( \@keep ) } );
-
-        $self->p->updatePersistentSession(
-            $req,
-            {
-                _u2fKeyHandle => '',
-                _u2fUserKey   => ''
-            }
-        );
+        #$self->p->updatePersistentSession(
+            #$req,
+            #{
+                #_u2fKeyHandle => '',
+                #_u2fUserKey   => ''
+            #}
+        #);
         $self->userLogger->notice('U2F key unregistration succeed');
         return [
             200,

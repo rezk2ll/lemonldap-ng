@@ -98,8 +98,8 @@ sub run {
         $self->logger->debug('TOTP code verified');
 
         # Now code is verified, let's store the master key in persistent data
-        $self->p->updatePersistentSession( $req,
-            { _totp2fSecret => $token->{_totp2fSecret} } );
+        #$self->p->updatePersistentSession( $req,
+            #{ _totp2fSecret => $token->{_totp2fSecret} } );
 
         my $_2fDevices = eval {
             $self->logger->debug("Looking for 2F Devices ...");
@@ -129,7 +129,7 @@ sub run {
           };
 
         $self->logger->debug(
-            "Append 2F Device : { type => 'totp', name => $TOTPName }");
+            "Append 2F Device : { type => 'TOTP', name => $TOTPName }");
         $self->p->updatePersistentSession( $req,
             { _2fDevices => to_json($_2fDevices) } );
 
@@ -143,7 +143,8 @@ sub run {
         my $nk = 0;
         my $secret;
         if ( ( $req->param('newkey') and $self->conf->{totp2fUserCanChangeKey} )
-            or not $req->userData->{_totp2fSecret} )
+            #or not $req->userData->{_totp2fSecret} )
+            or $req->userData->{$_2fDevices} !~ /"type":\s*"TOTP"/s )
         {
             $secret = $self->newSecret;
             $nk     = 1;
@@ -192,14 +193,15 @@ sub run {
         return $self->p->sendError( $req, 'notAuthorized', 400 );
     }
 
-    # Get or generate master key
-    if ( $action eq 'unregister' ) {
-        $self->p->updatePersistentSession( $req, { _totp2fSecret => '' } );
-        $self->userLogger->notice('TOTP unregistration succeed');
-        return [ 200, [ 'Content-Type' => 'application/json' ],
-            ['{"result":1}'] ];
-    }
-    elsif ( $action eq 'delete' ) {
+    # Delete TOTP
+    #if ( $action eq 'unregister' ) {
+        #$self->p->updatePersistentSession( $req, { _totp2fSecret => '' } );
+        #$self->userLogger->notice('TOTP unregistration succeed');
+        #return [ 200, [ 'Content-Type' => 'application/json' ],
+            #['{"result":1}'] ];
+    #}
+    #elsif ( $action eq 'delete' ) {
+	if ( $action eq 'delete' ) {
         my $epoch      = $req->param('epoch');
         my $_2fDevices = eval {
             $self->logger->debug("Loading 2F Devices ...");
