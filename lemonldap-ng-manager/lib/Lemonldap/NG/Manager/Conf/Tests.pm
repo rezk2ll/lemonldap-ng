@@ -230,7 +230,7 @@ sub tests {
                 (
                     $cn
                       and $cn ne $conf->{cookieName}
-                    ? 'Cookie name has changed, you must restart all your Apache servers'
+                    ? 'Cookie name has changed, you must restart all your web servers'
                     : ()
                 )
             );
@@ -248,7 +248,7 @@ sub tests {
             );
         },
 
-        # Test SMTP connection and authentication
+        # Test SMTP connection and authentication (warning only)
         smtpConnectionAuthentication => sub {
 
             # Skip test if no SMTP configuration
@@ -278,7 +278,7 @@ sub tests {
             return 1;
         },
 
-        # SAML entity ID must be unique
+        # SAML entity ID must be uniq
         samlIDPEntityIdUniqueness => sub {
             return 1
               unless ( $conf->{samlIDPMetaDataXML}
@@ -334,6 +334,7 @@ sub tests {
             return ( $res, join( ', ', @msg ) );
         },
 
+        # Try to parse combination with declared modules
         checkCombinations => sub {
             return 1 unless ( $conf->{authentication} eq 'Combination' );
             require Lemonldap::NG::Common::Combination::Parser;
@@ -354,6 +355,17 @@ sub tests {
             };
             return ( 0, $@ ) if ($@);
             return 1;
+        },
+
+        # Warn if TOTP or U2F is enabled with UTOTP (U2F + TOTP)
+        utotp => sub {
+            return 1 unless ( $conf->{utotp2fActivation} );
+            my $w = '';
+            foreach ( 'totp', 'u' ) {
+                $w .= uc($_) . "2F is activated 2 times\n"
+                  if ( $self->conf->{ $_ . '2fActivation' } eq '1' );
+            }
+            return ( 1, ( $w ? $w : () ) );
         },
     };
 }
