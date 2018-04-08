@@ -29,10 +29,11 @@ sub init {
     if (    $self->conf->{totp2fSelfRegistration}
         and $self->conf->{totp2fActivation} eq '1' )
     {
-        $self->conf->{totp2fActivation} = '$_totp2fSecret';
+        #$self->conf->{totp2fActivation} = '$_totp2fSecret';
+        $self->conf->{totp2fActivation} = '$_2fDevices =~ /"type":\s*"TOTP"/s';
     }
-    $self->conf->{totp2fInterval} ||= 30;
-    $self->conf->{totp2fRange}    ||= 1;
+    #$self->conf->{totp2fInterval} ||= 30;
+    #$self->conf->{totp2fRange}    ||= 1;
     return $self->SUPER::init();
 }
 

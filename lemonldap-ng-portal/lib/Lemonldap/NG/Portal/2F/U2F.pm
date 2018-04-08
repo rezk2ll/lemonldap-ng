@@ -35,7 +35,8 @@ sub init {
     if (    $self->conf->{u2fSelfRegistration}
         and $self->conf->{u2fActivation} eq '1' )
     {
-        $self->conf->{u2fActivation} = '$_u2fKeyHandle and $_u2fUserKey';
+        #$self->conf->{u2fActivation} = '$_u2fKeyHandle and $_u2fUserKey';
+        $self->conf->{u2fActivation} = '$_2fDevices =~ /"type":\s*"U2F"/s';
     }
     return 0
       unless ( $self->Lemonldap::NG::Portal::Main::SecondFactor::init()
