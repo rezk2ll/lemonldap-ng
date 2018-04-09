@@ -536,7 +536,7 @@ sub substitute {
     $expr =~ s/\$ip\b/\$ENV{REMOTE_ADDR}/sg;
 
     # substitute vars with session datas, excepts special vars $_ and $\d+
-    $expr =~ s/\$(?!ENV)(_*[a-zA-Z]\w*)/\$s->{$1}/sg;
+    $expr =~ s/\$(?!ENV)([_a-zA-Z]\w*)/\$s->{$1}/sg;
     $expr =~ s/\$ENV\{/\$r->{env}->\{/g;
 
     return $expr;

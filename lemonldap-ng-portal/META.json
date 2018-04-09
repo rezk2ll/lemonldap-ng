@@ -1,0 +1,80 @@
+{
+   "abstract" : "The authentication portal part of Lemonldap::NG Web-SSO system.",
+   "author" : [
+      "Xavier Guimard <x.guimard@free.fr>, ClÃ©ment Oudot <clement@oodo.net>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "ExtUtils::MakeMaker version 7.24, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "open_source"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Lemonldap-NG-Portal",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "inc"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Convert::Base32" : "0",
+            "Email::Sender" : "0",
+            "HTTP::Message" : "0",
+            "IO::String" : "0",
+            "LWP::UserAgent" : "0",
+            "MIME::Entity" : "0",
+            "SOAP::Lite" : "0",
+            "String::Random" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "runtime" : {
+         "recommends" : {
+            "DBI" : "0",
+            "Email::Sender" : "1.300027",
+            "GD::SecurityImage" : "0",
+            "Glib" : "0",
+            "HTTP::Message" : "0",
+            "Image::Magick" : "0",
+            "LWP::Protocol::https" : "0",
+            "LWP::UserAgent" : "0",
+            "Lasso" : "v2.3.0",
+            "MIME::Entity" : "0",
+            "Net::Facebook::Oauth2" : "0",
+            "Net::LDAP" : "0.38",
+            "Net::OAuth" : "0",
+            "Net::OpenID::Consumer" : "0",
+            "Net::OpenID::Server" : "0",
+            "SOAP::Lite" : "0",
+            "String::Random" : "0",
+            "Unicode::String" : "0",
+            "Web::ID" : "0"
+         },
+         "requires" : {
+            "Clone" : "0",
+            "Lemonldap::NG::Handler" : "v2.0.0",
+            "Regexp::Assemble" : "0"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "X_twitter" : "https://twitter.com/lemonldapng",
+      "homepage" : "http://lemonldap-ng.org/",
+      "license" : [
+         "http://opensource.org/licenses/GPL-2.0"
+      ],
+      "x_MailingList" : "mailto:lemonldap-ng-dev@ow2.org"
+   },
+   "version" : "v2.0.0",
+   "x_serialization_backend" : "JSON::PP version 2.27400_02"
+}

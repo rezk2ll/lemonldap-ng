@@ -2,7 +2,7 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('Lemonldap::NG Manager', function() {
+describe('12 Lemonldap::NG Manager', function() {
 
   describe('OIDC RP configuration', function() {
 
@@ -15,7 +15,7 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('a-oidcRPMetaDataNodes/new__rp-example')).click();
       element(by.id('t-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataExportedVars')).click();
       element(by.css('.glyphicon-plus-sign')).click();
-      element(by.id('a-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataExportedVars')).click();
+      //element(by.id('a-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataExportedVars')).click();
       element(by.id('t-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataExportedVars/n1')).click();
       element(by.id('hashkeyinput')).clear().sendKeys('MyKey');
       element(by.id('hashvalueinput')).clear().sendKeys('MyValue');
@@ -25,7 +25,7 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('textinput')).clear().sendKeys('MyClientID');
       element(by.id('t-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataOptionsExtraClaims')).click();
       element(by.css('.glyphicon-plus-sign')).click();
-      element(by.id('a-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataOptionsExtraClaims')).click();
+      //element(by.id('a-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataOptionsExtraClaims')).click();
       element(by.id('t-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataOptionsExtraClaims/n2')).click();
       element(by.id('hashkeyinput')).clear().sendKeys('MyClaim');
       element(by.id('hashvalueinput')).clear().sendKeys('MyAttribute');

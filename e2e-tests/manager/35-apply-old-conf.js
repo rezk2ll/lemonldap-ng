@@ -2,7 +2,7 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('Lemonldap::NG Manager', function() {
+describe('35 Lemonldap::NG Manager', function() {
 
   it('should be able to restore an old configuration', function() {
     browser.get('/#/confs/1');
