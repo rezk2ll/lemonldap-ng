@@ -1,6 +1,8 @@
 use Test::More;
 use strict;
 use IO::String;
+use LWP::UserAgent;
+use inc::LWP::Protocol::PSGI;
 use MIME::Base64;
 
 BEGIN {
@@ -12,6 +14,16 @@ my $maintests = 20;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
+
+# Redefine LWP methods for tests
+LWP::Protocol::PSGI->register(
+    sub {
+        my $req = Plack::Request->new(@_);
+        fail('POST should not launch SOAP requests');
+        count(1);
+        return [ 500, [], [] ];
+    }
+);
 
 SKIP: {
     eval "use Lasso";
@@ -215,17 +227,6 @@ qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
 count($maintests);
 clean_sessions();
 done_testing( count() );
-
-# Redefine LWP methods for tests
-no warnings 'redefine';
-
-sub LWP::UserAgent::request {
-    my ( $self, $req ) = @_;
-    fail('Redirect should not launch SOAP requests');
-    my $httpResp = HTTP::Response->new(500);
-    count(1);
-    return $httpResp;
-}
 
 sub switch {
     my $type = shift;

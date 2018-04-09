@@ -1,6 +1,8 @@
 use Test::More;
 use strict;
 use IO::String;
+use LWP::UserAgent;
+use inc::LWP::Protocol::PSGI;
 use MIME::Base64;
 
 BEGIN {
@@ -11,6 +13,33 @@ my $maintests = 18;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
+
+# Redefine LWP methods for tests
+LWP::Protocol::PSGI->register(
+    sub {
+        my $req = Plack::Request->new(@_);
+        ok( $req->uri =~ m#http://auth.((?:id|s)p).com(.*)#, 'SOAP request' );
+        my $host = $1;
+        my $url  = $2;
+        my $res;
+        my $s = $req->content;
+        my $client = ( $host eq 'idp' ? $issuer : $sp );
+        ok(
+            $res = $client->_post(
+                $url, IO::String->new($s),
+                length => length($s),
+                type   => 'application/xml',
+            ),
+            'Execute request'
+        );
+        expectOK($res);
+        ok( getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
+            'Content is XML' )
+          or explain( $res->[1], 'Content-Type => application/xml' );
+        count(3);
+        return $res;
+    }
+);
 
 SKIP: {
     eval "use Lasso";
@@ -191,39 +220,6 @@ clean_sessions();
 done_testing( count() );
 
 no warnings 'redefine';
-
-# Redefine LWP methods for tests
-no warnings 'redefine';
-
-sub LWP::UserAgent::request {
-    my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.((?:id|s)p).com(.*)#, 'SOAP request' );
-    my $host = $1;
-    my $url  = $2;
-    my $res;
-    my $s = $req->content;
-    my $client = ( $host eq 'idp' ? $issuer : $sp );
-    ok(
-        $res = $client->_post(
-            $url, IO::String->new($s),
-            length => length($s),
-            type   => 'application/xml',
-        ),
-        'Execute request'
-    );
-    expectOK($res);
-    ok( getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
-        'Content is XML' )
-      or explain( $res->[1], 'Content-Type => application/xml' );
-    my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
-
-    while ( my $name = shift @{ $res->[1] } ) {
-        $httpResp->header( $name, shift( @{ $res->[1] } ) );
-    }
-    $httpResp->content( join( '', @{ $res->[2] } ) );
-    count(3);
-    return $httpResp;
-}
 
 sub switch {
     my $type = shift;
