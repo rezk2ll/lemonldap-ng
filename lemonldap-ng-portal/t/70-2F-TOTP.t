@@ -90,7 +90,7 @@ SKIP: {
     eval { $res = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), 'Content is JSON' )
       or explain( $res->[2]->[0], 'JSON content' );
-    ok( $res->{result} = 1, 'Key is registered' );
+    ok( $res->{result} == 1, 'Key is registered' );
 
     # Try to sing-in
     $client->logout($id);
