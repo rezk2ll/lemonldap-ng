@@ -423,6 +423,7 @@ t/65-AutoSignin.t
 t/70-2F-TOTP.t
 t/71-2F-UTOTP-TOTP-only.t
 t/72-2F-REST.t
+t/73-2F-U2F.t
 t/90-Translations.t
 t/99-pod.t
 t/lmConf-1.json

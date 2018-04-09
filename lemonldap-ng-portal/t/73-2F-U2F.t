@@ -179,8 +179,10 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
         'Push U2F signature'
     );
+
+    # See https://github.com/mschout/perl-authen-u2f-tester/issues/2
     pass(
-'For an unknown reason, Authen::2F::Tester signatures are not recognized by Crypt::U2F::Server'
+'For an unknown reason, Authen::2F::Tester signatures are not recognized by Yubico library'
     );
 }
 count($maintests);
