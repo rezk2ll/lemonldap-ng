@@ -2,7 +2,7 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('Lemonldap::NG Manager', function() {
+describe('07u Lemonldap::NG Manager', function() {
 
   describe('Apply mechanism', function() {
 

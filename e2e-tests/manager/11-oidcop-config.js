@@ -2,7 +2,7 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('Lemonldap::NG Manager', function() {
+describe('11 Lemonldap::NG Manager', function() {
 
   describe('OIDC OP configuration', function() {
 
@@ -19,7 +19,7 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('filetext')).sendKeys('{"c":"d"}');
       element(by.id('t-oidcOPMetaDataNodes/new__op-example/oidcOPMetaDataExportedVars')).click();
       element(by.css('.glyphicon-plus-sign')).click();
-      element(by.id('a-oidcOPMetaDataNodes/new__op-example/oidcOPMetaDataExportedVars')).click();
+      //element(by.id('a-oidcOPMetaDataNodes/new__op-example/oidcOPMetaDataExportedVars')).click();
       element(by.id('t-oidcOPMetaDataNodes/new__op-example/oidcOPMetaDataExportedVars/n1')).click();
       element(by.id('hashkeyinput')).clear().sendKeys('MyKey');
       element(by.id('hashvalueinput')).clear().sendKeys('MyValue');

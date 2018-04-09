@@ -2,7 +2,7 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('Lemonldap::NG Manager', function() {
+describe('05 Lemonldap::NG Manager', function() {
 
   describe('Form control', function() {
 
@@ -87,7 +87,7 @@ describe('Lemonldap::NG Manager', function() {
             }
           });
         });
-        expect(element(by.id('t-virtualHosts/test1.example.com/post/n' + id)).getText()).toMatch(/^https?:\/\//);
+        expect(element(by.id('t-virtualHosts/test1.example.com/post/n' + id)).getText()).toMatch(/^https?:\/\ //);
         id++;
       }
     });
