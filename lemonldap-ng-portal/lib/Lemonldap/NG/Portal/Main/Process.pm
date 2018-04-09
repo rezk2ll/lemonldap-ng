@@ -149,19 +149,20 @@ sub authLogout {
 sub deleteSession {
     my ( $self, $req ) = @_;
     $req->userData( {} );
-    my $apacheSession = $self->getApacheSession( $req->id );
-    my $id            = $req->id;
-    unless ($apacheSession) {
-        $self->logger->debug("Session $id already deleted");
-        return PE_OK;
-    }
-    unless ( $self->_deleteSession( $req, $apacheSession ) ) {
-        $self->logger->error("Unable to delete session $id");
-        $self->logger->error( $apacheSession->error );
-        return PE_ERROR;
-    }
-    else {
-        $self->logger->debug("Session $id deleted from global storage");
+    if ( my $id = $req->id ) {
+        my $apacheSession = $self->getApacheSession( $req->id );
+        unless ($apacheSession) {
+            $self->logger->debug("Session $id already deleted");
+            return PE_OK;
+        }
+        unless ( $self->_deleteSession( $req, $apacheSession ) ) {
+            $self->logger->error("Unable to delete session $id");
+            $self->logger->error( $apacheSession->error );
+            return PE_ERROR;
+        }
+        else {
+            $self->logger->debug("Session $id deleted from global storage");
+        }
     }
 
     # TODO
