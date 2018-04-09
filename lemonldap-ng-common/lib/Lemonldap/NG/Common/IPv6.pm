@@ -53,3 +53,5 @@ sub compact6 {
     }
     return $_[0];
 }
+
+1;

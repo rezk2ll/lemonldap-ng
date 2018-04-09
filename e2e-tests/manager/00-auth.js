@@ -2,7 +2,7 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('Lemonldap::NG', function() {
+describe('00 Lemonldap::NG', function() {
 
   describe('Auth mechanism', function() {
 

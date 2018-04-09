@@ -2,7 +2,7 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('Lemonldap::NG Manager', function() {
+describe('10 Lemonldap::NG Manager', function() {
 
   describe('SAML configuration', function() {
 

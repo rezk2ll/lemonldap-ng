@@ -2,7 +2,7 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('Lemonldap::NG Manager', function() {
+describe('07 Lemonldap::NG Manager', function() {
 
   describe('Form control, part 3 - authParams', function() {
 
