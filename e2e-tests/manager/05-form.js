@@ -87,7 +87,7 @@ describe('05 Lemonldap::NG Manager', function() {
             }
           });
         });
-        expect(element(by.id('t-virtualHosts/test1.example.com/post/n' + id)).getText()).toMatch(/^https?:\/\ //);
+        expect(element(by.id('t-virtualHosts/test1.example.com/post/n' + id)).getText()).toMatch(/^https?:\/\//);
         id++;
       }
     });
