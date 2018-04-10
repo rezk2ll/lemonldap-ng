@@ -158,7 +158,8 @@ sub loadUser {
         $self->logger->debug("Reading U2F keys if exists ...");
         if ( $_->{type} eq 'U2F' ) {
 			$self->logger->debug("_userKey = ".$_->{_userKey});
-			$_->{_userKey} = $self->decode_base64url($_->{_userKey});
+			$self->logger->debug("_keyHandle = ".$_->{_keyHandle});
+			$_->{_userKey} = $self->decode_base64url( $_->{_userKey} );
             push @u2fs, $_;
         }
 		}
@@ -176,6 +177,7 @@ sub loadUser {
     if (    ( $kh = $u2fs[0]{_keyHandle} )
         and ( $uk = $u2fs[0]{_userKey} ) )
     {
+		$self->logger->debug("kh & uk -> OK");
         $req->datas->{crypter} = $self->crypter(
             #keyHandle => $self->decode_base64url($kh),
             #publicKey => $self->decode_base64url($uk)

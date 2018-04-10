@@ -273,15 +273,51 @@ sub loadUser {
     $self->logger->debug("Loading user U2F Devices ...");
     my $uid     = $req->userData->{ $self->conf->{whatToTrace} };
     my $session = $self->p->getPersistentSession($uid);
-    my $kh      = $session->data->{_u2fKeyHandle};
-    my $uk      = $session->data->{_u2fUserKey};
+    
+    
+    
+    
+    
+            my $secret = '';
+        my $_2fDevices = eval {
+            $self->logger->debug("Loading 2F Devices ...");
+
+            # Read existing 2FDevices
+            from_json( $session->data->{_2fDevices}, { allow_nonref => 1 } );
+        };
+        
+        unless ( $_2fDevices ) {
+            $self->logger->debug("No 2F Device found");
+
+            # Set default value
+            @$_2fDevices = [];
+        }
+        
+        #foreach (@$_2fDevices) {
+        #$self->logger->debug("Reading U2F keys if exists ...");
+        #if ( $_->{type} eq 'TOTP' ) {
+            #$secret = $_->{_secret};
+            #last;
+        #}
+		#}
+    
+		my @U2Fs = grep { $_->{type} =~ /U2F/s } @$_2fDevices;
+    
+    
+    
+    my $kh      = $U2Fs[0]{_keyHandle};
+    my $uk      = $self->decode_base64url( $U2Fs[0]{_userKey} );
     unless ( $kh and $uk ) {
 		$self->logger->debug("UTOP -> No U2F key found !!!");
         return 0;
     }
+    $self->logger->debug("_userKey = ".$uk);
+    
     $req->datas->{crypter} = $self->crypter(
-        keyHandle => $self->decode_base64url($kh),
-        publicKey => $self->decode_base64url($uk)
+        #keyHandle => $self->decode_base64url($kh),
+        #publicKey => $self->decode_base64url($uk)
+        keyHandle => $kh,
+        publicKey => $uk
     );
     unless ( $req->datas->{crypter} ) {
         my $error = Crypt::U2F::Server::Simple::lastError();

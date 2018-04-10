@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 18;
+my $maintests = 17;
 
 SKIP: {
     eval { require Authen::U2F::Tester };
@@ -179,9 +179,17 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
         'Push U2F signature'
     );
-    pass(
-'For an unknown reason, Authen::2F::Tester signatures are not recognized by Crypt::U2F::Server'
-    );
+
+    # See https://github.com/mschout/perl-authen-u2f-tester/issues/2
+    if ( $Authen::U2F::Tester::VERSION >= 0.03 ) {
+        expectCookie($res);
+    }
+    else {
+        count(1);
+        pass(
+'Authen::2F::Tester-0.02 signatures are not recognized by Yubico library'
+        );
+    }
 }
 count($maintests);
 
