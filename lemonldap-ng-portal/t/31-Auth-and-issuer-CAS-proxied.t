@@ -1,6 +1,8 @@
 use Test::More;    # skip_all => 'CAS is in rebuild';
 use strict;
 use IO::String;
+use LWP::UserAgent;
+use inc::LWP::Protocol::PSGI;
 use MIME::Base64;
 
 BEGIN {
@@ -11,7 +13,44 @@ my $debug = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
-no warnings 'redefine';
+# Redefine LWP methods for tests
+LWP::Protocol::PSGI->register(
+    sub {
+        my $req = Plack::Request->new(@_);
+        ok( $req->uri =~ m#http://auth.((?:id|s)p).com([^\?]*)(?:\?(.*))?$#,
+            ' Request to ' . $req->uri );
+        my $host  = $1;
+        my $url   = $2;
+        my $query = $3;
+        my $res;
+        my $client = ( $host eq 'idp' ? $issuer : $sp );
+        if ( $req->method eq 'POST' ) {
+            my $s = $req->content;
+            ok(
+                $res = $client->_post(
+                    $url, IO::String->new($s),
+                    length => length($s),
+                    query  => $query,
+                    type   => 'application/xml',
+                ),
+                " Execute POST request to $url"
+            );
+        }
+        else {
+            ok(
+                $res = $client->_get(
+                    $url,
+                    type  => 'application/xml',
+                    query => $query,
+                ),
+                " Execute request to $url"
+            );
+        }
+        expectOK($res);
+        count(2);
+        return $res;
+    }
+);
 
 ok( $issuer = issuer(), 'Issuer portal' );
 $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
@@ -140,8 +179,8 @@ ok(
 );
 count(1);
 expectRedirection( $res, 'http://auth.sp.com/?logout' );
-ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancestors/,
-    ' Frame can be embedded' )
+my $h = getHeader( $res, 'Content-Security-Policy' );
+ok( ( not $h or $h !~ /frame-ancestors/ ), ' Frame can be embedded' )
   or explain( $res->[1],
     'Content-Security-Policy does not contain a frame-ancestors' );
 count(1);
@@ -166,51 +205,6 @@ expectRedirection( $res,
 
 clean_sessions();
 done_testing( count() );
-
-# Redefine LWP methods for tests
-no warnings 'redefine';
-
-sub LWP::UserAgent::request {
-    my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.((?:id|s)p).com([^\?]*)(?:\?(.*))?$#,
-        ' Request to ' . $req->uri );
-    my $host  = $1;
-    my $url   = $2;
-    my $query = $3;
-    my $res;
-    my $client = ( $host eq 'idp' ? $issuer : $sp );
-    if ( $req->method eq 'POST' ) {
-        my $s = $req->content;
-        ok(
-            $res = $client->_post(
-                $url, IO::String->new($s),
-                length => length($s),
-                query  => $query,
-                type   => 'application/xml',
-            ),
-            " Execute POST request to $url"
-        );
-    }
-    else {
-        ok(
-            $res = $client->_get(
-                $url,
-                type  => 'application/xml',
-                query => $query,
-            ),
-            " Execute request to $url"
-        );
-    }
-    expectOK($res);
-    my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
-
-    while ( my $name = shift @{ $res->[1] } ) {
-        $httpResp->header( $name, shift( @{ $res->[1] } ) );
-    }
-    $httpResp->content( join( '', @{ $res->[2] } ) );
-    count(2);
-    return $httpResp;
-}
 
 sub switch {
     my $type = shift;
