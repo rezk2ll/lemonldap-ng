@@ -32,8 +32,8 @@ sub init {
     if (    $self->conf->{yubikey2fSelfRegistration}
         and $self->conf->{yubikey2fActivation} eq '1' )
     {
-        #$self->conf->{yubikey2fActivation} = '$_yubikeys';
-        $self->conf->{yubikey2fActivation} = '$_2fDevices =~ /"type":\s*"UBK"/s';
+        $self->conf->{yubikey2fActivation} =
+          '$_2fDevices =~ /"type":\s*"UBK"/s';
     }
     unless ($self->conf->{yubikey2fClientID}
         and $self->conf->{yubikey2fSecretKey} )

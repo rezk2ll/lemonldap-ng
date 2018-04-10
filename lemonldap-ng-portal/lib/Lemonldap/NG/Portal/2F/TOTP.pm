@@ -30,11 +30,8 @@ sub init {
     if (    $self->conf->{totp2fSelfRegistration}
         and $self->conf->{totp2fActivation} eq '1' )
     {
-        #$self->conf->{totp2fActivation} = '$_totp2fSecret';
         $self->conf->{totp2fActivation} = '$_2fDevices =~ /"type":\s*"TOTP"/s';
     }
-    #$self->conf->{totp2fInterval} ||= 30;
-    #$self->conf->{totp2fRange}    ||= 1;
     return $self->SUPER::init();
 }
 
@@ -67,43 +64,29 @@ sub verify {
         $self->userLogger->error('TOTP 2F: no code');
         return PE_FORMEMPTY;
     }
-    
-        my $secret = '';
-        my $_2fDevices = eval {
-            $self->logger->debug("Loading 2F Devices ...");
 
-            # Read existing 2FDevices
-            from_json( $session->{_2fDevices}, { allow_nonref => 1 } );
-        };
-        
-            unless ( $_2fDevices ) {
-            $self->logger->debug("No 2F Device found");
+    my $secret     = '';
+    my $_2fDevices = eval {
+        $self->logger->debug("Loading 2F Devices ...");
 
-            # Set default value
-            @$_2fDevices = [];
-        }
-        
-        foreach (@$_2fDevices) {
+        # Read existing 2FDevices
+        from_json( $session->{_2fDevices}, { allow_nonref => 1 } );
+    };
+
+    unless ($_2fDevices) {
+        $self->logger->debug("No 2F Device found");
+
+        # Set default value
+        @$_2fDevices = [];
+    }
+
+    foreach (@$_2fDevices) {
         $self->logger->debug("Reading TOTP secret if exists ...");
         if ( $_->{type} eq 'TOTP' ) {
             $secret = $_->{_secret};
             last;
         }
-		}
-        
-        
-        
-        
-        
-        #my @totp2f = grep { $_->{type} =~ /TOTP/s } @$_2fDevices;
-        
-
-
-
-
-
-
-
+    }
 
     my $r = $self->verifyCode(
         $self->conf->{totp2fInterval},

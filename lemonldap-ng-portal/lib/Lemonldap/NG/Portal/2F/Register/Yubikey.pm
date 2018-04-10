@@ -46,10 +46,6 @@ sub run {
         if ( $otp
             and length($otp) > $self->conf->{yubikey2fPublicIDSize} )
         {
-            #my $keys = $req->userData->{_yubikeys} || '';
-            #$keys .= ( $keys ? ', ' : '' )
-              #. substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
-
             my $key = substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
             my $_2fDevices = eval {
                 $self->logger->debug("Looking for 2F Devices ...");
@@ -112,7 +108,6 @@ sub run {
             $self->p->updatePersistentSession( $req,
                 { _2fDevices => to_json($_2fDevices) } );
 
-            #$self->p->updatePersistentSession( $req, { _yubikeys => $keys } );
             return $self->p->sendHtml(
                 $req, 'error',
                 params => {

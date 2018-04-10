@@ -98,63 +98,48 @@ sub run {
         $self->logger->debug('TOTP code verified');
 
         # Now code is verified, let's store the master key in persistent data
-        
-        my $secret = '';        
+
+        my $secret     = '';
         my $_2fDevices = eval {
             $self->logger->debug("Looking for 2F Devices ...");
-            
-            # Read existing 2FDevices
+
+            # Reading existing 2FDevices
             from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
         };
         unless ($_2fDevices) {
             $self->logger->debug("No 2F Device found");
             $_2fDevices = [];
-        };
-        
-       
-        #my $_2fDevices = eval {
-            #$self->logger->debug("Loading 2F Devices ...");
+        }
 
-            ## Read existing 2FDevices
-            #from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
-        #};
-        
+        # Reading existing TOTP
         my @totp2f = grep { $_->{type} eq "TOTP" } @$_2fDevices;
-        
-        unless ( @totp2f ) {
+        unless (@totp2f) {
             $self->logger->debug("No TOTP Device found");
 
             # Set default value
-            push @totp2f, { _secret => '' } ;
+            push @totp2f, { _secret => '' };
         }
-        
-        # Loading TOTP secret
-        foreach ( @totp2f ) {
-					$self->logger->debug("Reading TOTP secret if exists ...");
-					$secret = $_->{_secret};        
-        }
-        
-        if ( $token->{_totp2fSecret} eq $secret ) {
-			return $self->p->sendError( $req, 'totpExistingKey', 200 );
-		}
 
-		### USER CAN ONLY REGISTER ONE TOTP ###
-		# Delete TOTP 2F devices registered
-		my @keep = ();
+        # Loading TOTP secret
+        foreach (@totp2f) {
+            $self->logger->debug("Reading TOTP secret if exists ...");
+            $secret = $_->{_secret};
+        }
+
+        if ( $token->{_totp2fSecret} eq $secret ) {
+            return $self->p->sendError( $req, 'totpExistingKey', 200 );
+        }
+
+        ### USER CAN ONLY REGISTER ONE TOTP ###
+        # Delete TOTP 2F devices previously registered
+        my @keep = ();
         while (@$_2fDevices) {
             my $element = shift @$_2fDevices;
             $self->logger->debug("Looking for TOTP to delete ...");
             push @keep, $element unless ( $element->{type} eq "TOTP" );
         }
 
-        #$self->logger->debug("Delete previously registered TOTP");
-        #$self->p->updatePersistentSession( $req,
-            #{ _2fDevices => to_json( \@keep ) } );
-
-
-
         # Check if user can register one more device
-        #my $size    = @$_2fDevices;
         my $size    = @keep;
         my $maxSize = $self->conf->{max2FDevices};
         $self->logger->debug("Nbr 2FDevices = $size / $maxSize");
@@ -164,8 +149,7 @@ sub run {
                 400 );
         }
 
-		# Store TOTP secret
-        #push @{$_2fDevices},
+        # Store TOTP secret
         push @keep,
           {
             type    => 'TOTP',
@@ -177,9 +161,7 @@ sub run {
         $self->logger->debug(
             "Append 2F Device : { type => 'TOTP', name => $TOTPName }");
         $self->p->updatePersistentSession( $req,
-            #{ _2fDevices => to_json($_2fDevices) } );
             { _2fDevices => to_json( \@keep ) } );
-
         $self->userLogger->notice('TOTP registration succeed');
         return [ 200, [ 'Content-Type' => 'application/json' ],
             ['{"result":1}'] ];
@@ -187,50 +169,50 @@ sub run {
 
     # Get or generate master key
     elsif ( $action eq 'getkey' ) {
-        my $nk = 0;
+        my $nk     = 0;
         my $secret = '';
-        
+
         my $_2fDevices = eval {
             $self->logger->debug("Loading 2F Devices ...");
 
             # Read existing 2FDevices
             from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
         };
-        
+
+        # Loading TOTP secret
         my @totp2f = grep { $_->{type} eq "TOTP" } @$_2fDevices;
-        
-        unless ( @totp2f ) {
+        unless (@totp2f) {
             $self->logger->debug("No TOTP found");
 
             # Set default value
-            push @totp2f, { _secret => '' } ;
-        };
-	
-	# Loading TOTP secret
-        foreach ( @totp2f ) {
-					$self->logger->debug("Reading TOTP secret if exists ...");
-					$secret = $_->{_secret};    
-         };
-        
+            push @totp2f, { _secret => '' };
+        }
+
+        # Loading TOTP secret
+        foreach (@totp2f) {
+            $self->logger->debug("Reading TOTP secret if exists ...");
+            $secret = $_->{_secret};
+        }
+
         if ( ( $req->param('newkey') and $self->conf->{totp2fUserCanChangeKey} )
             or not $secret )
         {
             $secret = $self->newSecret;
             $self->logger->debug("Generating new secret = $secret");
-            $nk     = 1;
+            $nk = 1;
         }
-        
+
         elsif ( $req->param('newkey') ) {
             return $self->p->sendError( $req, 'notAuthorized', 200 );
         }
-        
+
         elsif ( $self->conf->{totp2fDisplayExistingSecret} ) {
             $self->logger->debug("User secret = $secret");
         }
-        
+
         else {
             return $self->p->sendError( $req, 'totpExistingKey', 200 );
-        };
+        }
 
         # Secret is stored in a token: we choose to not accept secret returned
         # by Ajax request to avoid some attacks
@@ -259,7 +241,7 @@ sub run {
                 interval => $self->conf->{totp2fInterval}
             }
         );
-    };
+    }
 
     # Check if unregistration is allowed
     unless ( $self->conf->{totp2fUserCanChangeKey} ) {
@@ -267,7 +249,7 @@ sub run {
     }
 
     # Delete TOTP
-	if ( $action eq 'delete' ) {
+    if ( $action eq 'delete' ) {
         my $epoch      = $req->param('epoch');
         my $_2fDevices = eval {
             $self->logger->debug("Loading 2F Devices ...");
@@ -276,6 +258,7 @@ sub run {
             from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
         };
 
+        # Delete TOTP 2F device
         my @keep = ();
         while (@$_2fDevices) {
             my $element = shift @$_2fDevices;
@@ -292,7 +275,6 @@ sub run {
             ['{"result":1}'] ];
 
     }
-
 }
 
 1;

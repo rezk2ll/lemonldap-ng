@@ -36,7 +36,6 @@ sub init {
     if (    $self->conf->{u2fSelfRegistration}
         and $self->conf->{u2fActivation} eq '1' )
     {
-        #$self->conf->{u2fActivation} = '$_u2fKeyHandle and $_u2fUserKey';
         $self->conf->{u2fActivation} = '$_2fDevices =~ /"type":\s*"U2F"/s';
     }
     return 0
@@ -87,9 +86,8 @@ sub verify {
             $req->error(PE_ERROR);
             return $self->fail($req);
         }
-        $self->logger->debug("Get challenge: $challenge");
 
-        #eval { $challenge = JSON::from_json($challenge)->{challenge} };
+        $self->logger->debug("Get challenge: $challenge");
         if ( not $req->datas->{crypter}->setChallenge($challenge) ) {
             $self->logger->error(
                 $@ ? $@ : Crypt::U2F::Server::Simple::lastError() );
@@ -138,57 +136,45 @@ sub fail {
 sub loadUser {
     my ( $self, $req, $session ) = @_;
     my ( $kh, $uk );
-    
-        my $_2fDevices = eval {
-            $self->logger->debug("Loading 2F Devices ...");
 
-            # Read existing 2FDevices
-            from_json( $session->{_2fDevices}, { allow_nonref => 1 } );
-        };
-        
-        unless ( $_2fDevices ) {
-            $self->logger->debug("No 2F Device found");
+    my $_2fDevices = eval {
+        $self->logger->debug("Loading 2F Devices ...");
 
-            # Set default value
-            @$_2fDevices = [];
-        }
-        
-        my @u2fs = ();
-        foreach ( @$_2fDevices ) {
+        # Read existing 2FDevices
+        from_json( $session->{_2fDevices}, { allow_nonref => 1 } );
+    };
+
+    unless ($_2fDevices) {
+        $self->logger->debug("No 2F Device found");
+
+        # Set default value
+        @$_2fDevices = [];
+    }
+
+    my @u2fs = ();
+    foreach (@$_2fDevices) {
         $self->logger->debug("Reading U2F keys if exists ...");
         if ( $_->{type} eq 'U2F' ) {
-			$self->logger->debug("_userKey = ".$_->{_userKey});
-			$self->logger->debug("_keyHandle = ".$_->{_keyHandle});
-			$_->{_userKey} = $self->decode_base64url( $_->{_userKey} );
+            $self->logger->debug( "_userKey = " . $_->{_userKey} );
+            $self->logger->debug( "_keyHandle = " . $_->{_keyHandle} );
+            $_->{_userKey} = $self->decode_base64url( $_->{_userKey} );
             push @u2fs, $_;
         }
-		}
-		
-    
-    
-    
-    
-    
-    
-    
-    
-    #if (    ( $kh = $session->{_u2fKeyHandle} )
-    #    and ( $uk = $session->{_u2fUserKey} ) )
+    }
+
     if (    ( $kh = $u2fs[0]{_keyHandle} )
         and ( $uk = $u2fs[0]{_userKey} ) )
     {
-		$self->logger->debug("kh & uk -> OK");
+        $self->logger->debug("kh & uk -> OK");
         $req->datas->{crypter} = $self->crypter(
-            #keyHandle => $self->decode_base64url($kh),
-            #publicKey => $self->decode_base64url($uk)
             keyHandle => $kh,
-            publicKey => $uk    
+            publicKey => $uk
         );
         unless ( $req->datas->{crypter} ) {
             $self->logger->error(
                 'U2F error: ' . Crypt::U2F::Server::u2fclib_getError() );
             return -1;
-        };
+        }
         return 1;
     }
     else {
