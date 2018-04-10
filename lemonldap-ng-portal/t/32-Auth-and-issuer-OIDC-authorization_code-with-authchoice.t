@@ -1,6 +1,8 @@
 use Test::More;
 use strict;
 use IO::String;
+use LWP::UserAgent;
+use inc::LWP::Protocol::PSGI;
 use MIME::Base64;
 
 BEGIN {
@@ -11,6 +13,57 @@ my $debug     = 'error';
 my $maintests = 18;
 my ( $op, $rp, $res );
 my %handlerOR = ( op => [], rp => [] );
+
+LWP::Protocol::PSGI->register(
+    sub {
+        my $req = Plack::Request->new(@_);
+        ok( $req->uri =~ m#http://auth.((?:o|r)p).com(.*)#, ' REST request' );
+        my $host = $1;
+        my $url  = $2;
+        my ( $res, $client );
+        count(1);
+        if ( $host eq 'op' ) {
+            pass("  Request from RP to OP,     endpoint $url");
+            $client = $op;
+        }
+        elsif ( $host eq 'rp' ) {
+            pass('  Request from OP to RP');
+            $client = $rp;
+        }
+        else {
+            fail('  Aborting REST request (external)');
+            return HTTP::Response->new(500);
+        }
+        if ( $req->method =~ /^post$/i ) {
+            my $s = $req->content;
+            ok(
+                $res = $client->_post(
+                    $url, IO::String->new($s),
+                    length => length($s),
+                    type   => $req->header('Content-Type'),
+                ),
+                '  Execute request'
+            );
+        }
+        else {
+            ok(
+                $res = $client->_get(
+                    $url,
+                    custom => {
+                        HTTP_AUTHORIZATION => $req->header('Authorization'),
+                    }
+                ),
+                '  Execute request'
+            );
+        }
+        ok( $res->[0] == 200, '  Response is 200' );
+        ok( getHeader( $res, 'Content-Type' ) =~ m#^application/json#,
+            '  Content is JSON' )
+          or explain( $res->[1], 'Content-Type => application/json' );
+        count(4);
+        return $res;
+    }
+);
 
 SKIP: {
     eval { require DBI; require DBD::SQLite; };
@@ -185,65 +238,6 @@ SKIP: {
 count($maintests);
 eval { unlink 't/userdb.db' };
 done_testing( count() );
-
-no warnings 'redefine';
-
-sub LWP::UserAgent::request {
-    my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.((?:o|r)p).com(.*)#, ' REST request' );
-    my $host = $1;
-    my $url  = $2;
-    my ( $res, $client );
-    count(1);
-    if ( $host eq 'op' ) {
-        pass("  Request from RP to OP,     endpoint $url");
-        $client = $op;
-    }
-    elsif ( $host eq 'rp' ) {
-        pass('  Request from OP to RP');
-        $client = $rp;
-    }
-    else {
-        fail('  Aborting REST request (external)');
-        return HTTP::Response->new(500);
-    }
-    if ( $req->method =~ /^post$/i ) {
-        my $s = $req->content;
-        ok(
-            $res = $client->_post(
-                $url, IO::String->new($s),
-                length => length($s),
-                type   => $req->header('Content-Type'),
-            ),
-            '  Execute request'
-        );
-    }
-    else {
-        ok(
-            $res = $client->_get(
-                $url,
-                custom => {
-                    HTTP_AUTHORIZATION => $req->header('Authorization'),
-                }
-            ),
-            '  Execute request'
-        );
-    }
-    ok( $res->[0] == 200, '  Response is 200' );
-    ok( getHeader( $res, 'Content-Type' ) =~ m#^application/json#,
-        '  Content is JSON' )
-      or explain( $res->[1], 'Content-Type => application/json' );
-    my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
-
-    while ( my $name = shift @{ $res->[1] } ) {
-        $httpResp->header( $name, shift( @{ $res->[1] } ) );
-    }
-
-    #print STDERR Dumper($res->[2]);
-    $httpResp->content( join( '', @{ $res->[2] } ) );
-    count(4);
-    return $httpResp;
-}
 
 sub switch {
     my $type = shift;

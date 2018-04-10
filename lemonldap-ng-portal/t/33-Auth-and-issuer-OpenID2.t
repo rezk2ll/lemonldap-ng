@@ -1,6 +1,8 @@
 use Test::More;
 use strict;
 use IO::String;
+use LWP::UserAgent;
+use inc::LWP::Protocol::PSGI;
 use MIME::Base64;
 
 BEGIN {
@@ -11,6 +13,36 @@ my $maintests = 9;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
+
+LWP::Protocol::PSGI->register(
+    sub {
+        my $req = Plack::Request->new(@_);
+        ok( $req->uri =~ m#http://auth.idp.com(.*)#,
+            ' Request from SP to IdP' );
+        my $url = $1;
+        my ($res);
+        count(1);
+        if ( $req->method =~ /^post$/i ) {
+            my $s = $req->content;
+            ok(
+                $res = $issuer->_post(
+                    $url, IO::String->new($s),
+                    length => length($s),
+                    type   => $req->header('Content-Type'),
+                    accept => 'text/plain',
+                ),
+                '  Execute request'
+            );
+        }
+        else {
+            ok( $res = $issuer->_get( $url, accept => 'text/plain', ),
+                '  Execute post request' );
+        }
+        expectOK($res);
+        count(1);
+        return $res;
+    }
+);
 
 SKIP: {
     eval { require Net::OpenID::Consumer; require Net::OpenID::Server; };
@@ -103,42 +135,6 @@ sub switch {
     @Lemonldap::NG::Handler::Main::_onReload = @{
         $handlerOR{$type};
     };
-}
-
-no warnings 'redefine';
-
-sub LWP::UserAgent::request {
-    my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.idp.com(.*)#, ' Request from SP to IdP' );
-    my $url = $1;
-    my ($res);
-    count(1);
-    if ( $req->method =~ /^post$/i ) {
-        my $s = $req->content;
-        ok(
-            $res = $issuer->_post(
-                $url, IO::String->new($s),
-                length => length($s),
-                type   => $req->header('Content-Type'),
-                accept => 'text/plain',
-            ),
-            '  Execute request'
-        );
-    }
-    else {
-        ok( $res = $issuer->_get( $url, accept => 'text/plain', ),
-            '  Execute post request' );
-    }
-    expectOK($res);
-    my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
-
-    while ( my $name = shift @{ $res->[1] } ) {
-        $httpResp->header( $name, shift( @{ $res->[1] } ) );
-    }
-    $httpResp->request($req);
-    $httpResp->content( join( '', @{ $res->[2] } ) );
-    count(1);
-    return $httpResp;
 }
 
 sub issuer {
