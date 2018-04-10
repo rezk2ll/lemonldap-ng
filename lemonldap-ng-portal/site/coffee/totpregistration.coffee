@@ -76,17 +76,7 @@ verify = ->
 					else
 						setMsg data.error, 'danger'
 				else
-					setMsg 'yourKeyIsRegistered', 'success'
-					
-unregister = ->
-	$.ajax
-		type: "POST",
-		url: "#{portal}/totpregister/unregister"
-		data: {}
-		dataType: 'json'
-		error: displayError
-		success: (data) ->
-		setMsg 'yourKeyIsUnregistered', 'success'					
+					setMsg 'yourKeyIsRegistered', 'success'					
 					
 $(document).ready ->
 	getKey(0)
@@ -94,5 +84,3 @@ $(document).ready ->
 		getKey(1)
 	$('#verify').on 'click', () ->
 		verify()
-	$('#unregister').on 'click', () ->
-		unregister()

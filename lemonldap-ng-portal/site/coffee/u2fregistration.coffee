@@ -56,21 +56,6 @@ register = ->
 								setMsg 'yourKeyIsRegistered', 'positive'
 						error: displayError
 
-# Unregistration function (launched by "unregister" button)
-unregister = ->
-		$.ajax
-			type: "POST"
-			url: "#{portal}2fregisters/u/unregistration"
-			data: {}
-			dataType: 'json'
-			error: displayError
-			success: (resp) ->
-				if resp.error
-					setMsg 'u2fFailed', 'warning'
-				else if resp.result
-					setMsg 'yourKeyIsUnregistered', 'positive'
-			error: displayError
-
 # Verification function (launched by "verify" button)
 verify = ->
 	# 1 get challenge
@@ -112,6 +97,5 @@ verify = ->
 $(document).ready ->
 	$('#u2fPermission').hide()
 	$('#register').on 'click', register
-	$('#unregister').on 'click', unregister
 	$('#verify').on 'click', verify
 	$('#goback').attr 'href', portal

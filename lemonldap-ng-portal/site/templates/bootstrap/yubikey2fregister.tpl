@@ -1,8 +1,8 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-  <div class="container">
-    <div id="color" class="message message-positive alert"><span id="msg" trspan="clickOnYubikey"></span></div>
-  </div>
+<div class="container">
+  <div id="color" class="message message-positive alert"><span id="msg" trspan="clickOnYubikey"></span></div>
+</div>
   <main id="menucontent" class="container">
     <div class="panel panel-info">
      <div class="panel-body">
@@ -17,8 +17,6 @@
      </div>
     </div>
   </main>
-
-
 <div class="buttons">
   <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-warning" role="button">
     <span class="glyphicon glyphicon-pencil"></span>&nbsp;

@@ -1,14 +1,7 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
 <div class="container">
-	
-
-    <div id="color" class="message message-positive alert"><span id="msg" trspan="choose2f"></span></div>
-
-	
-  <!--
-  <div class="message message-positive alert" trspan="choose2f"></div>
-  -->
+  <div id="color" class="message message-positive alert"><span id="msg" trspan="choose2f"></span></div>
   <TMPL_IF NAME="SFDEVICES">
     <div class="alert alert-info">
 	<table class="table table-hover table-condensed table-responsive">
@@ -41,7 +34,7 @@
     <TMPL_LOOP NAME="MODULES">
 	  &nbsp;&nbsp;
       <a href="<TMPL_VAR NAME="URL">">
-        <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2F" />
+        <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2F" title="<TMPL_VAR NAME="CODE">2F" />
       </a>
       &nbsp;&nbsp;
     </TMPL_LOOP>

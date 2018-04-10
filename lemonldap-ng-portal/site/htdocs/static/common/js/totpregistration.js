@@ -5,7 +5,7 @@ LemonLDAP::NG TOTP registration script
  */
 
 (function() {
-  var displayError, getKey, setMsg, token, unregister, verify;
+  var displayError, getKey, setMsg, token, verify;
 
   setMsg = function(msg, level) {
     $('#msg').html(window.translate(msg));
@@ -102,27 +102,13 @@ LemonLDAP::NG TOTP registration script
     }
   };
 
-  unregister = function() {
-    return $.ajax({
-      type: "POST",
-      url: portal + "/totpregister/unregister",
-      data: {},
-      dataType: 'json',
-      error: displayError,
-      success: function(data) {}
-    }, setMsg('yourKeyIsUnregistered', 'success'));
-  };
-
   $(document).ready(function() {
     getKey(0);
     $('#changekey').on('click', function() {
       return getKey(1);
     });
-    $('#verify').on('click', function() {
+    return $('#verify').on('click', function() {
       return verify();
-    });
-    return $('#unregister').on('click', function() {
-      return unregister();
     });
   });
 
