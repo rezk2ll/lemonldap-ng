@@ -1,6 +1,8 @@
 use Test::More;
 use strict;
 use IO::String;
+use LWP::UserAgent;
+use inc::LWP::Protocol::PSGI;
 
 BEGIN {
     require 't/test-lib.pm';
@@ -9,6 +11,56 @@ BEGIN {
 my $debug = 'error';
 my ( $issuer, $sp, $res, $spId );
 my %handlerOR = ( issuer => [], sp => [] );
+
+# Redefine LWP methods for tests
+LWP::Protocol::PSGI->register(
+    sub {
+        my $req = Plack::Request->new(@_);
+        ok(
+            $req->uri =~ m#http://auth.idp.com(.*?)(?:\?(.*))?$#,
+            ' @ REST request (' . $req->method . " $1)"
+        );
+        count(1);
+        my $url   = $1;
+        my $query = $2;
+        my $res;
+        my $s = $req->content;
+        if ( $req->method =~ /^(post|put)$/i ) {
+            my $mth = '_' . lc($1);
+            my $s   = $req->content;
+            ok(
+                $res = $issuer->$mth(
+                    $url,
+                    IO::String->new($s),
+                    length => length($s),
+                    type   => $req->header('Content-Type'),
+                ),
+                ' Post request'
+            );
+            count(1);
+            expectOK($res);
+        }
+        elsif ( $req->method =~ /^(get|delete)$/i ) {
+            my $mth = '_' . lc($1);
+            ok(
+                $res = $issuer->$mth(
+                    $url,
+                    accept => $req->header('Accept'),
+                    cookie => $req->header('Cookie'),
+                    query  => $query,
+                ),
+                ' Execute request'
+            );
+            ok( ( $res->[0] == 200 or $res->[0] == 400 ),
+                ' Response is 200 or 400' )
+              or explain( $res->[0], '200 or 400' );
+            count(2);
+        }
+        pass(' @ END OF REST REQUEST');
+        count(1);
+        return $res;
+    }
+);
 
 ok( $issuer = issuer(), 'Issuer portal' );
 $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
@@ -98,61 +150,6 @@ expectReject($res);
 
 clean_sessions();
 done_testing( count() );
-
-# Redefine LWP methods for tests
-no warnings 'redefine';
-
-sub LWP::UserAgent::request {
-    my ( $self, $req ) = @_;
-    ok(
-        $req->uri =~ m#http://auth.idp.com(.*)#,
-        ' @ REST request (' . $req->method . " $1)"
-    );
-    count(1);
-    my $url = $1;
-    my $res;
-    my $s = $req->content;
-    if ( $req->method =~ /^(post|put)$/i ) {
-        my $mth = '_' . lc($1);
-        my $s   = $req->content;
-        ok(
-            $res = $issuer->$mth(
-                $url,
-                IO::String->new($s),
-                length => length($s),
-                type   => $req->header('Content-Type'),
-            ),
-            ' Post request'
-        );
-        count(1);
-        expectOK($res);
-    }
-    elsif ( $req->method =~ /^(get|delete)$/i ) {
-        my $mth = '_' . lc($1);
-        ok(
-            $res = $issuer->$mth(
-                $url,
-                accept => $req->header('Accept'),
-                cookie => $req->header('Cookie')
-            ),
-            ' Execute request'
-        );
-        ok( ( $res->[0] == 200 or $res->[0] == 400 ),
-            ' Response is 200 or 400' )
-          or explain( $res->[0], '200 or 400' );
-        count(2);
-    }
-    my $httpResp;
-    $httpResp = HTTP::Response->new( $res->[0], 'OK' );
-
-    while ( my $name = shift @{ $res->[1] } ) {
-        $httpResp->header( $name, shift( @{ $res->[1] } ) );
-    }
-    $httpResp->content( join( '', @{ $res->[2] } ) );
-    pass(' @ END OF REST REQUEST');
-    count(1);
-    return $httpResp;
-}
 
 sub switch {
     my $type = shift;

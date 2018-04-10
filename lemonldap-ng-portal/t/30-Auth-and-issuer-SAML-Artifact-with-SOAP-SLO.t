@@ -219,8 +219,6 @@ count($maintests);
 clean_sessions();
 done_testing( count() );
 
-no warnings 'redefine';
-
 sub switch {
     my $type = shift;
     @Lemonldap::NG::Handler::Main::_onReload = @{

@@ -1,6 +1,8 @@
 use Test::More;
 use strict;
 use IO::String;
+use LWP::UserAgent;
+use inc::LWP::Protocol::PSGI;
 
 BEGIN {
     require 't/test-lib.pm';
@@ -10,6 +12,39 @@ my $maintests = 10;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
+
+# Redefine LWP methods for tests
+LWP::Protocol::PSGI->register(
+    sub {
+        my $req = Plack::Request->new(@_);
+        ok( $req->uri =~ m#http://auth.((?:id|s)p).com(.*)#,
+            ' @ SOAP REQUEST @' );
+        my $host = $1;
+        my $url  = $2;
+        my $res;
+        my $s = $req->content;
+        my $client = ( $host eq 'idp' ? $issuer : $sp );
+        ok(
+            $res = $client->_post(
+                $url,
+                IO::String->new($s),
+                length => length($s),
+                type   => $req->header('Content-Type'),
+                custom => {
+                    HTTP_SOAPACTION => $req->header('Soapaction'),
+                },
+            ),
+            ' Execute request'
+        );
+        expectOK($res);
+        ok( getHeader( $res, 'Content-Type' ) =~ m#^(?:text|application)/xml#,
+            ' Content is XML' )
+          or explain( $res->[1], 'Content-Type => application/xml' );
+        pass(' @ END OF SOAP REQUEST @');
+        count(4);
+        return $res;
+    }
+);
 
 SKIP: {
     eval 'use SOAP::Lite';
@@ -88,44 +123,6 @@ SKIP: {
 count($maintests);
 clean_sessions();
 done_testing( count() );
-
-# Redefine LWP methods for tests
-no warnings 'redefine';
-
-sub LWP::UserAgent::request {
-    my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.((?:id|s)p).com(.*)#, ' @ SOAP REQUEST @' );
-    my $host = $1;
-    my $url  = $2;
-    my $res;
-    my $s = $req->content;
-    my $client = ( $host eq 'idp' ? $issuer : $sp );
-    ok(
-        $res = $client->_post(
-            $url,
-            IO::String->new($s),
-            length => length($s),
-            type   => $req->header('Content-Type'),
-            custom => {
-                HTTP_SOAPACTION => $req->header('Soapaction'),
-            },
-        ),
-        ' Execute request'
-    );
-    expectOK($res);
-    ok( getHeader( $res, 'Content-Type' ) =~ m#^(?:text|application)/xml#,
-        ' Content is XML' )
-      or explain( $res->[1], 'Content-Type => application/xml' );
-    my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
-
-    while ( my $name = shift @{ $res->[1] } ) {
-        $httpResp->header( $name, shift( @{ $res->[1] } ) );
-    }
-    $httpResp->content( join( '', @{ $res->[2] } ) );
-    pass(' @ END OF SOAP REQUEST @');
-    count(4);
-    return $httpResp;
-}
 
 sub switch {
     my $type = shift;
