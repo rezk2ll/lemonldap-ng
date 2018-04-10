@@ -11,6 +11,7 @@ package Lemonldap::NG::Portal::2F::Engines::Default;
 
 use strict;
 use Mouse;
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_NOTOKEN
@@ -41,10 +42,6 @@ has ott => (
 
 sub init {
     my ($self) = @_;
-
-    # Set default 2F list
-    $self->conf->{available2F}                 ||= 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey';
-    $self->conf->{available2FSelfRegistration} ||= 'TOTP,U2F,Yubikey';
 
     # Load 2F modules
     for my $i ( 0 .. 1 ) {
@@ -91,17 +88,17 @@ sub init {
 
     # Enable REST request only if more than 1 2F module is enabled
     if ( @{ $self->{sfModules} } > 1 ) {
-        $self->addUnauthRoute( '2fchoice' => '_choice',   ['POST'] );
+        $self->addUnauthRoute( '2fchoice' => '_choice',  ['POST'] );
         $self->addUnauthRoute( '2fchoice' => 'redirect', ['GET'] );
     }
 
-    # Enable 2F registration URL only if a least 1 registration module
+    # Enable 2F registration URL only if at least 1 registration module
     # is enabled
     if ( @{ $self->{sfRModules} } ) {
 
         # Registration base
         $self->addAuthRoute( '2fregisters' => '_displayRegister', ['GET'] );
-        $self->addAuthRoute( '2fregisters' => 'register',        ['POST'] );
+        $self->addAuthRoute( '2fregisters' => 'register',         ['POST'] );
     }
 
     return 1;
@@ -111,14 +108,14 @@ sub init {
 
 # public PE_CODE run($req)
 #
-# run() is called at each authentication, just after sesionInfo populate
+# run() is called at each authentication, just after sessionInfo populated
 sub run {
     my ( $self, $req ) = @_;
 
     # Skip 2F unless a module has been registered
     return PE_OK unless ( @{ $self->sfModules } );
-
-    # Search for authorizated modules for this user
+    
+    # Search for authorized modules for this user
     my @am;
     foreach my $m ( @{ $self->sfModules } ) {
         $self->logger->debug(
@@ -128,8 +125,8 @@ sub run {
             push @am, $m->{m};
         }
     }
-
-    # If no 2F modules are authorizated, skipping 2F
+    
+    # If no 2F module is authorized, skipping 2F
     # Note that a rule may forbid access after (GrantSession plugin)
     return PE_OK unless (@am);
 
@@ -142,7 +139,7 @@ sub run {
     my $token = $self->ott->createToken( $req->sessionInfo );
     delete $req->{authResult};
 
-    # If only one 2F is authorizated, display it
+    # If only one 2F is authorized, display it
     unless ($#am) {
         my $res = $am[0]->run( $req, $token );
         $req->authResult($res);
@@ -169,9 +166,9 @@ sub run {
 # Return true if at least 1 register module is available for this user. Used
 # by Menu to display or not /2fregisters page
 sub display2fRegisters {
-    my($self,$req,$session) = @_;
+    my ( $self, $req, $session ) = @_;
     foreach my $m ( @{ $self->sfRModules } ) {
-        return 1 if ( $m->{r}->( $req, $session) );
+        return 1 if ( $m->{r}->( $req, $session ) );
     }
     return 0;
 }
@@ -237,7 +234,7 @@ sub _displayRegister {
                 400 );
         }
         unless ( $m->{r}->( $req, $req->userData ) ) {
-            return $self->p->sendError( $req, 'Registration unauthorizated',
+            return $self->p->sendError( $req, 'Registration not authorized',
                 403 );
         }
         return $self->p->sendHtml( $req, $m->{m}->template );
@@ -261,12 +258,22 @@ sub _displayRegister {
         return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ],
             [] ];
     }
+
+    my $_2fDevices = eval { from_json( $req->userData->{_2fDevices},
+            { allow_nonref => 1 } ); };
+
+    unless ($_2fDevices) {
+        $self->logger->debug("No 2F Device found");
+        $_2fDevices = [];
+    }
+
     return $self->p->sendHtml(
         $req,
         '2fregisters',
         params => {
-            SKIN    => $self->conf->{portalSkin},
-            MODULES => \@am,
+            SKIN      => $self->conf->{portalSkin},
+            MODULES   => \@am,
+            SFDEVICES => $_2fDevices,
         }
     );
 }

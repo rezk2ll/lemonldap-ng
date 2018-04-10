@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::2F::UTOTP;
 
 use strict;
 use Mouse;
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
 );
 
@@ -36,7 +37,9 @@ sub init {
       )
     {
         $self->conf->{utotp2fActivation} =
-          '$_totp2fSecret or $_u2fKeyHandle and $_u2fUserKey';
+
+          #'$_totp2fSecret or $_u2fKeyHandle and $_u2fUserKey';
+          '$_2fDevices =~ /"type":\s*"(?:TOTP|U2F)"/s';
     }
     foreach (qw(U2F TOTP)) {
 
