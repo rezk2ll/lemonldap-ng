@@ -270,11 +270,13 @@ sub run {
 
 sub loadUser {
     my ( $self, $req ) = @_;
+    $self->logger->debug("Loading user U2F Devices ...");
     my $uid     = $req->userData->{ $self->conf->{whatToTrace} };
     my $session = $self->p->getPersistentSession($uid);
     my $kh      = $session->data->{_u2fKeyHandle};
     my $uk      = $session->data->{_u2fUserKey};
     unless ( $kh and $uk ) {
+		$self->logger->debug("UTOP -> No U2F key found !!!");
         return 0;
     }
     $req->datas->{crypter} = $self->crypter(

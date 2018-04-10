@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::2F::TOTP;
 
 use strict;
 use Mouse;
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_ERROR
@@ -66,12 +67,49 @@ sub verify {
         $self->userLogger->error('TOTP 2F: no code');
         return PE_FORMEMPTY;
     }
+    
+        my $secret = '';
+        my $_2fDevices = eval {
+            $self->logger->debug("Loading 2F Devices ...");
+
+            # Read existing 2FDevices
+            from_json( $session->{_2fDevices}, { allow_nonref => 1 } );
+        };
+        
+            unless ( $_2fDevices ) {
+            $self->logger->debug("No 2F Device found");
+
+            # Set default value
+            @$_2fDevices = [];
+        }
+        
+        foreach (@$_2fDevices) {
+        $self->logger->debug("Reading TOTP secret if exists ...");
+        if ( $_->{type} eq 'TOTP' ) {
+            $secret = $_->{_secret};
+            last;
+        }
+		}
+        
+        
+        
+        
+        
+        #my @totp2f = grep { $_->{type} =~ /TOTP/s } @$_2fDevices;
+        
+
+
+
+
+
+
+
 
     my $r = $self->verifyCode(
         $self->conf->{totp2fInterval},
         $self->conf->{totp2fRange},
         $self->conf->{totp2fDigits},
-        $session->{_totp2fSecret}, $code
+        $secret, $code
     );
     if ( $r == -1 ) { return PE_ERROR; }
     elsif ($r) {

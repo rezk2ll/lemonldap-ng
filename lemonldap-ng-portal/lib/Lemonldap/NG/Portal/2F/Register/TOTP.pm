@@ -98,20 +98,64 @@ sub run {
         $self->logger->debug('TOTP code verified');
 
         # Now code is verified, let's store the master key in persistent data
-        #$self->p->updatePersistentSession( $req,
-            #{ _totp2fSecret => $token->{_totp2fSecret} } );
-
+        
+        my $secret = '';        
         my $_2fDevices = eval {
             $self->logger->debug("Looking for 2F Devices ...");
+            
+            # Read existing 2FDevices
             from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
         };
         unless ($_2fDevices) {
             $self->logger->debug("No 2F Device found");
             $_2fDevices = [];
+        };
+        
+       
+        #my $_2fDevices = eval {
+            #$self->logger->debug("Loading 2F Devices ...");
+
+            ## Read existing 2FDevices
+            #from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
+        #};
+        
+        my @totp2f = grep { $_->{type} eq "TOTP" } @$_2fDevices;
+        
+        unless ( @totp2f ) {
+            $self->logger->debug("No TOTP Device found");
+
+            # Set default value
+            push @totp2f, { _secret => '' } ;
+        }
+        
+        # Loading TOTP secret
+        foreach ( @totp2f ) {
+					$self->logger->debug("Reading TOTP secret if exists ...");
+					$secret = $_->{_secret};        
+        }
+        
+        if ( $token->{_totp2fSecret} eq $secret ) {
+			return $self->p->sendError( $req, 'totpExistingKey', 200 );
+		}
+
+		### USER CAN ONLY REGISTER ONE TOTP ###
+		# Delete TOTP 2F devices registered
+		my @keep = ();
+        while (@$_2fDevices) {
+            my $element = shift @$_2fDevices;
+            $self->logger->debug("Looking for TOTP to delete ...");
+            push @keep, $element unless ( $element->{type} eq "TOTP" );
         }
 
+        #$self->logger->debug("Delete previously registered TOTP");
+        #$self->p->updatePersistentSession( $req,
+            #{ _2fDevices => to_json( \@keep ) } );
+
+
+
         # Check if user can register one more device
-        my $size    = @$_2fDevices;
+        #my $size    = @$_2fDevices;
+        my $size    = @keep;
         my $maxSize = $self->conf->{max2FDevices};
         $self->logger->debug("Nbr 2FDevices = $size / $maxSize");
         if ( $size >= $maxSize ) {
@@ -120,7 +164,9 @@ sub run {
                 400 );
         }
 
-        push @{$_2fDevices},
+		# Store TOTP secret
+        #push @{$_2fDevices},
+        push @keep,
           {
             type    => 'TOTP',
             name    => $TOTPName,
@@ -131,7 +177,8 @@ sub run {
         $self->logger->debug(
             "Append 2F Device : { type => 'TOTP', name => $TOTPName }");
         $self->p->updatePersistentSession( $req,
-            { _2fDevices => to_json($_2fDevices) } );
+            #{ _2fDevices => to_json($_2fDevices) } );
+            { _2fDevices => to_json( \@keep ) } );
 
         $self->userLogger->notice('TOTP registration succeed');
         return [ 200, [ 'Content-Type' => 'application/json' ],
@@ -153,42 +200,37 @@ sub run {
         my @totp2f = grep { $_->{type} eq "TOTP" } @$_2fDevices;
         
         unless ( @totp2f ) {
-            $self->logger->debug("No 2F Device found");
+            $self->logger->debug("No TOTP found");
 
             # Set default value
             push @totp2f, { _secret => '' } ;
-        }
-        
+        };
+	
+	# Loading TOTP secret
         foreach ( @totp2f ) {
-					$self->logger->debug("Reading TOTP secret ...");
-					$secret = $_->{_secret};
-                
+					$self->logger->debug("Reading TOTP secret if exists ...");
+					$secret = $_->{_secret};    
          };
         
-        
-        
         if ( ( $req->param('newkey') and $self->conf->{totp2fUserCanChangeKey} )
-            #or not $req->userData->{_totp2fSecret} )
             or not $secret )
         {
             $secret = $self->newSecret;
             $self->logger->debug("Generating new secret = $secret");
             $nk     = 1;
         }
+        
         elsif ( $req->param('newkey') ) {
             return $self->p->sendError( $req, 'notAuthorized', 200 );
         }
+        
         elsif ( $self->conf->{totp2fDisplayExistingSecret} ) {
-            #$secret = $req->userData->{_totp2fSecret};
-            
-            
             $self->logger->debug("User secret = $secret");
-            
         }
         
         else {
             return $self->p->sendError( $req, 'totpExistingKey', 200 );
-        }
+        };
 
         # Secret is stored in a token: we choose to not accept secret returned
         # by Ajax request to avoid some attacks
@@ -203,14 +245,6 @@ sub run {
             $issuer = $self->conf->{portal};
             $issuer =~ s#^https?://([^/:]+).*$#$1#;
         }
-        
-        if ( $token eq $secret ) {
-        
-			return $self->p->sendError( $req, 'notAuthorized', 200 );
-        
-		}
-        
-        
 
         # QR-code will be generated by a javascript, here we just send data
         return $self->p->sendJSONresponse(
@@ -225,21 +259,14 @@ sub run {
                 interval => $self->conf->{totp2fInterval}
             }
         );
-    }
+    };
 
     # Check if unregistration is allowed
-    unless ( $self->conf->{TOTP2fUserCanChangeKey} ) {
+    unless ( $self->conf->{totp2fUserCanChangeKey} ) {
         return $self->p->sendError( $req, 'notAuthorized', 400 );
     }
 
     # Delete TOTP
-    #if ( $action eq 'unregister' ) {
-        #$self->p->updatePersistentSession( $req, { _totp2fSecret => '' } );
-        #$self->userLogger->notice('TOTP unregistration succeed');
-        #return [ 200, [ 'Content-Type' => 'application/json' ],
-            #['{"result":1}'] ];
-    #}
-    #elsif ( $action eq 'delete' ) {
 	if ( $action eq 'delete' ) {
         my $epoch      = $req->param('epoch');
         my $_2fDevices = eval {

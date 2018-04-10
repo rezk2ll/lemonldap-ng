@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::2F::UTOTP;
 
 use strict;
 use Mouse;
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
 );
 

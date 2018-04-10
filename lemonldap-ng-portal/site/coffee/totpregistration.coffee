@@ -4,7 +4,7 @@ LemonLDAP::NG TOTP registration script
 
 setMsg = (msg, level) ->
 	$('#msg').html window.translate msg
-	$('#color').removeClass 'message-positive message-warning alert-success alert-warning'
+	$('#color').removeClass 'message-positive message-warning message-danger alert-success alert-warning alert-danger'
 	$('#color').addClass "message-#{level}"
 	level = 'success' if level == 'positive'
 	$('#color').addClass "alert-#{level}"
@@ -20,6 +20,7 @@ displayError = (j, status, err) ->
 token=''
 
 getKey = (reset) ->
+	setMsg 'yourTotpKey', 'warning'
 	$.ajax
 		type: "POST",
 		url: "#{portal}/2fregisters/totp/getkey"
