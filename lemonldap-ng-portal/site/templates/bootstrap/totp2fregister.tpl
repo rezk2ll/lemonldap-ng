@@ -23,9 +23,9 @@
         <span trspan="changeKey">Change key</span>
       </span>
       &nbsp;&nbsp;
-      <span id="register" class="btn btn-success" role="button">
+      <span id="verify" class="btn btn-success" role="button">
         <span class="glyphicon glyphicon-check"></span>&nbsp;
-        <span trspan="register">Register</span>
+        <span trspan="verify">Verify</span>
       </span>
      </div>
     </div>

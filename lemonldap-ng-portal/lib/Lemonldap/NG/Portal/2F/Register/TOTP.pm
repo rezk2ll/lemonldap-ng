@@ -41,7 +41,7 @@ sub run {
     }
 
     # Verification that user has a valid TOTP app
-    if ( $action eq 'register' ) {
+    if ( $action eq 'verify' ) {
 
         # Get form token
         my $token = $req->param('token');

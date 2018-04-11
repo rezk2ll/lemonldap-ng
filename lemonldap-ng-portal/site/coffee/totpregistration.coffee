@@ -55,14 +55,14 @@ getKey = (reset) ->
 				setMsg 'yourTotpKey', 'success'
 			token = data.token
 
-register = ->
+verify = ->
 	val = $('#code').val()
 	unless val
 		setMsg 'fillTheForm', 'warning'
 	else
 		$.ajax
 			type: "POST",
-			url: "#{portal}/2fregisters/totp/register"
+			url: "#{portal}/2fregisters/totp/verify"
 			dataType: 'json'
 			data:
 				token: token
@@ -82,5 +82,5 @@ $(document).ready ->
 	getKey(0)
 	$('#changekey').on 'click', () ->
 		getKey(1)
-	$('#register').on 'click', () ->
-		register()
+	$('#verify').on 'click', () ->
+		verify()

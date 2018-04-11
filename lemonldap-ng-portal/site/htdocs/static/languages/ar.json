@@ -159,6 +159,7 @@
 "noHistory":"هذا هو أول اتصال، مرحبا بك!",
 "notAuthorized":"You're not authorized too do this",
 "notFound": "لم يتم العثور: محاولة الدخول إلى صفحة غير متوفرة",
+"noTOTPFound":"No TOTP found",
 "noU2FKeyFound": "No U2F key found",
 "oidcConsent":"التطبيق ٪s هل ترغب في معرفة:",
 "oidcConsents": "OIDC consents",
