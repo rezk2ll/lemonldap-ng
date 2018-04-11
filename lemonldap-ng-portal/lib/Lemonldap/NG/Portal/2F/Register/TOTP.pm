@@ -85,7 +85,7 @@ sub run {
             $token->{_totp2fSecret}, $code
         );
         if ( $r == -1 ) {
-            return $self->p->sendError( 'serverError', 500 );
+            return $self->p->sendError( $req, 'serverError', 500 );
         }
 
         # Invalid try is returned with a 200 code. Javascript will read error
@@ -99,14 +99,22 @@ sub run {
 
         # Now code is verified, let's store the master key in persistent data
 
-        my $secret     = '';
-        my $_2fDevices = eval {
-            $self->logger->debug("Looking for 2F Devices ...");
+        my $secret = '';
 
-            # Reading existing 2FDevices
-            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
-        };
-        unless ($_2fDevices) {
+        # Reading existing 2FDevices
+        $self->logger->debug("Looking for 2F Devices ...");
+        my $_2fDevices;
+        if ( $req->userData->{_2fDevices} ) {
+            $_2fDevices = eval {
+                from_json( $req->userData->{_2fDevices},
+                    { allow_nonref => 1 } );
+            };
+            if ($@) {
+                $self->logger->error("Corrupted session (_2fDevices): $@");
+                return $self->p->sendError( $req, "Corrupted session", 500 );
+            }
+        }
+        else {
             $self->logger->debug("No 2F Device found");
             $_2fDevices = [];
         }
@@ -172,12 +180,19 @@ sub run {
         my $nk     = 0;
         my $secret = '';
 
-        my $_2fDevices = eval {
-            $self->logger->debug("Loading 2F Devices ...");
-
-            # Read existing 2FDevices
-            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
-        };
+        # Read existing 2FDevices
+        $self->logger->debug("Loading 2F Devices ...");
+        my $_2fDevices = [];
+        if ( $req->userData->{_2fDevices} ) {
+            $_2fDevices = eval {
+                from_json( $req->userData->{_2fDevices},
+                    { allow_nonref => 1 } );
+            };
+            if ($@) {
+                $self->logger->error("Corrupted session (_2fDevices): $@");
+                return $self->p->sendError( $req, "Corrupted session", 500 );
+            }
+        }
 
         # Loading TOTP secret
         my @totp2f = grep { $_->{type} eq "TOTP" } @$_2fDevices;
@@ -250,13 +265,21 @@ sub run {
 
     # Delete TOTP
     if ( $action eq 'delete' ) {
-        my $epoch      = $req->param('epoch');
-        my $_2fDevices = eval {
-            $self->logger->debug("Loading 2F Devices ...");
+        my $epoch = $req->param('epoch');
 
-            # Read existing 2FDevices
-            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
-        };
+        # Read existing 2FDevices
+        $self->logger->debug("Loading 2F Devices ...");
+        my $_2fDevices = [];
+        if ( $req->userData->{_2fDevices} ) {
+            $_2fDevices = eval {
+                from_json( $req->userData->{_2fDevices},
+                    { allow_nonref => 1 } );
+            };
+            if ($@) {
+                $self->logger->error("Corrupted session (_2fDevices): $@");
+                return $self->p->sendError( $req, "Corrupted session", 500 );
+            }
+        }
 
         # Delete TOTP 2F device
         my @keep = ();

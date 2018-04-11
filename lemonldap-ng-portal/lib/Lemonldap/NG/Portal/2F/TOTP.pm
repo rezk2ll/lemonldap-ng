@@ -65,27 +65,31 @@ sub verify {
         return PE_FORMEMPTY;
     }
 
-    my $secret     = '';
-    my $_2fDevices = eval {
+    my $secret = '';
+    my $_2fDevices;
+    if ( $session->{_2fDevices} ) {
         $self->logger->debug("Loading 2F Devices ...");
 
         # Read existing 2FDevices
-        from_json( $session->{_2fDevices}, { allow_nonref => 1 } );
-    };
-
-    unless ($_2fDevices) {
-        $self->logger->debug("No 2F Device found");
-
-        # Set default value
-        @$_2fDevices = [];
+        $_2fDevices =
+          eval { from_json( $session->{_2fDevices}, { allow_nonref => 1 } ); };
+        if ($@) {
+            $self->logger->error("Bad encoding in _2fDevices: $@");
+            return PE_ERROR;
+        }
+        $self->logger->debug("2F Device(s) found");
+        foreach (@$_2fDevices) {
+            $self->logger->debug("Reading TOTP secret if exists ...");
+            if ( $_->{type} eq 'TOTP' ) {
+                $secret = $_->{_secret};
+                last;
+            }
+        }
     }
 
-    foreach (@$_2fDevices) {
-        $self->logger->debug("Reading TOTP secret if exists ...");
-        if ( $_->{type} eq 'TOTP' ) {
-            $secret = $_->{_secret};
-            last;
-        }
+    unless ($secret) {
+        $self->logger->debug("No TOTP secret found");
+        return PE_BADCREDENTIALS;
     }
 
     my $r = $self->verifyCode(
