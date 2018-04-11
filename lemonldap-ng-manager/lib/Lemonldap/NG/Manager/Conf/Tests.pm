@@ -360,12 +360,13 @@ sub tests {
         # Warn if TOTP or U2F is enabled with UTOTP (U2F + TOTP)
         utotp => sub {
             return 1 unless ( $conf->{utotp2fActivation} );
-            my $w = '';
+            my $w = "";
             foreach ( 'totp', 'u' ) {
-                $w .= uc($_) . "2F is activated 2 times\n"
-                  if ( $self->conf->{ $_ . '2fActivation' } eq '1' );
+                $w .= uc($_) . "2F is activated twice !!! \n"
+                  if ( $conf->{ $_ . '2fActivation' } eq '1' );
             }
             return ( 1, ( $w ? $w : () ) );
+
         },
     };
 }

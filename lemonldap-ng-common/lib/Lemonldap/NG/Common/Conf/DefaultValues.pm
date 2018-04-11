@@ -119,6 +119,8 @@ sub defaultValues {
         'mailUrl'                    => 'http://auth.example.com/resetpwd',
         'managerDn'                  => '',
         'managerPassword'            => '',
+        'max2FDevices'               => 10,
+        'max2FDevicesNameLength'     => 20,
         'multiValuesSeparator'       => '; ',
         'notificationStorage'        => 'File',
         'notificationStorageOptions' => {
@@ -251,6 +253,7 @@ sub defaultValues {
         'totp2fInterval'                          => 30,
         'totp2fRange'                             => 1,
         'totp2fSelfRegistration'                  => 0,
+        'totp2fUserCanRemoveKey'                  => 1,
         'trustedProxies'                          => '',
         'twitterAuthnLevel'                       => 1,
         'u2fActivation'                           => 0,
@@ -267,7 +270,8 @@ sub defaultValues {
         'whatToTrace'                             => 'uid',
         'yubikey2fActivation'                     => 0,
         'yubikey2fPublicIDSize'                   => 12,
-        'yubikey2fSelfRegistration'               => 0
+        'yubikey2fSelfRegistration'               => 0,
+        'yubikey2fUserCanRemoveKey'               => 1
     };
 }
 

@@ -670,6 +670,7 @@ sub tree {
                                 'totp2fDigits',
                                 'totp2fDisplayExistingSecret',
                                 'totp2fUserCanChangeKey',
+                                'totp2fUserCanRemoveKey',
                             ]
                         },
                         {
@@ -706,6 +707,7 @@ sub tree {
                                 'yubikey2fNonce',
                                 'yubikey2fUrl',
                                 'yubikey2fPublicIDSize',
+                                'yubikey2fUserCanRemoveKey',
                             ],
                         },
                     ]

@@ -1596,6 +1596,14 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'test'    => qr/^\S*$/,
             'type'    => 'password'
         },
+        'max2FDevices' => {
+            'default' => 10,
+            'type'    => 'int'
+        },
+        'max2FDevicesNameLength' => {
+            'default' => 20,
+            'type'    => 'int'
+        },
         'multiValuesSeparator' => {
             'default' => '; ',
             'type'    => 'authParamsText'
@@ -3219,6 +3227,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'bool'
         },
+        'totp2fUserCanRemoveKey' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'trustedDomains' => {
             'type' => 'text'
         },
@@ -3421,6 +3433,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'yubikey2fUrl' => {
             'type' => 'text'
+        },
+        'yubikey2fUserCanRemoveKey' => {
+            'default' => 1,
+            'type'    => 'bool'
         },
         'zimbraAccountKey' => {
             'type' => 'text'

@@ -1054,7 +1054,19 @@ sub attributes {
             default       => 1,
             documentation => 'Upgrade session activation',
         },
-
+        
+        # 2F
+        max2FDevices => {
+            default       => 10,
+            type          => 'int',
+            documentation => 'Maximum registered 2F devices',
+        },
+        max2FDevicesNameLength => {
+            default       => 20,
+            type          => 'int',
+            documentation => 'Maximum 2F devices name length',
+        },
+        
         # U2F
         u2fActivation => {
             type          => 'boolOrExpr',
@@ -1122,6 +1134,11 @@ sub attributes {
             type          => 'bool',
             default       => 0,
             documentation => 'Authorize users to change existing TOTP secret',
+        },
+        totp2fUserCanRemoveKey => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Authorize users to remove existing TOTP secret',
         },
 
         # UTOTP 2F
@@ -1236,6 +1253,11 @@ sub attributes {
             type          => 'int',
             default       => 12,
             documentation => 'Yubikey public ID size',
+        },
+        yubikey2fUserCanRemoveKey => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Authorize users to remove existing Yubikey',
         },
 
         # Single session

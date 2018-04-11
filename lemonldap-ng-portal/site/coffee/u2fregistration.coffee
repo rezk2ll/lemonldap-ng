@@ -38,15 +38,16 @@ register = ->
 				$('#u2fPermission').hide()
 				# Handle errors
 				if data.errorCode
-					setMsg 'unableToGetKey', 'warning'
+					setMsg data.error, 'warning'
 				else
 					# 3 send response
 					$.ajax
 						type: "POST"
 						url: "#{portal}2fregisters/u/registration"
-						data:
+						data: 
 							registration: JSON.stringify data
 							challenge: JSON.stringify ch
+							keyName: $('#keyName').val()
 						dataType: 'json'
 						success: (resp) ->
 							if resp.error
@@ -54,21 +55,6 @@ register = ->
 							else if resp.result
 								setMsg 'yourKeyIsRegistered', 'positive'
 						error: displayError
-
-# Unregistration function (launched by "unregister" button)
-unregister = ->
-		$.ajax
-			type: "POST"
-			url: "#{portal}2fregisters/u/unregistration"
-			data: {}
-			dataType: 'json'
-			error: displayError
-			success: (resp) ->
-				if resp.error
-					setMsg 'u2fFailed', 'warning'
-				else if resp.result
-					setMsg 'yourKeyIsUnregistered', 'positive'
-			error: displayError
 
 # Verification function (launched by "verify" button)
 verify = ->
@@ -111,6 +97,5 @@ verify = ->
 $(document).ready ->
 	$('#u2fPermission').hide()
 	$('#register').on 'click', register
-	$('#unregister').on 'click', unregister
 	$('#verify').on 'click', verify
 	$('#goback').attr 'href', portal

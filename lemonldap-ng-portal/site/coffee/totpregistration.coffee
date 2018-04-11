@@ -4,7 +4,7 @@ LemonLDAP::NG TOTP registration script
 
 setMsg = (msg, level) ->
 	$('#msg').html window.translate msg
-	$('#color').removeClass 'message-positive message-warning alert-success alert-warning'
+	$('#color').removeClass 'message-positive message-warning message-danger alert-success alert-warning alert-danger'
 	$('#color').addClass "message-#{level}"
 	level = 'success' if level == 'positive'
 	$('#color').addClass "alert-#{level}"
@@ -20,6 +20,7 @@ displayError = (j, status, err) ->
 token=''
 
 getKey = (reset) ->
+	setMsg 'yourTotpKey', 'warning'
 	$.ajax
 		type: "POST",
 		url: "#{portal}/2fregisters/totp/getkey"
@@ -66,6 +67,7 @@ verify = ->
 			data:
 				token: token
 				code: val
+				TOTPName: $('#TOTPName').val()
 			error: displayError
 			success: (data) ->
 				if data.error
@@ -74,17 +76,7 @@ verify = ->
 					else
 						setMsg data.error, 'danger'
 				else
-					setMsg 'yourKeyIsRegistered', 'success'
-					
-unregister = ->
-	$.ajax
-		type: "POST",
-		url: "#{portal}/totpregister/unregister"
-		data: {}
-		dataType: 'json'
-		error: displayError
-		success: (data) ->
-		setMsg 'yourKeyIsUnregistered', 'success'					
+					setMsg 'yourKeyIsRegistered', 'success'					
 					
 $(document).ready ->
 	getKey(0)
@@ -92,5 +84,3 @@ $(document).ready ->
 		getKey(1)
 	$('#verify').on 'click', () ->
 		verify()
-	$('#unregister').on 'click', () ->
-		unregister()

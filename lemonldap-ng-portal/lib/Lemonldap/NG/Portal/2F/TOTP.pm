@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::2F::TOTP;
 
 use strict;
 use Mouse;
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_ERROR
@@ -25,14 +26,12 @@ sub init {
     my ($self) = @_;
 
     # If self registration is enabled and "activation" is simply set to
-    # "enabled", replace the rule to detect if user has register its key
+    # "enabled", replace the rule to detect if user has registered its key
     if (    $self->conf->{totp2fSelfRegistration}
         and $self->conf->{totp2fActivation} eq '1' )
     {
-        $self->conf->{totp2fActivation} = '$_totp2fSecret';
+        $self->conf->{totp2fActivation} = '$_2fDevices =~ /"type":\s*"TOTP"/s';
     }
-    $self->conf->{totp2fInterval} ||= 30;
-    $self->conf->{totp2fRange}    ||= 1;
     return $self->SUPER::init();
 }
 
@@ -66,11 +65,38 @@ sub verify {
         return PE_FORMEMPTY;
     }
 
+    my $secret = '';
+    my $_2fDevices;
+    if ( $session->{_2fDevices} ) {
+        $self->logger->debug("Loading 2F Devices ...");
+
+        # Read existing 2FDevices
+        $_2fDevices =
+          eval { from_json( $session->{_2fDevices}, { allow_nonref => 1 } ); };
+        if ($@) {
+            $self->logger->error("Bad encoding in _2fDevices: $@");
+            return PE_ERROR;
+        }
+        $self->logger->debug("2F Device(s) found");
+        foreach (@$_2fDevices) {
+            $self->logger->debug("Reading TOTP secret if exists ...");
+            if ( $_->{type} eq 'TOTP' ) {
+                $secret = $_->{_secret};
+                last;
+            }
+        }
+    }
+
+    unless ($secret) {
+        $self->logger->debug("No TOTP secret found");
+        return PE_BADCREDENTIALS;
+    }
+
     my $r = $self->verifyCode(
         $self->conf->{totp2fInterval},
         $self->conf->{totp2fRange},
         $self->conf->{totp2fDigits},
-        $session->{_totp2fSecret}, $code
+        $secret, $code
     );
     if ( $r == -1 ) { return PE_ERROR; }
     elsif ($r) {
