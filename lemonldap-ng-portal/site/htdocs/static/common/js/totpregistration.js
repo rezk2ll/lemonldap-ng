@@ -5,7 +5,7 @@ LemonLDAP::NG TOTP registration script
  */
 
 (function() {
-  var displayError, getKey, setMsg, token, verify;
+  var displayError, getKey, register, setMsg, token;
 
   setMsg = function(msg, level) {
     $('#msg').html(window.translate(msg));
@@ -71,7 +71,7 @@ LemonLDAP::NG TOTP registration script
     });
   };
 
-  verify = function() {
+  register = function() {
     var val;
     val = $('#code').val();
     if (!val) {
@@ -79,7 +79,7 @@ LemonLDAP::NG TOTP registration script
     } else {
       return $.ajax({
         type: "POST",
-        url: portal + "/2fregisters/totp/verify",
+        url: portal + "/2fregisters/totp/register",
         dataType: 'json',
         data: {
           token: token,
@@ -107,8 +107,8 @@ LemonLDAP::NG TOTP registration script
     $('#changekey').on('click', function() {
       return getKey(1);
     });
-    return $('#verify').on('click', function() {
-      return verify();
+    return $('#register').on('click', function() {
+      return register();
     });
   });
 

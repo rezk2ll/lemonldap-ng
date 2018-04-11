@@ -159,6 +159,7 @@
 "noHistory":"This is your first connection, welcome!",
 "notAuthorized":"You're not authorized too do this",
 "notFound": "Not found: you try to access to an unavailable page",
+"noTOTPFound":"No TOTP found",
 "noU2FKeyFound": "No U2F key found",
 "oidcConsent":"The application %s would like to know:",
 "oidcConsents": "OIDC consents",
