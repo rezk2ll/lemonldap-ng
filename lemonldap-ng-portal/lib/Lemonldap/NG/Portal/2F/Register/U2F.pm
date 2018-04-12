@@ -220,13 +220,6 @@ sub run {
     elsif ( $action eq 'delete' ) {
         my $epoch = $req->param('epoch');
 
-        #my $_2fDevices = eval {
-        #$self->logger->debug("Loading 2F Devices ...");
-
-        ## Read existing 2FDevices
-        #from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
-        #};
-
         # Read existing 2FDevices
         $self->logger->debug("Looking for 2F Devices ...");
         my $_2fDevices;
