@@ -6,9 +6,9 @@ require 't/test-lib.pm';
 my $maintests = 17;
 
 SKIP: {
-    eval { require Authen::U2F::Tester };
-    if ($@) {
-        skip 'Authen::2F::Tester is missing', $maintests;
+    eval { require Crypt::U2F::Server; require Authen::U2F::Tester };
+    if ( $@ or $Crypt::U2F::Server::VERSION < 0.42 ) {
+        skip 'Missing libraries', $maintests;
     }
     use_ok('Lemonldap::NG::Common::FormEncode');
 
