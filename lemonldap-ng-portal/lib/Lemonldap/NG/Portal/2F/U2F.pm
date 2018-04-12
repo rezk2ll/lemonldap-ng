@@ -104,7 +104,7 @@ sub verify {
                   . Crypt::U2F::Server::u2fclib_getError()
                   . ')' );
             $req->error(PE_U2FFAILED);
-            $req->authResult(PE_U2FFAILED);
+            #$req->authResult(PE_U2FFAILED);
             return $self->fail($req);
         }
     }
@@ -161,7 +161,7 @@ sub loadUser {
         }
     }
 
-    #### TOTO : MANAGE MULTI U2F KEYS
+    #### TODO : MANAGE MULTI U2F KEYS
     if (    ( $kh = $u2fs[0]{_keyHandle} )
         and ( $uk = $u2fs[0]{_userKey} ) )
     {
