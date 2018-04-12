@@ -38,7 +38,7 @@ sub run {
         my $UBKName = $req->param('UBKName');
         my $epoch   = time();
 
-        # Set default name if empty and troncate name if too long
+        # Set default name if empty and truncate name if too long
         $UBKName ||= $epoch;
         $UBKName = substr( $UBKName, 0, $self->conf->{max2FDevicesNameLength} );
         $self->logger->debug("Yubikey name : $UBKName");
@@ -47,17 +47,28 @@ sub run {
             and length($otp) > $self->conf->{yubikey2fPublicIDSize} )
         {
             my $key = substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
-            my $_2fDevices = eval {
-                $self->logger->debug("Looking for 2F Devices ...");
-                from_json( $req->userData->{_2fDevices},
-                    { allow_nonref => 1 } );
-            };
-            unless ($_2fDevices) {
+
+            # Read existing 2FDevices
+            $self->logger->debug("Looking for 2F Devices ...");
+            my $_2fDevices;
+            if ( $req->userData->{_2fDevices} ) {
+                $_2fDevices = eval {
+                    from_json( $req->userData->{_2fDevices},
+                        { allow_nonref => 1 } );
+                };
+                if ($@) {
+                    $self->logger->error("Corrupted session (_2fDevices): $@");
+                    return $self->p->sendError( $req, "Corrupted session",
+                        500 );
+                }
+            }
+
+            else {
                 $self->logger->debug("No 2F Device found");
                 $_2fDevices = [];
             }
 
-            # Search if Yubikey has been already registered
+            # Search if the Yubikey has been already registered
             my $SameUBKFound = 0;
             foreach (@$_2fDevices) {
                 $self->logger->debug("Reading Yubikeys ...");
@@ -134,13 +145,26 @@ sub run {
     }
 
     if ( $action eq 'delete' ) {
-        my $epoch      = $req->param('epoch');
-        my $_2fDevices = eval {
-            $self->logger->debug("Loading 2F Devices ...");
+        my $epoch = $req->param('epoch');
 
-            # Read existing 2FDevices
-            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
-        };
+        # Read existing 2FDevices
+        $self->logger->debug("Looking for 2F Devices ...");
+        my $_2fDevices;
+        if ( $req->userData->{_2fDevices} ) {
+            $_2fDevices = eval {
+                from_json( $req->userData->{_2fDevices},
+                    { allow_nonref => 1 } );
+            };
+            if ($@) {
+                $self->logger->error("Corrupted session (_2fDevices): $@");
+                return $self->p->sendError( $req, "Corrupted session", 500 );
+            }
+        }
+
+        else {
+            $self->logger->debug("No 2F Device found");
+            $_2fDevices = [];
+        }
 
         my @keep = ();
         while (@$_2fDevices) {

@@ -48,7 +48,7 @@ sub run {
         unless ($token) {
             $self->userLogger->warn(
                 "TOTP registration: register try without token for $user");
-            return $self->p->sendError( $req, 'Go away', 400 );
+            return $self->p->sendError( $req, 'noTOTPFound', 400 );
         }
 
         # Verify that token exists in DB (note that "keep" flag is set to
@@ -67,7 +67,7 @@ sub run {
         my $TOTPName = $req->param('TOTPName');
         my $epoch    = time();
 
-        # Set default name if empty and troncate name if too long
+        # Set default name if empty and truncate name if too long
         $TOTPName ||= $epoch;
         $TOTPName =
           substr( $TOTPName, 0, $self->conf->{max2FDevicesNameLength} );
@@ -139,7 +139,7 @@ sub run {
         }
 
         ### USER CAN ONLY REGISTER ONE TOTP ###
-        # Delete TOTP 2F devices previously registered
+        # Delete TOTP previously registered
         my @keep = ();
         while (@$_2fDevices) {
             my $element = shift @$_2fDevices;
@@ -181,8 +181,8 @@ sub run {
         my $secret = '';
 
         # Read existing 2FDevices
-        $self->logger->debug("Loading 2F Devices ...");
-        my $_2fDevices = [];
+        $self->logger->debug("Looking for 2F Devices ...");
+        my $_2fDevices;
         if ( $req->userData->{_2fDevices} ) {
             $_2fDevices = eval {
                 from_json( $req->userData->{_2fDevices},
@@ -192,6 +192,11 @@ sub run {
                 $self->logger->error("Corrupted session (_2fDevices): $@");
                 return $self->p->sendError( $req, "Corrupted session", 500 );
             }
+        }
+
+        else {
+            $self->logger->debug("No 2F Device found");
+            $_2fDevices = [];
         }
 
         # Loading TOTP secret
@@ -269,7 +274,7 @@ sub run {
 
         # Read existing 2FDevices
         $self->logger->debug("Loading 2F Devices ...");
-        my $_2fDevices = [];
+        my $_2fDevices;
         if ( $req->userData->{_2fDevices} ) {
             $_2fDevices = eval {
                 from_json( $req->userData->{_2fDevices},
@@ -279,6 +284,11 @@ sub run {
                 $self->logger->error("Corrupted session (_2fDevices): $@");
                 return $self->p->sendError( $req, "Corrupted session", 500 );
             }
+        }
+
+        else {
+            $self->logger->debug("No 2F Device found");
+            $_2fDevices = [];
         }
 
         # Delete TOTP 2F device
@@ -296,7 +306,6 @@ sub run {
         $self->userLogger->notice('TOTP deletion succeed');
         return [ 200, [ 'Content-Type' => 'application/json' ],
             ['{"result":1}'] ];
-
     }
 }
 

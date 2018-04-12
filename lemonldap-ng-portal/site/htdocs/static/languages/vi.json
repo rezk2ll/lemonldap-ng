@@ -159,6 +159,7 @@
 "noHistory":"Đây là kết nối đầu tiên của bạn, chào mừng!",
 "notAuthorized":"You're not authorized too do this",
 "notFound": "Không tìm thấy: bạn cố gắng truy cập vào một trang không có sẵn",
+"noTOTPFound":"No TOTP found",
 "noU2FKeyFound": "No U2F key found",
 "oidcConsent":"Ứng dụng % s muốn biết:",
 "oidcConsents": "OIDC consents",

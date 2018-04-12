@@ -135,33 +135,33 @@ sub fail {
 
 sub loadUser {
     my ( $self, $req, $session ) = @_;
-    my ( $kh, $uk );
+    my ( $kh, $uk, $_2fDevices );
+    my @u2fs = ();
 
-    my $_2fDevices = eval {
+    if ( $session->{_2fDevices} ) {
         $self->logger->debug("Loading 2F Devices ...");
 
         # Read existing 2FDevices
-        from_json( $session->{_2fDevices}, { allow_nonref => 1 } );
-    };
+        $_2fDevices =
+          eval { from_json( $session->{_2fDevices}, { allow_nonref => 1 } ); };
+        if ($@) {
+            $self->logger->error("Bad encoding in _2fDevices: $@");
+            return PE_ERROR;
+        }
+        $self->logger->debug("2F Device(s) found");
 
-    unless ($_2fDevices) {
-        $self->logger->debug("No 2F Device found");
-
-        # Set default value
-        @$_2fDevices = [];
-    }
-
-    my @u2fs = ();
-    foreach (@$_2fDevices) {
-        $self->logger->debug("Reading U2F keys if exists ...");
-        if ( $_->{type} eq 'U2F' ) {
-            $self->logger->debug( "_userKey = " . $_->{_userKey} );
-            $self->logger->debug( "_keyHandle = " . $_->{_keyHandle} );
-            $_->{_userKey} = $self->decode_base64url( $_->{_userKey} );
-            push @u2fs, $_;
+        foreach (@$_2fDevices) {
+            $self->logger->debug("Reading U2F keys if exists ...");
+            if ( $_->{type} eq 'U2F' ) {
+                $self->logger->debug( "_userKey = " . $_->{_userKey} );
+                $self->logger->debug( "_keyHandle = " . $_->{_keyHandle} );
+                $_->{_userKey} = $self->decode_base64url( $_->{_userKey} );
+                push @u2fs, $_;
+            }
         }
     }
 
+    #### TOTO : MANAGE MULTI U2F KEYS
     if (    ( $kh = $u2fs[0]{_keyHandle} )
         and ( $uk = $u2fs[0]{_userKey} ) )
     {

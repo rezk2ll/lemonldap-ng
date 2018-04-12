@@ -31,17 +31,22 @@ sub run {
 
     if ( $action eq 'register' ) {
 
-        # Check if user can register one more device
-        my $_2fDevices = eval {
-            $self->logger->debug("Looking for 2F Devices ...");
+        # Read existing 2FDevices
+        $self->logger->debug("Looking for 2F Devices ...");
+        my $_2fDevices;
+        if ( $req->userData->{_2fDevices} ) {
+            $_2fDevices = eval {
+                from_json( $req->userData->{_2fDevices},
+                    { allow_nonref => 1 } );
+            };
+            if ($@) {
+                $self->logger->error("Corrupted session (_2fDevices): $@");
+                return $self->p->sendError( $req, "Corrupted session", 500 );
+            }
+        }
 
-            # Read existing 2FDevices
-            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
-        };
-        unless ($_2fDevices) {
+        else {
             $self->logger->debug("No 2F Device found");
-
-            # Set default value
             $_2fDevices = [];
         }
 
@@ -88,24 +93,33 @@ sub run {
             my ( $keyHandle, $userKey ) = $c->registrationVerify($resp);
             if ( $keyHandle and $userKey ) {
 
-                my $_2fDevices = eval {
-                    $self->logger->debug("Looking for 2F Devices ...");
+                # Read existing 2FDevices
+                $self->logger->debug("Looking for 2F Devices ...");
+                my $_2fDevices;
+                if ( $req->userData->{_2fDevices} ) {
+                    $_2fDevices = eval {
+                        from_json(
+                            $req->userData->{_2fDevices},
+                            { allow_nonref => 1 }
+                        );
+                    };
+                    if ($@) {
+                        $self->logger->error(
+                            "Corrupted session (_2fDevices): $@");
+                        return $self->p->sendError( $req, "Corrupted session",
+                            500 );
+                    }
+                }
 
-                    # Read existing 2FDevices
-                    from_json( $req->userData->{_2fDevices},
-                        { allow_nonref => 1 } );
-                };
-                unless ($_2fDevices) {
+                else {
                     $self->logger->debug("No 2F Device found");
-
-                    # Set default value
                     $_2fDevices = [];
                 }
 
                 my $keyName = $req->param('keyName');
                 my $epoch   = time();
 
-                # Set default name if empty and troncate name if too long
+                # Set default name if empty and truncate name if too long
                 $keyName ||= $epoch;
                 $keyName =
                   substr( $keyName, 0, $self->conf->{max2FDevicesNameLength} );
@@ -203,32 +217,27 @@ sub run {
         ];
     }
 
-    #elsif ( $action eq 'unregistration' ) {
-    #$self->p->updatePersistentSession(
-    #$req,
-    #{
-    #_u2fKeyHandle => '',
-    #_u2fUserKey   => ''
-    #}
-    #);
-    #$self->userLogger->notice('U2F key unregistration succeed');
-    #return [
-    #200,
-    #[ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
-    #['{"result":1}']
-    #];
-    #my $err = Crypt::U2F::Server::Simple::lastError();
-    #$self->userLogger->warn("U2F Unregistration failed: $err");
-    #return $self->p->sendError( $req, $err, 200 );
-    #}
     elsif ( $action eq 'delete' ) {
-        my $epoch      = $req->param('epoch');
-        my $_2fDevices = eval {
-            $self->logger->debug("Loading 2F Devices ...");
+        my $epoch = $req->param('epoch');
 
-            # Read existing 2FDevices
-            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
-        };
+        # Read existing 2FDevices
+        $self->logger->debug("Looking for 2F Devices ...");
+        my $_2fDevices;
+        if ( $req->userData->{_2fDevices} ) {
+            $_2fDevices = eval {
+                from_json( $req->userData->{_2fDevices},
+                    { allow_nonref => 1 } );
+            };
+            if ($@) {
+                $self->logger->error("Corrupted session (_2fDevices): $@");
+                return $self->p->sendError( $req, "Corrupted session", 500 );
+            }
+        }
+
+        else {
+            $self->logger->debug("No 2F Device found");
+            $_2fDevices = [];
+        }
 
         my @keep = ();
         while (@$_2fDevices) {
@@ -261,19 +270,24 @@ sub loadUser {
     my $uid     = $req->userData->{ $self->conf->{whatToTrace} };
     my $session = $self->p->getPersistentSession($uid);
 
-    my $secret     = '';
-    my $_2fDevices = eval {
-        $self->logger->debug("Loading 2F Devices ...");
+    my $secret = '';
 
-        # Read existing 2FDevices
-        from_json( $session->data->{_2fDevices}, { allow_nonref => 1 } );
-    };
+    # Read existing 2FDevices
+    $self->logger->debug("Looking for 2F Devices ...");
+    my $_2fDevices;
+    if ( $req->userData->{_2fDevices} ) {
+        $_2fDevices = eval {
+            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
+        };
+        if ($@) {
+            $self->logger->error("Corrupted session (_2fDevices): $@");
+            return $self->p->sendError( $req, "Corrupted session", 500 );
+        }
+    }
 
-    unless ($_2fDevices) {
+    else {
         $self->logger->debug("No 2F Device found");
-
-        # Set default value
-        @$_2fDevices = [];
+        $_2fDevices = [];
     }
 
     # Reading existing U2F keys
