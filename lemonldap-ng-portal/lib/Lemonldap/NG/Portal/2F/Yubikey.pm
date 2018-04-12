@@ -1,9 +1,14 @@
+# Yubikey second factor authentication
+#
+# This plugin handle authentications to ask Yubikey second factor for users that
+# have registered their Yubikey
 package Lemonldap::NG::Portal::2F::Yubikey;
 
 use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_ERROR
   PE_BADCREDENTIALS
   PE_FORMEMPTY
   PE_OK
@@ -56,18 +61,28 @@ sub init {
 }
 
 sub run {
-    my ( $self, $req, $token ) = @_;
-    my $yubikey    = 0;
-    my $_2fDevices = eval {
-        $self->logger->debug("Looking for 2F Devices ...");
-        from_json( $req->{sessionInfo}->{_2fDevices}, { allow_nonref => 1 } );
-    };
+    my ( $self, $req, $token, $_2fDevices ) = @_;
+    my $yubikey = 0;
+    if ( $req->{sessionInfo}->{_2fDevices} ) {
+        $self->logger->debug("Loading 2F Devices ...");
 
-    foreach (@$_2fDevices) {
-        $self->logger->debug("Reading Yubikey ...");
-        if ( $_->{type} eq 'UBK' ) {
-            $yubikey = $_->{_yubikey};
-            last;
+        # Read existing 2FDevices
+        $_2fDevices = eval {
+            from_json( $req->{sessionInfo}->{_2fDevices},
+                { allow_nonref => 1 } );
+        };
+        if ($@) {
+            $self->logger->error("Bad encoding in _2fDevices: $@");
+            return PE_ERROR;
+        }
+        $self->logger->debug("2F Device(s) found");
+
+        foreach (@$_2fDevices) {
+            $self->logger->debug("Reading Yubikey ...");
+            if ( $_->{type} eq 'UBK' ) {
+                $yubikey = $_->{_yubikey};
+                last;
+            }
         }
     }
 

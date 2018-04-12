@@ -1,3 +1,7 @@
+# TOTP second factor authentication
+#
+# This plugin handle authentications to ask TOTP second factor for users that
+# have registered their TOTP secret
 package Lemonldap::NG::Portal::2F::TOTP;
 
 use strict;

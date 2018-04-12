@@ -37,8 +37,6 @@ sub init {
       )
     {
         $self->conf->{utotp2fActivation} =
-
-          #'$_totp2fSecret or $_u2fKeyHandle and $_u2fUserKey';
           '$_2fDevices =~ /"type":\s*"(?:TOTP|U2F)"/s';
     }
     foreach (qw(U2F TOTP)) {
