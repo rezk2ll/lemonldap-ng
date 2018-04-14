@@ -57,13 +57,23 @@ sub run {
         return PE_ERROR     if ( $res == -1 );
         return PE_U2FFAILED if ( $res == 0 );
 
-        my $challenge = $req->datas->{crypter}->authenticationChallenge;
+		my @challenges = ();
+		my @crypters = $req->datas->{crypter};
+		foreach ( @crypters ) {
+			
+			push @challenges, %$_->authenticationChallenge;
+			
+		}
+		
+		
+       # my $challenge = $req->datas->{crypter}->authenticationChallenge;
         my $tmp       = $self->p->sendHtml(
             $req,
             'u2fcheck',
             params => {
                 SKIN      => $self->conf->{portalSkin},
-                CHALLENGE => $challenge,
+                #CHALLENGE => $challenge,
+                CHALLENGES => @challenges,
                 TOKEN     => $token
             }
         );
@@ -162,14 +172,26 @@ sub loadUser {
     }
 
     #### TODO : MANAGE MULTI U2F KEYS
-    if (    ( $kh = $u2fs[0]{_keyHandle} )
-        and ( $uk = $u2fs[0]{_userKey} ) )
+    my @crypters = ();
+    #if (    ( $kh = $u2fs[0]{_keyHandle} )
+    #    and ( $uk = $u2fs[0]{_userKey} ) )
+    if (    ( $u2fs[0]{_keyHandle} )
+        and ( $u2fs[0]{_userKey} ) )
     {
         $self->logger->debug("kh & uk -> OK");
-        $req->datas->{crypter} = $self->crypter(
-            keyHandle => $kh,
-            publicKey => $uk
-        );
+        
+        foreach ( @u2fs ) {
+			$kh = $_->{_keyHandle};
+			$uk = $_->{_userKey};
+			push @crypters, $self->crypter( keyHandle => $kh, publicKey => $uk );
+		}
+        
+        
+        $req->datas->{crypter} = @crypters;
+        #$req->datas->{crypter} = $self->crypter(
+            #keyHandle => $kh,
+            #publicKey => $uk
+        #);
         unless ( $req->datas->{crypter} ) {
             $self->logger->error(
                 'U2F error: ' . Crypt::U2F::Server::u2fclib_getError() );

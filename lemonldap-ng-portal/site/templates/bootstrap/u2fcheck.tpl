@@ -18,7 +18,8 @@
     <input type="hidden" id="token" name="token" value="<TMPL_VAR NAME="TOKEN">">
   </form>
   <script type="application/init">
-  <TMPL_VAR NAME="CHALLENGE">
+  <!-- <TMPL_VAR NAME="CHALLENGE"> -->
+  <TMPL_VAR NAME="CHALLENGES">
   </script>
 <!-- //if:jsminified
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/u2f-api.min.js"></script>
