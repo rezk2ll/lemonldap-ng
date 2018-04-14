@@ -298,20 +298,21 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							for sfDevice in array
 								for key, value of sfDevice
 									if key == 'type'
-										type = value
+										title = value
 									if key == 'name'
 										name = value
+									if key == 'epoch'
+										epoch = value
 								subres.push
-									title: 'TYPE'
-									value: "#{type} / #{name}"
+									title: title
+									value: "#{name} / #{epoch}"
 							delete session[attr]	
 						else
 							subres.push
 								title: attr
 								value: session[attr]
-							console.log("!=" + session[attr])
 							delete session[attr]
-						
+					
 				if subres.length >0
 					res.push
 						title: "__#{category}__"

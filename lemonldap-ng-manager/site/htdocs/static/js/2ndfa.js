@@ -272,7 +272,7 @@
       $scope.displaySession = function(scope) {
         var sessionId, transformSession;
         transformSession = function(session) {
-          var _insert, _stToStr, array, attr, attrs, category, i, id, k, key, len, len1, res, sfDevice, subres, time, value;
+          var _insert, _stToStr, array, attr, attrs, category, epoch, i, id, k, key, len, len1, name, res, sfDevice, subres, time, title, value;
           _stToStr = function(s) {
             return s;
           };
@@ -331,11 +331,20 @@
                     sfDevice = array[k];
                     for (key in sfDevice) {
                       value = sfDevice[key];
-                      subres.push({
-                        title: key,
-                        value: value
-                      });
+                      if (key === 'type') {
+                        title = value;
+                      }
+                      if (key === 'name') {
+                        name = value;
+                      }
+                      if (key === 'epoch') {
+                        epoch = value;
+                      }
                     }
+                    subres.push({
+                      title: title,
+                      value: name + " / " + epoch
+                    });
                   }
                   delete session[attr];
                 } else {
@@ -343,7 +352,6 @@
                     title: attr,
                     value: session[attr]
                   });
-                  console.log("!=" + session[attr]);
                   delete session[attr];
                 }
               }
