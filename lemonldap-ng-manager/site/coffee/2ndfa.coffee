@@ -72,13 +72,14 @@ hiddenAttributes = '_password'
 categories =
     dateTitle:          ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen']
     connectionTitle:    ['ipAddr', '_timezone', '_url']
-    authenticationTitle:['_session_id', '_user', '_password', 'authenticationLevel']
-    modulesTitle:       ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti']
-    saml:               ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump']
-    groups:             ['groups', 'hGroups']
-    ldap:               ['dn']
-    BrowserID:          ['_browserIdAnswer', '_browserIdAnswerRaw']
-    OpenIDConnect:      ['_oidc_id_token', '_oidc_OP', '_oidc_access_token']
+    #authenticationTitle:['_session_id', '_user', '_password', 'authenticationLevel']
+    sfaTitle:			['_2fDevices']
+    #modulesTitle:       ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti']
+    #saml:               ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump']
+    #groups:             ['groups', 'hGroups']
+    #ldap:               ['dn']
+    #BrowserID:          ['_browserIdAnswer', '_browserIdAnswerRaw']
+    #OpenIDConnect:      ['_oidc_id_token', '_oidc_OP', '_oidc_access_token']
 
 # Menu entries
 menu =
@@ -284,10 +285,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						else if key.match /^(_utime|_lastAuthnUTime|_lastSeen|notification)$/
 							session[key] = $scope.localeDate value
 						else if key.match /^(_startTime|_updateTime)$/
-							session[key] = _stToStr value
-						#else if key.match /^(_u2fKeyHandle|_u2fUserKey|_totp2fSecret)$/
-						#	session[key] = '##########'
-							
+							session[key] = _stToStr value							
 			res = []
 
 			# 2. Push session keys in result, grouped by categories
@@ -295,55 +293,70 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 				subres = []
 				for attr in attrs
 					if session[attr]
-						subres.push
-							title: attr
-							value: session[attr]
-						delete session[attr]
+						if session[attr].match(/(?:UBK|TOTP|U2F)/)
+							array = JSON.parse(session[attr]);
+							for sfDevice in array
+								for key, value of sfDevice
+									if key == 'type'
+										type = value
+									if key == 'name'
+										name = value
+								subres.push
+									title: 'TYPE'
+									value: "#{type} / #{name}"
+							delete session[attr]	
+						else
+							subres.push
+								title: attr
+								value: session[attr]
+							console.log("!=" + session[attr])
+							delete session[attr]
+						
 				if subres.length >0
 					res.push
 						title: "__#{category}__"
 						nodes: subres
 
-			# 3. Add OpenID and notifications already notified
-			_insert '^openid', 'OpenID'
-			_insert '^notification_(.+)', '__notificationsDone__'
+			## 3. Add OpenID and notifications already notified
+			#_insert '^openid', 'OpenID'
+			#_insert '^notification_(.+)', '__notificationsDone__'
 
-			# 4. Add session history if exists
-			if session._loginHistory
-				tmp = []
-				if session._loginHistory.successLogin
-					for l in session._loginHistory.successLogin
-						tmp.push
-							t: l._utime
-							title: $scope.localeDate l._utime
-							value: "Success (IP #{l.ipAddr})"
-				if session._loginHistory.failedLogin
-					for l in session._loginHistory.failedLogin
-						tmp.push
-							t: l._utime
-							title: $scope.localeDate l._utime
-							value: "#{l.error} (IP #{l.ipAddr})"
-				delete session._loginHistory
-				tmp.sort (a,b) ->
-					a.t - b.t
-				res.push
-					title: '__loginHistory__'
-					nodes: tmp
+			## 4. Add session history if exists
+			#if session._loginHistory
+				#tmp = []
+				#if session._loginHistory.successLogin
+					#for l in session._loginHistory.successLogin
+						#tmp.push
+							#t: l._utime
+							#title: $scope.localeDate l._utime
+							#value: "Success (IP #{l.ipAddr})"
+				#if session._loginHistory.failedLogin
+					#for l in session._loginHistory.failedLogin
+						#tmp.push
+							#t: l._utime
+							#title: $scope.localeDate l._utime
+							#value: "#{l.error} (IP #{l.ipAddr})"
+				#delete session._loginHistory
+				#tmp.sort (a,b) ->
+					#a.t - b.t
+				#res.push
+					#title: '__loginHistory__'
+					#nodes: tmp
 
-			# 5. Other keys (attributes and macros)
-			tmp = []
-			for key, value of session
-				tmp.push
-					title: key
-					value: value
-			tmp.sort (a,b) ->
-				if a.title > b.title then 1
-				else if a.title < b.title then -1
-				else 0
+			## 5. Other keys (attributes and macros)
+			#tmp = []
+			#for key, value of session
+				#tmp.push
+					#title: key
+					#value: value
+			#tmp.sort (a,b) ->
+				#if a.title > b.title then 1
+				#else if a.title < b.title then -1
+				#else 0
 
-			res.push
-				title: '__attributesAndMacros__'
-				nodes: tmp
+			#res.push
+				#title: '__attributesAndMacros__'
+				#nodes: tmp
 			return {
 				_utime: time
 				id: id

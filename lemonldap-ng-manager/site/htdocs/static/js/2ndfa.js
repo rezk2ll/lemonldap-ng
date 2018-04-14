@@ -82,13 +82,7 @@
   categories = {
     dateTitle: ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen'],
     connectionTitle: ['ipAddr', '_timezone', '_url'],
-    authenticationTitle: ['_session_id', '_user', '_password', 'authenticationLevel'],
-    modulesTitle: ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti'],
-    saml: ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump'],
-    groups: ['groups', 'hGroups'],
-    ldap: ['dn'],
-    BrowserID: ['_browserIdAnswer', '_browserIdAnswerRaw'],
-    OpenIDConnect: ['_oidc_id_token', '_oidc_OP', '_oidc_access_token']
+    sfaTitle: ['_2fDevices']
   };
 
   menu = {
@@ -278,7 +272,7 @@
       $scope.displaySession = function(scope) {
         var sessionId, transformSession;
         transformSession = function(session) {
-          var _insert, _stToStr, attr, attrs, category, i, id, k, key, l, len, len1, len2, m, ref, ref1, res, subres, time, tmp, value;
+          var _insert, _stToStr, array, attr, attrs, category, i, id, k, key, len, len1, res, sfDevice, subres, time, value;
           _stToStr = function(s) {
             return s;
           };
@@ -331,11 +325,27 @@
             for (i = 0, len = attrs.length; i < len; i++) {
               attr = attrs[i];
               if (session[attr]) {
-                subres.push({
-                  title: attr,
-                  value: session[attr]
-                });
-                delete session[attr];
+                if (session[attr].match(/(?:UBK|TOTP|U2F)/)) {
+                  array = JSON.parse(session[attr]);
+                  for (k = 0, len1 = array.length; k < len1; k++) {
+                    sfDevice = array[k];
+                    for (key in sfDevice) {
+                      value = sfDevice[key];
+                      subres.push({
+                        title: key,
+                        value: value
+                      });
+                    }
+                  }
+                  delete session[attr];
+                } else {
+                  subres.push({
+                    title: attr,
+                    value: session[attr]
+                  });
+                  console.log("!=" + session[attr]);
+                  delete session[attr];
+                }
               }
             }
             if (subres.length > 0) {
@@ -345,62 +355,6 @@
               });
             }
           }
-          _insert('^openid', 'OpenID');
-          _insert('^notification_(.+)', '__notificationsDone__');
-          if (session._loginHistory) {
-            tmp = [];
-            if (session._loginHistory.successLogin) {
-              ref = session._loginHistory.successLogin;
-              for (k = 0, len1 = ref.length; k < len1; k++) {
-                l = ref[k];
-                tmp.push({
-                  t: l._utime,
-                  title: $scope.localeDate(l._utime),
-                  value: "Success (IP " + l.ipAddr + ")"
-                });
-              }
-            }
-            if (session._loginHistory.failedLogin) {
-              ref1 = session._loginHistory.failedLogin;
-              for (m = 0, len2 = ref1.length; m < len2; m++) {
-                l = ref1[m];
-                tmp.push({
-                  t: l._utime,
-                  title: $scope.localeDate(l._utime),
-                  value: l.error + " (IP " + l.ipAddr + ")"
-                });
-              }
-            }
-            delete session._loginHistory;
-            tmp.sort(function(a, b) {
-              return a.t - b.t;
-            });
-            res.push({
-              title: '__loginHistory__',
-              nodes: tmp
-            });
-          }
-          tmp = [];
-          for (key in session) {
-            value = session[key];
-            tmp.push({
-              title: key,
-              value: value
-            });
-          }
-          tmp.sort(function(a, b) {
-            if (a.title > b.title) {
-              return 1;
-            } else if (a.title < b.title) {
-              return -1;
-            } else {
-              return 0;
-            }
-          });
-          res.push({
-            title: '__attributesAndMacros__',
-            nodes: tmp
-          });
           return {
             _utime: time,
             id: id,

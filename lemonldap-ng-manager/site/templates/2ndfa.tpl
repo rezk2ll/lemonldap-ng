@@ -97,6 +97,11 @@
         </div>
       </div> 
       
+      
+      
+      
+      
+      
       <div class="panel panel-default" ng-hide="currentSession===null">
         <div class="panel-heading">
           <h1 class="panel-title text-center">{{translate("sessionTitle")}} {{currentSession.id}}</h1>

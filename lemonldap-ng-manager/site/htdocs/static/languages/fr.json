@@ -672,6 +672,7 @@
 "sessionStartedAt":"Session démarrée le ",
 "sessionStorage":"Stockage des sessions",
 "sessionTitle":"Contenu de la session",
+"sfaTitle":"Seconds Facteurs d'authentification",
 "show":"Montrer",
 "showHelp":"Montrer l'aide",
 "singleIP":"Une seule session par couple utilisateur/IP",
