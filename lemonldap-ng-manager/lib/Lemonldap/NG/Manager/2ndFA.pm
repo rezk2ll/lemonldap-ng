@@ -36,23 +36,23 @@ sub addRoutes {
         ['GET']
       )
 
-      # DELETE 2FA KEY
+      # DELETE 2FA DEVICE
       ->addRoute(
-        sfa => { ':sessionType' => { ':sessionId' => 'delete2FAKey' } },
+        sfa => { ':sessionType' => { ':sessionId' => 'delete2FA' } },
         ['DELETE']
-      )
-
-      # ADD 2FA KEY
-      ->addRoute(
-        sfa => { ':sessionType' => { ':sessionId' => 'add2FAKey' } },
-        ['PUT']
-      )
-
-      # VERIFY 2FA KEY
-      ->addRoute(
-        sfa => { ':sessionType' => { ':sessionId' => 'verify2FAKey' } },
-        ['POST']
       );
+
+      ## ADD 2FA DEVICE
+      #->addRoute(
+        #sfa => { ':sessionType' => { ':sessionId' => 'add2FA' } },
+        #['PUT']
+      #)
+
+      ## VERIFY 2FA DEVICE
+      #->addRoute(
+        #sfa => { ':sessionType' => { ':sessionId' => 'verify2FA' } },
+        #['POST']
+      #);
 
     $self->setTypes($conf);
 
@@ -61,13 +61,14 @@ sub addRoutes {
     $self->{hiddenAttributes} //= "_password";
     $self->{TOTPCheck} = '1';
     $self->{U2FCheck}  = '1';
+    $self->{UBKCheck}  = '1';
 }
 
 ###################
 # II. 2FA METHODS #
 ###################
 
-sub delete2FAKey {
+sub delete2FA {
 
     my ( $self, $req, $session, $skey ) = @_;
 
@@ -78,37 +79,41 @@ sub delete2FAKey {
     my $Key    = $params->{Key};
 
     if ( $Key =~ /\bU2F\b/ ) {
-        $self->logger->debug("Call procedure deleteU2FKey");
-        return $self->deleteU2FKey( $req, $session, $skey );
+        $self->logger->debug("Call procedure deleteU2F");
+        return $self->deleteU2F( $req, $session, $skey );
     }
     elsif ( $Key =~ /\bTOTP\b/ ) {
-        $self->logger->debug("Call procedure deleteTOTPKey");
-        return $self->deleteTOTPKey( $req, $session, $skey );
+        $self->logger->debug("Call procedure deleteTOTP");
+        return $self->deleteTOTP( $req, $session, $skey );
+    }
+    elsif ( $Key =~ /\bUBK\b/ ) {
+        $self->logger->debug("Call procedure deleteUBK");
+        return $self->deleteUBK( $req, $session, $skey );
     }
     else {
         return $self->sendError( $req, undef, 400 );
     }
 }
 
-sub add2FAKey {
+#sub add2FA {
 
-    my ( $self, $req, $session, $skey ) = @_;
+    #my ( $self, $req, $session, $skey ) = @_;
 
-    eval 'use Crypt::U2F::Server::Simple';
-    if ($@) {
-        $self->error("Can't load U2F library: $@");
-        return 0;
-    }
+    #eval 'use Crypt::U2F::Server::Simple';
+    #if ($@) {
+        #$self->error("Can't load U2F library: $@");
+        #return 0;
+    #}
 
-    return $self->addU2FKey( $req, $session, $skey );
-}
+    #return $self->addU2FKey( $req, $session, $skey );
+#}
 
-sub verify2FAKey {
+#sub verify2FA {
 
-    my ( $self, $req, $session, $skey ) = @_;
+    #my ( $self, $req, $session, $skey ) = @_;
 
-    return $self->addU2FKey( $req, $session, $skey );
-}
+    #return $self->addU2FKey( $req, $session, $skey );
+#}
 
 ########################
 # III. DISPLAY METHODS #
@@ -137,8 +142,7 @@ sub sfa {
     # 2.1 Get fields to require
     my @fields = (
         '_httpSessionType', $self->{ipField},
-        $whatToTrace,       '_u2fKeyHandle',
-        '_totp2fSecret'
+        $whatToTrace,       '_2fDevices'
     );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/;
@@ -155,9 +159,10 @@ sub sfa {
     $moduleOptions->{backend} = $mod->{module};
 
     # Select 2FA sessions to display
-    if ( defined $params->{TOTPCheck} and defined $params->{TOTPCheck} ) {
+    if ( defined $params->{TOTPCheck} or defined $params->{U2FCheck} or defined $params->{UBKCheck}) {
         $self->{TOTPCheck} = delete $params->{TOTPCheck};
         $self->{U2FCheck}  = delete $params->{U2FCheck};
+        $self->{UBKCheck}  = delete $params->{UBKCheck};
     }
 
     my %filters = map {
@@ -236,15 +241,22 @@ sub sfa {
     if ( $self->{U2FCheck} eq '2' ) {
         foreach my $session ( keys %$res ) {
             delete $res->{$session}
-              unless ( defined $res->{$session}->{_u2fKeyHandle}
-                and length $res->{$session}->{_u2fKeyHandle} );
+              unless ( defined $res->{$session}->{_2fDevices}
+                and $res->{$session}->{_2fDevices} =~ /"type":\s*"U2F"/s );
         }
     }
     if ( $self->{TOTPCheck} eq '2' ) {
         foreach my $session ( keys %$res ) {
             delete $res->{$session}
-              unless ( defined $res->{$session}->{_totp2fSecret}
-                and length $res->{$session}->{_totp2fSecret} );
+              unless ( defined $res->{$session}->{_2fDevices}
+                and $res->{$session}->{_2fDevices} =~ /"type":\s*"TOTP"/s );
+        }
+    }
+    if ( $self->{UBKCheck} eq '2' ) {
+        foreach my $session ( keys %$res ) {
+            delete $res->{$session}
+              unless ( defined $res->{$session}->{_2fDevices}
+                and $res->{$session}->{_2fDevices} =~ /"type":\s*"UBK"/s );
         }
     }
 

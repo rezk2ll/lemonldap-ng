@@ -344,7 +344,7 @@
                     }
                     subres.push({
                       title: title,
-                      value: name + "       " + myDate
+                      value: name + " --> " + myDate
                     });
                   }
                   delete session[attr];

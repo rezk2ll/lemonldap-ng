@@ -306,7 +306,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 										myDate = newDate.toLocaleString()
 								subres.push
 									title: title
-									value: "#{name}       #{myDate}"
+									value: "#{name} --> #{myDate}"
 							delete session[attr]	
 						else
 							subres.push
