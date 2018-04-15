@@ -293,7 +293,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 				subres = []
 				for attr in attrs
 					if session[attr]
-						if session[attr].match(/(?:UBK|TOTP|U2F)/)
+						if session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)
 							array = JSON.parse(session[attr]);
 							for sfDevice in array
 								for key, value of sfDevice
@@ -302,10 +302,11 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									if key == 'name'
 										name = value
 									if key == 'epoch'
-										epoch = value
+										newDate = new Date(value * 1000)
+										myDate = newDate.toLocaleString()
 								subres.push
 									title: title
-									value: "#{name} / #{epoch}"
+									value: "#{name}       #{myDate}"
 							delete session[attr]	
 						else
 							subres.push

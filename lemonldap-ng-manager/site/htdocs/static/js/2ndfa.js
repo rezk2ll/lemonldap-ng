@@ -272,7 +272,7 @@
       $scope.displaySession = function(scope) {
         var sessionId, transformSession;
         transformSession = function(session) {
-          var _insert, _stToStr, array, attr, attrs, category, epoch, i, id, k, key, len, len1, name, res, sfDevice, subres, time, title, value;
+          var _insert, _stToStr, array, attr, attrs, category, i, id, k, key, len, len1, myDate, name, newDate, res, sfDevice, subres, time, title, value;
           _stToStr = function(s) {
             return s;
           };
@@ -325,7 +325,7 @@
             for (i = 0, len = attrs.length; i < len; i++) {
               attr = attrs[i];
               if (session[attr]) {
-                if (session[attr].match(/(?:UBK|TOTP|U2F)/)) {
+                if (session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)) {
                   array = JSON.parse(session[attr]);
                   for (k = 0, len1 = array.length; k < len1; k++) {
                     sfDevice = array[k];
@@ -338,12 +338,13 @@
                         name = value;
                       }
                       if (key === 'epoch') {
-                        epoch = value;
+                        newDate = new Date(value * 1000);
+                        myDate = newDate.toLocaleString();
                       }
                     }
                     subres.push({
                       title: title,
-                      value: name + " / " + epoch
+                      value: name + "       " + myDate
                     });
                   }
                   delete session[attr];

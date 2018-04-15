@@ -56,7 +56,7 @@
     <!-- Right(main) div -->
     <div id="right" class="col-lg-8 col-md-8 col-sm-7 col-xs-12 scrollable" ng-class="{'hidden-xs':showT&&!showM}">
       <!-- Menu buttons -->
-      
+      <!--
       <div ng-if="currentSession && U2FCheck=='2' || currentSession && U2FCheck!='2' && TOTPCheck!='2'" class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
 
         <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
@@ -97,7 +97,7 @@
         </div>
       </div> 
       
-      
+      -->
       
       
       
