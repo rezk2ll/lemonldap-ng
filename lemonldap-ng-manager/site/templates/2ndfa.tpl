@@ -19,6 +19,8 @@
                 <label class="form-check-label" for="U2FCheck">U2F</label>&nbsp;&nbsp;
                 <input type="checkbox" ng-model="TOTPCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
                 <label class="form-check-label" for="TOTPCheck">TOTP</label>
+                <input type="checkbox" ng-model="UBKCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
+                <label class="form-check-label" for="UBKCheck">TOTP</label>
               </div>
             </form>
           </ul>
