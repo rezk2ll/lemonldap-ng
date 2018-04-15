@@ -19,9 +19,6 @@ displayError = (j, status, err) ->
 		setMsg res, 'warning'
 
 
-
-
-
 # Max number of session to display (see overScheme)
 max = 25
 
@@ -72,14 +69,7 @@ hiddenAttributes = '_password'
 categories =
     dateTitle:          ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen']
     connectionTitle:    ['ipAddr', '_timezone', '_url']
-    #authenticationTitle:['_session_id', '_user', '_password', 'authenticationLevel']
     sfaTitle:			['_2fDevices']
-    #modulesTitle:       ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti']
-    #saml:               ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump']
-    #groups:             ['groups', 'hGroups']
-    #ldap:               ['dn']
-    #BrowserID:          ['_browserIdAnswer', '_browserIdAnswerRaw']
-    #OpenIDConnect:      ['_oidc_id_token', '_oidc_OP', '_oidc_access_token']
 
 # Menu entries
 menu =
@@ -147,6 +137,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			switch typeof button.action
 				when 'function'
 					button.action $scope.currentNode, $scope
+					$scope[button.action]()
 				when 'string'
 					$scope[button.action]()
 				else
@@ -294,6 +285,10 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 				for attr in attrs
 					if session[attr]
 						if session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)
+							subres.push
+								title: "type"
+								value: "name"
+								epoch: "date"
 							array = JSON.parse(session[attr]);
 							for sfDevice in array
 								for key, value of sfDevice
@@ -306,7 +301,8 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 										myDate = newDate.toLocaleString()
 								subres.push
 									title: title
-									value: "#{name} --> #{myDate}"
+									value: name
+									epoch: myDate
 							delete session[attr]	
 						else
 							subres.push
@@ -318,47 +314,6 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 					res.push
 						title: "__#{category}__"
 						nodes: subres
-
-			## 3. Add OpenID and notifications already notified
-			#_insert '^openid', 'OpenID'
-			#_insert '^notification_(.+)', '__notificationsDone__'
-
-			## 4. Add session history if exists
-			#if session._loginHistory
-				#tmp = []
-				#if session._loginHistory.successLogin
-					#for l in session._loginHistory.successLogin
-						#tmp.push
-							#t: l._utime
-							#title: $scope.localeDate l._utime
-							#value: "Success (IP #{l.ipAddr})"
-				#if session._loginHistory.failedLogin
-					#for l in session._loginHistory.failedLogin
-						#tmp.push
-							#t: l._utime
-							#title: $scope.localeDate l._utime
-							#value: "#{l.error} (IP #{l.ipAddr})"
-				#delete session._loginHistory
-				#tmp.sort (a,b) ->
-					#a.t - b.t
-				#res.push
-					#title: '__loginHistory__'
-					#nodes: tmp
-
-			## 5. Other keys (attributes and macros)
-			#tmp = []
-			#for key, value of session
-				#tmp.push
-					#title: key
-					#value: value
-			#tmp.sort (a,b) ->
-				#if a.title > b.title then 1
-				#else if a.title < b.title then -1
-				#else 0
-
-			#res.push
-				#title: '__attributesAndMacros__'
-				#nodes: tmp
 			return {
 				_utime: time
 				id: id
@@ -493,7 +448,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			over = 0
 
 		# Launch HTTP
-		$http.get("#{scriptname}sfa/#{sessionType}?_session_uid=#{$scope.searchString}*&groupBy=substr(_session_uid,#{$scope.searchString.length})&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}").then (response) ->
+		$http.get("#{scriptname}sfa/#{sessionType}?_session_uid=#{$scope.searchString}*&groupBy=substr(_session_uid,#{$scope.searchString.length})&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}&UBKCheck=#{$scope.UBKCheck}").then (response) ->
 			data = response.data
 			if data.result
 				for n in data.values

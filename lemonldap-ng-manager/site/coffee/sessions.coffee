@@ -77,7 +77,7 @@ hiddenAttributes = '_password'
 categories =
     dateTitle:          ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen']
     connectionTitle:    ['ipAddr', '_timezone', '_url']
-    authenticationTitle:['_session_id', '_user', '_password', 'authenticationLevel']
+    authenticationTitle:['_session_id', '_user', '_password', 'authenticationLevel', '_2fDevices']
     modulesTitle:       ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti']
     saml:               ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump']
     groups:             ['groups', 'hGroups']
@@ -196,8 +196,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							session[key] = $scope.localeDate value
 						else if key.match /^(_startTime|_updateTime)$/
 							session[key] = _stToStr value
-						#else if key.match /^(_u2fKeyHandle|_u2fUserKey|_totp2fSecret)$/
-						#	session[key] = '##########'
+							
 			res = []
 
 			# 2. Push session keys in result, grouped by categories

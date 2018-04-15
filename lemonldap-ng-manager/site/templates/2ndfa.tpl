@@ -20,7 +20,7 @@
                 <input type="checkbox" ng-model="TOTPCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
                 <label class="form-check-label" for="TOTPCheck">TOTP</label>
                 <input type="checkbox" ng-model="UBKCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
-                <label class="form-check-label" for="UBKCheck">TOTP</label>
+                <label class="form-check-label" for="UBKCheck">UBK</label>
               </div>
             </form>
           </ul>
@@ -56,54 +56,7 @@
     </aside>
 
     <!-- Right(main) div -->
-    <div id="right" class="col-lg-8 col-md-8 col-sm-7 col-xs-12 scrollable" ng-class="{'hidden-xs':showT&&!showM}">
-      <!-- Menu buttons -->
-      <!--
-      <div ng-if="currentSession && U2FCheck=='2' || currentSession && U2FCheck!='2' && TOTPCheck!='2'" class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
-
-        <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
-          <ul ng-if="currentSession" class="nav navbar-nav">
-
-			<li ng-if="currentSession" ng-repeat="button in menu.delU2FKey" ng-include="'menubutton.html'"></li>
-			<li ng-if="currentSession" ng-repeat="button in menu.verifyU2FKey" ng-include="'menubutton.html'"></li>
-            <li ng-if="currentSession" ng-repeat="button in menu.addU2FKey" ng-include="'menubutton.html'"></li>
-            <li ng-if="currentSession===null" ng-repeat="button in menu.home" ng-include="'menubutton.html'"></li>
-            <li uib-dropdown class="visible-xs">
-              <a id="langmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
-              <ul uib-dropdown-menu aria-labelled-by="langmenu" role="grid">
-                <li ng-repeat="link in links"><a href="{{link.target}}" role="row"><i ng-if="link.icon" class="glyphicon glyphicon-{{link.icon}}"></i> {{translate(link.title)}}</a></li>
-                <li ng-repeat="menulink in menulinks"><a href="{{menulink.target}}" role="row"><i ng-if="menulink.icon" class="glyphicon glyphicon-{{menulink.icon}}"></i> {{translate(menulink.title)}}</a></li>
-                <li ng-include="'languages.html'"></li>
-              </ul>
-            </li>
-          </ul>    
-        </div>
-      </div>
-      
-      <div ng-if="currentSession && TOTPCheck=='2'|| currentSession && U2FCheck!='2' && TOTPCheck!='2'" class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
-        <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
-          <ul ng-if="currentSession" class="nav navbar-nav">
-            <li ng-if="currentSession" ng-repeat="button in menu.delTOTPKey" ng-include="'menubutton.html'"></li>
-            <li ng-if="currentSession" ng-repeat="button in menu.verifyTOTPKey" ng-include="'menubutton.html'"></li>
-            <li ng-if="currentSession" ng-repeat="button in menu.addTOTPKey" ng-include="'menubutton.html'"></li>
-            <li ng-if="currentSession===null" ng-repeat="button in menu.home" ng-include="'menubutton.html'"></li>
-            <li uib-dropdown class="visible-xs">
-              <a id="langmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
-              <ul uib-dropdown-menu aria-labelled-by="langmenu" role="grid">
-                <li ng-repeat="link in links"><a href="{{link.target}}" role="row"><i ng-if="link.icon" class="glyphicon glyphicon-{{link.icon}}"></i> {{translate(link.title)}}</a></li>
-                <li ng-repeat="menulink in menulinks"><a href="{{menulink.target}}" role="row"><i ng-if="menulink.icon" class="glyphicon glyphicon-{{menulink.icon}}"></i> {{translate(menulink.title)}}</a></li>
-                <li ng-include="'languages.html'"></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div> 
-      
-      -->
-      
-      
-      
-      
+    <div id="right" class="col-lg-8 col-md-8 col-sm-7 col-xs-12 scrollable" ng-class="{'hidden-xs':showT&&!showM}">    
       <div class="panel panel-default" ng-hide="currentSession===null">
         <div class="panel-heading">
           <h1 class="panel-title text-center">{{translate("sessionTitle")}} {{currentSession.id}}</h1>
@@ -132,8 +85,12 @@
     </div>
     <div ng-if="!node.nodes">
       <th>{{translate(node.title)}}</th>
-      <td><tt>${{node.title}}</tt></td>
-      <td><span id="v-{{node.title}}">{{node.value}}</td>
+        <td><span id="v-{{node.title}}"/>{{translate(node.value)}}</td>
+        <td><span id="v-{{node.epoch}}"/>{{translate(node.epoch)}}</td>
+      <td>
+		  <span ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="del(currentNode.nodes,$index)" />
+		  <span ng-if="$last && ( node.title=='TOTP' || node.title=='UBK' || node.title=='U2F' )" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"/>
+      </td>
     </div>
   </script>
 
@@ -145,12 +102,14 @@
         </a>
         <span id="s-{{node.value}}" ng-click="stoggle(this)">{{node.title || node.value}} <span class="badge">{{node.count}}</span></span>
       </span>
+
       <span ng-if="node.session">
         <a class="btn btn-node btn-sm" ng-click="displaySession(this)">
           <span class="glyphicon glyphicon-eye-open"></span>
         </a>
         <span id="s-{{node.session}}" ng-click="displaySession(this)">{{localeDate(node.date)}}</span>
       </span>
+
     </div>
     <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
       <li ng-repeat="node in node.nodes track by node.id" ui-tree-node ng-include="'nodes_renderer.html'" collapsed="true"></li>

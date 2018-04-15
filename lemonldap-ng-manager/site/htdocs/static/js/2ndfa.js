@@ -165,6 +165,7 @@
           switch (typeof button.action) {
             case 'function':
               button.action($scope.currentNode, $scope);
+              $scope[button.action]();
               break;
             case 'string':
               $scope[button.action]();
@@ -326,6 +327,11 @@
               attr = attrs[i];
               if (session[attr]) {
                 if (session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)) {
+                  subres.push({
+                    title: "type",
+                    value: "name",
+                    epoch: "date"
+                  });
                   array = JSON.parse(session[attr]);
                   for (k = 0, len1 = array.length; k < len1; k++) {
                     sfDevice = array[k];
@@ -344,7 +350,8 @@
                     }
                     subres.push({
                       title: title,
-                      value: name + " --> " + myDate
+                      value: name,
+                      epoch: myDate
                     });
                   }
                   delete session[attr];
@@ -465,7 +472,7 @@
         } else {
           over = 0;
         }
-        return $http.get(scriptname + "sfa/" + sessionType + "?_session_uid=" + $scope.searchString + "*&groupBy=substr(_session_uid," + $scope.searchString.length + ")&U2FCheck=" + $scope.U2FCheck + "&TOTPCheck=" + $scope.TOTPCheck).then(function(response) {
+        return $http.get(scriptname + "sfa/" + sessionType + "?_session_uid=" + $scope.searchString + "*&groupBy=substr(_session_uid," + $scope.searchString.length + ")&U2FCheck=" + $scope.U2FCheck + "&TOTPCheck=" + $scope.TOTPCheck + "&UBKCheck=" + $scope.UBKCheck).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;
           if (data.result) {
