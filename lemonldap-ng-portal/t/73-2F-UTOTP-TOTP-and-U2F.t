@@ -11,10 +11,10 @@ SKIP: {
         require Crypt::U2F::Server::Simple;
         require Authen::U2F::Tester;
     };
-    use_ok('Lemonldap::NG::Common::FormEncode');
     if ($@) {
         skip 'Missing libraries', $maintests;
     }
+    use_ok('Lemonldap::NG::Common::FormEncode');
     require Lemonldap::NG::Common::TOTP;
 
     my $client = LLNG::Manager::Test->new(
