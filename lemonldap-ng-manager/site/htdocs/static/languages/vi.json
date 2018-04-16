@@ -665,7 +665,7 @@
 "serverError":"Lỗi máy chủ",
 "session":"phiên",
 "sessions":"Phiên",
-"session_s":"session (s)",
+"session_s":"session(s)",
 "sessionDataToRemember":"Dữ liệu phiên để lưu trữ",
 "sessionDeleted":"Phiên đã bị xóa",
 "sessionParams":"Phiên",

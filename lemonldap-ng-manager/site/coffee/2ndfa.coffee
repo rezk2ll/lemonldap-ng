@@ -153,23 +153,11 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		$scope.data = []
 		$scope.updateTree2 '', $scope.data, 0, 0
 	
-	# Delete U2F key
-	$scope.deleteU2FKey = ->
+	# Delete 2FA device
+	$scope.delete2FA (type, myDate) = ->
+		epoch = myDate.getTime() / 1000
 		$scope.waiting = true
-		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=U2F").then (response) ->
-			$scope.currentSession = null
-			$scope.currentScope.remove()
-			$scope.waiting = false
-		, (resp) ->
-			$scope.currentSession = null
-			$scope.currentScope.remove()
-			$scope.waiting = false
-		$scope.showT = false
-		
-	# Delete TOTP key
-	$scope.deleteTOTPKey = ->
-		$scope.waiting = true
-		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=TOTP").then (response) ->
+		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?type=#{type}&epoch=#{epoch}").then (response) ->
 			$scope.currentSession = null
 			$scope.currentScope.remove()
 			$scope.waiting = false
@@ -179,57 +167,32 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			$scope.waiting = false
 		$scope.showT = false
 
-	# Add U2F key
-	$scope.addU2FKey = ->
-		$scope.waiting = true
-		$http['put']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=U2F").then (response) ->
-			$scope.currentSession = null
-			$scope.currentScope.remove()
-			$scope.waiting = false
-		, (resp) ->
-			$scope.currentSession = null
-			$scope.currentScope.remove()
-			$scope.waiting = false
-		$scope.showT = false
-		
-	# Add TOTP key
-	$scope.addTOTPKey = ->
-		$scope.waiting = true
-		$http['put']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=TOTP").then (response) ->
-			$scope.currentSession = null
-			$scope.currentScope.remove()
-			$scope.waiting = false
-		, (resp) ->
-			$scope.currentSession = null
-			$scope.currentScope.remove()
-			$scope.waiting = false
-		$scope.showT = false
+	## Add 2FA device
+	#$scope.add2FA (type) = ->
+		#$scope.waiting = true
+		#$http['put']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=U2F").then (response) ->
+			#$scope.currentSession = null
+			#$scope.currentScope.remove()
+			#$scope.waiting = false
+		#, (resp) ->
+			#$scope.currentSession = null
+			#$scope.currentScope.remove()
+			#$scope.waiting = false
+		#$scope.showT = false
 
-	# Verify U2F key
-	$scope.verifyU2FKey = ->
-		$scope.waiting = true
-		$http['post']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=U2F").then (response) ->
-			$scope.currentSession = null
-			$scope.currentScope.remove()
-			$scope.waiting = false
-		, (resp) ->
-			$scope.currentSession = null
-			$scope.currentScope.remove()
-			$scope.waiting = false
-		$scope.showT = true
 
-	# Verify TOTP key
-	$scope.verifyTOTPKey = ->
-		$scope.waiting = true
-		$http['post']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=TOTP").then (response) ->
-			$scope.currentSession = null
-			$scope.currentScope.remove()
-			$scope.waiting = false
-		, (resp) ->
-			$scope.currentSession = null
-			$scope.currentScope.remove()
-			$scope.waiting = false
-		$scope.showT = true
+	## Verify 2FA device
+	#$scope.verify2FA (epoch) = ->
+		#$scope.waiting = true
+		#$http['post']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?Key=TOTP").then (response) ->
+			#$scope.currentSession = null
+			#$scope.currentScope.remove()
+			#$scope.waiting = false
+		#, (resp) ->
+			#$scope.currentSession = null
+			#$scope.currentScope.remove()
+			#$scope.waiting = false
+		#$scope.showT = true
 
 	# Open node
 	$scope.stoggle = (scope) ->
@@ -297,12 +260,13 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									if key == 'name'
 										name = value
 									if key == 'epoch'
+										epoch = value
 										newDate = new Date(value * 1000)
 										myDate = newDate.toLocaleString()
 								subres.push
 									title: title
 									value: name
-									epoch: myDate
+									epoch: value
 							delete session[attr]	
 						else
 							subres.push
@@ -497,4 +461,6 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	c = $location.path().match /^\/(\w+)/
 	$scope.type = if c then c[1] else '_whatToTrace'
 ]
+
+
 

@@ -52,7 +52,7 @@ sub delSession {
     return $self->sendJSONresponse( $req, { result => 1 } );
 }
 
-sub deleteU2FKey {
+sub delete2F {
     my ( $self, $req ) = @_;
     return $self->sendJSONresponse( $req, { result => 1 } )
       if ( $self->{demoMode} );
@@ -77,31 +77,31 @@ sub deleteU2FKey {
     return $self->sendJSONresponse( $req, { result => 1 } );
 }
 
-sub deleteTOTPKey {
-    my ( $self, $req ) = @_;
-    return $self->sendJSONresponse( $req, { result => 1 } )
-      if ( $self->{demoMode} );
-    my $mod = $self->getMod($req)
-      or return $self->sendError( $req, undef, 400 );
-    my $id = $req->params('sessionId')
-      or return $self->sendError( $req, 'sessionId is missing', 400 );
+#sub deleteTOTP {
+    #my ( $self, $req ) = @_;
+    #return $self->sendJSONresponse( $req, { result => 1 } )
+      #if ( $self->{demoMode} );
+    #my $mod = $self->getMod($req)
+      #or return $self->sendError( $req, undef, 400 );
+    #my $id = $req->params('sessionId')
+      #or return $self->sendError( $req, 'sessionId is missing', 400 );
 
-    # Try to read session
-    my $session = $self->getApacheSession( $mod, $id )
-      or return $self->sendError( $req, undef, 400 );
+    ## Try to read session
+    #my $session = $self->getApacheSession( $mod, $id )
+      #or return $self->sendError( $req, undef, 400 );
 
-    # Delete U2F key attributs and update session
-    $session->data->{_totp2fSecret} = '';
-    $session->update( \%{ $session->data } );
+    ## Delete U2F key attributs and update session
+    #$session->data->{_totp2fSecret} = '';
+    #$session->update( \%{ $session->data } );
 
-    Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
-    if ( $session->error ) {
-        return $self->sendError( $req, $session->error, 200 );
-    }
-    return $self->sendJSONresponse( $req, { result => 1 } );
-}
+    #Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
+    #if ( $session->error ) {
+        #return $self->sendError( $req, $session->error, 200 );
+    #}
+    #return $self->sendJSONresponse( $req, { result => 1 } );
+#}
 
-sub addU2FKey {
+sub add2F {
     my ( $self, $req ) = @_;
     return $self->sendJSONresponse( $req, { result => 1 } )
       if ( $self->{demoMode} );
@@ -126,30 +126,30 @@ sub addU2FKey {
     return $self->sendJSONresponse( $req, { result => 1 } );
 }
 
-sub verifyU2FKey {
-    my ( $self, $req ) = @_;
-    return $self->sendJSONresponse( $req, { result => 1 } )
-      if ( $self->{demoMode} );
-    my $mod = $self->getMod($req)
-      or return $self->sendError( $req, undef, 400 );
-    my $id = $req->params('sessionId')
-      or return $self->sendError( $req, 'sessionId is missing', 400 );
+#sub verify2F {
+    #my ( $self, $req ) = @_;
+    #return $self->sendJSONresponse( $req, { result => 1 } )
+      #if ( $self->{demoMode} );
+    #my $mod = $self->getMod($req)
+      #or return $self->sendError( $req, undef, 400 );
+    #my $id = $req->params('sessionId')
+      #or return $self->sendError( $req, 'sessionId is missing', 400 );
 
-    # Try to read session
-    my $session = $self->getApacheSession( $mod, $id )
-      or return $self->sendError( $req, undef, 400 );
+    ## Try to read session
+    #my $session = $self->getApacheSession( $mod, $id )
+      #or return $self->sendError( $req, undef, 400 );
 
-    # Delete U2F key attributs and update session
-    $session->data->{_u2fKeyHandle} = 'OK';
-    $session->data->{_u2fUserKey}   = 'OK';
-    $session->update( \%{ $session->data } );
+    ## Delete U2F key attributs and update session
+    #$session->data->{_u2fKeyHandle} = 'OK';
+    #$session->data->{_u2fUserKey}   = 'OK';
+    #$session->update( \%{ $session->data } );
 
-    Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
-    if ( $session->error ) {
-        return $self->sendError( $req, $session->error, 200 );
-    }
-    return $self->sendJSONresponse( $req, { result => 1 } );
-}
+    #Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
+    #if ( $session->error ) {
+        #return $self->sendError( $req, $session->error, 200 );
+    #}
+    #return $self->sendJSONresponse( $req, { result => 1 } );
+#}
 
 sub session {
     my ( $self, $req, $id, $skey ) = @_;

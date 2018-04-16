@@ -84,13 +84,20 @@
       </table>
     </div>
     <div ng-if="!node.nodes">
-      <th>{{translate(node.title)}}</th>
-        <td><span id="v-{{node.title}}"/>{{translate(node.value)}}</td>
-        <td><span id="v-{{node.epoch}}"/>{{translate(node.epoch)}}</td>
+	  <span device={{node.type}} epoch={{node.epoch}}>
+      <th ng-if="node.title=='type'">{{translate(node.title)}}</th>
+      <td ng-if="node.title!='type'">{{node.title}}</td>
+      <th ng-if="node.title=='type'"><span id="v-{{node.value}}">{{translate(node.value)}}</span></th>
+      <td ng-if="node.title!='type'"><span id="v-{{node.value}}">{{node.value}}</span></td>
+      <th ng-if="node.title=='type'"><span id="v-{{node.epoch}}">{{translate(node.epoch)}}</span></th>
+      <td ng-if="node.title!='type'" class="data-epoch"><span id="v-{{node.epoch}}">{{node.epoch}}</span></td>
       <td>
-		  <span ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="del(currentNode.nodes,$index)" />
-		  <span ng-if="$last && ( node.title=='TOTP' || node.title=='UBK' || node.title=='U2F' )" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"/>
+		  <span ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="delete2FA(node.type, node.epoch)"></span>
+		  <!--
+		  <span ng-if="$last && ( node.title=='TOTP' || node.title=='UBK' || node.title=='U2F' )" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"></span>
+		  -->
       </td>
+      </span>
     </div>
   </script>
 

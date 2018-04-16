@@ -27,7 +27,7 @@ use constant defaultRoute => '2ndfa.html#/persistent';
 sub addRoutes {
     my ( $self, $conf ) = @_;
 
-    # Remote Procedure Call are defined in Lemonldap::NG::Common::Session::REST
+    # Remote Procedure are defined in Lemonldap::NG::Common::Session::REST
     # HTML template
     $self->addRoute( '2ndfa.html', undef, ['GET'] )
 
@@ -75,21 +75,22 @@ sub delete2FA {
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
 
-    my $params = $req->parameters();
-    my $Key    = $params->{Key};
+    my $params 	= $req->parameters();
+    my $type    = $params->{type};
+    my $epoch	= $params->{epoch};
 
-    if ( $Key =~ /\bU2F\b/ ) {
-        $self->logger->debug("Call procedure deleteU2F");
-        return $self->deleteU2F( $req, $session, $skey );
+    if ( $type =~ /\b(?:U2F|TOTP|UBK)\b/ and $epoch ) {
+        $self->logger->debug("Call procedure delete2F with type=$type and epoch=$epoch");
+        return $self->delete2F( $req, $session, $skey );
     }
-    elsif ( $Key =~ /\bTOTP\b/ ) {
-        $self->logger->debug("Call procedure deleteTOTP");
-        return $self->deleteTOTP( $req, $session, $skey );
-    }
-    elsif ( $Key =~ /\bUBK\b/ ) {
-        $self->logger->debug("Call procedure deleteUBK");
-        return $self->deleteUBK( $req, $session, $skey );
-    }
+    #elsif ( $type =~ /\bTOTP\b/ ) {
+        #$self->logger->debug("Call procedure deleteTOTP");
+        #return $self->deleteTOTP( $req, $session, $skey );
+    #}
+    #elsif ( $type =~ /\bUBK\b/ ) {
+        #$self->logger->debug("Call procedure deleteUBK");
+        #return $self->deleteUBK( $req, $session, $skey );
+    #}
     else {
         return $self->sendError( $req, undef, 400 );
     }
