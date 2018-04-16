@@ -16,9 +16,11 @@
             <form name="filterForm">
               <div class="form-check ">&nbsp;&nbsp;&nbsp;
                 <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
-                <label class="form-check-label" for="U2FCheck">U2F</label>&nbsp;&nbsp;
+                <label class="form-check-label" for="U2FCheck">U2F</label>
+                &nbsp;&nbsp;
                 <input type="checkbox" ng-model="TOTPCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
                 <label class="form-check-label" for="TOTPCheck">TOTP</label>
+                &nbsp;&nbsp;
                 <input type="checkbox" ng-model="UBKCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
                 <label class="form-check-label" for="UBKCheck">UBK</label>
               </div>
@@ -83,21 +85,19 @@
         <tr ng-repeat="node in node.nodes" ng-include="'session_attr.html'"></tr>
       </table>
     </div>
-    <div ng-if="!node.nodes">
-	  <span device={{node.type}} epoch={{node.epoch}}>
-      <th ng-if="node.title=='type'">{{translate(node.title)}}</th>
-      <td ng-if="node.title!='type'">{{node.title}}</td>
-      <th ng-if="node.title=='type'"><span id="v-{{node.value}}">{{translate(node.value)}}</span></th>
-      <td ng-if="node.title!='type'"><span id="v-{{node.value}}">{{node.value}}</span></td>
-      <th ng-if="node.title=='type'"><span id="v-{{node.sdate}}">{{translate(node.sdate)}}</span></th>
-      <td ng-if="node.title!='type'" class="data-epoch"><span id="v-{{node.sdate}}">{{node.sdate}}</span></td>
-      <td>
-		  <span ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="delete2FA(node.title, node.epoch)"></span>
-		  <!--
-		  <span ng-if="$last && ( node.title=='TOTP' || node.title=='UBK' || node.title=='U2F' )" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"></span>
-		  -->
-      </td>
-      </span>
+    <div ng-if="!node.nodes" id="data-{{node.epoch}}" ng-hide="isHidden">
+	      <th ng-if="node.title=='type'">{{translate(node.title)}}</th>
+	      <td ng-if="node.title!='type'">{{node.title}}</td>
+	      <th ng-if="node.title=='type'"><span id="v-{{node.value}}">{{translate(node.value)}}</span></th>
+	      <td ng-if="node.title!='type'"><span id="v-{{node.value}}">{{node.value}}</span></td>
+	      <th ng-if="node.title=='type'"><span id="v-{{node.sdate}}">{{translate(node.sdate)}}</span></th>
+	      <td ng-if="node.title!='type'" class="data-epoch"><span id="v-{{node.sdate}}">{{node.sdate}}</span></td>
+	      <td>
+			  <span ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="delete2FA(node.title, node.epoch)"></span>
+			  <!--
+			  <span ng-if="$last && ( node.title=='TOTP' || node.title=='UBK' || node.title=='U2F' )" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"></span>
+			  -->
+	      </td>
     </div>
   </script>
 

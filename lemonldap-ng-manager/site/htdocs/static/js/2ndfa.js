@@ -86,42 +86,6 @@
   };
 
   menu = {
-    delU2FKey: [
-      {
-        title: 'deleteU2FKey',
-        icon: 'trash'
-      }
-    ],
-    addU2FKey: [
-      {
-        title: 'addU2FKey',
-        icon: 'plus'
-      }
-    ],
-    verifyU2FKey: [
-      {
-        title: 'verifyU2FKey',
-        icon: 'check'
-      }
-    ],
-    delTOTPKey: [
-      {
-        title: 'deleteTOTPKey',
-        icon: 'trash'
-      }
-    ],
-    addTOTPKey: [
-      {
-        title: 'addTOTPKey',
-        icon: 'plus'
-      }
-    ],
-    verifyTOTPKey: [
-      {
-        title: 'verifyTOTPKey',
-        icon: 'check'
-      }
-    ],
     home: []
   };
 
@@ -185,6 +149,9 @@
         return $scope.updateTree2('', $scope.data, 0, 0);
       };
       $scope.delete2FA = function(type, epoch) {
+        var item;
+        item = angular.element("#data-" + epoch);
+        item.remove();
         $scope.waiting = true;
         $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?type=" + type + "&epoch=" + epoch).then(function(response) {
           return $scope.waiting = false;
@@ -256,7 +223,7 @@
             subres = [];
             for (i = 0, len = attrs.length; i < len; i++) {
               attr = attrs[i];
-              if (session[attr]) {
+              if (session[attr] && session[attr].match(/\w+/)) {
                 if (session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)) {
                   subres.push({
                     title: "type",

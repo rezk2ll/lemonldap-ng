@@ -73,30 +73,30 @@ categories =
 
 # Menu entries
 menu =
-	delU2FKey: [
-		title: 'deleteU2FKey'
-		icon:  'trash'
-	]
-	addU2FKey: [
-		title: 'addU2FKey'
-		icon:  'plus'
-	]
-	verifyU2FKey: [
-		title: 'verifyU2FKey'
-		icon:  'check'
-	]
-	delTOTPKey: [
-		title: 'deleteTOTPKey'
-		icon:  'trash'
-	]
-	addTOTPKey: [
-		title: 'addTOTPKey'
-		icon:  'plus'
-	]
-	verifyTOTPKey: [
-		title: 'verifyTOTPKey'
-		icon:  'check'
-	]
+	#delU2FKey: [
+		#title: 'deleteU2FKey'
+		#icon:  'trash'
+	#]
+	#addU2FKey: [
+		#title: 'addU2FKey'
+		#icon:  'plus'
+	#]
+	#verifyU2FKey: [
+		#title: 'verifyU2FKey'
+		#icon:  'check'
+	#]
+	#delTOTPKey: [
+		#title: 'deleteTOTPKey'
+		#icon:  'trash'
+	#]
+	#addTOTPKey: [
+		#title: 'addTOTPKey'
+		#icon:  'plus'
+	#]
+	#verifyTOTPKey: [
+		#title: 'verifyTOTPKey'
+		#icon:  'check'
+	#]
 	home: []
 
 ###
@@ -155,16 +155,20 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	
 	# Delete 2FA device
 	$scope.delete2FA = (type, epoch) ->
+		item = angular.element("#data-#{epoch}")
+		item.remove()
 		$scope.waiting = true
 		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?type=#{type}&epoch=#{epoch}").then (response) ->
 			#$scope.currentSession = null
 			#$scope.currentScope.remove()
+			#$scope.data = []
 			$scope.waiting = false
 		, (resp) ->
 			#$scope.currentSession = null
 			#$scope.currentScope.remove()
 			$scope.waiting = false
 		$scope.showT = false
+		#$scope.data = []
 
 	## Add 2FA device
 	#$scope.add2FA (type) = ->
@@ -245,7 +249,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			for category, attrs of categories
 				subres = []
 				for attr in attrs
-					if session[attr]
+					if session[attr]  and session[attr].match(/\w+/)
 						if session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)
 							subres.push
 								title: "type"
