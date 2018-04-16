@@ -184,83 +184,14 @@
         $scope.data = [];
         return $scope.updateTree2('', $scope.data, 0, 0);
       };
-      $scope.deleteU2FKey = function() {
+      $scope.delete2FA = function(type, epoch) {
         $scope.waiting = true;
-        $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
+        $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?type=" + type + "&epoch=" + epoch).then(function(response) {
           return $scope.waiting = false;
         }, function(resp) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
           return $scope.waiting = false;
         });
         return $scope.showT = false;
-      };
-      $scope.deleteTOTPKey = function() {
-        $scope.waiting = true;
-        $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=TOTP").then(function(response) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        }, function(resp) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        });
-        return $scope.showT = false;
-      };
-      $scope.addU2FKey = function() {
-        $scope.waiting = true;
-        $http['put'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        }, function(resp) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        });
-        return $scope.showT = false;
-      };
-      $scope.addTOTPKey = function() {
-        $scope.waiting = true;
-        $http['put'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=TOTP").then(function(response) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        }, function(resp) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        });
-        return $scope.showT = false;
-      };
-      $scope.verifyU2FKey = function() {
-        $scope.waiting = true;
-        $http['post'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        }, function(resp) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        });
-        return $scope.showT = true;
-      };
-      $scope.verifyTOTPKey = function() {
-        $scope.waiting = true;
-        $http['post'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=TOTP").then(function(response) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        }, function(resp) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        });
-        return $scope.showT = true;
       };
       $scope.stoggle = function(scope) {
         var node;
@@ -273,7 +204,7 @@
       $scope.displaySession = function(scope) {
         var sessionId, transformSession;
         transformSession = function(session) {
-          var _insert, _stToStr, array, attr, attrs, category, i, id, k, key, len, len1, myDate, name, newDate, res, sfDevice, subres, time, title, value;
+          var _insert, _stToStr, array, attr, attrs, category, epoch, i, id, k, key, len, len1, myDate, name, newDate, res, sfDevice, subres, time, title, value;
           _stToStr = function(s) {
             return s;
           };
@@ -330,7 +261,7 @@
                   subres.push({
                     title: "type",
                     value: "name",
-                    epoch: "date"
+                    sdate: "date"
                   });
                   array = JSON.parse(session[attr]);
                   for (k = 0, len1 = array.length; k < len1; k++) {
@@ -344,6 +275,7 @@
                         name = value;
                       }
                       if (key === 'epoch') {
+                        epoch = value;
                         newDate = new Date(value * 1000);
                         myDate = newDate.toLocaleString();
                       }
@@ -351,7 +283,8 @@
                     subres.push({
                       title: title,
                       value: name,
-                      epoch: myDate
+                      epoch: epoch,
+                      sdate: myDate
                     });
                   }
                   delete session[attr];

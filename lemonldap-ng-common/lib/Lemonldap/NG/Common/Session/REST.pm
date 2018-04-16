@@ -3,6 +3,7 @@ package Lemonldap::NG::Common::Session::REST;
 use strict;
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
+use JSON qw(from_json to_json);
 
 our $VERSION = '2.0.0';
 
@@ -44,6 +45,7 @@ sub delSession {
     my $id = $req->params('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
     my $session = $self->getApacheSession( $mod, $id );
+    $self->logger->debug("Delete session : $id");
     $session->remove;
     Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
     if ( $session->error ) {
@@ -62,12 +64,47 @@ sub delete2F {
       or return $self->sendError( $req, 'sessionId is missing', 400 );
 
     # Try to read session
+	$self->logger->debug("Loading session : $id");
     my $session = $self->getApacheSession( $mod, $id )
       or return $self->sendError( $req, undef, 400 );
+      
+	# Try to read 2F parameters
+	$self->logger->debug("Reading parameters ...");
+    my $params 	= $req->parameters();
+    my $type    = $params->{type} or return $self->sendError( $req, '2F device Type is missing', 400 );
+    my $epoch	= $params->{epoch} or return $self->sendError( $req, '2F device Epoch is missing', 400 );
+		
+	# Try to load 2F Device(s) from session
+    $self->logger->debug("Looking for 2F Device(s) ...");
+	my $_2fDevices;
+	if ( $session->data->{_2fDevices} ) {
+		$_2fDevices = eval {
+			from_json( $req->userData->{_2fDevices},
+				{ allow_nonref => 1 } );
+		};
+		if ($@) {
+			$self->logger->error("Corrupted session (_2fDevices) : $@");
+			return $self->p->sendError( $req, "Corrupted session", 500 );
+		}
+	}
+	else {
+		$self->logger->debug("No 2F Device found");
+		$_2fDevices = [];
+	}
 
-    # Delete U2F key attributs and update session
-    $session->data->{_u2fKeyHandle} = '';
-    $session->data->{_u2fUserKey}   = '';
+    # Delete 2F device
+	$self->logger->debug("Reading 2F device(s) ...");
+	my @keep = ();
+	while (@$_2fDevices) {
+		my $element = shift @$_2fDevices;
+		$self->logger->debug("Searching 2F device to delete -> $type / $epoch ...");
+		push @keep, $element unless ( ( $element->{type} eq $type ) and ( $element->{epoch} eq $epoch ) );
+	}
+	
+	# Update session
+	$self->logger->debug("Saving 2F Devices ...");
+	$session->data->{_2fDevices} = to_json( \@keep );
+	$self->logger->debug("Updating session ...");
     $session->update( \%{ $session->data } );
 
     Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
@@ -77,7 +114,7 @@ sub delete2F {
     return $self->sendJSONresponse( $req, { result => 1 } );
 }
 
-#sub deleteTOTP {
+#sub add2F {
     #my ( $self, $req ) = @_;
     #return $self->sendJSONresponse( $req, { result => 1 } )
       #if ( $self->{demoMode} );
@@ -91,7 +128,8 @@ sub delete2F {
       #or return $self->sendError( $req, undef, 400 );
 
     ## Delete U2F key attributs and update session
-    #$session->data->{_totp2fSecret} = '';
+    #$session->data->{_u2fKeyHandle} = 'TOF';
+    #$session->data->{_u2fUserKey}   = 'TOF';
     #$session->update( \%{ $session->data } );
 
     #Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
@@ -100,31 +138,6 @@ sub delete2F {
     #}
     #return $self->sendJSONresponse( $req, { result => 1 } );
 #}
-
-sub add2F {
-    my ( $self, $req ) = @_;
-    return $self->sendJSONresponse( $req, { result => 1 } )
-      if ( $self->{demoMode} );
-    my $mod = $self->getMod($req)
-      or return $self->sendError( $req, undef, 400 );
-    my $id = $req->params('sessionId')
-      or return $self->sendError( $req, 'sessionId is missing', 400 );
-
-    # Try to read session
-    my $session = $self->getApacheSession( $mod, $id )
-      or return $self->sendError( $req, undef, 400 );
-
-    # Delete U2F key attributs and update session
-    $session->data->{_u2fKeyHandle} = 'TOF';
-    $session->data->{_u2fUserKey}   = 'TOF';
-    $session->update( \%{ $session->data } );
-
-    Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
-    if ( $session->error ) {
-        return $self->sendError( $req, $session->error, 200 );
-    }
-    return $self->sendJSONresponse( $req, { result => 1 } );
-}
 
 #sub verify2F {
     #my ( $self, $req ) = @_;

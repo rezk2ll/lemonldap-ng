@@ -154,16 +154,15 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		$scope.updateTree2 '', $scope.data, 0, 0
 	
 	# Delete 2FA device
-	$scope.delete2FA (type, myDate) = ->
-		epoch = myDate.getTime() / 1000
+	$scope.delete2FA = (type, epoch) ->
 		$scope.waiting = true
 		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?type=#{type}&epoch=#{epoch}").then (response) ->
-			$scope.currentSession = null
-			$scope.currentScope.remove()
+			#$scope.currentSession = null
+			#$scope.currentScope.remove()
 			$scope.waiting = false
 		, (resp) ->
-			$scope.currentSession = null
-			$scope.currentScope.remove()
+			#$scope.currentSession = null
+			#$scope.currentScope.remove()
 			$scope.waiting = false
 		$scope.showT = false
 
@@ -251,7 +250,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							subres.push
 								title: "type"
 								value: "name"
-								epoch: "date"
+								sdate: "date"
 							array = JSON.parse(session[attr]);
 							for sfDevice in array
 								for key, value of sfDevice
@@ -260,13 +259,14 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									if key == 'name'
 										name = value
 									if key == 'epoch'
-										epoch = value
+										epoch   = value
 										newDate = new Date(value * 1000)
-										myDate = newDate.toLocaleString()
+										myDate  = newDate.toLocaleString()
 								subres.push
 									title: title
 									value: name
-									epoch: value
+									epoch: epoch
+									sdate: myDate
 							delete session[attr]	
 						else
 							subres.push
