@@ -3,21 +3,29 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 17;
+my $maintests = 37;
 
 SKIP: {
-    eval { require Crypt::U2F::Server; require Authen::U2F::Tester };
-    if ( $@ or $Crypt::U2F::Server::VERSION < 0.42 ) {
+    eval {
+        require Convert::Base32;
+        require Crypt::U2F::Server::Simple;
+        require Authen::U2F::Tester;
+    };
+    use_ok('Lemonldap::NG::Common::FormEncode');
+    if ($@) {
         skip 'Missing libraries', $maintests;
     }
-    use_ok('Lemonldap::NG::Common::FormEncode');
+    require Lemonldap::NG::Common::TOTP;
 
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel            => 'error',
-                u2fSelfRegistration => 1,
-                u2fActivation       => 1,
+                logLevel               => 'error',
+                utotp2fActivation      => 1,
+                totp2fSelfRegistration => 1,
+                u2fSelfRegistration    => 1,
+                u2fSelfRegistration =>
+                  '$_2fDevices =~ /"type":\s*"(?:TOTP|U2F)"/s',
             }
         }
     );
@@ -44,7 +52,90 @@ SKIP: {
         ),
         'Form registration'
     );
-    expectRedirection( $res, qr#/2fregisters/u$# );
+    expectRedirection( $res, qr#/2fregisters/totp$# );
+    ok(
+        $res = $client->_get(
+            '/2fregisters/totp',
+            cookie => "lemonldap=$id",
+            accept => 'text/html',
+        ),
+        'Form registration'
+    );
+    ok( $res->[2]->[0] =~ /totpregistration\.(?:min\.)?js/, 'Found TOTP js' );
+
+    # JS query
+    ok(
+        $res = $client->_post(
+            '/2fregisters/totp/getkey', IO::String->new(''),
+            cookie => "lemonldap=$id",
+            length => 0,
+        ),
+        'Get new key'
+    );
+    eval { $res = JSON::from_json( $res->[2]->[0] ) };
+    ok( not($@), 'Content is JSON' )
+      or explain( $res->[2]->[0], 'JSON content' );
+    my ( $key, $token );
+    ok( $key   = $res->{secret}, 'Found secret' );
+    ok( $token = $res->{token},  'Found token' );
+    $key = Convert::Base32::decode_base32($key);
+
+    # Post code
+    my $code;
+    ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
+        'Code' );
+    ok( $code =~ /^\d{6}$/, 'Code contains 6 digits' );
+    my $s = "code=$code&token=$token";
+    ok(
+        $res = $client->_post(
+            '/2fregisters/totp/verify',
+            IO::String->new($s),
+            length => length($s),
+            cookie => "lemonldap=$id",
+        ),
+        'Post code'
+    );
+    eval { $res = JSON::from_json( $res->[2]->[0] ) };
+    ok( not($@), 'Content is JSON' )
+      or explain( $res->[2]->[0], 'JSON content' );
+    ok( $res->{result} = 1, 'Key is registered' );
+
+    # Try to sing-in
+    $client->logout($id);
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+    my ( $host, $url, $query ) =
+      expectForm( $res, undef, '/utotp2fcheck', 'token' );
+    ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
+        'Code' );
+    $query =~ s/code=/code=$code/;
+    ok(
+        $res = $client->_post(
+            '/utotp2fcheck', IO::String->new($query),
+            length => length($query),
+        ),
+        'Post code'
+    );
+    $id = expectCookie($res);
+
+    # U2F form
+    ok(
+        $res = $client->_get(
+            '/2fregisters',
+            cookie => "lemonldap=$id",
+            accept => 'text/html',
+        ),
+        'Form registration'
+    );
+    expectOK($res);
+    ok( $res->[2]->[0] =~ m#<a.*href="/2fregisters/u">#, 'Get U2F choice' );
 
     ok(
         $res = $client->_get(
@@ -110,7 +201,6 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
             version          => "U2F_V2"
         }
     );
-    my ( $host, $url, $query );
     $query = Lemonldap::NG::Common::FormEncode::build_urlencoded(
         registration => $registrationData,
         challenge    => $res->[2]->[0],
@@ -132,8 +222,9 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( $data->{result} == 1, 'Key is registered' )
       or explain( $data, '"result":1' );
 
-    # Try to sing-in
+    # Try to sing-in with TOTP
     $client->logout($id);
+
     ok(
         $res = $client->_post(
             '/',
@@ -144,7 +235,37 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
         'Auth query'
     );
-    ( $host, $url, $query ) = expectForm( $res, undef, '/u2fcheck', 'token' );
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, '/utotp2fcheck', 'token' );
+    ok( $res->[2]->[0] =~ /input name="code"/, ' get TOTP form' );
+
+    # Use TOTP
+    ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
+        'Code' );
+    $query =~ s/code=/code=$code/;
+    ok(
+        $res = $client->_post(
+            '/utotp2fcheck', IO::String->new($query),
+            length => length($query),
+        ),
+        'Post code'
+    );
+    $id = expectCookie($res);
+    $client->logout($id);
+
+    # Try to sign-in with U2F
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+            accept => 'text/html',
+            cookie => "lemonldap=$id",
+        ),
+        'Auth query'
+    );
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, '/utotp2fcheck', 'token' );
 
     # Get challenge
     ok( $res->[2]->[0] =~ /^.*"keyHandle".*$/m, ' get keyHandle' );
@@ -196,3 +317,4 @@ count($maintests);
 clean_sessions();
 
 done_testing( count() );
+
