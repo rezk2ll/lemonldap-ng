@@ -35,7 +35,7 @@ SKIP: {
     );
     my $id = expectCookie($res);
 
-    # TOTP form
+    # U2F form
     ok(
         $res = $client->_get(
             '/2fregisters',
