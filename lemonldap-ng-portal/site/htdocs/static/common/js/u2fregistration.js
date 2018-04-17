@@ -92,7 +92,7 @@ LemonLDAP::NG U2F registration script
         setMsg('touchU2fDevice', 'positive');
         return u2f.sign(ch.appId, ch.challenge, request, function(data) {
           if (data.errorCode) {
-            return setMsg('unableToGetU2FKey', 'warning');
+            return setMsg('unableToGetKey', 'warning');
           } else {
             return $.ajax({
               type: "POST",
