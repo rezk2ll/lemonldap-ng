@@ -3,14 +3,8 @@ LemonLDAP::NG U2F verify script
 ###
 
 check = ->
-	registeredKey = [
-		keyHandle: window.datas.keyHandle
-		version: window.datas.version
-	]
-	registeredKeys = window.datas.challenges
-	console.log 'Key: ', registeredKeys
-	u2f.sign window.datas.appId, window.datas.challenges, registeredKey, (data) ->
-		$('#verify-data').val JSON.stringify(data)
+	u2f.sign window.datas.appId, window.datas.challenge, windows.datas.registeredKeys, (data) ->
+		$('#verify-data').val data
 		$('#verify-challenge').val window.datas.challenge
 		$('#verify-form').submit()
 

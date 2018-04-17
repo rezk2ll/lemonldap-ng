@@ -9,6 +9,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_BADCREDENTIALS
   PE_ERROR
   PE_OK
   PE_SENDRESPONSE
@@ -50,31 +51,45 @@ sub init {
 sub run {
     my ( $self, $req, $token ) = @_;
 
-    my ( $kh, $uk );
-
     # Check if user is registered
     if ( my $res = $self->loadUser( $req, $req->sessionInfo ) ) {
         return PE_ERROR     if ( $res == -1 );
         return PE_U2FFAILED if ( $res == 0 );
 
-		my @challenges = ();
-		my @crypters = $req->datas->{crypter};
-		foreach ( @crypters ) {
-			
-			push @challenges, %$_->authenticationChallenge;
-			
-		}
-		
-		
-       # my $challenge = $req->datas->{crypter}->authenticationChallenge;
-        my $tmp       = $self->p->sendHtml(
+        # Get a challenge (from first key)
+        my $data = eval {
+            JSON::from_json(
+                $req->datas->{crypter}->[0]->authenticationChallenge );
+        };
+        if ($@) {
+            $self->logger->error( Crypt::U2F::Server::u2fclib_getError() );
+            return PE_ERROR;
+        }
+
+        # Get registered keys
+        my @rk;
+        foreach ( @{ $req->datas->{crypter} } ) {
+            my $k = push @rk,
+              { keyHandle => $_->{keyHandle}, version => $data->{version} };
+
+        }
+
+        # Serialize datas
+        $data = JSON::to_json(
+            {
+                challenge      => $data->{challenge},
+                appId          => $data->{appId},
+                registeredKeys => \@rk
+            }
+        );
+
+        my $tmp = $self->p->sendHtml(
             $req,
             'u2fcheck',
             params => {
-                SKIN      => $self->conf->{portalSkin},
-                #CHALLENGE => $challenge,
-                CHALLENGES => @challenges,
-                TOKEN     => $token
+                SKIN  => $self->conf->{portalSkin},
+                DATA  => $data,
+                TOKEN => $token
             }
         );
         $self->logger->debug("Prepare U2F verification");
@@ -98,13 +113,29 @@ sub verify {
         }
 
         $self->logger->debug("Get challenge: $challenge");
-        if ( not $req->datas->{crypter}->setChallenge($challenge) ) {
+        $self->logger->debug("Get signature: $resp");
+        my $data = eval { JSON::from_json($resp) };
+        if ($@) {
+            $self->logger->error("U2F response error: $@");
+            $req->error(PE_ERROR);
+            return $self->fail($req);
+        }
+        my $crypter;
+        foreach ( @{ $req->datas->{crypter} } ) {
+            $crypter = $_ if ( $_->{keyHandle} eq $data->{keyHandle} );
+        }
+        unless ($crypter) {
+            $self->userLogger->error("Unregistered U2F key");
+            $req->error(PE_BADCREDENTIALS);
+            return $self->fail($req);
+        }
+        if ( not $crypter->setChallenge($challenge) ) {
             $self->logger->error(
                 $@ ? $@ : Crypt::U2F::Server::Simple::lastError() );
             $req->error(PE_ERROR);
             return $self->fail($req);
         }
-        if ( $req->datas->{crypter}->authenticationVerify($resp) ) {
+        if ( $crypter->authenticationVerify($resp) ) {
             $self->userLogger->info('U2F signature verified');
             return PE_OK;
         }
@@ -114,6 +145,7 @@ sub verify {
                   . Crypt::U2F::Server::u2fclib_getError()
                   . ')' );
             $req->error(PE_U2FFAILED);
+
             #$req->authResult(PE_U2FFAILED);
             return $self->fail($req);
         }
@@ -163,6 +195,12 @@ sub loadUser {
         foreach (@$_2fDevices) {
             $self->logger->debug("Reading U2F keys if exists ...");
             if ( $_->{type} eq 'U2F' ) {
+                unless ( $_->{_userKey} and $_->{_userKey} ) {
+                    $self->logger->error(
+"Missing required U2F attribute in storage ($session->{_2fDevices})"
+                    );
+                    next;
+                }
                 $self->logger->debug( "_userKey = " . $_->{_userKey} );
                 $self->logger->debug( "_keyHandle = " . $_->{_keyHandle} );
                 $_->{_userKey} = $self->decode_base64url( $_->{_userKey} );
@@ -172,31 +210,27 @@ sub loadUser {
     }
 
     #### TODO : MANAGE MULTI U2F KEYS
-    my @crypters = ();
-    #if (    ( $kh = $u2fs[0]{_keyHandle} )
-    #    and ( $uk = $u2fs[0]{_userKey} ) )
-    if (    ( $u2fs[0]{_keyHandle} )
-        and ( $u2fs[0]{_userKey} ) )
-    {
+    my @crypters;
+    if (@u2fs) {
         $self->logger->debug("kh & uk -> OK");
-        
-        foreach ( @u2fs ) {
-			$kh = $_->{_keyHandle};
-			$uk = $_->{_userKey};
-			push @crypters, $self->crypter( keyHandle => $kh, publicKey => $uk );
-		}
-        
-        
-        $req->datas->{crypter} = @crypters;
-        #$req->datas->{crypter} = $self->crypter(
-            #keyHandle => $kh,
-            #publicKey => $uk
-        #);
-        unless ( $req->datas->{crypter} ) {
-            $self->logger->error(
-                'U2F error: ' . Crypt::U2F::Server::u2fclib_getError() );
+
+        foreach (@u2fs) {
+            $kh = $_->{_keyHandle};
+            $uk = $_->{_userKey};
+            my $c = $self->crypter( keyHandle => $kh, publicKey => $uk );
+            if ($c) {
+                push @crypters, $c;
+            }
+            else {
+                $self->logger->error(
+                    'U2F error: ' . Crypt::U2F::Server::u2fclib_getError() );
+            }
+        }
+        unless (@crypters) {
             return -1;
         }
+
+        $req->datas->{crypter} = \@crypters;
         return 1;
     }
     else {
