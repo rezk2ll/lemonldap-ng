@@ -60,7 +60,7 @@ sub run {
         my $data = eval {
             from_json( $req->datas->{crypter}->[0]->authenticationChallenge );
         };
-        
+
         if ($@) {
             $self->logger->error( Crypt::U2F::Server::u2fclib_getError() );
             return PE_ERROR;
@@ -158,8 +158,6 @@ sub verify {
                   . Crypt::U2F::Server::u2fclib_getError()
                   . ')' );
             $req->error(PE_U2FFAILED);
-
-            #$req->authResult(PE_U2FFAILED);
             return $self->fail($req);
         }
     }
@@ -224,7 +222,7 @@ sub loadUser {
         }
     }
 
-    #### MANAGE MULTI U2F KEYS
+    # Manage multi u2f keys
     my @crypters;
     if (@u2fs) {
         $self->logger->debug("kh & uk -> OK");
