@@ -22,14 +22,14 @@
 <TMPL_ELSE>
  <form id="verify-form" action="/utotp2fcheck" method="post">
   <input type="hidden" id="token" name="token" value="<TMPL_VAR NAME="TOKEN">">
-  <TMPL_IF NAME="CHALLENGE">
+  <TMPL_IF NAME="DATA">
    <div class="message message-positive alert">
     <span trspan="touchU2fDeviceOrEnterTotp"></span>
    </div>
     <input type="hidden" id="verify-data" name="signature" value="">
     <input type="hidden" id="verify-challenge" name="challenge" value="">
    <script type="application/init">
-   <TMPL_VAR NAME="CHALLENGE">
+   <TMPL_VAR NAME="DATA">
    </script>
    <!-- //if:jsminified
      <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/u2f-api.min.js"></script>

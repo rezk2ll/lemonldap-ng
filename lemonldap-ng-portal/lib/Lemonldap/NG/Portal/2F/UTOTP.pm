@@ -21,6 +21,7 @@ has u2f => ( is => 'rw' );
 has totp => ( is => 'rw' );
 
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_ERROR
   PE_FORMEMPTY
   PE_OK
   PE_SENDRESPONSE
@@ -65,8 +66,35 @@ sub run {
     if ( my $res = $self->u2f->loadUser( $req, $req->sessionInfo ) ) {
         if ( $res > 0 ) {
             $self->logger->debug('U2F key is registered');
-            my $challenge = $req->datas->{crypter}->authenticationChallenge;
-            $tplPrms{CHALLENGE} = $challenge;
+            # Get a challenge (from first key)
+            my $data = eval {
+                from_json( $req->datas->{crypter}->[0]->authenticationChallenge );
+            };
+
+            if ($@) {
+                $self->logger->error( Crypt::U2F::Server::u2fclib_getError() );
+                return PE_ERROR;
+            }
+
+            # Get registered keys
+            my @rk;
+            foreach ( @{ $req->datas->{crypter} } ) {
+                my $k = push @rk,
+                  { keyHandle => $_->{keyHandle}, version => $data->{version} };
+
+            }
+
+            $self->ott->updateToken( $token, __ch => $data->{challenge} );
+
+            # Serialize datas
+            $data = to_json(
+                {
+                    challenge      => $data->{challenge},
+                    appId          => $data->{appId},
+                    registeredKeys => \@rk
+                }
+            );
+            $tplPrms{DATA} = $data;
         }
     }
 
