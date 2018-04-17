@@ -75,7 +75,7 @@ verify = ->
 			u2f.sign ch.appId, ch.challenge, request, (data) ->
 				# Handle errors
 				if data.errorCode
-					setMsg 'unableToGetU2FKey', 'warning'
+					setMsg 'unableToGetKey', 'warning'
 				else
 					# 3 send response
 					$.ajax

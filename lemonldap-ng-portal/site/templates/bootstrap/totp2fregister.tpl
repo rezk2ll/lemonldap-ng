@@ -25,7 +25,7 @@
       &nbsp;&nbsp;
       <span id="verify" class="btn btn-success" role="button">
         <span class="glyphicon glyphicon-check"></span>&nbsp;
-        <span trspan="verify">Verify</span>
+        <span trspan="register">Register</span>
       </span>
      </div>
     </div>

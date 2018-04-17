@@ -5,12 +5,7 @@
 <TMPL_IF NAME="AUTH_ERROR">
   <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
 </TMPL_IF>
-
-<TMPL_IF NAME="FAILED">
-  <p trspan="u2fFailed"></p>
-</TMPL_IF>
-
-<TMPL_IF NAME="CHALLENGE">
+<TMPL_IF NAME="DATA">
   <div class="message message-positive alert"><span trspan="touchU2fDevice"></span></div>
   <form id="verify-form" action="/u2fcheck" method="post">
     <input type="hidden" id="verify-data" name="signature" value="">
@@ -18,7 +13,7 @@
     <input type="hidden" id="token" name="token" value="<TMPL_VAR NAME="TOKEN">">
   </form>
   <script type="application/init">
-  <TMPL_VAR NAME="CHALLENGE">
+  <TMPL_VAR NAME="DATA">
   </script>
 <!-- //if:jsminified
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/u2f-api.min.js"></script>
