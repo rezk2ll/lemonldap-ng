@@ -9,6 +9,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_BADCREDENTIALS
   PE_ERROR
   PE_OK
   PE_SENDRESPONSE
@@ -58,7 +59,9 @@ sub run {
         return PE_U2FFAILED if ( $res == 0 );
 
         my $challenge = $req->datas->{crypter}->authenticationChallenge;
-        my $tmp       = $self->p->sendHtml(
+        $self->ott->updateToken( $token,
+            __ch => JSON::from_json($challenge)->{challenge} );
+        my $tmp = $self->p->sendHtml(
             $req,
             'u2fcheck',
             params => {
@@ -88,6 +91,12 @@ sub verify {
         }
 
         $self->logger->debug("Get challenge: $challenge");
+        unless ( $session->{__ch} and $session->{__ch} eq $challenge ) {
+            $self->userLogger->error("U2F challenge changes by user !!! $session->{__ch}/$challenge");
+            $req->error(PE_BADCREDENTIALS);
+            return $self->fail($req);
+        }
+        delete $session->{__ch};
         if ( not $req->datas->{crypter}->setChallenge($challenge) ) {
             $self->logger->error(
                 $@ ? $@ : Crypt::U2F::Server::Simple::lastError() );
