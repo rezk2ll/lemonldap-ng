@@ -41,6 +41,7 @@ sub crypter {
     return Crypt::U2F::Server::Simple->new(
         appId  => $self->origin,
         origin => $self->origin,
+        ( $self->conf->{logLevel} eq 'debug' ? ( debug => 1 ) : () ),
         %args,
     );
 }
