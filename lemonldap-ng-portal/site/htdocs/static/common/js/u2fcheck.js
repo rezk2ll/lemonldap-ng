@@ -8,8 +8,8 @@ LemonLDAP::NG U2F verify script
   var check;
 
   check = function() {
-    return u2f.sign(window.datas.appId, window.datas.challenge, windows.datas.registeredKeys, function(data) {
-      $('#verify-data').val(data);
+    return u2f.sign(window.datas.appId, window.datas.challenge, window.datas.registeredKeys, function(data) {
+      $('#verify-data').val(JSON.stringify(data));
       $('#verify-challenge').val(window.datas.challenge);
       return $('#verify-form').submit();
     });

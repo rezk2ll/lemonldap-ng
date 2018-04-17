@@ -58,7 +58,7 @@ sub run {
 
         # Get a challenge (from first key)
         my $data = eval {
-            JSON::from_json(
+            from_json(
                 $req->datas->{crypter}->[0]->authenticationChallenge );
         };
         if ($@) {
@@ -78,7 +78,7 @@ sub run {
 			__ch => $data->{challenge} );
 
         # Serialize datas
-        $data = JSON::to_json(
+        $data = to_json(
             {
                 challenge      => $data->{challenge},
                 appId          => $data->{appId},
@@ -214,23 +214,22 @@ sub loadUser {
         $self->logger->debug("2F Device(s) found");
 
         foreach (@$_2fDevices) {
-            $self->logger->debug("Reading U2F keys if exists ...");
+            $self->logger->debug("Looking for registered U2F key(s) ...");
             if ( $_->{type} eq 'U2F' ) {
                 unless ( $_->{_userKey} and $_->{_userKey} ) {
                     $self->logger->error(
-"Missing required U2F attribute in storage ($session->{_2fDevices})"
+"Missing required U2F attributes in storage ($session->{_2fDevices})"
                     );
                     next;
                 }
-                $self->logger->debug( "_userKey = " . $_->{_userKey} );
-                $self->logger->debug( "_keyHandle = " . $_->{_keyHandle} );
+                $self->logger->debug( "Found U2F key -> _userKey = " . $_->{_userKey} . "/ _keyHandle = " . $_->{_keyHandle} );
                 $_->{_userKey} = $self->decode_base64url( $_->{_userKey} );
                 push @u2fs, $_;
             }
         }
     }
 
-    #### TODO : MANAGE MULTI U2F KEYS
+    #### MANAGE MULTI U2F KEYS
     my @crypters;
     if (@u2fs) {
         $self->logger->debug("kh & uk -> OK");
@@ -250,12 +249,11 @@ sub loadUser {
         unless (@crypters) {
             return -1;
         }
-
         $req->datas->{crypter} = \@crypters;
         return 1;
     }
     else {
-        $self->userLogger->info("U2F: user not registered");
+        $self->userLogger->info("U2F : user not registered");
         return 0;
     }
 }
