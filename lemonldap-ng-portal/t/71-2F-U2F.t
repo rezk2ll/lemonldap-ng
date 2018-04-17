@@ -147,15 +147,16 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ( $host, $url, $query ) = expectForm( $res, undef, '/u2fcheck', 'token' );
 
     # Get challenge
-    ok( $res->[2]->[0] =~ /^.*"keyHandle":.*$/m, ' get keyHandle' );
-    $data = "$&";
+    ok( $res->[2]->[0] =~ /^.*"keyHandle".*$/m, ' get keyHandle' );
+    $data = $&;
     eval { $data = JSON::from_json($data) };
     ok( not($@), ' Content is JSON' )
       or explain( [ $@, $data ], 'JSON content' );
 
     # Build U2F signature
     $r =
-      $tester->sign( $data->{appId}, $data->{challenge}, $data->{registeredKeys}->[0]->{keyHandle} );
+      $tester->sign( $data->{appId}, $data->{challenge},
+        $data->{registeredKeys}->[0]->{keyHandle} );
     ok( $r->is_success, ' Good challenge value' ) or diag( $r->error_message );
     my $sign = JSON::to_json(
         {
