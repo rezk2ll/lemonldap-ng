@@ -4630,14 +4630,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Maintenance mode</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120303T081022Z" changeid="xavier">
-        <seg>Mode maintenance</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>For example, if real sessions are stored in <bpt i='0' x='0'>&lt;a0&gt;</bpt>files<ept i='0'>&lt;/a0&gt;</ept>:</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120420T201512Z" changeid="xavier">
@@ -11266,14 +11258,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Port</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120225T074024Z" changeid="xavier">
-        <seg>Port</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>If not Go on Manager, and declare Manager as a new <bpt i='0' x='0'>&lt;a0&gt;</bpt>virtual host<ept i='0'>&lt;/a0&gt;</ept>, for example <bpt i='1' x='1'>&lt;c1&gt;</bpt>manager.example.com<ept i='1'>&lt;/c1&gt;</ept>.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120418T203120Z" changeid="guimard">
@@ -12810,14 +12794,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
         <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt><bpt i='1' x='1'>&lt;s1&gt;</bpt>package<ept i='1'>&lt;/s1&gt;</ept><ept i='0'>&lt;/a0&gt;</ept> SSOExtensions<bpt i='2' x='2'>&lt;s2&gt;</bpt>;<ept i='2'>&lt;/s2&gt;</ept>
  
 <bpt i='3' x='3'>&lt;s3&gt;</bpt>sub<ept i='3'>&lt;/s3&gt;</ept> function1 <bpt i='4' x='4'>&lt;s4&gt;</bpt>{<ept i='4'>&lt;/s4&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>These options are used to build redirection <bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept> (when user is not logged, or for <bpt i='1' x='1'>&lt;a1&gt;</bpt>CDA<ept i='1'>&lt;/a1&gt;</ept> requests).</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120225T074119Z" changeid="xavier">
-        <seg>Ces options sont utilisées dans la construction des <bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept> de redirection (lorsque l'utilisateur n'est pas connecté ou pour les requêtes <bpt i='1' x='1'>&lt;a1&gt;</bpt>CDA<ept i='1'>&lt;/a1&gt;</ept>).</seg>
       </tuv>
     </tu>
     <tu>
@@ -17354,14 +17330,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>The first will allow to configure <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> for the alfresco webapp, and the other for the share webapp.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160227T183546Z" changeid="xavier">
-        <seg>Le premier autorise la configuration du <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> pour la webapp Alfresco et l'autre pour la webapp partagée.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>In the manager: set <bpt i='0' x='0'>&lt;a0&gt;</bpt>Apache::Session::Memcached<ept i='0'>&lt;/a0&gt;</ept> in <bpt i='1' x='1'>&lt;c1&gt;</bpt>General parameters<ept i='1'>&lt;/c1&gt;</ept> » <bpt i='2' x='2'>&lt;c2&gt;</bpt>Sessions<ept i='2'>&lt;/c2&gt;</ept> » <bpt i='3' x='3'>&lt;c3&gt;</bpt>Session storage<ept i='3'>&lt;/c3&gt;</ept> » <bpt i='4' x='4'>&lt;c4&gt;</bpt>Apache::Session module<ept i='4'>&lt;/c4&gt;</ept> and add the following parameters (case sensitive):</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T050722Z" changeid="guimard">
@@ -19134,14 +19102,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120506T103548Z" changeid="xavier">
         <seg>Langue</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>HTTPS</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120225T074025Z" changeid="xavier">
-        <seg>HTTPS</seg>
       </tuv>
     </tu>
     <tu>
@@ -25788,14 +25748,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160302T060910Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>ldapBindPassword<ept i='0'>&lt;/s0&gt;</ept> : mot-de-passe à utiliser pour se connecter au serveur LDAP</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Mpm-worker works faster and LemonLDAP::NG use the thread system for best performance.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120419T140135Z" changeid="guimard">
-        <seg>Mpm-worker est plus rapide et LemonLDAP::NG utilise le système de threads pour de meilleures performances.</seg>
       </tuv>
     </tu>
     <tu>

@@ -420,16 +420,22 @@ Voir <strong><a href="formreplay.html" class="wikilink1" title="documentation:2.
 Quelques options sont disponibles :
 </p>
 <ul>
-<li class="level1"><div class="li">  Port</div>
+<li class="level1"><div class="li">  Port: used to build redirection <abbr title="Uniform Resource Locator">URL</abbr> <em>(when user is not logged, or for <abbr title="Authentification inter-domaines">CDA</abbr> requests)</em></div>
 </li>
-<li class="level1"><div class="li">  HTTPS</div>
+<li class="level1"><div class="li">  HTTPS: used to build redirection <abbr title="Uniform Resource Locator">URL</abbr></div>
 </li>
-<li class="level1"><div class="li"> Mode maintenance</div>
+<li class="level1"><div class="li">  Maintenance mode: reject all requests with a maintenance message</div>
+</li>
+<li class="level1"><div class="li">  Aliases: list of aliases for this virtual host <em>(avoid to rewrite rules,…)</em></div>
+</li>
+<li class="level1"><div class="li">  Type: handler type <em>(normal, <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps Handler</a>,…)</em></div>
+</li>
+<li class="level1"><div class="li">  Authentication level required: this options avoid to reject user with a rule based on <code>$_authenticationLevel</code>. When user hasn't the required level, he is redirected to an upgrade page in the portal</div>
 </li>
 </ul>
 
 <p>
-Ces options sont utilisées dans la construction des <abbr title="Uniform Resource Locator">URL</abbr> de redirection (lorsque l'utilisateur n'est pas connecté ou pour les requêtes <abbr title="Authentification inter-domaines">CDA</abbr>). Sauf modification, les valeurs par défaut sont utilisées. Ces options ne sont à utiliser que pour surcharger les valeurs par défaut.
+“Port” and “HTTPS” options are used to build redirection <abbr title="Uniform Resource Locator">URL</abbr> <em>(when user is not logged, or for <abbr title="Authentification inter-domaines">CDA</abbr> requests)</em>. Sauf modification, les valeurs par défaut sont utilisées. Ces options ne sont à utiliser que pour surcharger les valeurs par défaut.
 </p>
 
 </div><!-- EDIT12 SECTION "Options" [8790-] -->
