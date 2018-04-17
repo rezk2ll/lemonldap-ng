@@ -416,16 +416,22 @@ See <strong><a href="formreplay.html" class="wikilink1" title="documentation:2.0
 Some options are available:
 </p>
 <ul>
-<li class="level1"><div class="li"> Port</div>
+<li class="level1"><div class="li"> Port: used to build redirection <abbr title="Uniform Resource Locator">URL</abbr> <em>(when user is not logged, or for <abbr title="Cross Domain Authentication">CDA</abbr> requests)</em></div>
 </li>
-<li class="level1"><div class="li"> HTTPS</div>
+<li class="level1"><div class="li"> HTTPS: used to build redirection <abbr title="Uniform Resource Locator">URL</abbr></div>
 </li>
-<li class="level1"><div class="li"> Maintenance mode</div>
+<li class="level1"><div class="li"> Maintenance mode: reject all requests with a maintenance message</div>
+</li>
+<li class="level1"><div class="li"> Aliases: list of aliases for this virtual host <em>(avoid to rewrite rules,…)</em></div>
+</li>
+<li class="level1"><div class="li"> Type: handler type <em>(normal, <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps Handler</a>,…)</em></div>
+</li>
+<li class="level1"><div class="li"> Authentication level required: this options avoid to reject user with a rule based on <code>$_authenticationLevel</code>. When user hasn&#039;t the required level, he is redirected to an upgrade page in the portal</div>
 </li>
 </ul>
 
 <p>
-These options are used to build redirection <abbr title="Uniform Resource Locator">URL</abbr> (when user is not logged, or for <abbr title="Cross Domain Authentication">CDA</abbr> requests). By default, default values are used. These options are only here to override default values.
+“Port” and “HTTPS” options are used to build redirection <abbr title="Uniform Resource Locator">URL</abbr> <em>(when user is not logged, or for <abbr title="Cross Domain Authentication">CDA</abbr> requests)</em>. By default, default values are used. These options are only here to override default values.
 </p>
 
 </div>

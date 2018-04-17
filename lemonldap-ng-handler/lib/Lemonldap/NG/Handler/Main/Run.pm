@@ -412,9 +412,11 @@ sub retrieveSession {
 
     # 1. Search if the user was the same as previous (very efficient in
     # persistent connection).
+    # NB: timout is here the same value as current HTTP/1.1 Keep-Alive timeout
+    #     (15 seconds)
     if (    defined $class->datas->{_session_id}
         and $id eq $class->datas->{_session_id}
-        and ( $now - $class->datasUpdate < 60 ) )
+        and ( $now - $class->datasUpdate < 15 ) )
     {
         $class->logger->debug("Get session $id from Handler internal cache");
         return $class->datas;

@@ -3004,19 +3004,19 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'select'  => [
                 {
-                    'k' => '0',
+                    'k' => 0,
                     'v' => 'unsecuredCookie'
                 },
                 {
-                    'k' => '1',
+                    'k' => 1,
                     'v' => 'securedCookie'
                 },
                 {
-                    'k' => '2',
+                    'k' => 2,
                     'v' => 'doubleCookie'
                 },
                 {
-                    'k' => '3',
+                    'k' => 3,
                     'v' => 'doubleCookieForSingleSession'
                 }
             ],

@@ -87,16 +87,16 @@
 <p>
 <abbr title="LemonLDAP::NG">LL::NG</abbr> can delegate authentication to Apache, so it is possible to use any <a href="http://httpd.apache.org/docs/current/howto/auth.html" class="urlextern" title="http://httpd.apache.org/docs/current/howto/auth.html"  rel="nofollow">Apache authentication module</a>, for example Kerberos, Radius, OTP, etc.
 </p>
-<div class="noteimportant">To authenticate users using Kerberos, you can now use the new <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos authentication module</a> which allow to chain Kerberos in a <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">combination</a>
+<div class="noteimportant">To authenticate users using Kerberos, you can now use the new <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos authentication module</a> which allow one to chain Kerberos in a <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">combination</a>
 </div><div class="notetip">Apache authentication module will set the <code>REMOTE_USER</code> environment variable, which will be used by <abbr title="LemonLDAP::NG">LL::NG</abbr> to get authenticated user.
 </div>
 </div>
-<!-- EDIT3 SECTION "Presentation" [81-664] -->
+<!-- EDIT3 SECTION "Presentation" [81-668] -->
 <h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT4 SECTION "Configuration" [665-691] -->
+<!-- EDIT4 SECTION "Configuration" [669-695] -->
 <h3 class="sectionedit5" id="llng">LL::NG</h3>
 <div class="level3">
 
@@ -111,7 +111,7 @@ You may want to failback to another authentication backend in case of the Apache
 <div class="notetip">In this case, the Apache authentication module should not require a valid user and not be authoritative, else Apache server will return an error and not let <abbr title="LemonLDAP::NG">LL::NG</abbr> Portal manage the failback authentication.
 </div>
 </div>
-<!-- EDIT5 SECTION "LL::NG" [692-1230] -->
+<!-- EDIT5 SECTION "LL::NG" [696-1234] -->
 <h3 class="sectionedit6" id="apache1">Apache</h3>
 <div class="level3">
 
@@ -130,12 +130,12 @@ The Apache configuration depends on the module you choose, you need to look at t
 </ul>
 
 </div>
-<!-- EDIT6 SECTION "Apache" [1231-1565] -->
+<!-- EDIT6 SECTION "Apache" [1235-1569] -->
 <h2 class="sectionedit7" id="tips">Tips</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT7 SECTION "Tips" [1566-1583] -->
+<!-- EDIT7 SECTION "Tips" [1570-1587] -->
 <h3 class="sectionedit8" id="kerberos">Kerberos</h3>
 <div class="level3">
 
@@ -145,7 +145,7 @@ The Kerberos configuration is quite complex. You can find some configuration tip
 <div class="notetip">Prefer new <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos</a> module.
 </div>
 </div>
-<!-- EDIT8 SECTION "Kerberos" [1584-1776] -->
+<!-- EDIT8 SECTION "Kerberos" [1588-1780] -->
 <h3 class="sectionedit9" id="compatibility_with_identity_provider_modules">Compatibility with Identity Provider modules</h3>
 <div class="level3">
 
@@ -165,6 +165,6 @@ This will bypass the authentication module for request from APPLICATIONS_<abbr t
 </p>
 
 </div>
-<!-- EDIT9 SECTION "Compatibility with Identity Provider modules" [1777-] --></div>
+<!-- EDIT9 SECTION "Compatibility with Identity Provider modules" [1781-] --></div>
 </body>
 </html>

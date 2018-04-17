@@ -233,7 +233,6 @@ sub run {
                 return $self->p->sendError( $req, "Corrupted session", 500 );
             }
         }
-
         else {
             $self->logger->debug("No 2F Device found");
             $_2fDevices = [];

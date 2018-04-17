@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authkerberos</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authkerberos"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authkerberos.html"/>
@@ -106,9 +106,16 @@ In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modu
 <li class="level1"><div class="li"> <strong>Remove domain in username</strong>: set to “enabled” to strip username value and remove the &#039;@domain&#039;.</div>
 </li>
 </ul>
+<div class="noteimportant"><ul>
+<li class="level1"><div class="li"> Due to a perl GSSAPI issue, you may need to copy the keytab in /etc/krb5.keytab which is the default location hardcoded in the library</div>
+</li>
+<li class="level1"><div class="li"> As Kerberos ticket is passed inside Authorization header, you may need to set CGIPassAuth on in Apache</div>
+</li>
+</ul>
 
 </div>
-<!-- EDIT4 SECTION "LLNG Configuration" [348-1158] -->
+</div>
+<!-- EDIT4 SECTION "LLNG Configuration" [348-1429] -->
 <h3 class="sectionedit5" id="kerberos_configuration">Kerberos configuration</h3>
 <div class="level3">
 
@@ -117,7 +124,7 @@ The Kerberos configuration is quite complex. You can find some configuration tip
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Kerberos configuration" [1159-1302] -->
+<!-- EDIT5 SECTION "Kerberos configuration" [1430-1573] -->
 <h3 class="sectionedit6" id="web_server_kerberos_module">Web Server Kerberos module</h3>
 <div class="level3">
 
@@ -142,6 +149,6 @@ Example with Apache and mod_auth_kerb:
   &lt;/If&gt;</pre>
 
 </div>
-<!-- EDIT6 SECTION "Web Server Kerberos module" [1303-] --></div>
+<!-- EDIT6 SECTION "Web Server Kerberos module" [1574-] --></div>
 </body>
 </html>

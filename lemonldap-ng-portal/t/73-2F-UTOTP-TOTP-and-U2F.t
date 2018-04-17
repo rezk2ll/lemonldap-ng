@@ -294,8 +294,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     # POST result
     ok(
         $res = $client->_post(
-            '/u2fcheck',
-            IO::String->new($query),
+            '/utotp2fcheck', IO::String->new($query),
             length => length($query),
         ),
         'Push U2F signature'
