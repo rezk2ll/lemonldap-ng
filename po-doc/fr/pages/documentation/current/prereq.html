@@ -86,25 +86,31 @@ To use LemonLDAP::NG, you have the choice of the Web Server :
 
 </p>
 <ul>
-<li class="level1"><div class="li">  Apache 2</div>
-</li>
 <li class="level1"><div class="li">  Nginx</div>
 </li>
-<li class="level1"><div class="li">  Any FastCGI compatible Web Server</div>
+<li class="level1"><div class="li">  Apache 2</div>
+</li>
+<li class="level1"><div class="li">  Any FastCGI or uWSGI compatible Web Server <em>(<strong>Portal and manager only</strong>)</em></div>
 </li>
 </ul>
 
 <p>
-For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-worker est plus rapide et LemonLDAP::NG utilise le système de threads pour de meilleures performances. If you have to use mpm-prefork (for example if you use PHP), LemonLDAP::NG will work anyway.
+
+For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-worker works faster and LemonLDAP::NG use the thread system for best performance <strong>but since Apache-2.4, mod_perl seems unstable in this configuration</strong>. If you have to use mpm-prefork (for example if you use PHP), LemonLDAP::NG will work anyway.
+
 </p>
 
-</div><!-- EDIT2 SECTION "Web Server" [48-451] -->
+<p>
+<a href="llng_deps.png_documentation_2.0_prereq.html" class="media" title="documentation:2.0:llng_deps.png"><img src="llng_deps.480eb0864712527af24b7886eca761d1.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+</div><!-- EDIT2 SECTION "Web Server" [48-610] -->
 
 <h2 class="sectionedit3" id="perl">Perl</h2>
 <div class="level2">
 <div class="noteclassic">Here is the list of Perl modules used in LemonLDAP::NG. Les modules "core" doivent être installés sur le système. Les autres modules ne doivent être installés que s'il est prévu d'utiliser les fonctionnalités associées.
 </div>
-</div><!-- EDIT3 SECTION "Perl" [452-665] -->
+</div><!-- EDIT3 SECTION "Perl" [611-824] -->
 
 <h3 class="sectionedit4" id="core">Core</h3>
 <div class="level3">
@@ -179,7 +185,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT4 SECTION "Core" [666-1289] -->
+</div><!-- EDIT4 SECTION "Core" [825-1448] -->
 
 <h3 class="sectionedit5" id="deprecated_features">Deprecated features</h3>
 <div class="level3">
@@ -202,7 +208,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT5 SECTION "Deprecated features" [1290-1458] -->
+</div><!-- EDIT5 SECTION "Deprecated features" [1449-1617] -->
 
 <h3 class="sectionedit6" id="saml2">SAML2</h3>
 <div class="level3">
@@ -215,7 +221,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT6 SECTION "SAML2" [1459-1544] -->
+</div><!-- EDIT6 SECTION "SAML2" [1618-1703] -->
 
 <h3 class="sectionedit7" id="specific_authentication_backends">Specific authentication backends</h3>
 <div class="level3">
@@ -258,7 +264,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT7 SECTION "Specific authentication backends" [1545-1773] -->
+</div><!-- EDIT7 SECTION "Specific authentication backends" [1704-1932] -->
 
 <h3 class="sectionedit8" id="smtpreset_password_by_mail">SMTP / réinitialisation de mot-de-passe par courriel</h3>
 <div class="level3">
@@ -269,7 +275,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT8 SECTION "SMTP / Reset password by mail" [1774-1852] -->
+</div><!-- EDIT8 SECTION "SMTP / Reset password by mail" [1933-2011] -->
 
 <h3 class="sectionedit9" id="unit_tests">Unit tests</h3>
 <div class="level3">
@@ -282,7 +288,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT9 SECTION "Unit tests" [1853-1919] -->
+</div><!-- EDIT9 SECTION "Unit tests" [2012-2078] -->
 
 <h2 class="sectionedit10" id="other">Autres</h2>
 <div class="level2">
@@ -293,12 +299,12 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </li>
 </ul>
 
-</div><!-- EDIT10 SECTION "Other" [1920-2136] -->
+</div><!-- EDIT10 SECTION "Other" [2079-2295] -->
 
 <h2 class="sectionedit11" id="install_dependencies_on_your_system">Installer les dépendances sur le système</h2>
 <div class="level2">
 
-</div><!-- EDIT11 SECTION "Install dependencies on your system" [2137-2186] -->
+</div><!-- EDIT11 SECTION "Install dependencies on your system" [2296-2345] -->
 
 <h3 class="sectionedit12" id="apt-get">APT-GET</h3>
 <div class="level3">
@@ -308,19 +314,19 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 Perl dependencies:
 
 </p>
-<pre class="code">apt install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhtml-template-perl libio-string-perl, libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl</pre>
+<pre class="code">apt install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhtml-template-perl libio-string-perl libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl</pre>
 
 <p>
 Pour Apache:
 </p>
-<pre class="code">apt install apache2 libapache2-mod-fcgid libapache2-mod-perl</pre>
+<pre class="code">apt install apache2 libapache2-mod-fcgid libapache2-mod-perl2</pre>
 
 <p>
 Pour Nginx:
 </p>
 <pre class="code">apt install nginx nginx-extras</pre>
 
-</div><!-- EDIT12 SECTION "APT-GET" [2187-2949] -->
+</div><!-- EDIT12 SECTION "APT-GET" [2346-3108] -->
 
 <h3 class="sectionedit13" id="yum">YUM</h3>
 <div class="level3">
@@ -345,7 +351,7 @@ Pour Nginx:
 <div class="noteimportant">As you need a recent version of Nginx, the best is to install <a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-red-hat-centos-packages" class="urlextern" title="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-red-hat-centos-packages"  rel="nofollow">Nginx official packages</a>.
 
 </div>
-</div><!-- EDIT13 SECTION "YUM" [2950-] -->
+</div><!-- EDIT13 SECTION "YUM" [3109-] -->
 </div>
 </body>
 </html>

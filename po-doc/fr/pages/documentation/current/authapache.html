@@ -88,15 +88,15 @@
 <p>
 <abbr title="LemonLDAP::NG">LL::NG</abbr> peut déléguer l'authentification à Apache, ainsi il est possible d'utiliser tous les <a href="http://httpd.apache.org/docs/current/howto/auth.html" class="urlextern" title="http://httpd.apache.org/docs/current/howto/auth.html"  rel="nofollow">modules d'authentification Apache</a>, par exemple Kerberos, Radius, OTP, etc.
 </p>
-<div class="noteimportant">To authenticate users using Kerberos, you can now use the new <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos authentication module</a> which allow to chain Kerberos in a <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">combination</a>
+<div class="noteimportant">To authenticate users using Kerberos, you can now use the new <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos authentication module</a> which allow one to chain Kerberos in a <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">combination</a>
 </div><div class="notetip">Les modules d'authentification Apache renseignent la variable d'environnement <code>REMOTE_USER</code>, qui sera utilisée par <abbr title="LemonLDAP::NG">LL::NG</abbr> pour obtenir le nom d'utilisateur authentifié.
 </div>
-</div><!-- EDIT3 SECTION "Presentation" [81-664] -->
+</div><!-- EDIT3 SECTION "Presentation" [81-668] -->
 
 <h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT4 SECTION "Configuration" [665-691] -->
+</div><!-- EDIT4 SECTION "Configuration" [669-695] -->
 
 <h3 class="sectionedit5" id="llng">LL::NG</h3>
 <div class="level3">
@@ -111,7 +111,7 @@ On peut choisir de basculer sur un autre backend d'authentification en cas d'éc
 <pre class="code">Apache;LDAP</pre>
 <div class="notetip">Dans ce cas, la module d'authentification Apache ne doit pas exiger un utilisateur valide et ne dois pas être impératif, sinon le serveur Apache va retourner une erreur sans passer la main au portail <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </div>
-</div><!-- EDIT5 SECTION "LL::NG" [692-1230] -->
+</div><!-- EDIT5 SECTION "LL::NG" [696-1234] -->
 
 <h3 class="sectionedit6" id="apache1">Apache</h3>
 <div class="level3">
@@ -130,12 +130,12 @@ La configuration Apache dépend du module choisi, se référer à sa documentati
 </li>
 </ul>
 
-</div><!-- EDIT6 SECTION "Apache" [1231-1565] -->
+</div><!-- EDIT6 SECTION "Apache" [1235-1569] -->
 
 <h2 class="sectionedit7" id="tips">Astuces</h2>
 <div class="level2">
 
-</div><!-- EDIT7 SECTION "Tips" [1566-1583] -->
+</div><!-- EDIT7 SECTION "Tips" [1570-1587] -->
 
 <h3 class="sectionedit8" id="kerberos">Kerberos</h3>
 <div class="level3">
@@ -146,7 +146,7 @@ La configuration Kerberos est assez complexe. On peut trouver quelques élément
 <div class="notetip">Prefer new <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos</a> module.
 
 </div>
-</div><!-- EDIT8 SECTION "Kerberos" [1584-1776] -->
+</div><!-- EDIT8 SECTION "Kerberos" [1588-1780] -->
 
 <h3 class="sectionedit9" id="compatibility_with_identity_provider_modules">Compatibilité avec les modules fournisseurs d'identité</h3>
 <div class="level3">
@@ -166,7 +166,7 @@ Dans ce cas, il faut ajouter dans la configuratio du module Apache :
 Ceci évite l'authentification des requêtes issues des adresses listées dans APPLICATIONS_<abbr title="Internet Protocol">IP</abbr>.
 </p>
 
-</div><!-- EDIT9 SECTION "Compatibility with Identity Provider modules" [1777-] -->
+</div><!-- EDIT9 SECTION "Compatibility with Identity Provider modules" [1781-] -->
 </div>
 </body>
 </html>

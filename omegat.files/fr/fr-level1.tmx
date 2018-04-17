@@ -4630,14 +4630,6 @@ SSLCACertificateFile /etc/httpd/certs/ow2-ca.cert</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Maintenance mode</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120303T081022Z" changeid="xavier">
-        <seg>Mode maintenance</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>For example, if real sessions are stored in files:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T201512Z" changeid="xavier">
@@ -11266,14 +11258,6 @@ portalSkin = dark</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Port</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T074024Z" changeid="xavier">
-        <seg>Port</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>If not Go on Manager, and declare Manager as a new virtual host, for example manager.example.com.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203120Z" changeid="guimard">
@@ -12810,14 +12794,6 @@ sub function1 {</seg>
         <seg>package SSOExtensions;
  
 sub function1 {</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>These options are used to build redirection URL (when user is not logged, or for CDA requests).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T074119Z" changeid="xavier">
-        <seg>Ces options sont utilisées dans la construction des URL de redirection (lorsque l'utilisateur n'est pas connecté ou pour les requêtes CDA).</seg>
       </tuv>
     </tu>
     <tu>
@@ -17354,14 +17330,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>The first will allow to configure SSO for the alfresco webapp, and the other for the share webapp.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160227T183546Z" changeid="xavier">
-        <seg>Le premier autorise la configuration du SSO pour la webapp Alfresco et l'autre pour la webapp partagée.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>In the manager: set Apache::Session::Memcached in General parameters » Sessions » Session storage » Apache::Session module and add the following parameters (case sensitive):</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T050722Z" changeid="guimard">
@@ -19134,14 +19102,6 @@ $lemonldap_config = Array(</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103548Z" changeid="xavier">
         <seg>Langue</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>HTTPS</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T074025Z" changeid="xavier">
-        <seg>HTTPS</seg>
       </tuv>
     </tu>
     <tu>
@@ -25788,14 +25748,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20160302T060910Z" changeid="xavier">
         <seg>ldapBindPassword : mot-de-passe à utiliser pour se connecter au serveur LDAP</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Mpm-worker works faster and LemonLDAP::NG use the thread system for best performance.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T140135Z" changeid="guimard">
-        <seg>Mpm-worker est plus rapide et LemonLDAP::NG utilise le système de threads pour de meilleures performances.</seg>
       </tuv>
     </tu>
     <tu>
