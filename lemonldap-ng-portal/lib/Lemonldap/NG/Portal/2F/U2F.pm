@@ -58,9 +58,9 @@ sub run {
 
         # Get a challenge (from first key)
         my $data = eval {
-            from_json(
-                $req->datas->{crypter}->[0]->authenticationChallenge );
+            from_json( $req->datas->{crypter}->[0]->authenticationChallenge );
         };
+        
         if ($@) {
             $self->logger->error( Crypt::U2F::Server::u2fclib_getError() );
             return PE_ERROR;
@@ -74,8 +74,7 @@ sub run {
 
         }
 
-		$self->ott->updateToken( $token,
-			__ch => $data->{challenge} );
+        $self->ott->updateToken( $token, __ch => $data->{challenge} );
 
         # Serialize datas
         $data = to_json(
@@ -85,7 +84,6 @@ sub run {
                 registeredKeys => \@rk
             }
         );
-
 
         my $tmp = $self->p->sendHtml(
             $req,
@@ -117,21 +115,16 @@ sub verify {
         }
 
         $self->logger->debug("Get challenge: $challenge");
-        
-       unless ( $session->{__ch} and $session->{__ch} eq $challenge ) {
 
-         $self->userLogger->error("U2F challenge changes by user !!! $session->{__ch}/$challenge");
+        unless ( $session->{__ch} and $session->{__ch} eq $challenge ) {
+            $self->userLogger->error(
+                "U2F challenge changes by user !!! $session->{__ch}/$challenge"
+            );
+            $req->error(PE_BADCREDENTIALS);
+            return $self->fail($req);
+        }
+        delete $session->{__ch};
 
-          $req->error(PE_BADCREDENTIALS);
-
-           return $self->fail($req);
-
-       }
-
-       delete $session->{__ch};
-
-        
-        
         $self->logger->debug("Get signature: $resp");
         my $data = eval { JSON::from_json($resp) };
         if ($@) {
@@ -149,7 +142,6 @@ sub verify {
             return $self->fail($req);
         }
 
-        
         if ( not $crypter->setChallenge($challenge) ) {
             $self->logger->error(
                 $@ ? $@ : Crypt::U2F::Server::Simple::lastError() );
@@ -222,7 +214,10 @@ sub loadUser {
                     );
                     next;
                 }
-                $self->logger->debug( "Found U2F key -> _userKey = " . $_->{_userKey} . "/ _keyHandle = " . $_->{_keyHandle} );
+                $self->logger->debug( "Found U2F key -> _userKey = "
+                      . $_->{_userKey}
+                      . "/ _keyHandle = "
+                      . $_->{_keyHandle} );
                 $_->{_userKey} = $self->decode_base64url( $_->{_userKey} );
                 push @u2fs, $_;
             }
