@@ -112,6 +112,56 @@ sub getToken {
     }
 }
 
+sub updateToken {
+
+
+  my ( $self, $id, $k, $v ) = @_;	
+
+   if ( $self->cache ) {
+
+	
+
+     my $data;
+
+	
+
+      unless ( $data = $self->cache->get($id) ) {
+	
+           $self->logger->notice("Bad (or expired) token $id");
+	
+          return undef;
+
+        }
+
+      my $h = from_json( $data, { allow_nonref => 1 } );
+
+      $h->{$k} = $v;
+      $self->cache->set( $id, to_json($h), $self->timeout . ' s' );
+
+
+      return $id;
+
+    }
+
+	
+
+    else {
+
+	
+
+       $self->p->getApacheSession( $id, $k => $v );
+	
+
+       return $id;
+ 	
+
+   }
+	
+
+}
+
+
+
 sub setToken {
     my ( $self, $req, $info ) = @_;
     $self->logger->debug('Prepare token');
