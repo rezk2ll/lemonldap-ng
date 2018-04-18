@@ -155,7 +155,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	
 	# Delete 2FA device
 	$scope.delete2FA = (type, epoch) ->
-		item = angular.element("#data-#{epoch}")
+		item = angular.element(".data-#{epoch}")
 		item.remove()
 		$scope.waiting = true
 		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?type=#{type}&epoch=#{epoch}").then (response) ->

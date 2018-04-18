@@ -150,7 +150,7 @@
       };
       $scope.delete2FA = function(type, epoch) {
         var item;
-        item = angular.element("#data-" + epoch);
+        item = angular.element(".data-" + epoch);
         item.remove();
         $scope.waiting = true;
         $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?type=" + type + "&epoch=" + epoch).then(function(response) {
