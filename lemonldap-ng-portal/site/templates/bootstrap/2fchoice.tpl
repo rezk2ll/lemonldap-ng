@@ -15,7 +15,7 @@
     </form>
   </div>
 </div>
-
+<br>
 <div class="buttons">
   <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
     <span class="glyphicon glyphicon-home"></span>&nbsp;

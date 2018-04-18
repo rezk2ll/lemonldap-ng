@@ -28,8 +28,8 @@
       </tbody>
     </table>
     </div>
-    <br>
   </TMPL_IF>
+  <br>
   <div class="buttons"> 
     <TMPL_LOOP NAME="MODULES">
 	  &nbsp;&nbsp;

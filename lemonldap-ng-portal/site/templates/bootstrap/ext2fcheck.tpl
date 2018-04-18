@@ -20,9 +20,14 @@
       <span trspan="connect">Connect</span>
     </button>
   </div>
-
+  <br/>
+  <div class="buttons">
+  <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
+    <span class="glyphicon glyphicon-home"></span>&nbsp;
+    <span trspan="goToPortal">Go to portal</span>
+  </a>
+  </div>
 </div>
-
 </main>
 
 <TMPL_INCLUDE NAME="footer.tpl">
