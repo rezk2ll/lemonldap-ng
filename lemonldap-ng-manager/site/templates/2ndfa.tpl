@@ -116,7 +116,7 @@
         <a class="btn btn-node btn-sm" ng-click="displaySession(this)">
           <span class="glyphicon glyphicon-eye-open"></span>
         </a>
-        <span id="s-{{node.session}}" ng-click="displaySession(this)">{{localeDate(node.date)}}</span>
+        <span id="s-{{node.session}}" ng-click="displaySession(this)">{{node.sessionId}}</span>
       </span>
 
     </div>

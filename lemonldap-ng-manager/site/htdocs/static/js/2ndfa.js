@@ -35,27 +35,7 @@
       function(t, v) {
         return "groupBy=substr(" + t + ",1)";
       }, function(t, v) {
-        return t + "=" + v + "*&groupBy=" + t;
-      }, function(t, v) {
-        return t + "=" + v;
-      }
-    ],
-    _startTime: [
-      function(t, v) {
-        return "groupBy=substr(" + t + ",8)";
-      }, function(t, v) {
-        return t + "=" + v + "*&groupBy=substr(" + t + ",10)";
-      }, function(t, v) {
-        return t + "=" + v + "*&groupBy=substr(" + t + ",11)";
-      }, function(t, v) {
-        return t + "=" + v + "*&groupBy=substr(" + t + ",12)";
-      }, function(t, v) {
-        return t + "=" + v + "*&groupBy=_whatToTrace";
-      }, function(t, v, q) {
-        console.log(t);
-        console.log(v);
-        console.log(q);
-        return q.replace(/\&groupBy.*$/, '') + ("&_whatToTrace=" + v);
+        return t + "=" + v + "*";
       }
     ]
   };
@@ -67,21 +47,13 @@
       } else {
         return null;
       }
-    },
-    ipAddr: function(t, v, level, over) {
-      if (level > 0 && level < 4) {
-        return t + "=" + v + "*&groupBy=net(" + t + "," + (16 * level + 4 * (over + 1)) + ",2)";
-      } else {
-        return null;
-      }
     }
   };
 
   hiddenAttributes = '_password';
 
   categories = {
-    dateTitle: ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen'],
-    connectionTitle: ['ipAddr', '_timezone', '_url'],
+    dateTitle: ['_utime', '_startTime', '_updateTime'],
     sfaTitle: ['_2fDevices']
   };
 
@@ -314,7 +286,7 @@
       $scope.updateTree = function(value, node, level, over, currentQuery, count) {
         var query, scheme, tmp;
         $scope.waiting = true;
-        scheme = schemes[$scope.type] ? schemes[$scope.type] : $scope.type === '_updateTime' ? schemes._startTime : schemes._whatToTrace;
+        scheme = schemes[$scope.type] ? schemes[$scope.type] : schemes._whatToTrace;
         query = scheme[level]($scope.type, value, currentQuery);
         if (count > max && overScheme[$scope.type]) {
           if (tmp = overScheme[$scope.type]($scope.type, value, level, over, currentQuery)) {
@@ -341,9 +313,6 @@
                 n.level = level + 1;
                 n.query = query;
                 n.over = over;
-                if ($scope.type.match(/^(?:start|update)Time$/)) {
-                  n.title = n.value.replace(/^(\d{8})(\d{2})(\d{2})$/, '$2:$3').replace(/^(\d{8})(\d{2})(\d)$/, '$2:$30').replace(/^(\d{8})(\d{2})$/, '$2h').replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-                }
               }
               node.push(n);
             }
@@ -386,9 +355,6 @@
                 n.level = level + 1;
                 n.query = query;
                 n.over = over;
-                if ($scope.type.match(/^(?:start|update)Time$/)) {
-                  n.title = n.value.replace(/^(\d{8})(\d{2})(\d{2})$/, '$2:$3').replace(/^(\d{8})(\d{2})(\d)$/, '$2:$30').replace(/^(\d{8})(\d{2})$/, '$2h').replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-                }
               }
               node.push(n);
             }

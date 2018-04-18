@@ -28,28 +28,28 @@ schemes =
 	_whatToTrace: [
 		(t,v) ->
 			"groupBy=substr(#{t},1)"
+		#(t,v) ->
+			#"#{t}=#{v}*&groupBy=#{t}"
 		(t,v) ->
-			"#{t}=#{v}*&groupBy=#{t}"
-		(t,v) ->
-			"#{t}=#{v}"
+			"#{t}=#{v}*"
 	]
-	_startTime: [
-		(t,v) ->
-			"groupBy=substr(#{t},8)"
-		(t,v) ->
-			"#{t}=#{v}*&groupBy=substr(#{t},10)"
-		(t,v) ->
-			"#{t}=#{v}*&groupBy=substr(#{t},11)"
-		(t,v) ->
-			"#{t}=#{v}*&groupBy=substr(#{t},12)"
-		(t,v) ->
-			"#{t}=#{v}*&groupBy=_whatToTrace"
-		(t,v,q) ->
-			console.log t
-			console.log v
-			console.log q
-			q.replace(/\&groupBy.*$/, '') + "&_whatToTrace=#{v}"
-	]
+	#_startTime: [
+		#(t,v) ->
+			#"groupBy=substr(#{t},8)"
+		#(t,v) ->
+			#"#{t}=#{v}*&groupBy=substr(#{t},10)"
+		#(t,v) ->
+			#"#{t}=#{v}*&groupBy=substr(#{t},11)"
+		#(t,v) ->
+			#"#{t}=#{v}*&groupBy=substr(#{t},12)"
+		#(t,v) ->
+			#"#{t}=#{v}*&groupBy=_whatToTrace"
+		#(t,v,q) ->
+			#console.log t
+			#console.log v
+			#console.log q
+			#q.replace(/\&groupBy.*$/, '') + "&_whatToTrace=#{v}"
+	#]
 
 overScheme =
 	_whatToTrace: (t,v,level,over) ->
@@ -57,18 +57,18 @@ overScheme =
 			"#{t}=#{v}*&groupBy=substr(#{t},#{(level+over+1)})"
 		else
 			null
-	ipAddr: (t,v,level,over) ->
-		if level > 0 and level < 4
-			"#{t}=#{v}*&groupBy=net(#{t},#{16*level+4*(over+1)},2)"
-		else
-			null
+	#ipAddr: (t,v,level,over) ->
+		#if level > 0 and level < 4
+			#"#{t}=#{v}*&groupBy=net(#{t},#{16*level+4*(over+1)},2)"
+		#else
+			#null
 
 hiddenAttributes = '_password'
 
 # Attributes to group in session display
 categories =
-    dateTitle:          ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen']
-    connectionTitle:    ['ipAddr', '_timezone', '_url']
+    dateTitle:          ['_utime', '_startTime', '_updateTime']
+    #connectionTitle:    ['ipAddr', '_timezone', '_url']
     sfaTitle:			['_2fDevices']
 
 # Menu entries
@@ -331,9 +331,9 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		scheme = if schemes[$scope.type]
 			schemes[$scope.type]
 
-		#  - _updateTime must be displayed as startDate
-		else if $scope.type == '_updateTime'
-			schemes._startTime
+		##  - _updateTime must be displayed as startDate
+		#else if $scope.type == '_updateTime'
+			#schemes._startTime
 
 		#  - default to _whatToTrace scheme
 		else
@@ -366,17 +366,17 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						n.query = query
 						n.over  = over
 
-						# Date display in tree
-						if $scope.type.match /^(?:start|update)Time$/
-							n.title = n.value
-							# 12 digits -> 12:34
-							.replace(/^(\d{8})(\d{2})(\d{2})$/,'$2:$3')
-							# 11 digits -> 12:30
-							.replace(/^(\d{8})(\d{2})(\d)$/,'$2:$30')
-							# 10 digits -> 12h
-							.replace(/^(\d{8})(\d{2})$/,'$2h')
-							#  8 digits -> 2016-03-15
-							.replace(/^(\d{4})(\d{2})(\d{2})/,'$1-$2-$3')
+						## Date display in tree
+						#if $scope.type.match /^(?:start|update)Time$/
+							#n.title = n.value
+							## 12 digits -> 12:34
+							#.replace(/^(\d{8})(\d{2})(\d{2})$/,'$2:$3')
+							## 11 digits -> 12:30
+							#.replace(/^(\d{8})(\d{2})(\d)$/,'$2:$30')
+							## 10 digits -> 12h
+							#.replace(/^(\d{8})(\d{2})$/,'$2h')
+							##  8 digits -> 2016-03-15
+							#.replace(/^(\d{4})(\d{2})(\d{2})/,'$1-$2-$3')
 					node.push n
 				$scope.total = data.total if value == ''
 			$scope.waiting = false
@@ -428,17 +428,17 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						n.query = query
 						n.over  = over
 
-						# Date display in tree
-						if $scope.type.match /^(?:start|update)Time$/
-							n.title = n.value
-							# 12 digits -> 12:34
-							.replace(/^(\d{8})(\d{2})(\d{2})$/,'$2:$3')
-							# 11 digits -> 12:30
-							.replace(/^(\d{8})(\d{2})(\d)$/,'$2:$30')
-							# 10 digits -> 12h
-							.replace(/^(\d{8})(\d{2})$/,'$2h')
-							#  8 digits -> 2016-03-15
-							.replace(/^(\d{4})(\d{2})(\d{2})/,'$1-$2-$3')
+						## Date display in tree
+						#if $scope.type.match /^(?:start|update)Time$/
+							#n.title = n.value
+							## 12 digits -> 12:34
+							#.replace(/^(\d{8})(\d{2})(\d{2})$/,'$2:$3')
+							## 11 digits -> 12:30
+							#.replace(/^(\d{8})(\d{2})(\d)$/,'$2:$30')
+							## 10 digits -> 12h
+							#.replace(/^(\d{8})(\d{2})$/,'$2h')
+							##  8 digits -> 2016-03-15
+							#.replace(/^(\d{4})(\d{2})(\d{2})/,'$1-$2-$3')
 					node.push n
 				$scope.total = data.total if value == ''
 			$scope.waiting = false
