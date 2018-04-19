@@ -17,16 +17,16 @@
               <div class="form-check ">&nbsp;&nbsp;&nbsp;
                 <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
                 <label class="form-check-label" for="U2FCheck">U2F</label>
-                &nbsp;&nbsp;
+                &nbsp;&nbsp;&&nbsp;&nbsp;
                 <input type="checkbox" ng-model="TOTPCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
                 <label class="form-check-label" for="TOTPCheck">TOTP</label>
-                &nbsp;&nbsp;
+                &nbsp;&nbsp;&&nbsp;&nbsp;
                 <input type="checkbox" ng-model="UBKCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
                 <label class="form-check-label" for="UBKCheck">UBK</label>
               </div>
             </form>
           </ul>
-		  <div class="col-lg-6 col-md-6 col-sm-7 " >
+		  <div class="col-lg-6 col-md-6 col-sm-8 col-xs-14" >
 		    <form class="navbar-form" role="search">
               <div class="input-group add-on">
                 <input class="form-control" placeholder="{{translate('search')}}" type="text" ng-model="searchString" ng-init="" ng-keyup="search2FA()"/>
