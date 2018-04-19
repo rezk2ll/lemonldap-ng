@@ -83,14 +83,6 @@ sub delete2FA {
         $self->logger->debug("Call procedure delete2F with type=$type and epoch=$epoch");
         return $self->delete2F( $req, $session, $skey );
     }
-    #elsif ( $type =~ /\bTOTP\b/ ) {
-        #$self->logger->debug("Call procedure deleteTOTP");
-        #return $self->deleteTOTP( $req, $session, $skey );
-    #}
-    #elsif ( $type =~ /\bUBK\b/ ) {
-        #$self->logger->debug("Call procedure deleteUBK");
-        #return $self->deleteUBK( $req, $session, $skey );
-    #}
     else {
         return $self->sendError( $req, undef, 400 );
     }
@@ -317,8 +309,7 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
     else {
         $res = [
             sort { $a->{date} <=> $b->{date} }
-              #map { { session => $_, date => $res->{$_}->{_utime} } }
-              map { { session => $_, sessionId => $res->{$_}->{_session_uid} } }
+              map { { session => $_, userId => $res->{$_}->{_session_uid} } }
               keys %$res
         ];
     }
