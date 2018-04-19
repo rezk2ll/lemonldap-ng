@@ -216,8 +216,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							subres.push
 								title: attr
 								value: session[attr]
-							delete session[attr]
-					
+							delete session[attr]			
 				if subres.length >0
 					res.push
 						title: "__#{category}__"
