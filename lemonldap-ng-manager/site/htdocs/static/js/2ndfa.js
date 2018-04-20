@@ -35,27 +35,7 @@
       function(t, v) {
         return "groupBy=substr(" + t + ",1)";
       }, function(t, v) {
-        return t + "=" + v + "*&groupBy=" + t;
-      }, function(t, v) {
-        return t + "=" + v;
-      }
-    ],
-    _startTime: [
-      function(t, v) {
-        return "groupBy=substr(" + t + ",8)";
-      }, function(t, v) {
-        return t + "=" + v + "*&groupBy=substr(" + t + ",10)";
-      }, function(t, v) {
-        return t + "=" + v + "*&groupBy=substr(" + t + ",11)";
-      }, function(t, v) {
-        return t + "=" + v + "*&groupBy=substr(" + t + ",12)";
-      }, function(t, v) {
-        return t + "=" + v + "*&groupBy=_whatToTrace";
-      }, function(t, v, q) {
-        console.log(t);
-        console.log(v);
-        console.log(q);
-        return q.replace(/\&groupBy.*$/, '') + ("&_whatToTrace=" + v);
+        return t + "=" + v + "*";
       }
     ]
   };
@@ -67,21 +47,13 @@
       } else {
         return null;
       }
-    },
-    ipAddr: function(t, v, level, over) {
-      if (level > 0 && level < 4) {
-        return t + "=" + v + "*&groupBy=net(" + t + "," + (16 * level + 4 * (over + 1)) + ",2)";
-      } else {
-        return null;
-      }
     }
   };
 
   hiddenAttributes = '_password';
 
   categories = {
-    dateTitle: ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen'],
-    connectionTitle: ['ipAddr', '_timezone', '_url'],
+    dateTitle: ['_utime', '_startTime', '_updateTime'],
     sfaTitle: ['_2fDevices']
   };
 
@@ -150,7 +122,7 @@
       };
       $scope.delete2FA = function(type, epoch) {
         var item;
-        item = angular.element("#data-" + epoch);
+        item = angular.element(".data-" + epoch);
         item.remove();
         $scope.waiting = true;
         $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?type=" + type + "&epoch=" + epoch).then(function(response) {
@@ -171,7 +143,7 @@
       $scope.displaySession = function(scope) {
         var sessionId, transformSession;
         transformSession = function(session) {
-          var _insert, _stToStr, array, attr, attrs, category, epoch, i, id, k, key, len, len1, myDate, name, newDate, res, sfDevice, subres, time, title, value;
+          var _insert, _stToStr, array, arrayDate, attr, attrs, category, epoch, i, id, k, key, len, len1, name, pattern, res, sfDevice, subres, time, title, value;
           _stToStr = function(s) {
             return s;
           };
@@ -212,7 +184,9 @@
                 } else if (key.match(/^(_utime|_lastAuthnUTime|_lastSeen|notification)$/)) {
                   session[key] = $scope.localeDate(value);
                 } else if (key.match(/^(_startTime|_updateTime)$/)) {
-                  session[key] = _stToStr(value);
+                  pattern = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/;
+                  arrayDate = value.match(pattern);
+                  session[key] = arrayDate[3] + "/" + arrayDate[2] + "/" + arrayDate[1] + " à " + arrayDate[4] + ":" + arrayDate[5] + ":" + arrayDate[6];
                 }
               }
             }
@@ -228,7 +202,7 @@
                   subres.push({
                     title: "type",
                     value: "name",
-                    sdate: "date"
+                    epoch: "date"
                   });
                   array = JSON.parse(session[attr]);
                   for (k = 0, len1 = array.length; k < len1; k++) {
@@ -243,15 +217,12 @@
                       }
                       if (key === 'epoch') {
                         epoch = value;
-                        newDate = new Date(value * 1000);
-                        myDate = newDate.toLocaleString();
                       }
                     }
                     subres.push({
                       title: title,
                       value: name,
-                      epoch: epoch,
-                      sdate: myDate
+                      epoch: epoch
                     });
                   }
                   delete session[attr];
@@ -314,7 +285,7 @@
       $scope.updateTree = function(value, node, level, over, currentQuery, count) {
         var query, scheme, tmp;
         $scope.waiting = true;
-        scheme = schemes[$scope.type] ? schemes[$scope.type] : $scope.type === '_updateTime' ? schemes._startTime : schemes._whatToTrace;
+        scheme = schemes[$scope.type] ? schemes[$scope.type] : schemes._whatToTrace;
         query = scheme[level]($scope.type, value, currentQuery);
         if (count > max && overScheme[$scope.type]) {
           if (tmp = overScheme[$scope.type]($scope.type, value, level, over, currentQuery)) {
@@ -341,9 +312,6 @@
                 n.level = level + 1;
                 n.query = query;
                 n.over = over;
-                if ($scope.type.match(/^(?:start|update)Time$/)) {
-                  n.title = n.value.replace(/^(\d{8})(\d{2})(\d{2})$/, '$2:$3').replace(/^(\d{8})(\d{2})(\d)$/, '$2:$30').replace(/^(\d{8})(\d{2})$/, '$2h').replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-                }
               }
               node.push(n);
             }
@@ -386,9 +354,6 @@
                 n.level = level + 1;
                 n.query = query;
                 n.over = over;
-                if ($scope.type.match(/^(?:start|update)Time$/)) {
-                  n.title = n.value.replace(/^(\d{8})(\d{2})(\d{2})$/, '$2:$3').replace(/^(\d{8})(\d{2})(\d)$/, '$2:$30').replace(/^(\d{8})(\d{2})$/, '$2h').replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-                }
               }
               node.push(n);
             }

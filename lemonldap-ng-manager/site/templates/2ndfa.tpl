@@ -17,16 +17,16 @@
               <div class="form-check ">&nbsp;&nbsp;&nbsp;
                 <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
                 <label class="form-check-label" for="U2FCheck">U2F</label>
-                &nbsp;&nbsp;
+                &nbsp;&nbsp;&&nbsp;&nbsp;
                 <input type="checkbox" ng-model="TOTPCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
                 <label class="form-check-label" for="TOTPCheck">TOTP</label>
-                &nbsp;&nbsp;
+                &nbsp;&nbsp;&&nbsp;&nbsp;
                 <input type="checkbox" ng-model="UBKCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
                 <label class="form-check-label" for="UBKCheck">UBK</label>
               </div>
             </form>
           </ul>
-		  <div class="col-lg-6 col-md-6 col-sm-7 " >
+		  <div class="col-lg-6 col-md-6 col-sm-8 col-xs-14" >
 		    <form class="navbar-form" role="search">
               <div class="input-group add-on">
                 <input class="form-control" placeholder="{{translate('search')}}" type="text" ng-model="searchString" ng-init="" ng-keyup="search2FA()"/>
@@ -85,19 +85,19 @@
         <tr ng-repeat="node in node.nodes" ng-include="'session_attr.html'"></tr>
       </table>
     </div>
-    <div ng-if="!node.nodes" id="data-{{node.epoch}}" ng-hide="isHidden">
-	      <th ng-if="node.title=='type'">{{translate(node.title)}}</th>
-	      <td ng-if="node.title!='type'">{{node.title}}</td>
-	      <th ng-if="node.title=='type'"><span id="v-{{node.value}}">{{translate(node.value)}}</span></th>
-	      <td ng-if="node.title!='type'"><span id="v-{{node.value}}">{{node.value}}</span></td>
-	      <th ng-if="node.title=='type'"><span id="v-{{node.sdate}}">{{translate(node.sdate)}}</span></th>
-	      <td ng-if="node.title!='type'" class="data-epoch"><span id="v-{{node.sdate}}">{{node.sdate}}</span></td>
-	      <td>
-			  <span ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="delete2FA(node.title, node.epoch)"></span>
-			  <!--
-			  <span ng-if="$last && ( node.title=='TOTP' || node.title=='UBK' || node.title=='U2F' )" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"></span>
-			  -->
-	      </td>
+    <div ng-if="!node.nodes" >
+	   <th ng-if="node.title!='UBK' && node.title!='TOTP' && node.title!='U2F'">{{translate(node.title)}}</th>
+       <td class="data-{{node.epoch}}" ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" >{{node.title}}</td>
+	   <th ng-if="node.title=='type'">{{translate(node.value)}}</th>
+	   <td class="data-{{node.epoch}}" ng-if="node.title!='type'" >{{node.value}}</td>
+	   <th ng-if="node.title=='type'">{{translate(node.epoch)}}</th>
+	   <td class="data-{{node.epoch}}" ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'">{{localeDate(node.epoch)}}</td>
+      <td class="data-{{node.epoch}}">
+		  <span ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="delete2FA(node.title, node.epoch)"></span>
+		  <!--
+		  <span ng-if="$last && ( node.title=='TOTP' || node.title=='UBK' || node.title=='U2F' )" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"></span>
+		  -->
+      </td>
     </div>
   </script>
 
@@ -109,14 +109,12 @@
         </a>
         <span id="s-{{node.value}}" ng-click="stoggle(this)">{{node.title || node.value}} <span class="badge">{{node.count}}</span></span>
       </span>
-
       <span ng-if="node.session">
         <a class="btn btn-node btn-sm" ng-click="displaySession(this)">
           <span class="glyphicon glyphicon-eye-open"></span>
         </a>
-        <span id="s-{{node.session}}" ng-click="displaySession(this)">{{localeDate(node.date)}}</span>
+        <span id="s-{{node.session}}" ng-click="displaySession(this)">{{node.userId}}</span>
       </span>
-
     </div>
     <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
       <li ng-repeat="node in node.nodes track by node.id" ui-tree-node ng-include="'nodes_renderer.html'" collapsed="true"></li>

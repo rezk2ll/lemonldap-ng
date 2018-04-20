@@ -2,7 +2,6 @@
 # 2ndFA Session explorer
 ###
 
-
 setMsg = (msg, level) ->
 	$('#msg').html window.translate msg
 	$('#color').removeClass 'message-positive message-warning alert-success alert-warning'
@@ -18,7 +17,6 @@ displayError = (j, status, err) ->
 		console.log 'Returned error', res
 		setMsg res, 'warning'
 
-
 # Max number of session to display (see overScheme)
 max = 25
 
@@ -29,26 +27,7 @@ schemes =
 		(t,v) ->
 			"groupBy=substr(#{t},1)"
 		(t,v) ->
-			"#{t}=#{v}*&groupBy=#{t}"
-		(t,v) ->
-			"#{t}=#{v}"
-	]
-	_startTime: [
-		(t,v) ->
-			"groupBy=substr(#{t},8)"
-		(t,v) ->
-			"#{t}=#{v}*&groupBy=substr(#{t},10)"
-		(t,v) ->
-			"#{t}=#{v}*&groupBy=substr(#{t},11)"
-		(t,v) ->
-			"#{t}=#{v}*&groupBy=substr(#{t},12)"
-		(t,v) ->
-			"#{t}=#{v}*&groupBy=_whatToTrace"
-		(t,v,q) ->
-			console.log t
-			console.log v
-			console.log q
-			q.replace(/\&groupBy.*$/, '') + "&_whatToTrace=#{v}"
+			"#{t}=#{v}*"
 	]
 
 overScheme =
@@ -57,46 +36,16 @@ overScheme =
 			"#{t}=#{v}*&groupBy=substr(#{t},#{(level+over+1)})"
 		else
 			null
-	ipAddr: (t,v,level,over) ->
-		if level > 0 and level < 4
-			"#{t}=#{v}*&groupBy=net(#{t},#{16*level+4*(over+1)},2)"
-		else
-			null
 
 hiddenAttributes = '_password'
 
 # Attributes to group in session display
 categories =
-    dateTitle:          ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen']
-    connectionTitle:    ['ipAddr', '_timezone', '_url']
+    dateTitle:          ['_utime', '_startTime', '_updateTime']
     sfaTitle:			['_2fDevices']
 
 # Menu entries
 menu =
-	#delU2FKey: [
-		#title: 'deleteU2FKey'
-		#icon:  'trash'
-	#]
-	#addU2FKey: [
-		#title: 'addU2FKey'
-		#icon:  'plus'
-	#]
-	#verifyU2FKey: [
-		#title: 'verifyU2FKey'
-		#icon:  'check'
-	#]
-	#delTOTPKey: [
-		#title: 'deleteTOTPKey'
-		#icon:  'trash'
-	#]
-	#addTOTPKey: [
-		#title: 'addTOTPKey'
-		#icon:  'plus'
-	#]
-	#verifyTOTPKey: [
-		#title: 'verifyTOTPKey'
-		#icon:  'check'
-	#]
 	home: []
 
 ###
@@ -155,20 +104,14 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	
 	# Delete 2FA device
 	$scope.delete2FA = (type, epoch) ->
-		item = angular.element("#data-#{epoch}")
+		item = angular.element(".data-#{epoch}")
 		item.remove()
 		$scope.waiting = true
 		$http['delete']("#{scriptname}sfa/#{sessionType}/#{$scope.currentSession.id}?type=#{type}&epoch=#{epoch}").then (response) ->
-			#$scope.currentSession = null
-			#$scope.currentScope.remove()
-			#$scope.data = []
 			$scope.waiting = false
 		, (resp) ->
-			#$scope.currentSession = null
-			#$scope.currentScope.remove()
 			$scope.waiting = false
 		$scope.showT = false
-		#$scope.data = []
 
 	## Add 2FA device
 	#$scope.add2FA (type) = ->
@@ -242,7 +185,10 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						else if key.match /^(_utime|_lastAuthnUTime|_lastSeen|notification)$/
 							session[key] = $scope.localeDate value
 						else if key.match /^(_startTime|_updateTime)$/
-							session[key] = _stToStr value							
+							pattern = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/
+							arrayDate = value.match(pattern)
+							session[key] = "#{arrayDate[3]}/#{arrayDate[2]}/#{arrayDate[1]} à #{arrayDate[4]}:#{arrayDate[5]}:#{arrayDate[6]}"
+							#session[key] = _stToStr value							
 			res = []
 
 			# 2. Push session keys in result, grouped by categories
@@ -254,7 +200,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							subres.push
 								title: "type"
 								value: "name"
-								sdate: "date"
+								epoch: "date"
 							array = JSON.parse(session[attr]);
 							for sfDevice in array
 								for key, value of sfDevice
@@ -263,21 +209,17 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									if key == 'name'
 										name = value
 									if key == 'epoch'
-										epoch   = value
-										newDate = new Date(value * 1000)
-										myDate  = newDate.toLocaleString()
+										epoch = value
 								subres.push
 									title: title
 									value: name
 									epoch: epoch
-									sdate: myDate
 							delete session[attr]	
 						else
 							subres.push
 								title: attr
 								value: session[attr]
-							delete session[attr]
-					
+							delete session[attr]			
 				if subres.length >0
 					res.push
 						title: "__#{category}__"
@@ -331,10 +273,6 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		scheme = if schemes[$scope.type]
 			schemes[$scope.type]
 
-		#  - _updateTime must be displayed as startDate
-		else if $scope.type == '_updateTime'
-			schemes._startTime
-
 		#  - default to _whatToTrace scheme
 		else
 			schemes._whatToTrace
@@ -365,18 +303,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						n.level = level + 1
 						n.query = query
 						n.over  = over
-
-						# Date display in tree
-						if $scope.type.match /^(?:start|update)Time$/
-							n.title = n.value
-							# 12 digits -> 12:34
-							.replace(/^(\d{8})(\d{2})(\d{2})$/,'$2:$3')
-							# 11 digits -> 12:30
-							.replace(/^(\d{8})(\d{2})(\d)$/,'$2:$30')
-							# 10 digits -> 12h
-							.replace(/^(\d{8})(\d{2})$/,'$2h')
-							#  8 digits -> 2016-03-15
-							.replace(/^(\d{4})(\d{2})(\d{2})/,'$1-$2-$3')
+						
 					node.push n
 				$scope.total = data.total if value == ''
 			$scope.waiting = false
@@ -428,17 +355,6 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						n.query = query
 						n.over  = over
 
-						# Date display in tree
-						if $scope.type.match /^(?:start|update)Time$/
-							n.title = n.value
-							# 12 digits -> 12:34
-							.replace(/^(\d{8})(\d{2})(\d{2})$/,'$2:$3')
-							# 11 digits -> 12:30
-							.replace(/^(\d{8})(\d{2})(\d)$/,'$2:$30')
-							# 10 digits -> 12h
-							.replace(/^(\d{8})(\d{2})$/,'$2h')
-							#  8 digits -> 2016-03-15
-							.replace(/^(\d{4})(\d{2})(\d{2})/,'$1-$2-$3')
 					node.push n
 				$scope.total = data.total if value == ''
 			$scope.waiting = false
@@ -464,6 +380,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	# Default to '_whatToTrace'
 	c = $location.path().match /^\/(\w+)/
 	$scope.type = if c then c[1] else '_whatToTrace'
+	#$scope.myStyle = "{color: '#ffb84d'}"
 ]
 
 

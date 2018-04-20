@@ -42,17 +42,17 @@ sub addRoutes {
         ['DELETE']
       );
 
-      ## ADD 2FA DEVICE
-      #->addRoute(
-        #sfa => { ':sessionType' => { ':sessionId' => 'add2FA' } },
-        #['PUT']
-      #)
+    ## ADD 2FA DEVICE
+    #->addRoute(
+    #sfa => { ':sessionType' => { ':sessionId' => 'add2FA' } },
+    #['PUT']
+    #)
 
-      ## VERIFY 2FA DEVICE
-      #->addRoute(
-        #sfa => { ':sessionType' => { ':sessionId' => 'verify2FA' } },
-        #['POST']
-      #);
+    ## VERIFY 2FA DEVICE
+    #->addRoute(
+    #sfa => { ':sessionType' => { ':sessionId' => 'verify2FA' } },
+    #['POST']
+    #);
 
     $self->setTypes($conf);
 
@@ -75,22 +75,15 @@ sub delete2FA {
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
 
-    my $params 	= $req->parameters();
-    my $type    = $params->{type};
-    my $epoch	= $params->{epoch};
+    my $params = $req->parameters();
+    my $type   = $params->{type};
+    my $epoch  = $params->{epoch};
 
     if ( $type =~ /\b(?:U2F|TOTP|UBK)\b/ and $epoch ) {
-        $self->logger->debug("Call procedure delete2F with type=$type and epoch=$epoch");
+        $self->logger->debug(
+            "Call procedure delete2F with type=$type and epoch=$epoch");
         return $self->delete2F( $req, $session, $skey );
     }
-    #elsif ( $type =~ /\bTOTP\b/ ) {
-        #$self->logger->debug("Call procedure deleteTOTP");
-        #return $self->deleteTOTP( $req, $session, $skey );
-    #}
-    #elsif ( $type =~ /\bUBK\b/ ) {
-        #$self->logger->debug("Call procedure deleteUBK");
-        #return $self->deleteUBK( $req, $session, $skey );
-    #}
     else {
         return $self->sendError( $req, undef, 400 );
     }
@@ -98,22 +91,22 @@ sub delete2FA {
 
 #sub add2FA {
 
-    #my ( $self, $req, $session, $skey ) = @_;
+#my ( $self, $req, $session, $skey ) = @_;
 
-    #eval 'use Crypt::U2F::Server::Simple';
-    #if ($@) {
-        #$self->error("Can't load U2F library: $@");
-        #return 0;
-    #}
+#eval 'use Crypt::U2F::Server::Simple';
+#if ($@) {
+#$self->error("Can't load U2F library: $@");
+#return 0;
+#}
 
-    #return $self->addU2FKey( $req, $session, $skey );
+#return $self->addU2FKey( $req, $session, $skey );
 #}
 
 #sub verify2FA {
 
-    #my ( $self, $req, $session, $skey ) = @_;
+#my ( $self, $req, $session, $skey ) = @_;
 
-    #return $self->addU2FKey( $req, $session, $skey );
+#return $self->addU2FKey( $req, $session, $skey );
 #}
 
 ########################
@@ -141,10 +134,8 @@ sub sfa {
     my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
 
     # 2.1 Get fields to require
-    my @fields = (
-        '_httpSessionType', $self->{ipField},
-        $whatToTrace,       '_2fDevices'
-    );
+    my @fields =
+      ( '_httpSessionType', $self->{ipField}, $whatToTrace, '_2fDevices' );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/;
         $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
@@ -160,7 +151,10 @@ sub sfa {
     $moduleOptions->{backend} = $mod->{module};
 
     # Select 2FA sessions to display
-    if ( defined $params->{TOTPCheck} or defined $params->{U2FCheck} or defined $params->{UBKCheck}) {
+    if (   defined $params->{TOTPCheck}
+        or defined $params->{U2FCheck}
+        or defined $params->{UBKCheck} )
+    {
         $self->{TOTPCheck} = delete $params->{TOTPCheck};
         $self->{U2FCheck}  = delete $params->{U2FCheck};
         $self->{UBKCheck}  = delete $params->{UBKCheck};
@@ -313,11 +307,11 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
     }
 
     # Else, $res elements will be like:
-    #   { session => <sessionId>, date => <timestamp> }
+    #   { session => <sessionId>, userId => <_session_uid> }
     else {
         $res = [
             sort { $a->{date} <=> $b->{date} }
-              map { { session => $_, date => $res->{$_}->{_utime} } }
+              map { { session => $_, userId => $res->{$_}->{_session_uid} } }
               keys %$res
         ];
     }

@@ -21,7 +21,7 @@
           <!-- Last buttons, available languages -->
         </div>
         <ul class="hidden-xs nav navbar-nav" role="grid">
-          <li ng-repeat="l in links"><a href="{{l.target}}" role="row"><strong><i ng-if="l.icon" class="glyphicon glyphicon-{{l.icon}}"></i> <span ng-bind="translate(l.title)"></span></strong></a></li>
+          <li ng-repeat="l in links" id="l in links"><a href="{{l.target}}" role="row" ng-mousedown="myStyle={color: '#ffb84d'}"><strong><i ng-if="l.icon" class="glyphicon glyphicon-{{l.icon}}" ng-style="myStyle"></i> <span ng-style="myStyle" ng-bind="translate(l.title)"></span></strong></a></li>
         </ul>
         <ul class="hidden-xs nav navbar-nav navbar-right">
           <li uib-dropdown>

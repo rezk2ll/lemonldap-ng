@@ -77,13 +77,14 @@ hiddenAttributes = '_password'
 categories =
     dateTitle:          ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen']
     connectionTitle:    ['ipAddr', '_timezone', '_url']
-    authenticationTitle:['_session_id', '_user', '_password', 'authenticationLevel', '_2fDevices']
+    authenticationTitle:['_session_id', '_user', '_password', 'authenticationLevel']
     modulesTitle:       ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti']
     saml:               ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump']
     groups:             ['groups', 'hGroups']
     ldap:               ['dn']
     BrowserID:          ['_browserIdAnswer', '_browserIdAnswerRaw']
     OpenIDConnect:      ['_oidc_id_token', '_oidc_OP', '_oidc_access_token']
+    sfaTitle:			['_2fDevices']
 
 # Menu entries
 menu =
@@ -195,7 +196,11 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						else if key.match /^(_utime|_lastAuthnUTime|_lastSeen|notification)$/
 							session[key] = $scope.localeDate value
 						else if key.match /^(_startTime|_updateTime)$/
-							session[key] = _stToStr value
+							#session[key] = _stToStr value			
+							pattern = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/
+							arrayDate = value.match(pattern)
+							session[key] = "#{arrayDate[3]}/#{arrayDate[2]}/#{arrayDate[1]} à #{arrayDate[4]}:#{arrayDate[5]}:#{arrayDate[6]}"
+							
 							
 			res = []
 
@@ -203,11 +208,33 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			for category, attrs of categories
 				subres = []
 				for attr in attrs
-					if session[attr]
-						subres.push
-							title: attr
-							value: session[attr]
-						delete session[attr]
+				
+					if session[attr]  and session[attr].match(/\w+/)
+						if session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)
+							subres.push
+								title: "type"
+								value: "name"
+								epoch: "date"
+							array = JSON.parse(session[attr]);
+							for sfDevice in array
+								for key, value of sfDevice
+									if key == 'type'
+										title = value
+									if key == 'name'
+										name = value
+									if key == 'epoch'
+										epoch = value
+								subres.push
+									title: title
+									value: name
+									epoch: epoch
+							delete session[attr]	
+						else
+							subres.push
+								title: attr
+								value: session[attr]
+								epoch: ''
+							delete session[attr]
 				if subres.length >0
 					res.push
 						title: "__#{category}__"

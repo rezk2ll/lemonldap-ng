@@ -94,13 +94,14 @@
   categories = {
     dateTitle: ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen'],
     connectionTitle: ['ipAddr', '_timezone', '_url'],
-    authenticationTitle: ['_session_id', '_user', '_password', 'authenticationLevel', '_2fDevices'],
+    authenticationTitle: ['_session_id', '_user', '_password', 'authenticationLevel'],
     modulesTitle: ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti'],
     saml: ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump'],
     groups: ['groups', 'hGroups'],
     ldap: ['dn'],
     BrowserID: ['_browserIdAnswer', '_browserIdAnswerRaw'],
-    OpenIDConnect: ['_oidc_id_token', '_oidc_OP', '_oidc_access_token']
+    OpenIDConnect: ['_oidc_id_token', '_oidc_OP', '_oidc_access_token'],
+    sfaTitle: ['_2fDevices']
   };
 
   menu = {
@@ -185,7 +186,7 @@
       $scope.displaySession = function(scope) {
         var sessionId, transformSession;
         transformSession = function(session) {
-          var _insert, _stToStr, attr, attrs, category, i, id, j, k, key, l, len, len1, len2, ref, ref1, res, subres, time, tmp, value;
+          var _insert, _stToStr, array, arrayDate, attr, attrs, category, epoch, i, id, j, k, key, l, len, len1, len2, len3, m, name, pattern, ref, ref1, res, sfDevice, subres, time, title, tmp, value;
           _stToStr = function(s) {
             return s;
           };
@@ -226,7 +227,9 @@
                 } else if (key.match(/^(_utime|_lastAuthnUTime|_lastSeen|notification)$/)) {
                   session[key] = $scope.localeDate(value);
                 } else if (key.match(/^(_startTime|_updateTime)$/)) {
-                  session[key] = _stToStr(value);
+                  pattern = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/;
+                  arrayDate = value.match(pattern);
+                  session[key] = arrayDate[3] + "/" + arrayDate[2] + "/" + arrayDate[1] + " à " + arrayDate[4] + ":" + arrayDate[5] + ":" + arrayDate[6];
                 }
               }
             }
@@ -237,12 +240,43 @@
             subres = [];
             for (i = 0, len = attrs.length; i < len; i++) {
               attr = attrs[i];
-              if (session[attr]) {
-                subres.push({
-                  title: attr,
-                  value: session[attr]
-                });
-                delete session[attr];
+              if (session[attr] && session[attr].match(/\w+/)) {
+                if (session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)) {
+                  subres.push({
+                    title: "type",
+                    value: "name",
+                    epoch: "date"
+                  });
+                  array = JSON.parse(session[attr]);
+                  for (j = 0, len1 = array.length; j < len1; j++) {
+                    sfDevice = array[j];
+                    for (key in sfDevice) {
+                      value = sfDevice[key];
+                      if (key === 'type') {
+                        title = value;
+                      }
+                      if (key === 'name') {
+                        name = value;
+                      }
+                      if (key === 'epoch') {
+                        epoch = value;
+                      }
+                    }
+                    subres.push({
+                      title: title,
+                      value: name,
+                      epoch: epoch
+                    });
+                  }
+                  delete session[attr];
+                } else {
+                  subres.push({
+                    title: attr,
+                    value: session[attr],
+                    epoch: ''
+                  });
+                  delete session[attr];
+                }
               }
             }
             if (subres.length > 0) {
@@ -258,8 +292,8 @@
             tmp = [];
             if (session._loginHistory.successLogin) {
               ref = session._loginHistory.successLogin;
-              for (j = 0, len1 = ref.length; j < len1; j++) {
-                l = ref[j];
+              for (k = 0, len2 = ref.length; k < len2; k++) {
+                l = ref[k];
                 tmp.push({
                   t: l._utime,
                   title: $scope.localeDate(l._utime),
@@ -269,8 +303,8 @@
             }
             if (session._loginHistory.failedLogin) {
               ref1 = session._loginHistory.failedLogin;
-              for (k = 0, len2 = ref1.length; k < len2; k++) {
-                l = ref1[k];
+              for (m = 0, len3 = ref1.length; m < len3; m++) {
+                l = ref1[m];
                 tmp.push({
                   t: l._utime,
                   title: $scope.localeDate(l._utime),
