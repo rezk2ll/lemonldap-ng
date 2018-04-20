@@ -203,10 +203,12 @@ sub loadUser {
         }
         $self->logger->debug("2F Device(s) found");
 
+
+
         foreach (@$_2fDevices) {
             $self->logger->debug("Looking for registered U2F key(s) ...");
             if ( $_->{type} eq 'U2F' ) {
-                unless ( $_->{_userKey} and $_->{_userKey} ) {
+                unless ( $_->{_userKey} and $_->{_keyHandle} ) {
                     $self->logger->error(
 "Missing required U2F attributes in storage ($session->{_2fDevices})"
                     );

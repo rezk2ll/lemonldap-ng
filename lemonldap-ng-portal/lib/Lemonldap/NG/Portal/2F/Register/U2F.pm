@@ -162,14 +162,43 @@ sub run {
         elsif ( $err == 0 ) {
             return $self->p->sendError( $req, "noU2FKeyFound" );
         }
-        my $challenge = $req->datas->{crypter}->authenticationChallenge;
+
+        # Get a challenge (from first key)
+        my $data = eval {
+            from_json( $req->datas->{crypter}->[0]->authenticationChallenge );
+        };
+
+        if ($@) {
+            $self->logger->error( Crypt::U2F::Server::u2fclib_getError() );
+            return $self->p->sendError( $req, "U2F error: $error", 200 );
+        }
+
+        # Get registered keys
+        my @rk;
+        foreach ( @{ $req->datas->{crypter} } ) {
+            my $k = push @rk,
+              { keyHandle => $_->{keyHandle}, version => $data->{version} };
+
+            #{ keyHandle => $_->{keyHandle}, version => $challenge->{version} };
+
+        }
+
+        # Serialize datas
+        $data = to_json(
+            {
+                challenge      => $data->{challenge},
+                appId          => $data->{appId},
+                registeredKeys => \@rk
+            }
+        );
+
         return [
             200,
             [
                 'Content-Type'   => 'application/json',
-                'Content-Length' => length($challenge),
+                'Content-Length' => length($data),
             ],
-            [$challenge]
+            [$data]
         ];
     }
 
@@ -189,10 +218,30 @@ sub run {
         elsif ( $err == 0 ) {
             return $self->p->sendError( $req, "noU2FKeyFound" );
         }
+
         $self->logger->debug("Get verify response $resp");
-        $req->datas->{crypter}->setChallenge($challenge);
-        my $res =
-          ( $req->datas->{crypter}->authenticationVerify($resp) ? 1 : 0 );
+        my $data = eval { JSON::from_json($resp) };
+        if ($@) {
+            $self->logger->error("U2F response error: $@");
+            return $self->p->sendError( $req, "U2Fresponseerror" );
+        }
+        my $crypter;
+        foreach ( @{ $req->datas->{crypter} } ) {
+            $crypter = $_ if ( $_->{keyHandle} eq $data->{keyHandle} );
+        }
+        unless ($crypter) {
+            $self->userLogger->error("Unregistered U2F key");
+            return $self->p->sendError( $req, "U2FKeyUnregistered" );
+        }
+
+        if ( not $crypter->setChallenge($challenge) ) {
+            $self->logger->error(
+                $@ ? $@ : Crypt::U2F::Server::Simple::lastError() );
+
+            return $self->p->sendError( $req, "U2FServerError" );
+        }
+
+        my $res = ( $crypter->authenticationVerify($resp) ? 1 : 0 );
         return [
             200,
             [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
@@ -273,7 +322,10 @@ sub loadUser {
 
     # Read existing 2FDevices
     $self->logger->debug("Looking for 2F Devices ...");
-    my $_2fDevices;
+    my ( $kh, $uk, $_2fDevices );
+
+    my @u2fs = ();
+
     if ( $req->userData->{_2fDevices} ) {
         $_2fDevices = eval {
             from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
@@ -290,25 +342,73 @@ sub loadUser {
     }
 
     # Reading existing U2F keys
-    $self->logger->debug("Reading U2F keys if exists ...");
-    my @U2Fs = grep { $_->{type} =~ /U2F/s } @$_2fDevices;
-    my $kh   = $U2Fs[0]{_keyHandle};
-    my $uk   = $self->decode_base64url( $U2Fs[0]{_userKey} );
-    unless ( $kh and $uk ) {
-        $self->logger->debug("UTOP -> No U2F key found !!!");
+    #$self->logger->debug("Reading U2F keys if exists ...");
+    #my @U2Fs = grep { $_->{type} =~ /U2F/s } @$_2fDevices;
+
+    foreach (@$_2fDevices) {
+        $self->logger->debug("Looking for registered U2F key(s) ...");
+        if ( $_->{type} eq 'U2F' ) {
+            unless ( $_->{_userKey} and $_->{_keyHandle} ) {
+                $self->logger->error(
+"Missing required U2F attributes in storage ($session->{_2fDevices})"
+                );
+                next;
+            }
+            $self->logger->debug( "Found U2F key -> _userKey = "
+                  . $_->{_userKey}
+                  . "/ _keyHandle = "
+                  . $_->{_keyHandle} );
+            $_->{_userKey} = $self->decode_base64url( $_->{_userKey} );
+            push @u2fs, $_;
+        }
+    }
+
+    # Manage multi u2f keys
+    my @crypters;
+    if (@u2fs) {
+        $self->logger->debug("kh & uk -> OK");
+
+        foreach (@u2fs) {
+            $kh = $_->{_keyHandle};
+            $uk = $_->{_userKey};
+            my $c = $self->crypter( keyHandle => $kh, publicKey => $uk );
+            if ($c) {
+                push @crypters, $c;
+            }
+            else {
+                $self->logger->error(
+                    'U2F error: ' . Crypt::U2F::Server::u2fclib_getError() );
+            }
+        }
+        unless (@crypters) {
+            return -1;
+        }
+        $req->datas->{crypter} = \@crypters;
+        return 1;
+    }
+    else {
+        $self->userLogger->info("U2F : user not registered");
         return 0;
     }
-    $self->logger->debug( "_userKey = " . $uk );
 
-    $req->datas->{crypter} = $self->crypter(
-        keyHandle => $kh,
-        publicKey => $uk
-    );
-    unless ( $req->datas->{crypter} ) {
-        my $error = Crypt::U2F::Server::Simple::lastError();
-        return ( -1, $error );
-    }
-    return 1;
+    #my $kh   = $U2Fs[0]{_keyHandle};
+    #my $uk   = $self->decode_base64url( $U2Fs[0]{_userKey} );
+
+    #unless ( $kh and $uk ) {
+    #$self->logger->debug("UTOP -> No U2F key found !!!");
+    #return 0;
+    #}
+    #$self->logger->debug( "_userKey = " . $uk );
+
+    #$req->datas->{crypter} = $self->crypter(
+    #keyHandle => $kh,
+    #publicKey => $uk
+    #);
+    #unless ( $req->datas->{crypter} ) {
+    #my $error = Crypt::U2F::Server::Simple::lastError();
+    #return ( -1, $error );
+    #}
+    #return 1;
 }
 
 1;
