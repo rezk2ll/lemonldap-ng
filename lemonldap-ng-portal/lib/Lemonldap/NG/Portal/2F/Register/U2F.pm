@@ -213,7 +213,7 @@ sub run {
         }
         my ( $err, $error ) = $self->loadUser($req);
         if ( $err == -1 ) {
-            return $self->p->sendError( $req, "U2F error: $error", 200 );
+            return $self->p->sendError( $req, "U2F loading error: $error", 500 );
         }
         elsif ( $err == 0 ) {
             return $self->p->sendError( $req, "noU2FKeyFound" );
@@ -223,7 +223,7 @@ sub run {
         my $data = eval { JSON::from_json($resp) };
         if ($@) {
             $self->logger->error("U2F response error: $@");
-            return $self->p->sendError( $req, "U2Fresponseerror" );
+            return $self->p->sendError( $req, "U2FAnswerError" );
         }
         my $crypter;
         foreach ( @{ $req->datas->{crypter} } ) {
@@ -265,7 +265,6 @@ sub run {
             [$challenge]
         ];
     }
-
     elsif ( $action eq 'delete' ) {
         my $epoch = $req->param('epoch');
 
@@ -315,10 +314,9 @@ sub run {
 sub loadUser {
     my ( $self, $req ) = @_;
     $self->logger->debug("Loading user U2F Devices ...");
-    my $uid     = $req->userData->{ $self->conf->{whatToTrace} };
-    my $session = $self->p->getPersistentSession($uid);
-
-    my $secret = '';
+    #my $uid     = $req->userData->{ $self->conf->{whatToTrace} };
+    #my $session = $self->p->getPersistentSession($uid);
+    #my $secret = '';
 
     # Read existing 2FDevices
     $self->logger->debug("Looking for 2F Devices ...");
@@ -335,22 +333,18 @@ sub loadUser {
             return $self->p->sendError( $req, "Corrupted session", 500 );
         }
     }
-
     else {
         $self->logger->debug("No 2F Device found");
         $_2fDevices = [];
     }
 
     # Reading existing U2F keys
-    #$self->logger->debug("Reading U2F keys if exists ...");
-    #my @U2Fs = grep { $_->{type} =~ /U2F/s } @$_2fDevices;
-
     foreach (@$_2fDevices) {
         $self->logger->debug("Looking for registered U2F key(s) ...");
         if ( $_->{type} eq 'U2F' ) {
             unless ( $_->{_userKey} and $_->{_keyHandle} ) {
                 $self->logger->error(
-"Missing required U2F attributes in storage ($session->{_2fDevices})"
+'Missing required U2F attributes in storage ($session->{_2fDevices})'
                 );
                 next;
             }
@@ -366,13 +360,12 @@ sub loadUser {
     # Manage multi u2f keys
     my @crypters;
     if (@u2fs) {
-        $self->logger->debug("kh & uk -> OK");
-
         foreach (@u2fs) {
             $kh = $_->{_keyHandle};
             $uk = $_->{_userKey};
             my $c = $self->crypter( keyHandle => $kh, publicKey => $uk );
             if ($c) {
+				$self->logger->debug("kh & uk -> OK");
                 push @crypters, $c;
             }
             else {
@@ -390,25 +383,6 @@ sub loadUser {
         $self->userLogger->info("U2F : user not registered");
         return 0;
     }
-
-    #my $kh   = $U2Fs[0]{_keyHandle};
-    #my $uk   = $self->decode_base64url( $U2Fs[0]{_userKey} );
-
-    #unless ( $kh and $uk ) {
-    #$self->logger->debug("UTOP -> No U2F key found !!!");
-    #return 0;
-    #}
-    #$self->logger->debug( "_userKey = " . $uk );
-
-    #$req->datas->{crypter} = $self->crypter(
-    #keyHandle => $kh,
-    #publicKey => $uk
-    #);
-    #unless ( $req->datas->{crypter} ) {
-    #my $error = Crypt::U2F::Server::Simple::lastError();
-    #return ( -1, $error );
-    #}
-    #return 1;
 }
 
 1;

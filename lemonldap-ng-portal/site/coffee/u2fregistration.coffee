@@ -67,12 +67,7 @@ verify = ->
 		error: displayError
 		success: (ch) ->
 			# 2 build response
-			#request = [
-			#	keyHandle: ch.keyHandle
-			#	version: ch.version
-			#]
 			setMsg 'touchU2fDevice', 'positive'
-			#u2f.sign ch.appId, ch.challenge, request, (data) ->
 			u2f.sign ch.appId, ch.challenge, ch.registeredKeys, (data) ->
 				# Handle errors
 				if data.errorCode
