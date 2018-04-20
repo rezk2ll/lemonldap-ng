@@ -94,7 +94,7 @@
   categories = {
     dateTitle: ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen'],
     connectionTitle: ['ipAddr', '_timezone', '_url'],
-    authenticationTitle: ['_session_id', '_user', '_password', 'authenticationLevel'],
+    authenticationTitle: ['_session_id', '_user', '_password', 'authenticationLevel', '_2fDevices'],
     modulesTitle: ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti'],
     saml: ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump'],
     groups: ['groups', 'hGroups'],

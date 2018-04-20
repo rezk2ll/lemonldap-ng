@@ -82,52 +82,10 @@
   categories = {
     dateTitle: ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen'],
     connectionTitle: ['ipAddr', '_timezone', '_url'],
-    authenticationTitle: ['_session_id', '_user', '_password', 'authenticationLevel'],
-    modulesTitle: ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti'],
-    saml: ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump'],
-    groups: ['groups', 'hGroups'],
-    ldap: ['dn'],
-    BrowserID: ['_browserIdAnswer', '_browserIdAnswerRaw'],
-    OpenIDConnect: ['_oidc_id_token', '_oidc_OP', '_oidc_access_token']
+    sfaTitle: ['_2fDevices']
   };
 
   menu = {
-    delU2FKey: [
-      {
-        title: 'deleteU2FKey',
-        icon: 'trash'
-      }
-    ],
-    addU2FKey: [
-      {
-        title: 'addU2FKey',
-        icon: 'plus'
-      }
-    ],
-    verifyU2FKey: [
-      {
-        title: 'verifyU2FKey',
-        icon: 'check'
-      }
-    ],
-    delTOTPKey: [
-      {
-        title: 'deleteTOTPKey',
-        icon: 'trash'
-      }
-    ],
-    addTOTPKey: [
-      {
-        title: 'addTOTPKey',
-        icon: 'plus'
-      }
-    ],
-    verifyTOTPKey: [
-      {
-        title: 'verifyTOTPKey',
-        icon: 'check'
-      }
-    ],
     home: []
   };
 
@@ -171,6 +129,7 @@
           switch (typeof button.action) {
             case 'function':
               button.action($scope.currentNode, $scope);
+              $scope[button.action]();
               break;
             case 'string':
               $scope[button.action]();
@@ -189,83 +148,17 @@
         $scope.data = [];
         return $scope.updateTree2('', $scope.data, 0, 0);
       };
-      $scope.deleteU2FKey = function() {
+      $scope.delete2FA = function(type, epoch) {
+        var item;
+        item = angular.element("#data-" + epoch);
+        item.remove();
         $scope.waiting = true;
-        $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
+        $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?type=" + type + "&epoch=" + epoch).then(function(response) {
           return $scope.waiting = false;
         }, function(resp) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
           return $scope.waiting = false;
         });
         return $scope.showT = false;
-      };
-      $scope.deleteTOTPKey = function() {
-        $scope.waiting = true;
-        $http['delete'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=TOTP").then(function(response) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        }, function(resp) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        });
-        return $scope.showT = false;
-      };
-      $scope.addU2FKey = function() {
-        $scope.waiting = true;
-        $http['put'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        }, function(resp) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        });
-        return $scope.showT = false;
-      };
-      $scope.addTOTPKey = function() {
-        $scope.waiting = true;
-        $http['put'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=TOTP").then(function(response) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        }, function(resp) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        });
-        return $scope.showT = false;
-      };
-      $scope.verifyU2FKey = function() {
-        $scope.waiting = true;
-        $http['post'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=U2F").then(function(response) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        }, function(resp) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        });
-        return $scope.showT = true;
-      };
-      $scope.verifyTOTPKey = function() {
-        $scope.waiting = true;
-        $http['post'](scriptname + "sfa/" + sessionType + "/" + $scope.currentSession.id + "?Key=TOTP").then(function(response) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        }, function(resp) {
-          $scope.currentSession = null;
-          $scope.currentScope.remove();
-          return $scope.waiting = false;
-        });
-        return $scope.showT = true;
       };
       $scope.stoggle = function(scope) {
         var node;
@@ -278,7 +171,7 @@
       $scope.displaySession = function(scope) {
         var sessionId, transformSession;
         transformSession = function(session) {
-          var _insert, _stToStr, attr, attrs, category, i, id, k, key, l, len, len1, len2, m, ref, ref1, res, subres, time, tmp, value;
+          var _insert, _stToStr, array, attr, attrs, category, epoch, i, id, k, key, len, len1, myDate, name, newDate, res, sfDevice, subres, time, title, value;
           _stToStr = function(s) {
             return s;
           };
@@ -330,12 +223,45 @@
             subres = [];
             for (i = 0, len = attrs.length; i < len; i++) {
               attr = attrs[i];
-              if (session[attr]) {
-                subres.push({
-                  title: attr,
-                  value: session[attr]
-                });
-                delete session[attr];
+              if (session[attr] && session[attr].match(/\w+/)) {
+                if (session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)) {
+                  subres.push({
+                    title: "type",
+                    value: "name",
+                    sdate: "date"
+                  });
+                  array = JSON.parse(session[attr]);
+                  for (k = 0, len1 = array.length; k < len1; k++) {
+                    sfDevice = array[k];
+                    for (key in sfDevice) {
+                      value = sfDevice[key];
+                      if (key === 'type') {
+                        title = value;
+                      }
+                      if (key === 'name') {
+                        name = value;
+                      }
+                      if (key === 'epoch') {
+                        epoch = value;
+                        newDate = new Date(value * 1000);
+                        myDate = newDate.toLocaleString();
+                      }
+                    }
+                    subres.push({
+                      title: title,
+                      value: name,
+                      epoch: epoch,
+                      sdate: myDate
+                    });
+                  }
+                  delete session[attr];
+                } else {
+                  subres.push({
+                    title: attr,
+                    value: session[attr]
+                  });
+                  delete session[attr];
+                }
               }
             }
             if (subres.length > 0) {
@@ -345,62 +271,6 @@
               });
             }
           }
-          _insert('^openid', 'OpenID');
-          _insert('^notification_(.+)', '__notificationsDone__');
-          if (session._loginHistory) {
-            tmp = [];
-            if (session._loginHistory.successLogin) {
-              ref = session._loginHistory.successLogin;
-              for (k = 0, len1 = ref.length; k < len1; k++) {
-                l = ref[k];
-                tmp.push({
-                  t: l._utime,
-                  title: $scope.localeDate(l._utime),
-                  value: "Success (IP " + l.ipAddr + ")"
-                });
-              }
-            }
-            if (session._loginHistory.failedLogin) {
-              ref1 = session._loginHistory.failedLogin;
-              for (m = 0, len2 = ref1.length; m < len2; m++) {
-                l = ref1[m];
-                tmp.push({
-                  t: l._utime,
-                  title: $scope.localeDate(l._utime),
-                  value: l.error + " (IP " + l.ipAddr + ")"
-                });
-              }
-            }
-            delete session._loginHistory;
-            tmp.sort(function(a, b) {
-              return a.t - b.t;
-            });
-            res.push({
-              title: '__loginHistory__',
-              nodes: tmp
-            });
-          }
-          tmp = [];
-          for (key in session) {
-            value = session[key];
-            tmp.push({
-              title: key,
-              value: value
-            });
-          }
-          tmp.sort(function(a, b) {
-            if (a.title > b.title) {
-              return 1;
-            } else if (a.title < b.title) {
-              return -1;
-            } else {
-              return 0;
-            }
-          });
-          res.push({
-            title: '__attributesAndMacros__',
-            nodes: tmp
-          });
           return {
             _utime: time,
             id: id,
@@ -502,7 +372,7 @@
         } else {
           over = 0;
         }
-        return $http.get(scriptname + "sfa/" + sessionType + "?_session_uid=" + $scope.searchString + "*&groupBy=substr(_session_uid," + $scope.searchString.length + ")&U2FCheck=" + $scope.U2FCheck + "&TOTPCheck=" + $scope.TOTPCheck).then(function(response) {
+        return $http.get(scriptname + "sfa/" + sessionType + "?_session_uid=" + $scope.searchString + "*&groupBy=substr(_session_uid," + $scope.searchString.length + ")&U2FCheck=" + $scope.U2FCheck + "&TOTPCheck=" + $scope.TOTPCheck + "&UBKCheck=" + $scope.UBKCheck).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;
           if (data.result) {
