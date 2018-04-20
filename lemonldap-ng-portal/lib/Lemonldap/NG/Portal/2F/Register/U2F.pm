@@ -314,9 +314,6 @@ sub run {
 sub loadUser {
     my ( $self, $req ) = @_;
     $self->logger->debug("Loading user U2F Devices ...");
-    #my $uid     = $req->userData->{ $self->conf->{whatToTrace} };
-    #my $session = $self->p->getPersistentSession($uid);
-    #my $secret = '';
 
     # Read existing 2FDevices
     $self->logger->debug("Looking for 2F Devices ...");
