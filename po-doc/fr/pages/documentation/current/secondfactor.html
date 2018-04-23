@@ -43,26 +43,46 @@
 
 </head>
 <body>
-<div class="dokuwiki export container">
+<div class="dokuwiki export container"><!-- TOC START -->
 
-<h1 class="sectionedit1" id="second_factors">Second factors</h1>
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#providing_tokens_from_an_external_source">Providing tokens from an external source</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#u2f_tokens">U2F Tokens</a></div></li>
+<li class="level2"><div class="li"><a href="#totp_tokens">TOTP Tokens</a></div></li>
+<li class="level2"><div class="li"><a href="#yubikey_tokens">Yubikey Tokens</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#developper_corner">Developper corner</a></div></li>
+</ul>
+</div>
+</div><!-- TOC END -->
+
+
+<h1 class="sectionedit1" id="second_factors">Second Factors</h1>
 <div class="level1">
 
 <p>
 
-Two-factor authentication <em>(also known as 2FA)</em> is a type (subset) of <a href="https://en.wikipedia.org/wiki/Multi-factor_authentication" class="urlextern" title="https://en.wikipedia.org/wiki/Multi-factor_authentication"  rel="nofollow">multi-factor authentication</a>. It is a method of confirming a user's claimed identity by utilizing a combination of two different factors:
+Two-Factor Authentication <em>(as known as 2FA)</em> is a kind (subset) of <a href="https://en.wikipedia.org/wiki/Multi-factor_authentication" class="urlextern" title="https://en.wikipedia.org/wiki/Multi-factor_authentication"  rel="nofollow">multi-factor authentication</a>. It is a method to confirm a user's claimed identity by using a combination of two different factors :
 
 </p>
 <ol>
-<li class="level1"><div class="li">  something they know <em>(password,…)</em>,</div>
+<li class="level1"><div class="li">  something they know <em>(login / password, …)</em>,</div>
 </li>
-<li class="level1"><div class="li">  something they have <em>(U2F key, smartphone,…)</em>, or something they are <em>(biometrics)</em>.</div>
+<li class="level1"><div class="li">  something they have <em>(U2F Key, smartphone, …) or </em> </div>
+</li>
+<li class="level1"><div class="li">  something they are <em>(biometrics like fingerprints, …)</em>.</div>
 </li>
 </ol>
 
 <p>
 
-Since 2.0, LLNG provides some second factor plugins that can be used to complement auth module for 2FA:
+Since 2.0, LL-NG provides some second factor plugins that can be used to complete authentication module with 2FA :
 
 </p>
 <ul>
@@ -72,28 +92,66 @@ Since 2.0, LLNG provides some second factor plugins that can be used to compleme
 </li>
 <li class="level1"><div class="li"> <a href="utotp2f.html" class="wikilink1" title="documentation:2.0:utotp2f">U2F-or-TOTP</a> <em>(enable both U2F and TOTP)</em></div>
 </li>
-<li class="level1"><div class="li"> <a href="yubikey2f.html" class="wikilink1" title="documentation:2.0:yubikey2f">Yubikey tokens</a></div>
+<li class="level1"><div class="li"> <a href="yubikey2f.html" class="wikilink1" title="documentation:2.0:yubikey2f">Yubikey tokens</a> <em> provide by Yubico</em> </div>
 </li>
-<li class="level1"><div class="li"> <a href="rest2f.html" class="wikilink1" title="documentation:2.0:rest2f">REST</a> <em>(to call an external command)</em></div>
+<li class="level1"><div class="li"> <a href="rest2f.html" class="wikilink1" title="documentation:2.0:rest2f">REST</a> <em>(to call an external command)</em> </div>
 </li>
-<li class="level1"><div class="li"> <a href="external2f.html" class="wikilink1" title="documentation:2.0:external2f">External 2F</a> <em>(Remote REST app)</em></div>
+<li class="level1"><div class="li"> <a href="external2f.html" class="wikilink1" title="documentation:2.0:external2f">External 2F</a> <em>(Remote REST app) </em> </div>
 </li>
 </ul>
 
-</div><!-- EDIT1 SECTION "Second factors" [1-926] -->
+</div><!-- EDIT1 SECTION "Second Factors" [1-994] -->
 
-<h2 class="sectionedit2" id="developer_corner">Developer corner</h2>
+<h2 class="sectionedit2" id="providing_tokens_from_an_external_source">Providing tokens from an external source</h2>
 <div class="level2">
 
 <p>
 
-To develop a new 2FA plugin, read the <code>Lemonldap::NG::Portal::Main::SecondFactor (3pm)</code> manpage. Your 2F module must be a Perl class named <code>Lemonldap::NG::Portal::2F::<em>&lt;custom_name&gt;</em></code> To enable it, you can set <code>available2f</code> key in your <code>lemonldap-ng.ini</code> file:
+If you don't want to use self-registration features for U2F, TOTP and so on, you can set tokens by yourself <em>(in your LDAP server for example)</em> and map it to <code>_2fDevices</code> attribute. <code>_2fDevices</code> is a JSON array that contains token descriptions :
+
+</p>
+<pre class="code json">[ {"type" : "TOTP", "name" : "MyTOTP", …}, {&lt;other_token&gt;}, …]</pre>
+
+</div><!-- EDIT2 SECTION "Providing tokens from an external source" [995-1388] -->
+
+<h3 class="sectionedit3" id="u2f_tokens">U2F Tokens</h3>
+<div class="level3">
+<pre class="code json">{"name" : "MyU2FKey" , "type" : "U2F" , "_userKey" : "########" , "_keyHandle":"########" , "epoch":"1524078936"}</pre>
+
+</div><!-- EDIT3 SECTION "U2F Tokens" [1389-1546] -->
+
+<h3 class="sectionedit4" id="totp_tokens">TOTP Tokens</h3>
+<div class="level3">
+<pre class="code json">{"name" : "MyTOTP" , "type" : "TOTP" , "_secret" : "########" , "epoch" : "1523817955"}</pre>
+
+</div><!-- EDIT4 SECTION "TOTP Tokens" [1547-1679] -->
+
+<h3 class="sectionedit5" id="yubikey_tokens">Yubikey Tokens</h3>
+<div class="level3">
+<pre class="code json">{"name" : "MyYubikey" , "type" : "UBK" , "_yubikey" : "########" , "epoch" : "1523817715"}</pre>
+
+</div><!-- EDIT5 SECTION "Yubikey Tokens" [1680-1818] -->
+
+<h2 class="sectionedit6" id="developper_corner">Developper corner</h2>
+<div class="level2">
+
+<p>
+
+To developpe a new 2FA plugin, read <code>Lemonldap::NG::Portal::Main::SecondFactor (3pm)</code> manpage. Your 2F module must be a Perl class named <code>Lemonldap::NG::Portal::2F::<em>&lt;custom_name&gt;</em></code>. To enable it, set <code>available2F</code> key in your <code>lemonldap-ng.ini</code> file :
 
 </p>
 <pre class="code ini"><span class="re0"><span class="br0">[</span>portal<span class="br0">]</span></span>
 <span class="re1">available2F</span> <span class="sy0">=</span><span class="re2"> U2F,TOTP,&lt;custom_name&gt;</span></pre>
 
-</div><!-- EDIT2 SECTION "Developer corner" [927-] -->
+<p>
+
+To enable manager Second Factor Administration Module, set <code>enabledModules</code> key in your <code>lemonldap-ng.ini</code> file : 
+ 
+</p>
+<pre class="code ini"><span class="re0"><span class="br0">[</span>portal<span class="br0">]</span></span>
+<span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
+
+</div><!-- EDIT6 SECTION "Developper corner" [1819-] -->
 </div>
 </body>
 </html>

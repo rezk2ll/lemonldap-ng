@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:nodehandler</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,nodehandler"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="nodehandler.html"/>
@@ -43,19 +43,149 @@
 </head>
 <body>
 <div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#examples">Examples</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#use_it_as_fastcgi_server_application_protection_only">Use it as FastCGI server (application protection only)</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#fastcgi_server">FastCGI server</a></div></li>
+<li class="level3"><div class="li"><a href="#nginx_configuration">Nginx configuration</a></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><a href="#use_it_to_protect_an_express_app">Use it to protect an express app</a></div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
 
 <h1 class="sectionedit1" id="nodejs_handler">Node.js handler</h1>
 <div class="level1">
 
 <p>
-Since version 2.0, an experimental Node.js handler is available on <a href="https://github.com/LemonLDAPNG/node-lemonldap-ng-handler" class="urlextern" title="https://github.com/LemonLDAPNG/node-lemonldap-ng-handler"  rel="nofollow">GitHub</a>.
+Since version 2.0, a beta Node.js handler is available on <a href="https://github.com/LemonLDAPNG/node-lemonldap-ng-handler" class="urlextern" title="https://github.com/LemonLDAPNG/node-lemonldap-ng-handler"  rel="nofollow">GitHub</a>.
 </p>
 
 <p>
-Documentation is available on GitHub.
+Up-to-date documentation is available on GitHub.
 </p>
 
 </div>
+<!-- EDIT1 SECTION "Node.js handler" [1-209] -->
+<h2 class="sectionedit2" id="examples">Examples</h2>
+<div class="level2">
+
+<p>
+<strong>Important things</strong>:
+</p>
+<ul>
+<li class="level1"><div class="li"> Rules and headers must be written in javascript for these hosts <em>(example <code>$uid eq “dwho”</code> becomes <code>$uid === “dwho”</code>)</em></div>
+</li>
+<li class="level1"><div class="li"> Virtualhosts handled by node-lemonldap-ng-handler must be explicitly declared in you <code>lemonldap-ng.ini</code> file in <code>[node-handler]</code> section:</div>
+</li>
+</ul>
+<pre class="code ini"><span class="re0"><span class="br0">&#91;</span>node-handler<span class="br0">&#93;</span></span>
+&nbsp;
+<span class="re1">nodeVhosts</span> <span class="sy0">=</span><span class="re2"> test.example.com, test2.example.com</span></pre>
+
 </div>
+<!-- EDIT2 SECTION "Examples" [210-613] -->
+<h3 class="sectionedit3" id="use_it_as_fastcgi_server_application_protection_only">Use it as FastCGI server (application protection only)</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="fastcgi_server">FastCGI server</h4>
+<div class="level4">
+<dl class="file">
+<dt><a href="_export/code/documentation/2.0/nodehandler/codeblock.1.code" title="Download Snippet" class="mediafile mf_js">server.js</a></dt>
+<dd><pre class="code file javascript"><span class="kw1">var</span> handler <span class="sy0">=</span> require<span class="br0">&#40;</span><span class="st0">'node-lemonldap-ng-handler'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+handler.<span class="me1">init</span><span class="br0">&#40;</span><span class="br0">&#123;</span>
+  configStorage<span class="sy0">:</span> <span class="br0">&#123;</span>
+    <span class="st0">&quot;confFile&quot;</span><span class="sy0">:</span> <span class="st0">&quot;/path/to/lemonldap-ng.ini&quot;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+handler.<span class="me1">nginxServer</span><span class="br0">&#40;</span><span class="br0">&#123;</span>
+  <span class="st0">&quot;mode&quot;</span><span class="sy0">:</span> <span class="st0">&quot;fcgi&quot;</span><span class="sy0">,</span>   <span class="co1">// or &quot;http&quot;, default: fcgi</span>
+  <span class="st0">&quot;port&quot;</span><span class="sy0">:</span> <span class="nu0">9090</span><span class="sy0">,</span>     <span class="co1">// default value</span>
+  <span class="st0">&quot;ip&quot;</span><span class="sy0">:</span> <span class="st0">'localhost'</span> <span class="co1">// default value</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</dd></dl>
+
+</div>
+
+<h4 id="nginx_configuration">Nginx configuration</h4>
+<div class="level4">
+<dl class="file">
+<dt><a href="_export/code/documentation/2.0/nodehandler/codeblock.2.code" title="Download Snippet" class="mediafile mf_conf">nginx.conf</a></dt>
+<dd><pre class="code file nginx">server {
+  #...
+  # Internal authentication request
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass localhost:9090;
+&nbsp;
+    # Drop post datas
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH &quot;&quot;;
+&nbsp;
+    # Keep original hostname
+    fastcgi_param HOST $http_host;
+&nbsp;
+    # Keep original request (LLNG server will received /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  }
+&nbsp;
+  # Client requests
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    include conf/nginx-lua-headers.conf;
+  }
+}</pre>
+</dd></dl>
+
+</div>
+<!-- EDIT3 SECTION "Use it as FastCGI server (application protection only)" [614-1795] -->
+<h3 class="sectionedit4" id="use_it_to_protect_an_express_app">Use it to protect an express app</h3>
+<div class="level3">
+<dl class="file">
+<dt><a href="_export/code/documentation/2.0/nodehandler/codeblock.3.code" title="Download Snippet" class="mediafile mf_js">app.js</a></dt>
+<dd><pre class="code file javascript"><span class="co1">// Variables</span>
+<span class="kw1">var</span> express <span class="sy0">=</span> require<span class="br0">&#40;</span><span class="st0">'express'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">var</span> app <span class="sy0">=</span> express<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">var</span> handler <span class="sy0">=</span> require<span class="br0">&#40;</span><span class="st0">'node-lemonldap-ng-handler'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// initialize handler (optional args)</span>
+handler.<span class="me1">init</span><span class="br0">&#40;</span><span class="br0">&#123;</span>
+  configStorage<span class="sy0">:</span> <span class="br0">&#123;</span>
+    <span class="st0">&quot;confFile&quot;</span><span class="sy0">:</span><span class="st0">&quot;test/lemonldap-ng.ini&quot;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// and load it</span>
+app.<span class="me1">use</span><span class="br0">&#40;</span>handler.<span class="me1">run</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1">// Then simply use your express app</span>
+app.<span class="kw1">get</span><span class="br0">&#40;</span><span class="st0">'/'</span><span class="sy0">,</span> <span class="kw1">function</span><span class="br0">&#40;</span>req<span class="sy0">,</span> res<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> res.<span class="me1">send</span><span class="br0">&#40;</span><span class="st0">'Hello '</span> <span class="sy0">+</span> req.<span class="me1">headers</span><span class="br0">&#91;</span><span class="st0">'Auth-User'</span><span class="br0">&#93;</span> <span class="sy0">+</span> <span class="st0">' !'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+app.<span class="me1">listen</span><span class="br0">&#40;</span><span class="nu0">3000</span><span class="sy0">,</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">return</span> console.<span class="me1">log</span><span class="br0">&#40;</span><span class="st0">'Example app listening on port 3000!'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+</dd></dl>
+
+</div>
+<!-- EDIT4 SECTION "Use it to protect an express app" [1796-] --></div>
 </body>
 </html>

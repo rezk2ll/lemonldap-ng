@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:devopshandler</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,devopshandler"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="devopshandler.html"/>
@@ -111,7 +111,7 @@ Here is a simple Nginx configuration file. It looks like a standard LLNG nginx c
     fastcgi_param X_ORIGINAL_URI  $request_uri;
   }
   location /rules.json {
-    proxy_pass http://$vhost;
+    auth_request off;
     allow 127.0.0.0/8;
     deny all;
   }

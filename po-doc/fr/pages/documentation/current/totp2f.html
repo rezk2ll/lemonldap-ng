@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,totp2f"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="totp2f.html"/>
@@ -72,7 +72,7 @@
 LLNG can propose to users to register this kind of software to increase authentication level.
 
 </p>
-<div class="notetip">Note that it's a second factor, not an authentication module. Users are authenticated by both login form and TOTP.
+<div class="notetip">Note that it's a second factor, not an authentication module. Users are authenticated both by login form and TOTP.
 
 </div>
 </div><!-- EDIT1 SECTION "TOTP 2nd Factor Authentication (U2F)" [1-633] -->
@@ -88,7 +88,7 @@ In the manager (advanced parameters), you just have to enable it:
 <ul>
 <li class="level1"><div class="li">  TOTP ⇒ Activation: set it to “on”</div>
 </li>
-<li class="level1"><div class="li">  TOTP ⇒ Self registration: set it to “on” if users are authorizated to generate themselves TOTP secret</div>
+<li class="level1"><div class="li">  TOTP ⇒ Self registration: set it to “on” if users are authorized to generate themselves a TOTP secret</div>
 </li>
 <li class="level1"><div class="li">  TOTP ⇒ Authentication level: you can overwrite here auth level for TOTP registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only to users enrolled</strong></div>
 </li>
@@ -98,17 +98,17 @@ In the manager (advanced parameters), you just have to enable it:
 </li>
 <li class="level1"><div class="li">  TOTP ⇒ Range: number of additional intervals to test (default: 1)</div>
 </li>
-<li class="level1"><div class="li">  TOTP ⇒ Digits: number of digit of codes (default: 6)</div>
+<li class="level1"><div class="li">  TOTP ⇒ Digits: number of digit by codes (default: 6)</div>
 </li>
 <li class="level1"><div class="li">  TOTP ⇒ Display existing secret: display an already registered secret (default: disabled)</div>
 </li>
-<li class="level1"><div class="li">  TOTP ⇒ Change existing secret: authorize a user to change its already registered TOTP secret</div>
+<li class="level1"><div class="li">  TOTP ⇒ Change existing secret: authorize a user to change its previoulsy registered TOTP secret</div>
 </li>
 </ul>
-<div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule that <code>$_totp2fSecret</code> is set, else TOTP will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
+<div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule that <code>$_2fDevices =~ /“type”:\s*“TOTP”/s</code> is set, else TOTP will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
 
 </div>
-</div><!-- EDIT2 SECTION "Configuration" [634-1941] -->
+</div><!-- EDIT2 SECTION "Configuration" [634-1964] -->
 
 <h2 class="sectionedit3" id="enrollment">Enrollment</h2>
 <div class="level2">
@@ -118,42 +118,34 @@ In the manager (advanced parameters), you just have to enable it:
 If you've enabled self registration, users can get their key using <a href="https://portal/2fregisters" class="urlextern" title="https://portal/2fregisters"  rel="nofollow">https://portal/2fregisters</a>
 </p>
 
-</div><!-- EDIT3 SECTION "Enrollment" [1942-2060] -->
+</div><!-- EDIT3 SECTION "Enrollment" [1965-2083] -->
 
 <h2 class="sectionedit4" id="assistance">Assistance</h2>
 <div class="level2">
 
 <p>
 
-If a user lost its key, you may remove it's persistent session using the session explorer.
-
+If a user lost its key, you may remove it from manager Second Factor module.<em> 
+</em>
+To enable manager Second Factor Administration Module, set <code>enabledModules</code> key in your <code>lemonldap-ng.ini</code> file :<em> 
+</em>
 </p>
+<pre class="code ini"><span class="re0"><span class="br0">[</span>portal<span class="br0">]</span></span>
+<span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
 
-</div><!-- EDIT4 SECTION "Assistance" [2061-2176] -->
+</div><!-- EDIT4 SECTION "Assistance" [2084-2398] -->
 
 <h2 class="sectionedit5" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
 <p>
 
-If you have another TOTP registration interface, you have to populate session (using exported variables) to set these keys:
+If you have another TOTP registration interface, you have to set these keys in Second Factor Devices array (JSON) in your user-database. Then map it to the _2fDevices attribute <em>(see <a href="exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables</a>)</em>:
 
 </p>
-<div class="table sectionedit6"><table class="inline table table-bordered table-striped">
-	<thead>
-	<tr class="row0 roweven">
-		<th class="col0"> Nom </th><th class="col1">  Value  </th>
-	</tr>
-	</thead>
-	<tr class="row1 rowodd">
-		<td class="col0">  _totp2fSecret  </td><td class="col1">  key handle value, base32 encoded  </td>
-	</tr>
-	<tr class="row2 roweven">
-		<td class="col0">  _u2fUserKey  </td><td class="col1">  user key value, base64 encoded  </td>
-	</tr>
-</table></div><!-- EDIT6 TABLE [2332-2450] -->
+<pre class="code file json">[{"name" : "MyTOTP" , "type" : "TOTP" , "_secret" : "########" , "epoch":"1524078936"}, ...]</pre>
 
-</div><!-- EDIT5 SECTION "Developer corner" [2177-] -->
+</div><!-- EDIT5 SECTION "Developer corner" [2399-] -->
 </div>
 </body>
 </html>

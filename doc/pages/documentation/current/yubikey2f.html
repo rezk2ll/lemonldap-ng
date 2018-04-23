@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:yubikey2f</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,yubikey2f"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="yubikey2f.html"/>
@@ -88,7 +88,7 @@ In the manager (second factors), you just have to enable it:
 <ul>
 <li class="level1"><div class="li"> Activation: set it to “on”</div>
 </li>
-<li class="level1"><div class="li"> Self registration: set it to “on” if users are authorizated to register their keys</div>
+<li class="level1"><div class="li"> Self registration: set it to “on” if users are authorized to register their keys</div>
 </li>
 <li class="level1"><div class="li"> Authentication level: you can overwrite here auth level for Yubikey registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only to users enrolled</strong></div>
 </li>
@@ -103,18 +103,19 @@ In the manager (second factors), you just have to enable it:
 <li class="level1"><div class="li"> OTP public ID part size: leave it to default (12) unless you know what you are doing</div>
 </li>
 </ul>
-<div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule: <code>$_yubikeys</code>, else Yubikey will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
+<div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule: <code>$_2fDevices =~ /“type”:\s*“UBK”/s</code>, else Yubikey will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
 </div>
 </div>
-<!-- EDIT3 SECTION "Configuration" [484-1599] -->
+<!-- EDIT3 SECTION "Configuration" [484-1620] -->
 <h2 class="sectionedit4" id="provisioning">Provisioning</h2>
 <div class="level2">
 
 <p>
-If you don&#039;t want to use self-registration, set public part of user&#039;s yubikey <em>(12 first characters)</em> in an attribute mapped to <code>_yubikeys</code>. Multiples values are allowed (space or comma separated).
+If you don&#039;t want to use self-registration, set public part of user&#039;s yubikey in Second Factor Devices array (JSON) in your user-database. Then map it to the _2fDevices attribute <em>(see <a href="exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables</a>)</em>:
 </p>
+<pre class="code file json">[{&quot;name&quot; : &quot;MyYubikey&quot; , &quot;type&quot; : &quot;UBK&quot; , &quot;_secret&quot; : &quot;########&quot; , &quot;epoch&quot;:&quot;1524078936&quot;}, ...]</pre>
 
 </div>
-<!-- EDIT4 SECTION "Provisioning" [1600-] --></div>
+<!-- EDIT4 SECTION "Provisioning" [1621-] --></div>
 </body>
 </html>
