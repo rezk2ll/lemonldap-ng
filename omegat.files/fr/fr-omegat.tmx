@@ -6424,14 +6424,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>This an experimental tool that may evolve in next releases.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T075745Z" changeid="xavier">
-        <seg>C'est un outil expérimental qui évoluera dans les prochaines versions.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Modify the portal virtual host to match this example:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T213603Z" changeid="xavier">
@@ -8370,14 +8362,6 @@ description: {whatToTrace}'$uid'
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T202857Z" changeid="guimard">
         <seg>Avant d'activer la protection du manager par &lt;a0&gt;LL::NG&lt;/a0&gt;, il faut avoir configuré la méthode d'authentification sur le portail et véifier qu'on peut s'y connecter sans difficultés.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Yubikey authentication level</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064937Z" changeid="guimard">
-        <seg>Niveau d'authentification de Yubikey</seg>
       </tuv>
     </tu>
     <tu>
@@ -11442,14 +11426,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>yubikeySecretKey</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064908Z" changeid="guimard">
-        <seg>yubikeySecretKey</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>If you can not access the Manager anymore, you can unprotect it by editing &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt; and changing the &lt;c1&gt;protection&lt;/c1&gt; parameter:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T075218Z" changeid="xavier">
@@ -12110,14 +12086,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR">
         <seg>les macros sont utilisées pour étendre (ou réécrire) les &lt;a0&gt;variables exportées&lt;/a0&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>yubikeyClientID</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064859Z" changeid="guimard">
-        <seg>yubikeyClientID</seg>
       </tuv>
     </tu>
     <tu>
@@ -18180,14 +18148,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>yubikeyPublicIDSize</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064925Z" changeid="guimard">
-        <seg>yubikeyPublicIDSize</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Display-Name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T061220Z" changeid="xavier">
@@ -21064,14 +21024,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T094842Z" changeid="xavier">
         <seg>protéger le manager par configuration d'Apache</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>yubikeyAuthnLevel</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T064938Z" changeid="guimard">
-        <seg>yubikeyAuthnLevel</seg>
       </tuv>
     </tu>
     <tu>

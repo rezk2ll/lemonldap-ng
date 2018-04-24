@@ -53,13 +53,13 @@ sub load {
     my ( $self, $cfgNum, $fields ) = @_;
     $fields = $fields ? join( ",", @$fields ) : '*';
     my $sth =
-      $self->_dbh->prepare( "SELECT cfgNum,field,value from "
+      $self->_dbh->prepare( "SELECT field,value from "
           . $self->{dbiTable}
           . " WHERE cfgNum=?" );
     $sth->execute($cfgNum);
     my ( $res, @row );
     while ( @row = $sth->fetchrow_array ) {
-        $res->{ $row[1] } = $row[2];
+        $res->{ $row[0] } = $row[1];
     }
     unless ($res) {
         $Lemonldap::NG::Common::Conf::msg .=

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:utotp2f</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,utotp2f"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="utotp2f.html"/>
@@ -48,15 +48,15 @@
 <div class="level1">
 
 <p>
-This modules enables simultaneously <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> and <a href="totp2f.html" class="wikilink1" title="documentation:2.0:totp2f">TOTP</a> <em>(like Gitlab)</em>. Users can so use their TOTP instead if they don&#039;t have their U2F device.
+This modules enables both <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> and <a href="totp2f.html" class="wikilink1" title="documentation:2.0:totp2f">TOTP</a> <em>(like Gitlab)</em>. Therefore, users can use their TOTP instead if they don&#039;t have their U2F device.
 </p>
 
 <p>
-The difference with enabling both U2F and TOTP is that there is only one page displayed instead of displaying first a choice menu.
+Difference between enabled both U2F and TOTP is that only one page is displayed instead of displaying first a choice menu.
 </p>
 
 </div>
-<!-- EDIT1 SECTION "U2F-or-TOTP 2nd Factor Authentication" [1-346] -->
+<!-- EDIT1 SECTION "U2F-or-TOTP 2nd Factor Authentication" [1-336] -->
 <h2 class="sectionedit2" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -64,26 +64,26 @@ The difference with enabling both U2F and TOTP is that there is only one page di
 In the manager (advanced parameters), you just have to enable it:
 </p>
 <ul>
-<li class="level1"><div class="li"> Activation: set it to “on”. Note that you should not enable directly <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> and <a href="totp2f.html" class="wikilink1" title="documentation:2.0:totp2f">TOTP</a> <em>(except for self-registration: see below)</em></div>
+<li class="level1"><div class="li"> Activation: set it to “on”. Note that you should not enable <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> and <a href="totp2f.html" class="wikilink1" title="documentation:2.0:totp2f">TOTP</a> separatly <em>(except for self-registration: see below)</em></div>
 </li>
-<li class="level1"><div class="li"> Authentication level: you can overwrite here auth level for registered users. Leave it blank keeps auth level provided by first authentication module (default: 2 for user/password based modules). It is recommended to set an higher value here if you want to give access to some apps only to users enrolled.</div>
+<li class="level1"><div class="li"> Authentication level: you can overwrite here auth level for registered users. Leave it blank keeps auth level provided by first authentication module (By default: 2 for user/password based modules). It is recommended to set an higher value here if you want to give access to apps just for enrolled users.</div>
 </li>
 </ul>
 <div class="notetip">Every other parameters of <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> and <a href="totp2f.html" class="wikilink1" title="documentation:2.0:totp2f">TOTP</a> can be set in the corresponding 2F modules except that you should not enable them.
-</div><div class="noteimportant">If you want to give a different level for U2F or TOTP, leave this parameter blank and set U2F ant TOTP “authentication level” in corresponding modules.
+</div><div class="noteimportant">If you want to give a different level for U2F or TOTP, leave this parameter blank and set U2F and TOTP “authentication level” in corresponding modules.
 </div>
 </div>
-<!-- EDIT2 SECTION "Configuration" [347-1236] -->
+<!-- EDIT2 SECTION "Configuration" [337-1226] -->
 <h3 class="sectionedit3" id="self-registration">Self-registration</h3>
 <div class="level3">
 
 <p>
-This module has no self-registration. You must use U2F and TOTP self registration modules. Example: suppose you want to authorize U2F registration only if a TOTP secret is registered:
+This module has no self-registration. You have to use U2F and TOTP self registration modules. Example: suppose you want to allow U2F registration only if a TOTP secret is registered:
 </p>
 <ul>
 <li class="level1"><div class="li"> TOTP self-registration ⇒ enabled</div>
 </li>
-<li class="level1"><div class="li"> U2F self-registration ⇒ set to <code>$_totp2fSecret</code></div>
+<li class="level1"><div class="li"> U2F self-registration  ⇒ <code>$_2fDevices =~ /“type”:\s*“TOTP”/s</code></div>
 </li>
 </ul>
 
@@ -92,6 +92,6 @@ Automatically, U2F registration will be hidden for unregistered TOTP users and d
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Self-registration" [1237-] --></div>
+<!-- EDIT3 SECTION "Self-registration" [1227-] --></div>
 </body>
 </html>
