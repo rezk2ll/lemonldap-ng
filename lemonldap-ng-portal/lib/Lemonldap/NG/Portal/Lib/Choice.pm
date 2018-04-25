@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Lib::Choice;
 
 use strict;
 use Mouse;
+use Safe;
 
 extends 'Lemonldap::NG::Portal::Lib::Wrapper';
 
@@ -89,6 +90,7 @@ package Lemonldap::NG::Portal::Main;
 sub _buildAuthLoop {
     my ( $self, $req ) = @_;
     my @authLoop;
+    my $safe = Safe->new;
 
     # Test authentication choices
     unless ( ref $self->conf->{authChoiceModules} eq 'HASH' ) {
@@ -112,34 +114,44 @@ sub _buildAuthLoop {
         $name =~ s/\_/ /g;
 
         # Find modules associated to authChoice
-        my ( $auth, $userDB, $passwordDB, $url ) =
+        my ( $auth, $userDB, $passwordDB, $url, $condition ) =
           split( /[;\|]/, $self->conf->{authChoiceModules}->{$_} );
 
-        if ( $auth and $userDB and $passwordDB ) {
+        if ( defined $condition and !$safe->reval($condition) ) {
+            $self->logger->debug(
+"Condition returns false, authentication choice $name will not be displayed"
+            );
+        }
+        else {
+            if ( $auth and $userDB and $passwordDB ) {
 
-            # Default URL
-            if ( defined $url
-                and not $self->p->checkXSSAttack( 'URI',
-                    $req->env->{'REQUEST_URI'} ) )
-            {
-                $url .= $req->env->{'REQUEST_URI'};
-            }
-            else {
-                $url .= '#';
-            }
-            $self->logger->debug("Use URL $url");
+                # Default URL
+                if (
+                    defined $url
+                    and not $self->p->checkXSSAttack(
+                        'URI', $req->env->{'REQUEST_URI'}
+                    )
+                  )
+                {
+                    $url .= $req->env->{'REQUEST_URI'};
+                }
+                else {
+                    $url .= '#';
+                }
+                $self->logger->debug("Use URL $url");
 
-            # Options to store in the loop
-            my $optionsLoop =
-              { name => $name, key => $_, module => $auth, url => $url };
+                # Options to store in the loop
+                my $optionsLoop =
+                  { name => $name, key => $_, module => $auth, url => $url };
 
-            # Get displayType for this module
-            no strict 'refs';
-            my $displayType = "Lemonldap::NG::Portal::Auth::${auth}"
-              ->can('getDisplayType')->( undef, $req );
+                # Get displayType for this module
+                no strict 'refs';
+                my $displayType = "Lemonldap::NG::Portal::Auth::${auth}"
+                  ->can('getDisplayType')->( undef, $req );
 
-            $self->logger->debug("Display type $displayType for module $auth");
-            $optionsLoop->{$displayType} = 1;
+                $self->logger->debug(
+                    "Display type $displayType for module $auth");
+                $optionsLoop->{$displayType} = 1;
 
            # If displayType is logo, check if key.png is available
            # TODO:
@@ -149,20 +161,20 @@ sub _buildAuthLoop {
            #    $optionsLoop->{logoFile} = $_ . ".png";
            #}
            #else {
-            $optionsLoop->{logoFile} = $auth . ".png";
+                $optionsLoop->{logoFile} = $auth . ".png";
 
-            #}
+                #}
 
-            # Register item in loop
-            push @authLoop, $optionsLoop;
+                # Register item in loop
+                push @authLoop, $optionsLoop;
 
-            $self->logger->debug(
-                "Authentication choice $name will be displayed");
-        }
-
-        else {
-            $req->error("Authentication choice $_ value is invalid");
-            return 0;
+                $self->logger->debug(
+                    "Authentication choice $name will be displayed");
+            }
+            else {
+                $req->error("Authentication choice $_ value is invalid");
+                return 0;
+            }
         }
 
     }
