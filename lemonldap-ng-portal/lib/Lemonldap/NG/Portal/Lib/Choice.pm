@@ -14,7 +14,7 @@ has rules => ( is => 'rw', default => sub { {} } );
 
 has type => ( is => 'rw' );
 
-my $_choiceObj;
+my $_choiceRules;
 
 # INITIALIZATION
 
@@ -56,7 +56,8 @@ sub init {
         # Display conditions
         my $safe = Safe->new;
         if ( my $cond = $mods[4] ) {
-            my $self->rules->{$name} =
+            $self->logger->debug("Found a rule for $name");
+            my $_choiceRules->{$name} =
               $safe->reval("sub{my(\$env)=\@_;return ($cond)}");
             if ($@) {
                 $self->logger->error("Bad condition $cond: $@");
@@ -64,7 +65,8 @@ sub init {
             }
         }
         else {
-            $self->rules->{$name} = sub { 1 };
+            $self->logger->debug("No rule for $name");
+            $_choiceRules->{$name} = sub { 1 };
         }
     }
     unless ( keys %{ $self->modules } ) {
@@ -135,7 +137,11 @@ sub _buildAuthLoop {
         my ( $auth, $userDB, $passwordDB, $url, $condition ) =
           split( /[;\|]/, $self->conf->{authChoiceModules}->{$name} );
 
-        unless ( $_choiceObj->rules->{$name}->( $req->env ) ) {
+        unless ( $_choiceRules->{$name} ) {
+            $self->logger->error("$name has no rule !!!");
+            $_choiceRules->{$name} = sub { 1 };
+        }
+        unless ( $_choiceRules->{$name}->( $req->env ) ) {
             $self->logger->debug(
 "Condition returns false, authentication choice $name will not be displayed"
             );
