@@ -10,6 +10,8 @@ our $VERSION = '2.0.0';
 
 has modules => ( is => 'rw', default => sub { {} } );
 
+has rules => ( is => 'rw', default => sub { {} } );
+
 has type => ( is => 'rw' );
 
 # INITIALIZATION
@@ -46,6 +48,20 @@ sub init {
             $self->logger->error(
                 "Choice: unable to load $name, disabling it: " . $self->error );
             $self->error('');
+        }
+
+        # Display conditions
+        my $safe = Safe->new;
+        if ( my $cond = $mods[4] ) {
+            my $self->rules->{$name} =
+              $safe->reval("sub{my(\$env)=\@_;return ($cond)}");
+            if ($@) {
+                $self->logger->error("Bad condition $cond: $@");
+                return 0;
+            }
+        }
+        else {
+            $self->rules->{$name} = sub { 1 };
         }
     }
     unless ( keys %{ $self->modules } ) {
@@ -90,7 +106,6 @@ package Lemonldap::NG::Portal::Main;
 sub _buildAuthLoop {
     my ( $self, $req ) = @_;
     my @authLoop;
-    my $safe = Safe->new;
 
     # Test authentication choices
     unless ( ref $self->conf->{authChoiceModules} eq 'HASH' ) {
@@ -115,9 +130,9 @@ sub _buildAuthLoop {
 
         # Find modules associated to authChoice
         my ( $auth, $userDB, $passwordDB, $url, $condition ) =
-          split( /[;\|]/, $self->conf->{authChoiceModules}->{$_} );
+          split( /[;\|]/, $self->conf->{authChoiceModules}->{$name} );
 
-        if ( defined $condition and !$safe->reval($condition) ) {
+        unless ( $self->rules->{$name}->( $req->env ) ) {
             $self->logger->debug(
 "Condition returns false, authentication choice $name will not be displayed"
             );
