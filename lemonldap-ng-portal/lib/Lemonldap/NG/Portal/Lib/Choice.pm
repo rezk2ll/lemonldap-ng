@@ -25,7 +25,6 @@ my $_choiceRules;
 sub init {
     my ( $self, $type ) = @_;
     $self->type($type);
-    $_choiceObj = $self;
 
     unless ( $self->conf->{authChoiceModules}
         and %{ $self->conf->{authChoiceModules} } )
