@@ -14,6 +14,8 @@ has rules => ( is => 'rw', default => sub { {} } );
 
 has type => ( is => 'rw' );
 
+my $_choiceObj;
+
 # INITIALIZATION
 
 # init() must be called by module::init() with a number:
@@ -23,6 +25,7 @@ has type => ( is => 'rw' );
 sub init {
     my ( $self, $type ) = @_;
     $self->type($type);
+    $_choiceObj = $self;
 
     unless ( $self->conf->{authChoiceModules}
         and %{ $self->conf->{authChoiceModules} } )
@@ -132,7 +135,7 @@ sub _buildAuthLoop {
         my ( $auth, $userDB, $passwordDB, $url, $condition ) =
           split( /[;\|]/, $self->conf->{authChoiceModules}->{$name} );
 
-        unless ( $self->rules->{$name}->( $req->env ) ) {
+        unless ( $_choiceObj->rules->{$name}->( $req->env ) ) {
             $self->logger->debug(
 "Condition returns false, authentication choice $name will not be displayed"
             );
