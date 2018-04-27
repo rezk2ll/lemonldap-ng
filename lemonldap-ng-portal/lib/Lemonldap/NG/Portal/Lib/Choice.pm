@@ -54,7 +54,8 @@ sub init {
 
         # Display conditions
         my $safe = Safe->new;
-        if ( my $cond = $mods[4] ) {
+        my $cond = $mods[4];
+        if ( defined $cond ) {
             $self->logger->debug("Found a rule for $name");
             my $_choiceRules->{$name} =
               $safe->reval("sub{my(\$env)=\@_;return ($cond)}");
@@ -146,12 +147,9 @@ sub _buildAuthLoop {
             if ( $auth and $userDB and $passwordDB ) {
 
                 # Default URL
-                if (
-                    defined $url
-                    and not $self->checkXSSAttack(
-                        'URI', $req->env->{'REQUEST_URI'}
-                    )
-                  )
+                if ( defined $url
+                    and not $self->checkXSSAttack( 'URI',
+                        $req->env->{'REQUEST_URI'} ) )
                 {
                     $url .= $req->env->{'REQUEST_URI'};
                 }
