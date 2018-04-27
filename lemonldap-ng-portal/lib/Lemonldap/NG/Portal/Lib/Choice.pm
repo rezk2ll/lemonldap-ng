@@ -131,15 +131,15 @@ sub _buildAuthLoop {
 
         # Find modules associated to authChoice
         my ( $auth, $userDB, $passwordDB, $url, $condition ) =
-          split( /[;\|]/, $self->conf->{authChoiceModules}->{$name} );
+          split( /[;\|]/, $self->conf->{authChoiceModules}->{$_} );
 
-        unless ( $_choiceRules->{$name} ) {
-            $self->logger->error("$name has no rule !!!");
-            $_choiceRules->{$name} = sub { 1 };
+        unless ( $_choiceRules->{$_} ) {
+            $self->logger->error("$_ has no rule !!!");
+            $_choiceRules->{$_} = sub { 1 };
         }
-        unless ( $_choiceRules->{$name}->( $req->env ) ) {
+        unless ( $_choiceRules->{$_}->( $req->env ) ) {
             $self->logger->debug(
-"Condition returns false, authentication choice $name will not be displayed"
+"Condition returns false, authentication choice $_ will not be displayed"
             );
         }
         else {
