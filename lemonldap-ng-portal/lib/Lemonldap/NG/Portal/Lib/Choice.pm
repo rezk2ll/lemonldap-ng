@@ -148,7 +148,7 @@ sub _buildAuthLoop {
                 # Default URL
                 if (
                     defined $url
-                    and not $self->p->checkXSSAttack(
+                    and not $self->checkXSSAttack(
                         'URI', $req->env->{'REQUEST_URI'}
                     )
                   )
