@@ -57,7 +57,7 @@ sub init {
         my $cond = $mods[4];
         if ( defined $cond ) {
             $self->logger->debug("Found a rule for $name");
-            my $_choiceRules->{$name} =
+            $_choiceRules->{$name} =
               $safe->reval("sub{my(\$env)=\@_;return ($cond)}");
             if ($@) {
                 $self->logger->error("Bad condition $cond: $@");
@@ -144,6 +144,7 @@ sub _buildAuthLoop {
             );
         }
         else {
+            $self->logger->debug("Displaying authentication choice $_");
             if ( $auth and $userDB and $passwordDB ) {
 
                 # Default URL

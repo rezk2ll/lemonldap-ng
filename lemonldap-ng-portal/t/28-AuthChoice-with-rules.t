@@ -1,0 +1,71 @@
+use Test::More;
+use strict;
+use IO::String;
+
+require 't/test-lib.pm';
+
+my $res;
+my $maintests = 3;
+
+eval { unlink 't/userdb.db' };
+
+SKIP: {
+    eval { require DBI; require DBD::SQLite; };
+    if ($@) {
+        skip 'DBD::SQLite not found', $maintests;
+    }
+    require 't/test-ldap.pm';
+    my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
+    $dbh->do('CREATE TABLE users (user text,password text,name text)');
+    $dbh->do("INSERT INTO users VALUES ('dwho','dwho','Doctor who')");
+
+    my $client = LLNG::Manager::Test->new(
+        {
+            ini => {
+                logLevel       => 'error',
+                useSafeJail    => 1,
+                authentication => 'Choice',
+                userDB         => 'Same',
+
+                authChoiceParam   => 'test',
+                authChoiceModules => {
+                    demo => 'Demo;Demo;Null;;0',
+                    sql  => 'DBI;DBI;DBI;;1',
+                },
+
+                dbiAuthChain        => 'dbi:SQLite:dbname=t/userdb.db',
+                dbiAuthUser         => '',
+                dbiAuthPassword     => '',
+                dbiAuthTable        => 'users',
+                dbiAuthLoginCol     => 'user',
+                dbiAuthPasswordCol  => 'password',
+                dbiAuthPasswordHash => '',
+            }
+        }
+    );
+
+    ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu' );
+    ok( $res->[2]->[0] !~ /demo/, 'Demo not displayed' );
+
+    # Test SQL
+    my $postString = 'user=dwho&password=dwho&test=sql';
+
+    # Try yo authenticate
+    # -------------------
+    ok(
+        $res = $client->_post(
+            '/', IO::String->new($postString),
+            length => length($postString)
+        ),
+        'Auth query'
+    );
+    expectOK($res);
+    my $id = expectCookie($res);
+    $client->logout($id);
+    clean_sessions();
+}
+count($maintests);
+eval { unlink 't/userdb.db' };
+stopLdapServer() if $ENV{LLNGTESTLDAP};
+clean_sessions();
+done_testing( count() );
