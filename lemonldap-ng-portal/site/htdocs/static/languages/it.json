@@ -85,7 +85,7 @@
 "PE83":"Verifica U2F fallita",
 "PE84":"Non sei autorizzato ad accedere a questo host",
 "PE85":"Il sito remoto richiede una sessione più recente (e il plug-in di UpgradeSession non viene caricato). Disconnetti e riprova",
-"2FManagment":"Gestionnaire 2ndF",
+"2FManagment":"Gestionnaire 2ndFA",
 "accept":"Accetta",
 "accessDenied":"Non hai un'autorizzazione di accesso per questa applicazione",
 "accountCreated":"Il tuo account è stato creato, la tua password temporanea è stata inviata all'indirizzo email.",

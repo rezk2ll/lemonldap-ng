@@ -85,7 +85,7 @@
 "PE83":"U2F verification failed",
 "PE84":"You're not authorized to access to this host",
 "PE85":"The remote site ask for a newer session (and UpgradeSession plugin isn't loaded). Logout and retry",
-"2FManagment":"2ndF Managment",
+"2FManagment":"2ndFA Managment",
 "accept":"Accept",
 "accessDenied":"You have no access authorization for this application",
 "accountCreated":"Your account has been created, your temporary password has been sent to your mail address.",
