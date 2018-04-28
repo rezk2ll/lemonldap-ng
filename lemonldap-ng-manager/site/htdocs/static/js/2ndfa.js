@@ -369,11 +369,15 @@
       $scope.init = function() {
         $scope.waiting = true;
         $scope.data = [];
-        return $q.all([$translator.init($scope.lang), $scope.updateTree('', $scope.data, 0, 0)]).then(function() {
+        $q.all([$translator.init($scope.lang), $scope.updateTree('', $scope.data, 0, 0)]).then(function() {
           return $scope.waiting = false;
         }, function(resp) {
           return $scope.waiting = false;
         });
+        $scope.activeModule = "2ndFA";
+        return $scope.myStyle = {
+          color: '#ffb84d'
+        };
       };
       c = $location.path().match(/^\/(\w+)/);
       return $scope.type = c ? c[1] : '_whatToTrace';

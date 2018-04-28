@@ -241,7 +241,9 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 			$scope.waiting = false
 		, (resp) ->
 			$scope.waiting = false
-
+		$scope.activeModule = "notifications"
+		$scope.myStyle = {color: '#ffb84d'}
+		
 	$scope.displayCreateForm = ->
 		$scope.waiting = true
 		$translator.init($scope.lang).then ->

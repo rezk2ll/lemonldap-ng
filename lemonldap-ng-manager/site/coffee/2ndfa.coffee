@@ -375,12 +375,14 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			$scope.waiting = false
 		, (resp) ->
 			$scope.waiting = false
+		$scope.activeModule = "2ndFA"
+		$scope.myStyle = {color: '#ffb84d'}
 
 	# Query scheme initialization
 	# Default to '_whatToTrace'
 	c = $location.path().match /^\/(\w+)/
 	$scope.type = if c then c[1] else '_whatToTrace'
-	#$scope.myStyle = "{color: '#ffb84d'}"
+	
 ]
 
 
