@@ -55,6 +55,7 @@
     <span trspan="connect">Connect</span>
    </button>
   </div>
+  <br>
  </form>
 </TMPL_IF>
 
