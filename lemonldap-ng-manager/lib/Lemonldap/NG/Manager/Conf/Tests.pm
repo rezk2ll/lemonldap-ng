@@ -362,7 +362,7 @@ sub tests {
             return 1 unless ( $conf->{utotp2fActivation} );
             my $w = "";
             foreach ( 'totp', 'u' ) {
-                $w .= uc($_) . "2F is activated twice !!! \n"
+                $w .= uc($_) . "2F is activated twice \n"
                   if ( $conf->{ $_ . '2fActivation' } eq '1' );
             }
             return ( 1, ( $w ? $w : () ) );

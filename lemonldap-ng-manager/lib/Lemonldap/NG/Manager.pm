@@ -193,7 +193,7 @@ inherits of L<Lemonldap::NG::Handler::PSGI::Router>
 
 =head1 ORGANIZATION
 
-Lemonldap::NG Manager contains 5 parts:
+Lemonldap::NG Manager contains 6 parts:
 
 =over
 
@@ -202,6 +202,8 @@ Lemonldap::NG Manager contains 5 parts:
 =item Session explorer
 
 =item Notification explorer
+
+=item Second Factors manager
 
 =item Configuration builder (see L<Lemonldap::NG::Manager::Build>
 
@@ -253,7 +255,7 @@ you can also fix them in $opts hash ref passed as argument to run() or new()).
   protection     = manager
   
   ;enabledModules: Modules to display. Default to `conf, sessions, notifications`
-  enabledModules = conf, sessions, notifications
+  enabledModules = conf, sessions, notifications, 2ndFA
   
   ;logLevel:       choose one of error, warn, notice, info, debug
   ;                See Lemonldap::NG::Common::PSGI doc for more
