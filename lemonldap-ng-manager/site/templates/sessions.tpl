@@ -91,21 +91,14 @@
       </table>
     </div>
     <div ng-if="!node.nodes">
-
-	   
-	   
 	   <th ng-if="node.title!='UBK' && node.title!='TOTP' && node.title!='U2F'">{{translate(node.title)}}</th>
        <td ng-if="node.title!='type' && node.title!='UBK' && node.title!='TOTP' && node.title!='U2F' " >${{node.title}}</td>
 	   <td ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'">{{node.title}}</td>
-
 	   <th ng-if="node.title=='type'">{{translate(node.value)}}</th>
-	   <td ng-if="node.title!='type'" >{{node.value}}</td>
+	   <td class="col-md-3" ng-if="node.title!='type'" >{{node.value}}</td>
 	   <th ng-if="node.title=='type'">{{translate(node.epoch)}}</th>
-	   <td ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'">{{localeDate(node.epoch)}}</td>
+	   <td class="col-md-3" ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'">{{localeDate(node.epoch)}}</td>
 	   <td></td>
-	   
-	   
-	   
     </div>
   </script>
 

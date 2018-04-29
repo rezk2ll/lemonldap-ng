@@ -751,6 +751,9 @@ llapp.controller 'TreeCtrl', [
 				$scope.form = 'home'
 				$scope.waiting = false
 			, readError
+			$scope.activeModule = "conf"
+			$scope.myStyle = {color: '#ffb84d'}
+					
 		c = $location.path().match(new RegExp('^/confs/(latest|[0-9]+)'))
 		unless c
 			console.log "Redirecting to /confs/latest"

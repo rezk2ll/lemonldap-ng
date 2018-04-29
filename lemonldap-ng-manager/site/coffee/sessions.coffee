@@ -395,6 +395,8 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			$scope.waiting = false
 		, (resp) ->
 			$scope.waiting = false
+		$scope.activeModule = "sessions"
+		$scope.myStyle = {color: '#ffb84d'}
 
 	# Query scheme initialization
 	# Default to '_whatToTrace'
