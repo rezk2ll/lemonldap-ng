@@ -131,6 +131,15 @@ L<Lemonldap::NG::Portal> second factor plugins.
   sub init {
       my ($self) = @_;
       # Insert here initialization process
+      #
+      # If self registration is enabled and "activation" is set to "enabled",
+      # replace the rule to detect if user has registered a device key.
+      # The rule must be like this :
+      # By example : 
+      $self->conf->{u2fActivation} = '$_2fDevices =~ /"type":\s*"U2F"/s'
+      # Optionnaly, the rule can be : '$_2fDevices and $_2fDevices =~ /"type":\s*"U2F"/s'
+      # to avoid warning due to undef variable
+      #
       # Required call:
       return $self->SUPER::init();
   }

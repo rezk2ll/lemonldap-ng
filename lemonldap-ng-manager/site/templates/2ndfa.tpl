@@ -88,9 +88,9 @@
     <div ng-if="!node.nodes" >
 	   <th ng-if="node.title!='UBK' && node.title!='TOTP' && node.title!='U2F'">{{translate(node.title)}}</th>
        <td ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" >{{node.title}}</td>
-	   <th ng-if="node.title=='type'">{{translate(node.value)}}</th>
+	   <th class="col-md-3" ng-if="node.title=='type'">{{translate(node.value)}}</th>
 	   <td class="col-md-3" ng-if="node.title!='type'" >{{node.value}}</td>
-	   <th ng-if="node.title=='type'">{{translate(node.epoch)}}</th>
+	   <th class="col-md-3" ng-if="node.title=='type'">{{translate(node.epoch)}}</th>
 	   <td class="col-md-3" ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'">{{localeDate(node.epoch)}}</td>
       <td >
 		  <span ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="delete2FA(node.title, node.epoch)"></span>

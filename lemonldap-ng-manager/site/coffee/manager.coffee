@@ -751,6 +751,7 @@ llapp.controller 'TreeCtrl', [
 				$scope.form = 'home'
 				$scope.waiting = false
 			, readError
+			# Colorized link
 			$scope.activeModule = "conf"
 			$scope.myStyle = {color: '#ffb84d'}
 					

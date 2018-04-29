@@ -241,6 +241,7 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 			$scope.waiting = false
 		, (resp) ->
 			$scope.waiting = false
+		# Colorized link
 		$scope.activeModule = "notifications"
 		$scope.myStyle = {color: '#ffb84d'}
 		
