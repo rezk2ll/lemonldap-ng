@@ -395,6 +395,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			$scope.waiting = false
 		, (resp) ->
 			$scope.waiting = false
+		# Colorized link
 		$scope.activeModule = "sessions"
 		$scope.myStyle = {color: '#ffb84d'}
 
