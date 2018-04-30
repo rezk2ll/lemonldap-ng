@@ -74,7 +74,6 @@ sub new {
     weaken $self->{portal};
 
     # Setting default LDAP password storage encoding to utf-8
-    $self->{conf}->{ldapPwdEnc} ||= 'utf-8';
     return $self;
 }
 

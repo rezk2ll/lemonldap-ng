@@ -13,16 +13,9 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Main::Auth';
 
-# PROPERTIES
-
-has SSLField => ( is => 'rw' );
-
 # INITIALIZATION
 
 sub init {
-    my ($self) = @_;
-    $self->SSLField( $self->conf->{SSLVar} ||= 'SSL_CLIENT_S_DN_Email' );
-    $self->conf->{SSLVarIf} ||= {};
     return 1;
 }
 
@@ -30,7 +23,7 @@ sub init {
 # @return Lemonldap::NG::Portal constant
 sub extractFormInfo {
     my ( $self, $req ) = @_;
-    my $field = $self->SSLField;
+    my $field = $self->conf->{SSLVar};
     if ( $req->env->{SSL_CLIENT_I_DN}
         and my $tmp =
         $self->conf->{SSLVarIf}->{ $req->env->{SSL_CLIENT_I_DN} } )

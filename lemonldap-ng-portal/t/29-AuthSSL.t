@@ -23,9 +23,31 @@ ok(
     ),
     'Auth query'
 );
-count(1);
 expectOK($res);
-my $id = expectCookie($res);
+expectCookie($res);
+count(1);
+
+$client = LLNG::Manager::Test->new(
+    {
+        ini => {
+            logLevel       => 'error',
+            useSafeJail    => 1,
+            authentication => 'SSL',
+            userDB         => 'Null',
+        }
+    }
+);
+
+ok(
+    $res = $client->_get(
+        '/', custom => { SSL_CLIENT_S_DN_Email => 'dwho' }
+    ),
+    'Auth query'
+);
+expectOK($res);
+expectCookie($res);
+count(1);
+
 clean_sessions();
 
 done_testing( count() );
