@@ -1054,7 +1054,7 @@ sub attributes {
             default       => 1,
             documentation => 'Upgrade session activation',
         },
-        
+
         # 2F
         max2FDevices => {
             default       => 10,
@@ -1066,7 +1066,7 @@ sub attributes {
             type          => 'int',
             documentation => 'Maximum 2F devices name length',
         },
-        
+
         # U2F
         u2fActivation => {
             type          => 'boolOrExpr',
@@ -2401,8 +2401,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 5,
             documentation => 'SSL authentication level',
         },
-        SSLVar    => { type => 'text', },
-        SSLVarIf  => { type => 'keyTextContainer', },
+        SSLVar => {
+            type    => 'text',
+            default => 'SSL_CLIENT_S_DN_Email'
+        },
+        SSLVarIf => {
+            type    => 'keyTextContainer',
+            default => {}
+        },
         sslByAjax => {
             type          => 'bool',
             documentation => 'Use Ajax request for SSL',

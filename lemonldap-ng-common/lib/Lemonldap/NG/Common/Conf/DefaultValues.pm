@@ -244,6 +244,8 @@ sub defaultValues {
         'SMTPServer'                              => '',
         'SMTPTLS'                                 => '',
         'SSLAuthnLevel'                           => 5,
+        'SSLVar'                                  => 'SSL_CLIENT_S_DN_Email',
+        'SSLVarIf'                                => {},
         'successLoginNumber'                      => 5,
         'timeout'                                 => 72000,
         'timeoutActivity'                         => 0,
