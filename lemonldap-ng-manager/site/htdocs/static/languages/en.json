@@ -639,7 +639,7 @@
 "restConfigServer":"REST configuration server",
 "restore":"Restore",
 "restoreConf":"Restore configuration",
-"rest2f":"REST Second Factor",
+"rest2f":"REST second factor",
 "rest2fActivation":"Activation",
 "rest2fAuthnLevel":"Authentication level",
 "rest2fInitArgs":"Init Arguments",
