@@ -1,5 +1,5 @@
 ###
-# Session explorer
+# Sessions explorer
 ###
 
 # Max number of session to display (see overScheme)
