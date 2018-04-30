@@ -74,10 +74,12 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-			<li><a href="/2fregisters">
-              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/2FManagment.png" width="16" height="16" alt="refresh" />
-              <span trspan="2FManagment">2FManagment</span>
-            </a></li>
+			<TMPL_IF NAME="SFAManagment">
+			  <li><a href="/2fregisters">
+	              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/2FManagment.png" width="16" height="16" alt="refresh" />
+	              <span trspan="2FManagment">2FManagment</span>
+	          </a></li>
+            </TMPL_IF>
             <li><a href="/refresh">
               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/arrow_refresh.png" width="16" height="16" alt="refresh" />
               <span trspan="refreshrights">Refresh</span>
