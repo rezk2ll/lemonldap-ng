@@ -12,7 +12,7 @@
       <div class="navbar navbar-default">
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" role="grid">
-            <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('2faSessions')}}</a></li>
+            <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('2faSessions')}} &nbsp;&nbsp;</a></li>
             <form name="filterForm">
               <div class="form-check ">&nbsp;&nbsp;&nbsp;
                 <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
@@ -86,13 +86,13 @@
       </table>
     </div>
     <div ng-if="!node.nodes" >
-	   <th ng-if="node.title!='UBK' && node.title!='TOTP' && node.title!='U2F'">{{translate(node.title)}}</th>
-       <td ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" >{{node.title}}</td>
+	   <th class="col-md-3" ng-if="node.title!='UBK' && node.title!='TOTP' && node.title!='U2F'">{{translate(node.title)}}</th>
+       <td class="data-{{node.epoch}}" ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" >{{node.title}}</td>
 	   <th class="col-md-3" ng-if="node.title=='type'">{{translate(node.value)}}</th>
-	   <td class="col-md-3" ng-if="node.title!='type'" >{{node.value}}</td>
+	   <td class="col-md-3 data-{{node.epoch}}" ng-if="node.title!='type'" >{{node.value}}</td>
 	   <th class="col-md-3" ng-if="node.title=='type'">{{translate(node.epoch)}}</th>
-	   <td class="col-md-3" ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'">{{localeDate(node.epoch)}}</td>
-      <td >
+	   <td class="col-md-3 data-{{node.epoch}}" ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'">{{localeDate(node.epoch)}}</td>
+      <td class="data-{{node.epoch}}">
 		  <span ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="delete2FA(node.title, node.epoch)"></span>
 		  <!--
 		  <span ng-if="$last && ( node.title=='TOTP' || node.title=='UBK' || node.title=='U2F' )" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"></span>
