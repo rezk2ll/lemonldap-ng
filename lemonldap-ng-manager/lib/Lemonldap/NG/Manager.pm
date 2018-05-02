@@ -52,7 +52,7 @@ sub init {
         return 0;
     }
 
-    $self->{enabledModules} ||= "conf, sessions, notifications";
+    $self->{enabledModules} ||= "conf, sessions, notifications, 2ndFA";
     my @links;
     my @enabledModules =
       map { push @links, $_; "Lemonldap::NG::Manager::" . ucfirst($_) }
@@ -254,7 +254,7 @@ you can also fix them in $opts hash ref passed as argument to run() or new()).
   ;                Lemonldap::NG::Handler::PSGI::Router doc.
   protection     = manager
   
-  ;enabledModules: Modules to display. Default to `conf, sessions, notifications`
+  ;enabledModules: Modules to display. Default to `conf, sessions, notifications, 2ndFA`
   enabledModules = conf, sessions, notifications, 2ndFA
   
   ;logLevel:       choose one of error, warn, notice, info, debug
