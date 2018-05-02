@@ -52,7 +52,7 @@ sub init {
         return 0;
     }
 
-    $self->{enabledModules} ||= "conf, sessions, notifications";
+    $self->{enabledModules} ||= "conf, sessions, notifications, 2ndFA";
     my @links;
     my @enabledModules =
       map { push @links, $_; "Lemonldap::NG::Manager::" . ucfirst($_) }
