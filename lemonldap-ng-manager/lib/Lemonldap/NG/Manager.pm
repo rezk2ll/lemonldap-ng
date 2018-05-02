@@ -254,7 +254,7 @@ you can also fix them in $opts hash ref passed as argument to run() or new()).
   ;                Lemonldap::NG::Handler::PSGI::Router doc.
   protection     = manager
   
-  ;enabledModules: Modules to display. Default to `conf, sessions, notifications`
+  ;enabledModules: Modules to display. Default to `conf, sessions, notifications, 2ndFA`
   enabledModules = conf, sessions, notifications, 2ndFA
   
   ;logLevel:       choose one of error, warn, notice, info, debug
