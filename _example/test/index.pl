@@ -14,8 +14,11 @@ my $name = $cgi->param("name") || "LemonLDAP::NG sample protected application";
 my $color = $cgi->param("color") || "#ddd";
 
 # Local parameters
-my $portal_url  = "http://auth.__DNSDOMAIN__";
-my $manager_url = "http://manager.__DNSDOMAIN__";
+my $host = $ENV{HTTP_HOST};
+my ( $domain ) = ( $host =~ /\w+\.(.*)/ );
+my $protocol = $ENV{HTTPS} ? "https" : "http";
+my $portal_url  = "$protocol://auth.$domain";
+my $manager_url = "$protocol://manager.$domain";
 
 # CSS
 my $css = <<EOT;
