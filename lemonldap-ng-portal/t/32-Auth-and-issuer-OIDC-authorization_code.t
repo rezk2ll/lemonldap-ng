@@ -9,9 +9,11 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $debug = 'error';
+my $debug = 'debug';
 my ( $op, $rp, $res );
 my %handlerOR = ( op => [], rp => [] );
+
+my $access_token;
 
 LWP::Protocol::PSGI->register(
     sub {
@@ -60,6 +62,11 @@ LWP::Protocol::PSGI->register(
             '  Content is JSON' )
           or explain( $res->[1], 'Content-Type => application/json' );
         count(4);
+        if ( $res->[2]->[0] =~ /"access_token":"(.*?)"/ ) {
+            $access_token = $1;
+            pass "Found access_token $access_token";
+            count(1);
+        }
         return $res;
     }
 );
@@ -148,6 +155,27 @@ ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancestors/,
 count(1);
 
 # Verify UTF-8
+ok(
+    $res = $op->_get(
+        '/oauth2/userinfo',
+        query  => 'access_token=' . $access_token,
+    ),
+    'Get userinfo'
+);
+ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+  or print STDERR $@;
+ok( $res->{name} eq 'Frédéric Accents', 'UTF-8 values' )
+  or explain( $res, 'name => Frédéric Accents' );
+count(3);
+
+ok( $res = $op->_get("/sessions/global/$spId"), 'Get UTF-8' );
+expectOK($res);
+ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+  or print STDERR $@;
+ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
+  or explain( $res, 'cn => Frédéric Accents' );
+count(3);
+
 switch ('rp');
 ok( $res = $rp->_get("/sessions/global/$spId"), 'Get UTF-8' );
 expectOK($res);
@@ -290,6 +318,7 @@ sub op {
                 authentication                  => 'Demo',
                 userDB                          => 'Same',
                 issuerDBOpenIDConnectActivation => "1",
+                restSessionServer               => 1,
                 oidcRPMetaDataExportedVars      => {
                     rp => {
                         email       => "mail",
