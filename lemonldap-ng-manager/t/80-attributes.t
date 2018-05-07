@@ -3,7 +3,6 @@
 
 use strict;
 use Test::More;
-use Data::Dumper;
 
 # CONSTANTS
 

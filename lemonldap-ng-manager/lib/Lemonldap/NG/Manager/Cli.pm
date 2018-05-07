@@ -6,6 +6,7 @@ use Data::Dumper;
 use Lemonldap::NG::Common::Conf::ReConstants;
 
 our $VERSION = '2.0.0';
+$Data::Dumper::Useperl = 1;
 
 extends('Lemonldap::NG::Manager::Cli::Lib');
 

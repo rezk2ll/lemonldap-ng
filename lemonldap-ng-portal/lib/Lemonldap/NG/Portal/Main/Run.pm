@@ -679,7 +679,8 @@ sub cookie {
 sub _dump {
     my ( $self, $variable ) = @_;
     require Data::Dumper;
-    $Data::Dumper::Indent = 0;
+    $Data::Dumper::Indent  = 0;
+    $Data::Dumper::Useperl = 1;
     $self->logger->debug( "Dump: " . Data::Dumper::Dumper($variable) );
     return;
 }

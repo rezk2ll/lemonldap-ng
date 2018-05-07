@@ -9,7 +9,6 @@ use strict;
 use Mouse;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
-use Data::Dumper;
 use HTML::Template;
 use MIME::Base64;
 use Safe;

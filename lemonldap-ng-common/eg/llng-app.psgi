@@ -1,6 +1,5 @@
 #!/usr/bin/perl
 
-use Data::Dumper;
 use Plack::Builder;
 
 # Basic test app
