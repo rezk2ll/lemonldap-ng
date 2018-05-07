@@ -15,10 +15,10 @@ my $color = $cgi->param("color") || "#ddd";
 
 # Local parameters
 my $host = $ENV{HTTP_HOST};
-my ( $domain ) = ( $host =~ /\w+\.(.*)/ );
-my $protocol = $ENV{HTTPS} ? "https" : "http";
-my $portal_url  = "$protocol://auth.$domain";
-my $manager_url = "$protocol://manager.$domain";
+my ( $domain, $port ) = ( $host =~ /\w+\.(.*?):(\d*)/ );
+my $protocol    = ( $ENV{HTTPS} =~ /^on$/i ) ? "https" : "http";
+my $portal_url  = "$protocol://auth.$domain:$port";
+my $manager_url = "$protocol://manager.$domain:$port";
 
 # CSS
 my $css = <<EOT;
@@ -67,7 +67,8 @@ print
 "<script type=\"text/javascript\" src=\"$portal_url/static/bwr/jquery/dist/jquery.js\"></script>\n";
 print
 "<script type=\"text/javascript\" src=\"$portal_url/static/bwr/jquery-ui/jquery-ui.js\"></script>\n";
-print "<script src=\"$portal_url/static/bwr/bootstrap/dist/js/bootstrap.js\"></script>\n";
+print
+"<script src=\"$portal_url/static/bwr/bootstrap/dist/js/bootstrap.js\"></script>\n";
 print "</head>\n";
 print "<body>\n";
 
