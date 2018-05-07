@@ -245,6 +245,7 @@
             for (i = 0, len = attrs.length; i < len; i++) {
               attr = attrs[i];
               if (session[attr]) {
+                session[attr] = session[attr].toString();
                 if (session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)) {
                   subres.push({
                     title: "type",
@@ -273,12 +274,14 @@
                     });
                   }
                   delete session[attr];
-                } else {
+                } else if (session[attr].match(/\w+/)) {
                   subres.push({
                     title: attr,
                     value: session[attr],
                     epoch: ''
                   });
+                  delete session[attr];
+                } else {
                   delete session[attr];
                 }
               } else {
