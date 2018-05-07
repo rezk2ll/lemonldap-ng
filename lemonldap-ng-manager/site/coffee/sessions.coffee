@@ -196,7 +196,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						else if key.match /^(_utime|_lastAuthnUTime|_lastSeen|notification)$/
 							session[key] = $scope.localeDate value
 						else if key.match /^(_startTime|_updateTime)$/
-							#session[key] = _stToStr value			
+							value = _stToStr value			
 							pattern = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/
 							arrayDate = value.match(pattern)
 							session[key] = "#{arrayDate[3]}/#{arrayDate[2]}/#{arrayDate[1]} à #{arrayDate[4]}:#{arrayDate[5]}:#{arrayDate[6]}"
