@@ -157,7 +157,7 @@
 "newPassword":"Mật khẩu mới",
 "newPwdSentTo":"Một xác nhận đã được gửi đến địa chỉ thư của bạn.",
 "noHistory":"Đây là kết nối đầu tiên của bạn, chào mừng!",
-"notAuthorized":"You're not authorized too do this",
+"notAuthorized":"You're not authorized to do this",
 "notFound": "Không tìm thấy: bạn cố gắng truy cập vào một trang không có sẵn",
 "noTOTPFound":"No TOTP found",
 "noU2FKeyFound": "No U2F key found",
