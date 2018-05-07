@@ -209,7 +209,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			# 2. Push session keys in result, grouped by categories
 			for category, attrs of categories
 				subres = []
-				for attr in attrs		
+				for attr in attrs
 					if session[attr]
 						if session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)
 							subres.push
