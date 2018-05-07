@@ -244,7 +244,7 @@
             subres = [];
             for (i = 0, len = attrs.length; i < len; i++) {
               attr = attrs[i];
-              if (session[attr] && session[attr].match(/\w+/)) {
+              if (session[attr]) {
                 if (session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)) {
                   subres.push({
                     title: "type",
