@@ -196,7 +196,6 @@
             reg = new RegExp(re);
             for (key in session) {
               value = session[key];
-              key = key.toString();
               if (key.match(reg) && value) {
                 tmp.push({
                   title: key,
@@ -216,8 +215,6 @@
           id = session._session_id;
           for (key in session) {
             value = session[key];
-            key = key.toString();
-            value = value.toString();
             if (!value) {
               delete session[key];
             } else {

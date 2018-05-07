@@ -171,7 +171,6 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 				tmp = []
 				reg = new RegExp(re)
 				for key,value of session
-					key = key.toString()
 					if key.match(reg) and value
 						tmp.push
 							title: key
@@ -186,8 +185,6 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 			# 1. Replace values if needed
 			for key, value of session
-				key = key.toString()
-				value = value.toString()
 				unless value
 					delete session[key]
 				else
