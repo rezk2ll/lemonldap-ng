@@ -196,7 +196,8 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			for category, attrs of categories
 				subres = []
 				for attr in attrs
-					if session[attr]  and session[attr].match(/\w+/)
+					if session[attr]
+						session[attr] = session[attr].toString()
 						if session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)
 							subres.push
 								title: "type"
@@ -216,11 +217,15 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									value: name
 									epoch: epoch
 							delete session[attr]	
-						else
+						else if session[attr].match(/\w+/)
 							subres.push
 								title: attr
 								value: session[attr]
-							delete session[attr]			
+							delete session[attr]
+						else
+							delete session[attr]
+					else
+						delete session[attr]
 				if subres.length >0
 					res.push
 						title: "__#{category}__"
