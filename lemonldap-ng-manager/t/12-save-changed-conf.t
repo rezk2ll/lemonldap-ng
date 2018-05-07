@@ -4,7 +4,6 @@
 use Test::More;
 use strict;
 use JSON;
-use Data::Dumper;
 require 't/test-lib.pm';
 
 my $struct = 't/jsonfiles/12-modified.json';

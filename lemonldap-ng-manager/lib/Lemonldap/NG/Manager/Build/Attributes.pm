@@ -215,6 +215,11 @@ sub attributes {
     return {
 
         # Other
+        logLevel => {
+            type          => 'text',
+            documentation => 'Log level, must be set in .ini',
+            flags         => 'hmp',
+        },
         configStorage => {
             type          => 'text',
             documentation => 'Configuration storage',

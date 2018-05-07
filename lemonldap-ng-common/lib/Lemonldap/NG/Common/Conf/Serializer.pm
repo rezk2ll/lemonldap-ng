@@ -131,7 +131,7 @@ sub oldUnserialize {
         if ( $k =~ $hashParameters and $v ||= {} and not ref($v) ) {
             $conf->{$k} = {};
 
-            # Value should be a Data::Dumper, else this is an old format
+            # Value should be a Data::Dumper, else this is an old-old format
             if ( defined($v) and $v !~ /^\$/ ) {
 
                 $Lemonldap::NG::Common::Conf::msg .=

@@ -8,7 +8,7 @@ use JSON;
 my $milestone = '2.0.0';
 my @cat = ( 'Bug', 'Improvement', 'New Feature' );
 
-open F, "$ENV{HOME}/.ow2-token" or die $!;
+open F, "$ENV{HOME}/.ow2-token" or die "Unable to get OW2 token ($!)";
 my $token = join '',<F>;
 close F;
 $token =~ s/\s//sg or die "No token";

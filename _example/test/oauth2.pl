@@ -10,6 +10,7 @@ use MIME::Base64
 use URI::Escape;
 use CGI;
 use Data::Dumper;
+$Data::Dumper::Useperl = 1;
 use utf8;
 use Digest::SHA
   qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha256_base64 sha384_base64 sha512_base64/;
@@ -660,8 +661,8 @@ else {
     my $ui_locales    = uri_escape("fr-CA en-GB en fr-FR fr");
     my $login_hint    = uri_escape("coudot");
     my $max_age       = 3600;
-    my $id_token_hint =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhenAiOiJsZW1vbmxkYXAiLCJzdWIiOiJjb3Vkb3RAbGluYWdvcmEuY29tIiwiaWF0IjoxNDI3Mjk5MjMyLCJhdXRoX3RpbWUiOjE0MjcyOTYwNTQsImV4cCI6IjM2MDAiLCJub25jZSI6IjEyMzQ1Njc4OTAiLCJhdWQiOlsibGVtb25sZGFwIl0sImF0X2hhc2giOiJwZEdBcG9lVE8tNTM0el9XQ2wxcUtRIiwiYWNyIjoibG9hLTIiLCJpc3MiOiJodHRwOi8vYXV0aC5leGFtcGxlLmNvbS8ifQ==.R7nddv9bom+J2hyrTe/7a4mRupJAoDioBYaop+Q94Fg";
+    my $id_token_hint = "";
+#"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhenAiOiJsZW1vbmxkYXAiLCJzdWIiOiJjb3Vkb3RAbGluYWdvcmEuY29tIiwiaWF0IjoxNDI3Mjk5MjMyLCJhdXRoX3RpbWUiOjE0MjcyOTYwNTQsImV4cCI6IjM2MDAiLCJub25jZSI6IjEyMzQ1Njc4OTAiLCJhdWQiOlsibGVtb25sZGFwIl0sImF0X2hhc2giOiJwZEdBcG9lVE8tNTM0el9XQ2wxcUtRIiwiYWNyIjoibG9hLTIiLCJpc3MiOiJodHRwOi8vYXV0aC5leGFtcGxlLmNvbS8ifQ==.R7nddv9bom+J2hyrTe/7a4mRupJAoDioBYaop+Q94Fg";
 
     my $request_paylod_hash = {
         response_type => "code",

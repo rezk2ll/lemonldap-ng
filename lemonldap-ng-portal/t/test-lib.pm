@@ -3,7 +3,6 @@ package main;
 
 use strict;
 use Data::Dumper;
-$Data::Dumper::Sortkeys = 1;
 use LWP::UserAgent;
 use URI::Escape;
 use 5.10.0;
@@ -15,7 +14,9 @@ BEGIN {
 }
 
 our $count = 1;
-$Data::Dumper::Deparse = 1;
+$Data::Dumper::Deparse  = 1;
+$Data::Dumper::Sortkeys = 1;
+$Data::Dumper::Useperl  = 1;
 my $ini;
 
 sub count {

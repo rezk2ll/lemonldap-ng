@@ -6,7 +6,6 @@ package Lemonldap::NG::Handler::Lib::Status;
 use strict;
 use POSIX qw(setuid setgid);
 use JSON qw(to_json);
-use Data::Dumper;
 
 our $VERSION = '2.0.0';
 

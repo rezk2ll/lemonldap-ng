@@ -117,8 +117,6 @@ sub handlerAbort {
 sub handler {
     my ( $self, $req ) = @_;
 
-    #print STDERR Dumper($self->routes);use Data::Dumper;
-
     # Reinitialize configuration message
     $Lemonldap::NG::Common::Conf::msg = '';
 
