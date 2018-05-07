@@ -292,7 +292,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			over = 0
 
 		# Launch HTTP query
-		$http.get("#{scriptname}sfa/#{sessionType}?#{query}&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}").then (response) ->
+		$http.get("#{scriptname}sfa/#{sessionType}?#{query}&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}&UBKCheck=#{$scope.UBKCheck}").then (response) ->
 			data = response.data
 			if data.result
 				for n in data.values
