@@ -10,6 +10,8 @@ my $rmg =
 "^(?:(?:$Lemonldap::NG::Common::Conf::ReConstants::virtualHostKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::casAppMetaDataNodeKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::casSrvMetaDataNodeKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::oidcOPMetaDataNodeKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::oidcRPMetaDataNodeKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::samlIDPMetaDataNodeKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::samlSPMetaDataNodeKeys)|(?:$Lemonldap::NG::Common::Conf::ReConstants::specialNodeKeys))\$";
 $rmg = qr/$rmg/;
 
+my $complexNodes = qr/^(?:(?:(?:saml(?:ID|S)|oidc[OR])P|cas(?:App|Srv))MetaData|vhost)Options$/;
+
 my $ignore = qr/^(?:virtualHosts)$/;
 
 open F, 'lemonldap-ng-manager/site/htdocs/static/reverseTree.json';
@@ -49,13 +51,15 @@ foreach my $k ( sort keys %$prm ) {
       # Manager flag
       .' | '.( $p->{flags} =~ /m/ ? $ok : '')
       # Ini-only flag
-      .' | ' . ( ( $managed->{$k} or $k =~ $rmg ) ? '' : $ok )
+      .' | ' . ( ( $managed->{$k} or $k =~ $rmg ) ? '' : ( $k =~ $complexNodes ? '[1]' : $ok ) )
       # End of line
       . " |\n";
 }
 
 print <<EOF;
 </sortable>
+
+//[1]: complex nodes//
 
 ===== Configuration backend parameters =====
 

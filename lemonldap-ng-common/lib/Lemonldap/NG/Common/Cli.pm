@@ -2,7 +2,6 @@ package Lemonldap::NG::Common::Cli;
 
 use strict;
 use Mouse;
-use Data::Dumper;
 use Lemonldap::NG::Common::Conf;
 
 our $VERSION = '2.0.0';

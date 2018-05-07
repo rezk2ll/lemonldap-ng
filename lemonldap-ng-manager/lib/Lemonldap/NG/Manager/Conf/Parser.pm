@@ -79,6 +79,7 @@ sub hdebug {
         foreach my $d (@_) {
             if ( ref $d ) {
                 require Data::Dumper;
+                $Data::Dumper::Useperl = 1;
                 print STDERR Data::Dumper::Dumper($d);
             }
             else { print STDERR "$d\n" }

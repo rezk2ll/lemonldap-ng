@@ -1,6 +1,5 @@
 use Test::More;
 use JSON;
-use Data::Dumper;
 use MIME::Base64;
 
 BEGIN {

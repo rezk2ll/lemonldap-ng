@@ -125,6 +125,7 @@ sub jsonResponse {
       or die "PSGI lib has refused my get, aborting";
     unless ( $res->[0] == 200 ) {
         require Data::Dumper;
+        $Data::Dumper::Useperl = 1;
         print STDERR "Result dump :\n" . Data::Dumper::Dumper($res);
         die "Manager lib does not return a 200 code, aborting";
     }
@@ -139,6 +140,7 @@ sub jsonPostResponse {
       or die "PSGI lib has refused my post, aborting";
     unless ( $res->[0] == 200 ) {
         require Data::Dumper;
+        $Data::Dumper::Useperl = 1;
         print STDERR "Result dump :\n" . Data::Dumper::Dumper($res);
         die "Manager lib does not return a 200 code, aborting";
     }
@@ -153,6 +155,7 @@ sub jsonPutResponse {
       or die "PSGI lib has refused my put, aborting";
     unless ( $res->[0] == 200 ) {
         require Data::Dumper;
+        $Data::Dumper::Useperl = 1;
         print STDERR "Result dump :\n" . Data::Dumper::Dumper($res);
         die "Manager lib does not return a 200 code, aborting";
     }
