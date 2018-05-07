@@ -264,7 +264,7 @@ sub run {
     }
 
     # Check if unregistration is allowed
-    unless ( $self->conf->{totp2fUserCanChangeKey} ) {
+    unless ( $self->conf->{totp2fUserCanRemoveKey} ) {
         return $self->p->sendError( $req, 'notAuthorized', 400 );
     }
 
