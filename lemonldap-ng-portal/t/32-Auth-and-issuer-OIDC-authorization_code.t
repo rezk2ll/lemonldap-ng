@@ -9,7 +9,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $debug = 'debug';
+my $debug = 'error';
 my ( $op, $rp, $res );
 my %handlerOR = ( op => [], rp => [] );
 
