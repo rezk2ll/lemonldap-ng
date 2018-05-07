@@ -32,7 +32,6 @@ getKey = (reset) ->
 		success: (data) ->
 			if data.error
 				if data.error.match /totpExistingKey/
-					console.log 'ErrorTOTP:', data.error
 					$("#divToHide").hide()
 				return setMsg data.error, 'warning'
 			unless data.portal and data.user and data.secret
