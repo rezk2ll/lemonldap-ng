@@ -18,10 +18,10 @@ use Digest::SHA
 #==============================================================================
 # Configuration
 #==============================================================================
-my $host              = $ENV{HTTP_HOST};
-my ($domain)          = ( $host =~ /\w+\.(.*)/ );
-my $protocol          = $ENV{HTTPS} ? "https" : "http";
-my $portal_url        = "$protocol://auth.$domain";
+my $host = $ENV{HTTP_HOST};
+my ( $domain, $port ) = ( $host =~ /\w+\.(.*?):(\d*)/ );
+my $protocol          = ( $ENV{HTTPS} =~ /^on$/i ) ? "https" : "http";
+my $portal_url        = "$protocol://auth.$domain:$port";
 my $client_id         = "lemonldap";
 my $client_secret     = "secret";
 my $authorization_uri = "$portal_url/oauth2/authorize";
@@ -662,6 +662,7 @@ else {
     my $login_hint    = uri_escape("coudot");
     my $max_age       = 3600;
     my $id_token_hint = "";
+
 #"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhenAiOiJsZW1vbmxkYXAiLCJzdWIiOiJjb3Vkb3RAbGluYWdvcmEuY29tIiwiaWF0IjoxNDI3Mjk5MjMyLCJhdXRoX3RpbWUiOjE0MjcyOTYwNTQsImV4cCI6IjM2MDAiLCJub25jZSI6IjEyMzQ1Njc4OTAiLCJhdWQiOlsibGVtb25sZGFwIl0sImF0X2hhc2giOiJwZEdBcG9lVE8tNTM0el9XQ2wxcUtRIiwiYWNyIjoibG9hLTIiLCJpc3MiOiJodHRwOi8vYXV0aC5leGFtcGxlLmNvbS8ifQ==.R7nddv9bom+J2hyrTe/7a4mRupJAoDioBYaop+Q94Fg";
 
     my $request_paylod_hash = {
