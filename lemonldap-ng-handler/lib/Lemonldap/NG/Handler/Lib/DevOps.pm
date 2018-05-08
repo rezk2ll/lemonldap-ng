@@ -32,13 +32,20 @@ sub loadVhostConfig {
     my ( $class, $req, $vhost ) = @_;
     my $json;
     if ( $class->tsv->{useSafeJail} ) {
-        my $base = $class->localConfig->{loopBackUrl}
-          || "http://127.0.0.1:" . $req->{env}->{SERVER_PORT};
-        my $get = HTTP::Request->new( GET => "$base/rules.json" );
+        my $rUrl = $req->{env}->{RULES_URL}
+          || (
+            (
+                $class->localConfig->{loopBackUrl}
+                || "http://127.0.0.1:" . $req->{env}->{SERVER_PORT}
+            )
+            . '/rules.json'
+          );
+        my $get = HTTP::Request->new( GET => $rUrl );
         $get->header( Host => $vhost );
         my $resp = $class->ua->request($get);
         if ( $resp->is_success ) {
-            eval { $json = from_json( $resp->content, { allow_nonref => 1 } ) };
+            eval {
+                $json = from_json( $resp->content, { allow_nonref => 1 } ); };
             if ($@) {
                 $class->logger->error(
                     "Bad rules.json for $vhost, skipping ($@)");
