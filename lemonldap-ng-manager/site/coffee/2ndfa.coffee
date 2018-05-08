@@ -185,17 +185,19 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						else if key.match /^(_utime|_lastAuthnUTime|_lastSeen|notification)$/
 							session[key] = $scope.localeDate value
 						else if key.match /^(_startTime|_updateTime)$/
+							value = _stToStr value
 							pattern = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/
 							arrayDate = value.match(pattern)
-							session[key] = "#{arrayDate[3]}/#{arrayDate[2]}/#{arrayDate[1]} à #{arrayDate[4]}:#{arrayDate[5]}:#{arrayDate[6]}"
-							#session[key] = _stToStr value							
+							session[key] = "#{arrayDate[3]}/#{arrayDate[2]}/#{arrayDate[1]} à #{arrayDate[4]}:#{arrayDate[5]}:#{arrayDate[6]}"							
+			
 			res = []
 
 			# 2. Push session keys in result, grouped by categories
 			for category, attrs of categories
 				subres = []
 				for attr in attrs
-					if session[attr]  and session[attr].match(/\w+/)
+					if session[attr]
+						session[attr] = session[attr].toString()
 						if session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)
 							subres.push
 								title: "type"
@@ -215,11 +217,15 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									value: name
 									epoch: epoch
 							delete session[attr]	
-						else
+						else if session[attr].match(/\w+/)
 							subres.push
 								title: attr
 								value: session[attr]
-							delete session[attr]			
+							delete session[attr]
+						else
+							delete session[attr]
+					else
+						delete session[attr]
 				if subres.length >0
 					res.push
 						title: "__#{category}__"
@@ -292,7 +298,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			over = 0
 
 		# Launch HTTP query
-		$http.get("#{scriptname}sfa/#{sessionType}?#{query}&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}").then (response) ->
+		$http.get("#{scriptname}sfa/#{sessionType}?#{query}&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}&UBKCheck=#{$scope.UBKCheck}").then (response) ->
 			data = response.data
 			if data.result
 				for n in data.values

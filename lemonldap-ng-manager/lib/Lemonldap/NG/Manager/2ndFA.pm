@@ -233,12 +233,16 @@ sub sfa {
     }
 
     # Filter 2FA sessions if needed
+    $self->logger->debug("Filtering 2F sessions...");
+    my $all = ( keys %$res );
+    
     if ( $self->{U2FCheck} eq '2' ) {
         foreach my $session ( keys %$res ) {
             delete $res->{$session}
               unless ( defined $res->{$session}->{_2fDevices}
                 and $res->{$session}->{_2fDevices} =~ /"type":\s*"U2F"/s );
         }
+        $self->logger->debug("Removing sessions unless U2F key registered");
     }
     if ( $self->{TOTPCheck} eq '2' ) {
         foreach my $session ( keys %$res ) {
@@ -246,6 +250,7 @@ sub sfa {
               unless ( defined $res->{$session}->{_2fDevices}
                 and $res->{$session}->{_2fDevices} =~ /"type":\s*"TOTP"/s );
         }
+        $self->logger->debug("Removing sessions unless TOTP secret registered");
     }
     if ( $self->{UBKCheck} eq '2' ) {
         foreach my $session ( keys %$res ) {
@@ -253,9 +258,11 @@ sub sfa {
               unless ( defined $res->{$session}->{_2fDevices}
                 and $res->{$session}->{_2fDevices} =~ /"type":\s*"UBK"/s );
         }
+        $self->logger->debug("Removing sessions unless UBK device registered");
     }
 
     my $total = ( keys %$res );
+	$self->logger->debug("Session(s) left : $total / $all");
 
     if ( my $group = $req->params('groupBy') ) {
         my $r;

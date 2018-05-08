@@ -227,6 +227,7 @@
                 } else if (key.match(/^(_utime|_lastAuthnUTime|_lastSeen|notification)$/)) {
                   session[key] = $scope.localeDate(value);
                 } else if (key.match(/^(_startTime|_updateTime)$/)) {
+                  value = _stToStr(value);
                   pattern = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/;
                   arrayDate = value.match(pattern);
                   session[key] = arrayDate[3] + "/" + arrayDate[2] + "/" + arrayDate[1] + " à " + arrayDate[4] + ":" + arrayDate[5] + ":" + arrayDate[6];
@@ -240,7 +241,8 @@
             subres = [];
             for (i = 0, len = attrs.length; i < len; i++) {
               attr = attrs[i];
-              if (session[attr] && session[attr].match(/\w+/)) {
+              if (session[attr]) {
+                session[attr] = session[attr].toString();
                 if (session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)) {
                   subres.push({
                     title: "type",
@@ -269,12 +271,14 @@
                     });
                   }
                   delete session[attr];
-                } else {
+                } else if (session[attr].match(/\w+/)) {
                   subres.push({
                     title: attr,
                     value: session[attr],
                     epoch: ''
                   });
+                  delete session[attr];
+                } else {
                   delete session[attr];
                 }
               } else {

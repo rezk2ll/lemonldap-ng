@@ -254,7 +254,7 @@ sub _displayRegister {
               };
         }
     }
-    if ( @am == 1 ) {
+    if ( @am == 1 and not $req->userData->{_2fDevices} ) {
         return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ],
             [] ];
     }
