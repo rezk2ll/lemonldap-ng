@@ -242,8 +242,7 @@
             for (i = 0, len = attrs.length; i < len; i++) {
               attr = attrs[i];
               if (session[attr]) {
-                session[attr] = session[attr].toString();
-                if (session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)) {
+                if (session[attr].toString().match(/"type":\s*"(?:TOTP|U2F|UBK)"/)) {
                   subres.push({
                     title: "type",
                     value: "name",
@@ -271,7 +270,7 @@
                     });
                   }
                   delete session[attr];
-                } else if (session[attr].match(/\w+/)) {
+                } else if (session[attr].toString().match(/\w+/)) {
                   subres.push({
                     title: attr,
                     value: session[attr],

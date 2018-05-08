@@ -208,8 +208,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 				subres = []
 				for attr in attrs
 					if session[attr]
-						session[attr] = session[attr].toString()
-						if session[attr].match(/"type":\s*"(?:TOTP|U2F|UBK)"/)
+						if session[attr].toString().match(/"type":\s*"(?:TOTP|U2F|UBK)"/)
 							subres.push
 								title: "type"
 								value: "name"
@@ -228,7 +227,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									value: name
 									epoch: epoch
 							delete session[attr]	
-						else if session[attr].match(/\w+/)
+						else if session[attr].toString().match(/\w+/)
 							subres.push
 								title: attr
 								value: session[attr]
