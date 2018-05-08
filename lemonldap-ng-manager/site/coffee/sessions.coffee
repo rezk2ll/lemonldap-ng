@@ -208,7 +208,6 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 				subres = []
 				for attr in attrs
 					if session[attr]
-						#session[attr] = session[attr].toString()
 						if session[attr].toString().match(/"type":\s*"(?:TOTP|U2F|UBK)"/)
 							subres.push
 								title: "type"
