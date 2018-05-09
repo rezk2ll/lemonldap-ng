@@ -15,10 +15,10 @@ my $color = $cgi->param("color") || "#ddd";
 
 # Local parameters
 my $host = $ENV{HTTP_HOST};
-my ( $domain, $port ) = ( $host =~ /\w+\.(.*?):(\d*)/ );
+my ( $domain, $port ) = ( $host =~ /\w+\.([^:]*?)(:\d+)?/ );
 my $protocol    = ( $ENV{HTTPS} =~ /^on$/i ) ? "https" : "http";
-my $portal_url  = "$protocol://auth.$domain:$port";
-my $manager_url = "$protocol://manager.$domain:$port";
+my $portal_url  = "$protocol://auth.$domain$port";
+my $manager_url = "$protocol://manager.$domain$port";
 
 # CSS
 my $css = <<EOT;

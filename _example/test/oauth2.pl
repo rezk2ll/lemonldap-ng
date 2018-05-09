@@ -19,9 +19,9 @@ use Digest::SHA
 # Configuration
 #==============================================================================
 my $host = $ENV{HTTP_HOST};
-my ( $domain, $port ) = ( $host =~ /\w+\.(.*?):(\d*)/ );
+my ( $domain, $port ) = ( $host =~ /\w+\.([^:]*?)(:\d+)?/ );
 my $protocol          = ( $ENV{HTTPS} =~ /^on$/i ) ? "https" : "http";
-my $portal_url        = "$protocol://auth.$domain:$port";
+my $portal_url        = "$protocol://auth.$domain$port";
 my $client_id         = "lemonldap";
 my $client_secret     = "secret";
 my $authorization_uri = "$portal_url/oauth2/authorize";
