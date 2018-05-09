@@ -56,6 +56,13 @@
    </button>
   </div>
   <br>
+  <div class="buttons">
+    <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
+      <span class="glyphicon glyphicon-home"></span>&nbsp;
+      <span trspan="goToPortal">Go to portal</span>
+    </a>
+  </div>
+  <br>
  </form>
 </TMPL_IF>
 

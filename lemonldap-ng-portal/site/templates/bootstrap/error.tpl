@@ -45,11 +45,6 @@
     </TMPL_IF>
 
     <div class="buttons">
-	  <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-warning" role="button">
-      <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-      <span trspan="2FManagment">2F managment</span>
-      </a>
-      &nbsp;&nbsp;&nbsp;&nbsp;	
       <a href="<TMPL_VAR NAME="PORTAL_URL"><TMPL_IF NAME="AUTH_URL">/?url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
         <span class="glyphicon glyphicon-home"></span>
         <span trspan="goToPortal">Go to portal</span>
