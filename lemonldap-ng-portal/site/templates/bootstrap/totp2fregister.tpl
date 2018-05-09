@@ -7,11 +7,13 @@
   <main id="menucontent" class="container">
    <div class="panel panel-info">
     <div class="panel-body">
-     <div>
-      <canvas id="qr"></canvas>
-      <pre id="serialized">
-      </pre>
-     </div>
+
+       <div id="divToHide">
+        <canvas id="qr"></canvas>
+        <pre id="serialized">
+        </pre>
+       </div>
+
      <div class="form-group">
        <b><span trspan="name">Name</span> : </b><input type="text" id="TOTPName" name="TOTPName" value="MyTOTP"/>
        &nbsp;&nbsp;&nbsp;&nbsp;

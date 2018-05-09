@@ -27,7 +27,6 @@
       <span trspan="goToPortal">Go to portal</span>
     </a>
   </div>
-  
 </form>
 </div>
 </main>
