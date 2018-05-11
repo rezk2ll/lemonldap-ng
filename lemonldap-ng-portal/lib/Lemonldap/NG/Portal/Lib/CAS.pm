@@ -73,6 +73,7 @@ sub loadApp {
 
 sub sendSoapResponse {
     my ( $self, $req, $s ) = @_;
+    $self->logger->debug("Send response: $s");
     return [
         200,
         [
