@@ -37,12 +37,16 @@ my @notManagedAttributes = (
     'secureTokenHeader', 'secureTokenMemcachedServers', 'secureTokenUrls',
 
     # Zimbra handler
-    'zimbraAccountKey', 'zimbraBy', 'zimbraPreAuthKey',
-    'zimbraSsoUrl',     'zimbraUrl',
+    'zimbraAccountKey', 'zimbraBy', 'zimbraPreAuthKey', 'zimbraSsoUrl',
+    'zimbraUrl',
+
+    # Loggers
+    'log4perlConfFile', 'userSyslogFacility', 'logger', 'sentryDsn',
+    'syslogFacility',   'userLogger',         'logLevel',
 
     # Other ini-only prms
     'configStorage', 'status', 'localStorageOptions', 'localStorage',
-    'max2FDevices', 'max2FDevicesNameLength', 'logLevel',
+    'max2FDevices', 'max2FDevicesNameLength',
 );
 
 # Words used either as attribute name and node title
