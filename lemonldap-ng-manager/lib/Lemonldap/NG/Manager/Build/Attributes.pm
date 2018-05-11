@@ -378,26 +378,32 @@ sub attributes {
         logger => {
             type          => 'text',
             documentation => 'technical logger',
+            flags         => 'hmp',
         },
         userLogger => {
             type          => 'text',
             documentation => 'User actions logger',
+            flags         => 'hmp',
         },
         log4perlConfFile => {
             type          => 'text',
             documentation => 'Log4Perl logger configuration file',
+            flags         => 'hmp',
         },
         sentryDsn => {
             type          => 'text',
             documentation => 'Sentry logger DSN',
+            flags         => 'hmp',
         },
         syslogFacility => {
             type          => 'text',
             documentation => 'Syslog logger technical facility',
+            flags         => 'hmp',
         },
         userSyslogFacility => {
             type          => 'text',
             documentation => 'Syslog logger user-actions facility',
+            flags         => 'hmp',
         },
 
         # Manager or PSGI protected apps
