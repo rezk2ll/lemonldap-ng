@@ -215,11 +215,6 @@ sub attributes {
     return {
 
         # Other
-        logLevel => {
-            type          => 'text',
-            documentation => 'Log level, must be set in .ini',
-            flags         => 'hmp',
-        },
         configStorage => {
             type          => 'text',
             documentation => 'Configuration storage',
@@ -374,7 +369,38 @@ sub attributes {
             documentation => 'Enable StayConnected plugin',
         },
 
-        # Manager
+        # Loggers (ini only)
+        logLevel => {
+            type          => 'text',
+            documentation => 'Log level, must be set in .ini',
+            flags         => 'hmp',
+        },
+        logger => {
+            type          => 'text',
+            documentation => 'technical logger',
+        },
+        userLogger => {
+            type          => 'text',
+            documentation => 'User actions logger',
+        },
+        log4perlConfFile => {
+            type          => 'text',
+            documentation => 'Log4Perl logger configuration file',
+        },
+        sentryDsn => {
+            type          => 'text',
+            documentation => 'Sentry logger DSN',
+        },
+        syslogFacility => {
+            type          => 'text',
+            documentation => 'Syslog logger technical facility',
+        },
+        userSyslogFacility => {
+            type          => 'text',
+            documentation => 'Syslog logger user-actions facility',
+        },
+
+        # Manager or PSGI protected apps
         protection => {
             type          => 'text',
             test          => qr/^(?:none|authenticate|manager|)$/,
