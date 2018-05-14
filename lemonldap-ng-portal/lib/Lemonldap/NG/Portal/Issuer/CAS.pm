@@ -430,6 +430,68 @@ sub validate {
 
 sub proxy {
     my ( $self, $req ) = @_;
+
+    $self->logger->debug(
+        'URL ' . $req->uri . " detected as an CAS PROXY URL" );
+
+    # GET parameters
+    my $pgt           = $req->param('pgt');
+    my $targetService = $req->param('targetService');
+
+    # Required parameters: pgt and targetService
+    unless ( $pgt and $targetService ) {
+        $self->logger->error("Pgt and TargetService parameters required");
+        $self->returnCasProxyError( $req, 'INVALID_REQUEST',
+            'Missing mandatory parameters (pgt, targetService)' );
+    }
+
+    $self->logger->debug(
+        "Get proxy request with ticket $pgt for service $targetService");
+
+    # Get CAS session corresponding to ticket
+    unless ( $pgt =~ s/^PGT-// ) {
+        $self->logger->error(
+            "Provided ticket is not a proxy granting ticket (PGT)");
+        $self->returnCasProxyError( $req, 'BAD_PGT',
+            'Provided ticket is not a proxy granting ticket' );
+    }
+
+    my $casProxyGrantingSession = $self->getCasSession($pgt);
+
+    unless ($casProxyGrantingSession) {
+        $self->logger->error("Proxy granting ticket session $pgt not found");
+        $self->returnCasProxyError( $req, 'BAD_PGT', 'Ticket not found' );
+    }
+
+    $self->logger->debug("Proxy granting session $pgt found");
+
+    # Create a proxy ticket
+    $self->logger->debug(
+        "Create a CAS proxy ticket for service $targetService");
+
+    my $casProxySession = $self->getCasSession();
+
+    unless ($casProxySession) {
+        $self->logger->error("Unable to create CAS proxy session");
+        $self->returnCasProxyError( $req, 'INTERNAL_ERROR',
+            'Error in proxy session management' );
+    }
+
+    my $Pinfos;
+    $Pinfos->{type}    = 'casProxy';
+    $Pinfos->{service} = $targetService;
+    $Pinfos->{_cas_id} = $casProxyGrantingSession->data->{_cas_id};
+    $Pinfos->{_utime}  = $casProxyGrantingSession->data->{_utime};
+    $Pinfos->{proxies} = $casProxyGrantingSession->data->{proxies};
+
+    $casProxySession->update($Pinfos);
+
+    my $casProxySessionID = $casProxySession->id;
+    my $casProxyTicket    = "PT-" . $casProxySessionID;
+
+    $self->logger->debug("CAS proxy session $casProxySessionID created");
+
+    return $self->returnCasProxySuccess( $req, $casProxyTicket );
 }
 
 sub serviceValidate {
