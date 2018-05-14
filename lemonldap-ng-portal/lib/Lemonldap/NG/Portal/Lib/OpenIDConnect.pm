@@ -1068,7 +1068,7 @@ sub getEndPointAccessToken {
     my $access_token;
 
     my $authorization = $req->authorization;
-    if ( $authorization =~ /^Bearer (\w+)/i ) {
+    if ( $authorization and $authorization =~ /^Bearer (\w+)/i ) {
         $self->logger->debug("Bearer access token");
         $access_token = $1;
     }
