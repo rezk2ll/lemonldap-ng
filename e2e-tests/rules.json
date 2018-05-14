@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "default": 0
+  },
+  "headers":{
+    "Auth-User": "$uid",
+    "Test-Value":"42"
+  }
+}
