@@ -10,7 +10,7 @@ BEGIN {
 }
 eval { unlink 't/userdb.db' };
 
-my $maintests = 14;
+my $maintests = 21;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -61,6 +61,8 @@ SKIP: {
     if ($@) {
         skip 'DBD::SQLite not found', $maintests;
     }
+
+    diag 'Build SQL DB';
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do(
 'CREATE TABLE users (user text,password text,name text,uid text,cn text,mail text)'
@@ -69,14 +71,17 @@ SKIP: {
 "INSERT INTO users VALUES ('dwho','dwho','Doctor who','dwho','Doctor who','dwho\@badwolf.org')"
     );
 
+    diag 'Build CAS server';
     ok( $issuer = issuer(), 'Issuer portal' );
     $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
     switch ('sp');
 
+    diag 'Build CAS app';
     ok( $sp = sp(), 'SP portal' );
     $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
 
     # Simple SP access
+    diag 'Connect to CAS app';
     ok(
         $res = $sp->_get(
             '/', accept => 'text/html',
@@ -89,6 +94,7 @@ SKIP: {
         'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
 
     # Query IdP
+    diag 'Follow redirection to CAS server';
     switch ('issuer');
     ok(
         $res = $issuer->_get(
@@ -101,6 +107,7 @@ SKIP: {
     expectOK($res);
 
     # Try to authenticate to IdP
+    diag 'Try to authenticate';
     my $body = $res->[2]->[0];
     $body =~ s/^.*?<form.*?>//s;
     $body =~ s#</form>.*$##s;
@@ -124,6 +131,7 @@ SKIP: {
     my $idpId = expectCookie($res);
 
     # Back to SP
+    diag 'Follow redirection to CAS app';
     switch ('sp');
     ok(
         $res = $sp->_get(
@@ -144,7 +152,81 @@ SKIP: {
     expectOK($res);
     expectAuthenticatedAs( $res, 'dwho' );
 
+    # Renew test
+    diag 'Test "renew"';
+    ok(
+        $res = $sp->_get(
+            '/', accept => 'text/html',
+        ),
+        'Unauth SP request (2)'
+    );
+    ok( expectCookie( $res, 'llngcasserver' ) eq 'idp',
+        'Get CAS server cookie' );
+    expectRedirection( $res,
+        'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
+
+    diag 'Follow redirection to CAS server with "renew" set to "true"';
+    switch ('issuer');
+    ok(
+        $res = $issuer->_get(
+            '/cas/login',
+            query  => 'service=http://auth.sp.com/&renew=true',
+            cookie => "lemonldap=$idpId",
+            accept => 'text/html'
+        ),
+        'Query CAS server (2)'
+    );
+
+    diag 'Verify that confirmation is asked';
+    my ( $host, $url );
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, '/upgradesession', 'confirm', 'url' );
+    ok(
+        $res = $issuer->_post(
+            '/upgradesession', IO::String->new($query),
+            length => length($query),
+            cookie => "lemonldap=$idpId",
+            accept => 'text/html'
+        ),
+        'Post confirm'
+    );
+    ( $host, $url, $query ) = expectForm( $res, undef, undef, 'upgrading' );
+
+    diag 'Try to authenticate';
+    $query =~ s/password=//;
+    $query .= '&password=dwho';
+    ok(
+        $res = $issuer->_post(
+            '/upgradesession', IO::String->new($query),
+            length => length($query),
+            cookie => "lemonldap=$idpId",
+            accept => 'text/html'
+        ),
+        'Post credentials'
+    );
+    ($query) = expectRedirection( $res,
+        qr#^http://auth.idp.com/cas/login\?(issuerRequestcas=.*)# );
+    $idpId = expectCookie($res);
+    ok(
+        $res = $issuer->_get(
+            '/cas/login',
+            query  => $query,
+            cookie => "lemonldap=$idpId",
+            accept => 'text/html'
+        ),
+        'Follow redirection'
+
+    );
+    ($query) = expectRedirection($res,qr#http://auth.sp.com/?\?(ticket=.*)$#);
+
+    diag 'Follow redirection to CAS app';
+    switch ('sp');
+    ok($res=$sp->_get('/',query => $query),'Follow redirection');
+
+    expectCookie($res);
+
     # Logout initiated by SP
+    diag 'Try to logout from CAS app';
     ok(
         $res = $sp->_get(
             '/',
@@ -172,6 +254,7 @@ SKIP: {
       or explain( $res->[1],
         'Content-Security-Policy => ...child-src auth.idp.com' );
 
+    diag 'Get iframe from CAS server';
     switch ('issuer');
     ok(
         $res = $issuer->_get(
@@ -185,8 +268,9 @@ SKIP: {
     expectRedirection( $res, 'http://auth.sp.com/?logout' );
 
     # Verify that user has been disconnected
+    diag 'Verify that user has been disconnected';
     ok( $res = $issuer->_get( '/', cookie => "lemonldap=$idpId" ),
-        'Query IdP' );
+        'Query CAS server' );
     expectReject($res);
 
     switch ('sp');
@@ -196,7 +280,7 @@ SKIP: {
             accept => 'text/html',
             cookie => "lemonldap=$idpId,llngcasserver=idp"
         ),
-        'Query IdP'
+        'Query CAS app'
     );
     expectRedirection( $res,
         'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );

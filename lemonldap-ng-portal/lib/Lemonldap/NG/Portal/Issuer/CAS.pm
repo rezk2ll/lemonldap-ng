@@ -89,16 +89,8 @@ sub run {
             # Authentication must be replayed
             $self->logger->debug("Authentication renew requested");
             $self->{updateSession} = 1;
-            $req->steps(
-                [
-                    @{ $self->p->beforeAuth },
-                    $self->p->authProcess,
-                    @{ $self->p->betweenAuthAndDatas },
-                    $self->p->sessionDatas,
-                    @{ $self->p->afterDatas },
-                ]
-            );
-            return PE_OK;
+            $req->env->{QUERY_STRING} =~ s/renew=true/renew=false/;
+            return $self->reAuth($req);
         }
 
         # If no service defined, exit
