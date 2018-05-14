@@ -622,7 +622,7 @@ sub _validate2 {
         # Trace proxies
         $PGinfos->{proxies} = (
               $proxies
-            ? $proxies . $self->{multiValuesSeparator} . $pgtUrl
+            ? $proxies . $self->conf->{multiValuesSeparator} . $pgtUrl
             : $pgtUrl
         );
 
