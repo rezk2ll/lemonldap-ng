@@ -155,10 +155,20 @@ else {
         print "</div>\n";
         print "</div>\n";
 
-        print
-"<div class=\"text-center\"><a class=\"btn btn-info\" role=\"button\" href=\""
+        print "<div class=\"text-center\">\n";
+        print "<a class=\"btn btn-info\" role=\"button\" href=\""
           . $cgi->url
-          . "\">Home</a></div>\n";
+          . "\">Home</a>\n";
+        print "<a class=\"btn btn-danger\" role=\"button\" href=\""
+          . $cas_url
+          . "/logout"
+          . "\">Logout</a>\n";
+        print "<a class=\"btn btn-danger\" role=\"button\" href=\""
+          . $cas_url
+          . "/logout?service="
+          . $cgi->url
+          . "\">Logout with redirect</a>\n";
+        print "</div>\n";
 
     }
 
