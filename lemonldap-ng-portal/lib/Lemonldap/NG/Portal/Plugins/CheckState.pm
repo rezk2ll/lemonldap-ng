@@ -40,13 +40,20 @@ sub check {
     }
     if ( my $user = $req->param('user') and my $pwd = $req->param('password') )
     {
-        # Note that "extractFormInfo" isn't launched due to "token"
         $req->user($user);
         $req->datas->{password} = $pwd;
+
+        # Not launched method:
+        #  - "extractFormInfo" due to "token"
+        #  - "buildCookie" useless here
         $req->steps(
             [
-                'getUser',                          'authenticate',
-                @{ $self->p->betweenAuthAndDatas }, $self->p->sessionDatas,
+                'getUser',
+                'authenticate',
+                @{ $self->p->betweenAuthAndDatas },
+                qw( setAuthSessionInfo setSessionInfo setMacros setGroups
+                  setPersistentSessionInfo setLocalGroups store secondFactor
+                  storeHistory),
                 @{ $self->p->afterDatas }
             ]
         );
