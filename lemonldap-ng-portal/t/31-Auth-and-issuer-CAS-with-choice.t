@@ -132,6 +132,7 @@ SKIP: {
 
     # Back to SP
     switch ('sp');
+
     # Follow redirection to CAS app
     ok(
         $res = $sp->_get(
@@ -216,11 +217,12 @@ SKIP: {
         'Follow redirection'
 
     );
-    ($query) = expectRedirection($res,qr#http://auth.sp.com/?\?(ticket=.*)$#);
+    ($query) =
+      expectRedirection( $res, qr#http://auth.sp.com/?\?(ticket=.*)$# );
 
     # Follow redirection to CAS app
     switch ('sp');
-    ok($res=$sp->_get('/',query => $query),'Follow redirection');
+    ok( $res = $sp->_get( '/', query => $query ), 'Follow redirection' );
 
     expectCookie($res);
 
@@ -313,18 +315,19 @@ sub issuer {
                     demo => 'Demo;Demo;Demo',
                     sql  => 'DBI;DBI;DBI',
                 },
-                dbiAuthChain           => 'dbi:SQLite:dbname=t/userdb.db',
-                dbiAuthUser            => '',
-                dbiAuthPassword        => '',
-                dbiAuthTable           => 'users',
-                dbiAuthLoginCol        => 'user',
-                dbiAuthPasswordCol     => 'password',
-                dbiAuthPasswordHash    => '',
-                issuerDBCASActivation  => 1,
-                casAttr                => 'uid',
-                casAttributes          => { cn => 'cn', uid => 'uid', },
-                casAccessControlPolicy => 'none',
-                multiValuesSeparator   => ';',
+                dbiAuthChain             => 'dbi:SQLite:dbname=t/userdb.db',
+                dbiAuthUser              => '',
+                dbiAuthPassword          => '',
+                dbiAuthTable             => 'users',
+                dbiAuthLoginCol          => 'user',
+                dbiAuthPasswordCol       => 'password',
+                dbiAuthPasswordHash      => '',
+                issuerDBCASActivation    => 1,
+                casAttr                  => 'uid',
+                casAttributes            => { cn => 'cn', uid => 'uid', },
+                casAccessControlPolicy   => 'none',
+                multiValuesSeparator     => ';',
+                portalForceAuthnInterval => -1,
             }
         }
     );
