@@ -43,7 +43,7 @@ sub check {
         $req->user($user);
         $req->datas->{password} = $pwd;
 
-        # Not launched method:
+        # Not launched methods:
         #  - "extractFormInfo" due to "token"
         #  - "buildCookie" useless here
         $req->steps(
