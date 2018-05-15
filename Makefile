@@ -1111,6 +1111,7 @@ test_omegat_%_dir:
 omegat-configuration-file:
 	-@mkdir -p po-doc/$(LANGCODE)/pages
 	@perl -pe 'BEGIN{$$p=`pwd`;chomp $$p;}s/__LANG__/$(OMEGATCODE)/;s/__PWD__/$$p/o;' omegat.files/_base.project >omegat.files/$(LANGCODE)/omegat.project
+	@mkdir -p omegat.files/$(LANGCODE)/{tm glossary dictionary}
 
 translation: omegat-configuration-file
 	@omegat omegat.files/$(LANGCODE) --no-team --quiet
@@ -1128,7 +1129,7 @@ translated-doc: omegat-configuration-file
 	@$(MAKE) translated-doc LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
 	
 omegat-clean:
-	@rm -rf omegat.files/*/omegat.project omegat.files/*/omegat/project_save*.bak
+	@rm -rf omegat.files/*/omegat.project omegat.files/*/omegat/project_save*.bak omegat.files/*/omegat/last_entry.properties
 
 omegat-%-clean:
 	@rm -rf po-doc/$*

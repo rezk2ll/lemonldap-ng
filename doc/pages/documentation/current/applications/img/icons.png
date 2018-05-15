@@ -90,7 +90,7 @@
         <form action="/start" accept-charset="utf-8" class="search" id="dw__search" method="get" role="search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" /><input type="submit" value="Search" class="button" title="Search" /><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>
         
         <ul class="nav navbar-nav">
-                    <li><a href="/documentation/2.0/applications/img/icons.png?do=login&amp;sectok=1ec7eb5b1665f9db3d769287145fdc46"  class="action login" rel="nofollow" title="Login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>        </ul>
+                    <li><a href="/documentation/2.0/applications/img/icons.png?do=login&amp;sectok=b1ead7f504050dc6ea4ebced99caf5c1"  class="action login" rel="nofollow" title="Login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>        </ul>
 
       </div>
 
@@ -170,6 +170,22 @@ You&#039;ve followed a link to a topic that doesn&#039;t exist yet. If permissio
 <div class="text-center">
 </p>
 
+</div>
+<!-- EDIT1 SECTION "Hosted by" [40-174] -->
+<h3 class="sectionedit2" id="certifications">Certifications</h3>
+<div class="level3">
+
+<p>
+<a href="https://partenaires.franceconnect.gouv.fr/references#LogicielslibresFranceConnectables" class="media" title="https://partenaires.franceconnect.gouv.fr/references#LogicielslibresFranceConnectables"  rel="nofollow"><img src="/_media/applications/franceconnect_logo.png" class="mediacenter" alt="" /></a>
+<strong>France Connect</strong>
+</div>
+</p>
+<hr />
+
+<p>
+<div class="text-center">
+</p>
+
 <p>
 <script type="text/javascript" src="http://www.openhub.net/p/12421/widgets/project_users.js?style=blue"></script>
 </div>
@@ -185,7 +201,7 @@ You&#039;ve followed a link to a topic that doesn&#039;t exist yet. If permissio
 
 
 </div>
-<!-- EDIT1 SECTION "Hosted by" [40-] -->          </div>
+<!-- EDIT2 SECTION "Certifications" [175-] -->          </div>
   </div>
 </aside>
 
@@ -204,7 +220,7 @@ You&#039;ve followed a link to a topic that doesn&#039;t exist yet. If permissio
       
     </div><!-- /site -->
 
-    <div class="no"><img src="/lib/exe/indexer.php?id=documentation%3A2.0%3Aapplications%3Aimg%3Aicons.png&amp;1524488100" width="2" height="1" alt="" /></div>
+    <div class="no"><img src="/lib/exe/indexer.php?id=documentation%3A2.0%3Aapplications%3Aimg%3Aicons.png&amp;1526412059" width="2" height="1" alt="" /></div>
     <div id="screen__mode" class="no">
       <span class="visible-xs"></span>
       <span class="visible-sm"></span>

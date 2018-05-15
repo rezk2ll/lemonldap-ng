@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:logs</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,logs"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="logs.html"/>
@@ -62,6 +62,8 @@
 <li class="level2"><div class="li"><a href="#apache2_logger">Apache2 logger</a></div></li>
 <li class="level2"><div class="li"><a href="#syslog">Syslog</a></div></li>
 <li class="level2"><div class="li"><a href="#log4perl">Log4perl</a></div></li>
+<li class="level2"><div class="li"><a href="#sentry">Sentry</a></div></li>
+<li class="level2"><div class="li"><a href="#dispatch">Dispatch</a></div></li>
 </ul></li>
 </ul>
 </div>
@@ -93,6 +95,10 @@ Each category can be handle by a different logging framework. You can choose bet
 </li>
 <li class="level1"><div class="li"> <strong>Lemonldap::NG::Common::Logger::Log4perl</strong>: use <code>Log4perl</code> framework to log <em>(inspired by Java Log4J)</em></div>
 </li>
+<li class="level1"><div class="li"> <strong>Lemonldap::NG::Common::Logger::Sentry <em>(experimental)</em></strong>: use <a href="https://sentry.io" class="urlextern" title="https://sentry.io"  rel="nofollow">Sentry</a> to store logs</div>
+</li>
+<li class="level1"><div class="li"> <strong>Lemonldap::NG::Common::Logger::Dispatch</strong>: dispatch logs in other backends depending on log level</div>
+</li>
 </ul>
 
 <p>
@@ -112,7 +118,7 @@ LLNG provides also a username that can be used by webservers in their access log
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Logs" [1-1310] -->
+<!-- EDIT1 SECTION "Logs" [1-1527] -->
 <h2 class="sectionedit2" id="default_loggers">Default loggers</h2>
 <div class="level2">
 <ul>
@@ -125,12 +131,12 @@ LLNG provides also a username that can be used by webservers in their access log
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Default loggers" [1311-1630] -->
+<!-- EDIT2 SECTION "Default loggers" [1528-1847] -->
 <h2 class="sectionedit3" id="log_levels">Log levels</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Log levels" [1631-1654] -->
+<!-- EDIT3 SECTION "Log levels" [1848-1871] -->
 <h3 class="sectionedit4" id="technical_log_levels">Technical log levels</h3>
 <div class="level3">
 <ul>
@@ -147,7 +153,7 @@ LLNG provides also a username that can be used by webservers in their access log
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Technical log levels" [1655-2064] -->
+<!-- EDIT4 SECTION "Technical log levels" [1872-2281] -->
 <h3 class="sectionedit5" id="log_levels_for_user_actions">Log levels for user actions</h3>
 <div class="level3">
 <ul>
@@ -164,12 +170,12 @@ LLNG provides also a username that can be used by webservers in their access log
 </ul>
 
 </div>
-<!-- EDIT5 SECTION "Log levels for user actions" [2065-2458] -->
+<!-- EDIT5 SECTION "Log levels for user actions" [2282-2675] -->
 <h2 class="sectionedit6" id="logger_configuration">Logger configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT6 SECTION "Logger configuration" [2459-2492] -->
+<!-- EDIT6 SECTION "Logger configuration" [2676-2709] -->
 <h3 class="sectionedit7" id="std_logger">Std logger</h3>
 <div class="level3">
 
@@ -178,7 +184,7 @@ Nothing to configure except logLevel.
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Std logger" [2493-2553] -->
+<!-- EDIT7 SECTION "Std logger" [2710-2770] -->
 <h3 class="sectionedit8" id="apache2_logger">Apache2 logger</h3>
 <div class="level3">
 
@@ -191,7 +197,7 @@ See <a href="http://httpd.apache.org/docs/current/mod/core.html#loglevel" class=
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Apache2 logger" [2554-2789] -->
+<!-- EDIT8 SECTION "Apache2 logger" [2771-3006] -->
 <h3 class="sectionedit9" id="syslog">Syslog</h3>
 <div class="level3">
 
@@ -202,7 +208,7 @@ You can choose facility in lemonldap-ng.ini file. Default values:
 <span class="re1">userSyslogFacility</span> <span class="sy0">=</span><span class="re2"> auth</span></pre>
 
 </div>
-<!-- EDIT9 SECTION "Syslog" [2790-2948] -->
+<!-- EDIT9 SECTION "Syslog" [3007-3165] -->
 <h3 class="sectionedit10" id="log4perl">Log4perl</h3>
 <div class="level3">
 
@@ -214,6 +220,35 @@ You can indicate the Log4perl configuration file and the classes to use. Default
 <span class="re1">log4perlUserLogger</span> <span class="sy0">=</span><span class="re2"> LLNG.user</span></pre>
 
 </div>
-<!-- EDIT10 SECTION "Log4perl" [2949-] --></div>
+<!-- EDIT10 SECTION "Log4perl" [3166-3392] -->
+<h3 class="sectionedit11" id="sentry">Sentry</h3>
+<div class="level3">
+
+<p>
+You just have to give your DSN:
+</p>
+<pre class="code file ini"><span class="re1">sentryDsn</span> <span class="sy0">=</span><span class="re2"> https://...</span></pre>
+<div class="noteimportant">This experimental logger requires <a href="https://metacpan.org/pod/Sentry::Raven" class="urlextern" title="https://metacpan.org/pod/Sentry::Raven"  rel="nofollow">Sentry::Raven</a> Perl module.
+</div>
+</div>
+<!-- EDIT11 SECTION "Sentry" [3393-3614] -->
+<h3 class="sectionedit12" id="dispatch">Dispatch</h3>
+<div class="level3">
+
+<p>
+Use it to use more than one logger. Example:
+</p>
+<pre class="code file ini"><span class="re1">logger</span>               <span class="sy0">=</span><span class="re2"> Lemonldap::NG::Common::Logger::Dispatch</span>
+<span class="re1">userLogger</span>           <span class="sy0">=</span><span class="re2"> Lemonldap::NG::Common::Logger::Dispatch</span>
+<span class="re1">logDispatchError</span>     <span class="sy0">=</span><span class="re2"> Lemonldap::NG::Common::Logger::Sentry</span>
+<span class="re1">logDispatchNotice</span>    <span class="sy0">=</span><span class="re2"> Lemonldap::NG::Common::Logger::Syslog</span>
+<span class="re1">userLogDispatchError</span> <span class="sy0">=</span><span class="re2"> Lemonldap::NG::Common::Logger::Sentry</span>
+<span class="co0">; Other parameters</span>
+<span class="re1">syslogFacility</span>    <span class="sy0">=</span><span class="re2"> daemon</span>
+<span class="re1">sentryDsn</span>         <span class="sy0">=</span><span class="re2"> https://...</span></pre>
+<div class="noteimportant">At least <code>logDispatchError</code> <em>(or <code>userLogDispatchError</code> for user logs)</em> must be defined. All sub level will be dispatched on it, until another lever is declared. In the above example, Sentry collects <code>error</code> and <code>warn</code> levels and all user actions, while syslog stores technical <code>notice</code>, <code>info</code> and <code>debug</code> logs.
+</div>
+</div>
+<!-- EDIT12 SECTION "Dispatch" [3615-] --></div>
 </body>
 </html>

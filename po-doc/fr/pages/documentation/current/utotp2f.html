@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,utotp2f"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="utotp2f.html"/>
@@ -50,7 +50,7 @@
 
 <p>
 
-This modules enables both <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> and <a href="totp2f.html" class="wikilink1" title="documentation:2.0:totp2f">TOTP</a> <em>(like Gitlab)</em>. Therefore, users can use their TOTP instead if they don't have their U2F device.
+This module enables both <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> and <a href="totp2f.html" class="wikilink1" title="documentation:2.0:totp2f">TOTP</a> Authentication <em>(like Gitlab)</em>. Therefore, users can use their TOTP instead if they don't have their U2F device.
 
 </p>
 
@@ -60,14 +60,14 @@ Difference between enabled both U2F and TOTP is that only one page is displayed 
 
 </p>
 
-</div><!-- EDIT1 SECTION "U2F-or-TOTP 2nd Factor Authentication" [1-336] -->
+</div><!-- EDIT1 SECTION "U2F-or-TOTP 2nd Factor Authentication" [1-350] -->
 
 <h2 class="sectionedit2" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
 
-In the manager (advanced parameters), you just have to enable it:
+In the manager (second factors), you just have to enable it:
 
 </p>
 <ul>
@@ -81,7 +81,7 @@ In the manager (advanced parameters), you just have to enable it:
 </div><div class="noteimportant">If you want to give a different level for U2F or TOTP, leave this parameter blank and set U2F and TOTP “authentication level” in corresponding modules.
 
 </div>
-</div><!-- EDIT2 SECTION "Configuration" [337-1226] -->
+</div><!-- EDIT2 SECTION "Configuration" [351-1235] -->
 
 <h3 class="sectionedit3" id="self-registration">Self-registration</h3>
 <div class="level3">
@@ -104,7 +104,7 @@ Automatically, U2F registration will be hidden for unregistered TOTP users and d
 
 </p>
 
-</div><!-- EDIT3 SECTION "Self-registration" [1227-] -->
+</div><!-- EDIT3 SECTION "Self-registration" [1236-] -->
 </div>
 </body>
 </html>

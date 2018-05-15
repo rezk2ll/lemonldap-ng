@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,u2f"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="u2f.html"/>
@@ -71,13 +71,13 @@
 
 <p>
 
-LLNG can propose to users to register their keys. When done, 2F registered users can not login without using its key.
+LLNG can propose to users to register their keys. When done, 2F registered users can not login without using their key.
 
 </p>
 <div class="notetip">Note that it's a second factor, not an authentication module. Users are authenticated by both login form and U2F form.
 
 </div>
-</div><!-- EDIT1 SECTION "Universal 2nd Factor Authentication (U2F)" [1-527] -->
+</div><!-- EDIT1 SECTION "Universal 2nd Factor Authentication (U2F)" [1-529] -->
 
 <h2 class="sectionedit2" id="prerequisites_and_dependencies">Pré-requis et dépendances</h2>
 <div class="level2">
@@ -90,7 +90,7 @@ This feature uses <a href="https://metacpan.org/pod/Crypt::U2F::Server::Simple" 
 <div class="noteimportant">An HTTPS portal is required to use U2F
 
 </div>
-</div><!-- EDIT2 SECTION "Prerequisites and dependencies" [528-879] -->
+</div><!-- EDIT2 SECTION "Prerequisites and dependencies" [530-881] -->
 
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
@@ -111,7 +111,7 @@ In the manager (second factors), you just have to enable it:
 <div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule: <code>$_2fDevices =~ /“type”:\s*“U2F”/s</code>, else U2F will be required even if users are not registered. This is automatically done when “activation” is set to “on”.
 
 </div>
-</div><!-- EDIT3 SECTION "Configuration" [880-1733] -->
+</div><!-- EDIT3 SECTION "Configuration" [882-1735] -->
 
 <h2 class="sectionedit4" id="browser_compatibility">Browser compatibility</h2>
 <div class="level2">
@@ -132,7 +132,7 @@ In the manager (second factors), you just have to enable it:
 </li>
 </ul>
 
-</div><!-- EDIT4 SECTION "Browser compatibility" [1734-2174] -->
+</div><!-- EDIT4 SECTION "Browser compatibility" [1736-2176] -->
 
 <h2 class="sectionedit5" id="enrollment">Enrollment</h2>
 <div class="level2">
@@ -142,7 +142,7 @@ In the manager (second factors), you just have to enable it:
 If you have enabled self registration, users can register their U2F keys using <a href="https://portal/2fregisters" class="urlextern" title="https://portal/2fregisters"  rel="nofollow">https://portal/2fregisters</a>
 </p>
 
-</div><!-- EDIT5 SECTION "Enrollment" [2175-2305] -->
+</div><!-- EDIT5 SECTION "Enrollment" [2177-2307] -->
 
 <h2 class="sectionedit6" id="assistance">Assistance</h2>
 <div class="level2">
@@ -156,7 +156,7 @@ If a user lost its key, you can delete the 2F device from the manager Second Fac
 <pre class="code ini"><span class="re0"><span class="br0">[</span>portal<span class="br0">]</span></span>
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
 
-</div><!-- EDIT6 SECTION "Assistance" [2306-2626] -->
+</div><!-- EDIT6 SECTION "Assistance" [2308-2628] -->
 
 <h2 class="sectionedit7" id="developer_corner">Developer corner</h2>
 <div class="level2">
@@ -176,7 +176,7 @@ Note that both “origin” and “appId” are fixed to portal <abbr title="Uni
 
 </p>
 
-</div><!-- EDIT7 SECTION "Developer corner" [2627-] -->
+</div><!-- EDIT7 SECTION "Developer corner" [2629-] -->
 </div>
 </body>
 </html>

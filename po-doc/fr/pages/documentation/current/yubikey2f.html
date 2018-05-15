@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,yubikey2f"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="yubikey2f.html"/>
@@ -93,7 +93,7 @@ In the manager (second factors), you just have to enable it:
 </li>
 <li class="level1"><div class="li">  Self registration: set it to “on” if users are authorized to register their keys</div>
 </li>
-<li class="level1"><div class="li">  Authentication level: you can overwrite here auth level for Yubikey registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only to users enrolled</strong></div>
+<li class="level1"><div class="li">  Authentication level: you can overwrite here auth level for Yubikey registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only to enrolled users</strong></div>
 </li>
 <li class="level1"><div class="li">  Client ID: given by Yubico or another service</div>
 </li>
