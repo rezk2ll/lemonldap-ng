@@ -1,6 +1,6 @@
 ### Concerned version
 
-Version: X.X.X
+Version: %X.X.X
 
 ### Summary
 
