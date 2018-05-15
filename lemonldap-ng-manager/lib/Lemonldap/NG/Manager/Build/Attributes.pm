@@ -368,6 +368,14 @@ sub attributes {
             type          => 'bool',
             documentation => 'Enable StayConnected plugin',
         },
+        checkState => {
+            type => 'bool',
+            documentation => 'Enable CheckState plugin',
+        },
+        checkStateSecret => {
+            type => 'text',
+            documentation => 'Secret token for CheckState plugin',
+        },
 
         # Loggers (ini only)
         logLevel => {

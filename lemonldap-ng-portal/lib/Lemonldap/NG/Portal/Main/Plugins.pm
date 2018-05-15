@@ -22,6 +22,7 @@ our @pList = (
     grantSessionRule           => '::Plugins::GrantSession',
     upgradeSession             => '::Plugins::Upgrade',
     autoSigninRules            => '::Plugins::AutoSignin',
+    checkState                 => '::Plugins::CheckState',
 );
 
 ##@method list enabledPlugins

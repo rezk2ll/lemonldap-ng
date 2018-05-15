@@ -635,6 +635,11 @@ sub tree {
                             help  => 'autoSignin.html',
                             nodes => ['autoSigninRules'],
                         },
+                        {
+                            title => 'stateCheck',
+                            help  => 'checkstate.html',
+                            nodes => [ 'checkState', 'checkStateSecret', ],
+                        },
                     ]
                 },
                 {

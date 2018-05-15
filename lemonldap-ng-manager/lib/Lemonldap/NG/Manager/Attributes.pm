@@ -753,6 +753,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'cfgVersion' => {
             'type' => 'text'
         },
+        'checkState' => {
+            'type' => 'bool'
+        },
+        'checkStateSecret' => {
+            'type' => 'text'
+        },
         'checkXSS' => {
             'default' => 1,
             'type'    => 'bool'
