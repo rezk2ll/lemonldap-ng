@@ -766,7 +766,10 @@ sub tree {
                             title => 'portalRedirection',
                             help  => 'redirections.html#portal_redirections',
                             form  => 'simpleInputContainer',
-                            nodes => [ 'jsRedirect', 'noAjaxHook' ]
+                            nodes => [
+                                'jsRedirect', 'noAjaxHook',
+                                'skipRenewConfirmation',
+                            ]
                         },
                         'nginxCustomHandlers',
                         'logoutServices',
@@ -778,7 +781,6 @@ sub tree {
                                 'redirectFormMethod', 'activeTimer',
                             ]
                         },
-                        'skipRenewConfirmation',
                     ]
                 }
             ]
