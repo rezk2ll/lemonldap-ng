@@ -14,7 +14,6 @@ use IO::String;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_RENEWSESSION
-  PE_SENDRESPONSE
 );
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
@@ -158,17 +157,17 @@ sub restoreRequest {
 
 sub reAuth {
     my ( $self, $req ) = @_;
-    my $url =
+    $req->datas->{customScript} =
+qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/autoRenew.min.js"></script>'
+      if ( $self->conf->{skipRenewConfirmation} );
+    $req->datas->{_url} = encode_base64(
         $self->conf->{portal}
-      . $req->path_info
-      . '?issuerRequest'
-      . $self->path . '='
-      . $self->storeRequest($req);
-    if ( $self->conf->{skipRenewConfirmation} ) {
-        $req->response( [ 302, [ Location => $url ], [] ] );
-        return PE_SENDRESPONSE;
-    }
-    $req->datas->{_url} = encode_base64( $url, '' );
+          . $req->path_info
+          . '?issuerRequest'
+          . $self->path . '='
+          . $self->storeRequest($req),
+        ''
+    );
     return PE_RENEWSESSION;
 }
 

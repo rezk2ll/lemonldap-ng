@@ -272,7 +272,7 @@ our $defaultIni = {
     cookieName    => 'lemonldap',
     domain        => 'example.com',
     templateDir   => 'site/templates',
-    staticPrefix  => '/index.fcgi',
+    staticPrefix  => '/static',
     securedCookie => 0,
     https         => 0,
 };

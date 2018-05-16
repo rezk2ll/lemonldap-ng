@@ -4,7 +4,7 @@
 
 <div class="message message-positive alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
 
-<form action="/upgradesession" method="post" class="password" role="form">
+<form id="upgrd" action="/upgradesession" method="post" class="password" role="form">
   <div class="form">
     <div class="form-group input-group">
         <input type="hidden" name="confirm" value="<TMPL_VAR NAME="CONFIRMKEY">">

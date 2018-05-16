@@ -10,7 +10,7 @@ BEGIN {
 }
 eval { unlink 't/userdb.db' };
 
-my $maintests = 21;
+my $maintests = 22;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -93,7 +93,6 @@ SKIP: {
     expectRedirection( $res,
         'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
 
-    # Query IdP
     # Follow redirection to CAS server
     switch ('issuer');
     ok(
@@ -107,7 +106,6 @@ SKIP: {
     expectOK($res);
 
     # Try to authenticate to IdP
-    # Try to authenticate
     my $body = $res->[2]->[0];
     $body =~ s/^.*?<form.*?>//s;
     $body =~ s#</form>.*$##s;
@@ -181,6 +179,9 @@ SKIP: {
     my ( $host, $url );
     ( $host, $url, $query ) =
       expectForm( $res, undef, '/upgradesession', 'confirm', 'url' );
+
+    # Verify that autopost is required (skipRenewConfirmation is set to 1)
+    ok( $res->[2]->[0] =~ /autoRenew\.(?:min\.)js/m, ' Get autorenew.js' );
     ok(
         $res = $issuer->_post(
             '/upgradesession', IO::String->new($query),
@@ -246,7 +247,7 @@ SKIP: {
     );
 
     # Query IdP with iframe src
-    my $url = $1;
+    $url   = $1;
     $query = $2;
     ok(
         getHeader( $res, 'Content-Security-Policy' ) =~
@@ -304,14 +305,15 @@ sub issuer {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel          => $debug,
-                templatesDir      => 'site/htdocs/static',
-                domain            => 'idp.com',
-                portal            => 'http://auth.idp.com',
-                authentication    => 'Choice',
-                userDB            => 'Same',
-                authChoiceParam   => 'test',
-                authChoiceModules => {
+                skipRenewConfirmation => 1,
+                logLevel              => $debug,
+                templatesDir          => 'site/htdocs/static',
+                domain                => 'idp.com',
+                portal                => 'http://auth.idp.com',
+                authentication        => 'Choice',
+                userDB                => 'Same',
+                authChoiceParam       => 'test',
+                authChoiceModules     => {
                     demo => 'Demo;Demo;Demo',
                     sql  => 'DBI;DBI;DBI',
                 },
