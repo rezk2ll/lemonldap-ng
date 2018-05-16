@@ -682,6 +682,7 @@
 "singleSession":"One session only by user",
 "singleUserByIP":"One user by IP address",
 "singleSessionUserByIP":"One session by IP address",
+"skipRenewConfirmation":"Skip re-auth confirmation",
 "slaveAuthnLevel":"Authentication level",
 "slaveExportedVars":"Exported variables",
 "slaveMasterIP":"Master's IP address",

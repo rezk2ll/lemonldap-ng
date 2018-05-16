@@ -777,7 +777,8 @@ sub tree {
                                 'infoFormMethod',     'confirmFormMethod',
                                 'redirectFormMethod', 'activeTimer',
                             ]
-                        }
+                        },
+                        'skipRenewConfirmation',
                     ]
                 }
             ]

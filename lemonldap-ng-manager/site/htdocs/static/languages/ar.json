@@ -682,6 +682,7 @@
 "singleSession":"جلسة واحدة فقط من قبل المستخدم",
 "singleUserByIP":"مستخدم واحد لكل عنوان آي بي",
 "singleSessionUserByIP":"جلسة واحدة بواسطة عنوان الآي بي",
+"skipRenewConfirmation":"Skip re-auth confirmation",
 "slaveAuthnLevel":"مستوى إثبات الهوية",
 "slaveExportedVars":"المتغيرات المصدرة",
 "slaveMasterIP":"عنوان آي بي  الماستر",

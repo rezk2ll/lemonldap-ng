@@ -682,6 +682,7 @@
 "singleSession":"Một phiên chỉ bởi người dùng",
 "singleUserByIP":"Một người dùng theo địa chỉ IP",
 "singleSessionUserByIP":"Một phiên theo địa chỉ IP",
+"skipRenewConfirmation":"Skip re-auth confirmation",
 "slaveAuthnLevel":"Mức xác thực",
 "slaveExportedVars":"Biến đã được xuất",
 "slaveMasterIP":"Địa chỉ IP của Master",
