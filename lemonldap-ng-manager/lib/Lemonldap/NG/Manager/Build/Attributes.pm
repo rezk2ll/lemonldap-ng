@@ -369,12 +369,17 @@ sub attributes {
             documentation => 'Enable StayConnected plugin',
         },
         checkState => {
-            type => 'bool',
+            type          => 'bool',
             documentation => 'Enable CheckState plugin',
         },
         checkStateSecret => {
-            type => 'text',
+            type          => 'text',
             documentation => 'Secret token for CheckState plugin',
+        },
+        skipRenewConfirmation => {
+            type => 'bool',
+            documentation =>
+              'Avoid asking confirmation when an Issuer asks to renew auth',
         },
 
         # Loggers (ini only)

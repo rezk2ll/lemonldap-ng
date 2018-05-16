@@ -157,14 +157,17 @@ sub restoreRequest {
 
 sub reAuth {
     my ( $self, $req ) = @_;
-    $req->datas->{_url} = encode_base64(
+    my $url =
         $self->conf->{portal}
-          . $req->path_info
-          . '?issuerRequest'
-          . $self->path . '='
-          . $self->storeRequest($req),
-        ''
-    );
+      . $req->path_info
+      . '?issuerRequest'
+      . $self->path . '='
+      . $self->storeRequest($req);
+    if ( $self->conf->{skipRenewConfirmation} ) {
+        $req->response( [ 302, [ Location => $url ], [] ] );
+        return PE_SENDRESPONSE;
+    }
+    $req->datas->{_url} = encode_base64( $url, '' );
     return PE_RENEWSESSION;
 }
 
