@@ -14,6 +14,7 @@ use IO::String;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_RENEWSESSION
+  PE_SENDRESPONSE
 );
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
