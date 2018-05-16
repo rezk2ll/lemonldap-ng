@@ -1,10 +1,17 @@
 # LemonLDAP::NG
 
-LemonLDAP::NG is a modular Web-SSO based on Apache::Session modules.
+LemonLDAP::NG is a complete and modular Web-SSO system that can run with
+reverse-proxies or directly on application webservers. It can be used in
+conjunction with OpenID-Connect, CAS and SAML systems as identity or
+service provider. It can also be used as proxy between those federation
+systems.
 
-You can find documentation here:
- * for administrators: https://lemonldap-ng.org/
- * for developers: see also embedded perldoc
+It manages both authentication and authorization and provides headers for
+accounting. So you can have a full AAA protection. Authorizations are built by
+associating a regular expression and a rule. Regular expression is applied on
+the requested URL and the rule calculates if the user is authorized.
+
+You can find documentation on [our website](https://lemonldap-ng.org/)
 
 # Upgrade
 

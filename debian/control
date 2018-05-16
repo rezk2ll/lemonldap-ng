@@ -68,7 +68,7 @@ Description: OpenID-Connect, CAS and SAML compatible Web-SSO system
  also be used as proxy between those federation systems.
  .
  It manages both authentication and authorization and provides headers for
- accounting. So you can have a full AAA protection. Authorization are built by
+ accounting. So you can have a full AAA protection. Authorizations are built by
  associating a regular expression and a rule. Regular expression is applied on
  the requested URL and the rule calculates if the user is authorized.
  .
