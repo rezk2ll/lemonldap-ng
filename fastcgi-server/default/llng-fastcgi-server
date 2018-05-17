@@ -15,7 +15,9 @@ GROUP=__GROUP__
 #CUSTOM_FUNCTIONS_FILE=/var/lib/lemonldap-ng/myfile.pm
 
 # Engine (default to FCGI)
+#ENGINE=FCGI
 #ENGINE=AnyEvent::FCGI
 #ENGINE=FCGI::Async
 #ENGINE=FCGI::EV
 #ENGINE=FCGI::Engine
+#ENGINE=FCGI::Engine::ProcManager
