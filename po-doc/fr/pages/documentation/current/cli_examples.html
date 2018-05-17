@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,cli_examples"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="cli_examples.html"/>
@@ -333,7 +333,13 @@ In this example we have:
 </li>
 <li class="level1"><div class="li">  Client secret : testclientsecret</div>
 </li>
-<li class="level1"><div class="li">  Allowed redirection <abbr title="Uniform Resource Locator">URL</abbr>: <a href="https://testrp.e-serv.ch/?callback=1" class="urlextern" title="https://testrp.e-serv.ch/?callback=1"  rel="nofollow">https://testrp.e-serv.ch/?callback=1</a></div>
+<li class="level1"><div class="li">  Allowed redirection <abbr title="Uniform Resource Locator">URL</abbr>:</div>
+<ul>
+<li class="level2"><div class="li">  For login: <a href="https://testrp.example.com/?callback=1" class="urlextern" title="https://testrp.example.com/?callback=1"  rel="nofollow">https://testrp.example.com/?callback=1</a></div>
+</li>
+<li class="level2"><div class="li">  For logout: <a href="https://testrp.example.com/" class="urlextern" title="https://testrp.example.com/"  rel="nofollow">https://testrp.example.com/</a></div>
+</li>
+</ul>
 </li>
 <li class="level1"><div class="li">  Exported attributes:</div>
 <ul>
@@ -360,12 +366,12 @@ In this example we have:
 <li class="level1"><div class="li">  Redirection:</div>
 </li>
 </ul>
-<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 addKey oidcRPMetaDataOptions/testrp oidcRPMetaDataOptionsRedirectUris 'https://testrp.e-serv.ch/?callback=1'</pre>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 addKey oidcRPMetaDataOptions/testrp oidcRPMetaDataOptionsRedirectUris 'https://testrp.example.com/?callback=1' oidcRPMetaDataOptions/testrp oidcRPMetaDataOptionsPostLogoutRedirectUris 'https://testrp.example.com/'</pre>
 <ul>
 <li class="level1"><div class="li">  Signature and token expiration:</div>
 </li>
 </ul>
-<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 addKey oidcRPMetaDataOptions/idm oidcRPMetaDataOptionsIDTokenSignAlg RS512 oidcRPMetaDataOptions/idm oidcRPMetaDataOptionsIDTokenExpiration 3600 oidcRPMetaDataOptions/idm oidcRPMetaDataOptionsAccessTokenExpiration 3600</pre>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 addKey oidcRPMetaDataOptions/testrp  oidcRPMetaDataOptionsIDTokenSignAlg RS512 oidcRPMetaDataOptions/testrp  oidcRPMetaDataOptionsIDTokenExpiration 3600 oidcRPMetaDataOptions/testrp oidcRPMetaDataOptionsAccessTokenExpiration 3600</pre>
 
 </div><!-- EDIT9 SECTION "Register an OpenID Connect Relying Party" [7670-] -->
 </div>

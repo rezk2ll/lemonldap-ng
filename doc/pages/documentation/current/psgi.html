@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:psgi</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,psgi"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="psgi.html"/>
@@ -66,11 +66,11 @@ LLNG is build on <a href="http://plackperl.org/" class="urlextern" title="http:/
 </ul>
 
 <p>
-uWSGI and <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Node.js handler</a> may provide the highest performance.
+uWSGI or <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Node.js FastCGI server</a> may provide the highest performance.
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Advanced PSGI usage" [1-629] -->
+<!-- EDIT1 SECTION "Advanced PSGI usage" [1-635] -->
 <h2 class="sectionedit2" id="fastcgi_server_replacement">FastCGI server replacement</h2>
 <div class="level2">
 
@@ -78,9 +78,21 @@ uWSGI and <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:
 A <code>llng-server.psgi</code> is provided in example directory. It is designed to replace exactly FastCGI server. You can use it :
 </p>
 <ul>
-<li class="level1"><div class="li"> with a FCGI Plack server, but you just have to change llng-fastcgi-server engine <em>(in /etc/default/llng-fastcgi-server)</em> to have the same result</div>
+<li class="level1"><div class="li"> with a FCGI Plack server, but you just have to change llng-fastcgi-server engine <em>(in /etc/default/llng-fastcgi-server)</em> to have the same result. Available engines:</div>
+<ul>
+<li class="level2"><div class="li"> <a href="https://metacpan.org/pod/Plack::Handler::FCGI" class="urlextern" title="https://metacpan.org/pod/Plack::Handler::FCGI"  rel="nofollow">FCGI</a> <strong>(default)</strong></div>
 </li>
-<li class="level1"><div class="li"> with a HTTP Plack server, not yet tested</div>
+<li class="level2"><div class="li"> <a href="https://metacpan.org/pod/Plack::Handler::AnyEvent::FCGI" class="urlextern" title="https://metacpan.org/pod/Plack::Handler::AnyEvent::FCGI"  rel="nofollow">AnyEvent::FCGI</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="https://metacpan.org/pod/Plack::Handler::FCGI::EV" class="urlextern" title="https://metacpan.org/pod/Plack::Handler::FCGI::EV"  rel="nofollow">FCGI::EV</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="https://metacpan.org/pod/Plack::Handler::FCGI::Engine" class="urlextern" title="https://metacpan.org/pod/Plack::Handler::FCGI::Engine"  rel="nofollow">FCGI::Engine</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="https://metacpan.org/pod/Plack::Handler::FCGI::Engine::ProcManager" class="urlextern" title="https://metacpan.org/pod/Plack::Handler::FCGI::Engine::ProcManager"  rel="nofollow">FCGI::Engine::ProcManager</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="https://metacpan.org/pod/Plack::Handler::FCGI::Async" class="urlextern" title="https://metacpan.org/pod/Plack::Handler::FCGI::Async"  rel="nofollow">FCGI::Async</a></div>
+</li>
+</ul>
 </li>
 <li class="level1"><div class="li"> with uWSGI <em><strong>(see below)</strong></em></div>
 </li>
@@ -100,7 +112,7 @@ See also <a href="highperfnginxhandler.html" class="wikilink1" title="documentat
 </p>
 
 </div>
-<!-- EDIT2 SECTION "FastCGI server replacement" [630-1417] -->
+<!-- EDIT2 SECTION "FastCGI server replacement" [636-1878] -->
 <h3 class="sectionedit3" id="using_uwsgi">Using uWSGI</h3>
 <div class="level3">
 
@@ -114,6 +126,6 @@ You will find in LLNG Nginx configuration files some comments that explain how t
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Using uWSGI" [1418-] --></div>
+<!-- EDIT3 SECTION "Using uWSGI" [1879-] --></div>
 </body>
 </html>

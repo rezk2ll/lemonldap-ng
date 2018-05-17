@@ -14550,6 +14550,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG offline documentation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changeid="xavier" changedate="20180517T194110Z" creationid="xavier" creationdate="20180517T194110Z">
+        <seg>Documentation hors-ligne de LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG portal menu has 4 modules:</seg>
       </tuv>
       <tuv lang="FR-FR" changeid="guimard" changedate="20120419T134355Z">
@@ -15088,6 +15096,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changeid="xavier" changedate="20120216T051945Z">
         <seg>Système LL::NG principal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Main features</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Fonctionnalités principales</seg>
       </tuv>
     </tu>
     <tu>
@@ -16768,6 +16784,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changeid="xavier" changedate="20120221T065919Z">
         <seg>Placer vos propres fichiers au lieu de ow2.cert, ow2.key, ow2-ca.cert:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Quick start tutorial</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Tutoriel rapide</seg>
       </tuv>
     </tu>
     <tu>
@@ -19094,14 +19118,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>The AuthBasic Handler is a special Handler that will us AuthBasic to authenticate to a virtual host, and then play authorizations rules to allow access to the virtual host.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changeid="xavier" changedate="20121005T040839Z">
-        <seg>L'agent AuthBasic est un agent spécial qui utilise l'authentification web basique pour authentifier dans un hôte virtuel et qui utilise ensuite les règles d'autorisation pour valider les accès à l'hôte virtuel.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>The AuthDemo and UserDBDemo will allow you to log in and get the standard attributes (uid, cn and mail).</seg>
       </tuv>
       <tuv lang="FR-FR" changeid="xavier" changedate="20120226T115404Z">
@@ -20352,14 +20368,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>This can be useful to allow an third party application to access a virtual host with users credentials by sending a Basic challenge to it.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changeid="xavier" changedate="20121005T041259Z">
-        <seg>Ce peut être pratique pour autoriser une application cliente à accéder à un hôte virtuel avec un authentifiant en envoyant un en-tête basique.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>This concerns all parameters for the Attribute Authority metadata section</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20788,14 +20796,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR">
         <seg>Peut être défini par défaut.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>This step should already have been if you installed LL::NG with packages.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changeid="xavier" changedate="20160301T061046Z">
-        <seg>Cette étape est effectuée automatiquement lorsqu'on installe LL::NG avec les packages.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22176,14 +22176,6 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changeid="xavier" changedate="20120221T062318Z">
         <seg>À la réception de la requête, le contexte d'authentification réel est traduit en un niveau d'authentification interne (voir comment configurer la translation), utilisable pour accorder ou non la création de session.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>When session is granted, the Handler will then check the authorizations like the standard Handler.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changeid="xavier" changedate="20121005T041124Z">
-        <seg>Lorsque la session est validée, l'agent examine les autorisations comme un agent standard.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25224,10 +25216,34 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation/features.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/features.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation/latest/applications/zimbra.html</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation/latest/applications/zimbra.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/presentation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/presentation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/quickstart.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/quickstart.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -25404,6 +25420,14 @@ description: {whatToTrace}'$uid'
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:presentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:quickstart</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:quickstart</seg>
       </tuv>
     </tu>
     <tu>

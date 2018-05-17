@@ -43,17 +43,59 @@
 </head>
 <body>
 <div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#our_concept_of_ssoaas">Our concept of SSOaaS</a></div></li>
+<li class="level1"><div class="li"><a href="#using_front_reverse-proxies">Using front reverse-proxies</a></div></li>
+<li class="level1"><div class="li"><a href="#using_a_global_fastcgi_or_uwsgi_server">Using a global FastCGI (or uWSGI) server</a></div></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
 
 <h1 class="sectionedit1" id="sso_as_a_service_ssoaas">SSO as a service (SSOaaS)</h1>
 <div class="level1">
 
+</div>
+<!-- EDIT1 SECTION "SSO as a service (SSOaaS)" [1-41] -->
+<h2 class="sectionedit2" id="our_concept_of_ssoaas">Our concept of SSOaaS</h2>
+<div class="level2">
+
 <p>
-LLNG provides some features that can be used to provide <abbr title="Single Sign On">SSO</abbr> as a service. Two possibility to do it:
+Access management provides 3 services:
 </p>
 <ul>
-<li class="level1"><div class="li"> Using front reverse-proxies</div>
+<li class="level1"><div class="li"> Global authentication: Single-Sign-On</div>
 </li>
+<li class="level1"><div class="li"> Authorization check: authentication isn&#039;t enough, user rights mus be checked</div>
+</li>
+<li class="level1"><div class="li"> Accounting: <abbr title="Single Sign On">SSO</abbr> logs + application logs <em>(transactions and results)</em></div>
+</li>
+</ul>
+
+<p>
+LLNG provides all these services (except application logs of course, but headers are provided to permit this). Headers is another LLNG service: LLNG can provide any user attributes to the application <em>(see <a href="writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Rules and headers</a>)</em>
+</p>
+
+<p>
+<code>*aaS</code> means that application can drive undelying layer (IaaS for infrastructure, PaaS for platform,…). So for us, <code>SSOaaS</code> must provide the ability for an app to manage authorizations and to get user attributes. Authentication can&#039;t be really “*aaS”: app must not drive it, only consumes it.
+</p>
+
+<p>
+LLNG provides some features that can be used to provide <abbr title="Single Sign On">SSO</abbr> as a service: a web application can drive its rules and headers. Docker or VM images (Nginx only) includes LLNG Nginx configuration that points to a global <a href="platformsoverview.html#external_servers_for_nginx" class="wikilink1" title="documentation:2.0:platformsoverview">LLNG authorization server</a>. By default, all authenticated users can access and one header is set: <code>Auth-User</code>. If application gives a RULES_<abbr title="Uniform Resource Locator">URL</abbr> parameter that points to a JSON file, authorization server will read it and apply given rules and set asked headers <em>(see <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps Handler</a>)</em>.
+</p>
+
+<p>
+Two architectures to do it:
+</p>
+<ul>
 <li class="level1"><div class="li"> Using a global FastCGI (or uWSGI) server</div>
+</li>
+<li class="level1"><div class="li"> Using front reverse-proxies <em>(some cloud installation use reverse-proxies in front of the cloud)</em></div>
 </li>
 </ul>
 
@@ -62,8 +104,8 @@ In both case, Handler type must be set to <a href="devopshandler.html" class="wi
 </p>
 
 </div>
-<!-- EDIT1 SECTION "SSO as a service (SSOaaS)" [1-288] -->
-<h2 class="sectionedit2" id="using_front_reverse-proxies">Using front reverse-proxies</h2>
+<!-- EDIT2 SECTION "Our concept of SSOaaS" [42-1689] -->
+<h2 class="sectionedit3" id="using_front_reverse-proxies">Using front reverse-proxies</h2>
 <div class="level2">
 
 <p>
@@ -94,7 +136,7 @@ This configuration handles <code>*.dev.sso.my.domain</code> services and forward
     fastcgi_param CONTENT_LENGTH &quot;&quot;;
     # Keep original hostname
     fastcgi_param HOST $http_host;
-    # Keep original request (LLNG server will received /llauth)
+    # Keep original request (LLNG server will received /lmauth)
     fastcgi_param X_ORIGINAL_URI  $request_uri;
   }
   location /rules.json {
@@ -114,8 +156,8 @@ This configuration handles <code>*.dev.sso.my.domain</code> services and forward
 </dd></dl>
 
 </div>
-<!-- EDIT2 SECTION "Using front reverse-proxies" [289-1765] -->
-<h2 class="sectionedit3" id="using_a_global_fastcgi_or_uwsgi_server">Using a global FastCGI (or uWSGI) server</h2>
+<!-- EDIT3 SECTION "Using front reverse-proxies" [1690-3166] -->
+<h2 class="sectionedit4" id="using_a_global_fastcgi_or_uwsgi_server">Using a global FastCGI (or uWSGI) server</h2>
 <div class="level2">
 
 <p>
@@ -165,6 +207,6 @@ In this example, web server templates (Nginx only) are configured to ask authori
 </dd></dl>
 
 </div>
-<!-- EDIT3 SECTION "Using a global FastCGI (or uWSGI) server" [1766-] --></div>
+<!-- EDIT4 SECTION "Using a global FastCGI (or uWSGI) server" [3167-] --></div>
 </body>
 </html>

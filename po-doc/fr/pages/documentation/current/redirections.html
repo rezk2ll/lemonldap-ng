@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,redirections"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="redirections.html"/>
@@ -43,16 +43,38 @@
 
 </head>
 <body>
-<div class="dokuwiki export container">
+<div class="dokuwiki export container"><!-- TOC START -->
 
-<h1 class="sectionedit1" id="handler_redirections">Redirections des agents</h1>
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#handler_redirections">Redirections des agents</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#protocol_and_port">Protocole et port</a></div></li>
+<li class="level2"><div class="li"><a href="#forbidden_and_server_error">Accès interdits et erreurs du serveur</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#portal_redirections">Redirections du portail</a></div></li>
+</ul>
+</div>
+</div><!-- TOC END -->
+
+
+<h1 class="sectionedit1" id="redirections">Redirections</h1>
 <div class="level1">
+
+</div><!-- EDIT1 SECTION "Redirections" [1-28] -->
+
+<h2 class="sectionedit2" id="handler_redirections">Redirections des agents</h2>
+<div class="level2">
 <div class="noteclassic">Lorsqu'un utilisateur accède à un agent sans cookie, il est redirigé vers le portail, et l'<abbr title="Uniform Resource Locator">URL</abbr> cible est encodée dans l'<abbr title="Uniform Resource Locator">URL</abbr> de redirection (pour rediriger l'utilisateur après authentification).
 </div>
-</div><!-- EDIT1 SECTION "Handler Redirections" [1-223] -->
+</div><!-- EDIT2 SECTION "Handler Redirections" [29-249] -->
 
-<h2 class="sectionedit2" id="protocol_and_port">Protocole et port</h2>
-<div class="level2">
+<h3 class="sectionedit3" id="protocol_and_port">Protocole et port</h3>
+<div class="level3">
 
 <p>
 Pour encoder l'<abbr title="Uniform Resource Locator">URL</abbr> de redirection, l'agent utilise des variables d'environnement Apache et des paramètres de configuration :
@@ -70,10 +92,10 @@ Cesparamètres peuvent être configurés dans le manager, dans <code>Paramètres
 <div class="notetip">These settings can be overridden per virtual host, see <a href="configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">virtual host management</a>.
 
 </div>
-</div><!-- EDIT2 SECTION "Protocol and port" [224-732] -->
+</div><!-- EDIT3 SECTION "Protocol and port" [250-756] -->
 
-<h2 class="sectionedit3" id="forbidden_and_server_error">Accès interdits et erreurs du serveur</h2>
-<div class="level2">
+<h3 class="sectionedit4" id="forbidden_and_server_error">Accès interdits et erreurs du serveur</h3>
+<div class="level3">
 
 <p>
 Les agents utilisent le code d'erreur d'Apache dans les cas suivants :
@@ -121,19 +143,21 @@ Ces paramètres peuvent être configurés dans le manager, dans <code>Paramètre
 </li>
 </ul>
 
-</div><!-- EDIT3 SECTION "Forbidden and Server error" [733-2104] -->
+</div><!-- EDIT4 SECTION "Forbidden and Server error" [757-2126] -->
 
-<h1 class="sectionedit4" id="portal_redirections">Redirections du portail</h1>
-<div class="level1">
+<h2 class="sectionedit5" id="portal_redirections">Redirections du portail</h2>
+<div class="level2">
 <div class="noteclassic">Si un utilisateur est redirigé depuis un agent vers le portail pour s'authentifier et s'il est déjà authentifié, le portail le redirige vers l'<abbr title="Uniform Resource Locator">URL</abbr> de redirection.
 </div><ul>
 <li class="level1"><div class="li"> <strong>Redirection message</strong>: The redirection from portal can be done either with code 303 (See Other), or with a JavaScript redirection. Souvent la redirection prend du temps car c'est le premier accès de l'utilisateur à l'application protégée et il faut créer la session applicative ; la redirection JavaScript améliore le ressenti utilisateur en l'informant que l'authentification est réussie et en évitant qu'il clique de nouveau sur le bouton.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Keep redirections for Ajax</strong>: By default, when an Ajax request is done on the portal for an unauthenticated user (after a redirection done by the handler), a 401 code will be sentwith a <code>WWW-Authenticate</code> header containing “<abbr title="Authentification unique (Single Sign On)">SSO</abbr> &lt;portal-<abbr title="Uniform Resource Locator">URL</abbr>&gt;”. Set this option to 1 to keep the old behavior (return of <abbr title="HyperText Markup Language">HTML</abbr> code).</div>
 </li>
+<li class="level1"><div class="li"> <strong>Skip re-auth confirmation</strong>: by default, when re-authentication is needed, a confirmation screen is displayed to let user accept the re-authentication. If you enable this option, user will be directly redirected to login page.</div>
+</li>
 </ul>
 
-</div><!-- EDIT4 SECTION "Portal Redirections" [2105-] -->
+</div><!-- EDIT5 SECTION "Portal Redirections" [2127-] -->
 </div>
 </body>
 </html>

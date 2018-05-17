@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,handlerarch"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="handlerarch.html"/>
@@ -45,7 +45,7 @@
 <body>
 <div class="dokuwiki export container">
 
-<h1 class="sectionedit1" id="handler_architecture">Handler architecture</h1>
+<h1 class="sectionedit1" id="handler_libraries_architecture">Handler libraries architecture</h1>
 <div class="level1">
 
 <p>
@@ -54,7 +54,7 @@ Handlers are build on rows of modules:
 
 </p>
 <ul>
-<li class="level1"><div class="li">  Applications or launchers that get the request and choose the good type <em>(Main, AuthBasic, ZimbraPreAuth,…)</em> and launch it <em>(may not inherits of other Handler::* modules)</em></div>
+<li class="level1"><div class="li">  Applications or launchers that get the request and choose the right type <em>(Main, AuthBasic, ZimbraPreAuth,…)</em> and launch it <em>(may not inherits from other Handler::* modules)</em></div>
 </li>
 <li class="level1"><div class="li">  Wrappers that call “type” library and platform “Main” <em>(may all inherits from Platform::Main)</em></div>
 </li>
@@ -64,7 +64,7 @@ Handlers are build on rows of modules:
 </li>
 </ul>
 
-</div><!-- EDIT1 SECTION "Handler architecture" [1-452] -->
+</div><!-- EDIT1 SECTION "Handler libraries architecture" [1-465] -->
 
 <h2 class="sectionedit2" id="overview_of_handler_packages">Overview of Handler packages</h2>
 <div class="level2">
@@ -86,7 +86,7 @@ Handlers are build on rows of modules:
 	<tr class="row4 roweven">
 		<td class="col0 centeralign" colspan="2">    PSGI    </td><td class="col2 centeralign">    PSGI::&lt;type&gt;    </td>
 	</tr>
-</table></div><!-- EDIT3 TABLE [495-753] -->
+</table></div><!-- EDIT3 TABLE [508-766] -->
 
 <p>
 
@@ -106,7 +106,7 @@ Types are:
 </li>
 </ul>
 
-</div><!-- EDIT2 SECTION "Overview of Handler packages" [453-] -->
+</div><!-- EDIT2 SECTION "Overview of Handler packages" [466-] -->
 </div>
 </body>
 </html>

@@ -94,14 +94,14 @@ Up-to-date documentation is available on GitHub.
 </li>
 <li class="level1"><div class="li">  Multi-lines are not supported in lemonldap-ng.ini</div>
 </li>
-<li class="level1"><div class="li">  Virtualhosts handled by node-lemonldap-ng-handler must be explicitly declared in you <code>lemonldap-ng.ini</code> file in <code>[node-handler]</code> section <em>(<strong>NB</strong>: section <code>[handler]</code> isn't used by node handler)</em>:</div>
+<li class="level1"><div class="li">  Virtualhosts handled by node-lemonldap-ng-handler must be explicitly declared in your <code>lemonldap-ng.ini</code> file in <code>[node-handler]</code> section <em>(<strong>NB</strong>: section <code>[handler]</code> isn't used by node handler)</em>:</div>
 </li>
 </ul>
 <pre class="code ini"><span class="re0"><span class="br0">[</span>node-handler<span class="br0">]</span></span>
 &nbsp;
 <span class="re1">nodeVhosts</span> <span class="sy0">=</span><span class="re2"> test.example.com, test2.example.com</span></pre>
 
-</div><!-- EDIT2 SECTION "Examples" [210-730] -->
+</div><!-- EDIT2 SECTION "Examples" [210-731] -->
 
 <h3 class="sectionedit3" id="use_it_as_fastcgi_server_application_protection_only">Use it as FastCGI server (application protection only)</h3>
 <div class="level3">
@@ -148,7 +148,7 @@ handler.<span class="me1">nginxServer</span><span class="br0">(</span><span clas
     # Conserver le nom d'hôte original
     fastcgi_param HOST $http_host;
 &nbsp;
-    # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
+    # Keep original request (LLNG server will received /lmauth)
     fastcgi_param X_ORIGINAL_URI  $request_uri;
   }
 &nbsp;
@@ -163,7 +163,7 @@ handler.<span class="me1">nginxServer</span><span class="br0">(</span><span clas
 }</pre>
 </dd></dl>
 
-</div><!-- EDIT3 SECTION "Use it as FastCGI server (application protection only)" [731-1912] -->
+</div><!-- EDIT3 SECTION "Use it as FastCGI server (application protection only)" [732-1913] -->
 
 <h3 class="sectionedit4" id="use_it_to_protect_an_express_app">Use it to protect an express app</h3>
 <div class="level3">
@@ -193,7 +193,7 @@ app.<span class="me1">listen</span><span class="br0">(</span><span class="nu0">3
 <span class="br0">}</span><span class="br0">)</span><span class="sy0">;</span></pre>
 </dd></dl>
 
-</div><!-- EDIT4 SECTION "Use it to protect an express app" [1913-] -->
+</div><!-- EDIT4 SECTION "Use it to protect an express app" [1914-] -->
 </div>
 </body>
 </html>

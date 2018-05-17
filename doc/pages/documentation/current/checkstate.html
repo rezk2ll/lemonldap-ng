@@ -66,25 +66,25 @@ Just enable it in the manager (section “plugins”). You <em class="u">must</e
 <div class="level2">
 
 <p>
-When enabled, <code>/checkstate</code> <abbr title="Uniform Resource Locator">URL</abbr> path is handled by this plugin. It can be called only by an unauthenticated request. GET parameters:
+When enabled, <code>/checkstate</code> <abbr title="Uniform Resource Locator">URL</abbr> path is handled by this plugin. GET parameters:
 </p>
 <div class="table sectionedit4"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
-		<th class="col0 centeralign">  Parameter  </th><th class="col1 leftalign">  </th><th class="col2 centeralign">  Value  </th>
+		<th class="col0 centeralign">  GET Parameter  </th><th class="col1 centeralign">  Need  </th><th class="col2 centeralign">  Value  </th>
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  secret  </td><td class="col1 centeralign">  required  </td><td class="col2"> Same value as the shared secret given to the manager </td>
+		<td class="col0 centeralign">  <code>secret</code>  </td><td class="col1 centeralign">  required  </td><td class="col2"> Same value as the shared secret given to the manager </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  user  </td><td class="col1 centeralign">  optional  </td><td class="col2"> If set (with password), a login/logout process will be tried </td>
+		<td class="col0 centeralign">  <code>user</code>  </td><td class="col1 centeralign">  optional  </td><td class="col2" rowspan="2"> If set (with password), a login/logout process will be tried </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 centeralign">  password  </td><td class="col1 centeralign">  optional  </td><td class="col2 leftalign">  </td>
+		<td class="col0 centeralign">  <code>password</code>  </td><td class="col1 centeralign">  optional  </td>
 	</tr>
 </table></div>
-<!-- EDIT4 TABLE [466-693] -->
+<!-- EDIT4 TABLE [413-667] -->
 <p>
 Example: <code><a href="https://auth.example.com/checkstate?secret=qwerty&amp;user=dwho&amp;password=dwho" class="urlextern" title="https://auth.example.com/checkstate?secret=qwerty&amp;user=dwho&amp;password=dwho"  rel="nofollow">https://auth.example.com/checkstate?secret=qwerty&amp;user=dwho&amp;password=dwho</a></code>
 </p>

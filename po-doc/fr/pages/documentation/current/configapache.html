@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
 //else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,configapache"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="configapache.html"/>
@@ -47,13 +47,14 @@
 
 <h1 class="sectionedit1" id="deploy_apache_configuration">Deployer la configuration Apache</h1>
 <div class="level1">
-<div class="noteclassic">Cette étape est effectuée automatiquement lorsqu'on installe <abbr title="LemonLDAP::NG">LL::NG</abbr> avec les packages.
+<div class="noteclassic">This step should have been already done if you installed <abbr title="LemonLDAP::NG">LL::NG</abbr> with packages.
+
 </div>
-</div><!-- EDIT1 SECTION "Deploy Apache configuration" [1-131] -->
+</div><!-- EDIT1 SECTION "Deploy Apache configuration" [1-136] -->
 
 <h2 class="sectionedit2" id="files">Fichiers</h2>
 <div class="level2">
-<div class="noteimportant">Apache-ModPerl is no longer usable since version 2.4 <em>(many segfaults,…)</em>. No problem for portal and manager since they are now handle by FastCGI.
+<div class="noteimportant">Apache-ModPerl is no longer usable since 2.4 version <em>(many segfaults,…)</em>. No problem for portal and manager since they are now handled by FastCGI.
 
 <p>
 <strong>But for handlers, please use <a href="confignginx.html" class="wikilink1" title="documentation:2.0:confignginx">Nginx</a> !</strong>
@@ -83,7 +84,7 @@ a2ensite handler-apache2.conf
 a2ensite test-apache2.conf</pre>
 
 </div>
-</div><!-- EDIT2 SECTION "Files" [132-1156] -->
+</div><!-- EDIT2 SECTION "Files" [137-1162] -->
 
 <h2 class="sectionedit3" id="modules">Modules</h2>
 <div class="level2">
@@ -105,7 +106,7 @@ Il faut également charger quelques modules Apache :
 <pre class="code">a2enmod fcgid perl alias rewrite</pre>
 
 </div>
-</div><!-- EDIT3 SECTION "Modules" [1157-] -->
+</div><!-- EDIT3 SECTION "Modules" [1163-] -->
 </div>
 </body>
 </html>
