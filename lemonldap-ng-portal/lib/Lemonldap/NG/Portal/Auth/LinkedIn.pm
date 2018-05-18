@@ -4,7 +4,7 @@ use strict;
 use JSON;
 use Mouse;
 use MIME::Base64 qw/encode_base64 decode_base64/;
-use URI::Escape;
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_REDIRECT);
 
@@ -80,8 +80,8 @@ sub extractFormInfo {
     # Use authChoiceParam in redirect URL
     if ( $req->param( $self->conf->{authChoiceParam} ) ) {
         $callback_url .= ( $callback_url =~ /\?/ ? '&' : '?' );
-        $callback_url .= $self->conf->{authChoiceParam} . '='
-          . uri_escape( $req->param( $self->conf->{authChoiceParam} ) );
+        $callback_url .= build_urlencoded( $self->conf->{authChoiceParam} =>
+              $req->param( $self->conf->{authChoiceParam} ) );
     }
 
     # Check return values
@@ -195,12 +195,14 @@ sub extractFormInfo {
         $stateSession->update($stateInfos);
 
         my $authn_uri = $self->linkedInAuthorizationEndpoint;
-        $authn_uri .= "?response_type=code";
-        $authn_uri .=
-          "&client_id=" . uri_escape( $self->conf->{linkedInClientID} );
-        $authn_uri .= "&redirect_uri=$callback_url";
-        $authn_uri .= "&scope=" . uri_escape( $self->conf->{linkedInScope} );
-        $authn_uri .= "&state=" . $stateSession->id;
+        $authn_uri .= '?'
+          . build_urlencoded(
+            response_type => 'code',
+            client_id     => $self->conf->{linkedInClientID},
+            redirect_uri  => $callback_url,
+            scope         => $self->conf->{linkedInScope},
+            state         => $stateSession->id,
+          );
 
         $req->urldc($authn_uri);
 
