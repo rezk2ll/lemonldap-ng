@@ -307,7 +307,7 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coff
 
 %.min.js: %.js
 	@echo "Compressing $*.js"
-	@yui-compressor $*.js > $*.min.js
+	@uglifyjs --comments='/Copyr/i' $*.js > $*.min.js
 
 fastcgi-server/man/llng-fastcgi-server.1p: fastcgi-server/sbin/llng-fastcgi-server
 	@echo Update FastCGI server man page
