@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Lib::CAS;
 
 use strict;
 use Mouse;
-use URI::Escape;
+use Lemonldap::NG::Common::FormEncode;
 use XML::Simple;
 use Lemonldap::NG::Common::UserAgent;
 
@@ -321,17 +321,15 @@ sub callPgtUrl {
 sub getServerLoginURL {
     my ( $self, $service, $srvConf ) = @_;
 
-    return
-        $srvConf->{casSrvMetaDataOptionsUrl}
-      . "/login?service="
-      . uri_escape($service);
+    return "$srvConf->{casSrvMetaDataOptionsUrl}/login?"
+      . build_urlencoded( service => $service );
 }
 
 # Get Server Logout URL
 sub getServerLogoutURL {
     my ( $self, $service, $srvUrl ) = @_;
 
-    return $srvUrl . "/logout?service=" . uri_escape($service);
+    return "$srvUrl/logout?" . build_urlencoded( service => $service );
 }
 
 # Validate ST
@@ -339,11 +337,7 @@ sub validateST {
     my ( $self, $req, $service, $ticket, $srvConf ) = @_;
     my $proxyUrl;
 
-    my $serviceValidateUrl =
-        $srvConf->{casSrvMetaDataOptionsUrl}
-      . "/serviceValidate?service="
-      . uri_escape($service);
-    $serviceValidateUrl .= "&ticket=$ticket";
+    my %prm = ( service => $service, ticket => $ticket );
 
     my $proxied = $srvConf->{casSrvMetaDataOptionsProxiedServices} || {};
     my $proxy_url;
@@ -361,10 +355,12 @@ sub validateST {
 
         $req->datas->{casProxyUrl} = $proxy_url;
 
-        $serviceValidateUrl .= "&pgtUrl=" . uri_escape($proxy_url);
+        $prm{pgtUrl} = $proxy_url;
     }
 
-    my $response = $self->ua->get($serviceValidateUrl);
+    my $response =
+      $self->ua->get( "$srvConf->{casSrvMetaDataOptionsUrl}/serviceValidate?"
+          . build_urlencoded(%prm) );
 
     $self->logger->debug(
         "Get CAS serviceValidate response: " . $response->as_string );
@@ -448,11 +444,8 @@ sub storePGT {
 sub retrievePT {
     my ( $self, $service, $srvConf ) = @_;
 
-    my $proxyUrl =
-        $srvConf->{casSrvMetaDataOptionsUrl}
-      . "/proxy?targetService="
-      . uri_escape($service);
-    $proxyUrl .= "&pgt=" . $self->{pgtId};
+    my $proxyUrl = "$srvConf->{casSrvMetaDataOptionsUrl}/proxy?"
+      . build_urlencoded( targetService => $service, pgt => $self->{pgtId} );
 
     my $response = $self->ua->get($proxyUrl);
 

@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Auth::Twitter;
 
 use strict;
 use Mouse;
-use URI::Escape;
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
 
@@ -79,6 +79,7 @@ sub extractFormInfo {
 
         # 1.1 Try to get token to dialog with Twitter
         my $callback_url = $self->p->fullUrl($req);
+        my %prm = ( twitterback => 1 );
 
         # Twitter callback parameter
         $callback_url .=
@@ -86,14 +87,11 @@ sub extractFormInfo {
 
         # Add request state parameters
         if ( $req->datas->{_url} ) {
-            my $url_param = 'url=' . uri_escape( $req->datas->{_url} );
-            $callback_url .= ( $callback_url =~ /\?/ ? '&' : '?' ) . $url_param;
+            $prm{url} = $req->datas->{_url};
         }
         if ( $req->param( $self->conf->{authChoiceParam} ) ) {
-            my $url_param =
-              $self->conf->{authChoiceParam} . '='
-              . uri_escape( $req->param( $self->conf->{authChoiceParam} ) );
-            $callback_url .= ( $callback_url =~ /\?/ ? '&' : '?' ) . $url_param;
+            $prm{ $self->conf->{authChoiceParam} } =
+              $req->param( $self->conf->{authChoiceParam} );
         }
 
         # Forward hidden fields
@@ -102,12 +100,11 @@ sub extractFormInfo {
             $self->logger->debug("Add hidden values to Twitter redirect URL");
 
             foreach ( keys %{ $req->{portalHiddenFormValues} } ) {
-                $callback_url .=
-                    ( $callback_url =~ /\?/ ? '&' : '?' )
-                  . $_ . '='
-                  . uri_escape( $req->{portalHiddenFormValues}->{$_} );
+                $prm{$_} = $req->{portalHiddenFormValues}->{$_};
             }
         }
+        $callback_url .=
+          ( $callback_url =~ /\?/ ? '&' : '?' ) . build_urlencoded(%prm);
 
         my $request = Net::OAuth->request("request token")->new(
             consumer_key     => $self->conf->{twitterKey},
