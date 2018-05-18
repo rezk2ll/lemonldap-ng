@@ -79,11 +79,9 @@ sub extractFormInfo {
 
         # 1.1 Try to get token to dialog with Twitter
         my $callback_url = $self->p->fullUrl($req);
-        my %prm = ( twitterback => 1 );
 
         # Twitter callback parameter
-        $callback_url .=
-          ( $callback_url =~ /\?/ ? '&' : '?' ) . "twitterback=1";
+        my %prm = ( twitterback => 1 );
 
         # Add request state parameters
         if ( $req->datas->{_url} ) {
