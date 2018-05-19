@@ -2,6 +2,8 @@
 
 Version: %X.X.X
 
+Platform: (Nginx/Apache/Node.js)
+
 ### Summary
 
 Summarize the bug encountered concisely
@@ -17,3 +19,4 @@ Set here the logs using debug mode if possible. Attach it as file if it's too bi
 For any bug on configuration/sessions storage, give us details on backends
 
 ### Possible fixes
+
