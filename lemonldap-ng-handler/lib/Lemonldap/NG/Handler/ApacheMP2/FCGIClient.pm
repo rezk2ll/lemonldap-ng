@@ -41,6 +41,11 @@ sub handler {
         SERVER_PORT    => $r->get_server_port,
         REQUEST_METHOD => $r->method,
     };
+    foreach (qw(VHOSTTYPE)) {
+        if ( my $t = $r->dir_config($_) ) {
+            $env->{$_} = $t;
+        }
+    }
     $r->headers_in->do(
         sub {
             my $h = shift;
@@ -112,6 +117,7 @@ In apache2.conf:
   <VirtualHost ...>
     PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2::FCGIClient
     PerlSetVar LLNG_SERVER 127.0.0.1:9090
+    PerlSetVar VHOSTTYPE DevOps
     ...
   </VirtualHost>
 
