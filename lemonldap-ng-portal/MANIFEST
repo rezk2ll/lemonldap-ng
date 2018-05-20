@@ -136,6 +136,7 @@ META.json
 META.yml
 README
 site/coffee/2fregistration.coffee
+site/coffee/autoRenew.coffee
 site/coffee/confirm.coffee
 site/coffee/info.coffee
 site/coffee/kerberos.coffee
@@ -232,6 +233,8 @@ site/htdocs/static/common/icons/warning.png
 site/htdocs/static/common/it.png
 site/htdocs/static/common/js/2fregistration.js
 site/htdocs/static/common/js/2fregistration.min.js
+site/htdocs/static/common/js/autoRenew.js
+site/htdocs/static/common/js/autoRenew.min.js
 site/htdocs/static/common/js/confirm.js
 site/htdocs/static/common/js/confirm.min.js
 site/htdocs/static/common/js/info.js
