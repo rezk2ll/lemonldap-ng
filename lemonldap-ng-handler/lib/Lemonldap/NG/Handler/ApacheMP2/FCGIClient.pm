@@ -41,7 +41,7 @@ sub handler {
         SERVER_PORT    => $r->get_server_port,
         REQUEST_METHOD => $r->method,
     };
-    foreach (qw(VHOSTTYPE)) {
+    foreach (qw(VHOSTTYPE RULES_URL)) {
         if ( my $t = $r->dir_config($_) ) {
             $env->{$_} = $t;
         }
@@ -118,6 +118,7 @@ In apache2.conf:
     PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2::FCGIClient
     PerlSetVar LLNG_SERVER 127.0.0.1:9090
     PerlSetVar VHOSTTYPE DevOps
+    PerlSetVar RULES_URL http://app.tld/rules.json
     ...
   </VirtualHost>
 
