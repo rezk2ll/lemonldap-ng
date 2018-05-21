@@ -921,11 +921,17 @@ debian-install:
 	@exit 1
 
 debian-install-for-apache: debian-packages
-	perl -i -ne 'next if/fastcgi.*deb$$/;s/lemonldap-ng-fastcgi-server//;print' /tmp/lemonldap-ng_$(VERSION)*.changes
+	perl -i -ne 'next if/(?:fastcgi|uwsgi).*deb$$/;s/lemonldap-ng-(?:fastcgi-server|uwsgi-app)//;print' /tmp/lemonldap-ng_$(VERSION)*.changes
 	cd /tmp/lemonldap-ng-$(VERSION) && \
 	$(SU) debi
 
 debian-install-for-nginx: debian-packages
+	perl -i -ne 'next if/(?:uwsgi).*deb$$/;s/lemonldap-ng-(?:uwsgi-app)//;print' /tmp/lemonldap-ng_$(VERSION)*.changes
+	cd /tmp/lemonldap-ng-$(VERSION) && \
+	$(SU) debi
+
+debian-install-for-nginx-uwsgi: debian-packages
+	perl -i -ne 'next if/(?:fastcgi).*deb$$/;s/lemonldap-ng-(?:fastcgi-server)//;print' /tmp/lemonldap-ng_$(VERSION)*.changes
 	cd /tmp/lemonldap-ng-$(VERSION) && \
 	$(SU) debi
 
