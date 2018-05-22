@@ -68,7 +68,17 @@ sub _run {
             $req->respHeaders( [] );
             $self->routes( $self->unAuthRoutes );
         }
-        return $self->handler($req);
+        $res = $self->handler($req);
+
+        # Insert respHeaders in response only if not already set
+        my %hdr1 = @{ $res->[1] };
+        my %hdr2 = @{ $req->{respHeaders} };
+        foreach ( keys %hdr2 ) {
+            unless ( $hdr1{$_} and $hdr2{$_} eq $hdr1{$_} ) {
+                push @{ $res->[1] }, ( $_ => $hdr2{$_} );
+            }
+        }
+        return $res;
     };
 }
 
