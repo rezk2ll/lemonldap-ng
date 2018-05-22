@@ -419,6 +419,7 @@ prepare_test_server:
 		e2e-tests/conf/lmConf-1.json \
 		e2e-tests/conf/env.conf \
 		e2e-tests/conf/test-nginx.conf
+	@perl -i -pe 's/#CustomLog.*$$/CustomLog conf\/apache2.log llng/' e2e-tests/conf/portal-apache2.X.conf e2e-tests/conf/manager-apache2.X.conf
 	@if test "$(TESTUSESSL)" = "1"; then \
 		perl -i -pe 's#http://(test|mana|auth)#https://$$1#' e2e-tests/conf/lmConf-1.json e2e-tests/conf/handler-apache2.X.conf e2e-tests/conf/site/index.pl; \
 		perl -i -pe 's#"https": 0#"https": 1#' e2e-tests/conf/lmConf-1.json; \
