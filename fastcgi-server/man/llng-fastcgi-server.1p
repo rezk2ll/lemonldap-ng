@@ -129,7 +129,7 @@
 .\" ========================================================================
 .\"
 .IX Title "llng-fastcgi-server 1"
-.TH llng-fastcgi-server 1 "2018-05-13" "perl v5.26.2" "User Contributed Perl Documentation"
+.TH llng-fastcgi-server 1 "2018-05-22" "perl v5.26.2" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -152,26 +152,85 @@ parts (isolated handlers, portal,...).
 .SH "PARAMETERS"
 .IX Header "PARAMETERS"
 Each parameter can be set by an option or a environment variable.
-.IP "\-\-pid \-p ($ENV{\s-1PID\s0}):       pid file" 4
-.IX Item "--pid -p ($ENV{PID}): pid file"
+.IP "\-\-pid    \-p ($ENV{\s-1PID\s0}):" 4
+.IX Item "--pid -p ($ENV{PID}):"
+pid file
+.IP "\-\-user   \-u ($ENV{\s-1USER\s0}):" 4
+.IX Item "--user -u ($ENV{USER}):"
+user
+.IP "\-\-group  \-g ($ENV{\s-1GROUP\s0}):" 4
+.IX Item "--group -g ($ENV{GROUP}):"
+group
+.IP "\-\-proc   \-n ($ENV{\s-1NPROC\s0}):" 4
+.IX Item "--proc -n ($ENV{NPROC}):"
+Number of processus for \s-1FCGI\s0
+.IP "\-\-socket \-s ($ENV{\s-1SOCKET\s0}):" 4
+.IX Item "--socket -s ($ENV{SOCKET}):"
+Unix socket
+.IP "\-\-listen \-l ($ENV{\s-1LISTEN\s0}):" 4
+.IX Item "--listen -l ($ENV{LISTEN}):"
+Listening address (\s-1HOST:PORT, :PORT,\s0 or \s-1PATH\s0)
+.IP "\-\-customFunctionsFile \-f ($ENV{\s-1CUSTOM_FUNCTIONS_FILE\s0}):" 4
+.IX Item "--customFunctionsFile -f ($ENV{CUSTOM_FUNCTIONS_FILE}):"
+file to load for custom functions
+.IP "\-\-engine \-e ($ENV{\s-1ENGINE\s0}):" 4
+.IX Item "--engine -e ($ENV{ENGINE}):"
+Plack::Handler engine, default to \s-1FCGI\s0 (see below)
+.IP "\-\-plackOptions:" 4
+.IX Item "--plackOptions:"
+other options to pass to Plack. This multi-valued parameter must have
+\&\*(L"key=value\*(R" values.
+.Sp
+Example to use FCGI::ProcManager::Constrained instead of default \s-1FCGI\s0 manager
+(FCGI::ProcManager):
+.Sp
+.Vb 2
+\&  llng\-fastcgi\-server \-u nobody \-g nobody \-s /run/llng.sock \-e FCGI \-n 10 \e
+\&                      \-\-plackOptions manager=FCGI::ProcManager::Constrained
+.Ve
+.SH "ENGINES"
+.IX Header "ENGINES"
+By default, llng-fastcgi-server uses \s-1FCGI\s0 (= Plack::Handler::FCGI). Some
+other engines can be used:
+.SS "\s-1FCGI\s0 (default)"
+.IX Subsection "FCGI (default)"
+It uses FCGI::ProcManager as manager. Other managers:
+.IP "FCGI::ProcManager::Constrained" 4
+.IX Item "FCGI::ProcManager::Constrained"
+Example to launch it:
+.Sp
+.Vb 2
+\&  llng\-fastcgi\-server \-u nobody \-g nobody \-s /run/llng.sock \-e FCGI \-n 10 \e
+\&                      \-\-plackOptions manager=FCGI::ProcManager::Constrained
+.Ve
+.Sp
+You can then set environment values (in /etc/default/llng\-fastcgi\-server file
+for example):
+.Sp
+.Vb 3
+\&  PM_MAX_REQUESTS=10000
+\&  PM_SIZECHECK_NUM_REQUESTS=100
+\&  PM_MAX_SIZE=300000
+.Ve
+.IP "FCGI::ProcManager::Dynamic" 4
+.IX Item "FCGI::ProcManager::Dynamic"
+.Vb 2
+\&  llng\-fastcgi\-server \-u nobody \-g nobody \-s /run/llng.sock \-e FCGI \-n 10 \e
+\&                      \-\-plackOptions manager=FCGI::ProcManager::Dynamic
+.Ve
+.SS "Other FCGI::ProcManager style engines"
+.IX Subsection "Other FCGI::ProcManager style engines"
+.IP "FCGI::Engine" 4
+.IX Item "FCGI::Engine"
+.SS "Event engines"
+.IX Subsection "Event engines"
 .PD 0
-.IP "\-\-user \-u ($ENV{\s-1USER\s0}):     user" 4
-.IX Item "--user -u ($ENV{USER}): user"
-.IP "\-\-group \-g ($ENV{\s-1GROUP\s0}):   group" 4
-.IX Item "--group -g ($ENV{GROUP}): group"
-.IP "\-\-proc \-n ($ENV{\s-1NPROC\s0}):    Number of processus for \s-1FCGI\s0" 4
-.IX Item "--proc -n ($ENV{NPROC}): Number of processus for FCGI"
-.IP "\-\-engine \-e ($ENV{\s-1ENGINE\s0}): Plack::Handler engine, default to \s-1FCGI\s0" 4
-.IX Item "--engine -e ($ENV{ENGINE}): Plack::Handler engine, default to FCGI"
-.IP "\-\-socket \-s ($ENV{\s-1SOCKET\s0}): Unix socket" 4
-.IX Item "--socket -s ($ENV{SOCKET}): Unix socket"
-.IP "\-\-listen \-l ($ENV{\s-1LISTEN\s0}): Listening address (\s-1HOST:PORT, :PORT,\s0 or \s-1PATH\s0)" 4
-.IX Item "--listen -l ($ENV{LISTEN}): Listening address (HOST:PORT, :PORT, or PATH)"
-.IP "\-\-customFunctionsFile \-f ($ENV{\s-1CUSTOM_FUNCTIONS_FILE\s0}): file to load for custom functions" 4
-.IX Item "--customFunctionsFile -f ($ENV{CUSTOM_FUNCTIONS_FILE}): file to load for custom functions"
-.ie n .IP "\-\-plackOptions: other options to pass to Plack. This multi-valued parameter must have ""key=value"" values." 4
-.el .IP "\-\-plackOptions: other options to pass to Plack. This multi-valued parameter must have ``key=value'' values." 4
-.IX Item "--plackOptions: other options to pass to Plack. This multi-valued parameter must have key=value values."
+.IP "AnyEvent::FCGI" 4
+.IX Item "AnyEvent::FCGI"
+.IP "FCGI::Async" 4
+.IX Item "FCGI::Async"
+.IP "\s-1FCGI::EV\s0" 4
+.IX Item "FCGI::EV"
 .PD
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"

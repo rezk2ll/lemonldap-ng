@@ -185,25 +185,100 @@ Each parameter can be set by an option or a environment variable.
 
 =over
 
-=item --pid -p ($ENV{PID}):       pid file
+=item --pid    -p ($ENV{PID}):
 
-=item --user -u ($ENV{USER}):     user
+pid file
 
-=item --group -g ($ENV{GROUP}):   group
+=item --user   -u ($ENV{USER}):
 
-=item --proc -n ($ENV{NPROC}):    Number of processus for FCGI
+user
 
-=item --engine -e ($ENV{ENGINE}): Plack::Handler engine, default to FCGI
+=item --group  -g ($ENV{GROUP}):
 
-=item --socket -s ($ENV{SOCKET}): Unix socket
+group
 
-=item --listen -l ($ENV{LISTEN}): Listening address (HOST:PORT, :PORT, or PATH)
+=item --proc   -n ($ENV{NPROC}):
 
-=item --customFunctionsFile -f ($ENV{CUSTOM_FUNCTIONS_FILE}): file to load for
-custom functions
+Number of processus for FCGI
 
-=item --plackOptions: other options to pass to Plack. This multi-valued
-parameter must have "key=value" values.
+=item --socket -s ($ENV{SOCKET}):
+
+Unix socket
+
+=item --listen -l ($ENV{LISTEN}):
+
+Listening address (HOST:PORT, :PORT, or PATH)
+
+=item --customFunctionsFile -f ($ENV{CUSTOM_FUNCTIONS_FILE}):
+
+file to load for custom functions
+
+=item --engine -e ($ENV{ENGINE}):
+
+Plack::Handler engine, default to FCGI (see below)
+
+=item --plackOptions:
+
+other options to pass to Plack. This multi-valued parameter must have
+"key=value" values.
+
+Example to use L<FCGI::ProcManager::Constrained> instead of default FCGI manager
+(L<FCGI::ProcManager>):
+
+  llng-fastcgi-server -u nobody -g nobody -s /run/llng.sock -e FCGI -n 10 \
+                      --plackOptions manager=FCGI::ProcManager::Constrained
+
+=back
+
+=head1 ENGINES
+
+By default, llng-fastcgi-server uses FCGI (= L<Plack::Handler::FCGI>). Some
+other engines can be used:
+
+=head2 FCGI (default)
+
+It uses L<FCGI::ProcManager> as manager. Other managers:
+
+=over
+
+=item L<FCGI::ProcManager::Constrained>
+
+Example to launch it:
+
+  llng-fastcgi-server -u nobody -g nobody -s /run/llng.sock -e FCGI -n 10 \
+                      --plackOptions manager=FCGI::ProcManager::Constrained
+
+You can then set environment values (in /etc/default/llng-fastcgi-server file
+for example):
+
+  PM_MAX_REQUESTS=10000
+  PM_SIZECHECK_NUM_REQUESTS=100
+  PM_MAX_SIZE=300000
+
+=item L<FCGI::ProcManager::Dynamic>
+
+  llng-fastcgi-server -u nobody -g nobody -s /run/llng.sock -e FCGI -n 10 \
+                      --plackOptions manager=FCGI::ProcManager::Dynamic
+
+=back
+
+=head2 Other FCGI::ProcManager style engines
+
+=over
+
+=item FCGI::Engine
+
+=back
+
+=head2 Event engines
+
+=over
+
+=item AnyEvent::FCGI
+
+=item FCGI::Async
+
+=item FCGI::EV
 
 =back
 
