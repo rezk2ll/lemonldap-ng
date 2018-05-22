@@ -138,7 +138,15 @@ sub _authAndTrace {
         else {
             $self->logger->debug('User authenticated, calling handler()');
             $res = $self->handler($req);
-            push @{ $res->[1] }, @{ $req->{respHeaders} };
+
+            # Insert respHeaders in response only if not already set
+            my %hdr1 = @{ $res->[1] };
+            my %hdr2 = @{ $req->{respHeaders} };
+            foreach ( keys %hdr2 ) {
+                unless ( $hdr1{$_} and $hdr2{$_} eq $hdr1{$_} ) {
+                    push @{ $res->[1] }, ( $_ => $hdr2{$_} );
+                }
+            }
         }
         return $res;
     }
