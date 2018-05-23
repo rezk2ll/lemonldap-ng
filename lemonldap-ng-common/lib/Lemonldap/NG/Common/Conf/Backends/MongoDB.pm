@@ -75,7 +75,7 @@ sub store {
     my ( $self, $fields ) = @_;
     $fields = $self->serialize($fields);
     $fields->{_id} = $fields->{cfgNum};
-    my $res = eval { $self->_mongoColl->insert($fields) };
+    my $res = eval { $self->_mongoColl->insert_one($fields) };
     if ($@) {
         $Lemonldap::NG::Common::Conf::msg .= "Unable to store conf: $@\n";
         return 0;
