@@ -63,7 +63,7 @@ for ( my $i = 0 ; $i < NB ; $i++ ) {
     my $time2    = time() - $time;
     push @menu, $time2;
     $request = new HTTP::Request( 'GET', 'http://127.0.0.1:19876/' );
-    $request->header( Host => 'test.example.com' );
+    $request->header( Host => 'test1.example.com' );
     $request->header( "Cookie", $cookie );
 
     for ( my $j = 0 ; $j < 5 ; $j++ ) {
@@ -78,7 +78,7 @@ for ( my $i = 0 ; $i < NB ; $i++ ) {
 
 print "Result
 +-----+-----------+----------+---------+-----------------------------------------+
-| Req | Auth form | Post req |  Menu   |    5 access to test.example.com      
+| Req | Auth form | Post req |  Menu   |    5 access to test1.example.com      
    |
 +-----+-----------+----------+---------+-----------------------------------------+
 ";

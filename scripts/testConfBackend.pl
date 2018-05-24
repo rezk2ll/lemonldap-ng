@@ -18,7 +18,7 @@ Usage:
     $0 --module=<New> --ini=path/to/lemonldap-ng.ini --options='{ some => "parameter" }'
 
 <New> must be the last word of Perl package: file must be named
-Lemonldap::NG::Common::Conf::New
+Lemonldap::NG::Common::Conf::Backend::<New>
 
 );
     exit 1;
