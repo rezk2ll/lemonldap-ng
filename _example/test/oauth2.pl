@@ -97,7 +97,7 @@ if ( $cgi->param("test") eq "checksession" ) {
       . uri_escape($session_state) . '";' . "\n";
     $js .= 'function check_session()' . "\n";
     $js .= '{' . "\n";
-    $js .= 'var targetOrigin = "http://auth.example.com";' . "\n";
+    $js .= 'var targetOrigin = "' . $portal_url . '";' . "\n";
     $js .=
 'var win = window.parent.document.getElementById("opchecksession").contentWindow;'
       . "\n";
@@ -111,7 +111,7 @@ if ( $cgi->param("test") eq "checksession" ) {
     $js .= 'window.addEventListener("message", receiveMessage, false);' . "\n";
     $js .= 'function receiveMessage(e)' . "\n";
     $js .= '{' . "\n";
-    $js .= 'var targetOrigin = "http://auth.example.com";' . "\n";
+    $js .= 'var targetOrigin = "' . $portal_url . '";' . "\n";
     $js .= 'if (e.origin !== targetOrigin ) {return;}' . "\n";
     $js .= 'stat = e.data;' . "\n";
     $js .= 'document.getElementById("sessionstatus").textContent=stat;' . "\n";
@@ -210,7 +210,7 @@ if ($callback) {
 	// First, parse the query string
 	var params = {}, postBody = location.hash.substring(1),
 	regex = /([^&=]+)=([^&]*)/g, m;
-	var redirect_location = "http://" + window.location.host + "/oauth2.pl?openidconnectcallback=1&implicitcallback=1";
+	var redirect_location = window.location.protocol + "//" + window.location.host + "/oauth2.pl?openidconnectcallback=1&implicitcallback=1";
 	while (m = regex.exec(postBody)) {
 	params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
 	redirect_location = redirect_location +  "&" + decodeURIComponent(m[1]) +"="+ decodeURIComponent(m[2]);
@@ -656,14 +656,12 @@ else {
     my $scope         = uri_escape("openid profile address email phone");
     my $state         = uri_escape("ABCDEFGHIJKLMNOPQRSTUVWXXZ");
     my $nonce         = uri_escape("1234567890");
-    my $display       = uri_escape("popup");
-    my $prompt        = uri_escape("consent");
-    my $ui_locales    = uri_escape("fr-CA en-GB en fr-FR fr");
-    my $login_hint    = uri_escape("coudot");
+    my $display       = uri_escape("");                                  # popup
+    my $prompt        = uri_escape("");    # login / consent
+    my $ui_locales    = uri_escape("");    # fr-FR / en
+    my $login_hint    = uri_escape("");
     my $max_age       = 3600;
     my $id_token_hint = "";
-
-#"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhenAiOiJsZW1vbmxkYXAiLCJzdWIiOiJjb3Vkb3RAbGluYWdvcmEuY29tIiwiaWF0IjoxNDI3Mjk5MjMyLCJhdXRoX3RpbWUiOjE0MjcyOTYwNTQsImV4cCI6IjM2MDAiLCJub25jZSI6IjEyMzQ1Njc4OTAiLCJhdWQiOlsibGVtb25sZGFwIl0sImF0X2hhc2giOiJwZEdBcG9lVE8tNTM0el9XQ2wxcUtRIiwiYWNyIjoibG9hLTIiLCJpc3MiOiJodHRwOi8vYXV0aC5leGFtcGxlLmNvbS8ifQ==.R7nddv9bom+J2hyrTe/7a4mRupJAoDioBYaop+Q94Fg";
 
     my $request_paylod_hash = {
         response_type => "code",
