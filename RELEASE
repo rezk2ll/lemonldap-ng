@@ -32,6 +32,16 @@ Before release
 - Translate documentation
   $ make fr-doc
 
+  With recent versions of OmegaT, launch "make fr-translation" and choose
+  "generate project files"
+
+- Update changelog:
+
+  $ ./scripts/generate-changelog.pl
+
+  This update "changelog" file using GitLab issues (tags Bug, New feature,
+  Improvement)
+
 - Update debian/changelog
   launch just `dch -r` and force save (":w" and ot ":x")
 
