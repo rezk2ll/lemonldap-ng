@@ -33,8 +33,6 @@ for (@cat) {
     $result .=  "\n";
 }
 
-$result =~ s/'/'"'"'/g;
-
 `dch -c changelog -v $milestone '##CONTENT##';dch -c changelog -r --force-save-on-release '';cp changelog tmp.dch`;
 open IN, 'tmp.dch';
 open OUT, '>changelog';
