@@ -97,7 +97,7 @@ sub new {
     if ( $self->{localStorage} and not defined( $self->{refLocalStorage} ) ) {
         eval "use $self->{localStorage};";
         if ($@) {
-            $msg .= "Unable to load $self->{localStorage}: $@.\n";
+            $msg .= "Error: Unable to load $self->{localStorage}: $@.\n";
         }
 
         # TODO: defer that until $> > 0 (to avoid creating local cache with
@@ -132,7 +132,7 @@ sub saveConf {
     my $tmp = $self->store($conf);
 
     unless ( $tmp > 0 ) {
-        $msg .= "Configuration $conf->{cfgNum} not stored.\n";
+        $msg .= "Error: Configuration $conf->{cfgNum} not stored.\n";
         $self->unlock();
         return ( $tmp ? $tmp : UNKNOWN_ERROR );
     }
@@ -167,7 +167,7 @@ sub getConf {
     else {
         $args->{cfgNum} ||= $self->lastCfg;
         unless ( $args->{cfgNum} ) {
-            $msg .= "No configuration available in backend.\n";
+            $msg .= "Error: No configuration available in backend.\n";
         }
         my $r;
         unless ( ref( $self->{refLocalStorage} ) ) {
@@ -180,7 +180,7 @@ sub getConf {
         else {
             eval { $r = $self->{refLocalStorage}->get('conf') }
               if ( $> and not $args->{noCache} );
-            $msg = "Warn: $@" if ($@);
+            $msg .= "Warn: $@" if ($@);
             if (    ref($r)
                 and $r->{cfgNum}
                 and $args->{cfgNum}
@@ -191,8 +191,18 @@ sub getConf {
                 $args->{noCache} = 1;
             }
             else {
-                $r = $self->getDBConf($args);
-                return undef unless ( $r->{cfgNum} );
+                my $r2 = $self->getDBConf($args);
+                unless ( $r2->{cfgNum} ) {
+                    $r = $self->{refLocalStorage}->get('conf') unless ($r);
+                    $msg .=
+                      $r
+                      ? "Error: Using previous cached configuration\n"
+                      : "Error: No configuration found in local cache\n";
+                    return undef unless ($r);
+                }
+                else {
+                    $r = $r2;
+                }
 
                 $self->setDefault( $r, $args->{localPrm} );
                 $self->compactConf($r);
@@ -201,7 +211,6 @@ sub getConf {
                 $self->setLocalConf($r)
                   if ( $self->{refLocalStorage}
                     and not( $args->{noCache} == 1 or $args->{raw} ) );
-
             }
         }
 

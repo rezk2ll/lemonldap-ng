@@ -34,7 +34,6 @@ sub onReload {
 sub checkConf {
     my ( $class, $force ) = @_;
     my $prm = { local => !$force, localPrm => $class->localConfig };
-    $prm->{noCache} = 1 unless ( $class->cfgNum );
     my $conf = $class->confAcc->getConf($prm);
 
     unless ( ref($conf) ) {
@@ -44,10 +43,19 @@ sub checkConf {
         return $force ? 0 : $class->cfgNum ? 1 : 0;
     }
 
+    if ($Lemonldap::NG::Common::Conf::msg) {
+        if ( $Lemonldap::NG::Common::Conf::msg =~ /Error:/ ) {
+            $class->logger->error($Lemonldap::NG::Common::Conf::msg);
+        }
+        elsif ( $Lemonldap::NG::Common::Conf::msg =~ /Warn:/ ) {
+            $class->logger->warn($Lemonldap::NG::Common::Conf::msg);
+        }
+        else {
+            $class->logger->debug($Lemonldap::NG::Common::Conf::msg);
+        }
+    }
     if ( !$class->cfgNum or $class->cfgNum != $conf->{cfgNum} ) {
-        $class->logger->debug(
-"Get configuration $conf->{cfgNum} ($Lemonldap::NG::Common::Conf::msg)"
-        );
+        $class->logger->debug("Get configuration $conf->{cfgNum}");
         $class->lastCheck( time() );
         unless ( $class->cfgNum( $conf->{cfgNum} ) ) {
             $class->logger->error('No configuration available');
