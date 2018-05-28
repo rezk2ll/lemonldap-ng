@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+
+$ENV{LLNGTESTLDAP} = 1;
+
+chdir 'lemonldap-ng-portal';
+require './t/test-ldap.pm';
+
+print STDERR "Press a key to stop LDAP server\n";
+my $r = <STDIN>;
+
+stopLdapServer();
+
