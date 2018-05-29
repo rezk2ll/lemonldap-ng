@@ -454,12 +454,33 @@ start_web_server:	all prepare_test_server
 		sed -i 's|olcDbDirectory.*|olcDbDirectory: e2e-tests/conf/data|' e2e-tests/conf/slapd.ldif; \
 		sed -i 's|olcPidFile.*|olcPidFile: e2e-tests/conf/slapd.pid|' e2e-tests/conf/slapd.ldif; \
 		${LLNGTESTLDAP_SLAPADD_BIN} -F e2e-tests/conf/slapd.d -n 0 -l e2e-tests/conf/slapd.ldif; \
+		${LLNGTESTLDAP_SLAPADD_BIN} -F e2e-tests/conf/slapd.d -n 1 -l lemonldap-ng-portal/t/testslapd/users.ldif; \
 		${LLNGTESTLDAP_SLAPADD_BIN} -F e2e-tests/conf/slapd.d -n 1 -l lemonldap-ng-portal/t/testslapd/confs-sessions.ldif; \
 		${LLNGTESTLDAP_SLAPD_BIN} -s 511 -h "ldap://127.0.0.1:20389/" -F e2e-tests/conf/slapd.d; \
 		perl -Ilemonldap-ng-common/blib/lib ./lemonldap-ng-common/scripts/convertConfig \
 			--current=e2e-tests/conf/lemonldap-ng.ini \
 			--new=e2e-tests/conf/lemonldap-ng-ldap.ini; \
 		mv e2e-tests/conf/lemonldap-ng-ldap.ini e2e-tests/conf/lemonldap-ng.ini; \
+		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
+			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
+				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+				set globalStorage Apache::Session::LDAP; \
+		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
+			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
+				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+				addKey globalStorageOptions ldapServer 'ldap://localhost:20389'; \
+		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
+			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
+				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+				addKey globalStorageOptions ldapConfBase 'ou=configurations,dc=example,dc=com'; \
+		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
+			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
+				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+				addKey globalStorageOptions ldapBindDN 'cn=admin,dc=example,dc=com'; \
+		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
+			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
+				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+				addKey globalStorageOptions ldapBindPassword admin; \
 	fi
 	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` || true
 	-@[ -e e2e-tests/conf/nginx.pid ]   && kill `cat e2e-tests/conf/nginx.pid` || true
