@@ -4,6 +4,8 @@ $ENV{LLNGTESTLDAP} = 1;
 
 chdir 'lemonldap-ng-portal';
 require './t/test-ldap.pm';
+system( $ENV{LLNGTESTLDAP_SLAPADD_BIN} || '/usr/sbin/slapadd'
+      . ' -F t/testslapd/slapd.d -n 1 -l t/testslapd/confs-sessions.ldif' );
 
 print STDERR "Press a key to stop LDAP server\n";
 my $r = <STDIN>;
