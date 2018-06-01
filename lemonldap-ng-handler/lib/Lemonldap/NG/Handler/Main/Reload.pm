@@ -353,6 +353,7 @@ sub headersInit {
             $class->logger->warn('Empty vhost in headers, skipping');
             next;
         }
+        $headers->{$vhost} ||= {};
         my %headers = %{ $headers->{$vhost} };
         $class->tsv->{headerList}->{$vhost} = [ keys %headers ];
         my $sub = '';
