@@ -383,7 +383,7 @@ sub postUrlInit {
     foreach my $vhost ( keys %{ $conf->{post} } ) {
 
         #  Browse all POST URI
-        foreach my $url ( keys %{ $conf->{post}->{$vhost} } ) {
+        foreach my $url ( keys %{ $conf->{post}->{$vhost} || {} } ) {
             my $d = $conf->{post}->{$vhost}->{$url};
             $class->logger->debug("Compiling POST data for $url");
 
