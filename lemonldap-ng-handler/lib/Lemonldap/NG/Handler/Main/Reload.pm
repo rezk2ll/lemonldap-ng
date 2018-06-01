@@ -349,6 +349,10 @@ sub headersInit {
 
     # Creation of the subroutine which will generate headers
     foreach my $vhost ( keys %{$headers} ) {
+        unless ($vhost) {
+            $class->logger->warn('Empty vhost in headers, skipping');
+            next;
+        }
         my %headers = %{ $headers->{$vhost} };
         $class->tsv->{headerList}->{$vhost} = [ keys %headers ];
         my $sub = '';
