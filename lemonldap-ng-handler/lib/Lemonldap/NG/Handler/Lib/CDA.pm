@@ -48,7 +48,7 @@ sub run {
             return $class->REDIRECT;
         }
     }
-    return $class->SUPER::init( $req, $rule, $protection );
+    return $class->SUPER::run( $req, $rule, $protection );
 }
 
 ## @rmethod protected hash getCDAInfos(id)
