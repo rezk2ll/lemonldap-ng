@@ -33,7 +33,7 @@ BEGIN {
 sub run {
     my $class = shift;
     my $r     = $_[0];
-    my $ret   = $class->Lemonldap::NG::Handler::Main::Run::run($r);
+    my $ret   = $class->Lemonldap::NG::Handler::Main::run($r);
 
     # Continue only if user is authorized
     return $ret unless ( $ret == $class->OK );
