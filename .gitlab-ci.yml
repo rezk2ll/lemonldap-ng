@@ -53,10 +53,12 @@ pages:
   image: buildpkg/debian:stretch
   stage: deploy
   variables:
-    DEPLOY_DOMAIN: ow2.io
+    # Default page dir
+    # PAGES_DIR: public
+    PAGES_HOST: ow2.io
   environment:
     name: PPA
-    url: http://${CI_PROJECT_NAMESPACE}.${DEPLOY_DOMAIN}/${CI_PROJECT_NAME}
+    url: http://${CI_PROJECT_NAMESPACE}.${PAGES_HOST}/${CI_PROJECT_NAME}
   script:
     - cd $CI_PROJECT_DIR
     - ci-pages-ppa
