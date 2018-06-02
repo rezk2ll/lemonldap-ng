@@ -1,27 +1,75 @@
-stages:
-  - build
-
-build-debian:
+.build_job: &job_build
   stage: build
-  image: debian:stretch
-  script: |
-    echo "Installing build dependencies..."
-    apt-get update
-    apt-get install -y build-essential
-    apt-get build-dep -y .
-
-    echo "Converting to native package..."
-    suffix="~$CI_COMMIT_SHA"
-    sed -i "1{s/-1) /$suffix) /}" debian/changelog
-    sed -i 's/3.0 (quilt)/3.0 (native)/' debian/source/format
-
-    echo "Building LemonLDAP..."
-    dpkg-buildpackage
-
-    echo "Moving artifacts..."
-    mkdir artifacts
-    mv ../*.tar.xz ../*.dsc ../*.changes ../*.deb artifacts
+  script:
+     - apt-get update && apt-get -y dist-upgrade
+     - ci-build-pkg
   artifacts:
+    expire_in: 1 day
     paths:
-    - 'artifacts/*'
-    expire_in: 1 week
+      - result/*
+
+stages:
+- build
+- sign
+- deploy
+
+before_script:
+  - env | grep ^CI_
+  # Converting to native package...
+  - sed -i "1{s/-1) /$suffix) /}" debian/changelog
+  - sed -i 's/3.0 (quilt)/3.0 (native)/' debian/source/format
+
+build_stretch:
+  image: buildpkg/debian:stretch
+  <<: *job_build
+
+#build_xenial:
+#  image: buildpkg/ubuntu:xenial
+#  <<: *job_build
+
+build_bionic:
+  image: buildpkg/ubuntu:bionic
+  <<: *job_build
+
+sign:
+  image: buildpkg/debian:stretch
+  stage: sign
+#  variables:
+#    SIGN_USER: firstname.lastname@orange.com
+#    GPG_PRIVATE_KEY:
+  script:
+    - cd $CI_PROJECT_DIR
+    - ci-sign-pkg
+  dependencies:
+    - build_stretch
+#    - build_xenial
+    - build_bionic
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - result/*
+
+pages:
+  image: buildpkg/debian:stretch
+  stage: deploy
+  variables:
+    # Default page dir
+    # PAGES_DIR: public
+    PAGES_HOST: ow2.io
+  environment:
+    name: PPA
+    url: http://${CI_PROJECT_NAMESPACE}.${PAGES_HOST}/${CI_PROJECT_NAME}
+  script:
+    - cd $CI_PROJECT_DIR
+    - ci-pages-ppa
+    - ci-pages-home
+    - ci-pages-tree
+  dependencies:
+    - sign
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - public
+  only:
+    - master
+
