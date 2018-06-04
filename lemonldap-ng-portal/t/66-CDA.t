@@ -13,7 +13,7 @@ my $res;
 my $client = LLNG::Manager::Test->new(
     {
         ini => {
-            logLevel    => 'debug',
+            logLevel    => 'error',
             useSafeJail => 1,
             cda         => 1,
             logger      => 'Lemonldap::NG::Common::Logger::Std',
