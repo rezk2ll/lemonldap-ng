@@ -48,6 +48,9 @@
     "test2.example.com": {
       "^/logout": "logout_sso",
       "default": "accept"
+    },
+    "test.example.org": {
+      "default": "accept"
     }
   },
   "macros": {
