@@ -45,7 +45,7 @@ sub changeUrldc {
                 $cdaInfos->{cookie_name} = $self->{conf}->{cookieName} . "http";
             }
 
-            $self->p->updateSession( $cdaInfos, $cdaSession->id );
+            $self->p->updateSession( $req, $cdaInfos, $cdaSession->id );
 
             $req->{urldc} .=
                 ( $urldc =~ /\?/ ? '&' : '?' )
