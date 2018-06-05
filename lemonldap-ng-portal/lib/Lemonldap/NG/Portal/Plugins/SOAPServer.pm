@@ -237,8 +237,16 @@ sub getAttributes {
             "SOAP attributes request for " . ( $wtt ? $wtt : $id ) );
         push @tmp, SOAP::Data->name( error => 0 )->type('int');
         push @tmp,
-          SOAP::Data->name( attributes =>
-              _buildSoapHash( $session->data, @{ $self->exportedAttr } ) );
+          SOAP::Data->name(
+            attributes => _buildSoapHash(
+                $session->data,
+                (
+                    $session->{_session_kind} eq 'SSO'
+                    ? ( @{ $self->exportedAttr } )
+                    : ()
+                )
+            )
+          );
     }
     my $res = SOAP::Data->name( session => \SOAP::Data->value(@tmp) );
     return $res;
