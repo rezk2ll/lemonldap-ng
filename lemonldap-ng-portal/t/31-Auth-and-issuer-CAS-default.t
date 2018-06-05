@@ -58,6 +58,7 @@ ok( $issuer = issuer(), 'Issuer portal' );
 $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
 count(1);
 switch ('sp');
+&Lemonldap::NG::Handler::Main::cfgNum(0,0);
 
 ok( $sp = sp(), 'SP portal' );
 count(1);

@@ -27,6 +27,7 @@ expectOK($res);
 expectCookie($res);
 count(1);
 
+&Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 $client = LLNG::Manager::Test->new(
     {
         ini => {

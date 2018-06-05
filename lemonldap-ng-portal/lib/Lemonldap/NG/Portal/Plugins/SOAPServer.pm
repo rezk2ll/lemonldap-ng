@@ -241,7 +241,10 @@ sub getAttributes {
             attributes => _buildSoapHash(
                 $session->data,
                 (
-                    $session->{_session_kind} eq 'SSO'
+                    (
+                              $session->{_session_kind}
+                          and $session->{_session_kind} eq 'SSO'
+                    )
                     ? ( @{ $self->exportedAttr } )
                     : ()
                 )

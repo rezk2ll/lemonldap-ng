@@ -62,6 +62,7 @@ sub try {
 
 sub iniCmb {
     my $expr = shift;
+    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
     if (
         my $res = LLNG::Manager::Test->new(
             {

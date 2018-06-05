@@ -62,19 +62,20 @@ sub checkConf {
             return 0;
         }
         $class->configReload($conf);
-    }
-    $class->logger->debug("$class: configuration is up to date");
-    foreach (@_onReload) {
-        my ( $obj, $sub ) = @$_;
-        if ($obj) {
-            $class->logger->debug( 'Launching ' . ref($obj) . "->$sub(conf)" );
-            unless ( $obj->$sub($conf) ) {
-                $class->logger->error( "Underlying object can't load conf ("
-                      . ref($obj)
-                      . "->$sub)" );
+        foreach (@_onReload) {
+            my ( $obj, $sub ) = @$_;
+            if ($obj) {
+                $class->logger->debug(
+                    'Launching ' . ref($obj) . "->$sub(conf)" );
+                unless ( $obj->$sub($conf) ) {
+                    $class->logger->error( "Underlying object can't load conf ("
+                          . ref($obj)
+                          . "->$sub)" );
+                }
             }
         }
     }
+    $class->logger->debug("$class: configuration is up to date");
     return 1;
 }
 

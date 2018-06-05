@@ -31,6 +31,7 @@ ok(
 count(1);
 expectReject($res);
 
+&Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 $client = LLNG::Manager::Test->new(
     {
         ini => {

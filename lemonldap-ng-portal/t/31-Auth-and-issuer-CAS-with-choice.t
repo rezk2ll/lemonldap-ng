@@ -75,6 +75,7 @@ SKIP: {
     ok( $issuer = issuer(), 'Issuer portal' );
     $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
     switch ('sp');
+    &Lemonldap::NG::Handler::Main::cfgNum(0,0);
 
     # Build CAS app
     ok( $sp = sp(), 'SP portal' );

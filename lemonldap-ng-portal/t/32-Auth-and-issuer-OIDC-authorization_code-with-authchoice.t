@@ -92,6 +92,7 @@ SKIP: {
     my $metadata = $res->[2]->[0];
 
     switch ('rp');
+    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
     ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
 
     # Query RP for auth

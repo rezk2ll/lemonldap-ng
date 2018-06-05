@@ -31,6 +31,7 @@ SKIP: {
     ok( getHeader( $res, 'WWW-Authenticate' ) eq 'Negotiate',
         'Get negotiate header' )
       or explain( $res->[1], 'WWW-Authenticate => Negotiate' );
+    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
     $client = LLNG::Manager::Test->new(
         {
             ini => {
