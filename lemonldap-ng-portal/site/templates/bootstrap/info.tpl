@@ -16,7 +16,7 @@
         <TMPL_VAR NAME="MSG">
       </div>
     </div>
-    <div class="alert alert-info">
+    <div id="divToHide" class="alert alert-info">
       <p id="timer" trspan="redirectedIn">You'll be redirected in 30 seconds</p>
     </div>
       <div class="buttons">
