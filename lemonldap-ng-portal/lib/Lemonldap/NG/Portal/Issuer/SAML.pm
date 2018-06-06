@@ -74,6 +74,7 @@ qr/^($saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_u
           # Required to manage SLO in Proxy mode
           and $self->loadIDPs()
     );
+    return 0 unless ($res);
 
     # Single logout routes
     $self->addUnauthRouteFromMetaDataURL(
