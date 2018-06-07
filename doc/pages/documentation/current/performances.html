@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:performances</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,performances"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="performances.html"/>
@@ -83,16 +83,16 @@
 <div class="level1">
 
 <p>
-LemonLDAP::NG is designed to be very performant. In particular, it use Apache2 threads capabilities so to optimize performances, prefer using <a href="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime" class="urlextern" title="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime"  rel="nofollow">mpm-worker</a>.
+LemonLDAP::NG is designed to be very performant. Indeed, it uses Apache2 threads capabilities. So to increase performances, prefer using <a href="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime" class="urlextern" title="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime"  rel="nofollow">mpm-worker</a>.
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Performances" [1-254] -->
+<!-- EDIT1 SECTION "Performances" [1-249] -->
 <h2 class="sectionedit2" id="global_performance">Global performance</h2>
 <div class="level2">
 
 <p>
-On Linux, by default, there is no <abbr title="Domain Name System">DNS</abbr> cache and LemonLDAP::NG portal request <abbr title="Domain Name System">DNS</abbr> at every connexions on LDAP or DB. Under heavy loads, that can generated hundred of <abbr title="Domain Name System">DNS</abbr> queries and many errors on LDAP connexions (timed out) from IO::Socket.
+By default, Linux does not use <abbr title="Domain Name System">DNS</abbr> cache and LemonLDAP::NG portal request <abbr title="Domain Name System">DNS</abbr> for each connexions on LDAP or DB. Under heavy loads, that can generated hundred of <abbr title="Domain Name System">DNS</abbr> queries and many errors on LDAP connexions (timed out) from IO::Socket.
 </p>
 
 <p>
@@ -106,24 +106,24 @@ To bypass this, you can:
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Global performance" [255-658] -->
+<!-- EDIT2 SECTION "Global performance" [250-650] -->
 <h2 class="sectionedit3" id="handler_performance">Handler performance</h2>
 <div class="level2">
 
 <p>
-For Nginx, you can use another auth server instead of llng-fastcgi-server. See: <a href="highperfnginxhandler.html" class="wikilink1" title="documentation:2.0:highperfnginxhandler">High performance handler for Nginx</a>.
+For Nginx, you can use another auth server instead of llng-fastcgi-server. See: <a href="psgi.html" class="wikilink1" title="documentation:2.0:psgi">Advanced PSGI usage</a>.
 </p>
 
 <p>
-To increase handler performance, you can disable “Sessions activity timeout” To prevent it from writing to the session database.
+To increase handler performance, you can disable “Sessions activity timeout” to prevent it from writing to the session database.
 </p>
 
 <p>
-Handlers check rights and calculate headers for each HTTP hit. So to improve performances, avoid too complex rules by using the macro or the groups or local macros.
+Handlers check rights and calculate headers for each HTTP hit. So to improve performances, avoid too complex rules by using macros, groups or local macros.
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Handler performance" [659-1128] -->
+<!-- EDIT3 SECTION "Handler performance" [651-1080] -->
 <h3 class="sectionedit4" id="macros_and_groups">Macros and groups</h3>
 <div class="level3">
 
@@ -184,7 +184,7 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 </div><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
 </div>
 </div>
-<!-- EDIT4 SECTION "Macros and groups" [1129-3223] -->
+<!-- EDIT4 SECTION "Macros and groups" [1081-3175] -->
 <h3 class="sectionedit5" id="local_macros">Local macros</h3>
 <div class="level3">
 
@@ -198,17 +198,17 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 <div class="notetip">Note that this feature is interesting only for the Lemonldap::NG systems protecting a high number of applications
 </div>
 </div>
-<!-- EDIT5 SECTION "Local macros" [3224-3885] -->
+<!-- EDIT5 SECTION "Local macros" [3176-3837] -->
 <h2 class="sectionedit6" id="portal_performances">Portal performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT6 SECTION "Portal performances" [3886-3918] -->
+<!-- EDIT6 SECTION "Portal performances" [3838-3870] -->
 <h3 class="sectionedit7" id="general_performances">General performances</h3>
 <div class="level3">
 
 <p>
-The portal is the biggest component of Lemonldap::NG. Since version 2.0, it is run under FastCGI and rewritten using plugins, so performance is increased in comparison to earlier versions. You just have to disable unused plugins:
+The portal is the biggest component of Lemonldap::NG. Since version 2.0, portal runs under FastCGI and has been rewritten using plugins, so performance is increased in comparison to earlier versions. You just have to disable unused plugins:
 </p>
 <ul>
 <li class="level1"><div class="li"> disable unused issuer modules</div>
@@ -226,7 +226,7 @@ By default it uses local storage to store its tokens. If you have more than 1 po
 
 </div>
 </div>
-<!-- EDIT7 SECTION "General performances" [3919-4785] -->
+<!-- EDIT7 SECTION "General performances" [3871-4748] -->
 <h3 class="sectionedit8" id="apachesession_performances">Apache::Session performances</h3>
 <div class="level3">
 
@@ -264,7 +264,7 @@ Password   -&gt; ...</pre>
 <div class="level4">
 
 <p>
-<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> is a wrapper for other Apache::Session modules that add the capability to manage indexes. Prefer versions ≥ 1.2.5 to have better performances in DB cleaning. To use it (with PostgreSQL for example), choose “Apache::Session::Browseable::Postgres” as “Apache::Session module” and use the following parameters:
+<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> is a wrapper for other Apache::Session modules that add the capability to manage indexes. Prefer versions ≥ 1.2.5 for better performances in DB cleaning. To use it (with PostgreSQL for example), choose “Apache::Session::Browseable::Postgres” as “Apache::Session module” and use the following parameters:
 </p>
 <pre class="code">DataSource -&gt; dbi:Pg:database=sessions;host=...
 UserName   -&gt; user
@@ -284,10 +284,10 @@ Look at <a href="browseablesessionbackend.html" class="wikilink1" title="documen
 
 <h4 id="performance_test">Performance test</h4>
 <div class="level4">
-<div class="notetip">A <a href="https://metacpan.org/module/Apache::Session::Browseable::Redis" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> has been created, it is the faster (except for session explorer, defeated by Apache::Session::Browseable::<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">DBI</a>/<a href="https://metacpan.org/module/Apache::Session::Browseable::LDAP" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::LDAP"  rel="nofollow">LDAP</a>])
+<div class="notetip">A <a href="https://metacpan.org/module/Apache::Session::Browseable::Redis" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> has been created, it is the fastest (except for session explorer, defeated by Apache::Session::Browseable::<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">DBI</a>/<a href="https://metacpan.org/module/Apache::Session::Browseable::LDAP" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::LDAP"  rel="nofollow">LDAP</a>])
 </div>
 <p>
-This test isn&#039;t a “only-backend” test but embed some LLNG methods, so real differences between engines are mitigate here.
+This test isn&#039;t an “only-backend” test but embedded some LLNG methods, so real differences between engines are mitigate here.
 </p>
 <div class="table sectionedit9"><table class="inline table table-bordered table-striped">
 	<thead>
@@ -338,7 +338,7 @@ This test isn&#039;t a “only-backend” test but embed some LLNG methods, so r
 		<td class="col0 centeralign" colspan="8">  <em>The source of this test is available in sources: e2e-tests/sbperf.pl</em>  </td>
 	</tr>
 </table></div>
-<!-- EDIT9 TABLE [7676-9579] --><ul>
+<!-- EDIT9 TABLE [7640-9543] --><ul>
 <li class="level1"><div class="li"> <em><strong>(1) :</strong> “purge” test is done with Apache::Session::Browseable-1.2.5 and LLG-2.0. Earlier results are not so good.</em></div>
 </li>
 <li class="level1"><div class="li"> <em><strong>(2) :</strong> “purge” test is done with Apache::Session::Browseable-1.2.6 and LLG-2.0.</em></div>
@@ -362,7 +362,7 @@ Analysis:
 </ul>
 
 </div>
-<!-- EDIT8 SECTION "Apache::Session performances" [4786-10357] -->
+<!-- EDIT8 SECTION "Apache::Session performances" [4749-10321] -->
 <h3 class="sectionedit10" id="ldap_performances">LDAP performances</h3>
 <div class="level3">
 
@@ -399,12 +399,12 @@ Now ldapgroups contains “admin su”
 
 </div>
 </div>
-<!-- EDIT10 SECTION "LDAP performances" [10358-11487] -->
+<!-- EDIT10 SECTION "LDAP performances" [10322-11451] -->
 <h2 class="sectionedit11" id="manager_performances">Manager performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT11 SECTION "Manager performances" [11488-11521] -->
+<!-- EDIT11 SECTION "Manager performances" [11452-11485] -->
 <h3 class="sectionedit12" id="disable_unused_modules">Disable unused modules</h3>
 <div class="level3">
 
@@ -415,7 +415,7 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
 </div>
-<!-- EDIT12 SECTION "Disable unused modules" [11522-11768] -->
+<!-- EDIT12 SECTION "Disable unused modules" [11486-11732] -->
 <h3 class="sectionedit13" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
@@ -442,6 +442,6 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Use static HTML files" [11769-] --></div>
+<!-- EDIT13 SECTION "Use static HTML files" [11733-] --></div>
 </body>
 </html>

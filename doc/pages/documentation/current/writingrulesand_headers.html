@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:writingrulesand_headers</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,writingrulesand_headers"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="writingrulesand_headers.html"/>
@@ -239,26 +239,28 @@ Examples:
 		<td class="col0 leftalign"> Give display name  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  $givenName.“ ”.$surName  </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0 leftalign"> Give a non ascii data  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  encode_base64($givenName."&nbsp;".$surName)  </td>
+		<td class="col0 leftalign"> Give a non ascii data  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  encode_base64($givenName."&nbsp;".$surName,"")  </td>
 	</tr>
 </table></div>
-<!-- EDIT8 TABLE [4876-5209] -->
+<!-- EDIT8 TABLE [4876-5212] -->
 <p>
 As described in <a href="performances.html#handler_performance" class="wikilink1" title="documentation:2.0:performances">performances chapter</a>, you can use macros, local macros,…
 </p>
 <div class="noteimportant"><ul>
 <li class="level1"><div class="li"> Since many HTTP servers refuse non ascii headers, it is recommended to use encode_base64() function to transmit those headers</div>
 </li>
+<li class="level1"><div class="li"> Don&#039;t forget to add an empty string as second argument to encode_base64 function to avoid a “newline” characters insertion in result</div>
+</li>
 <li class="level1"><div class="li"> Header names must contain only letters and “-” character</div>
 </li>
 </ul>
 
-</div><div class="notetip">By default, <abbr title="Single Sign On">SSO</abbr> cookie is hidden, so protected applications cannot get <abbr title="Single Sign On">SSO</abbr> session key. But you can forward this key if it is really needed:
+</div><div class="notetip">By default, <abbr title="Single Sign On">SSO</abbr> cookie is hidden. So protected applications cannot retrieve <abbr title="Single Sign On">SSO</abbr> session key. But you can forward this key if absolutly needed:
 <pre class="code">Session-ID =&gt; $_session_id</pre>
 
 </div>
 </div>
-<!-- EDIT7 SECTION "Headers" [4693-5742] -->
+<!-- EDIT7 SECTION "Headers" [4693-5884] -->
 <h2 class="sectionedit9" id="available_functions">Available functions</h2>
 <div class="level2">
 
@@ -273,7 +275,7 @@ In addition to macros and name, you can use some functions in rules and headers:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "Available functions" [5743-5953] -->
+<!-- EDIT9 SECTION "Available functions" [5885-6095] -->
 <h2 class="sectionedit10" id="wildcards_in_hostnames">Wildcards in hostnames</h2>
 <div class="level2">
 
@@ -296,6 +298,6 @@ Even if a wildcard exists, if a virtualhost is explicitly declared, this rule is
 </ol>
 
 </div>
-<!-- EDIT10 SECTION "Wildcards in hostnames" [5954-] --></div>
+<!-- EDIT10 SECTION "Wildcards in hostnames" [6096-] --></div>
 </body>
 </html>

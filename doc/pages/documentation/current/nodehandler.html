@@ -142,7 +142,7 @@ handler.<span class="me1">nginxServer</span><span class="br0">&#40;</span><span 
     # Keep original hostname
     fastcgi_param HOST $http_host;
 &nbsp;
-    # Keep original request (LLNG server will received /lmauth)
+    # Keep original request (LLNG server will receive /lmauth)
     fastcgi_param X_ORIGINAL_URI  $request_uri;
   }
 &nbsp;
@@ -158,7 +158,7 @@ handler.<span class="me1">nginxServer</span><span class="br0">&#40;</span><span 
 </dd></dl>
 
 </div>
-<!-- EDIT3 SECTION "Use it as FastCGI server (application protection only)" [732-1913] -->
+<!-- EDIT3 SECTION "Use it as FastCGI server (application protection only)" [732-1912] -->
 <h3 class="sectionedit4" id="use_it_to_protect_an_express_app">Use it to protect an express app</h3>
 <div class="level3">
 <dl class="file">
@@ -188,6 +188,6 @@ app.<span class="me1">listen</span><span class="br0">&#40;</span><span class="nu
 </dd></dl>
 
 </div>
-<!-- EDIT4 SECTION "Use it to protect an express app" [1914-] --></div>
+<!-- EDIT4 SECTION "Use it to protect an express app" [1913-] --></div>
 </body>
 </html>

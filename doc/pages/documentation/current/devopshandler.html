@@ -48,7 +48,7 @@
 <div class="level1">
 
 <p>
-The goal of this handler is to read vhost configuration from the website itself and not in LLNG configuration. Rules and headers are set in a <strong>rules.json</strong> file available at the root of the website (ie <a href="http://website/rules.json" class="urlextern" title="http://website/rules.json"  rel="nofollow">http://website/rules.json</a>). This file looks like:
+This handler is designed to read vhost configuration from the website itself not from LL:NG configuration. Rules and headers are set in a <strong>rules.json</strong> file stored at the website root directory (ie <code>http://website/rules.json</code>). This file looks like:
 </p>
 <dl class="file">
 <dt><a href="_export/code/documentation/2.0/devopshandler/codeblock.0.code" title="Download Snippet" class="mediafile mf_json">rules.json</a></dt>
@@ -64,16 +64,16 @@ The goal of this handler is to read vhost configuration from the website itself 
 </dd></dl>
 
 <p>
-If this file is not found, a default rule is applied (accept) and 1 header is sent (Auth-User ⇒ $uid)
+If this file is not found, the default rule “accept” is applied and just “Auth-User” header is sent (Auth-User ⇒ $uid).
 </p>
 
 <p>
-There is nothing to configure to use it except that:
+No specific configuration is required except that:
 </p>
 <ul>
-<li class="level1"><div class="li"> you have to choose this handler <em>(directly using VHOSTTYPE environment variable [see below] or using manager if your websites are declared)</em></div>
+<li class="level1"><div class="li"> you have to choose this specific handler <em>(directly by using <code>VHOSTTYPE</code> environment variable)</em></div>
 </li>
-<li class="level1"><div class="li"> you can set the loopback <abbr title="Uniform Resource Locator">URL</abbr> needed by the DevOps handler to get /rules.json. Default to <a href="http://127.0.0.1" class="urlextern" title="http://127.0.0.1"  rel="nofollow">http://127.0.0.1</a>:&lt;server-port&gt;</div>
+<li class="level1"><div class="li"> you can set the loopback <abbr title="Uniform Resource Locator">URL</abbr> needed by the DevOps handler to get <code>/rules.json</code> or use <code>RULES_<abbr title="Uniform Resource Locator">URL</abbr></code> parameter to set JSON file path <em>(see <a href="ssoaas.html" class="wikilink1" title="documentation:2.0:ssoaas">SSO as a Service</a>)</em>. Default to <code>http://127.0.0.1:&lt;server-port&gt;</code></div>
 </li>
 </ul>
 <div class="noteimportant">Note that DevOps handler will refuse to compile rules.json if <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe Jail</a> isn&#039;t enabled.

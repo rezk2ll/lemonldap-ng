@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:handlerauthbasic</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,handlerauthbasic"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="handlerauthbasic.html"/>
@@ -127,7 +127,7 @@ Since 1.9.6, LLNG FastCGI server can handle AuthBasic handler. To call it, you j
   # Keep original hostname
   fastcgi_param HOST $http_host;
 
-  # Keep original request (LLNG server will received /llauth)
+  # Keep original request (LLNG server will receive /lmauth)
   fastcgi_param X_ORIGINAL_URI  $request_uri;
 }
 location / {
@@ -144,7 +144,7 @@ location / {
 }</pre>
 
 </div>
-<!-- EDIT5 SECTION "Nginx" [1091-2114] -->
+<!-- EDIT5 SECTION "Nginx" [1091-2113] -->
 <h3 class="sectionedit6" id="handler_parameters">Handler parameters</h3>
 <div class="level3">
 
@@ -153,6 +153,6 @@ No parameters needed. But you have to allow sessions web services, see <a href="
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Handler parameters" [2115-] --></div>
+<!-- EDIT6 SECTION "Handler parameters" [2114-] --></div>
 </body>
 </html>

@@ -183,7 +183,7 @@ Natively, Nginx supportes FastCGI and uWSGI protocoles.
 <p>
 Therefore, LLNG services can be provided by compatible external servers.
 </p>
-<div class="notetip">FastCGI or uWSGI server(s) can be installed on separate hosts. Also you can imagine a global cloud-FastCGI/uWSGI-service for all your Nginx servers. See <a href="ssoaas.html" class="wikilink1" title="documentation:2.0:ssoaas">SSO as a service (SSOaaS)</a> for more.
+<div class="notetip">FastCGI or uWSGI server(s) can be installed on separate hosts. Also you can imagine a global cloud-FastCGI/uWSGI-service for all your Nginx servers. See more at <a href="ssoaas.html" class="wikilink1" title="documentation:2.0:ssoaas">SSO as a service (SSOaaS)</a>.
 </div>
 </div>
 
@@ -191,7 +191,7 @@ Therefore, LLNG services can be provided by compatible external servers.
 <div class="level4">
 
 <p>
-By default, LLNG provides a Plack based FastCGI server able to afford all LLNG services using <a href="https://metacpan.org/pod/Plack::Handler::FCGI" class="urlextern" title="https://metacpan.org/pod/Plack::Handler::FCGI"  rel="nofollow">FCGI</a> engine <strong>(default)</strong>.
+By default, LLNG provides a Plack based FastCGI server able to afford all LLNG services using <a href="https://metacpan.org/pod/Plack::Handler::FCGI" class="urlextern" title="https://metacpan.org/pod/Plack::Handler::FCGI"  rel="nofollow">FCGI</a> engine.
 </p>
 
 <p>
@@ -211,7 +211,7 @@ However, you can use some other FastCGI server engines:
 <li class="level1"><div class="li"> <a href="https://github.com/LemonLDAPNG/node-lemonldap-ng-handler#nginx-authorization-server" class="urlextern" title="https://github.com/LemonLDAPNG/node-lemonldap-ng-handler#nginx-authorization-server"  rel="nofollow">LLNG FastCGI server for Node.js</a>(*)</div>
 </li>
 </ul>
-<div class="notewarning">(*) LLNG Node.js handler can be used only as Nginx `auth_request` server, not to serve Portal or Manager
+<div class="notewarning">(*) LLNG Node.js handler can only be used as Nginx `auth_request` server, not to serve Portal or Manager
 </div>
 </div>
 
