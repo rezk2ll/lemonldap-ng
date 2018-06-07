@@ -5,7 +5,6 @@ _go = 1
 
 stop = () ->
 	_go = 0
-	$('#timer').html("...");
 	$('#divToHide').hide();
 
 go = () ->

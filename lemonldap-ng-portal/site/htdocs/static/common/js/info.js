@@ -8,7 +8,6 @@
 
   stop = function() {
     _go = 0;
-    $('#timer').html("...");
     return $('#divToHide').hide();
   };
 
