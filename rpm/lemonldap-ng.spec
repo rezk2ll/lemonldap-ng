@@ -155,15 +155,6 @@ Summary:        LemonLDAP-NG documentation
 This package contains html documentation.
 
 #==============================================================================
-# Documentation FR
-#==============================================================================
-%package -n lemonldap-ng-fr-doc
-Summary:        LemonLDAP-NG French documentation
-
-%description -n lemonldap-ng-fr-doc
-This package contains html documentation translated in French.
-
-#==============================================================================
 # Handler
 #==============================================================================
 %package -n lemonldap-ng-handler
@@ -471,10 +462,6 @@ fi
 %defattr(-,root,root,-)
 %doc %{lm_vardir}/doc
 %doc changelog COPYING INSTALL README.md
-
-%files -n lemonldap-ng-fr-doc
-%defattr(-,root,root,-)
-%doc %{lm_vardir}/fr-doc
 
 %files -n lemonldap-ng-handler
 %defattr(-,root,root,-)

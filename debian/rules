@@ -47,22 +47,11 @@ override_dh_auto_install:
 			APACHEUSER=www-data \
 			APACHEGROUP=www-data \
 			DEFDOCDIR=/usr/share/doc/lemonldap-ng-doc \
-			FRDOCDIR=/usr/share/doc/lemonldap-ng-fr-doc \
 			UWSGIYAMLDIR=/etc/uwsgi/apps-available \
-			PROD=yes
-	$(MAKE) install_fr_doc_site \
-			DESTDIR=$(CURDIR)/debian/tmp \
-			DOCDIR=/usr/share/doc/lemonldap-ng-fr-doc \
 			PROD=yes
 	for i in handler portal manager test; do \
 		mv $(TMP)/etc/lemonldap-ng/$$i-apache2.X.conf $(TMP)/etc/lemonldap-ng/$$i-apache2.conf; \
 	done
-
-override_dh_link:
-	rm -rf debian/lemonldap-ng-fr-doc/usr/share/doc/lemonldap-ng-fr-doc/pages/documentation/current/documentation \
-		debian/lemonldap-ng-fr-doc/usr/share/doc/lemonldap-ng-fr-doc/pages/documentation/current/icons \
-		debian/lemonldap-ng-fr-doc/usr/share/doc/lemonldap-ng-fr-doc/pages/documentation/current/lib
-	dh_link
 
 override_dh_compress:
 	dh_compress -X favicon.ico
