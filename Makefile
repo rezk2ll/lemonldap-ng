@@ -719,8 +719,7 @@ install_webserver_conf:
 			s#__CONFDIR__#$(CONFDIR)#g; \
 			s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g; \
 			s#__VHOSTLISTEN__#$(VHOSTLISTEN)#g; \
-			s#__DEFDOCDIR__#$(DEFDOCDIR)/#g; \
-			' $(RCONFDIR)/*apache*.conf $(RCONFDIR)/*nginx*.conf
+			s#__DEFDOCDIR__#$(DEFDOCDIR)/#g;' $(RCONFDIR)/*apache*.conf $(RCONFDIR)/*nginx*.conf
 
 install_manager_site:	install_conf_dir
 	# Manager install
