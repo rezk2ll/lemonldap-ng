@@ -29,12 +29,6 @@ Before release
   
   $ make documentation
 
-- Translate documentation
-  $ make fr-doc
-
-  With recent versions of OmegaT, launch "make fr-translation" and choose
-  "generate project files"
-
 - Update changelog:
 
   $ ./scripts/generate-changelog.pl

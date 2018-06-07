@@ -62,7 +62,6 @@ MANAGERRELATIVESTATICDIR=/static
 MANAGERTEMPLATESDIR=$(MANAGERSITEDIR)/templates
 DOCDIR=$(DOCUMENTROOT)
 DEFDOCDIR=$(DOCUMENTROOT)/doc
-FRDOCDIR=$(DOCUMENTROOT)/fr-doc
 TESTDIR=$(DOCUMENTROOT)/test
 EXAMPLESDIR=$(LMPREFIX)/examples
 TOOLSDIR=$(LMPREFIX)/tools
@@ -275,10 +274,6 @@ all:	configure common handler manager portal
 	@echo "   - install_doc_site       ($(DEFDOCDIR))"
 	@echo "   - install_examples_site  ($(EXAMPLESDIR))"
 	@echo
-	@echo "Other languages documentation (fr only for now)"
-	@echo " - fr-doc                  (needs OmegaT)"
-	@echo " - install_fr_doc_site"
-	@echo
 
 # Configure targets
 # -----------------
@@ -400,7 +395,6 @@ prepare_test_server:
 		MANAGERSTATICDIR=`pwd`/$(SRCMANAGERDIR)/site/htdocs/static \
 		TESTDIR=`pwd`/e2e-tests/conf/site \
 		DEFDOCDIR=`pwd`/doc \
-		FRDOCDIR=`pwd`/po-doc/fr \
 		SBINDIR=`pwd`/e2e-tests/conf/sbin \
 		INITDIR=`pwd`/e2e-tests/conf/init \
 		ETCDEFAULTDIR=`pwd`/e2e-tests/conf/def
@@ -726,7 +720,7 @@ install_webserver_conf:
 			s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g; \
 			s#__VHOSTLISTEN__#$(VHOSTLISTEN)#g; \
 			s#__DEFDOCDIR__#$(DEFDOCDIR)/#g; \
-			s#__FRDOCDIR__#$(FRDOCDIR)/#g;' $(RCONFDIR)/*apache*.conf $(RCONFDIR)/*nginx*.conf
+			' $(RCONFDIR)/*apache*.conf $(RCONFDIR)/*nginx*.conf
 
 install_manager_site:	install_conf_dir
 	# Manager install
@@ -970,7 +964,7 @@ ubuntu-install-for-nginx:
 
 distclean:	clean
 
-clean:		common_clean handler_clean portal_clean manager_clean omegat-clean stop_web_server
+clean:		common_clean handler_clean portal_clean manager_clean stop_web_server
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf doc/devel
 	@rm -vf *gz *zip
@@ -1121,74 +1115,6 @@ tidy-js: clean
 		! -name conftree.js \
 		  -print \
 		  -exec js_beautify -o -s=2 {} \;
-
-# Translation targets
-# -------------------
-
-language_code = perl -e ' \
-		print { \
-			fr=> "FR-FR", \
-		}->{$(1)}'
-
-test_omegat_%_dir:
-	 @if [ ! -d omegat.files/$* ]; then \
-	 	echo "omegat.files/$* does not exist"; \
-		exit 1; \
-	fi
-
-omegat-configuration-file:
-	-@mkdir -p po-doc/$(LANGCODE)/pages
-	@perl -pe 'BEGIN{$$p=`pwd`;chomp $$p;}s/__LANG__/$(OMEGATCODE)/;s/__PWD__/$$p/o;' omegat.files/_base.project >omegat.files/$(LANGCODE)/omegat.project
-	@mkdir -p omegat.files/$(LANGCODE)/{tm glossary dictionary}
-
-translation: omegat-configuration-file
-	@omegat omegat.files/$(LANGCODE) --no-team --quiet
-
-translated-doc: omegat-configuration-file
-	@omegat omegat.files/$(LANGCODE) --mode=console-translate --quiet 2>/dev/null
-
-# 2. Public targets
-
-%-translation: test_omegat_%_dir omegat-%-clean
-	@$(MAKE) translation LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
-
-%-doc: test_omegat_%_dir omegat-%-clean
-	@mkdir -p po-doc/$*
-	@$(MAKE) translated-doc LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
-	
-omegat-clean:
-	@rm -rf omegat.files/*/omegat.project omegat.files/*/omegat/project_save*.bak omegat.files/*/omegat/last_entry.properties
-
-omegat-%-clean:
-	@rm -rf po-doc/$*
-
-install_%_doc_site:
-	@rm -rf $(RDOCDIR)/$*-doc || true
-	# Install doc directories
-	@install -v -d -m 755 $(RDOCDIR)/$*-doc
-	@cd po-doc/$* && find * -type d |(cd $(RDOCDIR)/$*-doc; xargs install -v -d -m 755) && cd -
-	# Install HTML files
-	@cd po-doc/$* && for f in `find * -type f -name '*.html'`; do \
-		echo "Installing $$f"; \
-		../../scripts/transform-templates \
-			usedebianlibs $(USEDEBIANLIBS) \
-			useexternallibs $(USEEXTERNALLIBS) \
-			jsminified $(JSCOMPRESS) \
-			cssminified $(CSSCOMPRESS) <$$f \
-		> $(RDOCDIR)/$*-doc/$$f; \
-	done && cd -
-	# Install other files
-	@cd po-doc/$* && for f in `find * -type f ! -name '*.html'`; do \
-		install -v -m 644 $$f $(RDOCDIR)/$*-doc/$$f; \
-	done && cd -
-	# Install symlinks (no symlinks)
-	@#cd po-doc/$* && tar cf - `find * -type l` | tar xvf - -C $(RDOCDIR)/$*-doc && cd -
-	# Remove js
-	@cd $(RDOCDIR)/$*-doc && if test "$(USEEXTERNALLIBS)" = "yes"; then \
-		rm -rvf $(DOCEXTERNALLIBS); \
-	elif test "$(USEDEBIANLIBS)" = "yes"; then \
-		rm -rvf $(DOCLIBSTOREMOVEFORDEBIAN); \
-	fi && cd -
 
 html_spelling:
 	@for i in $$(find doc/ -type f -name '*.html'); do \

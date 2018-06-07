@@ -39,9 +39,6 @@ my $manager = builder {
     enable "Plack::Middleware::Static",
       path => '^/lib/',
       root => '__DEFDOCDIR__pages/documentation/current/';
-    enable "Plack::Middleware::Static",
-      path => '^/fr-doc/',
-      root => '__FRDOCDIR__../';
     Lemonldap::NG::Manager->run( {} );
 };
 
