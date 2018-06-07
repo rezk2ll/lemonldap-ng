@@ -1482,6 +1482,7 @@ sub attributes {
                 { k => 'SecureToken',  v => 'SecureToken' },
                 { k => 'CDA',          v => 'CDA' },
                 { k => 'DevOps',       v => 'DevOps' },
+                { k => 'DevOpsST',     v => 'DevOpsST' },
                 { k => 'ServiceToken', v => 'ServiceToken' },
             ],
             default       => 'Main',

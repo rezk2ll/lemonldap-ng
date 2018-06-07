@@ -1112,6 +1112,10 @@ function templates(tpl,key) {
                   "v" : "DevOps"
                },
                {
+                  "k" : "DevOpsST",
+                  "v" : "DevOpsST"
+               },
+               {
                   "k" : "ServiceToken",
                   "v" : "ServiceToken"
                }
