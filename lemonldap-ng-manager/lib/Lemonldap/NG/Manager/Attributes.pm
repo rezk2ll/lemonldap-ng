@@ -3411,6 +3411,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
                     'v' => 'DevOps'
                 },
                 {
+                    'k' => 'DevOpsST',
+                    'v' => 'DevOpsST'
+                },
+                {
                     'k' => 'ServiceToken',
                     'v' => 'ServiceToken'
                 }

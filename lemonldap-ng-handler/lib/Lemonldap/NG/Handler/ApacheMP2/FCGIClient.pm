@@ -118,6 +118,7 @@ In apache2.conf:
     PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2::FCGIClient
     PerlSetVar LLNG_SERVER 127.0.0.1:9090
     PerlSetVar VHOSTTYPE DevOps
+    # or PerlSetVar VHOSTTYPE DevOpsST
     PerlSetVar RULES_URL http://app.tld/rules.json
     ...
   </VirtualHost>
