@@ -106,18 +106,20 @@ sub run {
     # Remove token
     eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
 
-    $r->add_output_filter(
-        sub {
-            my $f = shift;
-            while ( $f->read( my $buffer, 1024 ) ) {
-                $f->print($buffer);
+    if ( $INC{"Apache2/Filter.pm"} ) {
+        $r->add_output_filter(
+            sub {
+                my $f = shift;
+                while ( $f->read( my $buffer, 1024 ) ) {
+                    $f->print($buffer);
+                }
+                if ( $f->seen_eos ) {
+                    $class->_deleteToken($key);
+                }
+                return $class->OK;
             }
-            if ( $f->seen_eos ) {
-                $class->_deleteToken($key);
-            }
-            return $class->OK;
-        }
-    );
+        );
+    }
 
     # Return $class->OK
     return $class->OK;
