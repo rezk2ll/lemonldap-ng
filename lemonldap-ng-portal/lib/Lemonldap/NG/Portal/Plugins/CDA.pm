@@ -13,9 +13,8 @@ extends 'Lemonldap::NG::Common::Module';
 
 # INTERFACE
 
-sub afterDatas {
-    return 'changeUrldc';
-}
+use constant afterDatas  => 'changeUrldc';
+use constant forAuthUser => 'changeUrldc';
 
 sub init { 1 }
 
@@ -23,7 +22,7 @@ sub init { 1 }
 
 sub changeUrldc {
     my ( $self, $req ) = @_;
-    my $urldc = $req->{urldc};
+    my $urldc = $req->{urldc} || '';
     if (    $req->id
         and $urldc !~ m#^https?://[^/]*$self->{conf}->{domain}(:\d+)?/#oi
         and $self->p->isTrustedUrl($urldc) )
@@ -32,7 +31,8 @@ sub changeUrldc {
         $self->logger->debug('CDA request');
 
         # Create CDA session
-        if ( my $cdaSession = $self->p->getApacheSession( undef, kind => "CDA" ) )
+        if ( my $cdaSession =
+            $self->p->getApacheSession( undef, kind => "CDA" ) )
         {
             my $cdaInfos = { '_utime' => time };
             if ( $self->{conf}->{securedCookie} < 2 or $ssl ) {

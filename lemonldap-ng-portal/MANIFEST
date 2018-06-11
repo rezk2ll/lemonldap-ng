@@ -430,6 +430,7 @@ t/62-SingleSession.t
 t/63-History.t
 t/64-StayConnected.t
 t/65-AutoSignin.t
+t/66-CDA-already-auth.t
 t/66-CDA-with-REST.t
 t/66-CDA-with-SOAP.t
 t/66-CDA.t
