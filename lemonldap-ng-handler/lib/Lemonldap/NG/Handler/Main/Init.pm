@@ -7,6 +7,8 @@ package Lemonldap::NG::Handler::Main;
 use strict;
 use Lemonldap::NG::Common::Conf;
 
+our $statusInit = 1;
+
 ## @imethod void init(hashRef args)
 # Read parameters and build the Lemonldap::NG::Common::Conf object.
 # @param $args hash containing parameters
@@ -40,7 +42,8 @@ sub init($$) {
     $class->serverSignatureInit unless ( $class->localConfig->{hideSignature} );
 
     # * launch status process
-    $class->statusInit() if ( $class->localConfig->{status} );
+    $class->statusInit() if ( $class->localConfig->{status} and $statusInit );
+    $statusInit = 0;
     1;
 }
 

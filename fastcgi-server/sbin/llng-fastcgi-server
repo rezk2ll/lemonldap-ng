@@ -53,22 +53,20 @@ if ($user) {
     POSIX::setuid($uid);
 }
 
+unless ($>) {
+    die "Refuse to run as root. Aborting";
+}
+
 if ($customFunctionsFile) {
     eval { require $customFunctionsFile };
     die $@ if ($@);
 }
 
 my %builder = (
-    handler => sub {
-        require Lemonldap::NG::Handler::Server::Nginx;
-        return Lemonldap::NG::Handler::Server::Nginx->run( {} );
-    },
     reload => sub {
-        require Lemonldap::NG::Handler::Server::Nginx;
         return Lemonldap::NG::Handler::Server::Nginx->reload();
     },
     status => sub {
-        require Lemonldap::NG::Handler::Server::Nginx;
         return Lemonldap::NG::Handler::Server::Nginx->status();
     },
     manager => sub {
@@ -99,9 +97,8 @@ my %builder = (
     },
 );
 
-unless ($>) {
-    die "Refuse to run as root. Aborting";
-}
+require Lemonldap::NG::Handler::Server::Nginx;
+$_apps{handler} = Lemonldap::NG::Handler::Server::Nginx->run( {} );
 
 my $app = sub {
     my $type = $_[0]->{LLTYPE} || 'handler';

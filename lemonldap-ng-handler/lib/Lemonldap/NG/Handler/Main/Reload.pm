@@ -33,6 +33,7 @@ sub onReload {
 # @return true if config is up to date or if reload config succeeded
 sub checkConf {
     my ( $class, $force ) = @_;
+    $class->logger->error("Check configuration for $class");
     my $prm = { local => !$force, localPrm => $class->localConfig };
     my $conf = $class->confAcc->getConf($prm);
 
@@ -54,7 +55,7 @@ sub checkConf {
             $class->logger->debug($Lemonldap::NG::Common::Conf::msg);
         }
     }
-    if ( !$class->cfgNum or $class->cfgNum != $conf->{cfgNum} ) {
+    if ( $force or !$class->cfgNum or $class->cfgNum != $conf->{cfgNum} ) {
         $class->logger->debug("Get configuration $conf->{cfgNum}");
         $class->lastCheck( time() );
         unless ( $class->cfgNum( $conf->{cfgNum} ) ) {
