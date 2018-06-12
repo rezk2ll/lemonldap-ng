@@ -209,7 +209,7 @@ sub _choice {
             );
         }
     }
-    $self->userLogger->error('Bd 2F choice');
+    $self->userLogger->error('Bad 2F choice');
     return $self->p->lmError( $req, 500 );
 }
 

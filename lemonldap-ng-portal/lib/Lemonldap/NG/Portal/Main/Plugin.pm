@@ -79,7 +79,7 @@ L<Lemonldap::NG::Portal> modules I<(plugins, authentication modules,...)>.
   sub init {
       my ($self) = @_;
       $self->addUnauthRoute( mypath => 'hello', [ 'GET', 'PUT' ] );
-      $self->addAuthRoute( mypath => 'wellcome', [ 'GET', 'PUT' ] );
+      $self->addAuthRoute( mypath => 'welcome', [ 'GET', 'PUT' ] );
       return 1;
   }
   sub verifyIP {
@@ -92,10 +92,10 @@ L<Lemonldap::NG::Portal> modules I<(plugins, authentication modules,...)>.
       ...
       return $self->p->sendJSONresponse($req, { hello => 1 });
   }
-  sub wellcome {
+  sub welcome {
       my ($self, $req) = @_;
       ...
-      return $self->p->sendHtml($req, 'template', params => { WELLCOME => 1 });
+      return $self->p->sendHtml($req, 'template', params => { WELCOME => 1 });
   }
 
 =head1 DESCRIPTION
