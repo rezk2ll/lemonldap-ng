@@ -336,7 +336,7 @@ sub sessionStorageInit {
                   . Data::Dumper->new( [ $class->tsv->{sessionCacheOptions} ] )
                   ->Terse(1)->Indent(0)->Dump;    # To send params on one line
             }
-            print { $class->tsv->{statusPipe} } "RELOADCACHE $params\n";
+            $class->tsv->{statusPipe}->print("RELOADCACHE $params\n");
         }
     }
     return 1;
