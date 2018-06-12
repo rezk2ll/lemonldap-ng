@@ -55,6 +55,9 @@ sub init {
 
 sub run {
     my ( $self, $req, $token ) = @_;
+    
+    my $checkLogins = $req->param('checkLogins');
+    $self->logger->debug("REST2F checkLogins set") if ($checkLogins);
 
     if ( $self->conf->{rest2fInitUrl} ) {
 
@@ -89,6 +92,7 @@ sub run {
             SKIN   => $self->conf->{portalSkin},
             TOKEN  => $token,
             TARGET => '/rest2fcheck',
+            CHECKLOGINS => $checkLogins
         }
     );
     $self->logger->debug("Prepare external REST verification");
