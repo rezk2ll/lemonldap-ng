@@ -42,7 +42,7 @@ sub getStatus {
     my $statusOut  = $class->tsv->{statusOut};
     return $class->abort( $req, "$class: status page can not be displayed" )
       unless ( $statusPipe and $statusOut );
-    print $statusPipe "STATUS" . ( $req->{env}->{QUERY_STRING} || '' ) . "\n";
+    print $statusPipe "STATUS " . ( $req->{env}->{QUERY_STRING} || '' ) . "\n";
     my $buf;
 
     while (<$statusOut>) {

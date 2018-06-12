@@ -6,6 +6,7 @@ package Lemonldap::NG::Handler::Lib::Status;
 use strict;
 use POSIX qw(setuid setgid);
 use JSON qw(to_json);
+use IO::Select;
 
 our $VERSION = '2.0.0';
 
@@ -115,182 +116,194 @@ eval {
 # - display results
 sub run {
     $| = 1;
-    my ( $lastMn, $mn, $count, $cache );
-    while (<STDIN>) {
-        $mn = int( time / 60 ) - $start + 1;
-
-        # Cleaning activity array
-        if ( $mn > $lastMn ) {
-            for ( my $i = 0 ; $i < $mn - $lastMn ; $i++ ) {
-                unshift @$activity, {};
-                delete $activity->[ MN_COUNT + 1 ];
+    my ( $lastMn, $mn, $count, $cache, @ready );
+    my $sel = IO::Select->new;
+    $sel->add( \*STDIN );
+    while ( @ready = $sel->can_read ) {
+        foreach my $fh (@ready) {
+            if($fh == \*STDIN and $fh->eof) {
+                exit;
             }
-        }
-        $lastMn = $mn;
+            $_  = $fh->getline or next;
+            $mn = int( time / 60 ) - $start + 1;
 
-        # Activity collect
-        if (
+            # Cleaning activity array
+            if ( $mn > $lastMn ) {
+                for ( my $i = 0 ; $i < $mn - $lastMn ; $i++ ) {
+                    unshift @$activity, {};
+                    delete $activity->[ MN_COUNT + 1 ];
+                }
+            }
+            $lastMn = $mn;
+
+            # Activity collect
+            if (
 /^(\S+)\s+=>\s+(\S+)\s+(OK|REJECT|REDIRECT|LOGOUT|UNPROTECT|\-?\d+)$/
-          )
-        {
-            my ( $user, $uri, $code ) = ( $1, $2, $3 );
+              )
+            {
+                my ( $user, $uri, $code ) = ( $1, $2, $3 );
 
-            # Portal error translation
-            $code = portalTab->{$code} || $code if ( $code =~ /^\-?\d+$/ );
+                # Portal error translation
+                $code = portalTab->{$code} || $code if ( $code =~ /^\-?\d+$/ );
 
-            # Per user activity
-            $status->{user}->{$user}->{$code}++;
+                # Per user activity
+                $status->{user}->{$user}->{$code}++;
 
-            # Per uri activity
-            $uri =~ s/^(.*?)\?.*$/$1/;
-            $status->{uri}->{$uri}->{$code}++;
-            $count->{uri}->{$uri}++;
+                # Per uri activity
+                $uri =~ s/^(.*?)\?.*$/$1/;
+                $status->{uri}->{$uri}->{$code}++;
+                $count->{uri}->{$uri}++;
 
-            # Per vhost activity
-            my ($vhost) = ( $uri =~ /^([^\/]+)/ );
-            $status->{vhost}->{$vhost}->{$code}++;
-            $count->{vhost}->{$vhost}++;
+                # Per vhost activity
+                my ($vhost) = ( $uri =~ /^([^\/]+)/ );
+                $status->{vhost}->{$vhost}->{$code}++;
+                $count->{vhost}->{$vhost}++;
 
-            # Last 5 minutes activity
-            $activity->[0]->{$code}++;
-        }
-
-        elsif (/^RELOADCACHE(?:\s+(\S+?),(.+))?$/) {
-            if ( my ( $cacheModule, $cacheOptions ) = ( $1, $2 ) ) {
-                eval "use $cacheModule;"
-                  . "\$cache = new $cacheModule($cacheOptions);";
-                print STDERR "$@\n" if ($@);    # TODO: use logger instead
+                # Last 5 minutes activity
+                $activity->[0]->{$code}++;
             }
-            else {
-                $cache = undef;
-            }
-        }
 
-        # Status requests
-
-        # $args contains parameters passed to url status page (a=1 for example
-        # if request is http://test.example.com/status?a=1). To be used
-        # later...
-        elsif (/^STATUS(?:\s+(\S+))?$/) {
-            my $tmp  = $1;
-            my $args = {};
-            %$args = split( /[=&]/, $tmp ) if ($tmp);
-            &head unless ( $args->{json} );
-
-            my ( $c, $m, $u );
-            foreach my $user ( keys %{ $status->{user} } ) {
-                my $v = $status->{user}->{$user};
-                $u++ unless ( $user =~ /^\d+\.\d+\.\d+\.\d+$/ );
-
-                # Total requests
-                foreach ( keys %$v ) {
-                    $c->{$_} += $v->{$_};
+            elsif (/^RELOADCACHE(?:\s+(\S+?),(.+))?$/) {
+                if ( my ( $cacheModule, $cacheOptions ) = ( $1, $2 ) ) {
+                    eval "use $cacheModule;"
+                      . "\$cache = new $cacheModule($cacheOptions);";
+                    print STDERR "$@\n" if ($@);    # TODO: use logger instead
+                }
+                else {
+                    $cache = undef;
                 }
             }
-            for ( my $i = 1 ; $i < @$activity ; $i++ ) {
-                $m->{$_} += $activity->[$i]->{$_}
-                  foreach ( keys %{ $activity->[$i] } );
-            }
-            foreach ( keys %$m ) {
-                $m->{$_} = sprintf( "%.2f", $m->{$_} / MN_COUNT );
-                $m->{$_} = int( $m->{$_} ) if ( $m->{$_} > 99 );
-            }
 
-            # JSON values
-            if ( $args->{json} ) {
-                print to_json( { average => $m, total => $c } ) . "\nEND\n";
-            }
+            # Status requests
 
-            # Raw values (Dump)
-            elsif ( $args->{'dump'} ) {
-                print "<div id=\"dump\"><pre>\n";
-                print Dumper( $status, $activity, $count );
-                print "</pre></div>\n";
-                &end;
-            }
-            else {
+          # $args contains parameters passed to url status page (a=1 for example
+          # if request is http://test.example.com/status?a=1). To be used
+          # later...
+            elsif (/^STATUS\s*(\S+)?$/) {
+                my $tmp  = $1;
+                my $args = {};
+                %$args = split( /[=&]/, $tmp ) if ($tmp);
+                &head unless ( $args->{json} );
 
-                # Total requests
-                print "<h2>Total</h2>\n<div id=\"total\"><pre>\n";
-                print sprintf( "%-30s : \%6d (%.02f / mn)\n",
-                    $_, $c->{$_}, $c->{$_} / $mn )
-                  foreach ( sort keys %$c );
-                print "\n</pre></div>\n";
+                my ( $c, $m, $u );
+                foreach my $user ( keys %{ $status->{user} } ) {
+                    my $v = $status->{user}->{$user};
+                    $u++ unless ( $user =~ /^\d+\.\d+\.\d+\.\d+$/ );
 
-                # Average
-                print "<h2>Average for last " . MN_COUNT
-                  . " minutes</h2>\n<div id=\"average\"><pre>\n";
-                print sprintf( "%-30s : %6s / mn\n", $_, $m->{$_} )
-                  foreach ( sort keys %$m );
-                print "\n</pre></div>\n";
-
-                # Users connected
-                print "<div id=\"users\"><p>\nTotal users : $u\n</p></div>\n";
-
-                # Local cache
-                if ($cache) {
-                    my @t = $cache->get_keys( $_[1]->{namespace} );
-                    print "<div id=\"cache\"><p>\nLocal Cache : " . @t
-                      . " objects\n</p></div>\n";
+                    # Total requests
+                    foreach ( keys %$v ) {
+                        $c->{$_} += $v->{$_};
+                    }
+                }
+                for ( my $i = 1 ; $i < @$activity ; $i++ ) {
+                    $m->{$_} += $activity->[$i]->{$_}
+                      foreach ( keys %{ $activity->[$i] } );
+                }
+                foreach ( keys %$m ) {
+                    $m->{$_} = sprintf( "%.2f", $m->{$_} / MN_COUNT );
+                    $m->{$_} = int( $m->{$_} ) if ( $m->{$_} > 99 );
                 }
 
-                # Uptime
-                print "<div id=\"up\"><p>\nServer up for : "
-                  . &timeUp($mn)
-                  . "\n</p></div>\n";
+                # JSON values
+                if ( $args->{json} ) {
+                    print to_json( { average => $m, total => $c } ) . "\nEND\n";
+                }
 
-                # Top uri
-                if ( $args->{top} ) {
-                    print "<hr/>\n";
-                    $args->{categories} ||=
-                      'REJECT,PORTAL_FIRSTACCESS,LOGOUT,OK';
+                # Raw values (Dump)
+                elsif ( $args->{'dump'} ) {
+                    require Data::Dumper;
+                    print "<div id=\"dump\"><pre>\n";
+                    print Data::Dumper::Dumper( $status, $activity, $count );
+                    print "</pre></div>\n";
+                    &end;
+                }
+                else {
 
-                    # Vhost activity
+                    # Total requests
+                    print "<h2>Total</h2>\n<div id=\"total\"><pre>\n";
+                    print sprintf( "%-30s : \%6d (%.02f / mn)\n",
+                        $_, $c->{$_}, $c->{$_} / $mn )
+                      foreach ( sort keys %$c );
+                    print "\n</pre></div>\n";
+
+                    # Average
+                    print "<h2>Average for last " . MN_COUNT
+                      . " minutes</h2>\n<div id=\"average\"><pre>\n";
+                    print sprintf( "%-30s : %6s / mn\n", $_, $m->{$_} )
+                      foreach ( sort keys %$m );
+                    print "\n</pre></div>\n";
+
+                    # Users connected
                     print
+                      "<div id=\"users\"><p>\nTotal users : $u\n</p></div>\n";
+
+                    # Local cache
+                    if ($cache) {
+                        my @t = $cache->get_keys( $_[1]->{namespace} );
+                        print "<div id=\"cache\"><p>\nLocal Cache : " . @t
+                          . " objects\n</p></div>\n";
+                    }
+
+                    # Uptime
+                    print "<div id=\"up\"><p>\nServer up for : "
+                      . &timeUp($mn)
+                      . "\n</p></div>\n";
+
+                    # Top uri
+                    if ( $args->{top} ) {
+                        print "<hr/>\n";
+                        $args->{categories} ||=
+                          'REJECT,PORTAL_FIRSTACCESS,LOGOUT,OK';
+
+                        # Vhost activity
+                        print
 "<h2>Virtual Host activity</h2>\n<div id=\"vhost\"><pre>\n";
-                    foreach (
-                        sort { $count->{vhost}->{$b} <=> $count->{vhost}->{$a} }
-                        keys %{ $count->{vhost} }
-                      )
-                    {
-                        print
-                          sprintf( "%-40s : %6d\n", $_, $count->{vhost}->{$_} );
-                    }
-                    print "\n</pre></div>\n";
+                        foreach (
+                            sort {
+                                $count->{vhost}->{$b} <=> $count->{vhost}->{$a}
+                            }
+                            keys %{ $count->{vhost} }
+                          )
+                        {
+                            print sprintf( "%-40s : %6d\n",
+                                $_, $count->{vhost}->{$_} );
+                        }
+                        print "\n</pre></div>\n";
 
-                    # General
-                    print "<h2>Top used URI</h2>\n<div id=\"uri\"><pre>\n";
-                    my $i = 0;
-                    foreach (
-                        sort { $count->{uri}->{$b} <=> $count->{uri}->{$a} }
-                        keys %{ $count->{uri} }
-                      )
-                    {
-                        last if ( $i == $args->{top} );
-                        last unless ( $count->{uri}->{$_} );
-                        $i++;
-                        print
-                          sprintf( "%-80s : %6d\n", $_, $count->{uri}->{$_} );
-                    }
-                    print "\n</pre></div>\n";
+                        # General
+                        print "<h2>Top used URI</h2>\n<div id=\"uri\"><pre>\n";
+                        my $i = 0;
+                        foreach (
+                            sort { $count->{uri}->{$b} <=> $count->{uri}->{$a} }
+                            keys %{ $count->{uri} }
+                          )
+                        {
+                            last if ( $i == $args->{top} );
+                            last unless ( $count->{uri}->{$_} );
+                            $i++;
+                            print sprintf( "%-80s : %6d\n",
+                                $_, $count->{uri}->{$_} );
+                        }
+                        print "\n</pre></div>\n";
 
-                    # Top by category
-                    print
+                        # Top by category
+                        print
 "<table class=\"topByCat\"><tr><th style=\"width:20%\">Code</th><th>Top</th></tr>\n";
-                    foreach my $cat ( split /,/, $args->{categories} ) {
-                        print
-                          "<tr><td>$cat</td><td nowrap>\n<div id=\"$cat\">\n";
-                        topByCat( $cat, $args->{top} );
-                        print "</div>\n</td></tr>";
+                        foreach my $cat ( split /,/, $args->{categories} ) {
+                            print
+"<tr><td>$cat</td><td nowrap>\n<div id=\"$cat\">\n";
+                            topByCat( $cat, $args->{top} );
+                            print "</div>\n</td></tr>";
+                        }
+                        print "</table>\n";
                     }
-                    print "</table>\n";
-                }
 
-                &end;
+                    &end;
+                }
             }
-        }
-        else {
-            print STDERR "Status: Unknown command line : $_";
+            else {
+                print STDERR "Status: Unknown command line : $_";
+            }
         }
     }
 }
