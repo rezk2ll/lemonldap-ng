@@ -62,6 +62,10 @@ sub init {
 
 sub run {
     my ( $self, $req, $token, $_2fDevices ) = @_;
+        
+    my $checkLogins = $req->param('checkLogins');
+    $self->logger->debug("Yubikey checkLogins set") if ($checkLogins);
+    
     my $yubikey = 0;
     if ( $req->{sessionInfo}->{_2fDevices} ) {
         $self->logger->debug("Loading 2F Devices ...");
@@ -104,6 +108,7 @@ sub run {
             TARGET    => '/yubikey2fcheck',
             INPUTLOGO => 'yubikey.png',
             LEGEND    => 'clickOnYubikey',
+            CHECKLOGINS => $checkLogins
         }
     );
     $self->logger->debug("Display Yubikey form");
