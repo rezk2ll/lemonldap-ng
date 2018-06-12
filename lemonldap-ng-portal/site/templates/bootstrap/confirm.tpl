@@ -66,12 +66,6 @@
         </div>
       </TMPL_IF>
 
-      <!-- //if:jsminified
-        <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/confirm.min.js"></script>
-      //else -->
-        <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/confirm.js"></script>
-      <!-- //endif -->
-
       <div class="buttons">
         <button type="submit" class="positive btn btn-success">
           <span class="glyphicon glyphicon-ok"></span>
@@ -84,6 +78,12 @@
       </div>
 
       </TMPL_IF>
+
+      <!-- //if:jsminified
+        <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/confirm.min.js"></script>
+      //else -->
+        <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/confirm.js"></script>
+      <!-- //endif -->
 
       <hr />
 
