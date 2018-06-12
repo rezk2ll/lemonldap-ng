@@ -111,6 +111,9 @@ sub init {
 # run() is called at each authentication, just after sessionInfo populated
 sub run {
     my ( $self, $req ) = @_;
+    
+    my $checkLogins = $req->param('checkLogins');
+    $self->logger->debug("2F checkLogins set") if ($checkLogins);
 
     # Skip 2F unless a module has been registered
     return PE_OK unless ( @{ $self->sfModules } );
@@ -155,6 +158,7 @@ sub run {
             SKIN    => $self->conf->{portalSkin},
             TOKEN   => $token,
             MODULES => [ map { { CODE => $_->prefix, LOGO => $_->logo } } @am ],
+            CHECKLOGINS => $checkLogins
         }
     );
     $req->response($tpl);

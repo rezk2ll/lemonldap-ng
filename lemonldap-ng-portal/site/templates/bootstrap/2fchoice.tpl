@@ -4,7 +4,8 @@
   <div class="message message-positive alert" trspan="choose2f"></div>
   <div class="buttons">
     <form action="/2fchoice" method="POST">
-      <input type="hidden" name="token" id="token" value="<TMPL_VAR NAME="TOKEN">" />
+      <input type="hidden" id="token" name="token" value="<TMPL_VAR NAME="TOKEN">" />
+      <input type="hidden" id="checkLogins" name="checkLogins" value="<TMPL_VAR NAME="CHECKLOGINS">">
       <TMPL_LOOP NAME="MODULES">
 	  &nbsp;&nbsp;
         <button type="submit" name="sf" value="<TMPL_VAR NAME="CODE">">
