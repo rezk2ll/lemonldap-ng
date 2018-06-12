@@ -1747,7 +1747,7 @@ sub attributes {
                 { k => 'RSA_SHA1',   v => 'RSA SHA1' },
                 { k => 'RSA_SHA256', v => 'RSA SHA256' },
             ],
-            default => 'RSA_SHA256',
+            default => 'RSA_SHA1',
         },
         samlServiceUseCertificateInResponse => {
             type    => 'bool',
