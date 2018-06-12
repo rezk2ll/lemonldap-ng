@@ -46,7 +46,7 @@ sub getStatus {
         "STATUS " . ( $req->{env}->{QUERY_STRING} || '' ) . "\n" );
     my $buf;
 
-    while ( $statusOut->getline ) {
+    while ( $_ = $statusOut->getline ) {
         last if (/^END$/);
         $buf .= $_;
     }

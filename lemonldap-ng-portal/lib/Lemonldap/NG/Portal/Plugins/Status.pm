@@ -30,7 +30,7 @@ sub status {
         $p->print("STATUS json=1\n");
         my $buf;
         $p = $self->p->HANDLER->tsv->{statusOut};
-        while ( $p->getline ) {
+        while ( $_ = $p->getline ) {
             last if (/^END$/);
             $buf .= $_;
         }

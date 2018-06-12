@@ -115,16 +115,15 @@ eval {
 # - update counts
 # - display results
 sub run {
-    $| = 1;
     my ( $lastMn, $mn, $count, $cache, @ready );
     my $sel = IO::Select->new;
     $sel->add( \*STDIN );
     while ( @ready = $sel->can_read ) {
         foreach my $fh (@ready) {
-            if($fh == \*STDIN and $fh->eof) {
+            if ( $fh == \*STDIN and $fh->eof ) {
                 exit;
             }
-            $_  = $fh->getline or next;
+            $_ = $fh->getline or next;
             $mn = int( time / 60 ) - $start + 1;
 
             # Cleaning activity array
@@ -180,10 +179,27 @@ sub run {
           # if request is http://test.example.com/status?a=1). To be used
           # later...
             elsif (/^STATUS\s*(\S+)?$/) {
-                my $tmp  = $1;
+                my $tmp = $1;
+                my $out;
+                if ( $fh == \*STDIN ) {
+                    $out = \*STDOUT;
+                }
+                elsif ( $tmp =~ /host=(\S+)$/ ) {
+                    $out =
+                      IO::Socket::INET->new( Proto => "udp", PeerAddr => $1 );
+                    unless ($out) {
+                        print STDERR "Unable to open UDP connection\n";
+                        next;
+                    }
+                }
+                else {
+                    print STDERR "No host given, skipping\n";
+                    next;
+                }
+                $out->autoflush(1);
                 my $args = {};
                 %$args = split( /[=&]/, $tmp ) if ($tmp);
-                &head unless ( $args->{json} );
+                &head($out) unless ( $args->{json} );
 
                 my ( $c, $m, $u );
                 foreach my $user ( keys %{ $status->{user} } ) {
@@ -206,58 +222,66 @@ sub run {
 
                 # JSON values
                 if ( $args->{json} ) {
-                    print to_json( { average => $m, total => $c } ) . "\nEND\n";
+                    $out->print(
+                        to_json( { average => $m, total => $c } ) . "\nEND\n" );
                 }
 
                 # Raw values (Dump)
                 elsif ( $args->{'dump'} ) {
                     require Data::Dumper;
-                    print "<div id=\"dump\"><pre>\n";
-                    print Data::Dumper::Dumper( $status, $activity, $count );
-                    print "</pre></div>\n";
-                    &end;
+                    $out->print("<div id=\"dump\"><pre>\n");
+                    $out->print(
+                        Data::Dumper::Dumper( $status, $activity, $count ) );
+                    $out->print("</pre></div>\n");
+                    &end($out);
                 }
                 else {
 
                     # Total requests
-                    print "<h2>Total</h2>\n<div id=\"total\"><pre>\n";
-                    print sprintf( "%-30s : \%6d (%.02f / mn)\n",
-                        $_, $c->{$_}, $c->{$_} / $mn )
-                      foreach ( sort keys %$c );
-                    print "\n</pre></div>\n";
+                    $out->print("<h2>Total</h2>\n<div id=\"total\"><pre>\n");
+                    $out->print(
+                        sprintf(
+                            "%-30s : \%6d (%.02f / mn)\n",
+                            $_, $c->{$_}, $c->{$_} / $mn
+                        )
+                    ) foreach ( sort keys %$c );
+                    $out->print("\n</pre></div>\n");
 
                     # Average
-                    print "<h2>Average for last " . MN_COUNT
-                      . " minutes</h2>\n<div id=\"average\"><pre>\n";
-                    print sprintf( "%-30s : %6s / mn\n", $_, $m->{$_} )
+                    $out->print( "<h2>Average for last "
+                          . MN_COUNT
+                          . " minutes</h2>\n<div id=\"average\"><pre>\n" );
+                    $out->print( sprintf( "%-30s : %6s / mn\n", $_, $m->{$_} ) )
                       foreach ( sort keys %$m );
-                    print "\n</pre></div>\n";
+                    $out->print("\n</pre></div>\n");
 
                     # Users connected
-                    print
-                      "<div id=\"users\"><p>\nTotal users : $u\n</p></div>\n";
+                    $out->print(
+                        "<div id=\"users\"><p>\nTotal users : $u\n</p></div>\n"
+                    );
 
                     # Local cache
                     if ($cache) {
                         my @t = $cache->get_keys( $_[1]->{namespace} );
-                        print "<div id=\"cache\"><p>\nLocal Cache : " . @t
-                          . " objects\n</p></div>\n";
+                        $out->print( "<div id=\"cache\"><p>\nLocal Cache : "
+                              . @t
+                              . " objects\n</p></div>\n" );
                     }
 
                     # Uptime
-                    print "<div id=\"up\"><p>\nServer up for : "
-                      . &timeUp($mn)
-                      . "\n</p></div>\n";
+                    $out->print( "<div id=\"up\"><p>\nServer up for : "
+                          . &timeUp( $out, $mn )
+                          . "\n</p></div>\n" );
 
                     # Top uri
                     if ( $args->{top} ) {
-                        print "<hr/>\n";
                         $args->{categories} ||=
                           'REJECT,PORTAL_FIRSTACCESS,LOGOUT,OK';
 
                         # Vhost activity
-                        print
-"<h2>Virtual Host activity</h2>\n<div id=\"vhost\"><pre>\n";
+                        $out->print(
+"<hr/>\n<h2>Virtual Host activity</h2>\n<div id=\"vhost\"><pre>\n"
+                        );
                         foreach (
                             sort {
                                 $count->{vhost}->{$b} <=> $count->{vhost}->{$a}
@@ -265,13 +289,16 @@ sub run {
                             keys %{ $count->{vhost} }
                           )
                         {
-                            print sprintf( "%-40s : %6d\n",
-                                $_, $count->{vhost}->{$_} );
+                            $out->print(
+                                sprintf( "%-40s : %6d\n",
+                                    $_, $count->{vhost}->{$_} )
+                            );
                         }
-                        print "\n</pre></div>\n";
+                        $out->print("\n</pre></div>\n");
 
                         # General
-                        print "<h2>Top used URI</h2>\n<div id=\"uri\"><pre>\n";
+                        $out->print(
+                            "<h2>Top used URI</h2>\n<div id=\"uri\"><pre>\n");
                         my $i = 0;
                         foreach (
                             sort { $count->{uri}->{$b} <=> $count->{uri}->{$a} }
@@ -281,24 +308,28 @@ sub run {
                             last if ( $i == $args->{top} );
                             last unless ( $count->{uri}->{$_} );
                             $i++;
-                            print sprintf( "%-80s : %6d\n",
-                                $_, $count->{uri}->{$_} );
+                            $out->print(
+                                sprintf( "%-80s : %6d\n",
+                                    $_, $count->{uri}->{$_} )
+                            );
                         }
-                        print "\n</pre></div>\n";
+                        $out->print("\n</pre></div>\n");
 
                         # Top by category
-                        print
-"<table class=\"topByCat\"><tr><th style=\"width:20%\">Code</th><th>Top</th></tr>\n";
+                        $out->print(
+"<table class=\"topByCat\"><tr><th style=\"width:20%\">Code</th><th>Top</th></tr>\n"
+                        );
                         foreach my $cat ( split /,/, $args->{categories} ) {
-                            print
-"<tr><td>$cat</td><td nowrap>\n<div id=\"$cat\">\n";
-                            topByCat( $cat, $args->{top} );
-                            print "</div>\n</td></tr>";
+                            $out->print(
+"<tr><td>$cat</td><td nowrap>\n<div id=\"$cat\">\n"
+                            );
+                            topByCat( $out, $cat, $args->{top} );
+                            $out->print("</div>\n</td></tr>");
                         }
-                        print "</table>\n";
+                        $out->print("</table>\n");
                     }
 
-                    &end;
+                    &end($out);
                 }
             }
             else {
@@ -313,7 +344,7 @@ sub run {
 # @param $d Number of minutes since start
 # @return Date in format "day hour minute"
 sub timeUp {
-    my $d  = shift;
+    my ( $out, $d ) = @_;
     my $mn = $d % 60;
     $d = ( $d - $mn ) / 60;
     my $h = $d % 24;
@@ -326,9 +357,9 @@ sub timeUp {
 # @param $cat Category to display
 # @param $max Number of lines to display
 sub topByCat {
-    my ( $cat, $max ) = @_;
+    my ( $out, $cat, $max ) = @_;
     my $i = 0;
-    print "<pre>\n";
+    $out->print("<pre>\n");
     foreach (
         sort { $status->{uri}->{$b}->{$cat} <=> $status->{uri}->{$a}->{$cat} }
         keys %{ $status->{uri} }
@@ -337,15 +368,17 @@ sub topByCat {
         last if ( $i == $max );
         last unless ( $status->{uri}->{$_}->{$cat} );
         $i++;
-        print sprintf( "%-80s : %6d\n", $_, $status->{uri}->{$_}->{$cat} );
+        $out->print(
+            sprintf( "%-80s : %6d\n", $_, $status->{uri}->{$_}->{$cat} ) );
     }
-    print "</pre>\n";
+    $out->print("</pre>\n");
 }
 
 ## @rfn private void head()
 # Display head of HTML status responses.
 sub head {
-    print <<"EOF";
+    my $out = shift;
+    $out->print( <<"EOF");
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -427,7 +460,8 @@ EOF
 ## @rfn private void end()
 # Display end of HTML status responses.
 sub end {
-    print <<"EOF";
+    my $out = shift;
+    $out->print( <<"EOF");
 <hr/>
 <div id="footer">
 <script type="text/javascript" language="Javascript">
