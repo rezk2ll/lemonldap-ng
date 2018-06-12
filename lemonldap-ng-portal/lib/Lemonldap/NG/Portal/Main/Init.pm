@@ -325,7 +325,10 @@ sub findEP {
         if ( $obj->can($sub) ) {
             $self->logger->debug(" Found $sub entry point:");
             if ( my $callback = $obj->$sub ) {
-                push @{ $self->{$sub} }, sub { $obj->$callback( $_[0] ) };
+                push @{ $self->{$sub} }, sub {
+                    eval { $obj->logger->debug("Launching ${plugin}::$callback") };
+                    $obj->$callback( $_[0] );
+                };
                 $self->logger->debug("  -> $callback");
             }
         }
