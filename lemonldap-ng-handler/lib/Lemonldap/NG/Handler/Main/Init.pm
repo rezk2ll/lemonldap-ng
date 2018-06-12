@@ -96,7 +96,7 @@ sub statusInit {
         my $perl_exec = ( $^X =~ /perl/ ) ? $^X : 'perl';
         exec $perl_exec, '-MLemonldap::NG::Handler::Lib::Status',
           map( { "-I$_" } @INC ),
-          '-e &Lemonldap::NG::Handler::Lib::Status::run()';
+          '-e', '&Lemonldap::NG::Handler::Lib::Status::run()';
     }
 }
 

@@ -155,7 +155,7 @@
     "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : $_auth eq 'OpenIDConnect' ? \"$_user\\@$_oidcConnectedRP\" : \"$_user\""
   },
   "mailUrl": "http://auth.example.com:__port__/resetpwd",
-  "notification": 1,
+  "notification": 0,
   "notificationStorage": "File",
   "notificationStorageOptions": {
     "dirName": "__pwd__/e2e-tests/conf"
