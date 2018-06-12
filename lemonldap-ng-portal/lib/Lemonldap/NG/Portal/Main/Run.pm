@@ -165,9 +165,9 @@ sub do {
 
     # Update status
     if ( my $p = $self->HANDLER->tsv->{statusPipe} ) {
-        print $p ( $req->user ? $req->user : $req->address ) . ' => '
-          . $req->uri
-          . " $err\n";
+        $p->print( ( $req->user ? $req->user : $req->address ) . ' => '
+              . $req->uri
+              . " $err\n" );
     }
 
     # Update history

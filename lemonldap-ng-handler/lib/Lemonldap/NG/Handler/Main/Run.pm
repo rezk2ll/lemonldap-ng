@@ -42,10 +42,11 @@ sub getStatus {
     my $statusOut  = $class->tsv->{statusOut};
     return $class->abort( $req, "$class: status page can not be displayed" )
       unless ( $statusPipe and $statusOut );
-    print $statusPipe "STATUS " . ( $req->{env}->{QUERY_STRING} || '' ) . "\n";
+    $statusPipe->print(
+        "STATUS " . ( $req->{env}->{QUERY_STRING} || '' ) . "\n" );
     my $buf;
 
-    while (<$statusOut>) {
+    while ( $statusOut->getline ) {
         last if (/^END$/);
         $buf .= $_;
     }
@@ -201,9 +202,8 @@ sub updateStatus {
     $user ||= $req->{env}->{REMOTE_ADDR};
     $url  ||= $req->{env}->{REQUEST_URI};
     eval {
-            print $statusPipe "$user => "
-          . $req->{env}->{HTTP_HOST}
-          . "$url $action\n";
+        $statusPipe->print(
+            "$user => " . $req->{env}->{HTTP_HOST} . "$url $action\n" );
     };
 }
 

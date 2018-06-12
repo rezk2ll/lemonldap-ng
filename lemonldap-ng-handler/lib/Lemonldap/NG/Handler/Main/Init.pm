@@ -79,8 +79,7 @@ sub statusInit {
     my $statusPipe = IO::Pipe->new;
     my $statusOut  = IO::Pipe->new;
     if ( my $pid = fork() ) {
-
-        # TODO: log new process pid
+        $class->logger->debug("Status collector launched ($pid)");
         $statusPipe->writer();
         $statusOut->reader();
         $statusPipe->autoflush(1);

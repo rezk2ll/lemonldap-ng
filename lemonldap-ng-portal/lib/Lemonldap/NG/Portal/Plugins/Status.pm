@@ -27,10 +27,10 @@ sub status {
     my ( $self, $req ) = @_;
     my $res = {};
     if ( my $p = $self->p->HANDLER->tsv->{statusPipe} ) {
-        print $p "STATUS json=1\n";
+        $p->print("STATUS json=1\n");
         my $buf;
         $p = $self->p->HANDLER->tsv->{statusOut};
-        while (<$p>) {
+        while ( $p->getline ) {
             last if (/^END$/);
             $buf .= $_;
         }
