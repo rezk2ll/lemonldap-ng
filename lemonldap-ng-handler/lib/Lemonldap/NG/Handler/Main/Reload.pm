@@ -33,7 +33,7 @@ sub onReload {
 # @return true if config is up to date or if reload config succeeded
 sub checkConf {
     my ( $class, $force ) = @_;
-    $class->logger->error("Check configuration for $class");
+    $class->logger->debug("Check configuration for $class");
     my $prm = { local => !$force, localPrm => $class->localConfig };
     my $conf = $class->confAcc->getConf($prm);
 
