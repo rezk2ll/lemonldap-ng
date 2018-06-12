@@ -223,7 +223,7 @@ sub defaultValues {
         'samlOrganizationName'                        => 'Example',
         'samlOrganizationURL'        => 'http://www.example.com',
         'samlRelayStateTimeout'      => 600,
-        'samlServiceSignatureMethod' => 'RSA_SHA256',
+        'samlServiceSignatureMethod' => 'RSA_SHA1',
         'samlSPSSODescriptorArtifactResolutionServiceArtifact' =>
 '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
         'samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact' =>
