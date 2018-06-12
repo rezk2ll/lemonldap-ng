@@ -42,8 +42,7 @@ sub init($$) {
     $class->serverSignatureInit unless ( $class->localConfig->{hideSignature} );
 
     # * launch status process
-    $class->statusInit() if ( $class->localConfig->{status} and $statusInit );
-    $statusInit = 0;
+    $class->statusInit();
     1;
 }
 
@@ -74,29 +73,52 @@ sub serverSignatureInit {
 # Launch the status process
 sub statusInit {
     my ($class) = @_;
-    return if ( $class->tsv->{statusPipe} and $class->tsv->{statusOut} );
-    require IO::Pipe;
-    my $statusPipe = IO::Pipe->new;
-    my $statusOut  = IO::Pipe->new;
-    if ( my $pid = fork() ) {
-        $class->logger->debug("Status collector launched ($pid)");
-        $statusPipe->writer();
-        $statusOut->reader();
-        $statusPipe->autoflush(1);
-        ( $class->tsv->{statusPipe}, $class->tsv->{statusOut} ) =
-          ( $statusPipe, $statusOut );
+    return unless ( $class->localConfig->{status} and $statusInit );
+    $statusInit = 0;
+    return if ( $class->tsv->{statusPipe} );
+    if ( $ENV{LLNGSTATUSHOST} ) {
+        require IO::Socket::INET;
+        $class->tsv->{statusPipe} = IO::Socket::INET->new(
+            Proto    => 'udp',
+            PeerAddr => $ENV{LLNGSTATUSHOST}
+        );
+        $class->tsv->{statusOut} = undef;
     }
     else {
-        $statusPipe->reader();
-        $statusOut->writer();
-        my $fdin  = $statusPipe->fileno;
-        my $fdout = $statusOut->fileno;
-        open STDIN,  "<&$fdin";
-        open STDOUT, ">&$fdout";
-        my $perl_exec = ( $^X =~ /perl/ ) ? $^X : 'perl';
-        exec $perl_exec, '-MLemonldap::NG::Handler::Lib::Status',
-          map( { "-I$_" } @INC ),
-          '-e', '&Lemonldap::NG::Handler::Lib::Status::run()';
+        require IO::Pipe;
+        my $statusPipe = IO::Pipe->new;
+        my $statusOut  = IO::Pipe->new;
+        if ( my $pid = fork() ) {
+            $class->logger->debug("Status collector launched ($pid)");
+            $statusPipe->writer();
+            $statusOut->reader();
+            $statusPipe->autoflush(1);
+            ( $class->tsv->{statusPipe}, $class->tsv->{statusOut} ) =
+              ( $statusPipe, $statusOut );
+        }
+        else {
+            $statusPipe->reader();
+            $statusOut->writer();
+            my $fdin  = $statusPipe->fileno;
+            my $fdout = $statusOut->fileno;
+            open STDIN,  "<&$fdin";
+            open STDOUT, ">&$fdout";
+            my $perl_exec = ( $^X =~ /perl/ ) ? $^X : 'perl';
+            exec $perl_exec, '-MLemonldap::NG::Handler::Lib::Status',
+
+              # Insert @INC in Perl path
+              map( { "-I$_" } @INC ),
+
+              # Command to launch
+              '-e', '&Lemonldap::NG::Handler::Lib::Status::run()',
+
+              # Optional arg: UDP socket to listen to
+              (
+                $ENV{LLNGSTATUSLISTEN}
+                ? ( '--', '--udp', $ENV{LLNGSTATUSLISTEN} )
+                : ()
+              );
+        }
     }
 }
 

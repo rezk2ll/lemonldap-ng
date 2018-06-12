@@ -9,6 +9,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json);
 use MIME::Base64;
+use IO::Socket::INET;
 
 our $VERSION = '2.0.0';
 
@@ -27,10 +28,25 @@ sub status {
     my ( $self, $req ) = @_;
     my $res = {};
     if ( my $p = $self->p->HANDLER->tsv->{statusPipe} ) {
-        $p->print("STATUS json=1\n");
-        my $buf;
-        $p = $self->p->HANDLER->tsv->{statusOut};
-        while ( $_ = $p->getline ) {
+        my ( $args, $buf );
+        my $out = $self->p->HANDLER->tsv->{statusOut};
+        if ( $ENV{LLNGSTATUSHOST} ) {
+            foreach ( 64322 .. 64331 ) {
+                if ( $out =
+                    IO::Socket::INET->new( Proto => 'udp', LocalPort => $_ ) )
+                {
+                    $args = " host="
+                      . ( $ENV{LLNGSTATUSCLIENT} || 'localhost' ) . ":$_";
+                    last;
+                }
+            }
+        }
+        unless ($out) {
+            return $self->p->sendError( $req, 'No status connection' );
+        }
+
+        $p->print("STATUS json=1$args\n");
+        while ( $_ = $out->getline ) {
             last if (/^END$/);
             $buf .= $_;
         }

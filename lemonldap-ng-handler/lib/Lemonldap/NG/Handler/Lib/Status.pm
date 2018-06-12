@@ -7,6 +7,7 @@ use strict;
 use POSIX qw(setuid setgid);
 use JSON qw(to_json);
 use IO::Select;
+use IO::Socket::INET;
 
 our $VERSION = '2.0.0';
 
@@ -118,6 +119,16 @@ sub run {
     my ( $lastMn, $mn, $count, $cache, @ready );
     my $sel = IO::Select->new;
     $sel->add( \*STDIN );
+    while ( my $opt = shift @ARGV ) {
+        if ( $opt eq '--udp' ) {
+            my $hp = shift @ARGV;
+            my $s = IO::Socket::INET->new( Proto => 'udp', LocalAddr => $hp );
+            $sel->add($s);
+        }
+        else {
+            die "Unknown option $opt";
+        }
+    }
     while ( @ready = $sel->can_read ) {
         foreach my $fh (@ready) {
             if ( $fh == \*STDIN and $fh->eof ) {
@@ -178,13 +189,13 @@ sub run {
           # $args contains parameters passed to url status page (a=1 for example
           # if request is http://test.example.com/status?a=1). To be used
           # later...
-            elsif (/^STATUS\s*(\S+)?$/) {
+            elsif (/^STATUS\s*(.+)?$/) {
                 my $tmp = $1;
                 my $out;
                 if ( $fh == \*STDIN ) {
                     $out = \*STDOUT;
                 }
-                elsif ( $tmp =~ /host=(\S+)$/ ) {
+                elsif ( $tmp =~ s/\s*host=(\S+)$// ) {
                     $out =
                       IO::Socket::INET->new( Proto => "udp", PeerAddr => $1 );
                     unless ($out) {

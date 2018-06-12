@@ -40,10 +40,25 @@ sub getStatus {
     $class->logger->debug("Request for status");
     my $statusPipe = $class->tsv->{statusPipe};
     my $statusOut  = $class->tsv->{statusOut};
+    my $args       = '';
+    if ( $ENV{LLNGSTATUSHOST} ) {
+        require IO::Socket::INET;
+        foreach ( 64322 .. 64331 ) {
+            if ( $statusOut =
+                IO::Socket::INET->new( Proto => 'udp', LocalPort => $_ ) )
+            {
+                $args = ' host=' . ( $ENV{LLNGSTATUSCLIENT} || 'localhost' ) . ":$_";
+                last;
+            }
+        }
+        return $class->abort( $req,
+            "$class: status page can not be displayed, unable to open socket" )
+          unless ($statusOut);
+    }
     return $class->abort( $req, "$class: status page can not be displayed" )
       unless ( $statusPipe and $statusOut );
     $statusPipe->print(
-        "STATUS " . ( $req->{env}->{QUERY_STRING} || '' ) . "\n" );
+        "STATUS " . ( $req->{env}->{QUERY_STRING} || '' ) . "$args\n" );
     my $buf;
 
     while ( $_ = $statusOut->getline ) {
