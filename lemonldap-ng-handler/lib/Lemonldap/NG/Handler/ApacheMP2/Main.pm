@@ -43,7 +43,7 @@ our $request;    # Apache2::RequestRec object for current request
 
 #*run = \&Lemonldap::NG::Handler::Main::run;
 
-$ENV{LLNGSTATUSLISTEN} ||= '127.0.0.1:64321';
+$ENV{LLNGSTATUSLISTEN} ||= 'localhost:64321';
 __PACKAGE__->init();
 
 # INTERNAL METHODS
