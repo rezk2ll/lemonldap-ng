@@ -910,6 +910,7 @@
 "samlServicePrivateKeyEnc":"Khóa cá nhân",
 "samlServicePrivateKeyEncPwd":"Khóa mật khẩu cá nhân",
 "samlServicePublicKeyEnc":"Khóa công khai",
+"samlServiceSignatureMethod":"Signature method",
 "samlServiceUseCertificateInResponse":"Sử dụng chứng chỉ trong câu trả lời",
 "samlAdvanced":"Nâng cao",
 "samlIdPResolveCookie":"Tên cookie phân giải IDP",

@@ -1441,7 +1441,7 @@ sub attributes {
                         grep { $_ =~ /Undefined subroutine/ ? () : $_ }
                           split( /\n/, $@ ) );
                     return $err ? ( 1, "__badExpression__: $err" ) : (1);
-                }
+                  }
             },
             documentation => 'Virtualhost headers',
             flags         => 'h',
@@ -1740,6 +1740,14 @@ sub attributes {
             type          => 'RSAPublicKeyOrCertificate',
             default       => '',
             documentation => 'SAML encryption public key',
+        },
+        samlServiceSignatureMethod => {
+            type   => 'select',
+            select => [
+                { k => 'RSA_SHA1',   v => 'RSA SHA1' },
+                { k => 'RSA_SHA256', v => 'RSA SHA256' },
+            ],
+            default => 'RSA_SHA256',
         },
         samlServiceUseCertificateInResponse => {
             type    => 'bool',

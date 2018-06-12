@@ -27,7 +27,7 @@ sub types {
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -662,7 +662,7 @@ sub attributes {
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -1032,7 +1032,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
 
                     BEGIN {
                         ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                     }
                     eval $s;
                     my $err = join(
@@ -1117,7 +1117,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -1140,7 +1140,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -1495,7 +1495,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
 
                     BEGIN {
                         ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                     }
                     eval $s;
                     my $err = join(
@@ -1541,7 +1541,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -1900,7 +1900,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -2237,7 +2237,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(
@@ -2822,6 +2822,20 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '',
             'type'    => 'RSAPublicKeyOrCertificate'
         },
+        'samlServiceSignatureMethod' => {
+            'default' => 'RSA_SHA256',
+            'select'  => [
+                {
+                    'k' => 'RSA_SHA1',
+                    'v' => 'RSA SHA1'
+                },
+                {
+                    'k' => 'RSA_SHA256',
+                    'v' => 'RSA SHA256'
+                }
+            ],
+            'type' => 'select'
+        },
         'samlServiceUseCertificateInResponse' => {
             'default' => 0,
             'type'    => 'bool'
@@ -2940,7 +2954,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
 
                 BEGIN {
                     ${^WARNING_BITS} =
-"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55\x05";
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 my $err = join(

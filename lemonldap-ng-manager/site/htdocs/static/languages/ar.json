@@ -910,6 +910,7 @@
 "samlServicePrivateKeyEnc":"المفتاح الخاص",
 "samlServicePrivateKeyEncPwd":"مفتاح كلمة المرور الخاصة",
 "samlServicePublicKeyEnc":"المفتاح العام",
+"samlServiceSignatureMethod":"Signature method",
 "samlServiceUseCertificateInResponse":"استخدم الشهادة الرقمية في الردود",
 "samlAdvanced":"المتقدمة",
 "samlIdPResolveCookie":"اسم ملف تعريف الارتباط IDP",

@@ -202,7 +202,7 @@ sub loadService {
     );
 
     # Signature method
-    my $method = $self->conf->{samlServiceSignatureMethod} || 'SHA1';
+    my $method = $self->conf->{samlServiceSignatureMethod} || 'RSA_SHA1';
     $server->signature_method( $self->getSignatureMethod($method) );
     $self->logger->debug("Set $method as SAML server signature method ");
 
@@ -3074,9 +3074,9 @@ sub getSignatureMethod {
     my $signature_method_none = eval 'Lasso::Constants::SIGNATURE_METHOD_NONE';
 
     return $signature_method_rsa_sha1
-      if ( $signature_method =~ /^SHA1$/i );
+      if ( $signature_method =~ /^RSA_SHA1$/i );
     return $signature_method_rsa_sha256
-      if ( $signature_method =~ /^SHA256$/i );
+      if ( $signature_method =~ /^RSA_SHA256$/i );
     return $signature_method_none;
 }
 

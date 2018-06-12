@@ -221,8 +221,9 @@ sub defaultValues {
         'samlNameIDFormatMapX509'                     => 'mail',
         'samlOrganizationDisplayName'                 => 'Example',
         'samlOrganizationName'                        => 'Example',
-        'samlOrganizationURL'   => 'http://www.example.com',
-        'samlRelayStateTimeout' => 600,
+        'samlOrganizationURL'        => 'http://www.example.com',
+        'samlRelayStateTimeout'      => 600,
+        'samlServiceSignatureMethod' => 'RSA_SHA256',
         'samlSPSSODescriptorArtifactResolutionServiceArtifact' =>
 '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
         'samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact' =>

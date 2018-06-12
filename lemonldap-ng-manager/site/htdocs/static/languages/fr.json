@@ -910,6 +910,7 @@
 "samlServicePrivateKeyEnc":"Clef privée",
 "samlServicePrivateKeyEncPwd":"Mot de passe de la clef privée",
 "samlServicePublicKeyEnc":"Clef publique",
+"samlServiceSignatureMethod":"Méthode pour la signature",
 "samlServiceUseCertificateInResponse":"Utilisation du certificat dans les réponses",
 "samlAdvanced":"Avancé",
 "samlIdPResolveCookie":"Nom du cookie de résolution IDP",
