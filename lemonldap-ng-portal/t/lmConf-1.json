@@ -66,6 +66,7 @@
     "LockDirectory": "t/sessions/saml/lock",
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
+  "samlServiceSignatureMethod":"RSA_SHA1",
   "samlStorage": "Apache::Session::File",
   "samlStorageOptions": {
     "Directory": "t/sessions/saml",
