@@ -52,7 +52,7 @@ sub run {
     my ( $self, $req, $token ) = @_;
 
     my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("checkLogins set") if ($checkLogins);
+    $self->logger->debug("U2F checkLogins set") if ($checkLogins);
 
     # Check if user is registered
     if ( my $res = $self->loadUser( $req, $req->sessionInfo ) ) {
