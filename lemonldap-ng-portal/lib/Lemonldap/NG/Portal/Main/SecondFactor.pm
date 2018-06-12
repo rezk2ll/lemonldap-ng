@@ -56,6 +56,9 @@ sub _redirect {
 
 sub _verify {
     my ( $self, $req ) = @_;
+    
+    my $checkLogins = $req->param('checkLogins');
+    $self->logger->debug("checkLogins set") if ($checkLogins);
 
     # Check token
     my $token;
