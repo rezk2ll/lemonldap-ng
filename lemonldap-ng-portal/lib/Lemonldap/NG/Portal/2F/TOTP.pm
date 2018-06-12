@@ -44,6 +44,9 @@ sub init {
 sub run {
     my ( $self, $req, $token ) = @_;
     $self->logger->debug('Generate TOTP form');
+    
+    my $checkLogins = $req->param('checkLogins');
+    $self->logger->debug("TOTP checkLogins set") if ($checkLogins);
 
     # Prepare form
     my $tmp = $self->p->sendHtml(
@@ -51,7 +54,8 @@ sub run {
         'totp2fcheck',
         params => {
             SKIN  => $self->conf->{portalSkin},
-            TOKEN => $token
+            TOKEN => $token,
+            CHECKLOGINS => $checkLogins
         }
     );
     $self->logger->debug("Prepare TOTP 2F verification");
