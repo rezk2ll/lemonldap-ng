@@ -33,7 +33,7 @@ has noRoute => ( is => 'ro' );
 sub init {
     my ($self) = @_;
     unless ( $self->noRoute ) {
-        $self->logger->debug('Adding '.$self->prefix . '2fcheck routes');
+        $self->logger->debug( 'Adding ' . $self->prefix . '2fcheck routes' );
         $self->addUnauthRoute(
             $self->prefix . '2fcheck' => '_verify',
             ['POST']
@@ -92,7 +92,7 @@ sub _verify {
     if ( my $l = $self->conf->{ $self->prefix . '2fAuthnLevel' } ) {
         $self->p->updateSession( $req, { authenticationLevel => $l } );
     }
-    return $self->p->do( $req, [ sub { PE_OK } ] );
+    return $self->p->do( $req, [ @{ $self->p->afterDatas }, sub { PE_OK } ] );
 }
 
 1;
