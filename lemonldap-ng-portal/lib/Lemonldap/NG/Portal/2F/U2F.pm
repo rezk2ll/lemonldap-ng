@@ -50,9 +50,9 @@ sub init {
 # Main method
 sub run {
     my ( $self, $req, $token ) = @_;
-    
+
     my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("checkLogins ? $checkLogins");
+    $self->logger->debug("checkLogins set") if ($checkLogins);
 
     # Check if user is registered
     if ( my $res = $self->loadUser( $req, $req->sessionInfo ) ) {
@@ -92,9 +92,9 @@ sub run {
             $req,
             'u2fcheck',
             params => {
-                SKIN  => $self->conf->{portalSkin},
-                DATA  => $data,
-                TOKEN => $token,
+                SKIN        => $self->conf->{portalSkin},
+                DATA        => $data,
+                TOKEN       => $token,
                 CHECKLOGINS => $checkLogins
             }
         );
@@ -122,7 +122,7 @@ sub verify {
 
         unless ( $session->{__ch} and $session->{__ch} eq $challenge ) {
             $self->userLogger->error(
-                "U2F challenge changes by user !!! $session->{__ch} / $challenge"
+"U2F challenge changes by user !!! $session->{__ch} / $challenge"
             );
             $req->error(PE_BADCREDENTIALS);
             return $self->fail($req);
@@ -206,8 +206,6 @@ sub loadUser {
             return PE_ERROR;
         }
         $self->logger->debug("2F Device(s) found");
-
-
 
         foreach (@$_2fDevices) {
             $self->logger->debug("Looking for registered U2F key(s) ...");
