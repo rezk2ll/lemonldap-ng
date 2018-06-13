@@ -955,8 +955,9 @@ sub run {
 
 sub artifactServer {
     my ( $self, $req ) = @_;
-    $self->logger->debug(
-        "URL $req->uri detected as an artifact resolution service URL");
+    $self->logger->debug( "URL "
+          . $req->uri
+          . " detected as an artifact resolution service URL" );
 
     # Artifact request are sent with SOAP trough POST
     my $art_request = $req->content;
@@ -1440,7 +1441,8 @@ sub sloServer {
 
         if ($session_index) {
             my $sessionIndexSession = $self->getSamlSession($session_index);
-            return PE_SAML_SESSION_ERROR unless $sessionIndexSession;
+            return $self->p->sendError( $req, 'SAML session not found', 400 )
+              unless $sessionIndexSession;
 
             $local_session_id = $sessionIndexSession->data->{_saml_id};
 
