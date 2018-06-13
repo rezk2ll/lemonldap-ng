@@ -61,14 +61,23 @@ sub run {
     my ( $self, $req, $token ) = @_;
     $self->logger->debug('Generate TOTP form');
 
-    my %tplPrms = ( SKIN => $self->conf->{portalSkin}, TOKEN => $token );
+    my $checkLogins = $req->param('checkLogins');
+    $self->logger->debug("UTOTP checkLogins set") if ($checkLogins);
+
+    my %tplPrms = (
+        SKIN        => $self->conf->{portalSkin},
+        TOKEN       => $token,
+        CHECKLOGINS => $checkLogins
+    );
 
     if ( my $res = $self->u2f->loadUser( $req, $req->sessionInfo ) ) {
         if ( $res > 0 ) {
             $self->logger->debug('U2F key is registered');
+
             # Get a challenge (from first key)
             my $data = eval {
-                from_json( $req->datas->{crypter}->[0]->authenticationChallenge );
+                from_json(
+                    $req->datas->{crypter}->[0]->authenticationChallenge );
             };
 
             if ($@) {
@@ -91,7 +100,7 @@ sub run {
                 {
                     challenge      => $data->{challenge},
                     appId          => $data->{appId},
-                    registeredKeys => \@rk
+                    registeredKeys => \@rk,
                 }
             );
             $tplPrms{DATA} = $data;

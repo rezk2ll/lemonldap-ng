@@ -28,6 +28,7 @@
    </div>
     <input type="hidden" id="verify-data" name="signature" value="">
     <input type="hidden" id="verify-challenge" name="challenge" value="">
+    <input type="hidden" id="checkLogins" name="checkLogins" value="<TMPL_VAR NAME="CHECKLOGINS">">
    <script type="application/init">
    <TMPL_VAR NAME="DATA">
    </script>
