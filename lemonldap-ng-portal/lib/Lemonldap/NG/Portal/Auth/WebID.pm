@@ -58,7 +58,7 @@ sub extractFormInfo {
 
     # 1. Verify SSL exchange
     unless ( $req->{SSL_CLIENT_S_DN} ) {
-        $self->userlogger->warn( 'No certificate found for ' . $req->address );
+        $self->userLogger->warn( 'No certificate found for ' . $req->address );
         return PE_CERTIFICATEREQUIRED;
     }
 

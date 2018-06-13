@@ -208,7 +208,7 @@ sub getNotifBack {
                     # Current pending notification has not been found in
                     # request
                     $result = $fileResult = 0;
-                    $self->logger->debulogger->debug(
+                    $self->logger->debug(
                         'Current pending notification has not been found',
                         'debug' );
                     next;
