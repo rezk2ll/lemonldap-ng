@@ -132,7 +132,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( $data->{result} == 1, 'Key is registered' )
       or explain( $data, '"result":1' );
 
-    # Try to sing-in
+    # Try to sign-in
     $client->logout($id);
     ok(
         $res = $client->_post(

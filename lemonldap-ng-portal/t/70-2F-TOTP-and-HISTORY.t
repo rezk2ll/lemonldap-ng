@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 18;
+my $maintests = 19;
 
 SKIP: {
     eval { require Convert::Base32 };

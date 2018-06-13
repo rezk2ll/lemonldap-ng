@@ -92,7 +92,7 @@ SKIP: {
       or explain( $res->[2]->[0], 'JSON content' );
     ok( $res->{result} = 1, 'Key is registered' );
 
-    # Try to sing-in
+    # Try to sign-in
     $client->logout($id);
     ok(
         $res = $client->_post(

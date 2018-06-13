@@ -222,7 +222,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( $data->{result} == 1, 'Key is registered' )
       or explain( $data, '"result":1' );
 
-    # Try to sing-in with TOTP
+    # Try to sign-in with TOTP
     $client->logout($id);
 
     ok(
