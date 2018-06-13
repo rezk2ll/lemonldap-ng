@@ -8,8 +8,21 @@ package Lemonldap::NG::Common::Session;
 
 our $VERSION = '2.0.0';
 
-use Mouse;
 use Lemonldap::NG::Common::Apache::Session;
+BEGIN {
+    require Mouse;
+    my $v = $Mouse::VERSION;
+    $v =~ s/^v//;
+    if (    $v =~ /^2\.(?:1|2|3|4)/
+        and $INC{'Lemonldap/NG/Handler/Apache2/Main.pm'} )
+    {
+        require Moose;
+        Moose->import();
+    }
+    else {
+        Mouse->import();
+    }
+}
 
 has 'id' => (
     is  => 'rw',
