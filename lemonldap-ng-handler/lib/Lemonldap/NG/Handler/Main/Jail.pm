@@ -5,6 +5,7 @@ use strict;
 use Safe;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 
+# Workaround for another ModPerl/Mouse issue...
 BEGIN {
     require Mouse;
     my $v = $Mouse::VERSION;
