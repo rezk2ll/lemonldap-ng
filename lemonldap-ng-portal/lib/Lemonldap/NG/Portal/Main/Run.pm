@@ -371,15 +371,17 @@ sub getPersistentSession {
     if ( $ps->error ) {
         $self->logger->debug( $ps->error );
     }
+    else {
 
-    # Set _session_uid if not already present
-    unless ( defined $ps->data->{_session_uid} ) {
-        $ps->update( { _session_uid => $uid } );
-    }
+        # Set _session_uid if not already present
+        unless ( defined $ps->data->{_session_uid} ) {
+            $ps->update( { _session_uid => $uid } );
+        }
 
-    # Set _utime if not already present
-    unless ( defined $ps->data->{_utime} ) {
-        $ps->update( { _utime => time } );
+        # Set _utime if not already present
+        unless ( defined $ps->data->{_utime} ) {
+            $ps->update( { _utime => time } );
+        }
     }
 
     return $ps;
