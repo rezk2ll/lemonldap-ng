@@ -74,7 +74,7 @@ sub run {
         $self->logger->debug("TOTP name : $TOTPName");
 
         unless ($code) {
-            $self->logger->userInfo('TOTP registration: empty validation form');
+            $self->userLogger->info('TOTP registration: empty validation form');
             return $self->p->sendError( $req, 'missingCode', 200 );
         }
 
