@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: lemonldap-ng
-Upstream-Contact: Xavier Guimard <x.guimard@free.fr>
+Upstream-Contact: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues
 Source: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tags?sort=updated_desc
 
 Files: *
