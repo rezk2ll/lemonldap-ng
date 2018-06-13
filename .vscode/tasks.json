@@ -6,12 +6,14 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "LANG=C make"
+            "command": "LANG=C make",
+            "problemMatcher": []
         },
         {
             "label": "test",
-            "type":"shell",
-            "command": "LANG=C make test"
+            "type": "shell",
+            "command": "LANG=C make test",
+            "problemMatcher": []
         }
     ]
 }

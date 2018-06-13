@@ -11,11 +11,8 @@
 * Real federation
 * Unify SAML/OIDC presentation in Choice
 * Read-only manager
-* Register to do
 * Brute-force detection ?
 
 * Verify securedCookie=3 (strange)
 * Calendar in notifications explorer
 * "mail" in UserDB/\*
-* verify activeTimer on/off on screen
-* Add test for #173
