@@ -1089,7 +1089,8 @@ sub soapSloServer {
 
         # Get session index
         my $sessionIndexSession = $self->getSamlSession($session_index);
-        return PE_SAML_SESSION_ERROR unless $sessionIndexSession;
+        return $self->p->sendError( $req, 'SAML session not found', 400 )
+          unless $sessionIndexSession;
 
         my $local_session_id = $sessionIndexSession->data->{_saml_id};
 
