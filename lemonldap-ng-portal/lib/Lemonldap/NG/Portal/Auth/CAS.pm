@@ -72,28 +72,6 @@ sub extractFormInfo {
     # Local URL
     my $local_url = $self->p->fullUrl($req);
 
-    # Add request state parameters
-    if ( $req->datas->{_url} ) {
-        $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
-          . build_urlencoded( url => $req->datas->{_url} );
-    }
-    if ( $self->conf->{authChoiceParam}
-        and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )
-    {
-        $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
-          . build_urlencoded( $self->conf->{authChoiceParam} => $tmp );
-    }
-
-    # Forward hidden fields
-    if ( $req->{portalHiddenFormValues}
-        and %{ $req->{portalHiddenFormValues} } )
-    {
-
-        $self->logger->debug("Add hidden values to CAS redirect URL\n");
-        $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
-          . build_urlencoded( %{ $req->{portalHiddenFormValues} } );
-    }
-
     # Catch proxy callback
     if ( $req->param('casProxy') ) {
         $self->logger->debug("CAS: Proxy callback detected");
@@ -163,13 +141,37 @@ sub extractFormInfo {
 
     $req->datas->{_casSrvCurrent} = $srv;
 
-    # Build login URL
-    my $login_url = $self->getServerLoginURL( $local_url, $srvConf );
-    $login_url .= '&renew=true'   if $srvConf->{casSrvMetaDataOptionsRenew};
-    $login_url .= '&gateway=true' if $srvConf->{casSrvMetaDataOptionsGateway};
-
     # Unless a ticket has been found, we redirect the user
     unless ($ticket) {
+
+        # Add request state parameters
+        if ( $req->datas->{_url} ) {
+            $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
+              . build_urlencoded( url => $req->datas->{_url} );
+        }
+        if ( $self->conf->{authChoiceParam}
+            and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )
+        {
+            $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
+              . build_urlencoded( $self->conf->{authChoiceParam} => $tmp );
+        }
+
+        # Forward hidden fields
+        if ( $req->{portalHiddenFormValues}
+            and %{ $req->{portalHiddenFormValues} } )
+        {
+
+            $self->logger->debug("Add hidden values to CAS redirect URL\n");
+            $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
+              . build_urlencoded( %{ $req->{portalHiddenFormValues} } );
+        }
+
+        # Build login URL
+        my $login_url = $self->getServerLoginURL( $local_url, $srvConf );
+        $login_url .= '&renew=true' if $srvConf->{casSrvMetaDataOptionsRenew};
+        $login_url .= '&gateway=true'
+          if $srvConf->{casSrvMetaDataOptionsGateway};
+
         $self->logger->debug("CAS: Redirect user to $login_url");
         $req->{urldc} = $login_url;
         $req->steps( [] );
@@ -188,6 +190,7 @@ sub extractFormInfo {
     # Ticket found, try to validate it
     $local_url =~ s/ticket=[^&]+//;
     $local_url =~ s/\?$//;
+    $local_url =~ s/\&$//;
     ( $req->{user}, $req->datas->{casAttrs} ) =
       $self->validateST( $req, $local_url, $ticket, $srvConf );
     unless ( $req->{user} ) {
