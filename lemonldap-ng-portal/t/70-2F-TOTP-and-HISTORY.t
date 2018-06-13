@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 19;
+my $maintests = 18;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -15,7 +15,7 @@ SKIP: {
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel               => 'error',
+                logLevel               => 'debug',
                 totp2fSelfRegistration => 1,
                 totp2fActivation       => 1,
                 loginHistoryEnabled    => 1,
