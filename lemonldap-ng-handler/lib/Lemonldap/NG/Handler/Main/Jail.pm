@@ -4,7 +4,21 @@ use strict;
 
 use Safe;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
-use Mouse;
+
+BEGIN {
+    require Mouse;
+    my $v = $Mouse::VERSION;
+    $v =~ s/^v//;
+    if (    $v =~ /^2\.(?:1|2|3|4)/
+        and $INC{'Lemonldap/NG/Handler/Apache2/Main.pm'} )
+    {
+        require Moose;
+        Moose->import();
+    }
+    else {
+        Mouse->import();
+    }
+}
 
 has customFunctions => ( is => 'rw', isa => 'Maybe[Str]' );
 

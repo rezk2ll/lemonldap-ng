@@ -2,7 +2,6 @@ package Lemonldap::NG::Common::Logger::Log4perl;
 
 use strict;
 use Log::Log4perl;
-use Mouse;
 
 our $VERSION = '2.0.0';
 
