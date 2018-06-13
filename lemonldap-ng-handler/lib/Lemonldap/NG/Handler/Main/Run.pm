@@ -47,7 +47,8 @@ sub getStatus {
             if ( $statusOut =
                 IO::Socket::INET->new( Proto => 'udp', LocalPort => $_ ) )
             {
-                $args = ' host=' . ( $ENV{LLNGSTATUSCLIENT} || 'localhost' ) . ":$_";
+                $args =
+                  ' host=' . ( $ENV{LLNGSTATUSCLIENT} || 'localhost' ) . ":$_";
                 last;
             }
         }
@@ -57,6 +58,11 @@ sub getStatus {
     }
     return $class->abort( $req, "$class: status page can not be displayed" )
       unless ( $statusPipe and $statusOut );
+    my $q = $req->{env}->{QUERY_STRING} || '';
+    if ( $q =~ /\s/ ) {
+        $class->logger->error("Bad characters in query");
+        return $class->FORBIDDEN;
+    }
     $statusPipe->print(
         "STATUS " . ( $req->{env}->{QUERY_STRING} || '' ) . "$args\n" );
     my $buf;
