@@ -1,4 +1,5 @@
 .gitignore
+.vstags
 node_modules
 e2e-tests/conf
 lemonldap-ng-common/MYMETA.json

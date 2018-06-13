@@ -1,0 +1,10 @@
+{
+    "perl-toolbox.syntax.exec": "llperl",
+    "perl-toolbox.syntax.path": "/home/xavier/bin/",
+    "perlSyntax.includePaths": [
+        "./lemonldap-ng-common/blib/lib",
+        "./lemonldap-ng-handler/blib/lib",
+        "./lemonldap-ng-portal/blib/lib",
+        "./lemonldap-ng-manager/blib/lib"
+    ]
+}
