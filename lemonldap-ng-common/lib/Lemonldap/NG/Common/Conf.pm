@@ -138,7 +138,7 @@ sub saveConf {
     }
 
     $msg .= "Configuration $conf->{cfgNum} stored.\n";
-    $self->setLocalConf($r)
+    $self->setLocalConf($conf)
       if ( $self->{refLocalStorage} );
     return ( $self->unlock() ? $tmp : UNKNOWN_ERROR );
 }
