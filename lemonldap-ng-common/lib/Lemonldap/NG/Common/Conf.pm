@@ -138,6 +138,8 @@ sub saveConf {
     }
 
     $msg .= "Configuration $conf->{cfgNum} stored.\n";
+    $self->setLocalConf($r)
+      if ( $self->{refLocalStorage} );
     return ( $self->unlock() ? $tmp : UNKNOWN_ERROR );
 }
 
@@ -381,10 +383,6 @@ sub getDBConf {
     my $conf = $self->load( $args->{cfgNum} );
     $msg .= "Get configuration $conf->{cfgNum}.\n"
       if ( defined $conf->{cfgNum} );
-    $self->setLocalConf($conf)
-      if (  ref($conf)
-        and $self->{refLocalStorage}
-        and not( $args->{noCache} ) );
     return $conf;
 }
 
