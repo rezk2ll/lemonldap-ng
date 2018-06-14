@@ -122,7 +122,7 @@ sub extractFormInfo {
             my $portalPath = $self->conf->{portal};
             $portalPath =~ s#^https?://[^/]+/?#/#;
 
-            $req->datas->{list}            = $self->casAppList;
+            $req->datas->{list}            = $self->srvList;
             $req->datas->{confirmRemember} = 0;
 
             $req->datas->{login} = 1;
