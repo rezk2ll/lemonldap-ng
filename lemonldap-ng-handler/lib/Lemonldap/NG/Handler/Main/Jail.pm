@@ -8,11 +8,8 @@ use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 # Workaround for another ModPerl/Mouse issue...
 BEGIN {
     require Mouse;
-    my $v = $Mouse::VERSION;
-    $v =~ s/^v//;
-    if (    $v =~ /^2\.(?:1|2|3|4)/
-        and $INC{'Lemonldap/NG/Handler/Apache2/Main.pm'} )
-    {
+    my $v = sprintf( "%d.%03d%03d", ( $Mouse::VERSION =~ /(\d+)/g ) );
+    if ( $v < 2.005001 and $Lemonldap::NG::Handler::Apache2::Main::VERSION ) {
         require Moose;
         Moose->import();
     }

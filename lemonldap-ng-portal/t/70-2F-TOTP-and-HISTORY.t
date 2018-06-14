@@ -15,12 +15,12 @@ SKIP: {
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel               => 'debug',
+                logLevel               => 'error',
                 totp2fSelfRegistration => 1,
                 totp2fActivation       => 1,
                 loginHistoryEnabled    => 1,
-                authentication      => 'Demo',
-                userDB              => 'Same',
+                authentication         => 'Demo',
+                userDB                 => 'Same',
             }
         }
     );
@@ -120,10 +120,9 @@ SKIP: {
         'Post code'
     );
 
-
     expectOK($res);
     $id = expectCookie($res);
-    
+
     ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
       or explain( $res->[2]->[0], 'trspan="noHistory"' );
     my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
