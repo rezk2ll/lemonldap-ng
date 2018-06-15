@@ -138,11 +138,6 @@ sub saveConf {
     }
 
     $msg .= "Configuration $conf->{cfgNum} stored.\n";
-    if ( $self->{refLocalStorage} ) {
-        $self->setDefault( $r, $args->{localPrm} );
-        $self->compactConf($r);
-        $self->setLocalConf($conf);
-    }
     return ( $self->unlock() ? $tmp : UNKNOWN_ERROR );
 }
 
