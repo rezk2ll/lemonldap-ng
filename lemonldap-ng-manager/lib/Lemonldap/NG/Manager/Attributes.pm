@@ -759,6 +759,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'checkStateSecret' => {
             'type' => 'text'
         },
+        'checkTime' => {
+            'default' => 600,
+            'type'    => 'int'
+        },
         'checkXSS' => {
             'default' => 1,
             'type'    => 'bool'

@@ -215,6 +215,12 @@ sub attributes {
     return {
 
         # Other
+        checkTime => {
+            type => 'int',
+            documentation =>
+              'Timeout to check new configuration in local cache',
+            default => 600,
+        },
         configStorage => {
             type          => 'text',
             documentation => 'Configuration storage',
@@ -1441,7 +1447,7 @@ sub attributes {
                         grep { $_ =~ /Undefined subroutine/ ? () : $_ }
                           split( /\n/, $@ ) );
                     return $err ? ( 1, "__badExpression__: $err" ) : (1);
-                  }
+                }
             },
             documentation => 'Virtualhost headers',
             flags         => 'h',

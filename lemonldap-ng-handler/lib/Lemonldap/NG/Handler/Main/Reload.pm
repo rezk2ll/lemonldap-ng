@@ -36,6 +36,7 @@ sub checkConf {
     $class->logger->debug("Check configuration for $class");
     my $prm = { local => !$force, localPrm => $class->localConfig };
     my $conf = $class->confAcc->getConf($prm);
+    chomp $Lemonldap::NG::Common::Conf::msg;
 
     unless ( ref($conf) ) {
         $class->logger->error(
@@ -57,7 +58,6 @@ sub checkConf {
     }
     if ( $force or !$class->cfgNum or $class->cfgNum != $conf->{cfgNum} ) {
         $class->logger->debug("Get configuration $conf->{cfgNum}");
-        $class->lastCheck( time() );
         unless ( $class->cfgNum( $conf->{cfgNum} ) ) {
             $class->logger->error('No configuration available');
             return 0;
@@ -76,6 +76,8 @@ sub checkConf {
             }
         }
     }
+    $class->tsv->{checkTime} = $conf->{checkTime} if ( $conf->{checkTime} );
+    $class->lastCheck( time() );
     $class->logger->debug("$class: configuration is up to date");
     return 1;
 }

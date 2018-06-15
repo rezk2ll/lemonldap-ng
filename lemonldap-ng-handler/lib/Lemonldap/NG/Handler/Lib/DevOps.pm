@@ -19,8 +19,12 @@ sub grant {
     my ( $class, $req, $session, $uri, $cond, $vhost ) = @_;
     $vhost ||= $class->resolveAlias($req);
     $class->tsv->{lastVhostUpdate} //= {};
-    unless ( $class->tsv->{defaultCondition}->{$vhost}
-        and ( time() - $class->tsv->{lastVhostUpdate}->{$vhost} < 600 ) )
+    unless (
+        $class->tsv->{defaultCondition}->{$vhost}
+        and (
+            time() - $class->tsv->{lastVhostUpdate}->{$vhost} <
+            $class->tsv->{checkTime} )
+      )
     {
         $class->loadVhostConfig( $req, $vhost );
     }

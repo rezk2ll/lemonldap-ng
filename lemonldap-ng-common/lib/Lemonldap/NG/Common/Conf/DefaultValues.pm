@@ -24,6 +24,7 @@ sub defaultValues {
         'captcha_size'                => 6,
         'casAccessControlPolicy'      => 'none',
         'casAuthnLevel'               => 1,
+        'checkTime'                   => 600,
         'checkXSS'                    => 1,
         'confirmFormMethod'           => 'post',
         'cookieName'                  => 'lemonldap',
