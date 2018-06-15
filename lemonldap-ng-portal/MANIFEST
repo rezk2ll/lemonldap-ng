@@ -434,10 +434,14 @@ t/66-CDA-already-auth.t
 t/66-CDA-with-REST.t
 t/66-CDA-with-SOAP.t
 t/66-CDA.t
+t/70-2F-TOTP-with-HISTORY.t
 t/70-2F-TOTP.t
+t/71-2F-U2F-with-HISTORY.t
 t/71-2F-U2F.t
 t/72-2F-REST.t
+t/73-2F-UTOTP-TOTP-and-U2F-with-HISTORY.t
 t/73-2F-UTOTP-TOTP-and-U2F.t
+t/73-2F-UTOTP-TOTP-only-with-HISTORY.t
 t/73-2F-UTOTP-TOTP-only.t
 t/90-Translations.t
 t/99-pod.t
