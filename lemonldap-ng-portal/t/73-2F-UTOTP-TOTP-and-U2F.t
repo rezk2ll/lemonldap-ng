@@ -276,7 +276,8 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
 
     # Build U2F signature
     $r =
-      $tester->sign( $data->{appId}, $data->{challenge}, $data->{registeredKeys}->[0]->{keyHandle} );
+      $tester->sign( $data->{appId}, $data->{challenge},
+        $data->{registeredKeys}->[0]->{keyHandle} );
     ok( $r->is_success, ' Good challenge value' ) or diag( $r->error_message );
     my $sign = JSON::to_json(
         {

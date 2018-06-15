@@ -147,7 +147,8 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
         'Auth query'
     );
-    ( $host, $url, $query ) = expectForm( $res, undef, '/u2fcheck', 'token', 'checkLogins' );
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, '/u2fcheck', 'token', 'checkLogins' );
 
     # Get challenge
     ok( $res->[2]->[0] =~ /^.*"keyHandle".*$/m, ' get keyHandle' );
@@ -184,27 +185,24 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
         'Push U2F signature'
     );
-    
-    expectOK($res);
 
-    
+    expectOK($res);
 
     # See https://github.com/mschout/perl-authen-u2f-tester/issues/2
     if ( $Authen::U2F::Tester::VERSION >= 0.03 ) {
-		    $id = expectCookie($res);
-		ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
-			or explain( $res->[2]->[0], 'trspan="noHistory"' );
-		my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
-		ok( @c == 1, 'One entry found' );
-		$client->logout($id);
+        $id = expectCookie($res);
+        ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
+          or explain( $res->[2]->[0], 'trspan="noHistory"' );
+        my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
+        ok( @c == 1, 'One entry found' );
+        $client->logout($id);
     }
     else {
         count(1);
         pass(
 'Authen::2F::Tester-0.02 signatures are not recognized by Yubico library'
         );
-    };
-
+    }
 
 }
 count($maintests);

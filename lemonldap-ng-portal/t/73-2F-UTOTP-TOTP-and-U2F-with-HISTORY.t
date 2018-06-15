@@ -256,7 +256,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     );
     expectOK($res);
     $id = expectCookie($res);
-    
+
     ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
       or explain( $res->[2]->[0], 'trspan="noHistory"' );
     my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
@@ -286,7 +286,8 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
 
     # Build U2F signature
     $r =
-      $tester->sign( $data->{appId}, $data->{challenge}, $data->{registeredKeys}->[0]->{keyHandle} );
+      $tester->sign( $data->{appId}, $data->{challenge},
+        $data->{registeredKeys}->[0]->{keyHandle} );
     ok( $r->is_success, ' Good challenge value' ) or diag( $r->error_message );
     my $sign = JSON::to_json(
         {
@@ -310,17 +311,17 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
         'Push U2F signature'
     );
-    
+
     expectOK($res);
 
     # See https://github.com/mschout/perl-authen-u2f-tester/issues/2
     if ( $Authen::U2F::Tester::VERSION >= 0.03 ) {
-		$id = expectCookie($res);
-		ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
-			or explain( $res->[2]->[0], 'trspan="noHistory"' );
-		my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
-		ok( @c == 1, 'One entry found' );
-		$client->logout($id);
+        $id = expectCookie($res);
+        ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
+          or explain( $res->[2]->[0], 'trspan="noHistory"' );
+        my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
+        ok( @c == 1, 'One entry found' );
+        $client->logout($id);
     }
     else {
         count(1);

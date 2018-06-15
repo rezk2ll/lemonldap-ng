@@ -19,8 +19,8 @@ SKIP: {
                 utotp2fActivation      => 1,
                 totp2fSelfRegistration => 1,
                 loginHistoryEnabled    => 1,
-                authentication      => 'Demo',
-                userDB              => 'Same',
+                authentication         => 'Demo',
+                userDB                 => 'Same',
             }
         }
     );
@@ -115,19 +115,19 @@ SKIP: {
         $res = $client->_post(
             '/utotp2fcheck', IO::String->new($query),
             length => length($query),
-            accept => 'text/html',      
+            accept => 'text/html',
         ),
         'Post code'
     );
-    
+
     expectOK($res);
     $id = expectCookie($res);
-    
+
     ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
       or explain( $res->[2]->[0], 'trspan="noHistory"' );
     my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
     ok( @c == 1, 'One entry found' );
-    
+
     $client->logout($id);
 }
 count($maintests);
