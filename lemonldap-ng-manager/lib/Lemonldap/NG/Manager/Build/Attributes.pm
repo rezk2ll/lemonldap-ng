@@ -220,6 +220,7 @@ sub attributes {
             documentation =>
               'Timeout to check new configuration in local cache',
             default => 600,
+            flags         => 'hp',
         },
         configStorage => {
             type          => 'text',
