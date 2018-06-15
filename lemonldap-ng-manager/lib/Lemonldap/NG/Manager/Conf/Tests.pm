@@ -38,6 +38,14 @@ sub tests {
             );
         },
 
+        # Check if portal URL is well formated
+
+        portalURL => sub {
+            $conf->{portal} .= '/'
+              unless ( $conf->{portal} =~ /^.*\/$/ );
+            return 1;
+        },
+
         # Check if virtual hosts are in the domain
         vhostInDomainOrCDA => sub {
             return 1 if ( $conf->{cda} );
