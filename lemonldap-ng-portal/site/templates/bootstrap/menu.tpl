@@ -53,8 +53,7 @@
           </TMPL_IF>
           <TMPL_IF NAME="OidcConsents">
             <li><a href="#oidcConsents"><span>
-              <!-- TODO: change logo -->
-              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/calendar.png" width="16" height="16" alt="login history" />
+              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/oidc.png" width="16" height="16" alt="login history" />
               <span trspan="oidcConsents">OIDC Consent</span>
             </span></a></li>
           </TMPL_IF>

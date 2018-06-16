@@ -19,7 +19,7 @@ has menuModules => (
     builder => sub {
         my $conf = $_[0]->{conf};
         my @res;
-        foreach (qw(Appslist ChangePassword LoginHistory Logout OidcConsents)) {
+        foreach (qw(Appslist ChangePassword LoginHistory OidcConsents Logout)) {
             my $cond = $conf->{"portalDisplay$_"} // 1;
             $_[0]->p->logger->debug("Evaluate condition $cond for module $_");
             my $tmp =
