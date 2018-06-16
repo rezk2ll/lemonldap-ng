@@ -487,7 +487,7 @@ sub mkOidcConsent {
 
     if ( $self->conf->{oidcRPMetaDataOptions} ) {
         foreach my $oidc ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
-            $self->conf->{oidcRPMetaDataOptions}->{$oidc}->{oidcRPMetaDataOptionsDisplayName} = $oidc;
+            $self->conf->{oidcRPMetaDataOptions}->{$oidc}->{oidcRPMetaDataOptionsDisplayName} ||= $oidc;
         }
     }
 
