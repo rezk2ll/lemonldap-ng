@@ -166,3 +166,7 @@ div.oidc_consent_message > ul {
 .link {
   cursor: pointer;
 }
+
+.nodecor:hover, .nodecor:active.nodecor:focus {
+  text-decoration: none;
+}

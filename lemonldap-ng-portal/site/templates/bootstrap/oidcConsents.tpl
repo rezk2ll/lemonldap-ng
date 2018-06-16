@@ -8,7 +8,7 @@
   <TMPL_LOOP NAME="partners">
    <tr partner="<TMPL_VAR NAME="name">">
     <td><TMPL_VAR NAME="displayName">
-     <a partner="<TMPL_VAR NAME="name">" class="oidcConsent link text-danger glyphicon glyphicon-minus-sign"></a>
+     <a partner="<TMPL_VAR NAME="name">" class="oidcConsent link nodecor text-danger glyphicon glyphicon-minus-sign"></a>
     </td>
    </tr>
   </TMPL_LOOP>
