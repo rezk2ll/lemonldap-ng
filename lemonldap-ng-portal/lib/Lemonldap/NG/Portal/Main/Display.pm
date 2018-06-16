@@ -484,6 +484,13 @@ sub mkSessionArray {
 
 sub mkOidcConsent {
     my ( $self, $session ) = @_;
+
+    if ( $self->conf->{oidcRPMetaDataOptions} ) {
+        foreach my $oidc ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
+            $self->conf->{oidcRPMetaDataOptions}->{$oidc}->{oidcRPMetaDataOptionsDisplayName} = $oidc;
+        }
+    }
+
     return $self->loadTemplate(
         'oidcConsents',
         params => {
