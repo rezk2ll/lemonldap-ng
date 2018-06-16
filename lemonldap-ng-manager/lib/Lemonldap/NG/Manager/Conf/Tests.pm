@@ -41,8 +41,15 @@ sub tests {
         # Check if portal URL is well formated
 
         portalURL => sub {
+
+            # Checking for ending slash
             $conf->{portal} .= '/'
-              unless ( $conf->{portal} =~ /^.*\/$/ );
+              unless ( $conf->{portal} =~ qr#/$# );
+
+            # Deleting trailing ending slash
+            my $regex = qr#/+$#;
+            $conf->{portal} =~ s/$regex/\//;
+
             return 1;
         },
 
