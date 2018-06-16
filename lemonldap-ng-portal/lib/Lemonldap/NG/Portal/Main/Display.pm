@@ -494,8 +494,7 @@ sub mkOidcConsent {
                       ? {
                         name => $_,
                         displayName =>
-                          $self->conf->{oidcRPMetaDataOptions}->{$_}
-                          ->{oidcRPMetaDataOptionsDisplayName},
+                          $self->conf->{oidcRPMetaDataOptions}->{$_}->{oidcRPMetaDataOptionsDisplayName},
                       }
                       : ()
                 } ( split /,/, $session->{_oidcConnectedRP} )
