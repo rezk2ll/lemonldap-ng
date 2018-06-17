@@ -4,7 +4,7 @@
      - apt-get update && apt-get -y dist-upgrade
      - ci-build-pkg
   artifacts:
-    expire_in: 1 day
+    expire_in: 1 hour
     paths:
       - result/*
 
