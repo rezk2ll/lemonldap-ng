@@ -83,11 +83,15 @@ sub checkChoice {
       || $req->sessionInfo->{_choice}
       || $req->param( $self->conf->{authChoiceParam} )
       or return 0;
-    return $name if ( $req->datas->{ "enabledMods" . $self->type } );
     unless ( defined $self->modules->{$name} ) {
         $self->logger->error("Unknown choice '$name'");
         return 0;
     }
+
+    # Store choice if module loops
+    $self->p->setHiddenFormValue( $req, $self->conf->{authChoiceParam},
+        $name, '', 0 );
+    return $name if ( $req->datas->{ "enabledMods" . $self->type } );
     $req->sessionInfo->{_choice} = $name;
     $req->datas->{ "enabledMods" . $self->type } = [ $self->modules->{$name} ];
     $self->p->_authentication->authnLevel("${name}AuthnLevel");
