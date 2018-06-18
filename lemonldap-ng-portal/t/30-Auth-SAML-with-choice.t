@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 11;
+my $maintests = 12;
 my $debug     = 'error';
 my %handlerOR = ( issuer => [], sp => [] );
 
