@@ -118,15 +118,14 @@ SKIP: {
         ),
         'Post SAML response to SP'
     );
-    #print STDERR Dumper($res);
 
     # Verify authentication on SP
-    #expectRedirection( $res, 'http://auth.sp.com' );
-    #my $spId = expectCookie($res);
+    expectRedirection( $res, 'http://auth.sp.com' );
+    my $spId = expectCookie($res);
 
-    #ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
-    #expectOK($res);
-    #expectAuthenticatedAs( $res, 'fa@badwolf.org@idp' );
+    ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
+    expectOK($res);
+    expectAuthenticatedAs( $res, 'fa@badwolf.org@idp' );
 }
 
 # TODO

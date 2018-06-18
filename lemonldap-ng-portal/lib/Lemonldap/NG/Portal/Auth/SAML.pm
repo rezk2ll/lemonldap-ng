@@ -30,6 +30,7 @@ extends 'Lemonldap::NG::Portal::Main::Auth', 'Lemonldap::NG::Portal::Lib::SAML';
 has sloAssConsumerRe => ( is => 'rw' );
 has sloRe            => ( is => 'rw' );
 has artRe            => ( is => 'rw' );
+has catch            => ( is => 'rw' );
 
 sub forAuthUser { 'handleAuthRequests' }
 
@@ -68,6 +69,7 @@ qr/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_u
     my $saml_ars_url = $self->getMetaDataURL(
         "samlSPSSODescriptorArtifactResolutionServiceArtifact");
     $self->artRe(qr/^($saml_ars_url)(?:\?.*)?$/i);
+    $self->catch($self->sloAssConsumerRe);
 
     # Load SAML service and SAML IdP list
     return ( $self->SUPER::init and $self->loadIDPs );

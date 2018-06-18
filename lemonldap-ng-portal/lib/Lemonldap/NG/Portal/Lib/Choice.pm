@@ -14,6 +14,8 @@ has rules => ( is => 'rw', default => sub { {} } );
 
 has type => ( is => 'rw' );
 
+has catch => ( is => 'rw', default => sub { {} } );
+
 my $_choiceRules;
 
 # INITIALIZATION
@@ -52,6 +54,13 @@ sub init {
             $self->error('');
         }
 
+        # Test if auth module wants to catch some path
+        unless ($type) {
+            if ( $module->can('catch') ) {
+                $self->catch->{$name} = $module->catch;
+            }
+        }
+
         # Display conditions
         my $safe = Safe->new;
         my $cond = $mods[4];
@@ -78,7 +87,14 @@ sub init {
 
 sub checkChoice {
     my ( $self, $req ) = @_;
-    my $name =
+    my $name;
+    foreach ( keys %{ $self->catch } ) {
+        if ( $req->path_info =~ $self->catch->{$_} ) {
+            $name = $_;
+            last;
+        }
+    }
+    $name ||=
          $req->userData->{_choice}
       || $req->sessionInfo->{_choice}
       || $req->param( $self->conf->{authChoiceParam} )
