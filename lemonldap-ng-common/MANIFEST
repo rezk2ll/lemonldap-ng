@@ -20,6 +20,7 @@ lib/Lemonldap/NG/Common/Conf/Backends/DBI.pm
 lib/Lemonldap/NG/Common/Conf/Backends/File.pm
 lib/Lemonldap/NG/Common/Conf/Backends/JSONFile.pm
 lib/Lemonldap/NG/Common/Conf/Backends/LDAP.pm
+lib/Lemonldap/NG/Common/Conf/Backends/Local.pm
 lib/Lemonldap/NG/Common/Conf/Backends/MongoDB.pm
 lib/Lemonldap/NG/Common/Conf/Backends/RDBI.pm
 lib/Lemonldap/NG/Common/Conf/Backends/REST.pm
