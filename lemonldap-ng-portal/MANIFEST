@@ -227,6 +227,7 @@ site/htdocs/static/common/icons/arrow_refresh.png
 site/htdocs/static/common/icons/calendar.png
 site/htdocs/static/common/icons/door_out.png
 site/htdocs/static/common/icons/key.png
+site/htdocs/static/common/icons/oidc.png
 site/htdocs/static/common/icons/ok.png
 site/htdocs/static/common/icons/vcard_edit.png
 site/htdocs/static/common/icons/warning.png
@@ -375,6 +376,7 @@ t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-POST.t
 t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Redirect.t
+t/30-Auth-SAML-with-choice.t
 t/30-SAML-ReAuth-with-choice.t
 t/30-SAML-ReAuth.t
 t/30-SAML-SP-rule.t
