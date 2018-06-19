@@ -418,6 +418,7 @@ sub mydump {
     my ( $obj, $subname ) = @_;
     my $t = Dumper($obj);
     $t =~ s/^\s*(?:use strict;|package .*?;|)\n//gm;
+    $t =~ s/\n\s*BEGIN.*?\}\n/\n/sg;
     $t =~ s/^\$VAR1\s*=/sub $subname {\n    return/;
     return $t;
 }
