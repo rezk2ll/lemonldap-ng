@@ -257,11 +257,13 @@ sub sp {
                     idp => {
                         casSrvMetaDataOptionsUrl => 'http://auth.idp.com/cas',
                         casSrvMetaDataOptionsGateway         => 0,
-                        casSrvMetaDataOptionsProxiedServices => {
-                            test => 'http://test.sp.com/',
-                        },
                     }
                 },
+                casSrvMetaDataOptionsProxiedServices => {
+                    idp => {
+                            test => 'http://test.sp.com/',
+                    }
+               },
             },
         }
     );

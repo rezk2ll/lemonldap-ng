@@ -222,12 +222,12 @@ sub cTrees {
                     'casSrvMetaDataOptionsUrl',
                     'casSrvMetaDataOptionsRenew',
                     'casSrvMetaDataOptionsGateway',
-                    'casSrvMetaDataOptionsProxiedServices',
                     'casSrvMetaDataOptionsDisplayName',
                     'casSrvMetaDataOptionsIcon',
                 ]
             },
             'casSrvMetaDataExportedVars',
+            'casSrvMetaDataOptionsProxiedServices',
         ],
         casAppMetaDataNode => [
             {

@@ -76,12 +76,6 @@ function templates(tpl,key) {
             "type" : "bool"
          },
          {
-            "cnodes" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsProxiedServices",
-            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsProxiedServices",
-            "title" : "casSrvMetaDataOptionsProxiedServices",
-            "type" : "keyTextContainer"
-         },
-         {
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsDisplayName",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsDisplayName",
             "title" : "casSrvMetaDataOptionsDisplayName"
@@ -119,6 +113,12 @@ function templates(tpl,key) {
       ],
       "id" : tpl+"s/"+key+"/"+"casSrvMetaDataExportedVars",
       "title" : "casSrvMetaDataExportedVars",
+      "type" : "keyTextContainer"
+   },
+   {
+      "cnodes" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsProxiedServices",
+      "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsProxiedServices",
+      "title" : "casSrvMetaDataOptionsProxiedServices",
       "type" : "keyTextContainer"
    }
 ]

@@ -187,12 +187,15 @@ sub extractFormInfo {
 
     $self->logger->debug("CAS: Service Ticket received: $ticket");
 
+    my $proxied =
+      $self->conf->{casSrvMetaDataOptionsProxiedServices}->{$srv} || {};
+
     # Ticket found, try to validate it
     $local_url =~ s/ticket=[^&]+//;
     $local_url =~ s/\?$//;
     $local_url =~ s/\&$//;
     ( $req->{user}, $req->datas->{casAttrs} ) =
-      $self->validateST( $req, $local_url, $ticket, $srvConf );
+      $self->validateST( $req, $local_url, $ticket, $srvConf, $proxied );
     unless ( $req->{user} ) {
         $self->userLogger->error("CAS: Unable to validate ST $ticket");
         return PE_ERROR;
@@ -202,8 +205,6 @@ sub extractFormInfo {
     }
 
     # Request proxy tickets for proxied services
-    my $proxied =
-      $srvConf->{casSrvMetaDataOptionsProxiedServices}->{$srv} || {};
     if (%$proxied) {
 
         # Check we received a PGT
@@ -218,7 +219,7 @@ sub extractFormInfo {
         # Get a proxy ticket for each proxied service
         foreach ( keys %$proxied ) {
             my $service = $proxied->{$_};
-            my $pt = $self->retrievePT( $service, $srvConf );
+            my $pt = $self->retrievePT( $service, $pgtId, $srvConf );
 
             unless ($pt) {
                 $self->logger->error(

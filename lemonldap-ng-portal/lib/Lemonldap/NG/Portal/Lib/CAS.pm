@@ -334,12 +334,10 @@ sub getServerLogoutURL {
 
 # Validate ST
 sub validateST {
-    my ( $self, $req, $service, $ticket, $srvConf ) = @_;
-    my $proxyUrl;
+    my ( $self, $req, $service, $ticket, $srvConf, $proxied ) = @_;
 
     my %prm = ( service => $service, ticket => $ticket );
 
-    my $proxied = $srvConf->{casSrvMetaDataOptionsProxiedServices} || {};
     my $proxy_url;
     if (%$proxied) {
         $proxy_url = $self->p->fullUrl($req);
@@ -358,9 +356,13 @@ sub validateST {
         $prm{pgtUrl} = $proxy_url;
     }
 
-    my $response =
-      $self->ua->get( "$srvConf->{casSrvMetaDataOptionsUrl}/serviceValidate?"
-          . build_urlencoded(%prm) );
+    my $serviceValidateUrl =
+      "$srvConf->{casSrvMetaDataOptionsUrl}/serviceValidate?"
+      . build_urlencoded(%prm);
+
+    $self->logger->debug("Validate ST on CAS URL $serviceValidateUrl");
+
+    my $response = $self->ua->get($serviceValidateUrl);
 
     $self->logger->debug(
         "Get CAS serviceValidate response: " . $response->as_string );
@@ -442,10 +444,10 @@ sub storePGT {
 
 # Retrieve Proxy Ticket
 sub retrievePT {
-    my ( $self, $service, $srvConf ) = @_;
+    my ( $self, $service, $pgtId, $srvConf ) = @_;
 
     my $proxyUrl = "$srvConf->{casSrvMetaDataOptionsUrl}/proxy?"
-      . build_urlencoded( targetService => $service, pgt => $self->{pgtId} );
+      . build_urlencoded( targetService => $service, pgt => $pgtId );
 
     my $response = $self->ua->get($proxyUrl);
 
