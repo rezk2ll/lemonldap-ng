@@ -487,7 +487,21 @@ sub mkOidcConsent {
 
     if ( $self->conf->{oidcRPMetaDataOptions} ) {
         foreach my $oidc ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
-            $self->conf->{oidcRPMetaDataOptions}->{$oidc}->{oidcRPMetaDataOptionsDisplayName} ||= $oidc;
+            $self->conf->{oidcRPMetaDataOptions}->{$oidc}
+              ->{oidcRPMetaDataOptionsDisplayName} ||= $oidc;
+        }
+    }
+
+    my $consents = {};
+
+    foreach ( keys %$session ) {
+        if ( $_ =~ /_oidc_consent_time_(.+)$/ ) {
+            $consents->{$1}->{time} = $session->{ "_oidc_consent_time_" . $1 };
+            $consents->{$1}->{scope} =
+              $session->{ "_oidc_consent_scope_" . $1 };
+            $consents->{$1}->{displayName} =
+              $self->conf->{oidcRPMetaDataOptions}->{$1}
+              ->{oidcRPMetaDataOptionsDisplayName};
         }
     }
 
@@ -496,17 +510,15 @@ sub mkOidcConsent {
         params => {
             partners => [
                 map {
-                          $self->conf->{oidcRPMetaDataOptions}
-                      and $self->conf->{oidcRPMetaDataOptions}->{$_}
-                      ? {
-                        name => $_,
-                        displayName =>
-                          $self->conf->{oidcRPMetaDataOptions}->{$_}->{oidcRPMetaDataOptionsDisplayName},
-                      }
-                      : ()
-                } ( split /,/, $session->{_oidcConnectedRP} )
+                    {
+                        name        => $_,
+                        time        => $consents->{$_}->{time},
+                        scope       => $consents->{$_}->{scope},
+                        displayName => $consents->{$_}->{displayName}
+                    }
+                } ( sort keys %$consents )
             ],
-            consents => $session->{_oidcConnectedRP},
+            consents => join( ",", keys %$consents ),
         }
     );
 }
