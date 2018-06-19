@@ -193,6 +193,7 @@
 "resentConfirm":"Vuoi inviare di nuovo la mail di conferma?",
 "resetPwd":"Reimpostare la password",
 "rightsReloadNeedsLogout": "Le ricariche dei diritti necessitano di disconnettersi e di riconnettersi",
+"scope": "Scope",
 "selectIdP":"Seleziona il tuo provider di identità",
 "service":"Service",
 "sendPwd":"Inviami una nuova password",

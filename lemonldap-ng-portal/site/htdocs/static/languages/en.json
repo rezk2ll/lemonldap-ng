@@ -193,6 +193,7 @@
 "resentConfirm":"Do you want the confirmation mail to be resent?",
 "resetPwd":"Reset my password",
 "rightsReloadNeedsLogout": "Rights reloads need to logout and login again",
+"scope": "Scope",
 "selectIdP":"Select your Identity Provider",
 "service":"Service",
 "sendPwd":"Send me a new password",

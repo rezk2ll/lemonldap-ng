@@ -193,6 +193,7 @@
 "resentConfirm":"Bạn có muốn gửi lại thư xác nhận không?",
 "resetPwd":"Đặt lại mật khẩu của tôi",
 "rightsReloadNeedsLogout": "Tải lại quyền cần đăng xuất và đăng nhập lại",
+"scope": "Scope",
 "selectIdP":"Chọn bộ cung cấp danh tính của bạn",
 "service":"Service",
 "sendPwd":"Gửi cho tôi một mật khẩu mới",
