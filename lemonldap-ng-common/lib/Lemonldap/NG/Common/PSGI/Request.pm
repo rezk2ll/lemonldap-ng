@@ -30,6 +30,7 @@ sub new {
     if ( my $tmp = $self->script_name ) {
         $self->env->{PATH_INFO} =~ s|^$tmp|/|;
     }
+    $self->env->{PATH_INFO} ||= '/';
     $self->{uri} = uri_unescape( $self->env->{REQUEST_URI} );
     $self->{uri} =~ s|//+|/|g;
     $self->{datas}       = {};
