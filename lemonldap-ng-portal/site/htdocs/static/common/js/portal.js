@@ -76,7 +76,7 @@ LemonLDAP::NG Portal jQuery scripts
 
   removeOidcConsent = function(partner) {
     var r;
-    r = new RegExp("\b" + partner + "\b,?");
+    r = new RegExp("\b" + partner + "\b,?", 'g');
     datas['oidcConsents'] = datas['oidcConsents'].replace(r, '').replace(/,$/, '');
     return setKey('_oidcConnectedRP', datas['oidcConsents'], function() {
       return $("[partner='" + partner + "']").hide();

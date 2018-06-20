@@ -60,7 +60,7 @@ setOrder = ->
 
 # Function used to remove an OIDC consent
 removeOidcConsent = (partner) ->
-	r = new RegExp "\b#{partner}\b,?"
+	r = new RegExp "\b#{partner}\b,?", 'g'
 	datas['oidcConsents'] = datas['oidcConsents'].replace(r,'').replace(/,$/,'')
 	setKey '_oidcConnectedRP', datas['oidcConsents']
 		# Success
