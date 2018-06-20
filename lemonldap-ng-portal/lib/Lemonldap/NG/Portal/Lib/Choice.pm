@@ -16,6 +16,8 @@ has type => ( is => 'rw' );
 
 has catch => ( is => 'rw', default => sub { {} } );
 
+has sessionKey => ( is => 'ro', default => '_choice' );
+
 my $_choiceRules;
 
 # INITIALIZATION

@@ -38,7 +38,7 @@ foreach (qw(home menuCat menuApp authParamsTextContainer)) {
 foreach my $type ( keys %types ) {
     delete $types{$type};
     if ( $type =~
-/^(?:authParamsText|url|PerlModule|hostname|pcre|lmAttrOrMacro|subContainer|RSAP(?:ublic|rivate)Key(?:OrCertificate)?)$/
+/^(?:array|authParamsText|url|PerlModule|hostname|pcre|lmAttrOrMacro|subContainer|RSAP(?:ublic|rivate)Key(?:OrCertificate)?)$/
       )
     {
         delete $forms{$type};

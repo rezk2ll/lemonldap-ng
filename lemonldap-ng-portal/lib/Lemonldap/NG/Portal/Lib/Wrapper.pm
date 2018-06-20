@@ -29,17 +29,36 @@ sub beforeLogout        { '_beforeLogout' }
 
 sub _betweenAuthAndDatas { _wrapEntryPoint( @_, 'betweenAuthAndDatas' ); }
 sub _afterDatas          { _wrapEntryPoint( @_, 'afterDatas' ); }
-sub _forAuthUser         { _wrapEntryPoint( @_, 'forAuthUser' ); }
-sub _beforeLogout        { _wrapEntryPoint( @_, 'beforeLogout' ); }
+sub _forAuthUser         { _wrapEntryPoint( @_, 'forAuthUser', 1 ); }
+sub _beforeLogout        { _wrapEntryPoint( @_, 'beforeLogout', 1 ); }
 
 sub _wrapEntryPoint {
-    my ( $self, $req, $name ) = @_;
-    foreach ( @{ $req->datas->{enabledMods} } ) {
+    my ( $self, $req, $name, $connected ) = @_;
+    my @t;
+    if ($connected) {
+        if ( my $mod = $req->userData->{ $self->sessionKey } ) {
+            if ( $self->modules->{$mod} ) {
+                @t = ( $self->modules->{$mod} );
+            }
+            else {
+                $self->userLogger->error(
+                    "Bad $self->{sessionKey} value in session ($name)");
+            }
+        }
+        else {
+            $self->userLogger->warn(
+                "Missing $self->{sessionKey} key in session");
+        }
+    }
+    else {
+        @t = @{ $req->datas->{ "enabledMods" . $self->type } };
+    }
+    foreach (@t) {
         if ( $_->can($name) ) {
 
             # Launch sub and break loop if result isn't PE_OK (==0)
-            if ( my $r = $_->$name($req) ) {
-                return $r;
+            if ( my $sub = $_->$name() ) {
+                return $_->$sub($req);
             }
         }
     }
@@ -50,7 +69,7 @@ sub _wrapEntryPoint {
 # entry points since they will be launched by ^ methods
 sub loadPlugin {
     my ( $self, $name, $module ) = @_;
-    my $obj = $self->p->can('loadModule')->( $self, $module );
+    my $obj = $self->p->can('loadModule')->( $self->p, $module );
     ( $obj and $obj->init ) or return 0;
     return $obj;
 }
