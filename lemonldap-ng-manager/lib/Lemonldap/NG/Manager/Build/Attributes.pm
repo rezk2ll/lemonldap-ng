@@ -208,6 +208,9 @@ sub types {
         samlService => {
             test => sub { 1 }
         },
+        array => {
+            test => sub { 1 }
+        },
     };
 }
 
@@ -220,7 +223,13 @@ sub attributes {
             documentation =>
               'Timeout to check new configuration in local cache',
             default => 600,
-            flags         => 'hp',
+            flags   => 'hp',
+        },
+        mySessionAuthorizedRWKeys => {
+            type          => 'array',
+            documentation => 'Alterable session keys by user itself',
+            default =>
+              [ '_appsListOrder', '_oidcConnectedRP', '_oidc_consent_*' ],
         },
         configStorage => {
             type          => 'text',

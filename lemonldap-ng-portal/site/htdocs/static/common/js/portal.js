@@ -5,7 +5,7 @@ LemonLDAP::NG Portal jQuery scripts
  */
 
 (function() {
-  var datas, getCookie, getValues, isHiddenFormValueSet, ping, removeOidcConsent, restoreOrder, setCookie, setKey, setOrder, setSelector, translate, translatePage, translationFields,
+  var datas, delKey, getCookie, getValues, isHiddenFormValueSet, ping, removeOidcConsent, restoreOrder, setCookie, setKey, setOrder, setSelector, translate, translatePage, translationFields,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   translationFields = {};
@@ -75,14 +75,15 @@ LemonLDAP::NG Portal jQuery scripts
   };
 
   removeOidcConsent = function(partner) {
-    var r;
-    r = new RegExp("\b" + partner + "\b,?", 'g');
-    datas['oidcConsents'] = datas['oidcConsents'].replace(r, '').replace(/,$/, '');
-    return setKey('_oidcConnectedRP', datas['oidcConsents'], function() {
-      return $("[partner='" + partner + "']").hide();
-    }, function(j, s, e) {
+    var e;
+    e = function(j, s, e) {
       return alert(s + " " + e);
-    });
+    };
+    return delKey("_oidc_consent_time_" + partner, function() {
+      return delKey("_oidc_consent_scope_" + partner, function() {
+        return $("[partner='" + partner + "']").hide();
+      }, e);
+    }, e);
   };
 
   setKey = function(key, val, success, error) {
@@ -102,6 +103,24 @@ LemonLDAP::NG Portal jQuery scripts
           url: datas['scriptname'] + '/mysession/persistent',
           dataType: 'json',
           data: d,
+          success: success,
+          error: error
+        });
+      }
+    });
+  };
+
+  delKey = function(key, success, error) {
+    return $.ajax({
+      type: "GET",
+      url: datas['scriptname'] + '/mysession/?gettoken',
+      dataType: 'json',
+      error: error,
+      success: function(data) {
+        return $.ajax({
+          type: "DELETE",
+          url: datas['scriptname'] + "/mysession/persistent/" + key + "?token=" + data.token,
+          dataType: 'json',
           success: success,
           error: error
         });

@@ -5,6 +5,11 @@ our $VERSION = '2.0.0';
 
 sub types {
     return {
+        'array' => {
+            'test' => sub {
+                1;
+            }
+        },
         'authParamsText' => {
             'test' => sub {
                 1;
@@ -1591,6 +1596,11 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'multiValuesSeparator' => {
             'default' => '; ',
             'type'    => 'authParamsText'
+        },
+        'mySessionAuthorizedRWKeys' => {
+            'default' =>
+              [ '_appsListOrder', '_oidcConnectedRP', '_oidc_consent_*' ],
+            'type' => 'array'
         },
         'nginxCustomHandlers' => {
             'keyTest' => qr/^\w+$/,

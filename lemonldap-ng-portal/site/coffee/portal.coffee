@@ -60,15 +60,27 @@ setOrder = ->
 
 # Function used to remove an OIDC consent
 removeOidcConsent = (partner) ->
-	r = new RegExp "\b#{partner}\b,?", 'g'
-	datas['oidcConsents'] = datas['oidcConsents'].replace(r,'').replace(/,$/,'')
-	setKey '_oidcConnectedRP', datas['oidcConsents']
+	#r = new RegExp "\b#{partner}\b,?", 'g'
+	#datas['oidcConsents'] = datas['oidcConsents'].replace(r,'').replace(/,$/,'')
+	#setKey '_oidcConnectedRP', datas['oidcConsents']
+	#	# Success
+	#	, () ->
+	#		$("[partner='#{partner}']").hide()
+	#	# Error
+	#	, (j,s,e) ->
+	#		alert "#{s} #{e}"
+	e = (j,s,e) ->
+		alert "#{s} #{e}"
+	delKey "_oidc_consent_time_#{partner}"
 		# Success
 		, () ->
-			$("[partner='#{partner}']").hide()
-		# Error
-		, (j,s,e) ->
-			alert "#{s} #{e}"
+			delKey "_oidc_consent_scope_#{partner}"
+				# Success
+				, () ->
+					$("[partner='#{partner}']").hide()
+				# Error
+				, e
+		, e
 
 # Function used by setOrder() and removeOidcConsent() to push new values
 # For security reason, modification is rejected unless a valid token is given
@@ -89,6 +101,21 @@ setKey = (key,val,success,error) ->
 				url: datas['scriptname'] + '/mysession/persistent'
 				dataType: 'json'
 				data: d
+				success: success
+				error: error
+
+delKey = (key,success,error) ->
+	$.ajax
+		type: "GET"
+		url: datas['scriptname'] + '/mysession/?gettoken'
+		dataType: 'json'
+		error: error
+		# On success, value is set
+		success: (data) ->
+			$.ajax
+				type: "DELETE"
+				url: "#{datas['scriptname']}/mysession/persistent/#{key}?token=#{data.token}"
+				dataType: 'json'
 				success: success
 				error: error
 

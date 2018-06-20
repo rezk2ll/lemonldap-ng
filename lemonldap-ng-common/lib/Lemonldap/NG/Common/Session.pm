@@ -123,8 +123,12 @@ sub BUILD {
 
     if ( $self->{info} ) {
         foreach ( keys %{ $self->{info} } ) {
-            $data->{$_} = $self->{info}->{$_}
-              if ( defined $self->{info}->{$_} );
+            if ( defined $self->{info}->{$_} ) {
+                $data->{$_} = $self->{info}->{$_};
+            }
+            else {
+                delete $data->{$_};
+            }
         }
         delete $self->{info};
     }

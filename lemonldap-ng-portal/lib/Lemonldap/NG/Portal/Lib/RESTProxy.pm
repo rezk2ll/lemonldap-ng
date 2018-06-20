@@ -17,7 +17,7 @@ sub init {
     my ($self) = @_;
     $self->conf->{remoteCookieName} ||= $self->conf->{cookieName};
     $self->conf->{proxySessionService} ||=
-      $self->conf->{proxyAuthService} . '/mysession';
+      $self->conf->{proxyAuthService} . '/session/my';
     $self->conf->{proxySessionService} =~ s#/*$##;
     $self->ua( Lemonldap::NG::Common::UserAgent->new( $self->conf ) );
     $self->ua->default_header( Accept => 'application/json' );

@@ -111,18 +111,20 @@ sub defaultValues {
         'locationRules' => {
             'default' => 'deny'
         },
-        'logoutServices'             => {},
-        'macros'                     => {},
-        'mailCharset'                => 'utf-8',
-        'mailFrom'                   => 'noreply@example.com',
-        'mailSessionKey'             => 'mail',
-        'mailTimeout'                => 0,
-        'mailUrl'                    => 'http://auth.example.com/resetpwd',
-        'managerDn'                  => '',
-        'managerPassword'            => '',
-        'max2FDevices'               => 10,
-        'max2FDevicesNameLength'     => 20,
-        'multiValuesSeparator'       => '; ',
+        'logoutServices'         => {},
+        'macros'                 => {},
+        'mailCharset'            => 'utf-8',
+        'mailFrom'               => 'noreply@example.com',
+        'mailSessionKey'         => 'mail',
+        'mailTimeout'            => 0,
+        'mailUrl'                => 'http://auth.example.com/resetpwd',
+        'managerDn'              => '',
+        'managerPassword'        => '',
+        'max2FDevices'           => 10,
+        'max2FDevicesNameLength' => 20,
+        'multiValuesSeparator'   => '; ',
+        'mySessionAuthorizedRWKeys' =>
+          [ '_appsListOrder', '_oidcConnectedRP', '_oidc_consent_*' ],
         'notificationStorage'        => 'File',
         'notificationStorageOptions' => {
             'dirName' => '/var/lib/lemonldap-ng/notifications'

@@ -10,9 +10,9 @@
 #   * DELETE /sessions/<type>/<session-id>       : delete a session
 #
 # - Sessions for connected users (if restSessionServer is on):
-#   * GET /mysession/<type>                      : get session datas
-#   * GET /mysession/<type>/key                  : get session key
-#   * DELETE /mysession                          : ask for logout
+#   * GET /session/my/<type>                     : get session datas
+#   * GET /session/my/<type>/key                 : get session key
+#   * DELETE /session/my                         : ask for logout
 #
 # - Authentication
 #   * POST /sessions/<type>/<session-id>?auth    : authenticate with a fixed
@@ -34,7 +34,9 @@
 #   * GET /mysession/?authorizationfor=<base64-encoded-url>: ask if url is
 #                                                            authorizated
 #   * PUT /mysession/<type>                                : update some
-#                                                            persistent datas
+#                                                            persistent data
+#                                                            (restricted)
+#   * DELETE /mysession/<type>/key                         : delete key in data
 #                                                            (restricted)
 #
 # There is no conflict with SOAP server, they can be used together
@@ -148,17 +150,21 @@ sub init {
             sessions => { ':sessionType' => 'delSession' },
             ['DELETE']
         );
+
         $self->addAuthRoute(
-            mysession => { ':sessionType' => 'getMyKey' },
+            session => { my => { ':sessionType' => 'getMyKey' } },
             [ 'GET', 'POST' ]
         );
-        $self->addAuthRoute( mysession => 'delMySession', ['DELETE'] );
     }
 
     # Methods always available
     $self->addAuthRoute(
         mysession => { '*' => 'mysession' },
         [ 'GET', 'POST' ]
+    );
+    $self->addAuthRoute(
+        mysession => { ':key' => 'delKeyInMySession', '*' => 'delMySession' },
+        ['DELETE']
     );
     $self->addAuthRoute(
         mysession => { ':sessionType' => 'updateMySession' },
@@ -357,8 +363,17 @@ sub updateMySession {
     if ( my $token = $req->param('token') ) {
         if ( $self->ott->getToken($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
-                foreach my $key (qw(_appsListOrder _oidcConnectedRP)) {
-                    my $v = $req->param($key);
+                foreach my $key ( $self->conf->{mySessionAuthorizedRWKeys} ) {
+                    my $v;
+                    if ( $key =~ /\*/ ) {
+                        $key =~ s/\*/\.\*/g;
+                        if ( my ($k) = grep( /$key/, $req->params ) ) {
+                            $v = $req->param($k);
+                        }
+                    }
+                    else {
+                        $v = $req->param($key);
+                    }
                     if ( defined $v ) {
                         $res++;
                         push @$mKeys, $key;
@@ -380,6 +395,45 @@ sub updateMySession {
     }
     return $self->p->sendJSONresponse( $req,
         { result => 1, count => $res, modifiedKeys => $mKeys } );
+}
+
+sub delKeyInMySession {
+    my ( $self, $req ) = @_;
+    my $res   = 0;
+    my $mKeys = [];
+    my $dkey  = $req->param('key');
+    if ( my $token = $req->param('token') ) {
+        if ( $self->ott->getToken($token) ) {
+            if ( $req->param('sessionType') eq 'persistent' ) {
+                foreach my $key ( $self->conf->{mySessionAuthorizedRWKeys} ) {
+                    if ( $key =~ /\*/ ) {
+                        $key =~ s/\*/\.\*/g;
+                        if ( $dkey =~ /$key/ ) {
+                            $res++;
+                        }
+                    }
+                    elsif ( $dkey eq $key ) {
+                        $res++;
+                    }
+                }
+                if ($res) {
+                    $self->p->updatePersistentSession( $req,
+                        { $dkey => undef } );
+                }
+            }
+        }
+        else {
+            $self->logger->error('Update session request with invalid token');
+        }
+    }
+    else {
+        $self->logger->error('Update session request without token');
+    }
+    unless ($res) {
+        return $self->p->sendError( $req, 'Modification refused', 403 );
+    }
+    return $self->p->sendJSONresponse( $req,
+        { result => 1, count => $res, modifiedKeys => $dkey } );
 }
 
 1;
