@@ -267,12 +267,14 @@ sub newNotification {
         return $self->sendError( $req, "Missing $r", 200 )
           unless ( $json->{$r} );
     }
-	
-	# Set default date value
-	$self->logger->debug("Datas posted : uid = $json->{uid} - Date = $json->{date} - Ref = $json->{reference}");
-	my $dDate = strftime("%Y-%m-%d", localtime());
-	$json->{date} ||= $dDate;
-	$self->logger->debug("Notification Date = $json->{date}");
+
+    # Set default date value
+    $self->logger->debug(
+"Datas posted : uid = $json->{uid} - Date = $json->{date} - Ref = $json->{reference}"
+    );
+    my $dDate = strftime( "%Y-%m-%d", localtime() );
+    $json->{date} ||= $dDate;
+    $self->logger->debug("Notification Date = $json->{date}");
 
     unless ( $json->{date} =~ /^\d{4}-\d{2}-\d{2}$/ ) {
         return $self->sendError( $req, "Malformed date", 200 );
