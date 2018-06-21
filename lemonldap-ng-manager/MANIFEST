@@ -57,6 +57,8 @@ site/htdocs/static/bwr/angular/angular-csp.min.css
 site/htdocs/static/bwr/angular/angular.js
 site/htdocs/static/bwr/angular/angular.min.js
 site/htdocs/static/bwr/angular/angular.min.js.map
+site/htdocs/static/bwr/angular/ui-bootstrap-csp.css
+site/htdocs/static/bwr/angular/ui-bootstrap-csp.min.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.css.map
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.min.css
