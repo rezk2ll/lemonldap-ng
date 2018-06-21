@@ -64,8 +64,10 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 			switch typeof button.action
 				when 'function'
 					button.action $scope.currentNode, $scope
+
 				when 'string'
 					$scope[button.action]()
+
 				else
 					console.log typeof button.action
 		$scope.showM = false
@@ -263,7 +265,7 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 
 	$scope.popup =
 		opened: false
-
+		
 	# Date conversion
 	dateToString = (dt) ->
 		year = dt.getFullYear()
