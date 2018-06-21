@@ -50,10 +50,12 @@ sub _wrapEntryPoint {
                 "Missing $self->{sessionKey} key in session");
         }
     }
+    elsif ( ref $req->datas->{ "enabledMods" . $self->type } ) {
+        @t = @{ $req->datas->{ "enabledMods" . $self->type } };
+    }
     else {
-        if ( ref $req->datas->{ "enabledMods" . $self->type } ) {
-            @t = @{ $req->datas->{ "enabledMods" . $self->type } };
-        }
+        $self->logger->debug(
+            "Unable to find enabledMods$self->{type} in this context: $name");
     }
     foreach (@t) {
         if ( $_->can($name) ) {
