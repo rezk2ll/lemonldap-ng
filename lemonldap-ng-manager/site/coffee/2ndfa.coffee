@@ -254,7 +254,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 	# URI local path management
 	pathEvent = (event, next, current) ->
-		n = next.match /#\/(\w+)/
+		n = next.match /#!?\/(\w+)/
 		sessionType = 'global'
 		if n == null
 			$scope.type = '_whatToTrace'

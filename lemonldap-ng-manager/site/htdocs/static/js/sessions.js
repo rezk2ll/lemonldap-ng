@@ -373,7 +373,7 @@
       };
       pathEvent = function(event, next, current) {
         var n;
-        n = next.match(/#\/(\w+)/);
+        n = next.match(/#!?\/(\w+)/);
         sessionType = 'global';
         if (n === null) {
           $scope.type = '_whatToTrace';

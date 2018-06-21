@@ -126,7 +126,7 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 		$scope.showM = false
 
 	$scope.$on '$locationChangeSuccess', (event, next, current) ->
-		n = next.match /#\/(\w+)/
+		n = next.match /#!?\/(\w+)/
 		$scope.type = if n? then n[1] else 'actives'
 		if $scope.type == 'new'
 			$scope.displayCreateForm()

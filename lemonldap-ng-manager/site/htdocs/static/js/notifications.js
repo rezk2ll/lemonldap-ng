@@ -150,7 +150,7 @@
       };
       $scope.$on('$locationChangeSuccess', function(event, next, current) {
         var n;
-        n = next.match(/#\/(\w+)/);
+        n = next.match(/#!?\/(\w+)/);
         $scope.type = n != null ? n[1] : 'actives';
         if ($scope.type === 'new') {
           return $scope.displayCreateForm();
