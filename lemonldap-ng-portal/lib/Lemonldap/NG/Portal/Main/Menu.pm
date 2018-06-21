@@ -94,14 +94,15 @@ sub params {
             $req->param("tab") // '' )
           || "applist";
     }
-    
+
     $res{DISPLAY_MODULES} = $self->displayModules($req);
     $res{AUTH_ERROR_TYPE} =
       $req->error_type( $res{AUTH_ERROR} = $req->menuError );
-    
+
     # Display menu 2fRegisters link only if at least a 2F device is registered
-    $res{SFAManagment} = $self->p->_sfEngine->display2fRegisters($req, $req->userData);
-    $self->logger->debug( "Display 2fRegisters link ? ". $res{SFAManagment} );
+    $res{SFAManagment} =
+      $self->p->_sfEngine->display2fRegisters( $req, $req->userData );
+    $self->logger->debug( "Display 2fRegisters link ? " . $res{SFAManagment} );
 
     return %res;
 }

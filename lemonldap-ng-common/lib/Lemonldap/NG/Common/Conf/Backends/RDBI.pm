@@ -53,9 +53,8 @@ sub load {
     my ( $self, $cfgNum, $fields ) = @_;
     $fields = $fields ? join( ",", @$fields ) : '*';
     my $sth =
-      $self->_dbh->prepare( "SELECT field,value from "
-          . $self->{dbiTable}
-          . " WHERE cfgNum=?" );
+      $self->_dbh->prepare(
+        "SELECT field,value from " . $self->{dbiTable} . " WHERE cfgNum=?" );
     $sth->execute($cfgNum);
     my ( $res, @row );
     while ( @row = $sth->fetchrow_array ) {

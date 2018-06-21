@@ -213,7 +213,8 @@ sub run {
         }
         my ( $err, $error ) = $self->loadUser($req);
         if ( $err == -1 ) {
-            return $self->p->sendError( $req, "U2F loading error: $error", 500 );
+            return $self->p->sendError( $req, "U2F loading error: $error",
+                500 );
         }
         elsif ( $err == 0 ) {
             return $self->p->sendError( $req, "noU2FKeyFound" );
@@ -362,7 +363,7 @@ sub loadUser {
             $uk = $_->{_userKey};
             my $c = $self->crypter( keyHandle => $kh, publicKey => $uk );
             if ($c) {
-				$self->logger->debug("kh & uk -> OK");
+                $self->logger->debug("kh & uk -> OK");
                 push @crypters, $c;
             }
             else {

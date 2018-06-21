@@ -24,7 +24,7 @@ sub new {
         if ($show) {
             eval
 qq'sub $_ {\$_[0]->{raven}->capture_message(\$_[1],level => "$rl")}';
-            die $@ if($@);
+            die $@ if ($@);
         }
         else {
             eval qq'sub $_ {1}';

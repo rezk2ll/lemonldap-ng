@@ -96,7 +96,7 @@ SKIP: {
     $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
 
     switch ('rp');
-    &Lemonldap::NG::Handler::Main::cfgNum(0,0);
+    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
     ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
     $handlerOR{rp} = \@Lemonldap::NG::Handler::Main::_onReload;
 

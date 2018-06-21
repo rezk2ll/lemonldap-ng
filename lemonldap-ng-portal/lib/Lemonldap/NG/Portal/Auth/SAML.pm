@@ -69,7 +69,7 @@ qr/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_u
     my $saml_ars_url = $self->getMetaDataURL(
         "samlSPSSODescriptorArtifactResolutionServiceArtifact");
     $self->artRe(qr/^($saml_ars_url)(?:\?.*)?$/i);
-    $self->catch($self->sloAssConsumerRe);
+    $self->catch( $self->sloAssConsumerRe );
 
     # Load SAML service and SAML IdP list
     return ( $self->SUPER::init and $self->loadIDPs );

@@ -34,7 +34,7 @@ sub init {
 
 sub run {
     my ( $self, $req, $token ) = @_;
-    
+
     my $checkLogins = $req->param('checkLogins');
     $self->logger->debug("Ext2F checkLogins set") if ($checkLogins);
 
@@ -51,8 +51,8 @@ sub run {
         $req,
         'ext2fcheck',
         params => {
-            SKIN  => $self->conf->{portalSkin},
-            TOKEN => $token,
+            SKIN        => $self->conf->{portalSkin},
+            TOKEN       => $token,
             CHECKLOGINS => $checkLogins
         }
     );

@@ -96,7 +96,7 @@ SKIP: {
     $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
 
     switch ('proxy');
-    &Lemonldap::NG::Handler::Main::cfgNum(0,0);
+    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
     ok( $proxy = proxy( $jwks, $metadata ), 'Proxy portal' );
     $handlerOR{proxy} = \@Lemonldap::NG::Handler::Main::_onReload;
 

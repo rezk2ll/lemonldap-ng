@@ -235,7 +235,7 @@ sub sfa {
     # Filter 2FA sessions if needed
     $self->logger->debug("Filtering 2F sessions...");
     my $all = ( keys %$res );
-    
+
     if ( $self->{U2FCheck} eq '2' ) {
         foreach my $session ( keys %$res ) {
             delete $res->{$session}
@@ -262,7 +262,7 @@ sub sfa {
     }
 
     my $total = ( keys %$res );
-	$self->logger->debug("Session(s) left : $total / $all");
+    $self->logger->debug("Session(s) left : $total / $all");
 
     if ( my $group = $req->params('groupBy') ) {
         my $r;

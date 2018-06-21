@@ -20,59 +20,65 @@ sub register {
     unshift @apps, $app;
 
     # register this guy (as well as saving original code) once
-    if (! scalar keys %orig) {
+    if ( !scalar keys %orig ) {
         for my $proto (@protocols) {
-            if (my $orig = LWP::Protocol::implementor($proto)) {
+            if ( my $orig = LWP::Protocol::implementor($proto) ) {
                 $orig{$proto} = $orig;
-                LWP::Protocol::implementor($proto, $class);
-            } else {
-                Carp::carp("LWP::Protocol::$proto is unavailable. Skip registering overrides for it.") if $^W;
+                LWP::Protocol::implementor( $proto, $class );
+            }
+            else {
+                Carp::carp(
+"LWP::Protocol::$proto is unavailable. Skip registering overrides for it."
+                ) if $^W;
             }
         }
     }
 
-    if (defined wantarray) {
-        return LWP::Protocol::PSGI::Guard->new(sub {
-            $class->unregister_app($app);
-        });
+    if ( defined wantarray ) {
+        return LWP::Protocol::PSGI::Guard->new(
+            sub {
+                $class->unregister_app($app);
+            }
+        );
     }
 }
 
 sub unregister_app {
-    my ($class, $app) = @_;
+    my ( $class, $app ) = @_;
 
     my $i = 0;
     foreach my $stored_app (@apps) {
-        if ($app == $stored_app) {
+        if ( $app == $stored_app ) {
             splice @apps, $i, 1;
             return;
         }
         $i++;
     }
 }
-            
 
 sub unregister {
     my $class = shift;
     for my $proto (@protocols) {
-        if ($orig{$proto}) {
-            LWP::Protocol::implementor($proto, $orig{$proto});
+        if ( $orig{$proto} ) {
+            LWP::Protocol::implementor( $proto, $orig{$proto} );
         }
     }
     @apps = ();
 }
 
 sub request {
-    my($self, $request, $proxy, $arg, @rest) = @_;
+    my ( $self, $request, $proxy, $arg, @rest ) = @_;
 
-    if (my $app = $self->handles($request)) {
-        my $env = req_to_psgi $request;
+    if ( my $app = $self->handles($request) ) {
+        my $env      = req_to_psgi $request;
         my $response = res_from_psgi $app->app->($env);
-        my $content = $response->content;
+        my $content  = $response->content;
         $response->content('');
-        $self->collect_once($arg, $response, $content);
-    } else {
-        $orig{$self->{scheme}}->new($self->{scheme}, $self->{ua})->request($request, $proxy, $arg, @rest);
+        $self->collect_once( $arg, $response, $content );
+    }
+    else {
+        $orig{ $self->{scheme} }->new( $self->{scheme}, $self->{ua} )
+          ->request( $request, $proxy, $arg, @rest );
     }
 }
 
@@ -84,21 +90,20 @@ sub create {
 }
 
 sub handles {
-    my($self, $request) = @_;
+    my ( $self, $request ) = @_;
 
     foreach my $app (@apps) {
-        if ($app->match($request)) {
+        if ( $app->match($request) ) {
             return $app;
         }
     }
 }
 
-package
-  LWP::Protocol::PSGI::Guard;
+package LWP::Protocol::PSGI::Guard;
 use strict;
 
 sub new {
-    my($class, $code) = @_;
+    my ( $class, $code ) = @_;
     bless $code, $class;
 }
 
@@ -107,41 +112,47 @@ sub DESTROY {
     $self->();
 }
 
-package
-    LWP::Protocol::PSGI::App;
+package LWP::Protocol::PSGI::App;
 use strict;
 
 sub new {
-    my ($class, $app, %options) = @_;
+    my ( $class, $app, %options ) = @_;
     bless { app => $app, options => \%options }, $class;
 }
 
-sub app { $_[0]->{app} }
+sub app     { $_[0]->{app} }
 sub options { $_[0]->{options} }
+
 sub match {
-    my ($self, $request) = @_;
+    my ( $self, $request ) = @_;
     my $options = $self->options;
 
-    if ($options->{host}) {
-        my $matcher = $self->_matcher($options->{host});
-        $matcher->($request->uri->host) || $matcher->($request->uri->host_port);
-    } elsif ($options->{uri}) {
-        $self->_matcher($options->{uri})->($request->uri);
-    } else {
+    if ( $options->{host} ) {
+        my $matcher = $self->_matcher( $options->{host} );
+        $matcher->( $request->uri->host )
+          || $matcher->( $request->uri->host_port );
+    }
+    elsif ( $options->{uri} ) {
+        $self->_matcher( $options->{uri} )->( $request->uri );
+    }
+    else {
         1;
     }
 }
 
 sub _matcher {
-    my($self, $stuff) = @_;
-    if (ref $stuff eq 'Regexp') {
+    my ( $self, $stuff ) = @_;
+    if ( ref $stuff eq 'Regexp' ) {
         sub { $_[0] =~ $stuff };
-    } elsif (ref $stuff eq 'CODE') {
+    }
+    elsif ( ref $stuff eq 'CODE' ) {
         $stuff;
-    } elsif (!ref $stuff) {
+    }
+    elsif ( !ref $stuff ) {
         sub { $_[0] eq $stuff };
-    } else {
-        Carp::croak("Don't know how to match: ", ref $stuff);
+    }
+    else {
+        Carp::croak( "Don't know how to match: ", ref $stuff );
     }
 }
 

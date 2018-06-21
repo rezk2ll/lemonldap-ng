@@ -111,13 +111,13 @@ sub init {
 # run() is called at each authentication, just after sessionInfo populated
 sub run {
     my ( $self, $req ) = @_;
-    
+
     my $checkLogins = $req->param('checkLogins');
     $self->logger->debug("2F checkLogins set") if ($checkLogins);
 
     # Skip 2F unless a module has been registered
     return PE_OK unless ( @{ $self->sfModules } );
-    
+
     # Search for authorized modules for this user
     my @am;
     foreach my $m ( @{ $self->sfModules } ) {
@@ -128,7 +128,7 @@ sub run {
             push @am, $m->{m};
         }
     }
-    
+
     # If no 2F module is authorized, skipping 2F
     # Note that a rule may forbid access after (GrantSession plugin)
     return PE_OK unless (@am);

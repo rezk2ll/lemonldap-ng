@@ -158,8 +158,7 @@ count(1);
 # Verify UTF-8
 ok(
     $res = $op->_get(
-        '/oauth2/userinfo',
-        query  => 'access_token=' . $access_token,
+        '/oauth2/userinfo', query => 'access_token=' . $access_token,
     ),
     'Get userinfo'
 );

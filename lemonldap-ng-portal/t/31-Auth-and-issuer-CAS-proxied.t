@@ -56,7 +56,7 @@ ok( $issuer = issuer(), 'Issuer portal' );
 $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
 count(1);
 switch ('sp');
-&Lemonldap::NG::Handler::Main::cfgNum(0,0);
+&Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 
 ok( $sp = sp(), 'SP portal' );
 count(1);
@@ -256,14 +256,14 @@ sub sp {
                 casSrvMetaDataOptions => {
                     idp => {
                         casSrvMetaDataOptionsUrl => 'http://auth.idp.com/cas',
-                        casSrvMetaDataOptionsGateway         => 0,
+                        casSrvMetaDataOptionsGateway => 0,
                     }
                 },
                 casSrvMetaDataOptionsProxiedServices => {
                     idp => {
-                            test => 'http://test.sp.com/',
+                        test => 'http://test.sp.com/',
                     }
-               },
+                },
             },
         }
     );

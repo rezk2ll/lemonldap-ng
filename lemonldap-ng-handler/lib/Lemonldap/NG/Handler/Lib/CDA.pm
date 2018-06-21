@@ -48,7 +48,8 @@ sub run {
             return $class->REDIRECT;
         }
     }
-    return $class->Lemonldap::NG::Handler::Main::run( $req, $rule, $protection );
+    return $class->Lemonldap::NG::Handler::Main::run( $req, $rule,
+        $protection );
 }
 
 ## @rmethod protected hash getCDAInfos(id)
