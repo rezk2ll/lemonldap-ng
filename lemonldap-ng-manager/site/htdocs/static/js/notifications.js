@@ -318,6 +318,10 @@
       $scope.popupopen = function() {
         return $scope.popup.opened = true;
       };
+      $scope.dateOptions = {
+        startingDay: 1,
+        minDate: new Date()
+      };
       $scope.popup = {
         opened: false
       };

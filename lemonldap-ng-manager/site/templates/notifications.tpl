@@ -93,7 +93,7 @@
             <th><span trspan="date" /></th>
             <td>
             <p class="input-group">
-              <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="form.date" is-open="popup.opened" datepicker-options="{startingDay: 1}" popup-placement="auto top-right"/>
+              <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="form.date"  min-date="minDate" is-open="popup.opened" datepicker-options="dateOptions" popup-placement="auto top-right"/>
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="popupopen()"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>

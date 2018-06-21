@@ -264,6 +264,10 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 	$scope.popupopen = ->
 		$scope.popup.opened = true
 
+	$scope.dateOptions =
+		startingDay: 1
+		minDate : new Date()
+
 	$scope.popup =
 		opened: false
 
