@@ -51,7 +51,9 @@ sub _wrapEntryPoint {
         }
     }
     else {
-        @t = @{ $req->datas->{ "enabledMods" . $self->type } };
+        if ( ref $req->datas->{ "enabledMods" . $self->type } ) {
+            @t = @{ $req->datas->{ "enabledMods" . $self->type } };
+        }
     }
     foreach (@t) {
         if ( $_->can($name) ) {
