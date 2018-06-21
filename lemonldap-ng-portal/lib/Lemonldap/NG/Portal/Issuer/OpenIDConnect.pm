@@ -1000,9 +1000,11 @@ sub token {
         id_token     => $id_token,
     };
 
-    my $cRP = join ',', $rp, $apacheSession->data->{_oidcConnectedRP} || '';
-    $self->p->updateSession( $req, { _oidcConnectedRP => $cRP },
-        $apacheSession->id );
+    my $cRP = $apacheSession->data->{_oidcConnectedRP} || '';
+    unless ( $cRP =~ /\b$rp\b/ ) {
+        $self->p->updateSession( $req, { _oidcConnectedRP => "$rp,$cRP" },
+            $apacheSession->id );
+    }
 
     $self->logger->debug("Send token response");
 
