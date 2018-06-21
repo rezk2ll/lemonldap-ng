@@ -246,7 +246,7 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 		# Colorized link
 		$scope.activeModule = "notifications"
 		$scope.myStyle = {color: '#ffb84d'}
-		
+
 	$scope.displayCreateForm = ->
 		$scope.waiting = true
 		$translator.init($scope.lang).then ->
@@ -265,7 +265,7 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 
 	$scope.popup =
 		opened: false
-		
+
 	# Date conversion
 	dateToString = (dt) ->
 		year = dt.getFullYear()
