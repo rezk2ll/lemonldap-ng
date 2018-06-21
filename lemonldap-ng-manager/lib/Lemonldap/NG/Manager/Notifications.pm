@@ -4,6 +4,7 @@ use 5.10.0;
 use utf8;
 use Mouse;
 use JSON qw(from_json to_json);
+use POSIX qw(strftime);
 
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
@@ -262,10 +263,16 @@ sub newNotification {
         return $self->sendError( $req, undef, 200 );
     }
 
-    foreach my $r (qw(uid date reference xml)) {
+    foreach my $r (qw(uid reference xml)) {
         return $self->sendError( $req, "Missing $r", 200 )
           unless ( $json->{$r} );
     }
+	
+	# Set default date value
+	$self->logger->debug("Datas posted : uid = $json->{uid} - Date = $json->{date} - Ref = $json->{reference}");
+	my $dDate = strftime("%Y-%m-%d", localtime());
+	$json->{date} ||= $dDate;
+	$self->logger->debug("Notification Date = $json->{date}");
 
     unless ( $json->{date} =~ /^\d{4}-\d{2}-\d{2}$/ ) {
         return $self->sendError( $req, "Malformed date", 200 );
