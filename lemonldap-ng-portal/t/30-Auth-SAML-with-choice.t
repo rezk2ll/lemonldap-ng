@@ -12,7 +12,7 @@ BEGIN {
 }
 
 my $maintests = 16;
-my $debug     = 'debug';
+my $debug     = 'error';
 my %handlerOR = ( issuer => [], sp => [] );
 
 SKIP: {

@@ -163,7 +163,10 @@ sub init {
         [ 'GET', 'POST' ]
     );
     $self->addAuthRoute(
-        mysession => { ':key' => 'delKeyInMySession', '*' => 'delMySession' },
+        mysession => {
+            ':sessionType' =>
+              { ':key' => 'delKeyInMySession', '*' => 'delMySession' }
+        },
         ['DELETE']
     );
     $self->addAuthRoute(
@@ -342,8 +345,8 @@ sub mysession {
         $self->logger->debug(" Result is $res");
         return $self->p->sendJSONresponse( $req, { result => $res } );
     }
-    return $self->p->sendError( $req, 'whoami or authorizationfor is required',
-        400 );
+    return $self->p->sendError( $req,
+        'whoami or authorizationfor is required', 400 );
 }
 
 sub getMyKey {
