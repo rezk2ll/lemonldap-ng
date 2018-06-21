@@ -202,10 +202,11 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 			d.reject msgnok
 
 	$scope.save = ->
-		if $scope.form.uid and $scope.form.reference and $scope.form.xml and $scope.form.date
+		if $scope.form.uid and $scope.form.reference and $scope.form.xml
 			$scope.waiting = true
 			$scope.formPost.uid = $scope.form.uid
-			$scope.formPost.date = dateToString($scope.form.date)
+			if $scope.form.date
+				$scope.formPost.date = dateToString($scope.form.date)
 			$scope.formPost.reference = $scope.form.reference
 			$scope.formPost.condition = $scope.form.condition
 			$scope.formPost.xml = $scope.form.xml
