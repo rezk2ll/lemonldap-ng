@@ -411,7 +411,7 @@ sub delKeyInMySession {
                 foreach my $key ( $self->conf->{mySessionAuthorizedRWKeys} ) {
                     if ( $key =~ /\*/ ) {
                         $key =~ s/\*/\.\*/g;
-                        if ( $dkey =~ /$key/ ) {
+                        if ( $dkey =~ /^$key$/ ) {
                             $res++;
                         }
                     }
