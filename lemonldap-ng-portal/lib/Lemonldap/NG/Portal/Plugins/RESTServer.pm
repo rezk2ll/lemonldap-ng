@@ -366,7 +366,9 @@ sub updateMySession {
     if ( my $token = $req->param('token') ) {
         if ( $self->ott->getToken($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
-                foreach my $key ( $self->conf->{mySessionAuthorizedRWKeys} ) {
+                foreach
+                  my $key ( @{ $self->conf->{mySessionAuthorizedRWKeys} } )
+                {
                     my $v;
                     if ( $key =~ /\*/ ) {
                         $key =~ s/\*/\.\*/g;
@@ -408,7 +410,9 @@ sub delKeyInMySession {
     if ( my $token = $req->param('token') ) {
         if ( $self->ott->getToken($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
-                foreach my $key ( $self->conf->{mySessionAuthorizedRWKeys} ) {
+                foreach
+                  my $key ( @{ $self->conf->{mySessionAuthorizedRWKeys} } )
+                {
                     if ( $key =~ /\*/ ) {
                         $key =~ s/\*/\.\*/g;
                         if ( $dkey =~ /^$key$/ ) {
