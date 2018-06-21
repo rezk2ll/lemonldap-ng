@@ -188,7 +188,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							value = _stToStr value
 							pattern = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/
 							arrayDate = value.match(pattern)
-							session[key] = "#{arrayDate[3]}/#{arrayDate[2]}/#{arrayDate[1]} à #{arrayDate[4]}:#{arrayDate[5]}:#{arrayDate[6]}"							
+							session[key] = "#{arrayDate[3]}/#{arrayDate[2]}/#{arrayDate[1]} à #{arrayDate[4]}:#{arrayDate[5]}:#{arrayDate[6]}"
 			
 			res = []
 
@@ -202,7 +202,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 								title: "type"
 								value: "name"
 								epoch: "date"
-							array = JSON.parse(session[attr]);
+							array = JSON.parse(session[attr])
 							for sfDevice in array
 								for key, value of sfDevice
 									if key == 'type'
@@ -215,7 +215,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									title: title
 									value: name
 									epoch: epoch
-							delete session[attr]	
+							delete session[attr]
 						else if session[attr].toString().match(/\w+/)
 							subres.push
 								title: attr

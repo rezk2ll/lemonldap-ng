@@ -685,7 +685,7 @@ llapp.controller 'TreeCtrl', [
 		# Called when $location.path() change, launch getCfg() with the new
 		# configuration number
 		pathEvent = (event, next, current) ->
-			n = next.match(new RegExp('#/confs/(latest|[0-9]+)'))
+			n = next.match(new RegExp('#!?/confs/(latest|[0-9]+)'))
 			if n == null
 				$location.path '/confs/latest'
 			else

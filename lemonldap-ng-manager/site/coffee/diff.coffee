@@ -181,7 +181,7 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 		$location.path("/#{$scope.cfg[0].cfgNum}/#{$scope.cfg[1].cfgNum}")
 
 	pathEvent = (event, next, current) ->
-		n = next.match(new RegExp('#/(latest|[0-9]+)(?:/(latest|[0-9]+))?$'))
+		n = next.match(new RegExp('#!?/(latest|[0-9]+)(?:/(latest|[0-9]+))?$'))
 		if n == null
 			$location.path '/latest'
 		else
