@@ -15,7 +15,7 @@ scheme = [
 menu =
 	actives: [
 		title: 'markAsDone'
-		icon: 'eye-close'
+		icon: 'check'
 	]
 	done: [
 		title: 'deleteNotification'
@@ -82,12 +82,14 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 				title: 'notificationDeleted'
 			$scope.showModal "alert.html"
 			$scope.waiting = false
+			$scope.init()
 		, (response) ->
 			$scope.message =
 				title: 'notificationNotDeleted'
 				message: response.statusText
 			$scope.showModal "alert.html"
 			$scope.waiting = false
+			$scope.init()
 
 	$scope.deleteNotification = ->
 		$scope.waiting = true
@@ -98,12 +100,14 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 				title: 'notificationPurged'
 			$scope.showModal "alert.html"
 			$scope.waiting = false
+			$scope.init()
 		, (response) ->
 			$scope.message =
 				title: 'notificationNotPurged'
 				message: response.statusText
 			$scope.showModal "alert.html"
 			$scope.waiting = false
+			$scope.init()
 
 	$scope.stoggle = (scope) ->
 		node = scope.$modelValue
@@ -235,7 +239,11 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 
 	$scope.init = ->
 		$scope.waiting = true
+		$scope.showM = false
+		$scope.showT = false
 		$scope.data = []
+		$scope.currentScope = null
+		$scope.currentNotification = null
 		$q.all [
 			$translator.init $scope.lang
 			$scope.updateTree '', $scope.data, 0
