@@ -44,6 +44,8 @@ site/htdocs/static/bwr/angular-animate/angular-animate.min.js.map
 site/htdocs/static/bwr/angular-aria/angular-aria.js
 site/htdocs/static/bwr/angular-aria/angular-aria.min.js
 site/htdocs/static/bwr/angular-aria/angular-aria.min.js.map
+site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-csp.css
+site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-csp.min.css
 site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js
 site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.min.js
 site/htdocs/static/bwr/angular-cookies/angular-cookies.js
@@ -57,8 +59,6 @@ site/htdocs/static/bwr/angular/angular-csp.min.css
 site/htdocs/static/bwr/angular/angular.js
 site/htdocs/static/bwr/angular/angular.min.js
 site/htdocs/static/bwr/angular/angular.min.js.map
-site/htdocs/static/bwr/angular/ui-bootstrap-csp.css
-site/htdocs/static/bwr/angular/ui-bootstrap-csp.min.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.css.map
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-theme.min.css
