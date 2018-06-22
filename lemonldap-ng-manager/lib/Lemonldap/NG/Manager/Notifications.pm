@@ -269,11 +269,18 @@ sub newNotification {
     }
 
     # Set default date value
-    $self->logger->debug(
-"Posted datas : uid = $json->{uid} - Date = $json->{date} - Ref = $json->{reference}"
-    );
     my $dDate = strftime( "%Y-%m-%d", localtime() );
-    $json->{date} ||= $dDate;
+    if ( $json->{date} ) {
+        $self->logger->debug(
+"Posted datas : uid = $json->{uid} - Ref = $json->{reference} - Date = $json->{date}"
+        );
+    }
+    else {
+        $self->logger->debug(
+"Posted datas : uid = $json->{uid} - Ref = $json->{reference} - Date = ???"
+        );
+        $json->{date} = $dDate;
+    }
 
     # Check if posted date > today
     unless ( $json->{date} ge $dDate ) {
