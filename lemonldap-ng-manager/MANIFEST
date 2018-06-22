@@ -51,6 +51,7 @@ site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.min.js
 site/htdocs/static/bwr/angular-cookies/angular-cookies.js
 site/htdocs/static/bwr/angular-cookies/angular-cookies.min.js
 site/htdocs/static/bwr/angular-cookies/angular-cookies.min.js.map
+site/htdocs/static/bwr/angular-ui-tree/dist/angular-ui-tree.css
 site/htdocs/static/bwr/angular-ui-tree/dist/angular-ui-tree.js
 site/htdocs/static/bwr/angular-ui-tree/dist/angular-ui-tree.min.css
 site/htdocs/static/bwr/angular-ui-tree/dist/angular-ui-tree.min.js
