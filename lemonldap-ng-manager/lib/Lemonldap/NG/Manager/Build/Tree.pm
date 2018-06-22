@@ -377,7 +377,7 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'twitterAuthnLevel', 'twitterKey',
-                                'twitterSecret',     'twitterAppName'
+                                'twitterSecret',     'twitterAppName', 'twitterUserField'
                             ]
                         },
                         {

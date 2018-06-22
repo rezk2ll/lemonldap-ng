@@ -739,6 +739,7 @@
 "twitterKey":"مفتاح أل API",
 "twitterParams":"معاييرتويتر",
 "twitterSecret":"سر أل API ",
+"twitterUserField":"Field containing user identifier",
 "type":"نوع",
 "u2f":"U2F",
 "u2fActivation":"تفعيل",

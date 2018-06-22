@@ -199,16 +199,15 @@ sub extractFormInfo {
               . $req->datas->{_twitterUserId}
               . " and screen name "
               . $req->datas->{_twitterScreenName} );
+        $req->user(
+            $response->{extra_params}->{ $self->conf->{'twitterUserField'} } );
+        $self->logger->debug("Good Twitter authentication for $req->{user}");
     }
     else {
         $self->logger->error(
             'Twitter OAuth protocol error: ' . $res_access->content );
         return PE_ERROR;
     }
-
-    # 2.4 Set $req->{user} to screen name
-    $req->user( $req->datas->{_twitterScreenName} );
-    $self->logger->debug("Good Twitter authentication for $req->{user}");
 
     # Force redirection to avoid displaying OAuth datas
     $req->{mustRedirect} = 1;

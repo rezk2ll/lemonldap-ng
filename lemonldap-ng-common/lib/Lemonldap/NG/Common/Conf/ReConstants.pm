@@ -55,7 +55,7 @@ our $authParameters = {
   restParams => [qw(restAuthUrl restUserDBUrl restPwdConfirmUrl restPwdModifyUrl)],
   slaveParams => [qw(slaveAuthnLevel slaveExportedVars slaveUserHeader slaveMasterIP slaveHeaderName slaveHeaderContent)],
   sslParams => [qw(SSLAuthnLevel SSLVar SSLVarIf sslByAjax sslHost)],
-  twitterParams => [qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName)],
+  twitterParams => [qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName twitterUserField)],
   webidParams => [qw(webIDAuthnLevel webIDExportedVars webIDWhitelist)],
 };
 our $issuerParameters = {

@@ -739,6 +739,7 @@
 "twitterKey":"API key",
 "twitterParams":"Twitter parameters",
 "twitterSecret":"API secret",
+"twitterUserField":"Field containing user identifier",
 "type":"Type",
 "u2f":"U2F",
 "u2fActivation":"Activation",

@@ -2643,6 +2643,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         twitterKey     => { type => 'text', },
         twitterSecret  => { type => 'text', },
         twitterAppName => { type => 'text', },
+        twitterUserField => { type => 'text', default => 'screen_name' },
 
         # LinkedIn
         linkedInAuthnLevel => {

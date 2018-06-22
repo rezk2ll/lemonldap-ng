@@ -739,6 +739,7 @@
 "twitterKey":"khóa API",
 "twitterParams":"Thông số Twitter",
 "twitterSecret":"API bí mật",
+"twitterUserField":"Field containing user identifier",
 "type":"Loại",
 "u2f":"U2F",
 "u2fActivation":"Kích hoạt",
