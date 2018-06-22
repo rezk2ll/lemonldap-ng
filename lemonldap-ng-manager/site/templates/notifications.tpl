@@ -39,10 +39,10 @@
     <!-- Right(main) div -->
     <div id="right" class="col-lg-8 col-md-8 col-sm-7 col-xs-12 scrollable" ng-class="{'hidden-xs':showT&&!showM}">
       <!-- Menu buttons -->
-      <div class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
+      <div ng-if="type=='new'||currentNotification" class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
         <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
           <ul class="nav navbar-nav">
-            <li ng-if="type=='new'||currentNotification" ng-repeat="button in menu[type]" ng-include="'menubutton.html'"></li>
+            <li ng-repeat="button in menu[type]" ng-include="'menubutton.html'"></li>
             <li uib-dropdown class="visible-xs">
               <a id="langmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
               <ul uib-dropdown-menu aria-labelled-by="langmenu" role="grid">
