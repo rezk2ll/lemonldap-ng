@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 16;
+my $maintests = 17;
 my $debug     = 'error';
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -127,53 +127,69 @@ SKIP: {
     expectOK($res);
     expectAuthenticatedAs( $res, 'fa@badwolf.org@idp' );
 
-    # Logout initiated by IdP
-    switch ('issuer');
+    # Logout initiated by SP
     ok(
-        $res = $issuer->_get(
+        $res = $sp->_get(
             '/',
             query  => 'logout',
-            cookie => "lemonldap=$idpId",
+            cookie => "lemonldap=$spId",
             accept => 'text/html'
         ),
-        'Query IdP for logout'
-    );
-    expectOK($res);
-
-    ok(
-        $res->[2]->[0] =~
-m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
-        'Get iframe request'
-    ) or explain( $res, '' );
-    ( $url, $query ) = ( $1, $2 );
-
-    ok(
-        $res = $issuer->_get(
-            $url,
-            query  => $query,
-            cookie => "lemonldap=$idpId",
-            accept => 'text/html'
-        ),
-        'Get iframe'
+        'Query SP for logout'
     );
     ( $host, $url, $query ) =
-      expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleLogout',
+      expectAutoPost( $res, 'auth.idp.com', '/saml/singleLogout',
         'SAMLRequest' );
 
-    # Post SAML logout request to SP
+    # Push SAML logout request to IdP
+    switch ('issuer');
+    ok(
+        $res = $issuer->_post(
+            $url,
+            IO::String->new($query),
+            accept => 'text/html',
+            cookie => "lemonldap=$idpId",
+            length => length($query)
+        ),
+        'Post SAML logout request to IdP'
+    );
+    ( $host, $url, $query ) =
+      expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleLogoutReturn',
+        'SAMLResponse' );
+
+    # Post SAML response to SP
     switch ('sp');
     ok(
         $res = $sp->_post(
             $url, IO::String->new($query),
             accept => 'text/html',
             length => length($query),
-            cookie => "lemonldap=$spId",
+            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
-        'Post SAML logout request to SP'
+        'Post SAML response to SP'
     );
-    ( $host, $url, $query ) =
-      expectAutoPost( $res, 'auth.idp.com', '/saml/singleLogoutReturn',
-        'SAMLResponse' );
+    expectRedirection( $res, 'http://auth.sp.com' );
+
+    # Test if logout is done
+    switch ('issuer');
+    ok(
+        $res = $issuer->_get(
+            '/', cookie => "lemonldap=$idpId",
+        ),
+        'Test if user is reject on IdP'
+    );
+    expectReject($res);
+
+    switch ('sp');
+    ok(
+        $res = $sp->_get(
+            '/',
+            cookie =>
+              "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
+        ),
+        'Test if user is reject on SP'
+    );
+    expectReject($res);
 
 }
 

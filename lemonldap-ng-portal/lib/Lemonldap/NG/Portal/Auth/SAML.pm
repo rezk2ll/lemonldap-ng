@@ -27,7 +27,7 @@ extends 'Lemonldap::NG::Portal::Main::Auth', 'Lemonldap::NG::Portal::Lib::SAML';
 
 # INTERFACE
 
-has sloAssConsumerRe => ( is => 'rw' );
+has ssoAssConsumerRe => ( is => 'rw' );
 has sloRe            => ( is => 'rw' );
 has artRe            => ( is => 'rw' );
 has catch            => ( is => 'rw' );
@@ -45,7 +45,7 @@ sub init {
         "samlSPSSODescriptorAssertionConsumerServiceHTTPPost");
     my $saml_acs_get_url = $self->getMetaDataURL(
         "samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect");
-    $self->sloAssConsumerRe(
+    $self->ssoAssConsumerRe(
         qr/^($saml_acs_art_url|$saml_acs_post_url|$saml_acs_get_url)(?:\?.*)?$/i
     );
     my $saml_slo_soap_url =
@@ -69,7 +69,9 @@ qr/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_u
     my $saml_ars_url = $self->getMetaDataURL(
         "samlSPSSODescriptorArtifactResolutionServiceArtifact");
     $self->artRe(qr/^($saml_ars_url)(?:\?.*)?$/i);
-    $self->catch( $self->sloAssConsumerRe );
+    $self->catch(
+qr/^($saml_acs_art_url|$saml_acs_post_url|$saml_acs_get_url$saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)(?:\?.*)?$/i
+    );
 
     # Load SAML service and SAML IdP list
     return ( $self->SUPER::init and $self->loadIDPs );
@@ -87,7 +89,7 @@ sub extractFormInfo {
     my $content_type   = $req->content_type;
 
     # 1.1 SSO assertion consumer
-    if ( $url =~ $self->sloAssConsumerRe ) {
+    if ( $url =~ $self->ssoAssConsumerRe ) {
         $self->logger->debug(
             "URL $url detected as an SSO assertion consumer URL");
 
