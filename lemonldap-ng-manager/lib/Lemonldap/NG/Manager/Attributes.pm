@@ -1083,6 +1083,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
         },
+        'facebookUserField' => {
+            'default' => 'id',
+            'type'    => 'text'
+        },
         'failedLoginNumber' => {
             'default' => 5,
             'type'    => 'int'

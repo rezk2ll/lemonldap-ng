@@ -248,6 +248,7 @@
 "facebookAuthnLevel":"Mức xác thực",
 "facebookExportedVars":"Biến đã được xuất",
 "facebookParams":"Tham số Facebook",
+"facebookUserField":"Field containing user identifier",
 "failedLoginNumber":"Số lượt đăng nhập thất bại",
 "fileToUpload":"Tập tin để tải lên",
 "forbidden":"Bạn không được ủy quyền để hiển thị trang này",

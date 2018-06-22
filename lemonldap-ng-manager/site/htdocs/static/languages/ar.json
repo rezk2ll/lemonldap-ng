@@ -248,6 +248,7 @@
 "facebookAuthnLevel":"مستوى إثبات الهوية",
 "facebookExportedVars":"المتغيرات المصدرة",
 "facebookParams":"معاييرفاسيبوك",
+"facebookUserField":"Field containing user identifier",
 "failedLoginNumber":"عدد عمليات تسجيل الدخول الفاشلة المسجلة",
 "fileToUpload":"الملف الذي ستحمله",
 "forbidden":"لست مخولا بعرض هذه الصفحة",

@@ -203,7 +203,8 @@ sub tree {
                             help  => 'authfacebook.html',
                             nodes => [
                                 'facebookAuthnLevel', 'facebookExportedVars',
-                                'facebookAppId',      'facebookAppSecret'
+                                'facebookAppId',      'facebookAppSecret',
+                                'facebookUserField'
                             ]
                         },
                         {
@@ -377,7 +378,8 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'twitterAuthnLevel', 'twitterKey',
-                                'twitterSecret',     'twitterAppName', 'twitterUserField'
+                                'twitterSecret',     'twitterAppName',
+                                'twitterUserField'
                             ]
                         },
                         {

@@ -48,6 +48,7 @@ sub defaultValues {
         'ext2fActivation'      => 0,
         'facebookAuthnLevel'   => 1,
         'facebookExportedVars' => {},
+        'facebookUserField'    => 'id',
         'failedLoginNumber'    => 5,
         'formTimeout'          => 120,
         'globalStorage'        => 'Apache::Session::File',

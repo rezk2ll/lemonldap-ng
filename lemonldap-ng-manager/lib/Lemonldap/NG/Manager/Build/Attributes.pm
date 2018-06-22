@@ -1457,7 +1457,7 @@ sub attributes {
                         grep { $_ =~ /Undefined subroutine/ ? () : $_ }
                           split( /\n/, $@ ) );
                     return $err ? ( 1, "__badExpression__: $err" ) : (1);
-                }
+                  }
             },
             documentation => 'Virtualhost headers',
             flags         => 'h',
@@ -2633,6 +2633,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => {},
             documentation => 'Facebook exported variables',
         },
+        facebookUserField => { type => 'text', default => 'id' },
 
         # Twitter
         twitterAuthnLevel => {
@@ -2640,9 +2641,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 1,
             documentation => 'Twitter authentication level',
         },
-        twitterKey     => { type => 'text', },
-        twitterSecret  => { type => 'text', },
-        twitterAppName => { type => 'text', },
+        twitterKey       => { type => 'text', },
+        twitterSecret    => { type => 'text', },
+        twitterAppName   => { type => 'text', },
         twitterUserField => { type => 'text', default => 'screen_name' },
 
         # LinkedIn

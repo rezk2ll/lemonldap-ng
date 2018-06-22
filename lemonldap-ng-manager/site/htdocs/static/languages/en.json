@@ -248,6 +248,7 @@
 "facebookAuthnLevel":"Authentication level",
 "facebookExportedVars":"Exported variables",
 "facebookParams":"Facebook parameters",
+"facebookUserField":"Field containing user identifier",
 "failedLoginNumber":"Number of registered failed logins",
 "fileToUpload":"File to upload",
 "forbidden":"You're not authorized to show this page",

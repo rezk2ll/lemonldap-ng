@@ -49,14 +49,13 @@ sub extractFormInfo {
             $req->{sessionInfo}->{_facebookToken} = $access_token;
 
      # Get mandatory fields (see https://developers.facebook.com/tools/explorer)
-            my @fields = ('id');
+            my @fields = ( $self->conf->{facebookUserField} );
 
-            # Look at wanted fields
-            if ( $self->p->getModule( $req, 'user' ) =~ /^Facebook/ ) {
-                push @fields,
-                  map { /^(\w+)$/ ? ($1) : () }
-                  values %{ $self->conf->{facebookExportedVars} };
-            }
+            # Search all wanted fields
+            push @fields,
+              map { /^(\w+)$/ ? ($1) : () }
+              values %{ $self->conf->{facebookExportedVars} };
+
             my $datas;
 
             # When a field is not granted, Facebook returns only an error
@@ -86,13 +85,14 @@ sub extractFormInfo {
                 return PE_ERROR;
             }
 
-            # Use id field to trace user
-            unless ( $datas->{id} ) {
+            # Field to trace user
+            unless ( $datas->{ $self->conf->{facebookUserField} } ) {
                 $self->logger->error('Unable to get Facebook id');
                 return PE_ERROR;
             }
-            $req->user( $datas->{id} );
+            $req->user( $datas->{ $self->conf->{facebookUserField} } );
             $req->datas->{_facebookDatas} = $datas;
+            $req->{sessionInfo}->{_facebookDatas} = $datas;
 
             # Force redirection to avoid displaying Oauth datas
             $req->mustRedirect(1);

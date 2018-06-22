@@ -248,6 +248,7 @@
 "facebookAuthnLevel":"Niveau d'authentification",
 "facebookExportedVars":"Variables exportées",
 "facebookParams":"Paramètres Facebook",
+"facebookUserField":"Champ contenant l'identifiant de l'utilisateur",
 "failedLoginNumber":"Nombre d'échecs de connexion mémorisés",
 "fileToUpload":"Fichier à télécharger",
 "forbidden":"Vous n'êtes pas autorisé à visualiser cette page",
