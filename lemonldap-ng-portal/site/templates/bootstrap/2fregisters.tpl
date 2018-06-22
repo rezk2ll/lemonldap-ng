@@ -33,7 +33,7 @@
   <div class="buttons"> 
     <TMPL_LOOP NAME="MODULES">
 	  &nbsp;&nbsp;
-      <a href="<TMPL_VAR NAME="URL">">
+      <a href="<TMPL_VAR NAME="URL">" class="nodecor">
         <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2F" title="<TMPL_VAR NAME="CODE">2F" />
       </a>
       &nbsp;&nbsp;
