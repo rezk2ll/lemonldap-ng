@@ -11,7 +11,7 @@ require 't/test-lib.pm';
 
 # Try to create a notification
 my $notif =
-'{"date":"2015-05-03","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test\"}"}';
+'{"date":"2099-05-03","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test\"}"}';
 my $res =
   &client->jsonPostResponse( 'notifications/actives', '',
     IO::String->new($notif),
@@ -44,7 +44,7 @@ displayTests('done');
 
 # Delete notification
 $res =
-  &client->_del('notifications/done/dwho_Test_20150503_dwho_VGVzdA==.done');
+  &client->_del('notifications/done/dwho_Test_20990503_dwho_VGVzdA==.done');
 $res = &client->jsonResponse( 'notifications/done', 'groupBy=substr(uid,1)' );
 ok( $res->{result} == 1, 'Result = 1' );
 ok( $res->{count} == 0,  'Count = 0' );
