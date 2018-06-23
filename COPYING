@@ -15,6 +15,7 @@ Copyright: 2005-2018, Xavier Guimard <x.guimard@free.fr>
  2005-2018, Gendarmerie nationale <https://www.gendarmerie.interieur.gouv.fr>
  2006-2015, LINAGORA <info@linagora.com>
  2015-2018, Savoir-faire Linux <contact@savoirfairelinux.com>
+ 2018, Worteks <info@worteks.com>
 License: GPL-2+
 
 Files: lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Auth/PAM.pm
