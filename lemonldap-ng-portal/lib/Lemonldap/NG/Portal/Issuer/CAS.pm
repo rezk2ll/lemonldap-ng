@@ -18,6 +18,8 @@ extends 'Lemonldap::NG::Portal::Main::Issuer',
 
 # INITIALIZATION
 
+use constant beforeAuth => 'storeEnv';
+
 sub init {
     my ($self) = @_;
 
@@ -41,6 +43,23 @@ sub init {
 }
 
 # RUNNING METHODS
+
+sub storeEnv {
+    my ( $self, $req ) = @_;
+    my $service = $self->p->getHiddenFormValue( $req, 'service' )
+      || $req->param('service');
+
+    if ( $service and $service =~ m#^(https?://[^/]+)(/.*)?$# ) {
+        my ( $host, $uri ) = ( $1, $2 );
+        my $app = $self->casAppList->{$host};
+
+        if ($app) {
+            $req->env->{llng_cas_app} = $app;
+        }
+    }
+
+    return PE_OK;
+}
 
 # Main method (launched only for authenticated users, see Main/Issuer)
 sub run {
