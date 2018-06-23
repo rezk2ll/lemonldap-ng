@@ -4,6 +4,7 @@ use strict;
 use Mouse;
 use URI::Escape;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADCREDENTIALS);
+use utf8;
 
 our $VERSION = '2.0.0';
 
@@ -83,6 +84,12 @@ sub extractFormInfo {
             unless (@fields) {
                 $self->logger->error("Unable to get any Facebook field");
                 return PE_ERROR;
+            }
+
+            # Parse received datas
+            foreach ( keys %$datas ) {
+                utf8::encode $datas->{$_};
+                $self->logger->debug( "Facebook data $_: " . $datas->{$_} );
             }
 
             # Field to trace user
