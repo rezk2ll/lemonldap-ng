@@ -420,17 +420,8 @@ sub tree {
                             title => 'issuerDBCAS',
                             help  => 'idpcas.html',
                             nodes => [
-                                'issuerDBCASActivation',
-                                'issuerDBCASPath',
+                                'issuerDBCASActivation', 'issuerDBCASPath',
                                 'issuerDBCASRule',
-                                {
-                                    title => 'issuerDBCASOptions',
-                                    nodes => [
-                                        'casAttr',
-                                        'casAttributes',
-                                        'casAccessControlPolicy',
-                                    ]
-                                }
                             ]
                         },
                         {
@@ -1004,7 +995,12 @@ sub tree {
         'oidcRPMetaDataNodes',
         {
             title => 'casServiceMetadata',
-            nodes => [ 'casStorage', 'casStorageOptions' ]
+            nodes => [
+                'casAttr',
+                'casAttributes',
+                'casAccessControlPolicy', 'casStorage', 'casStorageOptions'
+
+            ]
         },
         'casSrvMetaDataNodes',
         'casAppMetaDataNodes',

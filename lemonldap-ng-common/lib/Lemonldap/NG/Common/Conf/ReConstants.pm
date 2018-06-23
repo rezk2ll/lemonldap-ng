@@ -59,7 +59,7 @@ our $authParameters = {
   webidParams => [qw(webIDAuthnLevel webIDExportedVars webIDWhitelist)],
 };
 our $issuerParameters = {
-  issuerDBCAS => [qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule casAttr casAttributes casAccessControlPolicy)],
+  issuerDBCAS => [qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule)],
   issuerDBGet => [qw(issuerDBGetActivation issuerDBGetPath issuerDBGetRule issuerDBGetParameters)],
   issuerDBOpenID => [qw(issuerDBOpenIDActivation issuerDBOpenIDPath issuerDBOpenIDRule openIdIssuerSecret openIdAttr openIdSPList openIdSreg_fullname openIdSreg_nickname openIdSreg_language openIdSreg_postcode openIdSreg_timezone openIdSreg_country openIdSreg_gender openIdSreg_email openIdSreg_dob)],
   issuerDBOpenIDConnect => [qw(issuerDBOpenIDConnectActivation issuerDBOpenIDConnectPath issuerDBOpenIDConnectRule)],
