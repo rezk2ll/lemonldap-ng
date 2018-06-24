@@ -26,7 +26,7 @@
 "_utime":"Session timestamp",
 "2faSessions":"2ndFA sessions explorer",
 "2ndFA":"Second Factors",
-"actives":"Actives",
+"actives":"Enabled",
 "activeTimer":"Auto accept time",
 "addAppCasPartner":"Add CAS application",
 "addIDPSamlPartner":"Add SAML IDP",
