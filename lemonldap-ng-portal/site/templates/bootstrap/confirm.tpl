@@ -50,6 +50,7 @@
       </div>
 
       <TMPL_IF NAME="REMEMBER">
+	  <p>&nbsp;</p>
       <div class="checkbox">
         <input type="checkbox" id="remember" name="cookie_type" value="1" aria-describedby="rememberlabel">
         <label id="rememberlabel" for="remember">
@@ -91,7 +92,18 @@
 
       </div>
     </div>
-
+    
+	  <TMPL_IF NAME="PORTAL_URL">
+	    <div id="logout">
+	      <div class="buttons">
+	        <a href="<TMPL_VAR NAME="PORTAL_URL"><TMPL_IF NAME="AUTH_URL">/?url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
+	          <span class="glyphicon glyphicon-home"></span>&nbsp;
+	          <span trspan="goToPortal">Go to portal</span>
+	        </a>
+	      </div>
+	    </div>
+	  </TMPL_IF>
+	  
   </form>
 
 </div>
