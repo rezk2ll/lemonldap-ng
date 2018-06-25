@@ -46,13 +46,13 @@
 
         <div id="<TMPL_VAR NAME="key">">
 
-          <form id="form" action="<TMPL_VAR NAME="url">" method="post" class="login <TMPL_VAR NAME="module">">
+          <form action="<TMPL_VAR NAME="url">" method="post" class="login <TMPL_VAR NAME="module">">
 
             <!-- Hidden fields -->
             <TMPL_VAR NAME="HIDDEN_INPUTS">
             <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
             <input type="hidden" name="timezone" />
-            <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="key">" />
+            <input type="hidden" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="key">" />
             <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
 
             <TMPL_IF NAME="standardform">
@@ -78,7 +78,7 @@
                 <TMPL_IF NAME="logoFile">
                   <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/modules/<TMPL_VAR NAME="logoFile">" alt="<TMPL_VAR NAME="module">" class="img-thumbnail" />
                 </TMPL_IF>
-
+				<p> </p>
                 <TMPL_INCLUDE NAME="checklogins.tpl">
 
                 <div class="buttons">

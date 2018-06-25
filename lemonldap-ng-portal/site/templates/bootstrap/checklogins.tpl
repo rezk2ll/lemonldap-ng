@@ -2,7 +2,7 @@
     <TMPL_IF NAME="CHECK_LOGINS">
     <div class="form-group input-group">
       <span class="input-group-addon">
-        <input type="checkbox" id="checkLogins" name="checkLogins" aria-describedby="checkLoginsLabel" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF> />
+        <input type="checkbox" name="checkLogins" aria-describedby="checkLoginsLabel" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF> />
       </span>
       <p class="form-control">
         <label id="checkLoginsLabel" for="checkLogins" trspan="checkLastLogins">Check my last logins</label>
