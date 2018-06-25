@@ -9,6 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_LOGOUT_OK
   PE_OK
+  PE_SENDRESPONSE
 );
 
 our $VERSION = '2.0.0';
@@ -18,7 +19,7 @@ extends 'Lemonldap::NG::Portal::Main::Issuer',
 
 # INITIALIZATION
 
-use constant beforeAuth => 'storeEnv';
+use constant beforeAuth => 'storeEnvAndCheckGateway';
 
 sub init {
     my ($self) = @_;
@@ -44,10 +45,19 @@ sub init {
 
 # RUNNING METHODS
 
-sub storeEnv {
+sub storeEnvAndCheckGateway {
     my ( $self, $req ) = @_;
     my $service = $self->p->getHiddenFormValue( $req, 'service' )
       || $req->param('service');
+    my $gateway = $self->p->getHiddenFormValue( $req, 'gateway' )
+      || $req->param('gateway');
+
+    if ( $gateway and $gateway eq "true" ) {
+        $self->logger->debug(
+            "Gateway mode requested, redirect without authentication");
+        $req->response( [ 302, [ Location => $service ], [] ] );
+        return PE_SENDRESPONSE;
+    }
 
     if ( $service and $service =~ m#^(https?://[^/]+)(/.*)?$# ) {
         my ( $host, $uri ) = ( $1, $2 );
