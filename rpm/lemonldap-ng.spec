@@ -299,13 +299,6 @@ chmod +x %{__perl_requires}
 	APACHEVERSION=%{apache_version} \
 	PROD=yes
 
-%{__make} %{?_smp_mflags} install_fr_doc_site \
-	DESTDIR=%{buildroot} \
-	PREFIX=%{lm_prefix} \
-	BINDIR=%{lm_sharedir}/bin \
-	DOCUMENTROOT=%{lm_vardir} \
-	DATADIR=%{lm_vardir}
-
 # Remove some unwanted files
 find %{buildroot} -name .packlist -exec rm -f {} \;
 find %{buildroot} -name perllocal.pod -exec rm -f {} \;
