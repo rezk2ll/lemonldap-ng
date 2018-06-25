@@ -82,14 +82,14 @@
 </ul>
 
 <p>
-Sessions for connected users:
+Sessions for connected users <em>(used by <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">LLNG Proxy</a>)</em>:
 </p>
 <ul>
-<li class="level1"><div class="li"> GET /mysession/&lt;type&gt;                      : get session datas</div>
+<li class="level1"><div class="li"> GET /session/my/&lt;type&gt;                      : get session datas</div>
 </li>
-<li class="level1"><div class="li"> GET /mysession/&lt;type&gt;/key                  : get session key</div>
+<li class="level1"><div class="li"> GET /session/my/&lt;type&gt;/key                  : get session key</div>
 </li>
-<li class="level1"><div class="li"> DELETE /mysession                          : ask for logout</div>
+<li class="level1"><div class="li"> DELETE /session/my                          : ask for logout</div>
 </li>
 </ul>
 
@@ -114,12 +114,12 @@ To configure it, REST session backend will be set trough Manager in global confi
 </p>
 
 </div>
-<!-- EDIT1 SECTION "REST session backend" [1-1390] -->
+<!-- EDIT1 SECTION "REST session backend" [1-1432] -->
 <h2 class="sectionedit2" id="setup">Setup</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT2 SECTION "Setup" [1391-1409] -->
+<!-- EDIT2 SECTION "Setup" [1433-1451] -->
 <h3 class="sectionedit3" id="manager">Manager</h3>
 <div class="level3">
 
@@ -152,9 +152,9 @@ Then, set <code>Lemonldap::NG::Common::Apache::Session::REST</code> in <code>Gen
 		<td class="col0 centeralign">  <strong>password</strong>  </td><td class="col1"> Password to use for auth basic mechanism </td><td class="col2 leftalign">   </td>
 	</tr>
 </table></div>
-<!-- EDIT4 TABLE [1758-2084] -->
+<!-- EDIT4 TABLE [1800-2126] -->
 </div>
-<!-- EDIT3 SECTION "Manager" [1410-2085] -->
+<!-- EDIT3 SECTION "Manager" [1452-2127] -->
 <h3 class="sectionedit5" id="apache">Apache</h3>
 <div class="level3">
 
@@ -167,7 +167,7 @@ Sessions REST end points access must be allowed in Apache portal configuration (
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT5 SECTION "Apache" [2086-2375] -->
+<!-- EDIT5 SECTION "Apache" [2128-2417] -->
 <h3 class="sectionedit6" id="real_session_backend">Real session backend</h3>
 <div class="level3">
 
@@ -184,6 +184,6 @@ For example, if real sessions are stored in <a href="filesessionbackend.html" cl
 <div class="notetip">Session explorer and “single session” features can&#039;t be used using this backend. Session explorer and portal must be launched with real backend.
 </div>
 </div>
-<!-- EDIT6 SECTION "Real session backend" [2376-] --></div>
+<!-- EDIT6 SECTION "Real session backend" [2418-] --></div>
 </body>
 </html>

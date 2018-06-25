@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:servertoserver</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,servertoserver"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="servertoserver.html"/>
@@ -48,11 +48,23 @@
 <div class="level1">
 
 <p>
-In modern applications, web application may need to call some other web application on behalf of the connected users. There is three way to do it: the ugly and the smart.
+In modern applications, web application may need to request some other web applications on behalf of the authenticated users. There are three ways to do this:
+</p>
+<ul>
+<li class="level1"><div class="li"> the Ugly : provide to all applications the <abbr title="Single Sign On">SSO</abbr> cookie. Not secured because the <abbr title="Single Sign On">SSO</abbr> cookie can be caught and used everywhere, every time by everyone!!! <strong>NOT RECOMMENDED</strong>.  </div>
+</li>
+<li class="level1"><div class="li"> the Bad (<a href="securetoken.html" class="wikilink1" title="documentation:2.0:securetoken">Secure Token Handler</a>) : <strong>Deprecated</strong>. Can be used in specific cases  </div>
+</li>
+<li class="level1"><div class="li"> the Good (Service Token Handler): See below ! (Thanks Sergio…)</div>
+</li>
+</ul>
+
+<p>
+The “Bad” method consists to give the token (cookie value) to webapp1 which uses it as cookie header in its request. Since 2.0 version, <abbr title="LemonLDAP::NG">LL::NG</abbr> gives a better way (the Good !) to do this by using limited scope tokens.
 </p>
 
 <p>
-The ugly consists to give the cookie value to the webapp 1 which use it in cookie header of its request. Since version 2.0, LLNG gives a better way to do it using tokens with limited scope.
+Tokens are time limited (30 seconds) and <abbr title="Uniform Resource Locator">URL</abbr> restricted (three max).
 </p>
 
 <p>
@@ -60,21 +72,21 @@ The ugly consists to give the cookie value to the webapp 1 which use it in cooki
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Handling server webservice calls" [1-447] -->
+<!-- EDIT1 SECTION "Handling server webservice calls" [1-899] -->
 <h2 class="sectionedit2" id="webapp1_handler_configuration">Webapp1 handler configuration</h2>
 <div class="level2">
 
 <p>
-Insert a header containing this value:
+Insert a header filled with this value:
 </p>
 <pre class="code file perl">token<span class="br0">&#40;</span> <span class="re0">$_session_id</span><span class="sy0">,</span> <span class="st_h">'webapp2.example.com'</span><span class="sy0">,</span> <span class="st_h">'webapp3.example.com'</span> <span class="br0">&#41;</span></pre>
 
 <p>
-Webapp1 can read this header and use it in its requests in the <code>X-Llng-Token</code> header. The token is build using the session ID and the list of authorized virtualhosts. The token is available only 30 seconds and only the listed virtualhosts.
+Webapp1 can read this header and use it in its requests by setting the <code>X-Llng-Token</code> header. The token is built using the session ID and the authorized virtualhosts list. The token is only available during 30 seconds and for the specified virtualhosts.
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Webapp1 handler configuration" [448-861] -->
+<!-- EDIT2 SECTION "Webapp1 handler configuration" [900-1328] -->
 <h2 class="sectionedit3" id="webapp2_handler_configuration">Webapp2 handler configuration</h2>
 <div class="level2">
 
@@ -83,6 +95,6 @@ Change handler type to “ServiceToken”. So it is able to manage both user and
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Webapp2 handler configuration" [862-] --></div>
+<!-- EDIT3 SECTION "Webapp2 handler configuration" [1329-] --></div>
 </body>
 </html>

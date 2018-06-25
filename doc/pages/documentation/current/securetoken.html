@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:securetoken</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,securetoken"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="securetoken.html"/>
@@ -55,7 +55,7 @@
 <li class="level2"><div class="li"><a href="#virtual_host">Virtual host</a></div>
 <ul class="toc">
 <li class="level3"><div class="li"><a href="#apache">Apache</a></div></li>
-<li class="level3"><div class="li"><a href="#nginx">Nginx</a></div></li>
+<li class="level3"><div class="li"><a href="#other_web_servers">Other web servers</a></div></li>
 </ul>
 </li>
 <li class="level2"><div class="li"><a href="#handler_parameters">Handler parameters</a></div></li>
@@ -97,7 +97,7 @@ This mechanism allows one to protect an application with an unsafe link between 
 <div class="level4">
 
 <p>
-Configure the virtual host like other <a href="configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a> but use Secure Token Handler instead of default Handler.
+VirtualHost has to be configured like other <a href="configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual hosts</a> but by using Secure Token Handler instead of default Handler.
 </p>
 <pre class="code file apache">PerlModule Lemonldap::NG::Handler::Specific::SecureToken
 &lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
@@ -112,12 +112,12 @@ Configure the virtual host like other <a href="configvhost.html" class="wikilink
 
 </div>
 
-<h4 id="nginx">Nginx</h4>
+<h4 id="other_web_servers">Other web servers</h4>
 <div class="level4">
-<div class="noteclassic">This module uses Apache2 Filter and is not compatible with Nginx.
+<div class="noteclassic">This handler uses Apache2Filter Module to hide token, prefer <a href="servertoserver.html" class="wikilink1" title="documentation:2.0:servertoserver">Handling server webservice calls</a> for other servers.
 </div>
 </div>
-<!-- EDIT4 SECTION "Virtual host" [542-1094] -->
+<!-- EDIT4 SECTION "Virtual host" [542-1184] -->
 <h3 class="sectionedit5" id="handler_parameters">Handler parameters</h3>
 <div class="level3">
 
@@ -149,6 +149,6 @@ SecureToken parameters are the following:
 
 </div>
 </div>
-<!-- EDIT5 SECTION "Handler parameters" [1095-] --></div>
+<!-- EDIT5 SECTION "Handler parameters" [1185-] --></div>
 </body>
 </html>

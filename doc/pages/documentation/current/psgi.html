@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:psgi</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,psgi"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="psgi.html"/>
@@ -59,8 +59,11 @@
 <li class="level2"><div class="li"><a href="#using_uwsgi">Using uWSGI</a></div>
 <ul class="toc">
 <li class="level3"><div class="li"><a href="#using_debian_lemonldap-ng-uwsgi-app_package">Using Debian lemonldap-ng-uwsgi-app package</a></div></li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#protect_a_psgi_application">Protect a PSGI application</a></div></li>
 </ul>
 </div>
 </div>
@@ -235,6 +238,50 @@ Then adapt your Nginx configuration to use this uWSGI app.
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Using uWSGI" [3413-] --></div>
+<!-- EDIT5 SECTION "Using uWSGI" [3413-4230] -->
+<h2 class="sectionedit6" id="protect_a_psgi_application">Protect a PSGI application</h2>
+<div class="level2">
+
+<p>
+LLNG provides <code>Plack::Middleware::Auth::LemonldapNG</code> that can be used to protect any PSGI application: it acts exactly like a LLNG handler. Simple example:
+</p>
+<dl class="file">
+<dt><a href="_export/code/documentation/2.0/psgi/codeblock.4.code" title="Download Snippet" class="mediafile mf_psgi">app.psgi</a></dt>
+<dd><pre class="code file perl"><span class="kw2">use</span> Plack<span class="sy0">::</span><span class="me2">Builder</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">my</span> <span class="re0">$app</span>   <span class="sy0">=</span> <span class="kw2">sub</span> <span class="br0">&#123;</span> <span class="sy0">...</span> <span class="br0">&#125;</span><span class="sy0">;</span>
+builder <span class="br0">&#123;</span>
+    enable <span class="st0">&quot;Auth::LemonldapNG&quot;</span><span class="sy0">;</span>
+    <span class="re0">$app</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</dd></dl>
+
+<p>
+More advanced example:
+</p>
+<dl class="file">
+<dt><a href="_export/code/documentation/2.0/psgi/codeblock.5.code" title="Download Snippet" class="mediafile mf_psgi">app.psgi</a></dt>
+<dd><pre class="code file perl"><span class="kw2">use</span> Plack<span class="sy0">::</span><span class="me2">Builder</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">my</span> <span class="re0">$app</span>   <span class="sy0">=</span> <span class="kw2">sub</span> <span class="br0">&#123;</span> <span class="sy0">...</span> <span class="br0">&#125;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1"># Optionally ($proposedResponse is the PSGI response of Lemonldap::NG handler)</span>
+<span class="kw2">sub</span> on_reject <span class="br0">&#123;</span>
+    <span class="kw1">my</span><span class="br0">&#40;</span><span class="re0">$self</span><span class="sy0">,</span><span class="re0">$env</span><span class="sy0">,</span><span class="re0">$proposedResponse</span><span class="br0">&#41;</span> <span class="sy0">=</span> <span class="co5">@_</span><span class="sy0">;</span>
+    <span class="co1"># ...</span>
+<span class="br0">&#125;</span>
+&nbsp;
+builder <span class="br0">&#123;</span>
+    enable <span class="st0">&quot;Auth::LemonldapNG&quot;</span><span class="sy0">,</span>
+      llparams <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
+        <span class="co1"># ...</span>
+      <span class="br0">&#125;</span><span class="sy0">,</span>
+      on_reject <span class="sy0">=&gt;</span> <span class="re0">\&amp;on_reject</span><span class="sy0">;</span>
+    <span class="re0">$app</span><span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span></pre>
+</dd></dl>
+
+</div>
+<!-- EDIT6 SECTION "Protect a PSGI application" [4231-] --></div>
 </body>
 </html>

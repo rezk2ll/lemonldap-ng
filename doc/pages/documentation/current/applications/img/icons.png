@@ -90,7 +90,7 @@
         <form action="/start" accept-charset="utf-8" class="search" id="dw__search" method="get" role="search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" /><input type="submit" value="Search" class="button" title="Search" /><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>
         
         <ul class="nav navbar-nav">
-                    <li><a href="/documentation/2.0/applications/img/icons.png?do=login&amp;sectok=a8e117edbbbe45106ea023b3c5ef2ae5"  class="action login" rel="nofollow" title="Login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>        </ul>
+                    <li><a href="/documentation/2.0/applications/img/icons.png?do=login&amp;sectok=ca8b27b06771874f4f7205ded14cfc7c"  class="action login" rel="nofollow" title="Login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>        </ul>
 
       </div>
 
@@ -178,6 +178,27 @@ You&#039;ve followed a link to a topic that doesn&#039;t exist yet. If permissio
 <p>
 <a href="https://partenaires.franceconnect.gouv.fr/references#LogicielslibresFranceConnectables" class="media" title="https://partenaires.franceconnect.gouv.fr/references#LogicielslibresFranceConnectables"  rel="nofollow"><img src="/_media/applications/franceconnect_logo.png" class="mediacenter" alt="" /></a>
 <strong>France Connect</strong>
+</p>
+
+<p>
+<a href="https://fusioniam.org" class="media" title="https://fusioniam.org"  rel="nofollow"><img src="/_media/logos/fusioniam_logo_icon_dragon_circle.png" class="mediacenter" alt="" /></a>
+<strong>FusionIAM projet member</strong>
+</div>
+</p>
+<hr />
+
+<p>
+<div class="text-center">
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Certifications" [175-534] -->
+<h3 class="sectionedit3" id="awards">Awards</h3>
+<div class="level3">
+
+<p>
+<a href="https://www.ow2con.org/view/2014/Awards_Results?year=2014&amp;event=OW2con14" class="media" title="https://www.ow2con.org/view/2014/Awards_Results?year=2014&amp;event=OW2con14"  rel="nofollow"><img src="/_media/logos/ow2.png?w=150&amp;tok=b7af43" class="mediacenter" alt="" width="150" /></a>
+<strong>OW2con&#039;14 Community Award</strong>
 </div>
 </p>
 <hr />
@@ -201,7 +222,7 @@ You&#039;ve followed a link to a topic that doesn&#039;t exist yet. If permissio
 
 
 </div>
-<!-- EDIT2 SECTION "Certifications" [175-] -->          </div>
+<!-- EDIT3 SECTION "Awards" [535-] -->          </div>
   </div>
 </aside>
 
@@ -220,7 +241,7 @@ You&#039;ve followed a link to a topic that doesn&#039;t exist yet. If permissio
       
     </div><!-- /site -->
 
-    <div class="no"><img src="/lib/exe/indexer.php?id=documentation%3A2.0%3Aapplications%3Aimg%3Aicons.png&amp;1528371119" width="2" height="1" alt="" /></div>
+    <div class="no"><img src="/lib/exe/indexer.php?id=documentation%3A2.0%3Aapplications%3Aimg%3Aicons.png&amp;1529961293" width="2" height="1" alt="" /></div>
     <div id="screen__mode" class="no">
       <span class="visible-xs"></span>
       <span class="visible-sm"></span>

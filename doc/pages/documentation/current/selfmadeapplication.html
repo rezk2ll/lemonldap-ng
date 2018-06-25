@@ -143,14 +143,8 @@ First create a PSGI module based on Lemonldap::NG::Handler:
   <span class="br0">&#125;</span></pre>
 
 <p>
-Then call this module in a CGI script:
+See our LLNG Nginx/Apache configurations to see how to launch it or read <a href="https://plackperl.org/" class="urlextern" title="https://plackperl.org/"  rel="nofollow">PSGI/Plack documentation</a>.
 </p>
-<pre class="code perl">  <span class="co1">#!/usr/bin/env perl</span>
-&nbsp;
-  <span class="kw2">use</span> My<span class="sy0">::</span><span class="me2">PSGI</span><span class="sy0">;</span>
-  <span class="kw2">use</span> Plack<span class="sy0">::</span><span class="me2">Handler</span><span class="sy0">::</span><span class="me2">FCGI</span><span class="sy0">;</span> <span class="co1"># or Plack::Handler::CGI</span>
-&nbsp;
-  Plack<span class="sy0">::</span><span class="me2">Handler</span><span class="sy0">::</span><span class="me2">FCGI</span><span class="sy0">-&gt;</span><span class="me1">new</span><span class="sy0">-&gt;</span><span class="me1">run</span><span class="br0">&#40;</span> My<span class="sy0">::</span><span class="me2">PSGI</span><span class="sy0">-&gt;</span><span class="me1">run</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 <p>
 The protection parameter must be set when calling the init() method:

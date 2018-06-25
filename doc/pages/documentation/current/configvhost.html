@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:configvhost</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,configvhost"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="configvhost.html"/>
@@ -276,7 +276,7 @@ server {
     fastcgi_param CONTENT_LENGTH &quot;&quot;;
     # Keep original hostname
     fastcgi_param HOST $http_host;
-    # Keep original request (LLNG server will received /llauth)
+    # Keep original request (LLNG server will receive /lmauth)
     fastcgi_param X_ORIGINAL_URI  $request_uri;
   } 
 &nbsp;
@@ -312,7 +312,7 @@ server {
 }</pre>
 
 </div>
-<!-- EDIT7 SECTION "Hosted application" [4936-6565] -->
+<!-- EDIT7 SECTION "Hosted application" [4936-6564] -->
 <h3 class="sectionedit8" id="reverse_proxy1">Reverse proxy</h3>
 <div class="level3">
 
@@ -335,7 +335,7 @@ server {
     fastcgi_param CONTENT_LENGTH &quot;&quot;;
     # Keep original hostname
     fastcgi_param HOST $http_host;
-    # Keep original request (LLNG server will received /llauth)
+    # Keep original request (LLNG server will receive /lmauth)
     fastcgi_param X_ORIGINAL_URI  $request_uri;
   } 
 &nbsp;
@@ -363,7 +363,7 @@ server {
 }</pre>
 
 </div>
-<!-- EDIT8 SECTION "Reverse proxy" [6566-7860] -->
+<!-- EDIT8 SECTION "Reverse proxy" [6565-7858] -->
 <h2 class="sectionedit9" id="lemonldapng_configuration">LemonLDAP::NG configuration</h2>
 <div class="level2">
 
@@ -390,7 +390,7 @@ A virtual host contains:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7861-8460] -->
+<!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7859-8458] -->
 <h3 class="sectionedit10" id="access_rules_and_http_headers">Access rules and HTTP headers</h3>
 <div class="level3">
 
@@ -399,7 +399,7 @@ See <strong><a href="writingrulesand_headers.html" class="wikilink1" title="docu
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Access rules and HTTP headers" [8461-8653] -->
+<!-- EDIT10 SECTION "Access rules and HTTP headers" [8459-8651] -->
 <h3 class="sectionedit11" id="post_data">POST data</h3>
 <div class="level3">
 
@@ -408,7 +408,7 @@ See <strong><a href="formreplay.html" class="wikilink1" title="documentation:2.0
 </p>
 
 </div>
-<!-- EDIT11 SECTION "POST data" [8654-8788] -->
+<!-- EDIT11 SECTION "POST data" [8652-8786] -->
 <h3 class="sectionedit12" id="options">Options</h3>
 <div class="level3">
 
@@ -435,6 +435,6 @@ Some options are available:
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Options" [8789-] --></div>
+<!-- EDIT12 SECTION "Options" [8787-] --></div>
 </body>
 </html>

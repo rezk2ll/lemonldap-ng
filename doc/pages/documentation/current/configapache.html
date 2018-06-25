@@ -52,11 +52,7 @@
 <!-- EDIT1 SECTION "Deploy Apache configuration" [1-136] -->
 <h2 class="sectionedit2" id="files">Files</h2>
 <div class="level2">
-<div class="noteimportant">Apache-ModPerl is no longer usable since 2.4 version <em>(many segfaults,…)</em>. No problem for portal and manager since they are now handled by FastCGI.
-<p>
-<strong>But for handlers, please use <a href="confignginx.html" class="wikilink1" title="documentation:2.0:confignginx">Nginx</a> !</strong>
-</p>
-
+<div class="noteimportant">Apache Mod Perl has many issues since 2.4 version with MPM worker and MPM event. No problem for portal and manager since they are now handled by FastCGI. If you want to use Apache for Handler, please switch to MPM prefork, else use Nginx.
 </div>
 <p>
 With tarball installation, Apache configuration files will be installed in <code>/usr/local/lemonldap-ng/etc/</code>, else they are in <code>/etc/lemonldap-ng</code>.
@@ -82,7 +78,7 @@ a2ensite test-apache2.conf</pre>
 
 </div>
 </div>
-<!-- EDIT2 SECTION "Files" [137-1162] -->
+<!-- EDIT2 SECTION "Files" [137-1191] -->
 <h2 class="sectionedit3" id="modules">Modules</h2>
 <div class="level2">
 
@@ -98,12 +94,14 @@ You will also need to load some Apache modules:
 </li>
 <li class="level1"><div class="li"> mod_fcgid</div>
 </li>
+<li class="level1"><div class="li"> mod_headers</div>
+</li>
 </ul>
 <div class="notetip">With Debian/Ubuntu:
-<pre class="code">a2enmod fcgid perl alias rewrite</pre>
+<pre class="code">a2enmod fcgid perl alias rewrite headers</pre>
 
 </div>
 </div>
-<!-- EDIT3 SECTION "Modules" [1163-] --></div>
+<!-- EDIT3 SECTION "Modules" [1192-] --></div>
 </body>
 </html>

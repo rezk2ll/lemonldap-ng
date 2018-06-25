@@ -70,25 +70,24 @@
 <div class="level2">
 
 <p>
-The AuthBasic Handler is a special Handler that will use AuthBasic to authenticate to a virtual host, and then run authorization rules to allow access to the virtual 
-host.
+The AuthBasic Handler is a special Handler using AuthBasic method to authenticate and grante access to a virtual host.
 </p>
 
 <p>
-The Handler will send a WWW-Authenticate header to the client, to request user and password, and then check the credentials using REST web service (you must enable REST session service in the manager). Then, when session is granted, the Handler will check authorizations like the standard Handler.
+The Handler sends a WWW-Authenticate header to the client, to request user id and password. Then it checks credentials by using <abbr title="LemonLDAP::NG">LL::NG</abbr> REST web service (REST session service must be enabled in the manager). Once session is granted, the Handler will check authorizations like the standard Handler.
 </p>
 
 <p>
-This can be useful to allow a third party application to access a virtual host with users credentials by sending a Basic challenge to it.
+This feature can be useful to allow a third party application to access a virtual host with user credentials by sending a Basic challenge to it.
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Presentation" [34-672] -->
+<!-- EDIT2 SECTION "Presentation" [34-624] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Configuration" [673-699] -->
+<!-- EDIT3 SECTION "Configuration" [625-651] -->
 <h3 class="sectionedit4" id="virtual_host">Virtual host</h3>
 <div class="level3">
 
@@ -107,7 +106,7 @@ If you want to protect only a virtualHost part, keep type on “Main” and set 
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Virtual host" [700-1090] -->
+<!-- EDIT4 SECTION "Virtual host" [652-1042] -->
 <h3 class="sectionedit5" id="nginx">Nginx</h3>
 <div class="level3">
 
@@ -144,7 +143,7 @@ location / {
 }</pre>
 
 </div>
-<!-- EDIT5 SECTION "Nginx" [1091-2113] -->
+<!-- EDIT5 SECTION "Nginx" [1043-2065] -->
 <h3 class="sectionedit6" id="handler_parameters">Handler parameters</h3>
 <div class="level3">
 
@@ -153,6 +152,6 @@ No parameters needed. But you have to allow sessions web services, see <a href="
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Handler parameters" [2114-] --></div>
+<!-- EDIT6 SECTION "Handler parameters" [2066-] --></div>
 </body>
 </html>

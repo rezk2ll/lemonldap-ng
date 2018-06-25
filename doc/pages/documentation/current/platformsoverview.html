@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:platformsoverview</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,platformsoverview"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="platformsoverview.html"/>
@@ -88,7 +88,7 @@ LLNG is able to use different web servers to provide its services. Here is a res
 <div class="level2">
 
 <p>
-Since 2.0, both portal and manager are native FastCGI applications. They can be used on any web server that can dial with a FastCGI server. Some examples:
+Since 2.0, both portal and manager are native FastCGI / PSGI Plack based applications. They can be powered by any FastCGI / PSGI compatible web servers. Some examples:
 </p>
 <div class="table sectionedit3"><table class="inline table table-bordered table-striped">
 	<thead>
@@ -103,9 +103,9 @@ Since 2.0, both portal and manager are native FastCGI applications. They can be 
 		<td class="col0 centeralign">  <strong>Link with webserver process</strong>  </td><td class="col1 centeralign">  External processes managed by webserver <em>(default)</em>  </td><td class="col2 centeralign">  External <a href="#external_servers_for_nginx" title="documentation:2.0:platformsoverview ↵" class="wikilink1">LLNG server</a>  </td><td class="col3 centeralign">  External <a href="#external_servers_for_nginx" title="documentation:2.0:platformsoverview ↵" class="wikilink1">LLNG server</a>  </td><td class="col4 centeralign">  <a href="configplack.html" class="wikilink1" title="documentation:2.0:configplack">Inside</a>  </td>
 	</tr>
 </table></div>
-<!-- EDIT3 TABLE [635-1181] -->
+<!-- EDIT3 TABLE [648-1194] -->
 </div>
-<!-- EDIT2 SECTION "Portal/Manager installation" [438-1182] -->
+<!-- EDIT2 SECTION "Portal/Manager installation" [438-1195] -->
 <h2 class="sectionedit4" id="application_protection_overview">Application protection overview</h2>
 <div class="level2">
 
@@ -130,7 +130,7 @@ To protect applications with handler, LLNG can be used in two mode:
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Application protection overview" [1183-1672] -->
+<!-- EDIT4 SECTION "Application protection overview" [1196-1685] -->
 <h3 class="sectionedit5" id="handler_integration">Handler integration</h3>
 <div class="level3">
 
@@ -152,10 +152,10 @@ LLNG handlers can be installed on the following web servers:
 		<td class="col0 centeralign">  <strong>Addon needed</strong>  </td><td class="col1 centeralign">  ModPerl  </td><td class="col2 leftalign">         </td><td class="col3 leftalign">                        </td><td class="col4 centeralign">  Express  </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  <strong>LLNG integration in webserver</strong>  </td><td class="col1 centeralign">  <a href="configvhost.html#apache_configuration" class="wikilink1" title="documentation:2.0:configvhost">Inside</a>  </td><td class="col2 centeralign">  Separate process: <a href="#external_servers_for_nginx" title="documentation:2.0:platformsoverview ↵" class="wikilink1">External LLNG FastCGI/uWSGI servers</a> <em>(auth_request)</em>  </td><td class="col3 centeralign">  <a href="configplack.html" class="wikilink1" title="documentation:2.0:configplack">Inside</a>  </td><td class="col4 centeralign">  <a href="https://github.com/LemonLDAPNG/node-lemonldap-ng-handler#express-app" class="urlextern" title="https://github.com/LemonLDAPNG/node-lemonldap-ng-handler#express-app"  rel="nofollow">Inside</a>  </td>
+		<td class="col0 centeralign">  <strong>LLNG integration in webserver</strong>  </td><td class="col1 centeralign">  <a href="configvhost.html#apache_configuration" class="wikilink1" title="documentation:2.0:configvhost">Inside</a>  </td><td class="col2 centeralign">  Separate process: <a href="#external_servers_for_nginx" title="documentation:2.0:platformsoverview ↵" class="wikilink1">External LLNG FastCGI/uWSGI servers</a> <em>(auth_request)</em>  </td><td class="col3 centeralign">  <a href="psgi.html#protect_a_psgi_application" class="wikilink1" title="documentation:2.0:psgi">Inside</a>  </td><td class="col4 centeralign">  <a href="https://github.com/LemonLDAPNG/node-lemonldap-ng-handler#express-app" class="urlextern" title="https://github.com/LemonLDAPNG/node-lemonldap-ng-handler#express-app"  rel="nofollow">Inside</a>  </td>
 	</tr>
 </table></div>
-<!-- EDIT6 TABLE [1799-2271] -->
+<!-- EDIT6 TABLE [1812-2304] -->
 </div>
 
 <h4 id="reverseproxy_mode">ReverseProxy Mode</h4>
@@ -170,14 +170,14 @@ LLNG handlers can be installed on the following web servers:
 		<td class="col0 centeralign">  <strong>LLNG integration in ReverseProxy webserver</strong>  </td><td class="col1 centeralign">  <a href="configvhost.html#apache_configuration" class="wikilink1" title="documentation:2.0:configvhost">Inside</a>  </td><td class="col2 centeralign">  Separate process: <a href="#external_servers_for_nginx" title="documentation:2.0:platformsoverview ↵" class="wikilink1">External LLNG FastCGI/uWSGI servers</a>  </td>
 	</tr>
 </table></div>
-<!-- EDIT7 TABLE [2299-2536] -->
+<!-- EDIT7 TABLE [2332-2569] -->
 </div>
-<!-- EDIT5 SECTION "Handler integration" [1673-2538] -->
+<!-- EDIT5 SECTION "Handler integration" [1686-2571] -->
 <h3 class="sectionedit8" id="external_servers_for_nginx">External servers for Nginx</h3>
 <div class="level3">
 
 <p>
-Natively, Nginx supportes FastCGI and uWSGI protocoles.
+Nginx supportes natively FastCGI and uWSGI protocoles.
 </p>
 
 <p>
@@ -223,6 +223,6 @@ However, you can use some other FastCGI server engines:
 </ul>
 
 </div>
-<!-- EDIT8 SECTION "External servers for Nginx" [2539-] --></div>
+<!-- EDIT8 SECTION "External servers for Nginx" [2572-] --></div>
 </body>
 </html>

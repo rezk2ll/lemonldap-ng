@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:secondfactor</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,secondfactor"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="secondfactor.html"/>
@@ -56,7 +56,7 @@
 <li class="level2"><div class="li"><a href="#yubikey_tokens">Yubikey Tokens</a></div></li>
 </ul>
 </li>
-<li class="level1"><div class="li"><a href="#developper_corner">Developper corner</a></div></li>
+<li class="level1"><div class="li"><a href="#developer_corner">Developer corner</a></div></li>
 </ul>
 </div>
 </div>
@@ -125,11 +125,11 @@ If you don&#039;t want to use self-registration features for U2F, TOTP and so on
 
 </div>
 <!-- EDIT5 SECTION "Yubikey Tokens" [1679-1817] -->
-<h2 class="sectionedit6" id="developper_corner">Developper corner</h2>
+<h2 class="sectionedit6" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
 <p>
-To developpe a new 2FA plugin, read <code>Lemonldap::NG::Portal::Main::SecondFactor (3pm)</code> manpage. Your 2F module must be a Perl class named <code>Lemonldap::NG::Portal::2F::<em>&lt;custom_name&gt;</em></code>. To enable it, set <code>available2F</code> key in your <code>lemonldap-ng.ini</code> file :
+To develop a new 2FA plugin, read <code>Lemonldap::NG::Portal::Main::SecondFactor (3pm)</code> manpage. Your 2F module must be a Perl class named <code>Lemonldap::NG::Portal::2F::<em>&lt;custom_name&gt;</em></code>. To enable it, set <code>available2F</code> key in your <code>lemonldap-ng.ini</code> file :
 </p>
 <pre class="code ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
 <span class="re1">available2F</span> <span class="sy0">=</span><span class="re2"> U2F,TOTP,&lt;custom_name&gt;</span></pre>
@@ -141,6 +141,6 @@ To enable manager Second Factor Administration Module, set <code>enabledModules<
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
 
 </div>
-<!-- EDIT6 SECTION "Developper corner" [1818-] --></div>
+<!-- EDIT6 SECTION "Developer corner" [1818-] --></div>
 </body>
 </html>

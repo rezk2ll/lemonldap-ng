@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authfacebook</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authfacebook"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authfacebook.html"/>
@@ -93,6 +93,8 @@ Then, go in <code>Facebook parameters</code>:
 </li>
 <li class="level1"><div class="li"> <strong>Facebook application secret</strong>: the corresponding secret</div>
 </li>
+<li class="level1"><div class="li"> <strong>User field</strong>: Facebook field that will be used as default user identifier</div>
+</li>
 </ul>
 
 <p>
@@ -112,7 +114,7 @@ If you use Facebook as user database, declare values in exported variables:
 </ul>
 </li>
 </ul>
-<div class="noteimportant">Do not query <code>id</code> field in exported variables, as it is already registered by the authentication module in <code>$_user</code>.
+<div class="noteimportant">Do not query user field in exported variables, as it is already registered by the authentication module in <code>$_user</code>.
 </div><div class="notetip">You can use the same Facebook access token in your applications. It is stored in session datas under the name <code>$_facebookToken</code>
 </div>
 </div>

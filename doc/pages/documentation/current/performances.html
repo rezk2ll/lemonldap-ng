@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:performances</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,performances"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="performances.html"/>
@@ -409,13 +409,13 @@ Now ldapgroups contains “admin su”
 <div class="level3">
 
 <p>
-In lemonldap-ng.ini, set only modules that you will use. By default, configuration, sessions explorer and notifications explorer are enabled. Example:
+In lemonldap-ng.ini, set only modules that you will use. By default, configuration, sessions explorer, notifications explorer and second factor are enabled. Example:
 </p>
 <pre class="code ini"><span class="re0"><span class="br0">&#91;</span>manager<span class="br0">&#93;</span></span>
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
 </div>
-<!-- EDIT12 SECTION "Disable unused modules" [11486-11732] -->
+<!-- EDIT12 SECTION "Disable unused modules" [11486-11747] -->
 <h3 class="sectionedit13" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
@@ -425,7 +425,7 @@ Once Manager is installed, browse enabled modules (configuration, sessions, noti
 <pre class="code apache"><span class="kw1">RewriteRule</span> <span class="st0">&quot;^/$&quot;</span> <span class="st0">&quot;/psgi/manager-server.fcgi&quot;</span> [PT]
 <span class="co1"># DirectoryIndex manager.html</span>
 <span class="co1"># RewriteCond &quot;%{REQUEST_FILENAME}&quot; &quot;!\.html$&quot;</span>
-<span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_FILENAME}&quot;</span> <span class="st0">&quot;!^/(?:static|doc|fr-doc|lib).*&quot;</span>
+<span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_FILENAME}&quot;</span> <span class="st0">&quot;!^/(?:static|doc|lib).*&quot;</span>
 <span class="kw1">RewriteRule</span> <span class="st0">&quot;^/(.+)$&quot;</span> <span class="st0">&quot;/psgi/manager-server.fcgi/$1&quot;</span> [PT]</pre>
 
 <p>
@@ -434,7 +434,7 @@ by:
 <pre class="code apache"><span class="co1"># RewriteRule &quot;^/$&quot; &quot;/psgi/manager-server.fcgi&quot; [PT]</span>
 <span class="kw1">DirectoryIndex</span> manager.html
 <span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_FILENAME}&quot;</span> <span class="st0">&quot;!<span class="es0">\.</span>html$&quot;</span>
-<span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_FILENAME}&quot;</span> <span class="st0">&quot;!^/(?:static|doc|fr-doc|lib).*&quot;</span>
+<span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_FILENAME}&quot;</span> <span class="st0">&quot;!^/(?:static|doc|lib).*&quot;</span>
 <span class="kw1">RewriteRule</span> <span class="st0">&quot;^/(.+)$&quot;</span> <span class="st0">&quot;/psgi/manager-server.fcgi/$1&quot;</span> [PT]</pre>
 
 <p>
@@ -442,6 +442,6 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Use static HTML files" [11733-] --></div>
+<!-- EDIT13 SECTION "Use static HTML files" [11748-] --></div>
 </body>
 </html>

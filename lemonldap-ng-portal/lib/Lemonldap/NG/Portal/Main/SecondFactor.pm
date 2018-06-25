@@ -140,7 +140,7 @@ L<Lemonldap::NG::Portal> second factor plugins.
       # The rule must be like this :
       # By example : 
       $self->conf->{u2fActivation} = '$_2fDevices =~ /"type":\s*"U2F"/s'
-      # Optionnaly, the rule can be : '$_2fDevices and $_2fDevices =~ /"type":\s*"U2F"/s'
+      # Optionally, the rule can be : '$_2fDevices and $_2fDevices =~ /"type":\s*"U2F"/s'
       # to avoid warning due to undef variable
       #
       # Required call:

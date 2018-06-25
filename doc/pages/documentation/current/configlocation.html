@@ -390,7 +390,7 @@ Manager virtual host is used to serve configuration interface and local document
     <span class="co1"># RewriteCond &quot;%{REQUEST_FILENAME}&quot; &quot;!\.html$&quot;</span>
 &nbsp;
     <span class="co1"># REST URLs</span>
-    <span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_FILENAME}&quot;</span> <span class="st0">&quot;!^/(?:static|doc|fr-doc|lib).*&quot;</span>
+    <span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_FILENAME}&quot;</span> <span class="st0">&quot;!^/(?:static|doc|lib).*&quot;</span>
     <span class="kw1">RewriteRule</span> <span class="st0">&quot;^/(.+)$&quot;</span> <span class="st0">&quot;/psgi/manager-server.fcgi/$1&quot;</span> [PT]
 &nbsp;
     <span class="kw1">Alias</span> /psgi/ /var/lib/lemonldap-ng/manager/psgi/
@@ -415,7 +415,7 @@ Configuration interface access is not protected by Apache but by LemonLDAP::NG i
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Manager" [8761-10311] -->
+<!-- EDIT8 SECTION "Manager" [8761-10304] -->
 <h3 class="sectionedit9" id="handler">Handler</h3>
 <div class="level3">
 <ul>
@@ -468,7 +468,7 @@ Then, to protect a standard virtual host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
 
 </div>
-<!-- EDIT9 SECTION "Handler" [10312-11670] -->
+<!-- EDIT9 SECTION "Handler" [10305-11663] -->
 <h2 class="sectionedit10" id="nginx">Nginx</h2>
 <div class="level2">
 <div class="noteimportant">LemonLDAP::NG does not manage Nginx configuration
@@ -491,7 +491,7 @@ See <a href="confignginx.html" class="wikilink1" title="documentation:2.0:config
 <div class="notewarning"><a href="fastcgiserver.html" class="wikilink1" title="documentation:2.0:fastcgiserver">LL::NG FastCGI</a> server must be loaded separately.
 </div>
 </div>
-<!-- EDIT10 SECTION "Nginx" [11671-12124] -->
+<!-- EDIT10 SECTION "Nginx" [11664-12117] -->
 <h3 class="sectionedit11" id="portal1">Portal</h3>
 <div class="level3">
 
@@ -563,7 +563,7 @@ In Portal virtual host, you will find several configuration parts:
   }</pre>
 
 </div>
-<!-- EDIT11 SECTION "Portal" [12125-13916] -->
+<!-- EDIT11 SECTION "Portal" [12118-13909] -->
 <h3 class="sectionedit12" id="manager2">Manager</h3>
 <div class="level3">
 
@@ -575,7 +575,7 @@ Manager virtual host is used to serve configuration interface and local document
   server_name manager.example.com;
   root /usr/share/lemonldap-ng/manager/;
 &nbsp;
-  if ($uri !~ ^/(static|doc|fr-doc|lib|javascript)) {
+  if ($uri !~ ^/(static|doc|lib|javascript)) {
     rewrite ^/(.*)$ /manager.psgi/$1 break;
   }
 &nbsp;
@@ -597,7 +597,7 @@ By default, configuration interface access is not protected by Nginx but by Lemo
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Manager" [13917-14669] -->
+<!-- EDIT12 SECTION "Manager" [13910-14655] -->
 <h3 class="sectionedit13" id="handler1">Handler</h3>
 <div class="level3">
 
@@ -697,10 +697,10 @@ Then, to protect a standard virtual host, you must insert this (or create an inc
     # Insert then your configuration (fastcgi_* or proxy_*)</pre>
 
 </div>
-<!-- EDIT13 SECTION "Handler" [14670-17756] -->
+<!-- EDIT13 SECTION "Handler" [14656-17742] -->
 <h2 class="sectionedit14" id="configuration_reload">Configuration reload</h2>
 <div class="level2">
-<div class="noteclassic">As Handlers keep configuration in cache, when configuration change, it should be updated in Handlers. An Apache restart will work, but LemonLDAP::NG offers the mean to reload them through an HTTP request. Configuration reload will then be effective in less than 10 minutes.
+<div class="noteclassic">As Handlers keep configuration in cache, when configuration change, it should be updated in Handlers. An Apache restart will work, but LemonLDAP::NG offers the mean to reload them through an HTTP request. Configuration reload will then be effective in less than 10 minutes. If you want to change this timeout, set <code>checkTime = 240</code> in your lemonldap-ng.ini file <em>(values in seconds)</em>
 </div>
 <p>
 After configuration is saved by Manager, LemonLDAP::NG will try to reload configuration on distant Handlers by sending an HTTP request to the servers. The servers and URLs can be configured in Manager, <code>General Parameters</code> &gt; <code>reload configuration URLs</code>: keys are server names or <abbr title="Internet Protocol">IP</abbr> the requests will be sent to, and values are the requested URLs.
@@ -715,9 +715,10 @@ These parameters can be overwritten in LemonLDAP::NG ini file, in the section <c
 The <code>reload</code> target is managed in Apache or Nginx configuration, inside a virtual host protected by LemonLDAP::NG Handler (see below examples in Apache→handler or Nginx→Handler).
 </p>
 <div class="noteimportant">You must allow access to declared URLs to your Manager <abbr title="Internet Protocol">IP</abbr>.
+</div><div class="noteimportant">If you want to use reload mechanism on a portal only host, you must install a handler in Portal host to be able to refresh local cache. Include <code>handler-nginx.conf</code> or <code>handler-apache2.conf</code> for example
 </div>
 </div>
-<!-- EDIT14 SECTION "Configuration reload" [17757-18926] -->
+<!-- EDIT14 SECTION "Configuration reload" [17743-19256] -->
 <h2 class="sectionedit15" id="local_file">Local file</h2>
 <div class="level2">
 
@@ -751,6 +752,6 @@ For example, to override configured skin for portal:
 <div class="notetip">You need to know the technical name of configuration parameter to do this. You can refer to <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">parameter list</a> to find it.
 </div>
 </div>
-<!-- EDIT15 SECTION "Local file" [18927-] --></div>
+<!-- EDIT15 SECTION "Local file" [19257-] --></div>
 </body>
 </html>
