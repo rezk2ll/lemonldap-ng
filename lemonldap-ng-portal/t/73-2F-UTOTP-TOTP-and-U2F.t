@@ -135,7 +135,7 @@ SKIP: {
         'Form registration'
     );
     expectOK($res);
-    ok( $res->[2]->[0] =~ m#<a.*href="/2fregisters/u">#, 'Get U2F choice' );
+    ok( $res->[2]->[0] =~ m#<a.*href="/2fregisters/u"#, 'Get U2F choice' );
 
     ok(
         $res = $client->_get(

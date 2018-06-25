@@ -4,6 +4,7 @@ use strict;
 use Encode;
 use Mouse;
 use POSIX qw(strftime);
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADMAILTOKEN
   PE_CAPTCHAEMPTY
@@ -285,13 +286,19 @@ sub _register {
         }
 
         # Build confirmation url
-        my $url = $self->registerUrl . "?register_token=" . $req->{id};
-        $url .= '&skin=' . $self->p->getSkin($req);
-        $url .= '&'
-          . $self->conf->{authChoiceParam} . '='
-          . $req->datas->{_authChoice}
-          if ( $req->datas->{_authChoice} );
-        $url .= '&url=' . $req->datas->{_url} if ( $req->datas->{_url} );
+        my $url =
+          $self->registerUrl . '?'
+          . build_urlencoded(
+            register_token => $req->{id},
+            skin           => $self->p->getSkin($req),
+            (
+                $req->datas->{_authChoice}
+                ? ( $self->conf->{authChoiceParam} =>
+                      $req->datas->{_authChoice} )
+                : ()
+            ),
+            ( $req->datas->{_url} ? ( url => $req->datas->{_url} ) : () ),
+          );
 
         # Build mail content
         my $tr      = $self->translate($req);
@@ -363,11 +370,16 @@ sub _register {
     # Build portal url
     my $url = $self->conf->{portal};
     $url =~ s#/*$##;
-    $url .= '/?skin=' . $self->p->getSkin($req);
-    $url .=
-      '&' . $self->conf->{authChoiceParam} . '=' . $req->datas->{_authChoice}
-      if ( $req->datas->{_authChoice} );
-    $url .= '&url=' . $req->datas->{_url} if ( $req->datas->{_url} );
+    $url .= '/?'
+      . build_urlencoded(
+        skin => $self->p->getSkin($req),
+        (
+            $req->datas->{_authChoice}
+            ? ( $self->conf->{authChoiceParam} => $req->datas->{_authChoice} )
+            : ()
+        ),
+        ( $req->datas->{_url} ? ( url => $req->datas->{_url} ) : () ),
+      );
 
     # Replace variables in body
     $body =~ s/\$url/$url/g;
