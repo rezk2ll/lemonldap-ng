@@ -98,14 +98,18 @@ sub init {
 
     # Purge loaded module list
     $self->loadedModules( {} );
+
+    # Insert `reloadConf` in handler reload stack
     Lemonldap::NG::Handler::Main->onReload( $self, 'reloadConf' );
+
+    # Handler::PSGI::Try initialization
     return 0 unless ( $self->SUPER::init( $self->localConfig ) );
     return 0 if ( $self->error );
 
     # Handle requests (other path may be declared in enabled plugins)
     $self
 
-      # "/"
+      # "/" or undeclared paths
       ->addUnauthRoute( '*' => 'login',     ['GET'] )
       ->addUnauthRoute( '*' => 'postLogin', ['POST'] )
       ->addAuthRoute( '*' => 'authenticatedRequest',     ['GET'] )
