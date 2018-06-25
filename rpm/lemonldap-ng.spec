@@ -201,6 +201,17 @@ Requires:	perl-FCGI-ProcManager
 This package deploys files needed to start a FastCGI server.
 
 #==============================================================================
+# UWSGI Application
+#==============================================================================
+%package -n lemonldap-ng-uwsgi-app
+Summary:        LemonLDAP-NG UWSGI Application
+Requires:	uwsgi-plugin-psgi
+
+%description -n lemonldap-ng-uwsgi-app
+LemonLDAP::NG uWSGI server provides a replacement to LemonLDAP::NG FastCGI
+server, using uWSGI instead of Plack FCGI.
+
+#==============================================================================
 # CPAN modules - Common
 #==============================================================================
 %package -n perl-Lemonldap-NG-Common
@@ -297,6 +308,8 @@ chmod +x %{__perl_requires}
 	ETCDEFAULTDIR=/etc/default \
 	DNSDOMAIN=%{lm_dnsdomain} \
 	APACHEVERSION=%{apache_version} \
+	UWSGIYAMLDIR=/etc/uwsgi/apps-available \
+	LLNGAPPDIR=%{lm_sharedir}/llng-server \
 	PROD=yes
 
 # Remove some unwanted files
@@ -315,6 +328,10 @@ install -m644 fastcgi-server/systemd/llng-fastcgi-server.tmpfile %{buildroot}%{_
 sed -i 's:__FASTCGISOCKDIR__:/var/run/llng-fastcgi-server:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
 sed -i 's:__USER__:%{lm_apacheuser}:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
 sed -i 's:__GROUP__:%{lm_apachegroup}:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
+
+# UWSGI Application
+mkdir -p %{buildroot}/etc/uwsgi/apps-available
+mkdir -p %{buildroot}%{lm_sharedir}/llng-server
 
 # Set apache user in some files (see Makefile)
 # Note: we do not use the APACHEUSER and APACHEGROUP in make install
@@ -493,6 +510,12 @@ fi
 %{_tmpfilesdir}/llng-fastcgi-server.conf
 %defattr(755,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir /var/run/llng-fastcgi-server
+%{lm_sharedir}/examples/llngapp.psgi
+
+%files -n lemonldap-ng-uwsgi-app
+%defattr(-,root,root,-)
+/etc/uwsgi/apps-available/llng-server.yaml
+%{lm_sharedir}/llng-server/llng-server.psgi
 
 %files -n perl-Lemonldap-NG-Common
 %defattr(-,root,root,-)
