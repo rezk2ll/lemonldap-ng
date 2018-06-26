@@ -479,6 +479,7 @@ fi
 %{_sysconfdir}/cron.d/lemonldap-ng-handler
 %{lm_vardir}/handler
 %{lm_examplesdir}/handler
+%{lm_sharedir}/llng-server/llng-server.psgi
 
 %files -n lemonldap-ng-manager
 %defattr(-,root,root,-)
@@ -515,7 +516,6 @@ fi
 %files -n lemonldap-ng-uwsgi-app
 %defattr(-,root,root,-)
 /etc/uwsgi/apps-available/llng-server.yaml
-%{lm_sharedir}/llng-server/llng-server.psgi
 
 %files -n perl-Lemonldap-NG-Common
 %defattr(-,root,root,-)
