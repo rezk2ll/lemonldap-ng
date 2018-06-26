@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Issuer::CAS;
 use strict;
 use Mouse;
 use URI;
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_CAS_SERVICE_NOT_ALLOWED
   PE_CONFIRM
@@ -215,11 +216,8 @@ sub run {
 
         # Redirect to service
         my $service_url = $service;
-        $service_url .= (
-            $service =~ /\?/
-            ? '&ticket=' . $casServiceTicket
-            : '?ticket=' . $casServiceTicket
-        );
+        $service_url .= ( $service =~ /\?/ ? '&' : '?' )
+          . build_urlencoded( ticket => $casServiceTicket );
 
         $self->logger->debug("Redirect user to $service_url");
 

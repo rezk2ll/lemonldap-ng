@@ -44,8 +44,12 @@ sub modifyPassword {
     eval {
         my $sth = $self->dbh->prepare(
             "UPDATE $table SET $passwordCol=$passwordsql WHERE $userCol=?");
-        $sth->execute( $pwd, $req->user ) if $passwordsql =~ /.*\?.*/;
-        $sth->execute( $req->user ) unless $passwordsql =~ /.*\?.*/;
+        if ( $passwordsql =~ /.*\?.*/ ) {
+            $sth->execute( $pwd, $req->user );
+        }
+        else {
+            $sth->execute( $req->user );
+        }
     };
     if ($@) {
 

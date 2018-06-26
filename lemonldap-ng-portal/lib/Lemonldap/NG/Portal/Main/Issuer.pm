@@ -11,6 +11,7 @@ use strict;
 use Mouse;
 use MIME::Base64;
 use IO::String;
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_RENEWSESSION
@@ -80,7 +81,8 @@ sub _redirect {
         $ir, '' );
     $req->{urldc} = $self->conf->{portal};
     $req->{urldc} =~ s#/*$##;
-    $req->{urldc} .= $req->path . "?issuerRequest$self->{path}=$ir";
+    $req->{urldc} .= $req->path . '?'
+      . build_urlencoded( "issuerRequest$self->{path}" => $ir );
     $self->p->setHiddenFormValue( $req, 'issuerUrldc', $req->urldc, '', 0 );
 
     if ( my $t = $req->param( 'issuerRequest' . $self->path ) ) {
@@ -162,10 +164,10 @@ qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/auto
       if ( $self->conf->{skipRenewConfirmation} );
     $req->datas->{_url} = encode_base64(
         $self->conf->{portal}
-          . $req->path_info
-          . '?issuerRequest'
-          . $self->path . '='
-          . $self->storeRequest($req),
+          . $req->path_info . '?'
+          . build_urlencoded(
+            "issuerRequest$self->{path}" => $self->storeRequest($req)
+          ),
         ''
     );
     return PE_RENEWSESSION;

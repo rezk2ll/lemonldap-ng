@@ -8,6 +8,7 @@ package Lemonldap::NG::Portal::CDC;
 use strict;
 use Mouse;
 use MIME::Base64;
+use Lemonldap::NG::Common::FormEncode;
 
 our $VERSION = '2.0.0';
 
@@ -153,9 +154,12 @@ sub handler {
         $urldc .= (
             $cdc_idp
             ? (
-                $urldc =~ /\?/
-                ? ( $self->{oldStyleUrl} ? '&' : ';' ) . 'idp=' . $cdc_idp
-                : '?idp=' . $cdc_idp
+                (
+                    $urldc =~ /\?/
+                    ? ( $self->{oldStyleUrl} ? '&' : ';' )
+                    : '?'
+                )
+                . build_urlencoded( idp => $cdc_idp )
               )
             : ''
         );

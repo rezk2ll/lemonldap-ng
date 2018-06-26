@@ -415,8 +415,12 @@ sub check_password {
         my $sth = $self->dbh->prepare(
 "SELECT $loginCol FROM $table WHERE $loginCol=? AND $passwordCol=$passwordsql"
         );
-        $sth->execute( $user, $password ) if $passwordsql =~ /.*\?.*/;
-        $sth->execute($user) unless $passwordsql =~ /.*\?.*/;
+        if ( $passwordsql =~ /.*\?.*/ ) {
+            $sth->execute( $user, $password );
+        }
+        else {
+            $sth->execute($user);
+        }
         @rows = $sth->fetchrow_array();
     };
     if ($@) {

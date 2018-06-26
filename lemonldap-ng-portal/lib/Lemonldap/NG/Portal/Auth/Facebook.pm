@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Auth::Facebook;
 use strict;
 use Mouse;
 use URI::Escape;
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADCREDENTIALS);
 use utf8;
 
@@ -160,13 +161,16 @@ sub fb {
     my $fb;
     my $sep = '?';
     my $ret = $conf->{portal};
+    my %prm;
     foreach my $v ( [ $req->datas->{_url}, "url" ],
         [ $req->param( $conf->{authChoiceParam} ), $conf->{authChoiceParam} ] )
     {
         if ( $v->[0] ) {
-            $ret .= "$sep$v->[1]=$v->[0]";
-            $sep = '&';
+            $prm{ $v->[1] } = $v->[0];
         }
+    }
+    if (%prm) {
+        $ret .= '?' . build_urlencoded(%prm);
     }
 
     eval {

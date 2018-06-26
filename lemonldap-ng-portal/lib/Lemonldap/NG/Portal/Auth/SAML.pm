@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Auth::SAML;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Lib::SAML;
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_CONFIRM
   PE_LOGOUT_OK
@@ -1431,11 +1432,8 @@ sub getIDP {
 
             my $cdc_reader_url = $self->conf->{samlCommonDomainCookieReader};
 
-            $cdc_reader_url .= (
-                $self->conf->{samlCommonDomainCookieReader} =~ /\?/
-                ? '&u->confrl=' . $return_url
-                : '?url=' . $return_url
-            );
+            $cdc_reader_url .= ( $cdc_reader_url =~ /\?/ ? '&' : '?' )
+              . build_urlencoded( url => $return_url );
 
             $self->logger->debug("Redirect user to $cdc_reader_url");
 

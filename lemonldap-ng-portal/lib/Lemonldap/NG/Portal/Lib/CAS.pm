@@ -306,7 +306,9 @@ sub callPgtUrl {
 
     # Build URL
     my $url =
-      $pgtUrl . ( $pgtUrl =~ /\?/ ? '&' : '?' ) . "pgtIou=$pgtIou&pgtId=$pgtId";
+        $pgtUrl
+      . ( $pgtUrl =~ /\?/ ? '&' : '?' )
+      . build_urlencoded( pgtIou => $pgtIou, pgtId => $pgtId );
 
     $self->logger->debug("Call URL $url");
 
@@ -341,12 +343,15 @@ sub validateST {
     my $proxy_url;
     if (%$proxied) {
         $proxy_url = $self->p->fullUrl($req);
+
+        # TODO: @coudot: why die here without any message ?
         die if ( $proxy_url =~ /casProxy=1/ );
         $proxy_url .= ( $proxy_url =~ /\?/ ? '&' : '?' ) . 'casProxy=1';
         if ( $self->conf->{authChoiceParam}
             and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )
         {
-            $proxy_url .= '&' . $self->conf->{authChoiceParam} . "=$tmp";
+            $proxy_url .=
+              '&' . build_urlencoded( $self->conf->{authChoiceParam} => $tmp );
         }
 
         $self->logger->debug("CAS Proxy URL: $proxy_url");

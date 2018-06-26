@@ -4,6 +4,7 @@ use strict;
 use Encode;
 use Mouse;
 use POSIX qw(strftime);
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_BADMAILTOKEN
@@ -289,16 +290,18 @@ sub _reset {
 
         # Build confirmation url
         my $url =
-            $self->conf->{mailUrl}
-          . "?mail_token="
-          . $req->{id}
-          . '&skin='
-          . $self->p->getSkin($req);
-        $url .= '&'
-          . $self->conf->{authChoiceParam} . '='
-          . $req->datas->{_authChoice}
-          if ( $req->datas->{_authChoice} );
-        $url .= '&url=' . $req->datas->{_url} if ( $req->datas->{_url} );
+          $self->conf->{mailUrl} . '?'
+          . build_urlencoded(
+            mail_token => $req->{id},
+            skin       => $self->p->getSkin($req),
+            (
+                $req->datas->{_authChoice}
+                ? ( $self->conf->{authChoiceParam} =>
+                      $req->datas->{_authChoice} )
+                : ()
+            ),
+            ( $req->datas->{_url} ? ( url => $req->datas->{_url} ) : () ),
+          );
 
         # Build mail content
         my $tr      = $self->translate($req);

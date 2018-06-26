@@ -5,6 +5,7 @@ use Mouse;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::UserAgent;
+use Lemonldap::NG::Common::FormEncode;
 use XML::Simple;
 use MIME::Base64;
 use String::Random;
@@ -2548,7 +2549,10 @@ sub sendLogoutRequestToProvider {
         my $relayID = $relayInfos->id;
 
         # Build the URL that could be used to play this logout request
-        my $slo_url = $portal . '/saml/relaySingleLogoutPOST?relay=' . $relayID;
+        my $slo_url =
+            $portal
+          . '/saml/relaySingleLogoutPOST?'
+          . build_urlencoded( relay => $relayID );
 
         # Create iFrame
         $info .= $self->loadTemplate(
@@ -2586,7 +2590,9 @@ sub sendLogoutRequestToProvider {
 
             # Build the URL that could be used to play this logout request
             my $slo_url =
-              $portal . '/saml/relaySingleLogoutSOAP?relay=' . $relayID;
+                $portal
+              . '/saml/relaySingleLogoutSOAP?'
+              . build_urlencoded( relay => $relayID );
 
             # Display information to the user
             $info .= $self->loadTemplate(

@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Issuer::Get;
 use strict;
 use Mouse;
 use URI::Escape;
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_BADURL);
 
 our $VERSION = '2.0.0';
@@ -50,7 +51,7 @@ sub computeGetParams {
     my ( $self, $req ) = @_;
 
     # Additional GET variables
-    my @getPrms;
+    my %getPrms;
     if ( exists $self->conf->{issuerDBGetParameters} ) {
         unless ( $req->urldc =~ m#^https?://([^/]+)# ) {
             $self->logger->error("Malformed url $req->urldc");
@@ -63,22 +64,16 @@ sub computeGetParams {
             return '';
         }
         foreach my $param ( keys %$prms ) {
-            my $value =
-              eval { uri_escape( $req->{sessionInfo}->{ $prms->{$param} } ) };
-            if ($@) {
-                $self->logger->error(
-                    "IssuerGet: unable to compute $param ($@)");
-                return;
-            }
+            my $value = $req->{sessionInfo}->{ $prms->{$param} };
             $value =~ s/[\r\n\t]//;
-            push @getPrms, "$param=$value";
+            $getPrms{$param} = $value;
         }
     }
     else {
         $self->logger->warn("IssuerGet: no configuration");
         return;
     }
-    my $getVars = join '&', @getPrms;
+    my $getVars = build_urlencoded(%getPrms);
 
     # If there are some GET variables to send
     # Add them to URL string
