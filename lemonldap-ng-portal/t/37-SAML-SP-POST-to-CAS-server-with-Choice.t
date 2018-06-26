@@ -10,8 +10,8 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 20;
-my $debug     = 'debug';
+my $maintests = 19;
+my $debug     = 'error';
 my ( $issuer, $proxy, $sp, $res );
 my %handlerOR = ( issuer => [], proxy => [], sp => [] );
 
@@ -139,7 +139,6 @@ SKIP: {
     ($query) = expectRedirection( $res,
 qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
     );
-    diag( "First bug: double issuerRequestsaml in query\n" . Dumper($res) );
 
     # Follow redirection to CAS server
     switch ('issuer');
@@ -213,7 +212,6 @@ qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
         ),
         'Post SAML response to SP'
     );
-    skip( 'Bug found', 5 );
 
     # Verify authentication on SP
     expectRedirection( $res, 'http://auth.sp.com' );
@@ -248,16 +246,16 @@ sub issuer {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                skipRenewConfirmation    => 1,
-                logLevel                 => $debug,
-                templatesDir             => 'site/htdocs/static',
-                domain                   => 'idp.com',
-                portal                   => 'http://auth.idp.com',
-                authentication           => 'Demo',
-                userDB                   => 'Same',
-                issuerDBCASActivation    => 1,
-                casAttr                  => 'uid',
-                casAttributes            => { cn => 'cn', uid => 'uid', },
+                skipRenewConfirmation => 1,
+                logLevel              => $debug,
+                templatesDir          => 'site/htdocs/static',
+                domain                => 'idp.com',
+                portal                => 'http://auth.idp.com',
+                authentication        => 'Demo',
+                userDB                => 'Same',
+                issuerDBCASActivation => 1,
+                casAttr               => 'uid',
+                casAttributes => { cn => 'cn', uid => 'uid', mail => 'mail', },
                 casAccessControlPolicy   => 'none',
                 multiValuesSeparator     => ';',
                 portalForceAuthnInterval => -1,
