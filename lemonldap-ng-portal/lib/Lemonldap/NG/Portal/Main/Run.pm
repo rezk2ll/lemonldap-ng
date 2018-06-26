@@ -657,7 +657,7 @@ sub fullUrl {
     my ( $self, $req ) = @_;
     my $pHost = $self->conf->{portal};
     $pHost =~ s#^(https?://[^/]+)(?:/.*)?$#$1#;
-    return $pHost . $req->uri;
+    return $pHost . $req->env->{REQUEST_URI};
 }
 
 sub cookie {

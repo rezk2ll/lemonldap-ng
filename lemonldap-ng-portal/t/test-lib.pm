@@ -5,6 +5,7 @@ use strict;
 use Data::Dumper;
 use LWP::UserAgent;
 use URI::Escape;
+use Lemonldap::NG::Common::FormEncode;
 use 5.10.0;
 
 no warnings 'redefine';
@@ -127,9 +128,7 @@ m@<form.+?action="(?:(?:http://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
         my %fields =
           ( $res->[2]->[0] =~
               m#<input.+?name="([^"]+)"[^>]+?value="([^"]*?)"#gs );
-        my $query = join( '&',
-            map { "$_=" . uri_escape( uri_unescape( $fields{$_} ) ) }
-              keys(%fields) );
+        my $query = build_urlencoded(%fields);
         foreach my $f (@requiredFields) {
             ok( defined $fields{$f}, qq{ Field "$f" is defined} );
             count(1);

@@ -197,8 +197,6 @@ qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
         'Push CAS response to proxy'
     );
 
-    print STDERR Dumper($url);
-    skip( 'Bug found', 6 );
     my $proxyId = expectCookie($res);
     ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleSignOnPost',
@@ -215,6 +213,7 @@ qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
         ),
         'Post SAML response to SP'
     );
+    skip( 'Bug found', 5 );
 
     # Verify authentication on SP
     expectRedirection( $res, 'http://auth.sp.com' );
