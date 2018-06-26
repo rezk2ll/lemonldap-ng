@@ -189,6 +189,9 @@ Lemonldap::NG::Portal::Main::Issuer - Base class for identity providers.
   use Mouse;
   extends 'Lemonldap::NG::Portal::Main::Issuer';
   use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+
+  # Required: URL root path
+  use constant path => 'saml';
   
   # Optional initialization method
   sub init {
@@ -251,6 +254,9 @@ URI path:
 
 They must be called during initialization process (so you must write the
 optional init() sub).
+
+Be carefull with C<add*authRoute()>: you can't catch here your root path (=
+path declared in C<$self-E<gt>path>) because it is catched by this module.
 
 Example:
 
