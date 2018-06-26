@@ -407,6 +407,7 @@ t/37-Logout-from-OIDC-RP-to-SAML-SP.t
 t/37-OIDC-RP-to-SAML-IdP-GET.t
 t/37-OIDC-RP-to-SAML-IdP-POST.t
 t/37-SAML-SP-GET-to-OIDC-OP.t
+t/37-SAML-SP-POST-to-CAS-server-with-Choice.t
 t/37-SAML-SP-POST-to-OIDC-OP.t
 t/40-Notifications-JSON-DBI.t
 t/40-Notifications-JSON-File-with-token.t
