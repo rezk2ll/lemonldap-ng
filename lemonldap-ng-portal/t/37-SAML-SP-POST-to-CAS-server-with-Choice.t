@@ -10,7 +10,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 19;
+my $maintests = 21;
 my $debug     = 'error';
 my ( $issuer, $proxy, $sp, $res );
 my %handlerOR = ( issuer => [], proxy => [], sp => [] );
@@ -134,6 +134,21 @@ SKIP: {
         ),
         'Post SAML request to IdP'
     );
+    ok( $res->[2]->[0] =~ s#^.*(<form [^>]*CAS.*?</form>).*$#$1#s,
+        'Found SAML choice' );
+    my $tmp;
+    ( $host, $tmp, $query ) = expectForm($res);
+    $query .= '&test=cas';
+    ok(
+        $res = $proxy->_post(
+            $url,
+            IO::String->new($query),
+            accept => 'text/html',
+            length => length($query)
+        ),
+        'Select "CAS"'
+    );
+
     ok( expectCookie( $res, 'llngcasserver' ) eq 'idp',
         'Get CAS server cookie' );
     ($query) = expectRedirection( $res,
@@ -268,11 +283,16 @@ sub proxy {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel                   => $debug,
-                domain                     => 'proxy.com',
-                portal                     => 'http://auth.proxy.com',
-                authentication             => 'CAS',
-                userDB                     => 'Same',
+                logLevel          => $debug,
+                domain            => 'proxy.com',
+                portal            => 'http://auth.proxy.com',
+                authentication    => 'Choice',
+                userDB            => 'Same',
+                authChoiceParam   => 'test',
+                authChoiceModules => {
+                    cas  => 'CAS;CAS;Null',
+                    demo => 'Demo;Demo;Null',
+                },
                 multiValuesSeparator       => ';',
                 casSrvMetaDataExportedVars => {
                     idp => {
