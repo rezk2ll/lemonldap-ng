@@ -128,7 +128,9 @@ m@<form.+?action="(?:(?:http://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
         my %fields =
           ( $res->[2]->[0] =~
               m#<input.+?name="([^"]+)"[^>]+?value="([^"]*?)"#gs );
-        my $query = build_urlencoded(%fields);
+        my $query = join( '&',
+            map { "$_=" . uri_escape( uri_unescape( $fields{$_} ) ) }
+              keys(%fields) );
         foreach my $f (@requiredFields) {
             ok( defined $fields{$f}, qq{ Field "$f" is defined} );
             count(1);

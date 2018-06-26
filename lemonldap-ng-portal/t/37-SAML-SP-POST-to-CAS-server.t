@@ -69,6 +69,7 @@ SKIP: {
 
     # Build proxy
     switch ('proxy');
+    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
     ok( $proxy = proxy(), 'Issuer portal' );
     $handlerOR{proxy} = \@Lemonldap::NG::Handler::Main::_onReload;
 
