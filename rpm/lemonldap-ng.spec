@@ -322,6 +322,7 @@ mkdir -p %{buildroot}%{_unitdir}
 install -m644 fastcgi-server/systemd/llng-fastcgi-server.service %{buildroot}%{_unitdir}
 sed -i 's:__FASTCGISOCKDIR__:/var/run/llng-fastcgi-server:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
 sed -i 's:__SBINDIR__:/usr/share/lemonldap-ng/sbin:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
+rm -f %{buildroot}/etc/init.d/llng-fastcgi-server
 
 mkdir -p %{buildroot}%{_tmpfilesdir}
 install -m644 fastcgi-server/systemd/llng-fastcgi-server.tmpfile %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
@@ -506,7 +507,6 @@ fi
 %defattr(-,root,root,-)
 %{lm_sharedir}/sbin/llng-fastcgi-server
 %config(noreplace) /etc/default/llng-fastcgi-server
-/etc/init.d/llng-fastcgi-server
 %{_unitdir}/llng-fastcgi-server.service
 %{_tmpfilesdir}/llng-fastcgi-server.conf
 %defattr(755,%{lm_apacheuser},%{lm_apachegroup},-)
