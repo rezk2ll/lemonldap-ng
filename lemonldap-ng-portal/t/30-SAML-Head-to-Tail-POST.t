@@ -68,19 +68,19 @@ SKIP: {
         $res = $sp->_post(
             '/',
             IO::String->new(
-                "confirm=$confirm&idp=http://auth.idp.com/isaml/metadata"),
+                "confirm=$confirm&idp=http://auth.idp.com/saml/metadata"),
             accept => 'text/html',
-            length => length($confirm) + 47,
+            length => length($confirm) + 46,
         ),
         'Select IDP'
     );
     ok( expectCookie( $res, 'lemonldapidp' ), 'IDP cookie defined' )
       or explain(
         $res->[1],
-'Set-Cookie => lemonldapidp=http://auth.idp.com/isaml/metadata; domain=.sp.com; path=/'
+'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
       );
     my ( $host, $url, $s ) =
-      expectAutoPost( $res, 'auth.idp.com', '/isaml/singleSignOn',
+      expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn',
         'SAMLRequest' );
 
     # Push SAML request to IdP
@@ -94,11 +94,9 @@ SKIP: {
         ),
         'Post SAML request to IdP'
     );
-    my $tmp;
-    ( $host, $tmp, $s ) = expectForm($res,'#');
+    expectOK($res);
 
     # Try to authenticate to IdP
-    $s =~ s/&?user=&?/&/;
     $s = "user=french&password=french&$s";
     ok(
         $res = $issuer->_post(
@@ -110,13 +108,6 @@ SKIP: {
         'Post authentication'
     );
     my $idpId = expectCookie($res);
-    ($url, $s) = expectRedirection($res,qr#^http://auth.idp.com(/isaml/singleSignOn)\?(.*)$#);
-    ok (
-        $res = $issuer->_get($url,query=>$s,cookie=>"lemonldap=$idpId",accept => 'text/html',),
-        ' Follow internal redirection'
-    );
-    #print STDERR Dumper($res);
-    skip 'todo', 10;
     ( $host, $url, $s ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleSignOnPost',
         'SAMLResponse' );
@@ -128,26 +119,25 @@ SKIP: {
             $url, IO::String->new($s),
             accept => 'text/html',
             length => length($s),
-            cookie => 'lemonldapidp=http://auth.idp.com/isaml/metadata',
+            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
         'Post SAML response to SP'
     );
 
     # Verify authentication on SP
-    expectRedirection( $res, 'http://auth.sp.com' );
+    ($url,$s) = expectRedirection( $res, qr#^http://auth.sp.com(/?[^\?]*)(?:\?(.*))?$# );
     my $spId = expectCookie($res);
 
-    ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
+    ok(
+        $res = $sp->_get(
+            $url || '/',
+            query => $s,
+            cookie => "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId",
+            accept => 'text/html',
+        ),
+        ' Follow redirection'
+    );
     expectOK($res);
-    expectAuthenticatedAs( $res, 'fa@badwolf.org@idp' );
-
-    # Verify UTF-8
-    ok( $res = $sp->_get("/sessions/global/$spId"), 'Get UTF-8' );
-    expectOK($res);
-    ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-      or print STDERR $@;
-    ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
-      or explain( $res, 'cn => Frédéric Accents' );
 
     # Logout initiated by SP
     ok(
@@ -159,9 +149,11 @@ SKIP: {
         ),
         'Query SP for logout'
     );
-    ( $host, $url, $s ) =
-      expectAutoPost( $res, 'auth.idp.com', '/isaml/singleLogout',
-        'SAMLRequest' );
+    #( $host, $url, $s ) =
+    #  expectAutoPost( $res, 'auth.idp.com', '/saml/singleLogout',
+    #    'SAMLRequest' );
+    #print STDERR Dumper($res);
+    skip 'todo', 8;
 
     # Push SAML logout request to IdP
     switch ('issuer');
@@ -186,7 +178,7 @@ SKIP: {
             $url, IO::String->new($s),
             accept => 'text/html',
             length => length($s),
-            cookie => 'lemonldapidp=http://auth.idp.com/isaml/metadata',
+            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
         'Post SAML response to SP'
     );
@@ -208,7 +200,7 @@ SKIP: {
             '/',
             accept => 'text/html',
             cookie =>
-              "lemonldapidp=http://auth.idp.com/isaml/metadata; lemonldap=$spId"
+              "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
         ),
         'Test if user is reject on SP'
     );
@@ -234,7 +226,7 @@ sub switch {
     my $type = shift;
     pass("     ====>  $type  <====");
     count(1);
-    $main::tt = $type;
+    $main::tt                                = $type;
     @Lemonldap::NG::Handler::Main::_onReload = @{
         $handlerOR{$type};
     };
@@ -250,7 +242,7 @@ sub issuer {
                 authentication         => 'Demo',
                 userDB                 => 'Same',
                 issuerDBSAMLActivation => 1,
-                issuerDBSAMLPath       => 'isaml',
+                issuerDBSAMLPath       => 'saml',
                 samlSPMetaDataOptions  => {
                     'sp.com' => {
                         samlSPMetaDataOptionsEncryptionMode           => 'none',
@@ -360,7 +352,6 @@ ywIDAQAB
 
 sub sp {
     my $xml = samlIDPMetaDataXML( 'idp', 'HTTP-POST' );
-    $xml =~ s#/saml/#/isaml/#g;
     return LLNG::Manager::Test->new(
         {
             ini => {

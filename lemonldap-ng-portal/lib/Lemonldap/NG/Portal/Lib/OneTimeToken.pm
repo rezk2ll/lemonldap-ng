@@ -66,12 +66,14 @@ sub createToken {
         # Dereference $infos
         my %h = %$infos;
         $self->cache->set( $id, to_json( \%h ), $self->timeout . ' s' );
+        $self->logger->debug("Token $id created");
         return $id;
     }
     else {
 
         # Create a new session
         my $tsession = $self->p->getApacheSession( undef, info => $infos );
+        $self->logger->debug("Token $tsession->{id} created");
         return $tsession->id;
     }
 }
@@ -82,6 +84,7 @@ sub getToken {
         $self->logger->error('getToken called without id');
         return undef;
     }
+    $self->logger->debug("Trying to load token $id");
 
     if ( $self->cache ) {
         my $data;
