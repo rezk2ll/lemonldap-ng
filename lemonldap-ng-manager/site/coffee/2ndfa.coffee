@@ -75,7 +75,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.translate = $translator.translate
 	$scope.translateTitle = (node) ->
 		$translator.translateField node, 'title'
-	sessionType = 'global'
+	sessionType = 'persistent'
 
 	# Handle menu items
 	$scope.menuClick = (button) ->
@@ -255,7 +255,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	# URI local path management
 	pathEvent = (event, next, current) ->
 		n = next.match /#!?\/(\w+)/
-		sessionType = 'global'
+		#sessionType = 'global'
 		if n == null
 			$scope.type = '_whatToTrace'
 		else if n[1].match /^(persistent)$/

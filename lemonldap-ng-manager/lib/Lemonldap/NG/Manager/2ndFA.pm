@@ -22,7 +22,7 @@ our $VERSION = '2.0.0';
 # I. INITIALIZATION METHODS #
 #############################
 
-use constant defaultRoute => '2ndfa.html#/persistent';
+use constant defaultRoute => '2ndfa.html';
 
 sub addRoutes {
     my ( $self, $conf ) = @_;

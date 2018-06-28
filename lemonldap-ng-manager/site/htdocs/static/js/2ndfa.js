@@ -90,7 +90,7 @@
       $scope.translateTitle = function(node) {
         return $translator.translateField(node, 'title');
       };
-      sessionType = 'global';
+      sessionType = 'persistent';
       $scope.menuClick = function(button) {
         if (button.popup) {
           window.open(button.popup);
@@ -274,7 +274,6 @@
       pathEvent = function(event, next, current) {
         var n;
         n = next.match(/#!?\/(\w+)/);
-        sessionType = 'global';
         if (n === null) {
           $scope.type = '_whatToTrace';
         } else if (n[1].match(/^(persistent)$/)) {
