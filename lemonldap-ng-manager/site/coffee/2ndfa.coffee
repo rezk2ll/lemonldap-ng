@@ -255,14 +255,8 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	# URI local path management
 	pathEvent = (event, next, current) ->
 		n = next.match /#!?\/(\w+)/
-		#sessionType = 'global'
-		if n == null
-			$scope.type = '_whatToTrace'
-		else if n[1].match /^(persistent)$/
-			sessionType = RegExp.$1
+		if n == null or n[1].match /^(persistent)$/
 			$scope.type = '_session_uid'
-		else
-			$scope.type = n[1]
 		$scope.init()
 
 	$scope.$on '$locationChangeSuccess', pathEvent

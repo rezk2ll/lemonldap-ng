@@ -274,13 +274,8 @@
       pathEvent = function(event, next, current) {
         var n;
         n = next.match(/#!?\/(\w+)/);
-        if (n === null) {
-          $scope.type = '_whatToTrace';
-        } else if (n[1].match(/^(persistent)$/)) {
-          sessionType = RegExp.$1;
+        if (n === null || n[1].match(/^(persistent)$/)) {
           $scope.type = '_session_uid';
-        } else {
-          $scope.type = n[1];
         }
         return $scope.init();
       };
