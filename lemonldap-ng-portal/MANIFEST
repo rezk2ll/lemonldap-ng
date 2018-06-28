@@ -377,6 +377,7 @@ t/30-Auth-and-issuer-SAML-POST.t
 t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Redirect.t
 t/30-Auth-SAML-with-choice.t
+t/30-SAML-Head-to-Tail-POST.t
 t/30-SAML-ReAuth-with-choice.t
 t/30-SAML-ReAuth.t
 t/30-SAML-SP-rule.t
@@ -403,11 +404,13 @@ t/36-Combination-Kerberos-or-Demo.t
 t/36-Combination-with-over.t
 t/36-Combination-with-token.t
 t/36-Combination.t
+t/37-CAS-App-to-SAML-IdP-POST.t
 t/37-Logout-from-OIDC-RP-to-SAML-SP.t
 t/37-OIDC-RP-to-SAML-IdP-GET.t
 t/37-OIDC-RP-to-SAML-IdP-POST.t
 t/37-SAML-SP-GET-to-OIDC-OP.t
 t/37-SAML-SP-POST-to-CAS-server-with-Choice.t
+t/37-SAML-SP-POST-to-CAS-server.t
 t/37-SAML-SP-POST-to-OIDC-OP.t
 t/40-Notifications-JSON-DBI.t
 t/40-Notifications-JSON-File-with-token.t

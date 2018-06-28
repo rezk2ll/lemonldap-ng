@@ -10,8 +10,8 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 20;
-my $debug     = 'debug';
+my $maintests = 21;
+my $debug     = 'error';
 my ( $issuer, $proxy, $sp, $res );
 my %handlerOR = ( issuer => [], proxy => [], sp => [] );
 
@@ -134,12 +134,26 @@ SKIP: {
         ),
         'Post SAML request to IdP'
     );
+    ok( $res->[2]->[0] =~ s#^.*(<form [^>]*CAS.*?</form>).*$#$1#s,
+        'Found SAML choice' );
+    my $tmp;
+    ( $host, $tmp, $query ) = expectForm($res);
+    $query .= '&test=cas';
+    ok(
+        $res = $proxy->_post(
+            $url,
+            IO::String->new($query),
+            accept => 'text/html',
+            length => length($query)
+        ),
+        'Select "CAS"'
+    );
+
     ok( expectCookie( $res, 'llngcasserver' ) eq 'idp',
         'Get CAS server cookie' );
     ($query) = expectRedirection( $res,
 qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
     );
-    diag( "First bug: double issuerRequestsaml in query\n" . Dumper($res) );
 
     # Follow redirection to CAS server
     switch ('issuer');
@@ -197,8 +211,6 @@ qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
         'Push CAS response to proxy'
     );
 
-    print STDERR Dumper($url);
-    skip( 'Bug found', 6 );
     my $proxyId = expectCookie($res);
     ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleSignOnPost',
@@ -249,16 +261,16 @@ sub issuer {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                skipRenewConfirmation    => 1,
-                logLevel                 => $debug,
-                templatesDir             => 'site/htdocs/static',
-                domain                   => 'idp.com',
-                portal                   => 'http://auth.idp.com',
-                authentication           => 'Demo',
-                userDB                   => 'Same',
-                issuerDBCASActivation    => 1,
-                casAttr                  => 'uid',
-                casAttributes            => { cn => 'cn', uid => 'uid', },
+                skipRenewConfirmation => 1,
+                logLevel              => $debug,
+                templatesDir          => 'site/htdocs/static',
+                domain                => 'idp.com',
+                portal                => 'http://auth.idp.com',
+                authentication        => 'Demo',
+                userDB                => 'Same',
+                issuerDBCASActivation => 1,
+                casAttr               => 'uid',
+                casAttributes => { cn => 'cn', uid => 'uid', mail => 'mail', },
                 casAccessControlPolicy   => 'none',
                 multiValuesSeparator     => ';',
                 portalForceAuthnInterval => -1,
@@ -271,11 +283,16 @@ sub proxy {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel                   => $debug,
-                domain                     => 'proxy.com',
-                portal                     => 'http://auth.proxy.com',
-                authentication             => 'CAS',
-                userDB                     => 'Same',
+                logLevel          => $debug,
+                domain            => 'proxy.com',
+                portal            => 'http://auth.proxy.com',
+                authentication    => 'Choice',
+                userDB            => 'Same',
+                authChoiceParam   => 'test',
+                authChoiceModules => {
+                    cas  => 'CAS;CAS;Null',
+                    demo => 'Demo;Demo;Null',
+                },
                 multiValuesSeparator       => ';',
                 casSrvMetaDataExportedVars => {
                     idp => {
