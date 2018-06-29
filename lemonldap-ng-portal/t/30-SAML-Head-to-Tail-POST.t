@@ -10,7 +10,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 18;
+my $maintests = 17;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -155,9 +155,6 @@ SKIP: {
       expectAutoPost( $res, 'auth.idp.com', '/saml/singleLogout',
         'SAMLRequest' );
 
-    #print STDERR Dumper($res);
-    #skip 'todo', 8;
-
     # Push SAML logout request to IdP
     switch ('issuer');
     ok(
@@ -185,20 +182,7 @@ SKIP: {
         ),
         'Post SAML response to SP'
     );
-    ( $url, $s ) =
-      expectRedirection( $res, qr#^http://auth.sp.com(/.*?)(?:\?(.*))?$# );
-
-    # Follow redirection
-    ok(
-        $res = $sp->_get(
-            $url,
-            query  => $s,
-            accept => 'text/html',
-            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
-        ),
-        ' Follow redirection'
-    );
-    diag "TODO: there is a loop here: http://auth.sp.com$url?$s";
+    expectOK($res);
 
     # Test if logout is done
     switch ('issuer');

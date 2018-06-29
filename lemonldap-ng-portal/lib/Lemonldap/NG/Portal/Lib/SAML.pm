@@ -2980,8 +2980,8 @@ sub deleteSAMLSecondarySessions {
             }
         }
     }
-    else {
-        $self->logger->debug("No SAML session found for session $session_id ");
+    elsif ($session_id) {
+        $self->logger->debug("No SAML session found for session $session_id");
     }
 
     return $result;

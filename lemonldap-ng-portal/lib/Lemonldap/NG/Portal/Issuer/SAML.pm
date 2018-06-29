@@ -162,6 +162,15 @@ sub storeEnv {
     return PE_OK;
 }
 
+sub ssoMatch {
+    my ( $self, $req ) = @_;
+    my $url = $self->normalize_url( $req->uri, $self->conf->{issuerDBSAMLPath},
+        $self->ssoGetUrl );
+    return ( $url =~ $self->ssoUrlRe or $req->datas->{_proxiedRequest} 
+      ? 1
+      : 0);
+}
+
 # Main method (launched only for authenticated users, see Main/Issuer)
 sub run {
     my ( $self, $req ) = @_;
@@ -953,6 +962,7 @@ sub run {
         }
 
     }
+    $self->logger->debug("Not an issuer request");
     return PE_OK;
 }
 

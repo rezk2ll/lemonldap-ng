@@ -73,20 +73,29 @@ sub init {
 
 sub _redirect {
     my ( $self, $req, @path ) = @_;
-    $self->logger->debug('Processing _redirect');
-    $self->logger->debug('Store issuer request');
-    my $ir =
-      $req->param( 'issuerRequest' . $self->path ) || $self->storeRequest($req);
-    $self->p->setHiddenFormValue( $req, 'issuerRequest' . $self->path,
-        $ir, '' );
-    $req->{urldc} = $self->conf->{portal};
-    $req->{urldc} =~ s#/*$##;
-    $req->{urldc} .= $req->path . '?'
-      . build_urlencoded( "issuerRequest$self->{path}" => $ir );
-    $self->p->setHiddenFormValue( $req, 'issuerUrldc', $req->urldc, '', 0 );
+    my $restore;
+    my $ir;
+    unless ( $self->can('ssoMatch') and not $self->ssoMatch($req) ) {
+        $restore = 1;
+        $self->logger->debug('Processing _redirect');
+        $self->logger->debug('Store issuer request');
+        $ir =
+             $req->param( 'issuerRequest' . $self->path )
+          || $self->storeRequest($req);
+        $self->p->setHiddenFormValue( $req, 'issuerRequest' . $self->path,
+            $ir, '' );
+        $req->{urldc} = $self->conf->{portal};
+        $req->{urldc} =~ s#/*$##;
+        $req->{urldc} .= $req->path . '?'
+          . build_urlencoded( "issuerRequest$self->{path}" => $ir );
+        $self->p->setHiddenFormValue( $req, 'issuerUrldc', $req->urldc, '', 0 );
 
-    if ( my $t = $req->param( 'issuerRequest' . $self->path ) ) {
-        $ir = $t;
+        if ( my $t = $req->param( 'issuerRequest' . $self->path ) ) {
+            $ir = $t;
+        }
+    }
+    else {
+        $self->logger->debug("Ignore SSO request");
     }
 
     # TODO: launch normal process with 'run' at the end
@@ -99,11 +108,16 @@ sub _redirect {
             @{ $self->p->betweenAuthAndDatas },
             $self->p->sessionDatas,
             @{ $self->p->afterDatas },
-            sub {
-                # Restore urldc if auth doesn't need to dial with browser
-                $self->restoreRequest( $req, $ir );
-                return $self->run( @_, @path );
-            }
+            (
+                $restore
+                ? sub {
+
+                    # Restore urldc if auth doesn't need to dial with browser
+                    $self->restoreRequest( $req, $ir );
+                    return $self->run( @_, @path );
+                }
+                : ()
+            )
         ]
     );
 }
