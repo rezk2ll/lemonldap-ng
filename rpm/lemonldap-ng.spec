@@ -15,10 +15,11 @@
 
 %define real_name lemonldap-ng
 %define real_version 2.0.0~alpha3
-%define cpan_common_version  %{real_version}
-%define cpan_handler_version %{real_version}
-%define cpan_manager_version %{real_version}
-%define cpan_portal_version  %{real_version}
+%define cpan_version 2.0.0
+%define cpan_common_version  %{cpan_version}
+%define cpan_handler_version %{cpan_version}
+%define cpan_manager_version %{cpan_version}
+%define cpan_portal_version  %{cpan_version}
 
 %define lm_prefix /usr
 %define lm_sharedir %{_datadir}/lemonldap-ng
