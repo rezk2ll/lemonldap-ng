@@ -25,6 +25,9 @@ has ssoUrlRe => ( is => 'rw' );
 has ssoUrlArtifact => ( is => 'rw' );
 
 has ssoGetUrl => ( is => 'rw' );
+use constant sessionKind => 'ISAML';
+use constant lsDump      => '_lassoSessionDumpI';
+use constant liDump      => '_lassoIdentityDumpI';
 
 # INTERFACE
 
@@ -220,8 +223,8 @@ sub run {
         if ( $request or $idp_initiated ) {
 
             # Load Session and Identity if they exist
-            my $session  = $req->{sessionInfo}->{_lassoSessionDump};
-            my $identity = $req->{sessionInfo}->{_lassoIdentityDump};
+            my $session  = $req->{sessionInfo}->{ $self->lsDump };
+            my $identity = $req->{sessionInfo}->{ $self->liDump };
 
             if ($session) {
                 unless ( $self->setSessionFromDump( $login, $session ) ) {
@@ -812,14 +815,14 @@ sub run {
                 # Update session
                 $self->logger->debug("Save Lasso identity in session");
                 $self->updatePersistentSession( $req,
-                    { _lassoIdentityDump => $login->get_identity->dump },
+                    { $self->liDump => $login->get_identity->dump },
                     undef, $session_id );
             }
 
             if ( $login->is_session_dirty ) {
                 $self->logger->debug("Save Lasso session in session");
                 $self->p->updateSession( $req,
-                    { _lassoSessionDump => $login->get_session->dump },
+                    { $self->lsDump => $login->get_session->dump },
                     $session_id );
             }
 
@@ -1109,8 +1112,8 @@ sub soapSloServer {
         }
 
         # Load Session and Identity if they exist
-        my $session  = $local_session->data->{_lassoSessionDump};
-        my $identity = $local_session->data->{_lassoIdentityDump};
+        my $session  = $local_session->data->{ $self->lsDump };
+        my $identity = $local_session->data->{ $self->liDump };
 
         if ($session) {
             unless ( $self->setSessionFromDump( $logout, $session ) ) {
@@ -1220,8 +1223,8 @@ sub logout {
     my $logout = $self->createLogout( $self->lassoServer );
 
     # Load Session and Identity if they exist
-    my $session  = $req->{sessionInfo}->{_lassoSessionDump};
-    my $identity = $req->{sessionInfo}->{_lassoIdentityDump};
+    my $session  = $req->{sessionInfo}->{ $self->lsDump };
+    my $identity = $req->{sessionInfo}->{ $self->liDump };
 
     if ($session) {
         unless ( $self->setSessionFromDump( $logout, $session ) ) {
@@ -1288,8 +1291,8 @@ sub sloRelaySoap {
     }
 
     # Load Session and Identity if they exist
-    my $session    = $relayInfos->data->{_lassoSessionDump};
-    my $identity   = $relayInfos->data->{_lassoIdentityDump};
+    my $session    = $relayInfos->data->{ $self->lsDump };
+    my $identity   = $relayInfos->data->{ $self->liDump };
     my $providerID = $relayInfos->data->{_providerID};
     my $relayState = $relayInfos->data->{_relayState} // '';
     my $spConfKey  = $self->spList->{$providerID}->{confKey};
@@ -1458,8 +1461,8 @@ sub sloServer {
                 "Get session id $local_session_id (from cookie)");
         }
         if ( $req->{sessionInfo} ) {
-            $session  = $req->{sessionInfo}->{_lassoSessionDump};
-            $identity = $req->{sessionInfo}->{_lassoIdentityDump};
+            $session  = $req->{sessionInfo}->{ $self->lsDump };
+            $identity = $req->{sessionInfo}->{ $self->liDump };
         }
         unless ($session) {
 
@@ -1472,8 +1475,8 @@ sub sloServer {
             }
 
             # Load Session and Identity if they exist
-            $session  = $local_session->data->{_lassoSessionDump};
-            $identity = $local_session->data->{_lassoIdentityDump};
+            $session  = $local_session->data->{ $self->lsDump };
+            $identity = $local_session->data->{ $self->liDump };
 
             # Import user datas in $req (for other "logout" subs)
             $req->id( $local_session->data->{_session_id} );
@@ -1665,7 +1668,12 @@ sub attributeServer {
       Lemonldap::NG::Common::Apache::Session->searchOn( $self->amOpts,
         "_nameID", $name_id->dump );
 
-    if ( my @saml_sessions_keys = keys %$saml_sessions ) {
+    if (
+        my @saml_sessions_keys =
+        grep { $saml_sessions->{$_}->{_session_kind} eq $self->sessionKind }
+        keys %$saml_sessions
+      )
+    {
 
         # Warning if more than one session found
         if ( $#saml_sessions_keys > 0 ) {

@@ -1656,10 +1656,17 @@ sub replayProtection {
       Lemonldap::NG::Common::Apache::Session->searchOn( $self->amOpts,
         "_assert_id", $samlID );
 
-    if ( my @keys = keys %$sessions ) {
+    if (
+        my @keys =
+        grep { $sessions->{$_}->{_session_kind} eq $self->sessionKind }
+        keys %$sessions
+      )
+    {
 
         # A session was found
         foreach (@keys) {
+            next
+              unless ( $sessions->{$_}->{_session_kind} eq $self->sessionKind );
             my $session = $_;
             my $result  = 1;
 
@@ -1780,7 +1787,12 @@ sub loadArtifact {
       Lemonldap::NG::Common::Apache::Session->searchOn( $self->amOpts,
         "_art_id", $id );
 
-    if ( my @keys = keys %$sessions ) {
+    if (
+        my @keys =
+        grep { $sessions->{$_}->{_session_kind} eq $self->sessionKind }
+        keys %$sessions
+      )
+    {
 
         my $nb_sessions = $#keys + 1;
 
@@ -1852,7 +1864,7 @@ sub createArtifactResponse {
             return;
         }
 
-        my $lassoSession = $session->data->{_lassoSessionDump};
+        my $lassoSession = $session->data->{ $self->lsDump };
 
         if ($lassoSession) {
             unless ( $self->setSessionFromDump( $login, $lassoSession ) ) {
@@ -1880,7 +1892,7 @@ sub createArtifactResponse {
     if ( $session_id and $login->is_session_dirty ) {
         $self->logger->debug("Save Lasso session in session");
         $self->updateSession( $req,
-            { _lassoSessionDump => $login->get_session->dump }, $session_id );
+            { $self->lsDump => $login->get_session->dump }, $session_id );
     }
 
     # Return artifact message
@@ -2574,14 +2586,12 @@ sub sendLogoutRequestToProvider {
                 "Build SOAP relay logout request for $providerID");
 
             my $infos;
-            $infos->{type}   = 'relay';
-            $infos->{_utime} = time;
-            $infos->{_lassoSessionDump} =
-              $req->sessionInfo->{_lassoSessionDump};
-            $infos->{_lassoIdentityDump} =
-              $req->sessionInfo->{_lassoIdentityDump};
-            $infos->{_providerID} = $providerID;
-            $infos->{_relayState} = $logout->msg_relayState;
+            $infos->{type}            = 'relay';
+            $infos->{_utime}          = time;
+            $infos->{ $self->lsDump } = $req->sessionInfo->{ $self->lsDump };
+            $infos->{ $self->liDump } = $req->sessionInfo->{ $self->liDump };
+            $infos->{_providerID}     = $providerID;
+            $infos->{_relayState}     = $logout->msg_relayState;
 
             # Create a new relay session
             my $relayInfos = $self->getSamlSession( undef, $infos );
@@ -2805,7 +2815,7 @@ sub getSamlSession {
             cacheModule          => $self->conf->{localSessionStorage},
             cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
             id                   => $id,
-            kind                 => "SAML",
+            kind                 => $self->sessionKind,
             ( $info ? ( info => $info ) : () ),
         }
     );
@@ -2944,7 +2954,12 @@ sub deleteSAMLSecondarySessions {
       Lemonldap::NG::Common::Apache::Session->searchOn( $self->amOpts,
         "_saml_id", $session_id );
 
-    if ( my @saml_sessions_keys = keys %$saml_sessions ) {
+    if (
+        my @saml_sessions_keys =
+        grep { $saml_sessions->{$_}->{_session_kind} eq $self->sessionKind }
+        keys %$saml_sessions
+      )
+    {
 
         foreach my $saml_session (@saml_sessions_keys) {
 

@@ -32,6 +32,9 @@ has ssoAssConsumerRe => ( is => 'rw' );
 has sloRe            => ( is => 'rw' );
 has artRe            => ( is => 'rw' );
 has catch            => ( is => 'rw' );
+use constant sessionKind => 'SAML';
+use constant lsDump      => '_lassoSessionDump';
+use constant liDump      => '_lassoIdentityDump';
 
 sub forAuthUser { 'handleAuthRequests' }
 
@@ -322,7 +325,13 @@ sub extractFormInfo {
                   Lemonldap::NG::Common::Apache::Session->searchOn(
                     $self->amOpts, "ProxyID", $assertion_responded );
 
-                if ( my @saml_sessions_keys = keys %$saml_sessions ) {
+                if (
+                    my @saml_sessions_keys = grep {
+                        $saml_sessions->{$_}->{_session_kind} eq
+                          $self->sessionKind
+                    } keys %$saml_sessions
+                  )
+                {
 
                     # Warning if more than one session found
                     if ( $#saml_sessions_keys > 0 ) {
@@ -562,7 +571,12 @@ sub extractFormInfo {
               Lemonldap::NG::Common::Apache::Session->searchOn( $self->amOpts,
                 "_nameID", $name_id->dump );
 
-            if ( my @local_sessions_keys = keys %$local_sessions ) {
+            if (
+                my @local_sessions_keys = grep {
+                    $local_sessions->{$_}->{_session_kind} eq $self->sessionKind
+                } keys %$local_sessions
+              )
+            {
 
                 # At least one session was found
                 foreach (@local_sessions_keys) {
@@ -602,13 +616,13 @@ sub extractFormInfo {
                   # Get Lasso::Session dump
                   # This value is erased if a next session match the SLO request
                         if (   $ssoSession
-                            && $ssoSession->data->{_lassoSessionDump} )
+                            && $ssoSession->data->{ $self->lsDump } )
                         {
                             $self->logger->debug(
 "Get Lasso::Session dump from session $real_session"
                             );
                             $session_dump =
-                              $ssoSession->data->{_lassoSessionDump};
+                              $ssoSession->data->{ $self->lsDump };
                         }
 
                 # Real session will be deleted after (see $req->steps... before)
@@ -1149,8 +1163,8 @@ sub setAuthSessionInfo {
     my $identity = $login->get_identity;
 
     # Dump Lasso objects in session
-    $req->{sessionInfo}->{_lassoSessionDump}  = $session->dump()  if $session;
-    $req->{sessionInfo}->{_lassoIdentityDump} = $identity->dump() if $identity;
+    $req->{sessionInfo}->{ $self->lsDump } = $session->dump()  if $session;
+    $req->{sessionInfo}->{ $self->liDump } = $identity->dump() if $identity;
 
     # Keep SAML Token in session
     my $store_samlToken = $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
@@ -1217,7 +1231,7 @@ sub authLogout {
     $self->deleteSAMLSecondarySessions($session_id);
 
     # Recover Lasso::Session dump
-    my $session_dump = $req->{sessionInfo}->{_lassoSessionDump};
+    my $session_dump = $req->{sessionInfo}->{ $self->lsDump };
 
     unless ($session_dump) {
         $self->userLogger->error("Could not get session dump from session");
