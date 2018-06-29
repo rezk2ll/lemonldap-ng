@@ -5,8 +5,8 @@ use Mouse;
 use URI::Escape;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_CONFIRM
   PE_ERROR
+  PE_IDPCHOICE
   PE_OK
   PE_REDIRECT
   PE_SENDRESPONSE
@@ -126,7 +126,7 @@ sub extractFormInfo {
             $req->datas->{confirmRemember} = 0;
 
             $req->datas->{login} = 1;
-            return PE_CONFIRM;
+            return PE_IDPCHOICE;
         }
     }
 

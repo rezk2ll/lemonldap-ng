@@ -18,7 +18,5 @@ timer = () ->
 $(document).ready ->
 	setTimeout go, 30000
 	setTimeout timer, 1000
-	$(".idploop").on 'click', () ->
-		$("#idp").val $(this).attr("val")
 	$("#refuse").on 'click', () ->
 		$("#confirm").attr "value", $(this).attr("val")

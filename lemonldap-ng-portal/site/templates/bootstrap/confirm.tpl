@@ -19,47 +19,12 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         <h3 class="panel-title">
-        <TMPL_IF NAME="LIST">
-          <span trspan="selectIdP">Select your Identity Provider</span>
-        <TMPL_ELSE>
           <span trspan="confirmation">Confirmation</span>
-        </TMPL_IF>
         </h3>
       </div>
       <div class="panel-body form">
 
       <TMPL_VAR NAME="MSG">
-
-      <TMPL_IF NAME="LIST">
-
-      <input type="hidden" id="idp" name="idp"/>
-
-      <div class="row">
-      <TMPL_LOOP NAME="LIST">
-        <div class="col-sm-6 <TMPL_VAR NAME="class">">
-          <button type="submit" class="btn btn-info idploop" val="<TMPL_VAR NAME="VAL">">
-          <TMPL_IF NAME="icon">
-            <img src="<TMPL_VAR NAME="icon">" class="glyphicon" />
-          <TMPL_ELSE>
-            <i class="glyphicon glyphicon-chevron-right"></i>
-          </TMPL_IF>
-            <TMPL_VAR NAME="NAME">
-          </button>
-        </div>
-      </TMPL_LOOP>
-      </div>
-
-      <TMPL_IF NAME="REMEMBER">
-	  <p>&nbsp;</p>
-      <div class="checkbox">
-        <input type="checkbox" id="remember" name="cookie_type" value="1" aria-describedby="rememberlabel">
-        <label id="rememberlabel" for="remember">
-          <span trspan="rememberChoice">Remember my choice</span>
-        </label>
-      </div>
-      </TMPL_IF>
-
-      <TMPL_ELSE>
 
       <TMPL_IF NAME="ACTIVE_TIMER">
         <div class="alert alert-info">
@@ -77,8 +42,6 @@
           <span trspan="refuse">Refuse</span>
         </button>
       </div>
-
-      </TMPL_IF>
 
       <!-- //if:jsminified
         <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/confirm.min.js"></script>

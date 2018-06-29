@@ -29,9 +29,6 @@
   $(document).ready(function() {
     setTimeout(go, 30000);
     setTimeout(timer, 1000);
-    $(".idploop").on('click', function() {
-      return $("#idp").val($(this).attr("val"));
-    });
     return $("#refuse").on('click', function() {
       return $("#confirm").attr("value", $(this).attr("val"));
     });

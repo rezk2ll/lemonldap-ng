@@ -4,8 +4,8 @@ use strict;
 use Mouse;
 use MIME::Base64 qw/encode_base64 decode_base64/;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_CONFIRM
   PE_ERROR
+  PE_IDPCHOICE
   PE_OK
 );
 
@@ -234,7 +234,7 @@ sub extractFormInfo {
             $req->datas->{confirmRemember} = 0;
 
             $req->datas->{login} = 1;
-            return PE_CONFIRM;
+            return PE_IDPCHOICE;
         }
     }
 

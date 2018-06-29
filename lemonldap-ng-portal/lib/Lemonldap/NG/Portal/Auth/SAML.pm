@@ -6,6 +6,7 @@ use Lemonldap::NG::Portal::Lib::SAML;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_CONFIRM
+  PE_IDPCHOICE
   PE_LOGOUT_OK
   PE_REDIRECT
   PE_OK
@@ -860,7 +861,7 @@ sub extractFormInfo {
 
         #TODO: check this
         $req->datas->{login} = 1;
-        return PE_CONFIRM;
+        return PE_IDPCHOICE;
     }
 
     # If IDP is found but not confirmed, let the user confirm it

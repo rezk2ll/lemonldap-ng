@@ -59,7 +59,7 @@ sub display {
         );
     }
 
-    # 1.2 An authentication (or userDB) module needs to ask a question
+    # 1.2a An authentication (or userDB) module needs to ask a question
     #     before processing to the request
     elsif ( $req->{error} == PE_CONFIRM ) {
         $self->logger->debug('Display: confirm detected');
@@ -78,6 +78,33 @@ sub display {
               && $req->datas->{login},
             ASK_LOGINS => $req->param('checkLogins') || 0,
             CONFIRMKEY => $self->stamp(),
+            REMEMBER   => $req->datas->{confirmRemember},
+            (
+                $req->datas->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                : ()
+            ),
+        );
+    }
+
+    # 1.2b An authentication (or userDB) module needs to ask a question
+    #     before processing to the request
+    elsif ( $req->{error} == PE_IDPCHOICE ) {
+        $self->logger->debug('Display: IDP choice detected');
+        $skinfile       = 'idpchoice';
+        %templateParams = (
+            AUTH_ERROR      => $req->error,
+            AUTH_ERROR_TYPE => $req->error_type,
+            AUTH_URL        => $req->{datas}->{_url},
+            HIDDEN_INPUTS   => $self->buildHiddenForm($req),
+            ACTIVE_TIMER    => $req->datas->{activeTimer},
+            FORM_METHOD     => $self->conf->{confirmFormMethod},
+            CHOICE_PARAM    => $self->conf->{authChoiceParam},
+            CHOICE_VALUE    => $req->datas->{_authChoice},
+            CHECK_LOGINS    => $self->conf->{portalCheckLogins}
+              && $req->datas->{login},
+            ASK_LOGINS => $req->param('checkLogins') || 0,
+            CONFIRMKEY => $self->stamp(),
             LIST       => $req->datas->{list}        || [],
             REMEMBER   => $req->datas->{confirmRemember},
             (
@@ -87,6 +114,7 @@ sub display {
             ),
         );
     }
+
 
     # 1.3 There is a message to display
     elsif ( my $info = $req->info ) {
