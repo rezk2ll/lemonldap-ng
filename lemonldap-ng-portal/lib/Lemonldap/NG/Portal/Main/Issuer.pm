@@ -79,8 +79,7 @@ sub _redirect {
         $restore = 1;
         $self->logger->debug('Processing _redirect');
         $self->logger->debug('Store issuer request');
-        $ir =
-             $req->param( 'issuerRequest' . $self->path )
+        $ir = $req->param( 'issuerRequest' . $self->path )
           || $self->storeRequest($req);
         $self->p->setHiddenFormValue( $req, 'issuerRequest' . $self->path,
             $ir, '' );
@@ -95,7 +94,7 @@ sub _redirect {
         }
     }
     else {
-        $self->logger->debug("Ignore SSO request");
+        $self->logger->debug('Not seen as Issuer request, skipping');
     }
 
     # TODO: launch normal process with 'run' at the end

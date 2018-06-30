@@ -36,6 +36,8 @@ has configStorage => (
     }
 );
 
+has ssoMatchUrl => ( is => 'rw' );
+
 # OIDC has 7 endpoints managed here as PSGI endpoints or in run() [Main/Issuer.pm
 # manage transparent authentication for run()]:
 #  - authorize   : in run()
@@ -89,10 +91,23 @@ sub init {
         '.well-known' => { 'openid-configuration' => 'metadata' },
         ['GET']
     );
+    my $m =
+        '^/'
+      . $self->path . '/+(?:'
+      . join( '|',
+        $self->conf->{oidcServiceMetaDataAuthorizeURI},
+        $self->conf->{oidcServiceMetaDataEndSessionURI},
+      ) . ')';
+    $self->ssoMatchUrl(qr/$m/);
     return 1;
 }
 
 # RUNNING METHODS
+
+sub ssoMatch {
+    my ( $self, $req ) = @_;
+    return ( $req->uri =~ $self->ssoMatchUrl ? 1 : 0 );
+}
 
 # Main method (launched only for authenticated users, see Main/Issuer.pm)
 # run() manages only "authorize" and "logout" endpoints.
