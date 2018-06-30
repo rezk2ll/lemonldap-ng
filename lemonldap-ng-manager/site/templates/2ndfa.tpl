@@ -12,7 +12,7 @@
       <div class="navbar navbar-default">
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" role="grid">
-            <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('2faSessions')}} &nbsp;&nbsp;</a></li>
+            <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-filter"></i> {{translate('2faSessions')}} &nbsp;&nbsp;</a></li>
             <form name="filterForm">
               <div class="form-check ">&nbsp;&nbsp;&nbsp;
                 <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="2" ng-false-value="1" ng-change="search2FA()"/>

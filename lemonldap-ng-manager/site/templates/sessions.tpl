@@ -25,7 +25,7 @@
                 <li><a id="a-updatetime" href="#!/_updateTime" role="row"><i class="glyphicon glyphicon-hourglass"></i> {{translate('_updateTime')}}</a></li>
               </ul>
             </li>
-            <li><a id="a-persistent" href="#!/persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('persistentSessions')}}</a></li>
+            <li><a id="a-persistent" href="#!/persistent" role="row"><i class="glyphicon glyphicon-lock"></i> {{translate('persistentSessions')}}</a></li>
           </ul>
         </div>
       </div>
