@@ -659,7 +659,7 @@ sub getOpenIDConnectSession {
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
             id                 => $id,
-            kind               => "OpenIDConnect",
+            kind               => $self->sessionKind,
             ( $info ? ( info => $info ) : () ),
         }
     );

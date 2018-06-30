@@ -26,6 +26,8 @@ sub beforeAuth { 'exportRequestParameters' }
 
 # INITIALIZATION
 
+use constant sessionKind => 'OIDCI';
+
 has configStorage => (
     is      => 'ro',
     lazy    => 1,

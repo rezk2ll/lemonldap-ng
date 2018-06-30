@@ -20,6 +20,8 @@ has opList => ( is => 'rw', default => sub { [] } );
 has opNumber => ( is => 'rw', default => 0 );
 has path     => ( is => 'rw', default => 'oauth2' );
 
+use constant sessionKind => 'OIDC';
+
 # INITIALIZATION
 
 sub init {
