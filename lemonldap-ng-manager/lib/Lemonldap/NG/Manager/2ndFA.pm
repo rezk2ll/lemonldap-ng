@@ -232,6 +232,13 @@ sub sfa {
         }
     }
 
+	# Delete sessions without 2F device(s)
+	$self->logger->debug("Deleting sessions without 2F device(s)...");
+	foreach my $session ( keys %$res ) {
+		delete $res->{$session}
+		  unless defined $res->{$session}->{_2fDevices};
+	}
+
     # Filter 2FA sessions if needed
     $self->logger->debug("Filtering 2F sessions...");
     my $all = ( keys %$res );
@@ -262,7 +269,7 @@ sub sfa {
     }
 
     my $total = ( keys %$res );
-    $self->logger->debug("Session(s) left : $total / $all");
+    $self->logger->debug("2FA session(s) left : $total / $all");
 
     if ( my $group = $req->params('groupBy') ) {
         my $r;

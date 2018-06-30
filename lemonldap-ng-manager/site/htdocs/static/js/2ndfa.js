@@ -85,6 +85,9 @@
       $scope.currentSession = null;
       $scope.menu = menu;
       $scope.searchString = '';
+      $scope.U2FCheck = "1";
+      $scope.TOTPCheck = "1";
+      $scope.UBKCheck = "1";
       $scope.translateP = $translator.translateP;
       $scope.translate = $translator.translate;
       $scope.translateTitle = function(node) {
@@ -367,6 +370,7 @@
       };
       $scope.init = function() {
         $scope.waiting = true;
+        $scope.U2FCheck = "1";
         $scope.data = [];
         $q.all([$translator.init($scope.lang), $scope.updateTree('', $scope.data, 0, 0)]).then(function() {
           return $scope.waiting = false;

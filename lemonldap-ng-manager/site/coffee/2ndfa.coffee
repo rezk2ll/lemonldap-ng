@@ -69,6 +69,9 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.currentSession = null
 	$scope.menu = menu
 	$scope.searchString = ''
+	$scope.U2FCheck = "1"
+	$scope.TOTPCheck = "1"
+	$scope.UBKCheck = "1"
 
 	# Import translations functions
 	$scope.translateP = $translator.translateP
@@ -365,6 +368,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	# initialization
 	$scope.init = ->
 		$scope.waiting = true
+		$scope.U2FCheck = "1"
 		$scope.data = []
 		$q.all [
 			$translator.init $scope.lang

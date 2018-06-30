@@ -15,13 +15,13 @@
             <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('2faSessions')}} &nbsp;&nbsp;</a></li>
             <form name="filterForm">
               <div class="form-check ">&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
+                <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="2" ng-false-value="1" ng-change="search2FA()"/>
                 <label class="form-check-label" for="U2FCheck">U2F</label>
                 &nbsp;&nbsp;&&nbsp;&nbsp;
-                <input type="checkbox" ng-model="TOTPCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
+                <input type="checkbox" ng-model="TOTPCheck" class="form-check-input" ng-true-value="2" ng-false-value="1" ng-change="search2FA()"/>
                 <label class="form-check-label" for="TOTPCheck">TOTP</label>
                 &nbsp;&nbsp;&&nbsp;&nbsp;
-                <input type="checkbox" ng-model="UBKCheck" class="form-check-input" ng-true-value="'2'" ng-false-value="'1'" ng-change="search2FA()"/>
+                <input type="checkbox" ng-model="UBKCheck" class="form-check-input" ng-true-value="2" ng-false-value="1" ng-change="search2FA()"/>
                 <label class="form-check-label" for="UBKCheck">UBK</label>
               </div>
             </form>
