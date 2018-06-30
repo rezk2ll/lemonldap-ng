@@ -20,7 +20,8 @@ extends 'Lemonldap::NG::Portal::Main::Issuer',
 
 # INITIALIZATION
 
-use constant beforeAuth => 'storeEnvAndCheckGateway';
+use constant beforeAuth  => 'storeEnvAndCheckGateway';
+use constant sessionKind => 'ICAS';
 
 sub init {
     my ($self) = @_;

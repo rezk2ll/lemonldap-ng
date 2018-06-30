@@ -106,7 +106,7 @@ sub getCasSession {
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
             id                 => $id,
-            kind               => "CAS",
+            kind               => $self->sessionKind,
             ( $info ? ( info => $info ) : () ),
         }
     );
@@ -255,7 +255,12 @@ sub deleteCasSecondarySessions {
     my $cas_sessions =
       $module->searchOn( $moduleOptions, "_cas_id", $session_id );
 
-    if ( my @cas_sessions_keys = keys %$cas_sessions ) {
+    if (
+        my @cas_sessions_keys =
+        grep { $cas_sessions->{$_}->{_session_kind} eq $self->sessionKind }
+        keys %$cas_sessions
+      )
+    {
 
         foreach my $cas_session (@cas_sessions_keys) {
 
@@ -404,7 +409,13 @@ sub validateST {
             my $pgtIdSessions =
               $module->searchOn( $moduleOptions, "pgtIou", $pgtIou );
 
-            foreach my $id ( keys %$pgtIdSessions ) {
+            foreach my $id (
+                grep {
+                    $pgtIdSessions->{$_}->{_session_kind} eq $self->sessionKind
+                }
+                keys %$pgtIdSessions
+              )
+            {
 
                 # There should be only on session
                 my $pgtIdSession = $self->getCasSession($id) or next;

@@ -20,6 +20,7 @@ extends 'Lemonldap::NG::Portal::Main::Auth', 'Lemonldap::NG::Portal::Lib::CAS';
 
 has srvNumber => ( is => 'rw', default => 0 );
 has srvList => ( is => 'rw', default => sub { [] } );
+use constant sessionKind => 'CAS';
 
 # INITIALIZATION
 
