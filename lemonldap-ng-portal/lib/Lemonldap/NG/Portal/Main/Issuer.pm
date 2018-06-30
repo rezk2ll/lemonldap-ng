@@ -270,8 +270,9 @@ URI path:
 They must be called during initialization process (so you must write the
 optional init() sub).
 
-Be carefull with C<add*authRoute()>: you can't catch here your root path (=
-path declared in C<$self-E<gt>path>) because it is catched by this module.
+Be careful with C<add*authRoute()>: you can't catch here your root path (=
+path declared in C<$self-E<gt>path>) because it is caught by this module,
+but you can catch sub-routes (ie C</path/something>).
 
 Example:
 
@@ -287,6 +288,13 @@ Example:
       # You must return a valid PSGI response
       return [ 200, [ 'Content-Type' => 'application/xml' ], [] ];
   }
+
+=head2 avoid conflicts in path
+
+If you share base URI path with another plugin (a C<Auth::*> module for
+example), it is recommended to write a C<ssoMatch> function that returns true
+if C<$req-E<gt>uri> has to be handled by Issuer module. See C<Issuer::SAML>
+or C<Issuer::OpenIDConnect> to have some examples.
 
 =head1 SEE ALSO
 
