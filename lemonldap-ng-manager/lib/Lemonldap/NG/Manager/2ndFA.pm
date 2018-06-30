@@ -232,12 +232,15 @@ sub sfa {
         }
     }
 
-	# Delete sessions without 2F device(s)
-	$self->logger->debug("Deleting sessions without 2F device(s)...");
-	foreach my $session ( keys %$res ) {
-		delete $res->{$session}
-		  unless defined $res->{$session}->{_2fDevices};
-	}
+    # Remove sessions without at least one 2F device(s)
+    $self->logger->debug(
+        "Removing sessions without at least one 2F device(s)...");
+    foreach my $session ( keys %$res ) {
+        delete $res->{$session}
+          unless ( defined $res->{$session}->{_2fDevices}
+            and $res->{$session}->{_2fDevices} =~
+            /"type":\s*"(?:U2F|TOTP|UBK)"/s );
+    }
 
     # Filter 2FA sessions if needed
     $self->logger->debug("Filtering 2F sessions...");
