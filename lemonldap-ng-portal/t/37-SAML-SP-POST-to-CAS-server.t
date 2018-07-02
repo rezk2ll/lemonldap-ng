@@ -10,7 +10,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 19;
+my $maintests = 18;
 my $debug     = 'error';
 my ( $issuer, $proxy, $sp, $res );
 my %handlerOR = ( issuer => [], proxy => [], sp => [] );
@@ -89,9 +89,6 @@ SKIP: {
         'Unauth SP request'
     );
     expectOK($res);
-    ok( expectCookie( $res, 'lemonldapidp' ) == 0, 'IDP cookie deleted' )
-      or explain( $res->[1],
-        'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
     ok(
         $res->[2]->[0] =~
           /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,

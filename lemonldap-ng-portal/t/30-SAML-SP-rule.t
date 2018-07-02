@@ -10,7 +10,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 10;
+my $maintests = 8;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -51,19 +51,7 @@ SKIP: {
         'Unauth SP request'
     );
     expectOK($res);
-    ok( expectCookie( $res, 'lemonldapidp' ) == 0, 'IDP cookie deleted' )
-      or explain( $res->[1],
-        'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
     my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'confirm' );
-    ok(
-        $res->[2]->[0] =~
-          m#<button type="submit".+?val="http://auth.idp.com/saml/metadata"#s,
-        'Found confirm key'
-      )
-      or explain(
-        $res->[2],
-'<input type="hidden" id="confirm" name="confirm" value="<base64 value>" />'
-      );
     $query .= '&idp=http://auth.idp.com/saml/metadata';
 
     # Choose idp on sp

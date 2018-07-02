@@ -9,7 +9,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 18;
+my $maintests = 17;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -65,9 +65,6 @@ SKIP: {
         'Unauth SP request'
     );
     expectOK($res);
-    ok( expectCookie( $res, 'lemonldapidp' ) == 0, 'IDP cookie deleted' )
-      or explain( $res->[1],
-        'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
     ok(
         $res->[2]->[0] =~
           /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,
