@@ -56,6 +56,7 @@ sub set {
         if ( ref $oldValue ) {
             die "$key seems to be a hash, modification refused";
         }
+        $oldValue //= '';
         push @list, [ $key, $oldValue, $pairs{$key} ];
     }
     unless ( $self->yes ) {
