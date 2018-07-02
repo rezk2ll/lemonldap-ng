@@ -753,7 +753,7 @@ sub extractFormInfo {
                             my $res = $self->p->deleteSession($req);
                             return (
                                 $res eq PE_LOGOUT_OK ? PE_SENDRESPONSE : $res );
-                        }
+                          }
                     ]
                 );
 
@@ -1459,6 +1459,12 @@ sub getIDP {
         }
 
         $self->logger->debug('No IDP found') unless ($idp);
+    }
+
+    # Case 6: auto select IDP if only one IDP defined
+    if ( scalar keys %{ $self->idpList } == 1 ) {
+        ($idp) = keys %{ $self->idpList };
+        $self->logger->debug("Selecting the only defined SAML IDP: $idp");
     }
 
     # Alert when selected IDP is unknown
