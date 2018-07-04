@@ -306,6 +306,12 @@ sub reloadConf {
         $self->loadPlugin($plugin) or return $self->fail;
     }
 
+    # Clean $req->pdata after authentication
+    push @{ $self->afterDatas }, sub {
+        $_[0]->pdata( {} ) unless ( $_[0]->datas->{keepPdata} );
+        return PE_OK;
+    };
+
     1;
 }
 
