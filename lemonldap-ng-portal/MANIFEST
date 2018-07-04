@@ -239,6 +239,8 @@ site/htdocs/static/common/js/autoRenew.js
 site/htdocs/static/common/js/autoRenew.min.js
 site/htdocs/static/common/js/confirm.js
 site/htdocs/static/common/js/confirm.min.js
+site/htdocs/static/common/js/idpchoice.js
+site/htdocs/static/common/js/idpchoice.min.js
 site/htdocs/static/common/js/info.js
 site/htdocs/static/common/js/info.min.js
 site/htdocs/static/common/js/kerberos.js
@@ -353,6 +355,7 @@ site/templates/common/redirect.tpl
 site/templates/common/registerBrowser.tpl
 site/templates/common/script.tpl
 t/01-AuthDemo.t
+t/01-pdata.t
 t/02-Password-Demo.t
 t/03-XSS-protection.t
 t/19-Auth-Null.t
@@ -455,6 +458,7 @@ t/73-2F-UTOTP-TOTP-only.t
 t/90-Translations.t
 t/99-pod.t
 t/lmConf-1.json
+t/pdata.pm
 t/saml-lib.pm
 t/sessions/lock/.exists
 t/sessions/saml/lock/.exists
