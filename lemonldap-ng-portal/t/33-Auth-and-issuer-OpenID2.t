@@ -90,6 +90,7 @@ SKIP: {
         'Follow redirection to IdP' );
     expectOK($res);
     my ($tmp);
+    my $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
     ( $host, $tmp, $query ) = expectForm( $res, '#', undef );
     $query .= '&user=dwho&password=dwho';
 
@@ -98,7 +99,8 @@ SKIP: {
         $res = $issuer->_post(
             $uri, IO::String->new($query),
             length => length($query),
-            accept => 'text/html'
+            accept => 'text/html',
+            cookie => $pdata,
         ),
         'Try to authenticate'
     );

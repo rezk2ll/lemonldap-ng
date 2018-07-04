@@ -89,6 +89,7 @@ ok(
 );
 count(1);
 expectOK($res);
+my $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
 
 # Try to authenticate to IdP
 my $body = $res->[2]->[0];
@@ -103,15 +104,16 @@ ok(
     $res = $issuer->_post(
         '/cas/login',
         IO::String->new($s),
+        cookie => $pdata,
         accept => 'text/html',
         length => length($s),
     ),
     'Post authentication'
 );
 count(1);
+my $idpId = expectCookie($res);
 my ($query) =
   expectRedirection( $res, qr#^http://auth.sp.com/\?(ticket=[^&]+)$# );
-my $idpId = expectCookie($res);
 
 # Back to SP
 switch ('sp');

@@ -70,9 +70,7 @@ sub init {
 # Overwrite _redirect to handle server-to-server queries
 sub _redirect {
     my ( $self, $req ) = @_;
-    unless ( $req->param('issuerUrldc')
-        or $req->param('issuerRequestopenidserver') )
-    {
+    unless ( $req->pdata->{issuerRequestopenidserver} ) {
         my $mode = $req->param('openid.mode');
         unless ($mode) {
             $self->logger->debug('OpenID SP test');

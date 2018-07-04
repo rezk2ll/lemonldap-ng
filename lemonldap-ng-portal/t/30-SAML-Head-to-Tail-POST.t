@@ -92,6 +92,7 @@ SKIP: {
         'Post SAML request to IdP'
     );
     expectOK($res);
+    my $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
 
     # Try to authenticate to IdP
     $s = "user=french&password=french&$s";
@@ -100,6 +101,7 @@ SKIP: {
             $url,
             IO::String->new($s),
             accept => 'text/html',
+            cookie => $pdata,
             length => length($s),
         ),
         'Post authentication'

@@ -105,6 +105,7 @@ SKIP: {
         'Query CAS server'
     );
     expectOK($res);
+    my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Try to authenticate to IdP
     my $body = $res->[2]->[0];
@@ -121,6 +122,7 @@ SKIP: {
             '/cas/login',
             IO::String->new($s),
             accept => 'text/html',
+            cookie => $pdata,
             length => length($s),
         ),
         'Post authentication'
@@ -175,6 +177,7 @@ SKIP: {
         ),
         'Query CAS server (2)'
     );
+    $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
 
     # Verify that confirmation is asked
     my ( $host, $url );
@@ -187,37 +190,35 @@ SKIP: {
         $res = $issuer->_post(
             '/upgradesession', IO::String->new($query),
             length => length($query),
-            cookie => "lemonldap=$idpId",
+            cookie => "lemonldap=$idpId; $pdata",
             accept => 'text/html'
         ),
         'Post confirm'
     );
     ( $host, $url, $query ) = expectForm( $res, undef, undef, 'upgrading' );
+    $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
 
     # Try to authenticate
-    $query =~ s/password=//;
+    $query =~ s/&?password=//;
     $query .= '&password=dwho';
     ok(
         $res = $issuer->_post(
             '/upgradesession', IO::String->new($query),
             length => length($query),
-            cookie => "lemonldap=$idpId",
+            cookie => "lemonldap=$idpId; $pdata",
             accept => 'text/html'
         ),
         'Post credentials'
     );
-    ($query) = expectRedirection( $res,
-        qr#^http://auth.idp.com/cas/login\?(issuerRequestcas=.*)# );
+    expectRedirection( $res, 'http://auth.idp.com/cas/login' );
     $idpId = expectCookie($res);
     ok(
         $res = $issuer->_get(
             '/cas/login',
-            query  => $query,
-            cookie => "lemonldap=$idpId",
+            cookie => "lemonldap=$idpId; $pdata",
             accept => 'text/html'
         ),
         'Follow redirection'
-
     );
     ($query) =
       expectRedirection( $res, qr#http://auth.sp.com/?\?(ticket=.*)$# );

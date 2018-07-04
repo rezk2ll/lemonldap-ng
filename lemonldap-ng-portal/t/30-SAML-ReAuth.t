@@ -107,6 +107,7 @@ SKIP: {
         ),
         'Post SAML request to IdP'
     );
+    my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
     my $tmp;
     ( $host, $tmp, $query ) =
       expectForm( $res, undef, '/upgradesession', 'confirm' );
@@ -118,12 +119,13 @@ SKIP: {
             accept => 'text/html',
             length => length($query),
             cookie =>
-              "lemonldap=$idpId;lemonldapidp=http://auth.idp.com/saml/metadata",
+"lemonldap=$idpId;lemonldapidp=http://auth.idp.com/saml/metadata;$pdata",
         ),
         'Ask to renew'
     );
     ( $host, $tmp, $query ) =
       expectForm( $res, '#', undef, 'upgrading', 'url' );
+    $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
     $query =~ s/user=[^&]*//;
     $query =~ s/^&//;
     $query =~ s/&$//;
@@ -136,26 +138,27 @@ SKIP: {
             accept => 'text/html',
             length => length($query),
             cookie =>
-              "lemonldap=$idpId;lemonldapidp=http://auth.idp.com/saml/metadata",
+"lemonldap=$idpId;lemonldapidp=http://auth.idp.com/saml/metadata;$pdata",
         ),
         'Re auth'
     );
+    $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
     $tmp = expectCookie($res);
     ok( $tmp ne $idpId, 'Get a new session' );
     $idpId = $tmp;
     ( $url, $query ) = expectRedirection( $res,
-        qr#http://auth.idp.com(/+saml/singleSignOn)\?(.*)# );
+        qr#http://auth.idp.com(/+saml/singleSignOn)(?:\?(.*))?# );
     ok(
         $res = $issuer->_get(
             $url,
             query  => $query,
             accept => 'text/html',
             cookie =>
-              "lemonldap=$idpId;lemonldapidp=http://auth.idp.com/saml/metadata",
+"lemonldap=$idpId;lemonldapidp=http://auth.idp.com/saml/metadata;$pdata",
         ),
         'Follow redirection'
     );
-    my ( $host, $url, $query ) =
+    ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleSignOnPost',
         'SAMLResponse' );
 

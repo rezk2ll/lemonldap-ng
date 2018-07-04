@@ -107,6 +107,7 @@ SKIP: {
         "Push request to OP,         endpoint $url" );
     my ( $host, $tmp );
     ( $host, $tmp, $query ) = expectForm($res);
+    my $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
 
     # Try to authenticate to OP
     $query =~ s/user=&?//;
@@ -117,6 +118,7 @@ SKIP: {
             IO::String->new($query),
             accept => 'text/html',
             length => length($query),
+            cookie => $pdata,
         ),
         "Post authentication,        endpoint $url"
     );

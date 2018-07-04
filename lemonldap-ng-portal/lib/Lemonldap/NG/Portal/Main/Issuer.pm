@@ -27,6 +27,8 @@ has type => ( is => 'rw' );
 
 has path => ( is => 'rw' );
 
+has ipath => ( is => 'rw' );
+
 has _ott => (
     is      => 'rw',
     lazy    => 1,
@@ -65,6 +67,7 @@ sub init {
     else {
         $self->logger->debug("No path declared for issuer $type. Skipping");
     }
+    $self->ipath( 'issuerRequest' . $self->path );
 }
 
 # RUNNING METHODS
@@ -76,22 +79,13 @@ sub _redirect {
     my $restore;
     my $ir;
     unless ( $self->can('ssoMatch') and not $self->ssoMatch($req) ) {
+        $self->logger->debug("Unauth request to $self->{path} issuer");
         $restore = 1;
         $self->logger->debug('Processing _redirect');
         $self->logger->debug('Store issuer request');
-        $ir = $req->param( 'issuerRequest' . $self->path )
-          || $self->storeRequest($req);
-        $self->p->setHiddenFormValue( $req, 'issuerRequest' . $self->path,
-            $ir, '' );
+        $ir = $req->pdata->{ $self->ipath } ||= $self->storeRequest($req);
+        $req->datas->{keepPdata} = 1;
         $req->{urldc} = $self->conf->{portal};
-        $req->{urldc} =~ s#/*$##;
-        $req->{urldc} .= $req->path . '?'
-          . build_urlencoded( "issuerRequest$self->{path}" => $ir );
-        $self->p->setHiddenFormValue( $req, 'issuerUrldc', $req->urldc, '', 0 );
-
-        if ( my $t = $req->param( 'issuerRequest' . $self->path ) ) {
-            $ir = $t;
-        }
     }
     else {
         $self->logger->debug('Not seen as Issuer request, skipping');
@@ -124,10 +118,15 @@ sub _redirect {
 # Case 3: authentified user, launch
 sub _forAuthUser {
     my ( $self, $req, @path ) = @_;
+
     $self->logger->debug('Processing _forAuthUser');
-    if ( my $r = $req->param( 'issuerRequest' . $self->path ) ) {
+    if ( my $r = $req->pdata->{ $self->ipath } ) {
+        $self->logger->debug("Restoring request to $self->{path} issuer");
         $self->restoreRequest( $req, $r );
     }
+
+    # Clean pdata: keepPdata has been set, so pdata must be cleaned here
+    $req->pdata( {} );
     $req->urlNotBase64(1) if ( ref($self) =~ /::CAS$/ );
     return $self->p->do(
         $req,
@@ -175,14 +174,10 @@ sub reAuth {
     $req->datas->{customScript} =
 qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/autoRenew.min.js"></script>'
       if ( $self->conf->{skipRenewConfirmation} );
-    $req->datas->{_url} = encode_base64(
-        $self->conf->{portal}
-          . $req->path_info . '?'
-          . build_urlencoded(
-            "issuerRequest$self->{path}" => $self->storeRequest($req)
-          ),
-        ''
-    );
+    $req->datas->{_url} =
+      encode_base64( $self->conf->{portal} . $req->path_info, '' );
+    $req->pdata->{ $self->ipath } = $self->storeRequest($req);
+    $req->datas->{keepPdata} = 1;
     return PE_RENEWSESSION;
 }
 

@@ -109,6 +109,7 @@ SKIP: {
         'Launch SAML request to IdP'
     );
     expectOK($res);
+    my $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
 
     # Try to authenticate to IdP
     my $body = $res->[2]->[0];
@@ -124,6 +125,7 @@ SKIP: {
             $url,
             IO::String->new($s),
             accept => 'text/html',
+            cookie => $pdata,
             length => length($s),
         ),
         'Post authentication'

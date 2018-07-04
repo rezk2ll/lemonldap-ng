@@ -346,7 +346,7 @@ sub logout {
 
 sub _get {
     my ( $self, $path, %args ) = @_;
-    return $self->app->(
+    my $res = $self->app->(
         {
             'HTTP_ACCEPT' => $args{accept}
               || 'application/json, text/plain, */*',
@@ -376,13 +376,16 @@ sub _get {
             ( $args{custom} ? %{ $args{custom} } : () ),
         }
     );
+    Test::More::diag("Pdata")
+      if ( @{ $res->[1] } and grep ( /pdata/, @{ $res->[1] } ) );
+    return $res;
 }
 
 sub _post {
     my ( $self, $path, $body, %args ) = @_;
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
-    return $self->app->(
+    my $res = $self->app->(
         {
             'HTTP_ACCEPT' => $args{accept}
               || 'application/json, text/plain, */*',
@@ -415,6 +418,8 @@ sub _post {
               || 'application/x-www-form-urlencoded',
         }
     );
+    Test::More::diag("Pdata") if ( grep /pdata/, @{ $res->[1] } );
+    return $res;
 }
 
 sub _delete {
