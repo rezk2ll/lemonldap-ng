@@ -22,6 +22,9 @@ has id          => ( is => 'rw' );
 has sessionInfo => ( is => 'rw' );
 has user        => ( is => 'rw' );
 
+# Persistent data (stored in cookie during auth, erased when auth is ready)
+has pdata => ( is => 'rw' );
+
 # Response cookies (list of strings built by cookie())
 has respCookies => ( is => 'rw' );
 
@@ -113,7 +116,7 @@ sub error_type {
 
 sub init {
     my ($self) = @_;
-    $self->{$_} = {} foreach (qw(datas customParameters sessionInfo));
+    $self->{$_} = {} foreach (qw(datas customParameters sessionInfo pdata));
     $self->{$_} = [] foreach (qw(respCookies));
 }
 

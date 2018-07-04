@@ -31,9 +31,31 @@ sub sessionDatas {
 # - launch Lemonldap::NG::Common::PSGI::Request::handler()
 sub handler {
     my ( $self, $req ) = @_;
+
     bless $req, 'Lemonldap::NG::Portal::Main::Request';
     $req->init();
-    return $self->Lemonldap::NG::Common::PSGI::Router::handler($req);
+
+    # Restore pdata
+    if ( my $v = $req->cookies->{ $self->conf->{cookieName} . 'pdata' } ) {
+        eval { $req->pdata( JSON::from_json($v) ); };
+        if ($@) {
+            $self->logger->error("Bad JSON content in cookie pdata");
+            $req->pdata( {} );
+        }
+    }
+    my $res = $self->Lemonldap::NG::Common::PSGI::Router::handler($req);
+
+    # Save pdata
+    my %v = (
+        name => $self->conf->{cookieName} . 'pdata',
+        (
+            %{ $req->pdata }
+            ? ( value => JSON::to_json( $req->pdata ) )
+            : ( value => '', expires => 'Wed, 21 Oct 2015 00:00:00 GMT' )
+        )
+    );
+    push @{ $res->[1] }, 'Set-Cookie', $self->cookie(%v);
+    return $res;
 }
 
 # MAIN ENTRY POINTS (declared in Lemonldap::NG::Portal::Main::Init)
