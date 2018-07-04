@@ -34,9 +34,11 @@ sub handler {
 
     bless $req, 'Lemonldap::NG::Portal::Main::Request';
     $req->init();
+    my $sp = 0;
 
     # Restore pdata
     if ( my $v = $req->cookies->{ $self->conf->{cookieName} . 'pdata' } ) {
+        $sp = 1;
         eval { $req->pdata( JSON::from_json($v) ); };
         if ($@) {
             $self->logger->error("Bad JSON content in cookie pdata");
@@ -46,15 +48,17 @@ sub handler {
     my $res = $self->Lemonldap::NG::Common::PSGI::Router::handler($req);
 
     # Save pdata
-    my %v = (
-        name => $self->conf->{cookieName} . 'pdata',
-        (
-            %{ $req->pdata }
-            ? ( value => JSON::to_json( $req->pdata ) )
-            : ( value => '', expires => 'Wed, 21 Oct 2015 00:00:00 GMT' )
-        )
-    );
-    push @{ $res->[1] }, 'Set-Cookie', $self->cookie(%v);
+    if ( $sp or %{ $req->pdata } ) {
+        my %v = (
+            name => $self->conf->{cookieName} . 'pdata',
+            (
+                %{ $req->pdata }
+                ? ( value => JSON::to_json( $req->pdata ) )
+                : ( value => '', expires => 'Wed, 21 Oct 2015 00:00:00 GMT' )
+            )
+        );
+        push @{ $res->[1] }, 'Set-Cookie', $self->cookie(%v);
+    }
     return $res;
 }
 
