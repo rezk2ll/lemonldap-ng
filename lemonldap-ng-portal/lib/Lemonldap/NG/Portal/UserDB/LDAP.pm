@@ -60,12 +60,12 @@ sub getUser {
         eval { $self->p->_authentication->setSecurity($req) };
         return PE_BADCREDENTIALS;
     }
-    unless ( $req->datas->{entry} = $mesg->entry(0) ) {
+    unless ( $req->data->{entry} = $mesg->entry(0) ) {
         $self->userLogger->warn("$req->{user} was not found in LDAP directory");
         eval { $self->p->_authentication->setSecurity($req) };
         return PE_BADCREDENTIALS;
     }
-    $req->datas->{dn} = $req->datas->{entry}->dn();
+    $req->data->{dn} = $req->data->{entry}->dn();
     PE_OK;
 }
 
@@ -75,13 +75,13 @@ sub getUser {
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{_dn} = $req->datas->{dn};
+    $req->{sessionInfo}->{_dn} = $req->data->{dn};
 
     my %vars = ( %{ $self->conf->{exportedVars} },
         %{ $self->conf->{ldapExportedVars} } );
     while ( my ( $k, $v ) = each %vars ) {
         $req->sessionInfo->{$k} =
-          $self->ldap->getLdapValue( $req->datas->{entry}, $v ) || "";
+          $self->ldap->getLdapValue( $req->data->{entry}, $v ) || "";
     }
 
     PE_OK;
@@ -97,7 +97,7 @@ sub setGroups {
     if ( $self->conf->{ldapGroupBase} ) {
 
         # Get value for group search
-        my $group_value = $self->ldap->getLdapValue( $req->datas->{entry},
+        my $group_value = $self->ldap->getLdapValue( $req->data->{entry},
             $self->conf->{ldapGroupAttributeNameUser} );
 
         $self->logger->debug( "Searching LDAP groups in "

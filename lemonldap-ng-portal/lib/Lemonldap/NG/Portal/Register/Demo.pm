@@ -19,10 +19,10 @@ sub computeLogin {
 
     # Get first letter of firstname and lastname
     my $login =
-      substr( lc $req->datas->{registerInfo}->{firstname}, 0, 1 )
-      . lc $req->datas->{registerInfo}->{lastname};
+      substr( lc $req->data->{registerInfo}->{firstname}, 0, 1 )
+      . lc $req->data->{registerInfo}->{lastname};
 
-    $req->datas->{registerInfo}->{login} = $login;
+    $req->data->{registerInfo}->{login} = $login;
 
     return PE_OK;
 }
@@ -32,12 +32,12 @@ sub computeLogin {
 # @result Lemonldap::NG::Portal constant
 sub createUser {
     my ( $self, $req ) = @_;
-    $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{ $req->datas
+    $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{ $req->data
           ->{registerInfo}->{login} } = {
-        uid => $req->datas->{registerInfo}->{login},
-        cn  => $req->datas->{registerInfo}->{firstname} . ' '
-          . $req->datas->{registerInfo}->{lastname},
-        mail => $req->datas->{registerInfo}->{login} . '@badwolf.org',
+        uid => $req->data->{registerInfo}->{login},
+        cn  => $req->data->{registerInfo}->{firstname} . ' '
+          . $req->data->{registerInfo}->{lastname},
+        mail => $req->data->{registerInfo}->{login} . '@badwolf.org',
           };
     return PE_OK;
 }

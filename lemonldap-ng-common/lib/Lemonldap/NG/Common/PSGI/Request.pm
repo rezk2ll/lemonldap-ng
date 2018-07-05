@@ -33,13 +33,13 @@ sub new {
     $self->env->{PATH_INFO} ||= '/';
     $self->{uri} = uri_unescape( $self->env->{REQUEST_URI} );
     $self->{uri} =~ s|^//+|/|g;
-    $self->{datas}       = {};
+    $self->{data}       = {};
     $self->{error}       = 0;
     $self->{respHeaders} = [];
     return bless( $self, $_[0] );
 }
 
-sub datas { $_[0]->{datas} }
+sub data { $_[0]->{data} }
 
 sub uri { $_[0]->{uri} }
 

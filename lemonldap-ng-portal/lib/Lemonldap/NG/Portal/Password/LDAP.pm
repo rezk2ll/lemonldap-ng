@@ -32,7 +32,7 @@ sub modifyPassword {
 
     # Call the modify password method
     my $code =
-      $self->ldap->userModifyPassword( $dn, $pwd, $req->datas->{oldpassword} );
+      $self->ldap->userModifyPassword( $dn, $pwd, $req->data->{oldpassword} );
 
     unless ( $code == PE_PASSWORD_OK ) {
         $self->ldap->unbind;
@@ -42,7 +42,7 @@ sub modifyPassword {
 
     # If password policy and force reset, set reset flag
     if (    $self->conf->{ldapPpolicyControl}
-        and $req->datas->{forceReset}
+        and $req->data->{forceReset}
         and $self->conf->{ldapUsePasswordResetAttribute} )
     {
         my $result = $self->ldap->modify(

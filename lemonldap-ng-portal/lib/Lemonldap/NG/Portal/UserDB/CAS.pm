@@ -28,7 +28,7 @@ sub getUser {
 sub setSessionInfo {
     my ( $self, $req ) = @_;
     my $srv;
-    unless ( $srv = $req->datas->{_casSrvCurrent} ) {
+    unless ( $srv = $req->data->{_casSrvCurrent} ) {
         $self->logger->error('UserDB::CAS must be used with Auth::CAS');
         return PE_ERROR;
     }
@@ -37,7 +37,7 @@ sub setSessionInfo {
         %{ $self->conf->{exportedVars} }
     );
     foreach ( keys %ev ) {
-        $req->{sessionInfo}->{$_} = $req->datas->{casAttrs}->{$_};
+        $req->{sessionInfo}->{$_} = $req->data->{casAttrs}->{$_};
     }
     PE_OK;
 }

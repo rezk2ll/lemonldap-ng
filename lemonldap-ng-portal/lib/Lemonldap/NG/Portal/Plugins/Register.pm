@@ -125,25 +125,25 @@ sub _register {
     }
 
     # Get register token (mail link)
-    $req->datas->{register_token} = $req->param('register_token');
+    $req->data->{register_token} = $req->param('register_token');
 
     # If a register token is present, find the corresponding info
-    if ( $req->datas->{register_token} ) {
+    if ( $req->data->{register_token} ) {
 
         $self->logger->debug(
-            "Token given for register: " . $req->datas->{register_token} );
+            "Token given for register: " . $req->data->{register_token} );
 
         # Get the corresponding session
-        if ( my $datas =
-            $self->mailott->getToken( $req->datas->{register_token} ) )
+        if ( my $data =
+            $self->mailott->getToken( $req->data->{register_token} ) )
         {
             $self->logger->debug(
-                'Token ' . $req->datas->{register_token} . ' found' );
+                'Token ' . $req->data->{register_token} . ' found' );
             foreach (qw(mail firstname lastname ipAddr)) {
-                $req->datas->{registerInfo}->{$_} = $datas->{$_};
+                $req->data->{registerInfo}->{$_} = $data->{$_};
             }
             $self->logger->debug( "User associated to token: "
-                  . $req->datas->{registerInfo}->{mail} );
+                  . $req->data->{registerInfo}->{mail} );
         }
         else {
             return PE_BADMAILTOKEN;
@@ -154,15 +154,15 @@ sub _register {
     else {
 
         # Use submitted value
-        $req->datas->{registerInfo}->{mail}      = $req->param('mail');
-        $req->datas->{registerInfo}->{firstname} = $req->param('firstname');
-        $req->datas->{registerInfo}->{lastname}  = $req->param('lastname');
-        $req->datas->{registerInfo}->{ipAddr}    = $req->address;
+        $req->data->{registerInfo}->{mail}      = $req->param('mail');
+        $req->data->{registerInfo}->{firstname} = $req->param('firstname');
+        $req->data->{registerInfo}->{lastname}  = $req->param('lastname');
+        $req->data->{registerInfo}->{ipAddr}    = $req->address;
 
         # Check captcha/token only if register session does not already exist
-        if ( $req->datas->{registerInfo}->{mail}
+        if ( $req->data->{registerInfo}->{mail}
             and
-            !$self->getRegisterSession( $req->datas->{registerInfo}->{mail} ) )
+            !$self->getRegisterSession( $req->data->{registerInfo}->{mail} ) )
         {
             # Check if token exists
             my $token;
@@ -211,12 +211,12 @@ sub _register {
 
     # Check mail
     return PE_MALFORMEDUSER
-      unless ( $req->datas->{registerInfo}->{mail} =~
+      unless ( $req->data->{registerInfo}->{mail} =~
         m/$self->{conf}->{userControl}/o );
 
     # Search for user using UserDB module
     # If the user already exists, register is forbidden
-    $req->user( $req->datas->{registerInfo}->{mail} );
+    $req->user( $req->data->{registerInfo}->{mail} );
     if ( $self->p->_userDB->getUser( $req, useMail => 1 ) == PE_OK ) {
         $self->userLogger->error(
 "Register: refuse mail $req->{mail} because already exists in UserDB"
@@ -224,20 +224,20 @@ sub _register {
         return PE_REGISTERALREADYEXISTS;
     }
     my $register_session =
-      $self->getRegisterSession( $req->datas->{registerInfo}->{mail} );
-    $req->datas->{mail_already_sent} =
+      $self->getRegisterSession( $req->data->{registerInfo}->{mail} );
+    $req->data->{mail_already_sent} =
       ( $register_session and !$req->id ) ? 1 : 0;
 
     # Skip this step if confirmation was already sent
-    unless ( $req->datas->{register_token} or $register_session ) {
+    unless ( $req->data->{register_token} or $register_session ) {
 
         # Create mail token
         $register_session = $self->mailott->createToken(
             {
-                mail      => $req->datas->{registerInfo}->{mail},
-                firstname => $req->datas->{registerInfo}->{firstname},
-                lastname  => $req->datas->{registerInfo}->{lastname},
-                ipAddr    => $req->datas->{registerInfo}->{ipAddr},
+                mail      => $req->data->{registerInfo}->{mail},
+                firstname => $req->data->{registerInfo}->{firstname},
+                lastname  => $req->data->{registerInfo}->{lastname},
+                ipAddr    => $req->data->{registerInfo}->{ipAddr},
                 _type     => 'register',
             }
         );
@@ -247,7 +247,7 @@ sub _register {
     # Send confirmation mail
 
     # Skip this step if user clicked on the confirmation link
-    unless ( $req->datas->{register_token} ) {
+    unless ( $req->data->{register_token} ) {
 
         # Check if confirmation mail has already been sent
         $self->logger->debug('No register_token');
@@ -263,9 +263,9 @@ sub _register {
 
         $self->logger->debug("Register expiration timestamp: $expTimestamp");
 
-        $req->datas->{expMailDate} =
+        $req->data->{expMailDate} =
           strftime( "%d/%m/%Y", localtime $expTimestamp );
-        $req->datas->{expMailTime} =
+        $req->data->{expMailTime} =
           strftime( "%H:%M", localtime $expTimestamp );
 
         # Mail session start date
@@ -273,13 +273,13 @@ sub _register {
 
         $self->logger->debug("Register start timestamp: $startTimestamp");
 
-        $req->datas->{startMailDate} =
+        $req->data->{startMailDate} =
           strftime( "%d/%m/%Y", localtime $startTimestamp );
-        $req->datas->{startMailTime} =
+        $req->data->{startMailTime} =
           strftime( "%H:%M", localtime $startTimestamp );
 
         # Ask if user want another confirmation email
-        if ( $req->datas->{mail_already_sent}
+        if ( $req->data->{mail_already_sent}
             and !$req->param('resendconfirmation') )
         {
             return PE_MAILCONFIRMATION_ALREADY_SENT;
@@ -291,7 +291,7 @@ sub _register {
           . build_urlencoded(
             register_token => $req->{id},
             skin           => $self->p->getSkin($req),
-            ( $req->datas->{_url} ? ( url => $req->datas->{_url} ) : () ),
+            ( $req->data->{_url} ? ( url => $req->data->{_url} ) : () ),
           );
 
         # Build mail content
@@ -308,14 +308,14 @@ sub _register {
         $body = $self->loadTemplate( 'mail_register_confirm', filter => $tr );
 
         # Replace variables in body
-        $body =~ s/\$expMailDate/$req->datas->{expMailDate}/g;
-        $body =~ s/\$expMailTime/$req->datas->{expMailTime}/g;
+        $body =~ s/\$expMailDate/$req->data->{expMailDate}/g;
+        $body =~ s/\$expMailTime/$req->data->{expMailTime}/g;
         $body =~ s/\$url/$url/g;
-        $body =~ s/\$(\w+)/$req->datas->{registerInfo}->{$1}/eg;
+        $body =~ s/\$(\w+)/$req->data->{registerInfo}->{$1}/eg;
 
         # Send mail
         return PE_MAILERROR
-          unless $self->send_mail( $req->datas->{registerInfo}->{mail},
+          unless $self->send_mail( $req->data->{registerInfo}->{mail},
             $subject, $body, $html );
 
         $self->logger->debug('Register message sent');
@@ -327,24 +327,24 @@ sub _register {
 
     $self->logger->debug( "Generated password: " . $password );
 
-    $req->datas->{registerInfo}->{password} = $password;
-    $req->datas->{forceReset} = 1;
+    $req->data->{registerInfo}->{password} = $password;
+    $req->data->{forceReset} = 1;
 
     # Find a login
     my $result = $self->registerModule->computeLogin($req);
     unless ( $result == PE_OK ) {
         $self->logger->error( "Could not compute login for "
-              . $req->datas->{registerInfo}->{mail} );
+              . $req->data->{registerInfo}->{mail} );
         return $result;
     }
 
     # Create user
     $self->logger->debug(
-        'Create new user ' . $req->datas->{registerInfo}->{login} );
+        'Create new user ' . $req->data->{registerInfo}->{login} );
     $result = $self->registerModule->createUser($req);
     unless ( $result == PE_OK ) {
         $self->logger->error(
-            "Could not create user " . $req->datas->{registerInfo}->{login} );
+            "Could not create user " . $req->data->{registerInfo}->{login} );
         return $result;
     }
 
@@ -367,16 +367,16 @@ sub _register {
     $url .= '/?'
       . build_urlencoded(
         skin => $self->p->getSkin($req),
-        ( $req->datas->{_url} ? ( url => $req->datas->{_url} ) : () ),
+        ( $req->data->{_url} ? ( url => $req->data->{_url} ) : () ),
       );
 
     # Replace variables in body
     $body =~ s/\$url/$url/g;
-    $body =~ s/\$(\w+)/$req->datas->{registerInfo}->{$1}/ge;
+    $body =~ s/\$(\w+)/$req->data->{registerInfo}->{$1}/ge;
 
     # Send mail
     return PE_MAILERROR
-      unless $self->send_mail( $req->datas->{registerInfo}->{mail},
+      unless $self->send_mail( $req->data->{registerInfo}->{mail},
         $subject, $body, $html );
 
     return PE_MAILOK;
@@ -390,26 +390,26 @@ sub display {
         SKIN_BG         => $self->conf->{portalSkinBackground},
         AUTH_ERROR      => $req->error,
         AUTH_ERROR_TYPE => $req->error_type,
-        AUTH_URL        => $req->datas->{_url},
+        AUTH_URL        => $req->data->{_url},
         CHOICE_PARAM    => $self->conf->{authChoiceParam},
-        CHOICE_VALUE    => $req->datas->{_authChoice},
-        EXPMAILDATE     => $req->datas->{expMailDate},
-        EXPMAILTIME     => $req->datas->{expMailTime},
-        STARTMAILDATE   => $req->datas->{startMailDate},
-        STARTMAILTIME   => $req->datas->{startMailTime},
-        MAILALREADYSENT => $req->datas->{mail_already_sent},
+        CHOICE_VALUE    => $req->data->{_authChoice},
+        EXPMAILDATE     => $req->data->{expMailDate},
+        EXPMAILTIME     => $req->data->{expMailTime},
+        STARTMAILDATE   => $req->data->{startMailDate},
+        STARTMAILTIME   => $req->data->{startMailTime},
+        MAILALREADYSENT => $req->data->{mail_already_sent},
         MAIL            => $self->p->checkXSSAttack( 'mail',
-            $req->datas->{registerInfo}->{mail} ) ? ""
-        : $req->datas->{registerInfo}->{mail},
+            $req->data->{registerInfo}->{mail} ) ? ""
+        : $req->data->{registerInfo}->{mail},
         FIRSTNAME => $self->p->checkXSSAttack( 'firstname',
-            $req->datas->{registerInfo}->{firstname} ) ? ""
-        : $req->datas->{registerInfo}->{firstname},
+            $req->data->{registerInfo}->{firstname} ) ? ""
+        : $req->data->{registerInfo}->{firstname},
         LASTNAME => $self->p->checkXSSAttack( 'lastname',
-            $req->datas->{registerInfo}->{lastname} ) ? ""
-        : $req->datas->{registerInfo}->{lastname},
+            $req->data->{registerInfo}->{lastname} ) ? ""
+        : $req->data->{registerInfo}->{lastname},
         REGISTER_TOKEN => $self->p->checkXSSAttack( 'register_token',
-            $req->datas->{register_token} ) ? ""
-        : $req->datas->{register_token},
+            $req->data->{register_token} ) ? ""
+        : $req->data->{register_token},
     );
 
     # Display form the first time

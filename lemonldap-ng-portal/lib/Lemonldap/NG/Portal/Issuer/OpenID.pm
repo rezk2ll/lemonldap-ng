@@ -116,9 +116,9 @@ sub logout {
 # Create if not done a new Lemonldap::NG::Portal::Lib::OpenID::Server objet
 sub openIDServer {
     my ( $self, $req ) = @_;
-    return $req->datas->{_openidserver} if ( $req->datas->{_openidserver} );
+    return $req->data->{_openidserver} if ( $req->data->{_openidserver} );
 
-    $req->datas->{_openidserver} =
+    $req->data->{_openidserver} =
       Lemonldap::NG::Portal::Lib::OpenID::Server->new(
         server_secret => sub { return $self->secret },
         args          => sub { $req->param(@_) },
@@ -152,7 +152,7 @@ sub openIDServer {
             if ( $tmp =~ $self->spList xor $self->listIsWhite ) {
                 $self->userLogger->warn(
                     "$trust_root is forbidden for openID exchange");
-                $req->datas->{_openIdForbidden} = 1;
+                $req->data->{_openIdForbidden} = 1;
                 return 0;
             }
             elsif ( $req->{sessionInfo}->{"_openidTrust$trust_root"} ) {
@@ -171,7 +171,7 @@ sub openIDServer {
             }
             else {
                 $self->logger->debug('OpenID request not trusted');
-                $req->datas->{_openIdTrustRequired} = 1;
+                $req->data->{_openIdTrustRequired} = 1;
                 return 0;
             }
         },
@@ -185,7 +185,7 @@ sub openIDServer {
             },
         },
       );
-    return $req->datas->{_openidserver};
+    return $req->data->{_openidserver};
 }
 
 # Manage Lemonldap::NG::Portal::OpenID::Server responses
@@ -202,8 +202,8 @@ sub _openIDResponse {
 
     # Setup
     elsif ( $type eq 'setup' ) {
-        if (   $req->datas->{_openIdTrustRequired}
-            or $req->datas->{_openIdTrustExtMsg} )
+        if (   $req->data->{_openIdTrustRequired}
+            or $req->data->{_openIdTrustExtMsg} )
         {
 
             # TODO
@@ -213,8 +213,8 @@ sub _openIDResponse {
                     params => { trspan => "openidExchange,$data->{trust_root}" }
                 )
             );
-            $req->info( $req->datas->{_openIdTrustExtMsg} )
-              if ( $req->datas->{_openIdTrustExtMsg} );
+            $req->info( $req->data->{_openIdTrustExtMsg} )
+              if ( $req->data->{_openIdTrustExtMsg} );
             $self->logger->debug('OpenID confirmation');
             foreach ( keys %{ $req->parameters } ) {
                 if (/^(?:openid.*|url)$/) {
@@ -224,20 +224,20 @@ sub _openIDResponse {
             }
 
             # TODO: understand why this is needed here and not in OIDC
-            delete $req->datas->{_url};
+            delete $req->data->{_url};
             return PE_CONFIRM;
         }
-        elsif ( $req->datas->{_badOpenIdentity} ) {
+        elsif ( $req->data->{_badOpenIdentity} ) {
             $self->userLogger->warn(
 "The user $req->{sessionInfo}->{_user} tries to use the id \"$data->{identity}\" on $data->{trust_root}"
             );
             return PE_OPENID_BADID;
         }
-        elsif ( $req->datas->{_openIdForbidden} ) {
+        elsif ( $req->data->{_openIdForbidden} ) {
             return PE_BADPARTNER;
         }
 
-        # User has refused sharing its datas
+        # User has refused sharing its data
         else {
             $self->userLogger->notice(
                 $req->{sessionInfo}->{ $self->conf->{whatToTrace} }

@@ -17,7 +17,7 @@ sub newNotification {
     my @notifs;
     $json = [$json] unless ( ref($json) eq 'ARRAY' );
     foreach my $notif (@$json) {
-        my @datas;
+        my @data;
 
         # Mandatory information
         foreach (qw(date uid reference)) {
@@ -26,10 +26,10 @@ sub newNotification {
                 $self->logger->error("Attribute $_ is missing");
                 return 0;
             }
-            push @datas, $tmp;
+            push @data, $tmp;
         }
-        push @datas, ( $notif->{condition} // '' );
-        push @notifs, [ @datas, $jsonString ];
+        push @data, ( $notif->{condition} // '' );
+        push @notifs, [ @data, $jsonString ];
     }
     my $count;
     foreach (@notifs) {

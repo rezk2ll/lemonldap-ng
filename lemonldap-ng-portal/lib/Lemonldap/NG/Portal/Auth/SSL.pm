@@ -40,7 +40,7 @@ sub extractFormInfo {
     }
     elsif ( $self->conf->{sslByAjax} and not $req->param('nossl') ) {
         $self->logger->debug('Send SSL javascript');
-        $req->datas->{customScript} .=
+        $req->data->{customScript} .=
             '<script type="application/init">{"sslHost":"'
           . $self->conf->{sslHost}
           . '"}</script>';

@@ -101,7 +101,7 @@ sub extractFormInfo {
         }
 
         # Get OpenID Provider
-        my $op = $req->datas->{_oidcOPCurrent};
+        my $op = $req->data->{_oidcOPCurrent};
 
         unless ($op) {
             $self->userLogger->error("OpenID Provider not found");
@@ -205,8 +205,8 @@ sub extractFormInfo {
         my $user_id = $id_token_payload_hash->{sub};
 
         # Remember tokens
-        $req->datas->{access_token} = $access_token;
-        $req->datas->{id_token}     = $id_token;
+        $req->data->{access_token} = $access_token;
+        $req->data->{id_token}     = $id_token;
 
         $self->logger->debug( "Found user_id: " . $user_id );
         $req->user($user_id);
@@ -232,10 +232,10 @@ sub extractFormInfo {
             my $portalPath = $self->{portal};
             $portalPath =~ s#^https?://[^/]+/?#/#;
 
-            $req->datas->{list}            = $self->opList;
-            $req->datas->{confirmRemember} = 0;
+            $req->data->{list}            = $self->opList;
+            $req->data->{confirmRemember} = 0;
 
-            $req->datas->{login} = 1;
+            $req->data->{login} = 1;
             return PE_IDPCHOICE;
         }
     }
@@ -243,7 +243,7 @@ sub extractFormInfo {
     # Provider is choosen
     $self->logger->debug("OpenID Provider $op choosen");
 
-    $req->datas->{_oidcOPCurrent} = $op;
+    $req->data->{_oidcOPCurrent} = $op;
 
     # AuthN Request
     $self->logger->debug("Build OpenIDConnect AuthN Request");
@@ -268,20 +268,20 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    my $op = $req->datas->{_oidcOPCurrent};
+    my $op = $req->data->{_oidcOPCurrent};
 
     $req->{sessionInfo}->{authenticationLevel} = $self->conf->{oidcAuthnLevel};
 
     $req->{sessionInfo}->{_oidc_OP} = $op;
     $req->{sessionInfo}->{_oidc_access_token} =
-      $req->datas->{access_token};
+      $req->data->{access_token};
 
     # Keep ID Token in session
     my $store_IDToken = $self->conf->{oidcOPMetaDataOptions}->{$op}
       ->{oidcOPMetaDataOptionsStoreIDToken};
     if ($store_IDToken) {
         $self->logger->debug("Store ID Token in session");
-        $req->{sessionInfo}->{_oidc_id_token} = $req->datas->{id_token};
+        $req->{sessionInfo}->{_oidc_id_token} = $req->data->{id_token};
     }
     else {
         $self->logger->debug("ID Token will not be stored in session");

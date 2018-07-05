@@ -77,7 +77,7 @@ sub run {
             # Get a challenge (from first key)
             my $data = eval {
                 from_json(
-                    $req->datas->{crypter}->[0]->authenticationChallenge );
+                    $req->data->{crypter}->[0]->authenticationChallenge );
             };
 
             if ($@) {
@@ -87,7 +87,7 @@ sub run {
 
             # Get registered keys
             my @rk;
-            foreach ( @{ $req->datas->{crypter} } ) {
+            foreach ( @{ $req->data->{crypter} } ) {
                 my $k = push @rk,
                   { keyHandle => $_->{keyHandle}, version => $data->{version} };
 
@@ -95,7 +95,7 @@ sub run {
 
             $self->ott->updateToken( $token, __ch => $data->{challenge} );
 
-            # Serialize datas
+            # Serialize data
             $data = to_json(
                 {
                     challenge      => $data->{challenge},

@@ -42,7 +42,7 @@ sub check {
     if ( my $user = $req->param('user') and my $pwd = $req->param('password') )
     {
         $req->user($user);
-        $req->datas->{password} = $pwd;
+        $req->data->{password} = $pwd;
 
         # Not launched methods:
         #  - "extractFormInfo" due to "token"
@@ -51,11 +51,11 @@ sub check {
             [
                 'getUser',
                 'authenticate',
-                @{ $self->p->betweenAuthAndDatas },
+                @{ $self->p->betweenAuthAndData },
                 qw( setAuthSessionInfo setSessionInfo setMacros setGroups
                   setPersistentSessionInfo setLocalGroups store secondFactor
                   storeHistory),
-                @{ $self->p->afterDatas }
+                @{ $self->p->afterData }
             ]
         );
         if ( $res = $self->p->process( $req, ) ) {

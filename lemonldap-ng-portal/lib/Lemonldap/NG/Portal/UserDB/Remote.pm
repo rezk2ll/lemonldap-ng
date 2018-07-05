@@ -14,8 +14,8 @@ extends 'Lemonldap::NG::Common::Module', 'Lemonldap::NG::Portal::Lib::Remote';
 
 sub setSessionInfo {
     my ( $self, $req ) = @_;
-    delete $req->datas->{rSessionInfo}->{_session_id};
-    $req->{sessionInfo} = $req->datas->{rSessionInfo};
+    delete $req->data->{rSessionInfo}->{_session_id};
+    $req->{sessionInfo} = $req->data->{rSessionInfo};
     PE_OK;
 }
 

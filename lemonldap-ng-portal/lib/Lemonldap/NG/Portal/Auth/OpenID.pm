@@ -75,7 +75,7 @@ sub init {
 
 sub extractFormInfo {
     my ( $self, $req ) = @_;
-    $req->datas->{csr} = Net::OpenID::Consumer->new(
+    $req->data->{csr} = Net::OpenID::Consumer->new(
         ua    => $self->ua(),
         cache => $self->p->HANDLER->tsv->{refLocalStorage}
           || Cache::FileCache->new,
@@ -93,7 +93,7 @@ sub extractFormInfo {
 
     # 2. Check OpenID responses
     if ($openid) {
-        my $csr = $req->datas->{csr};
+        my $csr = $req->data->{csr};
 
         # Remote error
         unless ( $csr->is_server_response() ) {
@@ -115,8 +115,8 @@ sub extractFormInfo {
         }
 
         # TODO: check verified identity
-        elsif ( $req->datas->{vident} = $csr->verified_identity ) {
-            $req->user( $req->datas->{vident}->url() );
+        elsif ( $req->data->{vident} = $csr->verified_identity ) {
+            $req->user( $req->data->{vident}->url() );
             $self->userLogger->notice(
                 "OpenID good authentication for $req->{user}");
             $req->{mustRedirect} = 1;
@@ -138,7 +138,7 @@ sub extractFormInfo {
             $self->userLogger->warn("$url is forbidden for openID exchange");
             return PE_BADPARTNER;
         }
-        my $claimed_identity = $req->datas->{csr}->claimed_identity($url);
+        my $claimed_identity = $req->data->{csr}->claimed_identity($url);
 
         # Check if url is valid
         unless ($claimed_identity) {
@@ -151,7 +151,7 @@ sub extractFormInfo {
         my $check_url = $claimed_identity->check_url(
             return_to => $self->conf->{portal}
               . '?openid=1&'
-              .  ( $req->datas->{_url} ? build_urlencoded( url => $req->datas->{_url} ) : '' ),
+              .  ( $req->data->{_url} ? build_urlencoded( url => $req->data->{_url} ) : '' ),
             trust_root     => $self->conf->{portal},
             delayed_return => 1,
         );

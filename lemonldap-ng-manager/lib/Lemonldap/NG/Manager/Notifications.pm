@@ -272,12 +272,12 @@ sub newNotification {
     my $dDate = strftime( "%Y-%m-%d", localtime() );
     if ( $json->{date} ) {
         $self->logger->debug(
-"Posted datas : uid = $json->{uid} - Ref = $json->{reference} - Date = $json->{date}"
+"Posted data : uid = $json->{uid} - Ref = $json->{reference} - Date = $json->{date}"
         );
     }
     else {
         $self->logger->debug(
-"Posted datas : uid = $json->{uid} - Ref = $json->{reference} - Date = ???"
+"Posted data : uid = $json->{uid} - Ref = $json->{reference} - Date = ???"
         );
         $json->{date} = $dDate;
     }

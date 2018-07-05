@@ -4,7 +4,7 @@
 #  * a new route "/notifback" for checking accepted notifications
 #    (sub getNotifBack). It launch then autoRedirect() with "mustRedirect"
 #    set to 1 because underlying handler has not seen user as authenticated
-#    so datas are not set;
+#    so data are not set;
 #  * a callback inserted in process steps after authentication process,
 #    This callback launches checkForNotifications to get notification and
 #    cipher LemonLDAP::NG cookies.
@@ -26,7 +26,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 # INTERFACE
 
 # Declare additional process steps
-sub afterDatas { 'checkNotifDuringAuth' }
+sub afterData { 'checkNotifDuringAuth' }
 
 # For now, notifications are done only during authentication process
 #sub forAuthUser { 'checkNotifForAuthUser' }
@@ -109,14 +109,14 @@ sub init {
 sub checkNotifDuringAuth {
     my ( $self, $req ) = @_;
     eval {
-        $req->{datas}->{notification} =
+        $req->{data}->{notification} =
           $self->module->checkForNotifications($req);
     };
     if ($@) {
         $self->logger->error($@);
         return PE_ERROR;
     }
-    if ( $req->{datas}->{notification} ) {
+    if ( $req->{data}->{notification} ) {
         $self->p->rebuildCookies($req);
 
         # Restore and cipher cookies

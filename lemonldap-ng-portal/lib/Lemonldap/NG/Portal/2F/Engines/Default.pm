@@ -208,7 +208,7 @@ sub _choice {
                 $req,
                 [
                     sub { $res }, 'controlUrl',
-                    'buildCookie', @{ $self->p->afterDatas },
+                    'buildCookie', @{ $self->p->afterData },
                 ]
             );
         }

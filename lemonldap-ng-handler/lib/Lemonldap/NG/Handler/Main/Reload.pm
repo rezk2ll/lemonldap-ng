@@ -406,7 +406,7 @@ sub postUrlInit {
             {
                 $class->tsv->{maintenance}->{$vhost} = 1;
                 $class->logger->error(
-                    "$class: Unable to build post datas: "
+                    "$class: Unable to build post data: "
                       . $class->tsv->{jail}->error );
             }
 
@@ -552,7 +552,7 @@ sub substitute {
     $expr =~ s/\$vhost\b/\$ENV{HTTP_HOST}/sg;
     $expr =~ s/\$ip\b/\$ENV{REMOTE_ADDR}/sg;
 
-    # substitute vars with session datas, excepts special vars $_ and $\d+
+    # substitute vars with session data, excepts special vars $_ and $\d+
     $expr =~ s/\$(?!ENV)([_a-zA-Z]\w*)/\$s->{$1}/sg;
     $expr =~ s/\$ENV\{/\$r->{env}->\{/g;
 

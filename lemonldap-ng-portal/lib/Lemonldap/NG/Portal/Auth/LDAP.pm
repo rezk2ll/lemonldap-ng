@@ -26,7 +26,7 @@ sub authenticate {
     }
 
     # Set the dn unless done before
-    unless ( $req->datas->{dn} ) {
+    unless ( $req->data->{dn} ) {
         if ( my $tmp = $self->getUser($req) ) {
             $self->setSecurity($req);
             return $tmp;
@@ -34,11 +34,11 @@ sub authenticate {
     }
 
     my $res =
-      $self->userBind( $req, $req->datas->{dn},
-        password => $req->datas->{password} );
+      $self->userBind( $req, $req->data->{dn},
+        password => $req->data->{password} );
 
     # Remember password if password reset needed
-    $req->datas->{oldpassword} = $self->{password}
+    $req->data->{oldpassword} = $self->{password}
       if (
         $res == PE_PP_CHANGE_AFTER_RESET
         or (    $res == PE_PP_PASSWORD_EXPIRED

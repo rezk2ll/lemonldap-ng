@@ -36,9 +36,9 @@ sub getUser {
 # Get all required attributes
 sub setSessionInfo {
     my ( $self, $req ) = @_;
-    my $idp        = $req->datas->{_idp};
-    my $idpConfKey = $req->datas->{_idpConfKey};
-    my $nameid     = $req->datas->{_nameID};
+    my $idp        = $req->data->{_idp};
+    my $idpConfKey = $req->data->{_idpConfKey};
+    my $nameid     = $req->data->{_nameID};
 
     my $exportedAttr;
 

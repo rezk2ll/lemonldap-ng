@@ -74,7 +74,7 @@ sub addRoutes {
 
 ##@method public PSGI-JSON-response newRSAKey($req)
 # Return a hashref containing private and public keys
-# The posted datas must contain a JSON object containing
+# The posted data must contain a JSON object containing
 # {"password":"newpassword"}
 #
 #@param $req Lemonldap::NG::Common::PSGI::Request object

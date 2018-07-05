@@ -123,10 +123,10 @@ sub extractFormInfo {
             my $portalPath = $self->conf->{portal};
             $portalPath =~ s#^https?://[^/]+/?#/#;
 
-            $req->datas->{list}            = $self->srvList;
-            $req->datas->{confirmRemember} = 0;
+            $req->data->{list}            = $self->srvList;
+            $req->data->{confirmRemember} = 0;
 
-            $req->datas->{login} = 1;
+            $req->data->{login} = 1;
             return PE_IDPCHOICE;
         }
     }
@@ -140,15 +140,15 @@ sub extractFormInfo {
     # Provider is choosen
     $self->logger->debug("CAS server $srv choosen");
 
-    $req->datas->{_casSrvCurrent} = $srv;
+    $req->data->{_casSrvCurrent} = $srv;
 
     # Unless a ticket has been found, we redirect the user
     unless ($ticket) {
 
         # Add request state parameters
-        if ( $req->datas->{_url} ) {
+        if ( $req->data->{_url} ) {
             $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
-              . build_urlencoded( url => $req->datas->{_url} );
+              . build_urlencoded( url => $req->data->{_url} );
         }
 
         # Forward hidden fields
@@ -189,7 +189,7 @@ sub extractFormInfo {
     $local_url =~ s/ticket=[^&]+//;
     $local_url =~ s/\?$//;
     $local_url =~ s/\&$//;
-    ( $req->{user}, $req->datas->{casAttrs} ) =
+    ( $req->{user}, $req->data->{casAttrs} ) =
       $self->validateST( $req, $local_url, $ticket, $srvConf, $proxied );
     unless ( $req->{user} ) {
         $self->userLogger->error("CAS: Unable to validate ST $ticket");
@@ -203,7 +203,7 @@ sub extractFormInfo {
     if (%$proxied) {
 
         # Check we received a PGT
-        my $pgtId = $req->datas->{pgtId};
+        my $pgtId = $req->data->{pgtId};
 
         unless ($pgtId) {
             $self->logger->error(
@@ -242,7 +242,7 @@ sub authenticate {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     $req->{sessionInfo}->{authenticationLevel} = $self->conf->{casAuthnLevel};
-    $req->{sessionInfo}->{_casSrv}             = $req->datas->{_casSrvCurrent};
+    $req->{sessionInfo}->{_casSrv}             = $req->data->{_casSrvCurrent};
     PE_OK;
 }
 
@@ -257,7 +257,7 @@ sub authLogout {
     $self->logger->debug("Build CAS logout URL: $logout_url");
 
     # Register CAS logout URL in logoutServices
-    $req->datas->{logoutServices}->{CASserver} = $logout_url;
+    $req->data->{logoutServices}->{CASserver} = $logout_url;
 
     PE_OK;
 }

@@ -306,18 +306,18 @@ sub extractFormInfo {
             $req->user($user);
 
             # Store Lasso objects
-            $req->datas->{_lassoLogin}   = $login;
-            $req->datas->{_idp}          = $idp;
-            $req->datas->{_idpConfKey}   = $idpConfKey;
-            $req->datas->{_nameID}       = $nameid;
-            $req->datas->{_sessionIndex} = $session_index;
+            $req->data->{_lassoLogin}   = $login;
+            $req->data->{_idp}          = $idp;
+            $req->data->{_idpConfKey}   = $idpConfKey;
+            $req->data->{_nameID}       = $nameid;
+            $req->data->{_sessionIndex} = $session_index;
 
             # Store Token
             my $saml_token = $assertion->export_to_xml;
 
             $self->logger->debug("SAML Token: $saml_token");
 
-            $req->datas->{_samlToken} = $saml_token;
+            $req->data->{_samlToken} = $saml_token;
 
             # Restore initial SAML request in case of proxying
             if ($assertion_responded) {
@@ -351,13 +351,13 @@ sub extractFormInfo {
 
                     my $samlSessionInfo = $self->getSamlSession($saml_session);
 
-                    $req->datas->{_proxiedRequest} =
+                    $req->data->{_proxiedRequest} =
                       $samlSessionInfo->data->{Request};
-                    $req->datas->{_proxiedMethod} =
+                    $req->data->{_proxiedMethod} =
                       $samlSessionInfo->data->{Method};
-                    $req->datas->{_proxiedRelayState} =
+                    $req->data->{_proxiedRelayState} =
                       $samlSessionInfo->data->{RelayState};
-                    $req->datas->{_proxiedArtifact} =
+                    $req->data->{_proxiedArtifact} =
                       $samlSessionInfo->data->{Artifact};
 
                # Save values in hidden fields in case of other user interactions
@@ -845,8 +845,8 @@ sub extractFormInfo {
                 name => $self->idpList->{$_}->{name}
               };
         }
-        $req->datas->{list}            = \@list;
-        $req->datas->{confirmRemember} = 1;
+        $req->data->{list}            = \@list;
+        $req->data->{confirmRemember} = 1;
 
         # Delete existing IDP resolution cookie
         $req->addCookie(
@@ -860,7 +860,7 @@ sub extractFormInfo {
         );
 
         #TODO: check this
-        $req->datas->{login} = 1;
+        $req->data->{login} = 1;
         return PE_IDPCHOICE;
     }
 
@@ -884,7 +884,7 @@ sub extractFormInfo {
             )
         );
 
-        $req->datas->{login} = 1;
+        $req->data->{login} = 1;
         return PE_CONFIRM;
     }
 
@@ -998,16 +998,16 @@ sub extractFormInfo {
     }
 
     # Keep initial SAML request data in memory in case of proxing
-    if ( $req->datas->{_proxiedSamlRequest} ) {
+    if ( $req->data->{_proxiedSamlRequest} ) {
 
         my $infos;
 
         $infos->{type}       = 'proxy';
         $infos->{_utime}     = time;
-        $infos->{Request}    = $req->datas->{_proxiedRequest};
-        $infos->{Method}     = $req->datas->{_proxiedMethod};
-        $infos->{RelayState} = $req->datas->{_proxiedRelayState};
-        $infos->{Artifact}   = $req->datas->{_proxiedArtifact};
+        $infos->{Request}    = $req->data->{_proxiedRequest};
+        $infos->{Method}     = $req->data->{_proxiedMethod};
+        $infos->{RelayState} = $req->data->{_proxiedRelayState};
+        $infos->{Artifact}   = $req->data->{_proxiedArtifact};
         $infos->{ProxyID}    = $samlID;
 
         my $samlSessionInfo = $self->getSamlSession( undef, $infos );
@@ -1071,9 +1071,9 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    my $login      = $req->datas->{_lassoLogin};
-    my $idp        = $req->datas->{_idp};
-    my $idpConfKey = $req->datas->{_idpConfKey};
+    my $login      = $req->data->{_lassoLogin};
+    my $idp        = $req->data->{_idp};
+    my $idpConfKey = $req->data->{_idpConfKey};
 
     # Get SAML assertion
     my $assertion = $self->getAssertion($login);
@@ -1172,13 +1172,13 @@ sub setAuthSessionInfo {
       ->{samlIDPMetaDataOptionsStoreSAMLToken};
     if ($store_samlToken) {
         $self->logger->debug("Store SAML Token in session");
-        $req->{sessionInfo}->{_samlToken} = $req->datas->{_samlToken};
+        $req->{sessionInfo}->{_samlToken} = $req->data->{_samlToken};
     }
     else {
         $self->logger->debug("SAML Token will not be stored in session");
     }
 
-    $req->datas->{_lassoLogin} = $login;
+    $req->data->{_lassoLogin} = $login;
     push @{ $req->steps }, sub { $self->authFinish(@_) };
 
     PE_OK;
@@ -1194,8 +1194,8 @@ sub authFinish {
     my $utime = $req->{sessionInfo}->{_utime};
 
     # Get saved Lasso objects
-    my $nameid        = $req->datas->{_nameID};
-    my $session_index = $req->datas->{_sessionIndex};
+    my $nameid        = $req->data->{_nameID};
+    my $session_index = $req->data->{_sessionIndex};
 
     $self->logger->debug( "Store NameID "
           . $nameid->dump

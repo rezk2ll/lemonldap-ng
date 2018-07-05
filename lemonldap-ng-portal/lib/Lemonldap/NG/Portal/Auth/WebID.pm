@@ -65,9 +65,9 @@ sub extractFormInfo {
     # 2. Verify that certificate is WebID compliant
     #    NB: WebID URI is used as user field
     eval {
-        $req->datas->{_webid} =
+        $req->data->{_webid} =
           Web::ID->new( certificate => $req->{SSL_CLIENT_CERT} );
-        $req->user( $req->datas->{_webid}->uri->as_string );
+        $req->user( $req->data->{_webid}->uri->as_string );
     };
     return PE_BADCERTIFICATE if ( $@ or not( $req->user ) );
 
@@ -75,8 +75,8 @@ sub extractFormInfo {
     return PE_BADPARTNER unless ( $req->user =~ $self->reWebIDWhitelist );
 
     # 4. Verify FOAF document
-    return PE_BADCREDENTIALS unless ( $req->datas->{_webid}->valid() );
-    $req->datas->{_webIdAuthDone}++;
+    return PE_BADCREDENTIALS unless ( $req->data->{_webid}->valid() );
+    $req->data->{_webIdAuthDone}++;
 
     # 5. OK, access granted
     return PE_OK;

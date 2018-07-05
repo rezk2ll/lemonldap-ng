@@ -546,7 +546,7 @@ sub checkLassoError {
 
 ## @method Lasso::Server createServer(string metadata, string private_key, string private_key_password, string private_key_enc, string private_key_enc_password, string certificate)
 # Load service metadata and create Lasso::Server object
-# @param metadata SAML metadatas
+# @param metadata SAML metadata
 # @param private_key private key
 # @param private_key_password optional private key password
 # @param private_key_enc optional private key for encryption
@@ -767,14 +767,14 @@ sub createAuthnRequest {
     # In this case:
     # * Check proxy conditions
     # * Forward some authn constraints
-    if ( $req->datas->{_proxiedSamlRequest} ) {
+    if ( $req->data->{_proxiedSamlRequest} ) {
 
         $self->logger->debug("IDP Proxy mode detected");
 
         # Get ProxyCount value
         eval {
             $proxyCount =
-              $req->datas->{_proxiedSamlRequest}->Scoping()->ProxyCount();
+              $req->data->{_proxiedSamlRequest}->Scoping()->ProxyCount();
         };
 
         # Deny request if ProxyCount eq 0
@@ -791,22 +791,22 @@ sub createAuthnRequest {
             else {
 
                 # Decrease ProxyCount
-                my $scoping = $req->datas->{_proxiedSamlRequest}->Scoping();
+                my $scoping = $req->data->{_proxiedSamlRequest}->Scoping();
                 $scoping->ProxyCount( $proxyCount-- );
                 eval { $request->Scoping($scoping); };
             }
         }
 
         # isPassive
-        eval { $isPassive = $req->datas->{_proxiedSamlRequest}->IsPassive(); };
+        eval { $isPassive = $req->data->{_proxiedSamlRequest}->IsPassive(); };
 
         # forceAuthn
-        eval { $forceAuthn = $req->datas->{_proxiedSamlRequest}->ForceAuthn(); };
+        eval { $forceAuthn = $req->data->{_proxiedSamlRequest}->ForceAuthn(); };
 
         # requestedAuthnContext
         eval {
             $proxyRequestedAuthnContext =
-              $req->datas->{_proxiedSamlRequest}->RequestedAuthnContext();
+              $req->data->{_proxiedSamlRequest}->RequestedAuthnContext();
         };
     }
 
@@ -3432,7 +3432,7 @@ If SAML Destination attribute is present, check it
 
 =head2 getSamlSession
 
-Try to recover the SAML session corresponding to id and return session datas
+Try to recover the SAML session corresponding to id and return session data
 
 =head2 createAttribute
 

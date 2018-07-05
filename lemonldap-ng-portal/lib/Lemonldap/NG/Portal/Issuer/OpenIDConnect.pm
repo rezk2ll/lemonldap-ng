@@ -502,7 +502,7 @@ sub run {
                                 }
                             )
                         );
-                        $req->datas->{activeTimer} = 0;
+                        $req->data->{activeTimer} = 0;
                         return PE_CONFIRM;
                     }
                 }
@@ -865,7 +865,7 @@ sub run {
             }
 
             $req->info( $self->loadTemplate('oidcLogout') );
-            $req->datas->{activeTimer} = 0;
+            $req->data->{activeTimer} = 0;
             return PE_CONFIRM;
         }
     }
@@ -1127,7 +1127,7 @@ sub registration {
     # Get client metadata
     my $client_metadata_json = $req->content;
     unless ($client_metadata_json) {
-        return $self->p->sendError( $req, 'Missing POST datas', 400 );
+        return $self->p->sendError( $req, 'Missing POST data', 400 );
     }
 
     $self->logger->debug("Client metadata received: $client_metadata_json");

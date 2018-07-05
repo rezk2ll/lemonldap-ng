@@ -17,7 +17,7 @@ has steps => ( is => 'rw' );
 # Authentication result
 has authResult => ( is => 'rw' );
 
-# Session datas when created
+# Session data when created
 has id          => ( is => 'rw' );
 has sessionInfo => ( is => 'rw' );
 has user        => ( is => 'rw' );
@@ -116,7 +116,7 @@ sub error_type {
 
 sub init {
     my ($self) = @_;
-    $self->{$_} = {} foreach (qw(datas customParameters sessionInfo pdata));
+    $self->{$_} = {} foreach (qw(data customParameters sessionInfo pdata));
     $self->{$_} = [] foreach (qw(respCookies));
 }
 
@@ -130,8 +130,8 @@ sub loginInfo {
 
 sub info {
     my ( $self, $info ) = @_;
-    $self->datas->{_info} .= $info if ( defined $info );
-    return $self->datas->{_info};
+    $self->data->{_info} .= $info if ( defined $info );
+    return $self->data->{_info};
 }
 
 sub addCookie {
@@ -174,7 +174,7 @@ portal jobs.
 Stack of methods to call for this requests. It can be modified to change
 authentication process
 
-=head3 datas()
+=head3 data()
 
 Free hash ref where plugins can store their data (during one request). Using it
 is a LLNG best practice

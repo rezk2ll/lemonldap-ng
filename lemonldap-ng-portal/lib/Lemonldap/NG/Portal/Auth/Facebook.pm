@@ -58,24 +58,24 @@ sub extractFormInfo {
               map { /^(\w+)$/ ? ($1) : () }
               values %{ $self->conf->{facebookExportedVars} };
 
-            my $datas;
+            my $data;
 
             # When a field is not granted, Facebook returns only an error
             # without real explanation. So here we try to reduce query until
             # having a valid response
             while (@fields) {
-                $datas = $fb->get(
+                $data = $fb->get(
                     'https://graph.facebook.com/me',
                     { fields => join( ',', @fields ) }
                 )->as_hash;
-                unless ( ref $datas ) {
+                unless ( ref $data ) {
                     $self->logger->error("Unable to get any Facebook field");
                     return PE_ERROR;
                 }
-                if ( $datas->{error} ) {
+                if ( $data->{error} ) {
                     my $tmp = pop @fields;
                     $self->logger->warn(
-"Unable to get some Facebook fields ($datas->{error}->{message}). Retrying without $tmp"
+"Unable to get some Facebook fields ($data->{error}->{message}). Retrying without $tmp"
                     );
                 }
                 else {
@@ -87,22 +87,22 @@ sub extractFormInfo {
                 return PE_ERROR;
             }
 
-            # Parse received datas
-            foreach ( keys %$datas ) {
-                utf8::encode $datas->{$_};
-                $self->logger->debug( "Facebook data $_: " . $datas->{$_} );
+            # Parse received data
+            foreach ( keys %$data ) {
+                utf8::encode $data->{$_};
+                $self->logger->debug( "Facebook data $_: " . $data->{$_} );
             }
 
             # Field to trace user
-            unless ( $datas->{ $self->conf->{facebookUserField} } ) {
+            unless ( $data->{ $self->conf->{facebookUserField} } ) {
                 $self->logger->error('Unable to get Facebook id');
                 return PE_ERROR;
             }
-            $req->user( $datas->{ $self->conf->{facebookUserField} } );
-            $req->datas->{_facebookDatas} = $datas;
-            $req->{sessionInfo}->{_facebookDatas} = $datas;
+            $req->user( $data->{ $self->conf->{facebookUserField} } );
+            $req->data->{_facebookData} = $data;
+            $req->{sessionInfo}->{_facebookData} = $data;
 
-            # Force redirection to avoid displaying Oauth datas
+            # Force redirection to avoid displaying Oauth data
             $req->mustRedirect(1);
             return PE_OK;
         }

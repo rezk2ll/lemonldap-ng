@@ -72,7 +72,7 @@ sub sregHook {
             $self->logger->error("Unknown OpenID SREG request $k");
         }
     }
-    $req->datas->{_openIdTrustExtMsg} .= $self->loadTemplate(
+    $req->data->{_openIdTrustExtMsg} .= $self->loadTemplate(
         'openIdPol',
         params => {
             policies => \@pol,
@@ -103,7 +103,7 @@ sub sregHook {
         }
     }
 
-    # Now set datas
+    # Now set data
     my ( %r, %msg, %ag, %toStore );
 
     # Requested parameters: check if already agreed or confirm is set
@@ -197,7 +197,7 @@ sub sregHook {
               };
         }
 
-        $req->datas->{_openIdTrustExtMsg} .= $self->loadTemplate(
+        $req->data->{_openIdTrustExtMsg} .= $self->loadTemplate(
             'openIdTrust',
             params => {
                 required => \@mreq,
@@ -213,7 +213,7 @@ sub sregHook {
 ## @method private array sregfilter(array attr)
 # Filter the arguments passed as parameters by checking their compliance with
 # SREG.
-# @return fitered datas
+# @return fitered data
 sub sregfilter {
     my ( $self, @attr ) = @_;
     my ( @ret, @rej );

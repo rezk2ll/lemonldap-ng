@@ -40,7 +40,7 @@ sub setSessionInfo {
         my $v        = $self->{vars}->{$k};
         my $attr     = $k;
         my $required = ( $attr =~ s/^!// ) ? 1 : 0;
-        $req->{sessionInfo}->{$attr} = $req->datas->{_facebookDatas}->{$v};
+        $req->{sessionInfo}->{$attr} = $req->data->{_facebookData}->{$v};
         if ( $required and not( defined $req->{sessionInfo}->{$attr} ) ) {
             $self->logger->warn(
 "Required parameter $v is not provided by Facebook server, aborted"

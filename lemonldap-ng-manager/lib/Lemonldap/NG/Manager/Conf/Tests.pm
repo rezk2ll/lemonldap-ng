@@ -226,7 +226,7 @@ sub tests {
                     backend => $conf->{globalStorage}
                   };
             };
-            return ( -1, "Unable to insert datas ($@)" ) if ($@);
+            return ( -1, "Unable to insert data ($@)" ) if ($@);
             return ( -1, "Unable to recover data stored" )
               unless ( $h{a} == 1 );
             eval { tied(%h)->delete; };

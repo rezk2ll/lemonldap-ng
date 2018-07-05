@@ -16,7 +16,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 # INTERFACE
 
-use constant afterDatas => 'newDevice';
+use constant afterData => 'newDevice';
 
 use constant beforeAuth => 'check';
 
@@ -79,7 +79,7 @@ sub newDevice {
     return PE_OK;
 }
 
-# Store datas in a long-time session
+# Store data in a long-time session
 sub storeBrowser {
     my ( $self, $req ) = @_;
     $req->urldc( $req->param('url') );
@@ -98,7 +98,7 @@ sub storeBrowser {
                             _utime          => time + $self->timeout,
                             _session_uid    => $uid,
                             _connectedSince => time,
-                            dataKeep        => $req->datas->{dataToKeep},
+                            dataKeep        => $req->data->{dataToKeep},
                             fingerprint     => $fg,
                         },
                     );
@@ -153,7 +153,7 @@ sub check {
                 and my $token = $req->param('token') )
             {
                 if ( my $prm = $self->ott->getToken($token) ) {
-                    $req->datas->{dataKeep} = $ps->data->{dataKeep};
+                    $req->data->{dataKeep} = $ps->data->{dataKeep};
                     $self->logger->debug('Persistent connection found');
                     if ( $fg eq $ps->data->{fingerprint} ) {
                         $req->user($uid);

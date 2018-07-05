@@ -19,16 +19,16 @@ sub init {
 sub getUser {
     my ( $self, $req, %args ) = @_;
     $self->checkChoice($req) or return PE_FIRSTACCESS;
-    return $req->datas->{enabledMods1}->[0]->getUser( $req, %args );
+    return $req->data->{enabledMods1}->[0]->getUser( $req, %args );
 }
 
 sub setSessionInfo {
-    return $_[1]->datas->{enabledMods1}->[0]->setSessionInfo( $_[1] );
+    return $_[1]->data->{enabledMods1}->[0]->setSessionInfo( $_[1] );
 }
 
 sub setGroups {
     $_[0]->checkChoice( $_[1] );
-    return $_[1]->datas->{enabledMods1}->[0]->setGroups( $_[1] );
+    return $_[1]->data->{enabledMods1}->[0]->setGroups( $_[1] );
 }
 
 1;

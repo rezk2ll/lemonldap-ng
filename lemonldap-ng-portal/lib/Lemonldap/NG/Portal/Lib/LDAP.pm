@@ -76,7 +76,7 @@ sub _buildFilter {
     $filter =~ s/\$(\w+)/".\$req->{sessionInfo}->{$1}."/g;
     $filter =~ s/\$req->\{sessionInfo\}->\{user\}/\$req->{user}/g;
     $filter =~
-      s/\$req->\{sessionInfo\}->\{(_?password|mail)\}/\$req->{datas}->{$1}/g;
+      s/\$req->\{sessionInfo\}->\{(_?password|mail)\}/\$req->{data}->{$1}/g;
     $_[0]->{p}->logger->debug("LDAP transformed filter: $filter");
     $filter = "sub{my(\$req)=\$_[0];return \"$filter\";}";
     return eval $filter;

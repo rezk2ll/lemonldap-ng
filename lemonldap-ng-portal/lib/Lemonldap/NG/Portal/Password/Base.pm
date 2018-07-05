@@ -32,13 +32,13 @@ sub _modifyPassword {
 
     # Exit if no password change requested
     return PE_OK
-      unless ( $req->datas->{newpassword} = $req->param('newpassword') );
+      unless ( $req->data->{newpassword} = $req->param('newpassword') );
 
     # Check if portal require old password
     if ( $self->conf->{portalRequireOldPassword} ) {
 
         # TODO: verify oldpassword
-        unless ( $req->datas->{oldpassword} = $req->param('oldpassword') ) {
+        unless ( $req->data->{oldpassword} = $req->param('oldpassword') ) {
             $self->logger->warn("Portal require old password");
             return PE_PP_MUST_SUPPLY_OLD_PASSWORD;
         }
@@ -46,15 +46,15 @@ sub _modifyPassword {
         # Verify that old password is good
         return PE_PASSWORD_MISMATCH
           unless (
-            $req->datas->{newpassword} eq $req->param('confirmpassword') );
+            $req->data->{newpassword} eq $req->param('confirmpassword') );
 
         # Verify old password
         return PE_BADOLDPASSWORD
-          unless ( $self->confirm( $req, $req->datas->{oldpassword} ) );
+          unless ( $self->confirm( $req, $req->data->{oldpassword} ) );
     }
 
     # Call password package
-    my $res = $self->modifyPassword( $req, $req->datas->{newpassword} );
+    my $res = $self->modifyPassword( $req, $req->data->{newpassword} );
     if ( $res == PE_PASSWORD_OK ) {
         $self->logger->debug( 'Update password in session for ' . $req->user );
         my $infos;

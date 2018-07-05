@@ -124,8 +124,8 @@ sub getDisplayType {
     return $self->conf->{combinationForms}
       if ( $self->conf->{combinationForms} );
     my ( $nb, $stack ) = (
-        $req->datas->{dataKeep}->{combinationTry},
-        $req->datas->{combinationStack}
+        $req->data->{dataKeep}->{combinationTry},
+        $req->data->{combinationStack}
     );
     my ( $res, $name ) = $stack->[$nb]->[0]->( 'getDisplayType', $req );
     return $res;
@@ -135,7 +135,7 @@ sub authLogout {
     my ( $self, $req ) = @_;
     $self->getStack( $req, 'extractFormInfo' ) or return PE_ERROR;
     my ( $res, $name ) =
-      $req->datas->{combinationStack}->[ $req->userData->{_combinationTry} ]
+      $req->data->{combinationStack}->[ $req->userData->{_combinationTry} ]
       ->[0]->( 'authLogout', $req );
     $self->logger->debug(qq'User disconnected using scheme "$name"');
     return $res;
@@ -143,15 +143,15 @@ sub authLogout {
 
 sub getStack {
     my ( $self, $req, @steps ) = @_;
-    return $req->datas->{combinationStack}
-      if ( $req->datas->{combinationStack} );
-    my $stack = $req->datas->{combinationStack} =
+    return $req->data->{combinationStack}
+      if ( $req->data->{combinationStack} );
+    my $stack = $req->data->{combinationStack} =
       $self->stackSub->( $req->env );
     unless ($stack) {
         $self->logger->error('No authentication scheme for this user');
     }
-    @{ $req->datas->{combinationSteps} } = ( @steps, @{ $req->steps } );
-    $req->datas->{dataKeep}->{combinationTry} ||= 0;
+    @{ $req->data->{combinationSteps} } = ( @steps, @{ $req->steps } );
+    $req->data->{dataKeep}->{combinationTry} ||= 0;
     return $stack;
 }
 
@@ -160,12 +160,12 @@ sub try {
     my ( $self, $type, $subname, $req ) = @_;
 
     # Get available authentication schemes for this user if not done
-    unless ( defined $req->datas->{combinationStack} ) {
+    unless ( defined $req->data->{combinationStack} ) {
         $self->getStack( $req, $subname ) or return PE_ERROR;
     }
     my ( $nb, $stack ) = (
-        $req->datas->{dataKeep}->{combinationTry},
-        $req->datas->{combinationStack}
+        $req->data->{dataKeep}->{combinationTry},
+        $req->data->{combinationStack}
     );
 
     # If more than 1 scheme is available
@@ -178,8 +178,8 @@ sub try {
         # On error, restart authentication with next scheme
         if ( $res > PE_OK ) {
             $self->logger->info(qq'Scheme "$name" returned $res, trying next');
-            $req->datas->{dataKeep}->{combinationTry}++;
-            $req->steps( [ @{ $req->datas->{combinationSteps} } ] );
+            $req->data->{dataKeep}->{combinationTry}++;
+            $req->steps( [ @{ $req->data->{combinationSteps} } ] );
             $req->continue(1);
             return PE_OK;
         }
@@ -189,7 +189,7 @@ sub try {
     }
     $req->sessionInfo->{ [ '_auth', '_userDB' ]->[$type] } = $name;
     $req->sessionInfo->{_combinationTry} =
-      $req->datas->{dataKeep}->{combinationTry};
+      $req->data->{dataKeep}->{combinationTry};
     if ( $res > 0 ) {
         $self->userLogger->warn( 'All schemes failed'
               . ( $req->user ? ' for user ' . $req->user : '' ) );

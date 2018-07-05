@@ -29,10 +29,10 @@ no warnings 'once';
 
 sub getUser {
     my ( $self, $req ) = @_;
-    return PE_OK if ( $req->datas->{_proxyQueryDone} );
+    return PE_OK if ( $req->data->{_proxyQueryDone} );
     my $soap = SOAP::Lite->proxy( $self->conf->{proxyAuthService} )
       ->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
-    my $r = $soap->getCookies( $req->{user}, $req->datas->{password} );
+    my $r = $soap->getCookies( $req->{user}, $req->data->{password} );
     if ( $r->fault ) {
         $self->logger->error( "Unable to query authentication service: "
               . $r->fault->{faultstring} );
@@ -47,22 +47,22 @@ sub getUser {
         $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }
-    unless ( $req->datas->{_remoteId} =
+    unless ( $req->data->{_remoteId} =
         $res->{cookies}->{ $self->conf->{remoteCookieName} } )
     {
         $self->logger->error("No cookie named $self->{remoteCookieName}");
         return PE_ERROR;
     }
-    $req->datas->{_proxyQueryDone}++;
+    $req->data->{_proxyQueryDone}++;
     PE_OK;
 }
 
 sub setSessionInfo {
     my ( $self, $req ) = @_;
-    return PE_OK if ( $req->datas->{_setSessionInfoDone} );
+    return PE_OK if ( $req->data->{_setSessionInfoDone} );
     my $soap = SOAP::Lite->proxy( $self->conf->{proxySessionService} )
       ->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
-    my $r = $soap->getAttributes( $req->datas->{_remoteId} );
+    my $r = $soap->getAttributes( $req->data->{_remoteId} );
     if ( $r->fault ) {
         $self->logger->error( "Unable to query authentication service"
               . $r->fault->{faultstring} );
@@ -76,7 +76,7 @@ sub setSessionInfo {
         $req->{sessionInfo}->{$_} ||= $res->{attributes}->{$_}
           unless (/^_/);
     }
-    $req->datas->{_setSessionInfoDone}++;
+    $req->data->{_setSessionInfoDone}++;
     PE_OK;
 }
 

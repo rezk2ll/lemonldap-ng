@@ -34,9 +34,9 @@ sub init {
 sub extractFormInfo {
     my ( $self, $req ) = @_;
 
-    if ( $req->datas->{_krbUser} ) {
+    if ( $req->data->{_krbUser} ) {
         $self->logger->debug( 'Kerberos ticket already validated for '
-              . $req->datas->{_krbUser} );
+              . $req->data->{_krbUser} );
         return PE_OK;
     }
 
@@ -94,7 +94,7 @@ sub extractFormInfo {
         # Case 3: Display kerberos auth page (with javascript)
         else {
             $self->logger->debug('Send Kerberos javascript');
-            $req->datas->{customScript} .=
+            $req->data->{customScript} .=
                 '<script type="text/javascript" src="'
               . $self->p->staticPrefix
               . '/common/js/kerberos.js"></script>';
@@ -145,7 +145,7 @@ sub extractFormInfo {
         return PE_ERROR;
     }
     $self->userLogger->notice("$client_name authentified by Kerberos");
-    $req->datas->{_krbUser} = $client_name;
+    $req->data->{_krbUser} = $client_name;
     if ( $self->conf->{krbRemoveDomain} ) {
         $client_name =~ s/^(.*)@.*$/$1/;
     }
@@ -164,7 +164,7 @@ sub authLogout {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     $req->{sessionInfo}->{authenticationLevel} = $self->conf->{krbAuthnLevel};
-    $req->{sessionInfo}->{_krbUser}            = $req->datas->{_krbUser};
+    $req->{sessionInfo}->{_krbUser}            = $req->data->{_krbUser};
     PE_OK;
 }
 

@@ -92,7 +92,7 @@ Level of protection. It can be one of:
 
 =head3 user
 
-Returns user session datas. If empty (no protection), returns:
+Returns user session data. If empty (no protection), returns:
 
   { _whatToTrace => 'anonymous' }
 

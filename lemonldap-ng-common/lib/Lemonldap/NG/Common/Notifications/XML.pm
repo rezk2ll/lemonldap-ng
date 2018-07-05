@@ -14,7 +14,7 @@ has parser => (
     }
 );
 
-# Check XML datas and insert new notifications.
+# Check XML data and insert new notifications.
 # @param $xml XML string containing notification
 # @return number of notifications done
 sub newNotification {
@@ -29,7 +29,7 @@ sub newNotification {
     foreach
       my $notif ( $xml->documentElement->getElementsByTagName('notification') )
     {
-        my @datas = ();
+        my @data = ();
 
         # Mandatory information
         foreach (qw(date uid reference)) {
@@ -38,16 +38,16 @@ sub newNotification {
                 $self->logger->error("Attribute $_ is missing");
                 return 0;
             }
-            push @datas, $tmp;
+            push @data, $tmp;
         }
 
         # Other information
         foreach (qw(condition)) {
             my $tmp;
             if ( $tmp = $notif->getAttribute($_) ) {
-                push @datas, $tmp;
+                push @data, $tmp;
             }
-            else { push @datas, ""; }
+            else { push @data, ""; }
         }
 
         my $result = XML::LibXML::Document->new( $version, $encoding );
@@ -56,7 +56,7 @@ sub newNotification {
         $result->setDocumentElement($root);
         $result = $result->serialize;
         utf8::encode($result);
-        push @notifs, [ @datas, $result ];
+        push @notifs, [ @data, $result ];
     }
     my $count;
     foreach (@notifs) {

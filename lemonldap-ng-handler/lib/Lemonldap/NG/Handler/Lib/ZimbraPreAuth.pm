@@ -53,7 +53,7 @@ sub run {
     # Build URL
     my $zimbra_url =
       $class->_buildZimbraPreAuthUrl( $req, $zimbraPreAuthKey, $zimbraUrl,
-        $class->datas->{$zimbraAccountKey},
+        $class->data->{$zimbraAccountKey},
         $zimbraBy, $timeout );
 
     # Header location
@@ -76,7 +76,7 @@ sub _buildZimbraPreAuthUrl {
 
     # Expiration time is calculated with _utime and timeout
     my $expires =
-      $timeout ? ( $class->datas->{_utime} + $timeout ) * 1000 : $timeout;
+      $timeout ? ( $class->data->{_utime} + $timeout ) * 1000 : $timeout;
 
     # Timestamp
     my $timestamp = time() * 1000;

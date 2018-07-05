@@ -49,7 +49,7 @@ sub init {
 
 # RUNNING METHODS
 
-# Read username and password from POST datas
+# Read username and password from POST data
 sub extractFormInfo {
     my ( $self, $req ) = @_;
 
@@ -68,16 +68,16 @@ sub extractFormInfo {
     elsif ( $defUser and $defPassword ) {
         $res = PE_FORMEMPTY
           unless ( ( $req->{user} = $req->param('user') )
-            && ( $req->datas->{password} = $req->param('password') ) );
+            && ( $req->data->{password} = $req->param('password') ) );
     }
 
     # 3. If user and oldpassword defined -> password form
     elsif ( $defUser and $defOldPassword ) {
         $res = PE_PASSWORDFORMEMPTY
           unless ( ( $req->{user} = $req->param('user') )
-            && ( $req->datas->{oldpassword} = $req->param('oldpassword') )
-            && ( $req->datas->{newpassword} = $req->param('newpassword') )
-            && ( $req->datas->{confirmpassword} =
+            && ( $req->data->{oldpassword} = $req->param('oldpassword') )
+            && ( $req->data->{newpassword} = $req->param('newpassword') )
+            && ( $req->data->{confirmpassword} =
                 $req->param('confirmpassword') ) );
     }
 
@@ -110,24 +110,24 @@ sub extractFormInfo {
             $self->logger->debug("Captcha code verified");
         }
         elsif ( $self->ott ) {
-            unless ( $req->datas->{tokenVerified}
+            unless ( $req->data->{tokenVerified}
                 or $self->ott->getToken($token) )
             {
                 $self->ott->setToken($req);
                 $self->userLogger->warn('Token expired');
                 return PE_TOKENEXPIRED;
             }
-            $req->datas->{tokenVerified} = 1;
+            $req->data->{tokenVerified} = 1;
         }
     }
 
     # Other parameters
-    $req->datas->{timezone} = $req->param('timezone');
+    $req->data->{timezone} = $req->param('timezone');
 
     PE_OK;
 }
 
-# Set password in session datas if wanted.
+# Set password in session data if wanted.
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
 
@@ -137,8 +137,8 @@ sub setAuthSessionInfo {
     # Store submitted password if set in configuration
     # WARNING: it can be a security hole
     if ( $self->conf->{storePassword} ) {
-        $req->{sessionInfo}->{'_password'} = $req->datas->{'newpassword'}
-          || $req->datas->{'password'};
+        $req->{sessionInfo}->{'_password'} = $req->data->{'newpassword'}
+          || $req->data->{'password'};
     }
 
     # Store user timezone

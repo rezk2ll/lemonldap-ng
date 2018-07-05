@@ -680,7 +680,7 @@ sub storeState {
     my $infos;
     foreach (@data) {
         $infos->{$_} = $req->{$_} if $req->{$_};
-        $infos->{"datas_$_"} = $req->datas->{$_} if $req->datas->{$_};
+        $infos->{"data_$_"} = $req->data->{$_} if $req->data->{$_};
     }
     return unless ($infos);
 
@@ -714,8 +714,8 @@ sub extractState {
     foreach ( keys %{$stateSession} ) {
         next if $_ =~ /(type|_session_id|_session_kind|_utime)/;
         my $tmp = $stateSession->{$_};
-        if (s/^datas_//) {
-            $req->datas->{$_} = $tmp;
+        if (s/^data_//) {
+            $req->data->{$_} = $tmp;
         }
         elsif ( $req->can($_) ) {
             $req->$_($tmp);

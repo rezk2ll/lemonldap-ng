@@ -54,7 +54,7 @@ sub authenticate {
         return PE_RADIUSCONNECTFAILED;
     }
 
-    my $res = $self->radius->check_pwd( $req->user, $req->datas->{password} );
+    my $res = $self->radius->check_pwd( $req->user, $req->data->{password} );
     unless ( $res == 1 ) {
         $self->userLogger->warn("Unable to authenticate $req->{user} !");
         $self->setSecurity($req);

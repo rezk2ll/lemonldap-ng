@@ -9,7 +9,7 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::OtherSessions';
 
-sub afterDatas { 'run' }
+sub afterData { 'run' }
 
 sub init { 1 }
 

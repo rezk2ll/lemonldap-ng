@@ -11,7 +11,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin',
 
 # INITIALIZATION
 
-sub afterDatas { 'run' }
+sub afterData { 'run' }
 
 sub init { 1 }
 

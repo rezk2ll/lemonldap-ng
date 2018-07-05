@@ -36,14 +36,14 @@ sub process {
 # First process block: check args
 # -------------------------------
 
-# For post requests, parse datas
+# For post requests, parse data
 sub restoreArgs {
     my ( $self, $req ) = @_;
     $req->mustRedirect(1);
     return PE_OK;
 }
 
-sub importHandlerDatas {
+sub importHandlerData {
     my ( $self, $req ) = @_;
     $req->{sessionInfo} = $req->userData;
     $req->id( $req->sessionInfo->{_session_id} );
@@ -73,7 +73,7 @@ sub controlUrl {
             }
         }
     }
-    $req->{datas}->{_url} ||= '';
+    $req->{data}->{_url} ||= '';
     my $url = $req->param('url');
     if ($url) {
 
@@ -120,7 +120,7 @@ sub controlUrl {
             return PE_BADURL;
         }
 
-        $req->datas->{_url} = $url;
+        $req->data->{_url} = $url;
     }
 
     PE_OK;
@@ -161,7 +161,7 @@ sub deleteSession {
 
     # TODO
     # Collect logout services and build hidden iFrames
-    if ( $req->datas->{logoutServices} and %{ $req->datas->{logoutServices} } )
+    if ( $req->data->{logoutServices} and %{ $req->data->{logoutServices} } )
     {
 
         $self->logger->debug("Create iFrames to forward logout to services");
@@ -172,10 +172,10 @@ sub deleteSession {
             )
         );
 
-        foreach ( keys %{ $req->datas->{logoutServices} } ) {
+        foreach ( keys %{ $req->data->{logoutServices} } ) {
             my $logoutServiceName = $_;
             my $logoutServiceUrl =
-              $req->datas->{logoutServices}->{$logoutServiceName};
+              $req->data->{logoutServices}->{$logoutServiceName};
 
             $self->logger->debug(
                 "Find logout service $logoutServiceName ($logoutServiceUrl)");

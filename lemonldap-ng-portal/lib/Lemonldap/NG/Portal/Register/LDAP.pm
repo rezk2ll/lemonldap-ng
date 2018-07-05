@@ -22,8 +22,8 @@ sub computeLogin {
 
     # Get first letter of firstname and lastname
     my $login =
-      substr( lc $req->datas->{registerInfo}->{firstname}, 0, 1 )
-      . lc $req->datas->{registerInfo}->{lastname};
+      substr( lc $req->data->{registerInfo}->{firstname}, 0, 1 )
+      . lc $req->data->{registerInfo}->{lastname};
 
     my $finalLogin = $login;
 
@@ -34,7 +34,7 @@ sub computeLogin {
         $finalLogin = $login . $i;
     }
 
-    $req->datas->{registerInfo}->{login} = $finalLogin;
+    $req->data->{registerInfo}->{login} = $finalLogin;
     return PE_OK;
 }
 
@@ -45,30 +45,30 @@ sub createUser {
     my ( $self, $req ) = @_;
 
     # LDAP connection has been verified by computeLogin
-    my $sn = uc $req->datas->{registerInfo}->{lastname};
-    my $gn = ucfirst $req->datas->{registerInfo}->{firstname};
+    my $sn = uc $req->data->{registerInfo}->{lastname};
+    my $gn = ucfirst $req->data->{registerInfo}->{firstname};
     my $cn = "$gn $sn";
     utf8::decode($cn);
     utf8::decode($sn);
     utf8::decode($gn);
     my $mesg = $self->ldap->add(
         "uid="
-          . $req->datas->{registerInfo}->{login} . ","
+          . $req->data->{registerInfo}->{login} . ","
           . $self->conf->{ldapBase},
         attrs => [
             objectClass  => [qw/top person organizationalPerson inetOrgPerson/],
-            uid          => $req->datas->{registerInfo}->{login},
+            uid          => $req->data->{registerInfo}->{login},
             cn           => $cn,
             sn           => $sn,
             givenName    => $gn,
-            userPassword => $req->datas->{registerInfo}->{password},
-            mail         => $req->datas->{registerInfo}->{mail},
+            userPassword => $req->data->{registerInfo}->{password},
+            mail         => $req->data->{registerInfo}->{mail},
         ]
     );
 
     if ( $mesg->is_error ) {
         $self->userLogger->error( "Can not create entry for "
-              . $req->datas->{registerInfo}->{login} );
+              . $req->data->{registerInfo}->{login} );
         $self->logger->error( "LDAP error " . $mesg->error );
 
         $self->ldap->unbind();

@@ -34,11 +34,11 @@ no warnings 'once';
 
 sub getUser {
     my ( $self, $req ) = @_;
-    return PE_OK if ( $req->datas->{_proxyQueryDone} );
+    return PE_OK if ( $req->data->{_proxyQueryDone} );
     $self->logger->debug(
         'Proxy push auth to ' . $self->conf->{proxyAuthService} );
     my $resp = $self->ua->post( $self->conf->{proxyAuthService},
-        { user => $req->{user}, password => $req->datas->{password} } );
+        { user => $req->{user}, password => $req->data->{password} } );
     unless ( $resp->is_success ) {
         $self->logger->error(
             'Unable to query authentication service: ' . $resp->status_line );
@@ -66,7 +66,7 @@ sub getUser {
 
 sub setSessionInfo {
     my ( $self, $req ) = @_;
-    return PE_OK if ( $req->datas->{_setSessionInfoDone} );
+    return PE_OK if ( $req->data->{_setSessionInfoDone} );
     my $q = HTTP::Request->new(
         GET => $self->conf->{proxySessionService} . '/global',
         [
@@ -89,7 +89,7 @@ sub setSessionInfo {
     foreach ( keys %$res ) {
         $req->{sessionInfo}->{$_} ||= $res->{$_} unless (/^_/);
     }
-    $req->datas->{_setSessionInfoDone}++;
+    $req->data->{_setSessionInfoDone}++;
     PE_OK;
 }
 

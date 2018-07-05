@@ -66,7 +66,7 @@ ok( $issuer = issuer(), 'Issuer portal' );
 $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
 
 # Test REST config backend
-ok( $res = $issuer->_get('/config/latest'), 'Get latest conf metadatas' );
+ok( $res = $issuer->_get('/config/latest'), 'Get latest conf metadata' );
 count(1);
 expectOK($res);
 

@@ -169,7 +169,7 @@ sub _authAndTrace {
 }
 
 ## @method hashRef user()
-# @return hash of user datas
+# @return hash of user data
 sub user {
     my ( $self, $req ) = @_;
     return $req->userData

@@ -20,15 +20,15 @@ has availableModules => ( is => 'rw', default => sub { {} } );
 # Note that "beforeAuth" can't be used here and must be wrapped in auth
 # module
 #
-# Note also that auth module must store in $req->datas->{enabledMods} a ref
+# Note also that auth module must store in $req->data->{enabledMods} a ref
 # to each enabled underlying auth modules
-sub betweenAuthAndDatas { '_betweenAuthAndDatas' }
-sub afterDatas          { '_afterDatas' }
+sub betweenAuthAndData { '_betweenAuthAndData' }
+sub afterData          { '_afterData' }
 sub forAuthUser         { '_forAuthUser' }
 sub beforeLogout        { '_beforeLogout' }
 
-sub _betweenAuthAndDatas { _wrapEntryPoint( @_, 'betweenAuthAndDatas' ); }
-sub _afterDatas          { _wrapEntryPoint( @_, 'afterDatas' ); }
+sub _betweenAuthAndData { _wrapEntryPoint( @_, 'betweenAuthAndData' ); }
+sub _afterData          { _wrapEntryPoint( @_, 'afterData' ); }
 sub _forAuthUser         { _wrapEntryPoint( @_, 'forAuthUser', 1 ); }
 sub _beforeLogout        { _wrapEntryPoint( @_, 'beforeLogout', 1 ); }
 
@@ -50,8 +50,8 @@ sub _wrapEntryPoint {
                 "Missing $self->{sessionKey} key in session");
         }
     }
-    elsif ( ref $req->datas->{ "enabledMods" . $self->type } ) {
-        @t = @{ $req->datas->{ "enabledMods" . $self->type } };
+    elsif ( ref $req->data->{ "enabledMods" . $self->type } ) {
+        @t = @{ $req->data->{ "enabledMods" . $self->type } };
     }
     else {
         $self->logger->debug(

@@ -93,7 +93,7 @@ sub _reset {
     }
 
     # FIRST FORM
-    $mailToken = $req->datas->{mailToken} = $req->param('mail_token');
+    $mailToken = $req->data->{mailToken} = $req->param('mail_token');
     unless ( $req->param('mail') || $mailToken ) {
         $self->setSecurity($req);
         return PE_MAILFIRSTACCESS if ( $req->method eq 'GET' );
@@ -114,7 +114,7 @@ sub _reset {
         }
 
         $req->{user} = $mailSession->data->{user};
-        $req->datas->{mailAddress} =
+        $req->data->{mailAddress} =
           $mailSession->data->{ $self->conf->{mailSessionKey} };
         $self->logger->debug( 'User associated to: ' . $req->{user} );
         $mailSession->remove;
@@ -197,9 +197,9 @@ sub _reset {
             my $mailTimeout =
               $self->conf->{mailTimeout} || $self->conf->{timeout};
             my $expTimestamp = time() + $mailTimeout;
-            $req->datas->{expMailDate} =
+            $req->data->{expMailDate} =
               strftime( "%d/%m/%Y", localtime $expTimestamp );
-            $req->datas->{expMailTime} =
+            $req->data->{expMailTime} =
               strftime( "%H:%M", localtime $expTimestamp );
             return PE_MAILCONFIRMOK;
         }
@@ -246,7 +246,7 @@ sub _reset {
     }
     elsif ($mailSession) {
         $self->logger->debug( 'Mail session found: ' . $mailSession->id );
-        $req->datas->{mailAlreadySent} = 1;
+        $req->data->{mailAlreadySent} = 1;
     }
 
     # Send confirmation mail
@@ -257,22 +257,22 @@ sub _reset {
 
         $self->logger->debug("Mail expiration timestamp: $expTimestamp");
 
-        $req->datas->{expMailDate} =
+        $req->data->{expMailDate} =
           strftime( "%d/%m/%Y", localtime $expTimestamp );
-        $req->datas->{expMailTime} =
+        $req->data->{expMailTime} =
           strftime( "%H:%M", localtime $expTimestamp );
 
         # Mail session start date
         my $startTimestamp = $mailSession->data->{mailSessionStartTimestamp};
 
         $self->logger->debug("Mail start timestamp: $startTimestamp");
-        $req->datas->{startMailDate} =
+        $req->data->{startMailDate} =
           strftime( "%d/%m/%Y", localtime $startTimestamp );
-        $req->datas->{startMailTime} =
+        $req->data->{startMailTime} =
           strftime( "%H:%M", localtime $startTimestamp );
 
         # Ask if user want another confirmation email
-        if ( $req->datas->{mailAlreadySent}
+        if ( $req->data->{mailAlreadySent}
             and !$req->param('resendconfirmation') )
         {
             $self->userLogger->notice(
@@ -283,10 +283,10 @@ sub _reset {
         }
 
         # Get mail address
-        $req->datas->{mailAddress} ||=
+        $req->data->{mailAddress} ||=
           $self->p->getFirstValue(
             $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
-        return PE_MAILERROR unless ( $req->datas->{mailAddress} );
+        return PE_MAILERROR unless ( $req->data->{mailAddress} );
 
         # Build confirmation url
         my $url =
@@ -294,7 +294,7 @@ sub _reset {
           . build_urlencoded(
             mail_token => $req->{id},
             skin       => $self->p->getSkin($req),
-            ( $req->datas->{_url} ? ( url => $req->datas->{_url} ) : () ),
+            ( $req->data->{_url} ? ( url => $req->data->{_url} ) : () ),
           );
 
         # Build mail content
@@ -319,15 +319,15 @@ sub _reset {
         }
 
         # Replace variables in body
-        $body =~ s/\$expMailDate/$req->datas->{expMailDate}/ge;
-        $body =~ s/\$expMailTime/$req->datas->{expMailTime}/ge;
+        $body =~ s/\$expMailDate/$req->data->{expMailDate}/ge;
+        $body =~ s/\$expMailTime/$req->data->{expMailTime}/ge;
         $body =~ s/\$url/$url/g;
         $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
         # Send mail
         unless (
             $self->send_mail(
-                $req->datas->{mailAddress},
+                $req->data->{mailAddress},
                 $subject, $body, $html
             )
           )
@@ -383,18 +383,18 @@ sub changePwd {
 
         $self->logger->debug( "Generated password: " . $password );
 
-        $req->datas->{newpassword}     = $password;
-        $req->datas->{confirmpassword} = $password;
-        $req->datas->{forceReset}      = 1;
+        $req->data->{newpassword}     = $password;
+        $req->data->{confirmpassword} = $password;
+        $req->data->{forceReset}      = 1;
     }
 
     # Else a password is required in request
     else {
-        $req->datas->{newpassword}     = $req->param('newpassword');
-        $req->datas->{confirmpassword} = $req->param('confirmpassword');
-        unless ($req->datas->{newpassword}
-            and $req->datas->{confirmpassword}
-            and $req->datas->{newpassword} eq $req->datas->{confirmpassword} )
+        $req->data->{newpassword}     = $req->param('newpassword');
+        $req->data->{confirmpassword} = $req->param('confirmpassword');
+        unless ($req->data->{newpassword}
+            and $req->data->{confirmpassword}
+            and $req->data->{newpassword} eq $req->data->{confirmpassword} )
         {
             $self->ott->setToken( $req, $req->sessionInfo );
             return PE_PASSWORDFORMEMPTY;
@@ -412,7 +412,7 @@ sub changePwd {
     }
 
     # Send mail containing the new password
-    $req->datas->{mailAddress} ||=
+    $req->data->{mailAddress} ||=
       $self->p->getFirstValue(
         $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
 
@@ -438,13 +438,13 @@ sub changePwd {
     }
 
     # Replace variables in body
-    my $password = $req->datas->{newpassword};
+    my $password = $req->data->{newpassword};
     $body =~ s/\$password/$password/g;
     $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
     # Send mail
     return PE_MAILERROR
-      unless $self->send_mail( $req->datas->{mailAddress}, $subject, $body,
+      unless $self->send_mail( $req->data->{mailAddress}, $subject, $body,
         $html );
 
     PE_MAILOK;
@@ -469,13 +469,13 @@ sub display {
         SKIN_BG         => $self->conf->{portalSkinBackground},
         AUTH_ERROR      => $req->error,
         AUTH_ERROR_TYPE => $req->error_type,
-        AUTH_URL        => $req->datas->{_url},
+        AUTH_URL        => $req->data->{_url},
         CHOICE_VALUE    => $req->{_authChoice},
-        EXPMAILDATE     => $req->datas->{expMailDate},
-        EXPMAILTIME     => $req->datas->{expMailTime},
-        STARTMAILDATE   => $req->datas->{startMailDate},
-        STARTMAILTIME   => $req->datas->{startMailTime},
-        MAILALREADYSENT => $req->datas->{mailAlreadySent},
+        EXPMAILDATE     => $req->data->{expMailDate},
+        EXPMAILTIME     => $req->data->{expMailTime},
+        STARTMAILDATE   => $req->data->{startMailDate},
+        STARTMAILTIME   => $req->data->{startMailTime},
+        MAILALREADYSENT => $req->data->{mailAlreadySent},
         MAIL            => (
             $self->p->checkXSSAttack( 'mail', $req->{user} )
             ? ""
@@ -487,11 +487,11 @@ sub display {
         DISPLAY_MAILSENT        => 0,
         DISPLAY_PASSWORD_FORM   => 0,
     );
-    if ( $req->datas->{mailToken}
-        and !$self->p->checkXSSAttack( 'mail_token', $req->datas->{mailToken} )
+    if ( $req->data->{mailToken}
+        and !$self->p->checkXSSAttack( 'mail_token', $req->data->{mailToken} )
       )
     {
-        $tplPrm{MAIL_TOKEN} = $req->datas->{mailToken};
+        $tplPrm{MAIL_TOKEN} = $req->data->{mailToken};
     }
 
     # Display captcha if it's enabled
@@ -512,7 +512,7 @@ sub display {
             or $req->error == PE_CAPTCHAERROR
             or $req->error == PE_CAPTCHAEMPTY
         )
-        and !$req->datas->{mailToken}
+        and !$req->data->{mailToken}
       )
     {
         $self->logger->debug('Display form');
@@ -538,7 +538,7 @@ sub display {
     }
 
     # Display password change form
-    elsif ( $req->datas->{mailToken}
+    elsif ( $req->data->{mailToken}
         and $req->error != PE_MAILERROR
         and $req->error != PE_BADMAILTOKEN
         and $req->error != PE_MAILOK )

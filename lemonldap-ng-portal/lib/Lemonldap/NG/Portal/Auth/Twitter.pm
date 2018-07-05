@@ -84,8 +84,8 @@ sub extractFormInfo {
         my %prm = ( twitterback => 1 );
 
         # Add request state parameters
-        if ( $req->datas->{_url} ) {
-            $prm{url} = $req->datas->{_url};
+        if ( $req->data->{_url} ) {
+            $prm{url} = $req->data->{_url};
         }
 
         # Forward hidden fields
@@ -187,14 +187,14 @@ sub extractFormInfo {
           ->from_post_body( $res_access->content );
 
         # Get user_id and screename
-        $req->datas->{_twitterUserId} = $response->{extra_params}->{user_id};
-        $req->datas->{_twitterScreenName} =
+        $req->data->{_twitterUserId} = $response->{extra_params}->{user_id};
+        $req->data->{_twitterScreenName} =
           $response->{extra_params}->{screen_name};
 
         $self->logger->debug( "Get user id "
-              . $req->datas->{_twitterUserId}
+              . $req->data->{_twitterUserId}
               . " and screen name "
-              . $req->datas->{_twitterScreenName} );
+              . $req->data->{_twitterScreenName} );
         $req->user(
             $response->{extra_params}->{ $self->conf->{'twitterUserField'} } );
         $self->logger->debug("Good Twitter authentication for $req->{user}");
@@ -205,7 +205,7 @@ sub extractFormInfo {
         return PE_ERROR;
     }
 
-    # Force redirection to avoid displaying OAuth datas
+    # Force redirection to avoid displaying OAuth data
     $req->{mustRedirect} = 1;
 
     # Clean temporaries cookies
@@ -223,10 +223,10 @@ sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
 
     $req->{sessionInfo}->{authenticationLevel} =
-      $req->datas->{twitterAuthnLevel};
-    $req->{sessionInfo}->{_twitterUserId} = $req->datas->{_twitterUserId};
+      $req->data->{twitterAuthnLevel};
+    $req->{sessionInfo}->{_twitterUserId} = $req->data->{_twitterUserId};
     $req->{sessionInfo}->{_twitterScreenName} =
-      $req->datas->{_twitterScreenName};
+      $req->data->{_twitterScreenName};
 
     PE_OK;
 }

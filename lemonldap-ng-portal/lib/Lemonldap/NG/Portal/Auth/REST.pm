@@ -31,7 +31,7 @@ sub authenticate {
     my ( $self, $req ) = @_;
     my $res = eval {
         $self->restCall( $self->conf->{restAuthUrl},
-            { user => $req->user, password => $req->datas->{password} } );
+            { user => $req->user, password => $req->data->{password} } );
     };
     if ($@) {
         $self->logger("Auth error: $@");
@@ -44,15 +44,15 @@ sub authenticate {
         $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }
-    $req->datas->{restAuthInfo} = $res->{info} || {};
+    $req->data->{restAuthInfo} = $res->{info} || {};
     return PE_OK;
 }
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     $self->SUPER::setAuthSessionInfo($req);
-    $req->sessionInfo->{$_} = $req->datas->{restAuthInfo}->{$_}
-      foreach ( keys %{ $req->datas->{restAuthInfo} } );
+    $req->sessionInfo->{$_} = $req->data->{restAuthInfo}->{$_}
+      foreach ( keys %{ $req->data->{restAuthInfo} } );
     return PE_OK;
 }
 

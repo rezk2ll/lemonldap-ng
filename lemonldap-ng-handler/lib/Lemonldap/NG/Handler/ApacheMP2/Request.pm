@@ -62,9 +62,9 @@ sub new {
     return $self;
 }
 
-sub datas {
+sub data {
     my ($self) = @_;
-    return $self->{datas} ||= {};
+    return $self->{data} ||= {};
 }
 
 1;

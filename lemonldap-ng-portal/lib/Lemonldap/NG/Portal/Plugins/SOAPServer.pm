@@ -159,7 +159,7 @@ sub getCookies {
     $self->logger->debug("SOAP authentication request for $user");
 
     $req->{user} = $user;
-    $req->datas->{password} = $password;
+    $req->data->{password} = $password;
     if ($sessionid) {
         $req->{id}    = $sessionid;
         $req->{force} = 1;
@@ -168,7 +168,7 @@ sub getCookies {
     $req->{error} = PE_OK;
 
     # User and password are required
-    unless ( $req->{user} && $req->datas->{password} ) {
+    unless ( $req->{user} && $req->data->{password} ) {
         $req->{error} = PE_FORMEMPTY;
     }
 
@@ -177,9 +177,9 @@ sub getCookies {
         $req->steps(
             [
                 qw(getUser authenticate setAuthSessionInfo),
-                @{ $self->p->betweenAuthAndDatas },
-                $self->p->sessionDatas,
-                @{ $self->p->afterDatas },
+                @{ $self->p->betweenAuthAndData },
+                $self->p->sessionData,
+                @{ $self->p->afterData },
             ]
         );
         $req->{error} = $self->p->process($req);
@@ -255,9 +255,9 @@ sub getAttributes {
     return $res;
 }
 
-# Update datas in the session referenced by $id
+# Update data in the session referenced by $id
 # @param $id Id of the session
-# @param $args datas to store
+# @param $args data to store
 
 =begin WSDL
 
@@ -425,7 +425,7 @@ sub isAuthorizedURI {
 
 ##@fn private SOAP::Data _buildSoapHash()
 # Serialize a hashref into SOAP::Data. Types are fixed to "string".
-# @return SOAP::Data serialized datas
+# @return SOAP::Data serialized data
 sub _buildSoapHash {
     my ( $h, @keys ) = @_;
     my @tmp = ();

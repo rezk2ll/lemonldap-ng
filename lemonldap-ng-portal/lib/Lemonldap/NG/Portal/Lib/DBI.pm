@@ -387,7 +387,7 @@ sub check_password {
     # If $user is an object then it's a Lemonldap::NG::Portal::Main::Request
     # object
     if ( ref($user) ) {
-        $password = $user->datas->{password};
+        $password = $user->data->{password};
         $user     = $user->{user};
     }
     my $table       = $self->conf->{dbiAuthTable};

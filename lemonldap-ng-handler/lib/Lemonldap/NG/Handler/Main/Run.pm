@@ -160,7 +160,7 @@ sub run {
         # Store local macros
         if ( keys %$session > $kc ) {
             $class->logger->debug("Update local cache");
-            $req->datas->{session}->update( $session, { updateCache => 2 } );
+            $req->data->{session}->update( $session, { updateCache => 2 } );
         }
 
         # Hide Lemonldap::NG cookie
@@ -435,16 +435,16 @@ sub retrieveSession {
     # persistent connection).
     # NB: timout is here the same value as current HTTP/1.1 Keep-Alive timeout
     #     (15 seconds)
-    if (    defined $class->datas->{_session_id}
-        and $id eq $class->datas->{_session_id}
-        and ( $now - $class->datasUpdate < 15 ) )
+    if (    defined $class->data->{_session_id}
+        and $id eq $class->data->{_session_id}
+        and ( $now - $class->dataUpdate < 15 ) )
     {
         $class->logger->debug("Get session $id from Handler internal cache");
-        return $class->datas;
+        return $class->data;
     }
 
     # 2. Get the session from cache or backend
-    my $session = $req->datas->{session} = (
+    my $session = $req->data->{session} = (
         Lemonldap::NG::Common::Session->new(
             {
                 storageModule        => $class->tsv->{sessionStorageModule},
@@ -459,7 +459,7 @@ sub retrieveSession {
 
     unless ( $session->error ) {
 
-        $class->datas( $session->data );
+        $class->data( $session->data );
 
         $class->logger->debug("Get session $id");
 
@@ -470,12 +470,12 @@ sub retrieveSession {
                 $class->tsv->{timeoutActivityInterval} )
           )
         {
-            $req->datas->{session}->update( { '_lastSeen' => $now } );
-            $class->datas( $session->data );
+            $req->data->{session}->update( { '_lastSeen' => $now } );
+            $class->data( $session->data );
 
             if ( $session->error ) {
                 $class->logger->error("Cannot update session $id");
-                $class->logger->error( $req->datas->{session}->error );
+                $class->logger->error( $req->data->{session}->error );
             }
             else {
                 $class->logger->debug("Update _lastSeen with $now");
@@ -497,11 +497,11 @@ sub retrieveSession {
             $class->logger->info("Session $id expired");
 
             # Clean cached data
-            $class->datas( {} );
+            $class->data( {} );
             return 0;
         }
 
-        $class->datasUpdate($now);
+        $class->dataUpdate($now);
         return $session->data;
     }
     else {
@@ -644,13 +644,13 @@ sub localUnlog {
     $class->logger->debug('Local handler logout');
     if ( $id //= $class->fetchId($req) ) {
 
-        # Delete thread datas
-        if (    $class->datas->{_session_id}
-            and $id eq $class->datas->{_session_id} )
+        # Delete thread data
+        if (    $class->data->{_session_id}
+            and $id eq $class->data->{_session_id} )
         {
-            $class->datas( {} );
+            $class->data( {} );
         }
-        delete $req->datas->{session};
+        delete $req->data->{session};
 
         # Delete local cache
         if (    $class->tsv->{refLocalStorage}
@@ -681,7 +681,7 @@ sub postOutputFilter {
 }
 
 ## @rmethod protected postInputFilter(string uri)
-# Replace request body with form datas defined in configuration
+# Replace request body with form data defined in configuration
 # @param uri URI to catch
 sub postInputFilter {
     my ( $class, $req, $session, $uri ) = @_;

@@ -45,12 +45,12 @@ has beforeAuth => (
     isa     => 'ArrayRef',
     default => sub { [] }
 );
-has betweenAuthAndDatas => (
+has betweenAuthAndData => (
     is      => 'rw',
     isa     => 'ArrayRef',
     default => sub { [] }
 );
-has afterDatas => (
+has afterData => (
     is      => 'rw',
     isa     => 'ArrayRef',
     default => sub { [] }
@@ -151,7 +151,7 @@ sub reloadConf {
 
     # Reinitialize arrays
     foreach (
-        qw(_macros _groups beforeAuth betweenAuthAndDatas afterDatas forAuthUser beforeLogout)
+        qw(_macros _groups beforeAuth betweenAuthAndData afterData forAuthUser beforeLogout)
       )
     {
         $self->{$_} = [];
@@ -307,7 +307,7 @@ sub reloadConf {
     }
 
     # Clean $req->pdata after authentication
-    push @{ $self->afterDatas }, sub {
+    push @{ $self->afterData }, sub {
         unless ( $_[0]->pdata->{keepPdata} ) {
             $self->logger->debug('Cleaning pdata');
             $_[0]->pdata( {} );
@@ -337,7 +337,7 @@ sub findEP {
 
     # Standards entry points
     foreach my $sub (
-        qw(beforeAuth betweenAuthAndDatas afterDatas forAuthUser beforeLogout))
+        qw(beforeAuth betweenAuthAndData afterData forAuthUser beforeLogout))
     {
         if ( $obj->can($sub) ) {
             $self->logger->debug(" Found $sub entry point:");

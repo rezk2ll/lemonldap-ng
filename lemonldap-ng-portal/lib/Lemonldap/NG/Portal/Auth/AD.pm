@@ -132,7 +132,7 @@ sub authenticate {
     }
 
     # Remember password if password reset needed
-    $req->datas->{oldpassword} = $req->datas->{password}
+    $req->data->{oldpassword} = $req->data->{password}
       if (
         $res == PE_PP_CHANGE_AFTER_RESET
         or (    $res == PE_PP_PASSWORD_EXPIRED

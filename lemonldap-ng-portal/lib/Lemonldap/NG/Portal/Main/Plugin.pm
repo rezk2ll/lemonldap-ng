@@ -156,10 +156,10 @@ are available.
 
 =item C<beforeAuth>: method called before authentication process
 
-=item C<betweenAuthAndDatas>: method called after authentication and before
+=item C<betweenAuthAndData>: method called after authentication and before
 setting C<sessionInfo> provisionning
 
-=item C<afterDatas>: method called after C<sessionInfo> provisionning
+=item C<afterData>: method called after C<sessionInfo> provisionning
 I<(macros, groups,...)>
 
 =item C<forAuthUser>: method called for already authenticated users

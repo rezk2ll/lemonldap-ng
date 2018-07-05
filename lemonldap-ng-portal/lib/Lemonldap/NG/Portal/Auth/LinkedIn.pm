@@ -150,11 +150,11 @@ sub extractFormInfo {
         }
 
         foreach ( keys %$json_hash ) {
-            $req->datas->{linkedInData}->{$_} = $json_hash->{$_};
+            $req->data->{linkedInData}->{$_} = $json_hash->{$_};
         }
 
         $req->user(
-            $req->datas->{linkedInData}->{ $self->conf->{linkedInUserField} } );
+            $req->data->{linkedInData}->{ $self->conf->{linkedInUserField} } );
 
         $self->logger->debug(
             "Good LinkedIn authentication for " . $req->user );
@@ -211,9 +211,9 @@ sub setAuthSessionInfo {
     $req->{sessionInfo}->{authenticationLevel} =
       $self->conf->{linkedInAuthnLevel};
 
-    foreach ( keys %{ $req->datas->{linkedInData} } ) {
+    foreach ( keys %{ $req->data->{linkedInData} } ) {
         $req->{sessionInfo}->{ 'linkedIn_' . $_ } =
-          $req->datas->{linkedInData}->{$_};
+          $req->data->{linkedInData}->{$_};
     }
 
     PE_OK;

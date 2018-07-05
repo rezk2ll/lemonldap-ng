@@ -94,7 +94,7 @@ sub run {
       unless $class->_isAlive();
 
     # Value to store
-    my $value = $class->datas->{$secureTokenAttribute};
+    my $value = $class->data->{$secureTokenAttribute};
 
     # Set token
     my $key = $class->_setToken( $value, $secureTokenExpiration );

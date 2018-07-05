@@ -105,7 +105,7 @@ sub run {
     return $tmp;
 ";
 
-        # Second step, Manager/Constants.pm file will contain datas issued from
+        # Second step, Manager/Constants.pm file will contain data issued from
         # this scan
         my $ra = Regexp::Assemble->new;
 

@@ -61,8 +61,8 @@ sub checkRemoteId {
             return PE_ERROR;
         }
 
-        %{ $req->datas->{rSessionInfo} } = %{ $remoteSession->data() };
-        delete( $req->datas->{rSessionInfo}->{'_password'} )
+        %{ $req->data->{rSessionInfo} } = %{ $remoteSession->data() };
+        delete( $req->data->{rSessionInfo}->{'_password'} )
           unless ( $self->conf->{storePassword} );
         return PE_OK;
     }

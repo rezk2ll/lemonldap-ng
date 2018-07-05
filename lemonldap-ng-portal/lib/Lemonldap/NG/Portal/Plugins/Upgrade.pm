@@ -72,7 +72,7 @@ sub confirm {
     my $res = $self->p->process($req);
     return $self->p->do( $req, [ sub { $res } ] ) if ($res);
     if ( $upg or $req->param('confirm') == 1 ) {
-        $req->datas->{noerror} = 1;
+        $req->data->{noerror} = 1;
         $self->p->setHiddenFormValue(
             $req,
             upgrading => $self->ott->createToken,

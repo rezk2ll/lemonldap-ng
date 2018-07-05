@@ -166,7 +166,7 @@ sub ssoMatch {
     my ( $self, $req ) = @_;
     my $url = $self->normalize_url( $req->uri, $self->conf->{issuerDBSAMLPath},
         $self->ssoGetUrl );
-    return ( $url =~ $self->ssoUrlRe or $req->datas->{_proxiedRequest} 
+    return ( $url =~ $self->ssoUrlRe or $req->data->{_proxiedRequest} 
       ? 1
       : 0);
 }
@@ -206,7 +206,7 @@ sub run {
     }
 
     # 1.1. SSO (SSO URL or Proxy Mode)
-    if ( $url =~ $self->ssoUrlRe or $req->datas->{_proxiedRequest} ) {
+    if ( $url =~ $self->ssoUrlRe or $req->data->{_proxiedRequest} ) {
 
         $self->logger->debug("URL $url detected as an SSO request URL");
 
@@ -221,11 +221,11 @@ sub run {
         $self->disableSignatureVerification($login);
 
         if ($request) {
-            $req->datas->{_proxiedSamlRequest} = $login->request();
-            $req->datas->{_proxiedRequest}     = $request;
-            $req->datas->{_proxiedMethod}      = $method;
-            $req->datas->{_proxiedRelayState}  = $relaystate,
-              $req->datas->{_proxiedArtifact}  = $artifact;
+            $req->data->{_proxiedSamlRequest} = $login->request();
+            $req->data->{_proxiedRequest}     = $request;
+            $req->data->{_proxiedMethod}      = $method;
+            $req->data->{_proxiedRelayState}  = $relaystate,
+              $req->data->{_proxiedArtifact}  = $artifact;
         }
 
         # Process the request or use IDP initiated mode
@@ -441,7 +441,7 @@ sub run {
             }
 
             # Check Destination (only in non proxy mode)
-            unless ( $req->datas->{_proxiedRequest} ) {
+            unless ( $req->data->{_proxiedRequest} ) {
                 return PE_SAML_DESTINATION_ERROR
                   unless ( $self->checkDestination( $login->request, $url ) );
             }
@@ -1219,7 +1219,7 @@ sub soapSloServer {
 
 sub logout {
     my ( $self, $req ) = @_;
-    return PE_OK if ( $req->datas->{samlSLOCalled} );
+    return PE_OK if ( $req->data->{samlSLOCalled} );
 
     # Session ID
     my $session_id = $req->{sessionInfo}->{_session_id} || $req->{id};
@@ -1388,7 +1388,7 @@ sub sloRelayPost {
 
 sub authSloServer {
     my ( $self, $req ) = @_;
-    $self->p->importHandlerDatas($req);
+    $self->p->importHandlerData($req);
     return $self->sloServer($req);
 }
 
@@ -1488,7 +1488,7 @@ sub sloServer {
             $session  = $local_session->data->{ $self->lsDump };
             $identity = $local_session->data->{ $self->liDump };
 
-            # Import user datas in $req (for other "logout" subs)
+            # Import user data in $req (for other "logout" subs)
             $req->id( $local_session->data->{_session_id} );
             $req->sessionInfo( $local_session->data );
             $req->user( $local_session->data->{ $self->conf->{whatToTrace} } );
@@ -1569,7 +1569,7 @@ sub sloServer {
 
         # Close local session
         # This flag is for logout() to say that SAML logout is already done
-        $req->datas->{samlSLOCalled} = 1;
+        $req->data->{samlSLOCalled} = 1;
 
         # Launch normal logout and ignore errors
         $self->p->do( $req, [ @{ $self->p->beforeLogout }, 'deleteSession' ] );
@@ -1606,7 +1606,7 @@ sub sloServer {
         # else it means SSO session was not closed: launching it
         $self->logger->debug(
             "SLO response found on an active SSO session, ignoring it");
-        $req->datas->{samlSLOCalled} = 1;
+        $req->data->{samlSLOCalled} = 1;
         return $self->p->do( $req,
             [ @{ $self->p->beforeLogout }, 'deleteSession' ] );
     }

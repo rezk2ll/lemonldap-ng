@@ -58,7 +58,7 @@ sub _run {
         my $res = $self->_authAndTrace( $req, 1 );
         if ( $res->[0] < 300 ) {
             $self->routes( $self->authRoutes );
-            $req->userData( $self->api->datas );
+            $req->userData( $self->api->data );
         }
         else {
             # Unset headers (handler adds a Location header)
@@ -148,12 +148,12 @@ L<Lemonldap::NG::Common::PSGI::Router>) except that:
 
 =back
 
-Note also that user session datas are available in $req parameter (first argument
+Note also that user session data are available in $req parameter (first argument
 received by REST methods):
 
 =over
 
-=item $req->userData() returns a hash reference containing user session datas
+=item $req->userData() returns a hash reference containing user session data
 
 =back
 

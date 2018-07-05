@@ -95,7 +95,7 @@ Main and plugin keys must be initializated during initialization. They must
 be read-only during receiving requests.
 
 The L<Lemonldap::NG::Portal::Main::Request> request has fixed keys. A plugin
-that wants to store a temporary key must store it in $req->datas or use
+that wants to store a temporary key must store it in C<$req-E<gt>data> or use
 defined keys, but it must never create a root key. Plugin keys may have
 explicit names to avoid conflicts.
 

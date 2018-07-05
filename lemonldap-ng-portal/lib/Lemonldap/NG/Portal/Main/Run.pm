@@ -19,7 +19,7 @@ use URI::Escape;
 # List constants
 sub authProcess { qw(extractFormInfo getUser authenticate) }
 
-sub sessionDatas {
+sub sessionData {
     qw(setAuthSessionInfo setSessionInfo setMacros setGroups setPersistentSessionInfo
       setLocalGroups store secondFactor storeHistory buildCookie);
 }
@@ -89,8 +89,8 @@ sub login {
         $req,
         [
             'controlUrl',        @{ $self->beforeAuth },
-            $self->authProcess,  @{ $self->betweenAuthAndDatas },
-            $self->sessionDatas, @{ $self->afterDatas },
+            $self->authProcess,  @{ $self->betweenAuthAndData },
+            $self->sessionData, @{ $self->afterData },
         ]
     );
 }
@@ -102,8 +102,8 @@ sub postLogin {
         [
             'restoreArgs',                   'controlUrl',
             @{ $self->beforeAuth },          $self->authProcess,
-            @{ $self->betweenAuthAndDatas }, $self->sessionDatas,
-            @{ $self->afterDatas },
+            @{ $self->betweenAuthAndData }, $self->sessionData,
+            @{ $self->afterData },
         ]
     );
 }
@@ -113,7 +113,7 @@ sub authenticatedRequest {
     return $self->do(
         $req,
         [
-            'importHandlerDatas', 'controlUrl',
+            'importHandlerData', 'controlUrl',
             'checkLogout',        @{ $self->forAuthUser }
         ]
     );
@@ -124,7 +124,7 @@ sub postAuthenticatedRequest {
     return $self->do(
         $req,
         [
-            'importHandlerDatas', 'restoreArgs',
+            'importHandlerData', 'restoreArgs',
             'controlUrl',         'checkLogout',
             @{ $self->forAuthUser }
         ]
@@ -134,24 +134,24 @@ sub postAuthenticatedRequest {
 sub refresh {
     my ( $self, $req ) = @_;
     $req->mustRedirect(1);
-    my %datas = %{ $req->userData };
-    $req->user( $datas{ $self->conf->{whatToTrace} } );
-    $req->id( $datas{_session_id} );
+    my %data = %{ $req->userData };
+    $req->user( $data{ $self->conf->{whatToTrace} } );
+    $req->id( $data{_session_id} );
     $self->userLogger->notice( 'Refresh request for ' . $req->user );
-    foreach ( keys %datas ) {
-        delete $datas{$_} unless ( /^_/ or /^(?:startTime)$/ );
+    foreach ( keys %data ) {
+        delete $data{$_} unless ( /^_/ or /^(?:startTime)$/ );
     }
     $req->steps(
         [
             'getUser',
-            @{ $self->betweenAuthAndDatas },
+            @{ $self->betweenAuthAndData },
             'setAuthSessionInfo',
             'setSessionInfo',
             'setMacros',
             'setGroups',
             'setLocalGroups',
             sub {
-                $req->sessionInfo->{$_} = $datas{$_} foreach ( keys %datas );
+                $req->sessionInfo->{$_} = $data{$_} foreach ( keys %data );
                 return PE_OK;
             },
             'store',
@@ -187,7 +187,7 @@ sub logout {
 sub do {
     my ( $self, $req, $steps ) = @_;
     $req->steps($steps);
-    $req->datas->{activeTimer} = $self->conf->{activeTimer};
+    $req->data->{activeTimer} = $self->conf->{activeTimer};
     my $err = $req->error( $self->process($req) );
 
     # Update status
@@ -237,8 +237,8 @@ sub do {
             and (
                 $err != PE_REDIRECT
                 or (    $err == PE_REDIRECT
-                    and $req->datas->{redirectFormMethod}
-                    and $req->datas->{redirectFormMethod} eq 'post' )
+                    and $req->data->{redirectFormMethod}
+                    and $req->data->{redirectFormMethod} eq 'post' )
                 or $req->info
             )
           )
@@ -297,7 +297,7 @@ sub autoRedirect {
         $self->logger->debug("Building redirection to $req->{urldc}");
         if ( $self->_jsRedirect->( $req, $req->sessionInfo ) ) {
             $req->error(PE_REDIRECT);
-            $req->datas->{redirectFormMethod} = "get";
+            $req->data->{redirectFormMethod} = "get";
         }
         else {
             return [ 302,
@@ -309,7 +309,7 @@ sub autoRedirect {
     return $self->sendHtml( $req, $tpl, params => $prms );
 }
 
-# Try to recover the session corresponding to id and return session datas.
+# Try to recover the session corresponding to id and return session data.
 # If $id is set to undef or if $args{force} is true, return a new session.
 sub getApacheSession {
     my ( $self, $id, %args ) = @_;
@@ -374,7 +374,7 @@ sub getApacheSession {
     return $as;
 }
 
-# Try to recover the persistent session corresponding to uid and return session datas.
+# Try to recover the persistent session corresponding to uid and return session data.
 sub getPersistentSession {
     my ( $self, $uid, $info ) = @_;
 
@@ -450,7 +450,7 @@ sub updatePersistentSession {
 
 # Update session stored.
 # If no id is given, try to get it from cookie.
-# If the session is available, update datas with $info.
+# If the session is available, update data with $info.
 # Note that outdated session data may remain some time on
 # server local cache, if there are several LL::NG servers.
 # @param infos hash reference of information to update
@@ -473,7 +473,7 @@ sub updateSession {
         foreach ( keys %$infos ) {
             $self->logger->debug(
                 "Update sessionInfo $_ with " . $infos->{$_} );
-            $req->{sessionInfo}->{$_} = $self->HANDLER->datas->{$_} =
+            $req->{sessionInfo}->{$_} = $self->HANDLER->data->{$_} =
               $infos->{$_};
         }
 
@@ -589,7 +589,7 @@ sub autoPost {
         return PE_INFO;
     }
 
-    $req->datas->{redirectFormMethod} = "post";
+    $req->data->{redirectFormMethod} = "post";
     return PE_REDIRECT;
 }
 

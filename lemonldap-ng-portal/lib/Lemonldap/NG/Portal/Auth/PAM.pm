@@ -43,7 +43,7 @@ sub authenticate {
             }
 
             elsif ( $code == PAM_PROMPT_ECHO_OFF ) {
-                $res = $req->datas->{password};
+                $res = $req->data->{password};
             }
 
             push( @response, PAM_SUCCESS, $res );

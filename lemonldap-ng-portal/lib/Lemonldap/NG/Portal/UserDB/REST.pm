@@ -48,14 +48,14 @@ sub getUser {
         $self->userLogger->warn( 'User ' . $req->user . ' not found' );
         return PE_USERNOTFOUND;
     }
-    $req->datas->{restUserDBInfo} = $res->{info} || {};
+    $req->data->{restUserDBInfo} = $res->{info} || {};
     return PE_OK;
 }
 
 sub setSessionInfo {
     my ( $self, $req ) = @_;
-    $req->sessionInfo->{$_} = $req->datas->{restUserDBInfo}->{$_}
-      foreach ( keys %{ $req->datas->{restUserDBInfo} } );
+    $req->sessionInfo->{$_} = $req->data->{restUserDBInfo}->{$_}
+      foreach ( keys %{ $req->data->{restUserDBInfo} } );
     PE_OK;
 }
 

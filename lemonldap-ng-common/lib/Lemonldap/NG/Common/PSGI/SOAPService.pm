@@ -20,12 +20,12 @@ sub new {
     return bless { obj => $obj, func => \@func, req => $req }, $class;
 }
 
-## @method datas AUTOLOAD()
+## @method data AUTOLOAD()
 # Call the wanted function with the object given to the constructor.
 # AUTOLOAD() is a magic method called by Perl interpreter fon non existent
 # functions. Here, we use it to call the wanted function (given by $AUTOLOAD)
 # if it is authorizated
-# @return datas provided by the exported function
+# @return data provided by the exported function
 sub AUTOLOAD {
     my $self = shift;
     $AUTOLOAD =~ s/.*:://;

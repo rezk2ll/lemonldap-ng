@@ -93,8 +93,8 @@ sub getNotifBack {
     $req->userData( $self->p->HANDLER->retrieveSession( $req, $id ) )
       or return $self->p->sendError( $req, 'Unknown session', 401 );
 
-    # Restore datas
-    $self->p->importHandlerDatas($req);
+    # Restore data
+    $self->p->importHandlerData($req);
     my $uid = $req->sessionInfo->{ $self->notifObject->notifField };
 
     my ( $notifs, $forUser );
@@ -174,10 +174,10 @@ sub getNotifBack {
 
             # One pending notification has been found and not accepted,
             # restart process to display pending notifications
-            # TODO: is it a good idea to launch all 'afterDatas' subs ?
+            # TODO: is it a good idea to launch all 'afterData' subs ?
             $self->logger->debug(
                 'Pending notification has been found and not accepted');
-            return $self->p->do( $req, $self->p->afterDatas );
+            return $self->p->do( $req, $self->p->afterData );
         }
 
         # All pending notifications have been accepted, restore cookies and

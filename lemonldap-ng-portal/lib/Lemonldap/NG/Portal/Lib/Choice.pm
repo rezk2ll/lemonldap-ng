@@ -109,9 +109,9 @@ sub checkChoice {
 
     # Store choice if module loops
     $req->pdata->{_choice} = $name;
-    return $name if ( $req->datas->{ "enabledMods" . $self->type } );
+    return $name if ( $req->data->{ "enabledMods" . $self->type } );
     $req->sessionInfo->{_choice} = $name;
-    $req->datas->{ "enabledMods" . $self->type } = [ $self->modules->{$name} ];
+    $req->data->{ "enabledMods" . $self->type } = [ $self->modules->{$name} ];
     $self->p->_authentication->authnLevel("${name}AuthnLevel");
     return $name;
 }
@@ -121,7 +121,7 @@ sub name {
     unless ($req) {
         return 'Choice';
     }
-    my $n = ref( $req->datas->{ "enabledMods" . $self->type }->[0] );
+    my $n = ref( $req->data->{ "enabledMods" . $self->type }->[0] );
     $n =~ s/^Lemonldap::NG::Portal::(?:(?:UserDB|Auth)::)?//;
     return $n;
 }

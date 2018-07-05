@@ -100,18 +100,18 @@ sub getConfByNum {
 #    * openIdIDPList() (old OpenID)
 #    * applicationList()
 #  - root:
-#    root query (/confs/latest for example) is redirected to metadatas()
+#    root query (/confs/latest for example) is redirected to metadata()
 #  - other requests:
 #    they are managed by getKey()
 #  - newRSAKey() returns a new RSA key pair if /confs/newRSAKey is called in a
 #    POST request
-#  - prx() load a request and return the content (for SAML/OIDC metadatas)
+#  - prx() load a request and return the content (for SAML/OIDC metadata)
 
 # 31 - Complex subnodes
 #      ----------------
 
 ## @method PSGI-JSON-response complexNodesRoot($req, $query, $tpl)
-# Respond to root requests for virtual hosts and SAMLmetadatas
+# Respond to root requests for virtual hosts and SAMLmetadata
 #
 #@param $req Lemonldap::NG::Common::PSGI::Request
 #@param $query Configuration root key
@@ -686,15 +686,15 @@ sub combModules {
 # 33 - Root queries
 #      -----------
 
-## @method PSGI-JSON-response metadatas($req)
-# Respond to `/conf/:cfgNum` requests by sending configuration metadatas
+## @method PSGI-JSON-response metadata($req)
+# Respond to `/conf/:cfgNum` requests by sending configuration metadata
 #
 # NB: if `full=1` is set in the query, configuration is returned directly in
 #     JSON
 #
 #@param $req Lemonldap::NG::Common::PSGI::Request
 #@return PSGI JSON response
-sub metadatas {
+sub metadata {
     my ( $self, $req ) = @_;
     if ( $req->params('full') and $req->params('full') !~ NO ) {
         my $c = $self->getConfKey( $req, 'cfgNum' );
@@ -738,13 +738,13 @@ sub metadatas {
         if ( $self->can('userId') ) {
             $self->userLogger->info( 'User '
                   . $self->userId($req)
-                  . ' ask for configuration metadatas ('
+                  . ' ask for configuration metadata ('
                   . $res->{cfgNum}
                   . ')' );
         }
         else {
             $self->logger->info(
-                "REST request to get configuration metadatas ($res->{cfgNum})"
+                "REST request to get configuration metadata ($res->{cfgNum})"
             );
         }
         return $self->sendJSONresponse( $req, $res );
@@ -764,7 +764,7 @@ sub metadatas {
 sub getKey {
     my ( $self, $req, $key, $subkey ) = @_;
     unless ($key) {
-        return $self->metadatas($req);
+        return $self->metadata($req);
     }
     $self->userLogger->info(
         'User ' . $self->userId($req) . " asks for key $key" );

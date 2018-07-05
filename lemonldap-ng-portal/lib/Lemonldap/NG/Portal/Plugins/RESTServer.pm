@@ -2,7 +2,7 @@
 #
 # This plugin adds the following entry points:
 # - Sessions backend (if restSessionServer is on)
-#   * GET /sessions/<type>/<session-id>          : get session datas
+#   * GET /sessions/<type>/<session-id>          : get session data
 #   * GET /sessions/<type>/<session-id>/<key>    : get a session key value
 #   * GET /sessions/<type>/<session-id>/[k1,k2]  : get some session key value
 #   * POST /sessions/<type>                      : create a session
@@ -10,7 +10,7 @@
 #   * DELETE /sessions/<type>/<session-id>       : delete a session
 #
 # - Sessions for connected users (if restSessionServer is on):
-#   * GET /session/my/<type>                     : get session datas
+#   * GET /session/my/<type>                     : get session data
 #   * GET /session/my/<type>/key                 : get session key
 #   * DELETE /session/my                         : ask for logout
 #
@@ -229,14 +229,14 @@ sub newAuthSession {
     $req->{id}    = $id;
     $req->{force} = 1;
     $req->user( $req->param('user') );
-    $req->datas->{password} = $req->param('password');
+    $req->data->{password} = $req->param('password');
     $req->steps(
         [
             @{ $self->p->beforeAuth },
             qw(getUser authenticate setAuthSessionInfo),
-            @{ $self->p->betweenAuthAndDatas },
-            $self->p->sessionDatas,
-            @{ $self->p->afterDatas },
+            @{ $self->p->betweenAuthAndData },
+            $self->p->sessionData,
+            @{ $self->p->afterData },
         ]
     );
     $req->{error} = $self->p->process($req);

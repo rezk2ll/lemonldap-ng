@@ -261,7 +261,7 @@ sub run {
                         'casBack2Url', params => { url => $logout_url }
                     )
                 );
-                $req->datas->{activeTimer} = 0;
+                $req->data->{activeTimer} = 0;
 
                 return PE_CONFIRM;
             }

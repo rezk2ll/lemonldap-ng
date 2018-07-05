@@ -41,19 +41,19 @@ sub display {
 
     # 1.1 A notification has to be done (session is created but hidden and
     #     unusable until the user has accept the message)
-    if ( my $notif = $req->datas->{notification} ) {
+    if ( my $notif = $req->data->{notification} ) {
         $self->logger->debug('Display: notification detected');
         $skinfile       = 'notification';
         %templateParams = (
             AUTH_ERROR_TYPE => $req->error_type,
             NOTIFICATION    => $notif,
             HIDDEN_INPUTS   => $self->buildHiddenForm($req),
-            AUTH_URL        => $req->{datas}->{_url},
+            AUTH_URL        => $req->{data}->{_url},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
-            CHOICE_VALUE    => $req->datas->{_authChoice},
+            CHOICE_VALUE    => $req->data->{_authChoice},
             (
-                $req->datas->{customScript}
-                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
         );
@@ -67,21 +67,21 @@ sub display {
         %templateParams = (
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
-            AUTH_URL        => $req->{datas}->{_url},
+            AUTH_URL        => $req->{data}->{_url},
             MSG             => $req->info,
             HIDDEN_INPUTS   => $self->buildHiddenForm($req),
-            ACTIVE_TIMER    => $req->datas->{activeTimer},
+            ACTIVE_TIMER    => $req->data->{activeTimer},
             FORM_METHOD     => $self->conf->{confirmFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
-            CHOICE_VALUE    => $req->datas->{_authChoice},
+            CHOICE_VALUE    => $req->data->{_authChoice},
             CHECK_LOGINS    => $self->conf->{portalCheckLogins}
-              && $req->datas->{login},
+              && $req->data->{login},
             ASK_LOGINS => $req->param('checkLogins') || 0,
             CONFIRMKEY => $self->stamp(),
-            REMEMBER   => $req->datas->{confirmRemember},
+            REMEMBER   => $req->data->{confirmRemember},
             (
-                $req->datas->{customScript}
-                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
         );
@@ -95,21 +95,21 @@ sub display {
         %templateParams = (
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
-            AUTH_URL        => $req->{datas}->{_url},
+            AUTH_URL        => $req->{data}->{_url},
             HIDDEN_INPUTS   => $self->buildHiddenForm($req),
-            ACTIVE_TIMER    => $req->datas->{activeTimer},
+            ACTIVE_TIMER    => $req->data->{activeTimer},
             FORM_METHOD     => $self->conf->{confirmFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
-            CHOICE_VALUE    => $req->datas->{_authChoice},
+            CHOICE_VALUE    => $req->data->{_authChoice},
             CHECK_LOGINS    => $self->conf->{portalCheckLogins}
-              && $req->datas->{login},
+              && $req->data->{login},
             ASK_LOGINS => $req->param('checkLogins') || 0,
             CONFIRMKEY => $self->stamp(),
-            LIST       => $req->datas->{list}        || [],
-            REMEMBER   => $req->datas->{confirmRemember},
+            LIST       => $req->data->{list}        || [],
+            REMEMBER   => $req->data->{confirmRemember},
             (
-                $req->datas->{customScript}
-                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
         );
@@ -126,13 +126,13 @@ sub display {
             MSG             => $info,
             URL             => $req->{urldc},
             HIDDEN_INPUTS   => $self->buildHiddenForm($req),
-            ACTIVE_TIMER    => $req->datas->{activeTimer},
+            ACTIVE_TIMER    => $req->data->{activeTimer},
             FORM_METHOD     => $self->conf->{infoFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
-            CHOICE_VALUE    => $req->datas->{_authChoice},
+            CHOICE_VALUE    => $req->data->{_authChoice},
             (
-                $req->datas->{customScript}
-                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
         );
@@ -153,12 +153,12 @@ sub display {
             PROVIDERURI     => $p,
             MSG             => $req->info(),
             (
-                $req->datas->{customScript}
-                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
         );
-        $templateParams{ID} = $req->datas->{_openidPortal} . $id if ($id);
+        $templateParams{ID} = $req->data->{_openidPortal} . $id if ($id);
     }
 
     # 2. Good authentication
@@ -169,10 +169,10 @@ sub display {
         %templateParams = (
             URL           => $req->{urldc},
             HIDDEN_INPUTS => $self->buildHiddenForm($req),
-            FORM_METHOD   => $req->datas->{redirectFormMethod} || 'get',
+            FORM_METHOD   => $req->data->{redirectFormMethod} || 'get',
             (
-                $req->datas->{customScript}
-                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
         );
@@ -193,8 +193,8 @@ sub display {
             HIDE_OLDPASSWORD    => 0,
             $self->menu->params($req),
             (
-                $req->datas->{customScript}
-                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
         );
@@ -206,10 +206,10 @@ sub display {
             MSG        => 'askToRenew',
             CONFIRMKEY => $self->stamp,
             PORTAL     => $self->conf->{portal},
-            URL        => $req->datas->{_url},
+            URL        => $req->data->{_url},
             (
-                $req->datas->{customScript}
-                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
         );
@@ -218,7 +218,7 @@ sub display {
     # 2.3 Case : user authenticated but an error was returned (bas url,...)
     elsif (
         $req->noLoginDisplay
-        or (    not $req->datas->{noerror}
+        or (    not $req->data->{noerror}
             and $req->userData
             and %{ $req->userData } )
       )
@@ -228,8 +228,8 @@ sub display {
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
             (
-                $req->datas->{customScript}
-                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
         );
@@ -243,7 +243,7 @@ sub display {
         %templateParams = (
             AUTH_ERROR            => $req->error,
             AUTH_ERROR_TYPE       => $req->error_type,
-            AUTH_URL              => $req->{datas}->{_url},
+            AUTH_URL              => $req->{data}->{_url},
             LOGIN                 => $login,
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
             ASK_LOGINS            => $req->param('checkLogins') || 0,
@@ -254,8 +254,8 @@ sub display {
             HIDDEN_INPUTS         => $self->buildHiddenForm($req),
             STAYCONNECTED         => $self->conf->{stayConnected},
             (
-                $req->datas->{customScript}
-                ? ( CUSTOM_SCRIPT => $req->datas->{customScript} )
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
         );
@@ -299,11 +299,11 @@ sub display {
                 DISPLAY_RESETPASSWORD => 0,
                 AUTH_LOOP             => [],
                 CHOICE_PARAM          => $self->conf->{authChoiceParam},
-                CHOICE_VALUE          => $req->datas->{_authChoice},
+                CHOICE_VALUE          => $req->data->{_authChoice},
                 OLDPASSWORD           => $self->checkXSSAttack( 'oldpassword',
-                    $req->datas->{oldpassword} )
+                    $req->data->{oldpassword} )
                 ? ""
-                : $req->datas->{oldpassword},
+                : $req->data->{oldpassword},
                 HIDE_OLDPASSWORD => $self->conf->{hideOldPassword},
             );
         }
@@ -337,7 +337,7 @@ sub display {
                     %templateParams,
                     AUTH_LOOP            => $authLoop,
                     CHOICE_PARAM         => $self->conf->{authChoiceParam},
-                    CHOICE_VALUE         => $req->datas->{_authChoice},
+                    CHOICE_VALUE         => $req->data->{_authChoice},
                     DISPLAY_FORM         => 0,
                     DISPLAY_OPENID_FORM  => 0,
                     DISPLAY_YUBIKEY_FORM => 0,
@@ -473,7 +473,7 @@ sub getSkin {
 }
 
 # Build an HTML array to display sessions
-# @param $sessions Array ref of hash ref containing sessions datas
+# @param $sessions Array ref of hash ref containing sessions data
 # @param $title Title of the array
 # @param $displayUser To display "User" column
 # @param $displaError To display "Error" column

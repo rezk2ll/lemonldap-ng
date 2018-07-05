@@ -84,7 +84,7 @@ sub sendSoapResponse {
     ];
 }
 
-# Try to recover the CAS session corresponding to id and return session datas
+# Try to recover the CAS session corresponding to id and return session data
 # If id is set to undef, return a new session
 sub getCasSession {
     my ( $self, $id, $info ) = @_;
@@ -355,7 +355,7 @@ sub validateST {
 
         $self->logger->debug("CAS Proxy URL: $proxy_url");
 
-        $req->datas->{casProxyUrl} = $proxy_url;
+        $req->data->{casProxyUrl} = $proxy_url;
 
         $prm{pgtUrl} = $proxy_url;
     }
@@ -413,7 +413,7 @@ sub validateST {
 
                 # There should be only on session
                 my $pgtIdSession = $self->getCasSession($id) or next;
-                $req->datas->{pgtId} = $pgtIdSession->data->{pgtId};
+                $req->data->{pgtId} = $pgtIdSession->data->{pgtId};
                 $pgtIdSession->remove;
             }
         }
@@ -499,7 +499,7 @@ This module contains common methods for CAS
 
 =head2 getCasSession
 
-Try to recover the CAS session corresponding to id and return session datas
+Try to recover the CAS session corresponding to id and return session data
 If id is set to undef, return a new session
 
 =head2 returnCasValidateError

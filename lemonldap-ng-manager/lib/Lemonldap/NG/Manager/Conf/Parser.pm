@@ -121,7 +121,7 @@ sub scanTree {
     $self->_scanNodes( $self->tree ) or return 0;
 
     # Set cfgNum to ref cfgNum (will be changed when saving), set other
-    # metadatas and set a value to the key if empty
+    # metadata and set a value to the key if empty
     $self->newConf->{cfgNum} = $self->req->params('cfgNum');
     $self->newConf->{cfgAuthor} =
       $self->req->userData->{ $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}

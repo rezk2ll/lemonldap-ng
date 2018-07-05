@@ -68,7 +68,7 @@ sub getUser {
         eval { $self->p->_authentication->setSecurity($req) };
         return PE_ERROR;
     }
-    unless ( $req->datas->{entry} = $sth->fetchrow_hashref() ) {
+    unless ( $req->data->{entry} = $sth->fetchrow_hashref() ) {
         $self->userLogger->warn("User $user not found");
         eval { $self->p->_authentication->setSecurity($req) };
         return PE_BADCREDENTIALS;
@@ -84,8 +84,8 @@ sub setSessionInfo {
 
     foreach my $var ( keys %{ $self->exportedVars } ) {
         my $attr = $self->exportedVars->{$var};
-        $req->{sessionInfo}->{$var} = $req->datas->{entry}->{$attr}
-          if ( defined $req->datas->{entry}->{$attr} );
+        $req->{sessionInfo}->{$var} = $req->data->{entry}->{$attr}
+          if ( defined $req->data->{entry}->{$attr} );
     }
     PE_OK;
 }

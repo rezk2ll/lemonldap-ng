@@ -1468,7 +1468,7 @@ sub attributes {
             test    => sub { 1 },
             keyTest => qr/^(?:\*\.)?$Regexp::Common::URI::RFC2396::hostname$/,
             keyMsgFail    => '__badHostname__',
-            documentation => 'Virtualhost urls/Datas to post',
+            documentation => 'Virtualhost urls/Data to post',
         },
 
         vhostOptions => {

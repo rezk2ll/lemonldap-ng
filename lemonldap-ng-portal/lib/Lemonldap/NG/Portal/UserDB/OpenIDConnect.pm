@@ -23,9 +23,9 @@ sub init {
 
 sub getUser {
     my ( $self, $req ) = @_;
-    my $op = $req->datas->{_oidcOPCurrent};
+    my $op = $req->data->{_oidcOPCurrent};
 
-    my $access_token = $req->datas->{access_token};
+    my $access_token = $req->data->{access_token};
 
     my $userinfo_content = $self->getUserInfo( $op, $access_token );
 
@@ -36,11 +36,11 @@ sub getUser {
 
     $self->logger->debug("UserInfo received: $userinfo_content");
 
-    $req->datas->{OpenIDConnect_user_info} =
+    $req->data->{OpenIDConnect_user_info} =
       $self->decodeJSON($userinfo_content);
 
     # Check that received sub is the same than current user
-    unless ( $req->datas->{OpenIDConnect_user_info}->{sub} eq $req->{user} ) {
+    unless ( $req->data->{OpenIDConnect_user_info}->{sub} eq $req->{user} ) {
         $self->logger->error("Received sub do not match current user");
         return PE_BADCREDENTIALS;
     }
@@ -51,7 +51,7 @@ sub getUser {
 # Get all required attributes
 sub setSessionInfo {
     my ( $self, $req ) = @_;
-    my $op = $req->datas->{_oidcOPCurrent};
+    my $op = $req->data->{_oidcOPCurrent};
 
     my %vars = (
         %{ $self->conf->{exportedVars} },
@@ -59,7 +59,7 @@ sub setSessionInfo {
     );
 
     while ( my ( $k, $v ) = each %vars ) {
-        $req->{sessionInfo}->{$k} = $req->datas->{OpenIDConnect_user_info}->{$v}
+        $req->{sessionInfo}->{$k} = $req->data->{OpenIDConnect_user_info}->{$v}
           || "";
     }
 

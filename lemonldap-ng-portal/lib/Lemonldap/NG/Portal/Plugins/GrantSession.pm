@@ -11,7 +11,7 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-use constant afterDatas => 'grantSession';
+use constant afterData => 'grantSession';
 
 has rules => ( is => 'rw', default => sub { {} } );
 

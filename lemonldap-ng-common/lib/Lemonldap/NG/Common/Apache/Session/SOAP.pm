@@ -147,7 +147,7 @@ sub _soapCall {
 
 ## @method hashRef get(string id)
 # @param $id Apache::Session session ID.
-# @return User datas
+# @return User data
 sub get {
     my $self = shift;
     my $id   = shift;
@@ -169,7 +169,7 @@ sub get {
 
 ## @method hashRef newSession()
 # Build a new Apache::Session session.
-# @return User datas (just the session ID)
+# @return User data (just the session ID)
 sub newSession {
     my $self = shift;
     $self->{data} = $self->_soapCall("newSession");
@@ -187,7 +187,7 @@ sub newSession {
 }
 
 ## @method boolean save()
-# Save user datas if modified.
+# Save user data if modified.
 sub save {
     my $self = shift;
     return unless ( $self->{modified} );

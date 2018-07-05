@@ -162,7 +162,7 @@ sub redirectFilter {
     while ( $f->read( my $buffer, 1024 ) ) {
     }
     $class->updateStatus( $f->r, '$class->REDIRECT',
-        $class->datas->{ $class->tsv->{whatToTrace} }, 'filter' );
+        $class->data->{ $class->tsv->{whatToTrace} }, 'filter' );
     return $class->OK;
 }
 

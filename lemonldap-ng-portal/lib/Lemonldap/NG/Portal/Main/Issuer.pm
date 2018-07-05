@@ -99,9 +99,9 @@ sub _redirect {
             'controlUrl',
             @{ $self->p->beforeAuth },
             $self->p->authProcess,
-            @{ $self->p->betweenAuthAndDatas },
-            $self->p->sessionDatas,
-            @{ $self->p->afterDatas },
+            @{ $self->p->betweenAuthAndData },
+            $self->p->sessionData,
+            @{ $self->p->afterData },
             (
                 $restore
                 ? sub {
@@ -136,7 +136,7 @@ sub _forAuthUser {
     return $self->p->do(
         $req,
         [
-            'importHandlerDatas',
+            'importHandlerData',
             'controlUrl',
             @{ $self->p->forAuthUser },
             sub {
@@ -180,10 +180,10 @@ sub restoreRequest {
 
 sub reAuth {
     my ( $self, $req ) = @_;
-    $req->datas->{customScript} =
+    $req->data->{customScript} =
 qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/autoRenew.min.js"></script>'
       if ( $self->conf->{skipRenewConfirmation} );
-    $req->datas->{_url} =
+    $req->data->{_url} =
       encode_base64( $self->conf->{portal} . $req->path_info, '' );
     $req->pdata->{ $self->ipath } = $self->storeRequest($req);
     $req->pdata->{keepPdata} = 1;
