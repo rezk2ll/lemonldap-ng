@@ -293,6 +293,7 @@ sub autoRedirect {
 
     # Redirection should be made if urldc defined
     if ( $req->{urldc} ) {
+        $self->logger->debug("Building redirection to $req->{urldc}");
         if ( $self->_jsRedirect->( $req, $req->sessionInfo ) ) {
             $req->error(PE_REDIRECT);
             $req->datas->{redirectFormMethod} = "get";

@@ -11,7 +11,7 @@ BEGIN {
 }
 
 my $maintests = 12;
-my $debug     = 'error';
+my $debug     = 'debug';
 my ( $idp, $proxy, $app, $res );
 my %handlerOR = ( idp => [], proxy => [], app => [] );
 
@@ -57,7 +57,6 @@ LWP::Protocol::PSGI->register(
 );
 
 SKIP: {
-    skip 'Broken for now', $maintests;
     eval "use Lasso";
     if ($@) {
         skip 'Lasso not found', $maintests;
@@ -164,8 +163,19 @@ SKIP: {
         'POST SAML response'
     );
     my $spId = expectCookie($res);
+    ( $url, $query ) = expectRedirection( $res, 'http://auth.proxy.com' );
+    ok(
+        $res = $proxy->_get(
+            '/',
+            accept => 'text/html',
+            cookie => "lemonldapidp=http://auth.idp.com/saml/metadata;lemonldap=$spId;$proxyPdata",
+        ),
+        'Follow internal redirection'
+    );
+
     ( $url, $query ) = expectRedirection( $res,
         qr#http://auth.proxy.com(/cas/login)(?:\?(.*))?$# );
+    skip;
     $url ||= '/';
 
     # Follow internal redirection

@@ -82,10 +82,9 @@ sub _redirect {
         $self->logger->debug("Unauth request to $self->{path} issuer");
         $restore = 1;
         $self->logger->debug('Processing _redirect');
-        $self->logger->debug('Store issuer request');
         $ir = $req->pdata->{ $self->ipath } ||= $self->storeRequest($req);
         $req->datas->{keepPdata} = 1;
-        $req->{urldc} = $self->conf->{portal};
+        $req->{urldc} = $self->conf->{portal} . '/' . $self->path;
     }
     else {
         $self->logger->debug('Not seen as Issuer request, skipping');
@@ -126,8 +125,10 @@ sub _forAuthUser {
     }
 
     # Clean pdata: keepPdata has been set, so pdata must be cleaned here
+    $self->logger->debug('Cleaning pdata');
     $req->pdata( {} );
     $req->urlNotBase64(1) if ( ref($self) =~ /::CAS$/ );
+    $req->mustRedirect(1);
     return $self->p->do(
         $req,
         [
@@ -143,6 +144,7 @@ sub _forAuthUser {
 
 sub storeRequest {
     my ( $self, $req ) = @_;
+    $self->logger->debug('Store issuer request');
     my $info = {};
     $info->{content} = $req->content;
     foreach ( keys %{ $req->env } ) {
@@ -162,7 +164,8 @@ sub restoreRequest {
         }
         $req->{env} = {};
         foreach ( keys %$env ) {
-            $self->logger->debug("Restore $_");
+            $self->logger->debug(
+                "Restore $_" . ( ref $env->{$_} ? '' : "\t" . $env->{$_} ) );
             $req->env->{$_} = $env->{$_} unless /^plack/;
         }
     }
