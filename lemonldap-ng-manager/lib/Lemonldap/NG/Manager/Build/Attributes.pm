@@ -1633,7 +1633,7 @@ sub attributes {
         casAppMetaDataNodes => {
             type     => 'casAppMetaDataNodeContainer',
             template => 'casAppMetaDataNode',
-            help     => 'authcas.html',
+            help     => 'idpcas.html',
         },
 
         # OpenID Issuer
@@ -1895,7 +1895,7 @@ sub attributes {
         samlIDPMetaDataNodes => {
             type     => 'samlIDPMetaDataNodeContainer',
             template => 'samlIDPMetaDataNode',
-            help     => 'idpsaml.html',
+            help     => 'authsaml.html',
         },
 
         # Fake attribute: used by manager REST API to agglomerate all nodes
@@ -1903,14 +1903,14 @@ sub attributes {
         samlSPMetaDataNodes => {
             type     => 'samlSPMetaDataNodeContainer',
             template => 'samlSPMetaDataNode',
-            help     => 'authsaml.html',
+            help     => 'idpsaml.html',
         },
 
         # TODO: split that
         # IDP Keys
         samlIDPMetaDataExportedAttributes => {
             type       => 'samlAttributeContainer',
-            help       => 'idpsaml.html#exported_attributes',
+            help       => 'authsaml.html#exported_attributes',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             keyMsgFail => '__badMetadataName__',
             test       => qr/\w/,
@@ -2534,7 +2534,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         casSrvMetaDataNodes => {
             type     => 'casSrvMetaDataNodeContainer',
             template => 'casSrvMetaDataNode',
-            help     => 'idpcas.html',
+            help     => 'authcas.html',
         },
 
         # PAM

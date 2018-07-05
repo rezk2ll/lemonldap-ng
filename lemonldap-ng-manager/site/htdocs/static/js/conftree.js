@@ -536,7 +536,7 @@ function templates(tpl,key) {
    {
       "cnodes" : tpl+"s/"+key+"/"+"samlIDPMetaDataExportedAttributes",
       "default" : [],
-      "help" : "idpsaml.html#exported_attributes",
+      "help" : "authsaml.html#exported_attributes",
       "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataExportedAttributes",
       "title" : "samlIDPMetaDataExportedAttributes",
       "type" : "samlAttributeContainer"
@@ -664,7 +664,7 @@ function templates(tpl,key) {
             "type" : "bool"
          }
       ],
-      "help" : "idpsaml.html#options",
+      "help" : "authsaml.html#options",
       "id" : "samlIDPMetaDataOptions",
       "title" : "samlIDPMetaDataOptions",
       "type" : "simpleInputContainer"
@@ -1016,7 +1016,7 @@ function templates(tpl,key) {
             "type" : "simpleInputContainer"
          }
       ],
-      "help" : "authsaml.html#options",
+      "help" : "idpsaml.html#options",
       "id" : "samlSPMetaDataOptions",
       "title" : "samlSPMetaDataOptions"
    }

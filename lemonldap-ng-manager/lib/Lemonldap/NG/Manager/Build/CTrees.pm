@@ -37,7 +37,7 @@ sub cTrees {
             'samlIDPMetaDataExportedAttributes',
             {
                 title => 'samlIDPMetaDataOptions',
-                help  => 'idpsaml.html#options',
+                help  => 'authsaml.html#options',
                 form  => 'simpleInputContainer',
                 nodes => [
                     'samlIDPMetaDataOptionsResolutionRule',
@@ -92,7 +92,7 @@ sub cTrees {
             "samlSPMetaDataExportedAttributes",
             {
                 title => "samlSPMetaDataOptions",
-                help  => 'authsaml.html#options',
+                help  => 'idpsaml.html#options',
                 nodes => [
                     {
                         title => "samlSPMetaDataOptionsAuthnResponse",
