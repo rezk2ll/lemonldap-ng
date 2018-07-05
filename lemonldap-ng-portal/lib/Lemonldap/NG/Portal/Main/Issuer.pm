@@ -83,6 +83,7 @@ sub _redirect {
         $restore = 1;
         $self->logger->debug('Processing _redirect');
         $ir = $req->pdata->{ $self->ipath } ||= $self->storeRequest($req);
+        $req->pdata->{ $self->ipath . 'Path' } = \@path;
         $req->datas->{keepPdata} = 1;
         $req->{urldc} = $self->conf->{portal} . '/' . $self->path;
     }
@@ -122,6 +123,8 @@ sub _forAuthUser {
     if ( my $r = $req->pdata->{ $self->ipath } ) {
         $self->logger->debug("Restoring request to $self->{path} issuer");
         $self->restoreRequest( $req, $r );
+        @path = @{ $req->pdata->{ $self->ipath . 'Path' } }
+          if ( $req->pdata->{ $self->ipath . 'Path' } );
     }
 
     # Clean pdata: keepPdata has been set, so pdata must be cleaned here

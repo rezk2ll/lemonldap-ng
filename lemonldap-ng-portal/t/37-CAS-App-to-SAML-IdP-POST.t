@@ -11,7 +11,7 @@ BEGIN {
 }
 
 my $maintests = 12;
-my $debug     = 'debug';
+my $debug     = 'error';
 my ( $idp, $proxy, $app, $res );
 my %handlerOR = ( idp => [], proxy => [], app => [] );
 
@@ -78,11 +78,12 @@ SKIP: {
     $handlerOR{app} = \@Lemonldap::NG::Handler::Main::_onReload;
 
     # Query RP for auth
-    ok( $res = $app->_get( '/', accept => 'text/html' ), 'Unauth CAS app request' );
-    ok( expectCookie( $res, 'llngcasserver' ) eq 'proxy', 'Get CAS server cookie' );
+    ok( $res = $app->_get( '/', accept => 'text/html' ),
+        'Unauth CAS app request' );
+    ok( expectCookie( $res, 'llngcasserver' ) eq 'proxy',
+        'Get CAS server cookie' );
     my ( $url, $query ) =
-      expectRedirection( $res,
-        qr#http://auth.proxy.com(/cas/login)\?(.*)$# );
+      expectRedirection( $res, qr#http://auth.proxy.com(/cas/login)\?(.*)$# );
 
     # Push request to Proxy
     switch ('proxy');
@@ -94,17 +95,18 @@ SKIP: {
         ),
         "Push request to proxy"
     );
-    my $proxyPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my $proxyPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
-    my $host;
-    ( $host, $url, $query ) = expectForm( $res, '#', undef, 'confirm' );
+    my ( $host, $tmp );
+    ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
     ok(
         $res = $proxy->_post(
-            '/',
+            $url,
             IO::String->new($query),
             length => length($query),
             accept => 'text/html',
-            cookie => "lemonldapidp=http://auth.idp.com/saml/metadata;$proxyPdata"
+            cookie =>
+              "lemonldapidp=http://auth.idp.com/saml/metadata;$proxyPdata"
         ),
         'Confirm IdP'
     );
@@ -124,7 +126,7 @@ SKIP: {
         'Launch SAML request to IdP'
     );
     my $tmp;
-    my $idpPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my $idpPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Try to authenticate to IdP
     my $body = $res->[2]->[0];
@@ -158,38 +160,25 @@ SKIP: {
             $url, IO::String->new($query),
             length => length($query),
             accept => 'text/html',
-            cookie => "lemonldapidp=http://auth.idp.com/saml/metadata;$proxyPdata",
+            cookie =>
+              "lemonldapidp=http://auth.idp.com/saml/metadata;$proxyPdata",
         ),
         'POST SAML response'
     );
     my $spId = expectCookie($res);
-    ( $url, $query ) = expectRedirection( $res, 'http://auth.proxy.com' );
+    ($url) = expectRedirection( $res, qr#http://auth.proxy.com([^?]*)# );
     ok(
         $res = $proxy->_get(
-            '/',
+            $url,
             accept => 'text/html',
-            cookie => "lemonldapidp=http://auth.idp.com/saml/metadata;lemonldap=$spId;$proxyPdata",
+            cookie =>
+"lemonldapidp=http://auth.idp.com/saml/metadata;lemonldap=$spId;$proxyPdata",
         ),
         'Follow internal redirection'
     );
 
-    ( $url, $query ) = expectRedirection( $res,
-        qr#http://auth.proxy.com(/cas/login)(?:\?(.*))?$# );
-    skip;
-    $url ||= '/';
-
-    # Follow internal redirection
-    ok(
-        $res = $proxy->_get(
-            $url,
-            query  => $query,
-            accept => 'text/html',
-            cookie =>
-              "lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata"
-        ),
-        'Follow internal redirection from SAML-SP to CAS app'
-    );
-    ($query) = expectRedirection($res,qr#^http://auth.app.com/\?(ticket.*)$#);
+    ($query) =
+      expectRedirection( $res, qr#^http://auth.app.com/\?(ticket.*)$# );
 
     # Follow redirection to App
     switch ('app');
@@ -332,16 +321,16 @@ sub proxy {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel                        => $debug,
-                domain                          => 'proxy.com',
-                portal                          => 'http://auth.proxy.com',
-                authentication                  => 'SAML',
-                userDB                          => 'Same',
+                logLevel              => $debug,
+                domain                => 'proxy.com',
+                portal                => 'http://auth.proxy.com',
+                authentication        => 'SAML',
+                userDB                => 'Same',
                 issuerDBCASActivation => 1,
                 casAttr               => 'uid',
                 casAttributes => { cn => 'cn', uid => 'uid', mail => 'mail', },
-                casAccessControlPolicy   => 'none',
-                multiValuesSeparator     => ';',
+                casAccessControlPolicy            => 'none',
+                multiValuesSeparator              => ';',
                 samlIDPMetaDataExportedAttributes => {
                     idp => {
                         mail => "0;mail;;",
