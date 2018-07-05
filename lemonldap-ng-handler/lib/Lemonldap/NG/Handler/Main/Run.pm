@@ -105,7 +105,7 @@ sub run {
 
     return $class->DECLINED unless ( $class->is_initial_req($req) );
 
-    # Direct return if maintenance mode is active
+    # Direct return if maintenance mode is enabled
     if ( $class->checkMaintenanceMode($req) ) {
 
         if ( $class->tsv->{useRedirectOnError} ) {
@@ -239,7 +239,7 @@ sub lmLog {
 
 ## @rmethod protected boolean checkMaintenanceMode
 # Check if we are in maintenance mode
-# @return true if maintenance mode
+# @return true if maintenance mode is enabled
 sub checkMaintenanceMode {
     my ( $class, $req ) = @_;
     my $vhost = $class->resolveAlias($req);
@@ -249,7 +249,7 @@ sub checkMaintenanceMode {
       : $class->tsv->{maintenance}->{_};
 
     if ($_maintenance) {
-        $class->logger->debug("Maintenance mode activated");
+        $class->logger->debug("Maintenance mode enabled");
         return 1;
     }
     return 0;
@@ -297,7 +297,7 @@ sub grant {
 
 ## @rmethod protected int forbidden(string uri)
 # Used to reject non authorized requests.
-# Inform the status processus and call logForbidden().
+# Inform the status process and call logForbidden().
 # @param $uri URI
 # @return Constant $class->FORBIDDEN
 sub forbidden {
@@ -352,7 +352,7 @@ sub hideCookie {
 }
 
 ## @rmethod protected string encodeUrl(string url)
-# Encode URl in the format used by Lemonldap::NG::Portal for redirections.
+# Encode URL in the format used by Lemonldap::NG::Portal for redirections.
 # @return Base64 encoded string
 sub encodeUrl {
     my ( $class, $req, $url ) = @_;
@@ -484,7 +484,7 @@ sub retrieveSession {
 
         # Verify that session is valid
         $class->logger->error(
-"_utime is not defined. This should not happen. Verify it is transmitted correctly to handler"
+"_utime is not defined. This should not happen. Check if it is well transmitted to handler"
         ) unless $session->data->{_utime};
         if (
             $now - $session->data->{_utime} > $class->tsv->{timeout}
@@ -542,7 +542,7 @@ sub _buildUrl {
 # @param $uri URI
 # @return 0 if URI is protected,
 # $class->UNPROTECT if it is unprotected by "unprotect",
-# SKIP if is is unprotected by "skip"
+# SKIP if unprotected by "skip"
 sub isUnprotected {
     my ( $class, $req, $uri ) = @_;
     my $vhost = $class->resolveAlias($req);

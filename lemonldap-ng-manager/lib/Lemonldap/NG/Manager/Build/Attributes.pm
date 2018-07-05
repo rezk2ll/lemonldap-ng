@@ -1629,7 +1629,7 @@ sub attributes {
         },
 
         # Fake attribute: used by manager REST API to agglomerate all nodes
-        # related to a SAML SP partner
+        # related to a CAS SP partner
         casAppMetaDataNodes => {
             type     => 'casAppMetaDataNodeContainer',
             template => 'casAppMetaDataNode',
@@ -2530,7 +2530,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         # Fake attribute: used by manager REST API to agglomerate all nodes
-        # related to a SAML IDP partner
+        # related to a CAS IDP partner
         casSrvMetaDataNodes => {
             type     => 'casSrvMetaDataNodeContainer',
             template => 'casSrvMetaDataNode',
