@@ -176,8 +176,15 @@ authentication process
 
 =head3 datas()
 
-Free hash ref where plugins can store their datas. Using it is a LLNG best
-practice
+Free hash ref where plugins can store their data (during one request). Using it
+is a LLNG best practice
+
+=head3 pdata
+
+Free hash ref where plugins can store some persistent data: data are kept
+during auth process and cleaned after successful authentication, except if
+C<$req-E<gt>pdata-E<gt>{keepPdata}> is set to 1. In this case, module that
+has set this flag must remove it after its job ends.
 
 =head3 User information
 
