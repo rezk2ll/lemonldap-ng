@@ -88,8 +88,8 @@ sub login {
     return $self->do(
         $req,
         [
-            'controlUrl',        @{ $self->beforeAuth },
-            $self->authProcess,  @{ $self->betweenAuthAndData },
+            'controlUrl',       @{ $self->beforeAuth },
+            $self->authProcess, @{ $self->betweenAuthAndData },
             $self->sessionData, @{ $self->afterData },
         ]
     );
@@ -100,8 +100,8 @@ sub postLogin {
     return $self->do(
         $req,
         [
-            'restoreArgs',                   'controlUrl',
-            @{ $self->beforeAuth },          $self->authProcess,
+            'restoreArgs',                  'controlUrl',
+            @{ $self->beforeAuth },         $self->authProcess,
             @{ $self->betweenAuthAndData }, $self->sessionData,
             @{ $self->afterData },
         ]
@@ -114,7 +114,7 @@ sub authenticatedRequest {
         $req,
         [
             'importHandlerData', 'controlUrl',
-            'checkLogout',        @{ $self->forAuthUser }
+            'checkLogout',       @{ $self->forAuthUser }
         ]
     );
 }
@@ -125,7 +125,7 @@ sub postAuthenticatedRequest {
         $req,
         [
             'importHandlerData', 'restoreArgs',
-            'controlUrl',         'checkLogout',
+            'controlUrl',        'checkLogout',
             @{ $self->forAuthUser }
         ]
     );

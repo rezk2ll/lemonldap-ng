@@ -1457,7 +1457,7 @@ sub attributes {
                         grep { $_ =~ /Undefined subroutine/ ? () : $_ }
                           split( /\n/, $@ ) );
                     return $err ? ( 1, "__badExpression__: $err" ) : (1);
-                  }
+                }
             },
             documentation => 'Virtualhost headers',
             flags         => 'h',

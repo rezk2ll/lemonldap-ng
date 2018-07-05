@@ -376,7 +376,8 @@ sub diff {
     my @cfgNum =
       ( scalar( $req->param('conf1') ), scalar( $req->param('conf2') ) );
     my @conf;
-	$self->logger->debug(" Loading confs");
+    $self->logger->debug(" Loading confs");
+
     # Load the 2 configurations
     for ( my $i = 0 ; $i < 2 ; $i++ ) {
         if ( %{ $self->currentConf }

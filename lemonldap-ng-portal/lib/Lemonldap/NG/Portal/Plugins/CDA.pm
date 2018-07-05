@@ -13,7 +13,7 @@ extends 'Lemonldap::NG::Common::Module';
 
 # INTERFACE
 
-use constant afterData  => 'changeUrldc';
+use constant afterData   => 'changeUrldc';
 use constant forAuthUser => 'changeUrldc';
 
 sub init { 1 }

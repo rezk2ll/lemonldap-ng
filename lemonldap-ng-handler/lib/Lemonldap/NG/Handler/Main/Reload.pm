@@ -405,8 +405,7 @@ sub postUrlInit {
                 $class->buildSub($sub) )
             {
                 $class->tsv->{maintenance}->{$vhost} = 1;
-                $class->logger->error(
-                    "$class: Unable to build post data: "
+                $class->logger->error( "$class: Unable to build post data: "
                       . $class->tsv->{jail}->error );
             }
 

@@ -90,7 +90,7 @@ SKIP: {
         'Follow redirection to IdP' );
     expectOK($res);
     my ($tmp);
-    my $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
     ( $host, $tmp, $query ) = expectForm( $res, '#', undef );
     $query .= '&user=dwho&password=dwho';
 

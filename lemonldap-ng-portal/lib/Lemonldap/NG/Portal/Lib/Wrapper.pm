@@ -24,13 +24,13 @@ has availableModules => ( is => 'rw', default => sub { {} } );
 # to each enabled underlying auth modules
 sub betweenAuthAndData { '_betweenAuthAndData' }
 sub afterData          { '_afterData' }
-sub forAuthUser         { '_forAuthUser' }
-sub beforeLogout        { '_beforeLogout' }
+sub forAuthUser        { '_forAuthUser' }
+sub beforeLogout       { '_beforeLogout' }
 
 sub _betweenAuthAndData { _wrapEntryPoint( @_, 'betweenAuthAndData' ); }
 sub _afterData          { _wrapEntryPoint( @_, 'afterData' ); }
-sub _forAuthUser         { _wrapEntryPoint( @_, 'forAuthUser', 1 ); }
-sub _beforeLogout        { _wrapEntryPoint( @_, 'beforeLogout', 1 ); }
+sub _forAuthUser        { _wrapEntryPoint( @_, 'forAuthUser', 1 ); }
+sub _beforeLogout       { _wrapEntryPoint( @_, 'beforeLogout', 1 ); }
 
 sub _wrapEntryPoint {
     my ( $self, $req, $name, $connected ) = @_;

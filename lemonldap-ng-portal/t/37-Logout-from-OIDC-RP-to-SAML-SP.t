@@ -111,7 +111,7 @@ SKIP: {
     ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
         "Push request to OP,         endpoint $url" );
     expectOK($res);
-    my $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Try to authenticate to IdP
     $query = "user=french&password=french&$query";

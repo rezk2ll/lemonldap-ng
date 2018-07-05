@@ -38,8 +38,8 @@ sub createUser {
     );
 
     if ( $mesg->is_error ) {
-        $self->userLogger->error( "Can not create entry for "
-              . $req->data->{registerInfo}->{login} );
+        $self->userLogger->error(
+            "Can not create entry for " . $req->data->{registerInfo}->{login} );
         $self->logger->error( "LDAP error " . $mesg->error );
 
         $self->ldap->unbind();

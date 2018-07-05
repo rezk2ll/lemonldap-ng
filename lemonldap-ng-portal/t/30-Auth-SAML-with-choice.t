@@ -57,7 +57,7 @@ SKIP: {
       or explain( $res->[1],
         'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
     ( $host, $url, $query ) = expectForm( $res, undef, undef, 'confirm', );
-    my $spPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Choose SAML issuer
     $query .= '&idp=http%3A%2F%2Fauth.idp.com%2Fsaml%2Fmetadata';
@@ -70,7 +70,7 @@ SKIP: {
         ),
         'Post SAML choice'
     );
-    $spPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
     ok( expectCookie( $res, 'lemonldapidp' ), 'IDP cookie defined' )
       or explain(
         $res->[1],
@@ -92,7 +92,7 @@ SKIP: {
         'Post SAML request to IdP'
     );
     expectOK($res);
-    my $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Try to authenticate to IdP
     $query = "user=french&password=french&$query";

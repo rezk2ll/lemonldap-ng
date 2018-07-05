@@ -87,7 +87,7 @@ SKIP: {
         'Launch SAML request to IdP'
     );
     expectOK($res);
-    my $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Try to authenticate to IdP with unautorizated user
     my $body = $res->[2]->[0];

@@ -398,8 +398,9 @@ sub display {
         STARTMAILDATE   => $req->data->{startMailDate},
         STARTMAILTIME   => $req->data->{startMailTime},
         MAILALREADYSENT => $req->data->{mail_already_sent},
-        MAIL            => $self->p->checkXSSAttack( 'mail',
-            $req->data->{registerInfo}->{mail} ) ? ""
+        MAIL            => $self->p->checkXSSAttack(
+            'mail', $req->data->{registerInfo}->{mail}
+          ) ? ""
         : $req->data->{registerInfo}->{mail},
         FIRSTNAME => $self->p->checkXSSAttack( 'firstname',
             $req->data->{registerInfo}->{firstname} ) ? ""

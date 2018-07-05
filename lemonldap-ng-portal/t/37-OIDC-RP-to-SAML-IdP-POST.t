@@ -119,8 +119,8 @@ SKIP: {
         ),
         "Push request to OP,         endpoint $url"
     );
-    my $spPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
-    my ($host,$tmp);
+    my $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+    my ( $host, $tmp );
     ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
     ok(
         $res = $sp->_post(
@@ -147,7 +147,7 @@ SKIP: {
         ),
         'Launch SAML request to IdP'
     );
-    my $idpPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my $idpPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
     my $tmp;
 
     # Try to authenticate to IdP
@@ -197,7 +197,7 @@ SKIP: {
             query  => $query,
             accept => 'text/html',
             cookie =>
-              "lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata"
+"lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata"
         ),
         'Follow internal redirection from SAML-SP to OIDC-OP'
     );
@@ -208,7 +208,7 @@ SKIP: {
             query  => $query,
             accept => 'text/html',
             cookie =>
-              "lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata"
+"lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata"
         ),
         'Confirm OIDC sharing'
     );

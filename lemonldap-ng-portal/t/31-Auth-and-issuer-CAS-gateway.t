@@ -88,9 +88,8 @@ ok(
     'Query CAS server'
 );
 count(1);
-my $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
-my ($query) =
-  expectRedirection( $res, qr#^http://auth.sp.com/# );
+my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+my ($query) = expectRedirection( $res, qr#^http://auth.sp.com/# );
 
 # Back to SP
 switch ('sp');

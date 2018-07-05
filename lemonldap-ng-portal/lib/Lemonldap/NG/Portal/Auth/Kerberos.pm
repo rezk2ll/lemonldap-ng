@@ -35,8 +35,8 @@ sub extractFormInfo {
     my ( $self, $req ) = @_;
 
     if ( $req->data->{_krbUser} ) {
-        $self->logger->debug( 'Kerberos ticket already validated for '
-              . $req->data->{_krbUser} );
+        $self->logger->debug(
+            'Kerberos ticket already validated for ' . $req->data->{_krbUser} );
         return PE_OK;
     }
 

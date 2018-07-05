@@ -161,8 +161,7 @@ sub deleteSession {
 
     # TODO
     # Collect logout services and build hidden iFrames
-    if ( $req->data->{logoutServices} and %{ $req->data->{logoutServices} } )
-    {
+    if ( $req->data->{logoutServices} and %{ $req->data->{logoutServices} } ) {
 
         $self->logger->debug("Create iFrames to forward logout to services");
 

@@ -105,7 +105,7 @@ sub display {
               && $req->data->{login},
             ASK_LOGINS => $req->param('checkLogins') || 0,
             CONFIRMKEY => $self->stamp(),
-            LIST       => $req->data->{list}        || [],
+            LIST       => $req->data->{list}         || [],
             REMEMBER   => $req->data->{confirmRemember},
             (
                 $req->data->{customScript}
@@ -114,7 +114,6 @@ sub display {
             ),
         );
     }
-
 
     # 1.3 There is a message to display
     elsif ( my $info = $req->info ) {

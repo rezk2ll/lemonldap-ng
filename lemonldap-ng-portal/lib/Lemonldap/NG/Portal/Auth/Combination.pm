@@ -145,8 +145,7 @@ sub getStack {
     my ( $self, $req, @steps ) = @_;
     return $req->data->{combinationStack}
       if ( $req->data->{combinationStack} );
-    my $stack = $req->data->{combinationStack} =
-      $self->stackSub->( $req->env );
+    my $stack = $req->data->{combinationStack} = $self->stackSub->( $req->env );
     unless ($stack) {
         $self->logger->error('No authentication scheme for this user');
     }

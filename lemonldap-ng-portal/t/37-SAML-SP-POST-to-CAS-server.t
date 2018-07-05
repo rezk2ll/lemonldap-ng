@@ -132,7 +132,7 @@ SKIP: {
         ),
         'Post SAML request to IdP'
     );
-    my $proxyPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my $proxyPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
     ok( expectCookie( $res, 'llngcasserver' ) eq 'idp',
         'Get CAS server cookie' );
     ($query) = expectRedirection( $res,
@@ -149,9 +149,8 @@ qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
         ),
         'Query CAS server'
     );
-    my $idpPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
-    ( $host, $url, $query ) =
-      expectForm( $res );
+    my $idpPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+    ( $host, $url, $query ) = expectForm($res);
     $query =~ s/&?user=//;
 
     # Try to authenticate to IdP

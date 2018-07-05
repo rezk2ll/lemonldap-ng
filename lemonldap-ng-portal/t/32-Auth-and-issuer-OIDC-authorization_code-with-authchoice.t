@@ -107,7 +107,7 @@ SKIP: {
         "Push request to OP,         endpoint $url" );
     my ( $host, $tmp );
     ( $host, $tmp, $query ) = expectForm($res);
-    my $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Try to authenticate to OP
     $query =~ s/user=&?//;

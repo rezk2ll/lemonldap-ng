@@ -488,8 +488,7 @@ sub display {
         DISPLAY_PASSWORD_FORM   => 0,
     );
     if ( $req->data->{mailToken}
-        and !$self->p->checkXSSAttack( 'mail_token', $req->data->{mailToken} )
-      )
+        and !$self->p->checkXSSAttack( 'mail_token', $req->data->{mailToken} ) )
     {
         $tplPrm{MAIL_TOKEN} = $req->data->{mailToken};
     }

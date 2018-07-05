@@ -166,9 +166,11 @@ sub ssoMatch {
     my ( $self, $req ) = @_;
     my $url = $self->normalize_url( $req->uri, $self->conf->{issuerDBSAMLPath},
         $self->ssoGetUrl );
-    return ( $url =~ $self->ssoUrlRe or $req->data->{_proxiedRequest} 
-      ? 1
-      : 0);
+    return (
+        $url =~ $self->ssoUrlRe or $req->data->{_proxiedRequest}
+        ? 1
+        : 0
+    );
 }
 
 # Main method (launched only for authenticated users, see Main/Issuer)

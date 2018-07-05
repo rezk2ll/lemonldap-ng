@@ -177,7 +177,7 @@ SKIP: {
         ),
         'Query CAS server (2)'
     );
-    $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Verify that confirmation is asked
     my ( $host, $url );
@@ -196,7 +196,7 @@ SKIP: {
         'Post confirm'
     );
     ( $host, $url, $query ) = expectForm( $res, undef, undef, 'upgrading' );
-    $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Try to authenticate
     $query =~ s/&?password=//;

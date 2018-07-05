@@ -137,7 +137,7 @@ SKIP: {
     ( $url, $query ) =
       expectRedirection( $res,
         qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
-    my $proxyPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my $proxyPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Push request to OP
     switch ('op');
@@ -145,7 +145,7 @@ SKIP: {
         "Push request to OP,         endpoint $url" );
     count(1);
     expectOK($res);
-    my $opPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my $opPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Try to authenticate to OP
     $query = "user=french&password=french&$query";
@@ -181,12 +181,20 @@ SKIP: {
     # Push OP response to Proxy
     switch ('proxy');
 
-    ok( $res = $proxy->_get( '/', query => $query, accept => 'text/html', cookie => $proxyPdata ),
-        'Call openidconnectcallback on Proxy' );
+    ok(
+        $res = $proxy->_get(
+            '/',
+            query  => $query,
+            accept => 'text/html',
+            cookie => $proxyPdata
+        ),
+        'Call openidconnectcallback on Proxy'
+    );
     count(1);
     my $proxyId = expectCookie($res);
-    ($url,$query) = expectRedirection( $res,
+    ( $url, $query ) = expectRedirection( $res,
         qr#http://auth.proxy.com(/saml[^\?]*)(?:\?(.+))?$# );
+
     #$proxyPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
 
     ok(
