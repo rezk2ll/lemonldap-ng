@@ -14,6 +14,7 @@ our $VERSION = '2.0.0';
 package Lemonldap::NG::Portal::Main;
 
 use strict;
+use URI::Escape;
 
 # List constants
 sub authProcess { qw(extractFormInfo getUser authenticate) }
@@ -39,7 +40,7 @@ sub handler {
     # Restore pdata
     if ( my $v = $req->cookies->{ $self->conf->{cookieName} . 'pdata' } ) {
         $sp = 1;
-        eval { $req->pdata( JSON::from_json($v) ); };
+        eval { $req->pdata( JSON::from_json( uri_unescape($v) ) ); };
         if ($@) {
             $self->logger->error("Bad JSON content in cookie pdata");
             $req->pdata( {} );
@@ -53,7 +54,7 @@ sub handler {
             name => $self->conf->{cookieName} . 'pdata',
             (
                 %{ $req->pdata }
-                ? ( value => JSON::to_json( $req->pdata ) )
+                ? ( value => uri_escape( JSON::to_json( $req->pdata ) ) )
                 : ( value => '', expires => 'Wed, 21 Oct 2015 00:00:00 GMT' )
             )
         );
