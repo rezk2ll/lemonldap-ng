@@ -308,7 +308,7 @@ sub reloadConf {
 
     # Clean $req->pdata after authentication
     push @{ $self->afterDatas }, sub {
-        unless ( $_[0]->datas->{keepPdata} or $_[0]->mustRedirect ) {
+        unless ( $_[0]->datas->{keepPdata} ) {
             $self->logger->debug('Cleaning pdata');
             $_[0]->pdata( {} );
         }

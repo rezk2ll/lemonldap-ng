@@ -67,7 +67,6 @@ LWP::Protocol::PSGI->register(
 );
 
 SKIP: {
-    skip 'Broken for now', $maintests;
     eval "use Lasso";
     if ($@) {
         skip 'Lasso not found', $maintests;
@@ -112,6 +111,7 @@ SKIP: {
     ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
         "Push request to OP,         endpoint $url" );
     expectOK($res);
+    my $pdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
 
     # Try to authenticate to IdP
     $query = "user=french&password=french&$query";
@@ -121,6 +121,7 @@ SKIP: {
             IO::String->new($query),
             accept => 'text/html',
             length => length($query),
+            cookie => $pdata,
         ),
         "Post authentication,        endpoint $url"
     );
