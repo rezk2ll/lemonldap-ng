@@ -77,13 +77,6 @@ sub extractFormInfo {
     # Build redirect_uri
     my $callback_url = $self->conf->{portal};
 
-    # Use authChoiceParam in redirect URL
-    if ( $req->param( $self->conf->{authChoiceParam} ) ) {
-        $callback_url .= ( $callback_url =~ /\?/ ? '&' : '?' );
-        $callback_url .= build_urlencoded( $self->conf->{authChoiceParam} =>
-              $req->param( $self->conf->{authChoiceParam} ) );
-    }
-
     # Check return values
     my $error = $req->param("error");
     my $code  = $req->param("code");

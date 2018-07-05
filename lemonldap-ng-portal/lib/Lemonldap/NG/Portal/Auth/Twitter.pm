@@ -87,10 +87,6 @@ sub extractFormInfo {
         if ( $req->datas->{_url} ) {
             $prm{url} = $req->datas->{_url};
         }
-        if ( $req->param( $self->conf->{authChoiceParam} ) ) {
-            $prm{ $self->conf->{authChoiceParam} } =
-              $req->param( $self->conf->{authChoiceParam} );
-        }
 
         # Forward hidden fields
         if ( exists $req->{portalHiddenFormValues} ) {

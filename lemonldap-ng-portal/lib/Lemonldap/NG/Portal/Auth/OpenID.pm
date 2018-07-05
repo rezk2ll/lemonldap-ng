@@ -151,16 +151,7 @@ sub extractFormInfo {
         my $check_url = $claimed_identity->check_url(
             return_to => $self->conf->{portal}
               . '?openid=1&'
-              . build_urlencoded(
-                ( $req->datas->{_url} ? ( url => $req->datas->{_url} ) : () ),
-                (
-                    $self->conf->{authChoiceParam}
-                      and $req->param( $self->conf->{authChoiceParam} )
-                    ? ( $self->conf->{authChoiceParam} =>
-                          $req->param( $self->conf->{authChoiceParam} ) )
-                    : ()
-                )
-              ),
+              .  ( $req->datas->{_url} ? build_urlencoded( url => $req->datas->{_url} ) : '' ),
             trust_root     => $self->conf->{portal},
             delayed_return => 1,
         );

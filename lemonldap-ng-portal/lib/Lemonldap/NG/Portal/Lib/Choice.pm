@@ -99,6 +99,7 @@ sub checkChoice {
     $name ||=
          $req->userData->{_choice}
       || $req->sessionInfo->{_choice}
+      || $req->pdata->{_choice}
       || $req->param( $self->conf->{authChoiceParam} )
       or return 0;
     unless ( defined $self->modules->{$name} ) {
@@ -107,8 +108,7 @@ sub checkChoice {
     }
 
     # Store choice if module loops
-    $self->p->setHiddenFormValue( $req, $self->conf->{authChoiceParam},
-        $name, '', 0 );
+    $req->pdata->{_choice} = $name;
     return $name if ( $req->datas->{ "enabledMods" . $self->type } );
     $req->sessionInfo->{_choice} = $name;
     $req->datas->{ "enabledMods" . $self->type } = [ $self->modules->{$name} ];

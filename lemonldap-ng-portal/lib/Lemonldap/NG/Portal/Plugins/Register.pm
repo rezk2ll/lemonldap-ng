@@ -291,12 +291,6 @@ sub _register {
           . build_urlencoded(
             register_token => $req->{id},
             skin           => $self->p->getSkin($req),
-            (
-                $req->datas->{_authChoice}
-                ? ( $self->conf->{authChoiceParam} =>
-                      $req->datas->{_authChoice} )
-                : ()
-            ),
             ( $req->datas->{_url} ? ( url => $req->datas->{_url} ) : () ),
           );
 
@@ -373,11 +367,6 @@ sub _register {
     $url .= '/?'
       . build_urlencoded(
         skin => $self->p->getSkin($req),
-        (
-            $req->datas->{_authChoice}
-            ? ( $self->conf->{authChoiceParam} => $req->datas->{_authChoice} )
-            : ()
-        ),
         ( $req->datas->{_url} ? ( url => $req->datas->{_url} ) : () ),
       );
 

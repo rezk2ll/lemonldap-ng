@@ -147,6 +147,7 @@ SKIP: {
         ),
         'Select "CAS"'
     );
+    $proxyPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     ok( expectCookie( $res, 'llngcasserver' ) eq 'idp',
         'Get CAS server cookie' );

@@ -352,12 +352,6 @@ sub validateST {
         # TODO: @coudot: why die here without any message ?
         die if ( $proxy_url =~ /casProxy=1/ );
         $proxy_url .= ( $proxy_url =~ /\?/ ? '&' : '?' ) . 'casProxy=1';
-        if ( $self->conf->{authChoiceParam}
-            and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )
-        {
-            $proxy_url .=
-              '&' . build_urlencoded( $self->conf->{authChoiceParam} => $tmp );
-        }
 
         $self->logger->debug("CAS Proxy URL: $proxy_url");
 

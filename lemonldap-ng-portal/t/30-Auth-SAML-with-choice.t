@@ -57,6 +57,7 @@ SKIP: {
       or explain( $res->[1],
         'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
     ( $host, $url, $query ) = expectForm( $res, undef, undef, 'confirm', );
+    my $spPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
 
     # Choose SAML issuer
     $query .= '&idp=http%3A%2F%2Fauth.idp.com%2Fsaml%2Fmetadata';
@@ -65,10 +66,11 @@ SKIP: {
             '/'    => IO::String->new($query),
             accept => 'text/html',
             length => length($query),
-            cookie => 'lemonldapidp=0',
+            cookie => "lemonldapidp=0;$spPdata",
         ),
         'Post SAML choice'
     );
+    $spPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
     ok( expectCookie( $res, 'lemonldapidp' ), 'IDP cookie defined' )
       or explain(
         $res->[1],
@@ -116,7 +118,7 @@ SKIP: {
             $url, IO::String->new($query),
             accept => 'text/html',
             length => length($query),
-            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
+            cookie => "lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata",
         ),
         'Post SAML response to SP'
     );

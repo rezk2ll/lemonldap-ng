@@ -294,12 +294,6 @@ sub _reset {
           . build_urlencoded(
             mail_token => $req->{id},
             skin       => $self->p->getSkin($req),
-            (
-                $req->datas->{_authChoice}
-                ? ( $self->conf->{authChoiceParam} =>
-                      $req->datas->{_authChoice} )
-                : ()
-            ),
             ( $req->datas->{_url} ? ( url => $req->datas->{_url} ) : () ),
           );
 
@@ -476,7 +470,6 @@ sub display {
         AUTH_ERROR      => $req->error,
         AUTH_ERROR_TYPE => $req->error_type,
         AUTH_URL        => $req->datas->{_url},
-        CHOICE_PARAM    => $self->conf->{authChoiceParam},
         CHOICE_VALUE    => $req->{_authChoice},
         EXPMAILDATE     => $req->datas->{expMailDate},
         EXPMAILTIME     => $req->datas->{expMailTime},

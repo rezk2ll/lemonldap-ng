@@ -161,17 +161,6 @@ sub fb {
     my $fb;
     my $sep = '?';
     my $ret = $conf->{portal};
-    my %prm;
-    foreach my $v ( [ $req->datas->{_url}, "url" ],
-        [ $req->param( $conf->{authChoiceParam} ), $conf->{authChoiceParam} ] )
-    {
-        if ( $v->[0] ) {
-            $prm{ $v->[1] } = $v->[0];
-        }
-    }
-    if (%prm) {
-        $ret .= '?' . build_urlencoded(%prm);
-    }
 
     eval {
         $fb = Net::Facebook::Oauth2->new(

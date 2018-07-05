@@ -150,12 +150,6 @@ sub extractFormInfo {
             $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
               . build_urlencoded( url => $req->datas->{_url} );
         }
-        if ( $self->conf->{authChoiceParam}
-            and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )
-        {
-            $local_url .= ( $local_url =~ /\?/ ? '&' : '?' )
-              . build_urlencoded( $self->conf->{authChoiceParam} => $tmp );
-        }
 
         # Forward hidden fields
         if ( $req->{portalHiddenFormValues}

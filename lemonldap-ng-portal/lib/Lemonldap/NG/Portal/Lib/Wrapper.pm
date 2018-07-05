@@ -88,7 +88,8 @@ sub AUTOLOAD {
     if ( $self->p->can($sub) ) {
         return $self->p->$sub(@_);
     }
-    die "Unknown method $sub";
+    require Carp;
+    Carp::confess "Unknown method $sub";
 }
 
 1;
