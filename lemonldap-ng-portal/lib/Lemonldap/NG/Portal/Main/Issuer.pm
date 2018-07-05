@@ -11,6 +11,7 @@ use strict;
 use Mouse;
 use MIME::Base64;
 use IO::String;
+use URI::Escape;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
@@ -84,7 +85,7 @@ sub _redirect {
         $self->logger->debug('Processing _redirect');
         $ir = $req->pdata->{ $self->ipath } ||= $self->storeRequest($req);
         $req->pdata->{ $self->ipath . 'Path' } = \@path;
-        $req->datas->{keepPdata} = 1;
+        $req->pdata->{keepPdata} = 1;
         $req->{urldc} = $self->conf->{portal} . '/' . $self->path;
     }
     else {
@@ -172,6 +173,8 @@ sub restoreRequest {
             $req->env->{$_} = $env->{$_} unless /^plack/;
         }
     }
+    $req->{uri} = uri_unescape( $req->env->{REQUEST_URI} );
+    $req->{uri} =~ s|^//+|/|g;
     return $req;
 }
 
@@ -183,7 +186,7 @@ qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/auto
     $req->datas->{_url} =
       encode_base64( $self->conf->{portal} . $req->path_info, '' );
     $req->pdata->{ $self->ipath } = $self->storeRequest($req);
-    $req->datas->{keepPdata} = 1;
+    $req->pdata->{keepPdata} = 1;
     return PE_RENEWSESSION;
 }
 

@@ -962,7 +962,7 @@ sub run {
         }
 
     }
-    $self->logger->debug("Not an issuer request");
+    $self->logger->debug("Not an issuer request $url");
     return PE_OK;
 }
 

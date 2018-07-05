@@ -67,7 +67,6 @@ LWP::Protocol::PSGI->register(
 );
 
 SKIP: {
-    skip 'Broken for now', $maintests;
     eval "use Lasso";
     if ($@) {
         skip 'Lasso not found', $maintests;
@@ -120,15 +119,16 @@ SKIP: {
         ),
         "Push request to OP,         endpoint $url"
     );
-    my $host;
-    ( $host, $url, $query ) = expectForm( $res, '#', undef, 'confirm' );
+    my $spPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
+    my ($host,$tmp);
+    ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
     ok(
         $res = $sp->_post(
-            '/',
+            $url,
             IO::String->new($query),
             length => length($query),
             accept => 'text/html',
-            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata'
+            cookie => "lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata"
         ),
         'Confirm IdP'
     );
@@ -147,6 +147,7 @@ SKIP: {
         ),
         'Launch SAML request to IdP'
     );
+    my $idpPdata = 'lemonldappdata=' . expectCookie($res, 'lemonldappdata');
     my $tmp;
 
     # Try to authenticate to IdP
@@ -165,6 +166,7 @@ SKIP: {
             IO::String->new($query),
             accept => 'text/html',
             length => length($query),
+            cookie => $idpPdata,
         ),
         'Post authentication'
     );
@@ -180,13 +182,13 @@ SKIP: {
             $url, IO::String->new($query),
             length => length($query),
             accept => 'text/html',
-            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
+            cookie => "lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata",
         ),
         'POST SAML response'
     );
     my $spId = expectCookie($res);
     ( $url, $query ) = expectRedirection( $res,
-        qr#http://auth.sp.com/*(/oauth2/authorize)\?(.*)$# );
+        qr#http://auth.sp.com/*(/oauth2[^\?]*)(?:\?(.*))?$# );
 
     # Follow internal redirection
     ok(
@@ -195,7 +197,7 @@ SKIP: {
             query  => $query,
             accept => 'text/html',
             cookie =>
-              "lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata"
+              "lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata"
         ),
         'Follow internal redirection from SAML-SP to OIDC-OP'
     );
@@ -206,7 +208,7 @@ SKIP: {
             query  => $query,
             accept => 'text/html',
             cookie =>
-              "lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata"
+              "lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata"
         ),
         'Confirm OIDC sharing'
     );

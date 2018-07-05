@@ -58,7 +58,7 @@ sub ask {
 
 sub confirm {
     my ( $self, $req ) = @_;
-    $req->datas->{keepPdata} = 1;
+    $req->pdata->{keepPdata} = 1;
     my $upg;
     if ( my $t = $req->param('upgrading') ) {
         if ( $self->ott->getToken($t) ) {

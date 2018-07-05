@@ -10,7 +10,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 20;
+my $maintests = 19;
 my $debug     = 'error';
 my ( $issuer, $proxy, $sp, $res );
 my %handlerOR = ( issuer => [], proxy => [], sp => [] );
@@ -57,7 +57,6 @@ LWP::Protocol::PSGI->register(
 );
 
 SKIP: {
-    skip 'Broken for now', $maintests;
     eval "use Lasso";
     if ($@) {
         skip 'Lasso not found', $maintests;
@@ -132,6 +131,7 @@ SKIP: {
         ),
         'Post SAML request to IdP'
     );
+    my $proxyPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
     ok( $res->[2]->[0] =~ s#^.*(<form [^>]*CAS.*?</form>).*$#$1#s,
         'Found SAML choice' );
     my $tmp;
@@ -142,7 +142,8 @@ SKIP: {
             $url,
             IO::String->new($query),
             accept => 'text/html',
-            length => length($query)
+            length => length($query),
+            cookie => $proxyPdata,
         ),
         'Select "CAS"'
     );
@@ -163,36 +164,24 @@ qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
         ),
         'Query CAS server'
     );
-    ( $host, $url, $query ) =
-      expectForm( $res, undef, undef, 'issuerUrldc', 'issuerRequestcas' );
+    my $idpPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+    ( $host, $url, $query ) = expectForm($res);
     $query =~ s/&?user=//;
 
     # Try to authenticate to IdP
     $query .= "&user=french&password=french";
     ok(
         $res = $issuer->_post(
-            '/',
+            '/cas/login',
             IO::String->new($query),
             accept => 'text/html',
             length => length($query),
+            cookie => $idpPdata,
         ),
         'Post authentication'
     );
     my $idpId = expectCookie($res);
 
-    # GET internal redirection to CAS Issuer
-    ($query) = expectRedirection( $res,
-        qr#http://auth.idp.com/cas/login\?(.*issuerRequestcas.*)$# );
-    ok(
-        $res = $issuer->_post(
-            '/cas/login',
-            IO::String->new($query),
-            accept => 'text/html',
-            length => length($query),
-            cookie => "lemonldap=$idpId",
-        ),
-        'Back to CAS Issuer'
-    );
     ( $url, $query ) = expectRedirection( $res,
         qr#^http://auth.proxy.com(/saml/singleSignOn)\?(.*ticket=.*)$# );
 
@@ -204,7 +193,7 @@ qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
             query  => $query,
             accept => 'text/html',
             length => length($query),
-            cookie => 'llngcasserver=idp',
+            cookie => "llngcasserver=idp;$proxyPdata",
         ),
         'Push CAS response to proxy'
     );

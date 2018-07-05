@@ -376,8 +376,6 @@ sub _get {
             ( $args{custom} ? %{ $args{custom} } : () ),
         }
     );
-    Test::More::diag("Pdata")
-      if ( @{ $res->[1] } and grep ( /pdata/, @{ $res->[1] } ) );
     return $res;
 }
 
