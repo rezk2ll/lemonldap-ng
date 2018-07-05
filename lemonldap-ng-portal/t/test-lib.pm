@@ -416,7 +416,6 @@ sub _post {
               || 'application/x-www-form-urlencoded',
         }
     );
-    Test::More::diag("Pdata") if ( grep /pdata/, @{ $res->[1] } );
     return $res;
 }
 
