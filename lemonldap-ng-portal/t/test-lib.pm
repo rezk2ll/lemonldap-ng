@@ -335,12 +335,13 @@ sub logout {
         ( defined( $c = main::getCookies($res)->{lemonldap} ) and not $c ),
         ' Cookie is deleted' )
       or main::explain( $res->[1], "Set-Cookie => 'lemonldap='" );
+    main::ok( not( main::getCookies($res)->{lemonldappdata} ), ' No pdata' );
     main::ok( $res = $self->_get( '/', cookie => "lemonldap=$id" ),
         'Disconnect request' )
       or explain( $res, '[<code>,<hdrs>,<content>]' );
     main::ok( $res->[0] == 401, ' Response is 401' )
       or main::explain( $res, 401 );
-    main::count(5);
+    main::count(6);
 
 }
 

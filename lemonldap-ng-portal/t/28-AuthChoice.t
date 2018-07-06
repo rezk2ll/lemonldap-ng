@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 2;
+my $maintests = 6;
 
 eval { unlink 't/userdb.db' };
 
@@ -59,14 +59,20 @@ SKIP: {
 
         # Try yo authenticate
         # -------------------
+        ok( $res = $client->_get('/',accept=>'text/html'), 'Get menu');
+        my @form = ($res->[2]->[0] =~ m#<form.*?</form>#sg);
+        ok(@form ==2,'Display 2 choices');
+        foreach (@form) {
+            expectForm([$res->[0],$res->[1],[$_]],undef,undef,'test');
+        }
         ok(
             $res = $client->_post(
                 '/', IO::String->new($postString),
-                length => length($postString)
+                length => length($postString),
+                accept => 'text/html',
             ),
             'Auth query'
         );
-        expectOK($res);
         my $id = expectCookie($res);
         $client->logout($id);
     }

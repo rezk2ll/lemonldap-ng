@@ -137,7 +137,12 @@ sub checkLogout {
 
 sub authLogout {
     my ( $self, $req ) = @_;
-    return $self->_authentication->authLogout($req);
+    my $res = $self->_authentication->authLogout($req);
+    unless ( $res or $req->pdata->{keepPdata} ) {
+        $self->logger->debug('Cleaning pdata');
+        $req->pdata( {} );
+    }
+    return $res;
 }
 
 sub deleteSession {
