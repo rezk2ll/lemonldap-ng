@@ -97,10 +97,10 @@ sub checkChoice {
         }
     }
     $name ||=
-         $req->userData->{_choice}
+         $req->param( $self->conf->{authChoiceParam} )
+      || $req->userData->{_choice}
       || $req->sessionInfo->{_choice}
       || $req->pdata->{_choice}
-      || $req->param( $self->conf->{authChoiceParam} )
       or return 0;
     unless ( defined $self->modules->{$name} ) {
         $self->logger->error("Unknown choice '$name'");
