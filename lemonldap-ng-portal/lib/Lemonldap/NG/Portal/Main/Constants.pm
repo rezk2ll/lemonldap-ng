@@ -10,6 +10,7 @@ use constant {
 
     # Portal errors
     # Developers warning, do not use PE_INFO, it's reserved to autoRedirect.
+    PE_IDPCHOICE                        => -5,
     PE_SENDRESPONSE                     => -4,
     PE_INFO                             => -3,
     PE_REDIRECT                         => -2,
@@ -90,7 +91,6 @@ use constant {
     PE_U2FFAILED                        => 83,
     PE_UNAUTHORIZEDPARTNER              => 84,
     PE_RENEWSESSION                     => 85,
-    PE_IDPCHOICE                        => 86,
 };
 
 # EXPORTER PARAMETERS

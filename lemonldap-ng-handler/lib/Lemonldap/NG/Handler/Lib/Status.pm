@@ -22,6 +22,7 @@ our $page_title = 'Lemonldap::NG statistics';
 # @return Constant hash used to convert error codes into string.
 sub portalTab {
     return {
+        -5 => 'PORTAL_IDPCHOICE',
         -4 => 'PORTAL_SENDRESPONSE',
         -3 => 'PORTAL_INFO',
         -2 => 'PORTAL_REDIRECT',

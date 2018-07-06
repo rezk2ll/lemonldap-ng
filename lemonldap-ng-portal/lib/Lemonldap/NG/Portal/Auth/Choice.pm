@@ -23,17 +23,23 @@ sub extractFormInfo {
         }
         return PE_FIRSTACCESS;
     }
-    return $req->data->{enabledMods0}->[0]->extractFormInfo($req);
+    my $res = $req->data->{enabledMods0}->[0]->extractFormInfo($req);
+    delete $req->pdata->{_choice} if ( $res > 0 );
+    return $res;
 }
 
 sub authenticate {
-    return $_[1]->data->{enabledMods0}->[0]->authenticate( $_[1] );
+    my $res = $_[1]->data->{enabledMods0}->[0]->authenticate( $_[1] );
+    delete $_[1]->pdata->{_choice} if ( $res > 0 );
+    return $res;
 }
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     $self->checkChoice($req) unless ( $req->data->{enabledMods0} );
-    return $req->data->{enabledMods0}->[0]->setAuthSessionInfo($req);
+    my $res = $req->data->{enabledMods0}->[0]->setAuthSessionInfo($req);
+    delete $_[1]->pdata->{_choice} if ( $res > 0 );
+    return $res;
 }
 
 sub authLogout {
