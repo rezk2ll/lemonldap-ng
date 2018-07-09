@@ -9,6 +9,7 @@ WriteMakefile(
     LICENSE      => 'gpl',
     META_MERGE   => {
         'recommends' => {
+            'Convert::Base32'       => 0,
             'DBI'                   => 0,
             'Email::Sender'         => 1.300027,
             'GD::SecurityImage'     => 0,
