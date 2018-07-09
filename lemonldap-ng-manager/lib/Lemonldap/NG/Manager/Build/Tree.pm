@@ -575,7 +575,6 @@ sub tree {
                             nodes => [
                                 {
                                     title => 'SMTP',
-                                    form  => 'simpleInputContainer',
                                     nodes => [
                                         'SMTPServer',   'SMTPPort',
                                         'SMTPAuthUser', 'SMTPAuthPass',
@@ -684,7 +683,6 @@ sub tree {
                         {
                             title => 'rest2f',
                             help  => 'rest2f.html',
-                            form  => 'simpleInputContainer',
                             nodes => [
                                 'rest2fActivation', 'rest2fInitUrl',
                                 'rest2fInitArgs',   'rest2fVerifyUrl',
@@ -718,7 +716,6 @@ sub tree {
                         {
                             title => 'security',
                             help => 'security.html#configure_security_settings',
-                            form => 'simpleInputContainer',
                             nodes => [
                                 'userControl',
                                 'portalForceAuthnInterval',
@@ -730,7 +727,7 @@ sub tree {
                                 'lwpSslOpts',
                                 {
                                     title => 'contentSecurityPolicy',
-                                    help  => 'csp.html',
+                                    help  => 'security.html#portal',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'cspDefault', 'cspImg',
