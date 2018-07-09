@@ -383,6 +383,18 @@ sub tests {
             return ( 1, ( $w ? $w : () ) );
 
         },
+
+        # Warn if TOTP not 6 or 8 digits long
+        totpDigits => sub {
+            return (
+                1,
+                (
+                    ( $conf->{totp2fDigits} == 6 or $conf->{totp2fDigits} == 8 )
+                    ? ''
+                    : 'TOTP should be 6 or 8 digits long'
+                )
+            );
+        },
     };
 }
 
