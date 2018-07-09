@@ -39,7 +39,6 @@ sub tests {
         },
 
         # Check if portal URL is well formated
-
         portalURL => sub {
 
             # Checking for ending slash
@@ -389,7 +388,10 @@ sub tests {
             return (
                 1,
                 (
-                    ( $conf->{totp2fDigits} == 6 or $conf->{totp2fDigits} == 8 )
+                    (
+                             $conf->{totp2fDigits} == 6
+                          or $conf->{totp2fDigits} == 8
+                    )
                     ? ''
                     : 'TOTP should be 6 or 8 digits long'
                 )
