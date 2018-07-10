@@ -368,6 +368,39 @@ sub tests {
                     $conf->{combination} );
             };
             return ( 0, $@ ) if ($@);
+            
+            # Return
+            return 1;
+        },
+
+        # Warn if manager seems to be unprotected
+        utotp2fDependencies => sub {
+            return 1
+              unless ( $conf->{utotp2fActivation}
+                or $conf->{totp2fActivation}
+                or $conf->{u2fActivation} );
+
+            # Use TOTP
+            if (   $conf->{totp2fActivation}
+                or $conf->{utotp2fActivation} )
+            {
+                eval "use Convert::Base32";
+                return ( 0,
+                    "Convert::Base32 module is required to enable TOTP" )
+                  if ($@);
+            }
+
+            # Use U2F
+            if (   $conf->{u2fActivation}
+                or $conf->{utotp2fActivation} )
+            {
+                eval "use Crypt::U2F::Server::Simple";
+                return ( 0,
+"Crypt::U2F::Server::Simple module is required to enable U2F"
+                ) if ($@);
+            }
+            
+            # Return
             return 1;
         },
 
@@ -396,6 +429,13 @@ sub tests {
                     : 'TOTP should be 6 or 8 digits long'
                 )
             );
+        },
+        formTimeout => sub {
+			return ( 0, "XSRF form token TTL must be higher than 10s") unless ( $conf->{formTimeout} > 10 );
+            return ( 1, "XSRF form token TTL should not be lower than 20s") unless ( $conf->{formTimeout} > 19 );
+            
+            # Return
+            return 1;            
         },
     };
 }
