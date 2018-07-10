@@ -368,7 +368,7 @@ sub tests {
                     $conf->{combination} );
             };
             return ( 0, $@ ) if ($@);
-            
+
             # Return
             return 1;
         },
@@ -399,7 +399,7 @@ sub tests {
 "Crypt::U2F::Server::Simple module is required to enable U2F"
                 ) if ($@);
             }
-            
+
             # Return
             return 1;
         },
@@ -431,11 +431,13 @@ sub tests {
             );
         },
         formTimeout => sub {
-			return ( 0, "XSRF form token TTL must be higher than 10s") unless ( $conf->{formTimeout} > 10 );
-            return ( 1, "XSRF form token TTL should not be lower than 20s") unless ( $conf->{formTimeout} > 19 );
-            
+            return ( 0, "XSRF form token TTL must be higher than 10s" )
+              unless ( $conf->{formTimeout} > 10 );
+            return ( 1, "XSRF form token TTL should not be lower than 20s" )
+              unless ( $conf->{formTimeout} > 19 );
+
             # Return
-            return 1;            
+            return 1;
         },
     };
 }
