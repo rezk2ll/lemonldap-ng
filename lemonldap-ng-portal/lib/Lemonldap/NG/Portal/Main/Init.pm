@@ -323,6 +323,7 @@ sub reloadConf {
         if ( $_[0]->param('cancel') ) {
             $self->logger->debug('Cancel called, push authCancel calls');
             unshift @{ $_[0]->steps }, @{ $self->authCancel };
+            return PE_OK;
         }
     };
 

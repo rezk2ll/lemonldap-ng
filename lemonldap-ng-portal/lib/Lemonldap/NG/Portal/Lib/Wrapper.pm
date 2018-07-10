@@ -32,7 +32,7 @@ sub _betweenAuthAndData { _wrapEntryPoint( @_, 'betweenAuthAndData' ); }
 sub _afterData          { _wrapEntryPoint( @_, 'afterData' ); }
 sub _forAuthUser        { _wrapEntryPoint( @_, 'forAuthUser', 1 ); }
 sub _beforeLogout       { _wrapEntryPoint( @_, 'beforeLogout', 1 ); }
-sub _authCancel         { _wrapEntryPoint( @_, 'authCancel', 1 ); }
+sub _authCancel         { _wrapEntryPoint( @_, 'authCancel' ); }
 
 sub _wrapEntryPoint {
     my ( $self, $req, $name, $connected ) = @_;
