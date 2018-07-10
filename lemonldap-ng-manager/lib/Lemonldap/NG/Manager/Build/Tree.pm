@@ -645,15 +645,6 @@ sub tree {
                               [ 'utotp2fActivation', 'utotp2fAuthnLevel' ]
                         },
                         {
-                            title => 'u2f',
-                            help  => 'u2f.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'u2fActivation', 'u2fSelfRegistration',
-                                'u2fAuthnLevel', 'u2fUserCanRemoveKey',
-                            ]
-                        },
-                        {
                             title => 'totp',
                             help  => 'totp2f.html',
                             form  => 'simpleInputContainer',
@@ -668,6 +659,15 @@ sub tree {
                                 'totp2fDisplayExistingSecret',
                                 'totp2fUserCanChangeKey',
                                 'totp2fUserCanRemoveKey',
+                            ]
+                        },
+                        {
+                            title => 'u2f',
+                            help  => 'u2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'u2fActivation', 'u2fSelfRegistration',
+                                'u2fAuthnLevel', 'u2fUserCanRemoveKey',
                             ]
                         },
                         {
