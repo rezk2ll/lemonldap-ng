@@ -390,6 +390,7 @@ t/31-Auth-and-issuer-CAS-declared-app.t
 t/31-Auth-and-issuer-CAS-default.t
 t/31-Auth-and-issuer-CAS-gateway.t
 t/31-Auth-and-issuer-CAS-proxied.t
+t/31-Auth-and-issuer-CAS-with-choice-and-cancel.t
 t/31-Auth-and-issuer-CAS-with-choice.t
 t/32-Auth-and-issuer-OIDC-authorization_code-OP-logout.t
 t/32-Auth-and-issuer-OIDC-authorization_code-with-authchoice.t

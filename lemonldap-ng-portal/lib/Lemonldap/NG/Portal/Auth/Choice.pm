@@ -8,8 +8,18 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Lib::Choice';
 
+# INITIALIZATION
+
 sub init {
     return $_[0]->SUPER::init(0);
+}
+
+# RUNNING METHODS
+
+sub _authCancel {
+    my ( $self, $req ) = @_;
+    delete $req->pdata->{_choice};
+    return $self->SUPER::_authCancel($req);
 }
 
 sub extractFormInfo {

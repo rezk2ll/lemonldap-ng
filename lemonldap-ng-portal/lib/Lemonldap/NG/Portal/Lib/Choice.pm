@@ -87,6 +87,8 @@ sub init {
     return 1;
 }
 
+# RUNNING METHODS
+
 sub checkChoice {
     my ( $self, $req ) = @_;
     my $name;

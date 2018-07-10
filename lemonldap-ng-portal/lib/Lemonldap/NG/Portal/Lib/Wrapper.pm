@@ -26,11 +26,13 @@ sub betweenAuthAndData { '_betweenAuthAndData' }
 sub afterData          { '_afterData' }
 sub forAuthUser        { '_forAuthUser' }
 sub beforeLogout       { '_beforeLogout' }
+sub authCancel         { '_authCancel' }
 
 sub _betweenAuthAndData { _wrapEntryPoint( @_, 'betweenAuthAndData' ); }
 sub _afterData          { _wrapEntryPoint( @_, 'afterData' ); }
 sub _forAuthUser        { _wrapEntryPoint( @_, 'forAuthUser', 1 ); }
 sub _beforeLogout       { _wrapEntryPoint( @_, 'beforeLogout', 1 ); }
+sub _authCancel         { _wrapEntryPoint( @_, 'authCancel' ); }
 
 sub _wrapEntryPoint {
     my ( $self, $req, $name, $connected ) = @_;
@@ -62,7 +64,8 @@ sub _wrapEntryPoint {
 
             # Launch sub and break loop if result isn't PE_OK (==0)
             if ( my $sub = $_->$name() ) {
-                return $_->$sub($req);
+                my $res = $_->$sub($req);
+                return $res if($res);
             }
         }
     }
