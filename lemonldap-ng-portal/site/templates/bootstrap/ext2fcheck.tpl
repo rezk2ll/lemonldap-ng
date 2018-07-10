@@ -23,9 +23,9 @@
   </div>
   <br/>
   <div class="buttons">
-  <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
+  <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1" class="btn btn-primary" role="button">
     <span class="glyphicon glyphicon-home"></span>&nbsp;
-    <span trspan="goToPortal">Go to portal</span>
+    <span trspan="cancel">Cancel</span>
   </a>
   </div>
 </div>

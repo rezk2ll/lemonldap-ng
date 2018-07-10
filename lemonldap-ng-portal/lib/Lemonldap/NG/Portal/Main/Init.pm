@@ -55,6 +55,11 @@ has afterData => (
     isa     => 'ArrayRef',
     default => sub { [] }
 );
+has authCancel => (
+    is      => 'rw',
+    isa     => 'ArrayRef',
+    default => sub { [] }
+);
 has forAuthUser => (
     is      => 'rw',
     isa     => 'ArrayRef',
@@ -151,7 +156,7 @@ sub reloadConf {
 
     # Reinitialize arrays
     foreach (
-        qw(_macros _groups beforeAuth betweenAuthAndData afterData forAuthUser beforeLogout)
+        qw(_macros _groups beforeAuth betweenAuthAndData afterData authCancel forAuthUser beforeLogout)
       )
     {
         $self->{$_} = [];
@@ -314,6 +319,12 @@ sub reloadConf {
         }
         return PE_OK;
     };
+    unshift @{ $self->beforeAuth }, sub {
+        if ( $_[0]->param('cancel') ) {
+            $self->logger->debug('Cancel called, push authCancel calls');
+            unshift @{ $_[0]->steps }, @{ $self->authCancel };
+        }
+    };
 
     1;
 }
@@ -337,7 +348,8 @@ sub findEP {
 
     # Standards entry points
     foreach my $sub (
-        qw(beforeAuth betweenAuthAndData afterData forAuthUser beforeLogout))
+        qw(beforeAuth betweenAuthAndData afterData authCancel forAuthUser beforeLogout)
+      )
     {
         if ( $obj->can($sub) ) {
             $self->logger->debug(" Found $sub entry point:");

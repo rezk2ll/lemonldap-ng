@@ -162,6 +162,9 @@ setting C<sessionInfo> provisionning
 =item C<afterData>: method called after C<sessionInfo> provisionning
 I<(macros, groups,...)>
 
+=item C<authCancel>: method called when user click on "cancel" during auth
+process
+
 =item C<forAuthUser>: method called for already authenticated users
 
 =item C<beforeLogout>: method called before logout

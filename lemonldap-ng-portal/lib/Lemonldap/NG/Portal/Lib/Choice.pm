@@ -87,6 +87,14 @@ sub init {
     return 1;
 }
 
+# RUNNING METHODS
+
+sub _authCancel {
+    my ( $self, $req ) = @_;
+    delete $req->pdata->{_choice};
+    return $self->SUPER::_authCancel($req);
+}
+
 sub checkChoice {
     my ( $self, $req ) = @_;
     my $name;
