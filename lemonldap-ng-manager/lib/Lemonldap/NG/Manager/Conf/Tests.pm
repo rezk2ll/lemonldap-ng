@@ -417,28 +417,26 @@ sub tests {
         },
 
         # Warn if TOTP not 6 or 8 digits long
-        totpDigits => sub {
-            return (
-                1,
-                (
-                    (
-                             $conf->{totp2fDigits} == 6
-                          or $conf->{totp2fDigits} == 8
-                    )
-                    ? ''
-                    : 'TOTP should be 6 or 8 digits long'
-                )
-            );
-        },
-        formTimeout => sub {
-            #return ( 0, "XSRF form token TTL must be higher than 10s" )
-              #unless ( $conf->{formTimeout} > 10 );
-            #return ( 1, "XSRF form token TTL should not be lower than 20s" )
-              #unless ( $conf->{formTimeout} > 19 );
-
-            # Return
-            return 1;
-        },
+        #totp2fDigits => sub {
+        #    return (
+        #        1,
+        #        (
+        #            (
+        #                     $conf->{totp2fDigits} == 6
+        #                  or $conf->{totp2fDigits} == 8
+        #            )
+        #            ? ''
+        #            : 'TOTP should be 6 or 8 digits long'
+        #        )
+        #    );
+        #},
+        #formTimeout => sub {
+        #    return ( 0, "XSRF form token TTL must be higher than 10s" )
+        #      unless ( $conf->{formTimeout} > 10 );
+        #    return ( 1, "XSRF form token TTL should not be lower or equal to 2mn" )
+        #      unless ( $conf->{formTimeout} < 121 );
+        #    return 1;
+        #},
     };
 }
 

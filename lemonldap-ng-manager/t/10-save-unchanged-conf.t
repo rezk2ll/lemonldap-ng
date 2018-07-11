@@ -1,5 +1,6 @@
 # Verify that an unmodified configuration is rejected
 
+use Data::Dumper;
 use Test::More;
 use strict;
 use JSON;

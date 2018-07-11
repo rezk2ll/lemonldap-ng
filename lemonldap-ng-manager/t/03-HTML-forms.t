@@ -2,6 +2,7 @@
 # forms are unused
 
 use Test::More;
+use Data::Dumper;
 use strict;
 
 my $formDir = 'site/htdocs/static/forms';
