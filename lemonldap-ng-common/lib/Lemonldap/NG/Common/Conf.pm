@@ -138,6 +138,12 @@ sub saveConf {
     }
 
     $msg .= "Configuration $conf->{cfgNum} stored.\n";
+    if ( $self->{refLocalStorage} ) {
+        $self->setDefault($conf);
+        $self->compactConf($conf);
+        $self->setLocalConf($conf);
+    }
+
     return ( $self->unlock() ? $tmp : UNKNOWN_ERROR );
 }
 
@@ -235,6 +241,12 @@ sub getConf {
 # Set default values
 sub setDefault {
     my ( $self, $conf, $localPrm ) = @_;
+    if ( defined $localPrm ) {
+        $self->{localPrm} = $localPrm;
+    }
+    else {
+        $localPrm = $self->{localPrm};
+    }
     my $defaultValues =
       Lemonldap::NG::Common::Conf::DefaultValues->defaultValues();
     if ( $localPrm and %$localPrm ) {
@@ -321,7 +333,13 @@ sub getLocalConf {
     if ($loaddefault) {
         foreach ( $cfg->Parameters(DEFAULTSECTION) ) {
             $r->{$_} = $cfg->val( DEFAULTSECTION, $_ );
-            if ( $r->{$_} =~ /^[{\[].*[}\]]$/ || $r->{$_} =~ /^sub\s*{.*}$/ ) {
+            if ( $_ eq "require" ) {
+                eval { require $r->{$_} };
+                $msg .= "Error: $@" if ($@);
+            }
+            if (   $r->{$_} =~ /^[{\[].*[}\]]$/
+                || $r->{$_} =~ /^sub\s*{.*}$/ )
+            {
                 eval "\$r->{$_} = $r->{$_}";
                 if ($@) {
                     $msg .= "Warning: error in file $file: $@.\n";
