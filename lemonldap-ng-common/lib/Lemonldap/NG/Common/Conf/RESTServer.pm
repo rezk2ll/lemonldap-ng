@@ -744,7 +744,7 @@ sub metadata {
         }
         else {
             $self->logger->info(
-                "REST request to get configuration metadata ($res->{cfgNum})" );
+                "REST request to get configuration metadata ($res->{cfgNum})");
         }
         return $self->sendJSONresponse( $req, $res );
     }

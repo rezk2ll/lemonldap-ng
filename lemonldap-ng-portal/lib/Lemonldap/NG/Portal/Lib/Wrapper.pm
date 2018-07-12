@@ -65,7 +65,7 @@ sub _wrapEntryPoint {
             # Launch sub and break loop if result isn't PE_OK (==0)
             if ( my $sub = $_->$name() ) {
                 my $res = $_->$sub($req);
-                return $res if($res);
+                return $res if ($res);
             }
         }
     }

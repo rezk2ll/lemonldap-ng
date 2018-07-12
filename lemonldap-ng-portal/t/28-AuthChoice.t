@@ -59,11 +59,11 @@ SKIP: {
 
         # Try yo authenticate
         # -------------------
-        ok( $res = $client->_get('/',accept=>'text/html'), 'Get menu');
-        my @form = ($res->[2]->[0] =~ m#<form.*?</form>#sg);
-        ok(@form ==2,'Display 2 choices');
+        ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get menu' );
+        my @form = ( $res->[2]->[0] =~ m#<form.*?</form>#sg );
+        ok( @form == 2, 'Display 2 choices' );
         foreach (@form) {
-            expectForm([$res->[0],$res->[1],[$_]],undef,undef,'test');
+            expectForm( [ $res->[0], $res->[1], [$_] ], undef, undef, 'test' );
         }
         ok(
             $res = $client->_post(
