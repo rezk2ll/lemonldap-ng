@@ -393,7 +393,6 @@ sub tree {
                         {
                             title => 'customParams',
                             help  => 'authcustom.html',
-                            form  => 'simpleInputContainer',
                             nodes => [
                                 'customAuth',     'customUserDB',
                                 'customPassword', 'customRegister',
