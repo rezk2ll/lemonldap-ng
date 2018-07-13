@@ -17,6 +17,7 @@ Lemonldap:NG::Portal::Auth - Writing authentication modules for LemonLDAP::NG.
   
   our $VERSION = '0.1';
   
+  # Directive provides by Mouse
   extends 'Lemonldap::NG::Portal::Main::Auth';
 
   sub init {
@@ -51,7 +52,7 @@ Lemonldap:NG::Portal::Auth - Writing authentication modules for LemonLDAP::NG.
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Main::Auth must be used to build Lemonldap::NG authentication
+Lemonldap::NG::Portal::Main::Auth must be used to build Lemonldap::NG authentication
 modules. Authentication modules are independent objects that are instantiated
 by Lemonldap::NG portal. They must provides methods described below.
 
