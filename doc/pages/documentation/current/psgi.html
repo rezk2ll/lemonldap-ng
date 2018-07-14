@@ -229,7 +229,8 @@ You will find in LLNG Nginx configuration files some comments that explain how t
 <p>
 lemonldap-ng-uwsgi-app installs a uWSGI application: <code>/etc/uwsgi/apps-available/llng-server.yaml</code>. To enable it, link it in <code>apps-enabled</code> and restart your uWSGI daemon:
 </p>
-<pre class="code shell">cd /etc/uwsgi/apps-enabled
+<pre class="code shell">apt-get install uwsgi uwsgi-plugin-psgi
+cd /etc/uwsgi/apps-enabled
 ln -s ../apps-available/llng-server.yaml
 service uwsgi restart</pre>
 
@@ -238,7 +239,7 @@ Then adapt your Nginx configuration to use this uWSGI app.
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Using uWSGI" [3413-4230] -->
+<!-- EDIT5 SECTION "Using uWSGI" [3413-4270] -->
 <h2 class="sectionedit6" id="protect_a_psgi_application">Protect a PSGI application</h2>
 <div class="level2">
 
@@ -282,6 +283,6 @@ builder <span class="br0">&#123;</span>
 </dd></dl>
 
 </div>
-<!-- EDIT6 SECTION "Protect a PSGI application" [4231-] --></div>
+<!-- EDIT6 SECTION "Protect a PSGI application" [4271-] --></div>
 </body>
 </html>

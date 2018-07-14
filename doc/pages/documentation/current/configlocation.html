@@ -344,7 +344,7 @@ In Portal virtual host, you will find several configuration parts:
         <span class="kw1">DirectoryIndex</span> index.fcgi index.html
     &lt;/<span class="kw3">IfModule</span>&gt;</pre>
 <ul>
-<li class="level1"><div class="li"> REST/SOAP end points (inactivated by default):</div>
+<li class="level1"><div class="li"> REST/SOAP end points (disabled by default):</div>
 </li>
 </ul>
 <pre class="code file apache">    <span class="co1"># REST/SOAP functions for sessions management (disabled by default)</span>
@@ -368,7 +368,7 @@ In Portal virtual host, you will find several configuration parts:
     &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT7 SECTION "Portal" [6660-8760] -->
+<!-- EDIT7 SECTION "Portal" [6660-8757] -->
 <h3 class="sectionedit8" id="manager1">Manager</h3>
 <div class="level3">
 
@@ -415,7 +415,7 @@ Configuration interface access is not protected by Apache but by LemonLDAP::NG i
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Manager" [8761-10304] -->
+<!-- EDIT8 SECTION "Manager" [8758-10301] -->
 <h3 class="sectionedit9" id="handler">Handler</h3>
 <div class="level3">
 <ul>
@@ -468,7 +468,7 @@ Then, to protect a standard virtual host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
 
 </div>
-<!-- EDIT9 SECTION "Handler" [10305-11663] -->
+<!-- EDIT9 SECTION "Handler" [10302-11660] -->
 <h2 class="sectionedit10" id="nginx">Nginx</h2>
 <div class="level2">
 <div class="noteimportant">LemonLDAP::NG does not manage Nginx configuration
@@ -491,7 +491,7 @@ See <a href="confignginx.html" class="wikilink1" title="documentation:2.0:config
 <div class="notewarning"><a href="fastcgiserver.html" class="wikilink1" title="documentation:2.0:fastcgiserver">LL::NG FastCGI</a> server must be loaded separately.
 </div>
 </div>
-<!-- EDIT10 SECTION "Nginx" [11664-12117] -->
+<!-- EDIT10 SECTION "Nginx" [11661-12114] -->
 <h3 class="sectionedit11" id="portal1">Portal</h3>
 <div class="level3">
 
@@ -563,7 +563,7 @@ In Portal virtual host, you will find several configuration parts:
   }</pre>
 
 </div>
-<!-- EDIT11 SECTION "Portal" [12118-13909] -->
+<!-- EDIT11 SECTION "Portal" [12115-13906] -->
 <h3 class="sectionedit12" id="manager2">Manager</h3>
 <div class="level3">
 
@@ -597,7 +597,7 @@ By default, configuration interface access is not protected by Nginx but by Lemo
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Manager" [13910-14655] -->
+<!-- EDIT12 SECTION "Manager" [13907-14652] -->
 <h3 class="sectionedit13" id="handler1">Handler</h3>
 <div class="level3">
 
@@ -697,7 +697,7 @@ Then, to protect a standard virtual host, you must insert this (or create an inc
     # Insert then your configuration (fastcgi_* or proxy_*)</pre>
 
 </div>
-<!-- EDIT13 SECTION "Handler" [14656-17742] -->
+<!-- EDIT13 SECTION "Handler" [14653-17739] -->
 <h2 class="sectionedit14" id="configuration_reload">Configuration reload</h2>
 <div class="level2">
 <div class="noteclassic">As Handlers keep configuration in cache, when configuration change, it should be updated in Handlers. An Apache restart will work, but LemonLDAP::NG offers the mean to reload them through an HTTP request. Configuration reload will then be effective in less than 10 minutes. If you want to change this timeout, set <code>checkTime = 240</code> in your lemonldap-ng.ini file <em>(values in seconds)</em>
@@ -718,7 +718,7 @@ The <code>reload</code> target is managed in Apache or Nginx configuration, insi
 </div><div class="noteimportant">If you want to use reload mechanism on a portal only host, you must install a handler in Portal host to be able to refresh local cache. Include <code>handler-nginx.conf</code> or <code>handler-apache2.conf</code> for example
 </div>
 </div>
-<!-- EDIT14 SECTION "Configuration reload" [17743-19256] -->
+<!-- EDIT14 SECTION "Configuration reload" [17740-19253] -->
 <h2 class="sectionedit15" id="local_file">Local file</h2>
 <div class="level2">
 
@@ -752,6 +752,6 @@ For example, to override configured skin for portal:
 <div class="notetip">You need to know the technical name of configuration parameter to do this. You can refer to <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">parameter list</a> to find it.
 </div>
 </div>
-<!-- EDIT15 SECTION "Local file" [19257-] --></div>
+<!-- EDIT15 SECTION "Local file" [19254-] --></div>
 </body>
 </html>

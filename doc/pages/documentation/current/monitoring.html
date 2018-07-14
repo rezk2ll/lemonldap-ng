@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:monitoring</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,monitoring"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="monitoring.html"/>
@@ -45,19 +45,19 @@
 <div class="dokuwiki export container">
 
 <p>
-Handler can be monitor using MRTG. See <a href="mrtg.html" class="wikilink1" title="documentation:2.0:mrtg">MRTG monitoring</a>.
+Handler can be monitored by using MRTG. See <a href="mrtg.html" class="wikilink1" title="documentation:2.0:mrtg">MRTG monitoring</a>.
 </p>
 
 <p>
-Portal can also publish its status using REST. To enable it, go to the manager, general parameters, advanced parameters. Then enable portal status.
+Portal can also publish its status using REST. To enable it, go to the manager, general parameters, plugins. Then enable “publish portal status” option.
 </p>
 
 <p>
-Then protect <a href="http://auth.yourdomain/portalStatus" class="urlextern" title="http://auth.yourdomain/portalStatus"  rel="nofollow">http://auth.yourdomain/portalStatus</a> in your webserver configuration.
+Then protect <a href="http://auth.yourdomain/portalStatus" class="urlextern" title="http://auth.yourdomain/portalStatus"  rel="nofollow">http://auth.yourdomain/portalStatus</a> in webserver configuration.
 </p>
 
 <p>
-This REST <abbr title="Uniform Resource Locator">URL</abbr> just publish a hash containing number of sessions of each type.
+This REST <abbr title="Uniform Resource Locator">URL</abbr> just publishes a hash containing number of sessions of each type.
 </p>
 </div>
 </body>

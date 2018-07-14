@@ -183,9 +183,9 @@ If you use <a href="soapsessionbackend.html" class="wikilink1" title="documentat
 <div class="level3">
 
 <p>
-<a href="writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Rules</a> are applied in alphabetical order (comment and regular expression). The first rule that matches is applied.
+<a href="writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Rules</a> are applied in alphabetical order (comment and regular expression). The first matching rule is applied.
 </p>
-<div class="noteimportant">The “default” rule is only applied if no other rule match
+<div class="noteimportant">The “default” rule is only applied if no other rule matchs
 </div>
 <p>
 The Manager let you define comments in rules, to order them:
@@ -211,7 +211,7 @@ For example, if these rules are used without comments:
 		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT10 TABLE [3378-3488] -->
+<!-- EDIT10 TABLE [3375-3485] -->
 <p>
 Then the second rule will be applied first, so every authenticated user will access to <code>/pub/admin</code> directory.
 </p>
@@ -232,8 +232,8 @@ Use comment to correct this:
 		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> 2_pub </td>
 	</tr>
 </table></div>
-<!-- EDIT11 TABLE [3633-3757] --><div class="notetip"><ul>
-<li class="level1"><div class="li"> Reload the Manager to see the order that will be used</div>
+<!-- EDIT11 TABLE [3630-3754] --><div class="notetip"><ul>
+<li class="level1"><div class="li"> Reload the Manager to see the effective order</div>
 </li>
 <li class="level1"><div class="li"> Use rule comments to order your rules</div>
 </li>
@@ -241,7 +241,7 @@ Use comment to correct this:
 
 </div>
 </div>
-<!-- EDIT9 SECTION "Order your rules" [2962-3878] -->
+<!-- EDIT9 SECTION "Order your rules" [2962-3867] -->
 <h3 class="sectionedit12" id="be_careful_with_url_parameters">Be careful with URL parameters</h3>
 <div class="level3">
 
@@ -265,7 +265,7 @@ For example with this rule on the <code>access</code> parameter:
 		<td class="col0"> default </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT13 TABLE [4115-4249] -->
+<!-- EDIT13 TABLE [4104-4238] -->
 <p>
 Then a user that try to access to one of the following <em class="u">will be granted</em> !
 </p>
@@ -295,11 +295,11 @@ You can use the following rules instead:
 		<td class="col0"> default </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT14 TABLE [4447-4650] --><div class="notetip"><strong>(?i)</strong> means case no sensitive.
+<!-- EDIT14 TABLE [4436-4639] --><div class="notetip"><strong>(?i)</strong> means case no sensitive.
 </div><div class="notewarning">Remember that rules written on GET parameters must be tested.
 </div>
 </div>
-<!-- EDIT12 SECTION "Be careful with URL parameters" [3879-4787] -->
+<!-- EDIT12 SECTION "Be careful with URL parameters" [3868-4776] -->
 <h3 class="sectionedit15" id="encoded_characters">Encoded characters</h3>
 <div class="level3">
 
@@ -308,7 +308,7 @@ Some characters are encoded in URLs by the browser (such as space,…). To avoid
 </p>
 
 </div>
-<!-- EDIT15 SECTION "Encoded characters" [4788-5041] -->
+<!-- EDIT15 SECTION "Encoded characters" [4777-5030] -->
 <h2 class="sectionedit16" id="secure_reverse-proxies">Secure reverse-proxies</h2>
 <div class="level2">
 
@@ -354,7 +354,7 @@ It is recommended to secure the channel between reverse-proxies and application 
 </ul>
 
 </div>
-<!-- EDIT16 SECTION "Secure reverse-proxies" [5042-6710] -->
+<!-- EDIT16 SECTION "Secure reverse-proxies" [5031-6699] -->
 <h2 class="sectionedit17" id="configure_security_settings">Configure security settings</h2>
 <div class="level2">
 
@@ -381,12 +381,12 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 </ul>
 
 </div>
-<!-- EDIT17 SECTION "Configure security settings" [6711-8044] -->
+<!-- EDIT17 SECTION "Configure security settings" [6700-8033] -->
 <h2 class="sectionedit18" id="fail2ban">Fail2ban</h2>
 <div class="level2">
 
 <p>
-For block brute force attack with fail2ban
+To prevent brute force attack with fail2ban
 </p>
 
 <p>
@@ -433,7 +433,7 @@ Restart fail2ban
 </p>
 
 </div>
-<!-- EDIT18 SECTION "Fail2ban" [8045-9098] -->
+<!-- EDIT18 SECTION "Fail2ban" [8034-9088] -->
 <h2 class="sectionedit19" id="sessions_identifier">Sessions identifier</h2>
 <div class="level2">
 
@@ -442,11 +442,11 @@ You can change the module used for sessions identifier generation. To do, add <c
 </p>
 
 <p>
-We recommend the use of <code>Lemonldap::NG::Common::Apache::Session::Generate::SHA256</code>.
+We recommend to use : <code>Lemonldap::NG::Common::Apache::Session::Generate::SHA256</code>.
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Sessions identifier" [9099-9363] -->
+<!-- EDIT19 SECTION "Sessions identifier" [9089-9351] -->
 <h2 class="sectionedit20" id="saml">SAML</h2>
 <div class="level2">
 
@@ -455,6 +455,6 @@ See <a href="samlservice.html#security_parameters" class="wikilink1" title="docu
 </p>
 
 </div>
-<!-- EDIT20 SECTION "SAML" [9364-] --></div>
+<!-- EDIT20 SECTION "SAML" [9352-] --></div>
 </body>
 </html>

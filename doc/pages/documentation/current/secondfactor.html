@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:secondfactor</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,secondfactor"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="secondfactor.html"/>
@@ -66,14 +66,14 @@
 <div class="level1">
 
 <p>
-Two-Factor Authentication <em>(as known as 2FA)</em> is a kind (subset) of <a href="https://en.wikipedia.org/wiki/Multi-factor_authentication" class="urlextern" title="https://en.wikipedia.org/wiki/Multi-factor_authentication"  rel="nofollow">multi-factor authentication</a>. It is a method to confirm a user&#039;s claimed identity by using a combination of two different factors :
+Two-Factor Authentication <em>(as known as 2FA)</em> is a kind (subset) of <a href="https://en.wikipedia.org/wiki/Multi-factor_authentication" class="urlextern" title="https://en.wikipedia.org/wiki/Multi-factor_authentication"  rel="nofollow">multi-factor authentication</a>. It is a method to confirm a user&#039;s claimed identity by using a combination of two different factors between:
 </p>
 <ol>
-<li class="level1"><div class="li"> something they know <em>(login / password, …)</em>,</div>
+<li class="level1"><div class="li"> something they know <em>(login / password, …)</em></div>
 </li>
-<li class="level1"><div class="li"> something they have <em>(U2F Key, smartphone, …) or </em> </div>
+<li class="level1"><div class="li"> something they have <em>(U2F Key, smartphone, …) </em> </div>
 </li>
-<li class="level1"><div class="li"> something they are <em>(biometrics like fingerprints, …)</em>.</div>
+<li class="level1"><div class="li"> something they are <em>(biometrics like fingerprints, …)</em></div>
 </li>
 </ol>
 
@@ -83,20 +83,20 @@ Since 2.0, LLNG provides some second factor plugins that can be used to complete
 <ul>
 <li class="level1"><div class="li"> <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F tokens</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="totp2f.html" class="wikilink1" title="documentation:2.0:totp2f">TOTP</a> <em>(to use with <a href="https://freeotp.github.io/" class="urlextern" title="https://freeotp.github.io/"  rel="nofollow">FreeOTP</a>, ||<a href="https://en.wikipedia.org/wiki/Google_Authenticator" class="urlextern" title="https://en.wikipedia.org/wiki/Google_Authenticator"  rel="nofollow">https://en.wikipedia.org/wiki/Google_Authenticator</a>|Google-Authenticator]],…)</em></div>
+<li class="level1"><div class="li"> <a href="totp2f.html" class="wikilink1" title="documentation:2.0:totp2f">TOTP</a> <em>(to use with <a href="https://freeotp.github.io/" class="urlextern" title="https://freeotp.github.io/"  rel="nofollow">FreeOTP</a>, <a href="https://en.wikipedia.org/wiki/Google_Authenticator" class="urlextern" title="https://en.wikipedia.org/wiki/Google_Authenticator"  rel="nofollow">Google-Authenticator</a>,…)</em></div>
 </li>
 <li class="level1"><div class="li"> <a href="utotp2f.html" class="wikilink1" title="documentation:2.0:utotp2f">U2F-or-TOTP</a> <em>(enable both U2F and TOTP)</em></div>
 </li>
 <li class="level1"><div class="li"> <a href="yubikey2f.html" class="wikilink1" title="documentation:2.0:yubikey2f">Yubikey tokens</a> <em> provide by Yubico</em> </div>
 </li>
-<li class="level1"><div class="li"> <a href="rest2f.html" class="wikilink1" title="documentation:2.0:rest2f">REST</a> <em>(to call an external command)</em> </div>
+<li class="level1"><div class="li"> <a href="rest2f.html" class="wikilink1" title="documentation:2.0:rest2f">REST</a> <em>(Remote REST app)</em> </div>
 </li>
-<li class="level1"><div class="li"> <a href="external2f.html" class="wikilink1" title="documentation:2.0:external2f">External 2F</a> <em>(Remote REST app) </em> </div>
+<li class="level1"><div class="li"> <a href="external2f.html" class="wikilink1" title="documentation:2.0:external2f">External 2F</a> <em>(to call an external command)</em> </div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT1 SECTION "Second Factors" [1-993] -->
+<!-- EDIT1 SECTION "Second Factors" [1-994] -->
 <h2 class="sectionedit2" id="providing_tokens_from_an_external_source">Providing tokens from an external source</h2>
 <div class="level2">
 
@@ -106,25 +106,25 @@ If you don&#039;t want to use self-registration features for U2F, TOTP and so on
 <pre class="code json">[ {&quot;type&quot; : &quot;TOTP&quot;, &quot;name&quot; : &quot;MyTOTP&quot;, …}, {&lt;other_token&gt;}, …]</pre>
 
 </div>
-<!-- EDIT2 SECTION "Providing tokens from an external source" [994-1387] -->
+<!-- EDIT2 SECTION "Providing tokens from an external source" [995-1388] -->
 <h3 class="sectionedit3" id="u2f_tokens">U2F Tokens</h3>
 <div class="level3">
 <pre class="code json">{&quot;name&quot; : &quot;MyU2FKey&quot; , &quot;type&quot; : &quot;U2F&quot; , &quot;_userKey&quot; : &quot;########&quot; , &quot;_keyHandle&quot;:&quot;########&quot; , &quot;epoch&quot;:&quot;1524078936&quot;}</pre>
 
 </div>
-<!-- EDIT3 SECTION "U2F Tokens" [1388-1545] -->
+<!-- EDIT3 SECTION "U2F Tokens" [1389-1546] -->
 <h3 class="sectionedit4" id="totp_tokens">TOTP Tokens</h3>
 <div class="level3">
 <pre class="code json">{&quot;name&quot; : &quot;MyTOTP&quot; , &quot;type&quot; : &quot;TOTP&quot; , &quot;_secret&quot; : &quot;########&quot; , &quot;epoch&quot; : &quot;1523817955&quot;}</pre>
 
 </div>
-<!-- EDIT4 SECTION "TOTP Tokens" [1546-1678] -->
+<!-- EDIT4 SECTION "TOTP Tokens" [1547-1679] -->
 <h3 class="sectionedit5" id="yubikey_tokens">Yubikey Tokens</h3>
 <div class="level3">
 <pre class="code json">{&quot;name&quot; : &quot;MyYubikey&quot; , &quot;type&quot; : &quot;UBK&quot; , &quot;_yubikey&quot; : &quot;########&quot; , &quot;epoch&quot; : &quot;1523817715&quot;}</pre>
 
 </div>
-<!-- EDIT5 SECTION "Yubikey Tokens" [1679-1817] -->
+<!-- EDIT5 SECTION "Yubikey Tokens" [1680-1818] -->
 <h2 class="sectionedit6" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -141,6 +141,6 @@ To enable manager Second Factor Administration Module, set <code>enabledModules<
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
 
 </div>
-<!-- EDIT6 SECTION "Developer corner" [1818-] --></div>
+<!-- EDIT6 SECTION "Developer corner" [1819-] --></div>
 </body>
 </html>

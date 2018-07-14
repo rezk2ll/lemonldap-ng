@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:totp2f</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,totp2f"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="totp2f.html"/>
@@ -49,6 +49,7 @@
 <div>
 
 <ul class="toc">
+<li class="level1"><div class="li"><a href="#prerequisites_and_dependencies">Prerequisites and dependencies</a></div></li>
 <li class="level1"><div class="li"><a href="#configuration">Configuration</a></div></li>
 <li class="level1"><div class="li"><a href="#enrollment">Enrollment</a></div></li>
 <li class="level1"><div class="li"><a href="#assistance">Assistance</a></div></li>
@@ -58,7 +59,7 @@
 </div>
 <!-- TOC END -->
 
-<h1 class="sectionedit1" id="totp_2nd_factor_authentication_u2f">TOTP 2nd Factor Authentication (U2F)</h1>
+<h1 class="sectionedit1" id="totp_2nd_factor_authentication">TOTP 2nd Factor Authentication</h1>
 <div class="level1">
 
 <p>
@@ -71,8 +72,24 @@ LLNG can propose to users to register this kind of software to increase authenti
 <div class="notetip">Note that it&#039;s a second factor, not an authentication module. Users are authenticated both by login form and TOTP.
 </div>
 </div>
-<!-- EDIT1 SECTION "TOTP 2nd Factor Authentication (U2F)" [1-633] -->
-<h2 class="sectionedit2" id="configuration">Configuration</h2>
+<!-- EDIT1 SECTION "TOTP 2nd Factor Authentication" [1-627] -->
+<h2 class="sectionedit2" id="prerequisites_and_dependencies">Prerequisites and dependencies</h2>
+<div class="level2">
+
+<p>
+This feature uses libconvert-base32-perl. Before enable it, on Debian you must install libconvert-base32-perl by :
+</p>
+<pre class="code">apt update
+apt install libconvert-base32-perl</pre>
+
+<p>
+Or from CPAN repository :
+</p>
+<pre class="code">cpanm Convert::Base32</pre>
+
+</div>
+<!-- EDIT2 SECTION "Prerequisites and dependencies" [628-912] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
@@ -101,8 +118,8 @@ In the manager (advanced parameters), you just have to enable it:
 <div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule that <code>$_2fDevices =~ /“type”:\s*“TOTP”/s</code> is set, else TOTP will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
 </div>
 </div>
-<!-- EDIT2 SECTION "Configuration" [634-1964] -->
-<h2 class="sectionedit3" id="enrollment">Enrollment</h2>
+<!-- EDIT3 SECTION "Configuration" [913-2243] -->
+<h2 class="sectionedit4" id="enrollment">Enrollment</h2>
 <div class="level2">
 
 <p>
@@ -110,8 +127,8 @@ If you&#039;ve enabled self registration, users can register their keys by using
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Enrollment" [1965-2092] -->
-<h2 class="sectionedit4" id="assistance">Assistance</h2>
+<!-- EDIT4 SECTION "Enrollment" [2244-2371] -->
+<h2 class="sectionedit5" id="assistance">Assistance</h2>
 <div class="level2">
 
 <p>
@@ -124,8 +141,8 @@ To enable manager Second Factor Administration Module, set <code>enabledModules<
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
 
 </div>
-<!-- EDIT4 SECTION "Assistance" [2093-2407] -->
-<h2 class="sectionedit5" id="developer_corner">Developer corner</h2>
+<!-- EDIT5 SECTION "Assistance" [2372-2686] -->
+<h2 class="sectionedit6" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
 <p>
@@ -134,6 +151,6 @@ If you have another TOTP registration interface, you have to set these keys in S
 <pre class="code file json">[{&quot;name&quot; : &quot;MyTOTP&quot; , &quot;type&quot; : &quot;TOTP&quot; , &quot;_secret&quot; : &quot;########&quot; , &quot;epoch&quot;:&quot;1524078936&quot;}, ...]</pre>
 
 </div>
-<!-- EDIT5 SECTION "Developer corner" [2408-] --></div>
+<!-- EDIT6 SECTION "Developer corner" [2687-] --></div>
 </body>
 </html>
