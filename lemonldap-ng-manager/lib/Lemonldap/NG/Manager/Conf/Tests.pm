@@ -436,8 +436,8 @@ sub tests {
             return ( 0, "XSRF form token TTL must be higher than 10s" )
               unless ( $conf->{formTimeout} > 10 );
             return ( 1,
-                "XSRF form token TTL should not be lower than 2mn" )
-              unless ( $conf->{formTimeout} > 119 );
+                "XSRF form token TTL should not be higher than 2mn" )
+              if ( $conf->{formTimeout} > 120 );
             return 1;
         },
     };
