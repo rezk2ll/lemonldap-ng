@@ -118,7 +118,7 @@ sub run {
         # AUTHORIZE
         if ( $path eq $self->conf->{oidcServiceMetaDataAuthorizeURI} ) {
             $self->logger->debug(
-                "URL  detected as an OpenID Connect AUTHORIZE URL");
+                "URL detected as an OpenID Connect AUTHORIZE URL");
 
             # Get and save parameters
             my $oidc_request = {};
@@ -211,15 +211,15 @@ sub run {
                 return PE_UNAUTHORIZEDPARTNER;
             }
             else {
-                $self->logger->debug("Client id $client_id match RP $rp");
+                $self->logger->debug("Client id $client_id matches RP $rp");
             }
 
-            # Check if this RP is authorizated
+            # Check if this RP is authorized
             if ( my $rule = $self->spRules->{$rp} ) {
                 unless ( $rule->( $req, $req->sessionInfo ) ) {
                     $self->userLogger->warn( 'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                          . "was not authorizated to access to $rp" );
+                          . "was not authorized to access to $rp" );
                     return PE_UNAUTHORIZEDPARTNER;
                 }
             }
@@ -288,7 +288,7 @@ sub run {
               )
             {
                 $self->logger->debug(
-"Reauthentication requested by Relying Party in prompt parameter"
+"Reauthentication required by Relying Party in prompt parameter"
                 );
                 return $self->reAuth($req);
             }
@@ -297,7 +297,7 @@ sub run {
             my $_lastAuthnUTime = $req->{sessionInfo}->{_lastAuthnUTime};
             if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
                 $self->logger->debug(
-"Reauthentication forced cause authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
+"Reauthentication forced because authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
                 );
                 return $self->reAuth($req);
             }
@@ -320,11 +320,11 @@ sub run {
                   )
                 {
                     $self->logger->error(
-                        "Request JWT signature could not be verified");
+                        "JWT signature request can not be verified");
                     return PE_ERROR;
                 }
                 else {
-                    $self->logger->debug("Request JWT signature verified");
+                    $self->logger->debug("JWT signature request verified");
                 }
             }
 
@@ -343,12 +343,12 @@ sub run {
                 my $user_id = $req->{sessionInfo}->{$user_id_attribute};
                 unless ( $sub eq $user_id ) {
                     $self->userLogger->error(
-                        "ID Token hint sub $sub do not match user $user_id");
+                        "ID Token hint sub $sub does not match user $user_id");
                     return $self->returnRedirectError(
                         $req,
                         $oidc_request->{'redirect_uri'},
                         'invalid_request',
-                        "current user do not match id_token_hint sub",
+                        "Current user does not match id_token_hint sub",
                         undef,
                         $oidc_request->{'state'},
                         ( $flow ne "authorizationcode" )
@@ -356,7 +356,7 @@ sub run {
                 }
                 else {
                     $self->logger->debug(
-                        "ID Token hint sub $sub match current user");
+                        "ID Token hint sub $sub matches current user");
                 }
             }
 
@@ -365,19 +365,63 @@ sub run {
               ->{oidcRPMetaDataOptionsBypassConsent};
             if ($bypassConsent) {
                 $self->logger->debug(
-                    "Consent is disabled for RP $rp, user will not be prompted"
+"Consent is disabled for Relying Party $rp, user will not be prompted"
                 );
             }
             else {
                 my $ask_for_consent = 1;
+
+########################
+                $req->{sessionInfo}->{_oidcConsents}
+
+                  # Loading existing oidcConsents
+                  $self->logger->debug("Looking for OIDC Consents ...");
+                my $_oidcConsents;
+                if ( $req->{sessionInfo}->{_oidcConsents} ) {
+                    $_oidcConsents = eval {
+                        from_json( $req->{sessionInfo}->{_oidcConsents},
+                            { allow_nonref => 1 } );
+                    };
+                    if ($@) {
+                        $self->logger->error(
+                            "Corrupted session (_oidcConsents): $@");
+                        return PE_ERROR;
+                    }
+                }
+                else {
+                    $self->logger->debug("No OIDC Consent found");
+                    $_oidcConsents = [];
+                }
+
+                # Reading existing RP
+                my @RPoidcConsent = grep { $_->{rp} eq $rp } @$_oidcConsents;
+                unless (@RPoidcConsent) {
+                    $self->logger->debug("No Relying Party $rp Consent found");
+
+                    # Set default value
+                    push @RPoidcConsent, { rp => $rp, time => '', scope => '' };
+                }
+
+###################
+
                 if (    $req->{sessionInfo}->{"_oidc_consent_time_$rp"}
                     and $req->{sessionInfo}->{"_oidc_consent_scope_$rp"} )
+
                 {
                     $ask_for_consent = 0;
                     my $consent_time =
                       $req->{sessionInfo}->{"_oidc_consent_time_$rp"};
                     my $consent_scope =
                       $req->{sessionInfo}->{"_oidc_consent_scope_$rp"};
+
+                    #if ( $RPoidcConsent[0]->{rp} eq $rp )
+                    #{
+                    #$ask_for_consent = 0;
+
+                    #my $consent_time =
+                    #$RPoidcConsent[0]->{time};
+                    # my $consent_scope =
+                    # $RPoidcConsent[0]->{scope};
 
                     $self->logger->debug(
 "Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)"
@@ -417,6 +461,28 @@ sub run {
                                   $oidc_request->{'scope'}
                             }
                         );
+
+                        ###############
+
+                        $RPoidcConsent[0]->{time}  = time;
+                        $RPoidcConsent[0]->{scope} = $oidc_request->{'scope'};
+
+                        push @{$_oidcConsents}, @{$RPoidcConsent};
+
+                        #{
+                        #type       => 'U2F',
+                        #name       => $keyName,
+                        #_userKey   => $self->encode_base64url( $userKey, '' ),
+                        #_keyHandle => $keyHandle,
+                        #epoch      => $epoch
+                        #};
+                        $self->logger->debug(
+                            "Append Relying Party $rp Consent");
+                        $self->p->updatePersistentSession( $req,
+                            { _oidcConsents => to_json($_oidcConsents) } );
+
+#################
+
                         $self->logger->debug(
                             "Consent given for Relying Party $rp");
                     }
@@ -437,12 +503,13 @@ sub run {
                     }
                     else {
                         $self->logger->debug(
-                            "Obtain user consent for Relying Party $rp");
+                            "Request user consent for Relying Party $rp");
 
                         # Return error if prompt is none
                         if ( $prompt and $prompt =~ /\bnone\b/ ) {
                             $self->logger->debug(
-                                "Consent is needed but prompt is none");
+                                "Consent is requiered but prompt is set to none"
+                            );
                             return $self->returnRedirectError(
                                 $req,
                                 $oidc_request->{'redirect_uri'},
@@ -776,7 +843,7 @@ sub run {
                 return PE_REDIRECT;
             }
 
-            $self->logger->debug("No flow has been selected");
+            $self->logger->debug("None flow has been selected");
             return PE_OK;
         }
 
@@ -898,7 +965,7 @@ sub token {
         return $self->p->sendError( $req, 'invalid_request', 400 );
     }
     else {
-        $self->logger->debug("Client id $client_id match RP $rp");
+        $self->logger->debug("Client id $client_id match Relying Party $rp");
     }
 
     # Check client_secret
@@ -924,7 +991,7 @@ sub token {
     # Check we have the same redirect_uri value
     unless ( $req->param("redirect_uri") eq $codeSession->data->{redirect_uri} )
     {
-        $self->userLogger->error( "Provided redirect_uri is different from "
+        $self->userLogger->error( "Provided redirect_uri does not match "
               . $codeSession->{redirect_uri} );
         return $self->p->sendError( $req, 'invalid_request', 400 );
     }
@@ -1290,7 +1357,7 @@ sub logout {
         foreach my $rp (@rps) {
             my $rpConf = $self->conf->{oidcRPMetaDataOptions}->{$rp};
             unless ($rpConf) {
-                $self->logger->error("Unknown RP $rp");
+                $self->logger->error("Unknown Relying Party $rp");
                 return PE_ERROR;
             }
             if ( my $url = $rpConf->{oidcRPMetaDataOptionsLogoutUrl} ) {
