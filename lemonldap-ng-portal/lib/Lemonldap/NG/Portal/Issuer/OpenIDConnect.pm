@@ -370,8 +370,6 @@ sub run {
             }
             else {
                 my $ask_for_consent = 1;
-
-########################
                 my $_oidcConsents;
                 my @RPoidcConsent = ();
 
@@ -403,18 +401,6 @@ sub run {
                     push @RPoidcConsent,
                       { rp => $rp, epoch => '', scope => '' };
                 }
-
-###################
-
-                #if (    $req->{sessionInfo}->{"_oidc_consent_time_$rp"}
-                #and $req->{sessionInfo}->{"_oidc_consent_scope_$rp"} )
-
-                #{
-                #$ask_for_consent = 0;
-                #my $consent_time =
-                #$req->{sessionInfo}->{"_oidc_consent_time_$rp"};
-                #my $consent_scope =
-                #$req->{sessionInfo}->{"_oidc_consent_scope_$rp"};
 
                 if ( $RPoidcConsent[0]{rp} eq $rp ) {
                     $ask_for_consent = 0;
@@ -451,6 +437,7 @@ sub run {
                     if (    $req->param('confirm')
                         and $req->param('confirm') == 1 )
                     {
+						############
                         $self->p->updatePersistentSession( $req,
                             { "_oidc_consent_time_$rp" => time } );
                         $self->p->updatePersistentSession(
@@ -460,19 +447,14 @@ sub run {
                                   $oidc_request->{'scope'}
                             }
                         );
-
-################
-
+                        ############
                         $RPoidcConsent[0]{epoch} = time;
                         $RPoidcConsent[0]{scope} = $oidc_request->{'scope'};
-
                         push @{$_oidcConsents}, @RPoidcConsent;
                         $self->logger->debug(
                             "Append Relying Party $rp Consent");
                         $self->p->updatePersistentSession( $req,
                             { _oidcConsents => to_json($_oidcConsents) } );
-
-#################
 
                         $self->logger->debug(
                             "Consent given for Relying Party $rp");
