@@ -544,11 +544,13 @@ sub mkOidcConsent {
 #####################
 
     foreach (@consents) {
+		if ( defined  {$_}->{rp} ){
         my $rp = {$_}->{rp};
         $consents->{$rp}->{epoch} = $_->{epoch};
         $consents->{$rp}->{scope} = $_->{scope};
         $consents->{$rp}->{displayName} =
           $self->conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsDisplayName};
+		}
     }
 
     #foreach ( keys %$session ) {
