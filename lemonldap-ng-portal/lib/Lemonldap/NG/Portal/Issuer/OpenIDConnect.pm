@@ -375,8 +375,8 @@ sub run {
                 my $_oidcConsents;
                 my @RPoidcConsent = ();
 
-                  # Loading existing oidcConsents
-                  $self->logger->debug("Looking for OIDC Consents ...");
+                # Loading existing oidcConsents
+                $self->logger->debug("Looking for OIDC Consents ...");
 
                 if ( $req->{sessionInfo}->{_oidcConsents} ) {
                     $_oidcConsents = eval {
@@ -400,29 +400,27 @@ sub run {
                     $self->logger->debug("No Relying Party $rp Consent found");
 
                     # Set default value
-                    push @RPoidcConsent, { rp => $rp, time => '', scope => '' };
+                    push @RPoidcConsent,
+                      { rp => $rp, epoch => '', scope => '' };
                 }
 
 ###################
 
-                if (    $req->{sessionInfo}->{"_oidc_consent_time_$rp"}
-                    and $req->{sessionInfo}->{"_oidc_consent_scope_$rp"} )
+                #if (    $req->{sessionInfo}->{"_oidc_consent_time_$rp"}
+                #and $req->{sessionInfo}->{"_oidc_consent_scope_$rp"} )
 
-                {
+                #{
+                #$ask_for_consent = 0;
+                #my $consent_time =
+                #$req->{sessionInfo}->{"_oidc_consent_time_$rp"};
+                #my $consent_scope =
+                #$req->{sessionInfo}->{"_oidc_consent_scope_$rp"};
+
+                if ( $RPoidcConsent[0]{rp} eq $rp ) {
                     $ask_for_consent = 0;
-                    my $consent_time =
-                      $req->{sessionInfo}->{"_oidc_consent_time_$rp"};
-                    my $consent_scope =
-                      $req->{sessionInfo}->{"_oidc_consent_scope_$rp"};
 
-                    #if ( $RPoidcConsent[0]{rp} eq $rp )
-                    #{
-                    #$ask_for_consent = 0;
-
-                    #my $consent_time =
-                    #$RPoidcConsent[0]{time};
-                    # my $consent_scope =
-                    # $RPoidcConsent[0]{scope};
+                    my $consent_time  = $RPoidcConsent[0]{epoch};
+                    my $consent_scope = $RPoidcConsent[0]{scope};
 
                     $self->logger->debug(
 "Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)"
@@ -463,20 +461,12 @@ sub run {
                             }
                         );
 
-                        ################
+################
 
-                        $RPoidcConsent[0]{time}  = time;
+                        $RPoidcConsent[0]{epoch} = time;
                         $RPoidcConsent[0]{scope} = $oidc_request->{'scope'};
 
                         push @{$_oidcConsents}, @RPoidcConsent;
-
-                        #{
-                        #type       => 'U2F',
-                        #name       => $keyName,
-                        #_userKey   => $self->encode_base64url( $userKey, '' ),
-                        #_keyHandle => $keyHandle,
-                        #epoch      => $epoch
-                        #};
                         $self->logger->debug(
                             "Append Relying Party $rp Consent");
                         $self->p->updatePersistentSession( $req,
