@@ -544,14 +544,14 @@ sub mkOidcConsent {
 #####################
 
     foreach (@$_consents) {
-		if ( defined  $_->{rp} ){
-        my $rp = $_->{rp};
-        		$self->logger->debug("RP $rp Consent found");
-        $consents->{$rp}->{epoch} = $_->{epoch};
-        $consents->{$rp}->{scope} = $_->{scope};
-        $consents->{$rp}->{displayName} =
-          $self->conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsDisplayName};
-		}
+        if ( defined $_->{rp} ) {
+            my $rp = $_->{rp};
+            $self->logger->debug("RP { $rp } Consent found");
+            $consents->{$rp}->{epoch} = $_->{epoch};
+            $consents->{$rp}->{scope} = $_->{scope};
+            $consents->{$rp}->{displayName} =
+              $self->conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsDisplayName};
+        }
     }
 
     #foreach ( keys %$session ) {
@@ -573,7 +573,7 @@ sub mkOidcConsent {
                 map {
                     {
                         name        => $_,
-                        time        => $consents->{$_}->{epoch},
+                        epoch       => $consents->{$_}->{epoch},
                         scope       => $consents->{$_}->{scope},
                         displayName => $consents->{$_}->{displayName}
                     }

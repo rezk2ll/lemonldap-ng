@@ -11,7 +11,7 @@
   <TMPL_LOOP NAME="partners">
    <tr partner="<TMPL_VAR NAME="name">">
     <td><TMPL_VAR NAME="displayName"></td>
-    <td class="localeDate" val="<TMPL_VAR NAME="time">"></td>
+    <td class="localeDate" val="<TMPL_VAR NAME="epoch">"></td>
     <td><TMPL_VAR NAME="scope"></td>
     <td><a partner="<TMPL_VAR NAME="name">" title="delete" class="oidcConsent link nodecor text-danger glyphicon glyphicon-minus-sign"></a></td>
     </td>

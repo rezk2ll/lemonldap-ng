@@ -54,7 +54,7 @@ getValues = () ->
 # ----------------------------------------
 setSelector = "#appslist"
 
-# Function that writes the list order to session (network errors ignored)
+# Function to write the sorted apps list to session (network errors ignored)
 setOrder = ->
 	setKey '_appsListOrder', $(setSelector).sortable("toArray").join()
 
@@ -71,16 +71,23 @@ removeOidcConsent = (partner) ->
 	#		alert "#{s} #{e}"
 	e = (j,s,e) ->
 		alert "#{s} #{e}"
-	delKey "_oidc_consent_time_#{partner}"
+	#delKey "_oidc_consent_time_#{partner}"
+		## Success
+		#, () ->
+			#delKey "_oidc_consent_scope_#{partner}"
+				## Success
+				#, () ->
+					#$("[partner='#{partner}']").hide()
+				## Error
+				#, e
+		#, e
+	delKey "_oidcConsents",partner
 		# Success
 		, () ->
-			delKey "_oidc_consent_scope_#{partner}"
-				# Success
-				, () ->
-					$("[partner='#{partner}']").hide()
-				# Error
-				, e
+			$("[partner='#{partner}']").hide()
+		# Error
 		, e
+		
 
 # Function used by setOrder() and removeOidcConsent() to push new values
 # For security reason, modification is rejected unless a valid token is given
@@ -104,7 +111,7 @@ setKey = (key,val,success,error) ->
 				success: success
 				error: error
 
-delKey = (key,success,error) ->
+delKey = (key,partner,success,error) ->
 	$.ajax
 		type: "GET"
 		url: datas['scriptname'] + '/mysession/?gettoken'
@@ -114,7 +121,8 @@ delKey = (key,success,error) ->
 		success: (data) ->
 			$.ajax
 				type: "DELETE"
-				url: "#{datas['scriptname']}/mysession/persistent/#{key}?token=#{data.token}"
+				url: "#{datas['scriptname']}/mysession/persistent/#{key}?option=#{partner}&token=#{data.token}"
+				#url: "#{datas['scriptname']}/mysession/persistent/#{key}?token=#{data.token}"
 				dataType: 'json'
 				success: success
 				error: error

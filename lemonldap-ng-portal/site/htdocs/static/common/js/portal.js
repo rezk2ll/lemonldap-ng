@@ -79,10 +79,8 @@ LemonLDAP::NG Portal jQuery scripts
     e = function(j, s, e) {
       return alert(s + " " + e);
     };
-    return delKey("_oidc_consent_time_" + partner, function() {
-      return delKey("_oidc_consent_scope_" + partner, function() {
-        return $("[partner='" + partner + "']").hide();
-      }, e);
+    return delKey("_oidcConsents", partner, function() {
+      return $("[partner='" + partner + "']").hide();
     }, e);
   };
 
@@ -110,7 +108,7 @@ LemonLDAP::NG Portal jQuery scripts
     });
   };
 
-  delKey = function(key, success, error) {
+  delKey = function(key, partner, success, error) {
     return $.ajax({
       type: "GET",
       url: datas['scriptname'] + '/mysession/?gettoken',
@@ -119,7 +117,7 @@ LemonLDAP::NG Portal jQuery scripts
       success: function(data) {
         return $.ajax({
           type: "DELETE",
-          url: datas['scriptname'] + "/mysession/persistent/" + key + "?token=" + data.token,
+          url: datas['scriptname'] + "/mysession/persistent/" + key + "?option=" + partner + "&token=" + data.token,
           dataType: 'json',
           success: success,
           error: error
