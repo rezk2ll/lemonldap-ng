@@ -524,9 +524,9 @@ sub mkOidcConsent {
 
     # Loading existing oidcConsents
     $self->logger->debug("Loading OIDC Consents ...");
-    my @consents = ();
+    my $_consents;
     if ( exists $session->{_oidcConsents} ) {
-        @consents = eval {
+        $_consents = eval {
             from_json( $session->{_oidcConsents}, { allow_nonref => 1 } );
         };
         if ($@) {
@@ -543,7 +543,7 @@ sub mkOidcConsent {
     my $consents = {};
 #####################
 
-    foreach (@consents) {
+    foreach (@$_consents) {
 		if ( defined  {$_}->{rp} ){
         my $rp = {$_}->{rp};
         $consents->{$rp}->{epoch} = $_->{epoch};
