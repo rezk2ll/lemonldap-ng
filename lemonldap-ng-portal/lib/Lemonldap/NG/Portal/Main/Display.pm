@@ -544,8 +544,9 @@ sub mkOidcConsent {
 #####################
 
     foreach (@$_consents) {
-		if ( defined  {$_}->{rp} ){
-        my $rp = {$_}->{rp};
+		if ( defined  $_->{rp} ){
+        my $rp = $_->{rp};
+        		$self->logger->debug("RP $rp Consent found");
         $consents->{$rp}->{epoch} = $_->{epoch};
         $consents->{$rp}->{scope} = $_->{scope};
         $consents->{$rp}->{displayName} =
