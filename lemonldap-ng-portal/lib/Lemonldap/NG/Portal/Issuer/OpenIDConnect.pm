@@ -372,11 +372,12 @@ sub run {
                 my $ask_for_consent = 1;
 
 ########################
-                $req->{sessionInfo}->{_oidcConsents}
+                my $_oidcConsents;
+                my @RPoidcConsent = ();
 
                   # Loading existing oidcConsents
                   $self->logger->debug("Looking for OIDC Consents ...");
-                my $_oidcConsents;
+
                 if ( $req->{sessionInfo}->{_oidcConsents} ) {
                     $_oidcConsents = eval {
                         from_json( $req->{sessionInfo}->{_oidcConsents},
@@ -394,7 +395,7 @@ sub run {
                 }
 
                 # Reading existing RP
-                my @RPoidcConsent = grep { $_->{rp} eq $rp } @$_oidcConsents;
+                @RPoidcConsent = grep { $_->{rp} eq $rp } @$_oidcConsents;
                 unless (@RPoidcConsent) {
                     $self->logger->debug("No Relying Party $rp Consent found");
 
@@ -414,14 +415,14 @@ sub run {
                     my $consent_scope =
                       $req->{sessionInfo}->{"_oidc_consent_scope_$rp"};
 
-                    #if ( $RPoidcConsent[0]->{rp} eq $rp )
+                    #if ( $RPoidcConsent[0]{rp} eq $rp )
                     #{
                     #$ask_for_consent = 0;
 
                     #my $consent_time =
-                    #$RPoidcConsent[0]->{time};
+                    #$RPoidcConsent[0]{time};
                     # my $consent_scope =
-                    # $RPoidcConsent[0]->{scope};
+                    # $RPoidcConsent[0]{scope};
 
                     $self->logger->debug(
 "Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)"
@@ -462,12 +463,12 @@ sub run {
                             }
                         );
 
-                        ###############
+                        ################
 
-                        $RPoidcConsent[0]->{time}  = time;
-                        $RPoidcConsent[0]->{scope} = $oidc_request->{'scope'};
+                        $RPoidcConsent[0]{time}  = time;
+                        $RPoidcConsent[0]{scope} = $oidc_request->{'scope'};
 
-                        push @{$_oidcConsents}, @{$RPoidcConsent};
+                        push @{$_oidcConsents}, @RPoidcConsent;
 
                         #{
                         #type       => 'U2F',
