@@ -32,11 +32,12 @@ Use any of Plack launcher. Example:
 =head1 DESCRIPTION
 
 Lemonldap::NG is a modular Web-SSO based on Apache::Session modules. It
-simplifies the build of a protected area with a few changes in the application.
+provides an easy way to build a secured area to protect applications with
+very few changes.
 
-It manages both authentication and authorization and provides headers for
-accounting. So you can have a full AAA protection for your web space as
-described below.
+Lemonldap::NG manages both authentication and authorization. Furthermore
+it provides headers for accounting. So you can have a full AAA protection
+for your web space as described below.
 
 Lemonldap::NG::Portal provides portal components. See
 L<http://lemonldap-ng.org> for more.
@@ -44,16 +45,16 @@ L<http://lemonldap-ng.org> for more.
 =head1 KINEMATICS
 
 The portal object is based on L<Lemonldap::NG::Handler::Try>: underlying
-handler tries to authenticate user and then follow the routes (auth/unauth)
-declared during initialization.
+handler tries to authenticate user and follows initialized auth / unauth
+routes.
 
 =head2 Initialization
 
-The initialisation process subscribes portal to handler configuration reload and
-ask for handler initialization (L<Lemonldap::NG::Portal::Main::Init>).
-So configuration read is triggered by handler at each reload.
+Initialization process subscribes portal to handler configuration reload and
+requests handler initialization (L<Lemonldap::NG::Portal::Main::Init>).
+So configuration is read by handler at each reload.
 
-During configuration reload, every enabled components are loaded as plugins:
+During configuration reload, each enabled components are loaded as plugins:
 
 =over
 
@@ -65,7 +66,7 @@ During configuration reload, every enabled components are loaded as plugins:
 
 =back
 
-init() is called for each plugin. If one plugin initialization fails (init()
+init() is called for each plugin. If a plugin initialization fails (init()
 returns 0), the portal responds a 500 status code for each request.
 
 See L<Lemonldap::NG::Portal::Main::Plugin> to see how to write modules.
@@ -73,7 +74,7 @@ See L<Lemonldap::NG::Portal::Main::Plugin> to see how to write modules.
 =head2 Main route
 
 The "/" route is declared in L<Lemonldap::NG::Portal::Main::Init>. It points to
-different methods in L<Lemonldap::NG::Portal::Main::Run>. Theses methods choose
+different methods in L<Lemonldap::NG::Portal::Main::Run>. Theses methods select
 methods to call in the process and call do().
 
 do() stores methods to call in $req->steps and launches
@@ -81,18 +82,18 @@ Lemonldap::NG::Portal::Main::Process::process(). This method removes each method
 stored in $req->steps and launches it. If the result is PE_OK, process()
 continues, else it returns the error code.
 
-If the request was an Ajax one, do() responds in JSON format else it manages
-redirection if any. Else it calls
-Lemonldap::NG::Portal::Main::Display::display() to have template and arguments,
-then it launch Lemonldap::NG::Common::PSGI::sendHtml() with them.
+If it is an Ajax request, do() responds in JSON format else it manages
+redirection if any. Else it calls 
+Lemonldap::NG::Portal::Main::Display::display() to load template and arguments,
+and launches Lemonldap::NG::Common::PSGI::sendHtml() using them.
 
 =head1 DEVELOPER INSTRUCTIONS
 
 Portal main object is defined in Lemonldap::NG::Portal::Main::* classes. Other
-components are plugins. Plugins must not store any hash key in the main object.
+components are plugins. Plugins do not have to store any hash key in main object.
 
-Main and plugin keys must be initializated during initialization. They must
-be read-only during receiving requests.
+Main and plugin keys must be set during initialization process. They must
+be read-only during requests receiving.
 
 The L<Lemonldap::NG::Portal::Main::Request> request has fixed keys. A plugin
 that wants to store a temporary key must store it in C<$req-E<gt>data> or use
@@ -100,10 +101,11 @@ defined keys, but it must never create a root key. Plugin keys may have
 explicit names to avoid conflicts.
 
 Whole configuration is always available. It is stored in $self->conf. It must
-not be modified by anyone even during initialization or receiving request
-(during initialization, copy the value in the plugin namespace instead).
+not be modified by any components even during initialization process or 
+receiving request (during initialization, copy the value in the plugin 
+namespace instead).
 
-All plugins can dial with the portal methods using $self->p which points to
+All plugins can access to portal methods using $self->p which points to
 portal main object. Some main methods are mapped to the plugin namespace:
 
 =over
@@ -118,8 +120,7 @@ portal main object. Some main methods are mapped to the plugin namespace:
 
 =head1 SEE ALSO
 
-Most of the documentation is available on the website
-L<http://lemonldap-ng.org>
+Most of the documentation is available on L<http://lemonldap-ng.org> website
 
 =head2 OTHER POD FILES
 
