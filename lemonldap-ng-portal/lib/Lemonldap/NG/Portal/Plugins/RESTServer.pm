@@ -426,12 +426,12 @@ sub delKeyInMySession {
                     }
                 }
                 if ($res) {
-					if ( $dkey !~ /^oidcConsents$/ ) {
+					if ( $dkey !~ /^_oidcConsents$/ ) {
 						$self->p->updatePersistentSession( $req,
 							{ $dkey => undef } );
 						$self->logger->debug("Update session -> delete Key : $dkey");
 						}
-                    elsif ( $dkey =~ /^oidcConsents$/ and defined $option ) {
+                    elsif ( $dkey =~ /^_oidcConsents$/ and defined $option ) {
 						$self->p->updatePersistentSession( $req,
 							{ $dkey => { $option => undef } } );
 						$self->logger->debug("Update session -> delete Key : $dkey with Option : $option");
