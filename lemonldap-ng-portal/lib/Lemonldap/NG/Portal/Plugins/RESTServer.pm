@@ -442,7 +442,8 @@ sub delKeyInMySession {
                     }
                     else {
                         $self->logger->error(
-                            'Update session request with invalid Key or Option');
+                            'Update session request with invalid Key or Option'
+                        );
                     }
                 }
             }

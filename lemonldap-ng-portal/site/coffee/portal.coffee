@@ -71,16 +71,6 @@ removeOidcConsent = (partner) ->
 	#		alert "#{s} #{e}"
 	e = (j,s,e) ->
 		alert "#{s} #{e}"
-	#delKey "_oidc_consent_time_#{partner}"
-		## Success
-		#, () ->
-			#delKey "_oidc_consent_scope_#{partner}"
-				## Success
-				#, () ->
-					#$("[partner='#{partner}']").hide()
-				## Error
-				#, e
-		#, e
 	delKey "_oidcConsents",partner
 		# Success
 		, () ->

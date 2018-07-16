@@ -437,17 +437,17 @@ sub run {
                     if (    $req->param('confirm')
                         and $req->param('confirm') == 1 )
                     {
-						############
-                        $self->p->updatePersistentSession( $req,
-                            { "_oidc_consent_time_$rp" => time } );
-                        $self->p->updatePersistentSession(
-                            $req,
-                            {
-                                "_oidc_consent_scope_$rp" =>
-                                  $oidc_request->{'scope'}
-                            }
-                        );
-                        ############
+                        #############
+                        #$self->p->updatePersistentSession( $req,
+                        #{ "_oidc_consent_time_$rp" => time } );
+                        #$self->p->updatePersistentSession(
+                        #$req,
+                        #{
+                        #"_oidc_consent_scope_$rp" =>
+                        #$oidc_request->{'scope'}
+                        #}
+                        #);
+                        #############
                         $RPoidcConsent[0]{epoch} = time;
                         $RPoidcConsent[0]{scope} = $oidc_request->{'scope'};
                         push @{$_oidcConsents}, @RPoidcConsent;
