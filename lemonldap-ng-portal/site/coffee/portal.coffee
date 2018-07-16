@@ -111,7 +111,7 @@ setKey = (key,val,success,error) ->
 				success: success
 				error: error
 
-delKey = (key,partner,success,error) ->
+delKey = (key,option,success,error) ->
 	$.ajax
 		type: "GET"
 		url: datas['scriptname'] + '/mysession/?gettoken'
@@ -121,8 +121,7 @@ delKey = (key,partner,success,error) ->
 		success: (data) ->
 			$.ajax
 				type: "DELETE"
-				url: "#{datas['scriptname']}/mysession/persistent/#{key}?option=#{partner}&token=#{data.token}"
-				#url: "#{datas['scriptname']}/mysession/persistent/#{key}?token=#{data.token}"
+				url: "#{datas['scriptname']}/mysession/persistent/#{key}?option=#{option}&token=#{data.token}"
 				dataType: 'json'
 				success: success
 				error: error

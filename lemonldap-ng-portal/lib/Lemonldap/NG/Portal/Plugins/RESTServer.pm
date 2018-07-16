@@ -404,9 +404,10 @@ sub updateMySession {
 
 sub delKeyInMySession {
     my ( $self, $req ) = @_;
-    my $res   = 0;
-    my $mKeys = [];
-    my $dkey  = $req->param('key');
+    my $res    = 0;
+    my $mKeys  = [];
+    my $dkey   = $req->param('key');
+    my $option = $req->param('option');
     if ( my $token = $req->param('token') ) {
         if ( $self->ott->getToken($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
@@ -424,8 +425,17 @@ sub delKeyInMySession {
                     }
                 }
                 if ($res) {
-                    $self->p->updatePersistentSession( $req,
-                        { $dkey => undef } );
+					if ( $dkey !~ /^oidcConsents$/ ) {
+						$self->p->updatePersistentSession( $req,
+							{ $dkey => undef } )
+						}
+                    elsif ( $dkey =~ /^oidcConsents$/ and defined $option ) {
+						$self->p->updatePersistentSession( $req,
+							{ $dkey => { $option => undef } } )
+					}
+					else {
+						$self->logger->error('Update session request with invalid option')
+					}       
                 }
             }
         }
