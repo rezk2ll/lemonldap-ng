@@ -384,7 +384,8 @@ sub updateMySession {
                         push @$mKeys, $key;
                         $self->p->updatePersistentSession( $req,
                             { $key => $v } );
-                        $self->logger->debug("Request to update session -> Key : $key");
+                        $self->logger->debug(
+                            "Request to update session -> Key : $key");
                     }
                 }
             }
@@ -426,19 +427,23 @@ sub delKeyInMySession {
                     }
                 }
                 if ($res) {
-					if ( $dkey !~ /^_oidcConsents$/ ) {
-						$self->p->updatePersistentSession( $req,
-							{ $dkey => undef } );
-						$self->logger->debug("Update session -> delete Key : $dkey");
-						}
+                    if ( $dkey !~ /^_oidcConsents$/ ) {
+                        $self->p->updatePersistentSession( $req,
+                            { $dkey => undef } );
+                        $self->logger->debug(
+                            "Update session -> delete Key : $dkey");
+                    }
                     elsif ( $dkey =~ /^_oidcConsents$/ and defined $option ) {
-						$self->p->updatePersistentSession( $req,
-							{ $dkey => { $option => undef } } );
-						$self->logger->debug("Update session -> delete Key : $dkey with Option : $option");
-					}
-					else {
-						$self->logger->error('Update session request with invalid option')
-					}       
+                        $self->p->updatePersistentSession( $req,
+                            { $dkey => { $option => undef } } );
+                        $self->logger->debug(
+"Update session -> delete Key : $dkey with Option : $option"
+                        );
+                    }
+                    else {
+                        $self->logger->error(
+                            'Update session request with invalid Key or Option');
+                    }
                 }
             }
         }
