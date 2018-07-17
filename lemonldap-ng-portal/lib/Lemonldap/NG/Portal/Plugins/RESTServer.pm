@@ -434,10 +434,10 @@ sub delKeyInMySession {
                             "Update session -> delete Key : $dkey");
                     }
                     elsif ( $dkey =~ /^_oidcConsents$/ and defined $sub ) {
-                        $self->p->updatePersistentSession( $req,
-                            { $dkey => { $sub => undef } } );
+						$tof = $req->userData->{ $self->conf->{whatToTrace} };
+                        $self->p->updatePersistentSession( $req, { $dkey => 'TOF' } );
                         $self->logger->debug(
-"Update session -> delete Key : $dkey with Option : $sub"
+"Update session -> delete Key : $dkey with Option : $sub & TOTOF = $tof"
                         );
                     }
                     else {
