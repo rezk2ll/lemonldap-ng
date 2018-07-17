@@ -101,7 +101,8 @@
     ldap: ['dn'],
     BrowserID: ['_browserIdAnswer', '_browserIdAnswerRaw'],
     OpenIDConnect: ['_oidc_id_token', '_oidc_OP', '_oidc_access_token'],
-    sfaTitle: ['_2fDevices']
+    sfaTitle: ['_2fDevices'],
+    oidcConsents: ['_oidcConsents']
   };
 
   menu = {
@@ -186,7 +187,7 @@
       $scope.displaySession = function(scope) {
         var sessionId, transformSession;
         transformSession = function(session) {
-          var _insert, _stToStr, array, arrayDate, attr, attrs, category, epoch, i, id, j, k, key, l, len, len1, len2, len3, m, name, pattern, ref, ref1, res, sfDevice, subres, time, title, tmp, value;
+          var _insert, _stToStr, array, arrayDate, attr, attrs, category, epoch, i, id, j, k, key, l, len, len1, len2, len3, len4, m, name, o, oidcConsent, pattern, ref, ref1, res, sfDevice, subres, time, title, tmp, value;
           _stToStr = function(s) {
             return s;
           };
@@ -270,6 +271,34 @@
                     });
                   }
                   delete session[attr];
+                } else if (session[attr].toString().match(/"rp":\s*"\w+"/)) {
+                  subres.push({
+                    title: "rp",
+                    value: "scope",
+                    epoch: "date"
+                  });
+                  array = JSON.parse(session[attr]);
+                  for (k = 0, len2 = array.length; k < len2; k++) {
+                    oidcConsent = array[k];
+                    for (key in oidcConsent) {
+                      value = oidcConsent[key];
+                      if (key === 'rp') {
+                        title = value;
+                      }
+                      if (key === 'scope') {
+                        name = value;
+                      }
+                      if (key === 'epoch') {
+                        epoch = value;
+                      }
+                    }
+                    subres.push({
+                      title: title,
+                      value: name,
+                      epoch: epoch
+                    });
+                  }
+                  delete session[attr];
                 } else if (session[attr].toString().match(/\w+/)) {
                   subres.push({
                     title: attr,
@@ -297,8 +326,8 @@
             tmp = [];
             if (session._loginHistory.successLogin) {
               ref = session._loginHistory.successLogin;
-              for (k = 0, len2 = ref.length; k < len2; k++) {
-                l = ref[k];
+              for (m = 0, len3 = ref.length; m < len3; m++) {
+                l = ref[m];
                 tmp.push({
                   t: l._utime,
                   title: $scope.localeDate(l._utime),
@@ -308,8 +337,8 @@
             }
             if (session._loginHistory.failedLogin) {
               ref1 = session._loginHistory.failedLogin;
-              for (m = 0, len3 = ref1.length; m < len3; m++) {
-                l = ref1[m];
+              for (o = 0, len4 = ref1.length; o < len4; o++) {
+                l = ref1[o];
                 tmp.push({
                   t: l._utime,
                   title: $scope.localeDate(l._utime),

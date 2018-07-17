@@ -85,6 +85,7 @@ categories =
     BrowserID:          ['_browserIdAnswer', '_browserIdAnswerRaw']
     OpenIDConnect:      ['_oidc_id_token', '_oidc_OP', '_oidc_access_token']
     sfaTitle:			['_2fDevices']
+    oidcConsents:		['_oidcConsents']
 
 # Menu entries
 menu =
@@ -227,6 +228,40 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									value: name
 									epoch: epoch
 							delete session[attr]
+						else if session[attr].toString().match(/"rp":\s*"\w+"/)
+							subres.push
+								title: "rp"
+								value: "scope"
+								epoch: "date"
+							array = JSON.parse(session[attr])
+							for oidcConsent in array
+								for key, value of oidcConsent
+									if key == 'rp'
+										title = value
+									if key == 'scope'
+										name = value
+									if key == 'epoch'
+										epoch = value
+								subres.push
+									title: title
+									value: name
+									epoch: epoch
+							delete session[attr]
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						else if session[attr].toString().match(/\w+/)
 							subres.push
 								title: attr
