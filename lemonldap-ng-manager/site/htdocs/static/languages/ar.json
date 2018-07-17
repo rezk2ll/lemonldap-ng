@@ -455,6 +455,7 @@
 "oldValue":"قيمة قديمة",
 "on":"تنشيط",
 "oidcAuthnLevel":"مستوى إثبات الهوية",
+"oidcConsents":"OpenID Connect Consents",
 "oidcOP":" أوبين أيدي كونيكت بروفيدر",
 "oidcOPMetaDataExportedVars":"السمات المصدرة",
 "oidcOPMetaDataJSON":"البيانات الوصفية",

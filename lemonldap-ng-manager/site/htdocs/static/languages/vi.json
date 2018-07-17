@@ -455,6 +455,7 @@
 "oldValue":"Giá trị cũ",
 "on":"Vào",
 "oidcAuthnLevel":"Mức xác thực",
+"oidcConsents":"OpenID Connect Consents",
 "oidcOP":"Bộ cung cấp Kết nối OpenID",
 "oidcOPMetaDataExportedVars":"Biến đã được xuất",
 "oidcOPMetaDataJSON":"Mô-tả dữ liệu",

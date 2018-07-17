@@ -455,6 +455,7 @@
 "oldValue":"Old value",
 "on":"On",
 "oidcAuthnLevel":"Authentication level",
+"oidcConsents":"OpenID Connect Consents",
 "oidcOP":"OpenID Connect Provider",
 "oidcOPMetaDataExportedVars":"Exported attributes",
 "oidcOPMetaDataJSON":"Metadata",
