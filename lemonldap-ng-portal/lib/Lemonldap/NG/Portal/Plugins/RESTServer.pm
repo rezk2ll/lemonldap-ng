@@ -351,7 +351,7 @@ sub mysession {
 
 sub getMyKey {
     my ( $self, $req, $key ) = @_;
-    $self->logger->debug("Request to get personal session info -> Key : $key");
+    #$self->logger->debug("Request to get personal session info -> Key : $key");
     return $self->session(
         $req,
         $req->userData->{_session_id},
@@ -434,7 +434,7 @@ sub delKeyInMySession {
                             "Update session -> delete Key : $dkey");
                     }
                     elsif ( $dkey =~ /^_oidcConsents$/ and defined $sub ) {
-						$tof = $req->userData->{ $self->conf->{whatToTrace} };
+						my $tof = $req->userData->{ $self->conf->{whatToTrace} };
                         $self->p->updatePersistentSession( $req, { $dkey => 'TOF' } );
                         $self->logger->debug(
 "Update session -> delete Key : $dkey with Option : $sub & TOTOF = $tof"
