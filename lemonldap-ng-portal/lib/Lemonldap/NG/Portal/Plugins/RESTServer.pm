@@ -437,12 +437,12 @@ sub delKeyInMySession {
 						my $tof = $req->userData->{ $self->conf->{whatToTrace} };
                         $self->p->updatePersistentSession( $req, { $dkey => 'TOF' } );
                         $self->logger->debug(
-"Update session -> delete Key : $dkey with Option : $sub & TOTOF = $tof"
+"Update session -> delete Key : $dkey with Sub : $sub & TOTOF = $tof"
                         );
                     }
                     else {
                         $self->logger->error(
-                            'Update session request with invalid Key or Option'
+                            'Update session request with invalid Key or Sub'
                         );
                     }
                 }
