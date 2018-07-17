@@ -351,6 +351,7 @@ sub mysession {
 
 sub getMyKey {
     my ( $self, $req, $key ) = @_;
+
     #$self->logger->debug("Request to get personal session info -> Key : $key");
     return $self->session(
         $req,
@@ -434,16 +435,43 @@ sub delKeyInMySession {
                             "Update session -> delete Key : $dkey");
                     }
                     elsif ( $dkey =~ /^_oidcConsents$/ and defined $sub ) {
-						my $tof = $req->userData->{ $self->conf->{whatToTrace} };
-                        $self->p->updatePersistentSession( $req, { $dkey => 'TOF' } );
+
+                        # Read existing oidcConsents
+                        $self->logger->debug("Looking for OIDC Consents ...");
+                        my $_oidcConsents;
+                        if ( $req->userData->{_oidcConsents} ) {
+                            $_oidcConsents = eval {
+                                from_json( $req->userData->{_oidcConsents},
+                                    { allow_nonref => 1 } );
+                            };
+                            if ($@) {
+                                $self->logger->error(
+                                    "Corrupted session (_oidcConsents): $@");
+                                return $self->p->sendError( $req,
+                                    "Corrupted session", 500 );
+                            }
+                        }
+                        else {
+                            $self->logger->debug("No OIDC Consents found");
+                            $_oidcConsents = [];
+                        }
+                        my @keep = ();
+                        while (@$_oidcConsents) {
+                            my $element = shift @$_oidcConsents;
+                            $self->logger->debug(
+                                "Looking for OIDC Consent to delete ...");
+                            push @keep, $element
+                              unless ( $element->{rp} eq $sub );
+                        }
+                        $self->p->updatePersistentSession( $req,
+                            { _oidcConsents => to_json( \@keep ) } );
                         $self->logger->debug(
-"Update session -> delete Key : $dkey with Sub : $sub & TOTOF = $tof"
+"Update session -> delete Key : $dkey with Sub : $sub"
                         );
                     }
                     else {
                         $self->logger->error(
-                            'Update session request with invalid Key or Sub'
-                        );
+                            'Update session request with invalid Key or Sub');
                     }
                 }
             }
