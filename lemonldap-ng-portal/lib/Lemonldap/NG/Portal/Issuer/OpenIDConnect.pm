@@ -391,10 +391,20 @@ sub run {
                     $self->logger->debug("No OIDC Consent found");
                     $_oidcConsents = [];
                 }
-
-                # Exclude revoked consents
-                @$_oidcConsents = map ( { defined $_->{rp} } @$_oidcConsents );
-
+				
+				############
+				### Exclude revoked consents
+				#my @keep = ();
+				#while (@$_oidcConsents) {
+					#my $element = shift @$_oidcConsents;
+					#$self->logger->debug("Looking for revoked consents to delete ...");
+					#push @keep, $element if ( defined $element->{rp} and defined $element->{epoch} and defined $element->{scope} );
+				#}
+				#@$_oidcConsents = @keep;
+				
+				############
+				
+				
                 # Read existing RP
                 @RPoidcConsent = grep { $_->{rp} eq $rp } @$_oidcConsents;
                 unless (@RPoidcConsent) {
