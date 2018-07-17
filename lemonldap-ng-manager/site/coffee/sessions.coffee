@@ -228,7 +228,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									value: name
 									epoch: epoch
 							delete session[attr]
-						else if session[attr].toString().match(/"rp":\s*"\w+"/)
+						else if session[attr].toString().match(/"rp":\s*"[\w-]+"/)
 							subres.push
 								title: "rp"
 								value: "scope"
