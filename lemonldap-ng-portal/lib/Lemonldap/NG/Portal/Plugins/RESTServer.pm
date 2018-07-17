@@ -45,6 +45,7 @@ package Lemonldap::NG::Portal::Plugins::RESTServer;
 
 use strict;
 use Mouse;
+use JSON qw(from_json to_json);
 use MIME::Base64;
 
 our $VERSION = '2.0.0';
