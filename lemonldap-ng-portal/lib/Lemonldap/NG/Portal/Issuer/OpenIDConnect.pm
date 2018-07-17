@@ -394,7 +394,7 @@ sub run {
 
                 # Exclude revoked consents
                 @$_oidcConsents = map ( { defined $_->{rp} } @$_oidcConsents );
-                
+
                 # Read existing RP
                 @RPoidcConsent = grep { $_->{rp} eq $rp } @$_oidcConsents;
                 unless (@RPoidcConsent) {

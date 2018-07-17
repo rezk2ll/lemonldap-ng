@@ -406,10 +406,10 @@ sub updateMySession {
 
 sub delKeyInMySession {
     my ( $self, $req ) = @_;
-    my $res    = 0;
-    my $mKeys  = [];
-    my $dkey   = $req->param('key');
-    my $sub = $req->param('sub');
+    my $res   = 0;
+    my $mKeys = [];
+    my $dkey  = $req->param('key');
+    my $sub   = $req->param('sub');
     if ( my $token = $req->param('token') ) {
         if ( $self->ott->getToken($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
