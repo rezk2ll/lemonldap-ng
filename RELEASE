@@ -22,7 +22,7 @@ Before release
 
 - Update documentation:
 
-  $ ./script/parameters-for-wiki.pl >/tmp/prmlist.txt
+  $ ./scripts/parameters-for-wiki.pl >/tmp/prmlist.txt
 
   Replace https://lemonldap-ng.org/documentation/X.X/parameterlist by
   /tmp/prmlist.txt content
