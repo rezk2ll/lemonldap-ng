@@ -352,8 +352,8 @@ sub mysession {
 
 sub getMyKey {
     my ( $self, $req, $key ) = @_;
-
-    #$self->logger->debug("Request to get personal session info -> Key : $key");
+    $key ||= '';
+    $self->logger->debug("Request to get personal session info -> Key : $key");
     return $self->session(
         $req,
         $req->userData->{_session_id},
@@ -453,7 +453,7 @@ sub delKeyInMySession {
                             }
                         }
                         else {
-                            $self->logger->debug("No OIDC Consents found");
+                            $self->logger->debug("No OIDC Consent found");
                             $_oidcConsents = [];
                         }
                         my @keep = ();

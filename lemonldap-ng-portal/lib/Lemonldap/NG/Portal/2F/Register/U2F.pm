@@ -178,9 +178,6 @@ sub run {
         foreach ( @{ $req->data->{crypter} } ) {
             my $k = push @rk,
               { keyHandle => $_->{keyHandle}, version => $data->{version} };
-
-            #{ keyHandle => $_->{keyHandle}, version => $challenge->{version} };
-
         }
 
         # Serialize data
