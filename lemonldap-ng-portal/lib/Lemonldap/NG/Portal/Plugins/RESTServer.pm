@@ -409,7 +409,7 @@ sub delKeyInMySession {
     my $res    = 0;
     my $mKeys  = [];
     my $dkey   = $req->param('key');
-    my $option = $req->param('option');
+    my $sub = $req->param('sub');
     if ( my $token = $req->param('token') ) {
         if ( $self->ott->getToken($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
@@ -433,11 +433,11 @@ sub delKeyInMySession {
                         $self->logger->debug(
                             "Update session -> delete Key : $dkey");
                     }
-                    elsif ( $dkey =~ /^_oidcConsents$/ and defined $option ) {
+                    elsif ( $dkey =~ /^_oidcConsents$/ and defined $sub ) {
                         $self->p->updatePersistentSession( $req,
-                            { $dkey => { $option => undef } } );
+                            { $dkey => { $sub => undef } } );
                         $self->logger->debug(
-"Update session -> delete Key : $dkey with Option : $option"
+"Update session -> delete Key : $dkey with Option : $sub"
                         );
                     }
                     else {

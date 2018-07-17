@@ -108,7 +108,7 @@ LemonLDAP::NG Portal jQuery scripts
     });
   };
 
-  delKey = function(key, partner, success, error) {
+  delKey = function(key, option, success, error) {
     return $.ajax({
       type: "GET",
       url: datas['scriptname'] + '/mysession/?gettoken',
@@ -117,7 +117,7 @@ LemonLDAP::NG Portal jQuery scripts
       success: function(data) {
         return $.ajax({
           type: "DELETE",
-          url: datas['scriptname'] + "/mysession/persistent/" + key + "?option=" + partner + "&token=" + data.token,
+          url: datas['scriptname'] + "/mysession/persistent/" + key + "?option=" + option + "&token=" + data.token,
           dataType: 'json',
           success: success,
           error: error

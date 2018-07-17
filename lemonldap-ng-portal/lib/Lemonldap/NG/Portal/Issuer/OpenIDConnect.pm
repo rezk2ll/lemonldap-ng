@@ -392,7 +392,10 @@ sub run {
                     $_oidcConsents = [];
                 }
 
-                # Reading existing RP
+                # Exclude revoked consents
+                @$_oidcConsents = map ( { defined $_->{rp} } @$_oidcConsents );
+                
+                # Read existing RP
                 @RPoidcConsent = grep { $_->{rp} eq $rp } @$_oidcConsents;
                 unless (@RPoidcConsent) {
                     $self->logger->debug("No Relying Party $rp Consent found");
