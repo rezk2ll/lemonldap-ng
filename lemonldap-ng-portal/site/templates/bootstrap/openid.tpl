@@ -23,7 +23,7 @@
     </TMPL_IF>
 
     <div class="buttons">
-      <a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive btn btn-success">
+      <a href="<TMPL_VAR NAME="PORTAL_URL">/?cancel=1" class="positive btn btn-success">
         <span class="glyphicon glyphicon-ok"></span>
         <span trspan="goToPortal">Go to portal</span>
       </a>
