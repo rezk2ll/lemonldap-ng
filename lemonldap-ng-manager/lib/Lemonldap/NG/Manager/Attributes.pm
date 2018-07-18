@@ -1603,7 +1603,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'mySessionAuthorizedRWKeys' => {
             'default' =>
-              [ '_appsListOrder', '_oidcConnectedRP', '_oidc_consent_*' ],
+              [ '_appsListOrder', '_oidcConnectedRP', '_oidcConsents' ],
             'type' => 'array'
         },
         'nginxCustomHandlers' => {
