@@ -93,11 +93,12 @@
     <div ng-if="!node.nodes">
 	   <th ng-if="node.title!='UBK' && node.title!='TOTP' && node.title!='U2F'">{{translate(node.title)}}</th>
        <td ng-if="node.title!='type' && node.title!='UBK' && node.title!='TOTP' && node.title!='U2F' && node.title!='rp'" >${{node.title}}</td>
-	   <td ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'">{{node.title}}</td>
+	   <!--<td ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'">{{node.title}}</td>-->
+	   <td class="col-md-3" ng-if="node.title!='type'">{{node.title}}</td>
 	   <th ng-if="node.title=='type' || node.title=='rp'">{{translate(node.value)}}</th>
-	   <td class="col-md-3" ng-if="node.title!='type'" >{{node.value}}</td>
+	   <td class="col-md-3" ng-if="node.title!='type'  && node.title!='rp'" >{{node.value}}</td>
 	   <th ng-if="node.title=='type' || node.title=='rp'">{{translate(node.epoch)}}</th>
-	   <td class="col-md-3" ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F' || node.title=='rp'">{{localeDate(node.epoch)}}</td>
+	   <td class="col-md-3" ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F' || node.value=>'1500000000'">{{localeDate(node.epoch)}}</td>
 	   <td></td>
     </div>
     
