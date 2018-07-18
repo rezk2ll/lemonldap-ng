@@ -247,7 +247,8 @@
                   subres.push({
                     title: "type",
                     value: "name",
-                    epoch: "date"
+                    epoch: "date",
+                    type: "2fa"
                   });
                   array = JSON.parse(session[attr]);
                   for (j = 0, len1 = array.length; j < len1; j++) {
@@ -267,7 +268,8 @@
                     subres.push({
                       title: title,
                       value: name,
-                      epoch: epoch
+                      epoch: epoch,
+                      type: ""
                     });
                   }
                   delete session[attr];
@@ -275,7 +277,8 @@
                   subres.push({
                     title: "rp",
                     value: "scope",
-                    epoch: "date"
+                    epoch: "date",
+                    type: "rp"
                   });
                   array = JSON.parse(session[attr]);
                   for (k = 0, len2 = array.length; k < len2; k++) {
@@ -295,7 +298,8 @@
                     subres.push({
                       title: title,
                       value: name,
-                      epoch: epoch
+                      epoch: epoch,
+                      type: ""
                     });
                   }
                   delete session[attr];

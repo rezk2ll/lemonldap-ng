@@ -214,6 +214,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 								title: "type"
 								value: "name"
 								epoch: "date"
+								type: "2fa"
 							array = JSON.parse(session[attr])
 							for sfDevice in array
 								for key, value of sfDevice
@@ -227,12 +228,14 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									title: title
 									value: name
 									epoch: epoch
+									type: ""
 							delete session[attr]
 						else if session[attr].toString().match(/"rp":\s*"[\w-]+"/)
 							subres.push
 								title: "rp"
 								value: "scope"
 								epoch: "date"
+								type: "rp"
 							array = JSON.parse(session[attr])
 							for oidcConsent in array
 								for key, value of oidcConsent
@@ -246,6 +249,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									title: title
 									value: name
 									epoch: epoch
+									type: ""
 							delete session[attr]
 						
 						
