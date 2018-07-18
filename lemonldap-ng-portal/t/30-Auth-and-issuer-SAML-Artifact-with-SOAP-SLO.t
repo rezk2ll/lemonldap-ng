@@ -9,7 +9,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 17;
+my $maintests = 14;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -63,29 +63,6 @@ SKIP: {
             '/', accept => 'text/html',
         ),
         'Unauth SP request'
-    );
-    expectOK($res);
-    ok(
-        $res->[2]->[0] =~
-          /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,
-        'Found confirm key'
-      )
-      or explain(
-        $res->[2],
-'<input type="hidden" id="confirm" name="confirm" value="<base64 value>" />'
-      );
-    my $confirm = $1;
-
-    # Choose idp on sp
-    ok(
-        $res = $sp->_post(
-            '/',
-            IO::String->new(
-                "confirm=$confirm&idp=http://auth.idp.com/saml/metadata"),
-            accept => 'text/html',
-            length => length($confirm) + 46,
-        ),
-        'Select IDP'
     );
     ok( expectCookie( $res, 'lemonldapidp' ), 'IDP cookie defined' )
       or explain(
@@ -201,18 +178,8 @@ SKIP: {
         ),
         'Test if user is reject on SP'
     );
-    expectOK($res);
-    ok(
-        $res->[2]->[0] =~
-          /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,
-        'Found confirm key'
-      )
-      or explain(
-        $res->[2],
-'<input type="hidden" id="confirm" name="confirm" value="<base64 value>" />'
-      );
-
-    #print STDERR Dumper($res);
+    expectRedirection( $res,
+        qr#^http://auth.idp.com(/saml/singleSignOnArtifact)\?(SAMLart=.+)# );
 }
 
 count($maintests);

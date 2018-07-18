@@ -10,7 +10,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 18;
+my $maintests = 16;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -50,20 +50,7 @@ SKIP: {
         ),
         'Unauth SP request'
     );
-    expectOK($res);
-    my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'confirm' );
-    $query .= '&idp=http://auth.idp.com/saml/metadata';
-
-    # Choose idp on sp
-    ok(
-        $res = $sp->_post(
-            '/',
-            IO::String->new($query),
-            accept => 'text/html',
-            length => length($query),
-        ),
-        'Select IDP'
-    );
+    my ( $host, $url, $query );
     ok(
         expectCookie( $res, 'lemonldapidp' ) eq
           'http://auth.idp.com/saml/metadata',
@@ -201,18 +188,8 @@ qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
         ),
         'Test if user is reject on SP'
     );
-    expectOK($res);
-    ok(
-        $res->[2]->[0] =~
-          /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,
-        'Found confirm key'
-      )
-      or explain(
-        $res->[2],
-'<input type="hidden" id="confirm" name="confirm" value="<base64 value>" />'
-      );
-
-    #print STDERR Dumper($res);
+    expectRedirection( $res,
+        qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 }
 
 count($maintests);

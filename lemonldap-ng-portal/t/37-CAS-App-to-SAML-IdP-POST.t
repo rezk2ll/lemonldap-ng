@@ -10,7 +10,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 12;
+my $maintests = 11;
 my $debug     = 'error';
 my ( $idp, $proxy, $app, $res );
 my %handlerOR = ( idp => [], proxy => [], app => [] );
@@ -98,18 +98,6 @@ SKIP: {
     my $proxyPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     my ( $host, $tmp );
-    ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
-    ok(
-        $res = $proxy->_post(
-            $url,
-            IO::String->new($query),
-            length => length($query),
-            accept => 'text/html',
-            cookie =>
-              "lemonldapidp=http://auth.idp.com/saml/metadata;$proxyPdata"
-        ),
-        'Confirm IdP'
-    );
     ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn',
         'SAMLRequest' );

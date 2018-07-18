@@ -11,7 +11,7 @@ BEGIN {
 }
 eval { unlink 't/userdb.db' };
 
-my $maintests = 15;
+my $maintests = 13;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -73,29 +73,6 @@ SKIP: {
             '/', accept => 'text/html',
         ),
         'Unauth SP request'
-    );
-    expectOK($res);
-    ok(
-        $res->[2]->[0] =~
-          /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,
-        'Found confirm key'
-      )
-      or explain(
-        $res->[2],
-'<input type="hidden" id="confirm" name="confirm" value="<base64 value>" />'
-      );
-    my $confirm = $1;
-
-    # Choose idp on sp
-    ok(
-        $res = $sp->_post(
-            '/',
-            IO::String->new(
-                "confirm=$confirm&idp=http://auth.idp.com/saml/metadata"),
-            accept => 'text/html',
-            length => length($confirm) + 46,
-        ),
-        'Select IDP'
     );
     ok( expectCookie( $res, 'lemonldapidp' ), 'IDP cookie defined' )
       or explain(

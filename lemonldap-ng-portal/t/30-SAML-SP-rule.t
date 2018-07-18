@@ -10,7 +10,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 8;
+my $maintests = 7;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -50,20 +50,6 @@ SKIP: {
         ),
         'Unauth SP request'
     );
-    expectOK($res);
-    my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'confirm' );
-    $query .= '&idp=http://auth.idp.com/saml/metadata';
-
-    # Choose idp on sp
-    ok(
-        $res = $sp->_post(
-            '/',
-            IO::String->new($query),
-            accept => 'text/html',
-            length => length($query),
-        ),
-        'Select IDP'
-    );
     ok(
         expectCookie( $res, 'lemonldapidp' ) eq
           'http://auth.idp.com/saml/metadata',
@@ -73,7 +59,7 @@ SKIP: {
         $res->[1],
 'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
       );
-    ( $url, $query ) = expectRedirection( $res,
+    my ( $url, $query ) = expectRedirection( $res,
         qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
     # Push SAML request to IdP
