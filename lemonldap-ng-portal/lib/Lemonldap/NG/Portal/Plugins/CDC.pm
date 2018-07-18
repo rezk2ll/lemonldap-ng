@@ -1,8 +1,3 @@
-## @file
-# Module for SAML Common Domain Cookie Support
-
-## @class Lemonldap::NG::Portal::CDC
-# Class for SAML Common Domain Cookie Support
 package Lemonldap::NG::Portal::CDC;
 
 use strict;
@@ -12,7 +7,7 @@ use Lemonldap::NG::Common::FormEncode;
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Common::PSGI';
+extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 # PROPERTIES
 
@@ -26,19 +21,8 @@ has cdc_values       => ( is => 'rw' );
 # INITIALIZATION
 
 sub init {
-    my ( $self, $args ) = @_;
-    my $tmp = Lemonldap::NG::Common::Conf->new( $args->{configStorage} );
-    unless ($tmp) {
-        $self->error(
-            "Unable to build configuration: $Lemonldap::NG::Common::Conf::msg");
-        return 0;
-    }
-    my $conf = $tmp->getConf();
-    unless ( ref($conf) ) {
-        $self->error(
-            "Unable to load configuration: $Lemonldap::NG::Common::Conf::msg");
-        return 0;
-    }
+    my ($self) = @_;
+    my $conf = $self->conf;
     $self->cdc_name( $conf->{samlCommonDomainCookieName} || '_saml_idp' );
     $self->cdc_domain( $conf->{samlCommonDomainCookieDomain} );
     $self->logger->debug( "[CDC] Cookie name: " . $self->cdc_name );
@@ -48,13 +32,12 @@ sub init {
     foreach (qw(httpOnly cookieExpiration oldStyleUrl)) {
         $self->$_( $conf->{$_} );
     }
+    $self->addAuthRoute( cdc => 'run' );
+    $self->addUnauthRoute( cdc => 'run' );
     return 1;
 }
 
-## @method int process()
-# Main method to process CDC requests
-# @return portal error code
-sub handler {
+sub run {
     my ( $self, $req ) = @_;
     my $cdc_idp    = "";
     my $cdc_cookie = "";
@@ -186,72 +169,7 @@ sub handler {
         ],
         ['OK']
     ];
+
 }
 
 1;
-
-__END__
-
-=head1 NAME
-
-=encoding utf8
-
-Lemonldap::NG::Portal::CDC - Manage SAML Common Domain Cookie
-
-=head1 SYNOPSIS
-
-Choose any L<Plack> method. CGI example:
-
-  #!/usr/bin/env plackup
-  
-  use Lemonldap::NG::Portal::CDC;
-  
-  # This must be the last instruction ! See PSGI for more
-  Lemonldap::NG::Portal::CDC->run($opts);
-
-=head1 DESCRIPTION
-
-Lemonldap::NG::Portal::CDC - Manage SAML Common Domain Cookie
-
-See L<http://lemonldap-ng.org> for more.
-
-=head1 SEE ALSO
-
-L<http://lemonldap-ng.org/>
-
-=head1 AUTHORS
-
-=over
-
-=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
-
-=back
-
-=head1 BUG REPORT
-
-Use OW2 system to report bug or ask for features:
-L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
-
-=head1 DOWNLOAD
-
-Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
-
-=head1 COPYRIGHT AND LICENSE
-
-See COPYING file for details.
-
-This library is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see L<http://www.gnu.org/licenses/>.
-
-=cut
