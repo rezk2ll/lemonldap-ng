@@ -92,7 +92,7 @@
     </div>
     <div ng-if="!node.nodes">
        <th ng-if="node.td!='1'">{{translate(node.title)}}</th>
-       <td ng-if="node.td=='1' && node.title!='TOTP' && node.title!='UBK' && node.title!='U2F'">{{node.title}}</td>
+       <td ng-if="node.td=='1'">{{node.title}}</td>
        <th ng-if="node.title=='type' || node.title=='rp'">{{translate(node.value)}}</th>
        <td class="col-md-3" ng-if="node.title!='type' && node.title!='rp'" >{{node.value}}</td>
        <th ng-if="node.title=='type' || node.title=='rp'">{{translate(node.epoch)}}</th>
