@@ -10,7 +10,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 26;
+my $maintests = 25;
 my $debug     = 'error';
 my ( $op, $rp, $sp, $res );
 my %handlerOR = ( op => [], rp => [], sp => [] );
@@ -170,17 +170,6 @@ SKIP: {
         ),
         'Try SAML SP'
     );
-    ( $host, $url, $query ) = expectForm( $res, '#', undef, 'confirm' );
-    ok(
-        $res = $sp->_post(
-            '/',
-            IO::String->new($query),
-            length => length($query),
-            accept => 'text/html',
-            cookie => 'lemonldapidp=http://auth.op.com/saml/metadata'
-        ),
-        'Confirm IdP'
-    );
     ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.op.com', '/saml/singleSignOn',
         'SAMLRequest' );
@@ -333,10 +322,7 @@ m#iframe src="http://auth.op.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         'Test if user is reject on SP'
     );
     expectOK($res);
-    expectForm( $res, '#', undef, 'confirm', 'idp' );
-
-    #print STDERR Dumper($res);
-
+    expectAutoPost( $res, 'auth.op.com', '/saml/singleSignOn', 'SAMLRequest' );
 }
 
 count($maintests);

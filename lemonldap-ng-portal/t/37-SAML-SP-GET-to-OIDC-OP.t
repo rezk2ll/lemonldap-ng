@@ -10,7 +10,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 13;
+my $maintests = 12;
 my $debug     = 'error';
 my ( $op, $proxy, $sp, $res );
 my %handlerOR = ( op => [], proxy => [], sp => [] );
@@ -110,18 +110,7 @@ SKIP: {
         ),
         'Try SAML SP'
     );
-    my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'confirm' );
-    ok(
-        $res = $sp->_post(
-            '/',
-            IO::String->new($query),
-            length => length($query),
-            accept => 'text/html',
-            cookie => 'lemonldapidp=http://auth.proxy.com/saml/metadata'
-        ),
-        'Confirm IdP'
-    );
-    ( $url, $query ) = expectRedirection( $res,
+    my ( $url, $query ) = expectRedirection( $res,
         qr#^http://auth.proxy.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
     # Push SAML request to IdP
@@ -161,7 +150,7 @@ SKIP: {
     );
     count(1);
     my $opId = expectCookie($res);
-    my $tmp;
+    my ( $host, $tmp );
     ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
 
     ok(
