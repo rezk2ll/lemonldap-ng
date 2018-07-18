@@ -1,6 +1,7 @@
 package Lemonldap::NG::Portal::Auth::SAML;
 
 use strict;
+use MIME::Base64 qw/encode_base64/;
 use Mouse;
 use Lemonldap::NG::Portal::Lib::SAML;
 use Lemonldap::NG::Common::FormEncode;
@@ -753,7 +754,7 @@ sub extractFormInfo {
                             my $res = $self->p->deleteSession($req);
                             return (
                                 $res eq PE_LOGOUT_OK ? PE_SENDRESPONSE : $res );
-                        }
+                          }
                     ]
                 );
 
@@ -824,12 +825,32 @@ sub extractFormInfo {
     # Search a selected IdP
     my ( $idp, $idp_cookie ) = $self->getIDP($req);
 
-    # Get confirmation flag
-    my $confirm_flag = $req->param("confirm") // 0;
+    # Use Common Domain Cookie
+    if (   !$idp
+        and $self->conf->{samlCommonDomainCookieActivation}
+        and $self->conf->{samlCommonDomainCookieReader} )
+    {
+        $self->logger->debug(
+            "Will try to use Common Domain Cookie for IDP resolution");
 
-    # If confirmation is -1 from resolved IDP screen,
-    # or IDP was not resolve, let the user choose its IDP
-    if ( $confirm_flag == -1 or !$idp ) {
+        # Add current URL to CDC Reader URL
+        my $return_url = encode_base64( $self->p->fullUrl($req), '' );
+
+        my $cdc_reader_url = $self->conf->{samlCommonDomainCookieReader};
+
+        $cdc_reader_url .= ( $cdc_reader_url =~ /\?/ ? '&' : '?' )
+          . build_urlencoded( url => $return_url );
+
+        $self->logger->debug("Redirect user to $cdc_reader_url");
+
+        $req->urldc($cdc_reader_url);
+
+        $req->steps( [] );
+        return PE_REDIRECT;
+    }
+
+    # If IDP was not resolved, let the user choose its IDP
+    unless ($idp) {
         $self->logger->debug("Redirecting user to IDP list");
 
         # Control url parameter
@@ -864,31 +885,7 @@ sub extractFormInfo {
         return PE_IDPCHOICE;
     }
 
-    # If IDP is found but not confirmed, let the user confirm it
-    elsif ( $confirm_flag != 1 ) {
-        $self->logger->debug("IDP $idp selected, need user confirmation");
-
-        # Control url parameter
-        my $urlcheck = $self->p->controlUrl($req);
-        return $urlcheck unless ( $urlcheck == PE_OK );
-
-        # Choosen IDP
-        $req->info(
-            $self->loadTemplate(
-                'samlRedirectToIdp',
-                params => {
-                    name => $self->idpList->{$idp}->{name},
-                    idp  => $idp,
-                    ( $req->param("url") ? ( url => $req->param("url") ) : () ),
-                }
-            )
-        );
-
-        $req->data->{login} = 1;
-        return PE_CONFIRM;
-    }
-
-    # Here confirmation is OK (confirm_flag == 1), store choosen IDP in cookie
+    # Store choosen IDP in cookie
     unless ( $idp_cookie and $idp eq $idp_cookie ) {
         $self->logger->debug("Build cookie to remember $idp as IDP choice");
 
@@ -1386,7 +1383,6 @@ sub getDisplayType {
 # * HTTP parameter
 # * "samlIdPResolveCookie" cookie
 # * Rules
-# * Common Domain Cookie
 #
 # @return Array containing :
 # * IdP found (or undef)
@@ -1433,31 +1429,6 @@ sub getIDP {
                 }
             }
         }
-
-        # Case 5: use Common Domain Cookie
-        if (   !$idp
-            and $self->conf->{samlCommonDomainCookieActivation}
-            and $self->conf->{samlCommonDomainCookieReader} )
-        {
-            $self->logger->debug(
-                "Will try to use Common Domain Cookie for IDP resolution");
-
-            # Add current URL to CDC Reader URL
-            my $return_url = encode_base64( $self->self_url(), '' );
-
-            my $cdc_reader_url = $self->conf->{samlCommonDomainCookieReader};
-
-            $cdc_reader_url .= ( $cdc_reader_url =~ /\?/ ? '&' : '?' )
-              . build_urlencoded( url => $return_url );
-
-            $self->logger->debug("Redirect user to $cdc_reader_url");
-
-            $req->urldc($cdc_reader_url);
-
-            $req->steps( [] );
-            return PE_REDIRECT;
-        }
-
         $self->logger->debug('No IDP found') unless ($idp);
     }
 

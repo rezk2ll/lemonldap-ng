@@ -9,7 +9,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 16;
+my $maintests = 15;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -137,7 +137,7 @@ m#img src="http://auth.idp.com(/saml/relaySingleLogoutSOAP)\?(relay=.*?)"#s,
     # Test if logout is done
     switch ('issuer');
     ok(
-        $res = $sp->_get(
+        $res = $issuer->_get(
             '/', cookie => "lemonldap=$idpId",
         ),
         'Test if user is reject on IdP'
@@ -154,16 +154,8 @@ m#img src="http://auth.idp.com(/saml/relaySingleLogoutSOAP)\?(relay=.*?)"#s,
         ),
         'Test if user is reject on SP'
     );
-    expectOK($res);
-    ok(
-        $res->[2]->[0] =~
-          /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,
-        'Found confirm key'
-      )
-      or explain(
-        $res->[2],
-'<input type="hidden" id="confirm" name="confirm" value="<base64 value>" />'
-      );
+    expectRedirection( $res,
+        qr#^http://auth.idp.com(/saml/singleSignOnArtifact)\?(SAMLart=.+)# );
 }
 
 count($maintests);

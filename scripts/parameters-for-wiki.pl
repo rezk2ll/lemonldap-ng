@@ -64,18 +64,30 @@ print <<EOF;
 ===== Configuration backend parameters =====
 
 ^  Full name  ^  Key name  ^  Configuration backend  ^
+| Directory | dirName | [[fileconfbackend|File]] |
 | DBI connection string | dbiChain | [[sqlconfbackend|CDBI / RDBI]] |
 | DBI user | dbiUser | ::: |
 | DBI password | dbiPassword | ::: |
 | DBI table name | dbiTable | ::: |
-| Storage directory | dirName | [[fileconfbackend|File]] |
+| Storage directory | dirName | [[fileconfbackend|File]] / [[yamlconfbackend|YAML]] |
 | LDAP server | ldapServer | [[ldapconfbackend|LDAP]] |
 | LDAP port | ldapPort | ::: |
 | LDAP base | ldapConfBase | ::: |
 | LDAP bind dn | ldapBindDN | ::: |
 | LDAP bind password | ldapBindPassword | ::: |
+| LDAP ObjectClass | ldapObjectClass | ::: |
+| LDAP ID attribute | ldapAttributeId | ::: |
+| LDAP content atribute | ldapAttributeContent | ::: |
 | Certificate authorities file | caFile | ::: |
 | Certificate authorities directory | caPath | ::: |
+| MongoDB database | dbName | [[mongodbconfbackend|MongoDB]] |
+| MongoDB collection | collectionName | ::: |
+| REST base URL | baseUrl | [[restconfbackend|REST]] |
+| REST realm | realm | ::: |
+| REST user | user | ::: |
+| REST password | password | ::: |
 | SOAP server location (URL) | proxy | [[soapconfbackend|SOAP]] |
 | [[http://search.cpan.org/perldoc?LWP::UserAgent|LWP::UserAgent]] parameters | proxyOptions | ::: |
+| SOAP user | User | ::: |
+| SOAP password | Password | ::: |
 EOF

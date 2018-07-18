@@ -10,7 +10,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 19;
+my $maintests = 18;
 my $debug     = 'error';
 my ( $idp, $sp, $rp, $res );
 my %handlerOR = ( idp => [], sp => [], rp => [] );
@@ -121,17 +121,6 @@ SKIP: {
     );
     my $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
     my ( $host, $tmp );
-    ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
-    ok(
-        $res = $sp->_post(
-            $url,
-            IO::String->new($query),
-            length => length($query),
-            accept => 'text/html',
-            cookie => "lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata"
-        ),
-        'Confirm IdP'
-    );
     ( $url, $query ) = expectRedirection( $res,
         qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
