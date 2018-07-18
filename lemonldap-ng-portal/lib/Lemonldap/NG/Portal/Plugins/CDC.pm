@@ -40,7 +40,6 @@ sub init {
 sub run {
     my ( $self, $req ) = @_;
     my $cdc_idp    = "";
-    my $cdc_cookie = "";
 
     # Default values
     my $cdc_domain = $self->cdc_domain || $req->hostname;
@@ -57,9 +56,7 @@ sub run {
     #}
 
     # Get cookie
-    my %cookies =
-      map { /=/ ? ( split /=/, $_ ) : () } split( /;\s*/, $req->cookie );
-    $cdc_cookie = $cookies{ $self->cdc_name } if %cookies;
+    my $cdc_cookie = $req->cookies->{ $self->cdc_name } // '';
 
     if ($cdc_cookie) {
         $self->logger->debug("[CDC] Cookie found with value $cdc_cookie");
