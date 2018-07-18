@@ -248,7 +248,7 @@
                     title: "type",
                     value: "name",
                     epoch: "date",
-                    type: "2fa"
+                    td: "0"
                   });
                   array = JSON.parse(session[attr]);
                   for (j = 0, len1 = array.length; j < len1; j++) {
@@ -269,7 +269,7 @@
                       title: title,
                       value: name,
                       epoch: epoch,
-                      type: ""
+                      td: "1"
                     });
                   }
                   delete session[attr];
@@ -278,7 +278,7 @@
                     title: "rp",
                     value: "scope",
                     epoch: "date",
-                    type: "rp"
+                    td: "0"
                   });
                   array = JSON.parse(session[attr]);
                   for (k = 0, len2 = array.length; k < len2; k++) {
@@ -299,7 +299,7 @@
                       title: title,
                       value: name,
                       epoch: epoch,
-                      type: ""
+                      td: "1"
                     });
                   }
                   delete session[attr];
