@@ -83,7 +83,7 @@ stored in $req->steps and launches it. If the result is PE_OK, process()
 continues, else it returns the error code.
 
 If it is an Ajax request, do() responds in JSON format else it manages
-redirection if any. Else it calls 
+redirection if any. Else it calls
 Lemonldap::NG::Portal::Main::Display::display() to load template and arguments,
 and launches Lemonldap::NG::Common::PSGI::sendHtml() using them.
 
@@ -101,8 +101,8 @@ defined keys, but it must never create a root key. Plugin keys may have
 explicit names to avoid conflicts.
 
 Whole configuration is always available. It is stored in $self->conf. It must
-not be modified by any components even during initialization process or 
-receiving request (during initialization, copy the value in the plugin 
+not be modified by any components even during initialization process or
+receiving request (during initialization, copy the value in the plugin
 namespace instead).
 
 All plugins can access to portal methods using $self->p which points to

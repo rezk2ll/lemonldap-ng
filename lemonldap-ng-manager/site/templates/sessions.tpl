@@ -98,7 +98,7 @@
        <th ng-if="node.title=='type' || node.title=='rp'">{{translate(node.epoch)}}</th>
        <td class="col-md-3" ng-if="node.epoch > 1500000000">{{localeDate(node.epoch)}}</td>
        <td></td>
-    </div>   
+    </div>
   </script>
 
   <script type="text/ng-template" id="nodes_renderer.html">

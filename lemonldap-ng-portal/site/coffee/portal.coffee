@@ -77,7 +77,6 @@ removeOidcConsent = (partner) ->
 			$("[partner='#{partner}']").hide()
 		# Error
 		, e
-		
 
 # Function used by setOrder() and removeOidcConsent() to push new values
 # For security reason, modification is rejected unless a valid token is given
