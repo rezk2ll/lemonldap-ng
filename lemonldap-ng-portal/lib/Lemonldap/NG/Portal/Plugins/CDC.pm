@@ -32,14 +32,14 @@ sub init {
     foreach (qw(httpOnly cookieExpiration oldStyleUrl)) {
         $self->$_( $conf->{$_} );
     }
-    $self->addAuthRoute( cdc => 'run' );
-    $self->addUnauthRoute( cdc => 'run' );
+    $self->addAuthRoute( cdc => { ':action' => 'run' }, ['GET'] );
+    $self->addUnauthRoute( cdc => { ':action' => 'run' }, ['GET'] );
     return 1;
 }
 
 sub run {
     my ( $self, $req ) = @_;
-    my $cdc_idp    = "";
+    my $cdc_idp = "";
 
     # Default values
     my $cdc_domain = $self->cdc_domain || $req->hostname;
