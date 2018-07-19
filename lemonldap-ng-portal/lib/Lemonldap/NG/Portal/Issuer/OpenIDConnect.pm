@@ -114,7 +114,10 @@ sub ssoMatch {
 sub run {
     my ( $self, $req, $path ) = @_;
     if ($path) {
-
+		
+		# Convert old format OIDC Consents
+		$self->_convertOldFormatConsents ( $req );
+		
         # AUTHORIZE
         if ( $path eq $self->conf->{oidcServiceMetaDataAuthorizeURI} ) {
             $self->logger->debug(
@@ -1509,6 +1512,50 @@ sub exportRequestParameters {
     }
 
     return PE_OK;
+}
+
+sub _convertOldFormatConsents {
+	my ( $self, $req ) = @_;
+	my @oidcConsents   = ();
+	my @rps   = ();
+	my $scope = '';
+	my $epoch = '';
+	my $rp    = '';
+	unless ( $req->{sessionInfo} ) { 
+		$self->logger->error( "Corrupted session");
+		return PE_ERROR;
+    }
+    
+    # Search Relying Party
+    $self->logger->debug("Searching for Relying Party...");
+	foreach ( keys %{ $req->{sessionInfo} } ) {
+		if ( $_ =~ /^_oidc_consent_scope_([\w-]+)$/ ) {
+			push @rps, $1;
+			$self->logger->debug("Found RP $1");
+		}
+	}
+	
+	# Convert OIDC Consents format
+	$self->logger->debug("Convert Relying Party...");
+	foreach ( @rps ) {
+		$scope = $req->{sessionInfo}->{"_oidc_consent_scope_" . $_};
+		$epoch = $req->{sessionInfo}->{"_oidc_consent_time_" . $_};
+		$rp    = $_;
+		
+		if ( defined $scope and defined $epoch and defined $rp ) {
+			$self->logger->debug("Append RP $rp Consent");
+			push @oidcConsents, { rp => $rp, scope => $scope, epoch => $epoch };
+			delete $req->{sessionInfo}->{"_oidc_consent_scope_" . $_};
+			delete $req->{sessionInfo}->{"_oidc_consent_time_" . $_};
+		}
+		else {
+			$self->logger->debug("Corrupted Consent / Session -> RP=$rp, Scope=$scope, Epoch=$epoch");
+			return PE_ERROR;
+		}
+	}
+	
+	# Update persistent session
+	$self->p->updatePersistentSession( $req, { _oidcConsents => to_json(\@oidcConsents) } );
 }
 
 1;
