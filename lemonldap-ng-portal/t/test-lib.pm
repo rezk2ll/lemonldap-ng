@@ -83,7 +83,7 @@ sub expectRedirection {
 sub expectAutoPost {
     my @r      = expectForm(@_);
     my $method = pop @r;
-    ok( $method =~ /^post$/i, ' Method is POST' ) or explain( \@r, 'POST' );
+    ok( $method =~ /^post$/i, ' Method is POST' ) or explain( $method, 'POST' );
     count(1);
     return @r;
 }
