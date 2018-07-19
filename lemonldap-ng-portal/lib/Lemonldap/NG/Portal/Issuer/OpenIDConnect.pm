@@ -1545,8 +1545,12 @@ sub _convertOldFormatConsents {
         if ( defined $scope and defined $epoch and defined $rp ) {
             $self->logger->debug("Append RP $rp Consent");
             push @oidcConsents, { rp => $rp, scope => $scope, epoch => $epoch };
-            delete $req->{sessionInfo}->{ "_oidc_consent_scope_" . $_ };
-            delete $req->{sessionInfo}->{ "_oidc_consent_time_" . $_ };
+            $self->logger->debug("Delete Key -> _oidc_consent_scope_$_");
+            $self->p->updatePersistentSession( $req,
+                { "_oidc_consent_scope_" . $_ => undef } );
+            $self->logger->debug("Delete Key -> _oidc_consent_time_$_");
+            $self->p->updatePersistentSession( $req,
+                { "_oidc_consent_time_" . $_ => undef } );
         }
         else {
             $self->logger->debug(
