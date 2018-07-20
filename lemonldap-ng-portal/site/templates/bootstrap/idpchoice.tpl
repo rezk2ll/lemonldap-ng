@@ -5,6 +5,7 @@
   <form id="form" action="#" method="<TMPL_VAR NAME="FORM_METHOD">" class="confirm" role="form">
 
     <TMPL_VAR NAME="HIDDEN_INPUTS">
+    <input type="hidden" name="cancel" value="0" />
     <TMPL_IF NAME="AUTH_URL">
       <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
     </TMPL_IF>
@@ -63,7 +64,7 @@
 	  <TMPL_IF NAME="PORTAL_URL">
 	    <div id="logout">
 	      <div class="buttons">
-	        <a href="<TMPL_VAR NAME="PORTAL_URL">/?cancel=1<TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"><TMPL_ELSE>/?cancel=1</TMPL_IF>" class="btn btn-primary" role="button">
+	        <a href="<TMPL_VAR NAME="PORTAL_URL">/?cancel=1<TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
 	          <span class="glyphicon glyphicon-home"></span>&nbsp;
 	          <span trspan="cancel">Cancel</span>
 	        </a>
