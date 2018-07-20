@@ -623,13 +623,13 @@ sub tree {
                         'upgradeSession',
                         {
                             title => 'autoSignin',
-                            help  => 'autoSignin.html',
-                            nodes => ['autoSigninRules'],
+                            help  => 'autosignin.html',
+                            nodes => ['autoSigninRules']
                         },
                         {
                             title => 'stateCheck',
                             help  => 'checkstate.html',
-                            nodes => [ 'checkState', 'checkStateSecret', ],
+                            nodes => [ 'checkState', 'checkStateSecret', ]
                         },
                     ]
                 },
