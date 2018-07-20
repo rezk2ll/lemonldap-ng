@@ -117,7 +117,7 @@ sub run {
 
         # Convert old format OIDC Consents
         my $ConvertedConsents = $self->_convertOldFormatConsents($req);
-		$self->logger->debug("$ConvertedConsents consents converted")
+		$self->logger->debug("$ConvertedConsents consents converted");
 
         # AUTHORIZE
         if ( $path eq $self->conf->{oidcServiceMetaDataAuthorizeURI} ) {
