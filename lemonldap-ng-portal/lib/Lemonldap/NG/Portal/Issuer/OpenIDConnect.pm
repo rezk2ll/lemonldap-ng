@@ -116,7 +116,8 @@ sub run {
     if ($path) {
 
         # Convert old format OIDC Consents
-        $self->_convertOldFormatConsents($req);
+        my $ConvertedConsents = $self->_convertOldFormatConsents($req);
+		$self->logger->debug("$ConvertedConsents consents converted")
 
         # AUTHORIZE
         if ( $path eq $self->conf->{oidcServiceMetaDataAuthorizeURI} ) {
@@ -1537,6 +1538,7 @@ sub _convertOldFormatConsents {
 
     # Convert OIDC Consents format
     $self->logger->debug("Convert Relying Party...");
+    my $count = 0;
     foreach (@rps) {
         $scope = $req->{sessionInfo}->{ "_oidc_consent_scope_" . $_ };
         $epoch = $req->{sessionInfo}->{ "_oidc_consent_time_" . $_ };
@@ -1545,6 +1547,7 @@ sub _convertOldFormatConsents {
         if ( defined $scope and defined $epoch and defined $rp ) {
             $self->logger->debug("Append RP $rp Consent");
             push @oidcConsents, { rp => $rp, scope => $scope, epoch => $epoch };
+            $count++;
             $self->logger->debug("Delete Key -> _oidc_consent_scope_$_");
             $self->p->updatePersistentSession( $req,
                 { "_oidc_consent_scope_" . $_ => undef } );
@@ -1563,6 +1566,7 @@ sub _convertOldFormatConsents {
     # Update persistent session
     $self->p->updatePersistentSession( $req,
         { _oidcConsents => to_json( \@oidcConsents ) } );
+    return $count;
 }
 
 1;
