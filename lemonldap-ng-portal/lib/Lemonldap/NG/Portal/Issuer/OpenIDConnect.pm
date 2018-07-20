@@ -117,7 +117,7 @@ sub run {
 
         # Convert old format OIDC Consents
         my $ConvertedConsents = $self->_convertOldFormatConsents($req);
-		$self->logger->debug("$ConvertedConsents consents converted");
+        $self->logger->debug("$ConvertedConsents consent(s) converted");
 
         # AUTHORIZE
         if ( $path eq $self->conf->{oidcServiceMetaDataAuthorizeURI} ) {
@@ -396,22 +396,6 @@ sub run {
                     $_oidcConsents = [];
                 }
 
-                ############
-                ### Exclude revoked consents
-                #my @keep = ();
-                #while (@$_oidcConsents) {
-                #    my $element = shift @$_oidcConsents;
-                #    $self->logger->debug(
-                #        "Looking for revoked consents to delete ...");
-                #    push @keep, $element
-                #      if (  defined $element->{rp}
-                #        and defined $element->{epoch}
-                #        and defined $element->{scope} );
-                #}
-                #@$_oidcConsents = @keep;
-
-                ############
-
                 # Read existing RP
                 @RPoidcConsent = grep { $_->{rp} eq $rp } @$_oidcConsents;
                 unless (@RPoidcConsent) {
@@ -457,17 +441,6 @@ sub run {
                     if (    $req->param('confirm')
                         and $req->param('confirm') == 1 )
                     {
-                        #############
-                        #$self->p->updatePersistentSession( $req,
-                        #{ "_oidc_consent_time_$rp" => time } );
-                        #$self->p->updatePersistentSession(
-                        #$req,
-                        #{
-                        #"_oidc_consent_scope_$rp" =>
-                        #$oidc_request->{'scope'}
-                        #}
-                        #);
-                        #############
                         $RPoidcConsent[0]{epoch} = time;
                         $RPoidcConsent[0]{scope} = $oidc_request->{'scope'};
                         push @{$_oidcConsents}, @RPoidcConsent;
