@@ -92,24 +92,17 @@
     </div>
     <div ng-if="!node.nodes">
        <th ng-if="node.td!='1'">{{translate(node.title)}}</th>
-       <td ng-if="node.td=='1'">{{node.title}}</td>
+       <td class="data-{{node.epoch}}" ng-if="node.td=='1'">{{node.title}}</td>
        <th ng-if="node.title=='type' || node.title=='rp'">{{translate(node.value)}}</th>
-       <td class="col-md-3" ng-if="node.title!='type' && node.title!='rp'" >{{node.value}}</td>
+       <td class="col-md-3 data-{{node.epoch}}" ng-if="node.title!='type' && node.title!='rp'" >{{node.value}}</td>
        <th ng-if="node.title=='type' || node.title=='rp'">{{translate(node.epoch)}}</th>
-       <td class="col-md-3" ng-if="node.epoch > 1500000000">{{localeDate(node.epoch)}}</td>
-       
-       
+       <td class="col-md-3 data-{{node.epoch}}" ng-if="node.epoch > 1500000000">{{localeDate(node.epoch)}}</td>
        <td class="data-{{node.epoch}}">
 	      <span ng-if="node.td=='1'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="deleteOIDCConsent(node.title, node.epoch)"></span>
 		  <!--
 		  <span ng-if="$last && ( node.title=='TOTP' || node.title=='UBK' || node.title=='U2F' )" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"></span>
 		  -->
        </td>
-       
-       
-       
-       
-       
     </div>
   </script>
 
