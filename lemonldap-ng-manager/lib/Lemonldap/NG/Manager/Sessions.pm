@@ -38,7 +38,7 @@ sub addRoutes {
       ->addRoute(
         sessions => { ':sessionType' => { ':sessionId' => 'delSession' } },
         ['DELETE']
-      );
+      )
 
     # DELETE OIDC CONSENT
     ->addRoute(
