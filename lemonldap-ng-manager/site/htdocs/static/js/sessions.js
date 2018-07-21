@@ -164,6 +164,18 @@
         }
         return $scope.showM = false;
       };
+      $scope.deleteOIDCConsent = function(rp, epoch) {
+        var item;
+        item = angular.element(".data-" + epoch);
+        item.remove();
+        $scope.waiting = true;
+        $http['delete'](scriptname + "sessions/OIDCConsent/" + sessionType + "/" + $scope.currentSession.id + "?rp=" + rp + "&epoch=" + epoch).then(function(response) {
+          return $scope.waiting = false;
+        }, function(resp) {
+          return $scope.waiting = false;
+        });
+        return $scope.showT = false;
+      };
       $scope.deleteSession = function() {
         $scope.waiting = true;
         return $http['delete'](scriptname + "sessions/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
