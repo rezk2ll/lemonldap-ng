@@ -140,6 +140,19 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 	# SESSION MANAGEMENT
 
+	# Delete RP Consent
+	$scope.deleteOIDCConsent = (rp, epoch) ->
+		item = angular.element(".data-#{epoch}")
+		item.remove()
+		$scope.waiting = true
+		$http['delete']("#{scriptname}sessions/OIDCConsent/#{sessionType}/#{$scope.currentSession.id}?rp=#{rp}&epoch=#{epoch}").then (response) ->
+			$scope.waiting = false
+		, (resp) ->
+			$scope.waiting = false
+		$scope.showT = false
+
+
+
 	# Delete
 	$scope.deleteSession = ->
 		$scope.waiting = true

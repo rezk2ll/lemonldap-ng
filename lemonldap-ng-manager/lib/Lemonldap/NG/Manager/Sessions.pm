@@ -40,6 +40,15 @@ sub addRoutes {
         ['DELETE']
       );
 
+    # DELETE OIDC CONSENT
+    ->addRoute(
+        sessions => {
+            OIDCConsent =>
+              { ':sessionType' => { ':sessionId' => 'delOIDCConsent' } }
+        },
+        ['DELETE']
+    );
+
     $self->setTypes($conf);
 
     $self->{ipField}              ||= 'ipAddr';
@@ -48,8 +57,33 @@ sub addRoutes {
 }
 
 #######################
-# II. DISPLAY METHODS #
+# II. CONSENT METHODS #
 #######################
+
+sub delOIDCConsent {
+
+    my ( $self, $req, $session, $skey ) = @_;
+
+    my $mod = $self->getMod($req)
+      or return $self->sendError( $req, undef, 400 );
+
+    my $params = $req->parameters();
+    my $epoch  = $params->{epoch};
+    my $rp     = $params->{rp};
+
+    if ( $rp =~ /\b[\w-]+\b/ and defined $epoch ) {
+        $self->logger->debug(
+            "Call procedure deleteOIDCConsent with RP=$rp and epoch=$epoch");
+        return $self->deleteOIDCConsent( $req, $session, $skey );
+    }
+    else {
+        return $self->sendError( $req, undef, 400 );
+    }
+}
+
+########################
+# III. DISPLAY METHODS #
+########################
 
 sub sessions {
     my ( $self, $req, $session, $skey ) = @_;
