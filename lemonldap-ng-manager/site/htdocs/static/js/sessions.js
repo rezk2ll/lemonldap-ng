@@ -311,7 +311,7 @@
                       title: title,
                       value: name,
                       epoch: epoch,
-                      td: "1"
+                      td: "2"
                     });
                   }
                   delete session[attr];
