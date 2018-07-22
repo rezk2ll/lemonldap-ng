@@ -38,7 +38,7 @@ sub addRoutes {
 
       # DELETE 2FA DEVICE
       ->addRoute(
-        sfa => { ':sessionType' => { ':sessionId' => 'delete2FA' } },
+        sfa => { ':sessionType' => { ':sessionId' => 'del2F' } },
         ['DELETE']
       );
 
@@ -68,7 +68,7 @@ sub addRoutes {
 # II. 2FA METHODS #
 ###################
 
-sub delete2FA {
+sub del2F {
 
     my ( $self, $req, $session, $skey ) = @_;
 
@@ -79,7 +79,7 @@ sub delete2FA {
     my $type   = $params->{type};
     my $epoch  = $params->{epoch};
 
-    if ( $type =~ /\b(?:U2F|TOTP|UBK)\b/ and $epoch ) {
+    if ( $type =~ /\b(?:U2F|TOTP|UBK)\b/ and defined $epoch ) {
         $self->logger->debug(
             "Call procedure delete2F with type=$type and epoch=$epoch");
         return $self->delete2F( $req, $session, $skey );

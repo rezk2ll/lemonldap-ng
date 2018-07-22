@@ -55,6 +55,70 @@ sub delSession {
     return $self->sendJSONresponse( $req, { result => 1 } );
 }
 
+sub deleteOIDCConsent {
+    my ( $self, $req ) = @_;
+    return $self->sendJSONresponse( $req, { result => 1 } )
+      if ( $self->{demoMode} );
+    my $mod = $self->getMod($req)
+      or return $self->sendError( $req, undef, 400 );
+    my $id = $req->params('sessionId')
+      or return $self->sendError( $req, 'sessionId is missing', 400 );
+
+    # Try to read session
+    $self->logger->debug("Loading session : $id");
+    my $session = $self->getApacheSession( $mod, $id )
+      or return $self->sendError( $req, undef, 400 );
+
+    # Try to read OIDC Consent parameters
+    $self->logger->debug("Reading parameters ...");
+    my $params = $req->parameters();
+    my $rp     = $params->{rp}
+      or return $self->sendError( $req, 'OIDC Consent RP is missing', 400 );
+    my $epoch = $params->{epoch}
+      or return $self->sendError( $req, 'OIDC Consent Epoch is missing', 400 );
+
+    # Try to load 2F Device(s) from session
+    $self->logger->debug("Looking for OIDC Consent(s) ...");
+    my $_oidcConsents;
+    if ( $session->data->{_oidcConsents} ) {
+        $_oidcConsents = eval {
+            from_json( $session->data->{_oidcConsents}, { allow_nonref => 1 } );
+        };
+        if ($@) {
+            $self->logger->error("Corrupted session (_oidcConsents) : $@");
+            return $self->p->sendError( $req, "Corrupted session", 500 );
+        }
+    }
+    else {
+        $self->logger->debug("No OIDC Consent found");
+        $_oidcConsents = [];
+    }
+
+    # Delete OIDC Consent
+    $self->logger->debug("Reading OIDC Consent(s) ...");
+    my @keep = ();
+    while (@$_oidcConsents) {
+        my $element = shift @$_oidcConsents;
+        $self->logger->debug(
+            "Searching for OIDC Consent to delete -> $rp / $epoch ...");
+        push @keep, $element
+          unless ( ( $element->{rp} eq $rp )
+            and ( $element->{epoch} eq $epoch ) );
+    }
+
+    # Update session
+    $self->logger->debug("Saving OIDC Consents ...");
+    $session->data->{_oidcConsents} = to_json( \@keep );
+    $self->logger->debug("Updating session ...");
+    $session->update( \%{ $session->data } );
+
+    Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
+    if ( $session->error ) {
+        return $self->sendError( $req, $session->error, 200 );
+    }
+    return $self->sendJSONresponse( $req, { result => 1 } );
+}
+
 sub delete2F {
     my ( $self, $req ) = @_;
     return $self->sendJSONresponse( $req, { result => 1 } )
@@ -100,7 +164,7 @@ sub delete2F {
     while (@$_2fDevices) {
         my $element = shift @$_2fDevices;
         $self->logger->debug(
-            "Searching 2F device to delete -> $type / $epoch ...");
+            "Searching for 2F device to delete -> $type / $epoch ...");
         push @keep, $element
           unless ( ( $element->{type} eq $type )
             and ( $element->{epoch} eq $epoch ) );

@@ -7,6 +7,7 @@ our $VERSION = '2.0.0';
 package Lemonldap::NG::Portal::Main;
 use strict;
 use Mouse;
+use JSON;
 
 has skinRules => ( is => 'rw' );
 
@@ -521,18 +522,49 @@ sub mkOidcConsent {
         }
     }
 
-    my $consents = {};
-
-    foreach ( keys %$session ) {
-        if ( $_ =~ /_oidc_consent_time_(.+)$/ ) {
-            $consents->{$1}->{time} = $session->{ "_oidc_consent_time_" . $1 };
-            $consents->{$1}->{scope} =
-              $session->{ "_oidc_consent_scope_" . $1 };
-            $consents->{$1}->{displayName} =
-              $self->conf->{oidcRPMetaDataOptions}->{$1}
-              ->{oidcRPMetaDataOptionsDisplayName};
+    # Loading existing oidcConsents
+    $self->logger->debug("Loading OIDC Consents ...");
+    my $_consents;
+    if ( exists $session->{_oidcConsents} ) {
+        $_consents = eval {
+            from_json( $session->{_oidcConsents}, { allow_nonref => 1 } );
+        };
+        if ($@) {
+            $self->logger->error("Corrupted session (_oidcConsents): $@");
+            return PE_ERROR;
         }
     }
+    else {
+        $self->logger->debug("No OIDC Consent found");
+
+        #$_oidcConsents = [];
+    }
+
+    my $consents = {};
+#####################
+
+    foreach (@$_consents) {
+        if ( defined $_->{rp} ) {
+            my $rp = $_->{rp};
+            $self->logger->debug("RP { $rp } Consent found");
+            $consents->{$rp}->{epoch} = $_->{epoch};
+            $consents->{$rp}->{scope} = $_->{scope};
+            $consents->{$rp}->{displayName} =
+              $self->conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsDisplayName};
+        }
+    }
+
+    #foreach ( keys %$session ) {
+    #if ( $_ =~ /_oidc_consent_time_(.+)$/ ) {
+    #$consents->{$1}->{time} = $session->{ "_oidc_consent_time_" . $1 };
+    #$consents->{$1}->{scope} =
+    #$session->{ "_oidc_consent_scope_" . $1 };
+    #$consents->{$1}->{displayName} =
+    #$self->conf->{oidcRPMetaDataOptions}->{$1}
+    #->{oidcRPMetaDataOptionsDisplayName};
+    #}
+    #}
+#####################
 
     return $self->loadTemplate(
         'oidcConsents',
@@ -541,7 +573,7 @@ sub mkOidcConsent {
                 map {
                     {
                         name        => $_,
-                        time        => $consents->{$_}->{time},
+                        epoch       => $consents->{$_}->{epoch},
                         scope       => $consents->{$_}->{scope},
                         displayName => $consents->{$_}->{displayName}
                     }

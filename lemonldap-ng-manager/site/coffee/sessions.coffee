@@ -85,6 +85,7 @@ categories =
     BrowserID:          ['_browserIdAnswer', '_browserIdAnswerRaw']
     OpenIDConnect:      ['_oidc_id_token', '_oidc_OP', '_oidc_access_token']
     sfaTitle:			['_2fDevices']
+    oidcConsents:		['_oidcConsents']
 
 # Menu entries
 menu =
@@ -138,6 +139,19 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		$scope.showM = false
 
 	# SESSION MANAGEMENT
+
+	# Delete RP Consent
+	$scope.deleteOIDCConsent = (rp, epoch) ->
+		item = angular.element(".data-#{epoch}")
+		item.remove()
+		$scope.waiting = true
+		$http['delete']("#{scriptname}sessions/OIDCConsent/#{sessionType}/#{$scope.currentSession.id}?rp=#{rp}&epoch=#{epoch}").then (response) ->
+			$scope.waiting = false
+		, (resp) ->
+			$scope.waiting = false
+		$scope.showT = false
+
+
 
 	# Delete
 	$scope.deleteSession = ->
@@ -200,7 +214,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							pattern = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/
 							arrayDate = value.match(pattern)
 							session[key] = "#{arrayDate[3]}/#{arrayDate[2]}/#{arrayDate[1]} à #{arrayDate[4]}:#{arrayDate[5]}:#{arrayDate[6]}"
-											
+
 			res = []
 
 			# 2. Push session keys in result, grouped by categories
@@ -213,6 +227,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 								title: "type"
 								value: "name"
 								epoch: "date"
+								td: "0"
 							array = JSON.parse(session[attr])
 							for sfDevice in array
 								for key, value of sfDevice
@@ -226,6 +241,28 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									title: title
 									value: name
 									epoch: epoch
+									td: "1"
+							delete session[attr]
+						else if session[attr].toString().match(/"rp":\s*"[\w-]+"/)
+							subres.push
+								title: "rp"
+								value: "scope"
+								epoch: "date"
+								td: "0"
+							array = JSON.parse(session[attr])
+							for oidcConsent in array
+								for key, value of oidcConsent
+									if key == 'rp'
+										title = value
+									if key == 'scope'
+										name = value
+									if key == 'epoch'
+										epoch = value
+								subres.push
+									title: title
+									value: name
+									epoch: epoch
+									td: "1"
 							delete session[attr]
 						else if session[attr].toString().match(/\w+/)
 							subres.push

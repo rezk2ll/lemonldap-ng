@@ -45,6 +45,7 @@ package Lemonldap::NG::Portal::Plugins::RESTServer;
 
 use strict;
 use Mouse;
+use JSON qw(from_json to_json);
 use MIME::Base64;
 
 our $VERSION = '2.0.0';
@@ -351,7 +352,8 @@ sub mysession {
 
 sub getMyKey {
     my ( $self, $req, $key ) = @_;
-    $self->logger->debug('Request to get personal session info');
+    $key ||= '';
+    $self->logger->debug("Request to get personal session info -> Key : $key");
     return $self->session(
         $req,
         $req->userData->{_session_id},
@@ -384,6 +386,8 @@ sub updateMySession {
                         push @$mKeys, $key;
                         $self->p->updatePersistentSession( $req,
                             { $key => $v } );
+                        $self->logger->debug(
+                            "Request to update session -> Key : $key");
                     }
                 }
             }
@@ -407,6 +411,7 @@ sub delKeyInMySession {
     my $res   = 0;
     my $mKeys = [];
     my $dkey  = $req->param('key');
+    my $sub   = $req->param('sub');
     if ( my $token = $req->param('token') ) {
         if ( $self->ott->getToken($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
@@ -424,8 +429,51 @@ sub delKeyInMySession {
                     }
                 }
                 if ($res) {
-                    $self->p->updatePersistentSession( $req,
-                        { $dkey => undef } );
+                    if ( $dkey !~ /^_oidcConsents$/ ) {
+                        $self->p->updatePersistentSession( $req,
+                            { $dkey => undef } );
+                        $self->logger->debug(
+                            "Update session -> delete Key : $dkey");
+                    }
+                    elsif ( $dkey =~ /^_oidcConsents$/ and defined $sub ) {
+
+                        # Read existing oidcConsents
+                        $self->logger->debug("Looking for OIDC Consents ...");
+                        my $_oidcConsents;
+                        if ( $req->userData->{_oidcConsents} ) {
+                            $_oidcConsents = eval {
+                                from_json( $req->userData->{_oidcConsents},
+                                    { allow_nonref => 1 } );
+                            };
+                            if ($@) {
+                                $self->logger->error(
+                                    "Corrupted session (_oidcConsents): $@");
+                                return $self->p->sendError( $req,
+                                    "Corrupted session", 500 );
+                            }
+                        }
+                        else {
+                            $self->logger->debug("No OIDC Consent found");
+                            $_oidcConsents = [];
+                        }
+                        my @keep = ();
+                        while (@$_oidcConsents) {
+                            my $element = shift @$_oidcConsents;
+                            $self->logger->debug(
+                                "Looking for OIDC Consent to delete ...");
+                            push @keep, $element
+                              unless ( $element->{rp} eq $sub );
+                        }
+                        $self->p->updatePersistentSession( $req,
+                            { _oidcConsents => to_json( \@keep ) } );
+                        $self->logger->debug(
+"Update session -> delete Key : $dkey with Sub : $sub"
+                        );
+                    }
+                    else {
+                        $self->logger->error(
+                            'Update session request with invalid Key or Sub');
+                    }
                 }
             }
         }
