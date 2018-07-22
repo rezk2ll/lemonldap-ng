@@ -93,6 +93,7 @@ sub tree {
                         {
                             title => 'portalCaptcha',
                             help  => 'captcha.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'captcha_login_enabled',
                                 'captcha_mail_enabled',
@@ -418,6 +419,7 @@ sub tree {
                         {
                             title => 'issuerDBCAS',
                             help  => 'idpcas.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'issuerDBCASActivation', 'issuerDBCASPath',
                                 'issuerDBCASRule',
@@ -458,6 +460,7 @@ sub tree {
                         {
                             title => 'issuerDBOpenIDConnect',
                             help  => 'idpopenidconnect.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'issuerDBOpenIDConnectActivation',
                                 'issuerDBOpenIDConnectPath',
