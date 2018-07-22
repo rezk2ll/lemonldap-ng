@@ -125,7 +125,7 @@ sub defaultValues {
         'max2FDevicesNameLength' => 20,
         'multiValuesSeparator'   => '; ',
         'mySessionAuthorizedRWKeys' =>
-          [ '_appsListOrder', '_oidcConnectedRP', '_oidc_consent_*' ],
+          [ '_appsListOrder', '_oidcConnectedRP', '_oidcConsents' ],
         'notificationStorage'        => 'File',
         'notificationStorageOptions' => {
             'dirName' => '/var/lib/lemonldap-ng/notifications'

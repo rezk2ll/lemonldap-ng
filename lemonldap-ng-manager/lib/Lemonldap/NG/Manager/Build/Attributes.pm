@@ -229,7 +229,7 @@ sub attributes {
             type          => 'array',
             documentation => 'Alterable session keys by user itself',
             default =>
-              [ '_appsListOrder', '_oidcConnectedRP', '_oidc_consent_*' ],
+              [ '_appsListOrder', '_oidcConnectedRP', '_oidcConsents' ],
         },
         configStorage => {
             type          => 'text',
@@ -382,10 +382,12 @@ sub attributes {
         },
         stayConnected => {
             type          => 'bool',
+            default       => 0,
             documentation => 'Enable StayConnected plugin',
         },
         checkState => {
             type          => 'bool',
+            default       => 0,
             documentation => 'Enable CheckState plugin',
         },
         checkStateSecret => {

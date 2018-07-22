@@ -749,7 +749,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'checkState' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'checkStateSecret' => {
             'type' => 'text'
@@ -1603,7 +1604,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'mySessionAuthorizedRWKeys' => {
             'default' =>
-              [ '_appsListOrder', '_oidcConnectedRP', '_oidc_consent_*' ],
+              [ '_appsListOrder', '_oidcConnectedRP', '_oidcConsents' ],
             'type' => 'array'
         },
         'nginxCustomHandlers' => {
@@ -3163,7 +3164,8 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type' => 'bool'
         },
         'stayConnected' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'storePassword' => {
             'default' => 0,

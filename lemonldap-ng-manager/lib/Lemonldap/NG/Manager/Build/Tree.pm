@@ -624,12 +624,13 @@ sub tree {
                         {
                             title => 'autoSignin',
                             help  => 'autosignin.html',
-                            nodes => ['autoSigninRules']
+                            nodes => ['autoSigninRules'],
                         },
                         {
                             title => 'stateCheck',
                             help  => 'checkstate.html',
-                            nodes => [ 'checkState', 'checkStateSecret', ]
+                            form  => 'simpleInputContainer',                            
+                            nodes => [ 'checkState', 'checkStateSecret', ],
                         },
                     ]
                 },
