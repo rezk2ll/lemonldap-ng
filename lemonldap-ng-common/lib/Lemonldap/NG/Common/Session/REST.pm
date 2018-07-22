@@ -77,7 +77,7 @@ sub deleteOIDCConsent {
     my $epoch = $params->{epoch}
       or return $self->sendError( $req, 'OIDC Consent Epoch is missing', 400 );
 
-    # Try to load 2F Device(s) from session
+    # Try to load OIDC Consents from session
     $self->logger->debug("Looking for OIDC Consent(s) ...");
     my $_oidcConsents;
     if ( $session->data->{_oidcConsents} ) {
