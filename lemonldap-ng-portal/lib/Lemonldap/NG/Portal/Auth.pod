@@ -54,7 +54,7 @@ Lemonldap:NG::Portal::Auth - Writing authentication modules for LemonLDAP::NG.
 
 Lemonldap::NG::Portal::Main::Auth must be used to build Lemonldap::NG authentication
 modules. Authentication modules are independent objects that are instantiated
-by Lemonldap::NG portal. They must provides methods described below.
+by Lemonldap::NG portal. They must provide methods described below.
 
 =head1 METHODS
 
@@ -78,7 +78,7 @@ by Lemonldap::NG portal. They must provides methods described below.
 
 =head3 "Routes" management
 
-Like any module that inherits from Lemonldap::NG::Portal::Plugin,
+Like each module that inherits from Lemonldap::NG::Portal::Plugin,
 Lemonldap::NG::Portal::Main::Auth provides URI path functions:
 
 =over
