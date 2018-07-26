@@ -1295,8 +1295,7 @@ sub endSessionDone {
 # Handle checksession endpoint
 sub checkSession {
     my ( $self, $req ) = @_;
-    $self->logger->debug(
-        "URL  detected as an OpenID Connect CHECK SESSION URL");
+    $self->logger->debug("URL detected as an OpenID Connect CHECK SESSION URL");
 
     # TODO: access_control_allow_origin => '*'
     $req->frame(1);
@@ -1500,8 +1499,9 @@ sub _convertOldFormatConsents {
         return PE_ERROR;
     }
 
-    # Search Relying Party
-    $self->logger->debug("Searching for Relying Party...");
+    # Search Relying Parties
+    $self->logger->debug(
+        "Searching for previously registered Relying Parties...");
     foreach ( keys %{ $req->{sessionInfo} } ) {
         if ( $_ =~ /^_oidc_consent_scope_([\w-]+)$/ ) {
             push @rps, $1;
@@ -1510,7 +1510,7 @@ sub _convertOldFormatConsents {
     }
 
     # Convert OIDC Consents format
-    $self->logger->debug("Convert Relying Party...");
+    $self->logger->debug("Convert Relying Party Consent(s)...");
     my $count = 0;
     foreach (@rps) {
         $scope = $req->{sessionInfo}->{ "_oidc_consent_scope_" . $_ };
