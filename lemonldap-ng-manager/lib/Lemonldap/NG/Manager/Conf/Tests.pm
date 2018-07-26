@@ -249,6 +249,18 @@ sub tests {
                 )
             );
         },
+                    
+        # Warn if cookie TTL is equal or lower than 30s
+        cookieTTL => sub {
+            return 1 unless ( defined $conf->{cookieExpiration} );
+            if ( $conf->{cookieExpiration} =~ /^(\d+)s?$/ ) {
+            return ( 0, "Cookie TTL must be higher than 30s" )
+              unless ( $1 > 30 );
+            }
+            
+            # Return
+            return 1;
+        },
 
         # Warn if manager seems to be unprotected
         managerProtection => sub {
@@ -413,7 +425,6 @@ sub tests {
                   if ( $conf->{ $_ . '2fActivation' } eq '1' );
             }
             return ( 1, ( $w ? $w : () ) );
-
         },
 
         # Warn if TOTP not 6 or 8 digits long
@@ -431,6 +442,8 @@ sub tests {
                 )
             );
         },
+        
+        # Warn if TOTP not 6 or 8 digits long
         formTimeout => sub {
             return 1 unless ( defined $conf->{formTimeout} );
             return ( 0, "XSRF form token TTL must be higher than 10s" )
@@ -438,6 +451,8 @@ sub tests {
             return ( 1,
                 "XSRF form token TTL should not be higher than 2mn" )
               if ( $conf->{formTimeout} > 120 );
+              
+            # Return
             return 1;
         },
     };
