@@ -64,7 +64,7 @@ sub init {
 
 sub authenticate {
     my ( $self, $req ) = @_;
-    my $res = $self->SUPER::authenticate;
+    my $res = $self->SUPER::authenticate($req);
 
     unless ( $res == PE_OK ) {
 
