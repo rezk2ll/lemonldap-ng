@@ -249,15 +249,15 @@ sub tests {
                 )
             );
         },
-                    
+
         # Warn if cookie TTL is equal or lower than 30s
         cookieTTL => sub {
             return 1 unless ( defined $conf->{cookieExpiration} );
             if ( $conf->{cookieExpiration} =~ /^(\d+)s?$/ ) {
-            return ( 0, "Cookie TTL must be higher than 30s" )
-              unless ( $1 > 30 );
+                return ( 0, "Cookie TTL must be higher than 30s" )
+                  unless ( $1 > 30 );
             }
-            
+
             # Return
             return 1;
         },
@@ -442,16 +442,15 @@ sub tests {
                 )
             );
         },
-        
+
         # Warn if TOTP not 6 or 8 digits long
         formTimeout => sub {
             return 1 unless ( defined $conf->{formTimeout} );
             return ( 0, "XSRF form token TTL must be higher than 10s" )
               unless ( $conf->{formTimeout} > 10 );
-            return ( 1,
-                "XSRF form token TTL should not be higher than 2mn" )
+            return ( 1, "XSRF form token TTL should not be higher than 2mn" )
               if ( $conf->{formTimeout} > 120 );
-              
+
             # Return
             return 1;
         },
