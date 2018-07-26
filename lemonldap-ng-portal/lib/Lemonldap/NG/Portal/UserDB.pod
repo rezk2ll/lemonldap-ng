@@ -42,7 +42,7 @@ Lemonldap:NG::Portal::UserDB - Writing authentication modules for LemonLDAP::NG.
 
 UserDB modules are used to search a user in user database. UserDB modules are
 independent objects that are instantiated by Lemonldap::NG portal. They must
-provides methods described below.
+provide methods described below.
 
 =head1 METHODS
 

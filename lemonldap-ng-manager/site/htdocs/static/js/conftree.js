@@ -24,7 +24,8 @@ function templates(tpl,key) {
          }
       ],
       "id" : "casAppMetaDataOptions",
-      "title" : "casAppMetaDataOptions"
+      "title" : "casAppMetaDataOptions",
+      "type" : "simpleInputContainer"
    },
    {
       "cnodes" : tpl+"s/"+key+"/"+"casAppMetaDataExportedVars",
@@ -64,12 +65,14 @@ function templates(tpl,key) {
             "title" : "casSrvMetaDataOptionsUrl"
          },
          {
+            "default" : 0,
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsRenew",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsRenew",
             "title" : "casSrvMetaDataOptionsRenew",
             "type" : "bool"
          },
          {
+            "default" : 0,
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsGateway",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsGateway",
             "title" : "casSrvMetaDataOptionsGateway",
@@ -87,7 +90,8 @@ function templates(tpl,key) {
          }
       ],
       "id" : "casSrvMetaDataOptions",
-      "title" : "casSrvMetaDataOptions"
+      "title" : "casSrvMetaDataOptions",
+      "type" : "simpleInputContainer"
    },
    {
       "cnodes" : tpl+"s/"+key+"/"+"casSrvMetaDataExportedVars",
@@ -497,6 +501,7 @@ function templates(tpl,key) {
                   "type" : "select"
                },
                {
+                  "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutSessionRequired",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutSessionRequired",
                   "title" : "oidcRPMetaDataOptionsLogoutSessionRequired",

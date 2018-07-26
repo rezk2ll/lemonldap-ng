@@ -700,7 +700,8 @@ sub attributes {
             'type' => 'text'
         },
         'casSrvMetaDataOptionsGateway' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'casSrvMetaDataOptionsIcon' => {
             'type' => 'text'
@@ -711,7 +712,8 @@ sub attributes {
             'type'       => 'keyTextContainer'
         },
         'casSrvMetaDataOptionsRenew' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'casSrvMetaDataOptionsUrl' => {
             'msgFail' => '__badUrl__',
@@ -1852,7 +1854,8 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type' => 'select'
         },
         'oidcRPMetaDataOptionsLogoutSessionRequired' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsLogoutType' => {
             'default' => 'front',

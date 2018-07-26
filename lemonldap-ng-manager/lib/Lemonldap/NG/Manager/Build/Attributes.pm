@@ -2510,13 +2510,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'subContainer',
             documentation => 'Root of CAS server options',
         },
-        casSrvMetaDataOptionsGateway         => { type => 'bool', },
+        casSrvMetaDataOptionsGateway => { type => 'bool', default => 0 },
         casSrvMetaDataOptionsProxiedServices => {
             type       => 'keyTextContainer',
             keyTest    => qr/^\w/,
             keyMsgFail => '__badCasProxyId__',
         },
-        casSrvMetaDataOptionsRenew => { type => 'bool', },
+        casSrvMetaDataOptionsRenew => { type => 'bool', default => 0 },
         casSrvMetaDataOptionsUrl   => {
             type    => 'text',
             test    => $url,
@@ -3145,6 +3145,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         oidcRPMetaDataOptionsLogoutSessionRequired => {
             type          => 'bool',
+            default       => 0,
             documentation => 'Session required for logout',
         },
     };

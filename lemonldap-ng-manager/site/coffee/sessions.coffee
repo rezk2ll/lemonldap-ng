@@ -262,7 +262,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 									title: title
 									value: name
 									epoch: epoch
-									td: "1"
+									td: "2"
 							delete session[attr]
 						else if session[attr].toString().match(/\w+/)
 							subres.push

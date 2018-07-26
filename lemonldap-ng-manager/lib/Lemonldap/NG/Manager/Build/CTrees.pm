@@ -218,6 +218,7 @@ sub cTrees {
         casSrvMetaDataNode => [
             {
                 title => 'casSrvMetaDataOptions',
+                form  => 'simpleInputContainer',
                 nodes => [
                     'casSrvMetaDataOptionsUrl',
                     'casSrvMetaDataOptionsRenew',
@@ -232,6 +233,7 @@ sub cTrees {
         casAppMetaDataNode => [
             {
                 title => 'casAppMetaDataOptions',
+                form  => 'simpleInputContainer',
                 nodes => [
                     'casAppMetaDataOptionsService',
                     'casAppMetaDataOptionsRule'
