@@ -20,7 +20,8 @@ use Digest::SHA
 #==============================================================================
 my $host = $ENV{HTTP_HOST};
 my ( $domain, $port ) = ( $host =~ /\w+\.([^:]+)(:\d+)?/ );
-my $protocol          = ( $ENV{HTTPS} =~ /^on$/i ) ? "https" : "http";
+my $protocol = ( $ENV{HTTPS} =~ /^on$/i ) ? "https" : "http";
+$port ||= "";
 my $portal_url        = "$protocol://auth.$domain$port";
 my $client_id         = "lemonldap";
 my $client_secret     = "secret";
