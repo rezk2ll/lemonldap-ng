@@ -31,8 +31,8 @@
       } else {
         stat = 'changed';
       }
-      return e.source.postMessage(stat, e.origin);
-    }, false);
+      return e.source.postMessage(stat, e.origin, false);
+    });
   });
 
 }).call(this);
