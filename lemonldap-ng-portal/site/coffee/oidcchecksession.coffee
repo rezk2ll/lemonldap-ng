@@ -21,7 +21,7 @@ $(document).ready ->
 											else
 												stat = 'changed'
 											e.source.postMessage stat, e.origin
-										, false
+									 , false
 									
 
 
