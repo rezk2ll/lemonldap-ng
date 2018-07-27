@@ -19,7 +19,7 @@
         return console.log('Parsing error', e);
       }
     });
-    return window.addEventListener("message", receiveMessage(function(e) {
+    return window.addEventListener("message", function(e) {
       var client_id, message, salt, session_state, ss, stat;
       message = e.data;
       client_id = decodeURIComponent(message.split(' ')[0]);
@@ -32,7 +32,7 @@
         stat = 'changed';
       }
       return e.source.postMessage(stat, e.origin);
-    }, false));
+    }, false);
   });
 
 }).call(this);

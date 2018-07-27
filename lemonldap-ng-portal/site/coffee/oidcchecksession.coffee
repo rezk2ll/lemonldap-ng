@@ -10,7 +10,7 @@ $(document).ready ->
 		catch e
 			console.log 'Parsing error', e
 	# Initialize JS communication channel
-	window.addEventListener "message", receiveMessage (e) ->
+	window.addEventListener "message", (e) ->
 											message = e.data
 											client_id = decodeURIComponent message.split(' ')[0]
 											session_state = decodeURIComponent message.split(' ')[1]
