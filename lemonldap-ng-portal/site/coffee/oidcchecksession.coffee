@@ -11,17 +11,14 @@ $(document).ready ->
 			console.log 'Parsing error', e
 	# Initialize JS communication channel
 	window.addEventListener "message", (e) ->
-											message = e.data
-											client_id = decodeURIComponent message.split(' ')[0]
-											session_state = decodeURIComponent message.split(' ')[1]
-											salt = decodeURIComponent session_state.split('.')[1]
-											ss = hash.toString(CryptoJS.enc.Base64) + '.'  + salt
-											if session_state == ss
-												stat = 'unchanged'
-											else
-												stat = 'changed'
-											e.source.postMessage stat, e.origin
-									  , false
-									
-
-
+			message = e.data
+			client_id = decodeURIComponent message.split(' ')[0]
+			session_state = decodeURIComponent message.split(' ')[1]
+			salt = decodeURIComponent session_state.split('.')[1]
+			ss = hash.toString(CryptoJS.enc.Base64) + '.'  + salt
+			if session_state == ss
+				stat = 'unchanged'
+			else
+				stat = 'changed'
+			e.source.postMessage stat, e.origin
+	, false
