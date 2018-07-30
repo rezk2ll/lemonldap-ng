@@ -253,14 +253,11 @@ sub tests {
         # Warn if cookie TTL is equal or lower than one hour
         cookieTTL => sub {
             return 1 unless ( defined $conf->{cookieExpiration} );
-            if ( $conf->{cookieExpiration} =~ /^(\d+)s?$/ ) {
-                return ( 1, "Cookie TTL should be higher than one hour" )
-                  unless ( $1 > 3600 );
-            }
-            if ( $conf->{cookieExpiration} =~ /^(\d+)m$/ ) {
-                return ( 1, "Cookie TTL should be higher than one hour" )
-                  unless ( $1 > 60 );
-            }
+            return ( 0, "Cookie TTL must be higher than one minute" )
+              unless ( $conf->{cookieExpiration} > 60 );
+            return ( 1, "Cookie TTL should be higher or equal than one hour" )
+              unless ( $conf->{cookieExpiration} >= 3600
+                || $conf->{cookieExpiration} == 0 );
 
             # Return
             return 1;

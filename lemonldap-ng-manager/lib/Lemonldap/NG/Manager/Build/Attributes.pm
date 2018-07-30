@@ -743,7 +743,7 @@ sub attributes {
 
         # Cookies
         cookieExpiration => {
-            type          => 'text',
+            type          => 'int',
             documentation => 'Cookie expiration',
             flags         => 'hp',
         },

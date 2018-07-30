@@ -887,7 +887,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'select'
         },
         'cookieExpiration' => {
-            'type' => 'text'
+            'type' => 'int'
         },
         'cookieName' => {
             'default' => 'lemonldap',
