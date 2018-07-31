@@ -399,7 +399,7 @@ sub tests {
                 or $conf->{utotp2fActivation} )
             {
                 eval "use Convert::Base32";
-                return ( 0,
+                return ( 1,
                     "Convert::Base32 module is required to enable TOTP" )
                   if ($@);
             }
@@ -409,7 +409,7 @@ sub tests {
                 or $conf->{utotp2fActivation} )
             {
                 eval "use Crypt::U2F::Server::Simple";
-                return ( 0,
+                return ( 1,
 "Crypt::U2F::Server::Simple module is required to enable U2F"
                 ) if ($@);
             }
@@ -417,7 +417,7 @@ sub tests {
             # Use Yubikey
             if ( $conf->{yubikey2fActivation} ) {
                 eval "use Auth::Yubikey_WebClient";
-                return ( 0,
+                return ( 1,
 "Auth::Yubikey_WebClient module is required to enable Yubikey"
                 ) if ($@);
             }
