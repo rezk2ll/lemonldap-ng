@@ -453,7 +453,7 @@ sub tests {
             );
         },
 
-        # Warn if TOTP not 6 or 8 digits long
+        # Warn if XSRF token TTL is higher than 10s
         formTimeout => sub {
             return 1 unless ( defined $conf->{formTimeout} );
             return ( 0, "XSRF form token TTL must be higher than 10s" )
