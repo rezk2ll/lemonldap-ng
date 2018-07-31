@@ -404,14 +404,6 @@ sub tests {
                   if ($@);
             }
 
-            # Use TOTP
-            if ( $conf->{yubikey2fActivation} ) {
-                eval "use Auth::Yubikey_WebClient";
-                return ( 0,
-"Auth::Yubikey_WebClient module is required to enable Yubikey"
-                ) if ($@);
-            }
-
             # Use U2F
             if (   $conf->{u2fActivation}
                 or $conf->{utotp2fActivation} )
@@ -419,6 +411,14 @@ sub tests {
                 eval "use Crypt::U2F::Server::Simple";
                 return ( 0,
 "Crypt::U2F::Server::Simple module is required to enable U2F"
+                ) if ($@);
+            }
+
+            # Use Yubikey
+            if ( $conf->{yubikey2fActivation} ) {
+                eval "use Auth::Yubikey_WebClient";
+                return ( 0,
+"Auth::Yubikey_WebClient module is required to enable Yubikey"
                 ) if ($@);
             }
 
