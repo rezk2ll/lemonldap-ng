@@ -387,11 +387,12 @@ sub tests {
         },
 
         # Warn if manager seems to be unprotected
-        utotp2fDependencies => sub {
+        sfaDependencies => sub {
             return 1
               unless ( $conf->{utotp2fActivation}
                 or $conf->{totp2fActivation}
-                or $conf->{u2fActivation} );
+                or $conf->{u2fActivation}
+                or $conf->{yubikey2fActivation} );
 
             # Use TOTP
             if (   $conf->{totp2fActivation}
@@ -401,6 +402,14 @@ sub tests {
                 return ( 0,
                     "Convert::Base32 module is required to enable TOTP" )
                   if ($@);
+            }
+
+            # Use TOTP
+            if ( $conf->{yubikey2fActivation} ) {
+                eval "use Auth::Yubikey_WebClient";
+                return ( 0,
+"Auth::Yubikey_WebClient module is required to enable Yubikey"
+                ) if ($@);
             }
 
             # Use U2F
