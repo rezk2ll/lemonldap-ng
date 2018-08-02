@@ -13,17 +13,16 @@ use Mouse;
 #
 # Developers: U2F must be loaded before Notifications
 our @pList = (
-    portalDisplayResetPassword       => '::Plugins::MailReset',
-    portalStatus                     => '::Plugins::Status',
-    cda                              => '::Plugins::CDA',
-    notification                     => '::Plugins::Notifications',
-    portalCheckLogins                => '::Plugins::History',
-    stayConnected                    => '::Plugins::StayConnected',
-    grantSessionRule                 => '::Plugins::GrantSession',
-    upgradeSession                   => '::Plugins::Upgrade',
-    autoSigninRules                  => '::Plugins::AutoSignin',
-    checkState                       => '::Plugins::CheckState',
-    samlCommonDomainCookieActivation => '::Plugins::CDC',
+    portalDisplayResetPassword => '::Plugins::MailReset',
+    portalStatus               => '::Plugins::Status',
+    cda                        => '::Plugins::CDA',
+    notification               => '::Plugins::Notifications',
+    portalCheckLogins          => '::Plugins::History',
+    stayConnected              => '::Plugins::StayConnected',
+    grantSessionRule           => '::Plugins::GrantSession',
+    upgradeSession             => '::Plugins::Upgrade',
+    autoSigninRules            => '::Plugins::AutoSignin',
+    checkState                 => '::Plugins::CheckState',
 );
 
 ##@method list enabledPlugins
