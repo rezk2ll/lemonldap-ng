@@ -456,9 +456,13 @@ sub tests {
         # Error if REST 2F verify URL is missing
         rest2fVerifyUrl => sub {
             return ( 0, "REST 2F Verify URL must be set" )
-		  			if ( $conf->{rest2fActivation} ne "0" && ( $conf->{rest2fVerifyUrl} eq "" ) );
-		  	
-		  	return 1;
+              if ( defined $conf->{rest2fActivation}
+                && $conf->{rest2fActivation} ne "0"
+                #&& defined $conf->{rest2fVerifyUrl}
+                && $conf->{rest2fVerifyUrl} eq "" );
+
+            # Return
+            return 1;
         },
 
         # Warn if XSRF token TTL is higher than 10s
