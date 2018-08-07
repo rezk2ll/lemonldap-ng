@@ -142,6 +142,7 @@
 "cspStyle":"Origine di stile",
 "cspConnect":"Destinazioni Ajax",
 "cspFont":"Origine carattere",
+"cspFormAction":"Form-Action source",
 "cfgLog":"Riprendi",
 "cfgVersion":"Versione configurazione",
 "checkXSS":"Verifica attacchi XSS",

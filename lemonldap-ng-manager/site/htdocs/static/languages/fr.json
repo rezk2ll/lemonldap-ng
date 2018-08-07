@@ -142,6 +142,7 @@
 "cspStyle":"Sources des styles",
 "cspConnect":"Destinations des requêtes Ajax",
 "cspFont":"Source des polices",
+"cspFormAction":"Source des actions des formulaires",
 "cfgLog":"Résumé",
 "cfgVersion":"Version de la configuration",
 "checkXSS":"Contrôler les attaques XSS",
