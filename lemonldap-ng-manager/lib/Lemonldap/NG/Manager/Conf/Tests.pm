@@ -386,7 +386,7 @@ sub tests {
             return 1;
         },
 
-        # Warn if manager seems to be unprotected
+        # Warn if 2F dependencies seem missing
         sfaDependencies => sub {
             return 1
               unless ( $conf->{utotp2fActivation}
@@ -451,6 +451,14 @@ sub tests {
                     : 'TOTP should be 6 or 8 digits long'
                 )
             );
+        },
+
+        # Error if REST 2F verify URL is missing
+        rest2fVerifyUrl => sub {
+            return ( 0, "REST 2F Verify URL must be set" )
+		  			if ( $conf->{rest2fActivation} ne "0" && ( $conf->{rest2fVerifyUrl} eq "" ) );
+		  	
+		  	return 1;
         },
 
         # Warn if XSRF token TTL is higher than 10s

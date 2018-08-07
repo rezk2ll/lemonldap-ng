@@ -342,6 +342,8 @@ sub attributes {
             default       => 'http://auth.example.com/',
             documentation => 'Portal URL',
             flags         => 'hmp',
+            test          => $url,
+            msgFail       => '__badUrl__',
         },
         portalStatus => {
             type          => 'bool',
