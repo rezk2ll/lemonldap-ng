@@ -458,7 +458,6 @@ sub tests {
             return ( 0, "REST 2F Verify URL must be set" )
               if ( defined $conf->{rest2fActivation}
                 && $conf->{rest2fActivation} ne "0"
-                #&& defined $conf->{rest2fVerifyUrl}
                 && $conf->{rest2fVerifyUrl} eq "" );
 
             # Return
