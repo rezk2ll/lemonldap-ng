@@ -283,6 +283,8 @@ has app => (
     isa => 'CodeRef',
 );
 
+has class => ( is => 'ro', default => 'Lemonldap::NG::Portal::Main' );
+
 has p => ( is => 'rw' );
 
 has ini => (
@@ -294,7 +296,7 @@ has ini => (
             $ini->{$k} //= $defaultIni->{$k};
         }
         $self->{ini} = $ini;
-        main::ok( $self->{p} = Lemonldap::NG::Portal::Main->new(),
+        main::ok( $self->{p} = $self->class->new(),
             'Portal object' );
         main::ok( $self->{p}->init($ini), 'Init' );
         main::ok( $self->{app} = $self->{p}->run(), 'Portal app' );

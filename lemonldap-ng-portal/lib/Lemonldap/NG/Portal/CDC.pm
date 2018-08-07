@@ -1,4 +1,9 @@
-package Lemonldap::NG::Portal::Plugins::CDC;
+## @file
+# Module for SAML Common Domain Cookie Support
+
+## @class Lemonldap::NG::Portal::CDC
+# Class for SAML Common Domain Cookie Support
+package Lemonldap::NG::Portal::CDC;
 
 use strict;
 use Mouse;
@@ -7,7 +12,7 @@ use Lemonldap::NG::Common::FormEncode;
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin';
+extends 'Lemonldap::NG::Common::PSGI';
 
 # PROPERTIES
 
@@ -21,8 +26,24 @@ has cdc_values       => ( is => 'rw' );
 # INITIALIZATION
 
 sub init {
-    my ($self) = @_;
-    my $conf = $self->conf;
+    my ( $self, $args ) = @_;
+    my $tmp = Lemonldap::NG::Common::Conf->new( $args->{configStorage} );
+    unless ($tmp) {
+        $self->error(
+            "Unable to access configuration: $Lemonldap::NG::Common::Conf::msg"
+        );
+        return 0;
+    }
+    my $lconf = $tmp->getLocalConf('portal') // {};
+    my $conf = $tmp->getConf();
+    unless ( ref($conf) ) {
+        $self->error(
+            "Unable to load configuration: $Lemonldap::NG::Common::Conf::msg");
+        return 0;
+    }
+    $lconf->{$_} = $args->{$_} foreach ( keys %$args );
+    $conf->{$_} = $lconf->{$_} foreach ( keys %$lconf );
+    $self->SUPER::init($lconf) or return 0;
     $self->cdc_name( $conf->{samlCommonDomainCookieName} || '_saml_idp' );
     $self->cdc_domain( $conf->{samlCommonDomainCookieDomain} );
     $self->logger->debug( "[CDC] Cookie name: " . $self->cdc_name );
@@ -32,14 +53,16 @@ sub init {
     foreach (qw(httpOnly cookieExpiration oldStyleUrl)) {
         $self->$_( $conf->{$_} );
     }
-    $self->addAuthRoute( cdc => { ':action' => 'run' }, ['GET'] );
-    $self->addUnauthRoute( cdc => { ':action' => 'run' }, ['GET'] );
     return 1;
 }
 
-sub run {
+## @method int process()
+# Main method to process CDC requests
+# @return portal error code
+sub handler {
     my ( $self, $req ) = @_;
-    my $cdc_idp = "";
+    my $cdc_idp    = "";
+    my $cdc_cookie = "";
 
     # Default values
     my $cdc_domain = $self->cdc_domain || $req->hostname;
@@ -56,7 +79,7 @@ sub run {
     #}
 
     # Get cookie
-    my $cdc_cookie = $req->cookies->{ $self->cdc_name } // '';
+    $cdc_cookie = $req->cookies->{ $self->cdc_name };
 
     if ($cdc_cookie) {
         $self->logger->debug("[CDC] Cookie found with value $cdc_cookie");
@@ -81,7 +104,7 @@ sub run {
         my $encoded_idp = encode_base64( $idp, '' );
 
         # Remove IDP value if already present
-        $cdc_cookie =~ s/$encoded_idp(\s+)?//g;
+        $cdc_cookie =~ s/$encoded_idp(\s+)?//g if ($cdc_cookie);
 
         # Add a space separator
         $cdc_cookie .= ( $cdc_cookie ? " " : "" );
@@ -91,14 +114,10 @@ sub run {
             "[CDC] Build cookie $self->{cdc_name} with value $cdc_cookie");
 
         # Build cookie
-        $req->addCookie(
-            $self->p->cookie(
-                name   => $self->cdc_name,
-                value  => $cdc_cookie,
-                domain => $cdc_domain,
-                secure => 1
-            )
-        );
+        push @{ $req->respHeaders },
+            'Set-Cookie' => $self->cdc_name . '='
+          . $cdc_cookie
+          . "; domain=$cdc_domain; secure=1";
     }
 
     # Read request
@@ -166,7 +185,72 @@ sub run {
         ],
         ['OK']
     ];
-
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+=encoding utf8
+
+Lemonldap::NG::Portal::CDC - Manage SAML Common Domain Cookie
+
+=head1 SYNOPSIS
+
+Choose any L<Plack> method. CGI example:
+
+  #!/usr/bin/env plackup
+  
+  use Lemonldap::NG::Portal::CDC;
+  
+  # This must be the last instruction ! See PSGI for more
+  Lemonldap::NG::Portal::CDC->run($opts);
+
+=head1 DESCRIPTION
+
+Lemonldap::NG::Portal::CDC - Manage SAML Common Domain Cookie
+
+See L<http://lemonldap-ng.org> for more.
+
+=head1 SEE ALSO
+
+L<http://lemonldap-ng.org/>
+
+=head1 AUTHORS
+
+=over
+
+=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+
+=head1 COPYRIGHT AND LICENSE
+
+See COPYING file for details.
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut
