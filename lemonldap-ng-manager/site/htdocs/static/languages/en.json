@@ -142,7 +142,6 @@
 "cspStyle":"Style source",
 "cspConnect":"Ajax destinations",
 "cspFont":"Font source",
-"cspFormAction":"Form-Action source",
 "cfgLog":"Resume",
 "cfgVersion":"Configuration version",
 "checkXSS":"Check XSS attacks",

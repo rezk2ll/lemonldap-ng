@@ -599,11 +599,6 @@ sub attributes {
             default       => "'self'",
             documentation => 'Font source for Content-Security-Policy',
         },
-        cspFormAction => {
-            type          => 'text',
-            default       => "'self'",
-            documentation => 'Form-Action source for Content-Security-Policy',
-        },
         portalAntiFrame => {
             default       => 1,
             type          => 'bool',

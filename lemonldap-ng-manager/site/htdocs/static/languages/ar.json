@@ -142,7 +142,6 @@
 "cspStyle":"مصدر الأسلوب ",
 "cspConnect":"وجهات أجاكس",
 "cspFont":" مصدر نوع الخط",
-"cspFormAction":"Form-Action source",
 "cfgLog":"استئنف",
 "cfgVersion":"عملية ضبط الإصدارات",
 "checkXSS":"تحقق من هجمات XSS",

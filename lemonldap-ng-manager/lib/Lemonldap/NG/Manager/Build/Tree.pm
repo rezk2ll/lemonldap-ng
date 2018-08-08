@@ -736,7 +736,6 @@ sub tree {
                                         'cspDefault', 'cspImg',
                                         'cspScript',  'cspStyle',
                                         'cspConnect', 'cspFont',
-                                        'cspFormAction',
                                     ]
                                 },
                                 'requireToken',

@@ -31,7 +31,6 @@ sub defaultValues {
         'cspConnect'                  => '\'self\'',
         'cspDefault'                  => '\'self\'',
         'cspFont'                     => '\'self\'',
-        'cspFormAction'               => '\'self\'',
         'cspImg'                      => '\'self\' data:',
         'cspScript'                   => '\'self\'',
         'cspStyle'                    => '\'self\'',

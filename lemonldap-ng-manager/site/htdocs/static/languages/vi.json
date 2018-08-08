@@ -142,7 +142,6 @@
 "cspStyle":"Nguồn phong cách",
 "cspConnect":"Đích cúa Ajax",
 "cspFont":"Nguồn phông chữ",
-"cspFormAction":"Form-Action source",
 "cfgLog":"Tiếp tục",
 "cfgVersion":"Phiên bản cấu hình",
 "checkXSS":"Kiểm tra tấn công XSS",

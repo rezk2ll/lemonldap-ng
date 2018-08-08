@@ -174,7 +174,6 @@ sub reloadConf {
         my $prm = $self->conf->{ 'csp' . ucfirst($_) };
         $csp .= "$_-src $prm;" if ($prm);
     }
-    $csp = $csp  . "form-action 'self' " . $self->conf->{ cspFormAction };
     $self->csp($csp);
 
     # Initialize templateDir
