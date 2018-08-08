@@ -398,7 +398,7 @@ sub run {
 
                 # Read existing RP
                 @RPoidcConsent = grep { $_->{rp} eq $rp } @$_oidcConsents;
-                unless (@RPoidcConsent) {
+                unless ( @RPoidcConsent ) {
                     $self->logger->debug("No Relying Party $rp Consent found");
 
                     # Set default value
@@ -406,12 +406,13 @@ sub run {
                       { rp => $rp, epoch => '', scope => '' };
                 }
 
-                if ( $RPoidcConsent[0]{rp} eq $rp ) {
+                if (   $RPoidcConsent[0]{rp} eq $rp
+                    && defined $RPoidcConsent[0]{epoch}
+                    && defined $RPoidcConsent[0]{scope} )
+                {
                     $ask_for_consent = 0;
-
                     my $consent_time  = $RPoidcConsent[0]{epoch};
                     my $consent_scope = $RPoidcConsent[0]{scope};
-
                     $self->logger->debug(
 "Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)"
                     );
@@ -1304,7 +1305,6 @@ sub checkSession {
         '../common/oidc_checksession',
         params => {
             COOKIENAME => $self->conf->{cookieName},
-            URL => 'toto',
         }
     );
 }
