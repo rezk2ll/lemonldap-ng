@@ -1304,6 +1304,7 @@ sub checkSession {
         '../common/oidc_checksession',
         params => {
             COOKIENAME => $self->conf->{cookieName},
+            URL => 'toto',
         }
     );
 }
