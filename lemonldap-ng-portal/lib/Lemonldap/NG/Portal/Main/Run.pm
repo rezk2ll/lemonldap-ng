@@ -756,6 +756,7 @@ sub sendHtml {
 
     # Set CSP header
     push @{ $res->[1] }, 'Content-Security-Policy' => $csp;
+    $self->logger->debug("Apply following CSP : $csp");
     return $res;
 }
 
