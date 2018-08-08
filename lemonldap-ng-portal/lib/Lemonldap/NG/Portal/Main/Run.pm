@@ -730,7 +730,7 @@ sub sendHtml {
         $self->logger->debug("Set CSP form-action with urldc : $url");
         $csp .= " $url";       
     }
-    my $url = $args->{params}->{URL};
+    my $url = $args{params}->{URL};
     $self->logger->debug("Required Params URL : $url");
     if ( defined $url and $url =~ s#(https?://[^/]+).*#$1# ) {
 		$self->logger->debug("Set CSP form-action with Params URL : $url");
