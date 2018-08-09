@@ -632,7 +632,7 @@ sub tree {
                         {
                             title => 'stateCheck',
                             help  => 'checkstate.html',
-                            form  => 'simpleInputContainer',                            
+                            form  => 'simpleInputContainer',
                             nodes => [ 'checkState', 'checkStateSecret', ],
                         },
                     ]
@@ -709,6 +709,7 @@ sub tree {
                                 'yubikey2fUserCanRemoveKey',
                             ],
                         },
+                        'sfRequired',
                     ]
                 },
                 {

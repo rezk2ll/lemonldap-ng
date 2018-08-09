@@ -97,6 +97,7 @@
 "browserIdAuthnLevel":"Livello di autenticazione",
 "browserIdAutoLogin":"Login automatico",
 "browserIdBackgroundColor":"Colore di sfondo",
+"sfRequired":"Require 2FA",
 "browseridParams":"BrowserIDParams",
 "browserIdSiteLogo":"Logo del sito",
 "browserIdSiteName":"Nome del sito",

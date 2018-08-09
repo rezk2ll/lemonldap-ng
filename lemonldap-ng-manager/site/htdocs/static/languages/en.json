@@ -680,6 +680,7 @@
 "sessionStorage":"Sessions Storage",
 "sessionTitle":"Session content",
 "sfaTitle":"Second Factors Authentication",
+"sfRequired":"Require 2FA",
 "show":"Show",
 "showHelp":"Show help",
 "singleIP":"One IP only by user",

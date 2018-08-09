@@ -3056,6 +3056,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '::2F::Engines::Default',
             'type'    => 'text'
         },
+        'sfRequired' => {
+            'type' => 'bool'
+        },
         'singleIP' => {
             'default' => 0,
             'type'    => 'bool'

@@ -680,6 +680,7 @@
 "sessionStorage":"Sessions lưu trữ",
 "sessionTitle":"Nội dung phiên",
 "sfaTitle":"Second Factors Authentication",
+"sfRequired":"Require 2FA",
 "show":"Hiển thị",
 "showHelp":"Hiển thị trợ giúp",
 "singleIP":"Chỉ một địa chỉ IP bởi người dùng",

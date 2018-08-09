@@ -99,6 +99,12 @@ sub init {
         # Registration base
         $self->addAuthRoute( '2fregisters' => '_displayRegister', ['GET'] );
         $self->addAuthRoute( '2fregisters' => 'register',         ['POST'] );
+        if ( $self->conf->{sfRequired} ) {
+            $self->addUnauthRoute(
+                '2fregisters' => 'restoreSession',
+                [ 'GET', 'POST' ]
+            );
+        }
     }
 
     return 1;
@@ -131,7 +137,24 @@ sub run {
 
     # If no 2F module is authorized, skipping 2F
     # Note that a rule may forbid access after (GrantSession plugin)
-    return PE_OK unless (@am);
+    unless (@am) {
+
+        # Except if 2FA is required, move to registration
+        if ( $self->conf->{sfRequired} ) {
+            $req->pdata->{sfRegToken} =
+              $self->ott->createToken( $req->sessionInfo );
+            $req->response(
+                [
+                    302, [ Location => $self->conf->{portal} . '/2fregisters' ],
+                    []
+                ]
+            );
+            return PE_SENDRESPONSE;
+        }
+        else {
+            return PE_OK;
+        }
+    }
 
     $self->userLogger->info( 'Second factor required for '
           . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
@@ -317,6 +340,16 @@ sub register {
         }
     }
     return $self->p->sendJSONresponse( $req, \@am );
+}
+
+sub restoreSession {
+    my ( $self, $req, @path ) = @_;
+    my $token = $req->pdata->{sfRegToken}
+      or return [ 302, [ Location => $self->conf->{portal} ], [] ];
+    $req->userData( $self->ott->getToken( $token, 1 ) );
+    return $req->method eq 'POST'
+      ? $self->register( $req, @path )
+      : $self->_displayRegister( $req, @path );
 }
 
 1;

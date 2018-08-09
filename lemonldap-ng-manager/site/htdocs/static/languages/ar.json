@@ -680,6 +680,7 @@
 "sessionStorage":"تخزين الجلسات",
 "sessionTitle":"محتوى الجلسة",
 "sfaTitle":"Second Factors Authentication",
+"sfRequired":"Require 2FA",
 "show":"عرض",
 "showHelp":"عرض المساعدة",
 "singleIP":"عنوان آي بي واحد لكل مستخدم",

@@ -372,6 +372,7 @@
 "logo":"Logo",
 "logout":"Déconnexion",
 "logoutServices":"Transfert de la déconnexion",
+"sfRequired":"Exiger 2FA",
 "logParams":"Journalisation",
 "lwpOpts":"Options pour les requêtes serveur",
 "lwpSslOpts":"Options SSL pour les requêtes serveur",

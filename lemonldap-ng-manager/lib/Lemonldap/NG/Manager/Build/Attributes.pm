@@ -2281,6 +2281,10 @@ sub attributes {
             default       => '::2F::Engines::Default',
             documentation => 'Second factor engine',
         },
+        sfRequired => {
+            type          => 'bool',
+            documentation => 'Second factor required',
+        },
         available2F => {
             type          => 'text',
             default       => 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey',
