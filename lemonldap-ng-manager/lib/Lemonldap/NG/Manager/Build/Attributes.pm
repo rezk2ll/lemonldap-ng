@@ -2283,6 +2283,7 @@ sub attributes {
         },
         sfRequired => {
             type          => 'bool',
+            default       => 0,
             documentation => 'Second factor required',
         },
         available2F => {

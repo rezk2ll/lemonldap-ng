@@ -3057,7 +3057,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'text'
         },
         'sfRequired' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'singleIP' => {
             'default' => 0,
