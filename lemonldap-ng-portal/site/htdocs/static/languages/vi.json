@@ -86,6 +86,7 @@
 "PE84":"Bạn không được phép truy cập vào máy chủ lưu trữ này",
 "PE85":"Trang web từ xa yêu cầu một phiên mới (và plugin UpgradeSession không được tải). Đăng xuất và thử lại ",
 "2FManagment":"2ndFA Management",
+"2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"Chấp nhận",
 "accessDenied":"Bạn không có quyền truy cập vào ứng dụng này",
 "accountCreated":"Tài khoản của bạn đã được tạo, mật khẩu tạm thời của bạn đã được gửi đến địa chỉ mail của bạn.",

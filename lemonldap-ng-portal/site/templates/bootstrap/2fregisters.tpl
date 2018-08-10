@@ -1,7 +1,13 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
 <div class="container">
-  <div id="color" class="message message-positive alert"><span id="msg" trspan="choose2f"></span></div>
+  <div id="color" class="message message-positive alert">
+   <TMPL_IF NAME="REG_REQUIRED">
+    <span trspan="2fRegRequired"></span>
+   <TMPL_ELSE>
+    <span id="msg" trspan="choose2f"></span>
+   </TMPL_IF>
+  </div>
   <TMPL_IF NAME="SFDEVICES">
     <div class="alert alert-info">
 	<table class="table table-hover table-condensed table-responsive">

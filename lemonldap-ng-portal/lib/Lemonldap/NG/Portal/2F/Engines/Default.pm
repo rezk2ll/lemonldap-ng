@@ -281,7 +281,9 @@ sub _displayRegister {
               };
         }
     }
-    if ( @am == 1 and not $req->userData->{_2fDevices} ) {
+    if ( @am == 1
+        and not( $req->userData->{_2fDevices} or $req->data->{sfRegRequired} ) )
+    {
         return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ],
             [] ];
     }
@@ -298,9 +300,10 @@ sub _displayRegister {
         $req,
         '2fregisters',
         params => {
-            SKIN      => $self->conf->{portalSkin},
-            MODULES   => \@am,
-            SFDEVICES => $_2fDevices,
+            SKIN         => $self->conf->{portalSkin},
+            MODULES      => \@am,
+            SFDEVICES    => $_2fDevices,
+            REG_REQUIRED => $req->data->{sfRegRequired},
         }
     );
 }
@@ -347,6 +350,7 @@ sub restoreSession {
     my $token = $req->pdata->{sfRegToken}
       or return [ 302, [ Location => $self->conf->{portal} ], [] ];
     $req->userData( $self->ott->getToken( $token, 1 ) );
+    $req->data->{sfRegRequired} = 1;
     return $req->method eq 'POST'
       ? $self->register( $req, @path )
       : $self->_displayRegister( $req, @path );
