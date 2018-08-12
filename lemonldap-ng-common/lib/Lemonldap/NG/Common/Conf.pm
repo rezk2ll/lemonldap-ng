@@ -358,6 +358,9 @@ sub getLocalConf {
     # Load section parameters
     foreach ( $cfg->Parameters($section) ) {
         $r->{$_} = $cfg->val( $section, $_ );
+
+        # Remove spaces before and after value (#1488)
+        $r->{$_} =~ s/^\s*(.+?)\s*/$1/;
         if ( $r->{$_} =~ /^[{\[].*[}\]]$/ || $r->{$_} =~ /^sub\s*{.*}$/ ) {
             eval "\$r->{$_} = $r->{$_}";
             if ($@) {
