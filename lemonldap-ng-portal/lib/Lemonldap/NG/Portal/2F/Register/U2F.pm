@@ -70,9 +70,9 @@ sub run {
             ],
             [$challenge]
         ];
-        # return twice ??? return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
     }
-    if ( $action eq 'registration' ) {
+    
+    elsif ( $action eq 'registration' ) {
         my ( $resp, $challenge );
         $self->logger->debug('Registration response');
         unless ($resp = $req->param('registration')
@@ -263,6 +263,7 @@ sub run {
             [$challenge]
         ];
     }
+    
     elsif ( $action eq 'delete' ) {
         my $epoch = $req->param('epoch');
 
