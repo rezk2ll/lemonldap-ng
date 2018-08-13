@@ -171,7 +171,7 @@ sub run {
         $self->p->updatePersistentSession( $req,
             { _2fDevices => to_json( \@keep ) } );
         $self->userLogger->notice('TOTP registration succeed');
-        return [ 200, [ 'Content-Type' => 'application/json' ],
+        return [ 200, [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
             ['{"result":1}'] ];
     }
 
@@ -304,7 +304,7 @@ sub run {
         $self->p->updatePersistentSession( $req,
             { _2fDevices => to_json( \@keep ) } );
         $self->userLogger->notice('TOTP deletion succeed');
-        return [ 200, [ 'Content-Type' => 'application/json' ],
+        return [ 200, [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
             ['{"result":1}'] ];
     }
 }

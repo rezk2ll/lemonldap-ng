@@ -70,7 +70,7 @@ sub run {
             ],
             [$challenge]
         ];
-        return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
+        # return twice ??? return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
     }
     if ( $action eq 'registration' ) {
         my ( $resp, $challenge );
