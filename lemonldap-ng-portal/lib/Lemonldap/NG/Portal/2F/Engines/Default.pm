@@ -141,15 +141,39 @@ sub run {
 
         # Except if 2FA is required, move to registration
         if ( $self->conf->{sfRequired} ) {
+            $self->logger->debug("2F is required...");
+            $self->logger->debug(" -> Regiter 2F");
             $req->pdata->{sfRegToken} =
               $self->ott->createToken( $req->sessionInfo );
-            $req->response(
-                [
-                    302, [ Location => $self->conf->{portal} . '/2fregisters' ],
-                    []
-                ]
-            );
-            return PE_SENDRESPONSE;
+            if ( @{ $self->sfModules } > 1 ) {
+                $self->logger->debug("More than one 2F is enabled");
+                $self->logger->debug(" -> Redirect to /2fregisters/");
+                $req->response(
+                    [
+                        302,
+                        [ Location => $self->conf->{portal} . '/2fregisters' ],
+                        []
+                    ]
+                );
+                return PE_SENDRESPONSE;
+            }
+            else {
+                $self->logger->debug("Just one 2F is enabled");
+                $self->logger->debug( " -> Redirect to /2fregisters/"
+                      . ${ $self->sfModules }[0]->{m}->prefix );
+                $req->response(
+                    [
+                        302,
+                        [
+                                Location => $self->conf->{portal}
+                              . '/2fregisters/'
+                              . ${ $self->sfModules }[0]->{m}->prefix
+                        ],
+                        []
+                    ]
+                );
+                return PE_SENDRESPONSE;
+            }
         }
         else {
             return PE_OK;
