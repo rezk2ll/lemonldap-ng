@@ -52,7 +52,7 @@ Lemonldap::NG.
   sub booksMethod {
     my ( $self, $req, @otherPathInfo ) = @_;
 
-    # Will be called only if authorisated
+    # Will be called only if authorized
     my $userId = $self->userId;
     my $book = $req->params('book');
     my $method = $req->method;

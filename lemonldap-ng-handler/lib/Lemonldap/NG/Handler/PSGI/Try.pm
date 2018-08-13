@@ -121,7 +121,7 @@ Lemonldap::NG::Handler::PSGI::Try - Special handler for Lemonldap::NG Portal
   sub booksMethod {
     my ( $self, $req, @otherPathInfo ) = @_;
 
-    # Will be called only if authorisated
+    # Will be called only if authorized
     my $userId = $self->userId;
     my $book = $req->params('book');
     my $method = $req->method;
@@ -132,7 +132,7 @@ Lemonldap::NG::Handler::PSGI::Try - Special handler for Lemonldap::NG Portal
 =head1 DESCRIPTION
 
 Lemonldap::NG::Handler::PSGI::Try is a L<Lemonldap::NG::Handler::PSGI::Router>
-package that maintain 2 REST routers: one for authenticated users and one for
+package that provides 2 REST routers: one for authenticated users and one for
 unauthenticated users.
 
 =head1 METHODS
@@ -148,7 +148,7 @@ L<Lemonldap::NG::Common::PSGI::Router>) except that:
 
 =back
 
-Note also that user session data are available in $req parameter (first argument
+Note also that user session datas are available in $req parameter (first argument
 received by REST methods):
 
 =over
