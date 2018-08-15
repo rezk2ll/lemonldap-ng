@@ -307,8 +307,11 @@ sub _displayRegister {
             [] ];
     }
 
-    my $_2fDevices = eval { from_json( $req->userData->{_2fDevices},
-            { allow_nonref => 1 } ); };
+    my $_2fDevices =
+      $req->userData->{_2fDevices}
+      ? eval { from_json( $req->userData->{_2fDevices},
+            { allow_nonref => 1 } ); }
+      : undef;
 
     unless ($_2fDevices) {
         $self->logger->debug("No 2F Device found");
