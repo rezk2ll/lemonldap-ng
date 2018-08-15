@@ -30,6 +30,8 @@ has sfModules => ( is => 'rw', default => sub { [] } );
 
 has sfRModules => ( is => 'rw', default => sub { [] } );
 
+has sfReq => ( is => 'rw' );
+
 has ott => (
     is      => 'rw',
     default => sub {
@@ -86,6 +88,19 @@ sub init {
         }
     }
 
+    unless (
+        $self->sfReq(
+            $self->p->HANDLER->buildSub(
+                $self->p->HANDLER->substitute( $self->conf->{sfRequired} )
+            )
+        )
+      )
+    {
+        $self->error( 'Error in sfRequired rule'
+              . $self->p->HANDLER->tsv->{jail}->error );
+        return 0;
+    }
+
     # Enable REST request only if more than 1 2F module is enabled
     if ( @{ $self->{sfModules} } > 1 ) {
         $self->addUnauthRoute( '2fchoice' => '_choice',  ['POST'] );
@@ -140,40 +155,20 @@ sub run {
     unless (@am) {
 
         # Except if 2FA is required, move to registration
-        if ( $self->conf->{sfRequired} ) {
+        if ( $self->sfReq->( $req, $req->sessionInfo ) ) {
             $self->logger->debug("2F is required...");
             $self->logger->debug(" -> Regiter 2F");
             $req->pdata->{sfRegToken} =
               $self->ott->createToken( $req->sessionInfo );
-            if ( @{ $self->sfModules } > 1 ) {
-                $self->logger->debug("More than one 2F is enabled");
-                $self->logger->debug(" -> Redirect to /2fregisters/");
-                $req->response(
-                    [
-                        302,
-                        [ Location => $self->conf->{portal} . '/2fregisters' ],
-                        []
-                    ]
-                );
-                return PE_SENDRESPONSE;
-            }
-            else {
-                $self->logger->debug("Just one 2F is enabled");
-                $self->logger->debug( " -> Redirect to /2fregisters/"
-                      . ${ $self->sfModules }[0]->{m}->prefix );
-                $req->response(
-                    [
-                        302,
-                        [
-                                Location => $self->conf->{portal}
-                              . '/2fregisters/'
-                              . ${ $self->sfModules }[0]->{m}->prefix
-                        ],
-                        []
-                    ]
-                );
-                return PE_SENDRESPONSE;
-            }
+            $self->logger->debug("Just one 2F is enabled");
+            $self->logger->debug(" -> Redirect to /2fregisters/");
+            $req->response(
+                [
+                    302,
+                    [ Location => $self->conf->{portal} . '/2fregisters/' ], []
+                ]
+            );
+            return PE_SENDRESPONSE;
         }
         else {
             return PE_OK;
