@@ -725,16 +725,18 @@ sub sendHtml {
     # Set authorized URL for POST
     my $csp = $self->csp . "form-action 'self'";
     if ( my $url = $req->urldc ) {
-		$self->logger->debug("Required urldc : $url");
+        $self->logger->debug("Required urldc : $url");
         $url =~ s#(https?://[^/]+).*#$1#;
         $self->logger->debug("Set CSP form-action with urldc : $url");
-        $csp .= " $url";       
+        $csp .= " $url";
     }
     my $url = $args{params}->{URL};
-    $self->logger->debug("Required Params URL : $url");
-    if ( defined $url and $url =~ s#(https?://[^/]+).*#$1# ) {
-		$self->logger->debug("Set CSP form-action with Params URL : $url");
-        $csp .= " $url";
+    if ( defined $url ) {
+        $self->logger->debug("Required Params URL : $url");
+        if ( $url =~ s#(https?://[^/]+).*#$1# ) {
+            $self->logger->debug("Set CSP form-action with Params URL : $url");
+            $csp .= " $url";
+        }
     }
     $csp .= ';';
 

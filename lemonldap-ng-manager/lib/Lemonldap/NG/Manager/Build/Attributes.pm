@@ -2282,7 +2282,7 @@ sub attributes {
             documentation => 'Second factor engine',
         },
         sfRequired => {
-            type          => 'bool',
+            type          => 'boolOrExpr',
             default       => 0,
             documentation => 'Second factor required',
         },
