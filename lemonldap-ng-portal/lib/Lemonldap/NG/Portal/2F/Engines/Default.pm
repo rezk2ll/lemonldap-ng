@@ -142,7 +142,7 @@ sub run {
         # Except if 2FA is required, move to registration
         if ( $self->conf->{sfRequired} ) {
             $self->logger->debug("2F is required...");
-            $self->logger->debug(" -> Regiter 2F");
+            $self->logger->debug(" -> Register 2F");
             $req->pdata->{sfRegToken} =
               $self->ott->createToken( $req->sessionInfo );
             if ( @{ $self->sfModules } > 1 ) {
@@ -281,7 +281,7 @@ sub _displayRegister {
     if ($tpl) {
         my ($m) = grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
         unless ($m) {
-            return $self->p->sendError( $req, 'Unexistent register module',
+            return $self->p->sendError( $req, 'Inexistent register module',
                 400 );
         }
         unless ( $m->{r}->( $req, $req->userData ) ) {
@@ -342,7 +342,7 @@ sub register {
     if ($tpl) {
         my ($m) = grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
         unless ($m) {
-            return $self->p->sendError( $req, 'Unexistent register module',
+            return $self->p->sendError( $req, 'Inexistent register module',
                 400 );
         }
         unless ( $m->{r}->( $req, $req->userData ) ) {

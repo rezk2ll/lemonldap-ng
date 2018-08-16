@@ -100,10 +100,10 @@ L<Lemonldap::NG::Portal> modules I<(plugins, authentication modules,...)>.
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Portal::Main::Plugin provides many methods to write easily
+Lemonldap::NG::Portal::Main::Plugin provides many methods to easily write 
 Lemonldap::NG addons.
 
-init() is called for each plugin. If one plugin initialization fails (init()
+init() is called for each plugin. If a plugin initialization fails (init()
 returns 0), the portal responds a 500 status code for each request.
 
 =head1 Writing plugins
@@ -120,10 +120,10 @@ Plugins must be valid packages well found in C<@INC>.
 
 =head3 Entry point based on PATH_INFO
 
-Plugins can declare unauthRoutes/authRoutes during this initialization (=
+Plugins can declare unauthRoutes/authRoutes during initialization (=
 /path/info). Methods declared in this way must be declared in the plugin class.
-They will be called this the $req argument: the HTTP request
-(L<Lemonldap::NG::Portal::Main::Request>). These methods must return a valid
+They will be called with $req argument. $req is the HTTP request.
+(See L<Lemonldap::NG::Portal::Main::Request>). These methods must return a valid
 L<PSGI> response. You can also use sendJSONresponse() or sendHtml() methods
 (see L<Lemonldap::NG::Common::PSGI>).
 
@@ -132,7 +132,7 @@ Example:
   sub init {
       my ($self) = @_;
       $self->addUnauthRoute( mypath => 'hello', [ 'GET', 'PUT' ] );
-      $self->addAuthRoute( mypath => 'wellcome', [ 'GET', 'PUT' ] );
+      $self->addAuthRoute( mypath => 'welcome', [ 'GET', 'PUT' ] );
       return 1;
   }
   sub hello {
@@ -140,7 +140,7 @@ Example:
       ...
       return $self->p->sendJSONresponse($req, { hello => 1 });
   }
-  sub wellcome {
+  sub welcome {
       my ($self, $req) = @_;
       ...
       return $self->p->sendHtml($req, 'template', params => { WELLCOME => 1 });
@@ -149,8 +149,7 @@ Example:
 =head3 Entry point in auth process
 
 A plugin which wants to be inserted in authentication process has to declare
-constants containing the name of the method to run. The following entry points
-are available.
+constants set with method name to run. Following entry points are available.
 
 =over
 
