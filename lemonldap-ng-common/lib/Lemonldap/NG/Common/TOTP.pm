@@ -10,7 +10,7 @@ use Digest::HMAC_SHA1 'hmac_sha1_hex';
 
 our $VERSION = '2.0.0';
 
-# Verify that TOTP $code match with $secret
+# Verify that TOTP $code matches with $secret
 sub verifyCode {
     my ( $self, $interval, $range, $digits, $secret, $code ) = @_;
     my $s = eval { decode_base32($secret) };
@@ -29,7 +29,6 @@ sub verifyCode {
 # Internal subroutine that calculates TOTP code using $secret and $interval
 sub _code {
     my ( $self, $secret, $r, $interval, $digits ) = @_;
-    $digits ||= 6;
     my $hmac = hmac_sha1_hex(
         pack( 'H*',
             sprintf( '%016x', int( ( time - $r * $interval ) / $interval ) ) ),
@@ -41,7 +40,7 @@ sub _code {
         (
             hex( substr( $hmac, hex( substr( $hmac, -1 ) ) * 2, 8 ) ) &
               0x7fffffff
-        ) % 1000000
+        ) % 10**$digits
     );
 }
 
