@@ -32,7 +32,7 @@ has logo => ( is => 'rw', default => 'u2f.png' );
 sub init {
     my ($self) = @_;
 
-    # If self registration is enabled and "activation" is simply set to
+    # If self registration is enabled and "activation" is just set to
     # "enabled", replace the rule to detect if user has registered its key
     if (    $self->conf->{u2fSelfRegistration}
         and $self->conf->{u2fActivation} eq '1' )

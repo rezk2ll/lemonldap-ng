@@ -29,7 +29,7 @@ has logo => ( is => 'rw', default => 'totp.png' );
 sub init {
     my ($self) = @_;
 
-    # If self registration is enabled and "activation" is simply set to
+    # If self registration is enabled and "activation" is just set to
     # "enabled", replace the rule to detect if user has registered its key
     if (    $self->conf->{totp2fSelfRegistration}
         and $self->conf->{totp2fActivation} eq '1' )
