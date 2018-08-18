@@ -439,6 +439,7 @@ sub tests {
 
         # Warn if TOTP not 6 or 8 digits long
         totp2fDigits => sub {
+            return 1 unless ( $conf->{totp2fActivation} );
             return 1 unless ( defined $conf->{totp2fDigits} );
             return (
                 1,
@@ -453,12 +454,66 @@ sub tests {
             );
         },
 
+        totp2fParams => sub {
+            return 1 unless ( $conf->{totp2fActivation} );
+            return ( 0, 'TOTP range must be defined' )
+              unless ( $conf->{totp2fRange} );
+            return ( 1, "TOTP interval should be higher than 10s" )
+              unless ( $conf->{totp2fInterval} > 10 );
+
+            # Return
+            return 1;
+        },
+
+        # Error if Yubikey client ID and secret key are missing
+        # Warn if Yubikey public ID size is not 12 digits long
+        yubikey2fParams => sub {
+            return 1 unless ( $conf->{yubikey2fActivation} );
+            return ( 0, "Yubikey client ID and secret key must be set" )
+              unless ( defined $conf->{yubikey2fSecretKey}
+                && defined $conf->{yubikey2fClientID} );
+            return (
+                1,
+                (
+                    ( $conf->{yubikey2fPublicIDSize} == 12 )
+                    ? ''
+                    : 'Yubikey public ID size should be 12 digits long'
+                )
+            );
+        },
+
         # Error if REST 2F verify URL is missing
         rest2fVerifyUrl => sub {
+            return 1 unless ( $conf->{rest2fActivation} );
             return ( 0, "REST 2F Verify URL must be set" )
-              if ( defined $conf->{rest2fActivation}
-                && $conf->{rest2fActivation} ne "0"
-                && $conf->{rest2fVerifyUrl} eq "" );
+              unless ( defined $conf->{rest2fVerifyUrl} );
+
+            # Return
+            return 1;
+        },
+
+        # Warn if 2FA is required without 2F module enabled
+        required2FA => sub {
+            return 1 unless ( $conf->{sfRequired} );
+            return ( 1,
+                "At least one 2FA module should be enabled to require 2FA" )
+              unless ( $conf->{u2fActivation}
+                || $conf->{totp2fActivation}
+                || $conf->{utotp2fActivation}
+                || $conf->{yubikeyfActivation}
+                || $conf->{ext2fActivation}
+                || $conf->{rest2fActivation} );
+
+            # Return
+            return 1;
+        },
+
+        # Error if external 2F Send or Validate command is missing
+        ext2fCommands => sub {
+            return 1 unless ( $conf->{ext2fActivation} );
+            return ( 0, "External 2F send or validate command must be set" )
+              unless ( defined $conf->{ext2FSendCommand}
+                && defined $conf->{ext2FValidateCommand} );
 
             # Return
             return 1;
