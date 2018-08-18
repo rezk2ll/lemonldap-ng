@@ -23,8 +23,6 @@ has logo => ( is => 'rw', default => 'yubikey.png' );
 
 sub init {
     my ($self) = @_;
-
-    #$self->conf->{yubikey2fPublicIDSize} ||= 12;
     return 1;
 }
 
