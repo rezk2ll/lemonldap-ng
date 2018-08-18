@@ -71,7 +71,7 @@ sub run {
             [$challenge]
         ];
     }
-    
+
     elsif ( $action eq 'registration' ) {
         my ( $resp, $challenge );
         $self->logger->debug('Registration response');
@@ -247,24 +247,13 @@ sub run {
         ];
     }
 
-    # Check if unregistration is allowed
-    unless ( $self->conf->{u2fUserCanRemoveKey} ) {
-        return $self->p->sendError( $req, 'notAuthorized', 200 );
-    }
-
-    if ( $action eq 'unregister' ) {
-        my $challenge = $self->crypter->registrationChallenge;
-        return [
-            200,
-            [
-                'Content-Type'   => 'application/json',
-                'Content-Length' => length($challenge),
-            ],
-            [$challenge]
-        ];
-    }
-    
     elsif ( $action eq 'delete' ) {
+
+        # Check if unregistration is allowed
+        unless ( $self->conf->{u2fUserCanRemoveKey} ) {
+            return $self->p->sendError( $req, 'notAuthorized', 200 );
+        }
+
         my $epoch = $req->param('epoch');
 
         # Read existing 2FDevices
