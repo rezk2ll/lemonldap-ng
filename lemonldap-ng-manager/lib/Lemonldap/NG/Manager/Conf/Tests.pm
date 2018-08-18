@@ -388,11 +388,18 @@ sub tests {
 
         # Warn if 2F dependencies seem missing
         sfaDependencies => sub {
-            return 1
-              unless ( $conf->{utotp2fActivation}
-                or $conf->{totp2fActivation}
-                or $conf->{u2fActivation}
-                or $conf->{yubikey2fActivation} );
+
+            my $enabled2fModule = 0;
+            foreach (qw(u totp utotp yubikey)) {
+                $enabled2fModule ||= $conf->{ $_ . '2fActivation' };
+            }
+
+            #return 1
+            #unless ( $conf->{utotp2fActivation}
+            #or $conf->{totp2fActivation}
+            #or $conf->{u2fActivation}
+            #or $conf->{yubikey2fActivation} );
+            return 1 unless ($enabled2fModule);
 
             # Use TOTP
             if (   $conf->{totp2fActivation}
@@ -495,14 +502,14 @@ sub tests {
         # Warn if 2FA is required without 2F module enabled
         required2FA => sub {
             return 1 unless ( $conf->{sfRequired} );
+
+            my $enabled2fModule = 0;
+            foreach (qw(u totp utotp yubikey ext rest)) {
+                $enabled2fModule ||= $conf->{ $_ . '2fActivation' };
+            }
             return ( 1,
                 "At least one 2FA module should be enabled to require 2FA" )
-              unless ( $conf->{u2fActivation}
-                || $conf->{totp2fActivation}
-                || $conf->{utotp2fActivation}
-                || $conf->{yubikeyfActivation}
-                || $conf->{ext2fActivation}
-                || $conf->{rest2fActivation} );
+              unless ($enabled2fModule);
 
             # Return
             return 1;
@@ -511,7 +518,7 @@ sub tests {
         # Error if external 2F Send or Validate command is missing
         ext2fCommands => sub {
             return 1 unless ( $conf->{ext2fActivation} );
-            return ( 0, "External 2F send or validate command must be set" )
+            return ( 0, "External 2F Send or Validate command must be set" )
               unless ( defined $conf->{ext2FSendCommand}
                 && defined $conf->{ext2FValidateCommand} );
 
