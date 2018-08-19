@@ -23,7 +23,7 @@
     <span trspan="2FManagment">2F managment</span>
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <a id="goback" href="<TMPL_VAR NAME="PORTAL_URL">/?cancel=1<TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
+  <a id="goback" href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1<TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
     <span class="glyphicon glyphicon-home"></span>&nbsp;
     <span trspan="goToPortal">Go to portal</span>
   </a>
