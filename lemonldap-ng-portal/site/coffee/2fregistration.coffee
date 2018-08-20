@@ -27,8 +27,6 @@ delete2F = (device, epoch) ->
 					device = 'totp'
 				else setMsg 'u2fFailed', 'warning'
 		
-		$("#delete-#{epoch}").hide()
-		
 		$.ajax
 			type: "POST"
 			url: "#{portal}2fregisters/#{device}/delete"
@@ -38,8 +36,11 @@ delete2F = (device, epoch) ->
 			error: displayError
 			success: (resp) ->
 				if resp.error
-					setMsg 'notAuthorized', 'warning'
+					if resp.error.match /notAuthorized/
+						setMsg 'notAuthorized', 'warning'
+					else setMsg 'unknownAction', 'warning'
 				else if resp.result
+					$("#delete-#{epoch}").hide()
 					setMsg 'yourKeyIsUnregistered', 'positive'
 			error: displayError
 

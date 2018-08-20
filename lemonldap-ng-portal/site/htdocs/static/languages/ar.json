@@ -212,6 +212,7 @@
 "u2fPermission": "قد تتم مطالبتك بالسماح للموقع  إذن الوصول إلى مفاتيح الأمان الخاصة بك.بعد منح الإذن، سيبدأ الجهاز في العملية.",
 "u2fWelcome": "U2F device management",
 "unableToGetKey": "تعذر الوصول إلى المفتاح. أعد محاولة الاتصال بالمشرف أو اتصل به",
+"unknownAction":"Unknown action",
 "unregister": "إلغاء",
 "updateCdc": "تحديث ملف تعريف ارتباط المجال المشترك",
 "upgradeSession":"ترقية الجلسة",

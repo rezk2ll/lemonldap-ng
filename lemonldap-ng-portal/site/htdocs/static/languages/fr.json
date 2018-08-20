@@ -212,6 +212,7 @@
 "u2fPermission": "Il est possible qu'on vous demande d'autoriser le site à accéder à votre clef. Après votre accord, la clef clignotera.",
 "u2fWelcome": "Gestion du périphérique U2F",
 "unableToGetKey": "Impossible d'accéder à la clef. Réessayez ou contactez votre administrateur",
+"unknownAction":"Action inconnue",
 "unregister": "Supprimer",
 "updateCdc": "Mise à jour du cookie de domaine commun",
 "upgradeSession":"Se réauthentifier",

@@ -137,13 +137,13 @@ sub run {
         }
     }
 
-    # Check if unregistration is allowed
-    unless ( $self->conf->{yubikey2fUserCanRemoveKey} ) {
-        return $self->p->sendError( $req, 'notAuthorized', 400 );
-    }
-
-    if ( $action eq 'delete' ) {
+    elsif ( $action eq 'delete' ) {
         my $epoch = $req->param('epoch');
+
+        # Check if unregistration is allowed
+        unless ( $self->conf->{yubikey2fUserCanRemoveKey} ) {
+            return $self->p->sendError( $req, 'notAuthorized', 400 );
+        }
 
         # Read existing 2FDevices
         $self->logger->debug("Looking for 2F Devices ...");
@@ -185,14 +185,8 @@ sub run {
 
     }
     else {
-        $self->userLogger->error("Unknown Yubikey action $action");
-        return $self->p->sendHtml(
-            $req, 'error',
-            params => {
-                AUTH_ERROR      => PE_ERROR,
-                AUTH_ERROR_TYPE => 'positive',
-            }
-        );
+        $self->logger->error("Unknown Yubikey action -> $action");
+        return $self->p->sendError( $req, 'unknownAction', 400 );
     }
 }
 

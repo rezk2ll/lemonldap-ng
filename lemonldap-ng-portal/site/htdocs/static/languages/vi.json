@@ -212,6 +212,7 @@
 "u2fPermission": "Bạn có thể được nhắc cho phép trang web được phép truy cập vào các khóa bảo mật của bạn. Sau khi cho phép, thiết bị sẽ bắt đầu nhấp nháy. ",
 "u2fWelcome": "U2F device management",
 "unableToGetKey": "Không thể truy cập khóa của bạn. Thử lại hoặc liên hệ với quản trị viên của bạn ",
+"unknownAction":"Unknown action",
 "unregister": "Hủy đăng ký",
 "updateCdc": "Cập nhật Cookie miền thông thường",
 "upgradeSession":"Phiên nâng cấp",

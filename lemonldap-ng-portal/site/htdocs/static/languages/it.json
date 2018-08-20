@@ -212,6 +212,7 @@
 "u2fPermission": "È possibile che venga richiesto di consentire il permesso del sito per accedere alle chiavi di sicurezza. Dopo aver concesso il permesso, il dispositivo inizierà a lampeggiare.",
 "u2fWelcome": "U2F device management",
 "unableToGetKey": "Impossibile accedere alla chiave. Riprovare o contattare l'amministratore",
+"unknownAction":"Unknown action",
 "unregister": "Non Registra",
 "updateCdc": "Aggiorna il Cookie di Common Domain",
 "upgradeSession":"Sessione di aggiornamento",

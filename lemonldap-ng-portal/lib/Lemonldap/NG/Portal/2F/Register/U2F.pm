@@ -295,8 +295,11 @@ sub run {
         $self->userLogger->warn("U2F Unregistration failed: $err");
         return $self->p->sendError( $req, $err, 200 );
     }
-    $self->logger->error("Unknown action $action");
-    return $self->p->sendError( $req, 'notAuthorized', 200 );
+    else {
+        $self->logger->error("Unknown U2F action -> $action");
+        return $self->p->sendError( $req, 'unknownAction', 400 );
+    }
+
 }
 
 sub loadUser {

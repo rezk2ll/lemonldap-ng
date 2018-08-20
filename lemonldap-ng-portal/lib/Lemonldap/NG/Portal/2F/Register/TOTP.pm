@@ -171,8 +171,11 @@ sub run {
         $self->p->updatePersistentSession( $req,
             { _2fDevices => to_json( \@keep ) } );
         $self->userLogger->notice('TOTP registration succeed');
-        return [ 200, [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
-            ['{"result":1}'] ];
+        return [
+            200,
+            [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
+            ['{"result":1}']
+        ];
     }
 
     # Get or generate master key
@@ -263,14 +266,14 @@ sub run {
         );
     }
 
-    # Check if unregistration is allowed
-    unless ( $self->conf->{totp2fUserCanRemoveKey} ) {
-        return $self->p->sendError( $req, 'notAuthorized', 400 );
-    }
-
     # Delete TOTP
-    if ( $action eq 'delete' ) {
+    elsif ( $action eq 'delete' ) {
         my $epoch = $req->param('epoch');
+
+        # Check if unregistration is allowed
+        unless ( $self->conf->{totp2fUserCanRemoveKey} ) {
+            return $self->p->sendError( $req, 'notAuthorized', 400 );
+        }
 
         # Read existing 2FDevices
         $self->logger->debug("Loading 2F Devices ...");
@@ -304,8 +307,15 @@ sub run {
         $self->p->updatePersistentSession( $req,
             { _2fDevices => to_json( \@keep ) } );
         $self->userLogger->notice('TOTP deletion succeed');
-        return [ 200, [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
-            ['{"result":1}'] ];
+        return [
+            200,
+            [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
+            ['{"result":1}']
+        ];
+    }
+    else {
+        $self->logger->error("Unknown TOTP action -> $action");
+        return $self->p->sendError( $req, 'unknownAction', 400 );
     }
 }
 
