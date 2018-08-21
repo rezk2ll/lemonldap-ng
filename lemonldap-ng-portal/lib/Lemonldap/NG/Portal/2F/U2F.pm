@@ -72,7 +72,7 @@ sub run {
         # Get registered keys
         my @rk;
         foreach ( @{ $req->data->{crypter} } ) {
-            my $k = push @rk,
+            push @rk,
               { keyHandle => $_->{keyHandle}, version => $data->{version} };
 
         }
