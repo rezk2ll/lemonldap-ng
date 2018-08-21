@@ -450,6 +450,7 @@ t/66-CDA-with-SOAP.t
 t/66-CDA.t
 t/70-2F-TOTP-with-HISTORY.t
 t/70-2F-TOTP.t
+t/70-2F-TOTP_8.t
 t/71-2F-U2F-with-HISTORY.t
 t/71-2F-U2F.t
 t/72-2F-REST.t
