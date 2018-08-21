@@ -3,10 +3,10 @@ Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
 Uploaders: Xavier Guimard <x.guimard@free.fr>
 Section: perl
 Priority: optional
-Rules-Requires-Root: binary-targets
 Build-Depends: debhelper (>= 10),
                po-debconf
 Build-Depends-Indep: libapache-session-perl,
+                     libauthen-oath-perl,
                      libcache-cache-perl,
                      libclone-perl,
                      libconfig-inifiles-perl,
@@ -46,10 +46,11 @@ Build-Depends-Indep: libapache-session-perl,
                      libxml-libxslt-perl,
                      libxml-simple-perl,
                      perl
-Standards-Version: 4.1.5
+Standards-Version: 4.2.0
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng
 Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng.git
 Homepage: https://lemonldap-ng.org/
+Rules-Requires-Root: binary-targets
 
 Package: lemonldap-ng
 Architecture: all
@@ -77,8 +78,8 @@ Description: OpenID-Connect, CAS and SAML compatible Web-SSO system
 Package: lemonldap-ng-doc
 Architecture: all
 Section: doc
-Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
 Description: Lemonldap::NG Web-SSO system documentation
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -96,12 +97,12 @@ Package: lemonldap-ng-handler
 Architecture: all
 Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version})
-Breaks: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
-Replaces: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
 Recommends: lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | libapache2-mod-perl2
 Suggests: libcache-memcached-perl,
           libdigest-hmac-perl,
           libsoap-lite-perl
+Breaks: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
+Replaces: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
 Description: Lemonldap::NG handler part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -189,6 +190,7 @@ Description: Lemonldap::NG authentication portal part
 
 Package: lemonldap-ng-fastcgi-server
 Architecture: all
+Section: web
 Depends: ${misc:Depends},
          ${perl:Depends},
          lsb-base,
@@ -197,7 +199,6 @@ Depends: ${misc:Depends},
          libplack-perl
 Recommends: libhttp-parser-xs-perl,
             nginx-extras | nginx
-Section: web
 Description: Lemonldap::NG FastCGI server
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -214,13 +215,13 @@ Description: Lemonldap::NG FastCGI server
 
 Package: lemonldap-ng-uwsgi-app
 Architecture: all
+Section: web
 Depends: ${misc:Depends},
          ${perl:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          uwsgi-plugin-psgi
 Recommends: libhttp-parser-xs-perl,
             nginx-extras | nginx
-Section: web
 Description: Lemonldap::NG uWSGI server
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -295,4 +296,3 @@ Description: Lemonldap::NG common files
  .
  Lemonldap::NG::Common contains common files used by other Lemonldap::NG
  modules.
-
