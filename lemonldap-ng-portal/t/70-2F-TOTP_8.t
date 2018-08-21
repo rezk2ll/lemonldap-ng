@@ -15,7 +15,7 @@ SKIP: {
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel               => 'debug',
+                logLevel               => 'error',
                 totp2fSelfRegistration => 1,
                 totp2fActivation       => 1,
                 totp2fDigits           => 8,
