@@ -38,7 +38,7 @@ sub init {
       )
     {
         $self->conf->{utotp2fActivation} =
-          '$_2fDevices =~ /"type":\s*"(?:TOTP|U2F)"/s';
+          '$_2fDevices && $_2fDevices =~ /"type":\s*"(?:TOTP|U2F)"/s';
     }
     foreach (qw(U2F TOTP)) {
 
@@ -88,7 +88,7 @@ sub run {
             # Get registered keys
             my @rk;
             foreach ( @{ $req->data->{crypter} } ) {
-                my $k = push @rk,
+                push @rk,
                   { keyHandle => $_->{keyHandle}, version => $data->{version} };
 
             }

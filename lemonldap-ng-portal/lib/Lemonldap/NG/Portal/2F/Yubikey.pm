@@ -41,7 +41,7 @@ sub init {
         and $self->conf->{yubikey2fActivation} eq '1' )
     {
         $self->conf->{yubikey2fActivation} =
-          '$_2fDevices =~ /"type":\s*"UBK"/s';
+          '$_2fDevices && $_2fDevices =~ /"type":\s*"UBK"/s';
     }
     unless ($self->conf->{yubikey2fClientID}
         and $self->conf->{yubikey2fSecretKey} )

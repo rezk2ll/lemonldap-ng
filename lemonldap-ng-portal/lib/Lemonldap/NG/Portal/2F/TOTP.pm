@@ -34,7 +34,7 @@ sub init {
     if (    $self->conf->{totp2fSelfRegistration}
         and $self->conf->{totp2fActivation} eq '1' )
     {
-        $self->conf->{totp2fActivation} = '$_2fDevices =~ /"type":\s*"TOTP"/s';
+        $self->conf->{totp2fActivation} = '$_2fDevices && $_2fDevices =~ /"type":\s*"TOTP"/s';
     }
     return $self->SUPER::init();
 }

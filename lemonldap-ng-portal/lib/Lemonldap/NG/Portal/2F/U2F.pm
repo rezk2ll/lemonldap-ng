@@ -37,7 +37,7 @@ sub init {
     if (    $self->conf->{u2fSelfRegistration}
         and $self->conf->{u2fActivation} eq '1' )
     {
-        $self->conf->{u2fActivation} = '$_2fDevices =~ /"type":\s*"U2F"/s';
+        $self->conf->{u2fActivation} = '$_2fDevices && $_2fDevices =~ /"type":\s*"U2F"/s';
     }
     return 0
       unless ( $self->Lemonldap::NG::Portal::Main::SecondFactor::init()
@@ -79,6 +79,9 @@ sub run {
 
         $self->ott->updateToken( $token, __ch => $data->{challenge} );
 
+		$self->logger->debug("Prepare U2F verification");
+		$self->logger->debug(" -> Send challenge: ". $data->{challenge});
+		
         # Serialize data
         $data = to_json(
             {
@@ -98,7 +101,6 @@ sub run {
                 CHECKLOGINS => $checkLogins
             }
         );
-        $self->logger->debug("Prepare U2F verification");
 
         $req->response($tmp);
         return PE_SENDRESPONSE;
@@ -206,9 +208,9 @@ sub loadUser {
             return PE_ERROR;
         }
         $self->logger->debug("2F Device(s) found");
-
+        
+        $self->logger->debug("Looking for registered U2F key(s) ...");
         foreach (@$_2fDevices) {
-            $self->logger->debug("Looking for registered U2F key(s) ...");
             if ( $_->{type} eq 'U2F' ) {
                 unless ( $_->{_userKey} and $_->{_keyHandle} ) {
                     $self->logger->error(
@@ -218,7 +220,7 @@ sub loadUser {
                 }
                 $self->logger->debug( "Found U2F key -> _userKey = "
                       . $_->{_userKey}
-                      . "/ _keyHandle = "
+                      . " / _keyHandle = "
                       . $_->{_keyHandle} );
                 $_->{_userKey} = $self->decode_base64url( $_->{_userKey} );
                 push @u2fs, $_;
@@ -229,11 +231,12 @@ sub loadUser {
     # Manage multi u2f keys
     my @crypters;
     if (@u2fs) {
-        $self->logger->debug("kh & uk -> OK");
+        $self->logger->debug("Generating crypter(s) with uk & kh");
 
         foreach (@u2fs) {
             $kh = $_->{_keyHandle};
             $uk = $_->{_userKey};
+            $self->logger->debug("Append crypter with kh -> $kh");
             my $c = $self->crypter( keyHandle => $kh, publicKey => $uk );
             if ($c) {
                 push @crypters, $c;
