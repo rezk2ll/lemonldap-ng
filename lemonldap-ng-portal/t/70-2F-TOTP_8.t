@@ -3,12 +3,16 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 16;
+my $maintests = 18;
 
 SKIP: {
     eval { require Convert::Base32 };
     if ($@) {
         skip 'Convert::Base32 is missing', $maintests;
+    }
+    eval { require Authen::OATH };
+    if ($@) {
+        skip 'Authen::OATH is missing', $maintests;
     }
     require Lemonldap::NG::Common::TOTP;
 
@@ -77,7 +81,7 @@ SKIP: {
     my $code;
     ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 8 ),
         'Code' );
-    ok( $code =~ /^\d{8}$/, 'Code contains 8 digits' );
+    ok( $code =~ /^\d{8}$/, 'Code contains 8 digits' ); 
     my $s = "code=$code&token=$token";
     ok(
         $res = $client->_post(
@@ -106,8 +110,19 @@ SKIP: {
     );
     my ( $host, $url, $query ) =
       expectForm( $res, undef, '/totp2fcheck', 'token' );
-    ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 8 ),
-        'Code' );
+    
+    # Generate TOTP with LLNG
+    my $totp;
+    ok( $totp = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 8 ),
+        'LLNG Code' );
+    
+    # Generate TOTP with an external application to validate LLNG TOTP formula
+    my $oath = Authen::OATH->new( digits => 8 );
+    ok( $code = $oath->totp( $key ),
+        'Ext. App Code' );
+    ok( $code == $totp, 'Both TOTP match')
+      or explain( [ $code, $totp ], 'LLNG and Ext. App TOTP mismatch');
+    
     $query =~ s/code=/code=$code/;
     ok(
         $res = $client->_post(
