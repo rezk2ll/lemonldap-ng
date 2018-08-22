@@ -186,10 +186,10 @@ system.
 
 The Perl part of Lemonldap::NG::Manager is the REST server. Web interface is
 written in Javascript, using AngularJS framework and can be found in `site`
-directory. The REST API is described in REST-API.md file given in source tree.
+directory. The REST API is described in REST-API.md file provided in source tree.
 
-Lemonldap::NG Manager uses L<Plack> to be compatible with CGI, FastCGI,... It
-inherits of L<Lemonldap::NG::Handler::PSGI::Router>
+Lemonldap::NG Manager uses L<Plack> to be CGI, FastCGI and so on compatible.
+It inherits of L<Lemonldap::NG::Handler::PSGI::Router>
 
 =head1 ORGANIZATION
 
@@ -207,24 +207,24 @@ Lemonldap::NG Manager contains 6 parts:
 
 =item Configuration builder (see L<Lemonldap::NG::Manager::Build>
 
-=item Command line (see L<Lemonldap::NG::Manager::Cli>
+=item Command line interface (see L<Lemonldap::NG::Manager::Cli>
 
 =back
 
-=head2 Generation of static files
+=head2 Static files generation
 
-The `scripts/jsongenerator.pl` file uses Lemonldap::NG::Manager::Build::Attributes,
+`scripts/jsongenerator.pl` file uses Lemonldap::NG::Manager::Build::Attributes,
 Lemonldap::NG::Manager::Build::Tree and Lemonldap::NG::Manager::Build::CTrees to generate
 
 =over
 
 =item `site/htdocs/static/struct.json`:
 
-the main file that contains the tree view;
+main file containing the tree view;
 
 =item `site/htdocs/static/js/conftree.js`:
 
-generates sub tree for virtualhosts and SAML and OpenID-Connect partners;
+generates Virtualhosts, SAML and OpenID-Connect partners sub-trees;
 
 =item `Lemonldap::NG::Common::Conf::ReConstants`:
 
@@ -268,7 +268,7 @@ you can also fix them in $opts hash ref passed as argument to run() or new()).
   ;languages:      Available interface languages
   languages      = en, fr
   
-  ;templateDir:    the path to the directory containing HTML templates
+  ;templateDir:    path to the directory containing HTML templates
   ;                See Lemonldap::NG::Common::PSGI doc for more
   templateDir    = /usr/share/lemonldap-ng/manager/
 
