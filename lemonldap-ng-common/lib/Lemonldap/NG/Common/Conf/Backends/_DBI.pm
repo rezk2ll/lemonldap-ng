@@ -70,12 +70,14 @@ sub _dbh {
     elsif ( $self->{dbiChain} =~ /^dbi:pg/i ) {
         $self->{_dbh}->{pg_enable_utf8} = 1;
     }
+
+    # DBD::MariaDB should have o problem here
     return $self->{_dbh};
 }
 
 sub lock {
     my $self = shift;
-    if ( $self->{dbiChain} =~ /^dbi:mysql:/i ) {
+    if ( $self->{dbiChain} =~ /^dbi:(?:MariaDB|mysql):/i ) {
         my @row = $self->_dbh->selectrow_array("SELECT GET_LOCK('lmconf', 0)");
         return $row[0] || 0;
     }
@@ -84,7 +86,7 @@ sub lock {
 
 sub isLocked {
     my $self = shift;
-    if ( $self->{dbiChain} =~ /^dbi:mysql:/i ) {
+    if ( $self->{dbiChain} =~ /^dbi:(?:MariaDB|mysql):/i ) {
         my @row = $self->_dbh->selectrow_array("SELECT IS_FREE_LOCK('lmconf')");
         return $row[0] ? 0 : 1;
     }
@@ -93,7 +95,7 @@ sub isLocked {
 
 sub unlock {
     my $self = shift;
-    if ( $self->{dbiChain} =~ /^dbi:mysql:/i ) {
+    if ( $self->{dbiChain} =~ /^dbi:(?:MariaDB|mysql):/i ) {
         my @row = $self->_dbh->selectrow_array("SELECT RELEASE_LOCK('lmconf')");
         return $row[0] || 0;
     }
