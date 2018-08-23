@@ -56,7 +56,7 @@ sub addRoutes {
 
     $self->setTypes($conf);
 
-    $self->{ipField}              ||= 'ipAddr';
+    #$self->{ipField}              ||= 'ipAddr';
     $self->{multiValuesSeparator} ||= '; ';
     $self->{hiddenAttributes} //= "_password";
     $self->{TOTPCheck} = '1';
@@ -135,7 +135,7 @@ sub sfa {
 
     # 2.1 Get fields to require
     my @fields =
-      ( '_httpSessionType', $self->{ipField}, $whatToTrace, '_2fDevices' );
+      ( '_httpSessionType', $whatToTrace, '_2fDevices' );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/;
         $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
