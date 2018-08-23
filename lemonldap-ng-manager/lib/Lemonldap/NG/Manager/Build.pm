@@ -643,8 +643,8 @@ system.
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Manager::Build is used only to build javascript files and
-Lemonldap::NG constants Perl files. It has to be launched after each change.
+Lemonldap::NG::Manager::Build is only used to build javascript files and
+Lemonldap::NG constants Perl files. It must be launched after each change.
 
 =head2 DEVELOPER CORNER
 
@@ -657,7 +657,7 @@ To add a new parameter, you have to:
 =item declare its position in the tree in Manager/Build/Tree.pm (or
 Manager/Build/CTrees.pm for complex nodes);
 
-=item refresh files using this (or launch any build makefile target at the
+=item refresh files by using this (or launch any build makefile target at the
 root of the Lemonldap::NG project sources).
 
 =back
@@ -666,18 +666,18 @@ See below for details.
 
 =head3 Files generated
 
-The `scripts/jsongenerator.pl` file uses Lemonldap::NG::Manager::Build::Attributes,
+`scripts/jsongenerator.pl` file uses Lemonldap::NG::Manager::Build::Attributes,
 Lemonldap::NG::Manager::Build::Tree and Lemonldap::NG::Manager::Build::CTrees to generate
 
 =over
 
 =item `site/htdocs/static/struct.json`:
 
-the main file that contains the tree view;
+Main file containing the tree view;
 
 =item `site/htdocs/static/js/conftree.js`:
 
-generates sub tree for virtualhosts and SAML and OpenID-Connect partners;
+generates Virtualhosts, SAML and OpenID-Connect partners sub-trees;
 
 =item `site/htdocs/static/reverseTree.json`:
 
@@ -703,30 +703,30 @@ first configuration in file format;
 
 =head3 Attribute declaration
 
-Set your new attribute as a key of attributes() function that points to a hash
+set your new attribute as a key of attributes() function that points to a hash
 ref containing:
 
 =over
 
 =item type (required):
 
-the type of the content. It must be declared in sub
-types() in the same file (except if attribute embeds its own tests) and must
-correspond to a form stored in the static/forms/ directory;
+content type must be declared in sub types() in the same file
+(except if attribute embeds its own tests) and must match
+to a form stored in static/forms/ directory;
 
 =item help (optional):
 
-the relative HTML path to the help page (relative to
+Relative HTML path to help page (relative to
 /doc/pages/documentation/<version>/);
 
 =item default (recommended):
 
-a default value to set if not defined;
+default value to set if not defined;
 
 =item select (optional):
 
 required only if type is `select`. In this case, it
-must contains an array of { k => <keyName>, v => <display name> } hashref
+must contain an array of { k => <keyName>, v => <display name> } hashref
 
 =item documentation (recommended):
 
@@ -735,10 +735,10 @@ some words for other developpers
 =item test (optional):
 
 if test is not defined for this type or if test must
-be more restrictive, set her a regular expression or a subroutine. Arguments
-passed to subroutine are (keyValue, newConf, currentKey), it returns 2
-arguments: a boolean result and a message (if non empty will be displayed as
-warning or error depending of result);
+be more restrictive, set here a regular expression or a subroutine. Arguments
+passed to subroutine are (keyValue, newConf, currentKey). It returns 2
+arguments: a boolean result and a message (if non empty message will be 
+displayed as warning or error depending of result);
 
 =item msgFail (optional):
 
@@ -747,30 +747,28 @@ error. Words to translate have to be written as so: __toTranslate__;
 
 =item keyTest (optional):
 
-for keys/values attributes, test to be applied on
-key;
+for keys/values attributes, test to be applied on key;
 
 =item keyMsgFail (optional):
 
-for regexp based key tests, same as msgFail for
-keys test;
+for regexp based key tests, same as msgFail for keys test;
 
 =back
 
-If you decide to declare a new type, you have to declare the following
+If you want to declare a new type, you have to declare following
 properties:
 
 =over
 
 =item test, msgFail, keyTest, keyMsgFail as shown above,
 
-=item form: the form to use if it doesn't have the same name.
+=item form: form to use if it doesn't have the same name.
 
 =back
 
-=head3 Tree positioning
+=head3 Tree location
 
-The tree is now very simple: it contains nodes and leaf. Leaf are designed only
+The tree is now very simple: it contains nodes and leaves. Leaves are designed only
 by their attribute name. All description must be done in the file described
 above. Nodes are array member designed as this:
 
@@ -806,13 +804,13 @@ array of sub nodes and leaf attached to this node
 
 =item group:
 
-must never be used in conjunction with nodes. Array of leafs only
+must never be used in conjunction with nodes. Array of leaves only
 to be displayed in the same form
 
 =item nodes_cond:
 
-array of sub nodes that will be displayed with a filter. Not
-yet documented here, see the source code of site/htdocs/static/js/filterFunctions.js.
+array of sub nodes that will be displayed with a filter. Not yet
+documented here, see the source code of site/htdocs/static/js/filterFunctions.js.
 
 =item nodes_filter:
 

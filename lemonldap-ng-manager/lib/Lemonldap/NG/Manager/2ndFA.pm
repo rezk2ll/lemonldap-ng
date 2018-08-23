@@ -151,13 +151,9 @@ sub sfa {
     $moduleOptions->{backend} = $mod->{module};
 
     # Select 2FA sessions to display
-    if (   defined $params->{TOTPCheck}
-        or defined $params->{U2FCheck}
-        or defined $params->{UBKCheck} )
-    {
-        $self->{TOTPCheck} = delete $params->{TOTPCheck};
-        $self->{U2FCheck}  = delete $params->{U2FCheck};
-        $self->{UBKCheck}  = delete $params->{UBKCheck};
+    foreach (qw(TOTP U2F UBK)) {
+        $self->{ $_ . 'Check' } = delete $params->{ $_ . 'Check' }
+          if ( defined $params->{ $_ . 'Check' } );
     }
 
     my %filters = map {
@@ -213,21 +209,12 @@ sub sfa {
         ( $filters{$firstFilter} ) );
     foreach my $k ( keys %filters ) {
         $self->logger->debug("Removing unless $k =~ /^$filters{$k}\$/");
-        if ( $filters{$k} =~ m#^([\w:]+)/(\d+)\*?$# ) {
-            my ( $net, $bits ) = ( $1, $2 );
-            foreach my $session ( keys %$res ) {
+        $filters{$k} =~ s/\./\\./g;
+        $filters{$k} =~ s/\*/\.\*/g;
+        foreach my $session ( keys %$res ) {
+            if ( $res->{$session}->{$k} ) {
                 delete $res->{$session}
-                  unless ( net6( $res->{$session}->{$k}, $bits ) eq $net );
-            }
-        }
-        else {
-            $filters{$k} =~ s/\./\\./g;
-            $filters{$k} =~ s/\*/\.\*/g;
-            foreach my $session ( keys %$res ) {
-                if ( $res->{$session}->{$k} ) {
-                    delete $res->{$session}
-                      unless ( $res->{$session}->{$k} =~ /^$filters{$k}$/ );
-                }
+                  unless ( $res->{$session}->{$k} =~ /^$filters{$k}$/ );
             }
         }
     }
@@ -245,30 +232,16 @@ sub sfa {
     # Filter 2FA sessions if needed
     $self->logger->debug("Filtering 2F sessions...");
     my $all = ( keys %$res );
-
-    if ( $self->{U2FCheck} eq '2' ) {
-        foreach my $session ( keys %$res ) {
-            delete $res->{$session}
-              unless ( defined $res->{$session}->{_2fDevices}
-                and $res->{$session}->{_2fDevices} =~ /"type":\s*"U2F"/s );
+    foreach (qw(TOTP U2F UBK)) {
+        if ( $self->{ $_ . 'Check' } eq '2' ) {
+            foreach my $session ( keys %$res ) {
+                delete $res->{$session}
+                  unless ( defined $res->{$session}->{_2fDevices}
+                    and $res->{$session}->{_2fDevices} =~ /"type":\s*"$_"/s );
+            }
+            $self->logger->debug(
+                "Removing sessions unless a $_ device is registered");
         }
-        $self->logger->debug("Removing sessions unless U2F key registered");
-    }
-    if ( $self->{TOTPCheck} eq '2' ) {
-        foreach my $session ( keys %$res ) {
-            delete $res->{$session}
-              unless ( defined $res->{$session}->{_2fDevices}
-                and $res->{$session}->{_2fDevices} =~ /"type":\s*"TOTP"/s );
-        }
-        $self->logger->debug("Removing sessions unless TOTP secret registered");
-    }
-    if ( $self->{UBKCheck} eq '2' ) {
-        foreach my $session ( keys %$res ) {
-            delete $res->{$session}
-              unless ( defined $res->{$session}->{_2fDevices}
-                and $res->{$session}->{_2fDevices} =~ /"type":\s*"UBK"/s );
-        }
-        $self->logger->debug("Removing sessions unless UBK device registered");
     }
 
     my $total = ( keys %$res );
