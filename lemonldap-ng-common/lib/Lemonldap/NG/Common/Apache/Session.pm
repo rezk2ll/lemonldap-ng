@@ -174,6 +174,9 @@ sub get_key_from_all_sessions {
         $args->{unserialize} =
           \&Lemonldap::NG::Common::Apache::Session::Serialize::JSON::_unserialize;
     }
+
+    # For now, Apache::Session::MariaDB doesn't exists.
+    # Apache::Session::Browseable::MariaDB has its own get_key_from_all_sessions
     if ( $backend =~
 /^Apache::Session::(SQLite\d?|MySQL|MySQL::NoLock|Postgres|Oracle|Sybase|Informix)$/
       )
