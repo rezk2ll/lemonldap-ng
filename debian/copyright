@@ -15,6 +15,7 @@ Copyright: 2005-2018, Xavier Guimard <x.guimard@free.fr>
  2005-2018, Gendarmerie nationale <https://www.gendarmerie.interieur.gouv.fr>
  2006-2015, LINAGORA <info@linagora.com>
  2015-2018, Savoir-faire Linux <contact@savoirfairelinux.com>
+ 2018, Worteks <info@worteks.com>
 License: GPL-2+
 
 Files: lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Auth/PAM.pm
@@ -59,6 +60,11 @@ Copyright: http://www.customicondesign.com
 License: CC-BY-NC-ND-3.0
 Comment: Downloaded from http://www.iconspedia.com/
 
+Files: lemonldap-ng-portal/site/htdocs/static/common/icons/oidc.png
+Copyright: http://www.customicondesign.com
+License: CC-BY-NC-ND-3.0
+Comment: Downloaded from http://www.iconspedia.com/
+
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Twitter.png
 Copyright: Paul Schulerr, http://schulerr.deviantart.com
 License: CC-3
@@ -83,7 +89,13 @@ Comment: downloaded from
 Files: lemonldap-ng-portal/site/htdocs/static/bootstrap/u2f.png
 Copyright: Bautsch <https://commons.wikimedia.org/wiki/User:Bautsch>
 License: CC0-1.0
-Comment: dowloaded from http://commons.wikimedia.org
+Comment: Downloaded from http://commons.wikimedia.org
+
+Files: lemonldap-ng-portal/site/htdocs/static/common/icons/sfa_manager.png
+Copyright: Christophe Maudoux <chrmdx@gmail.com>
+License: CC-3
+Comment: This work, "sfa_manager.png", is a derivative of
+ "Noun project 1162.svg" by Christopher T. Howlett, under CC-BY-3.0.
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/*
 Copyright: Various artists
