@@ -3,7 +3,7 @@ package Lemonldap::NG::Manager::Conf::Parser;
 # This module is called either to parse a new configuration in JSON format (as
 # posted by the web interface) and test a new configuration object.
 #
-# The new object must be build with the following properties:
+# The new object must be built with the following properties:
 #  - refConf: the actual configuration
 #  - req    : the Lemonldap::NG::Common::PSGI::Request
 #  - tree   : the new configuration in JSON format
@@ -104,7 +104,7 @@ sub check {
     hdebug("  tests succeed");
     $self->compactConf( $self->newConf );
     unless ( $self->confChanged ) {
-        hdebug("  no changes detected");
+        hdebug("  no change detected");
         $self->message('__confNotChanged__');
         return 0;
     }
