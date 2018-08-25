@@ -160,9 +160,10 @@ ok( $res->{count} == 1,       'Found 1 result' ) or print STDERR Dumper($res);
 ok( @{ $res->{values} } == 1, 'List 1 result' );
 ok( $res->{values}->[0]->{value} && $res->{values}->[0]->{value} eq 'd',
     'Result match "uid=d"' )
-      or print STDERR Dumper($res);
+  or print STDERR Dumper($res);
 ok( $res->{values}->[0]->{count} == 2, 'Found 2 sessions starting with "d"' );
 count(5);
+
 # uid=dw*
 $res = &client->jsonResponse( '/sfa/persistent',
     'uid=dw*&groupBy=substr(uid,2)&U2FCheck=1&TOTPCheck=1&UBKCheck=1' );
@@ -171,9 +172,10 @@ ok( $res->{count} == 1,       'Found 1 result' ) or print STDERR Dumper($res);
 ok( @{ $res->{values} } == 1, 'List 1 result' );
 ok( $res->{values}->[0]->{value} && $res->{values}->[0]->{value} eq 'dw',
     'Result match "uid=dw"' )
-      or print STDERR Dumper($res);
+  or print STDERR Dumper($res);
 ok( $res->{values}->[0]->{count} == 1, 'Found 1 session starting with "dw"' );
 count(5);
+
 # uid=d* & UBK
 $res = &client->jsonResponse( '/sfa/persistent',
     'uid=d*&groupBy=substr(uid,1)&U2FCheck=1&TOTPCheck=1&UBKCheck=2' );
@@ -182,9 +184,13 @@ ok( $res->{count} == 1,       'Found 1 result' ) or print STDERR Dumper($res);
 ok( @{ $res->{values} } == 1, 'List 1 result' );
 ok( $res->{values}->[0]->{value} && $res->{values}->[0]->{value} eq 'd',
     'Result match "uid=d"' )
-      or print STDERR Dumper($res);
-ok( $res->{values}->[0]->{count} == 1, 'Found 1 session starting with "d" & UBK' );
+  or print STDERR Dumper($res);
+ok(
+    $res->{values}->[0]->{count} == 1,
+    'Found 1 session starting with "d" & UBK'
+);
 count(5);
+
 # uid=dw* & UBK
 $res = &client->jsonResponse( '/sfa/persistent',
     'uid=dw*&groupBy=substr(uid,2)&U2FCheck=1&TOTPCheck=1&UBKCheck=2' );
@@ -193,14 +199,19 @@ ok( $res->{count} == 1,       'Found 1 result' ) or print STDERR Dumper($res);
 ok( @{ $res->{values} } == 1, 'List 1 result' );
 ok( $res->{values}->[0]->{value} && $res->{values}->[0]->{value} eq 'dw',
     'Result match "uid=dw"' )
-      or print STDERR Dumper($res);
-ok( $res->{values}->[0]->{count} == 1, 'Found 1 session starting with "dw" & UBK' );
+  or print STDERR Dumper($res);
+ok(
+    $res->{values}->[0]->{count} == 1,
+    'Found 1 session starting with "dw" & UBK'
+);
 count(5);
+
 # uid=da* & UBK
 $res = &client->jsonResponse( '/sfa/persistent',
     'uid=da*&groupBy=substr(uid,2)&U2FCheck=1&TOTPCheck=1&UBKCheck=2' );
-ok( $res->{result} == 1,      'Search "uid"=da* & UBK - Result code = 1' );
-ok( $res->{count} == 0,       'Found 0 session with "da" & UBK' ) or print STDERR Dumper($res);
+ok( $res->{result} == 1, 'Search "uid"=da* & UBK - Result code = 1' );
+ok( $res->{count} == 0,  'Found 0 session with "da" & UBK' )
+  or print STDERR Dumper($res);
 ok( @{ $res->{values} } == 0, 'List 0 result' );
 count(3);
 
@@ -219,9 +230,18 @@ ok( $res->{values}->[1]->{value} && $res->{values}->[1]->{value} eq 'r',
 ok( $res->{values}->[2]->{value} && $res->{values}->[2]->{value} eq 't',
     'Result match "uid=t"' )
   or print STDERR Dumper($res);
-ok( $res->{values}->[0]->{count} == 2, 'Found 2 sessions starting with "d" & U2F' );
-ok( $res->{values}->[1]->{count} == 1, 'Found 1 session starting with "r" & U2F' );
-ok( $res->{values}->[2]->{count} == 1, 'Found 1 session starting with "t" & U2F' );
+ok(
+    $res->{values}->[0]->{count} == 2,
+    'Found 2 sessions starting with "d" & U2F'
+);
+ok(
+    $res->{values}->[1]->{count} == 1,
+    'Found 1 session starting with "r" & U2F'
+);
+ok(
+    $res->{values}->[2]->{count} == 1,
+    'Found 1 session starting with "t" & U2F'
+);
 count(9);
 
 ## "Filtered by U2F & TOTP" query
@@ -233,19 +253,22 @@ ok( @{ $res->{values} } == 1, 'List 1 result' );
 ok( $res->{values}->[0]->{value} && $res->{values}->[0]->{value} eq 'd',
     'Result match "uid=d"' )
   or print STDERR Dumper($res);
-ok( $res->{values}->[0]->{count} == 2, 'Found 2 sessiond starting with "d" & U2F & TOTP' );
+ok( $res->{values}->[0]->{count} == 2,
+    'Found 2 sessiond starting with "d" & U2F & TOTP' );
 count(5);
 
 ## "Filtered by U2F & TOTP & UBK" query
 $res = &client->jsonResponse( '/sfa/persistent',
     'uid=*&groupBy=substr(uid,0)&U2FCheck=2&TOTPCheck=2&UBKCheck=2' );
-ok( $res->{result} == 1,      'Search "uid"=* & UBK & TOTP & UBK - Result code = 1' );
-ok( $res->{count} == 1,       'Found 1 result' ) or print STDERR Dumper($res);
+ok( $res->{result} == 1,
+    'Search "uid"=* & UBK & TOTP & UBK - Result code = 1' );
+ok( $res->{count} == 1, 'Found 1 result' ) or print STDERR Dumper($res);
 ok( @{ $res->{values} } == 1, 'List 1 result' );
 ok( $res->{values}->[0]->{value} && $res->{values}->[0]->{value} eq 'd',
     'Result match "uid=d"' )
   or print STDERR Dumper($res);
-ok( $res->{values}->[0]->{count} == 1, 'Found 1 session starting with "d" & U2F & TOTP & UBK' );
+ok( $res->{values}->[0]->{count} == 1,
+    'Found 1 session starting with "d" & U2F & TOTP & UBK' );
 count(5);
 
 ## "Filtered by U2F & UBK" query
@@ -260,8 +283,10 @@ ok( $res->{values}->[0]->{value} && $res->{values}->[0]->{value} eq 'd',
 ok( $res->{values}->[1]->{value} && $res->{values}->[1]->{value} eq 'r',
     'Result match "uid=r"' )
   or print STDERR Dumper($res);
-ok( $res->{values}->[0]->{count} == 1, 'Found 1 session starting with "d" & U2F & UBK' );
-ok( $res->{values}->[1]->{count} == 1, 'Found 1 session starting with "r" & U2F & UBK' );
+ok( $res->{values}->[0]->{count} == 1,
+    'Found 1 session starting with "d" & U2F & UBK' );
+ok( $res->{values}->[1]->{count} == 1,
+    'Found 1 session starting with "r" & U2F & UBK' );
 count(7);
 
 ## Delete 2F devices
@@ -277,6 +302,7 @@ foreach ( 1 .. 5 ) {
         'Body is JSON and result==1' );
     count(3);
 }
+
 # Delete TOTP devices
 foreach ( 3 .. 4 ) {
     ok(
@@ -289,6 +315,7 @@ foreach ( 3 .. 4 ) {
         'Body is JSON and result==1' );
     count(3);
 }
+
 # Delete UBK devices
 foreach ( 2 .. 3 ) {
     ok(
@@ -305,8 +332,9 @@ foreach ( 2 .. 3 ) {
 ## Check than all devices have been deleted with "All" query
 $res = &client->jsonResponse( '/sfa/persistent',
     'groupBy=substr(uid,1)&U2FCheck=1&TOTPCheck=1&UBKCheck=1' );
-ok( $res->{result} == 1,      'Result code = 1' );
-ok( $res->{count} == 0,       'Found 0 session with 2F device' ) or print STDERR Dumper($res);
+ok( $res->{result} == 1, 'Result code = 1' );
+ok( $res->{count} == 0,  'Found 0 session with 2F device' )
+  or print STDERR Dumper($res);
 ok( @{ $res->{values} } == 0, 'List 0 result' );
 count(3);
 
