@@ -100,9 +100,9 @@ sub params {
       $req->error_type( $res{AUTH_ERROR} = $req->menuError );
 
     # Display menu 2fRegisters link only if at least a 2F device is registered
-    $res{SFAManagment} =
+    $res{sfaManager} =
       $self->p->_sfEngine->display2fRegisters( $req, $req->userData );
-    $self->logger->debug( "Display 2fRegisters link ? " . $res{SFAManagment} );
+    $self->logger->debug("Display 2fRegisters link") if $res{sfaManager};
 
     return %res;
 }

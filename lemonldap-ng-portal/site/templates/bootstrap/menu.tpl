@@ -73,10 +73,10 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-			<TMPL_IF NAME="SFAManagment">
+			<TMPL_IF NAME="sfaManager">
 			  <li><a href="/2fregisters">
-	              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/2FManagment.png" width="16" height="16" alt="refresh" />
-	              <span trspan="2FManagment">2FManagment</span>
+	              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/sfa_manager.png" width="16" height="16" alt="refresh" />
+	              <span trspan="sfaManager">sfaManager</span>
 	          </a></li>
             </TMPL_IF>
             <li><a href="/refresh">

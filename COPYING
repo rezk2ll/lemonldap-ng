@@ -91,10 +91,12 @@ Copyright: Bautsch <https://commons.wikimedia.org/wiki/User:Bautsch>
 License: CC0-1.0
 Comment: Downloaded from http://commons.wikimedia.org
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/icons/2FManagment.png
-Copyright: Freepik <https://www.flaticon.com/free-icon/photo-contrast-symbol_44324>
-License: Flaticon Basic
-Comment: Downloaded from https://www.flaticon.com
+Files: lemonldap-ng-portal/site/htdocs/static/common/icons/sfa_manager.png
+Copyright: The Open Source Initiative
+License: CC-BY-2.5, https://creativecommons.org/licenses/by/2.5/
+Comment: This work, "sfa_manager.png", is a derivative of
+"Open Source Initiative keyhole.svg" by The Open Source Initiative,
+used under CC-BY-2.5. "sfa_manager" is licensed under CC-BY-2.5 by MAUDOUX Christophe.
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/*
 Copyright: Various artists
