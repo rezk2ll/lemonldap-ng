@@ -393,12 +393,6 @@ sub tests {
             foreach (qw(u totp utotp yubikey)) {
                 $enabled2fModule ||= $conf->{ $_ . '2fActivation' };
             }
-
-            #return 1
-            #unless ( $conf->{utotp2fActivation}
-            #or $conf->{totp2fActivation}
-            #or $conf->{u2fActivation}
-            #or $conf->{yubikey2fActivation} );
             return 1 unless ($enabled2fModule);
 
             # Use TOTP
@@ -461,6 +455,7 @@ sub tests {
             );
         },
 
+        # Test TOTP params
         totp2fParams => sub {
             return 1 unless ( $conf->{totp2fActivation} );
             return ( 0, 'TOTP range must be defined' )
@@ -499,17 +494,22 @@ sub tests {
             return 1;
         },
 
-        # Warn if 2FA is required without 2F module enabled
+        # Warn if 2FA is required without a registrable 2F module enabled
         required2FA => sub {
             return 1 unless ( $conf->{sfRequired} );
 
-            my $enabled2fModule = 0;
-            foreach (qw(u totp utotp yubikey ext rest)) {
-                $enabled2fModule ||= $conf->{ $_ . '2fActivation' };
+            my $enable2fModule = 0;
+            foreach (qw(u totp utotp yubikey)) {
+                $enable2fModule ||= $conf->{ $_ . '2fActivation' };
             }
+            my $registrable2fModule = 0;
+            foreach (qw(u totp yubikey)) {
+                $registrable2fModule ||= $conf->{ $_ . '2fSelfRegistration' };
+            }
+
             return ( 1,
-                "At least one 2FA module should be enabled to require 2FA" )
-              unless ($enabled2fModule);
+"At least one self registrable 2F module should be enabled to require 2FA"
+            ) unless ( $enable2fModule && $registrable2fModule );
 
             # Return
             return 1;
