@@ -198,6 +198,7 @@ t/15-combination.t
 t/20-test-coverage.t
 t/40-sessions.t
 t/50-notifications.t
+t/60-2ndfa.t
 t/80-attributes.t
 t/90-translations.t
 t/99-pod.t
