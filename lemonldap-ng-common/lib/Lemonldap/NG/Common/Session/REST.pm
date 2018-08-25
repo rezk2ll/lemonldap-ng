@@ -165,9 +165,15 @@ sub delete2F {
         my $element = shift @$_2fDevices;
         $self->logger->debug(
             "Searching for 2F device to delete -> $type / $epoch ...");
-        push @keep, $element
-          unless ( ( $element->{type} eq $type )
-            and ( $element->{epoch} eq $epoch ) );
+
+        if ( defined $element->{type} && defined $element->{epoch} ) {
+            push @keep, $element
+              unless ( ( $element->{type} eq $type )
+                and ( $element->{epoch} eq $epoch ) );
+        }
+        else {
+            $self->logger->error("Corrupted _2fDevice");
+        }
     }
 
     # Update session
