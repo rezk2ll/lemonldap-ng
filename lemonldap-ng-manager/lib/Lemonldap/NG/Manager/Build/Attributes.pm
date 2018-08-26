@@ -2284,6 +2284,7 @@ sub attributes {
         sfRequired => {
             type          => 'boolOrExpr',
             default       => 0,
+            help          => 'secondfactor.html',
             documentation => 'Second factor required',
         },
         available2F => {
