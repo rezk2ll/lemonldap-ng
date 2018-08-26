@@ -73,19 +73,20 @@ sub del2F {
     my ( $self, $req, $session, $skey ) = @_;
 
     my $mod = $self->getMod($req)
-      or return $self->sendError( $req, undef, 400 );
+      or return $self->sendError( $req, 'Bad mode', 400 );
 
     my $params = $req->parameters();
-    my $type   = $params->{type};
-    my $epoch  = $params->{epoch};
+    my $type   = $params->{type} or return $self->sendError( $req, 'Missing "type" parameter', 400 );
+    my $epoch  = $params->{epoch} or return $self->sendError( $req, 'Missing "epoch" parameter', 400 );
 
-    if ( $type =~ /\b(?:U2F|TOTP|UBK)\b/ and defined $epoch ) {
+
+    if ( $type =~ /\b(?:U2F|TOTP|UBK)\b/ ) {
         $self->logger->debug(
             "Call procedure delete2F with type=$type and epoch=$epoch");
         return $self->delete2F( $req, $session, $skey );
     }
     else {
-        return $self->sendError( $req, undef, 400 );
+        return $self->sendError( $req, 'Bad value "type" parameter', 400 );
     }
 }
 
@@ -123,7 +124,7 @@ sub sfa {
     }
 
     my $mod = $self->getMod($req)
-      or return $self->sendError( $req, undef, 400 );
+      or return $self->sendError( $req, 'Bad mode', 400 );
     my $params = $req->parameters();
     my $type   = delete $params->{sessionType};
     $type = ucfirst($type);
@@ -134,8 +135,7 @@ sub sfa {
     my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
 
     # 2.1 Get fields to require
-    my @fields =
-      ( '_httpSessionType', $whatToTrace, '_2fDevices' );
+    my @fields = ( '_httpSessionType', $whatToTrace, '_2fDevices' );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/;
         $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
@@ -151,7 +151,7 @@ sub sfa {
     $moduleOptions->{backend} = $mod->{module};
 
     # Select 2FA sessions to display
-    foreach (qw(TOTP U2F UBK)) {
+    foreach (qw(U2F TOTP UBK)) {
         $self->{ $_ . 'Check' } = delete $params->{ $_ . 'Check' }
           if ( defined $params->{ $_ . 'Check' } );
     }
@@ -232,7 +232,7 @@ sub sfa {
     # Filter 2FA sessions if needed
     $self->logger->debug("Filtering 2F sessions...");
     my $all = ( keys %$res );
-    foreach (qw(TOTP U2F UBK)) {
+    foreach (qw(U2F TOTP UBK)) {
         if ( $self->{ $_ . 'Check' } eq '2' ) {
             foreach my $session ( keys %$res ) {
                 delete $res->{$session}
@@ -242,6 +242,11 @@ sub sfa {
             $self->logger->debug(
                 "Removing sessions unless a $_ device is registered");
         }
+        #else {
+            #(
+                #return $self->sendError( $req, "Bad or Missing " . $_ . "Check parameter",
+                    #400 ) );
+        #}
     }
 
     my $total = ( keys %$res );
