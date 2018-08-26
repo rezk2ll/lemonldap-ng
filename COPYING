@@ -92,11 +92,10 @@ License: CC0-1.0
 Comment: Downloaded from http://commons.wikimedia.org
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/icons/sfa_manager.png
-Copyright: Christopher T. Howlett
-License: CC-BY-3.0, https://creativecommons.org/licenses/by/3.0
+Copyright: Christophe Maudoux <chrmdx@gmail.com>
+License: CC-3
 Comment: This work, "sfa_manager.png", is a derivative of
-"Noun project 1162.svg" by Christopher T. Howlett,
-used under CC-BY-3.0. "sfa_manager.png" is licensed under CC-BY-3.0 by MAUDOUX Christophe.
+ "Noun project 1162.svg" by Christopher T. Howlett, under CC-BY-3.0.
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/*
 Copyright: Various artists
@@ -905,10 +904,3 @@ License: BSD-3-clause
  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- 
- License: Flaticon Basic
-  FREE LICENSE (WITH ATTRIBUTION):
-  .
-  This license allows you to use for free any of Flaticon's contents for
-  your projects as long as they are attributed to their author in the
-  definitive project.
