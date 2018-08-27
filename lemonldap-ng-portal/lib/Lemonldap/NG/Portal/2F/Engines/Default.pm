@@ -262,6 +262,7 @@ sub _choice {
 sub _redirect {
     my ( $self, $req ) = @_;
     my $arg = $req->env->{QUERY_STRING};
+    $self->userLogger->error('Call sfEngine _redirect method');
     return [
         302, [ Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' ) ], []
     ];
