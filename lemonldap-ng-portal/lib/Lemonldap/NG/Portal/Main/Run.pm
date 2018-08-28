@@ -738,6 +738,11 @@ sub sendHtml {
             $csp .= " $url";
         }
     }
+    if ( defined $req->{cspFormAction} ) {
+        $self->logger->debug(
+            "Set CSP form-action with request URL: " . $req->{cspFormAction} );
+        $csp .= " " . $req->{cspFormAction};
+    }
     $csp .= ';';
 
     # Deny using portal in frame except if it is required

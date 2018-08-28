@@ -177,6 +177,7 @@ sub _buildAuthLoop {
                         $req->env->{'REQUEST_URI'} ) )
                 {
                     $url .= $req->env->{'REQUEST_URI'};
+                    $req->{cspFormAction} .= " $url";
                 }
                 else {
                     $url .= '#';
