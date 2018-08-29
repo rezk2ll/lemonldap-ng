@@ -50,8 +50,8 @@ sub init {
 
         # "for" key can have 3 values:
         # 0: this module will be used for Auth and UserDB
-        # 1: this module will be user for Auth only
-        # 2: this module will be user for UserDB only
+        # 1: this module will be used for Auth only
+        # 2: this module will be used for UserDB only
 
         # Load Auth module
         if ( $mod->{for} < 2 ) {
@@ -98,7 +98,7 @@ sub extractFormInfo {
     return $self->try( 0, 'extractFormInfo', $req );
 }
 
-# Note that UserDB::Combination use the same object.
+# Note that UserDB::Combination uses the same object.
 sub getUser {
     return $_[0]->try( 1, 'getUser', $_[1] );
 }
