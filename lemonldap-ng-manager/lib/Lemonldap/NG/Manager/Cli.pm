@@ -105,6 +105,14 @@ sub addKey {
         elsif ( $#path == 1 ) {
             $new->{ $path[0] }->{ $path[1] }->{ $el->[1] } = $el->[2];
         }
+        elsif ( $#path == 2 ) {
+            $new->{ $path[0] }->{ $path[1] }->{ $path[2] }->{ $el->[1] } =
+              $el->[2];
+        }
+        elsif ( $#path == 3 ) {
+            $new->{ $path[0] }->{ $path[1] }->{ $path[2] }->{ $path[3] }
+              ->{ $el->[1] } = $el->[2];
+        }
         else {
             die $el->[0] . " has too many levels. Aborting";
         }
@@ -136,6 +144,13 @@ sub delKey {
         }
         elsif ( $#path == 1 ) {
             delete $new->{ $path[0] }->{ $path[1] }->{ $el->[1] };
+        }
+        elsif ( $#path == 2 ) {
+            delete $new->{ $path[0] }->{ $path[1] }->{ $path[2] }->{ $el->[1] };
+        }
+        elsif ( $#path == 3 ) {
+            delete $new->{ $path[0] }->{ $path[1] }->{ $path[2] }->{ $path[3] }
+              ->{ $el->[1] };
         }
         else {
             die $el->[0] . " has too many levels. Aborting";
