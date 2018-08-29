@@ -73,7 +73,7 @@ sub enabledPlugins {
     # TODO: change this name
     if ( $conf->{customPlugins} ) {
         $self->logger->debug( 'Custom plugins: ' . $conf->{customPlugins} );
-        push @res, grep ( /\w/, split( /,\s*/, $conf->{customPlugins} ) );
+        push @res, grep ( /\w+/, split( /,\s*/, $conf->{customPlugins} ) );
     }
     return @res;
 }
