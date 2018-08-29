@@ -26,7 +26,6 @@ delete2F = (device, epoch) ->
 			else if device == 'TOTP'
 					device = 'totp'
 				else setMsg 'u2fFailed', 'warning'
-		
 		$.ajax
 			type: "POST"
 			url: "#{portal}2fregisters/#{device}/delete"

@@ -76,7 +76,6 @@ sub run {
                 }
             }
 
-            $self->logger->debug("Same 2F Device found ? $SameUBKFound");
             if ($SameUBKFound) {
                 $self->userLogger->error("Yubikey already registered !");
                 return $self->p->sendHtml(
