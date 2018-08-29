@@ -5,9 +5,13 @@ use strict;
 sub new {
     my ( $class, $self ) = @_;
     unless ( $self->{conf}->{customAuth} ) {
-        die 'Custom auth module not defined';
+        die 'Custom Auth module not defined';
     }
-    return $self->{p}->loadModule( $self->{conf}->{customAuth} );
+
+    eval $self->{p}->loadModule( $self->{conf}->{customAuth} );
+    ($@)
+      ? return $self->{p}->loadModule( $self->{conf}->{customAuth} )
+      : die 'Unable to load Auth module ' . $self->{conf}->{customAuth};
 }
 
 1;

@@ -5,9 +5,13 @@ use strict;
 sub new {
     my ( $class, $self ) = @_;
     unless ( $self->{conf}->{customUserDB} ) {
-        die 'Custom user DB module not defined';
+        die 'Custom User DB module not defined';
     }
-    return $self->{p}->loadModule( $self->{conf}->{customUserDB} );
+
+    eval $self->{p}->loadModule( $self->{conf}->{customUserDB} );
+    ($@)
+      ? return $self->{p}->loadModule( $self->{conf}->{customUserDB} )
+      : die 'Unable to load UserDB module ' . $self->{conf}->{customUserDB};
 }
 
 1;

@@ -5,9 +5,13 @@ use strict;
 sub new {
     my ( $class, $self ) = @_;
     unless ( $self->{conf}->{customPassword} ) {
-        die 'Custom password module not defined';
+        die 'Custom Password module not defined';
     }
-    return $self->{p}->loadModule( $self->{conf}->{customPassword} );
+
+    eval $self->{p}->loadModule( $self->{conf}->{customPassword} );
+    ($@)
+      ? return $self->{p}->loadModule( $self->{conf}->{customPassword} )
+      : die 'Unable to load Password module ' . $self->{conf}->{customPassword};
 }
 
 1;
