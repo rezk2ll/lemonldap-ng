@@ -91,7 +91,7 @@ sub controlUrl {
             $req->{urldc} =~ s/[\r\n]//sg;
         }
 
-        # For logout request, test if Referer comes from an authorizated site
+        # For logout request, test if Referer comes from an authorized site
         my $tmp = (
               $req->param('logout')
             ? $req->referer
@@ -110,7 +110,7 @@ sub controlUrl {
             return PE_BADURL;
         }
 
-        # Non protected hosts
+        # Unprotected hosts
         if ( $tmp and !$self->isTrustedUrl($tmp) ) {
             $self->userLogger->error(
                     "URL contains a non protected host (param: "

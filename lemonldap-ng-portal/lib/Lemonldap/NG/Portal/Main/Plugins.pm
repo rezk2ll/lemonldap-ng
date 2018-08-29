@@ -11,7 +11,7 @@ use Mouse;
 
 # Plugins enabled by a simple boolean value (ordered list)
 #
-# Developers: U2F must be loaded before Notifications
+# Developers: 2FA must be loaded before Notifications
 our @pList = (
     portalDisplayResetPassword => '::Plugins::MailReset',
     portalStatus               => '::Plugins::Status',
