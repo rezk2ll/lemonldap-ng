@@ -459,6 +459,7 @@ t/73-2F-UTOTP-TOTP-and-U2F.t
 t/73-2F-UTOTP-TOTP-only-with-HISTORY.t
 t/73-2F-UTOTP-TOTP-only.t
 t/74-2F-Required.t
+t/75-2F-Registers.t
 t/90-Translations.t
 t/99-pod.t
 t/lmConf-1.json
