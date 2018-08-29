@@ -7,7 +7,11 @@ sub new {
     unless ( $self->{conf}->{customRegister} ) {
         die 'Custom register module not defined';
     }
-    return $self->{p}->loadModule( $self->{conf}->{customRegister} );
+    
+    eval $self->{p}->loadModule( $self->{conf}->{customRegister} );
+    ($@)
+      ? return $self->{p}->loadModule( $self->{conf}->{customRegister )
+      : die 'Unable to load register module ' . $self->{conf}->{customRegister};
 }
 
 1;
