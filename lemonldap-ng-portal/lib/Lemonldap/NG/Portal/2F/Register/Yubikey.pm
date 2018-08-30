@@ -137,12 +137,15 @@ sub run {
     }
 
     elsif ( $action eq 'delete' ) {
-        my $epoch = $req->param('epoch');
 
         # Check if unregistration is allowed
         unless ( $self->conf->{yubikey2fUserCanRemoveKey} ) {
             return $self->p->sendError( $req, 'notAuthorized', 400 );
         }
+
+        my $epoch = $req->param('epoch')
+          or return $self->p->sendError( $req, '"epoch" parameter is missing',
+            400 );
 
         # Read existing 2FDevices
         $self->logger->debug("Looking for 2F Devices ...");

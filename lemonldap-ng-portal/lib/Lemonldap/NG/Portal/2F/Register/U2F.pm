@@ -254,7 +254,9 @@ sub run {
             return $self->p->sendError( $req, 'notAuthorized', 200 );
         }
 
-        my $epoch = $req->param('epoch');
+        my $epoch = $req->param('epoch')
+          or return $self->p->sendError( $req, '"epoch" parameter is missing',
+            400 );
 
         # Read existing 2FDevices
         $self->logger->debug("Looking for 2F Devices ...");
