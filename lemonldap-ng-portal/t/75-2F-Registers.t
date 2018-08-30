@@ -12,6 +12,11 @@ SKIP: {
         skip 'Convert::Base32 is missing', $maintests;
     }
     
+    eval { require Crypt::U2F::Server; require Authen::U2F::Tester };
+    if ( $@ or $Crypt::U2F::Server::VERSION < 0.42 ) {
+        skip 'Missing libraries', $maintests;
+    }
+    
     require Lemonldap::NG::Common::TOTP;
 
     my $client = LLNG::Manager::Test->new(
@@ -21,7 +26,7 @@ SKIP: {
                 totp2fSelfRegistration => 1,
                 totp2fActivation       => 1,
                 u2fSelfRegistration    => 1,
-                u2fActivation          => 0,
+                u2fActivation          => 1,
             }
         }
     );
