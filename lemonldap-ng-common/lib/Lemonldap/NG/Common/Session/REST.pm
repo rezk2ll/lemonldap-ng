@@ -73,9 +73,12 @@ sub deleteOIDCConsent {
     $self->logger->debug("Reading parameters ...");
     my $params = $req->parameters();
     my $rp     = $params->{rp}
-      or return $self->sendError( $req, 'OIDC Consent RP is missing', 400 );
+      or
+      return $self->sendError( $req, 'OIDC Consent "RP" parameter is missing',
+        400 );
     my $epoch = $params->{epoch}
-      or return $self->sendError( $req, 'OIDC Consent Epoch is missing', 400 );
+      or return $self->sendError( $req,
+        'OIDC Consent "epoch" parameter is missing', 400 );
 
     # Try to load OIDC Consents from session
     $self->logger->debug("Looking for OIDC Consent(s) ...");
@@ -99,11 +102,17 @@ sub deleteOIDCConsent {
     my @keep = ();
     while (@$_oidcConsents) {
         my $element = shift @$_oidcConsents;
+
         $self->logger->debug(
             "Searching for OIDC Consent to delete -> $rp / $epoch ...");
-        push @keep, $element
-          unless ( ( $element->{rp} eq $rp )
-            and ( $element->{epoch} eq $epoch ) );
+        if ( defined $element->{rp} && defined $element->{epoch} ) {
+            push @keep, $element
+              unless ( ( $element->{rp} eq $rp )
+                and ( $element->{epoch} eq $epoch ) );
+        }
+        else {
+            $self->logger->error("Corrupted OIDC Consent");
+        }
     }
 
     # Update session
@@ -137,9 +146,12 @@ sub delete2F {
     $self->logger->debug("Reading parameters ...");
     my $params = $req->parameters();
     my $type   = $params->{type}
-      or return $self->sendError( $req, '2F device Type is missing', 400 );
+      or return $self->sendError( $req, '2F device "type" parameter is missing',
+        400 );
     my $epoch = $params->{epoch}
-      or return $self->sendError( $req, '2F device Epoch is missing', 400 );
+      or
+      return $self->sendError( $req, '2F device "epoch" parameter is missing',
+        400 );
 
     # Try to load 2F Device(s) from session
     $self->logger->debug("Looking for 2F Device(s) ...");
@@ -163,9 +175,9 @@ sub delete2F {
     my @keep = ();
     while (@$_2fDevices) {
         my $element = shift @$_2fDevices;
+
         $self->logger->debug(
             "Searching for 2F device to delete -> $type / $epoch ...");
-
         if ( defined $element->{type} && defined $element->{epoch} ) {
             push @keep, $element
               unless ( ( $element->{type} eq $type )
@@ -188,56 +200,6 @@ sub delete2F {
     }
     return $self->sendJSONresponse( $req, { result => 1 } );
 }
-
-#sub add2F {
-#my ( $self, $req ) = @_;
-#return $self->sendJSONresponse( $req, { result => 1 } )
-#if ( $self->{demoMode} );
-#my $mod = $self->getMod($req)
-#or return $self->sendError( $req, undef, 400 );
-#my $id = $req->params('sessionId')
-#or return $self->sendError( $req, 'sessionId is missing', 400 );
-
-## Try to read session
-#my $session = $self->getApacheSession( $mod, $id )
-#or return $self->sendError( $req, undef, 400 );
-
-## Delete U2F key attributs and update session
-#$session->data->{_u2fKeyHandle} = 'TOF';
-#$session->data->{_u2fUserKey}   = 'TOF';
-#$session->update( \%{ $session->data } );
-
-#Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
-#if ( $session->error ) {
-#return $self->sendError( $req, $session->error, 200 );
-#}
-#return $self->sendJSONresponse( $req, { result => 1 } );
-#}
-
-#sub verify2F {
-#my ( $self, $req ) = @_;
-#return $self->sendJSONresponse( $req, { result => 1 } )
-#if ( $self->{demoMode} );
-#my $mod = $self->getMod($req)
-#or return $self->sendError( $req, undef, 400 );
-#my $id = $req->params('sessionId')
-#or return $self->sendError( $req, 'sessionId is missing', 400 );
-
-## Try to read session
-#my $session = $self->getApacheSession( $mod, $id )
-#or return $self->sendError( $req, undef, 400 );
-
-## Delete U2F key attributs and update session
-#$session->data->{_u2fKeyHandle} = 'OK';
-#$session->data->{_u2fUserKey}   = 'OK';
-#$session->update( \%{ $session->data } );
-
-#Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
-#if ( $session->error ) {
-#return $self->sendError( $req, $session->error, 200 );
-#}
-#return $self->sendJSONresponse( $req, { result => 1 } );
-#}
 
 sub session {
     my ( $self, $req, $id, $skey ) = @_;
