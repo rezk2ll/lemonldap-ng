@@ -268,7 +268,7 @@ ok( $res->{values}->[0]->{value} && $res->{values}->[0]->{value} eq 'd',
     'Result match "uid=d"' )
   or print STDERR Dumper($res);
 ok( $res->{values}->[0]->{count} == 2,
-    'Found 2 sessiond starting with "d" & U2F & TOTP' );
+    'Found 2 sessions starting with "d" & U2F & TOTP' );
 count(5);
 
 ## "Filtered by U2F & TOTP & UBK" query
