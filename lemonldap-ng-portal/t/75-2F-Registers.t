@@ -47,6 +47,7 @@ SKIP: {
         ),
         'Form registration'
     );
+
     #expectRedirection( $res, qr#/2fregisters/totp$# );
     ok(
         $res = $client->_get(
@@ -119,7 +120,7 @@ SKIP: {
         'Post code'
     );
     $id = expectCookie($res);
-    
+
     ok(
         $res = $client->_get(
             '/2fregisters',
@@ -128,15 +129,31 @@ SKIP: {
         ),
         'Form 2fregisters'
     );
-    ok( $res->[2]->[0] =~ /2fregistration\.(?:min\.)?js/, 'Found 2f registration js' );
-    
-    ok( $res->[2]->[0] =~ qr%<img src="/static/bootstrap/totp.png" alt="totp2F" title="totp2F" />%, 'Found totp.png' )   or print STDERR Dumper($res->[2]->[0]);
-    ok( $res->[2]->[0] =~ qr%<img src="/static/bootstrap/u2f.png" alt="u2F" title="u2F" />%, 'Found u2f.png' )   or print STDERR Dumper($res->[2]->[0]);
-    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/u" class="nodecor">%, 'Found 2fregisters/u link' )   or print STDERR Dumper($res->[2]->[0]);
-    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/totp" class="nodecor">%, 'Found 2fregisters/totp link' )   or print STDERR Dumper($res->[2]->[0]);
-    ok ($res->[2]->[0] =~ qr%<td class="align-middle" >TOTP</td><td class="align-middle">(\d{10})</td><td class="data-epoch">\d{10}</td>%, "TOTP epoch $1 found")
-    or print STDERR Dumper($res->[2]->[0]);
-    
+    ok( $res->[2]->[0] =~ /2fregistration\.(?:min\.)?js/,
+        'Found 2f registration js' );
+
+    ok(
+        $res->[2]->[0] =~
+qr%<img src="/static/bootstrap/totp.png" alt="totp2F" title="totp2F" />%,
+        'Found totp.png'
+    ) or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~
+          qr%<img src="/static/bootstrap/u2f.png" alt="u2F" title="u2F" />%,
+        'Found u2f.png'
+    ) or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/u" class="nodecor">%,
+        'Found 2fregisters/u link' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/totp" class="nodecor">%,
+        'Found 2fregisters/totp link' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~
+qr%<td class="align-middle" >TOTP</td><td class="align-middle">(\d{10})</td><td class="data-epoch">\d{10}</td>%,
+        "TOTP epoch $1 found"
+    ) or print STDERR Dumper( $res->[2]->[0] );
+
     ok(
         $res = $client->_post(
             '/2fregisters/totp/delete',
@@ -146,7 +163,7 @@ SKIP: {
         ),
         'Delete TOTP query'
     );
-    
+
     ok(
         $res = $client->_get(
             '/2fregisters',
@@ -155,13 +172,21 @@ SKIP: {
         ),
         'Form 2fregisters'
     );
-    
-    ok( $res->[2]->[0] =~ /2fregistration\.(?:min\.)?js/, 'Found 2f registration js' );
-    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/u" class="nodecor">%, 'Found 2fregisters/u link' )   or print STDERR Dumper($res);
-    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/totp" class="nodecor">%, 'Found 2fregisters/totp link' ) or print STDERR Dumper($res);
-    ok ($res->[2]->[0] !~ qr%<td class="align-middle" >TOTP</td><td class="align-middle">(\d{10})</td><td class="data-epoch">\d{10}</td>%, "TOTP deleted")
-    or print STDERR Dumper($res->[2]->[0]);
-    
+
+    ok( $res->[2]->[0] =~ /2fregistration\.(?:min\.)?js/,
+        'Found 2f registration js' );
+    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/u" class="nodecor">%,
+        'Found 2fregisters/u link' )
+      or print STDERR Dumper($res);
+    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/totp" class="nodecor">%,
+        'Found 2fregisters/totp link' )
+      or print STDERR Dumper($res);
+    ok(
+        $res->[2]->[0] !~
+qr%<td class="align-middle" >TOTP</td><td class="align-middle">(\d{10})</td><td class="data-epoch">\d{10}</td>%,
+        "TOTP deleted"
+    ) or print STDERR Dumper( $res->[2]->[0] );
+
     $client->logout($id);
 }
 count($maintests);
