@@ -37,19 +37,19 @@ while ( my $c = shift @{ $resBody->{details}->{__changes__} } ) {
     my @d2 = grep { $_->{key} eq $c->{key} } @cmsg;
     @changes = grep { $_->{key} ne $c->{key} } @changes;
     @cmsg    = grep { $_->{key} ne $c->{key} } @cmsg;
-    if( $c->{key} eq 'applicationList' ) {
+    if ( $c->{key} eq 'applicationList' ) {
         pass qq("$c->{key}" found);
     }
     else {
-    ok( ( $cmp1 - @changes ) == ( $cmp2 - @cmsg ), qq("$c->{key}" found) )
-      or print STDERR 'Expect: '
-      . ( $cmp1 - @changes )
-      . ', got: '
-      . ( $cmp2 - @cmsg )
-      . "\nExpect: "
-      . Dumper( \@d1 ) . "Got: "
-      . Dumper( \@d2 );
-      }
+        ok( ( $cmp1 - @changes ) == ( $cmp2 - @cmsg ), qq("$c->{key}" found) )
+          or print STDERR 'Expect: '
+          . ( $cmp1 - @changes )
+          . ', got: '
+          . ( $cmp2 - @cmsg )
+          . "\nExpect: "
+          . Dumper( \@d1 ) . "Got: "
+          . Dumper( \@d2 );
+    }
     count(1);
 }
 ok( !@changes, 'All changes detected' ) or $bug = 1;
