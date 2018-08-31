@@ -389,11 +389,12 @@ sub tests {
         # Warn if 2F dependencies seem missing
         sfaDependencies => sub {
 
-            my $enabled2fModule = 0;
+            my $ok = 0;
             foreach (qw(u totp utotp yubikey)) {
-                $enabled2fModule ||= $conf->{ $_ . '2fActivation' };
+                $ok ||= $conf->{ $_ . '2fActivation' };
+                last if ($ok);
             }
-            return 1 unless ($enabled2fModule);
+            return 1 unless ($ok);
 
             # Use TOTP
             if (   $conf->{totp2fActivation}
@@ -500,10 +501,10 @@ sub tests {
 
             my $msg = '';
             my $ok  = 0;
-
             foreach (qw(u totp yubikey)) {
                 $ok ||= $conf->{ $_ . '2fActivation' }
                   && $conf->{ $_ . '2fSelfRegistration' };
+                last if ($ok);
             }
 
             $ok ||= $conf->{'utotp2fActivation'}
