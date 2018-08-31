@@ -36,8 +36,12 @@ sub run {
         my $UBKName = $req->param('UBKName');
         my $epoch   = time();
 
-        # Set default name if empty and truncate name if too long
+     # Set default name if empty, check characters and truncate name if too long
         $UBKName ||= $epoch;
+        unless ( $UBKName =~ /^[\w]+$/ ) {
+            $self->userLogger->error('Yubikey name with bad character(s)');
+            return $self->p->sendError( $req, 'badName', 200 );
+        }
         $UBKName = substr( $UBKName, 0, $self->conf->{max2FDevicesNameLength} );
         $self->logger->debug("Yubikey name : $UBKName");
 
@@ -66,7 +70,7 @@ sub run {
                 $_2fDevices = [];
             }
 
-            # Search if the Yubikey has been already registered
+            # Search if the Yubikey is already registered
             my $SameUBKFound = 0;
             foreach (@$_2fDevices) {
                 $self->logger->debug("Reading Yubikeys ...");
@@ -77,7 +81,7 @@ sub run {
             }
 
             if ($SameUBKFound) {
-                $self->userLogger->error("Yubikey already registered !");
+                $self->userLogger->error("Yubikey already registered!");
                 return $self->p->sendHtml(
                     $req, 'error',
                     params => {

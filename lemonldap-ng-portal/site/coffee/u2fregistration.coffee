@@ -51,7 +51,9 @@ register = ->
 						dataType: 'json'
 						success: (resp) ->
 							if resp.error
-								setMsg 'u2fFailed', 'warning'
+								if resp.error.match /badName/
+									setMsg 'badName', 'warning'
+								else setMsg 'u2fFailed', 'warning'
 							else if resp.result
 								setMsg 'yourKeyIsRegistered', 'positive'
 						error: displayError

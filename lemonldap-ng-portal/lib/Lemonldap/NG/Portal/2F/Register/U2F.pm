@@ -119,8 +119,12 @@ sub run {
                 my $keyName = $req->param('keyName');
                 my $epoch   = time();
 
-                # Set default name if empty and truncate name if too long
+     # Set default name if empty, check characters and truncate name if too long
                 $keyName ||= $epoch;
+                unless ( $keyName =~ /^[\w]+$/ ) {
+                    $self->userLogger->error('U2F name with bad character(s)');
+                    return $self->p->sendError( $req, 'badName', 200 );
+                }
                 $keyName =
                   substr( $keyName, 0, $self->conf->{max2FDevicesNameLength} );
                 $self->logger->debug("Key name : $keyName");
