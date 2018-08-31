@@ -101,6 +101,7 @@
 "back2CasUrl":"L'applicazione dalla quale ti sei appena sconnesso ha fornito un link che dovresti seguire",
 "back2Portal":"Torna al portale",
 "badCode":"Bad code",
+"badName":"Bad name",
 "cancel":"Cancella",
 "captcha":"Captcha",
 "changeKey": "Generate new key",
