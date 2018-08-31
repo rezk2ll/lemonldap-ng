@@ -498,21 +498,21 @@ sub tests {
         required2FA => sub {
             return 1 unless ( $conf->{sfRequired} );
 
-            my $enable2fModule = 0;
-            foreach (qw(u totp utotp yubikey)) {
-                $enable2fModule ||= $conf->{ $_ . '2fActivation' };
-            }
-            my $registrable2fModule = 0;
+            my $msg = '';
+            my $ok  = 0;
+
             foreach (qw(u totp yubikey)) {
-                $registrable2fModule ||= $conf->{ $_ . '2fSelfRegistration' };
+                $ok ||= $conf->{ $_ . '2fActivation' }
+                  && $conf->{ $_ . '2fSelfRegistration' };
             }
 
-            return ( 1,
-"At least one self registrable 2F module should be enabled to require 2FA"
-            ) unless ( $enable2fModule && $registrable2fModule );
+            $ok ||= $conf->{'utotp2fActivation'}
+              && ( $conf->{'u2fSelfRegistration'}
+                || $conf->{'totp2fSelfRegistration'} );
+            $msg = "A self registrable module should be enabled to require 2FA"
+              unless ($ok);
 
-            # Return
-            return 1;
+            return ( 1, $msg );
         },
 
         # Error if external 2F Send or Validate command is missing
