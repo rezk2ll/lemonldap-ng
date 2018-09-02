@@ -8,12 +8,11 @@ sub new {
         die 'Custom register module not defined';
     }
 
-    eval $self->{p}->loadModule( $self->{conf}->{customRegister} );
-    ($@)
-      ? return $self->{p}->loadModule(
-        $self->{conf}->{ customRegister )
-        : die 'Unable to load register module '
-          . $self->{conf}->{customRegister};
-        }
+    my $res = $self->{p}->loadModule( $self->{conf}->{customRegister} );
+    unless($res) {
+        die 'Unable to load register module ' . $self->{conf}->{customRegister};
+    }
+    return $res;
+}
 
-      1;
+1;
