@@ -296,8 +296,7 @@ has ini => (
             $ini->{$k} //= $defaultIni->{$k};
         }
         $self->{ini} = $ini;
-        main::ok( $self->{p} = $self->class->new(),
-            'Portal object' );
+        main::ok( $self->{p} = $self->class->new(), 'Portal object' );
         main::ok( $self->{p}->init($ini), 'Init' );
         main::ok( $self->{app} = $self->{p}->run(), 'Portal app' );
         main::count(3);
@@ -370,7 +369,7 @@ sub _get {
                 : ()
             ),
             'REQUEST_METHOD' => $args{method} || 'GET',
-            'REQUEST_URI' => $path . ( $args{query} ? "?$args{query}" : '' ),
+            'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
             ( $args{query} ? ( QUERY_STRING => $args{query} ) : () ),
             'SCRIPT_NAME'     => '',
             'SERVER_NAME'     => 'auth.example.com',
@@ -406,10 +405,10 @@ sub _post {
                 : ()
             ),
             'REQUEST_METHOD' => $args{method} || 'POST',
-            'REQUEST_URI' => $path . ( $args{query} ? "?$args{query}" : '' ),
-            'SCRIPT_NAME' => '',
-            'SERVER_NAME'     => 'auth.example.com',
-            'SERVER_PORT'     => '80',
+            'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
+            'SCRIPT_NAME'    => '',
+            'SERVER_NAME'    => 'auth.example.com',
+            'SERVER_PORT'    => '80',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
             ( $args{custom} ? %{ $args{custom} } : () ),
             'psgix.input.buffered' => 0,

@@ -67,7 +67,7 @@ sub run {
         my $TOTPName = $req->param('TOTPName');
         my $epoch    = time();
 
-        # Set default name if empty, check characters and truncate name if too long
+     # Set default name if empty, check characters and truncate name if too long
         $TOTPName ||= $epoch;
         unless ( $TOTPName =~ /^[\w]+$/ ) {
             $self->userLogger->error('TOTP name with bad character(s)');

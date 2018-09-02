@@ -50,8 +50,7 @@ ok(
     $res = $client->_post(
         '/',
         IO::String->new(
-            'user=dwho&password=dwho&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw=='
-        ),
+            'user=dwho&password=dwho&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw=='),
         accept => 'text/html',
         length => 64,
     ),

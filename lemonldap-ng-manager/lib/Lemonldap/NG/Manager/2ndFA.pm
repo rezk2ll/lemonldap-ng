@@ -76,9 +76,10 @@ sub del2F {
       or return $self->sendError( $req, 'Bad mode', 400 );
 
     my $params = $req->parameters();
-    my $type   = $params->{type} or return $self->sendError( $req, 'Missing "type" parameter', 400 );
-    my $epoch  = $params->{epoch} or return $self->sendError( $req, 'Missing "epoch" parameter', 400 );
-
+    my $type   = $params->{type}
+      or return $self->sendError( $req, 'Missing "type" parameter', 400 );
+    my $epoch = $params->{epoch}
+      or return $self->sendError( $req, 'Missing "epoch" parameter', 400 );
 
     if ( $type =~ /\b(?:U2F|TOTP|UBK)\b/ ) {
         $self->logger->debug(
@@ -242,10 +243,13 @@ sub sfa {
             $self->logger->debug(
                 "Removing sessions unless a $_ device is registered");
         }
+
         #else {
-            #(
-                #return $self->sendError( $req, "Bad or Missing " . $_ . "Check parameter",
-                    #400 ) );
+        #    (
+        #        return $self->sendError(
+        #            $req, "Bad or Missing " . $_ . "Check parameter", 400
+        #        )
+        #    );
         #}
     }
 

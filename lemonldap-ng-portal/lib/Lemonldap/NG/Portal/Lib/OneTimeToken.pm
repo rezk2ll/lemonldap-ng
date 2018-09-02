@@ -110,7 +110,7 @@ sub getToken {
             return undef;
         }
         my %h = %{ $tsession->{data} };
-        $tsession->remove unless($keep);
+        $tsession->remove unless ($keep);
         return \%h;
     }
 }

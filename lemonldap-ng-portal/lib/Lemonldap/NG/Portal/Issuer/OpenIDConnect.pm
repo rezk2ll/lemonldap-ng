@@ -398,7 +398,7 @@ sub run {
 
                 # Read existing RP
                 @RPoidcConsent = grep { $_->{rp} eq $rp } @$_oidcConsents;
-                unless ( @RPoidcConsent ) {
+                unless (@RPoidcConsent) {
                     $self->logger->debug("No Relying Party $rp Consent found");
 
                     # Set default value

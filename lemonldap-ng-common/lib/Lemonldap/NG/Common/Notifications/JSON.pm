@@ -47,8 +47,7 @@ sub deleteNotification {
     # Check input parameters
     unless ( $uid and $myref ) {
         $self->userLogger->error(
-            'REST service "delete notification" called without all parameters'
-        );
+            'REST service "delete notification" called without all parameters');
         return 0;
     }
 

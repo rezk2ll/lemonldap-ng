@@ -41,8 +41,8 @@ sub init {
             "Unable to load configuration: $Lemonldap::NG::Common::Conf::msg");
         return 0;
     }
-    $lconf->{$_} = $args->{$_} foreach ( keys %$args );
-    $conf->{$_} = $lconf->{$_} foreach ( keys %$lconf );
+    $lconf->{$_} = $args->{$_}  foreach ( keys %$args );
+    $conf->{$_}  = $lconf->{$_} foreach ( keys %$lconf );
     $self->SUPER::init($lconf) or return 0;
     $self->cdc_name( $conf->{samlCommonDomainCookieName} || '_saml_idp' );
     $self->cdc_domain( $conf->{samlCommonDomainCookieDomain} );

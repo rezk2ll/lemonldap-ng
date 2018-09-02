@@ -778,7 +778,7 @@ sub run {
                 if (   $method == $self->getHttpMethod("post")
                     || $method == $self->getHttpMethod("artifact-post") )
                 {
-                    $artifact_method = $self->getHttpMethod("artifact-post")
+                    $artifact_method = $self->getHttpMethod("artifact-post");
 
                 }
                 else {

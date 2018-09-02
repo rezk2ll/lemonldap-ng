@@ -40,14 +40,14 @@ sub addRoutes {
         ['DELETE']
       )
 
-    # DELETE OIDC CONSENT
-    ->addRoute(
+      # DELETE OIDC CONSENT
+      ->addRoute(
         sessions => {
             OIDCConsent =>
               { ':sessionType' => { ':sessionId' => 'delOIDCConsent' } }
         },
         ['DELETE']
-    );
+      );
 
     $self->setTypes($conf);
 

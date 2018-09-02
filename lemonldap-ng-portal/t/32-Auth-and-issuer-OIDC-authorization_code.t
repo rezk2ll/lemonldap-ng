@@ -292,6 +292,7 @@ ok(
 );
 count(1);
 $idpId = expectCookie($res);
+
 #expectRedirection( $res, qr#^http://auth.rp.com/# );
 
 #print STDERR Dumper($res);

@@ -160,8 +160,7 @@ sub getNotifBack {
                 $self->p->updatePersistentSession( $req,
                     { "notification_$reference" => time() } );
                 $self->logger->debug(
-                    "Notification $reference registered in persistent session"
-                );
+                    "Notification $reference registered in persistent session");
             }
 
         # Notifications accepted for this file, delete it unless it's a wildcard

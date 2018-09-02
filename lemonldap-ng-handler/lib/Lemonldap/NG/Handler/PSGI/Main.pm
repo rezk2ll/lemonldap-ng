@@ -89,9 +89,7 @@ sub print {
 sub addToHtmlHead {
     my $self = shift;
     $self->logger->error(
-        'Features like form replay or logout_app can only be used with Apache'
-      ),
-      ;
+        'Features like form replay or logout_app can only be used with Apache');
 }
 
 sub cgiName {

@@ -48,6 +48,7 @@ my $res;
 ## Sessions creation
 # SSO session
 $ids[0] = newSession( 'dwho', '127.10.0.1', 'SSO', $sfaDevices );
+
 # Peristent sesssions
 $ids[1] = newSession( 'msmith', '127.10.0.1', 'Persistent', $sfaDevices );
 $sfaDevices = [
@@ -115,14 +116,13 @@ $sfaDevices = [
 ];
 $ids[5] = newSession( 'tof', '127.10.0.1', 'Persistent', $sfaDevices );
 
-
-        
 ## Verify sessions creation
 # Single SSO session access
 $res = &client->jsonResponse("/sessions/global/$ids[0]");
 ok( ( $res->{uid}    and $res->{uid} eq 'dwho' ),          'UID found' );
 ok( ( $res->{ipAddr} and $res->{ipAddr} eq '127.10.0.1' ), 'IP found' );
 count(2);
+
 # Single Persistent sessions access
 for ( my $i = 1 ; $i < 6 ; $i++ ) {
     $res = &client->jsonResponse("/sessions/persistent/$ids[$i]");
@@ -132,17 +132,25 @@ for ( my $i = 1 ; $i < 6 ; $i++ ) {
               and $res->{uid} =~ /^(?:dwho|rtyler|msmith|davros|tof)$/
         ),
         'Persistent sessions with UID found'
-     );
+    );
 }
 count(5);
 
 ## Single Persistent sfa access
 $res = &client->jsonResponse("/sfa/persistent/$ids[3]");
-ok( ( $res->{uid}    and $res->{uid} eq 'dwho' ),          'UID found' )   or print STDERR Dumper($res);
-ok( ( $res->{ipAddr} and $res->{ipAddr} eq '127.10.0.1' ), 'IP found' )  or print STDERR Dumper($res);
-ok( ( $res->{_2fDevices} and $res->{_2fDevices} =~ /"type":\s*"U2F"/s ), 'U2F found' )  or print STDERR Dumper($res);
-ok( ( $res->{_2fDevices} and $res->{_2fDevices} =~ /"type":\s*"TOTP"/s ), 'TOTP found' )  or print STDERR Dumper($res);
-ok( ( $res->{_2fDevices} and $res->{_2fDevices} =~ /"type":\s*"UBK"/s ), 'UBK found' )  or print STDERR Dumper($res);
+ok( ( $res->{uid} and $res->{uid} eq 'dwho' ), 'UID found' )
+  or print STDERR Dumper($res);
+ok( ( $res->{ipAddr} and $res->{ipAddr} eq '127.10.0.1' ), 'IP found' )
+  or print STDERR Dumper($res);
+ok( ( $res->{_2fDevices} and $res->{_2fDevices} =~ /"type":\s*"U2F"/s ),
+    'U2F found' )
+  or print STDERR Dumper($res);
+ok( ( $res->{_2fDevices} and $res->{_2fDevices} =~ /"type":\s*"TOTP"/s ),
+    'TOTP found' )
+  or print STDERR Dumper($res);
+ok( ( $res->{_2fDevices} and $res->{_2fDevices} =~ /"type":\s*"UBK"/s ),
+    'UBK found' )
+  or print STDERR Dumper($res);
 count(5);
 
 ## "All" query

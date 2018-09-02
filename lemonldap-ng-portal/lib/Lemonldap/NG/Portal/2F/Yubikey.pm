@@ -34,7 +34,7 @@ sub init {
         $self->logger->error($@);
         return 0;
     }
-    
+
     # If self registration is enabled and "activation" is just set to
     # "enabled", replace the rule to detect if user has registered its key
     if (    $self->conf->{yubikey2fSelfRegistration}

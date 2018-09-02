@@ -37,7 +37,8 @@ sub init {
     if (    $self->conf->{u2fSelfRegistration}
         and $self->conf->{u2fActivation} eq '1' )
     {
-        $self->conf->{u2fActivation} = '$_2fDevices && $_2fDevices =~ /"type":\s*"U2F"/s';
+        $self->conf->{u2fActivation} =
+          '$_2fDevices && $_2fDevices =~ /"type":\s*"U2F"/s';
     }
     return 0
       unless ( $self->Lemonldap::NG::Portal::Main::SecondFactor::init()
@@ -79,9 +80,9 @@ sub run {
 
         $self->ott->updateToken( $token, __ch => $data->{challenge} );
 
-		$self->logger->debug("Prepare U2F verification");
-		$self->logger->debug(" -> Send challenge: ". $data->{challenge});
-		
+        $self->logger->debug("Prepare U2F verification");
+        $self->logger->debug( " -> Send challenge: " . $data->{challenge} );
+
         # Serialize data
         $data = to_json(
             {
@@ -208,7 +209,7 @@ sub loadUser {
             return PE_ERROR;
         }
         $self->logger->debug("2F Device(s) found");
-        
+
         $self->logger->debug("Looking for registered U2F key(s) ...");
         foreach (@$_2fDevices) {
             if ( $_->{type} eq 'U2F' ) {

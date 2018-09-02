@@ -32,7 +32,7 @@ sub createUser {
             givenName      => $gn,
             unicodePwd     => utf8(
                 chr(34) . $req->data->{registerInfo}->{password} . chr(34)
-              )->utf16le(),
+            )->utf16le(),
             mail => $req->data->{registerInfo}->{mail},
         ]
     );
