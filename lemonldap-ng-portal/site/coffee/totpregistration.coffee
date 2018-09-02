@@ -74,8 +74,8 @@ verify = ->
 			error: displayError
 			success: (data) ->
 				if data.error
-					if data.error.match /badCode/
-						setMsg 'badCode', 'warning'
+					if data.error.match /bad(Code|Name)/
+						setMsg data.error, 'warning'
 					else
 						setMsg data.error, 'danger'
 				else

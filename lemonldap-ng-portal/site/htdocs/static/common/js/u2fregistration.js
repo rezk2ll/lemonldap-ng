@@ -9,7 +9,7 @@ LemonLDAP::NG U2F registration script
 
   setMsg = function(msg, level) {
     $('#msg').html(window.translate(msg));
-    $('#color').removeClass('message-positive message-warning alert-success alert-warning');
+    $('#color').removeClass('message-positive message-warning message-danger alert-success alert-warning alert-danger');
     $('#color').addClass("message-" + level);
     if (level === 'positive') {
       level = 'success';
@@ -62,9 +62,9 @@ LemonLDAP::NG U2F registration script
               success: function(resp) {
                 if (resp.error) {
                   if (resp.error.match(/badName/)) {
-                    return setMsg('badName', 'warning');
+                    return setMsg(resp.error, 'warning');
                   } else {
-                    return setMsg('u2fFailed', 'warning');
+                    return setMsg('u2fFailed', 'danger');
                   }
                 } else if (resp.result) {
                   return setMsg('yourKeyIsRegistered', 'positive');
@@ -101,7 +101,7 @@ LemonLDAP::NG U2F registration script
               dataType: 'json',
               success: function(resp) {
                 if (resp.error) {
-                  return setMsg('u2fFailed', 'warning');
+                  return setMsg('u2fFailed', 'danger');
                 } else if (resp.result) {
                   return setMsg('yourKeyIsVerified', 'positive');
                 }

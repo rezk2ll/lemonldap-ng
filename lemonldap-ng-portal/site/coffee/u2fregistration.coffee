@@ -4,7 +4,7 @@ LemonLDAP::NG U2F registration script
 
 setMsg = (msg, level) ->
 	$('#msg').html window.translate msg
-	$('#color').removeClass 'message-positive message-warning alert-success alert-warning'
+	$('#color').removeClass 'message-positive message-warning message-danger alert-success alert-warning alert-danger'
 	$('#color').addClass "message-#{level}"
 	level = 'success' if level == 'positive'
 	$('#color').addClass "alert-#{level}"
@@ -52,8 +52,8 @@ register = ->
 						success: (resp) ->
 							if resp.error
 								if resp.error.match /badName/
-									setMsg 'badName', 'warning'
-								else setMsg 'u2fFailed', 'warning'
+									setMsg resp.error, 'warning'
+								else setMsg 'u2fFailed', 'danger'
 							else if resp.result
 								setMsg 'yourKeyIsRegistered', 'positive'
 						error: displayError
@@ -85,7 +85,7 @@ verify = ->
 						dataType: 'json'
 						success: (resp) ->
 							if resp.error
-								setMsg 'u2fFailed', 'warning'
+								setMsg 'u2fFailed', 'danger'
 							else if resp.result
 								setMsg 'yourKeyIsVerified', 'positive'
 						error: (j, status, err) ->
