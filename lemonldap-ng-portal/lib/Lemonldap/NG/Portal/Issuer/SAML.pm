@@ -825,7 +825,7 @@ sub run {
 
                 # Update session
                 $self->logger->debug("Save Lasso identity in session");
-                $self->updatePersistentSession( $req,
+                $self->p->updatePersistentSession( $req,
                     { $self->liDump => $login->get_identity->dump },
                     undef, $session_id );
             }
