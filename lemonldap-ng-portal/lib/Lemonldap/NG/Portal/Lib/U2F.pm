@@ -6,8 +6,6 @@ use MIME::Base64 qw(encode_base64 decode_base64);
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin';
-
 has origin => ( is => 'rw', );
 
 sub init {
