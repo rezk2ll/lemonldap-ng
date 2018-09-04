@@ -754,7 +754,7 @@ sub extractFormInfo {
                             my $res = $self->p->deleteSession($req);
                             return (
                                 $res eq PE_LOGOUT_OK ? PE_SENDRESPONSE : $res );
-                        }
+                          }
                     ]
                 );
 
@@ -844,6 +844,45 @@ sub extractFormInfo {
         $self->logger->debug("Redirect user to $cdc_reader_url");
 
         $req->urldc($cdc_reader_url);
+
+        $req->steps( [] );
+        return PE_REDIRECT;
+    }
+
+    # Use SAML Discovery Protocol
+    if (   !$idp
+        and $self->conf->{samlDiscoveryProtocolActivation}
+        and defined $self->conf->{samlDiscoveryProtocolURL} )
+    {
+        $self->logger->debug(
+            "Will try to use SAML Discovery Protocol for IDP resolution");
+
+        my $disco_url = $self->conf->{samlDiscoveryProtocolURL};
+
+        $disco_url .= ( $disco_url =~ /\?/ ? '&' : '?' )
+          . build_urlencoded(
+            entityID      => $self->getMetaDataURL( 'samlEntityID', 0, 1 ),
+            return        => $self->conf->{portal},
+            returnIDParam => 'idp'
+          );
+
+        if ( defined $self->conf->{samlDiscoveryProtocolPolicy} ) {
+            $disco_url .= "&"
+              . build_urlencoded(
+                policy => $self->conf->{samlDiscoveryProtocolPolicy} );
+        }
+
+        if ( defined $self->conf->{samlDiscoveryProtocolIsPassive} ) {
+            $disco_url .= "&"
+              . build_urlencoded(
+                isPassive => $self->conf->{samlDiscoveryProtocolIsPassive}
+                ? "true"
+                : "false" );
+        }
+
+        $self->logger->debug("Redirect user to $disco_url");
+
+        $req->urldc($disco_url);
 
         $req->steps( [] );
         return PE_REDIRECT;
@@ -1440,7 +1479,7 @@ sub getIDP {
 
     # Alert when selected IDP is unknown
     if ( $idp and !exists $self->idpList->{$idp} ) {
-        $self->userLogger->error("Required IDP $idp does not exists");
+        $self->logger->error("Required IDP $idp does not exists");
         $idp = undef;
     }
 

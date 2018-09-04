@@ -21,24 +21,23 @@ sub newLdap {
     my $ldap;
 
     # Build object and test LDAP connexion
-    if (
+    unless (
         $ldap = Lemonldap::NG::Portal::Lib::Net::LDAP->new(
             { p => $self->{p}, conf => $self->{conf} }
         )
-        and my $msg = $ldap->bind
       )
     {
-        if ( $msg->code != 0 ) {
-            $self->logger->error( "LDAP error: " . $msg->error );
-        }
-        else {
-            if ( $self->{conf}->{ldapPpolicyControl} and not $ldap->loadPP() ) {
-                $self->logger->error("LDAP password policy error");
-            }
-        }
+        $self->logger->error("LDAP initialization error: $@");
+        return undef;
     }
-    else {
-        $self->logger->error("LDAP error: $@");
+
+    # Test connection
+    my $msg = $ldap->bind;
+    if ( $msg->code ) {
+        $self->logger->error( 'LDAP test has failed: ' . $msg->error );
+    }
+    elsif ( $self->{conf}->{ldapPpolicyControl} and not $ldap->loadPP() ) {
+        $self->logger->error("LDAP password policy error");
     }
     return $ldap;
 }
@@ -69,24 +68,32 @@ sub buildMailFilter {
 }
 
 sub _buildFilter {
-    my $conf = $_[0]->{conf};
-    $_[0]->{p}->logger->debug("LDAP Search base: $_[0]->{conf}->{ldapBase}");
-    my $filter = $_[1];
+    my ( $self, $filter ) = @_;
+    my $conf = $self->{conf};
+    $self->{p}->logger->debug("LDAP Search base: $_[0]->{conf}->{ldapBase}");
     $filter =~ s/"/\\"/g;
     $filter =~ s/\$(\w+)/".\$req->{sessionInfo}->{$1}."/g;
     $filter =~ s/\$req->\{sessionInfo\}->\{user\}/\$req->{user}/g;
     $filter =~
       s/\$req->\{sessionInfo\}->\{(_?password|mail)\}/\$req->{data}->{$1}/g;
-    $_[0]->{p}->logger->debug("LDAP transformed filter: $filter");
+    $self->{p}->logger->debug("LDAP transformed filter: $filter");
     $filter = "sub{my(\$req)=\$_[0];return \"$filter\";}";
-    return eval $filter;
+    my $res = eval $filter;
+
+    if ($@) {
+        $self->error("Unable to build fiter: $@");
+    }
+    return $res;
 }
 
 # INITIALIZATION
 
 sub init {
     my ($self) = @_;
-    $self->ldap and $self->filter;
+    $self->ldap
+      or $self->logger->error(
+        "LDAP initialization has failed, but let's continue");
+    $self->filter;
 }
 
 # RUNNING METHODS

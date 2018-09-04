@@ -43,7 +43,9 @@ sub dbh {
 # All DBI modules have just to verify that DBI connection is available
 sub init {
     my ($self) = @_;
-    return $self->_dbh;
+    $self->_dbh
+      or $self->logger->error("DBI connection has failed, but let's continue");
+    return 1;
 }
 
 # RUNNING METHODS

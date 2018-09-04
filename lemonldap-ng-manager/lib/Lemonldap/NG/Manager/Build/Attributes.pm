@@ -1834,6 +1834,25 @@ sub attributes {
             test    => $url,
             msgFail => '__badUrl__',
         },
+        samlDiscoveryProtocolActivation => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'SAML Discovery Protocol activation',
+        },
+        samlDiscoveryProtocolURL => {
+            type    => 'text',
+            test    => $url,
+            msgFail => '__badUrl__',
+            documentation => 'SAML Discovery Protocol EndPoint URL',
+        },
+        samlDiscoveryProtocolPolicy => {
+            type    => 'text',
+            documentation => 'SAML Discovery Protocol Policy',
+        },
+        samlDiscoveryProtocolIsPassive => {
+            type          => 'bool',
+            documentation => 'SAML Discovery Protocol Is Passive',
+        },
         samlRelayStateTimeout => {
             type          => 'int',
             default       => 600,

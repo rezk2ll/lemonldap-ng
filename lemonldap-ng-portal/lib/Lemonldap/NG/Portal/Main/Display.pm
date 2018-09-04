@@ -347,7 +347,8 @@ sub display {
             # Choose what form to display if not in a loop
             else {
 
-                my $displayType = $self->_authentication->getDisplayType($req);
+                my $displayType =
+                  eval { $self->_authentication->getDisplayType($req) };
 
                 $self->logger->debug("Display type $displayType ");
 

@@ -940,6 +940,16 @@ sub tree {
                                 'samlCommonDomainCookieReader',
                                 'samlCommonDomainCookieWriter'
                             ]
+                        },
+			{
+                            title => 'samlDiscoveryProtocol',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'samlDiscoveryProtocolActivation',
+                                'samlDiscoveryProtocolURL',
+                                'samlDiscoveryProtocolPolicy',
+                                'samlDiscoveryProtocolIsPassive'
+                            ]
                         }
                     ]
                 }

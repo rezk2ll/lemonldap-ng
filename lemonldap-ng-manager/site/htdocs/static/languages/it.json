@@ -816,6 +816,11 @@
 
 "saml":"SAML",
 "samlAttribute":"Attributo SAML",
+"samlDiscoveryProtocol":"Discovery Protocol",
+"samlDiscoveryProtocolActivation":"Activation",
+"samlDiscoveryProtocolIsPassive":"Is Passive",
+"samlDiscoveryProtocolPolicy":"Policy",
+"samlDiscoveryProtocolURL":"EndPoint URL",
 "samlNameIDFormatMap":"Formati NameID",
 "samlNameIDFormatMapEmail":"E-mail",
 "samlNameIDFormatMapX509":"X509",
