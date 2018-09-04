@@ -139,6 +139,31 @@ sub addCookie {
     push @{ $self->respHeaders }, 'Set-Cookie' => $cookie;
 }
 
+sub delCookie {
+    my ( $self, $cookieName ) = @_;
+    my $i = 0;
+    @{ $self->respHeaders } = map {
+
+        # Look for a Set-Cookie header
+        if ( $_ =~ /^Set-Cookie$/i ) {
+            $i = 1;
+            return ();
+        }
+        elsif ($i) {
+
+            # Keep other cookies
+            unless (/^$cookieName\s*=/i) {
+                $i = 0;
+                return ( 'Set-Cookie' => $_ );
+            }
+
+            #Value is hidden here
+            return ();
+        }
+        return $_;
+    } @{ $self->respHeaders };
+}
+
 # TODO: oldpassword
 1;
 __END__
@@ -224,6 +249,19 @@ see notification plugin.
 =head3 errorType()
 
 Returns positive/warning/negative depending on value stored in error property.
+
+=head2 Cookie methods
+
+=over
+
+=item addCookie(string $cookie): add cookie in $req response headers. String
+is a complete cookie string, ex: "lemonldap=xxx"
+
+=item delCookie(string $cookieName): remove cookie from $req response headers.
+It doesn't remove navigator cookie but remove a "Set-Cookie" header if value
+match "L<lt>cookieNameL<gt>=..."
+
+=back
 
 =head1 SEE ALSO
 
