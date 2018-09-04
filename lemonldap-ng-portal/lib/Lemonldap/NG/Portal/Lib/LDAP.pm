@@ -27,7 +27,7 @@ sub newLdap {
         )
       )
     {
-        $self->error("LDAP initialization error: $@");
+        $self->logger->error("LDAP initialization error: $@");
         return undef;
     }
 
@@ -90,7 +90,8 @@ sub _buildFilter {
 
 sub init {
     my ($self) = @_;
-    $self->ldap and $self->filter;
+    $self->ldap;
+    $self->filter;
 }
 
 # RUNNING METHODS
