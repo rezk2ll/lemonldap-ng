@@ -90,7 +90,9 @@ sub _buildFilter {
 
 sub init {
     my ($self) = @_;
-    $self->ldap;
+    $self->ldap
+      or $self->logger->error(
+        "LDAP initialization has failed, but let's continue");
     $self->filter;
 }
 
