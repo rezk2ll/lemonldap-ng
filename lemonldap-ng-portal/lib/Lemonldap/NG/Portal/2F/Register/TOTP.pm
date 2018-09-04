@@ -206,7 +206,7 @@ sub run {
             $_2fDevices = [];
         }
 
-        # Loading TOTP secret
+        # Looking for TOTP
         my @totp2f = grep { $_->{type} eq "TOTP" } @$_2fDevices;
         unless (@totp2f) {
             $self->logger->debug("No TOTP found");
