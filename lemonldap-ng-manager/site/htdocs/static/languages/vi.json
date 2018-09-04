@@ -816,6 +816,11 @@
 
 "saml":"SAML",
 "samlAttribute":"thuộc tính SAML",
+"samlDiscoveryProtocol":"Discovery Protocol",
+"samlDiscoveryProtocolActivation":"Activation",
+"samlDiscoveryProtocolIsPassive":"Is Passive",
+"samlDiscoveryProtocolPolicy":"Policy",
+"samlDiscoveryProtocolURL":"EndPoint URL",
 "samlNameIDFormatMap":"Định dạng NameID",
 "samlNameIDFormatMapEmail":"Email",
 "samlNameIDFormatMapX509":"X509",

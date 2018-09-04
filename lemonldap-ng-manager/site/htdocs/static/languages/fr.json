@@ -816,6 +816,11 @@
 
 "saml":"SAML",
 "samlAttribute":"Attribut SAML",
+"samlDiscoveryProtocol":"Protocole de découverte",
+"samlDiscoveryProtocolActivation":"Activation",
+"samlDiscoveryProtocolIsPassive":"Est passif",
+"samlDiscoveryProtocolPolicy":"Politique",
+"samlDiscoveryProtocolURL":"Adresse du point d'accès",
 "samlNameIDFormatMap":"Formats de NameID",
 "samlNameIDFormatMapEmail":"Email",
 "samlNameIDFormatMapX509":"X509",
