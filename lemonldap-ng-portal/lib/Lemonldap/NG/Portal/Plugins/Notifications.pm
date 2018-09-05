@@ -117,6 +117,9 @@ sub checkNotifDuringAuth {
         return PE_ERROR;
     }
     if ( $req->{data}->{notification} ) {
+
+        # Cipher id
+        $req->id( $self->p->HANDLER->tsv->{cipher}->encrypt( $req->id ) );
         $self->p->rebuildCookies($req);
 
         # Restore and cipher cookies

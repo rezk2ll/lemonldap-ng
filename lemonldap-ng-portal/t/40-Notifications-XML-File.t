@@ -6,7 +6,7 @@ require 't/test-lib.pm';
 
 my $res;
 my $file      = 't/20160530_dwho_dGVzdHJlZg==.xml';
-my $maintests = 6;
+my $maintests = 8;
 
 SKIP: {
     eval { require XML::LibXML; require XML::LibXSLT; };
@@ -99,6 +99,20 @@ SKIP: {
     expectRedirection( $res, qr/./ );
     $file =~ s/xml$/done/;
     ok( -e $file, 'Notification was deleted' );
+
+    $id = expectCookie($res);
+
+    ok(
+        $res = $client->_get(
+            '/',
+            cookie => "lemonldap=$id",
+            length => 64,
+            accept => 'text/html',
+        ),
+        'New auth query'
+    );
+    expectAuthenticatedAs( $res, 'dwho' );
+    ok( $res->[2]->[0] =~ /yourApp/s, 'Menu displayed' );
 
     #print STDERR Dumper($res);
 

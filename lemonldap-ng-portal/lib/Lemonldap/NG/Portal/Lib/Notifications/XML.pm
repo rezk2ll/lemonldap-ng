@@ -133,7 +133,6 @@ sub checkForNotifications {
     return 0 unless $i;
 
     # Returns HTML fragment
-    $req->id( $self->p->HANDLER->tsv->{cipher}->encrypt( $req->id ) );
     return $form;
 }
 

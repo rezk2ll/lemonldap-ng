@@ -68,9 +68,6 @@ sub checkForNotifications {
     # Stop here if nothing to display
     return 0 unless $i;
 
-    # Cipher cookie
-    $req->id( $self->p->HANDLER->tsv->{cipher}->encrypt( $req->id ) );
-
     # Returns HTML fragment
     return $form;
 }
