@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BASE=debian/tests/lib
+BASE=/usr/share/pkg-perl-autopkgtest
 
 TYPE=$1
 [ -n "$TYPE" ] || exit 1
@@ -8,25 +8,41 @@ TYPE=$1
 TESTDIR=${BASE}/${TYPE}.d
 [ -d "$TESTDIR" ] || exit 1
 
-SKIPLIST=debian/tests/pkg-perl/SKIP
-SKIPTMP=$(mktemp)
-if [ -f "$SKIPLIST" ]; then
-    grep -v '^ *#' "$SKIPLIST" |grep -v '^ *$' > "$SKIPTMP"
-fi
+LLSOURCEDIR=`pwd`
 
 EXITCODE=0
-for T in $(run-parts --list --regex '(^[a-z0-9.]+$)' ${TESTDIR} | \
-           grep -v -F -f "$SKIPTMP") ; do
-    if echo "$T" | grep -q '\.t$'
-    then
-        prove --norc -v "$T"
-        RET=$?
-        if [ $EXITCODE = 0 ]; then EXITCODE=$RET; fi
-    else
-        "$T"
-        RET=$?
-        if [ $EXITCODE = 0 ]; then EXITCODE=$RET; fi
+for LLLIB in lemonldap-ng-*; do
+    mkdir -p $LLSOURCEDIR/$LLLIB/debian/tests/pkg-perl
+    for llfile in debian/tests/pkg-perl/${LLLIB}*; do
+        if [ -r $llfile ]; then
+            dest=${llfile#*$LLLIB.}
+            cp -v $llfile $LLSOURCEDIR/$LLLIB/debian/tests/pkg-perl/$dest
+        fi
+    done
+    cd $LLSOURCEDIR/$LLLIB
+
+    SKIPLIST=debian/tests/pkg-perl/SKIP
+    SKIPTMP=$(mktemp)
+    if [ -f "$SKIPLIST" ]; then
+        grep -v '^ *#' "$SKIPLIST" |grep -v '^ *$' > "$SKIPTMP"
     fi
+    
+    for T in $(run-parts --list --regex '(^[a-z0-9.]+$)' ${TESTDIR} | \
+               grep -v -F -f "$SKIPTMP") ; do
+        if echo "$T" | grep -q '\.t$'
+        then
+            prove --norc -v "$T"
+            RET=$?
+            if [ $EXITCODE = 0 ]; then EXITCODE=$RET; fi
+        else
+            "$T"
+            RET=$?
+            if [ $EXITCODE = 0 ]; then EXITCODE=$RET; fi
+        fi
+    done
+
+    cd $LLSOURCEDIR
+    rm -rf $LLSOURCEDIR/$LLLIB/debian
 done
 rm -f "$SKIPTMP"
 exit $EXITCODE

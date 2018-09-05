@@ -1,4 +1,4 @@
-lemonldap-ng (2.0.0-1) UNRELEASED; urgency=medium
+lemonldap-ng (2.0.0-1) unstable; urgency=medium
 
   2.0 is a major release, many things have been changed. You must read
   https://lemonldap-ng.org/documentation/2.0/upgrade before upgrade.

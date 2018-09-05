@@ -395,7 +395,8 @@ sub staticFile {
     require Cwd;
     require HTTP::Date;
     open my $fh, '<:raw', $self->conf->{templatesDir} . "/$file"
-      or return $self->sendError( $req, $!, 403 );
+      or return $self->sendError( $req,
+        $self->conf->{templatesDir} . "/$file: $!", 403 );
     my @stat = stat $file;
     Plack::Util::set_io_path( $fh, Cwd::realpath($file) );
     return [

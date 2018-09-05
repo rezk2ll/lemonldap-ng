@@ -1,0 +1,4 @@
+t/03-HTML-forms.t
+t/80-attributes.t
+t/90-translations.t
+t/99-pod.t
