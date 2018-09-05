@@ -16,7 +16,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 # INTERFACE
 
-use constant afterData => 'newDevice';
+use constant endAuth => 'newDevice';
 
 use constant beforeAuth => 'check';
 

@@ -238,6 +238,8 @@ sub newAuthSession {
             @{ $self->p->betweenAuthAndData },
             $self->p->sessionData,
             @{ $self->p->afterData },
+            $self->p->validSession,
+            @{ $self->p->endAuth },
         ]
     );
     $req->{error} = $self->p->process($req);

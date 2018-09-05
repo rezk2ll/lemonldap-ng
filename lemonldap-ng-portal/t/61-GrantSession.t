@@ -31,6 +31,10 @@ ok(
 count(1);
 expectReject($res);
 
+my $c = getCookies($res);
+ok( not(%$c), 'No cookie' );
+count(1);
+
 &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 $client = LLNG::Manager::Test->new(
     {

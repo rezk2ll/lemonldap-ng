@@ -26,7 +26,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 # INTERFACE
 
 # Declare additional process steps
-sub afterData { 'checkNotifDuringAuth' }
+use constant endAuth => 'checkNotifDuringAuth';
 
 # For now, notifications are done only during authentication process
 #sub forAuthUser { 'checkNotifForAuthUser' }

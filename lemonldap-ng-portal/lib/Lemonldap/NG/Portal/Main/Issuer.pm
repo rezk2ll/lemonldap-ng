@@ -102,6 +102,8 @@ sub _redirect {
             @{ $self->p->betweenAuthAndData },
             $self->p->sessionData,
             @{ $self->p->afterData },
+            $self->p->validSession,
+            @{ $self->p->endAuth },
             (
                 $restore
                 ? sub {

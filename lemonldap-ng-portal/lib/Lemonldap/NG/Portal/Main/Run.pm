@@ -21,7 +21,11 @@ sub authProcess { qw(extractFormInfo getUser authenticate) }
 
 sub sessionData {
     qw(setAuthSessionInfo setSessionInfo setMacros setGroups setPersistentSessionInfo
-      setLocalGroups store secondFactor storeHistory buildCookie);
+      setLocalGroups store secondFactor);
+}
+
+sub validSession {
+    qw(storeHistory buildCookie);
 }
 
 # RESPONSE HANDLER
@@ -88,9 +92,10 @@ sub login {
     return $self->do(
         $req,
         [
-            'controlUrl',       @{ $self->beforeAuth },
-            $self->authProcess, @{ $self->betweenAuthAndData },
-            $self->sessionData, @{ $self->afterData },
+            'controlUrl',        @{ $self->beforeAuth },
+            $self->authProcess,  @{ $self->betweenAuthAndData },
+            $self->sessionData,  @{ $self->afterData },
+            $self->validSession, @{ $self->endAuth },
         ]
     );
 }
@@ -103,7 +108,8 @@ sub postLogin {
             'restoreArgs',                  'controlUrl',
             @{ $self->beforeAuth },         $self->authProcess,
             @{ $self->betweenAuthAndData }, $self->sessionData,
-            @{ $self->afterData },
+            @{ $self->afterData },          $self->validSession,
+            @{ $self->endAuth },
         ]
     );
 }
