@@ -161,6 +161,8 @@ setting C<sessionInfo> provisionning
 =item C<afterData>: method called after C<sessionInfo> provisionning
 I<(macros, groups,...)>
 
+=item C<endAuth>: method called when session is validated (after cookie build)
+
 =item C<authCancel>: method called when user click on "cancel" during auth
 process
 

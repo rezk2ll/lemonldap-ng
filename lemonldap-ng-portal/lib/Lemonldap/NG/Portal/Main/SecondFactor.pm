@@ -95,7 +95,7 @@ sub _verify {
     if ( my $l = $self->conf->{ $self->prefix . '2fAuthnLevel' } ) {
         $self->p->updateSession( $req, { authenticationLevel => $l } );
     }
-    return $self->p->do( $req, [ @{ $self->p->afterData }, sub { PE_OK } ] );
+    return $self->p->do( $req, [ @{ $self->p->endAuth }, sub { PE_OK } ] );
 }
 
 1;

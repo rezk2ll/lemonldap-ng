@@ -40,36 +40,32 @@ has _jsRedirect => ( is => 'rw' );
 has trustedDomainsRe => ( is => 'rw' );
 
 # Lists to store plugins entry-points
-has beforeAuth => (
-    is      => 'rw',
-    isa     => 'ArrayRef',
-    default => sub { [] }
-);
-has betweenAuthAndData => (
-    is      => 'rw',
-    isa     => 'ArrayRef',
-    default => sub { [] }
-);
-has afterData => (
-    is      => 'rw',
-    isa     => 'ArrayRef',
-    default => sub { [] }
-);
-has authCancel => (
-    is      => 'rw',
-    isa     => 'ArrayRef',
-    default => sub { [] }
-);
-has forAuthUser => (
-    is      => 'rw',
-    isa     => 'ArrayRef',
-    default => sub { [] }
-);
-has beforeLogout => (
-    is      => 'rw',
-    isa     => 'ArrayRef',
-    default => sub { [] }
-);
+my @entryPoints;
+
+BEGIN {
+    @entryPoints = (
+
+        # Auth process entrypoints
+        qw(beforeAuth betweenAuthAndData afterData endAuth),
+
+        # Authenticated users entrypoint
+        'forAuthUser',
+
+        # Logout entrypoint
+        'beforeLogout',
+
+        # Special endpoint
+        'authCancel',    # Clean pdata when user click on "cancel"
+    );
+
+    foreach (@entryPoints) {
+        has $_ => (
+            is      => 'rw',
+            isa     => 'ArrayRef',
+            default => sub { [] }
+        );
+    }
+}
 
 has spRules => (
     is      => 'rw',
@@ -155,10 +151,7 @@ sub reloadConf {
     %{ $self->{conf} } = %{ $self->localConfig };
 
     # Reinitialize arrays
-    foreach (
-        qw(_macros _groups beforeAuth betweenAuthAndData afterData authCancel forAuthUser beforeLogout)
-      )
-    {
+    foreach ( qw(_macros _groups), @entryPoints) {
         $self->{$_} = [];
     }
     $self->spRules( {} );
@@ -222,7 +215,8 @@ sub reloadConf {
             $self->error("$type is not set");
             return $self->fail;
         }
-        $mod = $self->conf->{$type} unless ( $self->conf->{$type} eq 'Same' );
+        $mod = $self->conf->{$type}
+          unless ( $self->conf->{$type} eq 'Same' );
         my $module = '::' . ucfirst($type) . '::' . $mod;
         $module =~ s/Authentication/Auth/;
 
@@ -312,7 +306,7 @@ sub reloadConf {
     }
 
     # Clean $req->pdata after authentication
-    push @{ $self->afterData }, sub {
+    push @{ $self->endAuth }, sub {
         unless ( $_[0]->pdata->{keepPdata} ) {
             $self->logger->debug('Cleaning pdata');
             $_[0]->pdata( {} );
@@ -348,10 +342,7 @@ sub findEP {
     my ( $self, $plugin, $obj ) = @_;
 
     # Standards entry points
-    foreach my $sub (
-        qw(beforeAuth betweenAuthAndData afterData authCancel forAuthUser beforeLogout)
-      )
-    {
+    foreach my $sub (@entryPoints) {
         if ( $obj->can($sub) ) {
             $self->logger->debug(" Found $sub entry point:");
             if ( my $callback = $obj->$sub ) {
@@ -412,8 +403,8 @@ sub fail {
 
 sub displayError {
     my ( $self, $req ) = @_;
-    return $self->sendError( $req, 'Portal error, contact your administrator',
-        500 );
+    return $self->sendError( $req,
+        'Portal error, contact your administrator', 500 );
 }
 
 1;
