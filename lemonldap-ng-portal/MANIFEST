@@ -460,11 +460,13 @@ t/73-2F-UTOTP-TOTP-only-with-HISTORY.t
 t/73-2F-UTOTP-TOTP-only.t
 t/74-2F-Required.t
 t/75-2F-Registers.t
+t/76-2F-Ext.t
 t/90-Translations.t
 t/99-pod.t
 t/lmConf-1.json
 t/pdata.pm
 t/saml-lib.pm
+t/sendOTP.pl
 t/sessions/lock/.exists
 t/sessions/saml/lock/.exists
 t/sessions2/6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101
@@ -476,3 +478,4 @@ t/test-psgi.pm
 t/testslapd/confs-sessions.ldif
 t/testslapd/slapd.ldif
 t/testslapd/users.ldif
+t/vrfyOTP.pl
