@@ -100,7 +100,20 @@ $file =~ s/json$/done/;
 ok( -e $file, 'Notification was deleted' );
 count(2);
 
-#print STDERR Dumper($res);
+$id = expectCookie($res);
+
+ok(
+    $res = $client->_get(
+        '/',
+        cookie => "lemonldap=$id",
+        length => 64,
+        accept => 'text/html',
+    ),
+    'New auth query'
+);
+expectAuthenticatedAs($res,'dwho');
+ok($res->[2]->[0] =~ /yourApp/s, 'Menu displayed');
+count(2);
 
 clean_sessions();
 

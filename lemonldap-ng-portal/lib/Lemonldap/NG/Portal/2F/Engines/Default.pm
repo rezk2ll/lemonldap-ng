@@ -250,7 +250,7 @@ sub _choice {
                 $req,
                 [
                     sub { $res }, 'controlUrl',
-                    'buildCookie', @{ $self->p->afterData },
+                    'buildCookie', @{ $self->p->endAuth },
                 ]
             );
         }

@@ -26,7 +26,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 # INTERFACE
 
 # Declare additional process steps
-sub afterData { 'checkNotifDuringAuth' }
+use constant endAuth => 'checkNotifDuringAuth';
 
 # For now, notifications are done only during authentication process
 #sub forAuthUser { 'checkNotifForAuthUser' }
@@ -117,6 +117,9 @@ sub checkNotifDuringAuth {
         return PE_ERROR;
     }
     if ( $req->{data}->{notification} ) {
+
+        # Cipher id
+        $req->id( $self->p->HANDLER->tsv->{cipher}->encrypt( $req->id ) );
         $self->p->rebuildCookies($req);
 
         # Restore and cipher cookies

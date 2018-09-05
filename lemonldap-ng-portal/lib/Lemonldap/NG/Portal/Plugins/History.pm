@@ -11,7 +11,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin',
 
 # INITIALIZATION
 
-sub afterData { 'run' }
+use constant endAuth => 'run';
 
 sub init { 1 }
 

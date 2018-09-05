@@ -53,9 +53,9 @@ sub check {
                 'authenticate',
                 @{ $self->p->betweenAuthAndData },
                 qw( setAuthSessionInfo setSessionInfo setMacros setGroups
-                  setPersistentSessionInfo setLocalGroups store secondFactor
-                  storeHistory),
-                @{ $self->p->afterData }
+                  setPersistentSessionInfo setLocalGroups store secondFactor),
+                @{ $self->p->afterData }, 'storeHistory',
+                @{ $self->p->endAuth }
             ]
         );
         if ( $res = $self->p->process( $req, ) ) {

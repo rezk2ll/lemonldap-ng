@@ -133,7 +133,6 @@ sub checkForNotifications {
     return 0 unless $i;
 
     # Returns HTML fragment
-    $req->id( $self->p->HANDLER->tsv->{cipher}->encrypt( $req->id ) );
     return $form;
 }
 
@@ -232,10 +231,10 @@ sub getNotifBack {
 
             # One pending notification has been found and not accepted,
             # restart process to display pending notifications
-            # TODO: is it a good idea to launch all 'afterData' subs ?
+            # TODO: is it a good idea to launch all 'endAuth' subs ?
             $self->logger->debug(
                 'Pending notification has been found and not accepted');
-            return $self->p->do( $req, $self->p->afterData );
+            return $self->p->do( $req, $self->p->endAuth );
         }
 
         # All pending notifications have been accepted, restore cookies and
