@@ -1,8 +1,9 @@
+use lib 'inc';
 use Test::More;
 use strict;
 use IO::String;
 use LWP::UserAgent;
-use inc::LWP::Protocol::PSGI;
+use LWP::Protocol::PSGI;
 
 BEGIN {
     require 't/test-lib.pm';
