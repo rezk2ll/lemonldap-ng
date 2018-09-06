@@ -4,13 +4,13 @@
 "click2Register":"انقر هنا لتأكيد تسجيل حسابك",
 "click2Reset":"انقر هنا لإعادة تعيين كلمة المرور",
 "hello":"مرحبا ",
-"mailConfirmSubject": "تأكيد إعادة تعيين كلمة المرور[LemonLDAP::NG]",
-"mailSubject": "كلمة المرور الجديدة [LemonLDAP::NG]",
+"mailConfirmSubject":"تأكيد إعادة تعيين كلمة المرور[LemonLDAP::NG]",
+"mailSubject":"كلمة المرور الجديدة [LemonLDAP::NG]",
 "newPwdIs":"كلمة المرور الجديدة هي",
 "pwdChanged":"تم تغيير كلمة المرور الخاصة بك",
 "pwdIs":"كلمة المرور الخاصة بك هي",
-"registerConfirmSubject": "تأكيد تسجيل الحساب[LemonLDAP::NG] ",
-"registerDoneSubject": "حسابك الجديد[LemonLDAP::NG]",
+"registerConfirmSubject":"تأكيد تسجيل الحساب[LemonLDAP::NG] ",
+"registerDoneSubject":"حسابك الجديد[LemonLDAP::NG]",
 "requestIssuedFromIP":"الطلب قد أرسل من عنوان الآي بي",
 "yourLoginIs":"تسجيل الدخول الخاص بك هو"
 }
