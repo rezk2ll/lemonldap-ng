@@ -1,6 +1,58 @@
 # Base library for portal tests
 package main;
 
+=pod
+
+=encoding utf8
+
+=head1 NAME
+
+test-lib.pm - Test framework for LLNG portal
+
+=head1 SYNOPSIS
+
+  use Test::More;
+  use strict;
+  use IO::String;
+  
+  require 't/test-lib.pm';
+  
+  my $res;
+  
+  my $client = LLNG::Manager::Test->new( {
+      ini => {
+          logLevel => 'error',
+          #...
+      }
+    }
+  );
+  
+  ok(
+      $res = $client->_post(
+          '/',
+          IO::String->new('user=dwho&password=dwho'),
+          length => 23
+      ),
+      'Auth query'
+  );
+  count(1);
+  expectOK($res);
+  my $id = expectCookie($res);
+  
+  clean_sessions();
+  done_testing( count() );
+
+=head1 DESCRIPTION
+
+This test library permits to simulate browser navigation.
+
+=head2 Functions
+
+In these functions, C<$res> is the result of a C<LLNG::Manager::Test::_get()> or
+C<LLNG::Manager::Test::_post()> call I<(see below)>.
+
+=cut
+
 use strict;
 use Data::Dumper;
 use LWP::UserAgent;
@@ -20,17 +72,38 @@ $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Useperl  = 1;
 my $ini;
 
+=head4 count($inc)
+
+Returns number of tests done. Increment test number if an argument is given
+
+=cut
+
 sub count {
     my $c = shift;
     $count += $c if ($c);
     return $count;
 }
 
+=head4 explain( $result, $expected_result )
+
+Used to display error if test fails:
+
+  ok( $res->[0] == 302, 'Get redirection' ) or
+    explain( $res->[0], 302 );
+
+=cut
+
 sub main::explain {
     my ( $get, $ref ) = @_;
     $get = Dumper($get) if ( ref $get );
     diag("Expect $ref, get $get\n");
 }
+
+=head4 clean_sessions()
+
+Clean sessions created during tests
+
+=cut
 
 sub clean_sessions {
     opendir D, 't/sessions' or die $!;
@@ -60,6 +133,23 @@ sub getCache {
     );
 }
 
+=head4 expectRedirection( $res, $location )
+
+Verify that request result is a redirection to $location. $location can be:
+
+=over
+
+=item a string: location must match exactly
+
+=item a regexp: location must match this regexp. In this case, the list of
+matching strings are returned. Example:
+
+  my( $uri, $query ) = expectRedirection( $res, qr#http://host(/[^\?]*)?(.*)$# );
+
+=back
+
+=cut
+
 sub expectRedirection {
     my ( $res, $location ) = @_;
     ok( $res->[0] == 302, ' Get redirection' )
@@ -80,6 +170,14 @@ sub expectRedirection {
     }
 }
 
+=head4 expectAutoPost(@args)
+
+Same behaviour as C<expectForm()> but verify also that form method is post.
+
+TODO: verify javascript
+
+=cut
+
 sub expectAutoPost {
     my @r      = expectForm(@_);
     my $method = pop @r;
@@ -87,6 +185,29 @@ sub expectAutoPost {
     count(1);
     return @r;
 }
+
+=head4 expectForm( $res, $hostRe, $uriRe, @requiredFields )
+
+Verify form in HTML result and return ( $host, $uri, $query, $method ):
+
+=over
+
+=item verify that a GET/POST form exists
+
+=item if a $hostRe regexp is given, verify that form target matches and
+populates $host. Skipped if $hostRe eq "#"
+
+=item if a $uriRe regexp is given, verify that form target matches and
+populates $uri
+
+=item if @requiredFields exists, verify that each element is an input name
+
+=item build form-url-encoded string looking at parameters/values and store it
+in $query
+
+=back
+
+=cut
 
 sub expectForm {
     my ( $res, $hostRe, $uriRe, @requiredFields ) = @_;
@@ -143,6 +264,12 @@ m@<form.+?action="(?:(?:http://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
     }
 }
 
+=head4 expectAuthenticatedAs($user)
+
+Verify that result has a C<Lm-Remote-User> header and value is $user
+
+=cut
+
 sub expectAuthenticatedAs {
     my ( $res, $user ) = @_;
     ok( getHeader( $res, 'Lm-Remote-User' ) eq $user,
@@ -151,17 +278,37 @@ sub expectAuthenticatedAs {
     count(1);
 }
 
+=head4 expectOK($res)
+
+Verify that returned code is 200
+
+=cut
+
 sub expectOK {
     my ($res) = @_;
     ok( $res->[0] == 200, ' HTTP code is 200' ) or explain( $res, 200 );
     count(1);
 }
 
+=head4 expectBadRequest($res)
+
+Verify that returned code is 400. Note that it works only for Ajax request
+(see below).
+
+=cut
+
 sub expectBadRequest {
     my ($res) = @_;
     ok( $res->[0] == 400, ' HTTP code is 400' ) or explain( $res->[0], 400 );
     count(1);
 }
+
+=head4 expectReject( $res, $code )
+
+Verify that returned code is 401 and JSON result contains C<error:"$code">.
+Note that it works only for Ajax request (see below).
+
+=cut
 
 sub expectReject {
     my ( $res, $code ) = @_;
@@ -179,6 +326,13 @@ sub expectReject {
     count(3);
 }
 
+=head4 expectCookie( $res, $cookieName )
+
+Check if a C<Set-Cookie> exists and set a cookie named $cookieName. Return
+its value.
+
+=cut
+
 sub expectCookie {
     my ( $res, $cookieName ) = @_;
     $cookieName ||= 'lemonldap';
@@ -191,6 +345,12 @@ sub expectCookie {
     count(1);
     return $id;
 }
+
+=head4 exceptCspFormOK( $res, $host )
+
+Verify that C<Content-Security-Policy> header allows to connect to $host.
+
+=cut
 
 sub exceptCspFormOK {
     my ( $res, $host ) = @_;
@@ -213,6 +373,12 @@ sub exceptCspFormOK {
     count(1);
 }
 
+=head4 getCookies($res)
+
+Returns an hash ref with names => values of cookies set by server.
+
+=cut
+
 sub getCookies {
     my ($resp) = @_;
     my @hdrs   = @{ $resp->[1] };
@@ -228,6 +394,12 @@ sub getCookies {
     return $res;
 }
 
+=head4 getHeader( $res, $hname )
+
+Returns value of first header named $hname in $res response.
+
+=cut
+
 sub getHeader {
     my ( $resp, $hname ) = @_;
     my @hdrs = @{ $resp->[1] };
@@ -241,15 +413,31 @@ sub getHeader {
     return undef;
 }
 
+=head4 getRedirection($res)
+
+Returns value of C<Location> header.
+
+=cut
+
 sub getRedirection {
     my ($resp) = @_;
     return getHeader( $resp, 'Location' );
 }
 
+=head4 getUser($res)
+
+Returns value of C<Lm-Remote-User> header.
+
+=cut
+
 sub getUser {
     my ($resp) = @_;
     return getHeader( $resp, 'Lm-Remote-User' );
 }
+
+=head2 LLNG::Manager::Test Class
+
+=cut
 
 package LLNG::Manager::Test;
 
@@ -278,14 +466,34 @@ our $defaultIni = {
     https         => 0,
 };
 
+=head3 Accessors
+
+=over
+
+=item app: built application
+
+=cut
+
 has app => (
     is  => 'rw',
     isa => 'CodeRef',
 );
 
+=item class: class to test (default Lemonldap::NG::Portal::Main)
+
+=cut
+
 has class => ( is => 'ro', default => 'Lemonldap::NG::Portal::Main' );
 
+=item p: portal object
+
+=cut
+
 has p => ( is => 'rw' );
+
+=item ini: initialization parameters ($defaultIni values + given parameters)
+
+=cut
 
 has ini => (
     is      => 'rw',
@@ -317,6 +525,26 @@ has ini => (
     }
 );
 
+=back
+
+=head3 Methods
+
+=head4 logout($id)
+
+Launch a C</?logout=1> request an test:
+
+=over
+
+=item if response is 200
+
+=item if cookie 'lemonldap' and 'lemonldappdata' have no value
+
+=item if a GET request with previous cookie value I<($i)> is rejected
+
+=back
+
+=cut
+
 sub logout {
     my ( $self, $id ) = @_;
     my $res;
@@ -345,6 +573,34 @@ sub logout {
     main::count(6);
 
 }
+
+=head4 _get( $path, %args )
+
+Simulates a GET requests to $path. Accepted arguments:
+
+=over
+
+=item accept: accepted content, default to Ajax request. Use 'text/html'
+to test content I<(to launch a C<expectForm()> for example)>.
+
+=item cookie: full cookie string
+
+=item custom: additional headers (hash ref only)
+
+=item ip: remote address. Default to 127.0.0.1
+
+=item method: default to GET. Only GET/DELETE values are acceptable
+(use C<_post()> if you want to launch a POST/PUT request)
+
+=item query: query string
+
+=item referer
+
+=item remote_user: REMOTE_USER header value
+
+=back
+
+=cut
 
 sub _get {
     my ( $self, $path, %args ) = @_;
@@ -380,6 +636,22 @@ sub _get {
     );
     return $res;
 }
+
+=head4 _post( $path, $body, %args )
+
+Same as C<_get> except that a body is required. $body must be a file handle.
+Example with IO::String:
+
+  ok( 
+      $res = $client->_post(
+          '/',
+          IO::String->new('user=dwho&password=dwho'),
+          length => 23
+      ),
+      'Auth query'
+  );
+
+=cut
 
 sub _post {
     my ( $self, $path, $body, %args ) = @_;
@@ -421,11 +693,23 @@ sub _post {
     return $res;
 }
 
+=head4 _delete( $path, %args )
+
+Call C<_get()> with method set to DELETE.
+
+=cut
+
 sub _delete {
     my ( $self, $path, %args ) = @_;
     $args{method} = 'DELETE';
     return $self->_get( $path, %args );
 }
+
+=head4 _put( $path, $body, %args )
+
+Call C<_post()> with method set to PUT
+
+=cut
 
 sub _put {
     my ( $self, $path, $body, %args ) = @_;
