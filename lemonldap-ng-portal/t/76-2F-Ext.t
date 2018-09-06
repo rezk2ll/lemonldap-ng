@@ -29,7 +29,7 @@ ok(
     ),
     'Auth query'
 );
-my ( $host, $url, $query ) = expectForm( $res, undef, '/ext2fcheck', 'token' );
+my ( $host, $url, $query ) = expectForm( $res, undef, '/ext2fcheck', 'token', 'code' );
 
 ok(
     $res->[2]->[0] =~
