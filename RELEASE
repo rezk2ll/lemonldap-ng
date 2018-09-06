@@ -20,6 +20,9 @@ $ make clean && make cpan
 Before release
 --------------
 
+- Update languages (needs a Transifex token)
+  $ ./scripts/download_translations
+
 - Update documentation:
 
   $ ./scripts/parameters-for-wiki.pl >/tmp/prmlist.txt
