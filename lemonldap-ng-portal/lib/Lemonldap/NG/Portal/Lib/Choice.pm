@@ -197,17 +197,17 @@ sub _buildAuthLoop {
                     "Display type $displayType for module $auth");
                 $optionsLoop->{$displayType} = 1;
 
-           # If displayType is logo, check if key.png is available
-           # TODO:
-           #if (
-           #    -e $self->getApacheHtdocsPath . "/skins/common/" . $_ . ".png" )
-           #{
-           #    $optionsLoop->{logoFile} = $_ . ".png";
-           #}
-           #else {
-                $optionsLoop->{logoFile} = $auth . ".png";
-
-                #}
+                # If displayType is logo, check if key.png is available
+                if (  -e $self->conf->{templateDir}
+                    . "/../htdocs/static/common/modules/"
+                    . $_
+                    . ".png" )
+                {
+                    $optionsLoop->{logoFile} = $_ . ".png";
+                }
+                else {
+                    $optionsLoop->{logoFile} = $auth . ".png";
+                }
 
                 # Register item in loop
                 push @authLoop, $optionsLoop;
