@@ -7,7 +7,7 @@ use LWP::Protocol::PSGI;
 use Plack::Request;
 
 require 't/test-lib.pm';
-my $maintests = 4;
+my $maintests = 6;
 
 LWP::Protocol::PSGI->register(
     sub {
@@ -40,6 +40,9 @@ my $client = LLNG::Manager::Test->new(
             rest2fInitArgs   => { name => 'uid' },
             rest2fVerifyUrl  => 'http://auth.example.com/vrfy',
             rest2fVerifyArgs => { code => 'code' },
+                        loginHistoryEnabled => 1,
+            authentication      => 'Demo',
+            userDB              => 'Same',
         }
     }
 );
@@ -50,14 +53,14 @@ my $res;
 ok(
     $res = $client->_post(
         '/',
-        IO::String->new('user=dwho&password=dwho'),
-        length => 23,
+        IO::String->new('user=dwho&password=dwho&checkLogins=1'),
+        length => 37,
         accept => 'text/html',
     ),
     'Auth query'
 );
 my ( $host, $url, $query ) =
-  expectForm( $res, undef, '/rest2fcheck', 'token', 'code' );
+  expectForm( $res, undef, '/rest2fcheck', 'token', 'code', 'checkLogins' );
 $query =~ s/code=/code=1234/;
 
 ok(
@@ -65,10 +68,18 @@ ok(
         '/rest2fcheck',
         IO::String->new($query),
         length => length($query),
+        accept => 'text/html',
     ),
     'Post code'
 );
 my $id = expectCookie($res);
+
+
+ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
+      or print STDERR Dumper( $res->[2]->[0] );
+my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
+ok( @c == 1, 'One entry found' );
+
 $client->logout($id);
 
 #print STDERR Dumper($res);

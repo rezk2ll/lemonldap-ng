@@ -4,7 +4,9 @@ use IO::String;
 use Data::Dumper;
 
 require 't/test-lib.pm';
-my $maintests = 3;
+my $maintests = 6;
+
+use_ok('Lemonldap::NG::Common::FormEncode');
 
 my $client = LLNG::Manager::Test->new(
     {
@@ -13,9 +15,13 @@ my $client = LLNG::Manager::Test->new(
             ext2fActivation      => 1,
             ext2FSendCommand     => 't/sendOTP.pl -uid $uid',
             ext2FValidateCommand => 't/vrfyOTP.pl -uid $uid -code $code',
+            loginHistoryEnabled  => 1,
+            authentication       => 'Demo',
+            userDB               => 'Same',
         }
     }
 );
+
 my $res;
 
 # Try to authenticate
@@ -23,13 +29,15 @@ my $res;
 ok(
     $res = $client->_post(
         '/',
-        IO::String->new('user=dwho&password=dwho'),
-        length => 23,
+        IO::String->new('user=dwho&password=dwho&checkLogins=1'),
+        length => 37,
         accept => 'text/html',
     ),
     'Auth query'
 );
-my ( $host, $url, $query ) = expectForm( $res, undef, '/ext2fcheck', 'token', 'code' );
+
+my ( $host, $url, $query ) =
+  expectForm( $res, undef, '/ext2fcheck', 'token', 'code', 'checkLogins' );
 
 ok(
     $res->[2]->[0] =~
@@ -43,10 +51,18 @@ ok(
         '/ext2fcheck',
         IO::String->new($query),
         length => length($query),
+        accept => 'text/html',
     ),
     'Post code'
 );
+
 my $id = expectCookie($res);
+
+ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
+ok( @c == 1, 'One entry found' );
+
 $client->logout($id);
 
 count($maintests);
