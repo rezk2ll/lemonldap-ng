@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Main::SecondFactor;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_SENDRESPONSE
   PE_OK
   PE_NOTOKEN
   PE_TOKENEXPIRED
@@ -95,7 +96,8 @@ sub _verify {
     if ( my $l = $self->conf->{ $self->prefix . '2fAuthnLevel' } ) {
         $self->p->updateSession( $req, { authenticationLevel => $l } );
     }
-    return $self->p->do( $req, [ @{ $self->p->endAuth }, sub { PE_OK } ] );
+    $req->authResult( PE_SENDRESPONSE );
+    return $self->p->do( $req, [ $self->p->validSession, @{ $self->p->endAuth }, sub { PE_OK } ] );
 }
 
 1;
