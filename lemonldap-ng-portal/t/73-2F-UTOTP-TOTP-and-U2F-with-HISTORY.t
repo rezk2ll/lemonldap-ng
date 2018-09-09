@@ -261,7 +261,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
       or explain( $res->[2]->[0], 'trspan="noHistory"' );
     my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
-    ok( @c == 1, 'One entry found' );
+    ok( @c == 3, 'Three entries found' );
     $client->logout($id);
 
     # Try to sign-in with U2F
@@ -321,7 +321,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
           or explain( $res->[2]->[0], 'trspan="noHistory"' );
         my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
-        ok( @c == 1, 'One entry found' );
+        ok( @c == 4, 'Four entries found' );
         $client->logout($id);
     }
     else {
