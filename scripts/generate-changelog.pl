@@ -45,3 +45,5 @@ while(<IN>) {
 }
 
 unlink 'tmp.dch';
+
+print STDERR "./changelog updated\n";
