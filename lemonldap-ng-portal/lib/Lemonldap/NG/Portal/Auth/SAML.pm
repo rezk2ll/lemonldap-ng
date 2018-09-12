@@ -877,7 +877,8 @@ sub extractFormInfo {
               . build_urlencoded(
                 isPassive => $self->conf->{samlDiscoveryProtocolIsPassive}
                 ? "true"
-                : "false" );
+                : "false"
+              );
         }
 
         $self->logger->debug("Redirect user to $disco_url");
@@ -1469,6 +1470,9 @@ sub getIDP {
             }
         }
         $self->logger->debug('No IDP found') unless ($idp);
+    }
+    else {
+        $self->logger->debug("IDP $idp found from idp URL Parameter");
     }
 
     # Case 6: auto select IDP if only one IDP defined

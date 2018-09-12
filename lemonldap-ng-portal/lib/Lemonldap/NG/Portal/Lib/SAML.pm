@@ -115,12 +115,12 @@ sub init {
 
     # Check for Lasso errors/messages (see BEGIN)
     unless (LASSO) {
-        $self->error("Module Lasso not loaded (see below)");
+        $self->logger->error("Module Lasso not loaded (see below)");
         return 0;
     }
 
     if (BADLASSO) {
-        $self->error('Lasso version >= 2.3.0 required');
+        $self->logger->error('Lasso version >= 2.3.0 required');
         return 0;
     }
 
@@ -164,7 +164,8 @@ sub loadService {
     unless ($self->conf->{samlServicePublicKeySig}
         and $self->conf->{samlServicePrivateKeySig} )
     {
-        $self->error('SAML private and public key not found in configuration');
+        $self->logger->error(
+            'SAML private and public key not found in configuration');
         return 0;
     }
 
@@ -209,7 +210,7 @@ sub loadService {
 
     # Log
     unless ($server) {
-        $self->error('Unable to create Lasso server');
+        $self->logger->error('Unable to create Lasso server');
         return 0;
     }
     $self->logger->debug("Service created");
@@ -243,7 +244,7 @@ sub loadIDPs {
 
         # Check metadata format
         if ( ref $idp_metadata eq "HASH" ) {
-            $self->error(
+            $self->logger->error(
 "Metadata for IDP $_ is in old format. Please reload them from Manager"
             );
             return 0;
@@ -257,7 +258,7 @@ sub loadIDPs {
         my $result = $self->addIDP( $self->lassoServer, $idp_metadata );
 
         unless ($result) {
-            $self->error("Fail to use IDP $_ Metadata");
+            $self->logger->error("Fail to use IDP $_ Metadata");
             return 0;
         }
 
@@ -281,7 +282,7 @@ sub loadIDPs {
             )
           )
         {
-            $self->error(
+            $self->logger->error(
                 "Unable to set encryption mode $encryption_mode on IDP $_");
             return 0;
         }
@@ -291,7 +292,7 @@ sub loadIDPs {
         if ( length $cond ) {
             $cond = $self->p->HANDLER->substitute($cond);
             unless ( $cond = $self->p->HANDLER->buildSub($cond) ) {
-                $self->error( 'SAML IdP rule error: '
+                $self->logger->error( 'SAML IdP rule error: '
                       . $self->p->HANDLER->tsv->{jail}->error );
                 return 0;
             }
@@ -328,7 +329,7 @@ sub loadSPs {
 
         # Check metadata format
         if ( ref $sp_metadata eq "HASH" ) {
-            $self->error(
+            $self->logger->error(
 "Metadata for SP $_ is in old format. Please reload them from Manager"
             );
             return 0;
@@ -342,7 +343,7 @@ sub loadSPs {
         my $result = $self->addSP( $self->lassoServer, $sp_metadata );
 
         unless ($result) {
-            $self->error("Fail to use SP $_ Metadata");
+            $self->logger->error("Fail to use SP $_ Metadata");
             return 0;
         }
 
@@ -365,7 +366,7 @@ sub loadSPs {
             )
           )
         {
-            $self->error(
+            $self->logger->error(
                 "Unable to set encryption mode $encryption_mode on SP $_");
             return 0;
         }
@@ -375,7 +376,7 @@ sub loadSPs {
         if ( length $rule ) {
             $rule = $self->p->HANDLER->substitute($rule);
             unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-                $self->error( 'SAML SP rule error: '
+                $self->logger->error( 'SAML SP rule error: '
                       . $self->p->HANDLER->tsv->{jail}->error );
                 return 0;
             }
