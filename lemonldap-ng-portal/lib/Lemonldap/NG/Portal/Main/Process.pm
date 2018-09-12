@@ -99,12 +99,11 @@ sub controlUrl {
         );
 
         # XSS attack
-        if (
-            $self->checkXSSAttack(
+        if ($self->checkXSSAttack(
                 $req->param('logout') ? 'HTTP Referer' : 'urldc',
                 $req->{urldc}
             )
-          )
+            )
         {
             delete $req->{urldc};
             return PE_BADURL;
@@ -113,9 +112,9 @@ sub controlUrl {
         # Unprotected hosts
         if ( $tmp and !$self->isTrustedUrl($tmp) ) {
             $self->userLogger->error(
-                    "URL contains a non protected host (param: "
-                  . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
-                  . " | value: $tmp)" );
+                      "URL contains a non protected host (param: "
+                    . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
+                    . " | value: $tmp)" );
             delete $req->{urldc};
             return PE_BADURL;
         }
@@ -166,7 +165,8 @@ sub deleteSession {
 
     # TODO
     # Collect logout services and build hidden iFrames
-    if ( $req->data->{logoutServices} and %{ $req->data->{logoutServices} } ) {
+    if ( $req->data->{logoutServices} and %{ $req->data->{logoutServices} } )
+    {
 
         $self->logger->debug("Create iFrames to forward logout to services");
 
@@ -178,24 +178,25 @@ sub deleteSession {
 
         foreach ( keys %{ $req->data->{logoutServices} } ) {
             my $logoutServiceName = $_;
-            my $logoutServiceUrl =
-              $req->data->{logoutServices}->{$logoutServiceName};
+            my $logoutServiceUrl
+                = $req->data->{logoutServices}->{$logoutServiceName};
 
             $self->logger->debug(
                 "Find logout service $logoutServiceName ($logoutServiceUrl)");
 
-            my $iframe =
-                qq'<iframe src="$logoutServiceUrl" alt="$logoutServiceName"'
-              . ' marginwidth="0" marginheight="0" scrolling="no"'
-              . ' class="hiddenFrame" width="0" height="0"'
-              . ' frameborder="0"></iframe>';
+            my $iframe
+                = qq'<iframe src="$logoutServiceUrl" alt="$logoutServiceName"'
+                . ' marginwidth="0" marginheight="0" scrolling="no"'
+                . ' class="hiddenFrame" width="0" height="0"'
+                . ' frameborder="0"></iframe>';
 
             $req->info($iframe);
         }
 
         # Redirect on logout page if no other target defined
         if ( !$req->urldc and !$req->postUrl ) {
-            $self->logger->debug('No other target defined, redirect on logout');
+            $self->logger->debug(
+                'No other target defined, redirect on logout');
             $req->urldc( $req->script_name . "?logout=1" );
         }
     }
@@ -283,10 +284,15 @@ sub getUser {
 sub authenticate {
     my ( $self, $req ) = @_;
     my $ret = $req->authResult( $self->_authentication->authenticate($req) );
-
+    $self->logger->debug(" -> authResult = $ret");
     if ( $ret == PE_OK ) {
         $req->{sessionInfo}->{_lastAuthnUTime} = time();
+        return $ret;
     }
+    $self->setSessionInfo($req);
+    $self->setPersistentSessionInfo($req);
+    $self->setMacros($req);
+    $self->storeHistory($req);
 
     return $ret;
 }
@@ -300,7 +306,8 @@ sub setAuthSessionInfo {
     if ( $ret == PE_OK
         and not( defined $req->sessionInfo->{authenticationLevel} ) )
     {
-        $self->logger->error('Authentication level is not set by auth module');
+        $self->logger->error(
+            'Authentication level is not set by auth module');
     }
     return $ret;
 }
@@ -320,15 +327,15 @@ sub setSessionInfo {
 
     # Date and time
     if ( $self->conf->{updateSession} ) {
-        $req->{sessionInfo}->{_updateTime} =
-          strftime( "%Y%m%d%H%M%S", localtime() );
+        $req->{sessionInfo}->{_updateTime}
+            = strftime( "%Y%m%d%H%M%S", localtime() );
     }
     else {
         $req->{sessionInfo}->{_utime} ||= time();
-        $req->{sessionInfo}->{_startTime} =
-          strftime( "%Y%m%d%H%M%S", localtime() );
+        $req->{sessionInfo}->{_startTime}
+            = strftime( "%Y%m%d%H%M%S", localtime() );
         $req->{sessionInfo}->{_lastSeen} = time()
-          if $self->conf->{timeoutActivity};
+            if $self->conf->{timeoutActivity};
     }
 
     # Store URL origin in session
@@ -346,8 +353,8 @@ sub setSessionInfo {
 sub setMacros {
     my ( $self, $req ) = @_;
     foreach ( sort keys %{ $self->_macros } ) {
-        $req->{sessionInfo}->{$_} =
-          $self->_macros->{$_}->( $req, $req->sessionInfo );
+        $req->{sessionInfo}->{$_}
+            = $self->_macros->{$_}->( $req, $req->sessionInfo );
     }
     PE_OK;
 }
@@ -387,16 +394,16 @@ sub setLocalGroups {
     my ( $self, $req ) = @_;
     foreach ( sort keys %{ $self->_groups } ) {
         if ( $self->_groups->{$_}->( $req, $req->sessionInfo ) ) {
-            $req->{sessionInfo}->{groups} .=
-              $self->conf->{multiValuesSeparator} . $_;
+            $req->{sessionInfo}->{groups}
+                .= $self->conf->{multiValuesSeparator} . $_;
             $req->{sessionInfo}->{hGroups}->{$_}->{name} = $_;
         }
     }
 
     # Clear values separator at the beginning
     if ( $req->{sessionInfo}->{groups} ) {
-        $req->{sessionInfo}->{groups} =~
-          s/^$self->{conf}->{multiValuesSeparator}//o;
+        $req->{sessionInfo}->{groups}
+            =~ s/^$self->{conf}->{multiValuesSeparator}//o;
     }
     PE_OK;
 }
@@ -420,8 +427,8 @@ sub store {
 
     # Compute unsecure cookie value if needed
     if ( $self->conf->{securedCookie} == 3 ) {
-        $req->{sessionInfo}->{_httpSession} =
-          $self->conf->{cipher}->encryptHex( $req->{id}, "http" );
+        $req->{sessionInfo}->{_httpSession}
+            = $self->conf->{cipher}->encryptHex( $req->{id}, "http" );
     }
 
     # Fill session

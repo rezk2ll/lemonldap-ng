@@ -13,11 +13,11 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_ERROR
-  PE_NOTOKEN
-  PE_OK
-  PE_SENDRESPONSE
-  PE_TOKENEXPIRED
+    PE_ERROR
+    PE_NOTOKEN
+    PE_OK
+    PE_SENDRESPONSE
+    PE_TOKENEXPIRED
 );
 
 our $VERSION = '2.0.0';
@@ -35,8 +35,8 @@ has sfReq => ( is => 'rw' );
 has ott => (
     is      => 'rw',
     default => sub {
-        my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        my $ott = $_[0]->{p}
+            ->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
         $ott->timeout( $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
@@ -49,8 +49,10 @@ sub init {
     for my $i ( 0 .. 1 ) {
         foreach (
             split /,\s*/,
-            $self->conf->{ $i ? 'available2FSelfRegistration' : 'available2F' }
-          )
+            $self->conf->{ $i
+                ? 'available2FSelfRegistration'
+                : 'available2F' }
+            )
         {
             my $prefix = lc($_);
             $prefix =~ s/2f$//i;
@@ -62,9 +64,10 @@ sub init {
             # Unless $rule, skip loading
             if ( $self->conf->{$ap} ) {
                 $self->logger->debug("Trying to load $_ 2F");
-                my $m =
-                  $self->p->loadPlugin( $i ? "::2F::Register::$_" : "::2F::$_" )
-                  or return 0;
+                my $m
+                    = $self->p->loadPlugin(
+                    $i ? "::2F::Register::$_" : "::2F::$_" )
+                    or return 0;
 
                 # Rule and prefix may be modified by 2F module, reread them
                 my $rule = $self->conf->{$ap};
@@ -74,13 +77,13 @@ sub init {
                 $rule = $self->p->HANDLER->substitute($rule);
                 unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
                     $self->error( 'External 2F rule error: '
-                          . $self->p->HANDLER->tsv->{jail}->error );
+                            . $self->p->HANDLER->tsv->{jail}->error );
                     return 0;
                 }
 
                 # Store module
                 push @{ $self->{ $i ? 'sfRModules' : 'sfModules' } },
-                  { p => $prefix, m => $m, r => $rule };
+                    { p => $prefix, m => $m, r => $rule };
             }
             else {
                 $self->logger->debug(' -> not enabled');
@@ -94,10 +97,10 @@ sub init {
                 $self->p->HANDLER->substitute( $self->conf->{sfRequired} )
             )
         )
-      )
+        )
     {
         $self->error( 'Error in sfRequired rule'
-              . $self->p->HANDLER->tsv->{jail}->error );
+                . $self->p->HANDLER->tsv->{jail}->error );
         return 0;
     }
 
@@ -158,14 +161,14 @@ sub run {
         if ( $self->sfReq->( $req, $req->sessionInfo ) ) {
             $self->logger->debug("2F is required...");
             $self->logger->debug(" -> Register 2F");
-            $req->pdata->{sfRegToken} =
-              $self->ott->createToken( $req->sessionInfo );
+            $req->pdata->{sfRegToken}
+                = $self->ott->createToken( $req->sessionInfo );
             $self->logger->debug("Just one 2F is enabled");
             $self->logger->debug(" -> Redirect to /2fregisters/");
             $req->response(
-                [
-                    302,
-                    [ Location => $self->conf->{portal} . '/2fregisters/' ], []
+                [   302,
+                    [ Location => $self->conf->{portal} . '/2fregisters/' ],
+                    []
                 ]
             );
             return PE_SENDRESPONSE;
@@ -176,11 +179,12 @@ sub run {
     }
 
     $self->userLogger->info( 'Second factor required for '
-          . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+            . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
     # Store user data in a token
     $req->sessionInfo->{_2fRealSession} = $req->id;
     $req->sessionInfo->{_2fUrldc}       = $req->urldc;
+    $req->sessionInfo->{_2fUtime}       = $req->{sessionInfo}->{_utime};
     my $token = $self->ott->createToken( $req->sessionInfo );
     delete $req->{authResult};
 
@@ -197,9 +201,10 @@ sub run {
         $req,
         '2fchoice',
         params => {
-            SKIN    => $self->conf->{portalSkin},
-            TOKEN   => $token,
-            MODULES => [ map { { CODE => $_->prefix, LOGO => $_->logo } } @am ],
+            SKIN  => $self->conf->{portalSkin},
+            TOKEN => $token,
+            MODULES =>
+                [ map { { CODE => $_->prefix, LOGO => $_->logo } } @am ],
             CHECKLOGINS => $checkLogins
         }
     );
@@ -225,15 +230,16 @@ sub _choice {
 
     # Restore session
     unless ( $token = $req->param('token') ) {
-        $self->userLogger->error( $self->prefix . ' 2F access without token' );
+        $self->userLogger->error(
+            $self->prefix . ' 2F access without token' );
         $req->mustRedirect(1);
-        return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
+        return $self->p->do( $req, [ sub {PE_NOTOKEN} ] );
     }
 
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
         $self->userLogger->info('Token expired');
-        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+        return $self->p->do( $req, [ sub {PE_TOKENEXPIRED} ] );
     }
 
     $req->sessionInfo($session);
@@ -248,8 +254,7 @@ sub _choice {
             $req->authResult($res);
             return $self->p->do(
                 $req,
-                [
-                    sub { $res }, 'controlUrl',
+                [   sub {$res}, 'controlUrl',
                     'buildCookie', @{ $self->p->endAuth },
                 ]
             );
@@ -264,7 +269,8 @@ sub _redirect {
     my $arg = $req->env->{QUERY_STRING};
     $self->logger->debug('Call sfEngine _redirect method');
     return [
-        302, [ Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' ) ], []
+        302, [ Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' ) ],
+        []
     ];
 }
 
@@ -294,25 +300,26 @@ sub _displayRegister {
             'Looking if ' . $m->{m}->prefix . '2F register is available' );
         if ( $m->{r}->( $req, $req->userData ) ) {
             push @am,
-              {
+                {
                 CODE => $m->{m}->prefix,
                 URL  => '/2fregisters/' . $m->{m}->prefix,
                 LOGO => $m->{m}->logo,
-              };
+                };
         }
     }
     if ( @am == 1
-        and not( $req->userData->{_2fDevices} or $req->data->{sfRegRequired} ) )
+        and
+        not( $req->userData->{_2fDevices} or $req->data->{sfRegRequired} ) )
     {
         return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ],
             [] ];
     }
 
-    my $_2fDevices =
-      $req->userData->{_2fDevices}
-      ? eval { from_json( $req->userData->{_2fDevices},
-            { allow_nonref => 1 } ); }
-      : undef;
+    my $_2fDevices = $req->userData->{_2fDevices}
+        ? eval {
+        from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
+        }
+        : undef;
 
     unless ($_2fDevices) {
         $self->logger->debug("No 2F Device found");
@@ -358,11 +365,11 @@ sub register {
             $self->logger->debug(' -> OK');
             my $name = $m->{m}->prefix;
             push @am,
-              {
+                {
                 name => $name,
                 logo => $m->{m}->logo,
                 url  => "/2fregisters/$name"
-              };
+                };
         }
     }
     return $self->p->sendJSONresponse( $req, \@am );
@@ -371,12 +378,12 @@ sub register {
 sub restoreSession {
     my ( $self, $req, @path ) = @_;
     my $token = $req->pdata->{sfRegToken}
-      or return [ 302, [ Location => $self->conf->{portal} ], [] ];
+        or return [ 302, [ Location => $self->conf->{portal} ], [] ];
     $req->userData( $self->ott->getToken( $token, 1 ) );
     $req->data->{sfRegRequired} = 1;
     return $req->method eq 'POST'
-      ? $self->register( $req, @path )
-      : $self->_displayRegister( $req, @path );
+        ? $self->register( $req, @path )
+        : $self->_displayRegister( $req, @path );
 }
 
 1;

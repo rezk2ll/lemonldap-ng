@@ -1,6 +1,5 @@
 package Lemonldap::NG::Portal::Main::SecondFactor;
 
-use Data::Dumper;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
@@ -88,7 +87,6 @@ sub _verify {
         $req->sessionInfo($session);
         $req->id( delete $req->sessionInfo->{_2fRealSession} );
         $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
-        $self->logger->debug("req badcredentials -> " . Dumper($req));
         $req->authResult(PE_BADCREDENTIALS);
         return $self->p->do( $req,
             [ $self->p->storeHistory($req), sub {$res} ] );
@@ -98,11 +96,13 @@ sub _verify {
     $req->sessionInfo($session);
     $req->id( delete $req->sessionInfo->{_2fRealSession} );
     $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
+    $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
     $self->p->rebuildCookies($req);
     $req->mustRedirect(1);
     $self->userLogger->notice( $self->prefix
             . '2F verification for '
             . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+
     if ( my $l = $self->conf->{ $self->prefix . '2fAuthnLevel' } ) {
         $self->p->updateSession( $req, { authenticationLevel => $l } );
     }
