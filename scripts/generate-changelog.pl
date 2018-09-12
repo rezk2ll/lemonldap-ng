@@ -5,6 +5,9 @@
 # This script downloads issues from gitlab.ow2.org and insert issues title in
 # "changelog" file in a new version entry, grouped using tags: Bug,
 # New feature, Improvement.
+#
+# Copyright: Xavier Guimard <x.guimard@free.fr>
+# See COPYING for license
 
 use LWP::UserAgent;
 use JSON;
