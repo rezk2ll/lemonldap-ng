@@ -87,6 +87,7 @@ sub _verify {
         $req->sessionInfo($session);
         $req->id( delete $req->sessionInfo->{_2fRealSession} );
         $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
+        $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
         $req->authResult(PE_BADCREDENTIALS);
         return $self->p->do( $req,
             [ $self->p->storeHistory($req), sub {$res} ] );
