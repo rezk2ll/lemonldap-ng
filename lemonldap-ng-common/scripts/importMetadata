@@ -270,7 +270,7 @@ foreach
                     my $nameformat =
                       $requestedAttribute->getAttribute("NameFormat");
                     $requestedAttributes->{$friendlyname} =
-                      "1;$name;$friendlyname;$nameformat";
+                      "1;$name;$nameformat;$friendlyname";
                     if ( $opts{verbose} ) {
                         print
 "Attribute $friendlyname ($name) requested by SP $entityID\n";
@@ -299,11 +299,11 @@ foreach
             if ( defined $spList->{$entityID} ) {
 
                 # Update metadata
-                $lastConf->{samlSPPMetaDataXML}->{ $spList->{$entityID} }
+                $lastConf->{samlSPMetaDataXML}->{ $spList->{$entityID} }
                   ->{samlSPMetaDataXML} = $partner_metadata;
 
                 # Update attributes
-                $lastConf->{samlSPPMetaDataExportedAttributes}
+                $lastConf->{samlSPMetaDataExportedAttributes}
                   ->{ $spList->{$entityID} } = $requestedAttributes;
 
                 if ( $opts{verbose} ) {
