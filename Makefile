@@ -606,6 +606,7 @@ install_bin:	install_conf_dir
 		${SRCCOMMONDIR}/scripts/rotateOidcKeys \
 		${SRCMANAGERDIR}/scripts/lmConfigEditor \
 		${SRCCOMMONDIR}/scripts/lemonldap-ng-cli \
+		${SRCCOMMONDIR}/scripts/importMetadata \
 			$(RBINDIR)
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RBINDIR)/lmConfigEditor $(RBINDIR)/lemonldap-ng-cli; \

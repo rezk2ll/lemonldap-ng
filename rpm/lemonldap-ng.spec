@@ -470,6 +470,7 @@ fi
 %dir %{lm_sharedir}/bin
 %{lm_sharedir}/bin/convertConfig
 %doc %{_mandir}/man1/convertConfig*
+%{lm_sharedir}/bin/importMetadata
 %{lm_sharedir}/bin/lmMigrateConfFiles2ini
 %{lm_sharedir}/bin/rotateOidcKeys
 %dir %{lm_examplesdir}

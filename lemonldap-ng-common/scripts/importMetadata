@@ -1,0 +1,327 @@
+#!/usr/bin/perl
+
+use strict;
+use Getopt::Long;
+use Lemonldap::NG::Common::Conf;
+use LWP::UserAgent;
+use MIME::Base64;
+use XML::LibXML;
+
+#==============================================================================
+# Get command line options
+#==============================================================================
+my %opts;
+my $result = GetOptions( \%opts, 'metadata|m=s', 'certificate|c=s', 'verbose|v',
+    'help|h', 'spconfprefix|s=s', 'idpconfprefix|i=s', );
+
+#==============================================================================
+# Help
+#==============================================================================
+if ( $opts{help} or !$opts{metadata} ) {
+    print STDERR
+"\nScript to import SAML metadata bundle file into LL::NG configuration\n\n";
+    print STDERR "Usage: $0 -m <metadata file URL>\n\n";
+    print STDERR "Options:\n";
+    print STDERR
+"\t-c (--certificate): URL of certificate, to check metadata document signature\n";
+    print STDERR
+      "\t-i (--idpconfprefix): Prefix used to set IDP configuration key\n";
+    print STDERR "\t-h (--help): print this message\n";
+    print STDERR "\t-m (--metadata): URL of metadata document\n";
+    print STDERR
+      "\t-s (--spconfprefix): Prefix used to set SP configuration key\n";
+    print STDERR "\t-v (--verbose): print debug messages\n";
+    exit 1;
+}
+
+#==============================================================================
+# Default values
+#==============================================================================
+
+my $spConfKeyPrefix  = $opts{spconfprefix} || "sp-";
+my $idpConfKeyPrefix = $opts{spconfprefix} || "idp-";
+
+my $spExportedAttributes = {};
+
+my $idpCounter =
+  { 'found' => 0, 'updated' => 0, 'created' => 0, rejected => 0 };
+my $spCounter = { 'found' => 0, 'updated' => 0, 'created' => 0, rejected => 0 };
+
+#==============================================================================
+# Main
+#==============================================================================
+my $conf     = Lemonldap::NG::Common::Conf->new();
+my $lastConf = $conf->getConf();
+
+if ( $opts{verbose} ) {
+    print "Read configuration " . $lastConf->{cfgNum} . "\n";
+}
+
+# IDP and SP lists
+my $idpList;
+my $spList;
+
+# List current SAML partners
+foreach my $spConfKey ( keys %{ $lastConf->{samlSPMetaDataXML} } ) {
+    my ( $tmp, $entityID ) =
+      ( $lastConf->{samlSPMetaDataXML}->{$spConfKey}->{samlSPMetaDataXML} =~
+          /entityID=(['"])(.+?)\1/si );
+    $spList->{$entityID} = $spConfKey;
+    if ( $opts{verbose} ) {
+        print "Existing SAML partner found: [SP] $entityID ($spConfKey)\n";
+    }
+}
+
+foreach my $idpConfKey ( keys %{ $lastConf->{samlIDPMetaDataXML} } ) {
+    my ( $tmp, $entityID ) =
+      ( $lastConf->{samlIDPMetaDataXML}->{$idpConfKey}->{samlIDPMetaDataXML} =~
+          /entityID=(['"])(.+?)\1/si );
+    $idpList->{$entityID} = $idpConfKey;
+    if ( $opts{verbose} ) {
+        print "Existing SAML partner found: [IDP] $entityID ($idpConfKey)\n";
+    }
+}
+
+# Download metadata file
+my $ua = LWP::UserAgent->new;
+$ua->timeout(10);
+$ua->env_proxy;
+
+my $metadata_file = $opts{metadata};
+
+if ( $opts{verbose} ) {
+    print "Try to download metadata file at $metadata_file\n";
+}
+my $response = $ua->get($metadata_file);
+
+if ( $response->is_success ) {
+    if ( $opts{verbose} ) {
+        print "Metadata file found\n";
+    }
+}
+else {
+    die $response->status_line;
+}
+
+my $dom = XML::LibXML->load_xml( string => $response->decoded_content );
+
+# Check file signature
+if ( $opts{certificate} ) {
+    my $certificate_file = $opts{certificate};
+    if ( $opts{verbose} ) {
+        print "Try to download certificate file at $certificate_file\n";
+    }
+    my $cert_response = $ua->get($certificate_file);
+
+    if ( $cert_response->is_success ) {
+        if ( $opts{verbose} ) {
+            print "Certificate file found:\n"
+              . $cert_response->decoded_content . "\n";
+        }
+    }
+    else {
+        die $cert_response->status_line;
+    }
+
+    if ( $opts{verbose} ) {
+        print "Check metadata signature with certificate";
+    }
+
+    # TODO
+    print STDERR "[WARN] Signature verification not yet implemented\n";
+}
+
+# Remove extensions
+foreach ( $dom->findnodes('//md:Extensions') ) { $_->unbindNode; }
+
+# Browse all partners
+foreach
+  my $partner ( $dom->findnodes('/md:EntitiesDescriptor/md:EntityDescriptor') )
+{
+    my $entityID = $partner->getAttribute('entityID');
+
+    # Add required XML namespaces
+    $partner->setNamespace( "urn:oasis:names:tc:SAML:2.0:metadata", "md", 0 );
+    $partner->setNamespace( "urn:oasis:names:tc:SAML:2.0:assertion", "saml",
+        0 );
+    $partner->setNamespace( "http://www.w3.org/2000/09/xmldsig#", "ds", 0 );
+
+    # Check IDP or SP
+    if ( my $idp = $partner->findnodes('./md:IDPSSODescriptor') ) {
+        $idpCounter->{found}++;
+
+        # Check if SAML 2.0 is supported
+        if (
+            $partner->findnodes(
+'./md:IDPSSODescriptor/md:SingleSignOnService[contains(@Binding,"urn:oasis:names:tc:SAML:2.0:")]'
+            )
+          )
+        {
+
+            # Read metadata
+            my $partner_metadata = $partner->toString;
+            $partner_metadata =~ s/\n//g;
+
+            # Check if entityID already in configuration
+            if ( defined $idpList->{$entityID} ) {
+
+                # Just update metadata
+                $lastConf->{samlIDPMetaDataXML}->{ $idpList->{$entityID} }
+                  ->{samlIDPMetaDataXML} = $partner_metadata;
+                if ( $opts{verbose} ) {
+                    print "Update IDP $entityID metadata in configuration\n";
+                }
+                $idpCounter->{updated}++;
+            }
+            else {
+                # Create a new partner
+                my $confKey =
+                  $idpConfKeyPrefix . encode_base64( $entityID, '' );
+                $confKey =~ s/=//g;
+
+                # Metadata
+                $lastConf->{samlIDPMetaDataXML}->{$confKey}
+                  ->{samlIDPMetaDataXML} = $partner_metadata;
+
+                # Attributes
+                # TODO: find which attributes to configure
+                $lastConf->{samlIDPMetaDataExportedAttributes}->{$confKey} = {
+                    'cn'   => '0;cn;;',
+                    'mail' => '0;mail;;',
+                    'uid'  => '0;uid;;'
+                };
+
+                # Options
+                $lastConf->{samlIDPMetaDataOptions}->{$confKey} = {
+                    'samlIDPMetaDataOptionsAdaptSessionUtime'        => 0,
+                    'samlIDPMetaDataOptionsAllowLoginFromIDP'        => 0,
+                    'samlIDPMetaDataOptionsAllowProxiedAuthn'        => 0,
+                    'samlIDPMetaDataOptionsCheckAudience'            => 1,
+                    'samlIDPMetaDataOptionsCheckSLOMessageSignature' => 1,
+                    'samlIDPMetaDataOptionsCheckSSOMessageSignature' => 1,
+                    'samlIDPMetaDataOptionsCheckTime'                => 1,
+                    'samlIDPMetaDataOptionsEncryptionMode'           => 'none',
+                    'samlIDPMetaDataOptionsForceAuthn'               => 0,
+                    'samlIDPMetaDataOptionsForceUTF8'                => 0,
+                    'samlIDPMetaDataOptionsIsPassive'                => 0,
+                    'samlIDPMetaDataOptionsRelayStateURL'            => 0,
+                    'samlIDPMetaDataOptionsSignSLOMessage'           => -1,
+                    'samlIDPMetaDataOptionsSignSSOMessage'           => -1,
+                    'samlIDPMetaDataOptionsStoreSAMLToken'           => 0
+                };
+                if ( $opts{verbose} ) {
+                    print
+"Declare new IDP $entityID (configuration key $confKey)\n";
+                }
+                $idpCounter->{created}++;
+            }
+
+        }
+        else {
+            print STDERR
+"[WARN] IDP $entityID is not compatible with SAML 2.0, it will not be imported.\n";
+            $idpCounter->{rejected}++;
+        }
+    }
+    if ( my $sp = $partner->findnodes('./md:SPSSODescriptor') ) {
+
+        $spCounter->{found}++;
+
+        # Check if SAML 2.0 is supported
+        if (
+            $partner->findnodes(
+'./md:SPSSODescriptor/md:AssertionConsumerService[contains(@Binding,"urn:oasis:names:tc:SAML:2.0:")]'
+            )
+          )
+        {
+
+            # Read metadata
+            my $partner_metadata = $partner->toString;
+            $partner_metadata =~ s/\n//g;
+
+            # Check if entityID already in configuration
+            if ( defined $spList->{$entityID} ) {
+
+                # Just update metadata
+                $lastConf->{samlSPPMetaDataXML}->{ $spList->{$entityID} }
+                  ->{samlSPMetaDataXML} = $partner_metadata;
+                if ( $opts{verbose} ) {
+                    print "Update SP $entityID metadata in configuration\n";
+                }
+                $spCounter->{updated}++;
+            }
+            else {
+                # Create a new partner
+                my $confKey = $spConfKeyPrefix . encode_base64( $entityID, '' );
+                $confKey =~ s/=//g;
+
+                # Metadata
+                $lastConf->{samlSPMetaDataXML}->{$confKey}->{samlSPMetaDataXML}
+                  = $partner_metadata;
+
+                # Attributes
+                # TODO: find which attributes to configure
+                $lastConf->{samlSPMetaDataExportedAttributes}->{$confKey} = {
+                    'cn'   => '1;cn;;',
+                    'mail' => '0;mail;;',
+                    'uid'  => '1;uid;;'
+                };
+
+                # Options
+                $lastConf->{samlSPMetaDataOptions}->{$confKey} = {
+                    'samlSPMetaDataOptionsCheckSLOMessageSignature'   => 1,
+                    'samlSPMetaDataOptionsCheckSSOMessageSignature'   => 1,
+                    'samlSPMetaDataOptionsEnableIDPInitiatedURL'      => 0,
+                    'samlSPMetaDataOptionsEncryptionMode'             => 'none',
+                    'samlSPMetaDataOptionsForceUTF8'                  => 1,
+                    'samlSPMetaDataOptionsNameIDFormat'               => '',
+                    'samlSPMetaDataOptionsNotOnOrAfterTimeout'        => 72000,
+                    'samlSPMetaDataOptionsOneTimeUse'                 => 0,
+                    'samlSPMetaDataOptionsSessionNotOnOrAfterTimeout' => 72000,
+                    'samlSPMetaDataOptionsSignSLOMessage'             => 1,
+                    'samlSPMetaDataOptionsSignSSOMessage'             => 1
+                };
+                if ( $opts{verbose} ) {
+                    print
+                      "Declare new SP $entityID (configuration key $confKey)\n";
+                }
+                $spCounter->{created}++;
+            }
+
+        }
+        else {
+            print STDERR
+"[WARN] SP $entityID is not compatible with SAML 2.0, it will not be imported.\n";
+            $spCounter->{rejected}++;
+        }
+
+    }
+
+}
+
+# Register configuration
+my $numConf = $conf->saveConf( $lastConf, ( cfgNumFixed => 1 ) );
+
+unless ($numConf) {
+    print STDERR "[ERROR] Unable to save configuration\n";
+    exit 1;
+}
+
+print "[IDP]\tFound: "
+  . $idpCounter->{found}
+  . "\tUpdated: "
+  . $idpCounter->{updated}
+  . "\tCreated: "
+  . $idpCounter->{created}
+  . "\tRejected: "
+  . $idpCounter->{rejected} . "\n";
+print "[SP]\tFound: "
+  . $spCounter->{found}
+  . "\tUpdated: "
+  . $spCounter->{updated}
+  . "\tCreated: "
+  . $spCounter->{created}
+  . "\tRejected: "
+  . $spCounter->{rejected} . "\n";
+print "[OK] Configuration $numConf saved\n";
+exit 0;

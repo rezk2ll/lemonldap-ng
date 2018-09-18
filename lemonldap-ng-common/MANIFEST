@@ -70,6 +70,7 @@ META.json
 META.yml
 README
 scripts/convertConfig
+scripts/importMetadata
 scripts/lemonldap-ng-cli
 scripts/lmMigrateConfFiles2ini
 scripts/rotateOidcKeys
