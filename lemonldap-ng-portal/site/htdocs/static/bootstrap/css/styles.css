@@ -33,7 +33,7 @@ body {
   margin-bottom: 20px;
 }
 
-.panel, .navbar-default {
+.card, .navbar-light {
   background-color: rgb(255,255,255);
   background-color: rgba(255,255,255,0.9);
   background-image: none;
@@ -81,29 +81,17 @@ li.ui-state-active {
   margin-top: 20px;
 }
 
+div.category {
+  margin: 10px 0;
+}
+
 div.application {
-  height:50px;
-  overflow:hidden;
+  margin: 5px 0;
+  overflow: hidden;
 }
 
 div.application a, div.application a:hover {
   text-decoration:none;
-  display: block;
-}
-/*
-div.application img.applogo {
-  width:32px;
-  height:32px;
-  float:left;
-}
-*/
-div.application h4.appname {
-  margin-top:5px;
-}
-
-div.application p.appdesc {
-  color:#aaa;
-  font-style:italic;
 }
 
 p.notifCheck label {
@@ -144,7 +132,6 @@ div.oidc_consent_message > ul {
     margin: 0 auto -60px;
   }
   #footer {
-    padding-top: 20px;
     height: 60px;
   }
 }
