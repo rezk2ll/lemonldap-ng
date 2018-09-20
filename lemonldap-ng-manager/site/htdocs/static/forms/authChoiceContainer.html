@@ -15,21 +15,21 @@
     </thead>
     <tbody>
       <tr ng-repeat="c in currentNode.nodes">
-        <td>
+        <td width="12%">
           <input class="form-control" ng-model="c.title" aria-decribedby="namelabel">
         </td>
-        <td ng-repeat="i in [0,1,2]">
+        <td width="16%" ng-repeat="i in [0,1,2]">
           <select class="form-control" ng-model="c.data[i]" ng-change="execFilters(_findScopeByKey('authParams'))" aria-decribedby="{{['authlabel','userdblabel','pwdlabel'][i]}}">
             <option ng-repeat="item in currentNode.select[i]" ng-selected="item.k==c.data[i]" value="{{item.k}}">{{item.v}}</option>
           </select>
         </td>
-        <td>
+        <td width="20%">
           <input class="form-control" ng-model="c.data[3]" aria-describedby="urllabel">
         </td>
-        <td>
+        <td width="15%">
           <input class="form-control" ng-model="c.data[4]" aria-describedby="condlabel">
         </td>
-        <td>
+        <td width="5%">
           <span class="link text-danger glyphicon glyphicon-minus-sign" ng-click="del(currentNode.nodes,$index)"/>
           <span ng-if="$last" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newChain',action: 'newAuthChoice'})"/>
         </td>
