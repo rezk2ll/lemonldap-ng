@@ -8,57 +8,45 @@
 
   <div id="menu">
 
-  <div class="nav navbar-default">
-
-    <div class="navbar-header">
-
-    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
-        <span class="sr-only">
-            Toggle navigation
-        </span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">
-      <span class="glyphicon glyphicon-home"></span>
-    </a>
-
-    </div>
 
     <TMPL_IF DISPLAY_MODULES>
 
-    <div class="navbar-collapse collapse">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <!-- Tabs list -->
-      <ul class="nav navbar-nav">
+      <ul class="navbar-nav mr-auto">
         <TMPL_LOOP NAME="DISPLAY_MODULES">
 
           <TMPL_IF NAME="Appslist">
-            <li><a href="#appslist"><span>
+            <li class="nav-item"><a class="nav-link" href="#appslist"><span>
               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/application_cascade.png" width="16" height="16" alt="appslist" />
               <span trspan="yourApps">Your applications</span>
             </span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="ChangePassword">
-            <li><a href="#password"><span>
+            <li class="nav-item"><a class="nav-link" href="#password"><span>
               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/vcard_edit.png" width="16" height="16" alt="password" />
               <span trspan="password">Password</span>
             </span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="LoginHistory">
-            <li><a href="#loginHistory"><span>
+            <li class="nav-item"><a class="nav-link" href="#loginHistory"><span>
               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/calendar.png" width="16" height="16" alt="login history" />
               <span trspan="loginHistory">Login history</span>
             </span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="OidcConsents">
-            <li><a href="#oidcConsents"><span>
+            <li class="nav-item"><a class="nav-link" href="#oidcConsents"><span>
               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/oidc.png" width="16" height="16" alt="login history" />
               <span trspan="oidcConsents">OIDC Consent</span>
             </span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="Logout">
-            <li><a href="#logout"><span>
+            <li class="nav-item"><a class="nav-link" href="#logout"><span>
               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/door_out.png" width="16" height="16" alt="logout" />
               <span trspan="logout">Logout</span>
             </span></a></li>
@@ -67,19 +55,19 @@
       </ul>
 
       <ul class="user nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
             <span trspan="connectedAs">Connected as</span> <TMPL_VAR NAME="AUTH_USER">
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-			<TMPL_IF NAME="sfaManager">
-			  <li><a href="/2fregisters">
-	              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/sfa_manager.png" width="16" height="16" alt="refresh" />
-	              <span trspan="sfaManager">sfaManager</span>
-	          </a></li>
+            <TMPL_IF NAME="sfaManager">
+              <li class="dropdown-item"><a href="/2fregisters">
+                <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/sfa_manager.png" width="16" height="16" alt="refresh" />
+                <span trspan="sfaManager">sfaManager</span>
+              </a></li>
             </TMPL_IF>
-            <li><a href="/refresh">
+            <li class="dropdown-item"><a href="/refresh">
               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/arrow_refresh.png" width="16" height="16" alt="refresh" />
               <span trspan="refreshrights">Refresh</span>
             </a></li>
@@ -90,7 +78,7 @@
     </div>
     </TMPL_IF>
 
-    </div>
+    </nav>
 
     <!-- Tabs content -->
     <TMPL_LOOP NAME="DISPLAY_MODULES">
@@ -104,14 +92,14 @@
             <TMPL_IF NAME="category">
             <!-- Category -->
 
-              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> panel panel-info" id="sort_<TMPL_VAR NAME="__counter__">">
+              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary" id="sort_<TMPL_VAR NAME="__counter__">">
 
-                <div class="panel-heading">
-                <h3 class="catname panel-title"><TMPL_VAR NAME="catname"></h3>
+                <div class="card-header text-white bg-secondary">
+                <h4 class="catname card-title"><TMPL_VAR NAME="catname"></h4>
                 </div>
 
                   <TMPL_IF applications>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <!-- Applications -->
 
                     <div class="row">
@@ -119,35 +107,37 @@
 
                       <!-- Application -->
                       <div class="col-md-4">
-                      <div class="application <TMPL_VAR NAME="appid"> panel panel-default">
-                        <a class="btn btn-link" href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="appname">" role="button">
+                      <div class="application <TMPL_VAR NAME="appid"> card">
+                        <a href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="appname">" >
 
+                        <div class="card-body">
                         <div class="row">
                         <!-- Logo (optional) -->
                         <TMPL_IF NAME="applogo">
-                          <div class="col-xs-3">
+                          <div class="col-3">
                           <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/apps/<TMPL_VAR NAME="applogo">"
-                            class="applogo <TMPL_VAR NAME="appid">"
+                            class="applogo <TMPL_VAR NAME="appid"> img-fluid"
                             alt="<TMPL_VAR NAME="appname">" />
                           </div>
-                          <div class="col-xs-9">
+                          <div class="col-9">
                         <TMPL_ELSE>
-                          <div class="col-xs-12">
+                          <div class="col-12">
                         </TMPL_IF>
                         
                         <!-- Name and link (mandatory) -->
-                        <h4 class="appname <TMPL_VAR NAME="appid"> text-center">
+                        <h5 class="appname <TMPL_VAR NAME="appid"> card-title">
                           <TMPL_VAR NAME="appname">
-                        </h4>
+                        </h5>
 
                         <!-- Description (optional) -->
                         <TMPL_IF NAME="appdesc">
-                          <p class="appdesc <TMPL_VAR NAME="appid"> hidden-xs">
+                          <p class="appdesc <TMPL_VAR NAME="appid"> card-subtitle mb-2 text-muted">
                             <TMPL_VAR NAME="appdesc">
                           </p>
                         </TMPL_IF>
 
                           </div>
+                        </div>
                         </div>
                         </a>
 
@@ -173,11 +163,11 @@
 
       <TMPL_IF NAME="ChangePassword">
         <div id="password">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-              <h3 class="panel-title" trspan="changePwd">Change your password</h3>
+            <div class="card border-secondary">
+              <div class="card-header text-white bg-secondary">
+              <h3 class="card-title" trspan="changePwd">Change your password</h3>
               </div>
-              <div class="panel-body">
+              <div class="card-body">
               <TMPL_INCLUDE NAME="password.tpl">
               </div>
             </div>
@@ -187,21 +177,21 @@
       <TMPL_IF NAME="LoginHistory">
         <div id="loginHistory">
             <TMPL_IF NAME="SUCCESS_LOGIN">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-              <h3 class="panel-title" trspan="lastLogins">Last logins</h3>
+            <div class="card border-secondary">
+              <div class="card-header text-white bg-secondary">
+              <h3 class="card-title" trspan="lastLogins">Last logins</h3>
               </div>
-              <div class="panel-body">
+              <div class="card-body">
               <TMPL_VAR NAME="SUCCESS_LOGIN">
               </div>
             </div>
             </TMPL_IF>
             <TMPL_IF NAME="FAILED_LOGIN">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-              <h3 class="panel-title" trspan="lastFailedLogins">Last failed logins</h3>
+            <div class="card border-secondary">
+              <div class="card-header text-white bg-secondary">
+              <h3 class="card-title" trspan="lastFailedLogins">Last failed logins</h3>
               </div>
-              <div class="panel-body">
+              <div class="card-body">
               <TMPL_VAR NAME="FAILED_LOGIN">
               </div>
             </div>
@@ -211,11 +201,11 @@
 
       <TMPL_IF NAME="OidcConsents">
         <div id="oidcConsents">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-              <h3 class="panel-title" trspan="oidcConsentsFull">OpenID-Connect Consents</h3>
+            <div class="card border-secondary">
+              <div class="card-header text-white bg-secondary">
+              <h3 class="card-title" trspan="oidcConsentsFull">OpenID-Connect Consents</h3>
               </div>
-              <div class="panel-body">
+              <div class="card-body">
               <TMPL_VAR NAME="OIDC_CONSENTS">
               </div>
             </div>
@@ -224,11 +214,11 @@
 
       <TMPL_IF NAME="Logout">
         <div id="logout">
-          <div class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title" trspan="areYouSure">Are you sure ?</h3>
+          <div class="card border-secondary">
+            <div class="card-header text-white bg-secondary">
+              <h3 class="card-title" trspan="areYouSure">Are you sure ?</h3>
             </div>
-            <div class="panel-body buttons">
+            <div class="card-body buttons">
             <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-success" role="button">
               <span class="glyphicon glyphicon-ok"></span>
               <span trspan="imSure">I'm sure</span>

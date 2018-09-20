@@ -17,13 +17,13 @@
     </TMPL_IF>
     <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
 
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <h3 class="panel-title">
+    <div class="card text-white bg-info">
+      <div class="card-header">
+        <h3 class="card-title">
           <span trspan="selectIdP">Select your Identity Provider</span>
         </h3>
       </div>
-      <div class="panel-body form">
+      <div class="card-body form">
 
       <input type="hidden" id="idp" name="idp"/>
 
@@ -43,10 +43,9 @@
       </div>
 
       <TMPL_IF NAME="REMEMBER">
-	  <p>&nbsp;</p>
-      <div class="checkbox">
-        <input type="checkbox" id="remember" name="cookie_type" value="1" aria-describedby="rememberlabel">
-        <label id="rememberlabel" for="remember">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="remember" name="cookie_type" value="1" aria-describedby="rememberlabel">
+        <label class="form-check-label" id="rememberlabel" for="remember">
           <span trspan="rememberChoice">Remember my choice</span>
         </label>
       </div>
@@ -56,7 +55,7 @@
         <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/idpchoice.min.js"></script>
       //else -->
         <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/idpchoice.js"></script>
-      <!-- //endif -->
+      <!-- //endif --> 
 
       </div>
     </div>

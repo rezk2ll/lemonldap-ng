@@ -6,7 +6,7 @@
   <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
   </TMPL_IF>
 
-  <div class="panel panel-default">
+  <div class="card">
 
   <TMPL_IF NAME="DISPLAY_FORM">
 
@@ -71,11 +71,9 @@
       </p>
 
 
-      <div class="checkbox">
-        <label>
-          <input id="resendconfirmation" type="checkbox" name="resendconfirmation" aria-describedby="resendconfirmationlabel">
-          <label for="resendconfirmation" id="resendconfirmationlabel" trspan="confirmPwd">Yes, resend the mail</label>
-        </label>
+      <div class="form-check">
+          <input class="form-check-input" id="resendconfirmation" type="checkbox" name="resendconfirmation" aria-describedby="resendconfirmationlabel">
+          <label class="form-check-label" for="resendconfirmation" id="resendconfirmationlabel" trspan="confirmPwd">Yes, resend the mail</label>
       </div>
 
       <div class="form-group">
@@ -115,11 +113,9 @@
           <input name="confirmpassword" type="password" class="form-control" trplaceholder="confirmPwd" />
         </div>
 
-        <div class="checkbox">
-          <label>
-            <input id="reset" type="checkbox" name="reset" aria-describedby="resetlabel"/>
-            <label for="reset" id="resetlabel" trspan="generatePwd">Generate the password automatically</label>
-          </label>
+        <div class="form-check">
+            <input class="form-check-input" id="reset" type="checkbox" name="reset" aria-describedby="resetlabel"/>
+            <label class="form-check-label" for="reset" id="resetlabel" trspan="generatePwd">Generate the password automatically</label>
         </div>
 
         <div class="form-group">

@@ -6,7 +6,7 @@
   <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
 </TMPL_IF>
 
-<div class="panel panel-default">
+<div class="card">
 
 <TMPL_IF NAME="FAILED">
   <p trspan="u2fFailed"></p>

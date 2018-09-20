@@ -16,13 +16,13 @@
     </TMPL_IF>
     <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
 
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <h3 class="panel-title">
+    <div class="card text-white bg-info">
+      <div class="card-header">
+        <h3 class="card-title">
           <span trspan="confirmation">Confirmation</span>
         </h3>
       </div>
-      <div class="panel-body form">
+      <div class="card-body form">
 
       <TMPL_VAR NAME="MSG">
 

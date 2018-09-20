@@ -6,7 +6,7 @@
   <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
   </TMPL_IF>
 
-  <div class="panel panel-default">
+  <div class="card">
 
   <TMPL_IF NAME="DISPLAY_FORM">
 
@@ -85,11 +85,9 @@
       </p>
 
 
-      <div class="checkbox">
-        <label for="resendconfirmation">
-          <input id="resendconfirmation" type="checkbox" name="resendconfirmation" ariadescribedby="resendconfirmationlabel">
-          <label id="resendconfirmationlabel" for="resendconfirmation" trspan="yesResendMail">Yes, resend the mail</label>
-        </label>
+      <div class="form-check">
+          <input class="form-check-input" id="resendconfirmation" type="checkbox" name="resendconfirmation" ariadescribedby="resendconfirmationlabel">
+          <label class="form-check-label" id="resendconfirmationlabel" for="resendconfirmation" trspan="yesResendMail">Yes, resend the mail</label>
       </div>
 
       <div class="form-group">

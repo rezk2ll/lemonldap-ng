@@ -4,8 +4,8 @@
   <div id="color" class="message message-positive alert"><span id="msg" trspan="clickOnYubikey"></span></div>
 </div>
   <main id="menucontent" class="container">
-    <div class="panel panel-info">
-     <div class="panel-body">
+    <div class="card text-white bg-info">
+     <div class="card-body">
       <form action="/2fregisters/yubikey/register" method="post">
        <div class="form-group">
 		<b><span trspan="name">Name</span></b> : <input type="text" id="UBKName" name="UBKName" value="MyYubikey"/>

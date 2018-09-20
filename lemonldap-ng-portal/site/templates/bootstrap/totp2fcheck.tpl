@@ -4,7 +4,7 @@
 
 <div class="message message-positive alert"><span trspan="enterTotpCode"></span></div>
 
-<div class="panel panel-default">
+<div class="card">
 
 <form action="/totp2fcheck" method="post" class="password" role="form">
   <div class="form">
