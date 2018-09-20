@@ -9,38 +9,28 @@
 
   <TMPL_IF AUTH_LOOP>
 
-    <div id="authMenu">
+    <div id="authMenu" class="card">
 
     <!-- Authentication loop -->
-    <div class="nav navbar-default">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-    <div class="navbar-header">
-
-    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
-        <span class="sr-only">
-            Toggle navigation
-        </span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">
-      <span class="glyphicon glyphicon-user"></span>
-    </a>
-
-    </div>
 
     <!-- Choice tabs -->
-    <div class="navbar-collapse collapse">
-
-      <ul class="nav navbar-nav">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
         <TMPL_LOOP NAME="AUTH_LOOP">
-          <li title="<TMPL_VAR NAME="key">"><a href="#<TMPL_VAR NAME="key">"><TMPL_VAR NAME="name"></a></li>
+          <li class="nav-item" title="<TMPL_VAR NAME="key">"><a class="nav-link" href="#<TMPL_VAR NAME="key">"><TMPL_VAR NAME="name"></a></li>
         </TMPL_LOOP>
       </ul>
-
     </div>
- 
+
+    </nav>
+
+    <div>
       <!-- Forms -->
       <TMPL_LOOP NAME="AUTH_LOOP">
 
@@ -105,7 +95,7 @@
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_FORM">
-  <div class="panel panel-default">
+  <div class="card">
   <TMPL_IF NAME="module">
     <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
   <TMPL_ELSE>
@@ -122,7 +112,7 @@
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_OPENID_FORM">
-  <div class="panel panel-default">
+  <div class="card">
   <TMPL_IF NAME="module">
     <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
   <TMPL_ELSE>
@@ -139,7 +129,7 @@
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_SSL_FORM">
-  <div class="panel panel-default">
+  <div class="card">
   <TMPL_IF NAME="module">
     <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
   <TMPL_ELSE>
@@ -156,7 +146,7 @@
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_YUBIKEY_FORM">
-  <div class="panel panel-default">
+  <div class="card">
   <TMPL_IF NAME="module">
     <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
   <TMPL_ELSE>
@@ -173,7 +163,7 @@
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_LOGO_FORM">
-  <div class="panel panel-default">
+  <div class="card">
   <TMPL_IF NAME="module">
     <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
   <TMPL_ELSE>
@@ -203,7 +193,7 @@
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_PASSWORD">
-    <div id="password" class="panel panel-default">
+    <div id="password" class="card">
     <TMPL_INCLUDE NAME="password.tpl">
     </div>
   </TMPL_IF>

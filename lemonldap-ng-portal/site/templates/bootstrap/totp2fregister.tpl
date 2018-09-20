@@ -5,8 +5,8 @@
 </div>
 
   <main id="menucontent" class="container">
-   <div class="panel panel-info">
-    <div class="panel-body">
+   <div class="card">
+    <div class="card-body">
 
        <div id="divToHide">
         <canvas id="qr"></canvas>

@@ -1,7 +1,7 @@
   <!-- Custom HTML footer -->
     <p>
       <span trspan="serviceProvidedBy">Service provided by</span>
-      <a href="http://lemonldap-ng.org" target="_blank" class="btn btn-default btn-xs">
+      <a href="http://lemonldap-ng.org" target="_blank" class="btn btn-secondary btn-xs">
         <span class="glyphicon glyphicon-new-window"></span>
         LemonLDAP::NG
       </a>

@@ -5,8 +5,8 @@
   </div>
 
   <main id="menucontent" class="container">
-    <div class="panel panel-info">
-     <div class="panel-body">
+    <div class="card">
+     <div class="card-body">
        <div id="u2fPermission" trspan="u2fPermission" class="alert alert-info">You may be prompted to allow the site permission to access your security keys. After granting permission, the device will start to blink.
        </div>
        <div class="buttons">

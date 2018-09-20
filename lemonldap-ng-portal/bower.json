@@ -6,7 +6,7 @@
   "license": "GPL2",
   "private": true,
   "dependencies": {
-    "bootstrap": "3.x",
+    "bootstrap": "4.x",
     "crypto-js": "x",
     "fingerprintjs2": "x",
     "jquery": "2.x",

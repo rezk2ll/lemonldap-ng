@@ -4,7 +4,7 @@
 
 <div class="message message-positive alert"><span trspan="<TMPL_IF "LEGEND"><TMPL_VAR "LEGEND"><TMPL_ELSE>enterExt2fCode</TMPL_IF>"></span></div>
 
-<div class="panel panel-default">
+<div class="card">
 
 <form action="<TMPL_IF "TARGET"><TMPL_VAR "TARGET"><TMPL_ELSE>/ext2fcheck</TMPL_IF>" method="post" class="password" role="form">
   <div class="form">
