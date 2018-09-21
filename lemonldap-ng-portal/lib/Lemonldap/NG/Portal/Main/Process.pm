@@ -289,12 +289,15 @@ sub authenticate {
         $req->{sessionInfo}->{_lastAuthnUTime} = time();
         return $ret;
     }
-    $self->setSessionInfo($req);
-    $self->setPersistentSessionInfo($req);
-    $self->setMacros($req);
-    $self->storeHistory($req);
 
-    return $ret;
+    # Store failed login into history
+    $req->steps(
+        [   'setSessionInfo',           'setMacros',
+            'setPersistentSessionInfo', 'storeHistory',
+            sub {PE_BADCREDENTIALS}
+        ]
+    );
+    return PE_OK;
 }
 
 # Third block: Session data providing
