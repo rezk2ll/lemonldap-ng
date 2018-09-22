@@ -69,6 +69,7 @@ ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' );
 ok( @c == 2, ' -> Two entries found' );
 count(2);
 
+$client->logout($id1);
 
 ## First failed connection
 ok(
@@ -117,6 +118,7 @@ ok( @c == 5, ' -> Five entries found' );
 ok( @cf == 2, "  -> Two 'failedLogin' entries found" );
 count(3);
 
+$client->logout($id1);
 clean_sessions();
 
 done_testing( count() );
