@@ -102,6 +102,7 @@
 "browserIdSiteName":"Site name",
 "browserIdVerificationURL":"Verification URL",
 "browseTree":"Browse tree",
+"brutForceProtection":"Brut force attack protection",
 "cancel":"Cancel",
 "captcha_login_enabled":"Activation in login form",
 "captcha_mail_enabled":"Activation in password reset by mail form",

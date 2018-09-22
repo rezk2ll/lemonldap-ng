@@ -102,6 +102,7 @@
 "browserIdSiteName":"Tên trang web",
 "browserIdVerificationURL":"URL xác minh",
 "browseTree":"Duyệt cây",
+"brutForceProtection":"Brut force attack protection",
 "cancel":"Hủy",
 "captcha_login_enabled":"Kích hoạt ở dạng đăng nhập",
 "captcha_mail_enabled":"Kích hoạt đặt lại mật khẩu bằng biểu mẫu thư",
