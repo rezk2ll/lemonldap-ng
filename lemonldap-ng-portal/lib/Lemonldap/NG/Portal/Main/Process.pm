@@ -294,6 +294,7 @@ sub authenticate {
     $req->steps(
         [   'setSessionInfo',           'setMacros',
             'setPersistentSessionInfo', 'storeHistory',
+            @{ $self->afterData },
             sub {PE_BADCREDENTIALS}
         ]
     );

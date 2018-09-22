@@ -607,6 +607,10 @@ sub attributes {
             'default' => 'TOTP,U2F,Yubikey',
             'type'    => 'text'
         },
+        'brutForceProtection' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'captcha_login_enabled' => {
             'default' => 0,
             'type'    => 'bool'

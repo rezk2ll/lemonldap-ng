@@ -604,11 +604,15 @@ sub attributes {
             type          => 'bool',
             documentation => 'Avoid portal to be displayed inside frames',
         },
-
         portalCheckLogins => {
             default       => 1,
             type          => 'bool',
             documentation => 'Display login history checkbox in portal',
+        },
+        brutForceProtection => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Prevent brut force attack after two failed logins',
         },
         portalForceAuthnInterval => {
             type    => 'int',

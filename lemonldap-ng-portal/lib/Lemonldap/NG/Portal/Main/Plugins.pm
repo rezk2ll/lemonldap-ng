@@ -19,6 +19,7 @@ our @pList = (
     notification               => '::Plugins::Notifications',
     portalCheckLogins          => '::Plugins::History',
     stayConnected              => '::Plugins::StayConnected',
+    brutForceProtection        => '::Plugins::BrutForceProtection',
     grantSessionRule           => '::Plugins::GrantSession',
     upgradeSession             => '::Plugins::Upgrade',
     autoSigninRules            => '::Plugins::AutoSignin',

@@ -727,6 +727,7 @@ sub tree {
                                 'trustedDomains',
                                 'useSafeJail',
                                 'checkXSS',
+                                'brutForceProtection',
                                 'lwpOpts',
                                 'lwpSslOpts',
                                 {
