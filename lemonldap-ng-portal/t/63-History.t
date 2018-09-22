@@ -15,6 +15,7 @@ my $client = LLNG::Manager::Test->new(
             authentication      => 'Demo',
             userDB              => 'Same',
             loginHistoryEnabled => 1,
+            brutForceProtection => 1,
         }
     }
 );
