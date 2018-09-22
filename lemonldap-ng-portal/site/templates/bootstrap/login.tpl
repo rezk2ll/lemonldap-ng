@@ -73,7 +73,7 @@
 
                 <div class="buttons">
                   <button type="submit" class="btn btn-success">
-                    <span class="glyphicon glyphicon-log-in"></span>
+                    <span class="fas fa-sign-in-alt"></span>
                     <span trspan="connect">Connect</span>
                   </button>
                 </div>
@@ -183,7 +183,7 @@
 
       <div class="buttons">
       <button type="submit" class="btn btn-success">
-        <span class="glyphicon glyphicon-log-in"></span>&nbsp;
+        <span class="fas fa-sign-in-alt"></span>&nbsp;
         <span trspan="connect">Connect</span>
       </button>
       </div>
@@ -209,7 +209,7 @@
       <div class="buttons">
       <TMPL_IF NAME="MSG"><TMPL_VAR NAME="MSG"></TMPL_IF>
         <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1<TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
-          <span class="glyphicon glyphicon-home"></span>&nbsp;
+          <span class="fas fa-home"></span>&nbsp;
           <span trspan="goToPortal">Go to portal</span>
         </a>
       </div>
@@ -220,7 +220,7 @@
     <div id="logout">
       <div class="buttons">
         <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-danger" role="button">
-          <span class="glyphicon glyphicon-log-out"></span>&nbps;
+          <span class="fas fa-sign-out-alt"></span>&nbps;
           <span trspan="logout">Logout</span>
         </a>
       </div>
