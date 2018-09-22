@@ -7,7 +7,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_INFO PE_OK);
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin';
+extends 'Lemonldap::NG::Portal::Main::Plugin',
+  'Lemonldap::NG::Portal::Lib::OtherSessions';
 
 # INITIALIZATION
 
@@ -22,11 +23,14 @@ sub run {
 
     my $countFailed = 0;
     my $lastFailedLoginEpoch = 0;
+    
     # Last failed login epoch before this authentication -> Auth_N-1
     if ( defined $req->sessionInfo->{_loginHistory}->{failedLogin} ){ 
         $countFailed = @{ $req->sessionInfo->{_loginHistory}->{failedLogin} };
-        $lastFailedLoginEpoch = $req->sessionInfo->{_loginHistory}->{failedLogin}->[1]->{_utime};
-    };
+    }
+    if ( defined $req->sessionInfo->{_loginHistory}->{failedLogin}->[1] ){ 
+        $lastFailedLoginEpoch = $req->sessionInfo->{_loginHistory}->{failedLogin}->[1]->{_utime}
+    }
 
     # If Auth. N-1 older than 10 minutes -> another try allowed
     if ( ( time - $lastFailedLoginEpoch ) > 600 ) {
@@ -36,10 +40,8 @@ sub run {
     # Delta between the two last failed logins -> Auth_N - Auth_N-1
     my $delta = time - $lastFailedLoginEpoch;
 
-    $self->logger->debug( " successLogin -> "
-            . Dumper( $req->sessionInfo->{_loginHistory}->{successLogin} ) );
-    $self->logger->debug( " failedLogin -> "
-            . Dumper( $req->sessionInfo->{_loginHistory}->{failedLogin} ) );
+    $self->logger->debug( " successLogin -> " . Dumper( $req->sessionInfo->{_loginHistory}->{successLogin} ) );
+    $self->logger->debug( " failedLogin -> " . Dumper( $req->sessionInfo->{_loginHistory}->{failedLogin} ) );
     $self->logger->debug(" Number of failedLogin -> $countFailed");
     $self->logger->debug(" Last failedLogin epoch -> $lastFailedLoginEpoch");
     $self->logger->debug( " Local time = " . localtime );
