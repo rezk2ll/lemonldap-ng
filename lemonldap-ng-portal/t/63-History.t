@@ -19,7 +19,7 @@ my $client = LLNG::Manager::Test->new(
     }
 );
 
-# Case "no history"
+## First successful connection
 ok(
     $res = $client->_post(
         '/',
@@ -35,7 +35,9 @@ my $id1 = expectCookie($res);
 ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
   or explain( $res->[2]->[0], 'trspan="noHistory"' );
 my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
-ok( @c == 1, 'One entry found' );
+
+# History with 1 successLogin
+ok( @c == 1, " -> One entry found" );
 count(2);
 
 ok( $res = $client->_get( '/', cookie => "lemonldap=$id1" ),
@@ -45,7 +47,7 @@ expectOK($res);
 
 $client->logout($id1);
 
-# History with 1 success
+## Second successful connection
 ok(
     $res = $client->_post(
         '/',
@@ -61,8 +63,58 @@ $id1 = expectCookie($res);
 
 ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' );
 @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
-ok( @c == 2, 'Two entries found' );
+
+# History with 2 success
+ok( @c == 2, ' -> Two entries found' );
 count(2);
+
+
+## First failed connection
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new('user=dwho&password=ohwd'),
+        length => 23
+    ),
+    'Auth query'
+);
+count(1);
+expectReject($res);
+
+## Second failed connection
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new('user=dwho&password=ohwd'),
+        length => 23
+    ),
+    'Auth query'
+);
+count(1);
+expectReject($res);
+
+## Third successful connection
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new('user=dwho&password=dwho&checkLogins=1'),
+        length => 37,
+        accept => 'text/html',
+    ),
+    'Auth query'
+);
+count(1);
+expectOK($res);
+$id1 = expectCookie($res);
+
+ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' );
+@c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
+my @cf = ( $res->[2]->[0] =~ /PE5<\/td>/gs );
+
+# History with 5 success
+ok( @c == 5, ' -> Five entries found' );
+ok( @cf == 2, "  -> Two 'failedLogin' entries found" );
+count(3);
 
 clean_sessions();
 
