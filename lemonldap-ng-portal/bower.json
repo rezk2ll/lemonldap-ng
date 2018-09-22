@@ -9,6 +9,7 @@
     "bootstrap": "4.x",
     "crypto-js": "x",
     "fingerprintjs2": "x",
+    "font-awesome": "x",
     "jquery": "2.x",
     "jquery-ui": "x",
     "jquery.cookie": "x",
