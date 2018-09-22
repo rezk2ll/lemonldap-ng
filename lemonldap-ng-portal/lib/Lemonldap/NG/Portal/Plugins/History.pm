@@ -1,5 +1,6 @@
 package Lemonldap::NG::Portal::Plugins::History;
 
+use Data::Dumper;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_INFO PE_OK);
@@ -21,6 +22,8 @@ sub run {
     my ( $self, $req ) = @_;
     if ( $req->param('checkLogins') ) {
         $self->logger->debug('History asked');
+        $self->logger->debug(' successLogins -> ' . Dumper($req->sessionInfo->{_loginHistory}->{successLogin} ));
+        $self->logger->debug(' failedLogins -> ' . Dumper($req->sessionInfo->{_loginHistory}->{failedLogin} ));
         $req->info(
             (
                 $req->sessionInfo->{_loginHistory}->{successLogin}
@@ -28,8 +31,9 @@ sub run {
                     $req->sessionInfo->{_loginHistory}->{successLogin},
                     'lastLogins', 0, 0 )
                 : ""
-            )
-            . (
+            ) 
+            . ("<hr>") .
+            (
                 $req->sessionInfo->{_loginHistory}->{failedLogin}
                 ? $self->p->mkSessionArray(
                     $req->sessionInfo->{_loginHistory}->{failedLogin},

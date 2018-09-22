@@ -19,16 +19,16 @@
     <div id="divToHide" class="alert alert-info">
       <p id="timer" trspan="redirectedIn">You'll be redirected in 30 seconds</p>
     </div>
-      <div class="buttons">
-        <button type="submit" class="positive btn btn-success">
-          <span class="glyphicon glyphicon-ok"></span>
-          <span trspan="continue">Continue</span>
-        </button>
-        <button id="wait" type="reset" class="negative btn btn-danger">
-          <span class="glyphicon glyphicon-stop"></span>
-          <span trspan="wait">Wait</span>
-        </button>
-      </div>
+    <div class="buttons">
+      <button type="submit" class="positive btn btn-success">
+        <span class="glyphicon glyphicon-ok"></span>
+        <span trspan="continue">Continue</span>
+      </button>
+      <button id="wait" type="reset" class="negative btn btn-danger">
+        <span class="glyphicon glyphicon-stop"></span>
+        <span trspan="wait">Wait</span>
+      </button>
+    </div>
   </form>
   <!-- //if:jsminified
     <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/info.min.js"></script>

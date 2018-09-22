@@ -284,7 +284,7 @@ sub getUser {
 sub authenticate {
     my ( $self, $req ) = @_;
     my $ret = $req->authResult( $self->_authentication->authenticate($req) );
-    $self->logger->debug(" -> authResult = $ret");
+    $self->logger->debug(" -> authResult = " . $req->authResult);
     if ( $ret == PE_OK ) {
         $req->{sessionInfo}->{_lastAuthnUTime} = time();
         return $ret;
@@ -297,6 +297,7 @@ sub authenticate {
             sub {PE_BADCREDENTIALS}
         ]
     );
+
     return PE_OK;
 }
 

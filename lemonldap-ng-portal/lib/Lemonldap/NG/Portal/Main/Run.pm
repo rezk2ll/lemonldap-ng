@@ -843,6 +843,8 @@ sub registerLogin {
     $login->{error} = $self->error( $req->authResult )
         if ( $req->authResult );
 
+    $self->logger->debug(" Current login -> " . $login->{error} );
+
     # Add current login into history
     unshift @{ $history->{$type} }, $login;
 
