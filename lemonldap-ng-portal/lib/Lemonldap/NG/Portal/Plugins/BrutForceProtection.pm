@@ -7,8 +7,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_INFO PE_OK);
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin',
-    'Lemonldap::NG::Portal::Lib::OtherSessions';
+extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 # INITIALIZATION
 
@@ -20,13 +19,14 @@ sub init {1}
 
 sub run {
     my ( $self, $req ) = @_;
-    my $countFailed
-        = @{ $req->sessionInfo->{_loginHistory}->{failedLogin} } || 0;
 
+    my $countFailed = 0;
+    my $lastFailedLoginEpoch = 0;
     # Last failed login epoch before this authentication -> Auth_N-1
-    my $lastFailedLoginEpoch
-        = $req->sessionInfo->{_loginHistory}->{failedLogin}->[1]->{_utime}
-        || 0;
+    if ( defined $req->sessionInfo->{_loginHistory}->{failedLogin} ){ 
+        $countFailed = @{ $req->sessionInfo->{_loginHistory}->{failedLogin} };
+        $lastFailedLoginEpoch = $req->sessionInfo->{_loginHistory}->{failedLogin}->[1]->{_utime};
+    };
 
     # If Auth. N-1 older than 10 minutes -> another try allowed
     if ( ( time - $lastFailedLoginEpoch ) > 600 ) {
