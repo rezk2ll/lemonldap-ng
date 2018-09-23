@@ -518,6 +518,8 @@ sub mkOidcConsent {
     if ( defined( $self->conf->{oidcRPMetaDataOptions} )
         and ref( $self->conf->{oidcRPMetaDataOptions} ) )
     {
+
+    	# Set default RP displayname
         foreach my $oidc ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
             $self->conf->{oidcRPMetaDataOptions}->{$oidc}
               ->{oidcRPMetaDataOptionsDisplayName} ||= $oidc;
@@ -525,10 +527,10 @@ sub mkOidcConsent {
     }
 
     # Loading existing oidcConsents
-    $self->logger->debug("Loading OIDC Consents ...");
-    my $_consents;
+    $self->logger->debug("Searching OIDC Consents...");
+    my $_oidcConsents;
     if ( exists $session->{_oidcConsents} ) {
-        $_consents = eval {
+        $_oidcConsents = eval {
             from_json( $session->{_oidcConsents}, { allow_nonref => 1 } );
         };
         if ($@) {
@@ -538,14 +540,9 @@ sub mkOidcConsent {
     }
     else {
         $self->logger->debug("No OIDC Consent found");
-
-        #$_oidcConsents = [];
     }
-
     my $consents = {};
-#####################
-
-    foreach (@$_consents) {
+    foreach (@$_oidcConsents) {
         if ( defined $_->{rp} ) {
             my $rp = $_->{rp};
             $self->logger->debug("RP { $rp } Consent found");
@@ -557,18 +554,7 @@ sub mkOidcConsent {
         }
     }
 
-    #foreach ( keys %$session ) {
-    #if ( $_ =~ /_oidc_consent_time_(.+)$/ ) {
-    #$consents->{$1}->{time} = $session->{ "_oidc_consent_time_" . $1 };
-    #$consents->{$1}->{scope} =
-    #$session->{ "_oidc_consent_scope_" . $1 };
-    #$consents->{$1}->{displayName} =
-    #$self->conf->{oidcRPMetaDataOptions}->{$1}
-    #->{oidcRPMetaDataOptionsDisplayName};
-    #}
-    #}
-#####################
-
+    # Display existing oidcConsents
     return $self->loadTemplate(
         'oidcConsents',
         params => {
