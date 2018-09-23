@@ -102,7 +102,7 @@
 "browserIdSiteName":"Nom du site",
 "browserIdVerificationURL":"Adresse de vérification",
 "browseTree":"Parcourir l'arbre",
-"brutForceProtection":"Protection contre les attaques par force brute",
+"bruteForceProtection":"Protection contre les attaques par force brute",
 "cancel":"Annuler",
 "captcha_login_enabled":"Activation dans le formulaire d'authentification",
 "captcha_mail_enabled":"Activation dans le formulaire de réinitialisation par mail",
