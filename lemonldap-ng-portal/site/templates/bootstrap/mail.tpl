@@ -21,8 +21,10 @@
 
     <h3 trspan="forgotPwd">Forgot your password?</h3>
 
-    <div class="form-group input-group">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i> </span>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="fas fa-envelope"></i> </span>
+      </div>
       <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required />
     </div>
 
@@ -30,8 +32,10 @@
     <div class="form-group">
       <img src="<TMPL_VAR NAME=CAPTCHA_SRC>" class="img-thumbnail" />
     </div>
-    <div class="form-group input-group">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i> </span>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="fas fa-eye"></i> </span>
+      </div>
       <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required />
     </div>
     </TMPL_IF>
@@ -39,8 +43,8 @@
       <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
     </TMPL_IF>
 
-    <button type="submit" class="btn btn-success" >
-      <span class="glyphicon glyphicon-send"></span>
+    <button type="submit" class="btn btn-success">
+      <span class="fas fa-envelope-open-text"></span>
       <span trspan="sendPwd">Send me a new password</span>
     </button>
     
@@ -71,16 +75,21 @@
       </p>
 
 
-      <div class="form-check">
-          <input class="form-check-input" id="resendconfirmation" type="checkbox" name="resendconfirmation" aria-describedby="resendconfirmationlabel">
+      <div class="input-group mb-3">
+        <div class="input-group-preprend">
+          <div class="input-group-text">
+            <input class="form-check-input" id="resendconfirmation" type="checkbox" name="resendconfirmation" aria-describedby="resendconfirmationlabel">
+          </div>
+        </div>
+        <p class="form-control">
           <label class="form-check-label" for="resendconfirmation" id="resendconfirmationlabel" trspan="confirmPwd">Yes, resend the mail</label>
+        </p>
       </div>
 
-      <div class="form-group">
-        <button type="submit" class="btn btn-success">
-          <span trspan="submit">Submit</span>
-        </button>
-      </div>
+      <button type="submit" class="btn btn-success">
+        <span class="fas fa-envelope-open-text"></span>
+        <span trspan="submit">Submit</span>
+      </button>
 
     </div>
     </form>
@@ -103,26 +112,34 @@
 
         <h3 trspan="changePwd">Change your password</h3>
 
-        <div class="form-group input-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-lock"></i> </span>
+          </div>
           <input name="newpassword" type="password" class="form-control" trplaceholder="newPassword" />
         </div>
 
-        <div class="form-group input-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-lock"></i> </span>
           <input name="confirmpassword" type="password" class="form-control" trplaceholder="confirmPwd" />
         </div>
 
-        <div class="form-check">
-            <input class="form-check-input" id="reset" type="checkbox" name="reset" aria-describedby="resetlabel"/>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input class="form-check-input" id="reset" type="checkbox" name="reset" aria-describedby="resetlabel"/>
+            </div>
+          </div>
+          <p class="form-control">
             <label class="form-check-label" for="reset" id="resetlabel" trspan="generatePwd">Generate the password automatically</label>
+          </p>
         </div>
 
-        <div class="form-group">
-          <button type="submit" class="btn btn-success">
-            <span trspan="submit">Submit</span>
-          </button>
-        </div>
+        <button type="submit" class="btn btn-success">
+          <span class="fas fa-envelope-open-text"></span>
+          <span trspan="submit">Submit</span>
+        </button>
 
       </div>
       </form>
@@ -157,7 +174,7 @@
 
   <div class="buttons">
     <a href="<TMPL_VAR NAME="PORTAL_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="CHOICE_VALUE">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="CHOICE_VALUE"></TMPL_IF><TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
-      <span class="glyphicon glyphicon-home"></span>
+      <span class="fas fa-home"></span>
       <span trspan="back2Portal">Go back to portal</span>
     </a>
   </div>

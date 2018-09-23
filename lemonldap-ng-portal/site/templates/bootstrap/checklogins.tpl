@@ -12,7 +12,7 @@
     </div>
     </TMPL_IF>
     <TMPL_IF NAME="STAYCONNECTED">
-    <div class="input-group">
+    <div class="input-group mb-3">
       <div class="input-group-prepend">
         <div class="input-group-text">
           <input type="checkbox" id="stayconnected" name="stayconnected" aria-describedby="stayConnectedLabel" />
