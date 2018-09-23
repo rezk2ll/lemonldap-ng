@@ -85,6 +85,7 @@
 "PE83":"Xác minh U2F không thành công",
 "PE84":"Bạn không được phép truy cập vào máy chủ lưu trữ này",
 "PE85":"Trang web từ xa yêu cầu một phiên mới (và plugin UpgradeSession không được tải). Đăng xuất và thử lại ",
+"PE86":"You must wait before trying to authenticate again",
 "2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"Chấp nhận",
 "accessDenied":"Bạn không có quyền truy cập vào ứng dụng này",

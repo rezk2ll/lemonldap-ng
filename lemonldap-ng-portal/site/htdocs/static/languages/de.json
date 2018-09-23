@@ -85,6 +85,7 @@
 "PE83":"U2F-Überprüfung fehlgeschlagen. Versuchen Sie es erneut oder wenden Sie sich an Ihren Administrator",
 "PE84":"Sie sind nicht berechtigt, auf diesen Host zuzugreifen",
 "PE85":"Die Gegenseite fragt nach einer neueren Sitzung (und das UpgradeSession-Plugin wurde nicht geladen). Abmelden und erneut versuchen",
+"PE86":"You must wait before trying to authenticate again",
 "2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"Akzeptieren",
 "accessDenied":"Sie haben keine Zugriffsberechtigung für diese Anwendung",

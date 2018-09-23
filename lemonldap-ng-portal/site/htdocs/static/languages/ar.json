@@ -85,6 +85,7 @@
 "PE83":"U2F verification failed. Retry or contact your administrator",
 "PE84":"You're not authorized to access to this host",
 "PE85":" الموقع البعيد يطلب جلسة جديدة (ولم يتم تحميل برنامج ترقية الجلسة).\nسجل الخروج و أعد المحاولة",
+"PE86":"You must wait before trying to authenticate again",
 "2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"قبول",
 "accessDenied":"ليس لديك إذن بالدخول لهذا التطبيق",

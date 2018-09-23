@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Plugins::BruteForceProtection;
 use Data::Dumper;
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_WAIT);
 
 our $VERSION = '2.0.0';
 
@@ -49,7 +49,8 @@ sub run {
 # If Delta between the two last failed logins < 10s and more than 2 failedLogins => waiting = failedLogins * 10s
     if ( $countFailed > 2 and ( $delta < 10 ) ) {
 
-        sleep $countFailed * 10;
+        #sleep $countFailed * 10;
+        return PE_WAIT;
 
     }
 

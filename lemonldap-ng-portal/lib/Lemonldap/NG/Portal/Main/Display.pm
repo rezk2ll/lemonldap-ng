@@ -8,6 +8,7 @@ package Lemonldap::NG::Portal::Main;
 use strict;
 use Mouse;
 use JSON;
+use Data::Dumper;
 
 has skinRules => ( is => 'rw' );
 
@@ -119,6 +120,7 @@ sub display {
     # 1.3 There is a message to display
     elsif ( my $info = $req->info ) {
         $self->logger->debug('Display: info detected');
+        $self->logger->debug('Hidden values -> '. Dumper( $req->{portalHiddenFormValues}));
         $skinfile       = 'info';
         %templateParams = (
             AUTH_ERROR      => $self->error,
@@ -135,6 +137,22 @@ sub display {
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
+        );
+    }
+
+    # 1.4 Brute-Force attack detected
+    elsif ( $req->{error} == PE_WAIT ) {
+        $self->logger->debug('Display: waiting before retrying authentication');
+        $self->logger->debug('Hidden values -> '. Dumper( $req->{portalHiddenFormValues}));
+        $skinfile       = 'info';
+        %templateParams = (
+            AUTH_ERROR      => $self->error,
+            AUTH_ERROR_TYPE => $req->error_type,
+            MSG             => '<span trspan="' . "PE$req->{error}" . '">">' . "PE$req->{error}" . '</span>',
+            URL             => $req->{urldc},
+            HIDDEN_INPUTS   => $self->buildHiddenForm($req),
+            ACTIVE_TIMER    => $req->data->{activeTimer},
+            FORM_METHOD     => $self->conf->{infoFormMethod},
         );
     }
 
@@ -215,7 +233,7 @@ sub display {
         );
     }
 
-    # 2.3 Case : user authenticated but an error was returned (bas url,...)
+    # 2.3 Case : user authenticated but an error was returned (bad url,...)
     elsif (
         $req->noLoginDisplay
         or (    not $req->data->{noerror}

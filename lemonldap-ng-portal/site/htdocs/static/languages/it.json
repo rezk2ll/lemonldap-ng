@@ -85,6 +85,7 @@
 "PE83":"U2F verification failed. Retry or contact your administrator",
 "PE84":"Non sei autorizzato ad accedere a questo host",
 "PE85":"Il sito remoto richiede una sessione più recente (e il plug-in di UpgradeSession non viene caricato). Disconnetti e riprova",
+"PE86":"You must wait before trying to authenticate again",
 "2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"Accetta",
 "accessDenied":"Non hai un'autorizzazione di accesso per questa applicazione",
