@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::BrutForceProtection;
+package Lemonldap::NG::Portal::Plugins::BruteForceProtection;
 
 use Data::Dumper;
 use strict;

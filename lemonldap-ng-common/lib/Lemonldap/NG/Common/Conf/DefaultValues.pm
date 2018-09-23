@@ -19,7 +19,7 @@ sub defaultValues {
         'authentication'              => 'Demo',
         'available2F'                 => 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey',
         'available2FSelfRegistration' => 'TOTP,U2F,Yubikey',
-        'brutForceProtection'         => 1,
+        'bruteForceProtection'        => 1,
         'captcha_mail_enabled'        => 1,
         'captcha_register_enabled'    => 1,
         'captcha_size'                => 6,

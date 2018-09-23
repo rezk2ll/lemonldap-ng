@@ -474,7 +474,7 @@ t/43-MailReset-with-token.t
 t/43-MailReset.t
 t/50-IssuerGet.t
 t/60-Status.t
-t/61-BrutForceProtection.t
+t/61-BruteForceAttackProtection.t
 t/61-GrantSession.t
 t/62-SingleSession.t
 t/63-History.t

@@ -607,7 +607,7 @@ sub attributes {
             'default' => 'TOTP,U2F,Yubikey',
             'type'    => 'text'
         },
-        'brutForceProtection' => {
+        'bruteForceProtection' => {
             'default' => 1,
             'type'    => 'bool'
         },

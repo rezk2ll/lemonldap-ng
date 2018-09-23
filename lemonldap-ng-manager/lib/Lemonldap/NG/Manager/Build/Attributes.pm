@@ -609,10 +609,10 @@ sub attributes {
             type          => 'bool',
             documentation => 'Display login history checkbox in portal',
         },
-        brutForceProtection => {
+        bruteForceProtection => {
             default       => 1,
             type          => 'bool',
-            documentation => 'Prevent brut force attack after two failed logins',
+            documentation => 'Prevent brute-force attack',
         },
         portalForceAuthnInterval => {
             type    => 'int',
