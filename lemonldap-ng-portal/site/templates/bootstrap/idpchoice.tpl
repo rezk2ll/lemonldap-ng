@@ -17,8 +17,8 @@
     </TMPL_IF>
     <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
 
-    <div class="card text-white bg-info">
-      <div class="card-header">
+    <div class="card border-info">
+      <div class="card-header text-white bg-info">
         <h3 class="card-title">
           <span trspan="selectIdP">Select your Identity Provider</span>
         </h3>
@@ -29,12 +29,12 @@
 
       <div class="row">
       <TMPL_LOOP NAME="LIST">
-        <div class="col-sm-6 <TMPL_VAR NAME="class">">
-          <button type="submit" class="btn btn-info idploop" val="<TMPL_VAR NAME="VAL">">
+        <div class="col-sm-6 <TMPL_VAR NAME="class"> mb-3">
+          <button type="submit" class="btn btn-secondary idploop" val="<TMPL_VAR NAME="VAL">">
           <TMPL_IF NAME="icon">
-            <img src="<TMPL_VAR NAME="icon">" class="glyphicon" />
+            <img src="<TMPL_VAR NAME="icon">" />
           <TMPL_ELSE>
-            <i class="glyphicon glyphicon-chevron-right"></i>
+            <i class="fas fa-globe"></i>
           </TMPL_IF>
             <TMPL_VAR NAME="NAME">
           </button>
@@ -43,8 +43,12 @@
       </div>
 
       <TMPL_IF NAME="REMEMBER">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="remember" name="cookie_type" value="1" aria-describedby="rememberlabel">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input class="form-check-input" type="checkbox" id="remember" name="cookie_type" value="1" aria-describedby="rememberlabel">
+          </div>
+        </div>
         <label class="form-check-label" id="rememberlabel" for="remember">
           <span trspan="rememberChoice">Remember my choice</span>
         </label>
@@ -64,7 +68,7 @@
 	    <div id="logout">
 	      <div class="buttons">
 	        <a href="<TMPL_VAR NAME="PORTAL_URL">/?cancel=1<TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
-	          <span class="glyphicon glyphicon-home"></span>&nbsp;
+	          <span class="fas fa-home"></span>&nbsp;
 	          <span trspan="cancel">Cancel</span>
 	        </a>
 	      </div>

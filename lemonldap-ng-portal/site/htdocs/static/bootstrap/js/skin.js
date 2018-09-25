@@ -10,9 +10,9 @@ $(document).ready(function() {
   $(".notifCheck").addClass("checkbox");
 
   // Collapse menu on click
-  $('.nav a[class!="dropdown-toggle"]').on('click', function() {
-    if ($('.navbar-toggle').css('display') != 'none') {
-      $(".navbar-toggle").trigger("click");
+  $('.collapse li[class!="dropdown"]').on('click', function() {
+    if (!$('.navbar-toggler').hasClass('collapsed')) {
+      $(".navbar-toggler").trigger("click");
     }
   });
 
