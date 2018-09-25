@@ -7,19 +7,16 @@
       <input type="hidden" id="token" name="token" value="<TMPL_VAR NAME="TOKEN">" />
       <input type="hidden" id="checkLogins" name="checkLogins" value="<TMPL_VAR NAME="CHECKLOGINS">">
       <TMPL_LOOP NAME="MODULES">
-	  &nbsp;&nbsp;
-        <button type="submit" name="sf" value="<TMPL_VAR NAME="CODE">">
+        <button type="submit" name="sf" value="<TMPL_VAR NAME="CODE">" class="mx-3">
           <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2F" title="<TMPL_VAR NAME="CODE">2F" />
         </button>
-      &nbsp;&nbsp;
       </TMPL_LOOP>
     </form>
   </div>
 </div>
-<br>
-<div class="buttons">
+<div class="buttons mt-3">
   <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1" class="btn btn-primary" role="button">
-    <span class="glyphicon glyphicon-home"></span>&nbsp;
+    <span class="fas fa-home"></span>&nbsp;
     <span trspan="cancel">Cancel</span>
   </a>
 </div>
