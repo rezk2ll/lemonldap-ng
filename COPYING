@@ -73,7 +73,7 @@ Comment: Downloaded from http://www.iconspedia.com/
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/WebID.png
 Copyright: unknown
 License: W3C
-Comment: Downloaded from
+Comment: downloaded from
  http://www.w3.org/2005/Incubator/webid/wiki/Main_Page#Other_resources
  .
  Author is unknown and license may be W3C or public-domain
@@ -81,7 +81,7 @@ Comment: Downloaded from
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/LinkedIn.png
 Copyright: Public Domain
 License: Simple-Geo
-Comment: Downloaded from
+Comment: downloaded from
  https://commons.wikimedia.org/wiki/File:LinkedIn_logo_initials.png
  .
  Author is unknown and license may be W3C or public-domain
@@ -100,7 +100,7 @@ Comment: This work, "sfa_manager.png", is a derivative of
 Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/*
 Copyright: Various artists
 License: CC-BY-NC-ND-3.0 or GFDL-1.3
-Comment: Downloaded from http://commons.wikimedia.org
+Comment: dowloaded from http://commons.wikimedia.org
 
 Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular*
 Copyright: 2010-2017, Google, Inc. http://angularjs.org
@@ -115,7 +115,7 @@ Copyright: 2014, unspecified
 License: Expat
 
 Files: lemonldap-ng-*/site/htdocs/static/bwr/bootstrap/*
-Copyright: 2011-2015, Twitter Inc.
+Copyright: 2011-2016, Twitter Inc.
 License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/bwr/crypto-js/*

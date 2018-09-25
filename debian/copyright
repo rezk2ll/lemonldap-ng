@@ -115,7 +115,7 @@ Copyright: 2014, unspecified
 License: Expat
 
 Files: lemonldap-ng-*/site/htdocs/static/bwr/bootstrap/*
-Copyright: 2011-2015, Twitter Inc.
+Copyright: 2011-2016, Twitter Inc.
 License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/bwr/crypto-js/*
