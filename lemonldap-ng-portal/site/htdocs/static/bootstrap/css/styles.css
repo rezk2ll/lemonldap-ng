@@ -39,7 +39,7 @@ body {
   background-image: none;
 }
 
-.login, .password, .confirm {
+.login, .password {
   text-align: center;
   padding: 20px;
 }
