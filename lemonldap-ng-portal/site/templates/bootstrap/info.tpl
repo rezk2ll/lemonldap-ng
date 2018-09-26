@@ -21,11 +21,11 @@
     </div>
     <div class="buttons">
       <button type="submit" class="positive btn btn-success">
-        <span class="fas fa-check-circle"></span>
+        <span class="fa fa-check-circle"></span>
         <span trspan="continue">Continue</span>
       </button>
       <button id="wait" type="reset" class="negative btn btn-danger">
-        <span class="fas fa-stopwatch"></span>
+        <span class="fa fa-stop"></span>
         <span trspan="wait">Wait</span>
       </button>
     </div>

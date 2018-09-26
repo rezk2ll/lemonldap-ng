@@ -28,7 +28,7 @@
             <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
             <td>
               <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
-                <span class="fas fa-minus-circle"></span>
+                <span class="fa fa-minus-circle"></span>
                 <span trspan="unregister">Unregister</span>
 	      </span>
 	    </td>
@@ -59,7 +59,7 @@
 
 <div class="buttons">
   <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1" class="btn btn-primary" role="button">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
     <span trspan="goToPortal">Go to portal</span>
   </a>
 </div>

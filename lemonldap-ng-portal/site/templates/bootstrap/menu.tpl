@@ -9,7 +9,7 @@
   <div id="menu">
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#"><i class="fas fa-home"></i></a>
+    <a class="navbar-brand" href="#"><i class="fa fa-home"></i></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -220,7 +220,7 @@
             </div>
             <div class="card-body buttons">
             <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-success" role="button">
-              <span class="fas fa-check-circle"></span>
+              <span class="fa fa-check-circle"></span>
               <span trspan="imSure">I'm sure</span>
             </a>
             </div>

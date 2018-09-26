@@ -15,7 +15,7 @@
 <TMPL_IF NAME="AUTH_ERROR">
   <div class="buttons">
     <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1" class="btn btn-primary" role="button">
-      <span class="fas fa-home"></span>
+      <span class="fa fa-home"></span>
       <span trspan="goToPortal">Go to portal</span>
     </a>
   </div>
@@ -47,20 +47,20 @@
   <div class="form">
    <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text"><i class="fas fa-lock"></i></span>
+      <span class="input-group-text"><i class="fa fa-lock"></i></span>
     </div>
     <input name="code" value="" class="form-control" id="extcode" trplaceholder="code" />
    </div>
   </div>
   <div class="buttons mb-3">
    <button type="submit" class="btn btn-success">
-    <span class="fas fa-sign-in-alt"></span>
+    <span class="fa fa-sign-in"></span>
     <span trspan="connect">Connect</span>
    </button>
   </div>
   <div class="buttons">
     <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1" class="btn btn-primary" role="button">
-      <span class="fas fa-home"></span>
+      <span class="fa fa-home"></span>
       <span trspan="cancel">Cancel</span>
     </a>
   </div>

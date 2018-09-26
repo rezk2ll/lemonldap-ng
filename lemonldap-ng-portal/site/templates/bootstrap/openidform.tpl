@@ -9,7 +9,7 @@
   <TMPL_INCLUDE NAME="checklogins.tpl">
 
   <button type="submit" class="btn btn-succesas" >
-    <span class="fas fa-sign-in-alt"></span>
+    <span class="fa fa-sign-in"></span>
     <span trspan="connect">Connect</span>
   </button>
 </div>

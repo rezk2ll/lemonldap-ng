@@ -16,7 +16,7 @@
     <td>
       <a partner="<TMPL_VAR NAME="name">" title="delete" class="oidcConsent">
         <span class="btn btn-danger" role="button">
-          <span class="fas fa-minus-circle"></span>
+          <span class="fa fa-minus-circle"></span>
           <span trspan="unregister">Unregister</span>
         </span>
       </a>

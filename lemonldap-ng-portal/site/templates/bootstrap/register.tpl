@@ -21,21 +21,21 @@
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fas fa-user"></i> </span>
+        <span class="input-group-text"><i class="fa fa-user"></i> </span>
       </div>
       <input name="firstname" type="text" value="<TMPL_VAR NAME="FIRSTNAME">" class="form-control" trplaceholder="firstName" required aria-required="true"/>
     </div>
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fas fa-user"></i> </span>
+        <span class="input-group-text"><i class="fa fa-user"></i> </span>
       </div>
       <input name="lastname" type="text" value="<TMPL_VAR NAME="LASTNAME">" class="form-control" trplaceholder="lastName" required aria-required="true"/>
     </div>
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fas fa-envelope"></i> </span>
+        <span class="input-group-text"><i class="fa fa-envelope"></i> </span>
       </div>
       <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required aria-required="true"/>
     </div>
@@ -46,7 +46,7 @@
     </div>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fas fa-eye"></i> </span>
+        <span class="input-group-text"><i class="fa fa-eye"></i> </span>
       </div>
       <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" placeholder="Captcha" required aria-required="true"/>
     </div>
@@ -56,7 +56,7 @@
     </TMPL_IF>
 
     <button type="submit" class="btn btn-success" >
-      <span class="fas fa-envelope-open-text"></span>
+      <span class="fa fa-envelope-open"></span>
       <span trspan="submit">Submit</span>
     </button>
 
@@ -105,7 +105,7 @@
       </div>
 
       <button type="submit" class="btn btn-success">
-        <span class="fas fa-envelope-open-text"></span>
+        <span class="fa fa-envelope-open"></span>
         <span trspan="submit">Submit</span>
       </button>
 
@@ -137,7 +137,7 @@
 
 	<div class="buttons">
 	  <a href="<TMPL_VAR NAME="PORTAL_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="CHOICE_VALUE">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="CHOICE_VALUE"></TMPL_IF><TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
-	    <span class="fas fa-home"></span>
+	    <span class="fa fa-home"></span>
 	    <span trspan="back2Portal">Go back to portal</span>
 	  </a>
 	</div>

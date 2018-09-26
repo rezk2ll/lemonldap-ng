@@ -14,7 +14,7 @@
     <!-- Authentication loop -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-    <a class="navbar-brand" href="#"><i class="fas fa-user-shield"></i></a>
+    <a class="navbar-brand" href="#"><i class="fa fa-user-circle"></i></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -73,7 +73,7 @@
 
                 <div class="buttons">
                   <button type="submit" class="btn btn-success">
-                    <span class="fas fa-sign-in-alt"></span>
+                    <span class="fa fa-sign-in"></span>
                     <span trspan="connect">Connect</span>
                   </button>
                 </div>
@@ -183,7 +183,7 @@
 
       <div class="buttons">
       <button type="submit" class="btn btn-success">
-        <span class="fas fa-sign-in-alt"></span>
+        <span class="fa fa-sign-in"></span>
         <span trspan="connect">Connect</span>
       </button>
       </div>
@@ -209,7 +209,7 @@
       <div class="buttons">
       <TMPL_IF NAME="MSG"><TMPL_VAR NAME="MSG"></TMPL_IF>
         <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1<TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
-          <span class="fas fa-home"></span>
+          <span class="fa fa-home"></span>
           <span trspan="goToPortal">Go to portal</span>
         </a>
       </div>
@@ -220,7 +220,7 @@
     <div id="logout">
       <div class="buttons">
         <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-danger" role="button">
-          <span class="fas fa-sign-out-alt"></span>&nbps;
+          <span class="fa fa-sign-out"></span>&nbps;
           <span trspan="logout">Logout</span>
         </a>
       </div>

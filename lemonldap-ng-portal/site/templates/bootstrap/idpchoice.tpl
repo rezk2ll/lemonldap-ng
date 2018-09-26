@@ -34,7 +34,7 @@
           <TMPL_IF NAME="icon">
             <img src="<TMPL_VAR NAME="icon">" class="mr-2" alt="<TMPL_VAR NAME="NAME">" title="<TMPL_VAR NAME="NAME">" />
           <TMPL_ELSE>
-            <i class="fas fa-globe mr-2"></i>
+            <i class="fa fa-globe mr-2"></i>
             <TMPL_VAR NAME="NAME">
           </TMPL_IF>
           </button>
@@ -68,7 +68,7 @@
 	    <div id="logout">
 	      <div class="buttons">
 	        <a href="<TMPL_VAR NAME="PORTAL_URL">/?cancel=1<TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
-	          <span class="fas fa-home"></span>
+	          <span class="fa fa-home"></span>
 	          <span trspan="cancel">Cancel</span>
 	        </a>
 	      </div>

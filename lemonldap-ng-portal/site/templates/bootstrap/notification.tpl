@@ -23,7 +23,7 @@
 
     <div class="buttons">
       <button type="submit" class="positive btn btn-success">
-        <span class="fas fa-check-circle"></span>
+        <span class="fa fa-check-circle"></span>
         <span trspan="accept">Accept</span>
       </button>
     </div>
