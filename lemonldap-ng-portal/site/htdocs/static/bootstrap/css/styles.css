@@ -83,6 +83,7 @@ li.ui-state-active {
 
 div.category {
   margin: 10px 0;
+  cursor: grab;
 }
 
 div.application {
