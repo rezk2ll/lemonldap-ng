@@ -158,11 +158,13 @@ print "</head>\n";
 print "<body>\n";
 
 print "<div id=\"content\" class=\"container\">\n";
-print "<div class=\"panel panel-info panel-body\">\n";
+print "<div class=\"card border-info\">\n";
 
-print "<div class=\"page-header\">\n";
+print "<div class=\"card-header text-white bg-info\">\n";
 print "<h1 class=\"text-center\">OpenID Connect sample client</h1>\n";
 print "</div>\n";
+
+print "<div class=\"card-body\">\n";
 
 # OIDC Callback
 my $callback = $cgi->param("openidconnectcallback");
@@ -171,12 +173,12 @@ if ($callback) {
 
     print "<h2 class=\"text-center\">Callback received</h2>";
 
-    print "<div class=\"panel panel-info\">\n";
-    print "<div class=\"panel-heading\">\n";
+    print "<div class=\"card border-info\">\n";
+    print "<div class=\"card-header\">\n";
     print
-"<h2 class=\"panel-title text-center\">OpenID Connect callback received</h2>\n";
+"<h2 class=\"card-title text-center\">OpenID Connect callback received</h2>\n";
     print "</div>\n";
-    print "<div class=\"panel-body\">\n";
+    print "<div class=\"card-body\">\n";
     print "<pre><code>"
       . $cgi->url( -path_info => 1, -query => 1 )
       . "</code></pre>\n";
@@ -327,11 +329,11 @@ if ($callback) {
         $id_token     = $cgi->param("id_token");
     }
 
-    print "<div class=\"panel panel-info\">\n";
-    print "<div class=\"panel-heading\">\n";
-    print "<h2 class=\"panel-title text-center\">Tokens</h2>\n";
+    print "<div class=\"card border-info\">\n";
+    print "<div class=\"card-header text-white bg-info\">\n";
+    print "<h2 class=\"card-title text-center\">Tokens</h2>\n";
     print "</div>\n";
-    print "<div class=\"panel-body\">\n";
+    print "<div class=\"card-body\">\n";
     print "<pre>Access token: <code>$access_token</code></pre>";
     print "<pre>ID token: <code>$id_token</code></pre>";
     print "</div>\n";
@@ -346,11 +348,11 @@ if ($callback) {
     my $id_token_payload_hash =
       from_json( decode_base64($id_token_payload), { allow_nonref => 1 } );
 
-    print "<div class=\"panel panel-info\">\n";
-    print "<div class=\"panel-heading\">\n";
-    print "<h2 class=\"panel-title text-center\">ID Token content</h2>\n";
+    print "<div class=\"card border-info\">\n";
+    print "<div class=\"card-header text-white bg-info\">\n";
+    print "<h2 class=\"card-title text-center\">ID Token content</h2>\n";
     print "</div>\n";
-    print "<div class=\"panel-body\">\n";
+    print "<div class=\"card-body\">\n";
     print "<pre>" . Dumper($id_token_payload_hash) . "</pre>";
     print "</div>\n";
     print "</div>\n";
@@ -376,11 +378,11 @@ if ($callback) {
         };
     }
 
-    print "<div class=\"panel panel-info\">\n";
-    print "<div class=\"panel-heading\">\n";
-    print "<h2 class=\"panel-title text-center\">User Info</h2>\n";
+    print "<div class=\"card border-info\">\n";
+    print "<div class=\"card-header text-white bg-info\">\n";
+    print "<h2 class=\"card-title text-center\">User Info</h2>\n";
     print "</div>\n";
-    print "<div class=\"panel-body\">\n";
+    print "<div class=\"card-body\">\n";
     print "<pre>" . Dumper($ui_json) . "</pre>";
     print "</div>\n";
     print "</div>\n";
@@ -475,11 +477,11 @@ elsif ( $cgi->param("test") eq "configuration" ) {
         exit 0;
     }
 
-    print "<div class=\"panel panel-info\">\n";
-    print "<div class=\"panel-heading\">\n";
-    print "<h2 class=\"panel-title text-center\">Configuration content</h2>\n";
+    print "<div class=\"card border-info\">\n";
+    print "<div class=\"card-header text-white bg-info\">\n";
+    print "<h2 class=\"card-title text-center\">Configuration content</h2>\n";
     print "</div>\n";
-    print "<div class=\"panel-body\">\n";
+    print "<div class=\"card-body\">\n";
     print "<pre>" . Dumper($json) . "</pre>";
     print "</div>\n";
     print "</div>\n";
@@ -535,11 +537,11 @@ elsif ( $cgi->param("test") eq "configuration" ) {
             exit 0;
         }
 
-        print "<div class=\"panel panel-info\">\n";
-        print "<div class=\"panel-heading\">\n";
-        print "<h2 class=\"panel-title text-center\">JWKS content</h2>\n";
+        print "<div class=\"card border-info\">\n";
+        print "<div class=\"card-header text-white bg-info\">\n";
+        print "<h2 class=\"card-title text-center\">JWKS content</h2>\n";
         print "</div>\n";
-        print "<div class=\"panel-body\">\n";
+        print "<div class=\"card-body\">\n";
         print "<pre>" . Dumper($jwks_json) . "</pre>";
         print "</div>\n";
         print "</div>\n";
@@ -580,11 +582,11 @@ elsif ( $cgi->param("test") eq "registration" ) {
         ],
     };
 
-    print "<div class=\"panel panel-info\">\n";
-    print "<div class=\"panel-heading\">\n";
-    print "<h2 class=\"panel-title text-center\">Client metadata sent</h2>\n";
+    print "<div class=\"card border-info\">\n";
+    print "<div class=\"card-header text-white bg-info\">\n";
+    print "<h2 class=\"card-title text-center\">Client metadata sent</h2>\n";
     print "</div>\n";
-    print "<div class=\"panel-body\">\n";
+    print "<div class=\"card-body\">\n";
     print "<pre>" . Dumper($fake_metadata) . "</pre>";
     print "</div>\n";
     print "</div>\n";
@@ -633,11 +635,11 @@ elsif ( $cgi->param("test") eq "registration" ) {
         exit 0;
     }
 
-    print "<div class=\"panel panel-info\">\n";
-    print "<div class=\"panel-heading\">\n";
-    print "<h2 class=\"panel-title text-center\">Register content</h2>\n";
+    print "<div class=\"card border-info\">\n";
+    print "<div class=\"card-header text-white bg-info\">\n";
+    print "<h2 class=\"card-title text-center\">Register content</h2>\n";
     print "</div>\n";
-    print "<div class=\"panel-body\">\n";
+    print "<div class=\"card-body\">\n";
     print "<pre>" . Dumper($register_json) . "</pre>";
     print "</div>\n";
     print "</div>\n";
@@ -731,6 +733,7 @@ else {
 
 }
 
+print "</div>\n";
 print "</div>\n";
 print "</div>\n";
 

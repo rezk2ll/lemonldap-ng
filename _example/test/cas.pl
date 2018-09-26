@@ -77,12 +77,13 @@ else {
     print "<body>\n";
 
     print "<div id=\"content\" class=\"container\">\n";
-    print "<div class=\"panel panel-info panel-body\">\n";
+    print "<div class=\"card border-info\">\n";
 
-    print "<div class=\"page-header\">\n";
+    print "<div class=\"card-header text-white bg-info mb-3\">\n";
     print "<h1 class=\"text-center\">CAS sample client</h1>\n";
     print "</div>\n";
 
+    print "<div class=\"card-body\">\n";
     my $ticket = $cgi->param('ticket');
 
     # First time access
@@ -102,11 +103,11 @@ else {
     # Ticket receveived
     else {
 
-        print "<div class=\"panel panel-info\">\n";
-        print "<div class=\"panel-heading\">\n";
-        print "<h2 class=\"panel-title text-center\">CAS login result</h2>\n";
+        print "<div class=\"card border-info mb-3\">\n";
+        print "<div class=\"card-header text-white bg-info\">\n";
+        print "<h2 class=\"card-title text-center\">CAS login result</h2>\n";
         print "</div>\n";
-        print "<div class=\"panel-body\">\n";
+        print "<div class=\"card-body\">\n";
         print $cgi->h4("Service ticket: $ticket");
 
         # Get user
@@ -172,6 +173,7 @@ else {
 
     }
 
+    print "</div>\n";
     print "</div>\n";
     print "</div>\n";
 
