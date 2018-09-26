@@ -105,15 +105,12 @@ img.langicon {
   cursor: pointer;
 }
 
-/* OpenID Connect */
-div.openidconnect button {
-  height: 60px;
-  width: 160px;
-  margin-bottom: 5px;
+button.idploop {
+  max-width: 300px;
 }
 
-div.openidconnect button img {
-  height: 30px;
+button.idploop img {
+  max-height: 30px;
 }
 
 div.oidc_consent_message > ul {

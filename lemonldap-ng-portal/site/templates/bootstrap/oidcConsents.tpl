@@ -13,7 +13,13 @@
     <td><TMPL_VAR NAME="displayName"></td>
     <td class="localeDate" val="<TMPL_VAR NAME="epoch">"></td>
     <td><TMPL_VAR NAME="scope"></td>
-    <td><a partner="<TMPL_VAR NAME="name">" title="delete" class="oidcConsent link nodecor text-danger fas fa-minus-circle"></a></td>
+    <td>
+      <a partner="<TMPL_VAR NAME="name">" title="delete" class="oidcConsent">
+        <span class="btn btn-danger" role="button">
+          <span class="fas fa-minus-circle"></span>
+          <span trspan="unregister">Unregister</span>
+        </span>
+      </a>
     </td>
    </tr>
   </TMPL_LOOP>

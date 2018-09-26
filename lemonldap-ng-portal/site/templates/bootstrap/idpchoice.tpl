@@ -23,20 +23,20 @@
           <span trspan="selectIdP">Select your Identity Provider</span>
         </h3>
       </div>
-      <div class="card-body form">
+      <div class="card-body">
 
       <input type="hidden" id="idp" name="idp"/>
 
-      <div class="row">
+      <div class="row text-center">
       <TMPL_LOOP NAME="LIST">
-        <div class="col-sm-6 <TMPL_VAR NAME="class"> mb-3">
-          <button type="submit" class="btn btn-secondary idploop" val="<TMPL_VAR NAME="VAL">">
+        <div class="col-sm-6 <TMPL_VAR NAME="class"> mb-3 mr-3">
+          <button type="submit" class="btn btn-secondary idploop py-3" val="<TMPL_VAR NAME="VAL">">
           <TMPL_IF NAME="icon">
-            <img src="<TMPL_VAR NAME="icon">" />
+            <img src="<TMPL_VAR NAME="icon">" class="mr-2" alt="<TMPL_VAR NAME="NAME">" title="<TMPL_VAR NAME="NAME">" />
           <TMPL_ELSE>
-            <i class="fas fa-globe"></i>
-          </TMPL_IF>
+            <i class="fas fa-globe mr-2"></i>
             <TMPL_VAR NAME="NAME">
+          </TMPL_IF>
           </button>
         </div>
       </TMPL_LOOP>
