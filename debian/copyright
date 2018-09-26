@@ -145,7 +145,7 @@ Comment: The upstream distribution does not contain an explicit statement of
 
 Files: lemonldap-ng-portal/site/htdocs/static/bwr/font-awesome/dist/webfonts/*
 Copyright: Font Awesome Team <hello@fontawesome.com>
-License: OFL
+License: SIL-OFL
 Comment: The upstream distribution does not contain an explicit statement of
  copyright ownership. Pursuant to the Berne Convention for the Protection of
  Literary and Artistic Works, it is assumed that all content is copyright by
@@ -1066,7 +1066,7 @@ License: Expat
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 
-License: OFL
+License: SIL-OFL
  -----------------------------------------------------------
  SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
  -----------------------------------------------------------
