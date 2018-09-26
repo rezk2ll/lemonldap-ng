@@ -1396,6 +1396,10 @@ sub attributes {
             documentation =>
               'List of attributes to export by SOAP or REST servers',
         },
+        wsdlServer => {
+            type          => 'bool',
+            documentation => 'Enable /portal.wsdl server',
+        },
 
         # AutoSignin
         autoSigninRules => {
@@ -1844,13 +1848,13 @@ sub attributes {
             documentation => 'SAML Discovery Protocol activation',
         },
         samlDiscoveryProtocolURL => {
-            type    => 'text',
-            test    => $url,
-            msgFail => '__badUrl__',
+            type          => 'text',
+            test          => $url,
+            msgFail       => '__badUrl__',
             documentation => 'SAML Discovery Protocol EndPoint URL',
         },
         samlDiscoveryProtocolPolicy => {
-            type    => 'text',
+            type          => 'text',
             documentation => 'SAML Discovery Protocol Policy',
         },
         samlDiscoveryProtocolIsPassive => {

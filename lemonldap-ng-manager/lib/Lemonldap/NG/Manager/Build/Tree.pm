@@ -545,7 +545,7 @@ sub tree {
                             nodes => [
                                 'restSessionServer', 'restConfigServer',
                                 'soapSessionServer', 'soapConfigServer',
-                                'exportedAttr'
+                                'exportedAttr',      'wsdlServer',
                             ]
                         },
                         {
@@ -942,7 +942,7 @@ sub tree {
                                 'samlCommonDomainCookieWriter'
                             ]
                         },
-			{
+                        {
                             title => 'samlDiscoveryProtocol',
                             form  => 'simpleInputContainer',
                             nodes => [

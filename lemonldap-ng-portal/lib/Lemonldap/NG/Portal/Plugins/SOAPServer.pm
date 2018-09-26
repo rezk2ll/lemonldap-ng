@@ -84,7 +84,14 @@ has wsdl => (
         $resp =~ s/\$cookieList/$cookieList/g;
         $resp =~ s/\$attrList/$attrList/g;
         $resp =~ s/\$portal/$self->conf->{portal}/ge;
-        return [ 200, [], [$resp] ];
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/wsdl+xml',
+                'Content-Length' => length($resp)
+            ],
+            [$resp]
+        ];
     }
 );
 
@@ -654,5 +661,62 @@ $attrList
   </wsdl:service>
 
   <!-- end sessions service -->
+
+  <!-- notification service -->
+
+  <wsdl:message name="newNotificationRequest">
+    <wsdl:part name="notification" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="newNotificationResponse">
+    <wsdl:part name="result" type="xsd:int" />
+  </wsdl:message>
+  <wsdl:message name="deleteNotificationRequest">
+    <wsdl:part name="uid" type="xsd:string" />
+    <wsdl:part name="myref" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="deleteNotificationResponse">
+    <wsdl:part name="result" type="xsd:int" />
+  </wsdl:message>
+
+  <wsdl:portType name="notificationPortType">
+    <wsdl:operation name="newNotification" parameterOrder="notification">
+      <wsdl:input message="impl:newNotificationRequest" name="newNotificationRequest" />
+      <wsdl:output message="impl:newNotificationResponse" name="newNotificationResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteNotification" parameterOrder="uid myref">
+      <wsdl:input message="impl:deleteNotificationRequest" name="deleteNotificationRequest" />
+      <wsdl:output message="impl:deleteNotificationResponse" name="deleteNotificationResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="notificationBinding" type="impl:notificationPortType">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="newNotification">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="newNotificationRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
+      </wsdl:input>
+      <wsdl:output name="newNotificationResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteNotification">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="deleteNotificationRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
+      </wsdl:input>
+      <wsdl:output name="deleteNotificationResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <wsdl:service name="notificationService">
+    <wsdl:port binding="impl:notificationBinding" name="notificationPort">
+      <wsdlsoap:address location="$portal/notifications" />
+    </wsdl:port>
+  </wsdl:service>
+
+  <!-- end notification service -->
 
 </wsdl:definitions>
