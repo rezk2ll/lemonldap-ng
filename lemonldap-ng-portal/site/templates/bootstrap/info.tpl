@@ -8,24 +8,24 @@
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
     </TMPL_IF>
     <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
-    <div class="card text-white">
-      <div class="card-header bg-info">
+    <div class="card border-info">
+      <div class="card-header text-white bg-info">
         <h3 class="card-title" trspan="info">Information</h3>
       </div>
       <div class="card-body">
         <TMPL_VAR NAME="MSG">
       </div>
-    </div>
-    <div id="divToHide" class="alert alert-info">
-      <p id="timer" trspan="redirectedIn">You'll be redirected in 30 seconds</p>
+      <div id="divToHide" class="card-footer text-white bg-info">
+        <p id="timer" trspan="redirectedIn">You'll be redirected in 30 seconds</p>
+      </div>
     </div>
     <div class="buttons">
       <button type="submit" class="positive btn btn-success">
-        <span class="glyphicon glyphicon-ok"></span>
+        <span class="fas fa-check-circle"></span>
         <span trspan="continue">Continue</span>
       </button>
       <button id="wait" type="reset" class="negative btn btn-danger">
-        <span class="glyphicon glyphicon-stop"></span>
+        <span class="fas fa-stopwatch"></span>
         <span trspan="wait">Wait</span>
       </button>
     </div>

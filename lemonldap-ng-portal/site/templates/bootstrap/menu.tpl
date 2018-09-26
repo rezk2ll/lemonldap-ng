@@ -9,7 +9,7 @@
   <div id="menu">
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#"></a>
+    <a class="navbar-brand" href="#"><i class="fas fa-home"></i></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -165,7 +165,7 @@
         <div id="password">
             <div class="card border-secondary">
               <div class="card-header text-white bg-secondary">
-              <h3 class="card-title" trspan="changePwd">Change your password</h3>
+              <h4 class="card-title" trspan="changePwd">Change your password</h4>
               </div>
               <div class="card-body">
               <TMPL_INCLUDE NAME="password.tpl">
@@ -179,7 +179,7 @@
             <TMPL_IF NAME="SUCCESS_LOGIN">
             <div class="card border-secondary">
               <div class="card-header text-white bg-secondary">
-              <h3 class="card-title" trspan="lastLogins">Last logins</h3>
+              <h4 class="card-title" trspan="lastLogins">Last logins</h4>
               </div>
               <div class="card-body">
               <TMPL_VAR NAME="SUCCESS_LOGIN">
@@ -189,7 +189,7 @@
             <TMPL_IF NAME="FAILED_LOGIN">
             <div class="card border-secondary">
               <div class="card-header text-white bg-secondary">
-              <h3 class="card-title" trspan="lastFailedLogins">Last failed logins</h3>
+              <h4 class="card-title" trspan="lastFailedLogins">Last failed logins</h4>
               </div>
               <div class="card-body">
               <TMPL_VAR NAME="FAILED_LOGIN">
@@ -203,7 +203,7 @@
         <div id="oidcConsents">
             <div class="card border-secondary">
               <div class="card-header text-white bg-secondary">
-              <h3 class="card-title" trspan="oidcConsentsFull">OpenID-Connect Consents</h3>
+              <h4 class="card-title" trspan="oidcConsentsFull">OpenID-Connect Consents</h4>
               </div>
               <div class="card-body">
               <TMPL_VAR NAME="OIDC_CONSENTS">
@@ -220,7 +220,7 @@
             </div>
             <div class="card-body buttons">
             <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-success" role="button">
-              <span class="glyphicon glyphicon-ok"></span>
+              <span class="fas fa-check-circle"></span>
               <span trspan="imSure">I'm sure</span>
             </a>
             </div>
