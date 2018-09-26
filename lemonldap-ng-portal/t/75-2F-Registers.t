@@ -138,27 +138,20 @@ SKIP: {
     ok( $res->[2]->[0] =~ /2fregistration\.(?:min\.)?js/,
         'Found 2f registration js' );
 
-    ok(
-        $res->[2]->[0] =~
-qr%<img src="/static/bootstrap/totp.png" alt="totp2F" title="totp2F" />%,
-        'Found totp.png'
-    ) or print STDERR Dumper( $res->[2]->[0] );
-    ok(
-        $res->[2]->[0] =~
-          qr%<img src="/static/bootstrap/u2f.png" alt="u2F" title="u2F" />%,
-        'Found u2f.png'
-    ) or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/u" class="nodecor">%,
+    ok( $res->[2]->[0] =~ qr%<img src="/static/bootstrap/totp.png".*?/>%,
+        'Found totp.png' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ qr%<img src="/static/bootstrap/u2f.png".*?/>%,
+        'Found u2f.png' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/u".*?>%,
         'Found 2fregisters/u link' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/totp" class="nodecor">%,
+    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/totp".*?>%,
         'Found 2fregisters/totp link' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok(
-        $res->[2]->[0] =~
-qr%<td class="align-middle" >TOTP</td><td class="align-middle">(\d{10})</td><td class="data-epoch">\d{10}</td>%,
-        "TOTP epoch $1 found"
-    ) or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ qr%TOTP.*epoch.*(\d{10})%m, "TOTP epoch $1 found" )
+      or print STDERR Dumper( $res->[2]->[0] );
 
     ok(
         $res = $client->_post(
