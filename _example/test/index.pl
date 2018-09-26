@@ -73,20 +73,22 @@ print "</head>\n";
 print "<body>\n";
 
 print "<div id=\"content\" class=\"container\">\n";
-print "<div class=\"panel panel-info panel-body\">\n";
+print "<div class=\"card border-info\">\n";
 
-print "<div class=\"page-header\">\n";
+print "<div class=\"card-header text-white bg-info mb-3\">\n";
 print "<h1 class=\"text-center\">$name</h1>\n";
 print "</div>\n";
 
-print "<div class=\"panel panel-info\">\n";
-print "<div class=\"panel-heading\">\n";
-print "<h2 class=\"panel-title text-center\">Main information</h2>\n";
+print "<div class=\"card-body\">\n";
+
+print "<div class=\"card border-info mb-3\">\n";
+print "<div class=\"card-header text-white bg-info\">\n";
+print "<h2 class=\"card-title text-center\">Main information</h2>\n";
 print "</div>\n";
-print "<div class=\"panel-body\">\n";
+print "<div class=\"card-body\">\n";
 print "<ul class=\"list-unstyled\">\n";
 print
-"<li><strong>Authentication status:</strong> <span class=\"label label-success\">Success</span></li>\n";
+"<li><strong>Authentication status:</strong> <span class=\"badge badge-success\">Success</span></li>\n";
 print "<li>Connected user: <ul>\n";
 print "<li><tt>\$ENV{HTTP_AUTH_USER}</tt>: $ENV{HTTP_AUTH_USER}</li>\n";
 print "<li><tt>\$ENV{REMOTE_USER}</tt>: $ENV{REMOTE_USER}</li>\n";
@@ -97,11 +99,11 @@ print
 print "</div>\n";
 print "</div>\n";
 
-print "<div class=\"panel panel-info\">\n";
-print "<div class=\"panel-heading\">\n";
-print "<h2 class=\"panel-title text-center\">HTTP headers</h2>\n";
+print "<div class=\"card border-info mb-3\">\n";
+print "<div class=\"card-header text-white bg-info\">\n";
+print "<h2 class=\"card-title text-center\">HTTP headers</h2>\n";
 print "</div>\n";
-print "<div class=\"panel-body\">\n";
+print "<div class=\"card-body\">\n";
 print
 "<p>To know who is connected in your applications, you can read HTTP headers:</p>\n";
 print "<div class=\"table-responsive\">\n";
@@ -128,11 +130,11 @@ print
 print "</div>\n";
 print "</div>\n";
 
-print "<div class=\"panel panel-info\">\n";
-print "<div class=\"panel-heading\">\n";
-print "<h2 class=\"panel-title text-center\">Scripts parameters</h2>\n";
+print "<div class=\"card border-info mb-3\">\n";
+print "<div class=\"card-header text-white bg-info\">\n";
+print "<h2 class=\"card-title text-center\">Scripts parameters</h2>\n";
 print "</div>\n";
-print "<div class=\"panel-body\">\n";
+print "<div class=\"card-body\">\n";
 print "<p>Find here all GET or POST parameters sent to this page:</p>\n";
 print "<div class=\"table-responsive\">\n";
 print "<table class=\"table table-striped table-hover\">\n";
@@ -150,11 +152,11 @@ print
 print "</div>\n";
 print "</div>\n";
 
-print "<div class=\"panel panel-info\">\n";
-print "<div class=\"panel-heading\">\n";
-print "<h2 class=\"panel-title text-center\">Environment for Perl CGI</h2>\n";
+print "<div class=\"card border-info mb-3\">\n";
+print "<div class=\"card-header text-white bg-info\">\n";
+print "<h2 class=\"card-title text-center\">Environment for Perl CGI</h2>\n";
 print "</div>\n";
-print "<div class=\"panel-body\">\n";
+print "<div class=\"card-body\">\n";
 print "<div class=\"table-responsive\">\n";
 print "<table class=\"table table-striped table-hover\">\n";
 print
@@ -172,6 +174,7 @@ print "</div>\n";
 print "</div>\n";
 print "</div>\n";
 
+print "</div>\n";
 print "</div>\n";
 print "</div>\n";
 
