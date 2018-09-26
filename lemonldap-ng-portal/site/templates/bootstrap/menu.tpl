@@ -62,12 +62,12 @@
           </a>
           <ul class="dropdown-menu" role="menu">
             <TMPL_IF NAME="sfaManager">
-              <li class="dropdown-item"><a href="/2fregisters">
+              <li class="dropdown-item"><a href="/2fregisters" class="nav-link">
                 <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/sfa_manager.png" width="16" height="16" alt="refresh" />
                 <span trspan="sfaManager">sfaManager</span>
               </a></li>
             </TMPL_IF>
-            <li class="dropdown-item"><a href="/refresh">
+            <li class="dropdown-item"><a href="/refresh" class="nav-link">
               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/arrow_refresh.png" width="16" height="16" alt="refresh" />
               <span trspan="refreshrights">Refresh</span>
             </a></li>

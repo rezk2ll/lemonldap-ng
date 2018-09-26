@@ -6,14 +6,14 @@
 
 <div class="form">
   <input type="hidden" name="nossl" value="1" />
-  <div class="form-group input-group sslclick buttons max">
+  <div class="sslclick buttons max">
     <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/modules/SSL.png" alt="<TMPL_VAR NAME="module">" class="img-thumbnail" />
   </div>
 
   <TMPL_INCLUDE NAME="checklogins.tpl">
 
   <button type="submit" class="btn btn-success sslclick" >
-    <span class="glyphicon glyphicon-log-in"></span>
+    <span class="fas fa-sign-in-alt"></span>
     <span trspan="connect">Connect</span>
   </button>
 </div>
