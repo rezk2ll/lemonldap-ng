@@ -10,12 +10,12 @@
     <TMPL_IF NAME="AUTH_URL">
       <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
     </TMPL_IF>
-    <div class="card text-white bg-info">
-      <div class="card-header">
+    <div class="card border-info">
+      <div class="card-header text-white bg-info">
         <h3 class="card-title" trspan="gotNewMessages">You have some new messages</h3>
       </div>
       <div class="card-body">
-        <div class="form card.card-body">
+        <div class="form">
         <TMPL_VAR NAME="NOTIFICATION">
         </div>
       </div>
@@ -23,7 +23,7 @@
 
     <div class="buttons">
       <button type="submit" class="positive btn btn-success">
-        <span class="glyphicon glyphicon-ok"></span>
+        <span class="fas fa-check-circle"></span>
         <span trspan="accept">Accept</span>
       </button>
     </div>
