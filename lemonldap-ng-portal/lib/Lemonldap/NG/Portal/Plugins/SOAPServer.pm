@@ -494,18 +494,18 @@ __DATA__
 <?xml version="1.0" encoding="UTF-8"?>
 
 <wsdl:definitions
-    targetNamespace="urn:Lemonldap/NG/Common/CGI/SOAPService"
-    xmlns:impl="urn:Lemonldap/NG/Common/CGI/SOAPService"
+    targetNamespace="urn:Lemonldap/NG/Common/PSGI/SOAPService"
+    xmlns:impl="urn:Lemonldap/NG/Common/PSGI/SOAPService"
     xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns1="urn:Lemonldap/NG/Common/CGI/SOAPService">
+    xmlns:tns1="urn:Lemonldap/NG/Common/PSGI/SOAPService">
 
   <!-- types definitions -->
 
   <wsdl:types>
-    <schema targetNamespace="urn:Lemonldap/NG/Common/CGI/SOAPService" xmlns="http://www.w3.org/2001/XMLSchema">
+    <schema targetNamespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" xmlns="http://www.w3.org/2001/XMLSchema">
       <import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
 
       <complexType name="CookiesSequence">
@@ -602,46 +602,46 @@ $attrList
     <wsdl:operation name="error">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="errorRequest">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
       </wsdl:input>
       <wsdl:output name="errorResponse">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getCookies">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="getCookiesRequest">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
       </wsdl:input>
       <wsdl:output name="getCookiesResponse">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getAttributes">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="getAttributesRequest">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
       </wsdl:input>
       <wsdl:output name="getAttributesResponse">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="isAuthorizedURI">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="isAuthorizedURIRequest">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
       </wsdl:input>
       <wsdl:output name="isAuthorizedURIResponse">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getMenuApplications">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="getMenuApplicationsRequest">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
       </wsdl:input>
       <wsdl:output name="getMenuApplicationsResponse">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/PSGI/SOAPService" use="encoded" />
       </wsdl:output>
     </wsdl:operation>
 
