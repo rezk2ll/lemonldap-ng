@@ -5,19 +5,15 @@
 <div class="message message-positive alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
 
 <form id="upgrd" action="/upgradesession" method="post" class="password" role="form">
-  <div class="form">
-    <div class="form-group input-group">
-        <input type="hidden" name="confirm" value="<TMPL_VAR NAME="CONFIRMKEY">">
-        <input type="hidden" name="url" value="<TMPL_VAR NAME="URL">">
-    </div>
-  </div>
+  <input type="hidden" name="confirm" value="<TMPL_VAR NAME="CONFIRMKEY">">
+  <input type="hidden" name="url" value="<TMPL_VAR NAME="URL">">
   <div class="buttons">
     <button type="submit" class="btn btn-success">
-      <span class="glyphicon glyphicon-log-in"></span>
+      <span class="fas fa-sign-in-alt"></span>
       <span trspan="upgradeSession">Upgrade session</span>
     </button>
     <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
-      <span class="glyphicon glyphicon-home"></span>&nbsp;
+      <span class="fas fa-home"></span>&nbsp;
       <span trspan="goToPortal">Go to portal</span>
     </a>
   </div>

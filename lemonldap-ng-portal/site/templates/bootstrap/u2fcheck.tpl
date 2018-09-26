@@ -29,7 +29,7 @@
 
 <div class="buttons">
   <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1" class="btn btn-primary" role="button">
-    <span class="glyphicon glyphicon-home"></span>&nbsp;
+    <span class="fas fa-home"></span>
     <span trspan="cancel">Cancel</span>
   </a>
 </div>
