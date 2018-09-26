@@ -61,6 +61,33 @@ has exportedAttr => (
     }
 );
 
+########
+# WSDL #
+########
+
+has wsdl => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        my ($self) = @_;
+        my @cookies = ( $self->conf->{cookieName} );
+        push @cookies, $self->conf->{cookieName} . 'http'
+          if ( $self->conf->{securedCookie} >= 2 );
+        my $cookieList = join "\n",
+          map { "<element name='$_' type='xsd:string'></element>" } @cookies;
+
+        my $attrList = join "\n", map {
+            "<element name='$_' type='xsd:string' nillable='true'></element>"
+        } $self->exportedAttr;
+        my $resp = join( '', <DATA> );
+        close DATA;
+        $resp =~ s/\$cookieList/$cookieList/g;
+        $resp =~ s/\$attrList/$attrList/g;
+        $resp =~ s/\$portal/$self->conf->{portal}/ge;
+        return [ 200, [], [$resp] ];
+    }
+);
+
 # INITIALIZATION
 
 sub init {
@@ -97,8 +124,8 @@ sub init {
         $self->addAuthRoute( config => { '*' => 'badSoapRequest' }, ['POST'] );
     }
     if ( $self->conf->{wsdlServer} ) {
-        $self->addUnauthRoute( 'portal.wsdl' => 'wsdl', ['GET'] );
-        $self->addAuthRoute( 'portal.wsdl' => 'wsdl', ['GET'] );
+        $self->addUnauthRoute( 'portal.wsdl' => 'getWsdl', ['GET'] );
+        $self->addAuthRoute( 'portal.wsdl' => 'getWsdl', ['GET'] );
     }
     1;
 }
@@ -107,7 +134,8 @@ sub init {
 sub unauthSessions {
     my ( $self, $req ) = @_;
     return $self->dispatch_to( $req,
-        qw(getCookies getAttributes isAuthorizedURI getMenuApplications) );
+        qw(error getCookies getAttributes isAuthorizedURI getMenuApplications)
+    );
 }
 
 sub unauthAdminSessions {
@@ -147,6 +175,15 @@ sub dispatch_to {
 
 # Called in SOAP context, returns cookies in an array.
 # This subroutine works only for portals working with user and password
+
+sub getWsdl {
+    return $_[0]->wsdl;
+}
+
+sub error {
+    my ( $self, $no, $lang ) = @_;
+    return "Error $no";
+}
 
 =begin WSDL
 
@@ -451,16 +488,6 @@ sub _buildSoapHash {
     return \SOAP::Data->value(@tmp);
 }
 
-########
-# WSDL #
-########
-
-sub wsdl {
-    my($self,$req)=@_;
-    # <element name='$_' type='xsd:string'></element>
-    # <element name='$_' type='xsd:string' nillable='true'></element>
-}
-
 1;
 
 __DATA__
@@ -507,7 +534,7 @@ $attrList
     </schema>
   </wsdl:types>
 
-  <!-- authentication service -->
+  <!-- sessions service -->
 
   <wsdl:message name="errorRequest">
     <wsdl:part name="code" type="xsd:int" />
@@ -524,102 +551,6 @@ $attrList
   <wsdl:message name="getCookiesResponse">
     <wsdl:part name="session" type="tns1:GetCookieResponse" />
   </wsdl:message>
-
-  <wsdl:portType name="authenticationPortType">
-    <wsdl:operation name="error" parameterOrder="code lang">
-      <wsdl:input message="impl:errorRequest" name="errorRequest" />
-      <wsdl:output message="impl:errorResponse" name="errorResponse" />
-    </wsdl:operation>
-    <wsdl:operation name="getCookies" parameterOrder="user password">
-      <wsdl:input message="impl:getCookiesRequest" name="getCookiesRequest" />
-      <wsdl:output message="impl:getCookiesResponse" name="getCookiesResponse" />
-    </wsdl:operation>
-  </wsdl:portType>
-
-  <wsdl:binding name="authenticationBinding" type="impl:authenticationPortType">
-    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="error">
-      <wsdlsoap:operation soapAction="" />
-      <wsdl:input name="errorRequest">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
-      </wsdl:input>
-      <wsdl:output name="errorResponse">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getCookies">
-      <wsdlsoap:operation soapAction="" />
-      <wsdl:input name="getCookiesRequest">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
-      </wsdl:input>
-      <wsdl:output name="getCookiesResponse">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
-
-  <wsdl:service name="authenticationService">
-    <wsdl:port binding="impl:authenticationBinding" name="authenticationPort">
-      <wsdlsoap:address location="$portal" />
-    </wsdl:port>
-  </wsdl:service>
-
-  <!-- notification service -->
-
-  <wsdl:message name="newNotificationRequest">
-    <wsdl:part name="notification" type="xsd:string" />
-  </wsdl:message>
-  <wsdl:message name="newNotificationResponse">
-    <wsdl:part name="result" type="xsd:int" />
-  </wsdl:message>
-  <wsdl:message name="deleteNotificationRequest">
-    <wsdl:part name="uid" type="xsd:string" />
-    <wsdl:part name="myref" type="xsd:string" />
-  </wsdl:message>
-  <wsdl:message name="deleteNotificationResponse">
-    <wsdl:part name="result" type="xsd:int" />
-  </wsdl:message>
-
-  <wsdl:portType name="notificationPortType">
-    <wsdl:operation name="newNotification" parameterOrder="notification">
-      <wsdl:input message="impl:newNotificationRequest" name="newNotificationRequest" />
-      <wsdl:output message="impl:newNotificationResponse" name="newNotificationResponse" />
-    </wsdl:operation>
-    <wsdl:operation name="deleteNotification" parameterOrder="uid myref">
-      <wsdl:input message="impl:deleteNotificationRequest" name="deleteNotificationRequest" />
-      <wsdl:output message="impl:deleteNotificationResponse" name="deleteNotificationResponse" />
-    </wsdl:operation>
-  </wsdl:portType>
-
-  <wsdl:binding name="notificationBinding" type="impl:notificationPortType">
-    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="newNotification">
-      <wsdlsoap:operation soapAction="" />
-      <wsdl:input name="newNotificationRequest">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
-      </wsdl:input>
-      <wsdl:output name="newNotificationResponse">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="deleteNotification">
-      <wsdlsoap:operation soapAction="" />
-      <wsdl:input name="deleteNotificationRequest">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
-      </wsdl:input>
-      <wsdl:output name="deleteNotificationResponse">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
-
-  <wsdl:service name="notificationService">
-    <wsdl:port binding="impl:notificationBinding" name="notificationPort">
-      <wsdlsoap:address location="$portal/notification" />
-    </wsdl:port>
-  </wsdl:service>
-
-  <!-- sessions service -->
 
   <wsdl:message name="getAttributesRequest">
     <wsdl:part name="id" type="xsd:string" />
@@ -644,6 +575,14 @@ $attrList
   </wsdl:message>
 
   <wsdl:portType name="sessionsPortType">
+    <wsdl:operation name="error" parameterOrder="code lang">
+      <wsdl:input message="impl:errorRequest" name="errorRequest" />
+      <wsdl:output message="impl:errorResponse" name="errorResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getCookies" parameterOrder="user password">
+      <wsdl:input message="impl:getCookiesRequest" name="getCookiesRequest" />
+      <wsdl:output message="impl:getCookiesResponse" name="getCookiesResponse" />
+    </wsdl:operation>
     <wsdl:operation name="getAttributes" parameterOrder="id">
       <wsdl:input message="impl:getAttributesRequest" name="getAttributesRequest" />
       <wsdl:output message="impl:getAttributesResponse" name="getAttributesResponse" />
@@ -660,6 +599,24 @@ $attrList
 
   <wsdl:binding name="sessionsBinding" type="impl:sessionsPortType">
     <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="error">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="errorRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+      </wsdl:input>
+      <wsdl:output name="errorResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCookies">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getCookiesRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+      </wsdl:input>
+      <wsdl:output name="getCookiesResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getAttributes">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="getAttributesRequest">
@@ -695,5 +652,7 @@ $attrList
       <wsdlsoap:address location="$portal/sessions" />
     </wsdl:port>
   </wsdl:service>
+
+  <!-- end sessions service -->
 
 </wsdl:definitions>

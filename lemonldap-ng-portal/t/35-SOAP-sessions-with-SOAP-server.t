@@ -9,7 +9,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 7;
+my $maintests = 9;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -108,6 +108,9 @@ SKIP: {
         'Test if user is reject on IdP'
     );
     expectReject($res);
+    ok( $res = $issuer->_get('/portal.wsdl'), 'Test WSDL' );
+    expectOK($res);
+    ok( $res->[2]->[0] =~ /wsdl:operation/s, ' Content contains wsdl def' );
 }
 
 count($maintests);
@@ -132,6 +135,7 @@ sub issuer {
                 authentication    => 'Demo',
                 userDB            => 'Same',
                 soapSessionServer => 1,
+                wsdlServer        => 1,
             }
         }
     );
