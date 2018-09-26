@@ -1,30 +1,47 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-<div class="container">
-  <div id="color" class="message message-positive alert"><span id="msg" trspan="clickOnYubikey"></span></div>
-</div>
   <main id="menucontent" class="container">
-    <div class="card text-white bg-info">
-     <div class="card-body">
+
+    <div id="color" class="message message-positive alert"><span id="msg" trspan="clickOnYubikey"></span></div>
+
+    <div class="card">
+      <div class="card-body">
       <form action="/2fregisters/yubikey/register" method="post">
-       <div class="form-group">
-		<b><span trspan="name">Name</span></b> : <input type="text" id="UBKName" name="UBKName" value="MyYubikey"/>
-		&nbsp;&nbsp;&nbsp;&nbsp;
-        <b><span trspan="id">Id</span></b></b> : <input type="text" id="otp" name="otp" />
-        <input class ="hidden" type="submit" value="Submit">
-       </div>
+
+      <div class="row">
+
+        <div class="col-md-6 text-center">
+          <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/yubikey.png" alt="Yubikey" title="Yubikey" />
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="UBKName"><span trspan="name">Name</span></label>
+            <input type="text" class="form-control" id="UBKName" name="UBKName" value="MyYubikey" trplaceholder="name" />
+          </div>
+          <div class="form-group">
+            <label for="otp"><span trspan="id">Id</span></label>
+            <input type="text" class="form-control" id="otp" name="otp" trplaceholder="Id" />
+          </div>
+          <input class="hidden" type="submit" value="Submit" />
+        </div>
+
+      </div>
+
       </form>
-     </div>
+      </div>
     </div>
+
   </main>
+
 <div class="buttons">
-  <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-warning" role="button">
-    <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+  <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-secondary" role="button">
+    <span class="fas fa-shield-alt"></span>
     <span trspan="sfaManager">sfaManager</span>
   </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;
+  
   <a id="goback" href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1<TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
-    <span class="glyphicon glyphicon-home"></span>&nbsp;
+    <span class="fas fa-home"></span>
     <span trspan="goToPortal">Go to portal</span>
   </a>
 </div>

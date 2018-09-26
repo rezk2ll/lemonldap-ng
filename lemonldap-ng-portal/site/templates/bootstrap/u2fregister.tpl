@@ -27,7 +27,7 @@
            <span class="fas fa-save"></span>
            <span trspan="register">Register</span>
          </span>
-         &nbsp;&nbsp;
+         
          <span id="verify" class="btn btn-success" role="button">
            <span class="fas fa-check-circle"></span>
            <span trspan="verify">Verify</span>
@@ -42,7 +42,7 @@
     <span class="fas fa-shield-alt"></span>
     <span trspan="sfaManager">sfaManager</span>
   </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;
+  
   <a id="goback" href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1<TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
     <span class="fas fa-home"></span>
     <span trspan="goToPortal">Go to portal</span>

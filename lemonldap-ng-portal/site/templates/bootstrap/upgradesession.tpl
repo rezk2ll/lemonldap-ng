@@ -13,7 +13,7 @@
       <span trspan="upgradeSession">Upgrade session</span>
     </button>
     <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
-      <span class="fas fa-home"></span>&nbsp;
+      <span class="fas fa-home"></span>
       <span trspan="goToPortal">Go to portal</span>
     </a>
   </div>

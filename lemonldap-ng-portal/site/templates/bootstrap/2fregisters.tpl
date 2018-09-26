@@ -9,8 +9,9 @@
    </TMPL_IF>
   </div>
   <TMPL_IF NAME="SFDEVICES">
-    <div class="alert alert-info">
-	<table class="table table-hover table-condensed table-responsive">
+    <div class="card mb-3 border-secondary">
+    <div class="card-body table-responsive">
+    <table class="table table-hover">
       <thead>
         <tr>
           <th><span trspan="type">Type</span></th>
@@ -22,31 +23,43 @@
       <tbody>
         <TMPL_LOOP NAME="SFDEVICES">
           <tr id='delete-<TMPL_VAR NAME="epoch">'>
-	          <td class="align-middle" ><TMPL_VAR NAME="type"></td><td class="align-middle"><TMPL_VAR NAME="name"></td><td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
-	          <td>
-	           <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
-	             <span class="fas fa-minus-circle"></span>
-	             <span trspan="unregister">Unregister</span>
-	           </span>
-	          </td>
+            <td class="align-middle" ><TMPL_VAR NAME="type"></td>
+            <td class="align-middle"><TMPL_VAR NAME="name"></td>
+            <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
+            <td>
+              <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
+                <span class="fas fa-minus-circle"></span>
+                <span trspan="unregister">Unregister</span>
+	      </span>
+	    </td>
           </tr>
         </TMPL_LOOP>
       </tbody>
     </table>
     </div>
+    </div>
   </TMPL_IF>
-  <br>
-  <div class="buttons"> 
+
+  <div class="text-center mb-3 row"> 
     <TMPL_LOOP NAME="MODULES">
-      <a href="<TMPL_VAR NAME="URL">" class="nodecor mx-3">
+    <div class="col">
+    <div class="card border-secondary">
+      <div class="card-body py-3">
+      <a href="<TMPL_VAR NAME="URL">" class="nodecor">
         <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2F" title="<TMPL_VAR NAME="CODE">2F" />
       </a>
+      </div>
+      <div class="card-footer text-white text-uppercase bg-secondary"><TMPL_VAR NAME="CODE">2F</div>
+    </div>
+    </div>
     </TMPL_LOOP>
   </div>
+
 </div>
-<div class="buttons mt-3">
+
+<div class="buttons">
   <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1" class="btn btn-primary" role="button">
-    <span class="fas fa-home"></span>&nbsp;
+    <span class="fas fa-home"></span>
     <span trspan="goToPortal">Go to portal</span>
   </a>
 </div>

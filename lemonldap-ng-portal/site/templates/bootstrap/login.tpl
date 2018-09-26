@@ -183,7 +183,7 @@
 
       <div class="buttons">
       <button type="submit" class="btn btn-success">
-        <span class="fas fa-sign-in-alt"></span>&nbsp;
+        <span class="fas fa-sign-in-alt"></span>
         <span trspan="connect">Connect</span>
       </button>
       </div>
@@ -209,7 +209,7 @@
       <div class="buttons">
       <TMPL_IF NAME="MSG"><TMPL_VAR NAME="MSG"></TMPL_IF>
         <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1<TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
-          <span class="fas fa-home"></span>&nbsp;
+          <span class="fas fa-home"></span>
           <span trspan="goToPortal">Go to portal</span>
         </a>
       </div>
