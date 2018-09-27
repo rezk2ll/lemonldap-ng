@@ -140,21 +140,21 @@ sub display {
         );
     }
 
-    # 1.4 Brute-Force attack detected
-    elsif ( $req->{error} == PE_WAIT ) {
-        $self->logger->debug('Display: waiting before retrying authentication');
-        $self->logger->debug('Hidden values -> '. Dumper( $req->{portalHiddenFormValues}));
-        $skinfile       = 'info';
-        %templateParams = (
-            AUTH_ERROR      => $self->error,
-            AUTH_ERROR_TYPE => $req->error_type,
-            MSG             => '<span trspan="' . "PE$req->{error}" . '">">' . "PE$req->{error}" . '</span>',
-            URL             => $req->{urldc},
-            HIDDEN_INPUTS   => $self->buildHiddenForm($req),
-            ACTIVE_TIMER    => $req->data->{activeTimer},
-            FORM_METHOD     => $self->conf->{infoFormMethod},
-        );
-    }
+    # # 1.4 Brute-Force attack detected
+    # elsif ( $req->{error} == PE_WAIT ) {
+    #     $self->logger->debug('Display: waiting before retrying authentication');
+    #     $self->logger->debug('Hidden values -> '. Dumper( $req->{portalHiddenFormValues}));
+    #     $skinfile       = 'info';
+    #     %templateParams = (
+    #         AUTH_ERROR      => $self->error,
+    #         AUTH_ERROR_TYPE => $req->error_type,
+    #         MSG             => '<span trspan="' . "PE$req->{error}" . '">">' . "PE$req->{error}" . '</span>',
+    #         URL             => $req->{urldc},
+    #         HIDDEN_INPUTS   => $self->buildHiddenForm($req),
+    #         ACTIVE_TIMER    => $req->data->{activeTimer},
+    #         FORM_METHOD     => $self->conf->{infoFormMethod},
+    #     );
+    # }
 
     # 1.4 OpenID menu page
     elsif ($req->{error} == PE_OPENID_EMPTY
@@ -330,6 +330,7 @@ sub display {
         # * Logout message
         # * Bad URL error
         elsif ($req->{error} == PE_LOGOUT_OK
+            or $req->{error} == PE_WAIT
             or $req->{error} == PE_BADURL )
         {
             %templateParams = (

@@ -1,6 +1,5 @@
 package Lemonldap::NG::Portal::Plugins::BruteForceProtection;
 
-use Data::Dumper;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_WAIT);
@@ -20,41 +19,42 @@ sub init {1}
 sub run {
     my ( $self, $req ) = @_;
 
-    my $countFailed = 0;
-    my $lastFailedLoginEpoch = 0;
-    
-    # Last failed login epoch before this authentication -> Auth_N-1
-    if ( defined $req->sessionInfo->{_loginHistory}->{failedLogin} ){ 
+    my $countFailed          = 0;
+    my @lastFailedLoginEpoch = ();
+
+    # Auth_N-2 failed login epoch
+    if ( defined $req->sessionInfo->{_loginHistory}->{failedLogin} ) {
         $countFailed = @{ $req->sessionInfo->{_loginHistory}->{failedLogin} };
     }
-    if ( defined $req->sessionInfo->{_loginHistory}->{failedLogin}->[1] ){ 
-        $lastFailedLoginEpoch = $req->sessionInfo->{_loginHistory}->{failedLogin}->[1]->{_utime}
+
+    $self->logger->debug( " Number of failedLogin = $countFailed" );
+    return PE_OK if ( $countFailed < 3 );
+
+    foreach ( 0 .. 2 ) {
+        if ( defined $req->sessionInfo->{_loginHistory}->{failedLogin}->[$_] )
+        {
+            push @lastFailedLoginEpoch,
+                $req->sessionInfo->{_loginHistory}->{failedLogin}->[$_]
+                ->{_utime};
+        }
     }
 
-    # If Auth. N-1 older than 10 minutes -> another try allowed
-    if ( ( time - $lastFailedLoginEpoch ) > 600 ) {
-        $lastFailedLoginEpoch = 0;
-    }
+    # If Auth_N-2 older than 5 minutes -> another try allowed
+    return PE_OK
+        if ( ( $lastFailedLoginEpoch[0] - $lastFailedLoginEpoch[2] ) > 300 );
 
     # Delta between the two last failed logins -> Auth_N - Auth_N-1
-    my $delta = time - $lastFailedLoginEpoch;
+    my $delta = time - $lastFailedLoginEpoch[1];
 
-    $self->logger->debug( " successLogin -> " . Dumper( $req->sessionInfo->{_loginHistory}->{successLogin} ) );
-    $self->logger->debug( " failedLogin -> " . Dumper( $req->sessionInfo->{_loginHistory}->{failedLogin} ) );
-    $self->logger->debug(" Number of failedLogin -> $countFailed");
-    $self->logger->debug(" Last failedLogin epoch -> $lastFailedLoginEpoch");
-    $self->logger->debug( " Local time = " . localtime );
-    $self->logger->debug(" Delta Auth_N - Auth_N-1 = $delta");
+    $self->logger->debug( " Local time = " . time );
+    $self->logger->debug(" Delta time - lastFailedLoginN-1 = $delta");
 
-# If Delta between the two last failed logins < 10s and more than 2 failedLogins => waiting = failedLogins * 10s
-    if ( $countFailed > 2 and ( $delta < 10 ) ) {
-
-        #sleep $countFailed * 10;
-        return PE_WAIT;
-
-    }
-
-    return PE_OK;
+    # Delta between the two last failed logins < 30s => wait
+    return PE_OK unless ( $delta < 31 );
+    
+    # Account locked
+    shift @{ $req->sessionInfo->{_loginHistory}->{failedLogin} };
+    return PE_WAIT;
 }
 
 1;
