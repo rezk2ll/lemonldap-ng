@@ -92,18 +92,39 @@ sub init {
 sub checkChoice {
     my ( $self, $req ) = @_;
     my $name;
-    foreach ( keys %{ $self->catch } ) {
-        if ( $req->path_info =~ $self->catch->{$_} ) {
-            $name = $_;
-            last;
+
+    # Check Choice from pdata
+    if ( defined $req->pdata->{_choice} ) {
+
+        $name = $req->pdata->{_choice};
+        $self->logger->debug("Choice $name selected from pdata");
+    }
+
+    unless ($name) {
+
+        # Check with catch method
+        foreach ( keys %{ $self->catch } ) {
+            if ( $req->path_info =~ $self->catch->{$_} ) {
+                $name = $_;
+                $self->logger->debug(
+                    "Choice $name selected from " . $req->path_info );
+                last;
+            }
         }
     }
-    $name ||=
-         $req->param( $self->conf->{authChoiceParam} )
-      || $req->userData->{_choice}
-      || $req->sessionInfo->{_choice}
-      || $req->pdata->{_choice}
-      or return 0;
+
+    unless ($name) {
+
+        # Check with other methods
+        $name ||=
+             $req->param( $self->conf->{authChoiceParam} )
+          || $req->userData->{_choice}
+          || $req->sessionInfo->{_choice}
+          or return 0;
+
+        $self->logger->debug("Choice $name selected");
+    }
+
     unless ( defined $self->modules->{$name} ) {
         $self->logger->error("Unknown choice '$name'");
         return 0;
