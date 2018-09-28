@@ -73,8 +73,8 @@ sub controlUrl {
             }
         }
     }
-    $req->{data}->{_url} ||= $req->pdata->{_url};
-    my $url = $req->param('url');
+    $req->{data}->{_url} ||= '';
+    my $url = $req->param('url') || $req->pdata->{_url};
     if ($url) {
 
         # REJECT NON BASE64 URL
@@ -120,6 +120,8 @@ sub controlUrl {
             return PE_BADURL;
         }
 
+        $req->env->{urldc}  = $req->{urldc};
+        $req->env->{_url}   = $req->{_url};
         $req->data->{_url}  = $url;
         $req->pdata->{_url} = $url;
     }
