@@ -1,5 +1,6 @@
 package Lemonldap::NG::Portal::Plugins::BruteForceProtection;
 
+use Data::Dumper;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_WAIT);
@@ -56,7 +57,7 @@ sub run {
         unless ( $delta <= $self->conf->{bruteForceProtectionTempo} );
 
     # Account locked
-    shift @{ $req->sessionInfo->{_loginHistory}->{failedLogin} };
+    #shift @{ $req->sessionInfo->{_loginHistory}->{failedLogin} };
     return PE_WAIT;
 }
 
