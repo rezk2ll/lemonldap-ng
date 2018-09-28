@@ -611,6 +611,14 @@ sub attributes {
             'default' => 1,
             'type'    => 'bool'
         },
+        'bruteForceProtectionMaxAge' => {
+            'default' => 300,
+            'type'    => 'int'
+        },
+        'bruteForceProtectionTempo' => {
+            'default' => 30,
+            'type'    => 'int'
+        },
         'captcha_login_enabled' => {
             'default' => 0,
             'type'    => 'bool'

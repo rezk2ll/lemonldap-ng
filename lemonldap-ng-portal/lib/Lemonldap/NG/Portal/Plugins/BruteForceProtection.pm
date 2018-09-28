@@ -19,6 +19,7 @@ sub init {1}
 sub run {
     my ( $self, $req ) = @_;
 
+    my $MaxAge               = 0;
     my $countFailed          = 0;
     my @lastFailedLoginEpoch = ();
 
@@ -27,7 +28,7 @@ sub run {
         $countFailed = @{ $req->sessionInfo->{_loginHistory}->{failedLogin} };
     }
 
-    $self->logger->debug( " Number of failedLogin = $countFailed" );
+    $self->logger->debug(" Number of failedLogin = $countFailed");
     return PE_OK if ( $countFailed < 3 );
 
     foreach ( 0 .. 2 ) {
@@ -39,19 +40,20 @@ sub run {
         }
     }
 
-    # If Auth_N-2 older than 5 minutes -> another try allowed
+    # If Auth_N-2 older than MaxAge -> another try allowed
+    $MaxAge = $lastFailedLoginEpoch[0] - $lastFailedLoginEpoch[2];
+    $self->logger->debug( " MaxAge = $MaxAge" );
     return PE_OK
-        if ( ( $lastFailedLoginEpoch[0] - $lastFailedLoginEpoch[2] ) > 300 );
+        if ( $MaxAge > $self->conf->{bruteForceProtectionMaxAge} );
 
     # Delta between the two last failed logins -> Auth_N - Auth_N-1
     my $delta = time - $lastFailedLoginEpoch[1];
-
-    $self->logger->debug( " Local time = " . time );
-    $self->logger->debug(" Delta time - lastFailedLoginN-1 = $delta");
+    $self->logger->debug(" Delta = $delta");
 
     # Delta between the two last failed logins < 30s => wait
-    return PE_OK unless ( $delta < 31 );
-    
+    return PE_OK
+        unless ( $delta <= $self->conf->{bruteForceProtectionTempo} );
+
     # Account locked
     shift @{ $req->sessionInfo->{_loginHistory}->{failedLogin} };
     return PE_WAIT;
