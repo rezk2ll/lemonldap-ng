@@ -21,8 +21,6 @@ sub run {
     my ( $self, $req ) = @_;
     if ( $req->param('checkLogins') ) {
         $self->logger->debug('History asked');
-        #$self->logger->debug(' successLogins -> ' . Dumper($req->sessionInfo->{_loginHistory}->{successLogin} ));
-        #$self->logger->debug(' failedLogins -> ' . Dumper($req->sessionInfo->{_loginHistory}->{failedLogin} ));
         $req->info(
             (
                 $req->sessionInfo->{_loginHistory}->{successLogin}
