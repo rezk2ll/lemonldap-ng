@@ -260,9 +260,9 @@ This file contains:
         return node.nodes.splice(n, 0, {
           id: node.id + "/n" + (id++),
           title: 'New rule',
-          re: '1',
+          re: 'Message',
           comment: 'New rule',
-          data: 'Message',
+          data: '1',
           type: "grant"
         });
       };

@@ -19,6 +19,8 @@ sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;
     foreach ( keys %{ $self->conf->{grantSessionRules} } ) {
+		$self->logger->debug("GrantRule key -> $_");
+		$self->logger->debug("GrantRule value -> " . $self->conf->{grantSessionRules}->{$_} );
         my $rule =
           $hd->buildSub(
             $hd->substitute( $self->conf->{grantSessionRules}->{$_} ) );

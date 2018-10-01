@@ -17,14 +17,15 @@
           <input class="form-control" ng-model="s.comment" ng-change="changeRuleTitle(s)"/>
         </td>
         <td>
-          <input class="form-control" ng-model="s.re" ng-change="changeRuleTitle(s)"/>
-        </td>
-        <td>
           <input class="form-control" ng-model="s.data"/>
         </td>
         <td>
+          <input class="form-control" ng-model="s.re" ng-change="changeRuleTitle(s)"/>
+        </td>
+
+        <td>
           <span ng-if="s.re!='default'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="del(currentNode.nodes,$index)"/>
-          <span ng-if="$last" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"/>
+          <span ng-if="$last" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newGrantRule'})"/>
         </td>
       </tr>
     </tbody>
