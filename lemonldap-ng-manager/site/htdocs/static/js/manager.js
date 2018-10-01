@@ -257,7 +257,7 @@ This file contains:
         node = $scope._findContainer();
         l = node.nodes.length;
         n = l > 0 ? l - 1 : 0;
-        return node.nodes.splice(n, 0, {
+        return node.nodes.push({
           id: node.id + "/n" + (id++),
           title: 'New rule',
           re: 'Message',

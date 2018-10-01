@@ -5,12 +5,11 @@
   <table class="table">
     <tr>
       <th><span trspan="comment"></span></th>
-      <td ng-if="currentNode.re!='default'"><input id="rulecomment" class="form-control" ng-model="currentNode.comment" ng-change="changeRuleTitle(currentNode)"/></td>
-      <td ng-if="currentNode.re=='default'"><p><strong><span trspan="defaultRule"></span></strong></p></td>
+      <td><input id="rulecomment" class="form-control" ng-model="currentNode.comment" ng-change="changeRuleTitle(currentNode)"/></td>
     </tr>
     <tr>
       <th><span trspan="rule"></span></th>
-      <td><input id="rule" class="form-control"ng-model="currentNode.re" ng-change="changeRuleTitle(currentNode)"/></td>
+      <td><input id="rule" class="form-control" ng-model="currentNode.re" ng-change="changeRuleTitle(currentNode)"/></td>
     </tr>
     <tr>
       <th><span trspan="message"></span></th>

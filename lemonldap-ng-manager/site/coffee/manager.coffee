@@ -219,7 +219,7 @@ llapp.controller 'TreeCtrl', [
 			node = $scope._findContainer()
 			l = node.nodes.length
 			n = if l > 0 then l - 1 else 0
-			node.nodes.splice n, 0,
+			node.nodes.push
 				id: "#{node.id}/n#{id++}"
 				title: 'New rule'
 				re: 'Message'
