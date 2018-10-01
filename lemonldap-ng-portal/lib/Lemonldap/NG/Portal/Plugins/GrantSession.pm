@@ -76,8 +76,8 @@ sub run {
                 return $req->authResult(PE_SESSIONNOTGRANTED);
             }
         }
-        return PE_OK;
     }
+    return PE_OK;
 }
 
 1;
