@@ -11,9 +11,9 @@ my $res;
 my $client = LLNG::Manager::Test->new(
     {
         ini => {
-            authentication   => 'Demo',
-            userdb           => 'Same',
-            grantSessionRule => {
+            authentication    => 'Demo',
+            userdb            => 'Same',
+            grantSessionRules => {
                 no => '$uid ne "dwho"',
             }
         }
@@ -39,9 +39,9 @@ count(1);
 $client = LLNG::Manager::Test->new(
     {
         ini => {
-            authentication   => 'Demo',
-            userdb           => 'Same',
-            grantSessionRule => {
+            authentication    => 'Demo',
+            userdb            => 'Same',
+            grantSessionRules => {
                 yes => '$uid eq "dwho"',
             }
         }

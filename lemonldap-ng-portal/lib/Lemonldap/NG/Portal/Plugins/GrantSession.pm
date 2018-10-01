@@ -11,17 +11,17 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-use constant afterData => 'grantSession';
+use constant afterData => 'run';
 
 has rules => ( is => 'rw', default => sub { {} } );
 
 sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;
-    foreach ( keys %{ $self->conf->{grantSessionRule} } ) {
+    foreach ( keys %{ $self->conf->{grantSessionRules} } ) {
         my $rule =
           $hd->buildSub(
-            $hd->substitute( $self->conf->{grantSessionRule}->{$_} ) );
+            $hd->substitute( $self->conf->{grantSessionRules}->{$_} ) );
         unless ($rule) {
             $self->error( "Bad grantSession rule " . $hd->tsv->{jail}->error );
             return 0;
@@ -31,7 +31,7 @@ sub init {
     return 1;
 }
 
-sub grantSession {
+sub run {
     my ( $self, $req ) = @_;
 
     sub sortByComment {
