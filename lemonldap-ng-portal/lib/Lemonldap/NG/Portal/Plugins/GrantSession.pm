@@ -47,14 +47,15 @@ sub run {
     $self->logger->debug(
         " Rules -> " . Dumper( $self->conf->{grantSessionRules} ) );
     foreach ( sort sortByComment keys %{ $self->rules } ) {
-        $self->logger->debug( "Grant session condition "
+        $self->logger->debug( "Grant session condition -> "
                 . $self->conf->{grantSessionRules}->{$_} );
         unless ( $self->rules->{$_}->( $req, $req->sessionInfo ) ) {
             $req->userData( {} );
 
             # Catch rule message
             $_ =~ /^(.*?)##.*$/;
-            if ( defined $1 ) {
+            if ( $1 ) {
+                $self->logger->debug("Message -> $1");
                 $req->info(
                     $self->loadTemplate(
                         'simpleInfo', params => { trspan => $1 }
