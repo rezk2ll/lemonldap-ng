@@ -24,7 +24,7 @@
         </td>
         <td>
           <span ng-model="s.title" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="del(currentNode.nodes,$index)"/>
-          <span ng-if="$last" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newGrantRule')"/>
+          <span ng-if="$last" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newGrantRule',action:'newGrantRule'})"/>
         </td>
       </tr>
     </tbody>
@@ -33,6 +33,7 @@
 <script type="text/menu">
 [{
   "title": "newGrantRule",
+  "action": "newGrantRule",
   "icon": "plus-sign"
 }]
 </script>
