@@ -293,18 +293,56 @@ sub extractFormInfo {
             }
 
             # Get NameID
-            my $nameid = $login->nameIdentifier;
+            my $nameid         = $login->nameIdentifier;
+            my $nameid_content = $nameid->content;
 
-            # Set user
-            my $user = $nameid->content;
-
-            unless ($user) {
+            unless ($nameid_content) {
                 $self->userLogger->error("No NameID value found");
                 return PE_SAML_SSO_ERROR;
             }
 
-            $self->logger->debug("Found NameID: $user");
+            $self->logger->debug("Found NameID content $nameid_content");
+
+            # Set user
+            my $user = $nameid_content;
+            my $userAttribute =
+              $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
+              ->{samlIDPMetaDataOptionsUserAttribute};
+
+            if ($userAttribute) {
+                $self->logger->debug(
+                    "Try to set user value from SAML attribute $userAttribute");
+
+                my $force_utf8 =
+                  $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
+                  ->{samlIDPMetaDataOptionsForceUTF8};
+
+                my $attr_statement = $assertion->AttributeStatement();
+                if ($attr_statement) {
+
+                    # Get attributes
+                    my @attributes = $attr_statement->Attribute();
+                    #
+                    # Try to get value
+                    my $value =
+                      $self->getAttributeValue( $userAttribute, undef, undef,
+                        \@attributes, $force_utf8 );
+
+                    # Store value as user
+                    if ( defined $value ) {
+                        $user = $value;
+                        $self->logger->debug(
+                            "Found value $value for attribute $userAttribute");
+                    }
+                }
+                else {
+                    $self->logger->debug(
+                        "No attributes found in SAML assertion");
+                }
+            }
+
             $req->user($user);
+            $self->logger->debug("Set user value to $user");
 
             # Store Lasso objects
             $req->data->{_lassoLogin}   = $login;
