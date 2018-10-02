@@ -23,7 +23,7 @@ my @notManagedAttributes = (
     # Second factor engine and lists of 2F modules
     'sfEngine', 'available2FSelfRegistration', 'available2F',
 
-    # Brute forece attack protection parameters
+    # Brute force attack protection parameters
     'bruteForceProtectionMaxAge', 'bruteForceProtectionTempo',
 
     # Metadatas (added by manager itself)
