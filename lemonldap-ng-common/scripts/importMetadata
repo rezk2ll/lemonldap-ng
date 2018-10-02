@@ -12,7 +12,7 @@ use XML::LibXML;
 #==============================================================================
 my %opts;
 my $result = GetOptions( \%opts, 'metadata|m=s', 'certificate|c=s', 'verbose|v',
-    'help|h', 'spconfprefix|s=s', 'idpconfprefix|i=s', );
+    'help|h', 'spconfprefix|s=s', 'idpconfprefix|i=s', 'warning|w' );
 
 #==============================================================================
 # Help
@@ -30,7 +30,7 @@ if ( $opts{help} or !$opts{metadata} ) {
     print STDERR "\t-m (--metadata): URL of metadata document\n";
     print STDERR
       "\t-s (--spconfprefix): Prefix used to set SP configuration key\n";
-    print STDERR "\t-v (--verbose): print debug messages\n";
+    print STDERR "\t-w (--warning): print debug messages\n";
     exit 1;
 }
 
@@ -176,7 +176,8 @@ if ( $opts{certificate} ) {
     }
 
     # TODO
-    print STDERR "[WARN] Signature verification not yet implemented\n";
+    print STDERR "[WARN] Signature verification not yet implemented\n"
+      if $opts{warning};
 }
 
 # Remove extensions
@@ -257,7 +258,8 @@ foreach
         }
         else {
             print STDERR
-"[WARN] IDP $entityID is not compatible with SAML 2.0, it will not be imported.\n";
+"[WARN] IDP $entityID is not compatible with SAML 2.0, it will not be imported.\n"
+              if $opts{warning};
             $idpCounter->{rejected}++;
         }
     }
@@ -364,7 +366,8 @@ foreach
         }
         else {
             print STDERR
-"[WARN] SP $entityID is not compatible with SAML 2.0, it will not be imported.\n";
+"[WARN] SP $entityID is not compatible with SAML 2.0, it will not be imported.\n"
+              if $opts{warning};
             $spCounter->{rejected}++;
         }
 
@@ -376,7 +379,7 @@ foreach
 my $numConf = $conf->saveConf( $lastConf, ( cfgNumFixed => 1 ) );
 
 unless ($numConf) {
-    print STDERR "[ERROR] Unable to save configuration\n";
+    print "[ERROR] Unable to save configuration\n";
     exit 1;
 }
 
