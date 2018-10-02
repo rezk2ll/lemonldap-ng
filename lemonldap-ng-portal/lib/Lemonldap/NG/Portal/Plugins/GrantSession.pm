@@ -1,6 +1,5 @@
 package Lemonldap::NG::Portal::Plugins::GrantSession;
 
-use Data::Dumper;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
@@ -44,8 +43,6 @@ sub run {
         return !$A ? 1 : !$B ? -1 : $A cmp $B;
     }
 
-    $self->logger->debug(
-        " Rules -> " . Dumper( $self->conf->{grantSessionRules} ) );
     foreach ( sort sortByComment keys %{ $self->rules } ) {
         $self->logger->debug( "Grant session condition -> "
                 . $self->conf->{grantSessionRules}->{$_} );
