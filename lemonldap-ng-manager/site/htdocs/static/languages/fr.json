@@ -858,6 +858,7 @@
 "samlIDPMetaDataOptionsSecurity":"Sécurité",
 "samlIDPMetaDataOptionsStoreSAMLToken":"Conserver le jeton SAML",
 "samlIDPMetaDataOptionsRelayStateURL":"Pemettre une URL dans le RelayState",
+"samlIDPMetaDataOptionsUserAttribute":"Attribut contenant l'identité de l'utilisateur",
 "samlSPMetaDataNodes":"Fournisseurs de service SAML",
 "samlSPMetaDataXML":"Metadonnées",
 "samlSPMetaDataExportedAttributes":"Attributs exportés",

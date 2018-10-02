@@ -2110,6 +2110,9 @@ sub attributes {
             type    => 'bool',
             default => 0,
         },
+        samlIDPMetaDataOptionsUserAttribute => {
+            type    => 'text',
+        },
 
         # SP keys
         samlSPMetaDataExportedAttributes => {

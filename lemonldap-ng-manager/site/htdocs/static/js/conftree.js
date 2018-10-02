@@ -696,6 +696,11 @@ function templates(tpl,key) {
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsStoreSAMLToken",
             "title" : "samlIDPMetaDataOptionsStoreSAMLToken",
             "type" : "bool"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsUserAttribute",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsUserAttribute",
+            "title" : "samlIDPMetaDataOptionsUserAttribute"
          }
       ],
       "id" : "samlIDPMetaDataOptionsSession",

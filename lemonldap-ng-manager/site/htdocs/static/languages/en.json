@@ -858,6 +858,7 @@
 "samlIDPMetaDataOptionsSecurity":"Security",
 "samlIDPMetaDataOptionsStoreSAMLToken":"Store SAML Token",
 "samlIDPMetaDataOptionsRelayStateURL":"Allow URL as RelayState",
+"samlIDPMetaDataOptionsUserAttribute":"Attribute containing user identifier",
 "samlSPMetaDataNodes":"SAML Service Providers",
 "samlSPMetaDataXML":"Metadata",
 "samlSPMetaDataExportedAttributes":"Exported attributes",

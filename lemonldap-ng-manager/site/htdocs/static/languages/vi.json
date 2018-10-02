@@ -858,6 +858,7 @@
 "samlIDPMetaDataOptionsSecurity":"Bảo mật",
 "samlIDPMetaDataOptionsStoreSAMLToken":"Lưu trữ token SAML",
 "samlIDPMetaDataOptionsRelayStateURL":"Cho phép URL như RelayState",
+"samlIDPMetaDataOptionsUserAttribute":"Attribute containing user identifier",
 "samlSPMetaDataNodes":"Trìn cung cấp dịch vụ SAML",
 "samlSPMetaDataXML":"Mô-tả dữ liệu",
 "samlSPMetaDataExportedAttributes":"Thuộc tính đã được xuất",

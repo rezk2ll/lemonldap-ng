@@ -56,7 +56,8 @@ sub cTrees {
                 nodes => [
                     "samlIDPMetaDataOptionsAdaptSessionUtime",
                     "samlIDPMetaDataOptionsForceUTF8",
-                    "samlIDPMetaDataOptionsStoreSAMLToken"
+                    "samlIDPMetaDataOptionsStoreSAMLToken",
+                    "samlIDPMetaDataOptionsUserAttribute"
                 ]
             },
             {
