@@ -36,6 +36,9 @@ count(1);
 ok( $res->[2]->[0] =~ /<h3 trspan="Dwho_notAllowed">Dwho_notAllowed<\/h3>/, 'dwho rejected with custom message' )
     or print STDERR Dumper( $res->[2]->[0] );
 count(1);
+ok( $res->[2]->[0] =~ qr%src="/static/common/js/info.(?:min\.)?js"></script>%, 'Found INFO js' )
+    or print STDERR Dumper( $res->[2]->[0] );
+count(1);
 
 ok(
     $res = $client->_post(
