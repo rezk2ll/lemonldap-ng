@@ -41,7 +41,7 @@ if ( $opts{help} or !$opts{metadata} ) {
 my $spConfKeyPrefix  = $opts{spconfprefix} || "sp-";
 my $idpConfKeyPrefix = $opts{spconfprefix} || "idp-";
 
-# Set here attributs that are declared for your SP in the federation
+# Set here attributes that are declared for your SP in the federation
 # They will be set as exported attributes for all IDP
 my $exportedAttributes = {
     'cn'                          => '0;cn',
@@ -54,6 +54,41 @@ my $exportedAttributes = {
     'mail'                        => '0;mail',
     'supannListeRouge'            => '0;supannListeRouge',
     'supannEtuCursusAnnee'        => '0;supannEtuCursusAnnee',
+};
+
+# Set here options that are applied on all SP from the federation
+my $spOptions = {
+    'samlSPMetaDataOptionsCheckSLOMessageSignature'   => 1,
+    'samlSPMetaDataOptionsCheckSSOMessageSignature'   => 1,
+    'samlSPMetaDataOptionsEnableIDPInitiatedURL'      => 0,
+    'samlSPMetaDataOptionsEncryptionMode'             => 'none',
+    'samlSPMetaDataOptionsForceUTF8'                  => 1,
+    'samlSPMetaDataOptionsNameIDFormat'               => '',
+    'samlSPMetaDataOptionsNotOnOrAfterTimeout'        => 72000,
+    'samlSPMetaDataOptionsOneTimeUse'                 => 0,
+    'samlSPMetaDataOptionsSessionNotOnOrAfterTimeout' => 72000,
+    'samlSPMetaDataOptionsSignSLOMessage'             => 1,
+    'samlSPMetaDataOptionsSignSSOMessage'             => 1
+};
+
+# Set here options that are applied on all IDP from the federation
+my $idpOptions = {
+    'samlIDPMetaDataOptionsAdaptSessionUtime'        => 0,
+    'samlIDPMetaDataOptionsAllowLoginFromIDP'        => 0,
+    'samlIDPMetaDataOptionsAllowProxiedAuthn'        => 0,
+    'samlIDPMetaDataOptionsCheckAudience'            => 1,
+    'samlIDPMetaDataOptionsCheckSLOMessageSignature' => 1,
+    'samlIDPMetaDataOptionsCheckSSOMessageSignature' => 1,
+    'samlIDPMetaDataOptionsCheckTime'                => 1,
+    'samlIDPMetaDataOptionsEncryptionMode'           => 'none',
+    'samlIDPMetaDataOptionsForceAuthn'               => 0,
+    'samlIDPMetaDataOptionsForceUTF8'                => 0,
+    'samlIDPMetaDataOptionsIsPassive'                => 0,
+    'samlIDPMetaDataOptionsNameIDFormat'             => 'transient',
+    'samlIDPMetaDataOptionsRelayStateURL'            => 0,
+    'samlIDPMetaDataOptionsSignSLOMessage'           => -1,
+    'samlIDPMetaDataOptionsSignSSOMessage'           => -1,
+    'samlIDPMetaDataOptionsStoreSAMLToken'           => 0
 };
 
 my $idpCounter =
@@ -186,9 +221,12 @@ foreach
                 $lastConf->{samlIDPMetaDataExportedAttributes}
                   ->{ $idpList->{$entityID} } = $exportedAttributes;
 
+                # Update options
+                $lastConf->{samlIDPMetaDataOptions}->{ $idpList->{$entityID} }
+                  = $idpOptions;
+
                 if ( $opts{verbose} ) {
-                    print
-"Update IDP $entityID metadata and attributes in configuration\n";
+                    print "Update IDP $entityID in configuration\n";
                 }
                 $idpCounter->{updated}++;
             }
@@ -207,23 +245,8 @@ foreach
                   $exportedAttributes;
 
                 # Options
-                $lastConf->{samlIDPMetaDataOptions}->{$confKey} = {
-                    'samlIDPMetaDataOptionsAdaptSessionUtime'        => 0,
-                    'samlIDPMetaDataOptionsAllowLoginFromIDP'        => 0,
-                    'samlIDPMetaDataOptionsAllowProxiedAuthn'        => 0,
-                    'samlIDPMetaDataOptionsCheckAudience'            => 1,
-                    'samlIDPMetaDataOptionsCheckSLOMessageSignature' => 1,
-                    'samlIDPMetaDataOptionsCheckSSOMessageSignature' => 1,
-                    'samlIDPMetaDataOptionsCheckTime'                => 1,
-                    'samlIDPMetaDataOptionsEncryptionMode'           => 'none',
-                    'samlIDPMetaDataOptionsForceAuthn'               => 0,
-                    'samlIDPMetaDataOptionsForceUTF8'                => 0,
-                    'samlIDPMetaDataOptionsIsPassive'                => 0,
-                    'samlIDPMetaDataOptionsRelayStateURL'            => 0,
-                    'samlIDPMetaDataOptionsSignSLOMessage'           => -1,
-                    'samlIDPMetaDataOptionsSignSSOMessage'           => -1,
-                    'samlIDPMetaDataOptionsStoreSAMLToken'           => 0
-                };
+                $lastConf->{samlIDPMetaDataOptions}->{$confKey} = $idpOptions;
+
                 if ( $opts{verbose} ) {
                     print
 "Declare new IDP $entityID (configuration key $confKey)\n";
@@ -306,9 +329,12 @@ foreach
                 $lastConf->{samlSPMetaDataExportedAttributes}
                   ->{ $spList->{$entityID} } = $requestedAttributes;
 
+                # Update options
+                $lastConf->{samlSPMetaDataOptions}->{ $spList->{$entityID} } =
+                  $spOptions;
+
                 if ( $opts{verbose} ) {
-                    print
-"Update SP $entityID metadata and attributes in configuration\n";
+                    print "Update SP $entityID in configuration\n";
                 }
                 $spCounter->{updated}++;
             }
@@ -326,19 +352,8 @@ foreach
                   $requestedAttributes;
 
                 # Options
-                $lastConf->{samlSPMetaDataOptions}->{$confKey} = {
-                    'samlSPMetaDataOptionsCheckSLOMessageSignature'   => 1,
-                    'samlSPMetaDataOptionsCheckSSOMessageSignature'   => 1,
-                    'samlSPMetaDataOptionsEnableIDPInitiatedURL'      => 0,
-                    'samlSPMetaDataOptionsEncryptionMode'             => 'none',
-                    'samlSPMetaDataOptionsForceUTF8'                  => 1,
-                    'samlSPMetaDataOptionsNameIDFormat'               => '',
-                    'samlSPMetaDataOptionsNotOnOrAfterTimeout'        => 72000,
-                    'samlSPMetaDataOptionsOneTimeUse'                 => 0,
-                    'samlSPMetaDataOptionsSessionNotOnOrAfterTimeout' => 72000,
-                    'samlSPMetaDataOptionsSignSLOMessage'             => 1,
-                    'samlSPMetaDataOptionsSignSSOMessage'             => 1
-                };
+                $lastConf->{samlSPMetaDataOptions}->{$confKey} = $spOptions;
+
                 if ( $opts{verbose} ) {
                     print
                       "Declare new SP $entityID (configuration key $confKey)\n";
