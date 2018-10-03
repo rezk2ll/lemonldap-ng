@@ -2169,6 +2169,14 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 5,
             'type'    => 'int'
         },
+        'portalForceReAuthn' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'portalForceReAuthnTempo' => {
+            'default' => 300,
+            'type'    => 'int'
+        },
         'portalOpenLinkInNewWindow' => {
             'default' => 0,
             'type'    => 'bool'

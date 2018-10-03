@@ -179,6 +179,8 @@ sub defaultValues {
         'portalDisplayRegister'              => 1,
         'portalErrorOnExpiredSession'        => 1,
         'portalForceAuthnInterval'           => 5,
+        'portalForceReAuthn'                 => 1,
+        'portalForceReAuthnTempo'            => 300,
         'portalPingInterval'                 => 60000,
         'portalRequireOldPassword'           => 1,
         'portalSkin'                         => 'bootstrap',

@@ -556,6 +556,17 @@ sub attributes {
             type          => 'bool',
             documentation => 'Check XSS',
         },
+        portalForceReAuthn => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Enable force reAuthentification to access to Portal',
+        },
+        portalForceReAuthnTempo => {
+            default => 300,
+            type    => 'int',
+            documentation =>
+                'Portal force reAuthentification -> Tempo before try again',
+        },
         bruteForceProtection => {
             default       => 1,
             type          => 'bool',
