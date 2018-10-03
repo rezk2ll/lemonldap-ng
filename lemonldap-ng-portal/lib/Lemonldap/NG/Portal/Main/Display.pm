@@ -217,6 +217,21 @@ sub display {
         );
     }
 
+    elsif ( $req->error == PE_MUSTAUTHN ) {
+        $skinfile       = 'updatesession';
+        %templateParams = (
+            MSG        => 'PE87',
+            CONFIRMKEY => $self->stamp,
+            PORTAL     => $self->conf->{portal},
+            URL        => $req->data->{_url},
+            (
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
+                : ()
+            ),
+        );
+    }
+
     # 2.3 Case : user authenticated but an error was returned (bad url,...)
     elsif (
         $req->noLoginDisplay
