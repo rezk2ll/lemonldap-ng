@@ -641,12 +641,6 @@ sub attributes {
             type          => 'bool',
             documentation => 'Display login history checkbox in portal',
         },
-        portalForceAuthnInterval => {
-            type    => 'int',
-            default => 5,
-            documentation =>
-                'Minimum number of seconds since last authentifcation to force reauthentication',
-        },
         randomPasswordRegexp => {
             type          => 'pcre',
             default       => '[A-Z]{3}[a-z]{5}.\d{2}',
