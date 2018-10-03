@@ -4,6 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Common::Combination::Parser;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
+use Scalar::Util 'weaken';
 
 our $VERSION = '2.0.0';
 
@@ -60,6 +61,8 @@ sub init {
                 $self->error("Unable to load Auth::$mod->{type}");
                 return 0;
             }
+            $tmp[0]->{userLogger} = $self->wrapUserLogger;
+            weaken $tmp[0]->{userLogger};
         }
 
         # Load UserDB module
@@ -70,6 +73,8 @@ sub init {
                 $self->error("Unable to load UserDB::$mod->{type}");
                 return 0;
             }
+            $tmp[1]->{userLogger} = $self->wrapUserLogger;
+            weaken $tmp[1]->{userLogger};
         }
 
         # Store modules as array

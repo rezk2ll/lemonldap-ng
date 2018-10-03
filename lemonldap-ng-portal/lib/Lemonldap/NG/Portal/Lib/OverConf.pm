@@ -1,13 +1,20 @@
 package Lemonldap::NG::Portal::Lib::OverConf;
 
 use Mouse::Role;
-use Scalar::Util 'weaken';
 
 # To avoid "tied" destroy, tied configurations are kept here
 our @overC;
 
 # Override portal loadPlugin() to use a wrapped configuration
 sub loadPlugin {
+    my ( $self, $plugin, $over ) = @_;
+    my $obj = $self->loadModule( $plugin, $over );
+    return 0
+      unless ( $obj and $obj = $self->p->findEP( $plugin, $obj ) );
+    return $obj;
+}
+
+sub loadModule {
     my ( $self, $plugin, $over ) = @_;
     my $obj;
     my $nc;
@@ -20,11 +27,7 @@ sub loadPlugin {
         $nc = $self->conf;
     }
     return 0
-      unless ( $obj = $self->p->loadModule( "$plugin", $nc ) );
-    return 0
-      unless $obj = $self->p->findEP( $plugin, $obj );
-    $obj->{userLogger} = $self->wrapUserLogger;
-    weaken $obj->{userLogger};
+      unless ( $obj = $self->p->loadModule( "$plugin", $nc ) and $obj->init );
     return $obj;
 }
 

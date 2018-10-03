@@ -60,6 +60,8 @@ has ott => (
     }
 );
 
+sub init { 1 }
+
 # Returns secret + a HTML image src content
 sub getCaptcha {
     my ($self) = @_;

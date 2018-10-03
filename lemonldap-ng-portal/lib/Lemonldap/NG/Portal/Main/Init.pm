@@ -355,7 +355,6 @@ sub findEP {
             }
         }
     }
-    ( $obj and $obj->init ) or return 0;
     $self->logger->debug("Plugin $plugin initializated");
 
     # Rules for menu
@@ -389,6 +388,7 @@ sub loadModule {
         $self->error("Unable to build $module object: $@");
         return 0;
     }
+    ( $obj and $obj->init ) or return 0;
     $self->loadedModules->{$module} = $obj;
     return $obj;
 }
