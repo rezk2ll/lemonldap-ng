@@ -4,6 +4,7 @@ use IO::String;
 
 BEGIN {
     eval {
+        unlink 't/userdb.db';
         require 't/test-lib.pm';
         require 't/smtp.pm';
     };
@@ -14,6 +15,7 @@ my $maintests = 7;
 my $mailSend  = 0;
 
 my $mail2 = 0;
+
 
 SKIP: {
     eval

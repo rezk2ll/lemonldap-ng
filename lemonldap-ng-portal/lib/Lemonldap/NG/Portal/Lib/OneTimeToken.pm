@@ -41,6 +41,8 @@ has cache => (
     },
 );
 
+sub init { 1 }
+
 sub createToken {
     my ( $self, $infos ) = @_;
 

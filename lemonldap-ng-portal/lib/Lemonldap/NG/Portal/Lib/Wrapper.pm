@@ -74,15 +74,6 @@ sub _wrapEntryPoint {
     return PE_OK;
 }
 
-# loadPlugin() fakes portal loadPlugin: it loads module but does not load
-# entry points since they will be launched by ^ methods
-sub loadPlugin {
-    my ( $self, $name, $module ) = @_;
-    my $obj = $self->p->can('loadModule')->( $self->p, $module );
-    ( $obj and $obj->init ) or return 0;
-    return $obj;
-}
-
 sub AUTOLOAD {
     no strict;
 

@@ -14,6 +14,7 @@ my $debug     = 'error';
 my $maintests = 18;
 my ( $op, $rp, $res );
 my %handlerOR = ( op => [], rp => [] );
+eval { unlink 't/userdb.db' };
 
 LWP::Protocol::PSGI->register(
     sub {

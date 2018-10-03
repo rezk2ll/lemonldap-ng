@@ -5,6 +5,7 @@ use Mouse;
 use Safe;
 
 extends 'Lemonldap::NG::Portal::Lib::Wrapper';
+with 'Lemonldap::NG::Portal::Lib::OverConf';
 
 our $VERSION = '2.0.0';
 
@@ -44,7 +45,7 @@ sub init {
             '::'
           . [ 'Auth', 'UserDB', 'Password' ]->[$type] . '::'
           . $mods[$type];
-        if ( $module = $self->loadPlugin( $name, $module ) ) {
+        if ( $module = $self->loadModule($module) ) {
             $self->modules->{$name} = $module;
             $self->logger->debug(
                 [qw(Authentication User Password)]->[$type]

@@ -10,6 +10,7 @@ our $VERSION = '2.0.0';
 
 # TODO: See Lib::Wrapper
 extends 'Lemonldap::NG::Portal::Main::Auth';
+with 'Lemonldap::NG::Portal::Lib::OverConf';
 
 # PROPERTIES
 
@@ -60,6 +61,8 @@ sub init {
                 $self->error("Unable to load Auth::$mod->{type}");
                 return 0;
             }
+            $tmp[0]->{userLogger} = $self->wrapUserLogger;
+            weaken $tmp[0]->{userLogger};
         }
 
         # Load UserDB module
@@ -70,6 +73,8 @@ sub init {
                 $self->error("Unable to load UserDB::$mod->{type}");
                 return 0;
             }
+            $tmp[1]->{userLogger} = $self->wrapUserLogger;
+            weaken $tmp[1]->{userLogger};
         }
 
         # Store modules as array
@@ -203,31 +208,6 @@ sub name {
     my ( $self, $req, $type ) = @_;
     return $req->sessionInfo->{ ( $type eq 'auth' ? '_auth' : '_userDB' ) }
       || 'Combination';
-}
-
-# To avoid "tied" destroy, tied configurations are kept here
-our %overC;
-
-# Override portal loadPlugin() to use a wrapped configuration
-sub loadPlugin {
-    my ( $self, $plugin, $over ) = @_;
-    my $obj;
-    my $nc;
-    if ($over) {
-        require Lemonldap::NG::Common::Conf::Wrapper;
-        tie %$nc, 'Lemonldap::NG::Common::Conf::Wrapper', $self->conf, $over;
-        $overC{$plugin} = $nc;
-    }
-    else {
-        $nc = $self->conf;
-    }
-    return 0
-      unless ( $obj = $self->p->loadModule( "$plugin", $nc ) );
-    return 0
-      unless $obj = $self->p->findEP( $plugin, $obj );
-    $obj->{userLogger} = $self->wrapUserLogger;
-    weaken $obj->{userLogger};
-    return $obj;
 }
 
 package Lemonldap::NG::Portal::Lib::Combination::UserLogger;
