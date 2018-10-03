@@ -556,16 +556,17 @@ sub attributes {
             type          => 'bool',
             documentation => 'Check XSS',
         },
-        portalForceReAuthn => {
-            default       => 1,
-            type          => 'bool',
-            documentation => 'Enable force reAuthentification to access to Portal',
+        portalForceAuthn => {
+            default => 1,
+            type    => 'bool',
+            documentation =>
+                'Enable force to authenticate when displaying portal',
         },
-        portalForceReAuthnTempo => {
-            default => 300,
+        portalForceAuthnInterval => {
+            default => 5,
             type    => 'int',
             documentation =>
-                'Portal force reAuthentification -> Tempo before try again',
+                'Maximun interval in seconds since last authentifcation to force reauthentication',
         },
         bruteForceProtection => {
             default       => 1,
@@ -2121,9 +2122,7 @@ sub attributes {
             type    => 'bool',
             default => 0,
         },
-        samlIDPMetaDataOptionsUserAttribute => {
-            type    => 'text',
-        },
+        samlIDPMetaDataOptionsUserAttribute => { type => 'text', },
 
         # SP keys
         samlSPMetaDataExportedAttributes => {

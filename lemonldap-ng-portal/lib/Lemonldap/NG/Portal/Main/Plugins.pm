@@ -24,7 +24,7 @@ our @pList = (
     upgradeSession             => '::Plugins::Upgrade',
     autoSigninRules            => '::Plugins::AutoSignin',
     checkState                 => '::Plugins::CheckState',
-    portalForceReAuthn         => '::Plugins::PortalForceReAuthn',
+    portalForceAuthn           => '::Plugins::PortalForceAuthn',
 );
 
 ##@method list enabledPlugins

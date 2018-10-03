@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::PortalForceReAuthn;
+package Lemonldap::NG::Portal::Plugins::PortalForceAuthn;
 
 use Data::Dumper;
 use strict;
@@ -26,7 +26,7 @@ sub run {
     if ( $req->env->{HTTP_HOST} and $portalURL =~ qr#\Q$HTTP_HOST# ) {
         my $delta = time() - $req->{sessionInfo}->{_utime};
         $self->logger->debug( "Delta with last Authn -> " . $delta );
-        $delta <= $self->conf->{portalForceReAuthnTempo}
+        $delta <= $self->conf->{portalForceAuthnInterval}
             ? return PE_OK
             : return PE_MUSTREAUTHN;
     }
