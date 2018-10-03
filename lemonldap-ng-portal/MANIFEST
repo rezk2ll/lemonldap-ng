@@ -101,6 +101,7 @@ lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
 lib/Lemonldap/NG/Portal/Plugins/History.pm
 lib/Lemonldap/NG/Portal/Plugins/MailReset.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
+lib/Lemonldap/NG/Portal/Plugins/PortalForceAuthn.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
 lib/Lemonldap/NG/Portal/Plugins/RESTServer.pm
@@ -349,6 +350,7 @@ site/templates/bootstrap/totp2fcheck.tpl
 site/templates/bootstrap/totp2fregister.tpl
 site/templates/bootstrap/u2fcheck.tpl
 site/templates/bootstrap/u2fregister.tpl
+site/templates/bootstrap/updatesession.tpl
 site/templates/bootstrap/upgradesession.tpl
 site/templates/bootstrap/utotp2fcheck.tpl
 site/templates/bootstrap/yubikey2fregister.tpl
