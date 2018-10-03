@@ -178,7 +178,6 @@ sub defaultValues {
         'portalDisplayOidcConsents'          => '$_oidcConnectedRP',
         'portalDisplayRegister'              => 1,
         'portalErrorOnExpiredSession'        => 1,
-        'portalForceAuthn'                   => 1,
         'portalForceAuthnInterval'           => 5,
         'portalPingInterval'                 => 60000,
         'portalRequireOldPassword'           => 1,

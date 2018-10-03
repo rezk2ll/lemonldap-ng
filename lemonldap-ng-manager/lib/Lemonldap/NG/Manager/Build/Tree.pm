@@ -722,6 +722,7 @@ sub tree {
                             help => 'security.html#configure_security_settings',
                             nodes => [
                                 'userControl',
+                                'portalForceAuthn',
                                 'portalForceAuthnInterval',
                                 'key',
                                 'trustedDomains',

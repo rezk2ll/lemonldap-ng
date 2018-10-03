@@ -2166,7 +2166,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'portalForceAuthn' => {
-            'default' => 1,
+            'default' => 0,
             'type'    => 'bool'
         },
         'portalForceAuthnInterval' => {

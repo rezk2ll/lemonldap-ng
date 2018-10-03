@@ -557,7 +557,7 @@ sub attributes {
             documentation => 'Check XSS',
         },
         portalForceAuthn => {
-            default => 1,
+            default => 0,
             type    => 'bool',
             documentation =>
                 'Enable force to authenticate when displaying portal',
