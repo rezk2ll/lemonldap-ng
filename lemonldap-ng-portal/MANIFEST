@@ -460,6 +460,7 @@ t/43-MailReset.t
 t/50-IssuerGet.t
 t/60-Status.t
 t/61-BruteForceProtection.t
+t/61-ForceAuthn.t
 t/61-GrantSession.t
 t/62-SingleSession.t
 t/63-History.t
