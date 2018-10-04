@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::PortalForceAuthn;
+package Lemonldap::NG::Portal::Plugins::ForceAuthn;
 
 use strict;
 use Mouse;

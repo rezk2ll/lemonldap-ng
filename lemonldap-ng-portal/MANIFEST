@@ -97,11 +97,11 @@ lib/Lemonldap/NG/Portal/Plugins/AutoSignin.pm
 lib/Lemonldap/NG/Portal/Plugins/BruteForceProtection.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckState.pm
+lib/Lemonldap/NG/Portal/Plugins/ForceAuthn.pm
 lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
 lib/Lemonldap/NG/Portal/Plugins/History.pm
 lib/Lemonldap/NG/Portal/Plugins/MailReset.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
-lib/Lemonldap/NG/Portal/Plugins/PortalForceAuthn.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
 lib/Lemonldap/NG/Portal/Plugins/RESTServer.pm
