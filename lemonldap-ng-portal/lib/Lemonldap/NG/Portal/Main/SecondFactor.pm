@@ -109,7 +109,7 @@ sub _verify {
     }
     $req->authResult(PE_SENDRESPONSE);
     return $self->p->do( $req,
-        [ $self->p->validSession, @{ $self->p->endAuth }, sub {PE_OK} ] );
+        [ @{ $self->p->afterData }, $self->p->validSession, @{ $self->p->endAuth }, sub {PE_OK} ] );
 }
 
 1;
