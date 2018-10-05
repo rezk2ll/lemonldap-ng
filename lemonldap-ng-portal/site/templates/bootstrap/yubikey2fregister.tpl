@@ -22,7 +22,7 @@
             <label for="otp"><span trspan="id">Id</span></label>
             <input type="text" class="form-control" id="otp" name="otp" trplaceholder="Id" />
           </div>
-          <input class="invisible" type="submit" value="Submit" />
+          <input class="d-none" type="submit" value="Submit" />
         </div>
 
       </div>
