@@ -4,7 +4,7 @@
 # have registered their U2F key
 package Lemonldap::NG::Portal::2F::U2F;
 
-use 5.16.0;
+#use 5.16.0;
 use strict;
 use Mouse;
 use JSON qw(from_json to_json);

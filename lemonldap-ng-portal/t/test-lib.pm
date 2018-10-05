@@ -58,7 +58,7 @@ use Data::Dumper;
 use LWP::UserAgent;
 use URI::Escape;
 use Lemonldap::NG::Common::FormEncode;
-use 5.10.0;
+#use 5.10.0;
 
 no warnings 'redefine';
 
