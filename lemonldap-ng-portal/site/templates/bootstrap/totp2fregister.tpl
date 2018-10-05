@@ -8,16 +8,14 @@
       <div class="card-body">
 
       <div class="row">
-    
-        <div class="col-md-6 text-center">
-        <div id="divToHide">
-          <canvas id="qr"></canvas>
-          <pre id="serialized"></pre>
-        </div>
+        <div id="divToHide" class="col-md-6 text-center">
+          <div >
+            <canvas id="qr"></canvas>
+            <pre id="serialized"></pre>
+          </div>
         </div>
 
         <div class="col-md-6">
-
           <div class="form-group">
             <label for="TOTPName"><span trspan="name">Name</span></label>
             <input type="text" class="form-control" id="TOTPName" name="TOTPName" value="MyTOTP" trplaceholder="name" />
@@ -26,17 +24,16 @@
             <label for="code"><span trspan="code">Code</span></label>
             <input id="code" class="form-control" name="code" type="number" />
           </div>
-
         </div>
       </div>
 
       <div class="buttons">
-        <span id="changekey" class="btn btn-secondary" role="button">
+        <span id="changekey" class="btn btn-info" role="button">
           <span class="fa fa-refresh"></span>
           <span trspan="changeKey">Change key</span>
         </span>
         <span id="verify" class="btn btn-success" role="button">
-          <span class="fa fa-check-circle"></span>
+          <span class="fa fa-floppy-o"></span>
           <span trspan="register">Register</span>
         </span>
       </div>
@@ -46,7 +43,7 @@
   </main>
   
 <div class="buttons">
-  <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-secondary" role="button">
+  <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-warning" role="button">
     <span class="fa fa-shield"></span>
     <span trspan="sfaManager">sfaManager</span>
   </a>

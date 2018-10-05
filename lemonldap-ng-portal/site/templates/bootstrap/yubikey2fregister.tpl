@@ -23,7 +23,7 @@
             <label for="otp"><span trspan="id">Id</span></label>
             <input type="text" class="form-control" id="otp" name="otp" trplaceholder="Id" />
           </div>
-          <input class="hidden" type="submit" value="Submit" />
+          <input class="invisible" type="submit" value="Submit" />
         </div>
 
       </div>
@@ -35,7 +35,7 @@
   </main>
 
 <div class="buttons">
-  <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-secondary" role="button">
+  <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-warning" role="button">
     <span class="fa fa-shield"></span>
     <span trspan="sfaManager">sfaManager</span>
   </a>

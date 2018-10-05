@@ -23,14 +23,13 @@
        </div>
 
        <div class="buttons">
-         <span id="register" class="btn btn-secondary" role="button">
-           <span class="fa fa-floppy-o"></span>
-           <span trspan="register">Register</span>
-         </span>
-         
-         <span id="verify" class="btn btn-success" role="button">
+         <span id="verify" class="btn btn-info" role="button">
            <span class="fa fa-check-circle"></span>
            <span trspan="verify">Verify</span>
+         </span>
+        <span id="register" class="btn btn-success" role="button">
+           <span class="fa fa-floppy-o"></span>
+           <span trspan="register">Register</span>
          </span>
        </div>
      </div>
@@ -38,7 +37,7 @@
   </main>
 
 <div class="buttons">
-  <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-secondary" role="button">
+  <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-warning" role="button">
     <span class="fa fa-shield"></span>
     <span trspan="sfaManager">sfaManager</span>
   </a>
