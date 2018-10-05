@@ -13,7 +13,6 @@
         <div class="col-md-6 text-center">
           <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/yubikey.png" alt="Yubikey" title="Yubikey" />
         </div>
-
         <div class="col-md-6">
           <div class="form-group">
             <label for="UBKName"><span trspan="name">Name</span></label>
