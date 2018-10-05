@@ -518,8 +518,9 @@ sub retrieveSession {
 # @return URL
 sub _buildUrl {
     my ( $class, $req, $s ) = @_;
-    my $vhost  = $req->{env}->{HTTP_HOST};
-    my $_https = (
+    my $realvhost = $req->{env}->{HTTP_HOST};
+    my $vhost     = $class->resolveAlias($req);
+    my $_https    = (
         defined( $class->tsv->{https}->{$vhost} )
         ? $class->tsv->{https}->{$vhost}
         : $class->tsv->{https}->{_}
@@ -533,7 +534,7 @@ sub _buildUrl {
           or ( $_https  && $portString == 443 )
           or ( !$_https && $portString == 80 )
     ) ? '' : ":$portString";
-    my $url = "http" . ( $_https ? "s" : "" ) . "://$vhost$portString$s";
+    my $url = "http" . ( $_https ? "s" : "" ) . "://$realvhost$portString$s";
     $class->logger->debug("Build URL $url");
     return $url;
 }
