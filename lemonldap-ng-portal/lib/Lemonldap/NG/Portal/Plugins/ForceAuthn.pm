@@ -18,10 +18,9 @@ sub init {1}
 
 sub run {
     my ( $self, $req ) = @_;
-    my $portalURL = $self->conf->{portal}  || '';
-    my $HTTP_HOST = $req->env->{HTTP_HOST} || '';
-
-    if ( $req->env->{HTTP_HOST} and $portalURL =~ qr#\Q$HTTP_HOST# ) {
+    if (    $req->env->{HTTP_HOST}
+        and $self->conf->{portal} =~ /\Q$req->{env}->{HTTP_HOST}/ )
+    {
         my $delta = time() - $req->{sessionInfo}->{_utime};
         $self->logger->debug( "Delta with last Authn -> " . $delta );
 
