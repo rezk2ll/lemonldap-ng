@@ -59,14 +59,14 @@ sub run {
                     )
                 );
                 $self->userLogger->error( 'User '
-                        . $req->user
+                        . $req->sessionInfo->{uid}
                         . " was not granted to open session (rule -> $1)" );
                 $req->urldc( $self->conf->{portal} );
                 return $req->authResult(PE_SESSIONNOTGRANTED);
             }
             else {
                 $self->userLogger->error( 'User '
-                        . $req->user
+                        . $req->sessionInfo->{uid}
                         . " was not granted to open session (rule -> "
                         . $self->conf->{grantSessionRules}->{$_}
                         . ")" );
