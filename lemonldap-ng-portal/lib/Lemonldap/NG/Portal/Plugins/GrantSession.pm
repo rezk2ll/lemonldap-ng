@@ -53,14 +53,23 @@ sub run {
             $_ =~ /^(.*?)##.*$/;
             if ($1) {
                 $self->logger->debug("Message -> $1");
+                
+                # Message can contain session data as user attributes or macros
+                my $hd  = $self->p->HANDLER;
+                my $msg = $hd->substitute($1);
+                unless ( $msg = $self->p->HANDLER->buildSub($msg) ) {
+                    $self->error( "Bad message " . $hd->tsv->{jail}->error );
+                    return 0;
+                }
+                $msg = $msg->( $req, $req->sessionInfo );
                 $req->info(
                     $self->loadTemplate(
-                        'simpleInfo', params => { trspan => $1 }
+                        'simpleInfo', params => { trspan => $msg }
                     )
                 );
                 $self->userLogger->error( 'User '
                         . $req->sessionInfo->{uid}
-                        . " was not granted to open session (rule -> $1)" );
+                        . " was not granted to open session (rule -> $msg)" );
                 $req->urldc( $self->conf->{portal} );
                 return $req->authResult(PE_SESSIONNOTGRANTED);
             }
