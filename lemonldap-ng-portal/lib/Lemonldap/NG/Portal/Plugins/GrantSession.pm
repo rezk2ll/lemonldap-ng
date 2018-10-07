@@ -51,7 +51,7 @@ sub run {
 
             # Catch rule message
             $_ =~ /^(.*?)##.*$/;
-            if ( $1 ) {
+            if ($1) {
                 $self->logger->debug("Message -> $1");
                 $req->info(
                     $self->loadTemplate(
