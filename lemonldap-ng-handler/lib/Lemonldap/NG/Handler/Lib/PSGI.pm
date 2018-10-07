@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Lib::PSGI;
 
-use 5.10.0;
+#use 5.10.0;
 use Mouse;
 
 #use Lemonldap::NG::Handler::Main qw(:jailSharedVars);
