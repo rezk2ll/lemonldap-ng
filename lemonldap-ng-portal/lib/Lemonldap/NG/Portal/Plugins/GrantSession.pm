@@ -53,8 +53,8 @@ sub run {
             $_ =~ /^(.*?)##.*$/;
             if ($1) {
                 $self->logger->debug("Message -> $1");
-                
-                # Message can contain session data as user attributes or macros
+
+               # Message can contain session data as user attributes or macros
                 my $hd  = $self->p->HANDLER;
                 my $msg = $hd->substitute($1);
                 unless ( $msg = $self->p->HANDLER->buildSub($msg) ) {
