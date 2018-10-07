@@ -15,9 +15,9 @@ my $client = LLNG::Manager::Test->new(
             authentication    => 'Demo',
             userdb            => 'Same',
             grantSessionRules => {
-                'Dwho_notAllowed##Test1' => '$uid ne "dwho"',
-                'Rtyler_Allowed##Test3'  => '$uid eq "rtyler"',
-                '##Test2'                => '$uid ne "mrsmith"',
+                '$uid . " not allowed"##rule1' => '$uid ne "dwho"',
+                'Rtyler_Allowed##rule3'  => '$uid eq "rtyler"',
+                '##rule2'                => '$uid ne "mrsmith"',
             }
         }
     }
@@ -32,8 +32,8 @@ ok( $res = $client->_post(
     'Auth query'
 );
 count(1);
-ok( $res->[2]->[0] =~ /<h3 trspan="Dwho_notAllowed">Dwho_notAllowed<\/h3>/,
-    'dwho rejected with custom message' )
+ok( $res->[2]->[0] =~ /<h3 trspan="dwho not allowed">dwho not allowed<\/h3>/,
+    'dwho rejected with custom message and session data' )
     or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 ok( $res->[2]->[0] =~ qr%src="/static/common/js/info.(?:min\.)?js"></script>%,
