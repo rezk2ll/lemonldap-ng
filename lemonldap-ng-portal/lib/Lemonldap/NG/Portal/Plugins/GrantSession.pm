@@ -57,9 +57,9 @@ sub run {
                # Message can contain session data as user attributes or macros
                 my $hd  = $self->p->HANDLER;
                 my $msg = $hd->substitute($1);
-                unless ( $msg = $self->p->HANDLER->buildSub($msg) ) {
+                unless ( $msg = $hd->buildSub($msg) ) {
                     $self->error( "Bad message " . $hd->tsv->{jail}->error );
-                    return 0;
+                    return PE_OK;
                 }
                 $msg = $msg->( $req, $req->sessionInfo );
                 $req->info(
