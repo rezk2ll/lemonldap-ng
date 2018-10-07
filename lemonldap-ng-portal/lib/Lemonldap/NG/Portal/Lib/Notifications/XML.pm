@@ -104,7 +104,7 @@ sub checkForNotifications {
 
                 unless ( $condition->( $req, $req->sessionInfo ) ) {
                     $self->logger->debug(
-                        'Notification condition not authorizated');
+                        'Notification condition not authorized');
 
                     # Remove it from XML
                     $notif->unbindNode();
