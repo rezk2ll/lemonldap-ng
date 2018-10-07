@@ -103,6 +103,8 @@ sub portalTab {
         83 => 'PE_U2FFAILED',
         84 => 'PE_UNAUTHORIZEDPARTNER',
         85 => 'PE_RENEWSESSION',
+        86 => 'PE_WAIT',
+        87 => 'PE_MUSTAUTHN',
     };
 }
 
