@@ -375,6 +375,11 @@ sub attributes {
             msgFail => '__badUrl__',
             documentation => 'URL to call on reload',
         },
+        portalMainLogo    => {
+            type          => 'text',
+            default       => 'common/logos/logo_llng_400px.png',
+            documentation => 'Portal main logo path',
+        },
         staticPrefix => {
             type          => 'text',
             documentation => 'Prefix of static files for HTML templates',

@@ -186,6 +186,7 @@ sub display {
 
         #utf8::decode($auth_user);
         %templateParams = (
+            MAIN_LOGO           => $self->conf->{portalMainLogo},
             AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
             NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
             LOGOUT_URL          => $self->conf->{portal} . "?logout=1",
@@ -258,6 +259,7 @@ sub display {
         my $login = $self->userId($req);
         $login = '' if ( $login eq 'anonymous' );
         %templateParams = (
+            MAIN_LOGO             => $self->conf->{portalMainLogo},
             AUTH_ERROR            => $req->error,
             AUTH_ERROR_TYPE       => $req->error_type,
             AUTH_URL              => $req->{data}->{_url},

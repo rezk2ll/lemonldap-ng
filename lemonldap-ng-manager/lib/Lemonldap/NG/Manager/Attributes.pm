@@ -2173,6 +2173,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 5,
             'type'    => 'int'
         },
+        'portalMainLogo' => {
+            'default' => 'common/logos/logo_llng_400px.png',
+            'type'    => 'text'
+        },
         'portalOpenLinkInNewWindow' => {
             'default' => 0,
             'type'    => 'bool'
