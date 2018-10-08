@@ -177,6 +177,7 @@
 "openSSOSession":"Open your SSO session",
 "otherSessions":"Other active sessions",
 "password": "Password",
+"portalMainLogo":"Portal main logo",
 "ppGrace": "authentications remaining, change your password!",
 "proxyError": "Bad gateway: unable to join remote server",
 "pwdChange":"Password change",

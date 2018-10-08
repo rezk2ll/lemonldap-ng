@@ -177,6 +177,7 @@
 "openSSOSession":"Ouvrir une session SSO",
 "otherSessions":"Autres sessions ouvertes",
 "password": "Mot-de-passe",
+"portalMainLogo":"Logo principal du Portail",
 "ppGrace": "authentifications restantes, changez votre mot de passe !",
 "proxyError": "Mauvaise passerelle : impossible de joindre le serveur amont",
 "pwdChange":"Changement de mot de passe",
