@@ -76,13 +76,13 @@
 
 
       <div class="input-group mb-3">
-        <div class="input-group-preprend">
+        <div class="input-group-prepend">
           <div class="input-group-text">
-            <input class="form-check-input" id="resendconfirmation" type="checkbox" name="resendconfirmation" aria-describedby="resendconfirmationlabel">
+            <input id="resendconfirmation" type="checkbox" name="resendconfirmation" aria-describedby="resendconfirmationlabel" />
           </div>
         </div>
         <p class="form-control">
-          <label class="form-check-label" for="resendconfirmation" id="resendconfirmationlabel" trspan="confirmPwd">Yes, resend the mail</label>
+          <label for="resendconfirmation" id="resendconfirmationlabel" trspan="confirmPwd">Yes, resend the mail</label>
         </p>
       </div>
 
@@ -128,11 +128,11 @@
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <div class="input-group-text">
-              <input class="form-check-input" id="reset" type="checkbox" name="reset" aria-describedby="resetlabel"/>
+              <input id="reset" type="checkbox" name="reset" aria-describedby="resetlabel" />
             </div>
           </div>
           <p class="form-control">
-            <label class="form-check-label" for="reset" id="resetlabel" trspan="generatePwd">Generate the password automatically</label>
+            <label for="reset" id="resetlabel" trspan="generatePwd">Generate the password automatically</label>
           </p>
         </div>
 

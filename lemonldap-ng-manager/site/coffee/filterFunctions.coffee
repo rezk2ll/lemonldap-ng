@@ -45,7 +45,7 @@ filterFunctions =
 						nd = if nd[1]._nodes then nd[1]._nodes else nd[1].nodes
 						for m in nd
 							for s in m.data
-								p s
+								p s if typeof s == 'string'
 
 				# Case "Combination"
 				else if node.nodes[0].data == 'Combination' and n.id == 'combinationParams'

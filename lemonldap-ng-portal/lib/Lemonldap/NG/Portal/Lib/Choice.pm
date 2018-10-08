@@ -45,7 +45,14 @@ sub init {
             '::'
           . [ 'Auth', 'UserDB', 'Password' ]->[$type] . '::'
           . $mods[$type];
-        if ( $module = $self->loadModule($module) ) {
+        my $over;
+        if ( $mods[5] ) {
+            eval { $over = from_json( $mods[5] ) };
+            if ($@) {
+                $self->logger->error("Bad over value ($@), skipped");
+            }
+        }
+        if ( $module = $self->loadModule( $module, $over ) ) {
             $self->modules->{$name} = $module;
             $self->logger->debug(
                 [qw(Authentication User Password)]->[$type]

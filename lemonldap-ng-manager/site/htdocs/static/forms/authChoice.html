@@ -32,11 +32,26 @@
       </tr>
     </tbody>
   </table>
+  <h4 trspan="overPrm"></h4>
+  <table class="table">
+    <tr ng-repeat="t in currentNode.data[5]">
+      <td>
+        <input class="form-control" ng-model="t[0]" />
+      </td>
+      <td>
+        <input class="form-control" ng-model="t[1]" />
+      </td>
+      <td>
+        <span class="link text-danger glyphicon glyphicon-minus-sign" ng-click="del(currentNode.data.over,$index)"/>
+        <span ng-if="$last" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newCmbOver'})"/>
+      </td>
+    </tr>
+  </table>
 </div>
 <script type="text/menu">
 [{
-  "action": "newAuthChoice",
-  "title": "newChain",
+  "action": "newChoiceOver",
+  "title": "newCmbOver",
   "icon": "plus-sign"
 },{
   "title": "deleteEntry",

@@ -1,6 +1,7 @@
 package Lemonldap::NG::Common::Conf::RESTServer;
 
 use strict;
+use JSON 'from_json';
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
@@ -539,11 +540,16 @@ sub authChoiceModules {
     unless ($key) {
         my @res;
         foreach my $k ( sort keys %$value ) {
+            my $data = [ split /;/, $value->{$k} ];
+            eval {$data->[5] = from_json($data->[5]) if $data->[5] };
+            if($@){
+            $self->logger->error("Bad value in choice over parameters, deleted ($@)");
+            }
             push @res,
               {
                 id    => "authChoiceModules/$k",
                 title => "$k",
-                data  => [ split /;/, $value->{$k} ],
+                data  => $data,
                 type  => 'authChoice'
               };
         }
