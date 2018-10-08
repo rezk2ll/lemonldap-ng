@@ -601,6 +601,7 @@
 "portalServers":"Serveurs du portail",
 "portalSkin":"Thème visuel par défaut",
 "portalSkinBackground":"Image de fond",
+"portalMainLogo":"Logo principal",
 "portalSkinRules":"Règles d'affichage du thème visuel",
 "portalStatus":"Publie le statut du portail",
 "portalUserAttr":"Attribut de l'utilisateur",
