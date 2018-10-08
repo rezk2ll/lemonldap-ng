@@ -316,6 +316,12 @@ llapp.controller 'TreeCtrl', [
 			d.over = [] unless d.over
 			d.over.push ["new#{id++}", '']
 
+		$scope.newChoiceOver = ->
+			d = $scope.currentNode.data
+			console.log "data", d
+			d[5] = [] unless d[5]
+			d[5].push ["new#{id++}", '']
+
 		# Add host
 		$scope.addHost = () ->
 			cn = $scope.currentNode

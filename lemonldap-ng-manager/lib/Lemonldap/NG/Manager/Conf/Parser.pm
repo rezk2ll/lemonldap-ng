@@ -21,6 +21,7 @@ package Lemonldap::NG::Manager::Conf::Parser;
 use strict;
 use utf8;
 use Mouse;
+use JSON 'to_json';
 use Lemonldap::NG::Common::Conf::ReConstants;
 use Lemonldap::NG::Manager::Attributes;
 
@@ -762,6 +763,13 @@ sub _scanNodes {
                 foreach my $n (@$subNodes) {
                     hdebug("  looking at $n subnode");
                     if ( ref $n->{data} and ref $n->{data} eq 'ARRAY' ) {
+                        # authChoiceModules
+                        if ( $name eq 'authChoiceModules' ) {
+                            hdebug('     combModules');
+                            $n->{data}->[5] ||= {};
+                            $n->{data}->[5] = to_json($n->{data}->[5]);
+                        }
+
                         $n->{data} = join ';', @{ $n->{data} };
                     }
                     $self->newConf->{$name}->{ $n->{title} } = $n->{data};
