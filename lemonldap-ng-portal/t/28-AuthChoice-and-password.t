@@ -23,11 +23,12 @@ SKIP: {
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel       => 'error',
-                useSafeJail    => 1,
-                authentication => 'Choice',
-                userDB         => 'Same',
-                passwordDB     => 'Choice',
+                logLevel                 => 'error',
+                useSafeJail              => 1,
+                authentication           => 'Choice',
+                userDB                   => 'Same',
+                passwordDB               => 'Choice',
+                portalRequireOldPassword => 1,
 
                 authChoiceParam   => 'test',
                 authChoiceModules => {
