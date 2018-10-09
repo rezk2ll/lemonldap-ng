@@ -526,14 +526,20 @@ sub tests {
                 unless ( $conf->{formTimeout} > 30 );
             return ( 1, "XSRF form token TTL should not be higher than 2mn" )
                 if ( $conf->{formTimeout} > 120 );
+
+            # Return
+            return 1;
         },
 
         # Error if external 2F Send or Validate command is missing
         bruteForceProtection => sub {
             return 1 unless ( $conf->{bruteForceProtection} );
             return ( 1,
-                'History" plugin is required for "BruteForceProtection" plugin'
+                '"History" plugin is required for "BruteForceProtection" plugin'
             ) unless ( $conf->{loginHistoryEnabled} );
+
+            # Return
+            return 1;
         },
     };
 }
