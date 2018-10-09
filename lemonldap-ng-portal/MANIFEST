@@ -391,8 +391,8 @@ t/24-AuthKerberos.t
 t/25-AuthSlave.t
 t/26-AuthRemote.t
 t/27-AuthProxy.t
+t/28-AuthChoice-and-password.t
 t/28-AuthChoice-with-rules.t
-t/28-AuthChoice.t
 t/29-AuthSSL.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
