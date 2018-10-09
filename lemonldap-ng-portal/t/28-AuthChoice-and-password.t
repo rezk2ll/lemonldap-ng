@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 6;
+my $maintests = 10;
 
 eval { unlink 't/userdb.db' };
 
@@ -23,10 +23,12 @@ SKIP: {
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel       => 'error',
-                useSafeJail    => 1,
-                authentication => 'Choice',
-                userDB         => 'Same',
+                logLevel                 => 'error',
+                useSafeJail              => 1,
+                authentication           => 'Choice',
+                userDB                   => 'Same',
+                passwordDB               => 'Choice',
+                portalRequireOldPassword => 1,
 
                 authChoiceParam   => 'test',
                 authChoiceModules => {
@@ -74,6 +76,33 @@ SKIP: {
             'Auth query'
         );
         my $id = expectCookie($res);
+
+        ok(
+            $res = $client->_post(
+                '/',
+                IO::String->new(
+                    'oldpassword=dwho&newpassword=test&confirmpassword=test'),
+                cookie => "lemonldap=$id",
+                accept => 'application/json',
+                length => 54
+            ),
+            'Change password'
+        );
+        expectOK($res);
+        $client->logout($id);
+        my $tmp = $postString;
+        $tmp =~ s/password=dwho/password=test/;
+        ok(
+            $res = $client->_post(
+                '/',
+                IO::String->new($tmp),
+                length => length($tmp),
+            ),
+            'Auth query with new password'
+        );
+        expectOK($res);
+        $id = expectCookie($res);
+
         $client->logout($id);
     }
 
