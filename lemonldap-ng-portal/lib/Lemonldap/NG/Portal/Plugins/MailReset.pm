@@ -246,6 +246,7 @@ sub _reset {
     }
     elsif ($mailSession) {
         $self->logger->debug( 'Mail session found: ' . $mailSession->id );
+        $req->id( $mailSession->id );
         $req->data->{mailAlreadySent} = 1;
     }
 
@@ -280,9 +281,10 @@ sub _reset {
 
             # Return mail already sent only if it is allowed at previous step
             if ( $self->conf->{portalErrorOnMailNotFound} ) {
+                $self->captcha(0);
+                $self->setSecurity($req);
                 return PE_MAILCONFIRMATION_ALREADY_SENT;
             }
-            return PE_MAILCONFIRMOK;
         }
 
         # Get mail address
