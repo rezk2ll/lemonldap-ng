@@ -47,6 +47,7 @@ sub display {
         $self->logger->debug('Display: notification detected');
         $skinfile       = 'notification';
         %templateParams = (
+            MAIN_LOGO       => $self->conf->{portalMainLogo},
             AUTH_ERROR_TYPE => $req->error_type,
             NOTIFICATION    => $notif,
             HIDDEN_INPUTS   => $self->buildHiddenForm($req),
@@ -67,6 +68,7 @@ sub display {
         $self->logger->debug('Display: confirm detected');
         $skinfile       = 'confirm';
         %templateParams = (
+            MAIN_LOGO       => $self->conf->{portalMainLogo},
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
             AUTH_URL        => $req->{data}->{_url},
@@ -95,6 +97,7 @@ sub display {
         $self->logger->debug('Display: IDP choice detected');
         $skinfile       = 'idpchoice';
         %templateParams = (
+            MAIN_LOGO       => $self->conf->{portalMainLogo},
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
             AUTH_URL        => $req->{data}->{_url},
@@ -123,6 +126,7 @@ sub display {
         $self->logger->debug('Hidden values -> '. Dumper( $req->{portalHiddenFormValues}));
         $skinfile       = 'info';
         %templateParams = (
+            MAIN_LOGO       => $self->conf->{portalMainLogo},
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $req->error_type,
             MSG             => $info,
@@ -150,6 +154,7 @@ sub display {
         my $id = $req->{sessionInfo}
           ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} };
         %templateParams = (
+            MAIN_LOGO       => $self->conf->{portalMainLogo},
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $req->error_type,
             PROVIDERURI     => $p,
@@ -206,6 +211,7 @@ sub display {
     elsif ( $req->error == PE_RENEWSESSION ) {
         $skinfile       = 'upgradesession';
         %templateParams = (
+            MAIN_LOGO  => $self->conf->{portalMainLogo},
             MSG        => 'askToRenew',
             CONFIRMKEY => $self->stamp,
             PORTAL     => $self->conf->{portal},
@@ -221,6 +227,7 @@ sub display {
     elsif ( $req->error == PE_MUSTAUTHN ) {
         $skinfile       = 'updatesession';
         %templateParams = (
+            MAIN_LOGO  => $self->conf->{portalMainLogo},
             MSG        => 'PE87',
             CONFIRMKEY => $self->stamp,
             PORTAL     => $self->conf->{portal},
@@ -243,6 +250,7 @@ sub display {
     {
         $skinfile       = 'error';
         %templateParams = (
+            MAIN_LOGO             => $self->conf->{portalMainLogo},
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
             (
