@@ -12,7 +12,15 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 use constant afterData => 'run';
 
-sub init {1}
+sub init {
+    my ($self) = @_;
+    unless ( $self->conf->{loginHistoryEnabled} ) {
+        $self->logger->error(
+            '"History" plugin is required for "BruteForceProtection" plugin');
+        return 0;
+    }
+    return 1;
+}
 
 # RUNNING METHOD
 
