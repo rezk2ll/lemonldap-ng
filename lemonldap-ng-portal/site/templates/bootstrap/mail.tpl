@@ -126,6 +126,7 @@
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fa fa-lock"></i> </span>
+          </div>
           <input name="confirmpassword" type="password" class="form-control" trplaceholder="confirmPwd" />
         </div>
 
