@@ -353,6 +353,7 @@ sub _reset {
 
 sub changePwd {
     my ( $self, $req ) = @_;
+    my %tplPrms;
     $self->logger->debug('Change password form response');
 
     if ( my $token = $req->param('token') ) {
@@ -391,6 +392,7 @@ sub changePwd {
         $req->data->{newpassword}     = $password;
         $req->data->{confirmpassword} = $password;
         $req->data->{forceReset}      = 1;
+        $tplPrms{RESET}               = 1;
     }
 
     # Else a password is required in request
@@ -438,7 +440,11 @@ sub changePwd {
     else {
 
         # Use HTML template
-        $body = $self->loadTemplate( 'mail_password', filter => $tr );
+        $body = $self->loadTemplate(
+            'mail_password',
+            filter => $tr,
+            params => \%tplPrms
+        );
         $html = 1;
     }
 
