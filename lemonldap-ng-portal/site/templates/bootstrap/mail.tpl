@@ -66,6 +66,10 @@
         <input type="hidden" value="<TMPL_VAR NAME="MAIL">" name="mail">
       </TMPL_IF>
 
+      <TMPL_IF NAME="TOKEN">
+        <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
+      </TMPL_IF>
+
       <h3 trspan="resendConfirmMail">Resend confirmation mail?</h3>
 
       <p class="alert alert-info">

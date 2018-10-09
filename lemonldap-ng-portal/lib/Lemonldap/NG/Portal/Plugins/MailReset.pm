@@ -278,7 +278,10 @@ sub _reset {
             $self->userLogger->notice(
                 'Reset mail already sent to ' . $req->{user} );
 
-            # To avoid enumeration, return OK
+            # Return mail already sent only if it is allowed at previous step
+            if ( $self->conf->{portalErrorOnMailNotFound} ) {
+                return PE_MAILCONFIRMATION_ALREADY_SENT;
+            }
             return PE_MAILCONFIRMOK;
         }
 
