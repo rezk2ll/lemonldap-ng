@@ -234,8 +234,6 @@ sub loadIDPs {
     # Build IDP list for later use in extractFormInfo
     $self->idpList( {} );
 
-    # TODO: QUESTION: do we have to return 0 (<=> block initialization) if one
-    #                 IdP load fails ?
     foreach ( keys %{ $self->conf->{samlIDPMetaDataXML} } ) {
         $self->logger->debug("Get Metadata for IDP $_");
 
@@ -247,7 +245,7 @@ sub loadIDPs {
             $self->logger->error(
 "Metadata for IDP $_ is in old format. Please reload them from Manager"
             );
-            return 0;
+            next;
         }
 
         if ( $self->conf->{samlMetadataForceUTF8} ) {
@@ -259,7 +257,7 @@ sub loadIDPs {
 
         unless ($result) {
             $self->logger->error("Fail to use IDP $_ Metadata");
-            return 0;
+            next;
         }
 
         # Store IDP entityID and Organization Name
@@ -284,8 +282,9 @@ sub loadIDPs {
         {
             $self->logger->error(
                 "Unable to set encryption mode $encryption_mode on IDP $_");
-            return 0;
+            next;
         }
+        $self->logger->debug("Set encryption mode $encryption_mode on IDP $_");
 
         my $cond = $self->conf->{samlIDPMetaDataOptions}->{$_}
           ->{samlIDPMetaDataOptionsResolutionRule};
@@ -294,11 +293,10 @@ sub loadIDPs {
             unless ( $cond = $self->p->HANDLER->buildSub($cond) ) {
                 $self->logger->error( 'SAML IdP rule error: '
                       . $self->p->HANDLER->tsv->{jail}->error );
-                return 0;
+                next;
             }
             $self->idpRules->{$entityID} = $cond;
         }
-        $self->logger->debug("Set encryption mode $encryption_mode on IDP $_");
 
         $self->logger->debug("IDP $_ added");
     }
@@ -332,7 +330,7 @@ sub loadSPs {
             $self->logger->error(
 "Metadata for SP $_ is in old format. Please reload them from Manager"
             );
-            return 0;
+            next;
         }
 
         if ( $self->conf->{samlMetadataForceUTF8} ) {
@@ -344,7 +342,7 @@ sub loadSPs {
 
         unless ($result) {
             $self->logger->error("Fail to use SP $_ Metadata");
-            return 0;
+            next;
         }
 
         # Store SP entityID and Organization Name
@@ -368,8 +366,9 @@ sub loadSPs {
         {
             $self->logger->error(
                 "Unable to set encryption mode $encryption_mode on SP $_");
-            return 0;
+            next;
         }
+        $self->logger->debug("Set encryption mode $encryption_mode on SP $_");
 
         my $rule = $self->conf->{samlSPMetaDataOptions}->{$_}
           ->{samlSPMetaDataOptionsRule};
@@ -378,12 +377,10 @@ sub loadSPs {
             unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
                 $self->logger->error( 'SAML SP rule error: '
                       . $self->p->HANDLER->tsv->{jail}->error );
-                return 0;
+                next;
             }
             $self->spRules->{$entityID} = $rule;
         }
-
-        $self->logger->debug("Set encryption mode $encryption_mode on SP $_");
 
         $self->logger->debug("SP $_ added");
     }
