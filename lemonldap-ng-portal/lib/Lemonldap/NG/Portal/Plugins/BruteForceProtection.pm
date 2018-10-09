@@ -15,9 +15,9 @@ use constant afterData => 'run';
 sub init {
     my ($self) = @_;
     unless ( $self->conf->{loginHistoryEnabled} ) {
-        $self->logger->error(
+        $self->logger->warn(
             '"History" plugin is required for "BruteForceProtection" plugin');
-        return 0;
+        #return 0;
     }
     return 1;
 }
