@@ -19,7 +19,6 @@ sub defaultValues {
         'authentication'              => 'Demo',
         'available2F'                 => 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey',
         'available2FSelfRegistration' => 'TOTP,U2F,Yubikey',
-        'bruteForceProtection'        => 1,
         'bruteForceProtectionMaxAge'  => 300,
         'bruteForceProtectionTempo'   => 30,
         'captcha_mail_enabled'        => 1,

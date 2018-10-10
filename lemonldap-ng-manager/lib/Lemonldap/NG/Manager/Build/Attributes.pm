@@ -574,7 +574,7 @@ sub attributes {
                 'Maximun interval in seconds since last authentifcation to force reauthentication',
         },
         bruteForceProtection => {
-            default       => 1,
+            default       => 0,
             type          => 'bool',
             documentation => 'Enable brute force attack protection',
         },

@@ -608,7 +608,7 @@ sub attributes {
             'type'    => 'text'
         },
         'bruteForceProtection' => {
-            'default' => 1,
+            'default' => 0,
             'type'    => 'bool'
         },
         'bruteForceProtectionMaxAge' => {

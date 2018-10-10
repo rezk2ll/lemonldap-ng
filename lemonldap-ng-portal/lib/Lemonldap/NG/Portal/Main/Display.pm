@@ -16,16 +16,17 @@ sub displayInit {
     my ($self) = @_;
     $self->skinRules( [] );
     if ( $self->conf->{portalSkinRules} ) {
-        foreach my $skinRule ( sort keys %{ $self->conf->{portalSkinRules} } ) {
+        foreach my $skinRule ( sort keys %{ $self->conf->{portalSkinRules} } )
+        {
             my $sub = HANDLER->buildSub( HANDLER->substitute($skinRule) );
             if ($sub) {
                 push @{ $self->skinRules },
-                  [ $self->conf->{portalSkinRules}->{$skinRule}, $sub ];
+                    [ $self->conf->{portalSkinRules}->{$skinRule}, $sub ];
             }
             else {
                 $self->logger->error(
                     qq(Skin rule "$skinRule" returns an error: )
-                      . HANDLER->tsv->{jail}->error );
+                        . HANDLER->tsv->{jail}->error );
             }
         }
     }
@@ -54,8 +55,7 @@ sub display {
             AUTH_URL        => $req->{data}->{_url},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->data->{_authChoice},
-            (
-                $req->data->{customScript}
+            (   $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
@@ -79,12 +79,11 @@ sub display {
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->data->{_authChoice},
             CHECK_LOGINS    => $self->conf->{portalCheckLogins}
-              && $req->data->{login},
+                && $req->data->{login},
             ASK_LOGINS => $req->param('checkLogins') || 0,
             CONFIRMKEY => $self->stamp(),
             REMEMBER   => $req->data->{confirmRemember},
-            (
-                $req->data->{customScript}
+            (   $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
@@ -107,13 +106,12 @@ sub display {
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->data->{_authChoice},
             CHECK_LOGINS    => $self->conf->{portalCheckLogins}
-              && $req->data->{login},
+                && $req->data->{login},
             ASK_LOGINS => $req->param('checkLogins') || 0,
             CONFIRMKEY => $self->stamp(),
-            LIST       => $req->data->{list} || [],
+            LIST       => $req->data->{list}         || [],
             REMEMBER   => $req->data->{confirmRemember},
-            (
-                $req->data->{customScript}
+            (   $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
@@ -123,7 +121,8 @@ sub display {
     # 1.3 There is a message to display
     elsif ( my $info = $req->info ) {
         $self->logger->debug('Display: info detected');
-        $self->logger->debug('Hidden values -> '. Dumper( $req->{portalHiddenFormValues}));
+        $self->logger->debug(
+            'Hidden values -> ' . Dumper( $req->{portalHiddenFormValues} ) );
         $skinfile       = 'info';
         %templateParams = (
             MAIN_LOGO       => $self->conf->{portalMainLogo},
@@ -136,8 +135,7 @@ sub display {
             FORM_METHOD     => $self->conf->{infoFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->data->{_authChoice},
-            (
-                $req->data->{customScript}
+            (   $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
@@ -152,15 +150,14 @@ sub display {
         my $p = $self->conf->{portal} . $self->conf->{issuerDBOpenIDPath};
         $p =~ s#(?<!:)/?\^?/#/#g;
         my $id = $req->{sessionInfo}
-          ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} };
+            ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} };
         %templateParams = (
             MAIN_LOGO       => $self->conf->{portalMainLogo},
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $req->error_type,
             PROVIDERURI     => $p,
             MSG             => $req->info(),
-            (
-                $req->data->{customScript}
+            (   $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
@@ -177,8 +174,7 @@ sub display {
             URL           => $req->{urldc},
             HIDDEN_INPUTS => $self->buildHiddenForm($req),
             FORM_METHOD   => $req->data->{redirectFormMethod} || 'get',
-            (
-                $req->data->{customScript}
+            (   $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
@@ -191,17 +187,17 @@ sub display {
 
         #utf8::decode($auth_user);
         %templateParams = (
-            MAIN_LOGO           => $self->conf->{portalMainLogo},
-            AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
-            NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
+            MAIN_LOGO => $self->conf->{portalMainLogo},
+            AUTH_USER =>
+                $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
+            NEWWINDOW           => $self->conf->{portalOpenLinkInNewWindow},
             LOGOUT_URL          => $self->conf->{portal} . "?logout=1",
             APPSLIST_ORDER      => $req->{sessionInfo}->{'_appsListOrder'},
             PING                => $self->conf->{portalPingInterval},
             REQUIRE_OLDPASSWORD => $self->conf->{portalRequireOldPassword},
             HIDE_OLDPASSWORD    => 0,
             $self->menu->params($req),
-            (
-                $req->data->{customScript}
+            (   $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
@@ -216,8 +212,7 @@ sub display {
             CONFIRMKEY => $self->stamp,
             PORTAL     => $self->conf->{portal},
             URL        => $req->data->{_url},
-            (
-                $req->data->{customScript}
+            (   $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
@@ -232,8 +227,7 @@ sub display {
             CONFIRMKEY => $self->stamp,
             PORTAL     => $self->conf->{portal},
             URL        => $req->data->{_url},
-            (
-                $req->data->{customScript}
+            (   $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
@@ -246,15 +240,14 @@ sub display {
         or (    not $req->data->{noerror}
             and $req->userData
             and %{ $req->userData } )
-      )
+        )
     {
         $skinfile       = 'error';
         %templateParams = (
-            MAIN_LOGO             => $self->conf->{portalMainLogo},
+            MAIN_LOGO       => $self->conf->{portalMainLogo},
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
-            (
-                $req->data->{customScript}
+            (   $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
@@ -267,21 +260,21 @@ sub display {
         my $login = $self->userId($req);
         $login = '' if ( $login eq 'anonymous' );
         %templateParams = (
-            MAIN_LOGO             => $self->conf->{portalMainLogo},
-            AUTH_ERROR            => $req->error,
-            AUTH_ERROR_TYPE       => $req->error_type,
-            AUTH_URL              => $req->{data}->{_url},
-            LOGIN                 => $login,
-            CHECK_LOGINS          => $self->conf->{portalCheckLogins},
-            ASK_LOGINS            => $req->param('checkLogins') || 0,
-            DISPLAY_RESETPASSWORD => $self->conf->{portalDisplayResetPassword},
-            DISPLAY_REGISTER      => $self->conf->{portalDisplayRegister},
-            MAIL_URL              => $self->conf->{mailUrl},
-            REGISTER_URL          => $self->conf->{registerUrl},
-            HIDDEN_INPUTS         => $self->buildHiddenForm($req),
-            STAYCONNECTED         => $self->conf->{stayConnected},
-            (
-                $req->data->{customScript}
+            MAIN_LOGO       => $self->conf->{portalMainLogo},
+            AUTH_ERROR      => $req->error,
+            AUTH_ERROR_TYPE => $req->error_type,
+            AUTH_URL        => $req->{data}->{_url},
+            LOGIN           => $login,
+            CHECK_LOGINS    => $self->conf->{portalCheckLogins},
+            ASK_LOGINS      => $req->param('checkLogins') || 0,
+            DISPLAY_RESETPASSWORD =>
+                $self->conf->{portalDisplayResetPassword},
+            DISPLAY_REGISTER => $self->conf->{portalDisplayRegister},
+            MAIL_URL         => $self->conf->{mailUrl},
+            REGISTER_URL     => $self->conf->{registerUrl},
+            HIDDEN_INPUTS    => $self->buildHiddenForm($req),
+            STAYCONNECTED    => $self->conf->{stayConnected},
+            (   $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
@@ -313,12 +306,12 @@ sub display {
             or $req->{error} == PE_PASSWORDFORMEMPTY
             or (    $req->{error} == PE_PP_PASSWORD_EXPIRED
                 and $self->conf->{ldapAllowResetExpiredPassword} )
-          )
+            )
         {
             %templateParams = (
                 %templateParams,
                 REQUIRE_OLDPASSWORD =>
-                  1,    # Old password is required to check user credentials
+                    1,    # Old password is required to check user credentials
                 DISPLAY_FORM          => 0,
                 DISPLAY_OPENID_FORM   => 0,
                 DISPLAY_YUBIKEY_FORM  => 0,
@@ -375,15 +368,17 @@ sub display {
             # Choose what form to display if not in a loop
             else {
 
-                my $displayType =
-                  eval { $self->_authentication->getDisplayType($req) };
+                my $displayType
+                    = eval { $self->_authentication->getDisplayType($req) };
 
                 $self->logger->debug("Display type $displayType ");
 
                 %templateParams = (
                     %templateParams,
-                    DISPLAY_FORM => $displayType =~ /\bstandardform\b/ ? 1 : 0,
-                    DISPLAY_OPENID_FORM => $displayType =~ /\bopenidform\b/ ? 1
+                    DISPLAY_FORM => $displayType =~ /\bstandardform\b/ ? 1
+                    : 0,
+                    DISPLAY_OPENID_FORM => $displayType =~ /\bopenidform\b/
+                    ? 1
                     : 0,
                     DISPLAY_YUBIKEY_FORM => $displayType =~ /\byubikeyform\b/
                     ? 1
@@ -393,9 +388,10 @@ sub display {
                     module            => $displayType eq "logo"
                     ? $self->getModule( $req, 'auth' )
                     : "",
-                    AUTH_LOOP => [],
-                    PORTAL_URL =>
-                      ( $displayType eq "logo" ? $self->conf->{portal} : 0 ),
+                    AUTH_LOOP  => [],
+                    PORTAL_URL => (
+                        $displayType eq "logo" ? $self->conf->{portal} : 0
+                    ),
                     MSG => $req->info(),
                 );
 
@@ -406,7 +402,8 @@ sub display {
     }
 
     # Additional $req param
-    %templateParams = ( %templateParams, %{ $req->{customParameters} // {} }, );
+    %templateParams
+        = ( %templateParams, %{ $req->{customParameters} // {} }, );
 
     $self->logger->debug("Skin returned: $skinfile");
     return ( $skinfile, \%templateParams );
@@ -422,15 +419,16 @@ sub staticFile {
     require Plack::Util;
     require Cwd;
     require HTTP::Date;
-    open my $fh, '<:raw', $self->conf->{templatesDir} . "/$file"
-      or return $self->sendError( $req,
+    open my $fh, '<:raw',
+        $self->conf->{templatesDir}
+        . "/$file"
+        or return $self->sendError( $req,
         $self->conf->{templatesDir} . "/$file: $!", 403 );
     my @stat = stat $file;
     Plack::Util::set_io_path( $fh, Cwd::realpath($file) );
     return [
         200,
-        [
-            'Content-Type'   => $type,
+        [   'Content-Type'   => $type,
             'Content-Length' => $stat[7],
             'Last-Modified'  => HTTP::Date::time2str( $stat[9] )
         ],
@@ -447,11 +445,12 @@ sub buildHiddenForm {
 
         # Check XSS attacks
         next
-          if $self->checkXSSAttack( $_, $req->{portalHiddenFormValues}->{$_} );
+            if $self->checkXSSAttack( $_,
+            $req->{portalHiddenFormValues}->{$_} );
 
         # Build hidden input HTML code
         $val .= qq{<input type="hidden" name="$_" id="$_" value="}
-          . $req->{portalHiddenFormValues}->{$_} . '" />';
+            . $req->{portalHiddenFormValues}->{$_} . '" />';
     }
 
     return $val;
@@ -522,13 +521,12 @@ sub mkSessionArray {
             displayError => $displayError,
             fields       => [
                 map { { name => $self->conf->{sessionDataToRemember}->{$_} } }
-                  @fields
+                    @fields
             ],
             sessions => [
                 map {
                     my $session = $_;
-                    {
-                        user   => $session->{user},
+                    {   user   => $session->{user},
                         utime  => $session->{_utime},
                         ip     => $session->{ipAddr},
                         values => [ map { { v => $session->{$_} } } @fields ],
@@ -547,10 +545,10 @@ sub mkOidcConsent {
         and ref( $self->conf->{oidcRPMetaDataOptions} ) )
     {
 
-    	# Set default RP displayname
+        # Set default RP displayname
         foreach my $oidc ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
             $self->conf->{oidcRPMetaDataOptions}->{$oidc}
-              ->{oidcRPMetaDataOptionsDisplayName} ||= $oidc;
+                ->{oidcRPMetaDataOptionsDisplayName} ||= $oidc;
         }
     }
 
@@ -576,9 +574,9 @@ sub mkOidcConsent {
             $self->logger->debug("RP { $rp } Consent found");
             $consents->{$rp}->{epoch} = $_->{epoch};
             $consents->{$rp}->{scope} = $_->{scope};
-            $consents->{$rp}->{displayName} =
-              $self->conf->{oidcRPMetaDataOptions}->{$rp}
-              ->{oidcRPMetaDataOptionsDisplayName};
+            $consents->{$rp}->{displayName}
+                = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+                ->{oidcRPMetaDataOptionsDisplayName};
         }
     }
 
@@ -588,8 +586,7 @@ sub mkOidcConsent {
         params => {
             partners => [
                 map {
-                    {
-                        name        => $_,
+                    {   name        => $_,
                         epoch       => $consents->{$_}->{epoch},
                         scope       => $consents->{$_}->{scope},
                         displayName => $consents->{$_}->{displayName}
