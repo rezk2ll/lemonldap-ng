@@ -216,7 +216,7 @@
         <div id="logout">
           <div class="card border-secondary">
             <div class="card-header text-white bg-secondary">
-              <h3 class="card-title" trspan="areYouSure">Are you sure ?</h3>
+              <h4 class="card-title" trspan="areYouSure">Are you sure ?</h4>
             </div>
             <div class="card-body buttons">
             <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-success" role="button">
