@@ -55,9 +55,9 @@ sub tree {
                             title => 'portalCustomization',
                             help  => 'portalcustom.html',
                             nodes => [
+                                'portalMainLogo',
                                 'portalSkin',
                                 'portalSkinBackground',
-                                'portalMainLogo',
                                 'portalSkinRules',
                                 {
                                     title => 'portalButtons',
