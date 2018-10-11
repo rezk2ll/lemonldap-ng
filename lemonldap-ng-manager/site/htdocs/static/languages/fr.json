@@ -574,7 +574,7 @@
 "plugins":"Extensions",
 "port":"Port",
 "portal":"URL",
-"portalAntiFrame":"Protection anti frame",
+"portalAntiFrame":"Protection anti iFrame",
 "portalButtons":"Boutons sur la page de connexion",
 "portalCaptcha":"Captcha",
 "portalCheckLogins":"Vérifier l'historique",
