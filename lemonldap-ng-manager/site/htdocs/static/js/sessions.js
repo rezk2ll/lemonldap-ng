@@ -199,7 +199,7 @@
       $scope.displaySession = function(scope) {
         var sessionId, transformSession;
         transformSession = function(session) {
-          var _insert, _stToStr, array, arrayDate, attr, attrs, category, epoch, i, id, j, k, key, l, len, len1, len2, len3, len4, m, name, o, oidcConsent, pattern, ref, ref1, res, sfDevice, subres, time, title, tmp, value;
+          var _insert, _stToStr, array, arrayDate, attr, attrs, category, cv, epoch, i, id, j, k, key, l, len, len1, len2, len3, len4, m, name, o, oidcConsent, pattern, ref, ref1, res, sfDevice, subres, time, title, tmp, value;
           _stToStr = function(s) {
             return s;
           };
@@ -341,24 +341,42 @@
           if (session._loginHistory) {
             tmp = [];
             if (session._loginHistory.successLogin) {
+              cv = "";
               ref = session._loginHistory.successLogin;
               for (m = 0, len3 = ref.length; m < len3; m++) {
                 l = ref[m];
+                for (key in l) {
+                  value = l[key];
+                  if (key.match(/^(_utime|ipAddr)$/)) {
+                    1;
+                  } else {
+                    cv = cv + (", " + key + " : " + value);
+                  }
+                }
                 tmp.push({
                   t: l._utime,
                   title: $scope.localeDate(l._utime),
-                  value: "Success (IP " + l.ipAddr + ")"
+                  value: ("Success (IP " + l.ipAddr + ")") + cv
                 });
               }
             }
             if (session._loginHistory.failedLogin) {
+              cv = "";
               ref1 = session._loginHistory.failedLogin;
               for (o = 0, len4 = ref1.length; o < len4; o++) {
                 l = ref1[o];
+                for (key in l) {
+                  value = l[key];
+                  if (key.match(/^(_utime|ipAddr|error)$/)) {
+                    1;
+                  } else {
+                    cv = cv + (", " + key + " : " + value);
+                  }
+                }
                 tmp.push({
                   t: l._utime,
                   title: $scope.localeDate(l._utime),
-                  value: l.error + " (IP " + l.ipAddr + ")"
+                  value: ("Error " + l.error + " (IP " + l.ipAddr + ")") + cv
                 });
               }
             }
