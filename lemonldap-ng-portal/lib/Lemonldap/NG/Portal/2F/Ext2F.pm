@@ -39,11 +39,12 @@ sub run {
     $self->logger->debug("Ext2F checkLogins set") if ($checkLogins);
 
     # Prepare command and launch it
-    $self->logger->debug('Launching "Send" external 2F command -> ' . $self->conf->{ext2FSendCommand});
+    $self->logger->debug( 'Launching "Send" external 2F command -> '
+          . $self->conf->{ext2FSendCommand} );
     if ( my $c =
         $self->launch( $req->sessionInfo, $self->conf->{ext2FSendCommand} ) )
     {
-		$self->logger->error("External send command failed (code $c)");
+        $self->logger->error("External send command failed (code $c)");
         return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
@@ -72,7 +73,8 @@ sub verify {
     }
 
     # Prepare command and launch it
-    $self->logger->debug('Launching "Validate" external 2F command -> ' . $self->conf->{ext2FValidateCommand});
+    $self->logger->debug( 'Launching "Validate" external 2F command -> '
+          . $self->conf->{ext2FValidateCommand} );
     $self->logger->debug(" code -> $code");
     if ( my $c =
         $self->launch( $session, $self->conf->{ext2FValidateCommand}, $code ) )

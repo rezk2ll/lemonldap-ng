@@ -12,7 +12,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 use constant forAuthUser => 'run';
 
-sub init {1}
+sub init { 1 }
 
 # RUNNING METHOD
 
@@ -25,8 +25,8 @@ sub run {
         $self->logger->debug( "Delta with last Authn -> " . $delta );
 
         $delta <= $self->conf->{portalForceAuthnInterval}
-            ? return PE_OK
-            : return PE_MUSTAUTHN;
+          ? return PE_OK
+          : return PE_MUSTAUTHN;
     }
 }
 

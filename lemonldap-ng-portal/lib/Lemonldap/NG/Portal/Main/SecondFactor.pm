@@ -3,11 +3,11 @@ package Lemonldap::NG::Portal::Main::SecondFactor;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-    PE_SENDRESPONSE
-    PE_OK
-    PE_NOTOKEN
-    PE_TOKENEXPIRED
-    PE_BADCREDENTIALS
+  PE_SENDRESPONSE
+  PE_OK
+  PE_NOTOKEN
+  PE_TOKENEXPIRED
+  PE_BADCREDENTIALS
 );
 
 our $VERSION = '2.0.0';
@@ -19,8 +19,8 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 has ott => (
     is      => 'rw',
     default => sub {
-        my $ott = $_[0]->{p}
-            ->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
         $ott->timeout( $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
@@ -52,8 +52,7 @@ sub _redirect {
     my ( $self, $req ) = @_;
     my $arg = $req->env->{QUERY_STRING};
     return [
-        302, [ Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' ) ],
-        []
+        302, [ Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' ) ], []
     ];
 }
 
@@ -66,16 +65,15 @@ sub _verify {
     # Check token
     my $token;
     unless ( $token = $req->param('token') ) {
-        $self->userLogger->error(
-            $self->prefix . ' 2F access without token' );
+        $self->userLogger->error( $self->prefix . ' 2F access without token' );
         $req->mustRedirect(1);
-        return $self->p->do( $req, [ sub {PE_NOTOKEN} ] );
+        return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
     }
 
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
         $self->userLogger->info('Token expired');
-        return $self->p->do( $req, [ sub {PE_TOKENEXPIRED} ] );
+        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
     }
 
     # Launch second factor verification
@@ -90,7 +88,7 @@ sub _verify {
         $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
         $req->authResult(PE_BADCREDENTIALS);
         return $self->p->do( $req,
-            [ $self->p->storeHistory($req), sub {$res} ] );
+            [ $self->p->storeHistory($req), sub { $res } ] );
     }
 
     # Else restore session
@@ -101,15 +99,22 @@ sub _verify {
     $self->p->rebuildCookies($req);
     $req->mustRedirect(1);
     $self->userLogger->notice( $self->prefix
-            . '2F verification for '
-            . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+          . '2F verification for '
+          . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
     if ( my $l = $self->conf->{ $self->prefix . '2fAuthnLevel' } ) {
         $self->p->updateSession( $req, { authenticationLevel => $l } );
     }
     $req->authResult(PE_SENDRESPONSE);
-    return $self->p->do( $req,
-        [ @{ $self->p->afterData }, $self->p->validSession, @{ $self->p->endAuth }, sub {PE_OK} ] );
+    return $self->p->do(
+        $req,
+        [
+            @{ $self->p->afterData },
+            $self->p->validSession,
+            @{ $self->p->endAuth },
+            sub { PE_OK }
+        ]
+    );
 }
 
 1;

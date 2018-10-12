@@ -111,8 +111,8 @@ ok(
     ),
     'New auth query'
 );
-expectAuthenticatedAs($res,'dwho');
-ok($res->[2]->[0] =~ /yourApp/s, 'Menu displayed');
+expectAuthenticatedAs( $res, 'dwho' );
+ok( $res->[2]->[0] =~ /yourApp/s, 'Menu displayed' );
 count(2);
 
 clean_sessions();

@@ -69,7 +69,7 @@ has confChanged => (
 );
 
 # Properties required during build
-has refConf => ( is => 'ro', isa      => 'HashRef', required => 1 );
+has refConf => ( is => 'ro', isa => 'HashRef', required => 1 );
 has req     => ( is => 'ro', required => 1 );
 has newConf => ( is => 'rw', isa      => 'HashRef' );
 has tree    => ( is => 'rw', isa      => 'ArrayRef' );
@@ -158,7 +158,7 @@ sub _scanNodes {
         hdebug("Looking to $name");
 
         # subnode
-        my $subNodes     = $leaf->{nodes} // $leaf->{_nodes};
+        my $subNodes     = $leaf->{nodes}      // $leaf->{_nodes};
         my $subNodesCond = $leaf->{nodes_cond} // $leaf->{_nodes_cond};
 
         ##################################
@@ -763,11 +763,12 @@ sub _scanNodes {
                 foreach my $n (@$subNodes) {
                     hdebug("  looking at $n subnode");
                     if ( ref $n->{data} and ref $n->{data} eq 'ARRAY' ) {
+
                         # authChoiceModules
                         if ( $name eq 'authChoiceModules' ) {
                             hdebug('     combModules');
                             $n->{data}->[5] ||= {};
-                            $n->{data}->[5] = to_json($n->{data}->[5]);
+                            $n->{data}->[5] = to_json( $n->{data}->[5] );
                         }
 
                         $n->{data} = join ';', @{ $n->{data} };
@@ -1059,15 +1060,15 @@ sub _unitTest {
                 or $attr->{type} =~ /Container$/ )
             {
                 my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail};
-                my $msg    = $attr->{msgFail} // $type->{msgFail};
+                my $msg    = $attr->{msgFail}    // $type->{msgFail};
                 $res = 0
                   unless (
                     $self->_execTest(
                         {
-                            keyTest    => $attr->{keyTest} // $type->{keyTest},
+                            keyTest => $attr->{keyTest} // $type->{keyTest},
                             keyMsgFail => $attr->{keyMsgFail}
                               // $type->{keyMsgFail},
-                            test    => $attr->{test} // $type->{test},
+                            test    => $attr->{test}    // $type->{test},
                             msgFail => $attr->{msgFail} // $type->{msgFail},
                         },
                         $conf->{$key},

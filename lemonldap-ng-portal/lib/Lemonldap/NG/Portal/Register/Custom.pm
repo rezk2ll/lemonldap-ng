@@ -9,7 +9,7 @@ sub new {
     }
 
     my $res = $self->{p}->loadModule( $self->{conf}->{customRegister} );
-    unless($res) {
+    unless ($res) {
         die 'Unable to load register module ' . $self->{conf}->{customRegister};
     }
     return $res;

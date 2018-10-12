@@ -9,7 +9,8 @@ use_ok('Lemonldap::NG::Common::FormEncode');
 count(1);
 
 my $client = LLNG::Manager::Test->new(
-    {   ini => {
+    {
+        ini => {
             logLevel                  => 'error',
             ext2fActivation           => 1,
             ext2FSendCommand          => 't/sendOTP.pl -uid $uid',
@@ -26,7 +27,8 @@ my $client = LLNG::Manager::Test->new(
 my $res;
 
 ## First failed connection
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=ohwd'),
         length => 23
@@ -37,7 +39,8 @@ count(1);
 expectReject($res);
 
 ## Second failed connection
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=ohwd'),
         length => 23
@@ -48,7 +51,8 @@ count(1);
 expectReject($res);
 
 ## Third failed connection -> rejected
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=ohwd'),
         length => 23,
@@ -64,7 +68,8 @@ sleep 2;
 
 # Try to authenticate
 # -------------------
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho&checkLogins=1'),
         length => 37,
@@ -74,18 +79,19 @@ ok( $res = $client->_post(
 );
 count(1);
 
-my ( $host, $url, $query )
-    = expectForm( $res, undef, '/ext2fcheck', 'token', 'code',
-    'checkLogins' );
+my ( $host, $url, $query ) =
+  expectForm( $res, undef, '/ext2fcheck', 'token', 'code', 'checkLogins' );
 
-ok( $res->[2]->[0]
-        =~ qr%<input name="code" value="" class="form-control" id="extcode" trplaceholder="code">%,
+ok(
+    $res->[2]->[0] =~
+qr%<input name="code" value="" class="form-control" id="extcode" trplaceholder="code">%,
     'Found EXTCODE input'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 $query =~ s/code=/code=123456/;
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/ext2fcheck',
         IO::String->new($query),
         length => length($query),
@@ -102,7 +108,8 @@ sleep 4;
 
 # Try to authenticate again
 # -------------------------
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho&checkLogins=1'),
         length => 37,
@@ -112,18 +119,19 @@ ok( $res = $client->_post(
 );
 count(1);
 
-( $host, $url, $query )
-    = expectForm( $res, undef, '/ext2fcheck', 'token', 'code',
-    'checkLogins' );
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/ext2fcheck', 'token', 'code', 'checkLogins' );
 
-ok( $res->[2]->[0]
-        =~ qr%<input name="code" value="" class="form-control" id="extcode" trplaceholder="code">%,
+ok(
+    $res->[2]->[0] =~
+qr%<input name="code" value="" class="form-control" id="extcode" trplaceholder="code">%,
     'Found EXTCODE input'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 $query =~ s/code=/code=123456/;
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/ext2fcheck',
         IO::String->new($query),
         length => length($query),
@@ -136,11 +144,11 @@ count(1);
 my $id = expectCookie($res);
 
 ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
-    or print STDERR Dumper( $res->[2]->[0] );
+  or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
 ok( @c == 4, 'Four entries found' )
-    or print STDERR Dumper( $res->[2]->[0] );
+  or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 $client->logout($id);

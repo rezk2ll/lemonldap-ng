@@ -20,7 +20,7 @@ SKIP: {
     );
     $dbh->prepare(
 q{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00',?,null,null)}
-    )->execute(
+      )->execute(
         '[
 {
   "uid": "dwho",
@@ -32,7 +32,7 @@ q{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00',?,nul
   "check": ["Accept test"]
 }
 ]'
-    );
+      );
 
     my $client = LLNG::Manager::Test->new(
         {

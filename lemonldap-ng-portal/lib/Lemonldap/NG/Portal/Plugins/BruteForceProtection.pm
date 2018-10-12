@@ -40,11 +40,9 @@ sub run {
     return PE_OK if ( $countFailed < 3 );
 
     foreach ( 0 .. 2 ) {
-        if ( defined $req->sessionInfo->{_loginHistory}->{failedLogin}->[$_] )
-        {
+        if ( defined $req->sessionInfo->{_loginHistory}->{failedLogin}->[$_] ) {
             push @lastFailedLoginEpoch,
-                $req->sessionInfo->{_loginHistory}->{failedLogin}->[$_]
-                ->{_utime};
+              $req->sessionInfo->{_loginHistory}->{failedLogin}->[$_]->{_utime};
         }
     }
     $self->logger->debug("BruteForceProtection enabled");
@@ -53,7 +51,7 @@ sub run {
     $MaxAge = $lastFailedLoginEpoch[0] - $lastFailedLoginEpoch[2];
     $self->logger->debug(" -> MaxAge = $MaxAge");
     return PE_OK
-        if ( $MaxAge > $self->conf->{bruteForceProtectionMaxAge} );
+      if ( $MaxAge > $self->conf->{bruteForceProtectionMaxAge} );
 
     # Delta between the two last failed logins -> Auth_N - Auth_N-1
     my $delta = time - $lastFailedLoginEpoch[1];
@@ -61,7 +59,7 @@ sub run {
 
     # Delta between the two last failed logins < 30s => wait
     return PE_OK
-        unless ( $delta <= $self->conf->{bruteForceProtectionTempo} );
+      unless ( $delta <= $self->conf->{bruteForceProtectionTempo} );
 
     # Account locked
     #shift @{ $req->sessionInfo->{_loginHistory}->{failedLogin} };

@@ -28,15 +28,15 @@ sub run {
                     $req->sessionInfo->{_loginHistory}->{successLogin},
                     'lastLogins', 0, 0 )
                 : ""
-            ) 
-            . ("<hr>") .
-            (
+            )
+            . ("<hr>")
+              . (
                 $req->sessionInfo->{_loginHistory}->{failedLogin}
                 ? $self->p->mkSessionArray(
                     $req->sessionInfo->{_loginHistory}->{failedLogin},
                     'lastFailedLogins', 0, 1 )
                 : ""
-            )
+              )
         );
         unless ( $req->info ) {
             $req->info( $self->loadTemplate('noHistory') );
