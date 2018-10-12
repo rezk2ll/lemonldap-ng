@@ -46,7 +46,7 @@
 
     <div class="buttons">
       <TMPL_IF RAW_ERROR>
-        <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-warning" role="button">
+        <a href="<TMPL_VAR NAME="PORTAL_URL">2fregisters" class="btn btn-info" role="button">
           <span class="fa fa-shield"></span>
           <span trspan="sfaManager">sfaManager</span>
         </a>
