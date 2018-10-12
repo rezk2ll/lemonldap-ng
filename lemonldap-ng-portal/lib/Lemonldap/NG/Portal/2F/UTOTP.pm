@@ -65,6 +65,7 @@ sub run {
     $self->logger->debug("UTOTP checkLogins set") if ($checkLogins);
 
     my %tplPrms = (
+        MAIN_LOGO   => $self->conf->{portalMainLogo},
         SKIN        => $self->conf->{portalSkin},
         TOKEN       => $token,
         CHECKLOGINS => $checkLogins

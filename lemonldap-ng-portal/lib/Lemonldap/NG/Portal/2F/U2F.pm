@@ -96,6 +96,7 @@ sub run {
             $req,
             'u2fcheck',
             params => {
+                MAIN_LOGO   => $self->conf->{portalMainLogo},
                 SKIN        => $self->conf->{portalSkin},
                 DATA        => $data,
                 TOKEN       => $token,
@@ -183,6 +184,7 @@ sub fail {
             $req,
             'u2fcheck',
             params => {
+                MAIN_LOGO       => $self->conf->{portalMainLogo},
                 AUTH_ERROR      => $req->error,
                 AUTH_ERROR_TYPE => $req->error_type,
                 SKIN            => $self->conf->{portalSkin},

@@ -85,6 +85,7 @@ sub run {
                 return $self->p->sendHtml(
                     $req, 'error',
                     params => {
+                        MAIN_LOGO       => $self->conf->{portalMainLogo},
                         RAW_ERROR       => 'yourKeyIsAlreadyRegistered',
                         AUTH_ERROR_TYPE => 'warning',
                     }
@@ -101,6 +102,7 @@ sub run {
                 return $self->p->sendHtml(
                     $req, 'error',
                     params => {
+                        MAIN_LOGO       => $self->conf->{portalMainLogo},
                         RAW_ERROR       => 'maxNumberof2FDevicesReached',
                         AUTH_ERROR_TYPE => 'warning',
                     }
@@ -123,6 +125,7 @@ sub run {
             return $self->p->sendHtml(
                 $req, 'error',
                 params => {
+                    MAIN_LOGO       => $self->conf->{portalMainLogo},
                     RAW_ERROR       => 'yourKeyIsRegistered',
                     AUTH_ERROR_TYPE => 'positive',
                 }
@@ -133,6 +136,7 @@ sub run {
             return $self->p->sendHtml(
                 $req, 'error',
                 params => {
+                    MAIN_LOGO       => $self->conf->{portalMainLogo},
                     AUTH_ERROR      => PE_FORMEMPTY,
                     AUTH_ERROR_TYPE => 'positive',
                 }

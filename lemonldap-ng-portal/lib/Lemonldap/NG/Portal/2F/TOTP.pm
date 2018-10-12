@@ -54,6 +54,7 @@ sub run {
         $req,
         'totp2fcheck',
         params => {
+            MAIN_LOGO   => $self->conf->{portalMainLogo},
             SKIN        => $self->conf->{portalSkin},
             TOKEN       => $token,
             CHECKLOGINS => $checkLogins
