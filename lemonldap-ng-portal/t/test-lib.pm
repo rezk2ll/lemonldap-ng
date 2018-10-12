@@ -58,6 +58,7 @@ use Data::Dumper;
 use LWP::UserAgent;
 use URI::Escape;
 use Lemonldap::NG::Common::FormEncode;
+
 #use 5.10.0;
 
 no warnings 'redefine';
@@ -625,7 +626,7 @@ sub _get {
                 : ()
             ),
             'REQUEST_METHOD' => $args{method} || 'GET',
-            'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
+            'REQUEST_URI' => $path . ( $args{query} ? "?$args{query}" : '' ),
             ( $args{query} ? ( QUERY_STRING => $args{query} ) : () ),
             'SCRIPT_NAME'     => '',
             'SERVER_NAME'     => 'auth.example.com',
@@ -677,10 +678,10 @@ sub _post {
                 : ()
             ),
             'REQUEST_METHOD' => $args{method} || 'POST',
-            'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
-            'SCRIPT_NAME'    => '',
-            'SERVER_NAME'    => 'auth.example.com',
-            'SERVER_PORT'    => '80',
+            'REQUEST_URI' => $path . ( $args{query} ? "?$args{query}" : '' ),
+            'SCRIPT_NAME' => '',
+            'SERVER_NAME'     => 'auth.example.com',
+            'SERVER_PORT'     => '80',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
             ( $args{custom} ? %{ $args{custom} } : () ),
             'psgix.input.buffered' => 0,

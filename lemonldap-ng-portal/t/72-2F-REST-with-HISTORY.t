@@ -34,13 +34,13 @@ LWP::Protocol::PSGI->register(
 my $client = LLNG::Manager::Test->new(
     {
         ini => {
-            logLevel         => 'error',
-            rest2fActivation => 1,
-            rest2fInitUrl    => 'http://auth.example.com/init',
-            rest2fInitArgs   => { name => 'uid' },
-            rest2fVerifyUrl  => 'http://auth.example.com/vrfy',
-            rest2fVerifyArgs => { code => 'code' },
-                        loginHistoryEnabled => 1,
+            logLevel            => 'error',
+            rest2fActivation    => 1,
+            rest2fInitUrl       => 'http://auth.example.com/init',
+            rest2fInitArgs      => { name => 'uid' },
+            rest2fVerifyUrl     => 'http://auth.example.com/vrfy',
+            rest2fVerifyArgs    => { code => 'code' },
+            loginHistoryEnabled => 1,
             authentication      => 'Demo',
             userDB              => 'Same',
         }
@@ -74,9 +74,8 @@ ok(
 );
 my $id = expectCookie($res);
 
-
 ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
-      or print STDERR Dumper( $res->[2]->[0] );
+  or print STDERR Dumper( $res->[2]->[0] );
 my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
 ok( @c == 1, 'One entry found' );
 

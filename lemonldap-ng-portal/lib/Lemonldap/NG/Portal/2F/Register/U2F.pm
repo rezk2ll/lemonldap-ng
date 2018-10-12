@@ -7,7 +7,8 @@ use JSON qw(from_json to_json);
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin', 'Lemonldap::NG::Portal::Lib::U2F';
+extends 'Lemonldap::NG::Portal::Main::Plugin',
+  'Lemonldap::NG::Portal::Lib::U2F';
 
 # INITIALIZATION
 

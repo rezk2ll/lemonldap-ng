@@ -53,7 +53,7 @@ sub mirror {
                 : ()
             ),
             'REQUEST_METHOD' => $args{method} || 'GET',
-            'REQUEST_URI'    => ( $args{path} || '/' )
+            'REQUEST_URI' => ( $args{path} || '/' )
               . ( $args{query} ? "?$args{query}" : '' ),
             ( $args{query} ? ( QUERY_STRING => $args{query} ) : () ),
             'SCRIPT_NAME'     => '',

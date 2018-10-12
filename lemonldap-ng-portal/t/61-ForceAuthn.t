@@ -10,7 +10,8 @@ BEGIN {
 my $res;
 
 my $client = LLNG::Manager::Test->new(
-    {   ini => {
+    {
+        ini => {
             authentication           => 'Demo',
             userdb                   => 'Same',
             portalForceAuthn         => 1,
@@ -19,7 +20,8 @@ my $client = LLNG::Manager::Test->new(
     }
 );
 
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho'),
         length => 23
@@ -33,7 +35,8 @@ count(1);
 
 sleep 3;
 
-ok( $res = $client->_get(
+ok(
+    $res = $client->_get(
         '/',
         cookie => "lemonldap=$id1",
         accept => 'text/html',
@@ -41,10 +44,11 @@ ok( $res = $client->_get(
     'Form ReAuthentification'
 );
 ok( $res->[2]->[0] =~ qr%<span trspan="PE87"></span>%, 'Found PE87 code' )
-    or print STDERR Dumper( $res->[2]->[0] );
+  or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho'),
         length => 23,
@@ -56,7 +60,8 @@ expectOK($res);
 $id1 = expectCookie($res);
 count(1);
 
-ok( $res = $client->_get(
+ok(
+    $res = $client->_get(
         '/',
         cookie => "lemonldap=$id1",
         accept => 'text/html',
@@ -65,7 +70,7 @@ ok( $res = $client->_get(
 );
 ok( $res->[2]->[0] =~ qr%<span trspan="yourApps">Your applications</span>%,
     'Found applications list' )
-    or print STDERR Dumper( $res->[2]->[0] );
+  or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 $client->logout($id1);
