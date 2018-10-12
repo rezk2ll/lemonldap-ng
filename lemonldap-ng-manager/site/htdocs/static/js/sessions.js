@@ -378,7 +378,7 @@
             }
             delete session._loginHistory;
             tmp.sort(function(a, b) {
-              return a.t - b.t;
+              return b.t - a.t;
             });
             res.push({
               title: '__loginHistory__',
