@@ -754,6 +754,17 @@ sub sendHtml {
             "Set CSP form-action with request URL: " . $req->{cspFormAction} );
         $csp .= " " . $req->{cspFormAction};
     }
+
+    # Set SAML Discovery Protocol in form-action
+    # See https://github.com/w3c/webappsec-csp/issues/8
+    if ( $self->conf->{samlDiscoveryProtocolActivation}
+        and defined $self->conf->{samlDiscoveryProtocolURL} )
+    {
+        $self->logger->debug(
+            "Add SAML Discovery Protocol URL in CSP form-action");
+
+        $csp .= " " . $self->conf->{samlDiscoveryProtocolURL};
+    }
     $csp .= ';';
 
     # Deny using portal in frame except if it is required
