@@ -49,9 +49,11 @@ sub init {
     for my $i ( 0 .. 1 ) {
         foreach (
             split /,\s*/,
-            $self->conf->{ $i
+            $self->conf->{
+                $i
                 ? 'available2FSelfRegistration'
-                : 'available2F' }
+                : 'available2F'
+            }
             )
         {
             my $prefix = lc($_);
@@ -201,8 +203,9 @@ sub run {
         $req,
         '2fchoice',
         params => {
-            SKIN  => $self->conf->{portalSkin},
-            TOKEN => $token,
+            MAIN_LOGO => $self->conf->{portalMainLogo},
+            SKIN      => $self->conf->{portalSkin},
+            TOKEN     => $token,
             MODULES =>
                 [ map { { CODE => $_->prefix, LOGO => $_->logo } } @am ],
             CHECKLOGINS => $checkLogins
@@ -290,7 +293,8 @@ sub _displayRegister {
             return $self->p->sendError( $req, 'Registration not authorized',
                 403 );
         }
-        return $self->p->sendHtml( $req, $m->{m}->template );
+        return $self->p->sendHtml( $req, $m->{m}->template,
+            params => { MAIN_LOGO => $self->conf->{portalMainLogo} } );
     }
 
     # If only one 2F is available, redirect to it
@@ -330,6 +334,7 @@ sub _displayRegister {
         $req,
         '2fregisters',
         params => {
+            MAIN_LOGO    => $self->conf->{portalMainLogo},
             SKIN         => $self->conf->{portalSkin},
             MODULES      => \@am,
             SFDEVICES    => $_2fDevices,
