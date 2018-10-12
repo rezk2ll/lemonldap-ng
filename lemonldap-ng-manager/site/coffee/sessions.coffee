@@ -310,7 +310,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							value: "Error #{l.error} (IP #{l.ipAddr})" + cv
 				delete session._loginHistory
 				tmp.sort (a,b) ->
-					a.t - b.t
+					b.t - a.t
 				res.push
 					title: '__loginHistory__'
 					nodes: tmp
