@@ -202,17 +202,10 @@ sub run {
         $req,
         '2fchoice',
         params => {
-            <<<< <<< HEAD
             MAIN_LOGO => $self->conf->{portalMainLogo},
             SKIN      => $self->conf->{portalSkin},
             TOKEN     => $token,
-            MODULES =>
-                [ map { { CODE => $_->prefix, LOGO => $_->logo } } @am ],
-=======
-            SKIN    => $self->conf->{portalSkin},
-            TOKEN   => $token,
             MODULES => [ map { { CODE => $_->prefix, LOGO => $_->logo } } @am ],
->>>>>>> 13320e64a942853b1f9ffa8bd181f13491a7817e
             CHECKLOGINS => $checkLogins
         }
     );
@@ -232,187 +225,175 @@ sub display2fRegisters {
     return 0;
 }
 
+sub _choice {
+    my ( $self, $req ) = @_;
+    my $token;
 
-              sub _choice {
-                my ( $self, $req ) = @_;
-                my $token;
+    # Restore session
+    unless ( $token = $req->param('token') ) {
+        $self->userLogger->error( $self->prefix . ' 2F access without token' );
+        $req->mustRedirect(1);
+        return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
+    }
 
-                # Restore session
-                unless ( $token = $req->param('token') ) {
-                    $self->userLogger->error(
-                        $self->prefix . ' 2F access without token' );
-                    $req->mustRedirect(1);
-                    return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
-                }
+    my $session;
+    unless ( $session = $self->ott->getToken($token) ) {
+        $self->userLogger->info('Token expired');
+        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+    }
 
-                my $session;
-                unless ( $session = $self->ott->getToken($token) ) {
-                    $self->userLogger->info('Token expired');
-                    return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
-                }
+    $req->sessionInfo($session);
 
-                $req->sessionInfo($session);
+    # New token
+    $token = $self->ott->createToken($session);
 
-                # New token
-                $token = $self->ott->createToken($session);
+    my $ch = $req->param('sf');
+    foreach my $m ( @{ $self->sfModules } ) {
+        if ( $m->{m}->prefix eq $ch ) {
+            my $res = $m->{m}->run( $req, $token );
+            $req->authResult($res);
+            return $self->p->do(
+                $req,
+                [
+                    sub { $res }, 'controlUrl',
+                    'buildCookie', @{ $self->p->endAuth },
+                ]
+            );
+        }
+    }
+    $self->userLogger->error('Bad 2F choice');
+    return $self->p->lmError( $req, 500 );
+}
 
-                my $ch = $req->param('sf');
-                foreach my $m ( @{ $self->sfModules } ) {
-                    if ( $m->{m}->prefix eq $ch ) {
-                        my $res = $m->{m}->run( $req, $token );
-                        $req->authResult($res);
-                        return $self->p->do(
-                            $req,
-                            [
-                                sub { $res }, 'controlUrl',
-                                'buildCookie', @{ $self->p->endAuth },
-                            ]
-                        );
-                    }
-                }
-                $self->userLogger->error('Bad 2F choice');
-                return $self->p->lmError( $req, 500 );
-            }
+sub _redirect {
+    my ( $self, $req ) = @_;
+    my $arg = $req->env->{QUERY_STRING};
+    $self->logger->debug('Call sfEngine _redirect method');
+    return [
+        302,
+        [
+            Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' )
+        ],
+        []
+    ];
+}
 
-            sub _redirect {
-                my ( $self, $req ) = @_;
-                my $arg = $req->env->{QUERY_STRING};
-                $self->logger->debug('Call sfEngine _redirect method');
-                return [
-                    302,
-                    [
-                        Location => $self->conf->{portal}
-                          . ( $arg ? "?$arg" : '' )
-                    ],
-                    []
-                ];
-            }
+sub _displayRegister {
+    my ( $self, $req, $tpl ) = @_;
 
-            sub _displayRegister {
-                my ( $self, $req, $tpl ) = @_;
+    # After verifying rule:
+    #  - display template if $tpl
+    #  - else display choice template
+    if ($tpl) {
+        my ($m) =
+          grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
+        unless ($m) {
+            return $self->p->sendError( $req,
+                'Inexistent register module', 400 );
+        }
+        unless ( $m->{r}->( $req, $req->userData ) ) {
+            return $self->p->sendError( $req,
+                'Registration not authorized', 403 );
+        }
+        return $self->p->sendHtml( $req, $m->{m}->template,
+            params => { MAIN_LOGO => $self->conf->{portalMainLogo} } );
+    }
 
-                # After verifying rule:
-                #  - display template if $tpl
-                #  - else display choice template
-                if ($tpl) {
-                    my ($m) =
-                      grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
-                    unless ($m) {
-                        return $self->p->sendError( $req,
-                            'Inexistent register module', 400 );
-                    }
-                    unless ( $m->{r}->( $req, $req->userData ) ) {
-                        return $self->p->sendError( $req,
-                            'Registration not authorized', 403 );
-                    }
-                    return $self->p->sendHtml( $req, $m->{m}->template,
-                        params =>
-                          { MAIN_LOGO => $self->conf->{portalMainLogo} } );
-                }
+    # If only one 2F is available, redirect to it
+    my @am;
+    foreach my $m ( @{ $self->sfRModules } ) {
+        $self->logger->debug(
+            'Looking if ' . $m->{m}->prefix . '2F register is available' );
+        if ( $m->{r}->( $req, $req->userData ) ) {
+            push @am,
+              {
+                CODE => $m->{m}->prefix,
+                URL  => '/2fregisters/' . $m->{m}->prefix,
+                LOGO => $m->{m}->logo,
+              };
+        }
+    }
+    if (
+        @am == 1
+        and not( $req->userData->{_2fDevices}
+            or $req->data->{sfRegRequired} )
+      )
+    {
+        return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ],
+            [] ];
+    }
 
-                # If only one 2F is available, redirect to it
-                my @am;
-                foreach my $m ( @{ $self->sfRModules } ) {
-                    $self->logger->debug( 'Looking if '
-                          . $m->{m}->prefix
-                          . '2F register is available' );
-                    if ( $m->{r}->( $req, $req->userData ) ) {
-                        push @am,
-                          {
-                            CODE => $m->{m}->prefix,
-                            URL  => '/2fregisters/' . $m->{m}->prefix,
-                            LOGO => $m->{m}->logo,
-                          };
-                    }
-                }
-                if (
-                    @am == 1
-                    and not( $req->userData->{_2fDevices}
-                        or $req->data->{sfRegRequired} )
-                  )
-                {
-                    return [
-                        302,
-                        [ Location => $self->conf->{portal} . $am[0]->{URL} ],
-                        []
-                    ];
-                }
+    my $_2fDevices =
+      $req->userData->{_2fDevices}
+      ? eval { from_json( $req->userData->{_2fDevices},
+            { allow_nonref => 1 } ); }
+      : undef;
 
-                my $_2fDevices = $req->userData->{_2fDevices}
-                  ? eval {
-                    from_json( $req->userData->{_2fDevices},
-                        { allow_nonref => 1 } );
-                  }
-                  : undef;
+    unless ($_2fDevices) {
+        $self->logger->debug("No 2F Device found");
+        $_2fDevices = [];
+    }
 
-                unless ($_2fDevices) {
-                    $self->logger->debug("No 2F Device found");
-                    $_2fDevices = [];
-                }
+    return $self->p->sendHtml(
+        $req,
+        '2fregisters',
+        params => {
+            MAIN_LOGO    => $self->conf->{portalMainLogo},
+            SKIN         => $self->conf->{portalSkin},
+            MODULES      => \@am,
+            SFDEVICES    => $_2fDevices,
+            REG_REQUIRED => $req->data->{sfRegRequired},
+        }
+    );
+}
 
-                return $self->p->sendHtml(
-                    $req,
-                    '2fregisters',
-                    params => {
-                        MAIN_LOGO    => $self->conf->{portalMainLogo},
-                        SKIN         => $self->conf->{portalSkin},
-                        MODULES      => \@am,
-                        SFDEVICES    => $_2fDevices,
-                        REG_REQUIRED => $req->data->{sfRegRequired},
-                    }
-                );
-            }
+# Check rule and display
+sub register {
+    my ( $self, $req, $tpl, @args ) = @_;
 
-            # Check rule and display
-            sub register {
-                my ( $self, $req, $tpl, @args ) = @_;
+    # After verifying rule:
+    #   - call register run method if $tpl
+    #   - else give JSON list of available registers for this user
+    if ($tpl) {
+        my ($m) =
+          grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
+        unless ($m) {
+            return $self->p->sendError( $req,
+                'Inexistent register module', 400 );
+        }
+        unless ( $m->{r}->( $req, $req->userData ) ) {
+            $self->userLogger->error("$tpl 2F registration refused");
+            return $self->p->sendError( $req, 'Registration refused', 403 );
+        }
+        return $m->{m}->run( $req, @args );
+    }
+    my @am;
+    foreach my $m ( @{ $self->sfRModules } ) {
+        $self->logger->debug(
+            'Looking if ' . $m->{m}->prefix . '2F register is available' );
+        if ( $m->{r}->( $req, $req->userData ) ) {
+            $self->logger->debug(' -> OK');
+            my $name = $m->{m}->prefix;
+            push @am,
+              {
+                name => $name,
+                logo => $m->{m}->logo,
+                url  => "/2fregisters/$name"
+              };
+        }
+    }
+    return $self->p->sendJSONresponse( $req, \@am );
+}
 
-                # After verifying rule:
-                #   - call register run method if $tpl
-                #   - else give JSON list of available registers for this user
-                if ($tpl) {
-                    my ($m) =
-                      grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
-                    unless ($m) {
-                        return $self->p->sendError( $req,
-                            'Inexistent register module', 400 );
-                    }
-                    unless ( $m->{r}->( $req, $req->userData ) ) {
-                        $self->userLogger->error(
-                            "$tpl 2F registration refused");
-                        return $self->p->sendError( $req,
-                            'Registration refused', 403 );
-                    }
-                    return $m->{m}->run( $req, @args );
-                }
-                my @am;
-                foreach my $m ( @{ $self->sfRModules } ) {
-                    $self->logger->debug( 'Looking if '
-                          . $m->{m}->prefix
-                          . '2F register is available' );
-                    if ( $m->{r}->( $req, $req->userData ) ) {
-                        $self->logger->debug(' -> OK');
-                        my $name = $m->{m}->prefix;
-                        push @am,
-                          {
-                            name => $name,
-                            logo => $m->{m}->logo,
-                            url  => "/2fregisters/$name"
-                          };
-                    }
-                }
-                return $self->p->sendJSONresponse( $req, \@am );
-            }
+sub restoreSession {
+    my ( $self, $req, @path ) = @_;
+    my $token = $req->pdata->{sfRegToken}
+      or return [ 302, [ Location => $self->conf->{portal} ], [] ];
+    $req->userData( $self->ott->getToken( $token, 1 ) );
+    $req->data->{sfRegRequired} = 1;
+    return $req->method eq 'POST'
+      ? $self->register( $req, @path )
+      : $self->_displayRegister( $req, @path );
+}
 
-            sub restoreSession {
-                my ( $self, $req, @path ) = @_;
-                my $token = $req->pdata->{sfRegToken}
-                  or return [ 302, [ Location => $self->conf->{portal} ], [] ];
-                $req->userData( $self->ott->getToken( $token, 1 ) );
-                $req->data->{sfRegRequired} = 1;
-                return $req->method eq 'POST'
-                  ? $self->register( $req, @path )
-                  : $self->_displayRegister( $req, @path );
-            }
-
-            1;
+1;
