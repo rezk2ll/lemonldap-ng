@@ -61,6 +61,7 @@ sub tree {
                                 'portalSkinRules',
                                 {
                                     title => 'portalButtons',
+                                    help  => 'portalcustom.html#buttons',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'portalCheckLogins',
@@ -70,6 +71,7 @@ sub tree {
                                 },
                                 {
                                     title => 'passwordManagement',
+                                    help  => 'portalcustom.html#password_management',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'portalRequireOldPassword',
@@ -79,6 +81,7 @@ sub tree {
                                 },
                                 {
                                     title => 'portalOther',
+                                    help  => 'portalcustom.html#other_parameters',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'portalUserAttr',
@@ -536,6 +539,7 @@ sub tree {
                 'reloadUrls',
                 {
                     title => 'plugins',
+                    help  => 'start.html#plugins',
                     nodes => [
                         'stayConnected',
                         'portalStatus',
@@ -640,6 +644,7 @@ sub tree {
                 },
                 {
                     title => 'secondFactors',
+                    help  => 'secondfactor.html',
                     nodes => [
                         {
                             title => 'utotp2f',

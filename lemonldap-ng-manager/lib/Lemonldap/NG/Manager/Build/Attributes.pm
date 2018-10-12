@@ -286,6 +286,7 @@ sub attributes {
         customFunctions => {
             type          => 'text',
             test          => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,
+            help          => 'customfunctions.html',
             msgFail       => "__badCustomFuncName__",
             documentation => 'List of custom functions',
             flags         => 'hmp',
@@ -329,6 +330,7 @@ sub attributes {
             type    => 'keyTextContainer',
             keyTest => qr/^\w+$/,
             test    => qr/^[a-zA-Z][a-zA-Z0-9]*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/,
+            help    => 'handlerarch.html',
             msgFail => '__badPerlPackageName__',
             documentation => 'Custom Nginx handler (deprecated)',
         },
