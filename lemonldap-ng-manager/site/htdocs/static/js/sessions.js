@@ -341,16 +341,14 @@
           if (session._loginHistory) {
             tmp = [];
             if (session._loginHistory.successLogin) {
-              cv = "";
               ref = session._loginHistory.successLogin;
               for (m = 0, len3 = ref.length; m < len3; m++) {
                 l = ref[m];
+                cv = "";
                 for (key in l) {
                   value = l[key];
-                  if (key.match(/^(_utime|ipAddr)$/)) {
-                    1;
-                  } else {
-                    cv = cv + (", " + key + " : " + value);
+                  if (!key.match(/^(_utime|ipAddr|error)$/)) {
+                    cv += ", " + key + " : " + value;
                   }
                 }
                 tmp.push({
@@ -361,16 +359,14 @@
               }
             }
             if (session._loginHistory.failedLogin) {
-              cv = "";
               ref1 = session._loginHistory.failedLogin;
               for (o = 0, len4 = ref1.length; o < len4; o++) {
                 l = ref1[o];
+                cv = "";
                 for (key in l) {
                   value = l[key];
-                  if (key.match(/^(_utime|ipAddr|error)$/)) {
-                    1;
-                  } else {
-                    cv = cv + (", " + key + " : " + value);
+                  if (!key.match(/^(_utime|ipAddr|error)$/)) {
+                    cv += ", " + key + " : " + value;
                   }
                 }
                 tmp.push({

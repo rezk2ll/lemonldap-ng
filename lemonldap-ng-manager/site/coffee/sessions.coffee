@@ -287,23 +287,23 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			if session._loginHistory
 				tmp = []
 				if session._loginHistory.successLogin
-					# History custom values
-					cv = ""
 					for l in session._loginHistory.successLogin
+						# History custom values
+						cv = ""
 						for key, value of l
-							if key.match /^(_utime|ipAddr|error)$/ then 1
-							else cv = cv + ", #{key} : #{value}"
+							if !key.match /^(_utime|ipAddr|error)$/ 
+								cv += ", #{key} : #{value}"
 						tmp.push
 							t: l._utime
 							title: $scope.localeDate l._utime
 							value: "Success (IP #{l.ipAddr})" + cv
 				if session._loginHistory.failedLogin
-					# History custom values
-					cv = ""
 					for l in session._loginHistory.failedLogin
+						# History custom values
+						cv = ""
 						for key, value of l
-							if key.match /^(_utime|ipAddr|error)$/ then 1
-							else cv = cv + ", #{key} : #{value}"
+							if !key.match /^(_utime|ipAddr|error)$/
+								cv += ", #{key} : #{value}"
 						tmp.push
 							t: l._utime
 							title: $scope.localeDate l._utime
