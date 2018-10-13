@@ -1,4 +1,4 @@
-# Verify that bas changes are detected
+# Verify that bad changes are detected
 
 use Test::More;
 use strict;
