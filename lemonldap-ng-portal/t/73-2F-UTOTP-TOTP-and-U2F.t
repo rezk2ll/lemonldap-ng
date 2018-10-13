@@ -18,14 +18,14 @@ SKIP: {
     require Lemonldap::NG::Common::TOTP;
 
     my $client = LLNG::Manager::Test->new(
-        {
-            ini => {
+        {   ini => {
                 logLevel               => 'error',
                 utotp2fActivation      => 1,
                 totp2fSelfRegistration => 1,
                 u2fSelfRegistration    => 1,
+                portalMainLogo         => 'common/logos/test.png',
                 u2fSelfRegistration =>
-                  '$_2fDevices =~ /"type":\s*"(?:TOTP|U2F)"/s',
+                    '$_2fDevices =~ /"type":\s*"(?:TOTP|U2F)"/s',
             }
         }
     );
@@ -33,8 +33,7 @@ SKIP: {
 
     # Try to authenticate
     # -------------------
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/',
             IO::String->new('user=dwho&password=dwho'),
             length => 23
@@ -44,8 +43,7 @@ SKIP: {
     my $id = expectCookie($res);
 
     # TOTP form
-    ok(
-        $res = $client->_get(
+    ok( $res = $client->_get(
             '/2fregisters',
             cookie => "lemonldap=$id",
             accept => 'text/html',
@@ -53,8 +51,7 @@ SKIP: {
         'Form registration'
     );
     expectRedirection( $res, qr#/2fregisters/totp$# );
-    ok(
-        $res = $client->_get(
+    ok( $res = $client->_get(
             '/2fregisters/totp',
             cookie => "lemonldap=$id",
             accept => 'text/html',
@@ -62,10 +59,13 @@ SKIP: {
         'Form registration'
     );
     ok( $res->[2]->[0] =~ /totpregistration\.(?:min\.)?js/, 'Found TOTP js' );
+    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/test.png"%,
+        'Found custom Main Logo' )
+        or print STDERR Dumper( $res->[2]->[0] );
+    count(1);
 
     # JS query
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/2fregisters/totp/getkey', IO::String->new(''),
             cookie => "lemonldap=$id",
             length => 0,
@@ -74,7 +74,7 @@ SKIP: {
     );
     eval { $res = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), 'Content is JSON' )
-      or explain( $res->[2]->[0], 'JSON content' );
+        or explain( $res->[2]->[0], 'JSON content' );
     my ( $key, $token );
     ok( $key   = $res->{secret}, 'Found secret' );
     ok( $token = $res->{token},  'Found token' );
@@ -86,8 +86,7 @@ SKIP: {
         'Code' );
     ok( $code =~ /^\d{6}$/, 'Code contains 6 digits' );
     my $s = "code=$code&token=$token";
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/2fregisters/totp/verify',
             IO::String->new($s),
             length => length($s),
@@ -97,13 +96,12 @@ SKIP: {
     );
     eval { $res = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), 'Content is JSON' )
-      or explain( $res->[2]->[0], 'JSON content' );
+        or explain( $res->[2]->[0], 'JSON content' );
     ok( $res->{result} = 1, 'Key is registered' );
 
     # Try to sing-in
     $client->logout($id);
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/',
             IO::String->new('user=dwho&password=dwho'),
             length => 23,
@@ -111,13 +109,12 @@ SKIP: {
         ),
         'Auth query'
     );
-    my ( $host, $url, $query ) =
-      expectForm( $res, undef, '/utotp2fcheck', 'token' );
+    my ( $host, $url, $query )
+        = expectForm( $res, undef, '/utotp2fcheck', 'token' );
     ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
         'Code' );
     $query =~ s/code=/code=$code/;
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/utotp2fcheck', IO::String->new($query),
             length => length($query),
         ),
@@ -126,8 +123,7 @@ SKIP: {
     $id = expectCookie($res);
 
     # U2F form
-    ok(
-        $res = $client->_get(
+    ok( $res = $client->_get(
             '/2fregisters',
             cookie => "lemonldap=$id",
             accept => 'text/html',
@@ -137,8 +133,7 @@ SKIP: {
     expectOK($res);
     ok( $res->[2]->[0] =~ m#<a.*href="/2fregisters/u"#, 'Get U2F choice' );
 
-    ok(
-        $res = $client->_get(
+    ok( $res = $client->_get(
             '/2fregisters/u',
             cookie => "lemonldap=$id",
             accept => 'text/html',
@@ -148,8 +143,7 @@ SKIP: {
     ok( $res->[2]->[0] =~ /u2fregistration\.(?:min\.)?js/, 'Found U2F js' );
 
     # Ajax registration request
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/2fregisters/u/register', IO::String->new(''),
             accept => 'application/json',
             cookie => "lemonldap=$id",
@@ -161,9 +155,10 @@ SKIP: {
     my $data;
     eval { $data = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), ' Content is JSON' )
-      or explain( [ $@, $res->[2] ], 'JSON content' );
-    ok( ( $data->{challenge} and $data->{appId} ), ' Get challenge and appId' )
-      or explain( $data, 'challenge and appId' );
+        or explain( [ $@, $res->[2] ], 'JSON content' );
+    ok( ( $data->{challenge} and $data->{appId} ),
+        ' Get challenge and appId' )
+        or explain( $data, 'challenge and appId' );
 
     # Build U2F tester
     my $tester = Authen::U2F::Tester->new(
@@ -191,11 +186,11 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
     );
     my $r = $tester->register( $data->{appId}, $data->{challenge} );
-    ok( $r->is_success, ' Good challenge value' ) or diag( $r->error_message );
+    ok( $r->is_success, ' Good challenge value' )
+        or diag( $r->error_message );
 
     my $registrationData = JSON::to_json(
-        {
-            clientData       => $r->client_data,
+        {   clientData       => $r->client_data,
             errorCode        => 0,
             registrationData => $r->registration_data,
             version          => "U2F_V2"
@@ -206,8 +201,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         challenge    => $res->[2]->[0],
     );
 
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/2fregisters/u/registration', IO::String->new($query),
             length => length($query),
             accept => 'application/json',
@@ -218,15 +212,14 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     expectOK($res);
     eval { $data = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), ' Content is JSON' )
-      or explain( [ $@, $res->[2] ], 'JSON content' );
+        or explain( [ $@, $res->[2] ], 'JSON content' );
     ok( $data->{result} == 1, 'Key is registered' )
-      or explain( $data, '"result":1' );
+        or explain( $data, '"result":1' );
 
     # Try to sign-in with TOTP
     $client->logout($id);
 
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/',
             IO::String->new('user=dwho&password=dwho'),
             length => 23,
@@ -235,16 +228,15 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
         'Auth query'
     );
-    ( $host, $url, $query ) =
-      expectForm( $res, undef, '/utotp2fcheck', 'token' );
+    ( $host, $url, $query )
+        = expectForm( $res, undef, '/utotp2fcheck', 'token' );
     ok( $res->[2]->[0] =~ /input name="code"/, ' get TOTP form' );
 
     # Use TOTP
     ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
         'Code' );
     $query =~ s/code=/code=$code/;
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/utotp2fcheck', IO::String->new($query),
             length => length($query),
         ),
@@ -254,8 +246,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     $client->logout($id);
 
     # Try to sign-in with U2F
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/',
             IO::String->new('user=dwho&password=dwho'),
             length => 23,
@@ -264,37 +255,35 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
         'Auth query'
     );
-    ( $host, $url, $query ) =
-      expectForm( $res, undef, '/utotp2fcheck', 'token' );
+    ( $host, $url, $query )
+        = expectForm( $res, undef, '/utotp2fcheck', 'token' );
 
     # Get challenge
     ok( $res->[2]->[0] =~ /^.*"keyHandle".*$/m, ' get keyHandle' );
     $data = $&;
     eval { $data = JSON::from_json($data) };
     ok( not($@), ' Content is JSON' )
-      or explain( [ $@, $data ], 'JSON content' );
+        or explain( [ $@, $data ], 'JSON content' );
 
     # Build U2F signature
-    $r =
-      $tester->sign( $data->{appId}, $data->{challenge},
+    $r = $tester->sign( $data->{appId}, $data->{challenge},
         $data->{registeredKeys}->[0]->{keyHandle} );
-    ok( $r->is_success, ' Good challenge value' ) or diag( $r->error_message );
+    ok( $r->is_success, ' Good challenge value' )
+        or diag( $r->error_message );
     my $sign = JSON::to_json(
-        {
-            errorCode     => 0,
+        {   errorCode     => 0,
             signatureData => $r->signature_data,
             clientData    => $r->client_data,
             keyHandle     => $data->{registeredKeys}->[0]->{keyHandle},
         }
     );
-    $sign =
-      Lemonldap::NG::Common::FormEncode::build_urlencoded( signature => $sign );
+    $sign = Lemonldap::NG::Common::FormEncode::build_urlencoded(
+        signature => $sign );
     $query =~ s/signature=/$sign/e;
     $query =~ s/challenge=/challenge=$data->{challenge}/;
 
     # POST result
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/utotp2fcheck', IO::String->new($query),
             length => length($query),
         ),
@@ -308,7 +297,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     else {
         count(1);
         pass(
-'Authen::2F::Tester-0.02 signatures are not recognized by Yubico library'
+            'Authen::2F::Tester-0.02 signatures are not recognized by Yubico library'
         );
     }
 }
