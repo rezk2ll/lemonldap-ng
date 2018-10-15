@@ -140,17 +140,44 @@ sub delKey {
     foreach my $el (@list) {
         my @path = split $sep, $el->[0];
         if ( $#path == 0 ) {
-            delete $new->{ $path[0] }->{ $el->[1] };
+            if (   exists $new->{ $path[0] }
+                && exists $new->{ $path[0] }->{ $el->[1] } )
+            {
+                delete $new->{ $path[0] }->{ $el->[1] }
+                  if exists $new->{ $path[0] }->{ $el->[1] };
+            }
         }
         elsif ( $#path == 1 ) {
-            delete $new->{ $path[0] }->{ $path[1] }->{ $el->[1] };
+            if (   exists $new->{ $path[0] }
+                && exists $new->{ $path[0] }->{ $path[1] }
+                && exists $new->{ $path[0] }->{ $path[1] }->{ $el->[1] } )
+            {
+                delete $new->{ $path[0] }->{ $path[1] }->{ $el->[1] };
+            }
         }
         elsif ( $#path == 2 ) {
-            delete $new->{ $path[0] }->{ $path[1] }->{ $path[2] }->{ $el->[1] };
+            if (   exists $new->{ $path[0] }
+                && exists $new->{ $path[0] }->{ $path[1] }
+                && exists $new->{ $path[0] }->{ $path[1] }->{ $path[2] }
+                && exists $new->{ $path[0] }->{ $path[1] }->{ $path[2] }
+                ->{ $el->[1] } )
+            {
+                delete $new->{ $path[0] }->{ $path[1] }->{ $path[2] }
+                  ->{ $el->[1] };
+            }
         }
         elsif ( $#path == 3 ) {
-            delete $new->{ $path[0] }->{ $path[1] }->{ $path[2] }->{ $path[3] }
-              ->{ $el->[1] };
+            if (   exists $new->{ $path[0] }
+                && exists $new->{ $path[0] }->{ $path[1] }
+                && exists $new->{ $path[0] }->{ $path[1] }->{ $path[2] }
+                && exists $new->{ $path[0] }->{ $path[1] }->{ $path[2] }
+                ->{ $path[3] }
+                && exists $new->{ $path[0] }->{ $path[1] }->{ $path[2] }
+                ->{ $path[3] }->{ $el->[1] } )
+            {
+                delete $new->{ $path[0] }->{ $path[1] }->{ $path[2] }
+                  ->{ $path[3] }->{ $el->[1] };
+            }
         }
         else {
             die $el->[0] . " has too many levels. Aborting";
