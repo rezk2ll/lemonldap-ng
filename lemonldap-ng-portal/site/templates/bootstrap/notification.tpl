@@ -22,9 +22,13 @@
     </div>
 
     <div class="buttons">
+      <a id="goback" href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1" class="btn btn-primary" role="button">
+        <span class="fa fa-home"></span>
+        <span trspan="cancel">Cancel</span>
+      </a>
       <button type="submit" class="positive btn btn-success">
         <span class="fa fa-check-circle"></span>
-        <span trspan="accept">Accept</span>
+        <span trspan="accept">Accept</span
       </button>
     </div>
 
