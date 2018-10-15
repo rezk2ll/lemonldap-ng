@@ -47,7 +47,7 @@ sub init {
           . $mods[$type];
         my $over;
         if ( $mods[5] ) {
-            eval { $over = from_json( $mods[5] ) };
+            eval { $over = JSON::from_json( $mods[5] ) };
             if ($@) {
                 $self->logger->error("Bad over value ($@), skipped");
             }
