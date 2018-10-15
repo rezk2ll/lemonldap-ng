@@ -85,8 +85,26 @@ ok(
     ),
     "Don't accept notification"
 );
-ok( $res->[0] == 200, "Don't receive redirection" )
-  or explain( [ $res->[0], $res->[1] ], 200 );
+ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
+    'Notification displayed' )
+    or print STDERR Dumper( $res->[2]->[0] );
+count(2);
+
+# Try to validate notification without accepting it
+$str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
+ok(
+    $res = $client->_post(
+        '/notifback',
+        IO::String->new($str),
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+        length => length($str),
+    ),
+    "Don't accept notification"
+);
+ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
+    'Notification displayed' )
+    or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
 # Try to validate notification
