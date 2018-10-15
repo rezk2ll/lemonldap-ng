@@ -216,8 +216,7 @@ sub do {
             return [
                 401,
                 [
-                    'WWW-Authenticate' => "SSO " . $self->conf->{portal},
-                    'Access-Control-Allow-Origin' => '*'
+                    'WWW-Authenticate' => "SSO " . $self->conf->{portal}
                 ],
                 [qq'{"result":0,"error":$err}']
             ];
