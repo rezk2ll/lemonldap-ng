@@ -173,7 +173,7 @@ sub getNotifBack {
             # TODO: is it a good idea to launch all 'endAuth' subs ?
             $self->logger->debug(
                 'Pending notification has been found and not accepted');
-            return $self->p->do( $req, $self->p->endAuth );
+            return $self->p->do( $req, [ @{ $self->p->endAuth } ] );
         }
 
         # All pending notifications have been accepted, restore cookies and

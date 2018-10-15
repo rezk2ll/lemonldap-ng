@@ -28,16 +28,17 @@ has stylesheet => (
     builder => sub {
         my $self = $_[0];
         my $xslt = XML::LibXSLT->new();
-        my $styleFile =
-          ( $self->conf->{notificationXSLTfile}
-              and -e $self->conf->{notificationXSLTfile} )
-          ? $self->conf->{notificationXSLTfile}
-          : $self->conf->{templatesDir} . '/common/notification.xsl';
+        my $styleFile
+            = ( $self->conf->{notificationXSLTfile}
+                and -e $self->conf->{notificationXSLTfile} )
+            ? $self->conf->{notificationXSLTfile}
+            : $self->conf->{templatesDir} . '/common/notification.xsl';
         unless ( -e $styleFile ) {
             $self->{logger}->error("$styleFile not found, aborting");
             die "$styleFile not found";
         }
-        return $xslt->parse_stylesheet( $self->parser->parse_file($styleFile) );
+        return $xslt->parse_stylesheet(
+            $self->parser->parse_file($styleFile) );
     }
 );
 
@@ -65,9 +66,11 @@ sub checkForNotifications {
     foreach my $file ( values %$notifs ) {
         my $xml = $self->parser->parse_string($file);
         my $j   = 0;                                    #Notifications count
-      LOOP: foreach my $notif (
-            eval { $xml->documentElement->getElementsByTagName('notification') }
-          )
+    LOOP: foreach my $notif (
+            eval {
+                $xml->documentElement->getElementsByTagName('notification');
+            }
+            )
         {
 
             # Get the reference
@@ -94,10 +97,11 @@ sub checkForNotifications {
 
                 $self->logger->debug("Get condition $condition");
                 $condition = $self->p->HANDLER->substitute($condition);
-                unless ( $condition = $self->p->HANDLER->buildSub($condition) )
+                unless ( $condition
+                    = $self->p->HANDLER->buildSub($condition) )
                 {
                     $self->logger->error( 'Notification condition error: '
-                          . $self->p->HANDLER->tsv->{jail}->error );
+                            . $self->p->HANDLER->tsv->{jail}->error );
                     $notif->unbindNode();
                     next LOOP;
                 }
@@ -148,11 +152,11 @@ sub getNotifBack {
         return $self->p->sendError( $req, 'No cookie found', 401 );
     }
     $id = $self->p->HANDLER->tsv->{cipher}->decrypt($id)
-      or return $self->sendError( $req, 'Unable to decrypt', 500 );
+        or return $self->sendError( $req, 'Unable to decrypt', 500 );
 
     # Verify that session exists
     $req->userData( $self->p->HANDLER->retrieveSession( $req, $id ) )
-      or return $self->sendError( $req, 'Unknown session', 401 );
+        or return $self->sendError( $req, 'Unknown session', 401 );
 
     # Restore data
     $self->p->importHandlerData($req);
@@ -169,7 +173,8 @@ sub getNotifBack {
             if (s/^reference//) {
                 $refs->{$v} = $_;
             }
-            elsif ( s/^check// and /^(\d+x\d+)x(\d+)$/ and $v eq 'accepted' ) {
+            elsif ( s/^check// and /^(\d+x\d+)x(\d+)$/ and $v eq 'accepted' )
+            {
                 push @{ $checks->{$1} }, $2;
             }
         }
@@ -180,7 +185,7 @@ sub getNotifBack {
             my $fileResult = 1;
             my $xml        = $self->parser->parse_string($file);
 
-            # Get pending notifications and verify that they have been accepted
+           # Get pending notifications and verify that they have been accepted
             foreach my $notif (
                 $xml->documentElement->getElementsByTagName('notification') )
             {
@@ -218,10 +223,11 @@ sub getNotifBack {
                 $self->p->updatePersistentSession( $req,
                     { "notification_$reference" => time() } );
                 $self->logger->debug(
-                    "Notification $reference registered in persistent session");
+                    "Notification $reference registered in persistent session"
+                );
             }
 
-        # Notifications accepted for this file, delete it unless it's a wildcard
+      # Notifications accepted for this file, delete it unless it's a wildcard
             if ( $fileResult and exists $forUser->{$fileName} ) {
                 $self->logger->debug("Notification file deleted");
                 $self->notifObject->delete($fileName);
@@ -234,7 +240,7 @@ sub getNotifBack {
             # TODO: is it a good idea to launch all 'endAuth' subs ?
             $self->logger->debug(
                 'Pending notification has been found and not accepted');
-            return $self->p->do( $req, $self->p->endAuth );
+            return $self->p->do( $req, [ @{ $self->p->endAuth } ] );
         }
 
         # All pending notifications have been accepted, restore cookies and
