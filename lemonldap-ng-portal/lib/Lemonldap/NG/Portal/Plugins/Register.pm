@@ -388,6 +388,7 @@ sub display {
         SKIN_PATH       => '/static',
         SKIN            => $self->p->getSkin($req),
         SKIN_BG         => $self->conf->{portalSkinBackground},
+        MAIN_LOGO       => $self->conf->{portalMainLogo},
         AUTH_ERROR      => $req->error,
         AUTH_ERROR_TYPE => $req->error_type,
         AUTH_URL        => $req->data->{_url},
