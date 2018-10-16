@@ -139,7 +139,8 @@ sub checkChoice {
     }
 
     # Store choice if module loops
-    $req->pdata->{_choice} = $name;
+    $req->pdata->{_choice}    = $name;
+    $req->data->{_authChoice} = $name;
     return $name if ( $req->data->{ "enabledMods" . $self->type } );
     $req->sessionInfo->{_choice} = $name;
     $req->data->{ "enabledMods" . $self->type } = [ $self->modules->{$name} ];
