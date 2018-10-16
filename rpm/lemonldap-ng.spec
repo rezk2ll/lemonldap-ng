@@ -444,11 +444,9 @@ fi
 
 
 %files
-%defattr(-,root,root,-)
 %doc changelog COPYING INSTALL README.md
 
 %files -n lemonldap-ng-conf
-%defattr(-,root,root,-)
 %dir %{lm_confdir}
 %config %{lm_confdir}/for_etc_hosts
 %config(noreplace) %{lm_confdir}/handler-apache%{apache_version}.conf
@@ -489,12 +487,10 @@ fi
 %config(noreplace) %{lm_vardir}/conf/lmConf-1.json
 
 %files -n lemonldap-ng-doc
-%defattr(-,root,root,-)
 %doc %{lm_vardir}/doc
 %doc changelog COPYING INSTALL README.md
 
 %files -n lemonldap-ng-handler
-%defattr(-,root,root,-)
 %{lm_sharedir}/bin/purgeLocalCache
 %{_sysconfdir}/cron.d/lemonldap-ng-handler
 %{lm_vardir}/handler
@@ -502,7 +498,6 @@ fi
 %{lm_sharedir}/llng-server/llng-server.psgi
 
 %files -n lemonldap-ng-manager
-%defattr(-,root,root,-)
 %{lm_sharedir}/manager
 %{lm_examplesdir}/manager
 %{lm_sharedir}/bin/lmConfigEditor
@@ -510,7 +505,6 @@ fi
 %doc %{_mandir}/man1/lemonldap-ng-cli*
 
 %files -n lemonldap-ng-portal
-%defattr(-,root,root,-)
 %{lm_vardir}/portal
 %{lm_sharedir}/bin/purgeCentralCache
 %{_sysconfdir}/cron.d/lemonldap-ng-portal
@@ -519,11 +513,9 @@ fi
 %dir %{lm_vardir}/captcha
 
 %files -n lemonldap-ng-test
-%defattr(-,root,root,-)
 %{lm_vardir}/test
 
 %files -n lemonldap-ng-fastcgi-server
-%defattr(-,root,root,-)
 %{lm_sharedir}/sbin/llng-fastcgi-server
 %config(noreplace) /etc/default/llng-fastcgi-server
 %{_unitdir}/llng-fastcgi-server.service
@@ -533,18 +525,15 @@ fi
 %{lm_sharedir}/examples/llngapp.psgi
 
 %files -n lemonldap-ng-uwsgi-app
-%defattr(-,root,root,-)
 /etc/uwsgi/apps-available/llng-server.yaml
 
 %files -n perl-Lemonldap-NG-Common
-%defattr(-,root,root,-)
 %doc %{_mandir}/man3/Lemonldap::NG::Common*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Common.pm
 %{perl_vendorlib}/Lemonldap/NG/Common/
 %{perl_vendorlib}/auto/Lemonldap/NG/Common/
 
 %files -n perl-Lemonldap-NG-Handler
-%defattr(-,root,root,-)
 %doc %{_mandir}/man3/Lemonldap::NG::Handler*.3pm.gz
 %doc %{_mandir}/man3/Plack::Middleware::Auth::LemonldapNG.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Handler.pm
@@ -553,13 +542,11 @@ fi
 %{perl_vendorlib}/Plack/Middleware/Auth/
 
 %files -n perl-Lemonldap-NG-Manager
-%defattr(-,root,root,-)
 %doc %{_mandir}/man3/Lemonldap::NG::Manager*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Manager.pm
 %{perl_vendorlib}/Lemonldap/NG/Manager/
 
 %files -n perl-Lemonldap-NG-Portal
-%defattr(-,root,root,-)
 %doc %{_mandir}/man3/Lemonldap::NG::Portal*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Portal.pm
 %{perl_vendorlib}/Lemonldap/NG/Portal/
