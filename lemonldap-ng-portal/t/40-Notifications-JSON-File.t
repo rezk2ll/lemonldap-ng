@@ -16,7 +16,7 @@ print F '[
   "title": "Test title",
   "subtitle": "Test subtitle",
   "text": "This is a test text",
-  "check": ["Accept test"]
+  "check": ["Accept test","Accept test2"]
 }
 ]';
 close F;
@@ -30,6 +30,7 @@ my $client = LLNG::Manager::Test->new(
             notificationStorage        => 'File',
             notificationStorageOptions => { dirName => 't' },
             oldNotifFormat             => 0,
+            portalMainLogo             => 'common/logos/test.png',
         }
     }
 );
@@ -78,21 +79,10 @@ ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
     or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
-# Try to validate notification without accepting it
-$str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
-ok( $res = $client->_post(
-        '/notifback',
-        IO::String->new($str),
-        cookie => "lemonldap=$id",
-        accept => 'text/html',
-        length => length($str),
-    ),
-    "Don't accept notification"
-);
-ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
-    'Notification displayed' )
+ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/test.png"%,
+    'Found custom Main Logo' )
     or print STDERR Dumper( $res->[2]->[0] );
-count(2);
+count(1);
 
 # Try to validate notification without accepting it
 $str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
@@ -110,9 +100,42 @@ ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
     or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
-# Try to validate notification
+# Try to validate notification without accepting it
+$str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
+ok( $res = $client->_post(
+        '/notifback',
+        IO::String->new($str),
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+        length => length($str),
+    ),
+    "Don't accept notification"
+);
+ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
+    'Notification displayed' )
+    or print STDERR Dumper( $res->[2]->[0] );
+count(2);
+
+# Try to validate notification with accepting just one checkbox
 $str
     = 'reference1x1=testref&check1x1x1=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
+ok( $res = $client->_post(
+        '/notifback',
+        IO::String->new($str),
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+        length => length($str),
+    ),
+    "Don't accept notification - Accept just one checkbox"
+);
+ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
+    'Notification displayed' )
+    or print STDERR Dumper( $res->[2]->[0] );
+count(2);
+
+# Try to validate notification with accepting all checkboxes
+$str
+    = 'reference1x1=testref&check1x1x1=accepted&check1x1x2=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
 ok( $res = $client->_post(
         '/notifback',
         IO::String->new($str),
