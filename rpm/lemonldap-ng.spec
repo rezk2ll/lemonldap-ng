@@ -29,14 +29,14 @@
 %define lm_storagefile %{lm_confdir}/lemonldap-ng.ini
 
 # Apache configuration directory
-%if 0%{?rhl}%{?rhel}%{?fedora}
+%if 0%{?rhel}%{?fedora}
 %define apache_confdir %{_sysconfdir}/httpd/conf.d
 %else
 %define apache_confdir /etc/apache2/conf.d
 %endif
 
 # Apache User and Group
-%if 0%{?rhl}%{?rhel}%{?fedora}
+%if 0%{?rhel}%{?fedora}
 %define lm_apacheuser apache
 %define lm_apachegroup apache
 %else
@@ -122,7 +122,7 @@ Requires:       perl(Apache::Session)
 Requires:       perl(IO::String)
 Requires:       perl(Lemonldap::NG::Common) = %{cpan_common_version}
 Requires:       perl(mod_perl2)
-%if 0%{?rhl}%{?rhel}%{?fedora}
+%if 0%{?rhel}%{?fedora}
 Requires(post):  httpd
 %else
 Requires(post):  apache2
@@ -137,7 +137,7 @@ Requires:       perl(Apache::Session)
 Requires:       perl(IO::String)
 Requires:       perl(Lemonldap::NG::Common) = %{cpan_common_version}
 Requires:       perl(mod_perl2)
-%if 0%{?rhl}%{?rhel}%{?fedora}
+%if 0%{?rhel}%{?fedora}
 Requires(post):  httpd
 %else
 Requires(post):  apache2
@@ -158,7 +158,7 @@ This package contains html documentation.
 #==============================================================================
 %package -n lemonldap-ng-handler
 Summary:        LemonLDAP-NG handler
-%if 0%{?rhl}%{?rhel}%{?fedora}
+%if 0%{?rhel}%{?fedora}
 Requires:       crontabs
 %endif
 Requires:       lemonldap-ng-conf = %{real_version}-%{release}
@@ -183,7 +183,7 @@ This package deploys the adminsitration interface and sessions explorer.
 #==============================================================================
 %package -n lemonldap-ng-portal
 Summary:        LemonLDAP-NG authentication portal
-%if 0%{?rhl}%{?rhel}%{?fedora}
+%if 0%{?rhel}%{?fedora}
 Requires:       crontabs
 %endif
 Requires:       lemonldap-ng-conf = %{real_version}-%{release}
@@ -208,7 +208,7 @@ This package deploys small test applications.
 %package -n lemonldap-ng-fastcgi-server
 Summary:        LemonLDAP-NG FastCGI Server
 Requires:       lemonldap-ng-conf = %{real_version}-%{release}
-%if 0%{?rhl}%{?rhel}%{?fedora}
+%if 0%{?rhel}%{?fedora}
 Requires:       mod_fcgid
 %else
 Requires:       apache2-mod_fcgid
