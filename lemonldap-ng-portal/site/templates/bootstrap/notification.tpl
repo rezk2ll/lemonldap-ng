@@ -28,7 +28,7 @@
       </a>
       <button type="submit" class="positive btn btn-success">
         <span class="fa fa-check-circle"></span>
-        <span trspan="accept">Accept</span
+        <span trspan="accept">Accept</span>
       </button>
     </div>
 

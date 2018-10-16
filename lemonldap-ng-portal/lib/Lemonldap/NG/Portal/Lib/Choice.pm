@@ -74,8 +74,8 @@ sub init {
         # Display conditions
         my $safe = Safe->new;
         my $cond = $mods[4];
-        if ( defined $cond ) {
-            $self->logger->debug("Found a rule for $name");
+        if ( defined $cond and $cond !~ /^$/ ) {
+            $self->logger->debug("Found rule $cond for $name");
             $_choiceRules->{$name} =
               $safe->reval("sub{my(\$env)=\@_;return ($cond)}");
             if ($@) {
@@ -139,7 +139,8 @@ sub checkChoice {
     }
 
     # Store choice if module loops
-    $req->pdata->{_choice} = $name;
+    $req->pdata->{_choice}    = $name;
+    $req->data->{_authChoice} = $name;
     return $name if ( $req->data->{ "enabledMods" . $self->type } );
     $req->sessionInfo->{_choice} = $name;
     $req->data->{ "enabledMods" . $self->type } = [ $self->modules->{$name} ];
