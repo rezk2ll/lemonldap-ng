@@ -10,48 +10,48 @@
 # Variables
 #==============================================================================
 
-%define perl_vendorlib %(eval "`%{__perl} -V:installvendorlib`"; echo $installvendorlib)
-%define perl_vendorarch %(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
+%global perl_vendorlib %(eval "`%{__perl} -V:installvendorlib`"; echo $installvendorlib)
+%global perl_vendorarch %(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
 
-%define real_name lemonldap-ng
-%define real_version 2.0.0
-%define cpan_version 2.0.0
-%define cpan_common_version  %{cpan_version}
-%define cpan_handler_version %{cpan_version}
-%define cpan_manager_version %{cpan_version}
-%define cpan_portal_version  %{cpan_version}
+%global real_name lemonldap-ng
+%global real_version 2.0.0
+%global cpan_version 2.0.0
+%global cpan_common_version  %{cpan_version}
+%global cpan_handler_version %{cpan_version}
+%global cpan_manager_version %{cpan_version}
+%global cpan_portal_version  %{cpan_version}
 
-%define lm_prefix /usr
-%define lm_sharedir %{_datadir}/lemonldap-ng
-%define lm_examplesdir %{lm_sharedir}/examples
-%define lm_vardir %{_localstatedir}/lib/lemonldap-ng
-%define lm_confdir %{_sysconfdir}/lemonldap-ng
-%define lm_storagefile %{lm_confdir}/lemonldap-ng.ini
+%global lm_prefix /usr
+%global lm_sharedir %{_datadir}/lemonldap-ng
+%global lm_examplesdir %{lm_sharedir}/examples
+%global lm_vardir %{_localstatedir}/lib/lemonldap-ng
+%global lm_confdir %{_sysconfdir}/lemonldap-ng
+%global lm_storagefile %{lm_confdir}/lemonldap-ng.ini
 
 # Apache configuration directory
 %if 0%{?rhel}%{?fedora}
-%define apache_confdir %{_sysconfdir}/httpd/conf.d
+%global apache_confdir %{_sysconfdir}/httpd/conf.d
 %else
-%define apache_confdir /etc/apache2/conf.d
+%global apache_confdir /etc/apache2/conf.d
 %endif
 
 # Apache User and Group
 %if 0%{?rhel}%{?fedora}
-%define lm_apacheuser apache
-%define lm_apachegroup apache
+%global lm_apacheuser apache
+%global lm_apachegroup apache
 %else
-%define lm_apacheuser wwwrun
-%define lm_apachegroup www
+%global lm_apacheuser wwwrun
+%global lm_apachegroup www
 %endif
 
 # Apache version
 %if 0%{?rhel} >= 7
-%define apache_version 2.4
+%global apache_version 2.4
 %else
-%define apache_version 2
+%global apache_version 2
 %endif
 
-%define lm_dnsdomain example.com
+%global lm_dnsdomain example.com
 
 #==============================================================================
 # Main package
@@ -288,7 +288,7 @@ sed -e '/perl(XML::LibXML)/d' |\
 sed -e '/perl(XML::LibXSLT)/d'
 EOF
 
-%define __perl_requires %{_builddir}/%{name}-%{real_version}/%{name}-req
+%global __perl_requires %{_builddir}/%{name}-%{real_version}/%{name}-req
 chmod +x %{__perl_requires}
 
 %if 0%{?rhel} >= 7
