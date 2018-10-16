@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 17;
+my $maintests = 18;
 
 SKIP: {
     eval { require Crypt::U2F::Server; require Authen::U2F::Tester };
@@ -55,7 +55,7 @@ SKIP: {
     ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/test.png"%,
         'Found custom Main Logo' )
         or print STDERR Dumper( $res->[2]->[0] );
-    count(1);
+
 
     # Ajax registration request
     ok( $res = $client->_post(

@@ -10,20 +10,19 @@ BEGIN {
 }
 
 my ( $res, $host, $url, $query );
-my $maintests = 10;
+my $maintests = 11;
 my $mailSend  = 0;
 my $mail2     = 0;
 
 SKIP: {
     eval
-      'require Email::Sender::Simple;use GD::SecurityImage;use Image::Magick;';
+        'require Email::Sender::Simple;use GD::SecurityImage;use Image::Magick;';
     if ($@) {
         skip 'Missing dependencies', $maintests;
     }
 
     my $client = LLNG::Manager::Test->new(
-        {
-            ini => {
+        {   ini => {
                 logLevel                   => 'error',
                 useSafeJail                => 1,
                 portalDisplayRegister      => 1,
@@ -33,6 +32,7 @@ SKIP: {
                 captcha_mail_enabled       => 1,
                 requireToken               => 1,
                 portalDisplayResetPassword => 1,
+                portalMainLogo             => 'common/logos/test.png',
             }
         }
     );
@@ -57,12 +57,14 @@ SKIP: {
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { JSON::from_json($ts) };
     ok( $captcha = $ts->{captcha}, ' Found captcha value' );
+    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/test.png"%,
+        'Found custom Main Logo' )
+        or print STDERR Dumper( $res->[2]->[0] );
 
     $query .= "&captcha=$captcha";
 
     # Post email
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/resetpwd', IO::String->new($query),
             length => length($query),
             accept => 'text/html'
@@ -74,9 +76,11 @@ SKIP: {
         'Found link in mail' );
     $query = $1;
 
-    ok(
-        $res =
-          $client->_get( '/resetpwd', query => $query, accept => 'text/html' ),
+    ok( $res = $client->_get(
+            '/resetpwd',
+            query  => $query,
+            accept => 'text/html'
+        ),
         'Post mail token received by mail'
     );
     ( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
@@ -85,8 +89,7 @@ SKIP: {
     $query .= '&newpassword=zz&confirmpassword=zz';
 
     # Post new password
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/resetpwd', IO::String->new($query),
             length => length($query),
             accept => 'text/html'
