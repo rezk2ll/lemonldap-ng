@@ -190,7 +190,7 @@ body{background:#000;color:#fff;padding:10px 50px;font-family:sans-serif;}a{text
 
 sub abort {
     my ( $self, $err ) = @_;
-    $self->logger->error($err);
+    eval { $self->logger->error($err) };
     return sub {
         $self->sendError( Lemonldap::NG::Common::PSGI::Request->new( $_[0] ),
             $err, 500 );
