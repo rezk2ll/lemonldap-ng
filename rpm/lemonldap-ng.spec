@@ -223,7 +223,7 @@ This package deploys files needed to start a FastCGI server.
 #==============================================================================
 %package -n lemonldap-ng-uwsgi-app
 Summary:        LemonLDAP-NG UWSGI Application
-Requires:	uwsgi-plugin-psgi
+Requires:       uwsgi-plugin-psgi
 
 %description -n lemonldap-ng-uwsgi-app
 LemonLDAP::NG uWSGI server provides a replacement to LemonLDAP::NG FastCGI
@@ -308,27 +308,27 @@ chmod +x %{__perl_requires}
 #============================================================================
 %install
 %{__make} %{?_smp_mflags} install \
-	DESTDIR=%{buildroot} \
-	PREFIX=%{lm_prefix} \
-	BINDIR=%{lm_sharedir}/bin \
-	SBINDIR=%{lm_sharedir}/sbin \
-	FASTCGISOCKDIR=/var/run/llng-fastcgi-server \
-	DOCUMENTROOT=%{lm_vardir} \
-	EXAMPLESDIR=%{lm_examplesdir} \
-	HANDLERDIR=%{lm_vardir}/handler \
-	MANAGERDIR=%{lm_sharedir}/manager \
-	STORAGECONFFILE=%{lm_storagefile} \
-	TOOLSDIR=%{lm_sharedir}/ressources \
-	CONFDIR=%{lm_confdir} \
-	CRONDIR=%{_sysconfdir}/cron.d \
-	DATADIR=%{lm_vardir} \
-	INITDIR=/etc/init.d \
-	ETCDEFAULTDIR=/etc/default \
-	DNSDOMAIN=%{lm_dnsdomain} \
-	APACHEVERSION=%{apache_version} \
-	UWSGIYAMLDIR=/etc/uwsgi/apps-available \
-	LLNGAPPDIR=%{lm_sharedir}/llng-server \
-	PROD=yes
+    DESTDIR=%{buildroot} \
+    PREFIX=%{lm_prefix} \
+    BINDIR=%{lm_sharedir}/bin \
+    SBINDIR=%{lm_sharedir}/sbin \
+    FASTCGISOCKDIR=/var/run/llng-fastcgi-server \
+    DOCUMENTROOT=%{lm_vardir} \
+    EXAMPLESDIR=%{lm_examplesdir} \
+    HANDLERDIR=%{lm_vardir}/handler \
+    MANAGERDIR=%{lm_sharedir}/manager \
+    STORAGECONFFILE=%{lm_storagefile} \
+    TOOLSDIR=%{lm_sharedir}/ressources \
+    CONFDIR=%{lm_confdir} \
+    CRONDIR=%{_sysconfdir}/cron.d \
+    DATADIR=%{lm_vardir} \
+    INITDIR=/etc/init.d \
+    ETCDEFAULTDIR=/etc/default \
+    DNSDOMAIN=%{lm_dnsdomain} \
+    APACHEVERSION=%{apache_version} \
+    UWSGIYAMLDIR=/etc/uwsgi/apps-available \
+    LLNGAPPDIR=%{lm_sharedir}/llng-server \
+    PROD=yes
 
 # Remove some unwanted files
 find %{buildroot} -name .packlist -exec rm -f {} \;
@@ -397,26 +397,26 @@ sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' %{buildroot}%{lm_storagefile}
 # Create symlink in Apache configuration
 # We use "z-lemonldap-ng-*" so that Apache read the files after "perl.conf"
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-handler.conf ] ; then
-	ln -s %{lm_confdir}/handler-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-handler.conf || :
+    ln -s %{lm_confdir}/handler-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-handler.conf || :
 fi
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-manager.conf ] ; then
-	ln -s %{lm_confdir}/manager-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-manager.conf || :
+    ln -s %{lm_confdir}/manager-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-manager.conf || :
 fi
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-portal.conf ] ; then
-	ln -s %{lm_confdir}/portal-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-portal.conf || :
+    ln -s %{lm_confdir}/portal-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-portal.conf || :
 fi
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-test.conf ] ; then
-	ln -s %{lm_confdir}/test-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-test.conf || :
+    ln -s %{lm_confdir}/test-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-test.conf || :
 fi
 # Upgrade from previous version
 # See http://lemonldap-ng.org/documentation/1.0/upgrade
 if [ $1 -gt 1 ] ; then
-	if [ -e %{lm_confdir}/storage.conf -o -e %{lm_confdir}/apply.conf -o -e %{lm_confdir}/apps-list.xml ] ; then
-		# Run migration script
-		%{lm_sharedir}/bin/lmMigrateConfFiles2ini 2>&1 > /dev/null || :
-		# Fix ownership
-		chgrp %{lm_apachegroup} %{lm_storagefile} || :
-	fi
+    if [ -e %{lm_confdir}/storage.conf -o -e %{lm_confdir}/apply.conf -o -e %{lm_confdir}/apps-list.xml ] ; then
+        # Run migration script
+        %{lm_sharedir}/bin/lmMigrateConfFiles2ini 2>&1 > /dev/null || :
+        # Fix ownership
+        chgrp %{lm_apachegroup} %{lm_storagefile} || :
+    fi
 fi
 # Set editor alternatives if it does not exist
 update-alternatives --display editor > /dev/null 2>&1
@@ -430,16 +430,16 @@ fi
 %preun -n lemonldap-ng-conf
 # Package removal
 if [ $1 -eq 0 ] ; then
-	# Remove symlink in Apache configuration
-	rm -f %{apache_confdir}/z-lemonldap-ng-handler.conf 2>&1 > /dev/null || :
-	rm -f %{apache_confdir}/z-lemonldap-ng-manager.conf 2>&1 > /dev/null || :
-	rm -f %{apache_confdir}/z-lemonldap-ng-portal.conf 2>&1 > /dev/null  || :
-	rm -f %{apache_confdir}/z-lemonldap-ng-test.conf 2>&1 > /dev/null  || :
+    # Remove symlink in Apache configuration
+    rm -f %{apache_confdir}/z-lemonldap-ng-handler.conf 2>&1 > /dev/null || :
+    rm -f %{apache_confdir}/z-lemonldap-ng-manager.conf 2>&1 > /dev/null || :
+    rm -f %{apache_confdir}/z-lemonldap-ng-portal.conf 2>&1 > /dev/null  || :
+    rm -f %{apache_confdir}/z-lemonldap-ng-test.conf 2>&1 > /dev/null  || :
 fi
 # Upgrade from previous version
 if [ $1 -eq 1 ] ; then
-	# Remove old symlink in Apache configuration
-	rm -f %{apache_confdir}/z-lemonldap-ng.conf 2>&1 > /dev/null || :
+    # Remove old symlink in Apache configuration
+    rm -f %{apache_confdir}/z-lemonldap-ng.conf 2>&1 > /dev/null || :
 fi
 
 
