@@ -60,7 +60,7 @@ Name:           %{real_name}
 Version:        %{real_version}
 Release:        1%{?dist}
 Summary:        LemonLDAP-NG WebSSO
-License:        GPL v2
+License:        GPLv2+
 URL:            http://lemonldap-ng.org
 Source0:        http://lemonldap-ng.org/download/%{name}-%{version}.tar.gz
 BuildArch:      noarch
