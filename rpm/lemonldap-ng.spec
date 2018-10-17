@@ -445,7 +445,8 @@ fi
 
 
 %files
-%doc changelog COPYING INSTALL README.md
+%doc changelog INSTALL README.md
+%license COPYING
 
 %files -n lemonldap-ng-conf
 %dir %{lm_confdir}
@@ -489,7 +490,8 @@ fi
 
 %files -n lemonldap-ng-doc
 %doc %{lm_vardir}/doc
-%doc changelog COPYING INSTALL README.md
+%doc changelog INSTALL README.md
+%license COPYING
 
 %files -n lemonldap-ng-handler
 %{lm_sharedir}/bin/purgeLocalCache
