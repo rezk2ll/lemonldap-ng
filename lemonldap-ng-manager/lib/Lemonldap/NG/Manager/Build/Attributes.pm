@@ -632,7 +632,7 @@ sub attributes {
             type    => 'text',
             default => "'self'",
             documentation =>
-              'Authorizated Ajax destination for Content-Security-Policy',
+              'Authorized Ajax destination for Content-Security-Policy',
         },
         cspFont => {
             type          => 'text',
