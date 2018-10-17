@@ -399,12 +399,13 @@ sub attributes {
             default       => 0,
             documentation => 'Enable CheckState plugin',
         },
-        checkStateSecret => {
+        checkStateSecret  => {
             type          => 'text',
             documentation => 'Secret token for CheckState plugin',
         },
         skipRenewConfirmation => {
-            type => 'bool',
+            type          => 'bool',
+            default       => 0,
             documentation =>
               'Avoid asking confirmation when an Issuer asks to renew auth',
         },

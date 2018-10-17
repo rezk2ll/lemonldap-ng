@@ -3116,7 +3116,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'skipRenewConfirmation' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'slaveAuthnLevel' => {
             'default' => 2,
