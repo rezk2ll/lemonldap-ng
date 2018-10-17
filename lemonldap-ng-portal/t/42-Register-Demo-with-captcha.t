@@ -32,6 +32,9 @@ SKIP: {
         }
     );
 
+    # Create main logo to avoid mail send error
+    `touch site/htdocs/static/common/logos/test.png`;
+
     # Test normal first access
     # ------------------------
     ok( $res = $client->_get( '/register', accept => 'text/html' ),
@@ -103,6 +106,9 @@ SKIP: {
         'Try to authenticate'
     );
     expectCookie($res);
+
+    # Delete main logo
+    `rm site/htdocs/static/common/logos/test.png`;
 }
 count($maintests);
 

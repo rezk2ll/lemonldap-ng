@@ -111,6 +111,7 @@ sub register {
 # Parameters check
 sub _register {
     my ( $self, $req ) = @_;
+    my %tplPrms;
 
     # Check if it's a first access
     unless ( ( $req->method =~ /^POST$/i and $req->param('mail') )
@@ -295,6 +296,7 @@ sub _register {
           );
 
         # Build mail content
+        $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
         my $tr      = $self->translate($req);
         my $subject = $self->conf->{registerConfirmSubject};
         unless ($subject) {
@@ -305,7 +307,11 @@ sub _register {
         my $html = 1;
 
         # Use HTML template
-        $body = $self->loadTemplate( 'mail_register_confirm', filter => $tr );
+        $body = $self->loadTemplate(
+            'mail_register_confirm',
+            filter => $tr,
+            params => \%tplPrms
+        );
 
         # Replace variables in body
         $body =~ s/\$expMailDate/$req->data->{expMailDate}/g;
@@ -349,6 +355,7 @@ sub _register {
     }
 
     # Build mail content
+    $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
     my $tr      = $self->translate($req);
     my $subject = $self->conf->{registerDoneSubject};
     unless ($subject) {
@@ -359,7 +366,11 @@ sub _register {
     my $html = 1;
 
     # Use HTML template
-    $body = $self->loadTemplate( 'mail_register_done', filter => $tr );
+    $body = $self->loadTemplate(
+        'mail_register_done',
+        filter => $tr,
+        params => \%tplPrms
+    );
 
     # Build portal url
     my $url = $self->conf->{portal};

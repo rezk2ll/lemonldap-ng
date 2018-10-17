@@ -37,6 +37,9 @@ SKIP: {
         }
     );
 
+    # Create main logo to avoid mail send error
+    `touch site/htdocs/static/common/logos/test.png`;
+
     # Test form
     # ------------------------
     ok( $res = $client->_get( '/resetpwd', accept => 'text/html' ),
@@ -97,6 +100,9 @@ SKIP: {
         'Post new password'
     );
     ok( mail() =~ /Your password was changed/, 'Password was changed' );
+
+    # Delete main logo
+    `rm site/htdocs/static/common/logos/test.png`;
 
     #print STDERR Dumper($query);
 }
