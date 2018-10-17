@@ -177,7 +177,7 @@ Requires:       lemonldap-ng-conf = %{real_version}-%{release}
 Requires:       perl(Lemonldap::NG::Manager) = %{cpan_manager_version}
 
 %description -n lemonldap-ng-manager
-This package deploys the adminsitration interface and sessions explorer.
+This package deploys the administration interface and sessions explorer.
 
 #==============================================================================
 # Portal
