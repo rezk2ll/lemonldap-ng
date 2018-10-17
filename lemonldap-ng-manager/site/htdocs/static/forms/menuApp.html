@@ -21,7 +21,7 @@
         <div class="row">
           <div class="col-md-1">
             <button class="btn btn-default" ng-click="showModal('logoChoice.html')">
-              <img ng-src="{{portal.data}}/skins/common/apps/{{currentNode.data.logo}}" />
+              <img ng-src="{{portal.data}}static/common/apps/{{currentNode.data.logo}}" />
             </button>
           </div>
           <div class="col-md-11">
@@ -41,7 +41,7 @@
               <option value="network.png">
               <option value="terminal.png">
               <option value="thumbnail.png">
-              <option value="tux.png"}
+              <option value="tux.png">
             </datalist>
           </div>
         </div>
@@ -83,7 +83,7 @@
     <div class="row text-center">
       <div class="col-md-2" ng-repeat="i in ['attach.png', 'bell.png', 'bookmark.png', 'configure.png', 'database.png', 'demo.png', 'folder.png', 'gear.png', 'help.png', 'mailappt.png', 'money.png', 'network.png', 'terminal.png', 'thumbnail.png', 'tux.png']">
         <button class="btn llcontainer" ng-class="{'btn-default':currentNode.data.logo!=i,'btn-info':currentNode.data.logo==i}" ng-click="ok(currentNode.data.logo=i)">
-          <img ng-src="{{elem('portal').data}}/skins/common/apps/{{i}}" title="{{i}}" alt="{{i}}" />
+          <img ng-src="{{elem('portal').data}}static/common/apps/{{i}}" title="{{i}}" alt="{{i}}" />
         </button>
       </div>
     </div>
