@@ -778,6 +778,7 @@ sub tree {
                         'multiValuesSeparator',
                         {
                             title => 'forms',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'infoFormMethod',     'confirmFormMethod',
                                 'redirectFormMethod', 'activeTimer',
