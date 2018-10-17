@@ -22,6 +22,7 @@ use Regexp::Assemble;
 has localConfig => ( is => 'rw', default => sub { {} } );
 has conf        => ( is => 'rw', default => sub { {} } );
 has menu        => ( is => 'rw', default => sub { {} } );
+has trOver      => ( is => 'rw', default => sub { { all => {} } } );
 
 # Sub modules
 has _authentication => ( is => 'rw' );
@@ -95,7 +96,16 @@ sub init {
         if ( $k =~ /tpl_(.*)/ ) {
             $self->customParameters->{$1} = $self->localConfig->{$k};
         }
+        elsif ( $k =~ /error_(?:(\w+?)_)?(\d+)$/ ) {
+            my $lang = $1 || 'all';
+            $self->trOver->{$lang}->{"PE$2"} = $self->localConfig->{$k};
+        }
+        elsif ( $k =~ /msg_(?:(\w+?)_)?(\w+)$/ ) {
+            my $lang = $1 || 'all';
+            $self->trOver->{$lang}->{$2} = $self->localConfig->{$k};
+        }
     }
+    $self->trOver( JSON::to_json( $self->trOver ) );
 
     # Purge loaded module list
     $self->loadedModules( {} );

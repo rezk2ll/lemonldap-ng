@@ -16,6 +16,11 @@ translationFields = {}
 translatePage = (lang) ->
 	$.getJSON "#{window.staticPrefix}languages/#{lang}.json", (data) ->
 		translationFields = data
+		for k,v of window.datas.trOver.all
+			translationFields[k] = v
+		if window.datas.trOver[lang]
+			for k,v of window.datas.trOver[lang]
+				translationFields[k] = v
 		$("[trspan]").each ->
 			args = $(this).attr('trspan').split(',')
 			txt = translate args.shift()

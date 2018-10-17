@@ -26,7 +26,8 @@
  "appslistorder":"<TMPL_VAR NAME="APPSLIST_ORDER">",
  "scriptname":"<TMPL_VAR NAME="SCRIPT_NAME">",
  "activeTimer":<TMPL_VAR NAME="ACTIVE_TIMER" DEFAULT="0">,
- "pingInterval":<TMPL_VAR NAME="PING" DEFAULT="0">
+ "pingInterval":<TMPL_VAR NAME="PING" DEFAULT="0">,
+ "trOver":<TMPL_VAR NAME="TROVER" DEFAULT="[]">
  }
  </script>
 
