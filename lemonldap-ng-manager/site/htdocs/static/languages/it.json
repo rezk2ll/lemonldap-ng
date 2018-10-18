@@ -138,7 +138,7 @@
 "cda":"Domini multipli",
 "contentSecurityPolicy":"Politica di protezione dei contenuti",
 "cspDefault":"Valore di default",
-"cspFormAction":"Form action source",
+"cspFormAction":"Form destinations",
 "cspImg":"Origine immagine",
 "cspScript":"Origine script",
 "cspStyle":"Origine di stile",
