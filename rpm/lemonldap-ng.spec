@@ -117,7 +117,7 @@ So you can have a full AAA protection for your web space as described below.
 #==============================================================================
 # Conf
 #==============================================================================
-%package -n lemonldap-ng-conf
+%package conf
 Summary:        LemonLDAP-NG configuration
 Requires:       perl(Apache::Session)
 Requires:       perl(IO::String)
@@ -132,7 +132,7 @@ Requires(post):  apache2
 #==============================================================================
 # Configuration
 #==============================================================================
-%description -n lemonldap-ng-conf
+%description conf
 This package contains the main storage configuration.
 Requires:       perl(Apache::Session)
 Requires:       perl(IO::String)
@@ -147,17 +147,17 @@ Requires(post):  apache2
 #==============================================================================
 # Documentation
 #==============================================================================
-%package -n lemonldap-ng-doc
+%package doc
 Summary:        LemonLDAP-NG documentation
 Requires:       lemonldap-ng-conf = %{real_version}-%{release}
 
-%description -n lemonldap-ng-doc
+%description doc
 This package contains html documentation.
 
 #==============================================================================
 # Handler
 #==============================================================================
-%package -n lemonldap-ng-handler
+%package handler
 Summary:        LemonLDAP-NG handler
 %if 0%{?rhel}%{?fedora}
 Requires:       crontabs
@@ -165,24 +165,24 @@ Requires:       crontabs
 Requires:       lemonldap-ng-conf = %{real_version}-%{release}
 Requires:       perl(Lemonldap::NG::Handler) = %{cpan_handler_version}
 
-%description -n lemonldap-ng-handler
+%description handler
 This package deploys the Apache Handler.
 
 #==============================================================================
 # Manager
 #==============================================================================
-%package -n lemonldap-ng-manager
+%package manager
 Summary:        LemonLDAP-NG administration interface
 Requires:       lemonldap-ng-conf = %{real_version}-%{release}
 Requires:       perl(Lemonldap::NG::Manager) = %{cpan_manager_version}
 
-%description -n lemonldap-ng-manager
+%description manager
 This package deploys the administration interface and sessions explorer.
 
 #==============================================================================
 # Portal
 #==============================================================================
-%package -n lemonldap-ng-portal
+%package portal
 Summary:        LemonLDAP-NG authentication portal
 %if 0%{?rhel}%{?fedora}
 Requires:       crontabs
@@ -190,23 +190,23 @@ Requires:       crontabs
 Requires:       lemonldap-ng-conf = %{real_version}-%{release}
 Requires:       perl(Lemonldap::NG::Portal) = %{cpan_portal_version}
 
-%description -n lemonldap-ng-portal
+%description portal
 This package deploys the authentication portal.
 
 #==============================================================================
 # Test
 #==============================================================================
-%package -n lemonldap-ng-test
+%package test
 Summary:        LemonLDAP-NG test applications
 Requires:       lemonldap-ng-conf = %{real_version}-%{release}
 
-%description -n lemonldap-ng-test
+%description test
 This package deploys small test applications.
 
 #==============================================================================
 # FastCGI Server
 #==============================================================================
-%package -n lemonldap-ng-fastcgi-server
+%package fastcgi-server
 Summary:        LemonLDAP-NG FastCGI Server
 Requires:       lemonldap-ng-conf = %{real_version}-%{release}
 %if 0%{?rhel}%{?fedora}
@@ -216,17 +216,17 @@ Requires:       apache2-mod_fcgid
 %endif
 Requires:       perl(FCGI::ProcManager)
 
-%description -n lemonldap-ng-fastcgi-server
+%description fastcgi-server
 This package deploys files needed to start a FastCGI server.
 
 #==============================================================================
 # UWSGI Application
 #==============================================================================
-%package -n lemonldap-ng-uwsgi-app
+%package uwsgi-app
 Summary:        LemonLDAP-NG UWSGI Application
 Requires:       uwsgi-plugin-psgi
 
-%description -n lemonldap-ng-uwsgi-app
+%description uwsgi-app
 LemonLDAP::NG uWSGI server provides a replacement to LemonLDAP::NG FastCGI
 server, using uWSGI instead of Plack FCGI.
 
@@ -394,7 +394,7 @@ sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' %{buildroot}%{lm_storagefile}
 #==============================================================================
 # Post Installation
 #==============================================================================
-%post -n lemonldap-ng-conf
+%post conf
 # Create symlink in Apache configuration
 # We use "z-lemonldap-ng-*" so that Apache read the files after "perl.conf"
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-handler.conf ] ; then
@@ -428,7 +428,7 @@ fi
 #==============================================================================
 # Pre uninstallation
 #==============================================================================
-%preun -n lemonldap-ng-conf
+%preun conf
 # Package removal
 if [ $1 -eq 0 ] ; then
     # Remove symlink in Apache configuration
@@ -448,7 +448,7 @@ fi
 %doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
 %license COPYING GPL
 
-%files -n lemonldap-ng-conf
+%files conf
 %dir %{lm_confdir}
 %config %{lm_confdir}/for_etc_hosts
 %config(noreplace) %{lm_confdir}/handler-apache%{apache_version}.conf
@@ -488,26 +488,26 @@ fi
 %defattr(640,%{lm_apacheuser},%{lm_apachegroup},-)
 %config(noreplace) %{lm_vardir}/conf/lmConf-1.json
 
-%files -n lemonldap-ng-doc
+%files doc
 %doc %{lm_vardir}/doc
 %doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
 %license COPYING GPL
 
-%files -n lemonldap-ng-handler
+%files handler
 %{lm_sharedir}/bin/purgeLocalCache
 %{_sysconfdir}/cron.d/lemonldap-ng-handler
 %{lm_vardir}/handler
 %{lm_examplesdir}/handler
 %{lm_sharedir}/llng-server/llng-server.psgi
 
-%files -n lemonldap-ng-manager
+%files manager
 %{lm_sharedir}/manager
 %{lm_examplesdir}/manager
 %{lm_sharedir}/bin/lmConfigEditor
 %{lm_sharedir}/bin/lemonldap-ng-cli
 %doc %{_mandir}/man1/lemonldap-ng-cli*
 
-%files -n lemonldap-ng-portal
+%files portal
 %{lm_vardir}/portal
 %{lm_sharedir}/bin/purgeCentralCache
 %{_sysconfdir}/cron.d/lemonldap-ng-portal
@@ -515,10 +515,10 @@ fi
 %defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir %{lm_vardir}/captcha
 
-%files -n lemonldap-ng-test
+%files test
 %{lm_vardir}/test
 
-%files -n lemonldap-ng-fastcgi-server
+%files fastcgi-server
 %{lm_sharedir}/sbin/llng-fastcgi-server
 %config(noreplace) /etc/default/llng-fastcgi-server
 %{_unitdir}/llng-fastcgi-server.service
@@ -527,7 +527,7 @@ fi
 %dir /var/run/llng-fastcgi-server
 %{lm_sharedir}/examples/llngapp.psgi
 
-%files -n lemonldap-ng-uwsgi-app
+%files uwsgi-app
 /etc/uwsgi/apps-available/llng-server.yaml
 
 %files -n perl-Lemonldap-NG-Common
