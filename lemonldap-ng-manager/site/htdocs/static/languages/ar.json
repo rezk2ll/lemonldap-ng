@@ -138,6 +138,7 @@
 "cda":"نطاقات متعددة",
 "contentSecurityPolicy":"السياسة الأمنية للمحتوى",
 "cspDefault":"القيمة الاعتيادية ",
+"cspFormAction":"Form action source",
 "cspImg":"مصدر الصورة",
 "cspScript":"مصدر السكربت",
 "cspStyle":"مصدر الأسلوب ",

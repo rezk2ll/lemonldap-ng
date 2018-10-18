@@ -138,6 +138,7 @@
 "cda":"Nhiều tên miền",
 "contentSecurityPolicy":"Chính sách bảo mật nội dung",
 "cspDefault":"Giá trị mặc định",
+"cspFormAction":"Form action source",
 "cspImg":"Nguồn ảnh",
 "cspScript":"Nguồn kịch bản",
 "cspStyle":"Nguồn phong cách",

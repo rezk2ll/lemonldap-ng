@@ -138,6 +138,7 @@
 "cda":"Domaines multiples",
 "contentSecurityPolicy":"Politique de sécurité de contenu",
 "cspDefault":"Valeur par défaut",
+"cspFormAction":"Form action source",
 "cspImg":"Sources des images",
 "cspScript":"Sources des scripts",
 "cspStyle":"Sources des styles",
