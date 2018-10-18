@@ -919,6 +919,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '\'self\'',
             'type'    => 'text'
         },
+        'cspFormAction' => {
+            'default' => '*',
+            'type'    => 'text'
+        },
         'cspImg' => {
             'default' => '\'self\' data:',
             'type'    => 'text'

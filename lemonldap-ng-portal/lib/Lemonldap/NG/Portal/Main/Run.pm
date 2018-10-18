@@ -733,7 +733,7 @@ sub sendHtml {
       'X-Content-Type-Options' => 'nosniff';
 
     # Set authorized URL for POST
-    my $csp = $self->csp . "form-action 'self'";
+    my $csp = $self->csp . "form-action 'self' " . $self->conf->{cspFormAction};
     if ( my $url = $req->urldc ) {
         $self->logger->debug("Required urldc : $url");
         $url =~ s#(https?://[^/]+).*#$1#;

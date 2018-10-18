@@ -613,6 +613,11 @@ sub attributes {
             default       => "'self'",
             documentation => 'Default value for Content-Security-Policy',
         },
+        cspFormAction => {
+            type          => 'text',
+            default       => "*",
+            documentation => 'Form action for Content-Security-Policy',
+        },
         cspImg => {
             type          => 'text',
             default       => "'self' data:",
