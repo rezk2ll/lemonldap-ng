@@ -32,7 +32,7 @@
 %if 0%{?rhel}%{?fedora}
 %global apache_confdir %{_sysconfdir}/httpd/conf.d
 %else
-%global apache_confdir /etc/apache2/conf.d
+%global apache_confdir %{_sysconfdir}/apache2/conf.d
 %endif
 
 # Apache User and Group
@@ -323,11 +323,11 @@ chmod +x %{__perl_requires}
     CONFDIR=%{lm_confdir} \
     CRONDIR=%{_sysconfdir}/cron.d \
     DATADIR=%{lm_vardir} \
-    INITDIR=/etc/init.d \
-    ETCDEFAULTDIR=/etc/default \
+    INITDIR=%{_sysconfdir}/init.d \
+    ETCDEFAULTDIR=%{_sysconfdir}/default \
     DNSDOMAIN=%{lm_dnsdomain} \
     APACHEVERSION=%{apache_version} \
-    UWSGIYAMLDIR=/etc/uwsgi/apps-available \
+    UWSGIYAMLDIR=%{_sysconfdir}/uwsgi/apps-available \
     LLNGAPPDIR=%{lm_sharedir}/llng-server \
     PROD=yes
 
@@ -341,7 +341,7 @@ mkdir -p %{buildroot}%{_unitdir}
 install -m644 fastcgi-server/systemd/llng-fastcgi-server.service %{buildroot}%{_unitdir}
 sed -i 's:__FASTCGISOCKDIR__:/var/run/llng-fastcgi-server:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
 sed -i 's:__SBINDIR__:/usr/share/lemonldap-ng/sbin:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
-rm -f %{buildroot}/etc/init.d/llng-fastcgi-server
+rm -f %{buildroot}%{_sysconfdir}/init.d/llng-fastcgi-server
 
 mkdir -p %{buildroot}%{_tmpfilesdir}
 install -m644 fastcgi-server/systemd/llng-fastcgi-server.tmpfile %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
@@ -350,7 +350,7 @@ sed -i 's:__USER__:%{lm_apacheuser}:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-s
 sed -i 's:__GROUP__:%{lm_apachegroup}:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
 
 # UWSGI Application
-mkdir -p %{buildroot}/etc/uwsgi/apps-available
+mkdir -p %{buildroot}%{_sysconfdir}/uwsgi/apps-available
 mkdir -p %{buildroot}%{lm_sharedir}/llng-server
 
 # Set apache user in some files (see Makefile)
@@ -360,7 +360,7 @@ mkdir -p %{buildroot}%{lm_sharedir}/llng-server
 sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{_sysconfdir}/cron.d/*
 sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{lm_sharedir}/bin/lmConfigEditor
 sed -i 's/nobody/%{lm_apacheuser}/g' %{buildroot}%{lm_sharedir}/bin/lemonldap-ng-cli
-sed -i 's/nobody/%{lm_apacheuser}/g' %{buildroot}/etc/default/llng-fastcgi-server
+sed -i 's/nobody/%{lm_apacheuser}/g' %{buildroot}%{_sysconfdir}/default/llng-fastcgi-server
 
 # Set UNIX rights
 mkdir -p %{buildroot}%{lm_vardir}/sessions/lock
@@ -520,7 +520,7 @@ fi
 
 %files fastcgi-server
 %{lm_sharedir}/sbin/llng-fastcgi-server
-%config(noreplace) /etc/default/llng-fastcgi-server
+%config(noreplace) %{_sysconfdir}/default/llng-fastcgi-server
 %{_unitdir}/llng-fastcgi-server.service
 %{_tmpfilesdir}/llng-fastcgi-server.conf
 %defattr(755,%{lm_apacheuser},%{lm_apachegroup},-)
@@ -528,7 +528,7 @@ fi
 %{lm_sharedir}/examples/llngapp.psgi
 
 %files uwsgi-app
-/etc/uwsgi/apps-available/llng-server.yaml
+%{_sysconfdir}/uwsgi/apps-available/llng-server.yaml
 
 %files -n perl-Lemonldap-NG-Common
 %{_mandir}/man3/Lemonldap::NG::Common*.3pm.*
