@@ -469,7 +469,7 @@ fi
 %dir %{lm_sharedir}
 %dir %{lm_sharedir}/bin
 %{lm_sharedir}/bin/convertConfig
-%doc %{_mandir}/man1/convertConfig*
+%{_mandir}/man1/convertConfig*
 %{lm_sharedir}/bin/importMetadata
 %{lm_sharedir}/bin/lmMigrateConfFiles2ini
 %{lm_sharedir}/bin/rotateOidcKeys
@@ -505,7 +505,7 @@ fi
 %{lm_examplesdir}/manager
 %{lm_sharedir}/bin/lmConfigEditor
 %{lm_sharedir}/bin/lemonldap-ng-cli
-%doc %{_mandir}/man1/lemonldap-ng-cli*
+%{_mandir}/man1/lemonldap-ng-cli*
 
 %files portal
 %{lm_vardir}/portal
@@ -531,26 +531,26 @@ fi
 /etc/uwsgi/apps-available/llng-server.yaml
 
 %files -n perl-Lemonldap-NG-Common
-%doc %{_mandir}/man3/Lemonldap::NG::Common*.3pm.gz
+%{_mandir}/man3/Lemonldap::NG::Common*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Common.pm
 %{perl_vendorlib}/Lemonldap/NG/Common/
 %{perl_vendorlib}/auto/Lemonldap/NG/Common/
 
 %files -n perl-Lemonldap-NG-Handler
-%doc %{_mandir}/man3/Lemonldap::NG::Handler*.3pm.gz
-%doc %{_mandir}/man3/Plack::Middleware::Auth::LemonldapNG.3pm.gz
+%{_mandir}/man3/Lemonldap::NG::Handler*.3pm.gz
+%{_mandir}/man3/Plack::Middleware::Auth::LemonldapNG.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Handler.pm
 %{perl_vendorlib}/Lemonldap/NG/Handler/
 %{perl_vendorlib}/auto/Lemonldap/NG/Handler/
 %{perl_vendorlib}/Plack/Middleware/Auth/
 
 %files -n perl-Lemonldap-NG-Manager
-%doc %{_mandir}/man3/Lemonldap::NG::Manager*.3pm.gz
+%{_mandir}/man3/Lemonldap::NG::Manager*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Manager.pm
 %{perl_vendorlib}/Lemonldap/NG/Manager/
 
 %files -n perl-Lemonldap-NG-Portal
-%doc %{_mandir}/man3/Lemonldap::NG::Portal*.3pm.gz
+%{_mandir}/man3/Lemonldap::NG::Portal*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Portal.pm
 %{perl_vendorlib}/Lemonldap/NG/Portal/
 
