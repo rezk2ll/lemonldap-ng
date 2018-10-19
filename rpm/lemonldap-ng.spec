@@ -531,26 +531,26 @@ fi
 /etc/uwsgi/apps-available/llng-server.yaml
 
 %files -n perl-Lemonldap-NG-Common
-%{_mandir}/man3/Lemonldap::NG::Common*.3pm.gz
+%{_mandir}/man3/Lemonldap::NG::Common*.3pm.*
 %{perl_vendorlib}/Lemonldap/NG/Common.pm
 %{perl_vendorlib}/Lemonldap/NG/Common/
 %{perl_vendorlib}/auto/Lemonldap/NG/Common/
 
 %files -n perl-Lemonldap-NG-Handler
-%{_mandir}/man3/Lemonldap::NG::Handler*.3pm.gz
-%{_mandir}/man3/Plack::Middleware::Auth::LemonldapNG.3pm.gz
+%{_mandir}/man3/Lemonldap::NG::Handler*.3pm.*
+%{_mandir}/man3/Plack::Middleware::Auth::LemonldapNG.3pm.*
 %{perl_vendorlib}/Lemonldap/NG/Handler.pm
 %{perl_vendorlib}/Lemonldap/NG/Handler/
 %{perl_vendorlib}/auto/Lemonldap/NG/Handler/
 %{perl_vendorlib}/Plack/Middleware/Auth/
 
 %files -n perl-Lemonldap-NG-Manager
-%{_mandir}/man3/Lemonldap::NG::Manager*.3pm.gz
+%{_mandir}/man3/Lemonldap::NG::Manager*.3pm.*
 %{perl_vendorlib}/Lemonldap/NG/Manager.pm
 %{perl_vendorlib}/Lemonldap/NG/Manager/
 
 %files -n perl-Lemonldap-NG-Portal
-%{_mandir}/man3/Lemonldap::NG::Portal*.3pm.gz
+%{_mandir}/man3/Lemonldap::NG::Portal*.3pm.*
 %{perl_vendorlib}/Lemonldap/NG/Portal.pm
 %{perl_vendorlib}/Lemonldap/NG/Portal/
 
