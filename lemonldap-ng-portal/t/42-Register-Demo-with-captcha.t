@@ -22,7 +22,7 @@ SKIP: {
 
     my $client = LLNG::Manager::Test->new(
         {   ini => {
-                logLevel                 => 'error',
+                logLevel                 => 'debug',
                 useSafeJail              => 1,
                 portalDisplayRegister    => 1,
                 registerDB               => 'Demo',
@@ -33,6 +33,7 @@ SKIP: {
     );
 
     # Create main logo to avoid mail send error
+    `mkdir -p site/htdocs/static/common/logos/`;
     `touch site/htdocs/static/common/logos/test.png`;
 
     # Test normal first access
