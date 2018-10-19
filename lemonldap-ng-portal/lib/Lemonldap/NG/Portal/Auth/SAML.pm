@@ -897,23 +897,24 @@ sub extractFormInfo {
 
         my $disco_url = $self->conf->{samlDiscoveryProtocolURL};
 
+        my $portal = $self->conf->{portal};
         $disco_url .= ( $disco_url =~ /\?/ ? '&' : '?' )
           . build_urlencoded(
             entityID      => $self->getMetaDataURL( 'samlEntityID', 0, 1 ),
-            return        => $self->conf->{portal},
+            return        => $portal,
             returnIDParam => 'idp'
           );
 
         if ( defined $self->conf->{samlDiscoveryProtocolPolicy} ) {
-            $disco_url .= "&"
-              . build_urlencoded(
-                policy => $self->conf->{samlDiscoveryProtocolPolicy} );
+            my $dppolicy = $self->conf->{samlDiscoveryProtocolPolicy};
+            $disco_url .= "&" . build_urlencoded( policy => $dppolicy );
         }
 
         if ( defined $self->conf->{samlDiscoveryProtocolIsPassive} ) {
+            my $dpispassive = $self->conf->{samlDiscoveryProtocolIsPassive};
             $disco_url .= "&"
               . build_urlencoded(
-                isPassive => $self->conf->{samlDiscoveryProtocolIsPassive}
+                isPassive => $dpispassive
                 ? "true"
                 : "false"
               );

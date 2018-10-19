@@ -287,12 +287,14 @@ sub _register {
         }
 
         # Build confirmation url
+        my $req_url = $req->data->{_url};
+        my $skin    = $self->p->getSkin($req);
         my $url =
           $self->registerUrl . '?'
           . build_urlencoded(
             register_token => $req->{id},
-            skin           => $self->p->getSkin($req),
-            ( $req->data->{_url} ? ( url => $req->data->{_url} ) : () ),
+            skin           => $skin,
+            ( $req_url ? ( url => $req_url ) : () ),
           );
 
         # Build mail content
@@ -375,10 +377,12 @@ sub _register {
     # Build portal url
     my $url = $self->conf->{portal};
     $url =~ s#/*$##;
+    my $req_url = $req->data->{_url};
+    my $skin    = $self->p->getSkin($req);
     $url .= '/?'
       . build_urlencoded(
-        skin => $self->p->getSkin($req),
-        ( $req->data->{_url} ? ( url => $req->data->{_url} ) : () ),
+        skin => $skin,
+        ( $req_url ? ( url => $req_url ) : () ),
       );
 
     # Replace variables in body

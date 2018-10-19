@@ -294,12 +294,14 @@ sub _reset {
         return PE_MAILERROR unless ( $req->data->{mailAddress} );
 
         # Build confirmation url
+        my $req_url = $req->data->{_url};
+        my $skin    = $self->p->getSkin($req);
         my $url =
           $self->conf->{mailUrl} . '?'
           . build_urlencoded(
             mail_token => $req->{id},
-            skin       => $self->p->getSkin($req),
-            ( $req->data->{_url} ? ( url => $req->data->{_url} ) : () ),
+            skin       => $skin,
+            ( $req_url ? ( url => $req_url ) : () ),
           );
 
         # Build mail content

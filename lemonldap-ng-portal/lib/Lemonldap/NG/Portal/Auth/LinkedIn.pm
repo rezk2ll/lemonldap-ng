@@ -188,12 +188,14 @@ sub extractFormInfo {
         $stateSession->update($stateInfos);
 
         my $authn_uri = $self->linkedInAuthorizationEndpoint;
+        my $client_id = $self->conf->{linkedInClientID};
+        my $scope     = $self->conf->{linkedInScope};
         $authn_uri .= '?'
           . build_urlencoded(
             response_type => 'code',
-            client_id     => $self->conf->{linkedInClientID},
+            client_id     => $client_id,
             redirect_uri  => $callback_url,
-            scope         => $self->conf->{linkedInScope},
+            scope         => $scope,
             state         => $stateSession->id,
           );
 
