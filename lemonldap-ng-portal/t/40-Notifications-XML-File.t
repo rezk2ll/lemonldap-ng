@@ -34,7 +34,7 @@ SKIP: {
                 notificationStorage        => 'File',
                 notificationStorageOptions => { dirName => 't' },
                 oldNotifFormat             => 1,
-                portalMainLogo             => 'common/logos/test.png',
+                portalMainLogo             => 'common/logos/logo_llng_old.png',
             }
         }
     );
@@ -79,7 +79,7 @@ SKIP: {
     ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
         'Notification displayed' )
         or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/test.png"%,
+    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo' )
         or print STDERR Dumper( $res->[2]->[0] );
 

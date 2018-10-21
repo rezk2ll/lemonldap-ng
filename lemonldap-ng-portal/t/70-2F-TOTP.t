@@ -17,7 +17,7 @@ SKIP: {
                 logLevel               => 'error',
                 totp2fSelfRegistration => 1,
                 totp2fActivation       => 1,
-                portalMainLogo         => 'common/logos/test.png',
+                portalMainLogo         => 'common/logos/logo_llng_old.png',
             }
         }
     );
@@ -51,7 +51,7 @@ SKIP: {
         'Form registration'
     );
     ok( $res->[2]->[0] =~ /totpregistration\.(?:min\.)?js/, 'Found TOTP js' );
-    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/test.png"%,
+    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo' )
         or print STDERR Dumper( $res->[2]->[0] );
     count(1);

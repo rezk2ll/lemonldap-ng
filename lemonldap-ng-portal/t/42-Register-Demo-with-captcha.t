@@ -22,19 +22,15 @@ SKIP: {
 
     my $client = LLNG::Manager::Test->new(
         {   ini => {
-                logLevel                 => 'debug',
+                logLevel                 => 'error',
                 useSafeJail              => 1,
                 portalDisplayRegister    => 1,
                 registerDB               => 'Demo',
                 captcha_register_enabled => 1,
-                portalMainLogo           => 'common/logos/test.png',
+                portalMainLogo           => 'common/logos/logo_llng_old.png',
             }
         }
     );
-
-    # Create main logo to avoid mail send error
-    `mkdir -p site/htdocs/static/common/logos/`;
-    `touch site/htdocs/static/common/logos/test.png`;
 
     # Test normal first access
     # ------------------------
@@ -50,10 +46,10 @@ SKIP: {
     my $token;
     ok( $token = $1, ' Token value is defined' );
     ok( $res->[2]->[0] =~ m#<img src="data:image/png;base64#,
-        ' Captcha image inserted' );
+        ' Captcha image inserted' )
+    or print STDERR Dumper( $res->[2]->[0] );
 
     # Try to get captcha value
-
     my ( $ts, $captcha );
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { JSON::from_json($ts) };
@@ -107,9 +103,6 @@ SKIP: {
         'Try to authenticate'
     );
     expectCookie($res);
-
-    # Delete main logo
-    `rm site/htdocs/static/common/logos/test.png`;
 }
 count($maintests);
 

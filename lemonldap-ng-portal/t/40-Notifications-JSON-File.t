@@ -30,7 +30,7 @@ my $client = LLNG::Manager::Test->new(
             notificationStorage        => 'File',
             notificationStorageOptions => { dirName => 't' },
             oldNotifFormat             => 0,
-            portalMainLogo             => 'common/logos/test.png',
+            portalMainLogo             => 'common/logos/logo_llng_old.png',
         }
     }
 );
@@ -79,7 +79,7 @@ ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
     or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
-ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/test.png"%,
+ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
     'Found custom Main Logo' )
     or print STDERR Dumper( $res->[2]->[0] );
 count(1);

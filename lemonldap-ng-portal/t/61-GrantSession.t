@@ -14,7 +14,7 @@ my $client = LLNG::Manager::Test->new(
             logLevel          => 'error',
             authentication    => 'Demo',
             userdb            => 'Same',
-            portalMainLogo    => 'common/logos/test.png',
+            portalMainLogo    => 'common/logos/logo_llng_old.png',
             grantSessionRules => {
                 '$uid . " not allowed"##rule1' => '$uid ne "dwho"',
                 'Rtyler_Allowed##rule3'        => '$uid eq "rtyler"',
@@ -41,7 +41,7 @@ ok( $res->[2]->[0] =~ qr%src="/static/common/js/info.(?:min\.)?js"></script>%,
     'Found INFO js'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
-ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/test.png"%,
+ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
     'Found custom Main Logo' )
     or print STDERR Dumper( $res->[2]->[0] );
 count(1);
@@ -69,7 +69,7 @@ ok( $res->[2]->[0] =~ /<span trmsg="4"><\/span><\/div>/,
     'rtyler rejected with PE_SESSIONNOTGRANTED'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
-ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/test.png"%,
+ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
     'Found custom Main Logo' )
     or print STDERR Dumper( $res->[2]->[0] );
 count(1);

@@ -15,7 +15,7 @@ my $client = LLNG::Manager::Test->new(
             userDB              => 'Same',
             loginHistoryEnabled => 1,
             brutForceProtection => 0,
-            portalMainLogo      => 'common/logos/test.png',
+            portalMainLogo      => 'common/logos/logo_llng_old.png',
             sessionDataToRemember =>
                 { uid => 'identity', _auth => 'AuthModule' },
         }
@@ -34,7 +34,7 @@ ok( $res = $client->_post(
 count(1);
 expectOK($res);
 my $id1 = expectCookie($res);
-ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/test.png"%,
+ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
     'Found custom Main Logo' )
     or print STDERR Dumper( $res->[2]->[0] );
 count(1);

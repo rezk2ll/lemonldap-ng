@@ -17,7 +17,7 @@ SKIP: {
                 logLevel            => 'error',
                 u2fSelfRegistration => 1,
                 u2fActivation       => 1,
-                portalMainLogo      => 'common/logos/test.png',
+                portalMainLogo      => 'common/logos/logo_llng_old.png',
             }
         }
     );
@@ -52,7 +52,7 @@ SKIP: {
         'Form registration'
     );
     ok( $res->[2]->[0] =~ /u2fregistration\.(?:min\.)?js/, 'Found U2F js' );
-    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/test.png"%,
+    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo' )
         or print STDERR Dumper( $res->[2]->[0] );
 

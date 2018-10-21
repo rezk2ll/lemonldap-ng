@@ -32,13 +32,10 @@ SKIP: {
                 captcha_mail_enabled       => 1,
                 requireToken               => 1,
                 portalDisplayResetPassword => 1,
-                portalMainLogo             => 'common/logos/test.png',
+                portalMainLogo             => 'common/logos/logo_llng_old.png',
             }
         }
     );
-
-    # Create main logo to avoid mail send error
-    `touch site/htdocs/static/common/logos/test.png`;
 
     # Test form
     # ------------------------
@@ -60,7 +57,7 @@ SKIP: {
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { JSON::from_json($ts) };
     ok( $captcha = $ts->{captcha}, ' Found captcha value' );
-    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/test.png"%,
+    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo' )
         or print STDERR Dumper( $res->[2]->[0] );
 
@@ -100,9 +97,6 @@ SKIP: {
         'Post new password'
     );
     ok( mail() =~ /Your password was changed/, 'Password was changed' );
-
-    # Delete main logo
-    `rm site/htdocs/static/common/logos/test.png`;
 
     #print STDERR Dumper($query);
 }
