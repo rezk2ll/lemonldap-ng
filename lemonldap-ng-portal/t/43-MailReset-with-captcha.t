@@ -10,7 +10,7 @@ BEGIN {
 }
 
 my ( $res, $host, $url, $query );
-my $maintests = 11;
+my $maintests = 12;
 my $mailSend  = 0;
 my $mail2     = 0;
 
@@ -32,7 +32,7 @@ SKIP: {
                 captcha_mail_enabled       => 1,
                 requireToken               => 1,
                 portalDisplayResetPassword => 1,
-                portalMainLogo             => 'common/logos/logo_llng_old.png',
+                portalMainLogo            => 'common/logos/logo_llng_old.png',
             }
         }
     );
@@ -57,9 +57,10 @@ SKIP: {
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { JSON::from_json($ts) };
     ok( $captcha = $ts->{captcha}, ' Found captcha value' );
-    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
-        'Found custom Main Logo' )
-        or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0]
+            =~ m%<img src="/static/common/logos/logo_llng_old.png"%,
+        'Found custom Main Logo'
+    ) or print STDERR Dumper( $res->[2]->[0] );
 
     $query .= "&captcha=$captcha";
 
@@ -71,6 +72,9 @@ SKIP: {
         ),
         'Post mail'
     );
+    ok( mail() =~ m%Content-Type: image/png; name="logo_llng_old.png"%,
+        'Found custom Main logo in mail' )
+        or print STDERR Dumper( mail() );
 
     ok( mail() =~ m#a href="http://auth.example.com/resetpwd\?(.*?)"#,
         'Found link in mail' );

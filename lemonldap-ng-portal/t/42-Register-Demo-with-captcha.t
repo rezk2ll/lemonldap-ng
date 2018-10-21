@@ -54,7 +54,7 @@ SKIP: {
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { JSON::from_json($ts) };
     ok( $captcha = $ts->{captcha}, ' Found captcha value' );
-    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
+    ok( $res->[2]->[0] =~ m%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo' )
         or print STDERR Dumper( $res->[2]->[0] );
 
