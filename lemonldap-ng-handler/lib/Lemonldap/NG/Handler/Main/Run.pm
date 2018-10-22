@@ -485,12 +485,13 @@ sub retrieveSession {
         $class->logger->error(
 "_utime is not defined. This should not happen. Check if it is well transmitted to handler"
         ) unless $session->data->{_utime};
+
+        $class->logger->debug( "Check session timeoutActivity from Handler -> " . $class->tsv->{timeoutActivity} ."s" );
         if (
             $now - $session->data->{_utime} > $class->tsv->{timeout}
             or (    $class->tsv->{timeoutActivity}
                 and $session->data->{_lastSeen}
-                and $now - $session->data->{_lastSeen} >
-                $class->tsv->{timeoutActivity} )
+                and ( ( $now - $session->data->{_lastSeen} ) > $class->tsv->{timeoutActivity} )
           )
         {
             $class->logger->info("Session $id expired");

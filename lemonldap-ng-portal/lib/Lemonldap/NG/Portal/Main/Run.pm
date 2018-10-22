@@ -359,7 +359,7 @@ sub getApacheSession {
         return;
     }
     $self->logger->debug("Get session $id from Portal::Main::Run") if ( $id );
-    $self->logger->debug( "Check session timeoutActivity" );
+    $self->logger->debug("Check session timeoutActivity -> " . $self->conf->{timeoutActivity} . "s");
     my $now = time;
     if (
             $id
