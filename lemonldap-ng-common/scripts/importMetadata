@@ -39,7 +39,7 @@ if ( $opts{help} or !$opts{metadata} ) {
 #==============================================================================
 
 my $spConfKeyPrefix  = $opts{spconfprefix} || "sp-";
-my $idpConfKeyPrefix = $opts{spconfprefix} || "idp-";
+my $idpConfKeyPrefix = $opts{idpconfprefix} || "idp-";
 
 # Set here attributes that are declared for your SP in the federation
 # They will be set as exported attributes for all IDP
