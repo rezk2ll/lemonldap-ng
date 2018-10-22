@@ -460,8 +460,7 @@ sub retrieveSession {
     unless ( $session->error ) {
 
         $class->data( $session->data );
-
-        $class->logger->debug("Get session $id");
+        $class->logger->debug("Get session $id from Handler::Main::Run");
 
         # Update the session to notify activity, if necessary
         if (

@@ -322,7 +322,6 @@ sub autoRedirect {
 sub getApacheSession {
     my ( $self, $id, %args ) = @_;
     $args{kind} ||= "SSO";
-
     if ($id) {
         $self->logger->debug("Try to get $args{kind} session $id");
     }
@@ -359,17 +358,17 @@ sub getApacheSession {
         $self->logger->debug("Session $args{kind} $id not found");
         return;
     }
-
+    $self->logger->debug("Get session $id from Portal::Main::Run") if ( $id );
+    $self->logger->debug( "Check session timeoutActivity" );
     my $now = time;
     if (
             $id
         and defined $as->data->{_utime}
         and (
-            $now - $as->data->{_utime} > $self->conf->{timeout}
+            ( ( $now - $as->data->{_utime} ) > $self->conf->{timeout} )
             or (    $self->conf->{timeoutActivity}
                 and $as->data->{_lastSeen}
-                and $now - $as->data->{_lastSeen} >
-                $self->conf->{timeoutActivity} )
+                and ( ( $now - $as->data->{_lastSeen} ) > $self->conf->{timeoutActivity} ) )
         )
       )
     {
