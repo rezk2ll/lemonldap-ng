@@ -491,7 +491,7 @@ sub retrieveSession {
             $now - $session->data->{_utime} > $class->tsv->{timeout}
             or (    $class->tsv->{timeoutActivity}
                 and $session->data->{_lastSeen}
-                and ( ( $now - $session->data->{_lastSeen} ) > $class->tsv->{timeoutActivity} )
+                and ( ( $now - $session->data->{_lastSeen} ) > $class->tsv->{timeoutActivity} ) )
           )
         {
             $class->logger->info("Session $id expired");
