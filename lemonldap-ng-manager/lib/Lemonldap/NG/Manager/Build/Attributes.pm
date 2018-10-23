@@ -616,7 +616,7 @@ sub attributes {
         cspFormAction => {
             type          => 'text',
             default       => "*",
-            documentation => 'Form action for Content-Security-Policy',
+            documentation => 'Form action destination for Content-Security-Policy',
         },
         cspImg => {
             type          => 'text',
