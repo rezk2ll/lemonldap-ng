@@ -478,7 +478,7 @@ sub retrieveSession {
         $class->logger->debug( "now -> " . $now );
         $class->logger->debug( "_lastSeen -> " . $session->data->{_lastSeen} )
             if ( $session->data->{_lastSeen} );
-        my $delta = $now - $session->data->{_lastSeen};
+        my $delta = $now - $session->data->{_lastSeen} if ( $session->data->{_lastSeen} );
         $class->logger->debug( "now - _lastSeen = " . $delta )
             if ( $session->data->{_lastSeen} );
         $class->logger->debug( "Session timeoutActivityInterval -> "
