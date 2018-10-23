@@ -257,7 +257,7 @@ sub getApacheSession {
         $self->error( $apacheSession->error );
         return undef;
     }
-    $self->logger->debug("Get session $id from Common::Session::REST");
+    $self->logger->debug("Get session $id from Common::Session::REST") if ( $id );
     return $apacheSession;
 }
 
