@@ -17,11 +17,11 @@ use strict;
 use URI::Escape;
 
 # List constants
-sub authProcess { qw(extractFormInfo getUser authenticate) }
+sub authProcess {qw(extractFormInfo getUser authenticate)}
 
 sub sessionData {
     qw(setAuthSessionInfo setSessionInfo setMacros setGroups setPersistentSessionInfo
-      setLocalGroups store secondFactor);
+        setLocalGroups store secondFactor);
 }
 
 sub validSession {
@@ -56,11 +56,9 @@ sub handler {
     if ( $sp or %{ $req->pdata } ) {
         my %v = (
             name => $self->conf->{cookieName} . 'pdata',
-            (
-                %{ $req->pdata }
+            (   %{ $req->pdata }
                 ? ( value => uri_escape( JSON::to_json( $req->pdata ) ) )
-                : (
-                    value   => '',
+                : ( value   => '',
                     expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
                 )
             )
@@ -94,8 +92,7 @@ sub login {
     my ( $self, $req ) = @_;
     return $self->do(
         $req,
-        [
-            'controlUrl',        @{ $self->beforeAuth },
+        [   'controlUrl',        @{ $self->beforeAuth },
             $self->authProcess,  @{ $self->betweenAuthAndData },
             $self->sessionData,  @{ $self->afterData },
             $self->validSession, @{ $self->endAuth },
@@ -107,8 +104,7 @@ sub postLogin {
     my ( $self, $req ) = @_;
     return $self->do(
         $req,
-        [
-            'restoreArgs',                  'controlUrl',
+        [   'restoreArgs',                  'controlUrl',
             @{ $self->beforeAuth },         $self->authProcess,
             @{ $self->betweenAuthAndData }, $self->sessionData,
             @{ $self->afterData },          $self->validSession,
@@ -121,8 +117,7 @@ sub authenticatedRequest {
     my ( $self, $req ) = @_;
     return $self->do(
         $req,
-        [
-            'importHandlerData', 'controlUrl',
+        [   'importHandlerData', 'controlUrl',
             'checkLogout',       @{ $self->forAuthUser }
         ]
     );
@@ -132,8 +127,7 @@ sub postAuthenticatedRequest {
     my ( $self, $req ) = @_;
     return $self->do(
         $req,
-        [
-            'importHandlerData', 'restoreArgs',
+        [   'importHandlerData', 'restoreArgs',
             'controlUrl',        'checkLogout',
             @{ $self->forAuthUser }
         ]
@@ -151,8 +145,7 @@ sub refresh {
         delete $data{$_} unless ( /^_/ or /^(?:startTime)$/ );
     }
     $req->steps(
-        [
-            'getUser',
+        [   'getUser',
             @{ $self->betweenAuthAndData },
             'setAuthSessionInfo',
             'setSessionInfo',
@@ -170,21 +163,21 @@ sub refresh {
     if ($res) {
         $req->info(
             $self->loadTemplate(
-                'simpleInfo', params => { trspan => 'rightsReloadNeedsLogout' }
+                'simpleInfo',
+                params => { trspan => 'rightsReloadNeedsLogout' }
             )
         );
         $req->urldc( $self->conf->{portal} );
-        return $self->do( $req, [ sub { PE_INFO } ] );
+        return $self->do( $req, [ sub {PE_INFO} ] );
     }
-    return $self->do( $req, [ sub { PE_OK } ] );
+    return $self->do( $req, [ sub {PE_OK} ] );
 }
 
 sub logout {
     my ( $self, $req ) = @_;
     return $self->do(
         $req,
-        [
-            'controlUrl', @{ $self->beforeLogout },
+        [   'controlUrl', @{ $self->beforeLogout },
             'authLogout', 'deleteSession'
         ]
     );
@@ -201,9 +194,9 @@ sub do {
 
     # Update status
     if ( my $p = $self->HANDLER->tsv->{statusPipe} ) {
-        $p->print( ( $req->user ? $req->user : $req->address ) . ' => '
-              . $req->uri
-              . " $err\n" );
+        $p->print(( $req->user ? $req->user : $req->address ) . ' => '
+                . $req->uri
+                . " $err\n" );
     }
 
     # Update history
@@ -215,9 +208,7 @@ sub do {
         if ( ( $err > 0 and !$req->id ) or $err eq PE_SESSIONNOTGRANTED ) {
             return [
                 401,
-                [
-                    'WWW-Authenticate' => "SSO " . $self->conf->{portal}
-                ],
+                [ 'WWW-Authenticate' => "SSO " . $self->conf->{portal} ],
                 [qq'{"result":0,"error":$err}']
             ];
         }
@@ -231,16 +222,14 @@ sub do {
         else {
             return $self->sendJSONresponse(
                 $req,
-                {
-                    result => 1,
+                {   result => 1,
                     code   => $err
                 }
             );
         }
     }
     else {
-        if (
-                $err
+        if (    $err
             and $err != PE_LOGOUT_OK
             and (
                 $err != PE_REDIRECT
@@ -249,7 +238,7 @@ sub do {
                     and $req->data->{redirectFormMethod} eq 'post' )
                 or $req->info
             )
-          )
+            )
         {
             my ( $tpl, $prms ) = $self->display($req);
             $self->logger->debug("Calling sendHtml with template $tpl");
@@ -267,21 +256,20 @@ sub do {
 
 sub getModule {
     my ( $self, $req, $type ) = @_;
-    if (
-        my $mod = {
+    if (my $mod = {
             auth     => '_authentication',
             user     => '_userDB',
             password => '_passwordDB'
         }->{$type}
-      )
+        )
     {
         if ( my $sub = $self->$mod->can('name') ) {
             return $sub->( $self->$mod, $req, $type );
         }
         else {
             my $s = ref( $self->$mod );
-            $s =~
-s/^Lemonldap::NG::Portal::(?:(?:Issuer|UserDB|Auth|Password)::)?//;
+            $s
+                =~ s/^Lemonldap::NG::Portal::(?:(?:Issuer|UserDB|Auth|Password)::)?//;
             return $s;
         }
     }
@@ -298,7 +286,7 @@ sub autoRedirect {
 
     # Set redirection URL if needed
     $req->{urldc} ||= $self->conf->{portal}
-      if ( $req->mustRedirect and not( $req->info ) );
+        if ( $req->mustRedirect and not( $req->info ) );
 
     # Redirection should be made if urldc defined
     if ( $req->{urldc} ) {
@@ -308,8 +296,9 @@ sub autoRedirect {
             $req->data->{redirectFormMethod} = "get";
         }
         else {
-            return [ 302,
-                [ Location => $req->{urldc}, @{ $req->respHeaders } ], [] ];
+            return [
+                302, [ Location => $req->{urldc}, @{ $req->respHeaders } ], []
+            ];
         }
     }
     my ( $tpl, $prms ) = $self->display($req);
@@ -330,8 +319,7 @@ sub getApacheSession {
     }
 
     my $as = Lemonldap::NG::Common::Session->new(
-        {
-            storageModule        => $self->conf->{globalStorage},
+        {   storageModule        => $self->conf->{globalStorage},
             storageModuleOptions => $self->conf->{globalStorageOptions},
             cacheModule          => $self->conf->{localSessionStorage},
             cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
@@ -345,8 +333,7 @@ sub getApacheSession {
     if ( my $err = $as->error ) {
         $self->lmLog(
             $err,
-            (
-                $err =~ /(?:Object does not exist|Invalid session ID)/
+            (   $err =~ /(?:Object does not exist|Invalid session ID)/
                 ? 'notice'
                 : 'error'
             )
@@ -358,19 +345,22 @@ sub getApacheSession {
         $self->logger->debug("Session $args{kind} $id not found");
         return;
     }
-    $self->logger->debug("Get session $id from Portal::Main::Run") if ( $id );
-    $self->logger->debug("Check session timeoutActivity -> " . $self->conf->{timeoutActivity} . "s");
+    $self->logger->debug("Get session $id from Portal::Main::Run") if ($id);
+    $self->logger->debug(
+        "Check session validity  -> " . $self->conf->{timeoutActivity} . "s" )
+        if ( $self->conf->{timeoutActivity} );
     my $now = time;
-    if (
-            $id
+    if (    $id
         and defined $as->data->{_utime}
         and (
             ( ( $now - $as->data->{_utime} ) > $self->conf->{timeout} )
             or (    $self->conf->{timeoutActivity}
                 and $as->data->{_lastSeen}
-                and ( ( $now - $as->data->{_lastSeen} ) > $self->conf->{timeoutActivity} ) )
+                and ( ( $now - $as->data->{_lastSeen} )
+                    > $self->conf->{timeoutActivity} )
+            )
         )
-      )
+        )
     {
         $self->logger->debug("Session $args{kind} $id expired");
         return;
@@ -393,8 +383,7 @@ sub getPersistentSession {
     $info->{_session_uid} = $uid;
 
     my $ps = Lemonldap::NG::Common::Session->new(
-        {
-            storageModule        => $self->conf->{persistentStorage},
+        {   storageModule        => $self->conf->{persistentStorage},
             storageModuleOptions => $self->conf->{persistentStorageOptions},
             id                   => $pid,
             force                => 1,
@@ -435,10 +424,11 @@ sub updatePersistentSession {
     # Return if no infos to update
     return () unless ( ref $infos eq 'HASH' and %$infos );
     $uid ||= $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
-      || $req->userData->{ $self->conf->{whatToTrace} };
+        || $req->userData->{ $self->conf->{whatToTrace} };
     $self->logger->debug("Found 'whatToTrace' -> $uid");
     unless ($uid) {
-        $self->logger->debug('No uid found, skipping updatePersistentSession');
+        $self->logger->debug(
+            'No uid found, skipping updatePersistentSession');
         return ();
     }
     $self->logger->debug("Update $uid persistent session");
@@ -480,14 +470,14 @@ sub updateSession {
         foreach ( keys %$infos ) {
             $self->logger->debug(
                 "Update sessionInfo $_ with " . $infos->{$_} );
-            $req->{sessionInfo}->{$_} = $self->HANDLER->data->{$_} =
-              $infos->{$_};
+            $req->{sessionInfo}->{$_} = $self->HANDLER->data->{$_}
+                = $infos->{$_};
         }
 
         # Update session in global storage with _updateTime
         $infos->{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
-        if ( my $apacheSession =
-            $self->getApacheSession( $id, info => $infos ) )
+        if ( my $apacheSession
+            = $self->getApacheSession( $id, info => $infos ) )
         {
             if ( $apacheSession->error ) {
                 $self->logger->error("Cannot update session $id");
@@ -570,10 +560,10 @@ sub isTrustedUrl {
 
 sub stamp {
     my $self = shift;
-    my $res =
-        $self->conf->{cipher}
-      ? $self->conf->{cipher}->encrypt( time() )
-      : 1;
+    my $res
+        = $self->conf->{cipher}
+        ? $self->conf->{cipher}->encrypt( time() )
+        : 1;
     $res =~ s/\+/%2B/g;
     return $res;
 }
@@ -705,7 +695,7 @@ sub cookie {
     $h{path} ||= '/';
     $h{HttpOnly} //= $self->conf->{httpOnly};
     $h{max_age}  //= $self->conf->{cookieExpiration}
-      if ( $self->conf->{cookieExpiration} );
+        if ( $self->conf->{cookieExpiration} );
     foreach (qw(domain path expires max_age HttpOnly)) {
         my $f = $_;
         $f =~ s/_/-/g;
@@ -728,11 +718,12 @@ sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
-      'X-XSS-Protection'       => '1; mode=block',
-      'X-Content-Type-Options' => 'nosniff';
+        'X-XSS-Protection'       => '1; mode=block',
+        'X-Content-Type-Options' => 'nosniff';
 
     # Set authorized URL for POST
-    my $csp = $self->csp . "form-action 'self' " . $self->conf->{cspFormAction};
+    my $csp
+        = $self->csp . "form-action 'self' " . $self->conf->{cspFormAction};
     if ( my $url = $req->urldc ) {
         $self->logger->debug("Required urldc : $url");
         $url =~ s#(https?://[^/]+).*#$1#;
@@ -743,13 +734,14 @@ sub sendHtml {
     if ( defined $url ) {
         $self->logger->debug("Required Params URL : $url");
         if ( $url =~ s#(https?://[^/]+).*#$1# ) {
-            $self->logger->debug("Set CSP form-action with Params URL : $url");
+            $self->logger->debug(
+                "Set CSP form-action with Params URL : $url");
             $csp .= " $url";
         }
     }
     if ( defined $req->{cspFormAction} ) {
-        $self->logger->debug(
-            "Set CSP form-action with request URL: " . $req->{cspFormAction} );
+        $self->logger->debug( "Set CSP form-action with request URL: "
+                . $req->{cspFormAction} );
         $csp .= " " . $req->{cspFormAction};
     }
 
@@ -775,7 +767,7 @@ sub sendHtml {
     my @url;
     if ( $req->info ) {
         @url = map { s#https?://([^/]+).*#$1#; $_ }
-          ( $req->info =~ /<iframe.*?src="(.*?)"/sg );
+            ( $req->info =~ /<iframe.*?src="(.*?)"/sg );
     }
     if (@url) {
         $csp .= join( ' ', 'child-src', @url ) . ';';
@@ -789,17 +781,16 @@ sub sendHtml {
 
 sub sendCss {
     my ( $self, $req ) = @_;
-    my $s =
-        'html,body{background:url("'
-      . $self->staticPrefix
-      . '/common/backgrounds/'
-      . $self->conf->{portalSkinBackground}
-      . '") no-repeat center fixed;'
-      . 'background-size:cover;}';
+    my $s
+        = 'html,body{background:url("'
+        . $self->staticPrefix
+        . '/common/backgrounds/'
+        . $self->conf->{portalSkinBackground}
+        . '") no-repeat center fixed;'
+        . 'background-size:cover;}';
     return [
         200,
-        [
-            'Content-Type'   => 'text/css',
+        [   'Content-Type'   => 'text/css',
             'Content-Length' => length($s),
             'Cache-Control'  => 'public,max-age=3600',
         ],
@@ -821,16 +812,16 @@ sub lmError {
 
     # Error code
     $templateParams{"ERROR$_"} = ( $httpError == $_ ? 1 : 0 )
-      foreach ( 403, 404, 500, 502, 503 );
+        foreach ( 403, 404, 500, 502, 503 );
     return $self->sendHtml( $req, 'error', params => \%templateParams );
 }
 
 sub rebuildCookies {
     my ( $self, $req ) = @_;
     my @tmp;
-    for ( my $i = 0 ; $i < @{ $req->{respHeaders} } ; $i += 2 ) {
+    for ( my $i = 0; $i < @{ $req->{respHeaders} }; $i += 2 ) {
         push @tmp, $req->respHeaders->[0], $req->respHeaders->[1]
-          unless ( $req->respHeaders->[0] eq 'Set-Cookie' );
+            unless ( $req->respHeaders->[0] eq 'Set-Cookie' );
     }
     $req->{respHeaders} = \@tmp;
     $self->buildCookie($req);
@@ -853,7 +844,7 @@ sub tplParams {
 sub registerLogin {
     my ( $self, $req ) = @_;
     return
-      unless ( $self->conf->{loginHistoryEnabled}
+        unless ( $self->conf->{loginHistoryEnabled}
         and defined $req->authResult );
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
     my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
@@ -863,17 +854,18 @@ sub registerLogin {
     # Gather current login's parameters
     my $login = $self->_sumUpSession( $req->{sessionInfo}, 1 );
     $login->{error} = $self->error( $req->authResult )
-      if ( $req->authResult );
+        if ( $req->authResult );
 
     $self->logger->debug( " Current login -> " . $login->{error} )
-      if ( $login->{error} );
+        if ( $login->{error} );
 
     # Add current login into history
     unshift @{ $history->{$type} }, $login;
 
     # Forget oldest logins
     splice @{ $history->{$type} }, $self->conf->{ $type . "Number" }
-      if ( scalar @{ $history->{$type} } > $self->conf->{ $type . "Number" } );
+        if (
+        scalar @{ $history->{$type} } > $self->conf->{ $type . "Number" } );
 
     # Save into persistent session
     $self->updatePersistentSession( $req, { _loginHistory => $history, } );
@@ -884,12 +876,12 @@ sub registerLogin {
 # @return hashref
 sub _sumUpSession {
     my ( $self, $session, $withoutUser ) = @_;
-    my $res =
-      $withoutUser
-      ? {}
-      : { user => $session->{ $self->conf->{whatToTrace} } };
+    my $res
+        = $withoutUser
+        ? {}
+        : { user => $session->{ $self->conf->{whatToTrace} } };
     $res->{$_} = $session->{$_}
-      foreach ( "_utime", "ipAddr",
+        foreach ( "_utime", "ipAddr",
         keys %{ $self->conf->{sessionDataToRemember} } );
     return $res;
 }
@@ -898,12 +890,12 @@ sub _sumUpSession {
 sub loadTemplate {
     my ( $self, $name, %prm ) = @_;
     $name .= '.tpl';
-    my $file =
-        $self->conf->{templateDir} . '/'
-      . $self->conf->{portalSkin} . '/'
-      . $name;
+    my $file
+        = $self->conf->{templateDir} . '/'
+        . $self->conf->{portalSkin} . '/'
+        . $name;
     $file = $self->conf->{templateDir} . '/common/' . $name
-      unless ( -e $file );
+        unless ( -e $file );
     unless ( -e $file ) {
         die "Unable to find $name in $self->conf->{templateDir}";
     }

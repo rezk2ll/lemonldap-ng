@@ -44,20 +44,20 @@ sub getStatus {
     if ( $ENV{LLNGSTATUSHOST} ) {
         require IO::Socket::INET;
         foreach ( 64322 .. 64331 ) {
-            if ( $statusOut =
-                IO::Socket::INET->new( Proto => 'udp', LocalPort => $_ ) )
+            if ( $statusOut
+                = IO::Socket::INET->new( Proto => 'udp', LocalPort => $_ ) )
             {
-                $args =
-                  ' host=' . ( $ENV{LLNGSTATUSCLIENT} || 'localhost' ) . ":$_";
+                $args = ' host='
+                    . ( $ENV{LLNGSTATUSCLIENT} || 'localhost' ) . ":$_";
                 last;
             }
         }
         return $class->abort( $req,
-            "$class: status page can not be displayed, unable to open socket" )
-          unless ($statusOut);
+            "$class: status page can not be displayed, unable to open socket"
+        ) unless ($statusOut);
     }
     return $class->abort( $req, "$class: status page can not be displayed" )
-      unless ( $statusPipe and $statusOut );
+        unless ( $statusPipe and $statusOut );
     my $q = $req->{env}->{QUERY_STRING} || '';
     if ( $q =~ /\s/ ) {
         $class->logger->error("Bad characters in query");
@@ -84,12 +84,12 @@ sub checkType {
 
     if ( time() - $class->lastCheck > $class->checkTime ) {
         die("$class: No configuration found")
-          unless ( $class->checkConf );
+            unless ( $class->checkConf );
     }
     my $vhost = $class->resolveAlias($req);
     return ( defined $class->tsv->{type}->{$vhost} )
-      ? $class->tsv->{type}->{$vhost}
-      : 'Main';
+        ? $class->tsv->{type}->{$vhost}
+        : 'Main';
 }
 
 ## @rmethod int run
@@ -125,7 +125,7 @@ sub run {
     my ($cond);
     ( $cond, $protection ) = $class->conditionSub($rule) if ($rule);
     $protection = $class->isUnprotected( $req, $uri ) || 0
-      unless ( defined $protection );
+        unless ( defined $protection );
 
     if ( $protection == $class->SKIP ) {
         $class->logger->debug("Access control skipped");
@@ -150,7 +150,7 @@ sub run {
 
         # AUTHORIZATION
         return ( $class->forbidden( $req, $session ), $session )
-          unless ( $class->grant( $req, $session, $uri, $cond ) );
+            unless ( $class->grant( $req, $session, $uri, $cond ) );
         $class->updateStatus( $req, 'OK',
             $session->{ $class->tsv->{whatToTrace} } );
 
@@ -168,8 +168,8 @@ sub run {
 
         # Log access granted
         $class->logger->debug( "User "
-              . $session->{ $class->tsv->{whatToTrace} }
-              . " was granted to access to $uri" );
+                . $session->{ $class->tsv->{whatToTrace} }
+                . " was granted to access to $uri" );
 
         #  Catch POST rules
         $class->postOutputFilter( $req, $session, $uri );
@@ -192,7 +192,7 @@ sub run {
 
         # Redirect user to the portal
         $class->logger->info("No cookie found")
-          unless ($id);
+            unless ($id);
 
         # if the cookie was fetched, a log is sent by retrieveSession()
         $class->updateStatus( $req, $id ? 'EXPIRED' : 'REDIRECT' );
@@ -243,10 +243,10 @@ sub lmLog {
 sub checkMaintenanceMode {
     my ( $class, $req ) = @_;
     my $vhost = $class->resolveAlias($req);
-    my $_maintenance =
-      ( defined $class->tsv->{maintenance}->{$vhost} )
-      ? $class->tsv->{maintenance}->{$vhost}
-      : $class->tsv->{maintenance}->{_};
+    my $_maintenance
+        = ( defined $class->tsv->{maintenance}->{$vhost} )
+        ? $class->tsv->{maintenance}->{$vhost}
+        : $class->tsv->{maintenance}->{_};
 
     if ($_maintenance) {
         $class->logger->debug("Maintenance mode enabled");
@@ -272,17 +272,17 @@ sub grant {
         }
     }
     for (
-        my $i = 0 ;
-        $i < ( $class->tsv->{locationCount}->{$vhost} || 0 ) ;
+        my $i = 0;
+        $i < ( $class->tsv->{locationCount}->{$vhost} || 0 );
         $i++
-      )
+        )
     {
         if ( $uri =~ $class->tsv->{locationRegexp}->{$vhost}->[$i] ) {
             $class->logger->debug( 'Regexp "'
-                  . $class->tsv->{locationConditionText}->{$vhost}->[$i]
-                  . '" match' );
+                    . $class->tsv->{locationConditionText}->{$vhost}->[$i]
+                    . '" match' );
             return $class->tsv->{locationCondition}->{$vhost}->[$i]
-              ->( $req, $session );
+                ->( $req, $session );
         }
     }
     unless ( $class->tsv->{defaultCondition}->{$vhost} ) {
@@ -319,8 +319,8 @@ sub forbidden {
 
     # Log forbidding
     $class->userLogger->notice( "User "
-          . $session->{ $class->tsv->{whatToTrace} }
-          . " was forbidden to access to $vhost$uri" );
+            . $session->{ $class->tsv->{whatToTrace} }
+            . " was forbidden to access to $vhost$uri" );
     $class->updateStatus( $req, 'REJECT',
         $session->{ $class->tsv->{whatToTrace} } );
 
@@ -373,9 +373,9 @@ sub goToPortal {
     $class->logger->debug(
         "Redirect $req->{env}->{REMOTE_ADDR} to portal (url was $url)");
     $class->set_header_out( $req,
-            'Location' => $class->tsv->{portal}->()
-          . "$path?url=$urlc_init"
-          . ( $arg ? "&$arg" : "" ) );
+              'Location' => $class->tsv->{portal}->()
+            . "$path?url=$urlc_init"
+            . ( $arg ? "&$arg" : "" ) );
     return $class->REDIRECT;
 }
 
@@ -385,9 +385,9 @@ sub goToError {
     $class->logger->debug(
         "Redirect $req->{env}->{REMOTE_ADDR} to lmError (url was $url)");
     $class->set_header_out( $req,
-            'Location' => $class->tsv->{portal}->()
-          . "/lmerror/$code"
-          . "?url=$urlc_init" );
+              'Location' => $class->tsv->{portal}->()
+            . "/lmerror/$code"
+            . "?url=$urlc_init" );
     return $class->REDIRECT;
 }
 
@@ -400,15 +400,15 @@ sub fetchId {
     my $vhost             = $class->resolveAlias($req);
     my $lookForHttpCookie = (
         $class->tsv->{securedCookie} =~ /^(2|3)$/
-          and !( defined( $class->tsv->{https}->{$vhost} ) )
+            and !( defined( $class->tsv->{https}->{$vhost} ) )
         ? $class->tsv->{https}->{$vhost}
         : $class->tsv->{https}->{_}
     );
     my $cn = $class->tsv->{cookieName};
-    my $value =
-      $lookForHttpCookie
-      ? ( $t =~ /${cn}http=([^,; ]+)/o ? $1 : 0 )
-      : ( $t =~ /$cn=([^,; ]+)/o ? $1 : 0 );
+    my $value
+        = $lookForHttpCookie
+        ? ( $t =~ /${cn}http=([^,; ]+)/o ? $1 : 0 )
+        : ( $t =~ /$cn=([^,; ]+)/o ? $1 : 0 );
 
     if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
         $value = $class->tsv->{cipher}->decryptHex( $value, "http" );
@@ -446,8 +446,7 @@ sub retrieveSession {
     # 2. Get the session from cache or backend
     my $session = $req->data->{session} = (
         Lemonldap::NG::Common::Session->new(
-            {
-                storageModule        => $class->tsv->{sessionStorageModule},
+            {   storageModule        => $class->tsv->{sessionStorageModule},
                 storageModuleOptions => $class->tsv->{sessionStorageOptions},
                 cacheModule          => $class->tsv->{sessionCacheModule},
                 cacheModuleOptions   => $class->tsv->{sessionCacheOptions},
@@ -462,12 +461,50 @@ sub retrieveSession {
         $class->data( $session->data );
         $class->logger->debug("Get session $id from Handler::Main::Run");
 
+        # Verify that session is valid
+        $class->logger->error(
+            "_utime is not defined. This should not happen. Check if it is well transmitted to handler"
+        ) unless $session->data->{_utime};
+
+        $class->logger->debug("Check session validity from Handler");
+        $class->logger->debug(
+            "Session timeout -> " . $class->tsv->{timeout} );
+        $class->logger->debug( "Session timeoutActivity -> "
+                . $class->tsv->{timeoutActivity}
+                . "s" )
+            if ( $class->tsv->{timeoutActivity} );
+        $class->logger->debug(
+            "Session _utime -> " . $session->data->{_utime} );
+        $class->logger->debug( "now -> " . $now );
+        $class->logger->debug( "_lastSeen -> " . $session->data->{_lastSeen} )
+            if ( $session->data->{_lastSeen} );
+        my $delta = $now - $session->data->{_lastSeen};
+        $class->logger->debug( "now - _lastSeen = " . $delta )
+            if ( $session->data->{_lastSeen} );
+        $class->logger->debug( "Session timeoutActivityInterval -> "
+                . $class->tsv->{timeoutActivityInterval} )
+            if ( $class->tsv->{timeoutActivityInterval} );
+        my $ttl = $class->tsv->{timeout} - $now + $session->data->{_utime};
+        $class->logger->debug( "Session TTL = " . $ttl );
+
+        if ($now - $session->data->{_utime} > $class->tsv->{timeout}
+            or (    $class->tsv->{timeoutActivity}
+                and $session->data->{_lastSeen}
+                and $delta > $class->tsv->{timeoutActivity} )
+            )
+        {
+            $class->logger->info("Session $id expired");
+
+            # Clean cached data
+            $class->data( {} );
+            return 0;
+        }
+
         # Update the session to notify activity, if necessary
-        if (
-            $class->tsv->{timeoutActivity}
-            and ( $now - $session->data->{_lastSeen} >
-                $class->tsv->{timeoutActivityInterval} )
-          )
+        if ($class->tsv->{timeoutActivity}
+            and ( $now - $session->data->{_lastSeen}
+                > $class->tsv->{timeoutActivityInterval} )
+            )
         {
             $req->data->{session}->update( { '_lastSeen' => $now } );
             $class->data( $session->data );
@@ -479,26 +516,6 @@ sub retrieveSession {
             else {
                 $class->logger->debug("Update _lastSeen with $now");
             }
-        }
-
-        # Verify that session is valid
-        $class->logger->error(
-"_utime is not defined. This should not happen. Check if it is well transmitted to handler"
-        ) unless $session->data->{_utime};
-
-        $class->logger->debug( "Check session timeoutActivity from Handler -> " . $class->tsv->{timeoutActivity} ."s" );
-        if (
-            $now - $session->data->{_utime} > $class->tsv->{timeout}
-            or (    $class->tsv->{timeoutActivity}
-                and $session->data->{_lastSeen}
-                and ( ( $now - $session->data->{_lastSeen} ) > $class->tsv->{timeoutActivity} ) )
-          )
-        {
-            $class->logger->info("Session $id expired");
-
-            # Clean cached data
-            $class->data( {} );
-            return 0;
         }
 
         $class->dataUpdate($now);
@@ -525,14 +542,14 @@ sub _buildUrl {
         ? $class->tsv->{https}->{$vhost}
         : $class->tsv->{https}->{_}
     );
-    my $portString =
-         $class->tsv->{port}->{$vhost}
-      || $class->tsv->{port}->{_}
-      || $req->{env}->{SERVER_PORT};
+    my $portString
+        = $class->tsv->{port}->{$vhost}
+        || $class->tsv->{port}->{_}
+        || $req->{env}->{SERVER_PORT};
     $portString = (
-             ( $realvhost =~ /:\d+/ )
-          or ( $_https  && $portString == 443 )
-          or ( !$_https && $portString == 80 )
+               ( $realvhost =~ /:\d+/ )
+            or ( $_https  && $portString == 443 )
+            or ( !$_https && $portString == 80 )
     ) ? '' : ":$portString";
     my $url = "http" . ( $_https ? "s" : "" ) . "://$realvhost$portString$s";
     $class->logger->debug("Build URL $url");
@@ -548,10 +565,10 @@ sub isUnprotected {
     my ( $class, $req, $uri ) = @_;
     my $vhost = $class->resolveAlias($req);
     for (
-        my $i = 0 ;
-        $i < ( $class->tsv->{locationCount}->{$vhost} || 0 ) ;
+        my $i = 0;
+        $i < ( $class->tsv->{locationCount}->{$vhost} || 0 );
         $i++
-      )
+        )
     {
         if ( $uri =~ $class->tsv->{locationRegexp}->{$vhost}->[$i] ) {
             return $class->tsv->{locationProtection}->{$vhost}->[$i];
@@ -568,7 +585,8 @@ sub sendHeaders {
     if ( defined $class->tsv->{forgeHeaders}->{$vhost} ) {
 
         # Log headers in debug mode
-        my %headers = $class->tsv->{forgeHeaders}->{$vhost}->( $req, $session );
+        my %headers
+            = $class->tsv->{forgeHeaders}->{$vhost}->( $req, $session );
         foreach my $h ( sort keys %headers ) {
             if ( defined( my $v = $headers{$h} ) ) {
                 $class->logger->debug("Send header $h with value $v");
@@ -600,7 +618,7 @@ sub resolveAlias {
 
     $vhost =~ s/:\d+//;
     return $class->tsv->{vhostAlias}->{$vhost}
-      if ( $class->tsv->{vhostAlias}->{$vhost} );
+        if ( $class->tsv->{vhostAlias}->{$vhost} );
     return $vhost if ( $class->tsv->{defaultCondition}->{$vhost} );
     my $v = $vhost;
     while ( $v =~ s/[\w\-]+/\*/ ) {
@@ -673,8 +691,8 @@ sub postOutputFilter {
         $class->logger->debug("Filling a html form with fake data");
 
         $class->unset_header_in( $req, "Accept-Encoding" );
-        my %postdata =
-          $class->tsv->{outputPostData}->{$vhost}->{$uri}->( $req, $session );
+        my %postdata = $class->tsv->{outputPostData}->{$vhost}->{$uri}
+            ->( $req, $session );
         my $formParams = $class->tsv->{postFormParams}->{$vhost}->{$uri};
         my $js = $class->postJavascript( $req, \%postdata, $formParams );
         $class->addToHtmlHead( $req, $js );
@@ -691,8 +709,8 @@ sub postInputFilter {
     if ( defined( $class->tsv->{inputPostData}->{$vhost}->{$uri} ) ) {
         $class->logger->debug("Replacing fake data with real form data");
 
-        my %data =
-          $class->tsv->{inputPostData}->{$vhost}->{$uri}->( $req, $session );
+        my %data = $class->tsv->{inputPostData}->{$vhost}->{$uri}
+            ->( $req, $session );
         foreach ( keys %data ) {
             $data{$_} = uri_escape( $data{$_} );
         }
@@ -712,32 +730,33 @@ sub postJavascript {
     foreach my $name ( keys %$data ) {
         use bytes;
         my $value = "x" x bytes::length( $data->{$name} );
-        $filler .=
-"form.find('input[name=\"$name\"], select[name=\"$name\"], textarea[name=\"$name\"]').val('$value')\n";
+        $filler
+            .= "form.find('input[name=\"$name\"], select[name=\"$name\"], textarea[name=\"$name\"]').val('$value')\n";
     }
 
-    my $submitter =
-        $formParams->{buttonSelector} eq "none" ? ""
-      : $formParams->{buttonSelector}
-      ? "form.find('$formParams->{buttonSelector}').click();\n"
-      : "form.submit();\n";
+    my $submitter
+        = $formParams->{buttonSelector} eq "none" ? ""
+        : $formParams->{buttonSelector}
+        ? "form.find('$formParams->{buttonSelector}').click();\n"
+        : "form.submit();\n";
 
     my $jqueryUrl = $formParams->{jqueryUrl} || "";
-    $jqueryUrl = &{ $class->tsv->{portal} } . "skins/common/js/jquery-1.10.2.js"
-      if ( $jqueryUrl eq "default" );
+    $jqueryUrl
+        = &{ $class->tsv->{portal} } . "skins/common/js/jquery-1.10.2.js"
+        if ( $jqueryUrl eq "default" );
     $jqueryUrl = "<script type='text/javascript' src='$jqueryUrl'></script>\n"
-      if ($jqueryUrl);
+        if ($jqueryUrl);
 
     return
-        $jqueryUrl
-      . "<script type='text/javascript'>\n"
-      . "/* script added by Lemonldap::NG */\n"
-      . "jQuery(window).on('load', function() {\n"
-      . "var form = jQuery('$form');\n"
-      . "form.attr('autocomplete', 'off');\n"
-      . $filler
-      . $submitter . "})\n"
-      . "</script>\n";
+          $jqueryUrl
+        . "<script type='text/javascript'>\n"
+        . "/* script added by Lemonldap::NG */\n"
+        . "jQuery(window).on('load', function() {\n"
+        . "var form = jQuery('$form');\n"
+        . "form.attr('autocomplete', 'off');\n"
+        . $filler
+        . $submitter . "})\n"
+        . "</script>\n";
 }
 
 1;
