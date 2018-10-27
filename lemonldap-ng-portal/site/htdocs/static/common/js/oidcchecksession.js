@@ -22,9 +22,13 @@
     return window.addEventListener("message", function(e) {
       var client_id, message, salt, session_state, ss, stat;
       message = e.data;
+      console.log('messsage=', message);
       client_id = decodeURIComponent(message.split(' ')[0]);
+      console.log('client_id=', client_id);
       session_state = decodeURIComponent(message.split(' ')[1]);
+      console.log('session_state=', session_state);
       salt = decodeURIComponent(session_state.split('.')[1]);
+      console.log('salt=', salt);
       ss = hash.toString(CryptoJS.enc.Base64) + '.' + salt;
       if (session_state === ss) {
         stat = 'unchanged';
