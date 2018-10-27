@@ -29,7 +29,7 @@
       console.log('session_state=', session_state);
       salt = decodeURIComponent(session_state.split('.')[1]);
       console.log('salt=', salt);
-      ss = hash.toString(CryptoJS.enc.Base64) + '.' + salt;
+      ss = at_hash.toString(CryptoJS.enc.Base64) + '.' + salt;
       if (session_state === ss) {
         stat = 'unchanged';
       } else {
