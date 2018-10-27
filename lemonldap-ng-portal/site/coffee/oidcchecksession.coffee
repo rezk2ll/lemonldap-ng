@@ -12,9 +12,13 @@ $(document).ready ->
 	# Initialize JS communication channel
 	window.addEventListener "message", (e) ->
 			message = e.data
+			console.log 'message=', message
 			client_id = decodeURIComponent message.split(' ')[0]
+			console.log 'client_id=', client_id
 			session_state = decodeURIComponent message.split(' ')[1]
+			console.log 'session_state=', session_state
 			salt = decodeURIComponent session_state.split('.')[1]
+			console.log 'salt=', salt
 			ss = hash.toString(CryptoJS.enc.Base64) + '.'  + salt
 			if session_state == ss
 				stat = 'unchanged'
