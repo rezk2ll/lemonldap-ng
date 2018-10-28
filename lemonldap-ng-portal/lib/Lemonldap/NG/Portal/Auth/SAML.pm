@@ -198,6 +198,7 @@ sub extractFormInfo {
                     delete $req->{urldc};
                     $req->mustRedirect(1);
                     $req->steps( [] );
+                    $req->continue(1);
                     return PE_OK;
                 }
             }
