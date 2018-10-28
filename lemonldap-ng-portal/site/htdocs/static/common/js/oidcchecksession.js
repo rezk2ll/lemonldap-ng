@@ -11,7 +11,8 @@
         tmp = JSON.parse($(this).text());
         results = [];
         for (k in tmp) {
-          results.push(values[k] = tmp[k]);
+          values[k] = tmp[k];
+          results.push(console.log('values=', values[k]));
         }
         return results;
       } catch (error) {
@@ -29,7 +30,7 @@
       console.log('session_state=', session_state);
       salt = decodeURIComponent(session_state.split('.')[1]);
       console.log('salt=', salt);
-      ss = at_hash.toString(CryptoJS.enc.Base64) + '.' + salt;
+      ss = btoa(client_id + ' ' + e.origin + ' ' + salt) + '.' + salt;
       if (session_state === ss) {
         stat = 'unchanged';
       } else {

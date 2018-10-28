@@ -7,6 +7,7 @@ $(document).ready ->
 			tmp = JSON.parse $(this).text()
 			for k of tmp
 				values[k] = tmp[k]
+				console.log 'values=', values[k]
 		catch e
 			console.log 'Parsing error', e
 	# Initialize JS communication channel
@@ -19,7 +20,9 @@ $(document).ready ->
 			console.log 'session_state=', session_state
 			salt = decodeURIComponent session_state.split('.')[1]
 			console.log 'salt=', salt
-			ss = at_hash.toString(CryptoJS.enc.Base64) + '.'  + salt
+			# hash ??????
+			#ss = hash.toString(CryptoJS.enc.Base64) + '.'  + salt
+			ss = btoa(client_id + ' ' + e.origin + ' ' + salt) + '.'  + salt
 			if session_state == ss
 				stat = 'unchanged'
 			else

@@ -142,12 +142,16 @@ print "<meta http-equiv=\"cache-control\" content=\"no-cache\" />\n";
 print
 "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n";
 print
-"<link href=\"$portal_url/static/bwr/bootstrap/dist/css/bootstrap.css\" rel=\"stylesheet\">\n";
+"<link href=\"$portal_url/static/bwr/bootstrap/dist/css/bootstrap.css\" type=\"text/css\" rel=\"stylesheet\">\n";
 print
-"<link href=\"$portal_url/static/bwr/bootstrap/dist/css/bootstrap-theme.css\" rel=\"stylesheet\">\n";
+"<link href=\"$portal_url/static/bwr/bootstrap/dist/css/bootstrap-theme.css\" type=\"text/css\" rel=\"stylesheet\">\n";
 print "<style>\n";
 print "$css\n";
 print "</style>\n";
+print
+"<script type=\"text/javascript\" src=\"$portal_url/static/bwr/crypto-js/sha256.js\"></script>\n";
+print
+"<script type=\"text/javascript\" src=\"$portal_url/static/bwr/crypto-js/enc-base64.js\"></script>\n";
 print
 "<script type=\"text/javascript\" src=\"$portal_url/static/bwr/jquery/dist/jquery.js\"></script>\n";
 print
