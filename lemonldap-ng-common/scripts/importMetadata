@@ -254,9 +254,10 @@ foreach my $idpConfKey ( keys %{ $lastConf->{samlIDPMetaDataXML} } ) {
                 }
                 else {
                     # Create a new partner
-                    my $confKey =
-                      $idpConfKeyPrefix . encode_base64( $entityID, '' );
-                    $confKey =~ s/=//g;
+                    my $entityIDKey = $entityID;
+                    $entityIDKey =~ s/^https?:\/\///;
+                    $entityIDKey =~ s/[^a-zA-Z0-9]/-/g;
+                    my $confKey = $idpConfKeyPrefix . $entityIDKey;
 
                     # Metadata
                     $lastConf->{samlIDPMetaDataXML}->{$confKey}
@@ -364,9 +365,10 @@ foreach my $idpConfKey ( keys %{ $lastConf->{samlIDPMetaDataXML} } ) {
                 }
                 else {
                     # Create a new partner
-                    my $confKey =
-                      $spConfKeyPrefix . encode_base64( $entityID, '' );
-                    $confKey =~ s/=//g;
+                    my $entityIDKey = $entityID;
+                    $entityIDKey =~ s/^https?:\/\///;
+                    $entityIDKey =~ s/[^a-zA-Z0-9]/-/g;
+                    my $confKey = $spConfKeyPrefix . $entityIDKey;
 
                     # Metadata
                     $lastConf->{samlSPMetaDataXML}->{$confKey}
