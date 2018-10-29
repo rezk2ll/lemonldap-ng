@@ -58,6 +58,7 @@ sub storeEnvAndCheckGateway {
         $self->logger->debug(
             "Gateway mode requested, redirect without authentication");
         $req->response( [ 302, [ Location => $service ], [] ] );
+        $req->pdata( {} );
         return PE_SENDRESPONSE;
     }
 
