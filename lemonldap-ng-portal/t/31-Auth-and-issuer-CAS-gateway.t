@@ -89,7 +89,6 @@ ok(
     'Query CAS server'
 );
 count(1);
-my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 my ($query) = expectRedirection( $res, qr#^http://auth.sp.com/# );
 
 # Back to SP
@@ -99,7 +98,7 @@ ok(
         '/',
         query  => $query,
         accept => 'text/html',
-        cookie => "llngcasserver=idp;$pdata",
+        cookie => "llngcasserver=idp",
     ),
     'Query SP with ticket'
 );
