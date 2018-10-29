@@ -544,7 +544,7 @@ sub _validate2 {
     # Required parameters: service and ticket
     unless ( $service and $ticket ) {
         $self->logger->error("Service and Ticket parameters required");
-        return $self->returnCasServiceValidateError( 'INVALID_REQUEST',
+        return $self->returnCasServiceValidateError( $req, 'INVALID_REQUEST',
             'Missing mandatory parameters (service, ticket)' );
     }
 
@@ -555,13 +555,13 @@ sub _validate2 {
     # Get CAS session corresponding to ticket
     if ( $urlType eq 'SERVICE' and !( $ticket =~ s/^ST-// ) ) {
         $self->logger->error("Provided ticket is not a service ticket (ST)");
-        return $self->returnCasServiceValidateError( 'INVALID_TICKET',
+        return $self->returnCasServiceValidateError( $req, 'INVALID_TICKET',
             'Provided ticket is not a service ticket' );
     }
     elsif ( $urlType eq 'PROXY' and !( $ticket =~ s/^(P|S)T-// ) ) {
         $self->userLogger->error(
             "Provided ticket is not a service or proxy ticket ($1T)");
-        return $self->returnCasServiceValidateError( 'INVALID_TICKET',
+        return $self->returnCasServiceValidateError( $req, 'INVALID_TICKET',
             'Provided ticket is not a service or proxy ticket' );
     }
 
@@ -569,7 +569,7 @@ sub _validate2 {
 
     unless ($casServiceSession) {
         $self->logger->error("$urlType ticket session $ticket not found");
-        return $self->returnCasServiceValidateError( 'INVALID_TICKET',
+        return $self->returnCasServiceValidateError( $req, 'INVALID_TICKET',
             'Ticket not found' );
     }
     my $app = $casServiceSession->data->{_casApp};
@@ -596,7 +596,8 @@ sub _validate2 {
                 "Submitted service $service does not match initial service "
                   . $casServiceSession->data->{service} );
             $self->deleteCasSession($casServiceSession);
-            return $self->returnCasServiceValidateError( 'INVALID_SERVICE',
+            return $self->returnCasServiceValidateError( $req,
+                'INVALID_SERVICE',
                 'Submitted service does not match initial service' );
         }
     }
@@ -703,7 +704,7 @@ sub _validate2 {
               . $casServiceSession->data->{_cas_id}
               . " notfound" );
         $self->deleteCasSession($casServiceSession);
-        return $self->returnCasServiceValidateError( 'INTERNAL_ERROR',
+        return $self->returnCasServiceValidateError( $req, 'INTERNAL_ERROR',
             'No session associated to ticket' );
     }
 
