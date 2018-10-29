@@ -204,7 +204,9 @@ sub _buildAuthLoop {
                 # Default URL
                 if ( defined $url
                     and not $self->checkXSSAttack( 'URI',
-                        $req->env->{'REQUEST_URI'} ) )
+                        $req->env->{'REQUEST_URI'} ) 
+                    and $url =~ m%^(https?://)?[^\s/$.?#].[^\s]*$%
+                    )
                 {
                     $url .= $req->env->{'REQUEST_URI'};
                     $req->{cspFormAction} .= " $url";
