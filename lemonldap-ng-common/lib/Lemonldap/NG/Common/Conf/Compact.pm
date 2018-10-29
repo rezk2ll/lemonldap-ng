@@ -11,7 +11,7 @@ sub compactConf {
 
     # Remove unused auth parameters
     my %keep;
-    foreach my $type (qw(authentication userDB passwordDB)) {
+    foreach my $type (qw(authentication userDB passwordDB registerDB)) {
         my $mod = $conf->{$type} || 'Null';
         $mod =~ s/OpenIDConnect/oidc/i;
         $mod = lc($mod);
