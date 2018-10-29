@@ -16,6 +16,7 @@ sub compactConf {
         $mod =~ s/OpenIDConnect/oidc/i;
         $mod = lc($mod);
         $keep{$mod} = 1;
+        if ( $mod eq "ad" ) { $keep{'ldap'} = 1; }
     }
     if ( $keep{combination} ) {
         foreach my $md ( keys %{ $conf->{combModules} } ) {
