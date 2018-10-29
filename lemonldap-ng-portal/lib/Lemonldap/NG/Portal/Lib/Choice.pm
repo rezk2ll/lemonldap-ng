@@ -39,12 +39,12 @@ sub init {
     }
 
     foreach my $name ( keys %{ $self->conf->{authChoiceModules} } ) {
-        my @mods =
-          split( /[;\|]/, $self->conf->{authChoiceModules}->{$name} );
-        my $module =
-            '::'
-          . [ 'Auth', 'UserDB', 'Password' ]->[$type] . '::'
-          . $mods[$type];
+        my @mods
+            = split( /[;\|]/, $self->conf->{authChoiceModules}->{$name} );
+        my $module
+            = '::'
+            . [ 'Auth', 'UserDB', 'Password' ]->[$type] . '::'
+            . $mods[$type];
         my $over;
         if ( $mods[5] ) {
             eval { $over = JSON::from_json( $mods[5] ) };
@@ -56,11 +56,12 @@ sub init {
             $self->modules->{$name} = $module;
             $self->logger->debug(
                 [qw(Authentication User Password)]->[$type]
-                  . " module $name selected" );
+                    . " module $name selected" );
         }
         else {
             $self->logger->error(
-                "Choice: unable to load $name, disabling it: " . $self->error );
+                "Choice: unable to load $name, disabling it: "
+                    . $self->error );
             $self->error('');
         }
 
@@ -76,8 +77,8 @@ sub init {
         my $cond = $mods[4];
         if ( defined $cond and $cond !~ /^$/ ) {
             $self->logger->debug("Found rule $cond for $name");
-            $_choiceRules->{$name} =
-              $safe->reval("sub{my(\$env)=\@_;return ($cond)}");
+            $_choiceRules->{$name}
+                = $safe->reval("sub{my(\$env)=\@_;return ($cond)}");
             if ($@) {
                 $self->logger->error("Bad condition $cond: $@");
                 return 0;
@@ -85,7 +86,7 @@ sub init {
         }
         else {
             $self->logger->debug("No rule for $name");
-            $_choiceRules->{$name} = sub { 1 };
+            $_choiceRules->{$name} = sub {1};
         }
     }
     unless ( keys %{ $self->modules } ) {
@@ -124,11 +125,11 @@ sub checkChoice {
     unless ($name) {
 
         # Check with other methods
-        $name ||=
-             $req->param( $self->conf->{authChoiceParam} )
-          || $req->userData->{_choice}
-          || $req->sessionInfo->{_choice}
-          or return 0;
+        $name
+            ||= $req->param( $self->conf->{authChoiceParam} )
+            || $req->userData->{_choice}
+            || $req->sessionInfo->{_choice}
+            or return 0;
 
         $self->logger->debug("Choice $name selected");
     }
@@ -185,16 +186,16 @@ sub _buildAuthLoop {
         $name =~ s/\_/ /g;
 
         # Find modules associated to authChoice
-        my ( $auth, $userDB, $passwordDB, $url, $condition ) =
-          split( /[;\|]/, $self->conf->{authChoiceModules}->{$_} );
+        my ( $auth, $userDB, $passwordDB, $url, $condition )
+            = split( /[;\|]/, $self->conf->{authChoiceModules}->{$_} );
 
         unless ( $_choiceRules->{$_} ) {
             $self->logger->error("$_ has no rule !!!");
-            $_choiceRules->{$_} = sub { 1 };
+            $_choiceRules->{$_} = sub {1};
         }
         unless ( $_choiceRules->{$_}->( $req->env ) ) {
             $self->logger->debug(
-"Condition returns false, authentication choice $_ will not be displayed"
+                "Condition returns false, authentication choice $_ will not be displayed"
             );
         }
         else {
@@ -202,14 +203,18 @@ sub _buildAuthLoop {
             if ( $auth and $userDB and $passwordDB ) {
 
                 # Default URL
-                if ( defined $url
-                    and not $self->checkXSSAttack( 'URI',
-                        $req->env->{'REQUEST_URI'} ) 
-                    and $url =~ m%^(https?://)?[^\s/$.?#].[^\s]*$%
+                if (defined $url
+                    and not $self->checkXSSAttack(
+                        'URI', $req->env->{'REQUEST_URI'}
+                    )
+                    and $url
+                    =~ m%^(https?://)?[^\s/$.?#].[^\s]*$% # URL must be well formatted
                     )
                 {
                     $url .= $req->env->{'REQUEST_URI'};
-                    $req->{cspFormAction} .= " $url";
+                    $req->{cspFormAction} .= " $url"
+                        unless $req->{cspFormAction}
+                        =~ qr%$url%;                      # Avoid same URL
                 }
                 else {
                     $url .= '#';
@@ -217,13 +222,17 @@ sub _buildAuthLoop {
                 $self->logger->debug("Use URL $url");
 
                 # Options to store in the loop
-                my $optionsLoop =
-                  { name => $name, key => $_, module => $auth, url => $url };
+                my $optionsLoop = {
+                    name   => $name,
+                    key    => $_,
+                    module => $auth,
+                    url    => $url
+                };
 
                 # Get displayType for this module
                 no strict 'refs';
                 my $displayType = "Lemonldap::NG::Portal::Auth::${auth}"
-                  ->can('getDisplayType')->( undef, $req );
+                    ->can('getDisplayType')->( undef, $req );
 
                 $self->logger->debug(
                     "Display type $displayType for module $auth");
