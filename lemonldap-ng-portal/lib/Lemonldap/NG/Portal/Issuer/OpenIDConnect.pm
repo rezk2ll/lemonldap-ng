@@ -407,8 +407,8 @@ sub run {
                 }
 
                 if (   $RPoidcConsent[0]{rp} eq $rp
-                    && defined $RPoidcConsent[0]{epoch}
-                    && defined $RPoidcConsent[0]{scope} )
+                    && $RPoidcConsent[0]{epoch}
+                    && $RPoidcConsent[0]{scope} )
                 {
                     $ask_for_consent = 0;
                     my $consent_time  = $RPoidcConsent[0]{epoch};
