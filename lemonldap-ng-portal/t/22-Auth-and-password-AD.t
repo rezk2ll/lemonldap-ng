@@ -17,6 +17,7 @@ SKIP: {
                 useSafeJail     => 1,
                 authentication  => 'AD',
                 userDB          => 'Same',
+                passwordDB      => 'AD',
                 LDAPFilter      => $ENV{ADFILTER} || '(cn=$user)',
                 ldapServer      => $ENV{ADSERVER},
                 ldapBase        => $ENV{ADBASE},
