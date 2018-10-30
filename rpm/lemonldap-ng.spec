@@ -544,7 +544,7 @@ fi
 %{perl_vendorlib}/Lemonldap/NG/Handler.pm
 %{perl_vendorlib}/Lemonldap/NG/Handler/
 %{perl_vendorlib}/auto/Lemonldap/NG/Handler/
-%{perl_vendorlib}/Plack/Middleware/Auth/
+%{perl_vendorlib}/Plack/Middleware/Auth/LemonldapNG.pm
 
 %files -n perl-Lemonldap-NG-Manager
 %{_mandir}/man3/Lemonldap::NG::Manager*.3pm.*
