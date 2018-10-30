@@ -315,7 +315,7 @@ chmod +x %{__perl_requires}
     PREFIX=%{lm_prefix} \
     BINDIR=%{lm_sharedir}/bin \
     SBINDIR=%{lm_sharedir}/sbin \
-    FASTCGISOCKDIR=/var/run/llng-fastcgi-server \
+    FASTCGISOCKDIR=%{_rundir}/llng-fastcgi-server \
     DOCUMENTROOT=%{lm_vardir} \
     EXAMPLESDIR=%{lm_examplesdir} \
     HANDLERDIR=%{lm_vardir}/handler \
@@ -341,13 +341,13 @@ find %{buildroot} -name *.bak -exec rm -f {} \;
 # Install files for FastCGI Server
 mkdir -p %{buildroot}%{_unitdir}
 install -m644 fastcgi-server/systemd/llng-fastcgi-server.service %{buildroot}%{_unitdir}
-sed -i 's:__FASTCGISOCKDIR__:/var/run/llng-fastcgi-server:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
+sed -i 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
 sed -i 's:__SBINDIR__:/usr/share/lemonldap-ng/sbin:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
 rm -f %{buildroot}%{_sysconfdir}/init.d/llng-fastcgi-server
 
 mkdir -p %{buildroot}%{_tmpfilesdir}
 install -m644 fastcgi-server/systemd/llng-fastcgi-server.tmpfile %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
-sed -i 's:__FASTCGISOCKDIR__:/var/run/llng-fastcgi-server:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
+sed -i 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
 sed -i 's:__USER__:%{lm_apacheuser}:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
 sed -i 's:__GROUP__:%{lm_apachegroup}:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
 
@@ -526,7 +526,7 @@ fi
 %{_unitdir}/llng-fastcgi-server.service
 %{_tmpfilesdir}/llng-fastcgi-server.conf
 %defattr(755,%{lm_apacheuser},%{lm_apachegroup},-)
-%dir /var/run/llng-fastcgi-server
+%dir %{_rundir}/llng-fastcgi-server
 %{lm_sharedir}/examples/llngapp.psgi
 
 %files uwsgi-app
