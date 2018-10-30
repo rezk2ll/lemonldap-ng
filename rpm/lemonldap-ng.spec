@@ -91,6 +91,8 @@ BuildRequires:  perl(Net::LDAP)
 BuildRequires:  perl(Plack)
 BuildRequires:  perl(Regexp::Assemble)
 BuildRequires:  perl(Regexp::Common)
+# https://bugzilla.redhat.com/show_bug.cgi?id=1644266
+#BuildRequires:  perl(Sentry::Raven)
 BuildRequires:  perl(SOAP::Lite)
 BuildRequires:  perl(String::Random)
 BuildRequires:  perl(Test::MockObject)
