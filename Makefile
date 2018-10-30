@@ -367,6 +367,12 @@ portal_test:	portal
 manager_test:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/ -I../${SRCHANDLERDIR}/blib/lib/"
 
+autopkgtest:    all
+	export PERL5LIB=`pwd`/${SRCCOMMONDIR}/blib/lib:`pwd`/${SRCHANDLERDIR}/blib/lib:`pwd`/${SRCMANAGERDIR}/blib/lib/:`pwd`/${SRCPORTALDIR}/blib/lib/
+	./debian/tests/runner build-deps
+	./debian/tests/runner runtime-deps
+	#/usr/share/pkg-perl-autopkgtest/runner runtime-deps-and-recommends
+
 # End-to-end tests
 # ----------------
 
