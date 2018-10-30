@@ -1519,7 +1519,7 @@ sub _convertOldFormatConsents {
         $epoch = $req->{sessionInfo}->{ "_oidc_consent_time_" . $_ };
         $rp    = $_;
 
-        if ( defined $scope and defined $epoch and defined $rp ) {
+        if ( $scope and $epoch and $rp ) {
             $self->logger->debug("Append RP $rp Consent");
             push @oidcConsents, { rp => $rp, scope => $scope, epoch => $epoch };
             $count++;
