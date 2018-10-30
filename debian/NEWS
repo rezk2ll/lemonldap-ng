@@ -5,7 +5,7 @@ lemonldap-ng (2.0.0-1) unstable; urgency=medium
 
  -- Xavier Guimard <x.guimard@free.fr>  Mon, 11 Dec 2017 22:48:25 +0100
 
-lemonldap-ng (1.9.3-1) unstable; urgency=medium
+lemonldap-ng (1.9.2-1) unstable; urgency=medium
 
   liblemonldap-ng-handler-perl package has been split into:
   - lemonldap-ng-handler that provides web server configuration
