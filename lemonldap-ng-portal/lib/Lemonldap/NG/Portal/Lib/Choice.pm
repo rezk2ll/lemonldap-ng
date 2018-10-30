@@ -214,7 +214,7 @@ sub _buildAuthLoop {
                     $url .= $req->env->{'REQUEST_URI'};
                     $req->{cspFormAction} .= " $url"
                         unless $req->{cspFormAction}
-                        =~ qr%$url%;                      # Avoid same URL
+                        =~ qr%\b$url\b%;                      # Avoid append same URL
                 }
                 else {
                     $url .= '#';
