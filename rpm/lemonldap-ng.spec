@@ -21,7 +21,7 @@
 %global cpan_manager_version %{cpan_version}
 %global cpan_portal_version  %{cpan_version}
 
-%global lm_prefix /usr
+%global lm_prefix %{_prefix}
 %global lm_sharedir %{_datadir}/lemonldap-ng
 %global lm_examplesdir %{lm_sharedir}/examples
 %global lm_vardir %{_localstatedir}/lib/lemonldap-ng
