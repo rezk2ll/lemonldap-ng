@@ -114,8 +114,11 @@ ok(
 );
 count(1);
 my $idpId = expectCookie($res);
-my ( $host, $tmp );
-( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
+#my ( $host, $tmp );
+#( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
+
+expectRedirection( $res,
+    qr#^http://auth.rp.com/?\?openidconnectcallback=1\#(.*)$# );
 
 ok(
     $res = $op->_post(
@@ -198,7 +201,7 @@ sub op {
                         oidcRPMetaDataOptionsIDTokenExpiration => 3600,
                         oidcRPMetaDataOptionsClientID          => "rpid",
                         oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
-                        oidcRPMetaDataOptionsBypassConsent     => 0,
+                        oidcRPMetaDataOptionsBypassConsent     => 1,
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
                         oidcRPMetaDataOptionsUserIDAttr        => "",
                         oidcRPMetaDataOptionsAccessTokenExpiration => 3600

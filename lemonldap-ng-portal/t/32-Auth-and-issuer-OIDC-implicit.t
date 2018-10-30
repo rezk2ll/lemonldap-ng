@@ -114,6 +114,7 @@ ok(
 );
 count(1);
 my $idpId = expectCookie($res);
+
 my ( $host, $tmp );
 ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
 
@@ -139,6 +140,51 @@ ok( $prms{session_state}, ' session_state found' );
 ok( $prms{access_token},  ' access_token found' );
 ok( $prms{state},         ' state found' );
 count(5);
+
+$op->logout($idpId);
+
+# Query RP for auth
+ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
+count(1);
+my ( $url, $query ) =
+  expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
+
+# Rewrite response_type to use implicit
+$query =~ s/response_type=code/response_type=id_token%20token/;
+
+# Push request to OP
+ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
+    "Push request to OP,         endpoint $url" );
+count(1);
+expectOK($res);
+
+# Try to authenticate to IdP
+$query = "user=dwho&password=dwho&$query&nonce=qwerty";
+
+ok(
+    $res = $op->_post(
+        $url,
+        IO::String->new($query),
+        accept => 'text/html',
+        length => length($query),
+    ),
+    "Post authentication,        endpoint $url"
+);
+count(1);
+expectRedirection( $res,
+    qr#^http://auth.rp.com/?\?openidconnectcallback=1\#(.*)$# );
+
+ok(
+    $res = $op->_post(
+        $url,
+        IO::String->new($query),
+        accept => 'text/html',
+        cookie => "lemonldap=$idpId",
+        length => length($query),
+    ),
+    "Post confirmation,          endpoint $url"
+);
+count(1);
 
 #print STDERR Dumper($query);
 
