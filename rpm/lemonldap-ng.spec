@@ -301,7 +301,9 @@ chmod +x %{__perl_requires}
 # Building
 #==============================================================================
 %build
-%{__make} %{?_smp_mflags} configure STORAGECONFFILE=%{lm_storagefile} PERLOPTIONS="INSTALLDIRS=vendor"
+%{__make} %{?_smp_mflags} configure \
+    STORAGECONFFILE=%{lm_storagefile} \
+    PERLOPTIONS="INSTALLDIRS=vendor"
 %{__make} %{?_smp_mflags}
 
 #==============================================================================
@@ -338,16 +340,23 @@ find %{buildroot} -name *.bak -exec rm -f {} \;
 
 # Install files for FastCGI Server
 mkdir -p %{buildroot}%{_unitdir}
-install -m644 fastcgi-server/systemd/llng-fastcgi-server.service %{buildroot}%{_unitdir}
-sed -i 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
-sed -i 's:__SBINDIR__:%{lm_sharedir}/sbin:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
+install -m644 fastcgi-server/systemd/llng-fastcgi-server.service \
+    %{buildroot}%{_unitdir}
+sed -i 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' \
+    %{buildroot}%{_unitdir}/llng-fastcgi-server.service
+sed -i 's:__SBINDIR__:%{lm_sharedir}/sbin:' \
+    %{buildroot}%{_unitdir}/llng-fastcgi-server.service
 rm -f %{buildroot}%{_sysconfdir}/init.d/llng-fastcgi-server
 
 mkdir -p %{buildroot}%{_tmpfilesdir}
-install -m644 fastcgi-server/systemd/llng-fastcgi-server.tmpfile %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
-sed -i 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
-sed -i 's:__USER__:%{lm_apacheuser}:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
-sed -i 's:__GROUP__:%{lm_apachegroup}:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
+install -m644 fastcgi-server/systemd/llng-fastcgi-server.tmpfile \
+    %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
+sed -i 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' \
+    %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
+sed -i 's:__USER__:%{lm_apacheuser}:' \
+    %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
+sed -i 's:__GROUP__:%{lm_apachegroup}:' \
+    %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
 
 # UWSGI Application
 mkdir -p %{buildroot}%{_sysconfdir}/uwsgi/apps-available
@@ -358,9 +367,12 @@ mkdir -p %{buildroot}%{lm_sharedir}/llng-server
 # because it launches a 'chown', which is not permitted if RPM is not
 # built as root
 sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{_sysconfdir}/cron.d/*
-sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{lm_sharedir}/bin/lmConfigEditor
-sed -i 's/nobody/%{lm_apacheuser}/g' %{buildroot}%{lm_sharedir}/bin/lemonldap-ng-cli
-sed -i 's/nobody/%{lm_apacheuser}/g' %{buildroot}%{_sysconfdir}/default/llng-fastcgi-server
+sed -i 's/nobody/%{lm_apacheuser}/' \
+    %{buildroot}%{lm_sharedir}/bin/lmConfigEditor
+sed -i 's/nobody/%{lm_apacheuser}/g' \
+    %{buildroot}%{lm_sharedir}/bin/lemonldap-ng-cli
+sed -i 's/nobody/%{lm_apacheuser}/g' \
+    %{buildroot}%{_sysconfdir}/default/llng-fastcgi-server
 
 # Set UNIX rights
 mkdir -p %{buildroot}%{lm_vardir}/sessions/lock
@@ -387,9 +399,12 @@ touch %buildroot%{apache_confdir}/z-lemonldap-ng-test.conf
 # Run test
 #==============================================================================
 %check
-sed -i 's:^dirName.*:dirName = %{buildroot}%{lm_vardir}/conf:' %{buildroot}%{lm_storagefile}
-%{__make} %{?_smp_mflags} test LLNG_DEFAULTCONFFILE=%{buildroot}%{lm_storagefile}
-sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' %{buildroot}%{lm_storagefile}
+sed -i 's:^dirName.*:dirName = %{buildroot}%{lm_vardir}/conf:' \
+    %{buildroot}%{lm_storagefile}
+%{__make} %{?_smp_mflags} test \
+    LLNG_DEFAULTCONFFILE=%{buildroot}%{lm_storagefile}
+sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' \
+    %{buildroot}%{lm_storagefile}
 
 #==============================================================================
 # Post Installation
@@ -398,21 +413,27 @@ sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' %{buildroot}%{lm_storagefile}
 # Create symlink in Apache configuration
 # We use "z-lemonldap-ng-*" so that Apache read the files after "perl.conf"
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-handler.conf ] ; then
-    ln -s %{lm_confdir}/handler-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-handler.conf || :
+    ln -s %{lm_confdir}/handler-apache%{apache_version}.conf \
+        %{apache_confdir}/z-lemonldap-ng-handler.conf || :
 fi
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-manager.conf ] ; then
-    ln -s %{lm_confdir}/manager-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-manager.conf || :
+    ln -s %{lm_confdir}/manager-apache%{apache_version}.conf \
+        %{apache_confdir}/z-lemonldap-ng-manager.conf || :
 fi
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-portal.conf ] ; then
-    ln -s %{lm_confdir}/portal-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-portal.conf || :
+    ln -s %{lm_confdir}/portal-apache%{apache_version}.conf \
+        %{apache_confdir}/z-lemonldap-ng-portal.conf || :
 fi
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-test.conf ] ; then
-    ln -s %{lm_confdir}/test-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-test.conf || :
+    ln -s %{lm_confdir}/test-apache%{apache_version}.conf \
+        %{apache_confdir}/z-lemonldap-ng-test.conf || :
 fi
 # Upgrade from previous version
 # See http://lemonldap-ng.org/documentation/1.0/upgrade
 if [ $1 -gt 1 ] ; then
-    if [ -e %{lm_confdir}/storage.conf -o -e %{lm_confdir}/apply.conf -o -e %{lm_confdir}/apps-list.xml ] ; then
+    if [ -e %{lm_confdir}/storage.conf \
+         -o -e %{lm_confdir}/apply.conf \
+         -o -e %{lm_confdir}/apps-list.xml ] ; then
         # Run migration script
         %{lm_sharedir}/bin/lmMigrateConfFiles2ini 2>&1 > /dev/null || :
         # Fix ownership
