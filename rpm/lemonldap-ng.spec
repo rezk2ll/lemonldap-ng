@@ -69,7 +69,8 @@ BuildRequires:  perl(Crypt::OpenSSL::X509)
 BuildRequires:  perl(Crypt::Rijndael)
 BuildRequires:  perl(Digest::SHA)
 BuildRequires:  perl(Email::Date::Format)
-BuildRequires:  perl(Email::Sender)
+# Not available for EL6
+%{?!el6:BuildRequires:  perl(Email::Sender)}
 BuildRequires:  perl(Env)
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(HTML::Template)
