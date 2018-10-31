@@ -9,7 +9,6 @@
 #==============================================================================
 # Variables
 #==============================================================================
-%global real_name lemonldap-ng
 %global real_version 2.0.0
 %global cpan_version 2.0.0
 %global cpan_common_version  %{cpan_version}
@@ -52,7 +51,7 @@
 #==============================================================================
 # Main package
 #==============================================================================
-Name:           %{real_name}
+Name:           lemonldap-ng
 Version:        %{real_version}
 Release:        1%{?dist}
 Summary:        LemonLDAP-NG WebSSO
@@ -286,7 +285,7 @@ This package installs the authentication portal.
 # Source preparation
 #==============================================================================
 %prep
-%setup -n %{real_name}-%{real_version} -q
+%setup -n %{name}-%{real_version} -q
 
 
 #==============================================================================
