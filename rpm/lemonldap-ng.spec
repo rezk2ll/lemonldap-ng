@@ -33,7 +33,7 @@
 %endif
 
 # Apache version
-%if 0%{?rhel} >= 7
+%if 0%{?fedora} || 0%{?rhel} >= 7
 %global apache_version 2.4
 %else
 %global apache_version 2
