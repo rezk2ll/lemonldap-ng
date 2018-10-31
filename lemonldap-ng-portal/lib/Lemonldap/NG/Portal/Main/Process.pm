@@ -17,7 +17,8 @@ use POSIX qw(strftime);
 sub process {
     my ( $self, $req, %args ) = @_;
 
-    #$req->error(PE_OK);
+    # Store ipAddr in env
+    $req->env->{ipAddr} = $req->address;
     my $err = PE_OK;
     while ( my $sub = shift @{ $req->steps } ) {
         if ( ref $sub ) {
