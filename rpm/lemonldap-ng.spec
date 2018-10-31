@@ -9,13 +9,6 @@
 #==============================================================================
 # Variables
 #==============================================================================
-%global real_version 2.0.0
-%global cpan_version 2.0.0
-%global cpan_common_version  %{cpan_version}
-%global cpan_handler_version %{cpan_version}
-%global cpan_manager_version %{cpan_version}
-%global cpan_portal_version  %{cpan_version}
-
 %global lm_prefix %{_prefix}
 %global lm_sharedir %{_datadir}/lemonldap-ng
 %global lm_examplesdir %{lm_sharedir}/examples
@@ -48,16 +41,18 @@
 
 %global lm_dnsdomain example.com
 
+#global pre_release beta1
+
 #==============================================================================
 # Main package
 #==============================================================================
 Name:           lemonldap-ng
-Version:        %{real_version}
-Release:        1%{?dist}
+Version:        2.0.0
+Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
 URL:            http://lemonldap-ng.org
-Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}.tar.gz
+Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_release:~%{pre_release}}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  perl(Apache::Session)
@@ -97,12 +92,12 @@ BuildRequires:  perl(XML::LibXSLT)
 BuildRequires:  perl(XML::Simple)
 BuildRequires:  systemd
 
-Requires: lemonldap-ng-conf = %{real_version}-%{release}
-Requires: lemonldap-ng-doc = %{real_version}-%{release}
-Requires: lemonldap-ng-handler = %{real_version}-%{release}
-Requires: lemonldap-ng-manager = %{real_version}-%{release}
-Requires: lemonldap-ng-portal = %{real_version}-%{release}
-Requires: lemonldap-ng-test = %{real_version}-%{release}
+Requires: lemonldap-ng-conf = %{version}-%{release}
+Requires: lemonldap-ng-doc = %{version}-%{release}
+Requires: lemonldap-ng-handler = %{version}-%{release}
+Requires: lemonldap-ng-manager = %{version}-%{release}
+Requires: lemonldap-ng-portal = %{version}-%{release}
+Requires: lemonldap-ng-test = %{version}-%{release}
 
 # Setup requires filtering
 %if 0%{?rhel} == 6
@@ -130,7 +125,7 @@ So you can have a full AAA protection for your web space as described below.
 Summary:        LemonLDAP-NG configuration
 Requires:       perl(Apache::Session)
 Requires:       perl(IO::String)
-Requires:       perl(Lemonldap::NG::Common) = %{cpan_common_version}
+Requires:       perl(Lemonldap::NG::Common) = %{version}-%{release}
 Requires:       perl(mod_perl2)
 %if 0%{?rhel}%{?fedora}
 Requires(post):  httpd
@@ -145,7 +140,7 @@ Requires(post):  apache2
 This package contains the main storage configuration.
 Requires:       perl(Apache::Session)
 Requires:       perl(IO::String)
-Requires:       perl(Lemonldap::NG::Common) = %{cpan_common_version}
+Requires:       perl(Lemonldap::NG::Common) = %{version}-%{release}
 Requires:       perl(mod_perl2)
 %if 0%{?rhel}%{?fedora}
 Requires(post):  httpd
@@ -158,7 +153,7 @@ Requires(post):  apache2
 #==============================================================================
 %package doc
 Summary:        LemonLDAP-NG documentation
-Requires:       lemonldap-ng-conf = %{real_version}-%{release}
+Requires:       lemonldap-ng-conf = %{version}-%{release}
 
 %description doc
 This package contains html documentation.
@@ -171,8 +166,8 @@ Summary:        LemonLDAP-NG handler
 %if 0%{?rhel}%{?fedora}
 Requires:       crontabs
 %endif
-Requires:       lemonldap-ng-conf = %{real_version}-%{release}
-Requires:       perl(Lemonldap::NG::Handler) = %{cpan_handler_version}
+Requires:       lemonldap-ng-conf = %{version}-%{release}
+Requires:       perl(Lemonldap::NG::Handler) = %{version}-%{release}
 
 %description handler
 This package deploys the Apache Handler.
@@ -182,8 +177,8 @@ This package deploys the Apache Handler.
 #==============================================================================
 %package manager
 Summary:        LemonLDAP-NG administration interface
-Requires:       lemonldap-ng-conf = %{real_version}-%{release}
-Requires:       perl(Lemonldap::NG::Manager) = %{cpan_manager_version}
+Requires:       lemonldap-ng-conf = %{version}-%{release}
+Requires:       perl(Lemonldap::NG::Manager) = %{version}-%{release}
 
 %description manager
 This package deploys the administration interface and sessions explorer.
@@ -196,8 +191,8 @@ Summary:        LemonLDAP-NG authentication portal
 %if 0%{?rhel}%{?fedora}
 Requires:       crontabs
 %endif
-Requires:       lemonldap-ng-conf = %{real_version}-%{release}
-Requires:       perl(Lemonldap::NG::Portal) = %{cpan_portal_version}
+Requires:       lemonldap-ng-conf = %{version}-%{release}
+Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
 
 %description portal
 This package deploys the authentication portal.
@@ -207,7 +202,7 @@ This package deploys the authentication portal.
 #==============================================================================
 %package test
 Summary:        LemonLDAP-NG test applications
-Requires:       lemonldap-ng-conf = %{real_version}-%{release}
+Requires:       lemonldap-ng-conf = %{version}-%{release}
 
 %description test
 This package deploys small test applications.
@@ -217,7 +212,7 @@ This package deploys small test applications.
 #==============================================================================
 %package fastcgi-server
 Summary:        LemonLDAP-NG FastCGI Server
-Requires:       lemonldap-ng-conf = %{real_version}-%{release}
+Requires:       lemonldap-ng-conf = %{version}-%{release}
 %if 0%{?rhel}%{?fedora}
 Requires:       mod_fcgid
 %else
@@ -244,7 +239,6 @@ server, using uWSGI instead of Plack FCGI.
 #==============================================================================
 %package -n perl-Lemonldap-NG-Common
 Summary:        LemonLDAP-NG Common Modules
-Version:        %{cpan_common_version}
 
 %description -n perl-Lemonldap-NG-Common
 This package installs the configuration libraries used by other LemonLDAP::NG
@@ -255,7 +249,6 @@ modules.
 #==============================================================================
 %package -n perl-Lemonldap-NG-Handler
 Summary:        LemonLDAP-NG Handler Modules
-Version:        %{cpan_handler_version}
 
 %description -n perl-Lemonldap-NG-Handler
 This package installs the Apache module part (handler) used to protect web
@@ -266,7 +259,6 @@ areas.
 #==============================================================================
 %package -n perl-Lemonldap-NG-Manager
 Summary:        LemonLDAP-NG Manager Modules
-Version:        %{cpan_manager_version}
 
 %description -n perl-Lemonldap-NG-Manager
 This package installs the administration interface (manager).
@@ -276,7 +268,6 @@ This package installs the administration interface (manager).
 #==============================================================================
 %package -n perl-Lemonldap-NG-Portal
 Summary:        LemonLDAP-NG Portal Modules
-Version:        %{cpan_portal_version}
 
 %description -n perl-Lemonldap-NG-Portal
 This package installs the authentication portal.
@@ -285,7 +276,7 @@ This package installs the authentication portal.
 # Source preparation
 #==============================================================================
 %prep
-%setup -n %{name}-%{real_version} -q
+%setup -q -n %{name}-%{version}%{?pre_release:~%{pre_release}}
 
 
 #==============================================================================
