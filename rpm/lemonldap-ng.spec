@@ -9,10 +9,6 @@
 #==============================================================================
 # Variables
 #==============================================================================
-
-%global perl_vendorlib %(eval "`%{__perl} -V:installvendorlib`"; echo $installvendorlib)
-%global perl_vendorarch %(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
-
 %global real_name lemonldap-ng
 %global real_version 2.0.0
 %global cpan_version 2.0.0
