@@ -581,131 +581,190 @@ fi
 %changelog
 * Fri Nov 30 2018 Clement Oudot <clem.oudot@gmail.com> - 2.0.0-1
 - Update to 2.0.0
+
 * Fri Jul 20 2018 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~beta1-1
 - First beta version for 2.0.0
+
 * Fri Jan 26 2018 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha3-1
 - Third alpha version for 2.0.0
+
 * Tue Jan 23 2018 Clement Oudot <clem.oudot@gmail.com> - 1.9.15-1
 - Update to 1.9.15
+
 * Fri Nov 24 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.14-1
 - Update to 1.9.14
+
 * Fri Sep 29 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.13-1
 - Update to 1.9.13
+
 * Thu Sep 14 2017 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha2-1
 - Second alpha version for 2.0.0
+
 * Tue Sep 12 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.12-1
 - Update to 1.9.12
+
 * Fri Sep 01 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.11-1
 - Update to 1.9.11
+
 * Mon Jul 10 2017 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha1-1
 - First alpha version for 2.0.0
+
 * Fri May 19 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.10-1
 - Update to 1.9.10
+
 * Thu Mar 16 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.9-1
 - Update to 1.9.9
+
 * Thu Mar 02 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.8-1
 - Update to 1.9.8
+
 * Mon Dec 12 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.7-1
 - Update to 1.9.7
+
 * Fri Oct 14 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.6-1
 - Update to 1.9.6
+
 * Mon Oct 10 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.11-1
 - Update to 1.4.11
+
 * Wed Jul 13 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.5-1
 - Update to 1.9.5
+
 * Wed Jul 13 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.10-1
 - Update to 1.4.10
+
 * Tue Jun 14 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.4-1
 - Update to 1.9.4
+
 * Tue Jun 07 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.3-1
 - Update to 1.9.3
+
 * Fri Jun 03 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.9-1
 - Update to 1.4.9
+
 * Sun May 01 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.2-1
 - Update to 1.9.2
+
 * Wed Apr 27 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.8-1
 - Update to 1.4.8
+
 * Thu Mar 31 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.1-1
 - Update to 1.9.1
+
 * Thu Mar 17 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.7-1
 - Update to 1.4.7
+
 * Wed Mar 02 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.0-1
 - Update to 1.9.0
+
 * Mon Sep 28 2015 Clement Oudot <clem.oudot@gmail.com> - 1.4.6-1
 - Update to 1.4.6
+
 * Mon May 11 2015 Clement Oudot <clem.oudot@gmail.com> - 1.4.5-1
 - Update to 1.4.5
+
 * Wed Apr 15 2015 Clement Oudot <clem.oudot@gmail.com> - 1.4.4-1
 - Update to 1.4.4
+
 * Thu Dec 18 2014 Clement Oudot <clem.oudot@gmail.com> - 1.4.3-1
 - Update to 1.4.3
 - Support for CentOS 7
+
 * Fri Oct 31 2014 Clement Oudot <clem.oudot@gmail.com> - 1.4.2-1
 - Update to 1.4.2
+
 * Fri Jul 25 2014 Clement Oudot <clem.oudot@gmail.com> - 1.4.1-1
 - Update to 1.4.1
+
 * Fri Apr 18 2014 Clement Oudot <clem.oudot@gmail.com> - 1.4.0-1
 - Update to 1.4.0
+
 * Fri Mar 07 2014 Clement Oudot <clem.oudot@gmail.com> - 1.3.3-1
 - Update to 1.3.3
+
 * Thu Jan 23 2014 Clement Oudot <clem.oudot@gmail.com> - 1.3.2-1
 - Update to 1.3.2
+
 * Mon Nov 11 2013 Clement Oudot <clem.oudot@gmail.com> - 1.3.1-1
 - Update to 1.3.1
+
 * Sat Nov 2 2013 Clement Oudot <clem.oudot@gmail.com> - 1.3.0-1
 - Update to 1.3.0
+
 * Mon Aug 26 2013 Clement Oudot <clem.oudot@gmail.com> - 1.2.5-1
 - Update to 1.2.5
+
 * Tue Apr 23 2013 Clement Oudot <clem.oudot@gmail.com> - 1.2.4-1
 - Update to 1.2.4
+
 * Fri Feb 08 2013 Clement Oudot <clem.oudot@gmail.com> - 1.2.3-1
 - Update to 1.2.3
+
 * Mon Sep 17 2012 Clement Oudot <clem.oudot@gmail.com> - 1.2.2-1
 - Update to 1.2.2
+
 * Thu Jul 05 2012 Clement Oudot <clem.oudot@gmail.com> - 1.2.1-1
 - Update to 1.2.1
+
 * Sun Jun 17 2012 Clement Oudot <clem.oudot@gmail.com> - 1.2.0-1
 - Update to 1.2.0
+
 * Fri Oct 07 2011 Clement Oudot <clem.oudot@gmail.com> - 1.1.2-1
 - Update to 1.1.2
+
 * Fri Jul 29 2011 Clement Oudot <clem.oudot@gmail.com> - 1.1.1-1
 - Update to 1.1.1
+
 * Fri Jul 08 2011 Clement Oudot <clem.oudot@gmail.com> - 1.1.0-1
 - Update to 1.1.0
+
 * Thu Jun 30 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.6-1
 - Update to 1.0.6
+
 * Fri Apr 15 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.5-1
 - Update to 1.0.5
+
 * Tue Mar 22 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.4-1
 - Update to 1.0.4
+
 * Mon Mar 07 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.3-1
 - Update to 1.0.3
+
 * Mon Feb 28 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.2-1
 - Update to 1.0.2
+
 * Thu Dec 16 2010 Clement Oudot <clem.oudot@gmail.com> - 1.0.1-1
 - Update to 1.0.1
+
 * Fri Nov 26 2010 Clement Oudot <clem.oudot@gmail.com> - 1.0-1
 - Update to 1.0
+
 * Wed Jul 21 2010 Nicolas Chauvet <kwizart@gmail.com> - 0.9.4.1-3
 - Fix compatibility with perl-LDAP 0.40
 - Add BR perl(Auth::CAS)
+
 * Mon Jul 12 2010 Nicolas Chauvet <nchauvet@linagora.com> - 0.9.4.1-2
 - Protect lemonldap directories against word readability
+
 * Mon Oct 12 2009 Nicolas Chauvet <nchauvet@linagora.com> - 0.9.4.1-1
 - Update to 0.9.4.1
+
 * Thu Sep 24 2009 Nicolas Chauvet <nchauvet@linagora.com> - 0.9.4-2
 - Add Missing BuildRequires
 - Remove filter for dependencies available in EPEL.
 - use %%defattr to define ownership.
+
 * Mon Jul 6 2009 Clement Oudot <coudot@linagora.com> - 0.9.4-1
 - Upgrade to release 0.9.4
 - Remove cronjob patch (included in 0.9.4)
 - Split scriplets into subpackages
 - Use conditions to build for other RPM distributions like OpenSuSE (thanks to clauded1)
+
 * Mon Jan 12 2009 Clement Oudot <coudot@linagora.com> - 0.9.3.2-2
 - Include cronjob patch
 - Delete unwanted files (perllocal.pod, .packlist)
 - Follow rpmfusion guidelines
+
 * Fri Jan 9 2009 Clement Oudot <coudot@linagora.com> - 0.9.3.2-1
 - Updated to release 0.9.3.2.
 - Use internal version number for perl modules (compatibility with RPMforge packages)
@@ -713,16 +772,22 @@ fi
 - Use the same directories as the Debian package.
 - Create a symlink in Apache confguration.
 - Create specific portal/manager/handler/conf packages independent from CPAN packages
+
 * Thu Nov 20 2008 Jean-Christophe Toussaint <jean-christophe.toussaint@ac-nancy-metz.fr> - 0.9.2-1DSI
 - Updated to release 0.9.2.
 - Using official tar.gz from forge.
+
 * Tue Oct 7 2008 David Hannequin <david.hannequin@linagora.com> 
 - New spec file
+
 * Sun Mar 02 2008 Dag Wieers <dag@wieers.com> - 0.85-1
 - Updated to release 0.85.
+
 * Tue Nov 13 2007 Dag Wieers <dag@wieers.com> - 0.84-1
 - Updated to release 0.84.
+
 * Wed May 02 2007 Dries Verachtert <dries@ulyssis.org> - 0.81-1
 - Updated to release 0.81.
+
 * Sun Apr 29 2007 Dries Verachtert <dries@ulyssis.org> - 0.75-1
 - Initial package.
