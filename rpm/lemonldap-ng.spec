@@ -90,7 +90,9 @@ BuildRequires:  perl(Test::Pod) >= 1.00
 BuildRequires:  perl(Unicode::String)
 BuildRequires:  perl(XML::LibXSLT)
 BuildRequires:  perl(XML::Simple)
+%if 0%{?fedora} || 0%{?rhel} >= 7
 BuildRequires:  systemd
+%endif
 
 Requires: lemonldap-ng-conf = %{version}-%{release}
 Requires: lemonldap-ng-doc = %{version}-%{release}
