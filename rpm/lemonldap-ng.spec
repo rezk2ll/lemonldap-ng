@@ -105,6 +105,18 @@ Requires: lemonldap-ng-manager = %{real_version}-%{release}
 Requires: lemonldap-ng-portal = %{real_version}-%{release}
 Requires: lemonldap-ng-test = %{real_version}-%{release}
 
+# Setup requires filtering
+%if 0%{?rhel} == 6
+%filter_from_requires /perl(lasso/d; /perl(Net::OpenID/d; /perl(Web::ID/d; /perl(XML::LibXML/d; /perl(XML::LibXSLT/d; /perl(Convert::Base32/d; /perl(Sentry::Raven/d;
+%filter_setup
+%endif
+
+%if 0%{?fedora} || 0%{?rhel} >= 7
+%{?perl_default_filter}
+%global __requires_exclude perl\\(lasso|perl\\(Net::OpenID|perl\\(Web::ID|perl\\(XML::LibXML|perl\\(XML::LibXSLT|perl\\(Convert::Base32|perl\\(Sentry::Raven
+%endif
+
+
 %description
 LemonLdap::NG is a modular Web-SSO based on Apache::Session modules. It
 simplifies the build of a protected area with a few changes in the
@@ -276,26 +288,6 @@ This package installs the authentication portal.
 %prep
 %setup -n %{real_name}-%{real_version} -q
 
-# Remove unwanted provides/requires
-
-cat << \EOF > %{name}-req
-#!/bin/sh
-%{__perl_requires} $* |\
-sed -e '/perl(lasso)/d' |\
-sed -e '/perl(Net::OpenID::Consumer)/d' |\
-sed -e '/perl(Net::OpenID::Server)/d' |\
-sed -e '/perl(Web::ID)/d' |\
-sed -e '/perl(XML::LibXML)/d' |\
-sed -e '/perl(XML::LibXSLT)/d'
-EOF
-
-%global __perl_requires %{_builddir}/%{name}-%{real_version}/%{name}-req
-chmod +x %{__perl_requires}
-
-%if 0%{?rhel} >= 7
-%{?perl_default_filter}
-%global __requires_exclude perl\\(lasso|perl\\(Net::OpenID|perl\\(Web::ID|perl\\(XML::LibXML|perl\\(XML::LibXSLT|perl\\(Convert::Base32|perl\\(Sentry::Raven
-%endif
 
 #==============================================================================
 # Building
