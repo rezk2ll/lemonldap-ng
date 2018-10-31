@@ -236,7 +236,8 @@ Summary:        LemonLDAP-NG Common Modules
 Version:        %{cpan_common_version}
 
 %description -n perl-Lemonldap-NG-Common
-This package installs the configuration libraries used by other LemonLDAP::NG modules.
+This package installs the configuration libraries used by other LemonLDAP::NG
+modules.
 
 #==============================================================================
 # CPAN modules - Handler
@@ -246,7 +247,8 @@ Summary:        LemonLDAP-NG Handler Modules
 Version:        %{cpan_handler_version}
 
 %description -n perl-Lemonldap-NG-Handler
-This package installs the Apache module part (handler) used to protect web areas.
+This package installs the Apache module part (handler) used to protect web
+areas.
 
 #==============================================================================
 # CPAN modules -  Manager
