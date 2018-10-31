@@ -203,18 +203,20 @@ sub _buildAuthLoop {
             if ( $auth and $userDB and $passwordDB ) {
 
                 # Default URL
+                $req->{cspFormAction} ||= '';
                 if (defined $url
                     and not $self->checkXSSAttack(
                         'URI', $req->env->{'REQUEST_URI'}
                     )
                     and $url
-                    =~ m%^(https?://)?[^\s/$.?#].[^\s]*$% # URL must be well formatted
+                    =~ q%^(https?://)?[^\s/.?#$].[^\s]+$% # URL must be well formatted
                     )
                 {
-                    $url .= $req->env->{'REQUEST_URI'};
+                    #$url .= $req->env->{'REQUEST_URI'};
+
+                    # Avoid append same URL
                     $req->{cspFormAction} .= " $url"
-                        unless $req->{cspFormAction}
-                        =~ qr%\b$url\b%;                      # Avoid append same URL
+                        unless $req->{cspFormAction} =~ qr%\b$url\b%;
                 }
                 else {
                     $url .= '#';
