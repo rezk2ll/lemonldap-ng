@@ -181,6 +181,7 @@ MANAGERLIBSTOREMOVEFORDEBIAN=$(RMANAGERSTATICDIR)/bwr/jquery/ \
 			$(RMANAGERSTATICDIR)/bwr/bootstrap/ \
 			$(RMANAGERSTATICDIR)/bwr/es5-shim/
 PORTALLIBSTOREMOVEFORDEBIAN=$(RPORTALSTATICDIR)/bwr/bootstrap/ \
+			$(RPORTALSTATICDIR)/bwr/font-awesome \
 			$(RPORTALSTATICDIR)/bwr/jquery-ui \
 			$(RPORTALSTATICDIR)/bwr/jquery.cookie \
 			$(RPORTALSTATICDIR)/bwr/jquery
