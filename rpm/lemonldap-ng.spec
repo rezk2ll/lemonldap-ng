@@ -327,9 +327,9 @@ find %{buildroot} -name *.bak -exec rm -f {} \;
 mkdir -p %{buildroot}%{_unitdir}
 install -m644 fastcgi-server/systemd/llng-fastcgi-server.service \
     %{buildroot}%{_unitdir}
-sed -i 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' \
-    %{buildroot}%{_unitdir}/llng-fastcgi-server.service
-sed -i 's:__SBINDIR__:%{lm_sharedir}/sbin:' \
+sed -i \
+    -e 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' \
+    -e 's:__SBINDIR__:%{lm_sharedir}/sbin:' \
     %{buildroot}%{_unitdir}/llng-fastcgi-server.service
 rm -f %{buildroot}%{_sysconfdir}/init.d/llng-fastcgi-server
 
