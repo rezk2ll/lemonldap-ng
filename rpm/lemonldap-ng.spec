@@ -460,8 +460,7 @@ fi
 %dir %{lm_examplesdir}
 %dir %{lm_sharedir}/ressources
 %{lm_sharedir}/ressources/*
-%defattr(-,root,%{lm_apachegroup},-)
-%config(noreplace) %{lm_storagefile}
+%config(noreplace) %attr(-,root,%{lm_apachegroup}) %{lm_storagefile}
 %defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir %{lm_vardir}/conf
 %dir %{lm_vardir}/sessions
