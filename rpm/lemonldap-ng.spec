@@ -336,11 +336,10 @@ rm -f %{buildroot}%{_sysconfdir}/init.d/llng-fastcgi-server
 mkdir -p %{buildroot}%{_tmpfilesdir}
 install -m644 fastcgi-server/systemd/llng-fastcgi-server.tmpfile \
     %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
-sed -i 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' \
-    %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
-sed -i 's:__USER__:%{lm_apacheuser}:' \
-    %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
-sed -i 's:__GROUP__:%{lm_apachegroup}:' \
+sed -i \
+    -e 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' \
+    -e 's:__USER__:%{lm_apacheuser}:' \
+    -e 's:__GROUP__:%{lm_apachegroup}:' \
     %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
 
 # UWSGI Application
