@@ -238,6 +238,16 @@ LemonLDAP::NG uWSGI server provides a replacement to LemonLDAP::NG FastCGI
 server, using uWSGI instead of Plack FCGI.
 
 #==============================================================================
+# Nginx server
+#==============================================================================
+%package nginx
+Summary:        LemonLDAP-NG Nginx support
+Requires:       nginx
+
+%description nginx
+Nginx support for LemonLDAP::NG.
+
+#==============================================================================
 # CPAN modules - Common
 #==============================================================================
 %package -n perl-Lemonldap-NG-Common
@@ -380,6 +390,11 @@ for i in handler manager portal test; do {
         %{buildroot}%{apache_confdir}/z-lemonldap-ng-$i.conf
 }; done
 
+# Install nginx conf files
+mkdir -p %{buildroot}%{_sysconfdir}/nginx/conf.d/
+mv %{buildroot}%{lm_confdir}/*nginx*.conf \
+    %{buildroot}%{_sysconfdir}/nginx/conf.d/
+
 #==============================================================================
 # Run test
 #==============================================================================
@@ -440,12 +455,6 @@ fi
 %dir %{lm_confdir}
 %config(noreplace) %attr(-,root,%{lm_apachegroup}) %{lm_storagefile}
 %config %{lm_confdir}/for_etc_hosts
-%config(noreplace) %{lm_confdir}/handler-nginx.conf
-%config(noreplace) %{lm_confdir}/manager-nginx.conf
-%config(noreplace) %{lm_confdir}/nginx-lmlog.conf
-%config(noreplace) %{lm_confdir}/nginx-lua-headers.conf
-%config(noreplace) %{lm_confdir}/portal-nginx.conf
-%config(noreplace) %{lm_confdir}/test-nginx.conf
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-manager.conf
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
@@ -512,6 +521,14 @@ fi
 
 %files uwsgi-app
 %{_sysconfdir}/uwsgi/apps-available/llng-server.yaml
+
+%files nginx
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/handler-nginx.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/manager-nginx.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/nginx-lmlog.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/nginx-lua-headers.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/portal-nginx.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/test-nginx.conf
 
 %files -n perl-Lemonldap-NG-Common
 %{_mandir}/man3/Lemonldap::NG::Common*.3pm.*
