@@ -136,20 +136,8 @@ Requires(post):  httpd
 Requires(post):  apache2
 %endif
 
-#==============================================================================
-# Configuration
-#==============================================================================
 %description conf
 This package contains the main storage configuration.
-Requires:       perl(Apache::Session)
-Requires:       perl(IO::String)
-Requires:       perl(Lemonldap::NG::Common) = %{version}-%{release}
-Requires:       perl(mod_perl2)
-%if 0%{?rhel}%{?fedora}
-Requires(post):  httpd
-%else
-Requires(post):  apache2
-%endif
 
 #==============================================================================
 # Documentation
