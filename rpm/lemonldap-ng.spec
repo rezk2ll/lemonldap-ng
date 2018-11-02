@@ -478,7 +478,7 @@ fi
 
 %files handler
 %{lm_sharedir}/bin/purgeLocalCache
-%{_sysconfdir}/cron.d/lemonldap-ng-handler
+%config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-handler
 %{lm_vardir}/handler
 %{lm_examplesdir}/handler
 %{lm_sharedir}/llng-server/llng-server.psgi
@@ -493,7 +493,7 @@ fi
 %files portal
 %{lm_vardir}/portal
 %{lm_sharedir}/bin/purgeCentralCache
-%{_sysconfdir}/cron.d/lemonldap-ng-portal
+%config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-portal
 %{lm_examplesdir}/portal
 %defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir %{lm_vardir}/captcha
