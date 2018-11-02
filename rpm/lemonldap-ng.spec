@@ -448,6 +448,14 @@ if [ $1 -eq 1 ] ; then
     rm -f %{apache_confdir}/z-lemonldap-ng.conf 2>&1 > /dev/null || :
 fi
 
+%post fastcgi-server
+%systemd_post llng-fastcgi-server.service
+
+%preun fastcgi-server
+%systemd_preun llng-fastcgi-server.service
+
+%postun fastcgi-server
+%systemd_postun_with_restart llng-fastcgi-server.service
 
 %files
 %doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
