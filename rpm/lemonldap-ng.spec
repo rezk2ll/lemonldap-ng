@@ -451,11 +451,11 @@ fi
 %systemd_postun_with_restart llng-fastcgi-server.service
 
 %files
-%doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
-%license COPYING GPL
 
 %files conf
+%doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
 %doc for_etc_hosts
+%license COPYING GPL
 %dir %{lm_confdir}
 %config(noreplace) %attr(-,root,%{lm_apachegroup}) %{lm_storagefile}
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
