@@ -438,6 +438,7 @@ fi
 
 %files conf
 %dir %{lm_confdir}
+%config(noreplace) %attr(-,root,%{lm_apachegroup}) %{lm_storagefile}
 %config %{lm_confdir}/for_etc_hosts
 %config(noreplace) %{lm_confdir}/handler-nginx.conf
 %config(noreplace) %{lm_confdir}/manager-nginx.conf
@@ -460,7 +461,6 @@ fi
 %dir %{lm_examplesdir}
 %dir %{lm_sharedir}/ressources
 %{lm_sharedir}/ressources/*
-%config(noreplace) %attr(-,root,%{lm_apachegroup}) %{lm_storagefile}
 %defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir %{lm_vardir}/conf
 %dir %{lm_vardir}/sessions
