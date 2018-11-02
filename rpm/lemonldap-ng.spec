@@ -395,6 +395,9 @@ mkdir -p %{buildroot}%{_sysconfdir}/nginx/conf.d/
 mv %{buildroot}%{lm_confdir}/*nginx*.conf \
     %{buildroot}%{_sysconfdir}/nginx/conf.d/
 
+# Remove for_etc_hosts from %%{_sysconfdir}
+mv %{buildroot}%{lm_confdir}/for_etc_hosts .
+
 #==============================================================================
 # Run test
 #==============================================================================
@@ -452,9 +455,9 @@ fi
 %license COPYING GPL
 
 %files conf
+%doc for_etc_hosts
 %dir %{lm_confdir}
 %config(noreplace) %attr(-,root,%{lm_apachegroup}) %{lm_storagefile}
-%config %{lm_confdir}/for_etc_hosts
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-manager.conf
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
