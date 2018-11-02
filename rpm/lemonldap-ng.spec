@@ -372,12 +372,13 @@ chmod 770 %{buildroot}%{lm_vardir}/notifications
 chmod 770 %{buildroot}%{lm_vardir}/captcha
 chmod 775 %{buildroot}%{lm_sharedir}/sbin/llng-fastcgi-server
 
-# Touch for ghost
-mkdir -p %buildroot%{apache_confdir}
-touch %buildroot%{apache_confdir}/z-lemonldap-ng-handler.conf
-touch %buildroot%{apache_confdir}/z-lemonldap-ng-manager.conf
-touch %buildroot%{apache_confdir}/z-lemonldap-ng-portal.conf
-touch %buildroot%{apache_confdir}/z-lemonldap-ng-test.conf
+# Install httpd conf files
+# We use "z-lemonldap-ng-*" so that httpd read the files after "perl.conf"
+mkdir -p %{buildroot}%{apache_confdir}
+for i in handler manager portal test; do {
+    mv %{buildroot}%{lm_confdir}/$i-apache%{apache_version}.conf \
+        %{buildroot}%{apache_confdir}/z-lemonldap-ng-$i.conf
+}; done
 
 #==============================================================================
 # Run test
@@ -394,24 +395,6 @@ sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' \
 # Post Installation
 #==============================================================================
 %post conf
-# Create symlink in Apache configuration
-# We use "z-lemonldap-ng-*" so that Apache read the files after "perl.conf"
-if [ ! -e %{apache_confdir}/z-lemonldap-ng-handler.conf ] ; then
-    ln -s %{lm_confdir}/handler-apache%{apache_version}.conf \
-        %{apache_confdir}/z-lemonldap-ng-handler.conf || :
-fi
-if [ ! -e %{apache_confdir}/z-lemonldap-ng-manager.conf ] ; then
-    ln -s %{lm_confdir}/manager-apache%{apache_version}.conf \
-        %{apache_confdir}/z-lemonldap-ng-manager.conf || :
-fi
-if [ ! -e %{apache_confdir}/z-lemonldap-ng-portal.conf ] ; then
-    ln -s %{lm_confdir}/portal-apache%{apache_version}.conf \
-        %{apache_confdir}/z-lemonldap-ng-portal.conf || :
-fi
-if [ ! -e %{apache_confdir}/z-lemonldap-ng-test.conf ] ; then
-    ln -s %{lm_confdir}/test-apache%{apache_version}.conf \
-        %{apache_confdir}/z-lemonldap-ng-test.conf || :
-fi
 # Upgrade from previous version
 # See http://lemonldap-ng.org/documentation/1.0/upgrade
 if [ $1 -gt 1 ] ; then
@@ -434,18 +417,10 @@ fi
 # Pre uninstallation
 #==============================================================================
 %preun conf
-# Package removal
-if [ $1 -eq 0 ] ; then
-    # Remove symlink in Apache configuration
-    rm -f %{apache_confdir}/z-lemonldap-ng-handler.conf 2>&1 > /dev/null || :
-    rm -f %{apache_confdir}/z-lemonldap-ng-manager.conf 2>&1 > /dev/null || :
-    rm -f %{apache_confdir}/z-lemonldap-ng-portal.conf 2>&1 > /dev/null  || :
-    rm -f %{apache_confdir}/z-lemonldap-ng-test.conf 2>&1 > /dev/null  || :
-fi
 # Upgrade from previous version
 if [ $1 -eq 1 ] ; then
-    # Remove old symlink in Apache configuration
-    rm -f %{apache_confdir}/z-lemonldap-ng.conf 2>&1 > /dev/null || :
+    # Remove old symlinks in Apache configuration
+    rm -f %{apache_confdir}/z-lemonldap-ng*.conf 2>&1 > /dev/null || :
 fi
 
 %post fastcgi-server
@@ -464,20 +439,16 @@ fi
 %files conf
 %dir %{lm_confdir}
 %config %{lm_confdir}/for_etc_hosts
-%config(noreplace) %{lm_confdir}/handler-apache%{apache_version}.conf
-%config(noreplace) %{lm_confdir}/manager-apache%{apache_version}.conf
-%config(noreplace) %{lm_confdir}/portal-apache%{apache_version}.conf
-%config(noreplace) %{lm_confdir}/test-apache%{apache_version}.conf
 %config(noreplace) %{lm_confdir}/handler-nginx.conf
 %config(noreplace) %{lm_confdir}/manager-nginx.conf
 %config(noreplace) %{lm_confdir}/nginx-lmlog.conf
 %config(noreplace) %{lm_confdir}/nginx-lua-headers.conf
 %config(noreplace) %{lm_confdir}/portal-nginx.conf
 %config(noreplace) %{lm_confdir}/test-nginx.conf
-%ghost %{apache_confdir}/z-lemonldap-ng-handler.conf
-%ghost %{apache_confdir}/z-lemonldap-ng-manager.conf
-%ghost %{apache_confdir}/z-lemonldap-ng-portal.conf
-%ghost %{apache_confdir}/z-lemonldap-ng-test.conf
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-manager.conf
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-test.conf
 %dir %{lm_vardir}
 %dir %{lm_sharedir}
 %dir %{lm_sharedir}/bin
