@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 3;
+my $maintests = 6;
 
 eval { unlink 't/userdb.db' };
 
@@ -20,8 +20,7 @@ SKIP: {
     $dbh->do("INSERT INTO users VALUES ('dwho','dwho','Doctor who')");
 
     my $client = LLNG::Manager::Test->new(
-        {
-            ini => {
+        {   ini => {
                 logLevel       => 'error',
                 useSafeJail    => 1,
                 authentication => 'Choice',
@@ -29,8 +28,12 @@ SKIP: {
 
                 authChoiceParam   => 'test',
                 authChoiceModules => {
-                    demo => 'Demo;Demo;Null;;0',
-                    sql  => 'DBI;DBI;DBI;;1',
+                    '1_demo' => 'Demo;Demo;Null;;0',
+                    '2_sql'  => 'DBI;DBI;DBI;;1',
+                    '3_demo' =>
+                        'Demo;Demo;Null;https://test.example.com;$env->{ipAddr} =~ /127.0.0.1/',
+                    '4_demo' =>
+                        'Demo;Demo;Null;https://test.example.com;$env->{ipAddr} =~ /1.2.3.4/',
                 },
 
                 dbiAuthChain        => 'dbi:SQLite:dbname=t/userdb.db',
@@ -45,15 +48,19 @@ SKIP: {
     );
 
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu' );
-    ok( $res->[2]->[0] !~ /demo/, 'Demo not displayed' );
+    ok( $res->[2]->[0] !~ /1_demo/, '1_Demo not displayed' );
+    ok( $res->[2]->[0] =~ /3_demo/, '3_Demo displayed' );
+    ok( $res->[2]->[0] =~ m%<form action="https://test.example.com"%,
+        ' Redirect URL found' )
+        or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] !~ /4_demo/, '4_Demo not displayed' );
 
     # Test SQL
-    my $postString = 'user=dwho&password=dwho&test=sql';
+    my $postString = 'user=dwho&password=dwho&test=2_sql';
 
     # Try yo authenticate
     # -------------------
-    ok(
-        $res = $client->_post(
+    ok( $res = $client->_post(
             '/', IO::String->new($postString),
             length => length($postString)
         ),
