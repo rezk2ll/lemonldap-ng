@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 6;
+my $maintests = 7;
 
 eval { unlink 't/userdb.db' };
 
@@ -23,6 +23,7 @@ SKIP: {
         {   ini => {
                 logLevel       => 'error',
                 useSafeJail    => 1,
+                portalMainLogo => 'common/logos/logo_llng_old.png',
                 authentication => 'Choice',
                 userDB         => 'Same',
 
@@ -54,6 +55,9 @@ SKIP: {
         ' Redirect URL found' )
         or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] !~ /4_demo/, '4_Demo not displayed' );
+    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
+        'Found custom Main Logo' )
+        or print STDERR Dumper( $res->[2]->[0] );
 
     # Test SQL
     my $postString = 'user=dwho&password=dwho&test=2_sql';
