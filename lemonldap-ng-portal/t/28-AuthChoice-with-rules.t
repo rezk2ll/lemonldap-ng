@@ -54,9 +54,10 @@ SKIP: {
     ok( $res->[2]->[0] =~ m%<form action="https://test.example.com"%,
         ' Redirect URL found' )
         or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[1]->[9] =~ m%;form-action \'self\'  https://test.example.com;%,
+    my $header = getHeader($res, 'Content-Security-Policy');
+    ok( $header =~ m%;form-action \'self\'  https://test.example.com;%,
         ' CSP URL found' )
-        or print STDERR Dumper( $res->[1]->[9] );
+        or print STDERR Dumper( $res->[1] );
     ok( $res->[2]->[0] !~ /4_demo/, '4_Demo not displayed' );
     ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo' )
