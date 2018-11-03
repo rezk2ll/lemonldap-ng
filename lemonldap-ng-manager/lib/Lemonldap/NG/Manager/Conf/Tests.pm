@@ -259,6 +259,44 @@ sub tests {
             return 1;
         },
 
+        # Warn if session timeout is lower than 10 minutes
+        timeoutActivity => sub {
+            return 1 unless ( defined $conf->{timeout} );
+            return ( 1,
+                "Session timeout should be higher than ten minutes" )
+                unless ( $conf->{timeout} > 600
+                || $conf->{timeout} == 0 );
+
+            # Return
+            return 1;
+        },
+
+        # Error if session Activity Timeout is equal or lower than one minute
+        timeoutActivity => sub {
+            return 1 unless ( defined $conf->{timeoutActivity} );
+            return ( 0,
+                "Session activity timeout must be higher or equal than one minute" )
+                unless ( $conf->{timeoutActivity} > 59
+                || $conf->{timeoutActivity} == 0 );
+
+            # Return
+            return 1;
+        },
+
+        # Error if session Activity Timeout is equal or lower than one minute
+        timeoutActivityInterval => sub {
+            return 1 unless ( defined $conf->{timeoutActivityInterval} );
+            return ( 0,
+                "Activity timeout interval must be lower than session activity timeout"
+                )
+                if ( $conf->{timeoutActivity}
+                and $conf->{timeoutActivity}
+                <= $conf->{timeoutActivityInterval} );
+
+            # Return
+            return 1;
+        },
+
         # Warn if manager seems to be unprotected
         managerProtection => sub {
             return (
@@ -531,7 +569,7 @@ sub tests {
             return 1;
         },
 
-        # Error if external 2F Send or Validate command is missing
+        # Warn if bruteForceProtection enabled without History
         bruteForceProtection => sub {
             return 1 unless ( $conf->{bruteForceProtection} );
             return ( 1,
