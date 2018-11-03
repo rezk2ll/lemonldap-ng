@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 7;
+my $maintests = 8;
 
 eval { unlink 't/userdb.db' };
 
@@ -54,6 +54,9 @@ SKIP: {
     ok( $res->[2]->[0] =~ m%<form action="https://test.example.com"%,
         ' Redirect URL found' )
         or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[1]->[9] =~ m%;form-action \'self\'  https://test.example.com;%,
+        ' CSP URL found' )
+        or print STDERR Dumper( $res->[1]->[9] );
     ok( $res->[2]->[0] !~ /4_demo/, '4_Demo not displayed' );
     ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo' )
