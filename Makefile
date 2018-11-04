@@ -27,6 +27,7 @@ CSSCOMPRESS=$(PROD)
 # External commands
 PERL=$$(which perl)
 PERLVERSION=`perl -e '$$version = $$^V; $$version =~ s/v//; print $$version'`
+export PERL5LIB=$(shell echo `pwd`/${SRCCOMMONDIR}/blib/lib:`pwd`/${SRCHANDLERDIR}/blib/lib:`pwd`/${SRCMANAGERDIR}/blib/lib/:`pwd`/${SRCPORTALDIR}/blib/lib/)
 SU=su -c
 COMPRESS=tar czf
 UNCOMPRESS=tar xzf
@@ -360,16 +361,15 @@ common_test:	common
 	@$(MAKE) -C ${SRCCOMMONDIR} test
 
 handler_test:	handler
-	@$(MAKE) -C ${SRCHANDLERDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/"
+	@$(MAKE) -C ${SRCHANDLERDIR} test
 
 portal_test:	portal
-	@$(MAKE) -C ${SRCPORTALDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/ -I../${SRCHANDLERDIR}/blib/lib/"
+	@$(MAKE) -C ${SRCPORTALDIR} test
 
 manager_test:	manager
-	@$(MAKE) -C ${SRCMANAGERDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/ -I../${SRCHANDLERDIR}/blib/lib/"
+	@$(MAKE) -C ${SRCMANAGERDIR} test
 
 autopkgtest:    all
-	export PERL5LIB=`pwd`/${SRCCOMMONDIR}/blib/lib:`pwd`/${SRCHANDLERDIR}/blib/lib:`pwd`/${SRCMANAGERDIR}/blib/lib/:`pwd`/${SRCPORTALDIR}/blib/lib/
 	./debian/tests/runner build-deps
 	./debian/tests/runner runtime-deps
 	#/usr/share/pkg-perl-autopkgtest/runner runtime-deps-and-recommends
@@ -433,17 +433,14 @@ start_web_server:	all prepare_test_server
 	@if test "$(TESTBACKEND)" = "DBI"; then \
 		echo 'create table lmConfig (cfgNum int, data text);'|sqlite3 e2e-tests/conf/config.db; \
 		echo 'create table sessions (id text, a_session text, LastUpdated int);'|sqlite3 e2e-tests/conf/sessions.db; \
-		perl -Ilemonldap-ng-common/blib/lib ./lemonldap-ng-common/scripts/convertConfig \
-			--current=e2e-tests/conf/lemonldap-ng.ini \
+		perl --current=e2e-tests/conf/lemonldap-ng.ini \
 			--new=e2e-tests/conf/lemonldap-ng-sql.ini; \
 		mv e2e-tests/conf/lemonldap-ng-sql.ini e2e-tests/conf/lemonldap-ng.ini; \
 		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
-			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
-				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+			perl lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
 				set globalStorage Apache::Session::SQLite3; \
 		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
-			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
-				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+			perl lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
 				addKey globalStorageOptions DataSource 'dbi:SQLite:dbname='`pwd`'/e2e-tests/conf/sessions.db'; \
 	fi
 	@# Debian: make start_web_server TESTBACKEND=LDAP LLNGTESTLDAP_SCHEMA_DIR=/etc/ldap/schema LLNGTESTLDAP_SLAPADD_BIN=/usr/sbin/slapadd
@@ -458,29 +455,24 @@ start_web_server:	all prepare_test_server
 		${LLNGTESTLDAP_SLAPADD_BIN} -F e2e-tests/conf/slapd.d -n 1 -l lemonldap-ng-portal/t/testslapd/users.ldif; \
 		${LLNGTESTLDAP_SLAPADD_BIN} -F e2e-tests/conf/slapd.d -n 1 -l lemonldap-ng-portal/t/testslapd/confs-sessions.ldif; \
 		${LLNGTESTLDAP_SLAPD_BIN} -s 511 -h "ldap://127.0.0.1:20389/" -F e2e-tests/conf/slapd.d; \
-		perl -Ilemonldap-ng-common/blib/lib ./lemonldap-ng-common/scripts/convertConfig \
+		perl ./lemonldap-ng-common/scripts/convertConfig \
 			--current=e2e-tests/conf/lemonldap-ng.ini \
 			--new=e2e-tests/conf/lemonldap-ng-ldap.ini; \
 		mv e2e-tests/conf/lemonldap-ng-ldap.ini e2e-tests/conf/lemonldap-ng.ini; \
 		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
-			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
-				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+			perl lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
 				set globalStorage Apache::Session::LDAP; \
 		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
-			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
-				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+			perl lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
 				addKey globalStorageOptions ldapServer 'ldap://localhost:20389'; \
 		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
-			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
-				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+			perl lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
 				addKey globalStorageOptions ldapConfBase 'ou=configurations,dc=example,dc=com'; \
 		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
-			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
-				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+			perl lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
 				addKey globalStorageOptions ldapBindDN 'cn=admin,dc=example,dc=com'; \
 		LLNG_DEFAULTCONFFILE=e2e-tests/conf/lemonldap-ng.ini \
-			perl -Ilemonldap-ng-common/blib/lib -Ilemonldap-ng-manager/blib/lib -Ilemonldap-ng-handler/blib/lib \
-				lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
+			perl lemonldap-ng-common/scripts/lemonldap-ng-cli --yes 1 \
 				addKey globalStorageOptions ldapBindPassword admin; \
 	fi
 	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` || true
@@ -572,12 +564,8 @@ restart_web_server: start_web_server
 
 plackup:
 	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
-	perl -I . -I`pwd`/lemonldap-ng-common/blib/lib/ \
-			-I`pwd`/lemonldap-ng-handler/blib/lib/ \
-			-I`pwd`/lemonldap-ng-portal/blib/lib/ \
-			-I`pwd`/lemonldap-ng-manager/blib/lib/ \
-		e2e-tests/conf/sbin/llng-fastcgi-server \
-			-F >e2e-tests/conf/fastcgi.log 2>&1 &
+	perl -I . e2e-tests/conf/sbin/llng-fastcgi-server \
+		-F >e2e-tests/conf/fastcgi.log 2>&1 &
 
 install_test:
 	@TESTWEBSERVERPORT=$(PORT) protractor e2e-tests/protractor-conf.js
