@@ -149,6 +149,8 @@ print "<style>\n";
 print "$css\n";
 print "</style>\n";
 print
+"<script type=\"text/javascript\" src=\"$portal_url/static/bwr/crypto-js/core.js\"></script>\n";
+print
 "<script type=\"text/javascript\" src=\"$portal_url/static/bwr/crypto-js/sha256.js\"></script>\n";
 print
 "<script type=\"text/javascript\" src=\"$portal_url/static/bwr/crypto-js/enc-base64.js\"></script>\n";

@@ -21,7 +21,7 @@
       }
     });
     return window.addEventListener("message", function(e) {
-      var client_id, message, salt, session_state, ss, stat;
+      var client_id, message, salt, session_state, ss, stat, word;
       message = e.data;
       console.log('message=', message);
       client_id = decodeURIComponent(message.split(' ')[0]);
@@ -30,7 +30,8 @@
       console.log('session_state=', session_state);
       salt = decodeURIComponent(session_state.split('.')[1]);
       console.log('salt=', salt);
-      ss = btoa(client_id + ' ' + e.origin + ' ' + salt) + '.' + salt;
+      word = CryptoJS.enc.Utf8.parse(client_id + ' ' + e.origin + ' ' + salt);
+      ss = CryptoJS.enc.Base64.stringify(word) + '.' + salt;
       if (session_state === ss) {
         stat = 'unchanged';
       } else {
