@@ -11,8 +11,7 @@
         tmp = JSON.parse($(this).text());
         results = [];
         for (k in tmp) {
-          values[k] = tmp[k];
-          results.push(console.log('values=', values[k]));
+          results.push(values[k] = tmp[k]);
         }
         return results;
       } catch (error) {
@@ -25,11 +24,8 @@
       message = e.data;
       console.log('message=', message);
       client_id = decodeURIComponent(message.split(' ')[0]);
-      console.log('client_id=', client_id);
       session_state = decodeURIComponent(message.split(' ')[1]);
-      console.log('session_state=', session_state);
       salt = decodeURIComponent(session_state.split('.')[1]);
-      console.log('salt=', salt);
       word = CryptoJS.enc.Utf8.parse(client_id + ' ' + e.origin + ' ' + salt);
       ss = CryptoJS.enc.Base64.stringify(word) + '.' + salt;
       if (session_state === ss) {
