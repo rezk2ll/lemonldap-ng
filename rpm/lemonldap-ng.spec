@@ -56,6 +56,7 @@ Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_relea
 BuildArch:      noarch
 
 BuildRequires:  perl-generators
+BuildRequires:  perl-interpreter
 BuildRequires:  perl(Apache::Session)
 BuildRequires:  perl(Authen::Captcha)
 BuildRequires:  perl(Cache::Cache)
