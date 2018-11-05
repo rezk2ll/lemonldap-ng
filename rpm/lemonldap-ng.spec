@@ -55,6 +55,7 @@ URL:            http://lemonldap-ng.org
 Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_release:~%{pre_release}}.tar.gz
 BuildArch:      noarch
 
+BuildRequires:  perl-generators
 BuildRequires:  perl(Apache::Session)
 BuildRequires:  perl(Authen::Captcha)
 BuildRequires:  perl(Cache::Cache)
