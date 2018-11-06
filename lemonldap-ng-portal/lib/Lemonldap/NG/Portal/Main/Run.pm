@@ -869,6 +869,8 @@ sub registerLogin {
 
     # Save into persistent session
     $self->updatePersistentSession( $req, { _loginHistory => $history, } );
+    
+    PE_OK;
 }
 
 # put main session data into a hash ref
