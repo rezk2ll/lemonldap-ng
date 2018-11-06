@@ -539,6 +539,7 @@ sub mkSessionArray {
                         ip     => $session->{ipAddr},
                         values => [ map { { v => $session->{$_} } } @fields ],
                         error  => $session->{error},
+                        displayError => $displayError,
                     }
                 } @$sessions
             ],

@@ -28,7 +28,7 @@
     <TMPL_LOOP NAME="values">
      <td><TMPL_VAR NAME="v"></td>
     </TMPL_LOOP>
-    <TMPL_IF NAME="error">
+    <TMPL_IF NAME="displayError">
      <td trspan="PE<TMPL_VAR NAME="error">">PE<TMPL_VAR NAME="error"></td>
     </TMPL_IF>
    </tr>
