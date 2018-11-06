@@ -150,33 +150,13 @@ sub verify {
       )
     {
         $self->userLogger->warn('Yubikey not registered');
-        $req->error(PE_BADCREDENTIALS);
-        return $self->fail($req);
+        return PE_BADCREDENTIALS;
     }
     if ( $self->yubi->otp($code) ne 'OK' ) {
         $self->userLogger->warn('Yubikey verification failed');
-        $req->error(PE_BADCREDENTIALS);
-        return $self->fail($req);
+        return PE_BADCREDENTIALS;
     }
     PE_OK;
-}
-
-sub fail {
-    my ( $self, $req ) = @_;
-    $req->response(
-        $self->p->sendHtml(
-            $req,
-            'u2fcheck',
-            params => {
-                MAIN_LOGO       => $self->conf->{portalMainLogo},
-                AUTH_ERROR      => $req->error,
-                AUTH_ERROR_TYPE => $req->error_type,
-                SKIN            => $self->conf->{portalSkin},
-                FAILED          => 1
-            }
-        )
-    );
-    return PE_SENDRESPONSE;
 }
 
 1
