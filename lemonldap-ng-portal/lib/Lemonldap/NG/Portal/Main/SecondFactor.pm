@@ -88,7 +88,7 @@ sub _verify {
         $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
         $req->authResult(PE_BADCREDENTIALS);
         return $self->p->do( $req,
-            [ $self->p->storeHistory($req), sub { $res } ] );
+            [ sub { $self->p->storeHistory($req) }, sub { $res } ] );
     }
 
     # Else restore session
