@@ -3103,6 +3103,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'boolOrExpr'
         },
+        'showLanguages' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'singleIP' => {
             'default' => 0,
             'type'    => 'bool'

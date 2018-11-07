@@ -379,6 +379,11 @@ sub attributes {
             default       => 'common/logos/logo_llng_400px.png',
             documentation => 'Portal main logo path',
         },
+        showLanguages => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Display langs icons',
+        },
         staticPrefix => {
             type          => 'text',
             documentation => 'Prefix of static files for HTML templates',

@@ -249,6 +249,7 @@ sub defaultValues {
         'securedCookie'                           => 0,
         'sfEngine'                                => '::2F::Engines::Default',
         'sfRequired'                              => 0,
+        'showLanguages'                           => 1,
         'slaveAuthnLevel'                         => 2,
         'slaveExportedVars'                       => {},
         'SMTPServer'                              => '',

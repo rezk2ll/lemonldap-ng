@@ -685,6 +685,7 @@
 "sfaTitle":"Second Factors Authentication",
 "sfRequired":"Require 2FA",
 "show":"Hiển thị",
+"showLanguages":"Show languages choice",
 "showHelp":"Hiển thị trợ giúp",
 "singleIP":"Chỉ một địa chỉ IP bởi người dùng",
 "singleSession":"Một phiên chỉ bởi người dùng",

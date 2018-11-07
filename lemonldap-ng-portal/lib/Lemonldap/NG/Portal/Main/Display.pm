@@ -69,6 +69,7 @@ sub display {
         $skinfile       = 'confirm';
         %templateParams = (
             MAIN_LOGO       => $self->conf->{portalMainLogo},
+            LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
             AUTH_URL        => $req->{data}->{_url},
@@ -98,6 +99,7 @@ sub display {
         $skinfile       = 'idpchoice';
         %templateParams = (
             MAIN_LOGO       => $self->conf->{portalMainLogo},
+            LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
             AUTH_URL        => $req->{data}->{_url},
@@ -128,6 +130,7 @@ sub display {
         $skinfile       = 'info';
         %templateParams = (
             MAIN_LOGO       => $self->conf->{portalMainLogo},
+            LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $req->error_type,
             MSG             => $info,
@@ -156,6 +159,7 @@ sub display {
           ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} };
         %templateParams = (
             MAIN_LOGO       => $self->conf->{portalMainLogo},
+            LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $req->error_type,
             PROVIDERURI     => $p,
@@ -193,6 +197,7 @@ sub display {
         #utf8::decode($auth_user);
         %templateParams = (
             MAIN_LOGO => $self->conf->{portalMainLogo},
+            LANGS     => $self->conf->{showLanguages},
             AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
             NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
             LOGOUT_URL          => $self->conf->{portal} . "?logout=1",
@@ -213,6 +218,7 @@ sub display {
         $skinfile       = 'upgradesession';
         %templateParams = (
             MAIN_LOGO  => $self->conf->{portalMainLogo},
+            LANGS      => $self->conf->{showLanguages},
             MSG        => 'askToRenew',
             CONFIRMKEY => $self->stamp,
             PORTAL     => $self->conf->{portal},
@@ -229,6 +235,7 @@ sub display {
         $skinfile       = 'updatesession';
         %templateParams = (
             MAIN_LOGO  => $self->conf->{portalMainLogo},
+            LANGS      => $self->conf->{showLanguages},
             MSG        => 'PE87',
             CONFIRMKEY => $self->stamp,
             PORTAL     => $self->conf->{portal},
@@ -252,6 +259,7 @@ sub display {
         $skinfile       = 'error';
         %templateParams = (
             MAIN_LOGO       => $self->conf->{portalMainLogo},
+            LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
             (
@@ -269,6 +277,7 @@ sub display {
         $login = '' if ( $login eq 'anonymous' );
         %templateParams = (
             MAIN_LOGO             => $self->conf->{portalMainLogo},
+            LANGS                 => $self->conf->{showLanguages},
             AUTH_ERROR            => $req->error,
             AUTH_ERROR_TYPE       => $req->error_type,
             AUTH_URL              => $req->{data}->{_url},

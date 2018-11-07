@@ -686,6 +686,7 @@
 "sfaTitle":"Seconds Facteurs d'Authentification",
 "show":"Montrer",
 "showHelp":"Montrer l'aide",
+"showLanguages":"Afficher le choix des langues",
 "singleIP":"Une seule session par couple utilisateur/IP",
 "singleSession":"Une seule session par utilisateur",
 "singleUserByIP":"Un seul utilisateur par IP",

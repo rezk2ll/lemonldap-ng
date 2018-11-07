@@ -39,15 +39,15 @@
  <TMPL_INCLUDE NAME="../common/script.tpl">
 <!-- //if:usedebianlibs
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.min.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/portal.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/portal.min.js"></script>
   <script type="text/javascript" src="/javascript/bootstrap/js/bootstrap.min.js"></script>
  //elsif:jsminified
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.min.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/portal.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/portal.min.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/js/bootstrap.min.js"></script>
  //else -->
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/portal.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/portal.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/js/bootstrap.js"></script>
  <!-- //endif -->
  <TMPL_VAR NAME="CUSTOM_SCRIPT">

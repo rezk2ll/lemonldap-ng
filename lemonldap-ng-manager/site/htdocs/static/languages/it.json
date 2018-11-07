@@ -686,6 +686,7 @@
 "sfRequired":"Require 2FA",
 "show":"Mostra",
 "showHelp":"Mostra aiuto",
+"showLanguages":"Show languages choice",
 "singleIP":"Solo un IP per utente",
 "singleSession":"Una sola sessione per utente",
 "singleUserByIP":"Un utente per indirizzo IP",
