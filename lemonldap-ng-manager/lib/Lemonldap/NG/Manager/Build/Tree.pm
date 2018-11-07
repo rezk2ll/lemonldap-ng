@@ -123,6 +123,7 @@ sub tree {
                         },
                         {   title => 'casParams',
                             help  => 'authcas.html',
+                            form  => 'simpleInputContainer',
                             nodes => ['casAuthnLevel']
                         },
                         {   title => 'dbiParams',
@@ -187,6 +188,7 @@ sub tree {
                         },
                         {   title => 'facebookParams',
                             help  => 'authfacebook.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'facebookAuthnLevel',
                                 'facebookExportedVars',
@@ -256,6 +258,7 @@ sub tree {
                         },
                         {   title => 'linkedinParams',
                             help  => 'authlinkedin.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'linkedInAuthnLevel',   'linkedInClientID',
                                 'linkedInClientSecret', 'linkedInFields',
@@ -280,6 +283,7 @@ sub tree {
                         },
                         {   title => 'oidcParams',
                             help  => 'authopenidconnect.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'oidcAuthnLevel',
                                 'oidcRPCallbackGetParam',
