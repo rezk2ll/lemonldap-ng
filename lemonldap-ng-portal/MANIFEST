@@ -186,12 +186,6 @@ site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.js
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.js.map
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.min.js
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.min.js.map
-site/htdocs/static/bwr/crypto-js/core.js
-site/htdocs/static/bwr/crypto-js/core.min.js
-site/htdocs/static/bwr/crypto-js/enc-base64.js
-site/htdocs/static/bwr/crypto-js/enc-base64.min.js
-site/htdocs/static/bwr/crypto-js/sha256.js
-site/htdocs/static/bwr/crypto-js/sha256.min.js
 site/htdocs/static/bwr/fingerprintjs2/fingerprint2.js
 site/htdocs/static/bwr/fingerprintjs2/fingerprint2.min.js
 site/htdocs/static/bwr/font-awesome/css/font-awesome.css
