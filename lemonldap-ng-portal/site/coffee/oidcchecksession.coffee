@@ -22,9 +22,9 @@ $(document).ready ->
 			#console.log 'salt=', salt
 			# hash ??????
 			#ss = hash.toString(CryptoJS.enc.Base64) + '.'  + salt
-			#ss = btoa(client_id + ' ' + e.origin + ' ' + salt) + '.'  + salt
-			word = CryptoJS.enc.Utf8.parse(client_id + ' ' + e.origin + ' ' + salt)
-			ss = CryptoJS.enc.Base64.stringify(word) + '.' + salt
+			ss = btoa(client_id + ' ' + e.origin + ' ' + salt) + '.'  + salt
+			#word = CryptoJS.enc.Utf8.parse(client_id + ' ' + e.origin + ' ' + salt)
+			#ss = CryptoJS.enc.Base64.stringify(word) + '.' + salt
 			if session_state == ss
 				stat = 'unchanged'
 			else
