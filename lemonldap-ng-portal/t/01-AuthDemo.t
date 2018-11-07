@@ -24,13 +24,19 @@ ok(
 count(1);
 expectReject($res);
 
+ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu' );
+ok( $res->[2]->[0] =~ m%<span id="languages"></span>%,
+    ' Language icons found' )
+    or print STDERR Dumper( $res->[2]->[0] );
+count(2);
+
 # Try to authenticate
 # -------------------
 ok(
     $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho'),
-        length => 23
+        length => 23,
     ),
     'Auth query'
 );

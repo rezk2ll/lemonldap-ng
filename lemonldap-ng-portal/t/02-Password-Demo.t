@@ -15,9 +15,16 @@ my $client = LLNG::Manager::Test->new(
             logLevel                 => 'error',
             passwordDB               => 'Demo',
             portalRequireOldPassword => 1,
+            showLanguages            => 0,
         }
     }
 );
+
+ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu' );
+ok( $res->[2]->[0] !~ m%<span id="languages"></span>%,
+    ' No language icon found' )
+    or print STDERR Dumper( $res->[2]->[0] );
+count(2);
 
 # Try yo authenticate
 # -------------------
