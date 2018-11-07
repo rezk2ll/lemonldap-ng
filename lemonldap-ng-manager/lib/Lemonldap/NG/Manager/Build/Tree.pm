@@ -188,7 +188,6 @@ sub tree {
                         },
                         {   title => 'facebookParams',
                             help  => 'authfacebook.html',
-                            form  => 'simpleInputContainer',
                             nodes => [
                                 'facebookAuthnLevel',
                                 'facebookExportedVars',
