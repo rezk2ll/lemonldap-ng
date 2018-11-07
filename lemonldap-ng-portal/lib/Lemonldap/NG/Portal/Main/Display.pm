@@ -48,6 +48,7 @@ sub display {
         $skinfile       = 'notification';
         %templateParams = (
             MAIN_LOGO       => $self->conf->{portalMainLogo},
+            LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR_TYPE => $req->error_type,
             NOTIFICATION    => $notif,
             HIDDEN_INPUTS   => $self->buildHiddenForm($req),
