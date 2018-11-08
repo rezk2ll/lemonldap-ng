@@ -257,6 +257,7 @@ foreach
                 my $entityIDKey = $entityID;
                 $entityIDKey =~ s/^https?:\/\///;
                 $entityIDKey =~ s/[^a-zA-Z0-9]/-/g;
+                $entityIDKey =~ s/-+$//g;
                 my $confKey = $idpConfKeyPrefix . $entityIDKey;
 
                 # Metadata
@@ -367,6 +368,7 @@ foreach
                 my $entityIDKey = $entityID;
                 $entityIDKey =~ s/^https?:\/\///;
                 $entityIDKey =~ s/[^a-zA-Z0-9]/-/g;
+                $entityIDKey =~ s/-+$//g;
                 my $confKey = $spConfKeyPrefix . $entityIDKey;
 
                 # Metadata
