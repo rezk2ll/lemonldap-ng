@@ -311,6 +311,8 @@ site/templates/bootstrap/confirm.tpl
 site/templates/bootstrap/customfooter.tpl
 site/templates/bootstrap/customhead.tpl
 site/templates/bootstrap/customheader.tpl
+site/templates/bootstrap/customLoginFooter.tpl
+site/templates/bootstrap/customLoginHeader.tpl
 site/templates/bootstrap/error.tpl
 site/templates/bootstrap/ext2fcheck.tpl
 site/templates/bootstrap/footer.tpl
