@@ -437,7 +437,7 @@ sub retrieveSession {
     #     (15 seconds)
     if (    defined $class->data->{_session_id}
         and $id eq $class->data->{_session_id}
-        and ( $now - $class->dataUpdate < 15 ) )
+        and ( $now - $class->dataUpdate < $class->tsv->{handlerInternalCache} ) )
     {
         $class->logger->debug("Get session $id from Handler internal cache");
         return $class->data;

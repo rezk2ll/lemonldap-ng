@@ -414,6 +414,11 @@ sub attributes {
             documentation =>
               'Avoid asking confirmation when an Issuer asks to renew auth',
         },
+        handlerInternalCache => {
+            type          => 'int',
+            default       => 15,
+            documentation => 'Handler internal cache timeout',
+        },
 
         # Loggers (ini only)
         logLevel => {

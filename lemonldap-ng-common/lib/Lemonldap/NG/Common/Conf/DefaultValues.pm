@@ -62,6 +62,7 @@ sub defaultValues {
             'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
         },
         'groups'                    => {},
+        'handlerInternalCache'      => 15,
         'hiddenAttributes'          => '_password',
         'httpOnly'                  => 1,
         'infoFormMethod'            => 'get',

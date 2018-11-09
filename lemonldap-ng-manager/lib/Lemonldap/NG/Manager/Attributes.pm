@@ -1159,6 +1159,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             },
             'type' => 'keyTextContainer'
         },
+        'handlerInternalCache' => {
+            'default' => 15,
+            'type'    => 'int'
+        },
         'hiddenAttributes' => {
             'default' => '_password',
             'type'    => 'text'
