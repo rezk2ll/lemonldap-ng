@@ -1,7 +1,8 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-
 <main id="logincontent" class="container">
+
+  <TMPL_INCLUDE NAME="customLoginHeader.tpl">
 
   <TMPL_IF NAME="AUTH_ERROR">
   <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
@@ -226,6 +227,8 @@
       </div>
     </div>
   </TMPL_IF>
+
+  <TMPL_INCLUDE NAME="customLoginFooter.tpl">
 
 </main>
 
