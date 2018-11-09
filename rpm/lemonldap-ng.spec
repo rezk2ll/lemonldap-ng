@@ -523,7 +523,6 @@ fi
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-manager.conf
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
-%config(noreplace) %{apache_confdir}/z-lemonldap-ng-test.conf
 %dir %{lm_vardir}
 %dir %{lm_sharedir}
 %dir %{lm_sharedir}/bin
@@ -574,6 +573,7 @@ fi
 
 %files test
 %{lm_vardir}/test
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-test.conf
 
 %files fastcgi-server
 %{lm_sharedir}/sbin/llng-fastcgi-server
