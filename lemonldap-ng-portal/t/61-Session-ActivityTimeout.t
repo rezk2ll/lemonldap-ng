@@ -15,8 +15,9 @@ my $client = LLNG::Manager::Test->new(
             logLevel                 => 'error',
             authentication           => 'Demo',
             userdb                   => 'Same',
-            timeoutActivity          => 20,
-            timeoutActivityInterval  => 16,
+            timeoutActivity          => 4,
+            timeoutActivityInterval  => 2,
+            handlerInternalCache     => 1,
         }
     }
 );
@@ -33,7 +34,7 @@ expectOK($res);
 my $id1 = expectCookie($res);
 count(1);
 
-sleep 17;
+sleep 3;
 
 ok(
     $res = $client->_get(
@@ -48,7 +49,7 @@ ok( $res->[2]->[0] =~ qr%<span trspan="yourApps">Your applications</span>%,
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
-sleep 21;
+sleep 5;
 
 ok(
     $res = $client->_get(
