@@ -418,6 +418,7 @@ sub attributes {
             type          => 'int',
             default       => 15,
             documentation => 'Handler internal cache timeout',
+            flags         => 'hp',
         },
 
         # Loggers (ini only)
