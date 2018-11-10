@@ -452,6 +452,7 @@ t/42-Register-Demo-with-captcha.t
 t/42-Register-Demo-with-token.t
 t/42-Register-Demo.t
 t/42-Register-LDAP.t
+t/43-MailReset-Choice.t
 t/43-MailReset-DBI.t
 t/43-MailReset-LDAP.t
 t/43-MailReset-with-captcha.t
