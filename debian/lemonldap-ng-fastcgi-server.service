@@ -6,7 +6,7 @@ Documentation=https://lemonldap-ng.org/documentation/latest/fastcgiserver
 [Service]
 Type=forking
 EnvironmentFile=/etc/default/lemonldap-ng-fastcgi-server
-PIDFile=/var/run/llng-fastcgi-server/llng-fastcgi-server.pid
+PIDFile=/run/llng-fastcgi-server/llng-fastcgi-server.pid
 ExecStart=/usr/sbin/llng-fastcgi-server
 ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile ${PID}
 KillMode=mixed
