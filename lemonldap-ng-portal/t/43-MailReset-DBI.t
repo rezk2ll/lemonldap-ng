@@ -11,7 +11,7 @@ BEGIN {
 }
 
 my ( $res, $user, $pwd );
-my $maintests = 7;
+my $maintests = 8;
 my $mailSend  = 0;
 
 my $mail2 = 0;
@@ -100,6 +100,19 @@ SKIP: {
     );
 
     ok( mail() =~ /Your password was changed/, 'Password was changed' );
+
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=zz&test=sql'),
+            length => 30
+        ),
+        'Auth query'
+    );
+    expectOK($res);
+    my $id = expectCookie($res);
+
+    $client->logout($id);
 
     #print STDERR Dumper($query);
 }

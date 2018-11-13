@@ -20,9 +20,9 @@ sub confirm {
 }
 
 sub modifyPassword {
-    my ( $self, $req, $pwd ) = @_;
+    my ( $self, $req, $pwd, $useMail ) = @_;
 
-    my $userCol     = $self->conf->{dbiAuthLoginCol};
+    my $userCol     = $useMail ? $self->mailField : $self->pivot;
     my $passwordCol = $self->conf->{dbiAuthPasswordCol};
     my $table       = $self->conf->{dbiAuthTable};
     my $dynamicHash = $self->conf->{dbiDynamicHashEnabled} || 0;

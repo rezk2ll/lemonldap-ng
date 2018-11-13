@@ -16,6 +16,36 @@ our $VERSION = '2.0.0';
 
 # PROPERTIES
 
+has table => (
+    is      => 'rw',
+    lazy    => 1,
+    builder => sub {
+        my $conf = $_[0]->{conf};
+        return $conf->{dbiUserTable} || $conf->{dbiAuthTable};
+    }
+);
+
+has pivot => (
+    is      => 'rw',
+    lazy    => 1,
+    builder => sub {
+        my $conf = $_[0]->{conf};
+        return $conf->{userPivot} || $conf->{dbiAuthLoginCol};
+    }
+);
+
+has mailField => (
+    is      => 'rw',
+    lazy    => 1,
+    builder => sub {
+        my $conf = $_[0]->{conf};
+        return
+             $conf->{dbiMailCol}
+          || $conf->{userPivot}
+          || $conf->{dbiAuthLoginCol};
+    }
+);
+
 # _dbh object: DB connection object
 has _dbh => (
     is      => 'rw',
