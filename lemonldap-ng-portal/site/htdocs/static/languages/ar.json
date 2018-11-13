@@ -200,7 +200,7 @@
 "scope":"Scope",
 "selectIdP":"اختر موفر الهوية الخاص بك",
 "service":"Service",
-"sendPwd":"أرسل لي كلمة مرور جديدة",
+"sendPwd":"Send me a link",
 "serverError":"يحدث خطأ في الخادم",
 "serviceProvidedBy":"الخدمة المقدمة من قبل",
 "sessionsDeleted":"الجلسات التالية تم غلقها",

@@ -200,7 +200,7 @@
 "scope":"Scope",
 "selectIdP":"Select your Identity Provider",
 "service":"Service",
-"sendPwd":"Send me a new password",
+"sendPwd":"Send me a link",
 "serverError":"Error occurs on the server",
 "serviceProvidedBy":"Service provided by",
 "sessionsDeleted":"The following sessions have been closed",

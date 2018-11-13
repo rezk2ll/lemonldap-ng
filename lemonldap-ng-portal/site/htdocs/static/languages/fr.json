@@ -200,7 +200,7 @@
 "scope": "Informations",
 "selectIdP":"Choisissez votre fournisseur d'identité",
 "service":"Service",
-"sendPwd":"Envoyez-moi un nouveau mot de passe",
+"sendPwd":"Envoyez-moi un lien",
 "serverError":"Une erreur est survenue sur le serveur",
 "serviceProvidedBy":"Ce service est fourni par",
 "sessionsDeleted":"Les sessions suivantes ont été fermées",
