@@ -223,7 +223,7 @@ Summary:        LemonLDAP-NG documentation
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 
 %description doc
-This package contains html documentation.
+This package contains HTML documentation.
 
 #==============================================================================
 # Handler
