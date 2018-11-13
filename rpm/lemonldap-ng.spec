@@ -462,6 +462,17 @@ mv %{buildroot}%{lm_confdir}/*nginx*.conf \
 # Remove for_etc_hosts from %%{_sysconfdir}
 mv %{buildroot}%{lm_confdir}/for_etc_hosts .
 
+# Fix shebang and perms
+sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
+    %{buildroot}/usr/share/lemonldap-ng/manager/htdocs/manager.psgi
+chmod 755 %{buildroot}/usr/share/lemonldap-ng/manager/htdocs/manager.psgi
+sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
+    %{buildroot}/usr/share/lemonldap-ng/examples/manager/manager.psgi
+chmod 755 %{buildroot}/usr/share/lemonldap-ng/examples/manager/manager.psgi
+sed -i -e '1i#!/usr/bin/plackup' \
+    %{buildroot}/usr/share/lemonldap-ng/examples/llngapp.psgi
+chmod 644 %{buildroot}/usr/share/lemonldap-ng/test/cas.php
+
 #==============================================================================
 # Run test
 #==============================================================================
