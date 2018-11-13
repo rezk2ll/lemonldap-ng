@@ -11,7 +11,7 @@ BEGIN {
 }
 
 my ( $res, $user, $pwd );
-my $maintests = 7;
+my $maintests = 14;
 my $mailSend  = 0;
 
 my $mail2 = 0;
@@ -61,59 +61,63 @@ SKIP: {
         }
     );
 
-    # Test form
-    # ------------------------
-    ok( $res = $client->_get( '/resetpwd', accept => 'text/html' ),
-        'Reset form', );
-    my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'mail' );
+    foreach my $sameBrowser ( 0 .. 1 ) {
 
-    $query = 'mail=yadd%40badwolf.org';
+        # Test form
+        # ------------------------
+        ok( $res = $client->_get( '/resetpwd', accept => 'text/html' ),
+            'Reset form', );
+        my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'mail' );
 
-    # Post email
-    ok(
-        $res = $client->_post(
-            '/resetpwd', IO::String->new($query),
-            query  => 'test=sql',
-            length => length($query),
-            accept => 'text/html'
-        ),
-        'Post mail'
-    );
-    my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+        $query = 'mail=yadd%40badwolf.org';
 
-    ok( mail() =~ m#a href="http://auth.example.com/resetpwd\?(.*?)"#,
-        'Found link in mail' );
-    $query = $1;
+        # Post email
+        ok(
+            $res = $client->_post(
+                '/resetpwd', IO::String->new($query),
+                query  => 'test=sql',
+                length => length($query),
+                accept => 'text/html'
+            ),
+            'Post mail'
+        );
+        my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
-    ok(
-        $res = $client->_get(
-            '/resetpwd',
-            query  => $query,
-            accept => 'text/html',
-            cookie => $pdata,
-        ),
-        'Post mail token received by mail'
-    );
-    ( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
-    ok( $res->[2]->[0] =~ /newpassword/s, ' Ask for a new password' );
+        ok( mail() =~ m#a href="http://auth.example.com/resetpwd\?(.*?)"#,
+            'Found link in mail' );
+        $query = $1;
 
-    $query .= '&newpassword=zz&confirmpassword=zz';
-    $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+        ok(
+            $res = $client->_get(
+                '/resetpwd',
+                query  => $query,
+                accept => 'text/html',
+                ( $sameBrowser ? ( cookie => $pdata ) : () ),
+            ),
+            'Post mail token received by mail with '
+              . ( $sameBrowser ? 'the same browser' : 'another browser' )
+        );
+        ( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
+        ok( $res->[2]->[0] =~ /newpassword/s, ' Ask for a new password' );
 
-    # Post new password
-    ok(
-        $res = $client->_post(
-            '/resetpwd', IO::String->new($query),
-            length => length($query),
-            accept => 'text/html',
-            cookie => $pdata,
-        ),
-        'Post new password'
-    );
+        $query .= '&newpassword=zz&confirmpassword=zz';
+        $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
-    ok( mail() =~ /Your password was changed/, 'Password was changed' );
+        # Post new password
+        ok(
+            $res = $client->_post(
+                '/resetpwd', IO::String->new($query),
+                length => length($query),
+                accept => 'text/html',
+                cookie => $pdata,
+            ),
+            'Post new password'
+        );
 
-    #print STDERR Dumper($query);
+        ok( mail() =~ /Your password was changed/, 'Password was changed' );
+
+        #print STDERR Dumper($query);
+    }
 }
 
 eval { unlink 't/userdb.db' };

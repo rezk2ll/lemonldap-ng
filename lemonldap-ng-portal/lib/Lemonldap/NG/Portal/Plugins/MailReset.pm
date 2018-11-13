@@ -117,6 +117,9 @@ sub _reset {
         $req->data->{mailAddress} =
           $mailSession->data->{ $self->conf->{mailSessionKey} };
         $self->logger->debug( 'User associated to: ' . $req->{user} );
+
+        # Restore pdata if any
+        $req->pdata( $mailSession->data->{_pdata} || {} );
         $mailSession->remove;
         $searchByMail = 0 unless ( $req->{user} =~ /\@/ );
     }
@@ -238,6 +241,9 @@ sub _reset {
 
         # Store type
         $infos->{_type} = "mail";
+
+        # Store pdata
+        $infos->{_pdata} = $req->pdata;
 
         # create session
         $mailSession = $self->p->getApacheSession( undef, info => $infos );
