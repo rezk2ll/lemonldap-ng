@@ -444,7 +444,7 @@ chmod 770 %{buildroot}%{lm_vardir}/psessions
 chmod 770 %{buildroot}%{lm_vardir}/psessions/lock
 chmod 770 %{buildroot}%{lm_vardir}/notifications
 chmod 770 %{buildroot}%{lm_vardir}/captcha
-chmod 755 %{buildroot}%{lm_sbindir}/llng-fastcgi-server
+chmod 775 %{buildroot}%{lm_sbindir}/llng-fastcgi-server
 
 # Install httpd conf files
 # We use "z-lemonldap-ng-*" so that httpd read the files after "perl.conf"
