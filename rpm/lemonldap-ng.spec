@@ -15,6 +15,8 @@
 %global lm_vardir %{_localstatedir}/lib/lemonldap-ng
 %global lm_confdir %{_sysconfdir}/lemonldap-ng
 %global lm_storagefile %{lm_confdir}/lemonldap-ng.ini
+%global lm_bindir %{_libexecdir}/%{name}/bin
+%global lm_sbindir %{_libexecdir}/%{name}/sbin
 
 # Apache configuration directory
 %if 0%{?rhel}%{?fedora}
@@ -370,12 +372,12 @@ This package installs the authentication portal.
 %{__make} %{?_smp_mflags} install \
     DESTDIR=%{buildroot} \
     PREFIX=%{lm_prefix} \
-    BINDIR=%{lm_sharedir}/bin \
-    SBINDIR=%{lm_sharedir}/sbin \
+    BINDIR=%{lm_bindir} \
+    SBINDIR=%{lm_sbindir} \
     FASTCGISOCKDIR=%{_rundir}/llng-fastcgi-server \
-    DOCUMENTROOT=%{lm_vardir} \
+    DOCUMENTROOT=%{lm_sharedir} \
     EXAMPLESDIR=%{lm_examplesdir} \
-    HANDLERDIR=%{lm_vardir}/handler \
+    HANDLERDIR=%{lm_sharedir}/handler \
     MANAGERDIR=%{lm_sharedir}/manager \
     STORAGECONFFILE=%{lm_storagefile} \
     TOOLSDIR=%{lm_sharedir}/ressources \
@@ -401,7 +403,7 @@ install -m644 fastcgi-server/systemd/llng-fastcgi-server.service \
     %{buildroot}%{_unitdir}
 sed -i \
     -e 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' \
-    -e 's:__SBINDIR__:%{lm_sharedir}/sbin:' \
+    -e 's:__SBINDIR__:%{lm_sbindir}:' \
     %{buildroot}%{_unitdir}/llng-fastcgi-server.service
 rm -f %{buildroot}%{_sysconfdir}/init.d/llng-fastcgi-server
 
@@ -424,9 +426,9 @@ mkdir -p %{buildroot}%{lm_sharedir}/llng-server
 # built as root
 sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{_sysconfdir}/cron.d/*
 sed -i 's/nobody/%{lm_apacheuser}/' \
-    %{buildroot}%{lm_sharedir}/bin/lmConfigEditor
+    %{buildroot}%{lm_bindir}/lmConfigEditor
 sed -i 's/nobody/%{lm_apacheuser}/g' \
-    %{buildroot}%{lm_sharedir}/bin/lemonldap-ng-cli
+    %{buildroot}%{lm_bindir}/lemonldap-ng-cli
 sed -i 's/nobody/%{lm_apacheuser}/g' \
     %{buildroot}%{_sysconfdir}/default/llng-fastcgi-server
 
@@ -442,7 +444,7 @@ chmod 770 %{buildroot}%{lm_vardir}/psessions
 chmod 770 %{buildroot}%{lm_vardir}/psessions/lock
 chmod 770 %{buildroot}%{lm_vardir}/notifications
 chmod 770 %{buildroot}%{lm_vardir}/captcha
-chmod 775 %{buildroot}%{lm_sharedir}/sbin/llng-fastcgi-server
+chmod 755 %{buildroot}%{lm_sbindir}/llng-fastcgi-server
 
 # Install httpd conf files
 # We use "z-lemonldap-ng-*" so that httpd read the files after "perl.conf"
@@ -482,7 +484,7 @@ if [ $1 -gt 1 ] ; then
          -o -e %{lm_confdir}/apply.conf \
          -o -e %{lm_confdir}/apps-list.xml ] ; then
         # Run migration script
-        %{lm_sharedir}/bin/lmMigrateConfFiles2ini 2>&1 > /dev/null || :
+        %{lm_bindir}/lmMigrateConfFiles2ini 2>&1 > /dev/null || :
         # Fix ownership
         chgrp %{lm_apachegroup} %{lm_storagefile} || :
     fi
@@ -523,17 +525,19 @@ fi
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-manager.conf
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
-%dir %{lm_vardir}
-%dir %{lm_sharedir}
-%dir %{lm_sharedir}/bin
-%{lm_sharedir}/bin/convertConfig
 %{_mandir}/man1/convertConfig*
-%{lm_sharedir}/bin/importMetadata
-%{lm_sharedir}/bin/lmMigrateConfFiles2ini
-%{lm_sharedir}/bin/rotateOidcKeys
+%dir %{_libexecdir}/%{name}
+%dir %{lm_sbindir}
+%dir %{lm_bindir}
+%{lm_bindir}/convertConfig
+%{lm_bindir}/importMetadata
+%{lm_bindir}/lmMigrateConfFiles2ini
+%{lm_bindir}/rotateOidcKeys
 %dir %{lm_examplesdir}
+%dir %{lm_sharedir}
 %dir %{lm_sharedir}/ressources
 %{lm_sharedir}/ressources/*
+%dir %{lm_vardir}
 %defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir %{lm_vardir}/conf
 %dir %{lm_vardir}/sessions
@@ -545,38 +549,38 @@ fi
 %config(noreplace) %{lm_vardir}/conf/lmConf-1.json
 
 %files doc
-%doc %{lm_vardir}/doc
+%doc %{lm_sharedir}/doc
 %doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
 %license COPYING GPL
 
 %files handler
-%{lm_sharedir}/bin/purgeLocalCache
+%{lm_bindir}/purgeLocalCache
 %config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-handler
-%{lm_vardir}/handler
+%{lm_sharedir}/handler
 %{lm_examplesdir}/handler
 %{lm_sharedir}/llng-server/llng-server.psgi
 
 %files manager
 %{lm_sharedir}/manager
 %{lm_examplesdir}/manager
-%{lm_sharedir}/bin/lmConfigEditor
-%{lm_sharedir}/bin/lemonldap-ng-cli
+%{lm_bindir}/lmConfigEditor
+%{lm_bindir}/lemonldap-ng-cli
 %{_mandir}/man1/lemonldap-ng-cli*
 
 %files portal
-%{lm_vardir}/portal
-%{lm_sharedir}/bin/purgeCentralCache
+%{lm_sharedir}/portal
+%{lm_bindir}/purgeCentralCache
 %config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-portal
 %{lm_examplesdir}/portal
 %defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir %{lm_vardir}/captcha
 
 %files test
-%{lm_vardir}/test
+%{lm_sharedir}/test
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-test.conf
 
 %files fastcgi-server
-%{lm_sharedir}/sbin/llng-fastcgi-server
+%{lm_sbindir}/llng-fastcgi-server
 %config(noreplace) %{_sysconfdir}/default/llng-fastcgi-server
 %{_unitdir}/llng-fastcgi-server.service
 %{_tmpfilesdir}/llng-fastcgi-server.conf
