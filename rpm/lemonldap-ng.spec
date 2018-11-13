@@ -589,7 +589,7 @@ fi
 %{lm_sharedir}/examples/llngapp.psgi
 
 %files uwsgi-app
-%{_sysconfdir}/uwsgi/apps-available/llng-server.yaml
+%config(noreplace) %{_sysconfdir}/uwsgi/apps-available/llng-server.yaml
 
 %files nginx
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/handler-nginx.conf
