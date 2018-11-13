@@ -3,6 +3,9 @@ ApacheMP2
 Common/Logger/Sentry.pm
 Handler/Lib/SecureToken.pm
 Handler/Server/SecureToken.pm
+Lemonldap/NG/Handler.pm
+ZimbraPreAuth.pm
+Portal/Lib/Captcha.pm
 Portal/Main/Run
 Portal/Main/Init
 Portal/Main/Display

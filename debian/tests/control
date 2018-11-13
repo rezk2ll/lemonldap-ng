@@ -6,9 +6,9 @@ Test-Command: ./debian/tests/runner runtime-deps
 Depends: @, pkg-perl-autopkgtest, libmouse-perl
 
 # Use pkg-perl-autopkgtest test for runtime-deps-and-recommends
+# Some portal suggested dependencies are added here
 Test-Command: /usr/share/pkg-perl-autopkgtest/runner runtime-deps-and-recommends
-Depends: @, @builddeps@, pkg-perl-autopkgtest, libmouse-perl, libcache-memcached-perl, libauthen-pam-perl, libauthen-radius-perl, libweb-id-perl, libyaml-perl
-Restrictions: needs-recommends
+Depends: @, @builddeps@, pkg-perl-autopkgtest, libyaml-perl, liblog-log4perl-perl, libauthen-pam-perl, libauthen-radius-perl, libweb-id-perl
 
 #Test-Command: ./debian/tests/runner heavy-deps
 #Depends: @, pkg-perl-autopkgtest, pkg-perl-autopkgtest-heavy, libmouse-perl
