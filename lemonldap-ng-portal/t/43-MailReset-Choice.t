@@ -11,14 +11,14 @@ BEGIN {
 }
 
 my ( $res, $user, $pwd );
-my $maintests = 14;
+my $maintests = 16;
 my $mailSend  = 0;
 
 my $mail2 = 0;
 
 SKIP: {
     eval
-      'require Email::Sender::Simple;use GD::SecurityImage;use Image::Magick;';
+        'require Email::Sender::Simple;use GD::SecurityImage;use Image::Magick;';
     if ($@) {
         skip 'Missing dependencies', $maintests;
     }
@@ -30,11 +30,11 @@ SKIP: {
     $dbh->do(
         'CREATE TABLE users (user text,password text,name text, mail text)');
     $dbh->do(
-        "INSERT INTO users VALUES ('yadd','yadd','Yadd','yadd\@badwolf.org')");
+        "INSERT INTO users VALUES ('yadd','yadd','Yadd','yadd\@badwolf.org')"
+    );
 
     my $client = LLNG::Manager::Test->new(
-        {
-            ini => {
+        {   ini => {
                 logLevel              => 'error',
                 useSafeJail           => 1,
                 portalDisplayRegister => 1,
@@ -61,6 +61,18 @@ SKIP: {
         }
     );
 
+    ok( $res = $client->_post(
+            '/',
+            IO::String->new('user=yadd&password=yadd&test=sql'),
+            length => 32
+        ),
+        'Auth query'
+    );
+    expectOK($res);
+    my $id = expectCookie($res);
+
+    $client->logout($id);
+
     foreach my $sameBrowser ( 0 .. 1 ) {
 
         # Test form
@@ -72,8 +84,7 @@ SKIP: {
         $query = 'mail=yadd%40badwolf.org';
 
         # Post email
-        ok(
-            $res = $client->_post(
+        ok( $res = $client->_post(
                 '/resetpwd', IO::String->new($query),
                 query  => 'test=sql',
                 length => length($query),
@@ -81,21 +92,21 @@ SKIP: {
             ),
             'Post mail'
         );
-        my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+        my $pdata
+            = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
         ok( mail() =~ m#a href="http://auth.example.com/resetpwd\?(.*?)"#,
             'Found link in mail' );
         $query = $1;
 
-        ok(
-            $res = $client->_get(
+        ok( $res = $client->_get(
                 '/resetpwd',
                 query  => $query,
                 accept => 'text/html',
                 ( $sameBrowser ? ( cookie => $pdata ) : () ),
             ),
             'Post mail token received by mail with '
-              . ( $sameBrowser ? 'the same browser' : 'another browser' )
+                . ( $sameBrowser ? 'the same browser' : 'another browser' )
         );
         ( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
         ok( $res->[2]->[0] =~ /newpassword/s, ' Ask for a new password' );
@@ -104,8 +115,7 @@ SKIP: {
         $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
         # Post new password
-        ok(
-            $res = $client->_post(
+        ok( $res = $client->_post(
                 '/resetpwd', IO::String->new($query),
                 length => length($query),
                 accept => 'text/html',
@@ -118,6 +128,18 @@ SKIP: {
 
         #print STDERR Dumper($query);
     }
+
+    ok( $res = $client->_post(
+            '/', IO::String->new('user=yadd&password=zz&test=sql'),
+            length => 30
+        ),
+        'Auth query'
+    );
+    expectOK($res);
+    $id = expectCookie($res);
+
+    $client->logout($id);
+
 }
 
 eval { unlink 't/userdb.db' };
