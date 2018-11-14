@@ -10,6 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants ':all';
 use Encode;
 use Unicode::String qw(utf8);
 use Scalar::Util 'weaken';
+use utf8;
 
 our $VERSION  = '2.0.0';
 our $ppLoaded = 0;
@@ -89,6 +90,9 @@ sub new {
 # @return Net::LDAP::Message
 sub bind {
     my ( $self, $dn, %args ) = @_;
+
+    $self->{portal}->logger->debug("Call bind for $dn");
+
     my $mesg;
     unless ($dn) {
         $dn = $self->{conf}->{managerDn};
@@ -258,6 +262,9 @@ sub userModifyPassword {
     my $passwordAttribute  = "userPassword";
     my $err;
     my $mesg;
+
+    utf8::downgrade($dn);
+    $self->{portal}->logger->debug("Call modify password for $dn");
 
     # Adjust configuration for AD
     if ($ad) {
