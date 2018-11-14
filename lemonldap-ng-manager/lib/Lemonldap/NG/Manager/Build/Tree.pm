@@ -25,16 +25,20 @@ our $VERSION = '2.0.0';
 #  * redirectFormMethod
 sub tree {
     return [
-        {   title => 'generalParameters',
+        {
+            title => 'generalParameters',
             nodes => [
-                {   title => 'portalParams',
+                {
+                    title => 'portalParams',
                     help  => 'portal.html',
                     nodes => [
                         '*portal',
-                        {   title => 'portalMenu',
+                        {
+                            title => 'portalMenu',
                             help  => 'portalmenu.html',
                             nodes => [
-                                {   title => 'portalModules',
+                                {
+                                    title => 'portalModules',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'portalDisplayLogout',
@@ -47,7 +51,8 @@ sub tree {
                                 'applicationList'
                             ]
                         },
-                        {   title => 'portalCustomization',
+                        {
+                            title => 'portalCustomization',
                             help  => 'portalcustom.html',
                             nodes => [
                                 'portalMainLogo',
@@ -55,7 +60,8 @@ sub tree {
                                 'portalSkin',
                                 'portalSkinBackground',
                                 'portalSkinRules',
-                                {   title => 'portalButtons',
+                                {
+                                    title => 'portalButtons',
                                     help  => 'portalcustom.html#buttons',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -64,9 +70,10 @@ sub tree {
                                         'portalDisplayRegister'
                                     ]
                                 },
-                                {   title => 'passwordManagement',
+                                {
+                                    title => 'passwordManagement',
                                     help =>
-                                        'portalcustom.html#password_management',
+                                      'portalcustom.html#password_management',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'portalRequireOldPassword',
@@ -74,9 +81,10 @@ sub tree {
                                         'mailOnPasswordChange'
                                     ]
                                 },
-                                {   title => 'portalOther',
+                                {
+                                    title => 'portalOther',
                                     help =>
-                                        'portalcustom.html#other_parameters',
+                                      'portalcustom.html#other_parameters',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'portalUserAttr',
@@ -89,7 +97,8 @@ sub tree {
                                 }
                             ]
                         },
-                        {   title => 'portalCaptcha',
+                        {
+                            title => 'portalCaptcha',
                             help  => 'captcha.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -101,40 +110,49 @@ sub tree {
                         }
                     ]
                 },
-                {   title => 'authParams',
+                {
+                    title => 'authParams',
                     help =>
-                        'start.html#authentication_users_and_password_databases',
+                      'start.html#authentication_users_and_password_databases',
                     form  => 'authParams',
-                    nodes => [ 'authentication', 'userDB', 'passwordDB' ],
+                    nodes => [
+                        'authentication', 'userDB', 'passwordDB', 'registerDB'
+                    ],
                     nodes_cond => [
-                        {   title => 'adParams',
+                        {
+                            title => 'adParams',
                             help  => 'authad.html',
                             nodes => [ 'ADPwdMaxAge', 'ADPwdExpireWarning' ]
                         },
-                        {   title => 'choiceParams',
+                        {
+                            title => 'choiceParams',
                             help  => 'authchoice.html',
-                            nodes =>
-                                [ 'authChoiceParam', 'authChoiceModules' ]
+                            nodes => [ 'authChoiceParam', 'authChoiceModules' ]
                         },
-                        {   title => 'apacheParams',
+                        {
+                            title => 'apacheParams',
                             help  => 'authapache.html',
                             form  => 'simpleInputContainer',
                             nodes => ['apacheAuthnLevel']
                         },
-                        {   title => 'casParams',
+                        {
+                            title => 'casParams',
                             help  => 'authcas.html',
                             form  => 'simpleInputContainer',
                             nodes => ['casAuthnLevel']
                         },
-                        {   title => 'dbiParams',
+                        {
+                            title => 'dbiParams',
                             help  => 'authdbi.html',
                             nodes => [
                                 'dbiAuthnLevel',
                                 'dbiExportedVars',
-                                {   title => 'dbiConnection',
+                                {
+                                    title => 'dbiConnection',
                                     help  => 'authdbi.html#connection',
                                     nodes => [
-                                        {   title => 'dbiConnectionAuth',
+                                        {
+                                            title => 'dbiConnectionAuth',
                                             form  => 'simpleInputContainer',
                                             nodes => [
                                                 'dbiAuthChain',
@@ -142,7 +160,8 @@ sub tree {
                                                 'dbiAuthPassword'
                                             ]
                                         },
-                                        {   title => 'dbiConnectionUser',
+                                        {
+                                            title => 'dbiConnectionUser',
                                             form  => 'simpleInputContainer',
                                             nodes => [
                                                 'dbiUserChain',
@@ -152,7 +171,8 @@ sub tree {
                                         }
                                     ]
                                 },
-                                {   title => 'dbiSchema',
+                                {
+                                    title => 'dbiSchema',
                                     help  => 'authdbi.html#schema',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -164,51 +184,56 @@ sub tree {
                                         'userPivot'
                                     ]
                                 },
-                                {   title => 'dbiPassword',
+                                {
+                                    title => 'dbiPassword',
                                     help  => 'authdbi.html#password',
                                     nodes => [
                                         'dbiAuthPasswordHash',
-                                        {   title => 'dbiDynamicHash',
+                                        {
+                                            title => 'dbiDynamicHash',
                                             help  => 'authdbi.html#password',
                                             form  => 'simpleInputContainer',
                                             nodes => [
                                                 'dbiDynamicHashEnabled',
                                                 'dbiDynamicHashValidSchemes',
-                                                'dbiDynamicHashValidSaltedSchemes',
-                                                'dbiDynamicHashNewPasswordScheme'
+'dbiDynamicHashValidSaltedSchemes',
+'dbiDynamicHashNewPasswordScheme'
                                             ]
                                         }
                                     ]
                                 }
                             ]
                         },
-                        {   title => 'demoParams',
+                        {
+                            title => 'demoParams',
                             help  => 'authdemo.html',
                             nodes => ['demoExportedVars']
                         },
-                        {   title => 'facebookParams',
+                        {
+                            title => 'facebookParams',
                             help  => 'authfacebook.html',
                             nodes => [
-                                'facebookAuthnLevel',
-                                'facebookExportedVars',
-                                'facebookAppId',
-                                'facebookAppSecret',
+                                'facebookAuthnLevel', 'facebookExportedVars',
+                                'facebookAppId',      'facebookAppSecret',
                                 'facebookUserField'
                             ]
                         },
-                        {   title => 'kerberosParams',
+                        {
+                            title => 'kerberosParams',
                             help  => 'authkerberos.html',
                             nodes => [
                                 'krbKeytab',     'krbByJs',
                                 'krbAuthnLevel', 'krbRemoveDomain'
                             ]
                         },
-                        {   title => 'ldapParams',
+                        {
+                            title => 'ldapParams',
                             help  => 'authldap.html',
                             nodes => [
                                 'ldapAuthnLevel',
                                 'ldapExportedVars',
-                                {   title => 'ldapConnection',
+                                {
+                                    title => 'ldapConnection',
                                     help  => 'authldap.html#connection',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -218,7 +243,8 @@ sub tree {
                                         'ldapVersion',     'ldapRaw'
                                     ]
                                 },
-                                {   title => 'ldapFilters',
+                                {
+                                    title => 'ldapFilters',
                                     help  => 'authldap.html#filters',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -226,7 +252,8 @@ sub tree {
                                         'mailLDAPFilter', 'ldapSearchDeref',
                                     ]
                                 },
-                                {   title => 'ldapGroups',
+                                {
+                                    title => 'ldapGroups',
                                     help  => 'authldap.html#groups',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -239,7 +266,8 @@ sub tree {
                                         'ldapGroupAttributeNameGroup'
                                     ]
                                 },
-                                {   title => 'ldapPassword',
+                                {
+                                    title => 'ldapPassword',
                                     help  => 'authldap.html#password',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -255,7 +283,8 @@ sub tree {
                                 },
                             ]
                         },
-                        {   title => 'linkedinParams',
+                        {
+                            title => 'linkedinParams',
                             help  => 'authlinkedin.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -264,23 +293,27 @@ sub tree {
                                 'linkedInUserField',    'linkedInScope'
                             ]
                         },
-                        {   title => 'combinationParams',
+                        {
+                            title => 'combinationParams',
                             help  => 'authcombination.html',
                             nodes => [ 'combination', 'combModules' ]
                         },
-                        {   title => 'nullParams',
+                        {
+                            title => 'nullParams',
                             help  => 'authnull.html',
                             form  => 'simpleInputContainer',
                             nodes => ['nullAuthnLevel']
                         },
-                        {   title => 'openidParams',
+                        {
+                            title => 'openidParams',
                             help  => 'authopenid.html',
                             nodes => [
                                 'openIdAuthnLevel', 'openIdExportedVars',
                                 'openIdSecret',     'openIdIDPList'
                             ]
                         },
-                        {   title => 'oidcParams',
+                        {
+                            title => 'oidcParams',
                             help  => 'authopenidconnect.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -289,7 +322,8 @@ sub tree {
                                 'oidcRPStateTimeout'
                             ]
                         },
-                        {   title => 'proxyParams',
+                        {
+                            title => 'proxyParams',
                             help  => 'authproxy.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -298,12 +332,14 @@ sub tree {
                                 'proxyUseSoap'
                             ]
                         },
-                        {   title => 'pamParams',
+                        {
+                            title => 'pamParams',
                             help  => 'authpam.html',
                             form  => 'simpleInputContainer',
                             nodes => [ 'pamService', 'pamAuthnLevel', ]
                         },
-                        {   title => 'radiusParams',
+                        {
+                            title => 'radiusParams',
                             help  => 'authradius.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -311,7 +347,8 @@ sub tree {
                                 'radiusServer'
                             ]
                         },
-                        {   title => 'restParams',
+                        {
+                            title => 'restParams',
                             help  => 'authrest.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -319,7 +356,8 @@ sub tree {
                                 'restPwdConfirmUrl', 'restPwdModifyUrl'
                             ]
                         },
-                        {   title => 'remoteParams',
+                        {
+                            title => 'remoteParams',
                             help  => 'authremote.html',
                             nodes => [
                                 'remotePortal',
@@ -328,7 +366,8 @@ sub tree {
                                 'remoteGlobalStorageOptions'
                             ]
                         },
-                        {   title => 'slaveParams',
+                        {
+                            title => 'slaveParams',
                             help  => 'authslave.html',
                             nodes => [
                                 'slaveAuthnLevel', 'slaveExportedVars',
@@ -336,7 +375,8 @@ sub tree {
                                 'slaveHeaderName', 'slaveHeaderContent'
                             ]
                         },
-                        {   title => 'sslParams',
+                        {
+                            title => 'sslParams',
                             help  => 'authssl.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -345,7 +385,8 @@ sub tree {
                                 'sslHost',
                             ]
                         },
-                        {   title => 'twitterParams',
+                        {
+                            title => 'twitterParams',
                             help  => 'authtwitter.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -354,14 +395,16 @@ sub tree {
                                 'twitterUserField'
                             ]
                         },
-                        {   title => 'webidParams',
+                        {
+                            title => 'webidParams',
                             help  => 'authwebid.html',
                             nodes => [
                                 'webIDAuthnLevel', 'webIDExportedVars',
                                 'webIDWhitelist'
                             ]
                         },
-                        {   title => 'customParams',
+                        {
+                            title => 'customParams',
                             help  => 'authcustom.html',
                             nodes => [
                                 'customAuth',     'customUserDB',
@@ -372,19 +415,21 @@ sub tree {
                     ],
                     'nodes_filter' => 'authParams'
                 },
-                {   title => 'issuerParams',
+                {
+                    title => 'issuerParams',
                     help  => 'start.html#identity_provider',
                     nodes => [
-                        {   title => 'issuerDBSAML',
+                        {
+                            title => 'issuerDBSAML',
                             help  => 'idpsaml.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'issuerDBSAMLActivation',
-                                'issuerDBSAMLPath',
+                                'issuerDBSAMLActivation', 'issuerDBSAMLPath',
                                 'issuerDBSAMLRule'
                             ]
                         },
-                        {   title => 'issuerDBCAS',
+                        {
+                            title => 'issuerDBCAS',
                             help  => 'idpcas.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -392,18 +437,21 @@ sub tree {
                                 'issuerDBCASRule',
                             ]
                         },
-                        {   title => 'issuerDBOpenID',
+                        {
+                            title => 'issuerDBOpenID',
                             help  => 'idpopenid.html',
                             nodes => [
                                 'issuerDBOpenIDActivation',
                                 'issuerDBOpenIDPath',
                                 'issuerDBOpenIDRule',
-                                {   title => 'issuerDBOpenIDOptions',
+                                {
+                                    title => 'issuerDBOpenIDOptions',
                                     nodes => [
                                         'openIdIssuerSecret',
                                         'openIdAttr',
                                         'openIdSPList',
-                                        {   title => 'openIdSreg',
+                                        {
+                                            title => 'openIdSreg',
                                             form  => 'simpleInputContainer',
                                             nodes => [
                                                 'openIdSreg_fullname',
@@ -421,7 +469,8 @@ sub tree {
                                 }
                             ]
                         },
-                        {   title => 'issuerDBOpenIDConnect',
+                        {
+                            title => 'issuerDBOpenIDConnect',
                             help  => 'idpopenidconnect.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -430,7 +479,8 @@ sub tree {
                                 'issuerDBOpenIDConnectRule',
                             ]
                         },
-                        {   title => 'issuerDBGet',
+                        {
+                            title => 'issuerDBGet',
                             help  => 'issuerdbget.html',
                             nodes => [
                                 'issuerDBGetActivation',
@@ -441,15 +491,15 @@ sub tree {
                         },
                     ]
                 },
-                {   title => 'logParams',
+                {
+                    title => 'logParams',
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
-                    nodes => [
-                        'trustedProxies', 'whatToTrace',
-                        'hiddenAttributes'
-                    ]
+                    nodes =>
+                      [ 'trustedProxies', 'whatToTrace', 'hiddenAttributes' ]
                 },
-                {   title => 'cookieParams',
+                {
+                    title => 'cookieParams',
                     help  => 'ssocookie.html',
                     form  => 'simpleInputContainer',
                     nodes => [
@@ -458,7 +508,8 @@ sub tree {
                         'httpOnly',   'cookieExpiration'
                     ]
                 },
-                {   title => 'sessionParams',
+                {
+                    title => 'sessionParams',
                     help  => 'sessions.html',
                     nodes => [
                         'storePassword',
@@ -466,7 +517,8 @@ sub tree {
                         'timeoutActivity',
                         'timeoutActivityInterval',
                         'grantSessionRules',
-                        {   title => 'sessionStorage',
+                        {
+                            title => 'sessionStorage',
                             help  => 'start.html#sessions_database',
                             nodes => [
                                 'globalStorage',
@@ -475,7 +527,8 @@ sub tree {
                                 'localSessionStorageOptions'
                             ]
                         },
-                        {   title => 'multipleSessions',
+                        {
+                            title => 'multipleSessions',
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'singleSession',  'singleIP',
@@ -483,21 +536,23 @@ sub tree {
                                 'notifyDeleted',  'notifyOther'
                             ]
                         },
-                        {   title => 'persistentSessions',
+                        {
+                            title => 'persistentSessions',
                             nodes => [
-                                'persistentStorage',
-                                'persistentStorageOptions'
+                                'persistentStorage', 'persistentStorageOptions'
                             ]
                         }
                     ]
                 },
                 'reloadUrls',
-                {   title => 'plugins',
+                {
+                    title => 'plugins',
                     help  => 'start.html#plugins',
                     nodes => [
                         'stayConnected',
                         'portalStatus',
-                        {   title => 'portalServers',
+                        {
+                            title => 'portalServers',
                             help  => 'portalservers.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -506,7 +561,8 @@ sub tree {
                                 'exportedAttr',      'wsdlServer',
                             ]
                         },
-                        {   title => 'loginHistory',
+                        {
+                            title => 'loginHistory',
                             help  => 'loginhistory.html',
                             nodes => [
                                 'loginHistoryEnabled',
@@ -515,7 +571,8 @@ sub tree {
                                 'sessionDataToRemember'
                             ]
                         },
-                        {   title => 'notifications',
+                        {
+                            title => 'notifications',
                             help  => 'notifications.html',
                             nodes => [
                                 'notification',
@@ -527,24 +584,28 @@ sub tree {
                                 'notificationXSLTfile'
                             ]
                         },
-                        {   title => 'passwordManagement',
+                        {
+                            title => 'passwordManagement',
                             help  => 'resetpassword.html',
                             nodes => [
-                                {   title => 'SMTP',
+                                {
+                                    title => 'SMTP',
                                     nodes => [
                                         'SMTPServer',   'SMTPPort',
                                         'SMTPAuthUser', 'SMTPAuthPass',
                                         'SMTPTLS',      'SMTPTLSOpts',
                                     ]
                                 },
-                                {   title => 'mailHeaders',
+                                {
+                                    title => 'mailHeaders',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'mailFrom', 'mailReplyTo',
                                         'mailCharset'
                                     ]
                                 },
-                                {   title => 'mailContent',
+                                {
+                                    title => 'mailContent',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'mailSubject',
@@ -553,22 +614,21 @@ sub tree {
                                         'mailConfirmBody'
                                     ]
                                 },
-                                {   title => 'mailOther',
+                                {
+                                    title => 'mailOther',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'mailUrl',
-                                        'randomPasswordRegexp',
-                                        'mailTimeout',
-                                        'mailSessionKey'
+                                        'mailUrl',     'randomPasswordRegexp',
+                                        'mailTimeout', 'mailSessionKey'
                                     ]
                                 }
                             ]
                         },
-                        {   title => 'register',
+                        {
+                            title => 'register',
                             help  => 'register.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'registerDB',
                                 'registerUrl',
                                 'registerTimeout',
                                 'registerConfirmSubject',
@@ -576,27 +636,32 @@ sub tree {
                             ]
                         },
                         'upgradeSession',
-                        {   title => 'autoSignin',
+                        {
+                            title => 'autoSignin',
                             help  => 'autosignin.html',
                             nodes => ['autoSigninRules'],
                         },
-                        {   title => 'stateCheck',
+                        {
+                            title => 'stateCheck',
                             help  => 'checkstate.html',
                             form  => 'simpleInputContainer',
                             nodes => [ 'checkState', 'checkStateSecret', ],
                         },
                     ]
                 },
-                {   title => 'secondFactors',
+                {
+                    title => 'secondFactors',
                     help  => 'secondfactor.html',
                     nodes => [
-                        {   title => 'utotp2f',
+                        {
+                            title => 'utotp2f',
                             help  => 'utotp2f.html',
                             form  => 'simpleInputContainer',
                             nodes =>
-                                [ 'utotp2fActivation', 'utotp2fAuthnLevel' ]
+                              [ 'utotp2fActivation', 'utotp2fAuthnLevel' ]
                         },
-                        {   title => 'totp',
+                        {
+                            title => 'totp',
                             help  => 'totp2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -612,7 +677,8 @@ sub tree {
                                 'totp2fUserCanRemoveKey',
                             ]
                         },
-                        {   title => 'u2f',
+                        {
+                            title => 'u2f',
                             help  => 'u2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -620,7 +686,8 @@ sub tree {
                                 'u2fAuthnLevel', 'u2fUserCanRemoveKey',
                             ]
                         },
-                        {   title => 'external2f',
+                        {
+                            title => 'external2f',
                             help  => 'external2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -629,7 +696,8 @@ sub tree {
                                 'ext2fLogo',
                             ]
                         },
-                        {   title => 'rest2f',
+                        {
+                            title => 'rest2f',
                             help  => 'rest2f.html',
                             nodes => [
                                 'rest2fActivation', 'rest2fInitUrl',
@@ -638,7 +706,8 @@ sub tree {
                                 'rest2fLogo',
                             ]
                         },
-                        {   title => 'yubikey2f',
+                        {
+                            title => 'yubikey2f',
                             help  => 'yubikey2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -656,13 +725,14 @@ sub tree {
                         'sfRequired',
                     ]
                 },
-                {   title => 'advancedParams',
+                {
+                    title => 'advancedParams',
                     help  => 'start.html#advanced_features',
                     nodes => [
                         'customFunctions',
-                        {   title => 'security',
-                            help =>
-                                'security.html#configure_security_settings',
+                        {
+                            title => 'security',
+                            help => 'security.html#configure_security_settings',
                             nodes => [
                                 'userControl',
                                 'portalForceAuthn',
@@ -674,7 +744,8 @@ sub tree {
                                 'bruteForceProtection',
                                 'lwpOpts',
                                 'lwpSslOpts',
-                                {   title => 'contentSecurityPolicy',
+                                {
+                                    title => 'contentSecurityPolicy',
                                     help  => 'security.html#portal',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -689,7 +760,8 @@ sub tree {
                                 'tokenUseGlobalStorage',
                             ]
                         },
-                        {   title => 'redirection',
+                        {
+                            title => 'redirection',
                             help  => 'redirections.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -700,7 +772,8 @@ sub tree {
                                 'maintenance'
                             ]
                         },
-                        {   title => 'portalRedirection',
+                        {
+                            title => 'portalRedirection',
                             help  => 'redirections.html#portal_redirections',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -711,7 +784,8 @@ sub tree {
                         'nginxCustomHandlers',
                         'logoutServices',
                         'multiValuesSeparator',
-                        {   title => 'forms',
+                        {
+                            title => 'forms',
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'infoFormMethod',     'confirmFormMethod',
@@ -722,19 +796,23 @@ sub tree {
                 }
             ]
         },
-        {   title => 'variables',
+        {
+            title => 'variables',
             help  => 'variables.html',
             nodes => [ 'exportedVars', 'macros', 'groups' ]
         },
         'virtualHosts',
-        {   title => 'samlServiceMetaData',
+        {
+            title => 'samlServiceMetaData',
             help  => 'samlservice.html',
             nodes => [
                 'samlEntityID',
-                {   title => 'samlServiceSecurity',
+                {
+                    title => 'samlServiceSecurity',
                     help  => 'samlservice.html#security_parameters',
                     nodes => [
-                        {   title => 'samlServiceSecuritySig',
+                        {
+                            title => 'samlServiceSecuritySig',
                             form  => 'RSAKey',
                             group => [
                                 'samlServicePrivateKeySig',
@@ -742,7 +820,8 @@ sub tree {
                                 'samlServicePublicKeySig'
                             ]
                         },
-                        {   title => 'samlServiceSecurityEnc',
+                        {
+                            title => 'samlServiceSecurityEnc',
                             form  => 'RSAKey',
                             group => [
                                 'samlServicePrivateKeyEnc',
@@ -754,7 +833,8 @@ sub tree {
                         'samlServiceSignatureMethod'
                     ]
                 },
-                {   title => 'samlNameIDFormatMap',
+                {
+                    title => 'samlNameIDFormatMap',
                     help  => 'samlservice.html#nameid_formats',
                     form  => 'simpleInputContainer',
                     nodes => [
@@ -764,7 +844,8 @@ sub tree {
                         'samlNameIDFormatMapKerberos'
                     ]
                 },
-                {   title => 'samlAuthnContextMap',
+                {
+                    title => 'samlAuthnContextMap',
                     help  => 'samlservice.html#authentication_contexts',
                     form  => 'simpleInputContainer',
                     nodes => [
@@ -774,82 +855,91 @@ sub tree {
                         'samlAuthnContextMapKerberos'
                     ]
                 },
-                {   title => 'samlOrganization',
+                {
+                    title => 'samlOrganization',
                     help  => 'samlservice.html#organization',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'samlOrganizationDisplayName',
-                        'samlOrganizationName',
+                        'samlOrganizationDisplayName', 'samlOrganizationName',
                         'samlOrganizationURL'
                     ]
                 },
-                {   title => 'samlSPSSODescriptor',
+                {
+                    title => 'samlSPSSODescriptor',
                     help  => 'samlservice.html#service_provider',
                     nodes => [
                         'samlSPSSODescriptorAuthnRequestsSigned',
                         'samlSPSSODescriptorWantAssertionsSigned',
-                        {   title => 'samlSPSSODescriptorSingleLogoutService',
+                        {
+                            title => 'samlSPSSODescriptorSingleLogoutService',
                             nodes => [
-                                'samlSPSSODescriptorSingleLogoutServiceHTTPRedirect',
-                                'samlSPSSODescriptorSingleLogoutServiceHTTPPost',
+'samlSPSSODescriptorSingleLogoutServiceHTTPRedirect',
+'samlSPSSODescriptorSingleLogoutServiceHTTPPost',
                                 'samlSPSSODescriptorSingleLogoutServiceSOAP'
                             ]
                         },
-                        {   title =>
-                                'samlSPSSODescriptorAssertionConsumerService',
+                        {
+                            title =>
+                              'samlSPSSODescriptorAssertionConsumerService',
                             nodes => [
-                                'samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact',
-                                'samlSPSSODescriptorAssertionConsumerServiceHTTPPost'
+'samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact',
+'samlSPSSODescriptorAssertionConsumerServiceHTTPPost'
                             ]
                         },
-                        {   title =>
-                                'samlSPSSODescriptorArtifactResolutionService',
+                        {
+                            title =>
+                              'samlSPSSODescriptorArtifactResolutionService',
                             nodes => [
-                                'samlSPSSODescriptorArtifactResolutionServiceArtifact'
+'samlSPSSODescriptorArtifactResolutionServiceArtifact'
                             ]
                         }
                     ]
                 },
-                {   title => 'samlIDPSSODescriptor',
+                {
+                    title => 'samlIDPSSODescriptor',
                     help  => 'samlservice.html#identity_provider',
                     nodes => [
                         'samlIDPSSODescriptorWantAuthnRequestsSigned',
-                        {   title =>
-                                'samlIDPSSODescriptorSingleSignOnService',
+                        {
+                            title => 'samlIDPSSODescriptorSingleSignOnService',
                             nodes => [
-                                'samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect',
-                                'samlIDPSSODescriptorSingleSignOnServiceHTTPPost',
-                                'samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact',
+'samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect',
+'samlIDPSSODescriptorSingleSignOnServiceHTTPPost',
+'samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact',
                             ]
                         },
-                        {   title =>
-                                'samlIDPSSODescriptorSingleLogoutService',
+                        {
+                            title => 'samlIDPSSODescriptorSingleLogoutService',
                             nodes => [
-                                'samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect',
-                                'samlIDPSSODescriptorSingleLogoutServiceHTTPPost',
+'samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect',
+'samlIDPSSODescriptorSingleLogoutServiceHTTPPost',
                                 'samlIDPSSODescriptorSingleLogoutServiceSOAP'
                             ]
                         },
-                        {   title =>
-                                'samlIDPSSODescriptorArtifactResolutionService',
+                        {
+                            title =>
+                              'samlIDPSSODescriptorArtifactResolutionService',
                             nodes => [
-                                'samlIDPSSODescriptorArtifactResolutionServiceArtifact'
+'samlIDPSSODescriptorArtifactResolutionServiceArtifact'
                             ]
                         }
                     ]
                 },
-                {   title => 'samlAttributeAuthorityDescriptor',
+                {
+                    title => 'samlAttributeAuthorityDescriptor',
                     help  => 'samlservice.html#attribute_authority',
                     nodes => [
-                        {   title =>
-                                'samlAttributeAuthorityDescriptorAttributeService',
+                        {
+                            title =>
+'samlAttributeAuthorityDescriptorAttributeService',
                             nodes => [
-                                'samlAttributeAuthorityDescriptorAttributeServiceSOAP'
+'samlAttributeAuthorityDescriptorAttributeServiceSOAP'
                             ]
                         }
                     ]
                 },
-                {   title => 'samlAdvanced',
+                {
+                    title => 'samlAdvanced',
                     help  => 'samlservice.html#advanced',
                     nodes => [
                         'samlIdPResolveCookie',
@@ -858,7 +948,8 @@ sub tree {
                         'samlStorageOptions',
                         'samlRelayStateTimeout',
                         'samlUseQueryStringSpecific',
-                        {   title => 'samlCommonDomainCookie',
+                        {
+                            title => 'samlCommonDomainCookie',
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'samlCommonDomainCookieActivation',
@@ -867,7 +958,8 @@ sub tree {
                                 'samlCommonDomainCookieWriter'
                             ]
                         },
-                        {   title => 'samlDiscoveryProtocol',
+                        {
+                            title => 'samlDiscoveryProtocol',
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'samlDiscoveryProtocolActivation',
@@ -882,11 +974,13 @@ sub tree {
         },
         'samlIDPMetaDataNodes',
         'samlSPMetaDataNodes',
-        {   title => 'oidcServiceMetaData',
+        {
+            title => 'oidcServiceMetaData',
             help  => 'openidconnectservice.html#service_configuration',
             nodes => [
                 'oidcServiceMetaDataIssuer',
-                {   title => 'oidcServiceMetaDataEndPoints',
+                {
+                    title => 'oidcServiceMetaDataEndPoints',
                     form  => 'simpleInputContainer',
                     nodes => [
                         'oidcServiceMetaDataAuthorizeURI',
@@ -901,9 +995,11 @@ sub tree {
                     ]
                 },
                 'oidcServiceMetaDataAuthnContext',
-                {   title => 'oidcServiceMetaDataSecurity',
+                {
+                    title => 'oidcServiceMetaDataSecurity',
                     nodes => [
-                        {   title => 'oidcServiceMetaDataKeys',
+                        {
+                            title => 'oidcServiceMetaDataKeys',
                             form  => 'RSAKeyNoPassword',
                             group => [
                                 'oidcServicePrivateKeySig',
@@ -917,14 +1013,16 @@ sub tree {
                         'oidcServiceAllowHybridFlow',
                     ],
                 },
-                {   title => "oidcServiceMetaDataSessions",
+                {
+                    title => "oidcServiceMetaDataSessions",
                     nodes => [ 'oidcStorage', 'oidcStorageOptions', ],
                 },
             ]
         },
         'oidcOPMetaDataNodes',
         'oidcRPMetaDataNodes',
-        {   title => 'casServiceMetadata',
+        {
+            title => 'casServiceMetadata',
             nodes => [
                 'casAttr',
                 'casAttributes',

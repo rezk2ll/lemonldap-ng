@@ -630,7 +630,7 @@
 "regexps":"Regular expressions",
 "register":"Register new account",
 "registerConfirmSubject":"Subject for confirmation mail",
-"registerDB":"Module",
+"registerDB":"Register module",
 "registerDoneSubject":"Subject for done mail",
 "registerTimeout":"Validity time of a register request",
 "registerUrl":"Page URL",

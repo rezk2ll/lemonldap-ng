@@ -630,7 +630,7 @@
 "regexps":"Espressioni regolari",
 "register":"Registra nuovo account",
 "registerConfirmSubject":"Oggetto per la mail di conferma",
-"registerDB":"Modulo",
+"registerDB":"Modulo di autoregistrazione",
 "registerDoneSubject":"Oggetto per la mail inviata",
 "registerTimeout":"Tempo di validità di una richiesta di registrazione",
 "registerUrl":"Page URL",
