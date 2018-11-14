@@ -177,7 +177,6 @@ sub _reset {
     }
 
     # Search user in database
-    #$req->user( $req->{mail} );
     $req->steps(
         [
             'getUser',                  'setSessionInfo',
@@ -187,8 +186,9 @@ sub _reset {
     );
     if ( my $error = $self->p->process( $req, useMail => $searchByMail ) ) {
         if ( $error == PE_USERNOTFOUND or $error == PE_BADCREDENTIALS ) {
-            $self->userLogger->warn(
-                "Reset asked for a unvalid user ($req->{user})");
+            $self->userLogger->warn( "Reset asked for a unvalid user ("
+                  . $req->param('mail')
+                  . ")" );
 
             # To avoid mail enumeration, return OK
             # unless portalErrorOnMailNotFound is set
@@ -426,8 +426,10 @@ sub changePwd {
     # Populate $req->{user} for logging purpose
     my $tmp = $self->conf->{portalRequireOldPassword};
     $self->conf->{portalRequireOldPassword} = 0;
-    $req->user($req->{sessionInfo}->{_user} );
-    my $result = $self->p->_passwordDB->modifyPassword($req, $req->data->{newpassword},1);
+    $req->user( $req->{sessionInfo}->{_user} );
+    my $result =
+      $self->p->_passwordDB->modifyPassword( $req, $req->data->{newpassword},
+        1 );
     $req->{user} = undef;
 
     # Mail token can be used only one time, delete the session if all is ok
@@ -574,9 +576,8 @@ sub display {
         $tplPrm{DISPLAY_PASSWORD_FORM} = 1;
     }
 
-    # Display password change form again if passwords mismatch 
-    elsif ( $req->error == PE_PASSWORDFORMEMPTY )
-    {
+    # Display password change form again if passwords mismatch
+    elsif ( $req->error == PE_PASSWORDFORMEMPTY ) {
         $self->logger->debug('Display password form');
         $tplPrm{DISPLAY_PASSWORD_FORM} = 1;
     }
