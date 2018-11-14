@@ -200,7 +200,7 @@
 "scope":"Scope",
 "selectIdP":"Chọn bộ cung cấp danh tính của bạn",
 "service":"Service",
-"sendPwd":"Gửi cho tôi một mật khẩu mới",
+"sendPwd":"Send me a link",
 "serverError":"Lỗi xảy ra trên máy chủ",
 "serviceProvidedBy":"Dịch vụ được cung cấp bởi",
 "sessionsDeleted":"Các phiên làm việc sau đã được đóng lại",

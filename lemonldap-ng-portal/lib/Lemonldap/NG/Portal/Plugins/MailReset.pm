@@ -166,7 +166,7 @@ sub _reset {
         elsif ( $self->conf->{requireToken} ) {
             unless ( $self->ott->getToken($token) ) {
                 $self->setSecurity($req);
-                $self->userLogger->warn('Reset try with expired/bas token');
+                $self->userLogger->warn('Reset try with expired/bad token');
                 return PE_TOKENEXPIRED;
             }
         }
@@ -385,11 +385,12 @@ sub changePwd {
         $self->userLogger->error('User tries to change password without token');
         return PE_NOTOKEN;
     }
-    unless ( delete $req->sessionInfo->{pwdAllowed} ) {
-        $self->userLogger->error(
-            'User tries to use another token to change a password');
-        return PE_NOTOKEN;
-    }
+
+    # unless ( delete $req->sessionInfo->{pwdAllowed} ) {
+    #     $self->userLogger->error(
+    #         'User tries to use another token to change a password');
+    #     return PE_NOTOKEN;
+    # }
 
     # Check if user wants to generate the new password
     if ( $req->param('reset') ) {
@@ -490,7 +491,7 @@ sub display {
     my ( $self, $req ) = @_;
     $self->logger->debug( 'Display called with code: ' . $req->error );
     my %tplPrm = (
-        SKIN_PATH       => '/static',
+        SKIN_PATH       => $self->conf->{staticPrefix},
         SKIN            => $self->p->getSkin($req),
         SKIN_BG         => $self->conf->{portalSkinBackground},
         MAIN_LOGO       => $self->conf->{portalMainLogo},
@@ -568,6 +569,13 @@ sub display {
         and $req->error != PE_MAILERROR
         and $req->error != PE_BADMAILTOKEN
         and $req->error != PE_MAILOK )
+    {
+        $self->logger->debug('Display password form');
+        $tplPrm{DISPLAY_PASSWORD_FORM} = 1;
+    }
+
+    # Display password change form again if passwords mismatch 
+    elsif ( $req->error == PE_PASSWORDFORMEMPTY )
     {
         $self->logger->debug('Display password form');
         $tplPrm{DISPLAY_PASSWORD_FORM} = 1;
