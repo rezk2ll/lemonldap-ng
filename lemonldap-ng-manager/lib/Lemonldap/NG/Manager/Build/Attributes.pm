@@ -787,7 +787,7 @@ sub attributes {
             documentation => 'Display reset password button in portal',
         },
         passwordResetAllowedRetries => {
-            default       => 4,
+            default       => 3,
             type          => 'int',
             documentation => 'Maximum number of retries to reset password',
         },

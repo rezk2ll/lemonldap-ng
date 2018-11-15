@@ -169,7 +169,7 @@ sub defaultValues {
         'pamAuthnLevel'                      => 2,
         'pamService'                         => 'login',
         'passwordDB'                         => 'Demo',
-        'passwordResetAllowedRetries'        => 4,
+        'passwordResetAllowedRetries'        => 3,
         'portal'                             => 'http://auth.example.com/',
         'portalAntiFrame'                    => 1,
         'portalCheckLogins'                  => 1,
