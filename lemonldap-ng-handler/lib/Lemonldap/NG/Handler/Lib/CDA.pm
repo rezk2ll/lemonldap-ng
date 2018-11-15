@@ -40,8 +40,7 @@ sub run {
                   . ( $class->tsv->{httpOnly} ? "; HttpOnly" : "" )
                   . (
                     $class->tsv->{cookieExpiration}
-                    ? "; expires="
-                      . expires( $class->tsv->{cookieExpiration}, 'cookie' )
+                    ? "; max-age=" . $class->tsv->{cookieExpiration}
                     : ""
                   )
             );
