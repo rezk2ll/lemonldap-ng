@@ -1,4 +1,4 @@
-# This file contains the description of all configuration parameters
+#  This file contains the description of all configuration parameters
 # It may be included only by batch files, never in portal or handler chain
 # for performances reasons
 
@@ -787,7 +787,7 @@ sub attributes {
             documentation => 'Display reset password button in portal',
         },
         passwordResetAllowedRetries => {
-            default       => 3,
+            default       => 4,
             type          => 'int',
             documentation => 'Maximum number of retries to reset password',
         },
