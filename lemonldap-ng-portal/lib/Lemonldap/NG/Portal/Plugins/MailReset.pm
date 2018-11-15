@@ -387,7 +387,7 @@ sub changePwd {
         return PE_NOTOKEN;
     }
 
-    unless ( delete $req->sessionInfo->{pwdAllowed}-- ) {
+    unless ( $req->sessionInfo->{pwdAllowed}-- ) {
         $self->userLogger->error(
             'User tries to use another token to change a password');
         return PE_NOTOKEN;
