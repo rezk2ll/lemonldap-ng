@@ -22,6 +22,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_PASSWORDFIRSTACCESS
   PE_PASSWORDFORMEMPTY
+  PE_PASSWORD_MISMATCH
   PE_PASSWORD_OK
   PE_TOKENEXPIRED
   PE_USERNOTFOUND
@@ -359,7 +360,7 @@ sub _reset {
 
     # User has a valid mailToken, allow to change password
     # A token is required
-    $self->ott->setToken( $req, { %{ $req->sessionInfo }, pwdAllowed => 1 } );
+    $self->ott->setToken( $req, { %{ $req->sessionInfo }, pwdAllowed => 3 } );
     return PE_PASSWORDFIRSTACCESS if ( $req->method eq 'GET' );
     return PE_PASSWORDFORMEMPTY;
 }
@@ -386,11 +387,11 @@ sub changePwd {
         return PE_NOTOKEN;
     }
 
-    # unless ( delete $req->sessionInfo->{pwdAllowed} ) {
-    #     $self->userLogger->error(
-    #         'User tries to use another token to change a password');
-    #     return PE_NOTOKEN;
-    # }
+    unless ( delete $req->sessionInfo->{pwdAllowed}-- ) {
+        $self->userLogger->error(
+            'User tries to use another token to change a password');
+        return PE_NOTOKEN;
+    }
 
     # Check if user wants to generate the new password
     if ( $req->param('reset') ) {
@@ -418,7 +419,10 @@ sub changePwd {
             and $req->data->{newpassword} eq $req->data->{confirmpassword} )
         {
             $self->ott->setToken( $req, $req->sessionInfo );
-            return PE_PASSWORDFORMEMPTY;
+            ( $req->data->{newpassword} && $req->data->{confirmpassword} )
+    ? return PE_PASSWORD_MISMATCH
+    : return PE_PASSWORDFORMEMPTY;
+
         }
     }
 
@@ -577,9 +581,9 @@ sub display {
     }
 
     # Display password change form again if passwords mismatch
-    elsif ( $req->error == PE_PASSWORDFORMEMPTY ) {
+    elsif ( $req->error == PE_PASSWORDFORMEMPTY || $req->error == PE_PASSWORD_MISMATCH ) {
         $self->logger->debug('Display password form');
-        $tplPrm{DISPLAY_PASSWORD_FORM} = 1;
+        $tplPrm{DISPLAY_PASSWORD_FORM} = $req->sessionInfo->{pwdAllowed};
     }
 
     # Custom template parameters
