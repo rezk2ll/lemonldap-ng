@@ -113,7 +113,7 @@ sub display {
               && $req->data->{login},
             ASK_LOGINS => $req->param('checkLogins') || 0,
             CONFIRMKEY => $self->stamp(),
-            LIST       => $req->data->{list} || [],
+            LIST       => $req->data->{list}         || [],
             REMEMBER   => $req->data->{confirmRemember},
             (
                 $req->data->{customScript}
@@ -423,6 +423,11 @@ sub display {
         TROVER => $self->trOver,
         %{ $req->{customParameters} // {} },
     );
+
+    for my $session_key ( keys %{ $req->{sessionInfo} } ) {
+        $templateParams{ "session_" . $session_key } =
+          $req->{sessionInfo}->{$session_key};
+    }
 
     $self->logger->debug("Skin returned: $skinfile");
     return ( $skinfile, \%templateParams );
