@@ -35,7 +35,7 @@ SKIP: {
 
     my $client = LLNG::Manager::Test->new(
         {   ini => {
-                logLevel              => 'debug',
+                logLevel              => 'error',
                 useSafeJail           => 1,
                 portalDisplayRegister => 1,
                 authentication        => 'Choice',
@@ -128,6 +128,8 @@ SKIP: {
 
         #print STDERR Dumper($query);
     }
+
+    sleep 2;
 
     ok( $res = $client->_post(
             '/', IO::String->new('user=yadd&password=zz&test=sql'),
