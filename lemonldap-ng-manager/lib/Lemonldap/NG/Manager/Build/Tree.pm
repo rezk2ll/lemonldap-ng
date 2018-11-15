@@ -67,6 +67,7 @@ sub tree {
                                     nodes => [
                                         'portalCheckLogins',
                                         'portalDisplayResetPassword',
+                                        'passwordResetAllowedRetries',
                                         'portalDisplayRegister'
                                     ]
                                 },

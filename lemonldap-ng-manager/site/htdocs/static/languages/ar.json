@@ -567,6 +567,7 @@
 "password":"كلمة المرور",
 "passwordDB":"وحدة  كلمة المرور",
 "passwordManagement":"إدارة كلمة المرور",
+"passwordResetAllowedRetries":"Max reset password retries",
 "persistent":"الثابتة",
 "persistentSessions":"الجلسات الثابتة",
 "persistentStorage":"أباتشي :: وحدة الجلسة",

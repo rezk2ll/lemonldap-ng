@@ -2113,6 +2113,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             ],
             'type' => 'select'
         },
+        'passwordResetAllowedRetries' => {
+            'default' => 3,
+            'type'    => 'int'
+        },
         'persistentStorage' => {
             'type' => 'PerlModule'
         },

@@ -360,7 +360,7 @@ sub _reset {
 
     # User has a valid mailToken, allow to change password
     # A token is required
-    $self->ott->setToken( $req, { %{ $req->sessionInfo }, pwdAllowed => 3 } );
+    $self->ott->setToken( $req, { %{ $req->sessionInfo }, pwdAllowed => $self->conf->{passwordResetAllowedRetries} } );
     return PE_PASSWORDFIRSTACCESS if ( $req->method eq 'GET' );
     return PE_PASSWORDFORMEMPTY;
 }
