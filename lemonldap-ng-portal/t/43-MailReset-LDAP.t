@@ -91,8 +91,8 @@ SKIP: {
     ok(
         $res = $client->_post(
             '/',
-            IO::String->new('user=dwho&password=zz&test=sql'),
-            length => 30
+            IO::String->new('user=dwho&password=zz'),
+            length => 21
         ),
         'Auth query'
     );
