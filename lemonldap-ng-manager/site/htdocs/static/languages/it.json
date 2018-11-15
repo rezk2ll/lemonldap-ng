@@ -567,6 +567,7 @@
 "password":"Password",
 "passwordDB":"Modulo password",
 "passwordManagement":"Gestione password",
+"passwordResetAllowedRetries":"Max reset password retries",
 "persistent":"Persistente",
 "persistentSessions":"Sessioni persistenti",
 "persistentStorage":"Modulo Apache::Session",
