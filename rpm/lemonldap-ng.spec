@@ -547,8 +547,7 @@ fi
 %{lm_bindir}/rotateOidcKeys
 %dir %{lm_examplesdir}
 %dir %{lm_sharedir}
-%dir %{lm_sharedir}/ressources
-%{lm_sharedir}/ressources/*
+%{lm_sharedir}/ressources/
 %dir %{lm_vardir}
 %defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir %{lm_vardir}/conf
