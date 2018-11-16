@@ -38,6 +38,7 @@ has ldapConfBase => (
 
 has ldapBindDN => (
     is      => 'ro',
+    lazy    => 1,
     default => sub {
         $_[0]->p->logger->warn('Warning: "ldapBindDN" parameter is not set');
         return '';

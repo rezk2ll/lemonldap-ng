@@ -22,6 +22,7 @@ sub import {
 
 has dbiTable => (
     is      => 'ro',
+    lazy    => 1,
     default => sub { $_[0]->{table} || 'notifications' }
 );
 
@@ -32,6 +33,7 @@ has dbiChain => (
 
 has dbiUser => (
     is      => 'ro',
+    lazy    => 1,
     default => sub {
         $_[0]->{p}->logger->warn('Warning: "dbiUser" parameter is not set');
         return '';
@@ -64,7 +66,9 @@ sub get {
     my ( $self, $uid, $ref ) = @_;
     return () unless ($uid);
     $self->_execute(
-        "SELECT * FROM $self->{dbiTable} WHERE done IS NULL AND uid=?"
+        "SELECT * FROM "
+          . $self->dbiTable
+          . " WHERE done IS NULL AND uid=?"
           . ( $ref ? " AND ref=?" : '' )
           . "ORDER BY date",
         $uid,

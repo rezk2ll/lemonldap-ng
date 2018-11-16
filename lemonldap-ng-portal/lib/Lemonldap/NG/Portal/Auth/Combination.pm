@@ -21,7 +21,7 @@ has wrapUserLogger => (
     lazy    => 1,
     default => sub {
         Lemonldap::NG::Portal::Lib::Combination::UserLogger->new(
-            $_[0]->{userLogger} );
+            $_[0]->userLogger );
     }
 );
 
