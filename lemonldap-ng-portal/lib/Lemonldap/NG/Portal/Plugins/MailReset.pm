@@ -88,7 +88,7 @@ sub _reset {
 
     # PASSWORD CHANGE FORM => changePwd()
     if ( $req->method =~ /^POST$/i
-        and ( $req->param('newpassword') or $req->param('reset') ) )
+        and ( $req->param('newpassword') or $req->param('confirmpassword') or $req->param('reset') ) )
     {
         return $self->changePwd($req);
     }
