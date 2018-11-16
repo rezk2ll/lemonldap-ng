@@ -6,10 +6,10 @@
   <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
   </TMPL_IF>
 
-  <div class="card">
+
 
   <TMPL_IF NAME="DISPLAY_FORM">
-
+  <div class="card">
     <form action="#" method="post" class="login" role="form">
     <div class="form">
 
@@ -173,9 +173,10 @@
       </h3>
     </div>
     </form>
+  </div>
   </TMPL_IF>
 
-  </div>
+
 
   <div class="buttons">
     <a href="<TMPL_VAR NAME="PORTAL_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="CHOICE_VALUE">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="CHOICE_VALUE"></TMPL_IF><TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
