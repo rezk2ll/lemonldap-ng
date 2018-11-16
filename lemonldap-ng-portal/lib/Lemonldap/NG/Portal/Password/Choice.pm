@@ -11,8 +11,10 @@ our $VERSION = '2.0.0';
 
 sub init {
     my ($self) = @_;
-    return (  $self->Lemonldap::NG::Portal::Password::Base::init()
-          and $self->Lemonldap::NG::Portal::Lib::Choice::init(2) );
+    return 0
+      unless ( $self->Lemonldap::NG::Portal::Password::Base::init()
+        and $self->Lemonldap::NG::Portal::Lib::Choice::init(2) );
+    $self->p->{_passwordDB} = $self;
 }
 
 sub confirm {
@@ -22,9 +24,10 @@ sub confirm {
 }
 
 sub modifyPassword {
-    my ( $self, $req, $pwd ) = @_;
+    my ( $self, $req, $pwd, $useMail ) = @_;
     $self->checkChoice($req) or return PE_ERROR;
-    return $req->data->{enabledMods2}->[0]->modifyPassword( $req, $pwd );
+    return $req->data->{enabledMods2}->[0]
+      ->modifyPassword( $req, $pwd, $useMail );
 }
 
 1;
