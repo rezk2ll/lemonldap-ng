@@ -612,6 +612,8 @@ fi
 
 %files -n perl-Lemonldap-NG-Common
 %{_mandir}/man3/Lemonldap::NG::Common*.3pm.*
+%dir %{perl_vendorlib}/Lemonldap
+%dir %{perl_vendorlib}/Lemonldap/NG
 %{perl_vendorlib}/Lemonldap/NG/Common.pm
 %{perl_vendorlib}/Lemonldap/NG/Common/
 %{perl_vendorlib}/auto/Lemonldap/NG/Common/
