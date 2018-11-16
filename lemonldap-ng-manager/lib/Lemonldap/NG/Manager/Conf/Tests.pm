@@ -569,6 +569,16 @@ sub tests {
             return 1;
         },
 
+        # Warn if number of password reset retries is null
+        passwordResetRetries => sub {
+            return 1 unless ( $conf->{portalDisplayResetPassword} );
+            return ( 1, "Number of reset password retries should not be null" )
+                unless ( $conf->{passwordResetAllowedRetries} );
+
+            # Return
+            return 1;
+        },
+
         # Warn if bruteForceProtection enabled without History
         bruteForceProtection => sub {
             return 1 unless ( $conf->{bruteForceProtection} );
