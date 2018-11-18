@@ -54,6 +54,7 @@
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_RESEND_FORM">
+  <div class="card">
     <form action="#" method="post" class="login" role="form">
     <div class="form">
 
@@ -97,10 +98,11 @@
 
     </div>
     </form>
+  </div>
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_PASSWORD_FORM">
-    <div id="password">
+    <div class="card" id="password">
       <form action="#" method="post" class="password" role="form">
       <div class="form">
 
