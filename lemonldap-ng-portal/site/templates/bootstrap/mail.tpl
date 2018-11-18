@@ -45,7 +45,7 @@
 
       <button type="submit" class="btn btn-success">
         <span class="fa fa-envelope-open"></span>
-        <span trspan="sendPwd">Send me a new password</span>
+        <span trspan="sendPwd">Send me a link</span>
       </button>
     
     </div>
@@ -73,7 +73,7 @@
       <h3 trspan="resendConfirmMail">Resend confirmation mail?</h3>
 
       <p class="alert alert-info">
-        <span trspan="pwdResetAlreadyIssued">A password reset request was already issued on </span>
+        <span trspan="pwdResetAlreadyIssued">A password reset request was already issued on</span>
         <TMPL_VAR NAME="STARTMAILDATE">.
         <span trspan="resentConfirm">Do you want the confirmation mail to be resent?</span>
       </p>
@@ -152,27 +152,27 @@
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_CONFIRMMAILSENT">
+    <div class="card">
     <form action="#" method="post" class="login" role="form">
-    <div class="form">
-      <h3>
-        <span trspan="mailSent2">A message has been sent to your mail address.</span>
-      </h3>
-      <p class="alert alert-info">
-        <span trspan="linkValidUntil">This message contains a link to reset your password, this link is valid until </span>
-        <TMPL_VAR NAME="EXPMAILDATE">.
-      </p>
-    </div>
+      <div class="form">
+        <h3 trspan="mailSent2">A message has been sent to your mail address.</h3>
+        <p class="alert alert-info">
+          <span trspan="linkValidUntil">This message contains a link to reset your password. This link is valid until </span>
+          <TMPL_VAR NAME="EXPMAILDATE">.
+        </p>
+      </div>
     </form>
+    </div>
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_MAILSENT">
+    <div class="card">
     <form action="#" method="post" class="login" role="form">
-    <div class="form">
-      <h3>
-        <span trspan="newPwdSentTo">A confirmation has been sent to your mail address.</span>
-      </h3>
-    </div>
+      <div class="form">
+        <h3 trspan="newPwdSentTo">A confirmation has been sent to your mail address.</h3>
+      </div>
     </form>
+    </div>
   </TMPL_IF>
 
   <div class="buttons">
