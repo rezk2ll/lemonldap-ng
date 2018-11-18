@@ -116,7 +116,7 @@
 "closeSSO":"Close your SSO session",
 "code":"Code",
 "confirmation":"Confirmation",
-"confirmLinkSent":"A confirmation link has been sent, this link is valid until ",
+"confirmLinkSent":"A confirmation link has been sent. This link is valid until ",
 "confirmPwd":"Confirm password",
 "connect":"Connect",
 "connectedAs":"Connected as",
