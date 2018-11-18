@@ -3,57 +3,57 @@
 <div id="mailcontent" class="container">
 
   <TMPL_IF NAME="AUTH_ERROR">
-  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
+    <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert">
+    <span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span>
+    </div>
   </TMPL_IF>
-
-
 
   <TMPL_IF NAME="DISPLAY_FORM">
   <div class="card">
     <form action="#" method="post" class="login" role="form">
     <div class="form">
 
-    <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
-    <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
-    <TMPL_IF NAME="CHOICE_VALUE">
-      <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
-    </TMPL_IF>
+      <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
+      <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+      <TMPL_IF NAME="CHOICE_VALUE">
+        <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
+      </TMPL_IF>
 
-    <h3 trspan="forgotPwd">Forgot your password?</h3>
+      <h3 trspan="forgotPwd">Forgot your password?</h3>
 
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fa fa-envelope"></i> </span>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-envelope"></i> </span>
+        </div>
+        <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required />
       </div>
-      <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required />
-    </div>
 
-    <TMPL_IF NAME=CAPTCHA_SRC>
-    <div class="form-group">
-      <img src="<TMPL_VAR NAME=CAPTCHA_SRC>" class="img-thumbnail" />
-    </div>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fa fa-eye"></i> </span>
-      </div>
-      <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required />
-    </div>
-    </TMPL_IF>
-    <TMPL_IF NAME="TOKEN">
-      <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
-    </TMPL_IF>
+      <TMPL_IF NAME=CAPTCHA_SRC>
+        <div class="form-group">
+          <img src="<TMPL_VAR NAME=CAPTCHA_SRC>" class="img-thumbnail" />
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-eye"></i> </span>
+          </div>
+          <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required />
+        </div>
+      </TMPL_IF>
+      <TMPL_IF NAME="TOKEN">
+        <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
+      </TMPL_IF>
 
-    <button type="submit" class="btn btn-success">
-      <span class="fa fa-envelope-open"></span>
-      <span trspan="sendPwd">Send me a new password</span>
-    </button>
+      <button type="submit" class="btn btn-success">
+        <span class="fa fa-envelope-open"></span>
+        <span trspan="sendPwd">Send me a new password</span>
+      </button>
     
     </div>
     </form>
+  </div>
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_RESEND_FORM">
-
     <form action="#" method="post" class="login" role="form">
     <div class="form">
 
@@ -173,10 +173,7 @@
       </h3>
     </div>
     </form>
-  </div>
   </TMPL_IF>
-
-
 
   <div class="buttons">
     <a href="<TMPL_VAR NAME="PORTAL_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="CHOICE_VALUE">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="CHOICE_VALUE"></TMPL_IF><TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>" class="btn btn-primary" role="button">
