@@ -4,13 +4,16 @@ package Lemonldap::NG::Handler::ApacheMP2::FCGIClient;
 
 use strict;
 use FCGI::Client;
+use Apache2::Connection;
 use Apache2::RequestUtil;
 use Apache2::RequestRec;
 use Apache2::Const -compile =>
   qw(FORBIDDEN HTTP_UNAUTHORIZED REDIRECT OK DECLINED DONE SERVER_ERROR AUTH_REQUIRED HTTP_SERVICE_UNAVAILABLE);
 use Apache2::Log;
+use APR::Table;
 use IO::Socket::INET;
 use FCGI::Client;
+use URI;
 use URI::Escape qw(uri_unescape);
 
 use constant FORBIDDEN         => Apache2::Const::FORBIDDEN;
