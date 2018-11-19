@@ -34,6 +34,10 @@ sub _modifyPassword {
     return PE_OK
       unless ( $req->data->{newpassword} = $req->param('newpassword') );
 
+    # Verify that old password is good
+    return PE_PASSWORD_MISMATCH
+      unless ( $req->data->{newpassword} eq $req->param('confirmpassword') );
+
     # Check if portal require old password
     if ( $self->conf->{portalRequireOldPassword} ) {
 
@@ -42,11 +46,6 @@ sub _modifyPassword {
             $self->logger->warn("Portal require old password");
             return PE_PP_MUST_SUPPLY_OLD_PASSWORD;
         }
-
-        # Verify that old password is good
-        return PE_PASSWORD_MISMATCH
-          unless (
-            $req->data->{newpassword} eq $req->param('confirmpassword') );
 
         # Verify old password
         return PE_BADOLDPASSWORD
