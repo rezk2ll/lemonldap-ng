@@ -29,7 +29,7 @@
 
       <div class="row text-center">
       <TMPL_LOOP NAME="LIST">
-        <div class="col-sm-6 <TMPL_VAR NAME="class"> mb-3 mr-3">
+        <div class="col-sm-6 <TMPL_VAR NAME="class"> mb-3">
           <button type="submit" class="btn btn-secondary idploop py-3" val="<TMPL_VAR NAME="VAL">">
           <TMPL_IF NAME="icon">
             <img src="<TMPL_VAR NAME="icon">" class="mr-2" alt="<TMPL_VAR NAME="NAME">" title="<TMPL_VAR NAME="NAME">" />
@@ -43,15 +43,17 @@
       </div>
 
       <TMPL_IF NAME="REMEMBER">
-      <div class="input-group mb-3">
+      <div class="input-group">
         <div class="input-group-prepend">
           <div class="input-group-text">
-            <input class="form-check-input" type="checkbox" id="remember" name="cookie_type" value="1" aria-describedby="rememberlabel">
+            <input type="checkbox" id="remember" name="cookie_type" value="1" aria-describedby="rememberlabel">
           </div>
         </div>
-        <label class="form-check-label" id="rememberlabel" for="remember">
-          <span trspan="rememberChoice">Remember my choice</span>
-        </label>
+        <p class="form-control">
+          <label id="rememberlabel" for="remember">
+            <span trspan="rememberChoice">Remember my choice</span>
+          </label>
+        </p>
       </div>
       </TMPL_IF>
 
