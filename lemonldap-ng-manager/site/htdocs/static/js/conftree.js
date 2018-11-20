@@ -1142,7 +1142,8 @@ function templates(tpl,key) {
       ],
       "help" : "configvhost.html#options",
       "id" : "vhostOptions",
-      "title" : "vhostOptions"
+      "title" : "vhostOptions",
+      "type" : "simpleInputContainer"
    }
 ]
 ;

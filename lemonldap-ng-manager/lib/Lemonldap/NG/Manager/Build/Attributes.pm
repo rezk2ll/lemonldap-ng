@@ -2278,6 +2278,10 @@ sub attributes {
             test          => $perlExpr,
             documentation => 'Rule to grant access to this SP',
         },
+        samlDiscoveryProtocolIsPassive => {
+            type    => 'bool',
+            default => 0,
+        },
 
         # AUTH, USERDB and PASSWORD MODULES
         authentication => {
