@@ -1902,6 +1902,7 @@ sub attributes {
             documentation => 'SAML Discovery Protocol Policy',
         },
         samlDiscoveryProtocolIsPassive => {
+            default       => 0,
             type          => 'bool',
             documentation => 'SAML Discovery Protocol Is Passive',
         },
@@ -2277,10 +2278,6 @@ sub attributes {
             type          => 'text',
             test          => $perlExpr,
             documentation => 'Rule to grant access to this SP',
-        },
-        samlDiscoveryProtocolIsPassive => {
-            type    => 'bool',
-            default => 0,
         },
 
         # AUTH, USERDB and PASSWORD MODULES
