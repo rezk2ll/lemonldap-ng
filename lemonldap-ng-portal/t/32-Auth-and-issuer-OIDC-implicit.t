@@ -115,6 +115,7 @@ ok(
 count(1);
 my $idpId = expectCookie($res);
 
+## Consent required
 my ( $host, $tmp );
 ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
 
@@ -171,23 +172,24 @@ ok(
     "Post authentication,        endpoint $url"
 );
 count(1);
-expectRedirection( $res,
-    qr#^http://auth.rp.com/?\?openidconnectcallback=1\#(.*)$# );
+$idpId = expectCookie($res);
+# expectRedirection( $res,
+#     qr#^http://auth.rp.com/?\?openidconnectcallback=1\#(.*)$# );
 
-ok(
-    $res = $op->_post(
-        $url,
-        IO::String->new($query),
-        accept => 'text/html',
-        cookie => "lemonldap=$idpId",
-        length => length($query),
-    ),
-    "Post confirmation,          endpoint $url"
-);
-count(1);
+# ok(
+#     $res = $op->_post(
+#         $url,
+#         IO::String->new($query),
+#         accept => 'text/html',
+#         cookie => "lemonldap=$idpId",
+#         length => length($query),
+#     ),
+#     "Post confirmation,          endpoint $url"
+# );
+#count(1);
 
 #print STDERR Dumper($query);
-
+$op->logout($idpId);
 clean_sessions();
 done_testing( count() );
 

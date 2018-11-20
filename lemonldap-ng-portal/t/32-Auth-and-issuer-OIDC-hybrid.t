@@ -114,23 +114,25 @@ ok(
 );
 count(1);
 my $idpId = expectCookie($res);
+
+## Bypass consent
 #my ( $host, $tmp );
 #( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
 
-expectRedirection( $res,
-    qr#^http://auth.rp.com/?\?openidconnectcallback=1\#(.*)$# );
+# expectRedirection( $res,
+#     qr#^http://auth.rp.com/?\?openidconnectcallback=1\#(.*)$# );
 
-ok(
-    $res = $op->_post(
-        $url,
-        IO::String->new($query),
-        accept => 'text/html',
-        cookie => "lemonldap=$idpId",
-        length => length($query),
-    ),
-    "Post confirmation,          endpoint $url"
-);
-count(1);
+# ok(
+#     $res = $op->_post(
+#         $url,
+#         IO::String->new($query),
+#         accept => 'text/html',
+#         cookie => "lemonldap=$idpId",
+#         length => length($query),
+#     ),
+#     "Post confirmation,          endpoint $url"
+# );
+# count(1);
 
 ($query) = expectRedirection( $res,
     qr#^http://auth.rp.com/?\?openidconnectcallback=1\#(.*)$# );

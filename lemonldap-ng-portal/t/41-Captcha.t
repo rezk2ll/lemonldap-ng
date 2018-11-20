@@ -17,6 +17,7 @@ SKIP: {
         {   ini => {
                 logLevel              => 'error',
                 useSafeJail           => 1,
+                loginHistoryEnabled   => 1,
                 captcha_login_enabled => 1,
                 portalMainLogo        => 'common/logos/logo_llng_old.png',
             }
@@ -43,21 +44,29 @@ SKIP: {
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { JSON::from_json($ts) };
     ok( $captcha = $ts->{captcha}, ' Found captcha value' );
-    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
-        'Found custom Main Logo' )
-        or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0]
+            =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
+        'Found custom Main Logo'
+    ) or print STDERR Dumper( $res->[2]->[0] );
 
     # Try to authenticate
-    $query .= "&user=dwho&password=dwho&captcha=$captcha";
+    $query .= "&user=dwho&password=dwho&captcha=$captcha&checkLogins=1";
     ok( $res = $client->_post(
             '/',
             IO::String->new($query),
-            length => length($query)
+            length => length($query),
+            accept => 'text/html',
         ),
         'Try to auth with captcha value'
     );
     expectOK($res);
     my $id = expectCookie($res);
+    ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
+        or explain( $res->[2]->[0], 'trspan="noHistory"' );
+    my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
+
+    # History with 1 successLogin
+    ok( @c == 1, " -> One entry found" );
 
     # Verify auth
     ok( $res = $client->_get( '/', cookie => "lemonldap=$id" ),
