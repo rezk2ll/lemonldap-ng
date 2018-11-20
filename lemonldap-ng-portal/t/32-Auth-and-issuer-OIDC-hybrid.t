@@ -116,8 +116,8 @@ count(1);
 my $idpId = expectCookie($res);
 
 ## Bypass consent
-#my ( $host, $tmp );
-#( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
+# my ( $host, $tmp );
+# ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
 
 # expectRedirection( $res,
 #     qr#^http://auth.rp.com/?\?openidconnectcallback=1\#(.*)$# );

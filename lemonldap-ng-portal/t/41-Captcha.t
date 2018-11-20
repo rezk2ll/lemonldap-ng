@@ -6,7 +6,7 @@ require 't/test-lib.pm';
 
 my $res;
 
-my $maintests = 14;
+my $maintests = 16;
 SKIP: {
     eval 'use GD::SecurityImage;use Image::Magick;';
     if ($@) {
