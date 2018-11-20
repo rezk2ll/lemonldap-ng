@@ -3,7 +3,6 @@
 package Lemonldap::NG::Handler::ApacheMP2::FCGIClient;
 
 use strict;
-use FCGI::Client;
 use Apache2::Connection;
 use Apache2::RequestUtil;
 use Apache2::RequestRec;
