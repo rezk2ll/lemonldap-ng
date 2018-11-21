@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 8;
+my $maintests = 9;
 
 eval { unlink 't/userdb.db' };
 
@@ -50,8 +50,9 @@ SKIP: {
     );
 
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu' );
-    ok( $res->[2]->[0] !~ /1_demo/, '1_Demo not displayed' );
-    ok( $res->[2]->[0] =~ /3_demo/, '3_Demo displayed' );
+    ok( $res->[2]->[0] !~ /1_demo/, '1_demo not displayed' );
+    ok( $res->[2]->[0] =~ /3_demo/, '3_demo displayed' );
+    ok( $res->[2]->[0] =~ /5_ssl/, '5_ssl displayed' );
     ok( $res->[2]->[0] =~ m%<form action="https://test.example.com"%,
         ' Redirect URL found' )
         or print STDERR Dumper( $res->[2]->[0] );
