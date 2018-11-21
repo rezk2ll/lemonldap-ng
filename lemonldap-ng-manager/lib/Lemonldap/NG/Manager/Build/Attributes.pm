@@ -1902,6 +1902,7 @@ sub attributes {
             documentation => 'SAML Discovery Protocol Policy',
         },
         samlDiscoveryProtocolIsPassive => {
+            default       => 0,
             type          => 'bool',
             documentation => 'SAML Discovery Protocol Is Passive',
         },

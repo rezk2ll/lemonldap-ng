@@ -2,8 +2,7 @@
 diff.html script
 ###
 
-llapp = angular.module 'llngConfDiff', ['ui.tree', 'ui.bootstrap', 'llApp', 'ngCookies']
-
+llapp = angular.module 'llngConfDiff', ['ui.tree', 'ui.bootstrap', 'llApp', 'ngCookies'] , ($rootScopeProvider) -> $rootScopeProvider.digestTtl(15)
 llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$location', ($scope, $http, $q, $translator, $location) ->
 	$scope.links = links
 	$scope.menulinks = menulinks
@@ -125,6 +124,7 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 					if v.constructor == 'array'
 						tmp.newvalue = v
 					else
+						console.log "Iteration"
 						tmp.newnodes = toNodes v, 'new'
 				else
 					tmp.newvalue = v

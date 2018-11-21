@@ -25,6 +25,7 @@ sub cTrees {
             {
                 title => 'vhostOptions',
                 help  => 'configvhost.html#options',
+                form  => 'simpleInputContainer',
                 nodes => [
                     'vhostPort',        'vhostHttps',
                     'vhostMaintenance', 'vhostAliases',
