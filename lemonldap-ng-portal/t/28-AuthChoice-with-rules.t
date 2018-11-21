@@ -35,6 +35,7 @@ SKIP: {
                         'Demo;Demo;Null;https://test.example.com;$env->{ipAddr} =~ /127.0.0.1/',
                     '4_demo' =>
                         'Demo;Demo;Null;https://test.example.com;$env->{ipAddr} =~ /1.2.3.4/',
+                    '5_ssl'  => 'SSL;LDAP;LDAP',
                 },
 
                 dbiAuthChain        => 'dbi:SQLite:dbname=t/userdb.db',
