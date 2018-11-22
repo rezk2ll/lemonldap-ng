@@ -616,7 +616,7 @@
 "proxyAuthService":"URL du portail interne",
 "proxySessionService":"URL du service de session",
 "proxyParams":"Paramètres Proxy",
-"proxyUseSoap":"Utiliser SOAP ai lieu de REST",
+"proxyUseSoap":"Utiliser SOAP au lieu de REST",
 "publicKey":"Clef publique",
 "purgeNotification":"Supprimer définitivement la notification",
 "radiusAuthnLevel":"Niveau d'authentification",
