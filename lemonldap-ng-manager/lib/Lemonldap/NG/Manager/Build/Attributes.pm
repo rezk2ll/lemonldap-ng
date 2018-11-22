@@ -2569,6 +2569,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         sslByAjax => {
             type          => 'bool',
+            default       => 0,
             documentation => 'Use Ajax request for SSL',
         },
         sslHost => {

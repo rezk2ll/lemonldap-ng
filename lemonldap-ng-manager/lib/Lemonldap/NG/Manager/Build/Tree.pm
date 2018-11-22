@@ -379,7 +379,6 @@ sub tree {
                         {
                             title => 'sslParams',
                             help  => 'authssl.html',
-                            form  => 'simpleInputContainer',
                             nodes => [
                                 'SSLAuthnLevel', 'SSLVar',
                                 'SSLVarIf',      'sslByAjax',
