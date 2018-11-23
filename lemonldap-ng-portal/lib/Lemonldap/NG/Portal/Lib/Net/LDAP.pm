@@ -91,7 +91,7 @@ sub new {
 sub bind {
     my ( $self, $dn, %args ) = @_;
 
-    $self->{portal}->logger->debug("Call bind for $dn");
+    $self->{portal}->logger->debug("Call bind for $dn") if $dn;
 
     my $mesg;
     unless ($dn) {
