@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 9;
+my $maintests = 12;
 
 eval { unlink 't/userdb.db' };
 
@@ -36,6 +36,7 @@ SKIP: {
                     '4_demo' =>
                         'Demo;Demo;Null;https://test.example.com;$env->{ipAddr} =~ /1.2.3.4/',
                     '5_ssl'  => 'SSL;LDAP;LDAP',
+                    '6_FakeCustom'  => 'Custom;Demo;Demo',
                 },
 
                 dbiAuthChain        => 'dbi:SQLite:dbname=t/userdb.db',
@@ -45,6 +46,8 @@ SKIP: {
                 dbiAuthLoginCol     => 'user',
                 dbiAuthPasswordCol  => 'password',
                 dbiAuthPasswordHash => '',
+                customAuth          => '::Auth::Apache',
+                customAddParams    => {},
             }
         }
     );
@@ -53,6 +56,13 @@ SKIP: {
     ok( $res->[2]->[0] !~ /1_demo/, '1_demo not displayed' );
     ok( $res->[2]->[0] =~ /3_demo/, '3_demo displayed' );
     ok( $res->[2]->[0] =~ /5_ssl/, '5_ssl displayed' );
+    ok( $res->[2]->[0] =~ /6_FakeCustom/, '6_FakeCustom displayed' );
+    ok( $res->[2]->[0] =~ qr%img src="/static/common/modules/Apache.png"%,
+        'Found 6_FakeCustom Logo' )
+        or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/SSL.png"%,
+        'Found 5_ssl Logo' )
+        or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%<form action="https://test.example.com"%,
         ' Redirect URL found' )
         or print STDERR Dumper( $res->[2]->[0] );
