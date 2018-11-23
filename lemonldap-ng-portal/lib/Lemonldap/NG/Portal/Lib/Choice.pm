@@ -234,19 +234,24 @@ sub _buildAuthLoop {
                 # Get displayType for this module
                 no strict 'refs';
                 my $displayType = "Lemonldap::NG::Portal::Auth::${auth}"
-                    ->can('getDisplayType')->( undef, $req );
+                    ->can('getDisplayType')->( $self, $req );
 
                 $self->logger->debug(
                     "Display type $displayType for module $auth");
                 $optionsLoop->{$displayType} = 1;
+                my $logo = $_;
+                if ( $auth eq 'Custom' ) {
+                    $logo
+                        = ( $self->{conf}->{customAuth} =~ /::(\w+)$/ )[0];
+                }
 
                 # If displayType is logo, check if key.png is available
                 if (  -e $self->conf->{templateDir}
                     . "/../htdocs/static/common/modules/"
-                    . $_
+                    . $logo
                     . ".png" )
                 {
-                    $optionsLoop->{logoFile} = $_ . ".png";
+                    $optionsLoop->{logoFile} = $logo . ".png";
                 }
                 else {
                     $optionsLoop->{logoFile} = $auth . ".png";

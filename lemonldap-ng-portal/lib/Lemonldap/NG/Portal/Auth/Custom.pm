@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Auth::Custom;
 
 use strict;
 
+# Fake 'new' method here. Return Lemonldap::NG::Portal::Auth::Custom::{CustomAuth}->new
 sub new {
     my ( $class, $self ) = @_;
     unless ( $self->{conf}->{customAuth} ) {
@@ -15,11 +16,20 @@ sub new {
 }
 
 sub getDisplayType {
-    my ( $class, $self ) = @_;
-    (         -e $self->{conf}->{templateDir}
-            . "/../htdocs/static/common/modules/"
-            . $self->{conf}->{customAuth}
-            . ".png" ) ? return "logo" : return "standardform";
+
+    # Warning : $self passed here is the Portal itself
+    my ($self) = @_;
+    my $logo = ( $self->{conf}->{customAuth} =~ /::(\w+)$/ )[0];
+
+    if (  -e $self->{conf}->{templateDir}
+        . "/../htdocs/static/common/modules/"
+        . $logo
+        . ".png" )
+    {
+        $self->logger->debug("CustomAuth $logo.png found");
+        return "logo";
+    };
+    return "standardform";
 }
 
 1;
