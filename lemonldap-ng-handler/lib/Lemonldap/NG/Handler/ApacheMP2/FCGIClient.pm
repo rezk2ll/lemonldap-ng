@@ -59,7 +59,7 @@ sub handler {
             return 1;
         }
     );
-    my $uri = URI->new( "http://" . $r->hostname . $r->unparsed_uri );
+    $uri = URI->new( "http://" . $r->hostname . $r->unparsed_uri );
     $env->{PATH_INFO} = uri_unescape( $uri->path );
     my ( $host, $port ) = ( $r->dir_config('LLNG_SERVER') =~ /^(.*):(\d+)$/ );
     unless ( $host and $port ) {
