@@ -445,6 +445,7 @@ sub changePwd {
       $self->p->_passwordDB->modifyPassword( $req,
         $req->data->{newpassword}, 1 );
     $req->{user} = undef;
+    $self->conf->{portalRequireOldPassword} = $tmp;
 
     # Mail token can be used only one time, delete the session if all is ok
     return $result unless ( $result == PE_PASSWORD_OK or $result == PE_OK );
