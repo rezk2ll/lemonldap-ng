@@ -64,7 +64,7 @@ sub setAuthSessionInfo {
 
 sub getDisplayType {
     my ( $self ) = @_;
-    $self->{conf}->{sslByAjax} ? return "sslform" : return "logo";
+    return ( $self->{conf}->{sslByAjax} ? "sslform" : "logo") ;
 }
 
 1;
