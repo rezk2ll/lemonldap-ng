@@ -11,8 +11,8 @@ sub new {
 
     eval $self->{p}->loadModule( $self->{conf}->{customAuth} );
     ($@)
-        ? return $self->{p}->loadModule( $self->{conf}->{customAuth} )
-        : die 'Unable to load Auth module ' . $self->{conf}->{customAuth};
+      ? return $self->{p}->loadModule( $self->{conf}->{customAuth} )
+      : die 'Unable to load Auth module ' . $self->{conf}->{customAuth};
 }
 
 sub getDisplayType {
@@ -28,7 +28,7 @@ sub getDisplayType {
     {
         $self->logger->debug("CustomAuth $logo.png found");
         return "logo";
-    };
+    }
     return "standardform";
 }
 

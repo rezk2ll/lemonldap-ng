@@ -26,7 +26,8 @@ SKIP: {
     close F;
 
     my $client = LLNG::Manager::Test->new(
-        {   ini => {
+        {
+            ini => {
                 logLevel                   => 'error',
                 useSafeJail                => 1,
                 notification               => 1,
@@ -41,10 +42,11 @@ SKIP: {
 
     # Try yo authenticate
     # -------------------
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/',
             IO::String->new(
-                'user=dwho&password=dwho&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw=='
+'user=dwho&password=dwho&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw=='
             ),
             accept => 'text/html',
             length => 64,
@@ -56,7 +58,8 @@ SKIP: {
     expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
 
     # Verify that cookie is ciphered (session unvalid)
-    ok( $res = $client->_get(
+    ok(
+        $res = $client->_get(
             '/',
             query  => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==',
             cookie => "lemonldap=$id",
@@ -67,7 +70,8 @@ SKIP: {
 
     # Try to validate notification without accepting it
     my $str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/notifback',
             IO::String->new($str),
             cookie => "lemonldap=$id",
@@ -78,14 +82,16 @@ SKIP: {
     );
     ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
         'Notification displayed' )
-        or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
-        'Found custom Main Logo' )
-        or print STDERR Dumper( $res->[2]->[0] );
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
+        'Found custom Main Logo'
+    ) or print STDERR Dumper( $res->[2]->[0] );
 
     # Try to validate notification without accepting it
     $str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/notifback',
             IO::String->new($str),
             cookie => "lemonldap=$id",
@@ -96,11 +102,12 @@ SKIP: {
     );
     ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
         'Notification displayed' )
-        or print STDERR Dumper( $res->[2]->[0] );
+      or print STDERR Dumper( $res->[2]->[0] );
 
     # Try to validate notification without accepting it
     $str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/notifback',
             IO::String->new($str),
             cookie => "lemonldap=$id",
@@ -111,12 +118,13 @@ SKIP: {
     );
     ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
         'Notification displayed' )
-        or print STDERR Dumper( $res->[2]->[0] );
+      or print STDERR Dumper( $res->[2]->[0] );
 
     # Try to validate notification with accepting just one checkbox
-    $str
-        = 'reference1x1=testref&check1x1x1=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
-    ok( $res = $client->_post(
+    $str =
+'reference1x1=testref&check1x1x1=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
+    ok(
+        $res = $client->_post(
             '/notifback',
             IO::String->new($str),
             cookie => "lemonldap=$id",
@@ -127,12 +135,13 @@ SKIP: {
     );
     ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
         'Notification displayed' )
-        or print STDERR Dumper( $res->[2]->[0] );
+      or print STDERR Dumper( $res->[2]->[0] );
 
     # Try to validate notification with accepting all ckeckboxes
-    $str
-        = 'reference1x1=testref&check1x1x1=accepted&check1x1x2=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
-    ok( $res = $client->_post(
+    $str =
+'reference1x1=testref&check1x1x1=accepted&check1x1x2=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
+    ok(
+        $res = $client->_post(
             '/notifback',
             IO::String->new($str),
             cookie => "lemonldap=$id",
@@ -147,7 +156,8 @@ SKIP: {
 
     $id = expectCookie($res);
 
-    ok( $res = $client->_get(
+    ok(
+        $res = $client->_get(
             '/',
             cookie => "lemonldap=$id",
             length => 64,

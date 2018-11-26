@@ -69,7 +69,9 @@ sub diff {
         }
         elsif ( exists $conf[1]->{$key} ) {
             if ( $conf[0]->{$key} ne $conf[1]->{$key} ) {
-            	$self->logger->debug( "Key $key has changed : " . $conf[0]->{$key} . " -> " . $conf[1]->{$key} );
+                $self->logger->debug( "Key $key has changed : "
+                      . $conf[0]->{$key} . " -> "
+                      . $conf[1]->{$key} );
                 $res[0]->{$key} = $conf[0]->{$key};
                 $res[1]->{$key} = $conf[1]->{$key};
             }

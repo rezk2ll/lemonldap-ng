@@ -16,7 +16,7 @@ extends 'Lemonldap::NG::Portal::Main::Auth',
 
 # INTERFACE
 
-has opList => ( is => 'rw', default => sub { [] } );
+has opList   => ( is => 'rw', default => sub { [] } );
 has opNumber => ( is => 'rw', default => 0 );
 has path     => ( is => 'rw', default => 'oauth2' );
 

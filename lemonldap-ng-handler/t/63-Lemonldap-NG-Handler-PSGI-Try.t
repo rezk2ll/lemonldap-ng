@@ -21,7 +21,7 @@ ok(
             cookieName          => 'lemonldap',
             securedCookie       => 0,
             https               => 0,
-            userLogger => 'Lemonldap::NG::Common::Logger::Null',
+            userLogger          => 'Lemonldap::NG::Common::Logger::Null',
         }
     ),
     'initialization'

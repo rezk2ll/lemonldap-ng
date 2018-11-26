@@ -9,7 +9,8 @@ BEGIN {
 my $res;
 
 my $client = LLNG::Manager::Test->new(
-    {   ini => {
+    {
+        ini => {
             logLevel            => 'error',
             authentication      => 'Demo',
             userDB              => 'Same',
@@ -17,13 +18,14 @@ my $client = LLNG::Manager::Test->new(
             brutForceProtection => 0,
             portalMainLogo      => 'common/logos/logo_llng_old.png',
             sessionDataToRemember =>
-                { uid => 'identity', _auth => 'AuthModule' },
+              { uid => 'identity', _auth => 'AuthModule' },
         }
     }
 );
 
 ## First successful connection
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho&checkLogins=1'),
         length => 37,
@@ -36,10 +38,10 @@ expectOK($res);
 my $id1 = expectCookie($res);
 ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
     'Found custom Main Logo' )
-    or print STDERR Dumper( $res->[2]->[0] );
+  or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
-    or explain( $res->[2]->[0], 'trspan="noHistory"' );
+  or explain( $res->[2]->[0], 'trspan="noHistory"' );
 my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
 
 # History with 1 successLogin
@@ -54,7 +56,8 @@ expectOK($res);
 $client->logout($id1);
 
 ## Second successful connection
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho&checkLogins=1'),
         length => 37,
@@ -76,7 +79,8 @@ count(2);
 $client->logout($id1);
 
 ## First failed connection
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=ohwd'),
         length => 23
@@ -87,7 +91,8 @@ count(1);
 expectReject($res);
 
 ## Second failed connection
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=ohwd'),
         length => 23
@@ -98,7 +103,8 @@ count(1);
 expectReject($res);
 
 ## Third successful connection
-ok( $res = $client->_post(
+ok(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho&checkLogins=1'),
         length => 37,
@@ -120,7 +126,7 @@ my @ccv2 = ( $res->[2]->[0] =~ /<td>Demo<\/td>/gs );
 ok( @c == 5,             ' -> Five entries found' );
 ok( @cf == 2,            "  -> Two 'failedLogin' entries found" );
 ok( @ccv1 + @ccv2 == 10, " -> Ten custom value entries found" )
-    or print STDERR Dumper( $res->[2]->[0] );
+  or print STDERR Dumper( $res->[2]->[0] );
 count(4);
 
 $client->logout($id1);

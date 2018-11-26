@@ -173,6 +173,7 @@ ok(
 );
 count(1);
 $idpId = expectCookie($res);
+
 # expectRedirection( $res,
 #     qr#^http://auth.rp.com/?\?openidconnectcallback=1\#(.*)$# );
 

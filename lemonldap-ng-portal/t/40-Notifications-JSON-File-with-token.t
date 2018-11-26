@@ -87,7 +87,7 @@ ok(
 );
 ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
     'Notification displayed' )
-    or print STDERR Dumper( $res->[2]->[0] );
+  or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
 # Try to validate notification without accepting it
@@ -104,7 +104,7 @@ ok(
 );
 ok( $res->[2]->[0] =~ qr%<h2 class="notifText">Test title</h2>%,
     'Notification displayed' )
-    or print STDERR Dumper( $res->[2]->[0] );
+  or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
 # Try to validate notification

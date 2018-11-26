@@ -174,7 +174,7 @@ sub send_mail {
             foreach ( keys %cid ) {
                 $message->attach(
                     Type => "image/" . ( $cid{$_} =~ m/\.(\w+)/ )[0],
-                    Id => $_,
+                    Id   => $_,
                     Path => $self->p->{templateDir} . "/" . $cid{$_},
                 );
             }

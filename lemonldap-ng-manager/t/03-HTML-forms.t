@@ -24,7 +24,7 @@ delete $forms{restore};
 my ( @types, $attr, $tree, $ctrees );
 ok( $tree   = Lemonldap::NG::Manager::Build::Tree::tree(),     'Get tree' );
 ok( $ctrees = Lemonldap::NG::Manager::Build::CTrees::cTrees(), 'Get cTrees' );
-ok( $attr = Lemonldap::NG::Manager::Build::Attributes::attributes(),
+ok( $attr   = Lemonldap::NG::Manager::Build::Attributes::attributes(),
     'Get attributes' );
 $count += 4;
 

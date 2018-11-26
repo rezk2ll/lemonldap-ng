@@ -1540,7 +1540,8 @@ sub _convertOldFormatConsents {
 
     # Update persistent session
     $self->p->updatePersistentSession( $req,
-        { _oidcConsents => to_json( \@oidcConsents ) } ) if $count;
+        { _oidcConsents => to_json( \@oidcConsents ) } )
+      if $count;
     return $count;
 }
 

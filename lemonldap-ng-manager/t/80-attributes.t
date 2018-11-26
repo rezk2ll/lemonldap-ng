@@ -49,7 +49,7 @@ my @notManagedAttributes = (
 
     # Other ini-only prms
     'configStorage', 'status', 'localStorageOptions', 'localStorage',
-    'max2FDevices', 'max2FDevicesNameLength', 'checkTime',
+    'max2FDevices',              'max2FDevicesNameLength', 'checkTime',
     'mySessionAuthorizedRWKeys', 'handlerInternalCache'
 );
 

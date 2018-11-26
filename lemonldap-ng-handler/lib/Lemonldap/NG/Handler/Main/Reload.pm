@@ -197,7 +197,7 @@ sub defaultValuesInit {
         cookieExpiration        cookieName         customFunctions httpOnly
         securedCookie           timeout            timeoutActivity
         timeoutActivityInterval useRedirectOnError useRedirectOnForbidden
-        useSafeJail             whatToTrace        handlerInternalCache 
+        useSafeJail             whatToTrace        handlerInternalCache
         )
     );
 

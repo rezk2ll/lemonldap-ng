@@ -14,7 +14,8 @@ SKIP: {
     }
 
     my $client = LLNG::Manager::Test->new(
-        {   ini => {
+        {
+            ini => {
                 logLevel              => 'error',
                 useSafeJail           => 1,
                 loginHistoryEnabled   => 1,
@@ -29,8 +30,7 @@ SKIP: {
     ok( $res = $client->_get('/'), 'Unauth JSON request' );
     expectReject($res);
 
-    ok( $res = $client->_get( '/', accept => 'text/html' ),
-        'Unauth request' );
+    ok( $res = $client->_get( '/', accept => 'text/html' ), 'Unauth request' );
     my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
     $query =~ s/.*\btoken=([^&]+).*/token=$1/;
     my $token;
@@ -44,14 +44,15 @@ SKIP: {
     ok( $ts = getCache()->get($token), ' Found token session' );
     $ts = eval { JSON::from_json($ts) };
     ok( $captcha = $ts->{captcha}, ' Found captcha value' );
-    ok( $res->[2]->[0]
-            =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
+    ok(
+        $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo'
     ) or print STDERR Dumper( $res->[2]->[0] );
 
     # Try to authenticate
     $query .= "&user=dwho&password=dwho&captcha=$captcha&checkLogins=1";
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/',
             IO::String->new($query),
             length => length($query),
@@ -62,15 +63,14 @@ SKIP: {
     expectOK($res);
     my $id = expectCookie($res);
     ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
-        or explain( $res->[2]->[0], 'trspan="noHistory"' );
+      or explain( $res->[2]->[0], 'trspan="noHistory"' );
     my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
 
     # History with 1 successLogin
     ok( @c == 1, " -> One entry found" );
 
     # Verify auth
-    ok( $res = $client->_get( '/', cookie => "lemonldap=$id" ),
-        'Verify auth' );
+    ok( $res = $client->_get( '/', cookie => "lemonldap=$id" ), 'Verify auth' );
     expectOK($res);
 
     # New try (with bad captcha)
@@ -82,7 +82,8 @@ SKIP: {
 
     # Try to auth with bad captcha
     $query .= '&user=dwho&password=dwho&captcha=00000';
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/',
             IO::String->new($query),
             length => length($query)
@@ -90,7 +91,8 @@ SKIP: {
         'Try to auth with bad captcha value'
     );
     expectReject($res);
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/', IO::String->new($query),
             length => length($query),
             accept => 'text/html',

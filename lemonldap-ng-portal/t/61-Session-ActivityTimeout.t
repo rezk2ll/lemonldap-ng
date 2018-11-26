@@ -12,12 +12,12 @@ my $res;
 my $client = LLNG::Manager::Test->new(
     {
         ini => {
-            logLevel                 => 'error',
-            authentication           => 'Demo',
-            userdb                   => 'Same',
-            timeoutActivity          => 4,
-            timeoutActivityInterval  => 2,
-            handlerInternalCache     => 1,
+            logLevel                => 'error',
+            authentication          => 'Demo',
+            userdb                  => 'Same',
+            timeoutActivity         => 4,
+            timeoutActivityInterval => 2,
+            handlerInternalCache    => 1,
         }
     }
 );
@@ -59,8 +59,11 @@ ok(
     ),
     'Form Authentification'
 );
-ok( $res->[2]->[0] =~ m%<div class="message message-warning alert"><span trmsg="1"></span></div>%, 'Found PE_SESSIONEXPIRED code' )
-  or print STDERR Dumper( $res->[2]->[0] );
+ok(
+    $res->[2]->[0] =~
+m%<div class="message message-warning alert"><span trmsg="1"></span></div>%,
+    'Found PE_SESSIONEXPIRED code'
+) or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
 $client->logout($id1);

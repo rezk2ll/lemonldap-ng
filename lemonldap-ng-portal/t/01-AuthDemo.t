@@ -25,9 +25,8 @@ count(1);
 expectReject($res);
 
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu' );
-ok( $res->[2]->[0] =~ m%<span id="languages"></span>%,
-    ' Language icons found' )
-    or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ m%<span id="languages"></span>%, ' Language icons found' )
+  or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
 # Try to authenticate

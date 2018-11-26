@@ -13,7 +13,8 @@ SKIP: {
     require Lemonldap::NG::Common::TOTP;
 
     my $client = LLNG::Manager::Test->new(
-        {   ini => {
+        {
+            ini => {
                 logLevel               => 'error',
                 totp2fSelfRegistration => 1,
                 totp2fActivation       => 1,
@@ -25,7 +26,8 @@ SKIP: {
 
     # Try to authenticate
     # -------------------
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/',
             IO::String->new('user=dwho&password=dwho'),
             length => 23
@@ -35,7 +37,8 @@ SKIP: {
     my $id = expectCookie($res);
 
     # TOTP form
-    ok( $res = $client->_get(
+    ok(
+        $res = $client->_get(
             '/2fregisters',
             cookie => "lemonldap=$id",
             accept => 'text/html',
@@ -43,7 +46,8 @@ SKIP: {
         'Form registration'
     );
     expectRedirection( $res, qr#/2fregisters/totp$# );
-    ok( $res = $client->_get(
+    ok(
+        $res = $client->_get(
             '/2fregisters/totp',
             cookie => "lemonldap=$id",
             accept => 'text/html',
@@ -51,13 +55,15 @@ SKIP: {
         'Form registration'
     );
     ok( $res->[2]->[0] =~ /totpregistration\.(?:min\.)?js/, 'Found TOTP js' );
-    ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
-        'Found custom Main Logo' )
-        or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
+        'Found custom Main Logo'
+    ) or print STDERR Dumper( $res->[2]->[0] );
     count(1);
 
     # JS query
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/2fregisters/totp/getkey', IO::String->new(''),
             cookie => "lemonldap=$id",
             length => 0,
@@ -66,7 +72,7 @@ SKIP: {
     );
     eval { $res = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), 'Content is JSON' )
-        or explain( $res->[2]->[0], 'JSON content' );
+      or explain( $res->[2]->[0], 'JSON content' );
     my ( $key, $token );
     ok( $key   = $res->{secret}, 'Found secret' );
     ok( $token = $res->{token},  'Found token' );
@@ -78,7 +84,8 @@ SKIP: {
         'Code' );
     ok( $code =~ /^\d{6}$/, 'Code contains 6 digits' );
     my $s = "code=$code&token=$token";
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/2fregisters/totp/verify',
             IO::String->new($s),
             length => length($s),
@@ -88,12 +95,13 @@ SKIP: {
     );
     eval { $res = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), 'Content is JSON' )
-        or explain( $res->[2]->[0], 'JSON content' );
+      or explain( $res->[2]->[0], 'JSON content' );
     ok( $res->{result} == 1, 'Key is registered' );
 
     # Try to sign-in
     $client->logout($id);
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/',
             IO::String->new('user=dwho&password=dwho'),
             length => 23,
@@ -101,12 +109,13 @@ SKIP: {
         ),
         'Auth query'
     );
-    my ( $host, $url, $query )
-        = expectForm( $res, undef, '/totp2fcheck', 'token' );
+    my ( $host, $url, $query ) =
+      expectForm( $res, undef, '/totp2fcheck', 'token' );
     ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
         'Code' );
     $query =~ s/code=/code=$code/;
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/totp2fcheck', IO::String->new($query),
             length => length($query),
         ),
