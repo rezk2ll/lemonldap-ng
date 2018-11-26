@@ -332,7 +332,7 @@ sub applyConf {
     }
     return {} unless (%reloadUrls);
 
-    $self->ua->timeout(3);
+    $self->ua->timeout( $newConf->{reloadTimeout} );
 
     # Parse apply values
     while ( my ( $host, $request ) = each %reloadUrls ) {

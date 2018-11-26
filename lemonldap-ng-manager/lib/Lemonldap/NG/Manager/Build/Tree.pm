@@ -544,7 +544,10 @@ sub tree {
                         }
                     ]
                 },
-                'reloadUrls',
+                {
+                    title => 'reloadParams',
+                    nodes => [ 'reloadUrls', 'reloadTimeout', ]
+                },
                 {
                     title => 'plugins',
                     help  => 'start.html#plugins',

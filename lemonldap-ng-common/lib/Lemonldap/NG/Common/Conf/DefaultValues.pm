@@ -193,6 +193,7 @@ sub defaultValues {
         'registerDB'               => 'Null',
         'registerTimeout'          => 0,
         'registerUrl'              => 'http://auth.example.com/register',
+        'reloadTimeout'            => 5,
         'remoteGlobalStorage' => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         'remoteGlobalStorageOptions' => {
             'ns' =>

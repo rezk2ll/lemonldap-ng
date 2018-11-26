@@ -366,6 +366,12 @@ sub attributes {
             default       => 'get',
             documentation => 'HTTP method for redirect page form',
         },
+        reloadTimeout => {
+            type          => 'int',
+            default       => 5,
+            documentation => 'Configuration reload timeout',
+            flags         => 'm',
+        },
         reloadUrls => {
             type          => 'keyTextContainer',
             help          => 'configlocation.html#configuration_reload',
@@ -404,13 +410,13 @@ sub attributes {
             default       => 0,
             documentation => 'Enable CheckState plugin',
         },
-        checkStateSecret  => {
+        checkStateSecret => {
             type          => 'text',
             documentation => 'Secret token for CheckState plugin',
         },
         skipRenewConfirmation => {
-            type          => 'bool',
-            default       => 0,
+            type    => 'bool',
+            default => 0,
             documentation =>
               'Avoid asking confirmation when an Issuer asks to renew auth',
         },
@@ -625,9 +631,10 @@ sub attributes {
             documentation => 'Default value for Content-Security-Policy',
         },
         cspFormAction => {
-            type          => 'text',
-            default       => "'self'",
-            documentation => 'Form action destination for Content-Security-Policy',
+            type    => 'text',
+            default => "'self'",
+            documentation =>
+              'Form action destination for Content-Security-Policy',
         },
         cspImg => {
             type          => 'text',
