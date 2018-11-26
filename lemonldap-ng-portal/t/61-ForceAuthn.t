@@ -41,7 +41,7 @@ ok(
         cookie => "lemonldap=$id1",
         accept => 'text/html',
     ),
-    'Form ReAuthentification'
+    'Form ReAuthentication'
 );
 ok( $res->[2]->[0] =~ qr%<span trspan="PE87"></span>%, 'Found PE87 code' )
   or print STDERR Dumper( $res->[2]->[0] );

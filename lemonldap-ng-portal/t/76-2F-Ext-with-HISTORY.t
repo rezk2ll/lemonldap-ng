@@ -12,7 +12,12 @@ my $client = LLNG::Manager::Test->new(
     {
         ini => {
             logLevel             => 'error',
-            u2fActivation        => '1',
+            rest2fActivation     => 1,
+            rest2fInitUrl        => 'http://auth.example.com/init',
+            rest2fInitArgs       => { name => 'uid' },
+            rest2fVerifyUrl      => 'http://auth.example.com/vrfy',
+            rest2fVerifyArgs     => { code => 'code' },
+            rest2fLogo           => 'u2f.png',
             totp2fActivation     => '$uid eq "dwho"',
             ext2fActivation      => 1,
             ext2FSendCommand     => 't/sendOTP.pl -uid $uid',
@@ -45,7 +50,7 @@ my ( $host, $url, $query ) =
 
 ok(
     $res->[2]->[0] =~
-qq%<img src="/static/bootstrap/u2f.png" alt="u2F" title="u2F" />%,
+qq%<img src="/static/bootstrap/u2f.png" alt="rest2F" title="rest2F" />%,
     'Found u2f.png'
 ) or print STDERR Dumper( $res->[2]->[0] );
 
