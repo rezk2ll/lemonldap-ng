@@ -44,7 +44,7 @@ test-lib.pm - Test framework for LLNG portal
 
 =head1 DESCRIPTION
 
-This test library permits to simulate browser navigation.
+This test library permits one to simulate browser navigation.
 
 =head2 Functions
 
@@ -349,7 +349,7 @@ sub expectCookie {
 
 =head4 exceptCspFormOK( $res, $host )
 
-Verify that C<Content-Security-Policy> header allows to connect to $host.
+Verify that C<Content-Security-Policy> header allows one to connect to $host.
 
 =cut
 
