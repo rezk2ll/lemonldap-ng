@@ -74,34 +74,20 @@ To edit <abbr title="Single Sign On">SSO</abbr> cookie parameters, go in Manager
 </li>
 <li class="level2"><div class="li"> <strong>Double cookie</strong>: two cookies are delivered, one for HTTP and HTTPS connections, the other for HTTPS only</div>
 </li>
-<li class="level2"><div class="li"> <strong>Double cookie for single session</strong>: as same, two cookies are delivered, but only one session is written in session database</div>
+<li class="level2"><div class="li"> <strong>Double cookie for single session</strong>: same as double cookie but only one session is created in session database</div>
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> <strong>Javascript protection</strong>: set httpOnly flag, to avoid cookie been caught by javascript code</div>
+<li class="level1"><div class="li"> <strong>Javascript protection</strong>: set httpOnly flag, to prevent cookie from being caught by javascript code</div>
 </li>
-<li class="level1"><div class="li"> <strong>Cookie expiration time</strong>: by default, <abbr title="Single Sign On">SSO</abbr> cookie is a session cookie, which mean it will be destroyed when the browser is closed. You can change this behavior and set a cookie duration, for example:</div>
-<ul>
-<li class="level2"><div class="li"> <strong>+30s</strong>: 30 seconds from session creation</div>
-</li>
-<li class="level2"><div class="li"> <strong>+10m</strong>: ten minutes from session creation</div>
-</li>
-<li class="level2"><div class="li"> <strong>+1h</strong>: one hour from session creation</div>
-</li>
-<li class="level2"><div class="li"> <strong>+3M</strong>: three months from session creation</div>
-</li>
-<li class="level2"><div class="li"> <strong>+10y</strong>: ten years from session creation</div>
-</li>
-<li class="level2"><div class="li"> <strong>Thursday, 25-Apr-1999 00:40:33 GMT</strong>:  at the indicated time and date (but this is probably a bad idea)</div>
-</li>
-</ul>
+<li class="level1"><div class="li"> <strong>Cookie expiration time</strong>: by default, <abbr title="Single Sign On">SSO</abbr> cookie is a session cookie, which means it will be destroyed when browser is closed. You can change this behavior by setting a cookie expiration time. It must be an integer. <strong>Cookie Expiration Time</strong> value is a number of seconds until the cookie expires. A zero or negative number will expire the cookie immediately.</div>
 </li>
 </ul>
 <div class="notewarning">When you change cookie expiration time, it is written on the user hard disk unlike session cookie
 </div><div class="noteimportant">Changing the domain value will not update other configuration parameters, like virtual host names, portal <abbr title="Uniform Resource Locator">URL</abbr>, etc. You have to update them by yourself.
 </div>
 </div>
-<!-- EDIT2 SECTION "SSO cookie" [59-2129] -->
+<!-- EDIT2 SECTION "SSO cookie" [59-1928] -->
 <h2 class="sectionedit3" id="portal_url">Portal URL</h2>
 <div class="level2">
 
@@ -117,6 +103,6 @@ Portal <abbr title="Uniform Resource Locator">URL</abbr> is the address used to 
 <div class="notewarning">The portal <abbr title="Uniform Resource Locator">URL</abbr> <strong>must</strong> be inside <abbr title="Single Sign On">SSO</abbr> domain. If secured cookie is enabled, the portal <abbr title="Uniform Resource Locator">URL</abbr> <strong>must</strong> be HTTPS.
 </div>
 </div>
-<!-- EDIT3 SECTION "Portal URL" [2130-] --></div>
+<!-- EDIT3 SECTION "Portal URL" [1929-] --></div>
 </body>
 </html>

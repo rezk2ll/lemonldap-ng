@@ -78,12 +78,12 @@ LLNG can propose to users to register their keys. When done, 2F registered users
 <div class="level2">
 
 <p>
-This feature uses <a href="https://metacpan.org/pod/Crypt::U2F::Server::Simple" class="urlextern" title="https://metacpan.org/pod/Crypt::U2F::Server::Simple"  rel="nofollow">Crypt::U2F::Server::Simple</a> that is available only via CPAN for now. Before compiling it, you must install Yubico&#039;s C library headers (called libu2f-server-dev on Debian).
+This feature uses <a href="https://metacpan.org/pod/Crypt::U2F::Server::Simple" class="urlextern" title="https://metacpan.org/pod/Crypt::U2F::Server::Simple"  rel="nofollow">Crypt::U2F::Server::Simple</a> that is only available on CPAN repository for now. Before compiling it, you must install Yubico&#039;s C library headers (called libu2f-server-dev on Debian).
 </p>
 <div class="noteimportant">An HTTPS portal is required to use U2F
 </div>
 </div>
-<!-- EDIT2 SECTION "Prerequisites and dependencies" [530-881] -->
+<!-- EDIT2 SECTION "Prerequisites and dependencies" [530-891] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -101,7 +101,7 @@ In the manager (second factors), you just have to enable it:
 <div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule: <code>$_2fDevices =~ /“type”:\s*“U2F”/s</code>, else U2F will be required even if users are not registered. This is automatically done when “activation” is set to “on”.
 </div>
 </div>
-<!-- EDIT3 SECTION "Configuration" [882-1735] -->
+<!-- EDIT3 SECTION "Configuration" [892-1745] -->
 <h2 class="sectionedit4" id="browser_compatibility">Browser compatibility</h2>
 <div class="level2">
 <ul>
@@ -122,7 +122,7 @@ In the manager (second factors), you just have to enable it:
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Browser compatibility" [1736-2176] -->
+<!-- EDIT4 SECTION "Browser compatibility" [1746-2186] -->
 <h2 class="sectionedit5" id="enrollment">Enrollment</h2>
 <div class="level2">
 
@@ -131,18 +131,18 @@ If you have enabled self registration, users can register their U2F keys using <
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Enrollment" [2177-2307] -->
+<!-- EDIT5 SECTION "Enrollment" [2187-2317] -->
 <h2 class="sectionedit6" id="assistance">Assistance</h2>
 <div class="level2">
 
 <p>
-If a user lost its key, you can delete the 2F device from the manager Second Factor module. To enable manager Second Factor Administration Module, set <code>enabledModules</code> key in your <code>lemonldap-ng.ini</code> file :
+If a user loses its key, you can delete it from the manager Second Factor module. To enable manager Second Factor Administration Module, set <code>enabledModules</code> key in your <code>lemonldap-ng.ini</code> file :
 </p>
 <pre class="code ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
 
 </div>
-<!-- EDIT6 SECTION "Assistance" [2308-2625] -->
+<!-- EDIT6 SECTION "Assistance" [2318-2625] -->
 <h2 class="sectionedit7" id="developer_corner">Developer corner</h2>
 <div class="level2">
 

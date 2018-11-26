@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:totp2f</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,totp2f"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="totp2f.html"/>
@@ -63,7 +63,7 @@
 <div class="level1">
 
 <p>
-<a href="https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm" class="urlextern" title="https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm"  rel="nofollow">Time based One Time Password</a> (TOTP) is an algorithm that computes a one-time password from a shared secret key and the current time. This is currently what <a href="https://en.wikipedia.org/wiki/Google_Authenticator" class="urlextern" title="https://en.wikipedia.org/wiki/Google_Authenticator"  rel="nofollow">Google Authenticator</a> or <a href="https://freeotp.github.io/" class="urlextern" title="https://freeotp.github.io/"  rel="nofollow">FreeOTP</a> use.
+<a href="https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm" class="urlextern" title="https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm"  rel="nofollow">Time based One Time Password</a> (TOTP) is an algorithm that computes a one-time password from a shared secret key and the current time. This is currently use by  <a href="https://en.wikipedia.org/wiki/Google_Authenticator" class="urlextern" title="https://en.wikipedia.org/wiki/Google_Authenticator"  rel="nofollow">Google Authenticator</a> or <a href="https://freeotp.github.io/" class="urlextern" title="https://freeotp.github.io/"  rel="nofollow">FreeOTP</a>.
 </p>
 
 <p>
@@ -72,7 +72,7 @@ LLNG can propose to users to register this kind of software to increase authenti
 <div class="notetip">Note that it&#039;s a second factor, not an authentication module. Users are authenticated both by login form and TOTP.
 </div>
 </div>
-<!-- EDIT1 SECTION "TOTP 2nd Factor Authentication" [1-627] -->
+<!-- EDIT1 SECTION "TOTP 2nd Factor Authentication" [1-626] -->
 <h2 class="sectionedit2" id="prerequisites_and_dependencies">Prerequisites and dependencies</h2>
 <div class="level2">
 
@@ -88,7 +88,7 @@ Or from CPAN repository :
 <pre class="code">cpanm Convert::Base32</pre>
 
 </div>
-<!-- EDIT2 SECTION "Prerequisites and dependencies" [628-912] -->
+<!-- EDIT2 SECTION "Prerequisites and dependencies" [627-911] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -118,7 +118,7 @@ In the manager (advanced parameters), you just have to enable it:
 <div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule that <code>$_2fDevices =~ /“type”:\s*“TOTP”/s</code> is set, else TOTP will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
 </div>
 </div>
-<!-- EDIT3 SECTION "Configuration" [913-2243] -->
+<!-- EDIT3 SECTION "Configuration" [912-2242] -->
 <h2 class="sectionedit4" id="enrollment">Enrollment</h2>
 <div class="level2">
 
@@ -127,12 +127,12 @@ If you&#039;ve enabled self registration, users can register their keys by using
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Enrollment" [2244-2371] -->
+<!-- EDIT4 SECTION "Enrollment" [2243-2370] -->
 <h2 class="sectionedit5" id="assistance">Assistance</h2>
 <div class="level2">
 
 <p>
-If a user lost its key, you may remove it from manager Second Factor module.<em> 
+If a user loses its key, you can remove it from manager Second Factor module.<em> 
 </em>
 To enable manager Second Factor Administration Module, set <code>enabledModules</code> key in your <code>lemonldap-ng.ini</code> file :<em> 
 </em>
@@ -141,7 +141,7 @@ To enable manager Second Factor Administration Module, set <code>enabledModules<
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
 
 </div>
-<!-- EDIT5 SECTION "Assistance" [2372-2686] -->
+<!-- EDIT5 SECTION "Assistance" [2371-2686] -->
 <h2 class="sectionedit6" id="developer_corner">Developer corner</h2>
 <div class="level2">
 

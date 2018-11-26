@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authcustom</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authcustom"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authcustom.html"/>
@@ -63,24 +63,41 @@
 <div class="level2">
 
 <p>
-This artifact allows one to define its own modules (authentication, user database, password or register DB).
+This artifact allows one to define its own modules (authentication, user database, password or register database).
 </p>
-<div class="notetip">The developer documentation is available in Portal manpages.
+<div class="notetip">The developer documentation is available in Portal manpages. See Auth.pod and UserDB.pod
+
 </div>
 </div>
-<!-- EDIT3 SECTION "Presentation" [117-330] -->
+<!-- EDIT3 SECTION "Presentation" [117-365] -->
 <h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-You just have to define class names of your custom modules in “Custom module names”. You can also add your custom parameters in “Additional parameters”. Be careful to use names not already used elsewhere in configuration. This parameters are available in your plugins using <code>$self→conf→{<em>customName</em>}</code>.
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose &#039;Custom module&#039;.
 </p>
 
 <p>
-See portal manpages to see how to write these plugins.
+Then, you just have to define class names of your custom modules in “Custom module names”. Custom parameters can be set in “Additional parameters”. Full path must be specify.
+</p>
+
+<p>
+You can define your own customAuth module icon. Icon must be in site/htdocs/static/common/modules/icon.png
+</p>
+<div class="notetip">::Auth::My::Dev.pm means Lemonldap::NG::Portal::Auth::My::Dev.pm
+
+</div><div class="noteclassic">Be careful. Don&#039; t use an already attributed name in configuration.
+
+</div>
+<p>
+These parameters are available in your plugins using <code>$self→conf→{<em>customName</em>}</code>.
+</p>
+
+<p>
+Read portal manpages to see how to write these plugins.
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Configuration" [331-] --></div>
+<!-- EDIT4 SECTION "Configuration" [366-] --></div>
 </body>
 </html>

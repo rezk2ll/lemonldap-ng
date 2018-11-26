@@ -77,27 +77,27 @@
 SQL session backend can be used with many SQL databases such as:
 </p>
 <ul>
-<li class="level1"><div class="li"> <a href="http://search.cpan.org/perldoc?Apache::Session::MySQL" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::MySQL"  rel="nofollow">MySQL</a></div>
+<li class="level1"><div class="li"> <a href="https://metacpan.org/pod/Apache::Session::MySQL" class="urlextern" title="https://metacpan.org/pod/Apache::Session::MySQL"  rel="nofollow">MariaDB / MySQL</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="http://search.cpan.org/perldoc?Apache::Session::Postgres" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Postgres"  rel="nofollow">PostgreSQL</a></div>
+<li class="level1"><div class="li"> <a href="https://metacpan.org/pod/Apache::Session::Postgres" class="urlextern" title="https://metacpan.org/pod/Apache::Session::Postgres"  rel="nofollow">PostgreSQL</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="http://search.cpan.org/perldoc?Apache::Session::Oracle" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Oracle"  rel="nofollow">Oracle</a></div>
+<li class="level1"><div class="li"> <a href="https://metacpan.org/pod/Apache::Session::Oracle" class="urlextern" title="https://metacpan.org/pod/Apache::Session::Oracle"  rel="nofollow">Oracle</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="http://search.cpan.org/perldoc?Apache::Session::Informix" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Informix"  rel="nofollow">Informix</a></div>
+<li class="level1"><div class="li"> <a href="https://metacpan.org/pod/Apache::Session::Informix" class="urlextern" title="https://metacpan.org/pod/Apache::Session::Informix"  rel="nofollow">Informix</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="http://search.cpan.org/perldoc?Apache::Session::Sybase" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Sybase"  rel="nofollow">Sybase</a></div>
+<li class="level1"><div class="li"> <a href="https://metacpan.org/pod/Apache::Session::Sybase" class="urlextern" title="https://metacpan.org/pod/Apache::Session::Sybase"  rel="nofollow">Sybase</a></div>
 </li>
 <li class="level1"><div class="li"> ….</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT1 SECTION "SQL session backend" [1-468] -->
+<!-- EDIT1 SECTION "SQL session backend" [1-448] -->
 <h2 class="sectionedit2" id="setup">Setup</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT2 SECTION "Setup" [469-487] -->
+<!-- EDIT2 SECTION "Setup" [449-467] -->
 <h3 class="sectionedit3" id="prepare_the_database">Prepare the database</h3>
 <div class="level3">
 
@@ -126,6 +126,7 @@ Create sessions table:
     <span class="br0">&#41;</span>;</pre>
 <div class="noteimportant">Change <code>char(32)</code> by <code>varchar(64)</code> if you use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
 </div><div class="notetip">You can change table name <code>sessions</code> to whatever you want, just adapt the parameter <code>TableName</code> in module options.
+</div><div class="noteimportant">For a better UTF-8 support, use <a href="https://metacpan.org/pod/DBD::MariaDB" class="urlextern" title="https://metacpan.org/pod/DBD::MariaDB"  rel="nofollow">DBD::MariaDB</a> with Apache::Session*::MySQL instead of DBD::mysql
 </div>
 </div>
 
@@ -159,12 +160,12 @@ lemonldap-ng=&gt; q</pre>
 <div class="noteimportant">Change <code>char(32)</code> by <code>varchar(64)</code> if you use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
 </div>
 </div>
-<!-- EDIT3 SECTION "Prepare the database" [488-2237] -->
+<!-- EDIT3 SECTION "Prepare the database" [468-2379] -->
 <h3 class="sectionedit4" id="manager">Manager</h3>
 <div class="level3">
 
 <p>
-Go in the Manager and set the session module (for example <a href="http://search.cpan.org/perldoc?Apache::Session::Postgres" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Postgres"  rel="nofollow">Apache::Session::Postgres</a> for PostgreSQL) in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
+Go in the Manager and set the session module (for example <a href="https://metacpan.org/pod/Apache::Session::Postgres" class="urlextern" title="https://metacpan.org/pod/Apache::Session::Postgres"  rel="nofollow">Apache::Session::Postgres</a> for PostgreSQL) in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
 </p>
 <div class="table sectionedit5"><table class="inline table table-bordered table-striped">
 	<thead>
@@ -176,7 +177,7 @@ Go in the Manager and set the session module (for example <a href="http://search
 	</tr>
 	</thead>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  <strong>DataSource</strong>  </td><td class="col1"> The <a href="http://search.cpan.org/perldoc?DBI" class="urlextern" title="http://search.cpan.org/perldoc?DBI"  rel="nofollow">DBI</a> string </td><td class="col2"> dbi:Pg:dbname=sessions;host=10.2.3.1 </td>
+		<td class="col0 centeralign">  <strong>DataSource</strong>  </td><td class="col1"> The <a href="https://metacpan.org/pod/DBI" class="urlextern" title="https://metacpan.org/pod/DBI"  rel="nofollow">DBI</a> string </td><td class="col2"> dbi:Pg:dbname=sessions;host=10.2.3.1 </td>
 	</tr>
 	<tr class="row3 rowodd">
 		<td class="col0 centeralign">  <strong>UserName</strong>  </td><td class="col1"> The database username </td><td class="col2"> lemonldapng </td>
@@ -191,9 +192,9 @@ Go in the Manager and set the session module (for example <a href="http://search
 		<td class="col0 centeralign">  <strong>TableName</strong>  </td><td class="col1"> <em>(Optional)</em> Name of the table </td><td class="col2"> sessions </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [2566-2975] -->
+<!-- EDIT5 TABLE [2702-3105] -->
 <p>
-You must read the man page corresponding to your database (<a href="http://search.cpan.org/perldoc?Apache::Session::MySQL" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::MySQL"  rel="nofollow">Apache::Session::MySQL</a>, …) to learn more about parameters. You must also install the database connector (<a href="http://search.cpan.org/perldoc?DBD::Oracle" class="urlextern" title="http://search.cpan.org/perldoc?DBD::Oracle"  rel="nofollow">DBD::Oracle</a>, <a href="http://search.cpan.org/perldoc?DBD::Pg" class="urlextern" title="http://search.cpan.org/perldoc?DBD::Pg"  rel="nofollow">DBD::Pg</a>,…)
+You must read the man page corresponding to your database (<a href="https://metacpan.org/pod/Apache::Session::MySQL" class="urlextern" title="https://metacpan.org/pod/Apache::Session::MySQL"  rel="nofollow">Apache::Session::MySQL</a>, …) to learn more about parameters. You must also install the database connector (<a href="https://metacpan.org/pod/DBD::Oracle" class="urlextern" title="https://metacpan.org/pod/DBD::Oracle"  rel="nofollow">https://metacpan.org/pod/DBD::Oracle</a>, <a href="https://metacpan.org/pod/DBD::Pg" class="urlextern" title="https://metacpan.org/pod/DBD::Pg"  rel="nofollow">DBD::Pg</a>,…)
 </p>
 <div class="noteimportant">For MySQL, you need to set additional parameters:<ul>
 <li class="level1"><div class="li"> LockDataSource</div>
@@ -234,9 +235,9 @@ If you may store some non-<abbr title="American Standard Code for Information In
 		<td class="col0 centeralign">  SQLite  </td><td class="col1 centeralign">  sqlite_unicode  </td><td class="col2 centeralign">  1  </td>
 	</tr>
 </table></div>
-<!-- EDIT6 TABLE [3795-3958] -->
+<!-- EDIT6 TABLE [3895-4058] -->
 </div>
-<!-- EDIT4 SECTION "Manager" [2238-3959] -->
+<!-- EDIT4 SECTION "Manager" [2380-4059] -->
 <h2 class="sectionedit7" id="security">Security</h2>
 <div class="level2">
 
@@ -249,6 +250,6 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Security" [3960-] --></div>
+<!-- EDIT7 SECTION "Security" [4060-] --></div>
 </body>
 </html>

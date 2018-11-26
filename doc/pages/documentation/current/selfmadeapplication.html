@@ -119,28 +119,46 @@ Examples with a <a href="writingrulesand_headers.html#headers" class="wikilink1"
 <p>
 First create a PSGI module based on Lemonldap::NG::Handler:
 </p>
-<pre class="code perl">  <a href="http://perldoc.perl.org/functions/package.html"><span class="kw3">package</span></a> My<span class="sy0">::</span><span class="me2">PSGI</span><span class="sy0">;</span>
+<pre class="code perl"><a href="http://perldoc.perl.org/functions/package.html"><span class="kw3">package</span></a> My<span class="sy0">::</span><span class="me2">PSGI</span><span class="sy0">;</span>
 &nbsp;
-  <span class="kw2">use</span> base Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Handler</span><span class="sy0">;</span>
+<span class="kw2">use</span> base <span class="st0">&quot;Lemonldap::NG::Handler::PSGI&quot;</span><span class="sy0">;</span>
 &nbsp;
-  <span class="kw2">sub</span> init <span class="br0">&#123;</span>
+<span class="kw2">sub</span> init <span class="br0">&#123;</span>
     <span class="kw1">my</span> <span class="br0">&#40;</span><span class="re0">$self</span><span class="sy0">,</span><span class="re0">$args</span><span class="br0">&#41;</span> <span class="sy0">=</span> <span class="co5">@_</span><span class="sy0">;</span>
     <span class="re0">$self</span><span class="sy0">-&gt;</span><span class="me1">protection</span><span class="br0">&#40;</span><span class="st_h">'manager'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$self</span><span class="sy0">-&gt;</span><span class="me1">SUPER</span><span class="sy0">::</span><span class="me2">init</span><span class="br0">&#40;</span><span class="re0">$args</span><span class="br0">&#41;</span> <span class="kw1">or</span> <a href="http://perldoc.perl.org/functions/return.html"><span class="kw3">return</span></a> <span class="nu0">0</span><span class="sy0">;</span>
+    <span class="re0">$self</span><span class="sy0">-&gt;</span><span class="me1">staticPrefix</span><span class="br0">&#40;</span><span class="st0">&quot;/static&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="re0">$self</span><span class="sy0">-&gt;</span><span class="me1">templateDir</span><span class="br0">&#40;</span><span class="st0">&quot;/usr/share/lemonldap-ng/portal/templates&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
     <span class="co1"># See Lemonldap::NG::Common::PSGI for more</span>
-    <span class="sy0">...</span>
+    <span class="co1">#...</span>
     <span class="co1"># Return a boolean. If false, then error message has to be stored in</span>
     <span class="co1"># $self-&gt;error</span>
     <a href="http://perldoc.perl.org/functions/return.html"><span class="kw3">return</span></a> <span class="nu0">1</span><span class="sy0">;</span>
-  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
 &nbsp;
-  <span class="kw2">sub</span> handler <span class="br0">&#123;</span>
+<span class="kw2">sub</span> handler <span class="br0">&#123;</span>
     <span class="kw1">my</span> <span class="br0">&#40;</span> <span class="re0">$self</span><span class="sy0">,</span> <span class="re0">$req</span> <span class="br0">&#41;</span> <span class="sy0">=</span> <span class="co5">@_</span><span class="sy0">;</span>
 &nbsp;
     <span class="co1"># Will be called only if authorisated</span>
-    <span class="kw1">my</span> <span class="re0">$userId</span> <span class="sy0">=</span> <span class="re0">$self</span><span class="sy0">-&gt;</span><span class="me1">userId</span><span class="sy0">;</span>
-    <span class="sy0">...</span>
-    <span class="re0">$self</span><span class="sy0">-&gt;</span><span class="me1">sendJSONresponse</span><span class="br0">&#40;</span><span class="sy0">...</span><span class="br0">&#41;</span><span class="sy0">;</span>
-  <span class="br0">&#125;</span></pre>
+    <span class="kw1">my</span> <span class="re0">$userId</span> <span class="sy0">=</span> <span class="re0">$self</span><span class="sy0">-&gt;</span><span class="me1">userId</span><span class="br0">&#40;</span><span class="re0">$req</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="co1">#...</span>
+&nbsp;
+    <span class="co1"># Return JSON</span>
+    <span class="co1"># $self-&gt;sendJSONresponse(...);</span>
+&nbsp;
+    <span class="co1"># or Return HTML</span>
+    <span class="re0">$self</span><span class="sy0">-&gt;</span><span class="me1">sendHtml</span><span class="br0">&#40;</span><span class="re0">$req</span><span class="sy0">,</span> <span class="st0">&quot;myskin/mytemplate&quot;</span><span class="sy0">,</span> <span class="br0">&#40;</span> params <span class="sy0">=&gt;</span> <span class="br0">&#123;</span> <span class="st_h">'userId'</span> <span class="sy0">=&gt;</span> <span class="re0">$userId</span> <span class="br0">&#125;</span><span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+They create a FCGI script like this:
+</p>
+<pre class="code perl"><span class="co1">#!/usr/bin/env perl</span>
+&nbsp;
+<span class="kw2">use</span> My<span class="sy0">::</span><span class="me2">PSGI</span><span class="sy0">;</span>
+<span class="kw2">use</span> Plack<span class="sy0">::</span><span class="me2">Handler</span><span class="sy0">::</span><span class="me2">FCGI</span><span class="sy0">;</span>
+&nbsp;
+Plack<span class="sy0">::</span><span class="me2">Handler</span><span class="sy0">::</span><span class="me2">FCGI</span><span class="sy0">-&gt;</span><span class="me1">new</span><span class="sy0">-&gt;</span><span class="me1">run</span><span class="br0">&#40;</span> My<span class="sy0">::</span><span class="me2">PSGI</span><span class="sy0">-&gt;</span><span class="me1">run</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 <p>
 See our LLNG Nginx/Apache configurations to see how to launch it or read <a href="https://plackperl.org/" class="urlextern" title="https://plackperl.org/"  rel="nofollow">PSGI/Plack documentation</a>.

@@ -57,6 +57,7 @@
 <li class="level1"><div class="li"><a href="#register_an_saml_service_provider">Register an SAML Service Provider</a></div></li>
 <li class="level1"><div class="li"><a href="#configure_openid_connect_identity_provider">Configure OpenID Connect Identity Provider</a></div></li>
 <li class="level1"><div class="li"><a href="#register_an_openid_connect_relying_party">Register an OpenID Connect Relying Party</a></div></li>
+<li class="level1"><div class="li"><a href="#categories_and_applications_in_menu">Categories and applications in menu</a></div></li>
 </ul>
 </div>
 </div>
@@ -339,6 +340,25 @@ In this example we have:
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 addKey oidcRPMetaDataOptions/testrp  oidcRPMetaDataOptionsIDTokenSignAlg RS512 oidcRPMetaDataOptions/testrp  oidcRPMetaDataOptionsIDTokenExpiration 3600 oidcRPMetaDataOptions/testrp oidcRPMetaDataOptionsAccessTokenExpiration 3600</pre>
 
 </div>
-<!-- EDIT9 SECTION "Register an OpenID Connect Relying Party" [7670-] --></div>
+<!-- EDIT9 SECTION "Register an OpenID Connect Relying Party" [7670-9177] -->
+<h2 class="sectionedit10" id="categories_and_applications_in_menu">Categories and applications in menu</h2>
+<div class="level2">
+
+<p>
+Create the category “applications”:
+```
+/usr/share/lemonldap-ng/bin/lemonldap-ng-cli addKey applicationList/applications type category  applicationList/applications catname Applications
+```
+</p>
+
+<p>
+Create the application “sample” inside category “applications”:
+```
+/usr/share/lemonldap-ng/bin/lemonldap-ng-cli addKey applicationList/icons/kmultiple.png” applicationList/applications/sample/options name “Sample application” applicationList/applications/sample/options uri “<a href="https://sample.example.com/" class="urlextern" title="https://sample.example.com/"  rel="nofollow">https://sample.example.com/</a>”
+```
+</p>
+
+</div>
+<!-- EDIT10 SECTION "Categories and applications in menu" [9178-] --></div>
 </body>
 </html>

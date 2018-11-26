@@ -92,6 +92,14 @@ The %ENV table provides:
 </li>
 </ul>
 </li>
+<li class="level1"><div class="li"> For portal:</div>
+<ul>
+<li class="level2"><div class="li"> $ENV{urldc} : Origin <abbr title="Uniform Resource Locator">URL</abbr> before Handler redirection, in cleartext</div>
+</li>
+<li class="level2"><div class="li"> $ENV{_url} : Origin <abbr title="Uniform Resource Locator">URL</abbr> before Handler redirection, base64 encoded</div>
+</li>
+</ul>
+</li>
 </ul>
 
 <p>
@@ -99,7 +107,7 @@ See also <a href="extendedfunctions.html" class="wikilink1" title="documentation
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Available $ENV{} variables" [547-1077] -->
+<!-- EDIT2 SECTION "Available $ENV{} variables" [547-1238] -->
 <h2 class="sectionedit3" id="rules">Rules</h2>
 <div class="level2">
 
@@ -139,7 +147,7 @@ Examples:
 		<td class="col0 leftalign"> Restrict access to the whole site to users that have the LDAP description field set to “LDAP administrator” (must be set in exported variables)  </td><td class="col1 centeralign">  default  </td><td class="col2 centeralign">  $description&nbsp;eq&nbsp;"LDAP&nbsp;administrator"  </td>
 	</tr>
 </table></div>
-<!-- EDIT4 TABLE [1300-2143] -->
+<!-- EDIT4 TABLE [1461-2304] -->
 <p>
 The “<strong>default</strong>” access rule is used if no other access rule match the current <abbr title="Uniform Resource Locator">URL</abbr>.
 </p>
@@ -170,7 +178,7 @@ Rules can also be used to intercept logout <abbr title="Uniform Resource Locator
 		<td class="col0"> Logout user from current application and from Lemonldap::NG and redirect it to http://intranet/ <strong><em>(Apache only)</em></strong> </td><td class="col1 centeralign">  ^/index.php\?logout  </td><td class="col2 centeralign">  logout_app_sso&nbsp;http://intranet/  </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [2637-3285] --><div class="notewarning"><code>logout_app</code> and <code>logout_app_sso</code> rules are not available on Nginx, only on Apache.
+<!-- EDIT5 TABLE [2798-3446] --><div class="notewarning"><code>logout_app</code> and <code>logout_app_sso</code> rules are not available on Nginx, only on Apache.
 </div>
 <p>
 By default, user will be redirected on portal if no <abbr title="Uniform Resource Locator">URL</abbr> defined, or on the specified <abbr title="Uniform Resource Locator">URL</abbr> if any.
@@ -178,7 +186,7 @@ By default, user will be redirected on portal if no <abbr title="Uniform Resourc
 <div class="noteimportant">Only current application is concerned by logout_app* targets. Be careful with some applications which doesn&#039;t verify Lemonldap::NG headers after having created their own cookies. If so, you can redirect users to a <abbr title="HyperText Markup Language">HTML</abbr> page that explain that it is safe to close browser after disconnect.
 </div>
 </div>
-<!-- EDIT3 SECTION "Rules" [1078-3806] -->
+<!-- EDIT3 SECTION "Rules" [1239-3967] -->
 <h3 class="sectionedit6" id="rules_on_authentication_level">Rules on authentication level</h3>
 <div class="level3">
 
@@ -212,7 +220,7 @@ There are two way to impose users to have a high authentication level:
 <div class="notetip">Instead of returning a 403 code, “minimum level” returns user to a form that explain that a higher level is required and propose to user to reauthenticate itself.
 </div>
 </div>
-<!-- EDIT6 SECTION "Rules on authentication level" [3807-4692] -->
+<!-- EDIT6 SECTION "Rules on authentication level" [3968-4853] -->
 <h2 class="sectionedit7" id="headers">Headers</h2>
 <div class="level2">
 
@@ -242,7 +250,7 @@ Examples:
 		<td class="col0 leftalign"> Give a non ascii data  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  encode_base64($givenName."&nbsp;".$surName,"")  </td>
 	</tr>
 </table></div>
-<!-- EDIT8 TABLE [4876-5212] -->
+<!-- EDIT8 TABLE [5037-5373] -->
 <p>
 As described in <a href="performances.html#handler_performance" class="wikilink1" title="documentation:2.0:performances">performances chapter</a>, you can use macros, local macros,…
 </p>
@@ -260,7 +268,7 @@ As described in <a href="performances.html#handler_performance" class="wikilink1
 
 </div>
 </div>
-<!-- EDIT7 SECTION "Headers" [4693-5884] -->
+<!-- EDIT7 SECTION "Headers" [4854-6045] -->
 <h2 class="sectionedit9" id="available_functions">Available functions</h2>
 <div class="level2">
 
@@ -275,7 +283,7 @@ In addition to macros and name, you can use some functions in rules and headers:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "Available functions" [5885-6095] -->
+<!-- EDIT9 SECTION "Available functions" [6046-6256] -->
 <h2 class="sectionedit10" id="wildcards_in_hostnames">Wildcards in hostnames</h2>
 <div class="level2">
 
@@ -298,6 +306,6 @@ Even if a wildcard exists, if a virtualhost is explicitly declared, this rule is
 </ol>
 
 </div>
-<!-- EDIT10 SECTION "Wildcards in hostnames" [6096-] --></div>
+<!-- EDIT10 SECTION "Wildcards in hostnames" [6257-] --></div>
 </body>
 </html>

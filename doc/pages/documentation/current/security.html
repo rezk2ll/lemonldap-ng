@@ -161,10 +161,17 @@ LLNG portal now embeds the following features:
 </li>
 <li class="level1"><div class="li"> <a href="https://en.wikipedia.org/wiki/Content_Security_Policy" class="urlextern" title="https://en.wikipedia.org/wiki/Content_Security_Policy"  rel="nofollow">Content-Security-Policy</a> header: portal build dynamically this header. You can modify default values in the manager <em>(Général parameters » Advanced parameters » Security » Content-Security-Policy)</em>.</div>
 </li>
+<li class="level1"><div class="li"> <a href="https://en.wikipedia.org/wiki/Brute-force_attack" class="urlextern" title="https://en.wikipedia.org/wiki/Brute-force_attack"  rel="nofollow">Brute-force attack</a> protection: after some failed logins, user must wait before re-try to log into Portal.</div>
+</li>
 </ul>
+<div class="noteimportant">* Brute-force attack protection is DISABLED by default
+<p>
+* Browser implementations of form Action directive are inconsistent (e.g. Firefox doesn&#039;t block the redirects whereas Chrome does). Administrators may have to modify form Action value with wildcard likes *.
+</p>
 
 </div>
-<!-- EDIT6 SECTION "Portal" [2106-2740] -->
+</div>
+<!-- EDIT6 SECTION "Portal" [2106-3191] -->
 <h3 class="sectionedit7" id="split_portal_when_using_soaprest">Split portal when using SOAP/REST</h3>
 <div class="level3">
 
@@ -173,12 +180,12 @@ If you use <a href="soapsessionbackend.html" class="wikilink1" title="documentat
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Split portal when using SOAP/REST" [2741-2931] -->
+<!-- EDIT7 SECTION "Split portal when using SOAP/REST" [3192-3382] -->
 <h2 class="sectionedit8" id="write_good_rules">Write good rules</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT8 SECTION "Write good rules" [2932-2961] -->
+<!-- EDIT8 SECTION "Write good rules" [3383-3412] -->
 <h3 class="sectionedit9" id="order_your_rules">Order your rules</h3>
 <div class="level3">
 
@@ -211,7 +218,7 @@ For example, if these rules are used without comments:
 		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT10 TABLE [3375-3485] -->
+<!-- EDIT10 TABLE [3826-3936] -->
 <p>
 Then the second rule will be applied first, so every authenticated user will access to <code>/pub/admin</code> directory.
 </p>
@@ -232,7 +239,7 @@ Use comment to correct this:
 		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> 2_pub </td>
 	</tr>
 </table></div>
-<!-- EDIT11 TABLE [3630-3754] --><div class="notetip"><ul>
+<!-- EDIT11 TABLE [4081-4205] --><div class="notetip"><ul>
 <li class="level1"><div class="li"> Reload the Manager to see the effective order</div>
 </li>
 <li class="level1"><div class="li"> Use rule comments to order your rules</div>
@@ -241,7 +248,7 @@ Use comment to correct this:
 
 </div>
 </div>
-<!-- EDIT9 SECTION "Order your rules" [2962-3867] -->
+<!-- EDIT9 SECTION "Order your rules" [3413-4318] -->
 <h3 class="sectionedit12" id="be_careful_with_url_parameters">Be careful with URL parameters</h3>
 <div class="level3">
 
@@ -265,7 +272,7 @@ For example with this rule on the <code>access</code> parameter:
 		<td class="col0"> default </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT13 TABLE [4104-4238] -->
+<!-- EDIT13 TABLE [4555-4689] -->
 <p>
 Then a user that try to access to one of the following <em class="u">will be granted</em> !
 </p>
@@ -295,20 +302,20 @@ You can use the following rules instead:
 		<td class="col0"> default </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT14 TABLE [4436-4639] --><div class="notetip"><strong>(?i)</strong> means case no sensitive.
+<!-- EDIT14 TABLE [4887-5090] --><div class="notetip"><strong>(?i)</strong> means case no sensitive.
 </div><div class="notewarning">Remember that rules written on GET parameters must be tested.
 </div>
 </div>
-<!-- EDIT12 SECTION "Be careful with URL parameters" [3868-4776] -->
+<!-- EDIT12 SECTION "Be careful with URL parameters" [4319-5227] -->
 <h3 class="sectionedit15" id="encoded_characters">Encoded characters</h3>
 <div class="level3">
 
 <p>
-Some characters are encoded in URLs by the browser (such as space,…). To avoid problems, <abbr title="LemonLDAP::NG">LL::NG</abbr> decode them using <a href="http://search.cpan.org/perldoc?Apache2::URI#unescape_url" class="urlextern" title="http://search.cpan.org/perldoc?Apache2::URI#unescape_url"  rel="nofollow">http://search.cpan.org/perldoc?Apache2::URI#unescape_url</a>. So write your rules using normal characters.
+Some characters are encoded in URLs by the browser (such as space,…). To avoid problems, <abbr title="LemonLDAP::NG">LL::NG</abbr> decode them using <a href="https://metacpan.org/pod/Apache2::URI#unescape_url" class="urlextern" title="https://metacpan.org/pod/Apache2::URI#unescape_url"  rel="nofollow">https://metacpan.org/pod/Apache2::URI#unescape_url</a>. So write your rules using normal characters.
 </p>
 
 </div>
-<!-- EDIT15 SECTION "Encoded characters" [4777-5030] -->
+<!-- EDIT15 SECTION "Encoded characters" [5228-5475] -->
 <h2 class="sectionedit16" id="secure_reverse-proxies">Secure reverse-proxies</h2>
 <div class="level2">
 
@@ -354,7 +361,7 @@ It is recommended to secure the channel between reverse-proxies and application 
 </ul>
 
 </div>
-<!-- EDIT16 SECTION "Secure reverse-proxies" [5031-6699] -->
+<!-- EDIT16 SECTION "Secure reverse-proxies" [5476-7144] -->
 <h2 class="sectionedit17" id="configure_security_settings">Configure security settings</h2>
 <div class="level2">
 
@@ -364,7 +371,7 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 <ul>
 <li class="level1"><div class="li"> <strong>Username control</strong>: Regular expression used to check user login syntax.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Force authentication</strong>: set to &#039;On&#039; to force authentication when user connects to portal, even if he has a valid session</div>
+<li class="level1"><div class="li"> <strong>Force authentication</strong>: set to &#039;On&#039; to force authentication when user connects to portal, even if he has a valid session.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Force authentication interval</strong>: time interval (in seconds) when a authentication renewal cannot be forced, used to prevent to loose the current authentication during the main process. If you experience slow network performances, you can increase this value.</div>
 </li>
@@ -376,12 +383,14 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 </li>
 <li class="level1"><div class="li"> <strong>Check <abbr title="Cross Site Scripting">XSS</abbr> Attacks</strong>: Set to &#039;Off&#039; to disable <abbr title="Cross Site Scripting">XSS</abbr> checks. <abbr title="Cross Site Scripting">XSS</abbr> checks will still be done with warning in logs, but this will not prevent the process to continue.</div>
 </li>
+<li class="level1"><div class="li"> <strong>Brute-Force Attack protection</strong>: set to &#039;On&#039; to enable it. The aim of a brute force attack is to gain access to user accounts by repeatedly trying to guess the password of a user. If it is disabled, automated tools may submit thousands of password attempts in a matter of seconds, making it easy for an attacker to beat a password-based authentication system.</div>
+</li>
 <li class="level1"><div class="li"> <strong>LWP::UserAgent SSL options</strong>: insert here options to pass to LWP::UserAgent object (used by <abbr title="Security Assertion Markup Language">SAML</abbr> or OpenID-Connect to query partners). Example: <code>verify_hostname ⇒ 0</code>, <code>SSL_verify_mode ⇒ 0</code></div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT17 SECTION "Configure security settings" [6700-8033] -->
+<!-- EDIT17 SECTION "Configure security settings" [7145-8845] -->
 <h2 class="sectionedit18" id="fail2ban">Fail2ban</h2>
 <div class="level2">
 
@@ -433,7 +442,7 @@ Restart fail2ban
 </p>
 
 </div>
-<!-- EDIT18 SECTION "Fail2ban" [8034-9088] -->
+<!-- EDIT18 SECTION "Fail2ban" [8846-9900] -->
 <h2 class="sectionedit19" id="sessions_identifier">Sessions identifier</h2>
 <div class="level2">
 
@@ -446,7 +455,7 @@ We recommend to use : <code>Lemonldap::NG::Common::Apache::Session::Generate::SH
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Sessions identifier" [9089-9351] -->
+<!-- EDIT19 SECTION "Sessions identifier" [9901-10163] -->
 <h2 class="sectionedit20" id="saml">SAML</h2>
 <div class="level2">
 
@@ -455,6 +464,6 @@ See <a href="samlservice.html#security_parameters" class="wikilink1" title="docu
 </p>
 
 </div>
-<!-- EDIT20 SECTION "SAML" [9352-] --></div>
+<!-- EDIT20 SECTION "SAML" [10164-] --></div>
 </body>
 </html>

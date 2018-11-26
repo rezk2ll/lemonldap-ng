@@ -62,24 +62,24 @@
 <div class="level1">
 
 <p>
-The <a href="http://www.yubico.com/yubikey" class="urlextern" title="http://www.yubico.com/yubikey"  rel="nofollow">Yubikey</a> is a small material token shipped by <a href="http://www.yubico.com" class="urlextern" title="http://www.yubico.com"  rel="nofollow">Yubico</a>. It sends an OTP, which is validated against Yubico server.
+A <a href="http://www.yubico.com/yubikey" class="urlextern" title="http://www.yubico.com/yubikey"  rel="nofollow">Yubikey</a> is a small material token manufactured by <a href="http://www.yubico.com" class="urlextern" title="http://www.yubico.com"  rel="nofollow">Yubico</a>. It sends an OTP, which is validated via Yubico server.
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Yubikey Second Factor" [1-214] -->
+<!-- EDIT1 SECTION "Yubikey Second Factor" [1-213] -->
 <h2 class="sectionedit2" id="prerequisites_and_dependencies">Prerequisites and dependencies</h2>
 <div class="level2">
 
 <p>
-You need <a href="http://search.cpan.org/~massyn/Auth-Yubikey_WebClient/" class="urlextern" title="http://search.cpan.org/~massyn/Auth-Yubikey_WebClient/"  rel="nofollow">Auth::Yubikey_WebClient</a> package.
+You must install <a href="http://search.cpan.org/~massyn/Auth-Yubikey_WebClient/" class="urlextern" title="http://search.cpan.org/~massyn/Auth-Yubikey_WebClient/"  rel="nofollow">Auth::Yubikey_WebClient</a> package.
 </p>
 
 <p>
-You need to get an client ID and a secret key from Yubico. See <a href="https://upgrade.yubico.com/getapikey/" class="urlextern" title="https://upgrade.yubico.com/getapikey/"  rel="nofollow">Yubico API</a> page.
+You have to retrieve a client ID and a secret key from Yubico. See <a href="https://upgrade.yubico.com/getapikey/" class="urlextern" title="https://upgrade.yubico.com/getapikey/"  rel="nofollow">Yubico API</a> page.
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Prerequisites and dependencies" [215-483] -->
+<!-- EDIT2 SECTION "Prerequisites and dependencies" [214-494] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -107,7 +107,7 @@ In the manager (second factors), you just have to enable it:
 <div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule: <code>$_2fDevices =~ /“type”:\s*“UBK”/s</code>, else Yubikey will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
 </div>
 </div>
-<!-- EDIT3 SECTION "Configuration" [484-1620] -->
+<!-- EDIT3 SECTION "Configuration" [495-1631] -->
 <h2 class="sectionedit4" id="provisioning">Provisioning</h2>
 <div class="level2">
 
@@ -117,7 +117,7 @@ If you don&#039;t want to use self-registration, set public part of user&#039;s 
 <pre class="code file json">[{&quot;name&quot; : &quot;MyYubikey&quot; , &quot;type&quot; : &quot;UBK&quot; , &quot;_secret&quot; : &quot;########&quot; , &quot;epoch&quot;:&quot;1524078936&quot;}, ...]</pre>
 
 </div>
-<!-- EDIT4 SECTION "Provisioning" [1621-1988] -->
+<!-- EDIT4 SECTION "Provisioning" [1632-1999] -->
 <h2 class="sectionedit5" id="enrollment">Enrollment</h2>
 <div class="level2">
 
@@ -126,6 +126,6 @@ If you have enabled self registration, users can register their U2F keys using <
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Enrollment" [1989-] --></div>
+<!-- EDIT5 SECTION "Enrollment" [2000-] --></div>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:start</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,start"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="start.html"/>
@@ -64,6 +64,8 @@
 <ul class="toc">
 <li class="level3"><div class="li"><a href="#authentication_users_and_password_databases">Authentication, users and password databases</a></div></li>
 <li class="level3"><div class="li"><a href="#identity_provider">Identity provider</a></div></li>
+<li class="level3"><div class="li"><a href="#attacks_and_protection">Attacks and Protection</a></div></li>
+<li class="level3"><div class="li"><a href="#plugins">Plugins</a></div></li>
 </ul>
 </li>
 <li class="level2"><div class="li"><a href="#handlers">Handlers</a></div></li>
@@ -430,8 +432,132 @@
 </p>
 
 </div>
-<!-- EDIT9 SECTION "Portal" [2025-5651] -->
-<h3 class="sectionedit12" id="handlers">Handlers</h3>
+
+<h4 id="attacks_and_protection">Attacks and Protection</h4>
+<div class="level4">
+<div class="notetip"><ul>
+<li class="level1"><div class="li"> To learn or find out more about security, go to <a href="security.html" class="wikilink1" title="documentation:2.0:security">Security</a> documentation</div>
+</li>
+</ul>
+
+</div>
+<p>
+<div class="row"><div class="col-md-1">
+<a href="icons/neotux.png_documentation_2.0_start.html" class="media" title="icons:neotux.png"><img src="icons/neotux.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+<div class="table sectionedit12"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0"> Attack </th><th class="col1 centeralign">  LLNG protection  </th><th class="col2 centeralign">  System Integrator protection  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0"> <a href="bruteforceprotection.html" class="wikilink1" title="documentation:2.0:bruteforceprotection">Brute Force</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> <a href="security.html#portal" class="wikilink1" title="documentation:2.0:security">Page Content</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign">    </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0"> <a href="security.html#portal" class="wikilink1" title="documentation:2.0:security">CSRF</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign">    </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0"> <a href="dos" class="wikilink2" title="documentation:2.0:dos" rel="nofollow">Deny of Service</a> </td><td class="col1 leftalign">   </td><td class="col2 centeralign">  ✔  </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0"> <a href="portalcustom.html#other_parameters" class="wikilink1" title="documentation:2.0:portalcustom">Invisible iFrame</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td>
+	</tr>
+	<tr class="row6 roweven">
+		<td class="col0"> <a href="mitm" class="wikilink2" title="documentation:2.0:mitm" rel="nofollow">Man-in-the-Middle</a> </td><td class="col1 leftalign">    </td><td class="col2 centeralign">  ✔  </td>
+	</tr>
+	<tr class="row7 rowodd">
+		<td class="col0"> <a href="exploit" class="wikilink2" title="documentation:2.0:exploit" rel="nofollow">Software Exploit</a> </td><td class="col1 leftalign">   </td><td class="col2 centeralign">  ✔  </td>
+	</tr>
+	<tr class="row8 roweven">
+		<td class="col0"> <a href="security.html#secure_reverse-proxies" class="wikilink1" title="documentation:2.0:security">SSO by-passing</a> </td><td class="col1 leftalign">    </td><td class="col2 centeralign">  ✔  </td>
+	</tr>
+	<tr class="row9 rowodd">
+		<td class="col0"> <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">XSS</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign">    </td>
+	</tr>
+</table></div>
+<!-- EDIT12 TABLE [5913-6427] -->
+<p>
+</div></div>
+</p>
+
+</div>
+
+<h4 id="plugins">Plugins</h4>
+<div class="level4">
+
+<p>
+<div class="row"><div class="col-md-1">
+<a href="icons/personal.png_documentation_2.0_start.html" class="media" title="icons:personal.png"><img src="icons/personal.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+<div class="table sectionedit13"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Name  </th><th class="col1 centeralign">  Description  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0"> <a href="autosignin.html" class="wikilink1" title="documentation:2.0:autosignin">Auto Signin</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Auto Signin Addon </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> <a href="bruteforceprotection.html" class="wikilink1" title="documentation:2.0:bruteforceprotection">Brute Force protection</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1"> User must wait to log in after 3 failed login attempts </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0"> <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a> </td><td class="col1"> Cross Domain Authentication </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0"> <a href="checkstate.html" class="wikilink1" title="documentation:2.0:checkstate">Check state</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Check state plugin (test page) </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0"> <a href="plugincustom.html" class="wikilink1" title="documentation:2.0:plugincustom">Custom</a> </td><td class="col1"> Write a custom plugin </td>
+	</tr>
+	<tr class="row6 roweven">
+		<td class="col0"> <a href="forcereauthn.html" class="wikilink1" title="documentation:2.0:forcereauthn">Force Authentication</a> </td><td class="col1"> Force authentication to access to Portal </td>
+	</tr>
+	<tr class="row7 rowodd">
+		<td class="col0"> <a href="loginhistory.html" class="wikilink1" title="documentation:2.0:loginhistory">Display login history</a> </td><td class="col1"></td>
+	</tr>
+	<tr class="row8 roweven">
+		<td class="col0"> <a href="sessions.html" class="wikilink1" title="documentation:2.0:sessions">Grant Sessions rules</a> </td><td class="col1"></td>
+	</tr>
+	<tr class="row9 rowodd">
+		<td class="col0"> <a href="notifications.html" class="wikilink1" title="documentation:2.0:notifications">Notifications system</a> </td><td class="col1"></td>
+	</tr>
+	<tr class="row10 roweven">
+		<td class="col0"> <a href="public_pages.html" class="wikilink1" title="documentation:2.0:public_pages">Public pages</a> </td><td class="col1"> Enable public pages system </td>
+	</tr>
+	<tr class="row11 rowodd">
+		<td class="col0"> <a href="resetpassword.html" class="wikilink1" title="documentation:2.0:resetpassword">Reset password by mail</a> </td><td class="col1"></td>
+	</tr>
+	<tr class="row12 roweven">
+		<td class="col0"> <a href="restservices.html" class="wikilink1" title="documentation:2.0:restservices">REST services</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1"> REST server for <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">Proxy</a> </td>
+	</tr>
+	<tr class="row13 rowodd">
+		<td class="col0"> <a href="soapservices.html" class="wikilink1" title="documentation:2.0:soapservices">SOAP services</a> </td><td class="col1"> SOAP server for <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">Proxy</a> </td>
+	</tr>
+	<tr class="row14 roweven">
+		<td class="col0"> <a href="status.html" class="wikilink1" title="documentation:2.0:status">Portal Status</a> </td><td class="col1"> Experimental portal status page </td>
+	</tr>
+	<tr class="row15 rowodd">
+		<td class="col0"> <a href="stayconnected" class="wikilink2" title="documentation:2.0:stayconnected" rel="nofollow">Stay connected</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Enable persistent connection on same browser </td>
+	</tr>
+	<tr class="row16 roweven">
+		<td class="col0"> Upgrade session <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Plugin that explain to user that a more secure authentication is needed instead of rejected it </td>
+	</tr>
+</table></div>
+<!-- EDIT13 TABLE [6595-7808] -->
+<p>
+</div></div>
+</p>
+
+</div>
+<!-- EDIT9 SECTION "Portal" [2025-7836] -->
+<h3 class="sectionedit14" id="handlers">Handlers</h3>
 <div class="level3">
 
 <p>
@@ -443,7 +569,7 @@
 <p>
 Handlers are software control agents to be installed on your web servers <em>(Nginx, Apache, PSGI like Plack based servers or Node.js)</em>.
 </p>
-<div class="table sectionedit13"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit15"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0"> Handler type </th><th class="col1 centeralign">  Apache  </th><th class="col2 centeralign">  Nginx  </th><th class="col3 rightalign">  <a href="https://plackperl.org" class="urlextern" title="https://plackperl.org"  rel="nofollow">Plack* servers</a></th><th class="col4 centeralign">  Node.js    </th><th class="col5 centeralign">  Comment  </th><td class="col6"></td>
@@ -474,7 +600,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 		<td class="col0"> <a href="applications/zimbra.html" class="wikilink1" title="documentation:2.0:applications:zimbra">Zimbra PreAuth</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 </table></div>
-<!-- EDIT13 TABLE [5926-7104] -->
+<!-- EDIT15 TABLE [8111-9289] -->
 <p>
 <em>(*): <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Node.js handler</a> has not yet reached the same level of functionalities.</em>
 </p>
@@ -484,8 +610,8 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Handlers" [5652-7229] -->
-<h3 class="sectionedit14" id="llng_databases">LLNG databases</h3>
+<!-- EDIT14 SECTION "Handlers" [7837-9414] -->
+<h3 class="sectionedit16" id="llng_databases">LLNG databases</h3>
 <div class="level3">
 
 </div>
@@ -502,7 +628,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 <p>
 <abbr title="LemonLDAP::NG">LL::NG</abbr> needs a storage system to store its own configuration (managed by the manager). Choose one in the following list: 
 </p>
-<div class="table sectionedit15"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit17"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Backend  </th><th class="col1 centeralign">  Shareable  </th><th class="col2 centeralign">  Comment  </th>
@@ -533,7 +659,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 		<td class="col0 centeralign">  <a href="localconfbackend.html" class="wikilink1" title="documentation:2.0:localconfbackend">Local</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a>  </td><td class="col1 leftalign">  </td><td class="col2 leftalign"> Use only lemonldap-ng.ini parameters.  </td>
 	</tr>
 </table></div>
-<!-- EDIT15 TABLE [7534-8620] --><div class="notetip">You can not start with an empty configuration, so read <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
+<!-- EDIT17 TABLE [9719-10805] --><div class="notetip">You can not start with an empty configuration, so read <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
 </div>
 <p>
 </div></div>
@@ -555,7 +681,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 <div class="noteimportant">If you plan to use LLNG in a large-scale system, take a look at <a href="performances.html#performance_test" class="wikilink1" title="documentation:2.0:performances">Performance Test</a> to choose the right backend. A <a href="browseablesessionbackend.html#browseable_sql" class="wikilink1" title="documentation:2.0:browseablesessionbackend">Browseable SQL backend</a> is generally a good choice.
 
-</div><div class="table sectionedit16"><table class="inline table table-bordered table-striped">
+</div><div class="table sectionedit18"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Backend  </th><th class="col1 centeralign">  Shareable  </th><th class="col2 centeralign">  <a href="documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">Session explorer</a>  </th><th class="col3 centeralign">  <a href="documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">Session restrictions</a>  </th><th class="col4 centeralign">  Session expiration  </th><th class="col5 centeralign">  Comment  </th>
@@ -588,14 +714,14 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 <strong>Can be used to secure another backend</strong> for remote servers.  </td>
 	</tr>
 </table></div>
-<!-- EDIT16 TABLE [9485-11165] -->
+<!-- EDIT18 TABLE [11670-13350] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT14 SECTION "LLNG databases" [7230-11193] -->
-<h2 class="sectionedit17" id="applications_protection">Applications protection</h2>
+<!-- EDIT16 SECTION "LLNG databases" [9415-13378] -->
+<h2 class="sectionedit19" id="applications_protection">Applications protection</h2>
 <div class="level2">
 
 <p>
@@ -623,8 +749,8 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT17 SECTION "Applications protection" [11194-11684] -->
-<h3 class="sectionedit18" id="well_known_compatible_applications">Well known compatible applications</h3>
+<!-- EDIT19 SECTION "Applications protection" [13379-13869] -->
+<h3 class="sectionedit20" id="well_known_compatible_applications">Well known compatible applications</h3>
 <div class="level3">
 <div class="noteclassic">Here is a list of well known applications that are compatible with <abbr title="LemonLDAP::NG">LL::NG</abbr>. A full list is available on <a href="applications.html" class="wikilink1" title="documentation:2.0:applications">vendor applications page</a>.
 </div>
@@ -721,8 +847,8 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT18 SECTION "Well known compatible applications" [11685-13898] -->
-<h2 class="sectionedit19" id="advanced_features">Advanced features</h2>
+<!-- EDIT20 SECTION "Well known compatible applications" [13870-16083] -->
+<h2 class="sectionedit21" id="advanced_features">Advanced features</h2>
 <div class="level2">
 
 <p>
@@ -778,8 +904,8 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Advanced features" [13899-15081] -->
-<h2 class="sectionedit20" id="mini_howtos">Mini howtos</h2>
+<!-- EDIT21 SECTION "Advanced features" [16084-17266] -->
+<h2 class="sectionedit22" id="mini_howtos">Mini howtos</h2>
 <div class="level2">
 
 <p>
@@ -804,6 +930,8 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </li>
 <li class="level1"><div class="li"> <a href="header_remote_user_conversion.html" class="wikilink1" title="documentation:2.0:header_remote_user_conversion">Convert HTTP header into environment variable</a></div>
 </li>
+<li class="level1"><div class="li"> <a href="renater.html" class="wikilink1" title="documentation:2.0:renater">Connect to Renater Federation</a></div>
+</li>
 </ul>
 
 <p>
@@ -811,8 +939,8 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT20 SECTION "Mini howtos" [15082-15855] -->
-<h2 class="sectionedit21" id="exploitation">Exploitation</h2>
+<!-- EDIT22 SECTION "Mini howtos" [17267-18086] -->
+<h2 class="sectionedit23" id="exploitation">Exploitation</h2>
 <div class="level2">
 
 <p>
@@ -846,8 +974,8 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT21 SECTION "Exploitation" [15856-16370] -->
-<h2 class="sectionedit22" id="bug_report">Bug report</h2>
+<!-- EDIT23 SECTION "Exploitation" [18087-18601] -->
+<h2 class="sectionedit24" id="bug_report">Bug report</h2>
 <div class="level2">
 
 <p>
@@ -855,8 +983,8 @@ See <a href="bugreport.html" class="wikilink1" title="bugreport">How to report a
 </p>
 
 </div>
-<!-- EDIT22 SECTION "Bug report" [16371-16435] -->
-<h2 class="sectionedit23" id="developer_corner">Developer corner</h2>
+<!-- EDIT24 SECTION "Bug report" [18602-18666] -->
+<h2 class="sectionedit25" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
 <p>
@@ -914,6 +1042,6 @@ If you don&#039;t want to publish your translation <em>(<code>XX</code> must be 
 </ul>
 
 </div>
-<!-- EDIT23 SECTION "Developer corner" [16436-] --></div>
+<!-- EDIT25 SECTION "Developer corner" [18667-] --></div>
 </body>
 </html>

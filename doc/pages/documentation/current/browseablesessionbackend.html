@@ -74,7 +74,7 @@
 <div class="level2">
 
 <p>
-Browseable session backend (<a href="http://search.cpan.org/perldoc?Apache::Session::Browseable" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a>) works exactly like Apache::Session::* corresponding module but add index that increase <a href="documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">session explorer</a> and <a href="documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">session restrictions</a> performances.
+Browseable session backend (<a href="https://metacpan.org/pod/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/pod/Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a>) works exactly like Apache::Session::* corresponding module but add index that increase <a href="documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">session explorer</a> and <a href="documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">session restrictions</a> performances.
 </p>
 
 <p>
@@ -104,7 +104,7 @@ The following table list fields to index depending on the feature you want to in
 		<td class="col0"> Session restrictions </td><td class="col1 centeralign">  _session_kind ipAddr <em>WHATTOTRACE</em>  </td>
 	</tr>
 </table></div>
-<!-- EDIT3 TABLE [877-1168] -->
+<!-- EDIT3 TABLE [871-1162] -->
 <p>
 See Apache::Session::Browseable::* man page to see how use indexes.
 </p>
@@ -113,7 +113,7 @@ See Apache::Session::Browseable::* man page to see how use indexes.
 </div><div class="noteclassic">Documentation below explains how set index on ipAddr and _whatToTrace. Adapt it to configure the index you need.
 </div>
 </div>
-<!-- EDIT2 SECTION "Presentation" [43-1691] -->
+<!-- EDIT2 SECTION "Presentation" [43-1685] -->
 <h2 class="sectionedit4" id="browseable_nosql">Browseable NoSQL</h2>
 <div class="level2">
 
@@ -140,15 +140,15 @@ You then just have to add the <code>Index</code> parameter  in <code>General par
 		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [1979-2136] -->
+<!-- EDIT5 TABLE [1973-2130] -->
 </div>
-<!-- EDIT4 SECTION "Browseable NoSQL" [1692-2137] -->
+<!-- EDIT4 SECTION "Browseable NoSQL" [1686-2131] -->
 <h2 class="sectionedit6" id="browseable_sql">Browseable SQL</h2>
 <div class="level2">
 <div class="noteclassic">This documentation concerns PostgreSQL. Some adaptations are needed with other databases.
 </div>
 </div>
-<!-- EDIT6 SECTION "Browseable SQL" [2138-2269] -->
+<!-- EDIT6 SECTION "Browseable SQL" [2132-2263] -->
 <h3 class="sectionedit7" id="prepare_database">Prepare database</h3>
 <div class="level3">
 
@@ -163,6 +163,7 @@ Database must be prepared exactly like in <a href="sqlsessionbackend.html#prepar
     _whatToTrace text<span class="sy0">,</span>
     _session_kind text<span class="sy0">,</span>
     _utime <span class="kw1">BIGINT</span><span class="sy0">,</span>
+    <span class="kw1">USER</span> text<span class="sy0">,</span>
     ipAddr text
 <span class="br0">&#41;</span>;
 <span class="kw1">CREATE</span> <span class="kw1">INDEX</span> uid1 <span class="kw1">ON</span> sessions <span class="kw1">USING</span> BTREE <span class="br0">&#40;</span>_whatToTrace<span class="br0">&#41;</span>;
@@ -177,12 +178,12 @@ Database must be prepared exactly like in <a href="sqlsessionbackend.html#prepar
 <div class="notetip">With new Apache::Session::Browseable::<strong>PgHstore</strong> and <strong>PgJSON</strong>, you don&#039;t need to declare indexes in <code>CREATE TABLE</code> since “json” and “hstore” type are browseable. You should anyway add some indexes <em>(see manpage)</em>.
 </div>
 </div>
-<!-- EDIT7 SECTION "Prepare database" [2270-3479] -->
+<!-- EDIT7 SECTION "Prepare database" [2264-3488] -->
 <h3 class="sectionedit8" id="manager">Manager</h3>
 <div class="level3">
 
 <p>
-Go in the Manager and set the session module (<a href="http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL"  rel="nofollow">Apache::Session::Browseable::MySQL</a> for MySQL) in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
+Go in the Manager and set the session module (<a href="https://metacpan.org/pod/Apache::Session::Browseable::MySQL" class="urlextern" title="https://metacpan.org/pod/Apache::Session::Browseable::MySQL"  rel="nofollow">Apache::Session::Browseable::MySQL</a> for MySQL) in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
 </p>
 <div class="table sectionedit9"><table class="inline table table-bordered table-striped">
 	<thead>
@@ -194,7 +195,7 @@ Go in the Manager and set the session module (<a href="http://search.cpan.org/pe
 	</tr>
 	</thead>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  <strong>DataSource</strong>  </td><td class="col1"> The <a href="http://search.cpan.org/perldoc?DBI" class="urlextern" title="http://search.cpan.org/perldoc?DBI"  rel="nofollow">DBI</a> string </td><td class="col2"> dbi:Pg:database=sessions </td>
+		<td class="col0 centeralign">  <strong>DataSource</strong>  </td><td class="col1"> The <a href="https://metacpan.org/pod/DBI" class="urlextern" title="https://metacpan.org/pod/DBI"  rel="nofollow">DBI</a> string </td><td class="col2"> dbi:Pg:database=sessions </td>
 	</tr>
 	<tr class="row3 rowodd">
 		<td class="col0 centeralign">  <strong>UserName</strong>  </td><td class="col1"> The database username </td><td class="col2"> lemonldapng </td>
@@ -206,14 +207,14 @@ Go in the Manager and set the session module (<a href="http://search.cpan.org/pe
 		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr _session_kind _utime </td>
 	</tr>
 </table></div>
-<!-- EDIT9 TABLE [3808-4159] --><div class="notetip">Apache::Session::Browseable::MySQL doesn&#039;t use locks so performances are keeped.
+<!-- EDIT9 TABLE [3811-4156] --><div class="notetip">Apache::Session::Browseable::MySQL doesn&#039;t use locks so performances are keeped.
 <p>
 For databases like PostgreSQL, don&#039;t forget to add “Commit” with a value of 1
 </p>
 
 </div>
 </div>
-<!-- EDIT8 SECTION "Manager" [3480-4338] -->
+<!-- EDIT8 SECTION "Manager" [3489-4335] -->
 <h2 class="sectionedit10" id="browseable_ldap">Browseable LDAP</h2>
 <div class="level2">
 
@@ -267,9 +268,9 @@ You need to add the <code>Index</code> field and can also configure the <code>ld
 		<td class="col0 centeralign">  <strong>ldapAttributeIndex</strong>  </td><td class="col1"> Attribute storing index </td><td class="col2"> ou </td>
 	</tr>
 </table></div>
-<!-- EDIT11 TABLE [4690-5424] -->
+<!-- EDIT11 TABLE [4687-5421] -->
 </div>
-<!-- EDIT10 SECTION "Browseable LDAP" [4339-5425] -->
+<!-- EDIT10 SECTION "Browseable LDAP" [4336-5422] -->
 <h2 class="sectionedit12" id="security">Security</h2>
 <div class="level2">
 
@@ -282,7 +283,7 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Security" [5426-5645] -->
+<!-- EDIT12 SECTION "Security" [5423-5642] -->
 <h2 class="sectionedit13" id="performances">Performances</h2>
 <div class="level2">
 
@@ -299,6 +300,7 @@ Here are some recommended configurations:
     _whatToTrace text<span class="sy0">,</span>
     _session_kind text<span class="sy0">,</span>
     _utime <span class="kw1">BIGINT</span><span class="sy0">,</span>
+    <span class="kw1">USER</span> text<span class="sy0">,</span>
     ipAddr <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">64</span><span class="br0">&#41;</span>
 <span class="br0">&#41;</span>;
 <span class="kw1">CREATE</span> <span class="kw1">INDEX</span> uid1 <span class="kw1">ON</span> sessions <span class="kw1">USING</span> BTREE <span class="br0">&#40;</span>_whatToTrace text_pattern_ops<span class="br0">&#41;</span>;
@@ -314,6 +316,7 @@ Here are some recommended configurations:
     a_session text<span class="sy0">,</span>
     _whatToTrace <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">64</span><span class="br0">&#41;</span><span class="sy0">,</span>
     _session_kind <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="kw1">USER</span> text<span class="sy0">,</span>
     _utime <span class="kw1">BIGINT</span>
 <span class="br0">&#41;</span>;
 <span class="kw1">CREATE</span> <span class="kw1">INDEX</span> uid1 <span class="kw1">ON</span> sessions <span class="br0">&#40;</span>_whatToTrace<span class="br0">&#41;</span> <span class="kw1">USING</span> BTREE;
@@ -322,6 +325,6 @@ Here are some recommended configurations:
 <span class="kw1">CREATE</span> <span class="kw1">INDEX</span> ip1 <span class="kw1">ON</span> sessions <span class="br0">&#40;</span>ipAddr<span class="br0">&#41;</span> <span class="kw1">USING</span> BTREE;</pre>
 
 </div>
-<!-- EDIT13 SECTION "Performances" [5646-] --></div>
+<!-- EDIT13 SECTION "Performances" [5643-] --></div>
 </body>
 </html>

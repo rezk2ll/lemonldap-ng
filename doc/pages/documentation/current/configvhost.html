@@ -92,10 +92,10 @@ To protect a virtual host in Apache, the LemonLDAP::NG Handler must be activated
 <p>
 Then you can take any virtual host, and simply add this line to protect it:
 </p>
-<pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
+<pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2</pre>
 
 </div>
-<!-- EDIT2 SECTION "Apache configuration" [207-530] -->
+<!-- EDIT2 SECTION "Apache configuration" [207-541] -->
 <h3 class="sectionedit3" id="hosted_application">Hosted application</h3>
 <div class="level3">
 
@@ -105,7 +105,7 @@ Example of a protected virtual host for a local application:
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
         <span class="kw1">ServerName</span> localsite.example.com
 &nbsp;
-        PerlHeaderParserHandler Lemonldap::NG::Handler
+        PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2
 &nbsp;
         <span class="kw1">DocumentRoot</span> /var/www/localsite
 &nbsp;
@@ -115,7 +115,7 @@ Example of a protected virtual host for a local application:
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- EDIT3 SECTION "Hosted application" [531-938] -->
+<!-- EDIT3 SECTION "Hosted application" [542-960] -->
 <h3 class="sectionedit4" id="reverse_proxy">Reverse proxy</h3>
 <div class="level3">
 
@@ -125,7 +125,7 @@ Example of a protected virtual host with LemonLDAP::NG as reverse proxy:
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
         <span class="kw1">ServerName</span> application.example.com
 &nbsp;
-        PerlHeaderParserHandler Lemonldap::NG::Handler
+        PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2
 &nbsp;
         <span class="co1"># Reverse-Proxy</span>
         <span class="kw1">ProxyPass</span> / http://private-name/
@@ -144,7 +144,7 @@ Same with remote server configured with the same host name:
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
         <span class="kw1">ServerName</span> application.example.com
 &nbsp;
-        PerlHeaderParserHandler Lemonldap::NG::Handler
+        PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2
 &nbsp;
         <span class="co1"># Reverse-Proxy</span>
         <span class="kw1">ProxyPass</span> / http://APPLICATION_IP/
@@ -160,7 +160,7 @@ To learn more about using Apache as reverse-proxy, see <a href="http://httpd.apa
 </div><div class="notetip">Some applications need the <code>REMOTE_USER</code> environment variable to get the connected user, which is not set in reverse-proxy mode. In this case, see <a href="header_remote_user_conversion.html" class="wikilink1" title="documentation:2.0:header_remote_user_conversion">how convert header into environment variable</a>.
 </div>
 </div>
-<!-- EDIT4 SECTION "Reverse proxy" [939-2531] -->
+<!-- EDIT4 SECTION "Reverse proxy" [961-2575] -->
 <h3 class="sectionedit5" id="add_a_floating_menu">Add a floating menu</h3>
 <div class="level3">
 
@@ -168,18 +168,18 @@ To learn more about using Apache as reverse-proxy, see <a href="http://httpd.apa
 A little floating menu can be added to application with this simple Apache configuration:
 </p>
 <pre class="code file apache">PerlModule Lemonldap::NG::Handler::Menu
-PerlOutputFilterHandler Lemonldap::NG::Handler::Menu-&gt;run</pre>
+PerlOutputFilterHandler Lemonldap::NG::Handler::ApacheMP2::Menu-&gt;run</pre>
 
 <p>
 Pages where this menu is displayed can be restricted, for example:
 </p>
 <pre class="code file apache">&lt;<span class="kw3">Location</span> /var/www/html/index.php&gt;
-PerlOutputFilterHandler Lemonldap::NG::Handler::Menu-&gt;run
+PerlOutputFilterHandler Lemonldap::NG::Handler::ApacheMP2::Menu-&gt;run
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 <div class="noteimportant">You need to disable mod_deflate to use the floating menu
 </div>
 </div>
-<!-- EDIT5 SECTION "Add a floating menu" [2532-3048] -->
+<!-- EDIT5 SECTION "Add a floating menu" [2576-3114] -->
 <h2 class="sectionedit6" id="nginx_configuration">Nginx configuration</h2>
 <div class="level2">
 
@@ -253,7 +253,7 @@ Then you can take any virtual host and modify it:
   }</pre>
 
 </div>
-<!-- EDIT6 SECTION "Nginx configuration" [3049-4935] -->
+<!-- EDIT6 SECTION "Nginx configuration" [3115-5001] -->
 <h3 class="sectionedit7" id="hosted_application1">Hosted application</h3>
 <div class="level3">
 
@@ -312,7 +312,7 @@ server {
 }</pre>
 
 </div>
-<!-- EDIT7 SECTION "Hosted application" [4936-6564] -->
+<!-- EDIT7 SECTION "Hosted application" [5002-6630] -->
 <h3 class="sectionedit8" id="reverse_proxy1">Reverse proxy</h3>
 <div class="level3">
 
@@ -363,7 +363,7 @@ server {
 }</pre>
 
 </div>
-<!-- EDIT8 SECTION "Reverse proxy" [6565-7858] -->
+<!-- EDIT8 SECTION "Reverse proxy" [6631-7924] -->
 <h2 class="sectionedit9" id="lemonldapng_configuration">LemonLDAP::NG configuration</h2>
 <div class="level2">
 
@@ -390,7 +390,7 @@ A virtual host contains:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7859-8458] -->
+<!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7925-8524] -->
 <h3 class="sectionedit10" id="access_rules_and_http_headers">Access rules and HTTP headers</h3>
 <div class="level3">
 
@@ -399,7 +399,7 @@ See <strong><a href="writingrulesand_headers.html" class="wikilink1" title="docu
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Access rules and HTTP headers" [8459-8651] -->
+<!-- EDIT10 SECTION "Access rules and HTTP headers" [8525-8717] -->
 <h3 class="sectionedit11" id="post_data">POST data</h3>
 <div class="level3">
 
@@ -408,7 +408,7 @@ See <strong><a href="formreplay.html" class="wikilink1" title="documentation:2.0
 </p>
 
 </div>
-<!-- EDIT11 SECTION "POST data" [8652-8786] -->
+<!-- EDIT11 SECTION "POST data" [8718-8852] -->
 <h3 class="sectionedit12" id="options">Options</h3>
 <div class="level3">
 
@@ -435,6 +435,6 @@ Some options are available:
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Options" [8787-] --></div>
+<!-- EDIT12 SECTION "Options" [8853-] --></div>
 </body>
 </html>

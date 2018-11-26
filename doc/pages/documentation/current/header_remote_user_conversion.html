@@ -71,7 +71,7 @@ This can be used to protect applications relying on <code>REMOTE_USER</code> env
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
         <span class="kw1">ServerName</span> application.example.com
 &nbsp;
-        PerlHeaderParserHandler Lemonldap::NG::Handler
+        PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2
 &nbsp;
         <span class="kw1">ProxyPreserveHost</span> <span class="kw2">on</span>
         <span class="kw1">ProxyPass</span> / http://APPLICATION_IP/
@@ -100,7 +100,7 @@ Of course, you need to <a href="passwordstore.html" class="wikilink1" title="doc
 
 </div>
 </div>
-<!-- EDIT2 SECTION "Apache" [62-1756] -->
+<!-- EDIT2 SECTION "Apache" [62-1767] -->
 <h2 class="sectionedit3" id="nginx">Nginx</h2>
 <div class="level2">
 
@@ -111,6 +111,6 @@ Nginx doesn&#039;t launch directly PHP pages (or other languages): it dials with
 fastcgi_param HTTP_MYVAR $authuser;</pre>
 
 </div>
-<!-- EDIT3 SECTION "Nginx" [1757-] --></div>
+<!-- EDIT3 SECTION "Nginx" [1768-] --></div>
 </body>
 </html>

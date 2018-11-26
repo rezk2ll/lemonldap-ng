@@ -81,16 +81,28 @@ You can share your configuration over the network using SOAP proxy system.
 </li>
 <li class="level1"><div class="li"> Set SOAP parameter to true in the configuration using the manager: the portal will become a SOAP server</div>
 </li>
-<li class="level1"><div class="li"> Configure Apache to allow remote access: in <code>portal-apache2.conf</code>, remote SOAP access is disabled by default. Change it:</div>
+<li class="level1"><div class="li"> Configure your web server to allow remote access. Remote SOAP access is disabled by default. You must change it as follow :</div>
 </li>
 </ul>
+
+<p>
+* in <code>portal-apache2.conf</code> : 
+</p>
 <pre class="code apache"><span class="co1"># SOAP functions for configuration access (disabled by default)</span>
 &lt;<span class="kw3">Location</span> /index.fcgi/config&gt;
     <span class="kw1">Require</span> ip 192.168.2.0/<span class="nu0">24</span>
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
+<p>
+* in <code>portal-nginx.conf</code> :
+</p>
+<pre class="code nginx"># SOAP functions for configuration access (disabled by default)
+location /index.psgi/config {
+  allow 192.168.2.0/24;
+}</pre>
+
 </div>
-<!-- EDIT3 SECTION "First, configure your real backend" [289-904] -->
+<!-- EDIT3 SECTION "First, configure your real backend" [289-1109] -->
 <h3 class="sectionedit4" id="next_configure_soap_for_your_remote_servers">Next, configure SOAP for your remote servers</h3>
 <div class="level3">
 
@@ -109,6 +121,6 @@ You can also add some other parameters
 <span class="re1">proxyOptions</span> <span class="sy0">=</span><span class="re2"> <span class="br0">&#123;</span> timeout <span class="sy0">=</span>&gt; 5 <span class="br0">&#125;</span></span></pre>
 
 </div>
-<!-- EDIT4 SECTION "Next, configure SOAP for your remote servers" [905-] --></div>
+<!-- EDIT4 SECTION "Next, configure SOAP for your remote servers" [1110-] --></div>
 </body>
 </html>

@@ -94,9 +94,10 @@ Since 2.0, LLNG provides some second factor plugins that can be used to complete
 <li class="level1"><div class="li"> <a href="external2f.html" class="wikilink1" title="documentation:2.0:external2f">External 2F</a> <em>(to call an external command)</em> </div>
 </li>
 </ul>
-
+<div class="notetip">If you want to force a 2F registration on first login, you can use “Require 2FA”. You can also use a rule to force 2FA registration only for some users.
 </div>
-<!-- EDIT1 SECTION "Second Factors" [1-994] -->
+</div>
+<!-- EDIT1 SECTION "Second Factors" [1-1165] -->
 <h2 class="sectionedit2" id="providing_tokens_from_an_external_source">Providing tokens from an external source</h2>
 <div class="level2">
 
@@ -106,25 +107,25 @@ If you don&#039;t want to use self-registration features for U2F, TOTP and so on
 <pre class="code json">[ {&quot;type&quot; : &quot;TOTP&quot;, &quot;name&quot; : &quot;MyTOTP&quot;, …}, {&lt;other_token&gt;}, …]</pre>
 
 </div>
-<!-- EDIT2 SECTION "Providing tokens from an external source" [995-1388] -->
+<!-- EDIT2 SECTION "Providing tokens from an external source" [1166-1559] -->
 <h3 class="sectionedit3" id="u2f_tokens">U2F Tokens</h3>
 <div class="level3">
 <pre class="code json">{&quot;name&quot; : &quot;MyU2FKey&quot; , &quot;type&quot; : &quot;U2F&quot; , &quot;_userKey&quot; : &quot;########&quot; , &quot;_keyHandle&quot;:&quot;########&quot; , &quot;epoch&quot;:&quot;1524078936&quot;}</pre>
 
 </div>
-<!-- EDIT3 SECTION "U2F Tokens" [1389-1546] -->
+<!-- EDIT3 SECTION "U2F Tokens" [1560-1717] -->
 <h3 class="sectionedit4" id="totp_tokens">TOTP Tokens</h3>
 <div class="level3">
 <pre class="code json">{&quot;name&quot; : &quot;MyTOTP&quot; , &quot;type&quot; : &quot;TOTP&quot; , &quot;_secret&quot; : &quot;########&quot; , &quot;epoch&quot; : &quot;1523817955&quot;}</pre>
 
 </div>
-<!-- EDIT4 SECTION "TOTP Tokens" [1547-1679] -->
+<!-- EDIT4 SECTION "TOTP Tokens" [1718-1850] -->
 <h3 class="sectionedit5" id="yubikey_tokens">Yubikey Tokens</h3>
 <div class="level3">
 <pre class="code json">{&quot;name&quot; : &quot;MyYubikey&quot; , &quot;type&quot; : &quot;UBK&quot; , &quot;_yubikey&quot; : &quot;########&quot; , &quot;epoch&quot; : &quot;1523817715&quot;}</pre>
 
 </div>
-<!-- EDIT5 SECTION "Yubikey Tokens" [1680-1818] -->
+<!-- EDIT5 SECTION "Yubikey Tokens" [1851-1989] -->
 <h2 class="sectionedit6" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -141,6 +142,6 @@ To enable manager Second Factor Administration Module, set <code>enabledModules<
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
 
 </div>
-<!-- EDIT6 SECTION "Developer corner" [1819-] --></div>
+<!-- EDIT6 SECTION "Developer corner" [1990-] --></div>
 </body>
 </html>

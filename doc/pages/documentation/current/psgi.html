@@ -103,7 +103,7 @@ uWSGI or <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:n
 A <code>llng-server.psgi</code> is provided in example directory. It is designed to replace exactly FastCGI server. You can use it :
 </p>
 <ul>
-<li class="level1"><div class="li"> with a FCGI Plack server, but you just have to change llng-fastcgi-server engine <em>(in /etc/default/llng-fastcgi-server)</em> to have the same result. Available engines:</div>
+<li class="level1"><div class="li"> with a FCGI Plack server, but you just have to change llng-fastcgi-server engine <em>(in /etc/default/lemonldap-ng-fastcgi-server)</em> to have the same result. Available engines:</div>
 <ul>
 <li class="level2"><div class="li"> <a href="https://metacpan.org/pod/Plack::Handler::FCGI" class="urlextern" title="https://metacpan.org/pod/Plack::Handler::FCGI"  rel="nofollow">FCGI</a> <strong>(default)</strong>. It can use the following managers:</div>
 <ul>
@@ -141,7 +141,7 @@ There are also some other psgi files in examples directory.
 </p>
 
 </div>
-<!-- EDIT2 SECTION "FastCGI server replacement" [636-2102] -->
+<!-- EDIT2 SECTION "FastCGI server replacement" [636-2110] -->
 <h3 class="sectionedit3" id="llng_fastcgi_server">LLNG FastCGI Server</h3>
 <div class="level3">
 
@@ -185,7 +185,7 @@ There are also some other psgi files in examples directory.
 		<td class="col0 leftalign">  </td><td class="col1 centeralign">  –plackOptions  </td><td class="col2 leftalign">  </td><td class="col3"> Other options to path to Plack. Can bu multi-valued. Values must look like <code>key=value</code> </td>
 	</tr>
 </table></div>
-<!-- EDIT4 TABLE [2202-2973] -->
+<!-- EDIT4 TABLE [2210-2981] -->
 <p>
 See <code>llng-fastcgi-server(1)</code> manpage.
 </p>
@@ -208,7 +208,7 @@ FCGI::Engine::ProcManager
                     -e FCGI::Engine::ProcManager</pre>
 
 </div>
-<!-- EDIT3 SECTION "LLNG FastCGI Server" [2103-3412] -->
+<!-- EDIT3 SECTION "LLNG FastCGI Server" [2111-3420] -->
 <h3 class="sectionedit5" id="using_uwsgi">Using uWSGI</h3>
 <div class="level3">
 
@@ -239,7 +239,7 @@ Then adapt your Nginx configuration to use this uWSGI app.
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Using uWSGI" [3413-4270] -->
+<!-- EDIT5 SECTION "Using uWSGI" [3421-4278] -->
 <h2 class="sectionedit6" id="protect_a_psgi_application">Protect a PSGI application</h2>
 <div class="level2">
 
@@ -283,6 +283,6 @@ builder <span class="br0">&#123;</span>
 </dd></dl>
 
 </div>
-<!-- EDIT6 SECTION "Protect a PSGI application" [4271-] --></div>
+<!-- EDIT6 SECTION "Protect a PSGI application" [4279-] --></div>
 </body>
 </html>

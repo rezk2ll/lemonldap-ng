@@ -223,7 +223,7 @@ For example, to preselect this IDP for users coming from 129.168.0.0/16 network 
 </li>
 <li class="level1"><div class="li"> <strong>Allow login from IDP</strong>: allow a user to connect directly from an IDP link. In this case, authentication is not a response to an issued authentication request, and we have less control on conditions.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Requested authentication context</strong>: this context is declared in authentication request. When receiving the request, the real authentication context will be mapped ton an internal authentication level (see <a href="samlservice.html#authentication_contexts" class="wikilink1" title="documentation:2.0:samlservice">how configure the mapping</a>), that you can check to allow or deny session creation.</div>
+<li class="level1"><div class="li"> <strong>Requested authentication context</strong>: this context is declared in authentication request. When receiving the request, the real authentication context will be mapped to an internal authentication level (see <a href="samlservice.html#authentication_contexts" class="wikilink1" title="documentation:2.0:samlservice">how configure the mapping</a>), that you can check to allow or deny session creation.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Allow <abbr title="Uniform Resource Locator">URL</abbr> as RelayState</strong>: Set to On if the RelayState value sent by IDP is the <abbr title="Uniform Resource Locator">URL</abbr> where the user must be redirected after authentication.</div>
 </li>
@@ -239,6 +239,8 @@ For example, to preselect this IDP for users coming from 129.168.0.0/16 network 
 <li class="level1"><div class="li"> <strong>Force UTF-8</strong>: this will force UTF-8 conversion of attributes values collected from IDP.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Store <abbr title="Security Assertion Markup Language">SAML</abbr> Token</strong>: allows one to keep <abbr title="Security Assertion Markup Language">SAML</abbr> token (assertion) inside user session. Don&#039;t enable it unless you need to replay this token on an application.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Attribute containing user identifier</strong>: set the value of <abbr title="Security Assertion Markup Language">SAML</abbr> attribute (“Name”) that should be used as user main identifier ($user). If empty, the NameID content is used.</div>
 </li>
 </ul>
 

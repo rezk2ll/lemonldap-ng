@@ -49,8 +49,9 @@
 <div>
 
 <ul class="toc">
-<li class="level1"><div class="li"><a href="#skin">Skin</a></div>
-<ul class="toc">
+<li class="level2"><div class="li"><a href="#main_logo">Main Logo</a></div></li>
+<li class="level2"><div class="li"><a href="#show_languages_choice">Show languages choice</a></div></li>
+<li class="level1"><div class="li"><a href="#skin">Skin</a></div></li>
 <li class="level2"><div class="li"><a href="#default_skin">Default skin</a></div></li>
 <li class="level2"><div class="li"><a href="#skin_background">Skin background</a></div></li>
 <li class="level2"><div class="li"><a href="#skin_rules">Skin rules</a></div></li>
@@ -58,8 +59,6 @@
 <li class="level2"><div class="li"><a href="#skin_customization">Skin customization</a></div></li>
 <li class="level2"><div class="li"><a href="#messages">Messages</a></div></li>
 <li class="level2"><div class="li"><a href="#template_parameters">Template parameters</a></div></li>
-</ul>
-</li>
 <li class="level1"><div class="li"><a href="#buttons">Buttons</a></div></li>
 <li class="level1"><div class="li"><a href="#password_management">Password management</a></div></li>
 <li class="level1"><div class="li"><a href="#other_parameters">Other parameters</a></div></li>
@@ -74,31 +73,56 @@
 </div>
 </div>
 <!-- EDIT1 SECTION "Portal customization" [1-142] -->
-<h2 class="sectionedit2" id="skin">Skin</h2>
+<h3 class="sectionedit2" id="main_logo">Main Logo</h3>
+<div class="level3">
+
+<p>
+You can change the default Main Logo in Manager: General Parameters &gt; Portal &gt; Customization &gt; Main Logo.
+</p>
+
+<p>
+A blank value disables Main Logo display.
+</p>
+<div class="notetip">- Logo files must be stored in lemonldap-ng-portal/site/htdocs/static/my/path directory
+<p>
+- Logo file path must be like my/path/logo.png
+</p>
+
+<p>
+- Main logo is included in Portal templates AND mail body
+</p>
+
+</div>
+</div>
+<!-- EDIT2 SECTION "Main Logo" [143-528] -->
+<h3 class="sectionedit3" id="show_languages_choice">Show languages choice</h3>
+<div class="level3">
+
+<p>
+You can disabled languages choice in Manager: General Parameters &gt; Portal &gt; Customization &gt; Show languages choice.
+</p>
+
+<p>
+Option enabled by default.
+</p>
+<div class="notetip">If languages choice is disabled, Portal displays accepted languages by your browser (EN by default).
+</div>
+</div>
+<!-- EDIT3 SECTION "Show languages choice" [529-829] -->
+<h2 class="sectionedit4" id="skin">Skin</h2>
 <div class="level2">
 
 <p>
-LemonLDAP::NG is shipped with 4 skins:
+LemonLDAP::NG is shipped with bootstrap skin.
 </p>
-<ul>
-<li class="level1"><div class="li"> pastel</div>
-</li>
-<li class="level1"><div class="li"> impact</div>
-</li>
-<li class="level1"><div class="li"> dark</div>
-</li>
-<li class="level1"><div class="li"> bootstrap</div>
-</li>
-</ul>
-<div class="notetip">It is recommended to use <code>bootstrap</code> skin, as other may be deprecated in the future.
-</div>
+
 <p>
-But you can make your own, see Skin customization below.
+But you can make your own. See Skin customization below.
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Skin" [143-408] -->
-<h3 class="sectionedit3" id="default_skin">Default skin</h3>
+<!-- EDIT4 SECTION "Skin" [830-952] -->
+<h3 class="sectionedit5" id="default_skin">Default skin</h3>
 <div class="level3">
 
 <p>
@@ -110,8 +134,8 @@ Select the <code>Custom</code> skin, then set the name of the skin you want to u
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Default skin" [409-648] -->
-<h3 class="sectionedit4" id="skin_background">Skin background</h3>
+<!-- EDIT5 SECTION "Default skin" [953-1192] -->
+<h3 class="sectionedit6" id="skin_background">Skin background</h3>
 <div class="level3">
 
 <p>
@@ -123,8 +147,8 @@ Go in <code>General Parameters</code> &gt; <code>Portal</code> &gt; <code>Custom
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Skin background" [649-950] -->
-<h3 class="sectionedit5" id="skin_rules">Skin rules</h3>
+<!-- EDIT6 SECTION "Skin background" [1193-1494] -->
+<h3 class="sectionedit7" id="skin_rules">Skin rules</h3>
 <div class="level3">
 
 <p>
@@ -142,8 +166,8 @@ To achieve this, you can create a rule in the Manager: select <code>General Para
 </ul>
 
 </div>
-<!-- EDIT5 SECTION "Skin rules" [951-1593] -->
-<h3 class="sectionedit6" id="skin_files">Skin files</h3>
+<!-- EDIT7 SECTION "Skin rules" [1495-2137] -->
+<h3 class="sectionedit8" id="skin_files">Skin files</h3>
 <div class="level3">
 
 <p>
@@ -165,18 +189,21 @@ A skin will often refer to the <code>common</code> skin, which is not a real ski
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Skin files" [1594-1928] -->
-<h3 class="sectionedit7" id="skin_customization">Skin customization</h3>
+<!-- EDIT8 SECTION "Skin files" [2138-2472] -->
+<h3 class="sectionedit9" id="skin_customization">Skin customization</h3>
 <div class="level3">
 <div class="noteimportant">If you modify directly the skin files, your modifications will certainly be erased on the next upgrade. The best is to create your own skin, based on an existing skin.
 </div>
 <p>
 Here we explain how to create a new skin, named <code>myskin</code>, from the <code>bootstrap</code> skin.
 </p>
-<pre class="code">cd /usr/share/lemonldap-ng/portal-skins/
+
+<p>
+First copy static content:
+</p>
+<pre class="code">cd /usr/share/lemonldap-ng/portal/htdocs/static
 mkdir myskin
 cd myskin/
-cp -a ../bootstrap/fonts/ .
 cp -a ../bootstrap/js/ .
 cp -a ../bootstrap/css/ .
 mkdir images</pre>
@@ -184,7 +211,10 @@ mkdir images</pre>
 <p>
 Then create symbolic links on template files, as you might not want to rewrite all <abbr title="HyperText Markup Language">HTML</abbr> code (else, do as you want).
 </p>
-<pre class="code">ln -s ../bootstrap/*.tpl .</pre>
+<pre class="code">cd /usr/share/lemonldap-ng/portal/templates/
+mkdir myskin
+cd myskin/
+ln -s ../bootstrap/*.tpl .</pre>
 
 <p>
 We include some template files that can be customized:
@@ -205,21 +235,33 @@ To use custom files, delete links and copy them into your skin folder:
 cp ../bootstrap/custom* .</pre>
 
 <p>
-Create a symlink in main skin directory:
+Then you can add your media to <code>myskin/images</code>, you will be able to use them in <abbr title="HyperText Markup Language">HTML</abbr> template with this code:
 </p>
-<pre class="code">ln -s /usr/share/lemonldap-ng/portal-skins/myskin /var/lib/lemonldap-ng/portal/skins/</pre>
+<pre class="code">&lt;img src=&quot;&lt;TMPL_VAR NAME=&quot;STATIC_PREFIX&quot;&gt;myskin/images/logo.png&quot; class=&quot;img-responsive center-block&quot; /&gt;</pre>
 
 <p>
-Then you <em>only</em> have to edit JS/<abbr title="Cascading Style Sheets">CSS</abbr> and add your media to <code>myskin/images</code>. Put all custom <abbr title="HyperText Markup Language">HTML</abbr> code in the custom template files.
+To change <abbr title="Cascading Style Sheets">CSS</abbr>, two options:
+</p>
+<ul>
+<li class="level1"><div class="li"> Edit myksin/css/skin.css and myskin/css/skin.min.css</div>
+</li>
+<li class="level1"><div class="li"> Create a new <abbr title="Cascading Style Sheets">CSS</abbr> file, for example myskin/css/myskin.css and load it in customhead.tpl:</div>
+</li>
+</ul>
+<pre class="code">&lt;link href=&quot;&lt;TMPL_VAR NAME=&quot;STATIC_PREFIX&quot;&gt;myskin/css/myskin.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</pre>
+
+<p>
+Put then all custom <abbr title="HyperText Markup Language">HTML</abbr> code in the custom template files.
 </p>
 
 <p>
-To configure your new skin in Manager, select the custom skin, and enter your skin name in the configuration field.
+To configure your new skin in Manager, select the custom skin, and enter your skin name in the configuration field. For example with lemonldap-ng-cli:
 </p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set portalSkin &#039;myskin&#039; portalSkinBackground &#039;&#039;</pre>
 
 </div>
-<!-- EDIT7 SECTION "Skin customization" [1929-3319] -->
-<h3 class="sectionedit8" id="messages">Messages</h3>
+<!-- EDIT9 SECTION "Skin customization" [2473-4399] -->
+<h3 class="sectionedit10" id="messages">Messages</h3>
 <div class="level3">
 
 <p>
@@ -231,16 +273,17 @@ Messages are defined in source code. If they really do not please you, override 
 <span class="re1">error_0</span> <span class="sy0">=</span><span class="re2"> Big brother is watching you, authenticated user</span>
 &nbsp;
 # Custom standard messages
-<span class="re1">msg_22</span> <span class="sy0">=</span><span class="re2"> Your last connections</span></pre>
+<span class="re1">msg_lastLogins</span> <span class="sy0">=</span><span class="re2"> Your last connections</span></pre>
 <div class="notetip">You can alse define messages in several languages:
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
 <span class="re1">error_en_0</span> <span class="sy0">=</span><span class="re2"> Big brother is watching you, authenticated user</span>
-<span class="re1">error_fr_0</span> <span class="sy0">=</span><span class="re2"> Souriez vous êtes surveillés !</span></pre>
+<span class="re1">error_fr_0</span> <span class="sy0">=</span><span class="re2"> Souriez vous êtes surveillés !</span>
+<span class="re1">msg_fr_lastLogins</span> <span class="sy0">=</span><span class="re2"> Dernières connexions</span></pre>
 
 </div>
 </div>
-<!-- EDIT8 SECTION "Messages" [3320-3911] -->
-<h3 class="sectionedit9" id="template_parameters">Template parameters</h3>
+<!-- EDIT10 SECTION "Messages" [4400-5041] -->
+<h3 class="sectionedit11" id="template_parameters">Template parameters</h3>
 <div class="level3">
 
 <p>
@@ -256,9 +299,14 @@ Then you will be able to use it in your template like this:
 </p>
 <pre class="code file html4strict">Hello <span class="sc2">&lt;TMPL_VAR <span class="kw3">NAME</span><span class="sy0">=</span><span class="st0">&quot;myparam&quot;</span>&gt;</span>!</pre>
 
+<p>
+All session variables are also available in templates, with the prefix “session_” :
+</p>
+<pre class="code file html4strict">Hello <span class="sc2">&lt;TMPL_VAR <span class="kw3">NAME</span><span class="sy0">=</span><span class="st0">&quot;session_cn&quot;</span>&gt;</span>!</pre>
+
 </div>
-<!-- EDIT9 SECTION "Template parameters" [3912-4282] -->
-<h2 class="sectionedit10" id="buttons">Buttons</h2>
+<!-- EDIT11 SECTION "Template parameters" [5042-5552] -->
+<h2 class="sectionedit12" id="buttons">Buttons</h2>
 <div class="level2">
 
 <p>
@@ -267,15 +315,15 @@ This node allows one to enable/disable buttons on the login page:
 <ul>
 <li class="level1"><div class="li"> <strong>Check last logins</strong>: displays a checkbox on login form, allowing user to check his login history right after opening session</div>
 </li>
-<li class="level1"><div class="li"> <strong>Reset password</strong>: display a link to <a href="resetpassword.html" class="wikilink1" title="documentation:2.0:resetpassword">reset your password page</a> (for password based authentication backends)</div>
+<li class="level1"><div class="li"> <strong>Reset password</strong>: display a link to <a href="resetpassword.html" class="wikilink1" title="documentation:2.0:resetpassword">reset your password page</a> (for password based authentication backends). Number of allowed retries can be set (3 times by default)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Register</strong>: display a link to <a href="register.html" class="wikilink1" title="documentation:2.0:register">register page</a> (for password based authentication backends)</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT10 SECTION "Buttons" [4283-4740] -->
-<h2 class="sectionedit11" id="password_management">Password management</h2>
+<!-- EDIT12 SECTION "Buttons" [5553-6069] -->
+<h2 class="sectionedit13" id="password_management">Password management</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>Require old password</strong>: used only in the password changing module of the menu, will check the old password before updating it</div>
@@ -287,8 +335,8 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT11 SECTION "Password management" [4741-5191] -->
-<h2 class="sectionedit12" id="other_parameters">Other parameters</h2>
+<!-- EDIT13 SECTION "Password management" [6070-6520] -->
+<h2 class="sectionedit14" id="other_parameters">Other parameters</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>User attribute</strong>: which session attribute will be used to display <code>Connected as</code> in the menu</div>
@@ -306,6 +354,6 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT12 SECTION "Other parameters" [5192-] --></div>
+<!-- EDIT14 SECTION "Other parameters" [6521-] --></div>
 </body>
 </html>
