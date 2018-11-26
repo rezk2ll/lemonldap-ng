@@ -350,12 +350,12 @@ sub attributes {
         portalStatus => {
             type          => 'bool',
             default       => 0,
+            help    => 'status.html',
             documentation => 'Enable portal status',
         },
         portalUserAttr => {
             type    => 'text',
             default => '_user',
-            help    => 'monitoring.html',
             documentation =>
               'Session parameter to display connected user in portal',
         },
@@ -402,6 +402,7 @@ sub attributes {
         },
         stayConnected => {
             type          => 'bool',
+            #help          => 'stayconnected.html',
             default       => 0,
             documentation => 'Enable StayConnected plugin',
         },
@@ -583,6 +584,7 @@ sub attributes {
         },
         portalForceAuthn => {
             default => 0,
+            help    => 'forcereauthn.html',
             type    => 'bool',
             documentation =>
               'Enable force to authenticate when displaying portal',
@@ -595,6 +597,7 @@ sub attributes {
         },
         bruteForceProtection => {
             default       => 0,
+            help          => 'bruteforceprotection.html',
             type          => 'bool',
             documentation => 'Enable brute force attack protection',
         },
