@@ -4,7 +4,7 @@ use IO::String;
 use Data::Dumper;
 
 require 't/test-lib.pm';
-my $maintests = 6;
+my $maintests = 10;
 
 use_ok('Lemonldap::NG::Common::FormEncode');
 
@@ -12,9 +12,12 @@ my $client = LLNG::Manager::Test->new(
     {
         ini => {
             logLevel             => 'error',
+            u2fActivation        => '1',
+            totp2fActivation     => '$uid eq "dwho"',
             ext2fActivation      => 1,
             ext2FSendCommand     => 't/sendOTP.pl -uid $uid',
             ext2FValidateCommand => 't/vrfyOTP.pl -uid $uid -code $code',
+            ext2fLogo            => 'yubikey.png',
             loginHistoryEnabled  => 1,
             authentication       => 'Demo',
             userDB               => 'Same',
@@ -37,6 +40,39 @@ ok(
 );
 
 my ( $host, $url, $query ) =
+  expectForm( $res, undef, '/2fchoice', 'token', 'checkLogins' );
+
+
+ok(
+    $res->[2]->[0] =~
+qq%<img src="/static/bootstrap/u2f.png" alt="u2F" title="u2F" />%,
+    'Found u2f.png'
+) or print STDERR Dumper( $res->[2]->[0] );
+
+ok(
+    $res->[2]->[0] =~
+qq%<img src="/static/bootstrap/yubikey.png" alt="ext2F" title="ext2F" />%,
+    'Found yubikey.png'
+) or print STDERR Dumper( $res->[2]->[0] );
+
+ok(
+    $res->[2]->[0] =~
+qq%<img src="/static/bootstrap/totp.png" alt="totp2F" title="totp2F" />%,
+    'Found totp.png'
+) or print STDERR Dumper( $res->[2]->[0] );
+
+$query .= '&sf=ext';
+ok(
+    $res = $client->_post(
+        '/2fchoice',
+        IO::String->new($query),
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'Post ext2f choice'
+);
+
+( $host, $url, $query ) =
   expectForm( $res, undef, '/ext2fcheck', 'token', 'code', 'checkLogins' );
 
 ok(

@@ -146,7 +146,6 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
             IO::String->new('user=dwho&password=dwho'),
             length => 23,
             accept => 'text/html',
-            cookie => "lemonldap=$id",
         ),
         'Auth query'
     );
