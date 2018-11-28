@@ -1,3 +1,118 @@
+lemonldap-ng (2.0.0) artful; urgency=medium
+
+  * Bugs:
+    * #757: "Attempt to free unreferenced scalar" in Lemonldap::NG::Common::Session
+    * #789: Apache reloading breaks SAML authentication
+    * #804: Uncomplete logout in Issuer modules
+    * #856: LemonLDAP loses exportedVars conf randomly
+    * #863: get_url function builds wrong Portal URL
+    * #918: Env variables are searched in backends
+    * #998: encode_base64 can be udefined after a reload by URL
+    * #1061: Multiple segfault using ModPerl::Registry with Apache2.4
+    * #1113: OIDC Provider to SAML SP does not work
+    * #1150: Can't get captcha to work with LDAP as backend
+    * #1171: Session explorer freezes when session number is high
+    * #1327: Facebook module not working due to API changes in Facebook
+    * #1420: Answering to CAS proxy requests as CAS Provider
+    * #1468: Enabling both Auth::SAML and Issuer::SAML breaks SLO
+
+  * New features:
+    * #575: Display differences between 2 conf
+    * #782: Node.js handler
+    * #819: Support of FIDO Alliance (multi-factor authentication)
+    * #826: Tab in portal to manage OpenID Connect consent
+    * #852: Possibility to reload/refresh his session without logout and relogin
+    * #970: REST API for Portal
+    * #971: Server-to-Server Handler
+    * #1015: Two-Factor Authentication with OTP for portal user logins
+    * #1019: Evaluate custom template parameters
+    * #1091: Handler for DevOps (SSOaaS)
+    * #1131: Portal plugin to "Stay connected on this device"
+    * #1138: Generate Content-Security-Policy headers and related
+    * #1148: U2F - Universal 2nd Factor Authentication
+    * #1151: Replace Multi by a Combination parser
+    * #1161: Manage access rules for CAS, SAML and OpenID Connect clients
+    * #1162: Capability to use Log4Perl (and other log backends)
+    * #1174: Auth and UserDB REST (delegation by web-service)
+    * #1188: Custom auth/userDB/password/register modules
+    * #1196: Auth::PAM module
+    * #1204: Propose reauthentication if higher access level is requested
+    * #1206: TLS support for mails
+    * #1208: YAML configuration backend
+    * #1212: Propose SSL authentication by Ajax
+    * #1318: Auto-Signin based on $env rules
+    * #1330: Menu rules for applications using SAML/CAS/OIDC
+    * #1359: TOTP plugin
+    * #1379: Feature: External Second Factor over REST API
+    * #1391: Mixed TOTP/U2F second factor plugin
+    * #1397: Plack servers support
+    * #1399: Yubikey as second factor
+    * #1419: Dispatch logger
+    * #1427: Alternative FastCGI-Client handler for Apache2
+    * #1438: Build trunk debian repository (nightly build)
+    * #1458: Local conf backend
+    * #1478: SAML Discovery Protocol (WAYF)
+    * #1500: Possibility to override parameters in Choice modules
+    * #1503: RENATER metadata download script
+    * #1512: Option to choose which SAML attribute will be used as "user" key
+    * #1535: Append Portal parameter to modify Handler Internal Cache
+    * #1539: Option to enable / disable languages choice display
+
+  * Improvements:
+    * #354: Session Explorer: possibility to order sessions by date
+    * #587: Selecting language while connecting to LemonLDAP
+    * #595: Portal powered by FastCGI (using Plack)
+    * #651: Common::CGI::abort should return 500 as HTTP status code
+    * #673: Split conf/session/flags management from the Portal $self object
+    * #713: Request management to handle sessions
+    * #803: AuthSSL : Ability to choose SSLvar or UserDB depending of the CA
+    * #868: Replace XML format by JSON for notifications
+    * #1033: Translate mail subject - forgotten password
+    * #1044: Adapt FastCGI server to be able to use an event Plack engine
+    * #1065: Provide SSL options for AuthBasic
+    * #1118: Manage unicode in session and configuration backends
+    * #1133: Translation system for mails
+    * #1137: Avoid using inline Javascript and CSS
+    * #1140: Add CSRF protection to login and password change forms
+    * #1160: Reorganize handler architecture
+    * #1173: Performance: minimize Apache::Session access
+    * #1181: Make Debian packages autopkgtestable
+    * #1183: Rewrite CAS authentication module
+    * #1201: IPv6 support
+    * #1220: Vietnamese translation
+    * #1222: Arabic translation
+    * #1232: Italian translation
+    * #1247: Support RSA SHA256 signature in SAML
+    * #1267: Allow custom regexp for vhost display
+    * #1302: Move all HTML fragments into templates
+    * #1317: Wildcard in virtualhost names
+    * #1322: Get user attributes in Auth module for external authentication
+    * #1388: Auto-generation of parameters list in doc
+    * #1400: CLUSTER - Status page who check the working state of LLNG
+    * #1418: Sentry Logger (experimental)
+    * #1427: Alternative FastCGI-Client handler for Apache2
+    * #1428: Provide better logs with Nginx
+    * #1429: Use cached configuration when configuration database isn't available
+    * #1442: Last logins not shown when second factors are enabled
+    * #1443: Hide countdown block when stopped
+    * #1445: Let's stop french manager doc translation
+    * #1448: Full status for Nginx
+    * #1461: Remember Choice and other context settings before redirecting user to an external service
+    * #1473: Complex nodes  not well displayed in manager
+    * #1488: Be tolerant with whitespaces in ini file
+    * #1490: Be able to use DBD::MariaDB
+    * #1499: CSP prevents to submit OIDC consents form
+    * #1501: Improve Login history module
+    * #1504: Upgrade to bootstrap 4
+    * #1515: Possibility to configure main logo on portal page
+    * #1522: Notifications with checkbox does not work
+    * #1526: Portal menu application and categorie logos not displayed
+    * #1542: Provide sessions attributes in template
+    * #1546: Configuration comparator does not work
+    * #1550: Error when enables "SSL, Custom " Auth modules with Choice
+
+ -- Clément <clem.oudot@gmail.com>  Wed, 28 Nov 2018 14:42:56 +0100
+
 lemonldap-ng (2.0.0~beta1) testing; urgency=low
 
 lemonldap-ng (2.0.0~alpha3) testing; urgency=low
