@@ -70,6 +70,9 @@ sub handler {
         PeerAddr => $host,
         PeerPort => $port,
     ) or die $!;
+    foreach ( keys %$env ) {
+        delete $env->{$_} unless ( length $env->{$_} );
+    }
     my ( $stdout, $stderr, $status ) =
       FCGI::Client::Connection->new( sock => $sock )->request($env);
     my %hdrs =
