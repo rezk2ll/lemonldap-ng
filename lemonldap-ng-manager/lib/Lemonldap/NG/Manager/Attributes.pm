@@ -3504,7 +3504,8 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'lmAttrOrMacro'
         },
         'wsdlServer' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'yubikey2fActivation' => {
             'default' => 0,

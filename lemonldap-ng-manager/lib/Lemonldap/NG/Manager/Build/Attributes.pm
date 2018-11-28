@@ -1459,6 +1459,7 @@ sub attributes {
               'List of attributes to export by SOAP or REST servers',
         },
         wsdlServer => {
+            default       => 0,
             type          => 'bool',
             documentation => 'Enable /portal.wsdl server',
         },
