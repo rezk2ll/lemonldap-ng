@@ -56,6 +56,7 @@ sub authLogout {
     $_[0]->checkChoice( $_[1] ) or return PE_OK;
     my $res = $_[1]->data->{enabledMods0}->[0]->authLogout( $_[1] );
     delete $_[1]->pdata->{_choice};
+    delete $_[1]->data->{_authChoice};
     return $res;
 }
 
