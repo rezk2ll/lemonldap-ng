@@ -665,6 +665,7 @@ sub tree {
                     help  => 'start.html#advanced_features',
                     nodes => [
                         'customFunctions',
+                        'multiValuesSeparator',
                         {   title => 'security',
                             help =>
                                 'security.html#configure_security_settings',
@@ -714,8 +715,7 @@ sub tree {
                             ]
                         },
                         'nginxCustomHandlers',
-                        'logoutServices',
-                        'multiValuesSeparator',
+                        'logoutServices',   
                         {   title => 'forms',
                             form  => 'simpleInputContainer',
                             nodes => [
