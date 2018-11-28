@@ -116,7 +116,7 @@
 "closeSSO":"أغلق جلسة الدخول الموحد (سسو)",
 "code":"الشفرة",
 "confirmation":"التأكيد",
-"confirmLinkSent":"تم إرسال رابط تأكيد، وهذا الرابط صالح حتى",
+"confirmLinkSent":"A confirmation link has been sent. This link is valid until ",
 "confirmPwd":"تأكيد كلمة المرور",
 "connect":"الاتصال",
 "connectedAs":"متصل ك",

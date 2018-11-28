@@ -116,7 +116,7 @@
 "closeSSO":"Đóng phiên SSO của bạn",
 "code":"Mã",
 "confirmation":"Xác nhận",
-"confirmLinkSent":"Một liên kết xác nhận đã được gửi, liên kết này hợp lệ cho đến khi",
+"confirmLinkSent":"A confirmation link has been sent. This link is valid until ",
 "confirmPwd":"Xác nhận mật khẩu",
 "connect":"Kết nối",
 "connectedAs":"Kết nối như là",
