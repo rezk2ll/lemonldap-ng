@@ -29,7 +29,7 @@
                 </a>
               </li>
               <li >
-                <input class="link" id="forcesave" type="checkbox" ng-model="forceSave" uib-tooltip="{{translate('forceSave')}}" tooltip-placement="right" ng-show="confirmNeeded||currentCfg.next" role="checkbox" aria-label="Force save">
+                <input id="forcesave" type="checkbox" ng-model="forceSave" uib-tooltip="{{translate('forceSave')}}" tooltip-placement="right" ng-show="confirmNeeded||currentCfg.next" role="checkbox" aria-label="Force save">
               </li>
               <li uib-dropdown>
                 <a id="navmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i> {{translate('browse')}} <span class="caret"></span></a>

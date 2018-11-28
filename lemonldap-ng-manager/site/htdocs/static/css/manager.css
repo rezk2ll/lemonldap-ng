@@ -253,3 +253,6 @@ dl,
   position: relative;
   margin-bottom: 10px;
 }
+.navbar-nav li {
+ line-height: 50px;
+}
