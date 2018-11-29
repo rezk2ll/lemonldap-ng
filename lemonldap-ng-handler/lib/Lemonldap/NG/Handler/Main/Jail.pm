@@ -8,6 +8,7 @@ use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 # Workaround for another ModPerl/Mouse issue...
 BEGIN {
     require Mouse;
+    no warnings;
     my $v = $Mouse::VERSION
       ? sprintf( "%d.%03d%03d", ( $Mouse::VERSION =~ /(\d+)/g ) )
       : 0;
