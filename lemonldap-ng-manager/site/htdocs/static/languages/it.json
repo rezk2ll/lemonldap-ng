@@ -637,7 +637,7 @@
 "registerUrl":"Page URL",
 "reloadParams":"Ricarica di configurazione",
 "reloadTimeout":"Reload timeout",
-"reloadUrls":"Reload URLs",
+"reloadUrls":"Ricarica gli URL",
 "remoteCookieName":"Nome del cookie",
 "remoteGlobalStorage":"Modulo di sessioni",
 "remoteGlobalStorageOptions":"Opzioni del modulo Sessioni",
