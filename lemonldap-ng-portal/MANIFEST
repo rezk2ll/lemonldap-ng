@@ -235,7 +235,9 @@ site/htdocs/static/common/backgrounds/1280px-BrockenSnowedTrees.jpg
 site/htdocs/static/common/backgrounds/1280px-Cedar_Breaks_National_Monument_partially.jpg
 site/htdocs/static/common/backgrounds/1280px-Parry_Peak_from_Winter_Park.jpg
 site/htdocs/static/common/backgrounds/Aletschgletscher_mit_Pinus_cembra1.jpg
+site/htdocs/static/common/de.png
 site/htdocs/static/common/en.png
+site/htdocs/static/common/es.png
 site/htdocs/static/common/favicon.ico
 site/htdocs/static/common/fr.png
 site/htdocs/static/common/icons/application_cascade.png
@@ -293,7 +295,11 @@ site/htdocs/static/common/modules/SAML.png
 site/htdocs/static/common/modules/SSL.png
 site/htdocs/static/common/modules/Twitter.png
 site/htdocs/static/common/modules/WebID.png
+site/htdocs/static/common/nl.png
+site/htdocs/static/common/pt.png
+site/htdocs/static/common/ro.png
 site/htdocs/static/common/vi.png
+site/htdocs/static/common/zh_CN.png
 site/htdocs/static/languages/ar.json
 site/htdocs/static/languages/de.json
 site/htdocs/static/languages/en.json
