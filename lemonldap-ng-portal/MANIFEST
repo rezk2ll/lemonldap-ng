@@ -24,7 +24,6 @@ lib/Lemonldap/NG/Portal/Auth/CAS.pm
 lib/Lemonldap/NG/Portal/Auth/Choice.pm
 lib/Lemonldap/NG/Portal/Auth/Combination.pm
 lib/Lemonldap/NG/Portal/Auth/Custom.pm
-lib/Lemonldap/NG/Portal/Auth/CustomAuth.pm
 lib/Lemonldap/NG/Portal/Auth/DBI.pm
 lib/Lemonldap/NG/Portal/Auth/Demo.pm
 lib/Lemonldap/NG/Portal/Auth/Facebook.pm
@@ -305,6 +304,7 @@ site/htdocs/static/languages/nl.json
 site/htdocs/static/languages/pt.json
 site/htdocs/static/languages/ro.json
 site/htdocs/static/languages/vi.json
+site/htdocs/static/languages/zh_CN.json
 site/templates/bootstrap/2fchoice.tpl
 site/templates/bootstrap/2fregisters.tpl
 site/templates/bootstrap/casBack2Url.tpl
@@ -364,6 +364,7 @@ site/templates/common/mail/en.json
 site/templates/common/mail/fr.json
 site/templates/common/mail/it.json
 site/templates/common/mail/vi.json
+site/templates/common/mail/zh_CN.json
 site/templates/common/mail_confirm.tpl
 site/templates/common/mail_footer.tpl
 site/templates/common/mail_header.tpl

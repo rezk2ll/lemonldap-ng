@@ -157,10 +157,12 @@ site/htdocs/static/js/notifications.min.js
 site/htdocs/static/js/sessions.js
 site/htdocs/static/js/sessions.min.js
 site/htdocs/static/languages/ar.json
+site/htdocs/static/languages/de.json
 site/htdocs/static/languages/en.json
 site/htdocs/static/languages/fr.json
 site/htdocs/static/languages/it.json
 site/htdocs/static/languages/vi.json
+site/htdocs/static/languages/zh_CN.json
 site/htdocs/static/logos/ar.png
 site/htdocs/static/logos/bootstrap.png
 site/htdocs/static/logos/custom.png
