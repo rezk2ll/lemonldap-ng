@@ -549,14 +549,13 @@ fi
 %dir %{lm_sharedir}
 %{lm_sharedir}/ressources/
 %dir %{lm_vardir}
-%defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
+%defattr(640,%{lm_apacheuser},%{lm_apachegroup},750)
 %dir %{lm_vardir}/conf
 %dir %{lm_vardir}/sessions
 %dir %{lm_vardir}/sessions/lock
 %dir %{lm_vardir}/psessions
 %dir %{lm_vardir}/psessions/lock
 %dir %{lm_vardir}/notifications
-%defattr(640,%{lm_apacheuser},%{lm_apachegroup},-)
 %config(noreplace) %{lm_vardir}/conf/lmConf-1.json
 
 %files doc
