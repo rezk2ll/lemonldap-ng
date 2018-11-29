@@ -342,7 +342,7 @@ Lemonldap::NG Web-SSO configuration. It is used by L<Lemonldap::NG::Handler>,
 L<Lemonldap::NG::Portal> and L<Lemonldap::NG::Manager>.
 
 Lemonldap::NG::Common::Apache::Session::SOAP used with
-L<Lemonldap::NG::Portal> provides the ability to acces to
+L<Lemonldap::NG::Portal> provides the ability to access to
 Lemonldap::NG sessions via SOAP: the portal act as a proxy to access to the
 real Apache::Session module (see HTML documentation for more)
 
