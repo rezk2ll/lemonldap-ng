@@ -181,14 +181,12 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 # Setup requires filtering
 %if 0%{?rhel} == 6
 %filter_from_requires /perl(lasso/d; /perl(Net::OpenID/d; /perl(Web::ID/d; /perl(XML::LibXML/d; /perl(XML::LibXSLT/d; /perl(Sentry::Raven/d;
-%filter_from_provides /perl(Lemonldap::NG::Handler::Main/d; /perl(Lemonldap::NG::Manager::Attributes/d; /perlLemonldap::NG::Portal::Main/d;
 %filter_setup
 %endif
 
 %if 0%{?fedora} || 0%{?rhel} >= 7
 %{?perl_default_filter}
 %global __requires_exclude perl\\(lasso|perl\\(Net::OpenID|perl\\(Web::ID|perl\\(XML::LibXML|perl\\(XML::LibXSLT|perl\\(Sentry::Raven
-%global __provides_exclude perl\\(Lemonldap::NG::Handler::Main|perl\\(Lemonldap::NG::Manager::Attributes|perl\\(Lemonldap::NG::Portal::Main
 %endif
 
 %description
