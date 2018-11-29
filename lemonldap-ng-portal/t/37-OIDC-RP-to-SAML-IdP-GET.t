@@ -136,7 +136,6 @@ SKIP: {
         'Launch SAML request to IdP'
     );
     my $idpPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
-    my $tmp;
 
     # Try to authenticate to IdP
     my $body = $res->[2]->[0];

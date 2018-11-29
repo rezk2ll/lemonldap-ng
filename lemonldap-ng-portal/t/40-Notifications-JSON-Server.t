@@ -45,7 +45,6 @@ count(1);
 
 # Try yo authenticate
 # -------------------
-my $res;
 ok(
     $res = $client->_post(
         '/',

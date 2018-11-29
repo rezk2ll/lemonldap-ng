@@ -147,7 +147,7 @@ $op->logout($idpId);
 # Query RP for auth
 ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
 count(1);
-my ( $url, $query ) =
+( $url, $query ) =
   expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
 
 # Rewrite response_type to use implicit
