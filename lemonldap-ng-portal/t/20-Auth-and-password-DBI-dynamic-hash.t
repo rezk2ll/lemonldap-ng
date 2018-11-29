@@ -190,7 +190,7 @@ SKIP: {
         'Authentication against newly-modified password'
     );
     expectOK($res);
-    my $id = expectCookie($res);
+    $id = expectCookie($res);
 
 # Verify that password is hashed with correct scheme (dbiDynamicHashNewPasswordScheme)
     my $sth = $dbh->prepare("SELECT password FROM users WHERE user='jsmith';");

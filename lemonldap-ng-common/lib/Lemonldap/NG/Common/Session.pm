@@ -13,7 +13,10 @@ use Lemonldap::NG::Common::Apache::Session;
 # Workaround for another ModPerl/Mouse issue...
 BEGIN {
     require Mouse;
-    my $v = sprintf( "%d.%03d%03d", ( $Mouse::VERSION =~ /(\d+)/g ) );
+    my $v =
+      $Mouse::VERSION
+      ? sprintf( "%d.%03d%03d", ( $Mouse::VERSION =~ /(\d+)/g ) )
+      : 0;
     if ( $v < 2.005001 and $Lemonldap::NG::Handler::Apache2::Main::VERSION ) {
         require Moose;
         Moose->import();
