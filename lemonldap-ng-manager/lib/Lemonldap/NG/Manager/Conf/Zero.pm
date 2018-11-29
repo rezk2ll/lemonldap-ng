@@ -129,7 +129,7 @@ sub zeroConf {
             'LockDirectory' => "$persistentSessionDir/lock"
         },
         'reloadUrls' => {
-            "reload.$domain" => "http://reload.$domain/reload"
+            "localhost" => "http://reload.$domain/reload"
         },
         'sessionDataToRemember' => {},
         'notification'          => 1,

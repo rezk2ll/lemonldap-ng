@@ -157,7 +157,7 @@
    "registerDB" : "Demo",
    "registerUrl" : "http://auth.__DNSDOMAIN__/register",
    "reloadUrls" : {
-      "reload.__DNSDOMAIN__" : "http://reload.__DNSDOMAIN__/reload"
+      "localhost" : "http://reload.__DNSDOMAIN__/reload"
    },
    "securedCookie" : 0,
    "sessionDataToRemember" : {},
