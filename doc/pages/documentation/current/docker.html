@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:docker</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,docker"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="docker.html"/>
@@ -84,10 +84,8 @@ Prerequisites:
 <ul>
 <li class="level1"><div class="li"> Map the container port 80 to host port 80 (option -p)</div>
 </li>
-<li class="level1"><div class="li"> Add reload.example.com to /etc/hosts in the container (option –add-host)</div>
-</li>
 </ul>
-<pre class="code">docker run -d --add-host reload.example.com:127.0.0.1 -p 80:80 coudot/lemonldap-ng</pre>
+<pre class="code">docker run -d -p 80:80 coudot/lemonldap-ng</pre>
 
 <p>
 Then connect to <a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a> with your browser and log in with dwho/dwho.

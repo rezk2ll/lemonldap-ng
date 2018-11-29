@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:installtarball</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,installtarball"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="installtarball.html"/>
@@ -258,12 +258,17 @@ To install them on system:
 <div class="level2">
 
 <p>
-Configure your <abbr title="Domain Name System">DNS</abbr> server to resolve names with your server <abbr title="Internet Protocol">IP</abbr>.
+Configure your <abbr title="Domain Name System">DNS</abbr> server to resolve names with your server <abbr title="Internet Protocol">IP</abbr>:
 </p>
-<div class="notetip">For tests with the configured domain, launch the following :
-<pre class="code shell">cat /usr/local/lemonldap-ng/etc/lemonldap-ng/for_etc_hosts &gt;&gt; /etc/hosts</pre>
+<ul>
+<li class="level1"><div class="li"> auth.&lt;your domain&gt;: main portal, must be public</div>
+</li>
+<li class="level1"><div class="li"> manager.&lt;your domain&gt;: manager, only for adminsitrators</div>
+</li>
+<li class="level1"><div class="li"> test1.&lt;your domain&gt;, test2.&lt;your domain&gt;: sample applications</div>
+</li>
+</ul>
 
-</div>
 <p>
 Follow the <a href="start.html#configuration" class="wikilink1" title="documentation:2.0:start">next steps</a>.
 </p>
