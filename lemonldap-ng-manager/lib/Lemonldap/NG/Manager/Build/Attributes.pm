@@ -349,7 +349,7 @@ sub attributes {
         portalStatus => {
             type          => 'bool',
             default       => 0,
-            help    => 'status.html',
+            help          => 'status.html',
             documentation => 'Enable portal status',
         },
         portalUserAttr => {
@@ -400,7 +400,8 @@ sub attributes {
             flags         => 'hmp',
         },
         stayConnected => {
-            type          => 'bool',
+            type => 'bool',
+
             #help          => 'stayconnected.html',
             default       => 0,
             documentation => 'Enable StayConnected plugin',
@@ -592,7 +593,7 @@ sub attributes {
             default => 5,
             type    => 'int',
             documentation =>
-'Maximun interval in seconds since last authentifcation to force reauthentication',
+'Maximum interval in seconds since last authentifcation to force reauthentication',
         },
         bruteForceProtection => {
             default       => 0,
