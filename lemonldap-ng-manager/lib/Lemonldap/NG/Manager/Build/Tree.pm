@@ -503,6 +503,7 @@ sub tree {
                     nodes => [
                         'stayConnected',
                         'portalStatus',
+                        'upgradeSession',
                         {   title => 'portalServers',
                             help  => 'portalservers.html',
                             form  => 'simpleInputContainer',
@@ -580,7 +581,6 @@ sub tree {
                                 'registerDoneSubject'
                             ]
                         },
-                        'upgradeSession',
                         {   title => 'autoSignin',
                             help  => 'autosignin.html',
                             nodes => ['autoSigninRules'],
@@ -678,6 +678,9 @@ sub tree {
                                 'useSafeJail',
                                 'checkXSS',
                                 'bruteForceProtection',
+                                'requireToken',
+                                'formTimeout',
+                                'tokenUseGlobalStorage',
                                 'lwpOpts',
                                 'lwpSslOpts',
                                 {   title => 'contentSecurityPolicy',
@@ -690,9 +693,6 @@ sub tree {
                                         'cspConnect',
                                     ]
                                 },
-                                'requireToken',
-                                'formTimeout',
-                                'tokenUseGlobalStorage',
                             ]
                         },
                         {   title => 'redirection',
@@ -932,8 +932,8 @@ sub tree {
         {   title => 'casServiceMetadata',
             nodes => [
                 'casAttr',
+                'casAccessControlPolicy', 'casStorage', 'casStorageOptions',
                 'casAttributes',
-                'casAccessControlPolicy', 'casStorage', 'casStorageOptions'
 
             ]
         },
