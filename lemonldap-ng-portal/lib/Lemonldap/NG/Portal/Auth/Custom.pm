@@ -9,10 +9,10 @@ sub new {
         die 'Custom Auth module not defined';
     }
 
-    eval $self->{p}->loadModule( $self->{conf}->{customAuth} );
-    ($@)
-      ? return $self->{p}->loadModule( $self->{conf}->{customAuth} )
-      : die 'Unable to load Auth module ' . $self->{conf}->{customAuth};
+    my $res;
+    eval { $res = $self->{p}->loadModule( $self->{conf}->{customAuth} ) };
+    die 'Unable to load Auth module ' . $self->{conf}->{customAuth} if ($@);
+    return $res;
 }
 
 sub getDisplayType {

@@ -27,7 +27,7 @@ sub loadModule {
         $nc = $self->conf;
     }
     return 0
-      unless ( $obj = $self->p->loadModule( "$plugin", $nc ) and $obj->init );
+      unless ( $obj = $self->p->loadModule( "$plugin", $nc ) );
     return $obj;
 }
 
