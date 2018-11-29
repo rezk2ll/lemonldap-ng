@@ -457,6 +457,15 @@ for i in handler manager portal test; do {
 mkdir -p %{buildroot}%{_sysconfdir}/nginx/conf.d/
 mv %{buildroot}%{lm_confdir}/*nginx*.conf \
     %{buildroot}%{_sysconfdir}/nginx/conf.d/
+# Move lua and log configuration
+mv %{buildroot}%{_sysconfdir}/nginx/conf.d/nginx-lua-headers.conf \
+    %{buildroot}%{_sysconfdir}/nginx/conf.d/nginx-lmlog.conf \
+    %{buildroot}%{_sysconfdir}/nginx/
+# Replace paths in main configuration files
+sed -i 's:/etc/lemonldap-ng/nginx-lmlog.conf:/etc/nginx/nginx-lmlog.conf:' \
+    %{buildroot}%{_sysconfdir}/nginx/conf.d/handler-nginx.conf
+sed -i 's:/etc/lemonldap-ng/nginx-lua-headers.conf:/etc/nginx/nginx-lua-headers.conf:' \
+    %{buildroot}%{_sysconfdir}/nginx/conf.d/test-nginx.conf
 
 # Remove for_etc_hosts from %%{_sysconfdir}
 mv %{buildroot}%{lm_confdir}/for_etc_hosts .
@@ -602,8 +611,8 @@ fi
 %files nginx
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/handler-nginx.conf
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/manager-nginx.conf
-%config(noreplace) %{_sysconfdir}/nginx/conf.d/nginx-lmlog.conf
-%config(noreplace) %{_sysconfdir}/nginx/conf.d/nginx-lua-headers.conf
+%config(noreplace) %{_sysconfdir}/nginx/nginx-lmlog.conf
+%config(noreplace) %{_sysconfdir}/nginx/nginx-lua-headers.conf
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/portal-nginx.conf
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/test-nginx.conf
 
