@@ -29,7 +29,7 @@ sub types {
             'test'    => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                eval "$s $val";
+                'Safe'->new->reval("no warning; $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -671,7 +671,7 @@ sub attributes {
             'test' => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                eval "$s $val";
+                'Safe'->new->reval("no warning; $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -1047,7 +1047,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
                 'test'       => sub {
                     my ( $val, $conf ) = @_;
                     my $s = $val;
-                    eval $s;
+                    'Safe'->new->reval("no warnings;$s");
                     my $err = join(
                         '',
                         grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -1131,7 +1131,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'keyTest' => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                eval "$s $val";
+                'Safe'->new->reval("no warning; $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -1149,7 +1149,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'test'    => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                eval "$s $val";
+                'Safe'->new->reval("no warning; $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -1503,7 +1503,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
                           : ( 0, '__badUrl__' );
                     }
                     $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
-                    eval $s;
+                    'Safe'->new->reval("no warnings;$s");
                     my $err = join(
                         '',
                         grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -1544,7 +1544,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'test'       => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                eval "$s $val";
+                'Safe'->new->reval("no warning; $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -1904,7 +1904,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'test' => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                eval "$s $val";
+                'Safe'->new->reval("no warning; $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -2251,7 +2251,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'keyTest'    => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                eval "$s $val";
+                'Safe'->new->reval("no warning; $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -2987,7 +2987,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'test' => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
-                eval "$s $val";
+                'Safe'->new->reval("no warning; $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }

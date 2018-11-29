@@ -14,7 +14,6 @@ SKIP: {
     if ($@) {
         skip 'DBD::SQLite not found', $maintests;
     }
-    require 't/test-ldap.pm';
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
     $dbh->do("INSERT INTO users VALUES ('dwho','dwho','Doctor who')");
@@ -36,7 +35,7 @@ SKIP: {
 'Demo;Demo;Null;https://test.example.com;$env->{ipAddr} =~ /127.0.0.1/',
                     '4_demo' =>
 'Demo;Demo;Null;https://test.example.com;$env->{ipAddr} =~ /1.2.3.4/',
-                    '5_ssl'        => 'SSL;LDAP;LDAP',
+                    '5_ssl'        => 'SSL;Demo;Demo',
                     '6_FakeCustom' => 'Custom;Demo;Demo',
                 },
 
@@ -96,6 +95,5 @@ SKIP: {
 }
 count($maintests);
 eval { unlink 't/userdb.db' };
-stopLdapServer() if $ENV{LLNGTESTLDAP};
 clean_sessions();
 done_testing( count() );
