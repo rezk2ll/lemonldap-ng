@@ -593,7 +593,7 @@ sub attributes {
             default => 5,
             type    => 'int',
             documentation =>
-'Maximum interval in seconds since last authentification to force reauthentication',
+'Maximum interval in seconds since last authentication to force reauthentication',
         },
         bruteForceProtection => {
             default       => 0,
