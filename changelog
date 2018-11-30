@@ -111,8 +111,6 @@ lemonldap-ng (2.0.0) artful; urgency=medium
     * #1546: Configuration comparator does not work
     * #1550: Error when enables "SSL, Custom " Auth modules with Choice
 
- -- Clément <clem.oudot@gmail.com>  Wed, 28 Nov 2018 14:42:56 +0100
-
 lemonldap-ng (2.0.0~beta1) testing; urgency=low
 
 lemonldap-ng (2.0.0~alpha3) testing; urgency=low
@@ -120,6 +118,45 @@ lemonldap-ng (2.0.0~alpha3) testing; urgency=low
 lemonldap-ng (2.0.0~alpha2) testing; urgency=low
 
 lemonldap-ng (2.0.0~alpha1) testing; urgency=low
+
+lemonldap-ng (1.9.18) stable; urgency=high
+
+    * #1479: App Category order - Cannot save
+    * #1476: Unescaped left brace generates a warning with Perl-5.28
+    * #1474: OAuth2 token_type is case insensitive
+    * #1514: Aliases not respecting redirect settings
+    * #1494: Manage applications with the lemonldap-ng-cli
+    * #1470: Warning when using CLI to set value which does not exists before
+    * #1469: SMTP timeout breaks Manager configuration save
+
+lemonldap-ng (1.9.17) stable; urgency=high
+
+    * #1416: Attribute encoding in CAS responses
+    * #1426: Error with mod_auth_openidc when kid is set in JWKS
+    * #1423: "samlServicePrivateKeySig: Bad PEM encoding" on manager when
+      saving config with some valid certificates
+    * #1415: Improve test pages
+    * #1413: Possibility to add conditions to display Choice tabs
+    * #1407: Remote MYSQL - mysql_enable_utf8 not applied?
+    * #1403: Parameter to ignore some tests during saving
+
+lemonldap-ng (1.9.16) stable; urgency=high
+
+    * #1390: Choice module allows XSS attack
+    * #1389: Kerberos ticket revalidated in Multi mode
+    * #1382: Kerberos - Username / Session uncorrectly set
+    * #1378: lemonldap-ng-doc unable to install on Debian 7
+    * #1372: Action "update-cache" in lemonldap-ng-cli does not work
+    * #1371: incompatibility between 1.4 portal and 1.9/2.0 handler : _utime
+      not defined
+    * #1368: Impossible to configure IssuerDB Get Parameters with RDBI backend
+    * #1366: Problem with kerberos and ajax and ldap ...
+    * #1363: Bad equality operator in Handler::Main::Jail
+    * #1362: Allow CAS 3.0 endpoints (/p3/serviceValidate and
+      /p3/proxyValidate)
+    * #1360: Using "force" and "cfgNum" with lemonldap-ng-cli does not work
+    * #1063: lemonldap-ng-fastcgi-server has a hard dependency on nginx
+    * #1253: Default values not saved by Manager (complex nodes)
 
 lemonldap-ng (1.9.15) stable; urgency=high
 
