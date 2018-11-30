@@ -156,9 +156,6 @@
    "portalSkinBackground" : "1280px-Cedar_Breaks_National_Monument_partially.jpg",
    "registerDB" : "Demo",
    "registerUrl" : "http://auth.__DNSDOMAIN__/register",
-   "reloadUrls" : {
-      "localhost" : "http://reload.__DNSDOMAIN__/reload"
-   },
    "securedCookie" : 0,
    "sessionDataToRemember" : {},
    "timeout" : 72000,
