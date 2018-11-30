@@ -658,7 +658,7 @@ fi
 * Fri Jul 20 2018 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~beta1-1
 - First beta version for 2.0.0
 
-* Fri Jun 17 2018 Clement Oudot <clem.oudot@gmail.com> - 1.9.17-1
+* Sun Jun 17 2018 Clement Oudot <clem.oudot@gmail.com> - 1.9.17-1
 - Update to 1.9.17
 
 * Fri Mar 16 2018 Clement Oudot <clem.oudot@gmail.com> - 1.9.16-1
