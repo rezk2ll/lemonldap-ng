@@ -14,7 +14,7 @@ use Regexp::Common qw/URI/;
 my $perlExpr = sub {
     my ( $val, $conf ) = @_;
     my $s = '';
-    #Safe->new->reval("no warning $s $val");
+    Safe->new->reval("BEGIN { warnings->unimport; } $s $val");
     my $err = join( '',
         grep { $_ =~ /Undefined subroutine/ ? () : $_ } split( /\n/, $@ ) );
     return $err ? ( 1, "__badExpression__: $err" ) : (1);
@@ -1499,7 +1499,7 @@ sub attributes {
                           : ( 0, '__badUrl__' );
                     }
                     $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
-                    #Safe->new->reval("no warnings $s");
+                    Safe->new->reval("BEGIN { warnings->unimport; } $s");
                     my $err = join( '',
                         grep { $_ =~ /Undefined subroutine/ ? () : $_ }
                           split( /\n/, $@ ) );
@@ -1524,7 +1524,7 @@ sub attributes {
                 test       => sub {
                     my ( $val, $conf ) = @_;
                     my $s = $val;
-                    #Safe->new->reval("no warnings $s");
+                    Safe->new->reval("BEGIN { warnings->unimport; } $s");
                     my $err = join( '',
                         grep { $_ =~ /Undefined subroutine/ ? () : $_ }
                           split( /\n/, $@ ) );

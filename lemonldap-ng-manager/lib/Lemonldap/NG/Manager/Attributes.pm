@@ -28,7 +28,8 @@ sub types {
             'msgFail' => '__notAValidPerlExpression__',
             'test'    => sub {
                 my ( $val, $conf ) = @_;
-                my $s   = '';
+                my $s = '';
+                'Safe'->new->reval("BEGIN { warnings->unimport; } $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -669,7 +670,8 @@ sub attributes {
         'casAppMetaDataOptionsRule' => {
             'test' => sub {
                 my ( $val, $conf ) = @_;
-                my $s   = '';
+                my $s = '';
+                'Safe'->new->reval("BEGIN { warnings->unimport; } $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -1044,7 +1046,8 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
                 'keyTest'    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
                 'test'       => sub {
                     my ( $val, $conf ) = @_;
-                    my $s   = $val;
+                    my $s = $val;
+                    'Safe'->new->reval("BEGIN { warnings->unimport; } $s");
                     my $err = join(
                         '',
                         grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -1127,7 +1130,8 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'grantSessionRules' => {
             'keyTest' => sub {
                 my ( $val, $conf ) = @_;
-                my $s   = '';
+                my $s = '';
+                'Safe'->new->reval("BEGIN { warnings->unimport; } $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -1144,7 +1148,8 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => {},
             'test'    => sub {
                 my ( $val, $conf ) = @_;
-                my $s   = '';
+                my $s = '';
+                'Safe'->new->reval("BEGIN { warnings->unimport; } $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -1498,6 +1503,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
                           : ( 0, '__badUrl__' );
                     }
                     $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
+                    'Safe'->new->reval("BEGIN { warnings->unimport; } $s");
                     my $err = join(
                         '',
                         grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -1537,7 +1543,8 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
             'test'       => sub {
                 my ( $val, $conf ) = @_;
-                my $s   = '';
+                my $s = '';
+                'Safe'->new->reval("BEGIN { warnings->unimport; } $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -1896,7 +1903,8 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcRPMetaDataOptionsRule' => {
             'test' => sub {
                 my ( $val, $conf ) = @_;
-                my $s   = '';
+                my $s = '';
+                'Safe'->new->reval("BEGIN { warnings->unimport; } $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -2242,7 +2250,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'keyMsgFail' => '__badSkinRule__',
             'keyTest'    => sub {
                 my ( $val, $conf ) = @_;
-                my $s   = '';
+                my $s = '';
+                'Safe'->new->reval("BEGIN { warnings->unimport; } $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
@@ -2363,7 +2372,12 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type'    => 'int'
         },
         'reloadUrls' => {
-            'type' => 'text'
+            'keyTest' =>
+qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?$/,
+            'msgFail' => '__badUrl__',
+            'test' =>
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
+            'type' => 'keyTextContainer'
         },
         'remoteCookieName' => {
             'type' => 'text'
@@ -2972,7 +2986,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'samlSPMetaDataOptionsRule' => {
             'test' => sub {
                 my ( $val, $conf ) = @_;
-                my $s   = '';
+                my $s = '';
+                'Safe'->new->reval("BEGIN { warnings->unimport; } $s $val");
                 my $err = join(
                     '',
                     grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
