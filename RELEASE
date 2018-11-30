@@ -8,7 +8,6 @@ The version
 * changelog (add a changelog from GitLab for the target version)
 * Main modules (Common.pm/Handler.pm/Portal.pm/Manager.pm)
 * Makefile.PL for cross-dependencies
-* Doxyfile
 
 - Then update packages information with:
 $ make clean && make cpan
