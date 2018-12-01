@@ -67,4 +67,8 @@ sub getDisplayType {
     return ( $self->{conf}->{sslByAjax} ? "sslform" : "logo" );
 }
 
+sub authLogout {
+    PE_OK;
+}
+
 1;
