@@ -17,6 +17,7 @@ before_script:
   - env | grep ^CI_
   # Converting to native package...
   - sed -i "1{s/-1) /$suffix) /}" debian/changelog
+  - sed -i "1{s/-2) /$suffix) /}" debian/changelog
   - sed -i 's/3.0 (quilt)/3.0 (native)/' debian/source/format
 
 build_stretch:
