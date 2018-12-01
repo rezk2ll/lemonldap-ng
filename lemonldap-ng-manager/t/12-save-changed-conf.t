@@ -26,14 +26,15 @@ ok( $resBody = from_json( $res->[2]->[0] ),
     "Result body contains JSON text" );
 ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
     or print STDERR Dumper($resBody);
-ok( @{ $resBody->{details}->{'__warnings__'} } == 2,
-    'JSON response contains 2 warnings' )
-    or print STDERR Dumper($resBody);
-ok( $resBody->{details}->{'__warnings__'}->[0]->{message}
+ok( $resBody->{details}->{__warnings__}
+        and @{ $resBody->{details}->{__warnings__} } == 2,
+    'JSON response contains 2 warnings'
+) or print STDERR Dumper($resBody);
+ok( $resBody->{details}->{__warnings__}->[0]->{message}
         =~ /\b(unprotected|cross-domain-authentication)\b/,
     "Warning with 'unprotect' or 'CDA' found"
 ) or print STDERR Dumper($resBody);
-ok( $resBody->{details}->{'__warnings__'}->[1]->{message}
+ok( $resBody->{details}->{__warnings__}->[1]->{message}
         =~ /\b(unprotected|cross-domain-authentication)\b/,
     "Warning with 'unprotect' or 'CDA' found"
 ) or print STDERR Dumper($resBody);
