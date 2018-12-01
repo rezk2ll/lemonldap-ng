@@ -24,8 +24,14 @@ ok( $res->[0] == 200, "Result code is 200" );
 ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
 ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
   or print STDERR Dumper($resBody);
+ok( @{ $resBody->{details}->{__warnings__} } == 2, "JSON response contains 2 warnings" )
+  or print STDERR Dumper($resBody);
+ok( $resBody->{details}->{__warnings__}->[0]->{message} =~ /(unprotected|cross-domain-authentication)/, "Warning with 'unprotect' or 'CDA' found" )
+  or print STDERR Dumper($resBody);
+ok( $resBody->{details}->{__warnings__}->[1]->{message} =~ /(unprotected|cross-domain-authentication)/, "Warning with 'unprotect' or 'CDA' found" )
+  or print STDERR Dumper($resBody);
 ok( -f $confFiles->[1], 'File is created' );
-
+count(3);
 my @changes = @{&changes};
 my @cmsg    = @{ $resBody->{details}->{__changes__} };
 my $bug;
