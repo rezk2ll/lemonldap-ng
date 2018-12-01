@@ -24,11 +24,11 @@ ok( $res->[0] == 200, "Result code is 200" );
 ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
 ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
   or print STDERR Dumper($resBody);
-ok( @{ $resBody->{details}->{__warnings__} } == 2, "JSON response contains 2 warnings" )
+ok( @{ $resBody->{details}->{'__warnings__'} } == 2, 'JSON response contains 2 warnings' )
   or print STDERR Dumper($resBody);
-ok( $resBody->{details}->{__warnings__}->[0]->{message} =~ /(unprotected|cross-domain-authentication)/, "Warning with 'unprotect' or 'CDA' found" )
+ok( $resBody->{details}->{'__warnings__'}->[0]->{message} =~ /\b(unprotected|cross-domain-authentication)\b/, "Warning with 'unprotect' or 'CDA' found" )
   or print STDERR Dumper($resBody);
-ok( $resBody->{details}->{__warnings__}->[1]->{message} =~ /(unprotected|cross-domain-authentication)/, "Warning with 'unprotect' or 'CDA' found" )
+ok( $resBody->{details}->{'__warnings__'}->[1]->{message} =~ /\b(unprotected|cross-domain-authentication)\b/, "Warning with 'unprotect' or 'CDA' found" )
   or print STDERR Dumper($resBody);
 ok( -f $confFiles->[1], 'File is created' );
 count(3);
@@ -84,8 +84,11 @@ ok( @c2 == 14, '14 keys changed or created in conf 2' )
 count(5);
 
 unlink $confFiles->[1];
-eval { rmdir 't/sessions'; };
+#eval { rmdir 't/sessions'; };
 done_testing( count() );
+
+# Remove sessions directory
+`rm -rf t/sessions`;
 
 sub changes {
     return [
