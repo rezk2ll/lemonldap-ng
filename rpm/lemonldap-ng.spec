@@ -148,8 +148,9 @@ BuildRequires:  perl(Regexp::Assemble)
 BuildRequires:  perl(Regexp::Common)
 BuildRequires:  perl(Safe)
 BuildRequires:  perl(Scalar::Util)
-# https://bugzilla.redhat.com/show_bug.cgi?id=1644266
-#BuildRequires:  perl(Sentry::Raven)
+%if 0%{?fedora}
+BuildRequires:  perl(Sentry::Raven)
+%endif
 BuildRequires:  perl(SOAP::Lite)
 BuildRequires:  perl(SOAP::Transport::HTTP)
 BuildRequires:  perl(strict)
@@ -191,7 +192,7 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 
 %if 0%{?fedora}
 %{?perl_default_filter}
-%global __requires_exclude perl\\(lasso|perl\\(Net::OpenID|perl\\(Web::ID|perl\\(XML::LibXML|perl\\(XML::LibXSLT|perl\\(Sentry::Raven
+%global __requires_exclude perl\\(lasso|perl\\(Net::OpenID|perl\\(Web::ID|perl\\(XML::LibXML|perl\\(XML::LibXSLT
 %endif
 
 %description
