@@ -145,6 +145,23 @@
   </div>
   </TMPL_IF>
 
+  <TMPL_IF NAME="DISPLAY_GPG_FORM">
+  <div class="card">
+  <TMPL_IF NAME="module">
+    <form id="lform" action="#" method="post" class="login <TMPL_VAR NAME="module">" role="form">
+  <TMPL_ELSE>
+    <form id="lform" action="#" method="post" class="login" role="form">
+  </TMPL_IF>
+    <!-- Hidden fields -->
+    <TMPL_VAR NAME="HIDDEN_INPUTS">
+    <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+    <input type="hidden" name="timezone" />
+    <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
+    <TMPL_INCLUDE NAME="gpgform.tpl">
+    </form>
+  </div>
+  </TMPL_IF>
+
   <TMPL_IF NAME="DISPLAY_YUBIKEY_FORM">
   <div class="card">
   <TMPL_IF NAME="module">
