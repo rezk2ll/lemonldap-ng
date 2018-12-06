@@ -24,6 +24,10 @@ build_stretch:
   image: buildpkg/debian:stretch
   <<: *job_build
 
+build_buster:
+  image: buildpkg/debian:buster
+  <<: *job_build
+
 #build_xenial:
 #  image: buildpkg/ubuntu:xenial
 #  <<: *job_build
@@ -43,6 +47,7 @@ sign:
     - ci-sign-pkg
   dependencies:
     - build_stretch
+    - build_buster
 #    - build_xenial
     - build_bionic
   artifacts:
