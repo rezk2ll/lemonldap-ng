@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+. /usr/share/debconf/confmodule
+
+if [ "$1" == "configure" ]
+then
+	find /var/lib/lemonldap-ng/manager/{static,manager.fcgi} -type l -xtype l -delete 2>/dev/null || true
+fi
+
+#DEBHELPER#
+exit 0
