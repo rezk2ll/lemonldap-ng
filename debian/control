@@ -100,6 +100,7 @@ Section: web
 Depends: ${misc:Depends},
          ${perl:Depends},
          lsb-base,
+         libfcgi-perl,
          libfcgi-procmanager-perl,
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libplack-perl
