@@ -303,7 +303,11 @@ $(document).ready ->
 			for al in window.availableLanguages
 				langdiv += "<img class=\"langicon\" src=\"#{window.staticPrefix}common/#{al}.png\" title=\"#{al}\" alt=\"[#{al}]\"> "
 				for nl in nlangs
-					if al == nl
+					console.log 'Navigator lang', nl
+					console.log 'Available lang', al
+					re = new RegExp('^'+al+'-?')
+					if nl.match re
+						console.log 'Matching lang', al
 						langs.push al
 					else if al.substring(0, 1) == nl.substring(0, 1)
 						langs2.push al
@@ -312,6 +316,7 @@ $(document).ready ->
 			lang = window.availableLanguages[0]
 	else if lang not in window.availableLanguages
 		lang = window.availableLanguages[0]
+	console.log 'Selected lang', lang
 	setCookie 'llnglanguage', lang
 	translatePage(lang)
 
