@@ -80,7 +80,7 @@ sub store {
         $Lemonldap::NG::Common::Conf::msg .= "Unable to store conf: $@\n";
         return 0;
     }
-    return $res;
+    return $fields->{cfgNum};
 }
 
 sub load {
