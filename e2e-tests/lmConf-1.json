@@ -188,7 +188,6 @@
   },
   "registerDB": "Demo",
   "registerUrl": "http://auth.example.com:__port__/register",
-  "reloadUrls": {"localhost":"http://reload.example.com:__port__/reload"},
   "securedCookie": 0,
   "sessionDataToRemember": {},
   "timeout": 72000,
