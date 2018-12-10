@@ -316,7 +316,7 @@ $(document).ready ->
 			lang = window.availableLanguages[0]
 	else if lang not in window.availableLanguages
 		lang = window.availableLanguages[0]
-	console.log 'Selected lang', lang
+	console.log 'Selected lang ->', lang
 	setCookie 'llnglanguage', lang
 	translatePage(lang)
 

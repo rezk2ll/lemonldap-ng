@@ -306,6 +306,7 @@ LemonLDAP::NG Portal jQuery scripts
     } else if (indexOf.call(window.availableLanguages, lang) < 0) {
       lang = window.availableLanguages[0];
     }
+    console.log('Selected lang ->', lang);
     setCookie('llnglanguage', lang);
     translatePage(lang);
     langdiv = '';
