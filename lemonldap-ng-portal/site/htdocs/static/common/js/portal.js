@@ -217,7 +217,7 @@ LemonLDAP::NG Portal jQuery scripts
   datas = {};
 
   $(document).ready(function() {
-    var action, al, authMenuTabs, back_url, i, l, lang, langdiv, langs, langs2, len, len1, len2, link, m, menuIndex, menuTabs, method, nl, nlangs, re, ref, ref1;
+    var action, al, authMenuTabs, back_url, i, l, lang, langdiv, langs, langs2, len, len1, len2, len3, link, m, menuIndex, menuTabs, method, n, nl, nlangs, re, ref, ref1, ref2;
     datas = getValues();
     window.datas = datas;
     if (datas['antiframe'] && top !== self) {
@@ -286,13 +286,17 @@ LemonLDAP::NG Portal jQuery scripts
         for (i = 0, len = ref.length; i < len; i++) {
           al = ref[i];
           langdiv += "<img class=\"langicon\" src=\"" + window.staticPrefix + "common/" + al + ".png\" title=\"" + al + "\" alt=\"[" + al + "]\"> ";
-          for (l = 0, len1 = nlangs.length; l < len1; l++) {
-            nl = nlangs[l];
-            console.log('Navigator lang', nl);
-            console.log('Available lang', al);
+        }
+        for (l = 0, len1 = nlangs.length; l < len1; l++) {
+          nl = nlangs[l];
+          console.log('Navigator lang', nl);
+          ref1 = window.availableLanguages;
+          for (m = 0, len2 = ref1.length; m < len2; m++) {
+            al = ref1[m];
+            console.log(' Available lang', al);
             re = new RegExp('^' + al + '-?');
             if (nl.match(re)) {
-              console.log('Matching lang', al);
+              console.log(' Matching lang =', al);
               langs.push(al);
             } else if (al.substring(0, 1) === nl.substring(0, 1)) {
               langs2.push(al);
@@ -310,9 +314,9 @@ LemonLDAP::NG Portal jQuery scripts
     setCookie('llnglanguage', lang);
     translatePage(lang);
     langdiv = '';
-    ref1 = window.availableLanguages;
-    for (m = 0, len2 = ref1.length; m < len2; m++) {
-      al = ref1[m];
+    ref2 = window.availableLanguages;
+    for (n = 0, len3 = ref2.length; n < len3; n++) {
+      al = ref2[n];
       langdiv += "<img class=\"langicon\" src=\"" + window.staticPrefix + "common/" + al + ".png\" title=\"" + al + "\" alt=\"[" + al + "]\"> ";
     }
     $('#languages').html(langdiv);
