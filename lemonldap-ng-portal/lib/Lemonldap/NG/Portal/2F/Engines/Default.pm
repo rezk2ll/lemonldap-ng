@@ -166,11 +166,11 @@ sub run {
             $req->pdata->{sfRegToken} =
               $self->ott->createToken( $req->sessionInfo );
             $self->logger->debug("Just one 2F is enabled");
-            $self->logger->debug(" -> Redirect to /2fregisters/");
+            $self->logger->debug(" -> Redirect to 2fregisters/");
             $req->response(
                 [
                     302,
-                    [ Location => $self->conf->{portal} . '/2fregisters/' ], []
+                    [ Location => $self->conf->{portal} . '2fregisters/' ], []
                 ]
             );
             return PE_SENDRESPONSE;
