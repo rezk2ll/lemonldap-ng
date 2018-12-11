@@ -296,7 +296,7 @@ LemonLDAP::NG Portal jQuery scripts
             console.log(' Available lang', al);
             re = new RegExp('^' + al + '-?');
             if (nl.match(re)) {
-              console.log(' Matching lang =', al);
+              console.log('  Matching lang =', al);
               langs.push(al);
             } else if (al.substring(0, 1) === nl.substring(0, 1)) {
               langs2.push(al);
