@@ -195,7 +195,7 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 
 %if 0%{?fedora}
 %{?perl_default_filter}
-%global __requires_exclude perl\\(lasso|perl\\(Web::ID|perl\\(XML::LibXML|perl\\(XML::LibXSLT
+%global __requires_exclude perl\\(lasso|perl\\(Web::ID|perl\\(XML::LibXML
 %endif
 
 %description
