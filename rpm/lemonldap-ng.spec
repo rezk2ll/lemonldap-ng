@@ -168,6 +168,9 @@ BuildRequires:  perl(URI::Escape)
 BuildRequires:  perl(URI::URL)
 BuildRequires:  perl(utf8)
 BuildRequires:  perl(warnings)
+%if 0%{?fedora}
+BuildRequires:  perl(XML::LibXML)
+%endif
 BuildRequires:  perl(XML::LibXSLT)
 BuildRequires:  perl(XML::Simple)
 BuildRequires:  perl(YAML)
@@ -195,7 +198,7 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 
 %if 0%{?fedora}
 %{?perl_default_filter}
-%global __requires_exclude perl\\(lasso|perl\\(Web::ID|perl\\(XML::LibXML
+%global __requires_exclude perl\\(lasso|perl\\(Web::ID
 %endif
 
 %description
