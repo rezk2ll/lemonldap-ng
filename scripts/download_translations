@@ -8,10 +8,11 @@ if [ -e ~/.transifex.key ]; then
 		for lang in `ls lemonldap-ng-$mod/site/htdocs/static/languages/|perl -ne 's/\.json//;print unless/^(en|fr)/'`; do
 			echo
 			echo "  # $lang.json"
+			remote=`echo $lang | perl -pe 's/^zh$/zh_CN/'`
 			curl -L --user api:`cat ~/.transifex.key` \
 				-X GET \
 				-o lemonldap-ng-$mod/site/htdocs/static/languages/$lang.json \
-				https://www.transifex.com/api/2/project/lemonldapng/resource/${mod}json/translation/$lang/?file
+				https://www.transifex.com/api/2/project/lemonldapng/resource/${mod}json/translation/$remote/?file
 			js_beautify -s=1 -w lemonldap-ng-$mod/site/htdocs/static/languages/$lang.json
 			perl -i -pe 's/^ //;s/": "/":"/' lemonldap-ng-$mod/site/htdocs/static/languages/$lang.json
 		done
@@ -24,10 +25,11 @@ if [ -e ~/.transifex.key ]; then
 		echo
 		echo "#"
 		echo "  # $lang.json"
+		remote=`echo $lang | perl -pe 's/^zh$/zh_CN/'`
 		curl -L --user api:`cat ~/.transifex.key` \
 			-X GET \
 			-o lemonldap-ng-portal/site/templates/common/mail/$lang.json \
-			https://www.transifex.com/api/2/project/lemonldapng/resource/mailjson_1/translation/$lang/?file
+			https://www.transifex.com/api/2/project/lemonldapng/resource/mailjson_1/translation/$remote/?file
 		js_beautify -s=1 -w lemonldap-ng-portal/site/templates/common/mail/$lang.json
 		perl -i -pe 's/^ //;s/": "/":"/' lemonldap-ng-portal/site/templates/common/mail/$lang.json
 	done

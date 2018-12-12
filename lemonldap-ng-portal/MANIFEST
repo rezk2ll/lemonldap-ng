@@ -299,7 +299,7 @@ site/htdocs/static/common/nl.png
 site/htdocs/static/common/pt.png
 site/htdocs/static/common/ro.png
 site/htdocs/static/common/vi.png
-site/htdocs/static/common/zh_CN.png
+site/htdocs/static/common/zh.png
 site/htdocs/static/languages/ar.json
 site/htdocs/static/languages/de.json
 site/htdocs/static/languages/en.json
@@ -310,7 +310,7 @@ site/htdocs/static/languages/nl.json
 site/htdocs/static/languages/pt.json
 site/htdocs/static/languages/ro.json
 site/htdocs/static/languages/vi.json
-site/htdocs/static/languages/zh_CN.json
+site/htdocs/static/languages/zh.json
 site/templates/bootstrap/2fchoice.tpl
 site/templates/bootstrap/2fregisters.tpl
 site/templates/bootstrap/casBack2Url.tpl
