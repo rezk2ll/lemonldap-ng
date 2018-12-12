@@ -213,6 +213,7 @@ sub defaultValuesInit {
         if ( $conf->{vhostOptions} ) {
             my $name = 'vhost' . ucfirst($opt);
             foreach my $vhost ( keys %{ $conf->{vhostOptions} } ) {
+                $conf->{vhostOptions}->{$vhost} ||= {};
                 my $val = $conf->{vhostOptions}->{$vhost}->{$name};
 
                 # Keep default value if $val is negative
