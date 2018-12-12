@@ -68,6 +68,9 @@ BEGIN {
     }
 }
 
+# Endpoints inserted after any main sub
+has 'afterSub' => ( is => 'rw', default => sub { {} } );
+
 has spRules => (
     is      => 'rw',
     default => sub { {} }
@@ -366,6 +369,26 @@ sub findEP {
                     $obj->$callback( $_[0] );
                 };
                 $self->logger->debug("  -> $callback");
+            }
+        }
+    }
+    if ( $obj->can('afterSub') ) {
+        $self->logger->debug("Found afterSub in $plugin");
+        my $h = $obj->afterSub;
+        unless ( ref $h and ref($h) eq 'HASH' ) {
+            $self->logger->error(
+                '"afterSub" endpoint must be a hashref, skipped');
+        }
+        else {
+            foreach my $ep ( keys %$h ) {
+                my $callback = $h->{$ep};
+                push @{ $self->afterSub->{$ep} }, sub {
+                    eval {
+                        $obj->logger->debug(
+                            "Launching ${plugin}::$callback afterSub $ep");
+                    };
+                    $obj->$callback( $_[0] );
+                };
             }
         }
     }

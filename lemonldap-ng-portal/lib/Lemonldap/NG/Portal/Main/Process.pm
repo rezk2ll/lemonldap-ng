@@ -28,6 +28,9 @@ sub process {
         else {
             $self->logger->debug("Processing $sub");
             last if ( $err = $self->$sub( $req, %args ) );
+            if ( $self->afterSub->{$sub} ) {
+                unshift @{ $req->steps }, @{ $self->afterSub->{$sub} };
+            }
         }
     }
     $self->logger->debug("Returned error: $err") if ($err);

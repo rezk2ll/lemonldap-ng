@@ -170,6 +170,18 @@ process
 
 =item C<beforeLogout>: method called before logout
 
+=item C<afterSub>: hash ref that give methods to call after given main method
+is called. Example:
+
+  use constant afterSub => {
+      getUser => 'mysub',
+  }
+  sub mysub {
+      my ( $self ,$req ) = @_;
+      # Do something
+      return PE_OK;
+  }
+
 =back
 
 B<Note>: methods inserted so must return a PE_* constant. See
