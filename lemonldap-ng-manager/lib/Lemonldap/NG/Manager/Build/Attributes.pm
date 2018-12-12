@@ -612,7 +612,13 @@ sub attributes {
             default => 300,
             type    => 'int',
             documentation =>
-              'Brute force attack protection -> Max age third failed login',
+              'Brute force attack protection -> Max age between last and first allowed failed login',
+        },
+        bruteForceProtectionMaxFailed => {
+            default => 3,
+            type    => 'int',
+            documentation =>
+              'Brute force attack protection -> Max allowed failed login',
         },
         grantSessionRules => {
             type          => 'grantContainer',
