@@ -24,7 +24,7 @@ my @notManagedAttributes = (
     'sfEngine', 'available2FSelfRegistration', 'available2F',
 
     # Brute force attack protection parameters
-    'bruteForceProtectionMaxAge', 'bruteForceProtectionTempo',
+    'bruteForceProtectionMaxAge', 'bruteForceProtectionTempo', 'bruteForceProtectionMaxFailed',
 
     # Metadatas (added by manager itself)
     'cfgAuthor', 'cfgAuthorIP', 'cfgNum', 'cfgDate', 'cfgLog', 'cfgVersion',

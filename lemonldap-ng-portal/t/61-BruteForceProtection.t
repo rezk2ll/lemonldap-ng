@@ -12,15 +12,15 @@ my $res;
 my $client = LLNG::Manager::Test->new(
     {
         ini => {
-            logLevel                  => 'error',
-            authentication            => 'Demo',
-            userDB                    => 'Same',
-            loginHistoryEnabled       => 1,
-            bruteForceProtection      => 1,
-            bruteForceProtectionTempo => 5,
+            logLevel                      => 'error',
+            authentication                => 'Demo',
+            userDB                        => 'Same',
+            loginHistoryEnabled           => 1,
+            bruteForceProtection          => 1,
+            bruteForceProtectionTempo     => 5,
             bruteForceProtectionMaxFailed => 4,
-            failedLoginNumber         => 6,
-            successLoginNumber        => 4,
+            failedLoginNumber             => 6,
+            successLoginNumber            => 4,
         }
     }
 );
