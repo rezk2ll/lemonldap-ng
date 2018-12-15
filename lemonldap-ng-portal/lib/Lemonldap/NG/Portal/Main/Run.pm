@@ -818,6 +818,8 @@ sub lmError {
     $self->controlUrl($req);
 
     my %templateParams = (
+        MAIN_LOGO  => $self->conf->{portalMainLogo},
+        LANGS      => $self->conf->{showLanguages},
         LOGOUT_URL => $self->conf->{portal} . "?logout=1",
         URL        => $req->{urldc},
     );
