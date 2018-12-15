@@ -307,7 +307,7 @@ llapp.controller 'TreeCtrl', [
 				type: 'cmbModule'
 				data:
 					type: 'LDAP'
-					for: 0
+					for: '0'
 					over: []
 			$scope.execFilters $scope._findScopeByKey 'authParams'
 
