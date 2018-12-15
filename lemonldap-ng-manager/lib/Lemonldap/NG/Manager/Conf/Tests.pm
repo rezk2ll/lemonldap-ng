@@ -418,6 +418,18 @@ sub tests {
             return 1;
         },
 
+        # Check Combination parameters
+        combinationParameters => sub {
+            return 1 unless ( $conf->{authentication} eq "Combination" );
+            return ( 0, "Combination rule must be defined" )
+                unless ( $conf->{combination} );
+            return ( 0, 'userDB must be set to "Same" to enable Combination' )
+                unless ( $conf->{userDB} eq "Same" );
+
+            # Return
+            return 1;
+        },
+
         # Warn if 2F dependencies seem missing
         sfaDependencies => sub {
 
@@ -594,17 +606,6 @@ sub tests {
             return 1;
         },
 
-        # Check Combination parameters
-        combinationAuthentication => sub {
-            return 1 unless ( $conf->{authentication} eq "Combination" );
-            return ( 0, "Combination chain must be defined" )
-                unless ( $conf->{combination} );
-            return ( 0, 'userDB must be set to "Same" to enable Combination' )
-                unless ( $conf->{userDB} eq "Same" );
-
-            # Return
-            return 1;
-        },
     };
 }
 
