@@ -599,7 +599,7 @@ sub tests {
             return 1 unless ( $conf->{authentication} eq "Combination" );
             return ( 0, "Combination chain must be defined" )
                 unless ( $conf->{combination} );
-            return ( 0, "userDB must be set to 'Same' to enable Combination" )
+            return ( 0, 'userDB must be set to "Same" to enable Combination' )
                 unless ( $conf->{userDB} eq "Same" );
 
             # Return
