@@ -155,7 +155,7 @@ sub _authAndTrace {
     }
     else {
         my %h = $req->{respHeaders} ? @{ $req->{respHeaders} } : ();
-        my $s = $type->tsv->{portal}->() . "lmerror/$res";
+        my $s = $type->tsv->{portal}->() . "/lmerror/$res";
         $s =
             '<html><head><title>Redirection</title></head><body>'
           . qq{<script type="text/javascript">window.location='$s'</script>}

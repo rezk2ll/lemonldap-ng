@@ -386,7 +386,7 @@ sub goToError {
         "Redirect $req->{env}->{REMOTE_ADDR} to lmError (url was $url)");
     $class->set_header_out( $req,
             'Location' => $class->tsv->{portal}->()
-          . "lmerror/$code"
+          . "/lmerror/$code"
           . "?url=$urlc_init" );
     return $class->REDIRECT;
 }
