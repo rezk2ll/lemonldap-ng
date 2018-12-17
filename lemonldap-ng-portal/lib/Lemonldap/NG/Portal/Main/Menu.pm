@@ -60,6 +60,8 @@ sub params {
     my ( $self, $req ) = @_;
     $self->{conf}->{imgPath} ||= $self->{staticPrefix};
     my %res;
+    my @defaultTabs = (qw/appslist password logout loginHistory oidcConsents/);
+    my @customTabs = split( /,\s*/, $self->{conf}->{customMenuTabs} );
 
     # Tab to display
     # Get the tab URL parameter
@@ -90,11 +92,18 @@ sub params {
 
     # else calculate modules to display
     else {
-        $res{DISPLAY_TAB} = (
-            grep /^(password|logout|loginHistory|oidcConsents)$/,
-            $req->param("tab") // ''
-          )[0]
-          || "applist";
+        my $tab = $req->param("tab");
+        if ( defined $tab
+            and grep ( /^$tab$/, ( @defaultTabs, @customTabs ) ) )
+        {
+            $self->logger->debug( "Select menu tab "
+                  . $req->param("tab")
+                  . "from GET parameter" );
+            $res{DISPLAY_TAB} = $req->param("tab");
+        }
+        else {
+            $res{DISPLAY_TAB} = "appslist";
+        }
     }
 
     $res{DISPLAY_MODULES} = $self->displayModules($req);
