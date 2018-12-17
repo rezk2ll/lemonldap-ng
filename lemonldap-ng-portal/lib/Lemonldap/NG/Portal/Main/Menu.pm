@@ -7,7 +7,7 @@ use utf8;
 use Mouse;
 use Clone 'clone';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.1';
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -90,8 +90,9 @@ sub params {
 
     # else calculate modules to display
     else {
-        $res{DISPLAY_TAB} = scalar( grep /^(password|logout|loginHistory)$/,
-            $req->param("tab") // '' )
+        $res{DISPLAY_TAB} =
+          ( grep /^(password|logout|loginHistory)$/, $req->param("tab") // '' )
+          [0]
           || "applist";
     }
 
