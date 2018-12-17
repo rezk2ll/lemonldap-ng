@@ -45,8 +45,8 @@ sub uri { $_[0]->{uri} }
 
 sub userData {
     my ( $self, $v ) = @_;
-    return $_[0]->{userData} = $v if ($v);
-    return $_[0]->{userData} || { _whatToTrace => $_[0]->user, };
+    return $self->{userData} = $v if ($v);
+    return $self->{userData} || { _whatToTrace => $self->{user}, };
 }
 
 sub respHeaders {

@@ -115,9 +115,12 @@ sub error_type {
 }
 
 sub init {
-    my ($self) = @_;
+    my ( $self, $conf ) = @_;
     $self->{$_} = {} foreach (qw(data customParameters sessionInfo pdata));
     $self->{$_} = [] foreach (qw(respCookies));
+    if ( my $tmp = $self->userData->{ $conf->{whatToTrace} } ) {
+        $self->user($tmp);
+    }
 }
 
 sub errorString {
