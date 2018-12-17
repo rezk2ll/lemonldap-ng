@@ -432,8 +432,6 @@ sub display {
     # Display form the first time
     if ((      $req->error == PE_REGISTERFORMEMPTY
             or $req->error == PE_REGISTERFIRSTACCESS
-
-            # or $req->error == PE_REGISTERALREADYEXISTS
             or $req->error == PE_CAPTCHAERROR
             or $req->error == PE_CAPTCHAEMPTY
             or $req->error == PE_NOTOKEN
