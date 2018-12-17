@@ -7,7 +7,7 @@ use utf8;
 use Mouse;
 use Clone 'clone';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.1';
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -60,6 +60,8 @@ sub params {
     my ( $self, $req ) = @_;
     $self->{conf}->{imgPath} ||= $self->{staticPrefix};
     my %res;
+    my @defaultTabs = (qw/appslist password logout loginHistory oidcConsents/);
+    my @customTabs = split( /,\s*/, $self->{conf}->{customMenuTabs} || '' );
 
     # Tab to display
     # Get the tab URL parameter
@@ -90,9 +92,18 @@ sub params {
 
     # else calculate modules to display
     else {
-        $res{DISPLAY_TAB} = scalar( grep /^(password|logout|loginHistory)$/,
-            $req->param("tab") // '' )
-          || "applist";
+        my $tab = $req->param("tab");
+        if ( defined $tab
+            and grep ( /^$tab$/, ( @defaultTabs, @customTabs ) ) )
+        {
+            $self->logger->debug( "Select menu tab "
+                  . $req->param("tab")
+                  . "from GET parameter" );
+            $res{DISPLAY_TAB} = $req->param("tab");
+        }
+        else {
+            $res{DISPLAY_TAB} = "appslist";
+        }
     }
 
     $res{DISPLAY_MODULES} = $self->displayModules($req);

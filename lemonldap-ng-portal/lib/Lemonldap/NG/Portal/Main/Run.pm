@@ -38,7 +38,7 @@ sub handler {
     my ( $self, $req ) = @_;
 
     bless $req, 'Lemonldap::NG::Portal::Main::Request';
-    $req->init();
+    $req->init( $self->conf );
     my $sp = 0;
 
     # Restore pdata

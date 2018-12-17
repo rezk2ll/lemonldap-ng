@@ -88,7 +88,7 @@ sub validateCaptcha {
         $self->logger->warn("Captcha token $token isn't valid");
         return 0;
     }
-    unless ( $s->{captcha} == $value ) {
+    unless ( $s->{captcha} eq $value ) {
         $self->logger->notice('Bad captcha response');
         return 0;
     }
