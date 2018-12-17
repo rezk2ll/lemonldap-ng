@@ -90,9 +90,10 @@ sub params {
 
     # else calculate modules to display
     else {
-        $res{DISPLAY_TAB} =
-          ( grep /^(password|logout|loginHistory)$/, $req->param("tab") // '' )
-          [0]
+        $res{DISPLAY_TAB} = (
+            grep /^(password|logout|loginHistory|oidcConsents)$/,
+            $req->param("tab") // ''
+          )[0]
           || "applist";
     }
 
