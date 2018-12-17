@@ -61,7 +61,7 @@ sub params {
     $self->{conf}->{imgPath} ||= $self->{staticPrefix};
     my %res;
     my @defaultTabs = (qw/appslist password logout loginHistory oidcConsents/);
-    my @customTabs = split( /,\s*/, $self->{conf}->{customMenuTabs} );
+    my @customTabs = split( /,\s*/, $self->{conf}->{customMenuTabs} || '' );
 
     # Tab to display
     # Get the tab URL parameter
