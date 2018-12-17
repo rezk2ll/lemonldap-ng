@@ -100,7 +100,10 @@ sub translate {
     my $langOver = from_json( $self->p->trOver, { allow_nonref => 1 } );
 
     if ($langOver) {
-        for my $k ( keys %{ $langOver->{$lang_code} } ) {
+        for my $k ( keys %{ $langOver->{all} || {} } ) {
+            $lang->{$k} = $langOver->{$lang_code}->{$k};
+        }
+        for my $k ( keys %{ $langOver->{$lang_code} || {} } ) {
             $lang->{$k} = $langOver->{$lang_code}->{$k};
         }
     }
@@ -181,7 +184,7 @@ sub send_mail {
             foreach ( keys %cid ) {
                 $message->attach(
                     Type => "image/" . ( $cid{$_} =~ m/\.(\w+)/ )[0],
-                    Id => $_,
+                    Id   => $_,
                     Path => $self->p->{templateDir} . "/" . $cid{$_},
                 );
             }
