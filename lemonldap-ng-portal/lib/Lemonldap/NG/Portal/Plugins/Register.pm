@@ -220,7 +220,7 @@ sub _register {
     $req->user( $req->data->{registerInfo}->{mail} );
     if ( $self->p->_userDB->getUser( $req, useMail => 1 ) == PE_OK ) {
         $self->userLogger->error(
-"Register: refuse mail $req->{mail} because already exists in UserDB"
+"Register: refuse mail $req->{data}->{registerInfo}->{mail} because already exists in UserDB"
         );
         return PE_REGISTERALREADYEXISTS;
     }
@@ -442,7 +442,7 @@ sub display {
         )
         and !$req->param('mail_token')
       )
-    {
+    {   $self->logger->debug('Display form for the firt time');
         %templateParams = (
             %templateParams,
             DISPLAY_FORM            => 1,
