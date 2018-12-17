@@ -400,7 +400,7 @@ sub _register {
 sub display {
     my ( $self, $req ) = @_;
     my %templateParams = (
-        SKIN_PATH       => '/static',
+        SKIN_PATH       => $self->conf->{staticPrefix},
         SKIN            => $self->p->getSkin($req),
         SKIN_BG         => $self->conf->{portalSkinBackground},
         MAIN_LOGO       => $self->conf->{portalMainLogo},
