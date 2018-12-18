@@ -191,7 +191,7 @@ sub _reset {
     );
     if ( my $error = $self->p->process( $req, useMail => $searchByMail ) ) {
         if ( $error == PE_USERNOTFOUND or $error == PE_BADCREDENTIALS ) {
-            $self->userLogger->warn( "Reset asked for a unvalid user ("
+            $self->userLogger->warn( "Reset asked for an unvalid user ("
                   . $req->param('mail')
                   . ")" );
 
@@ -283,7 +283,7 @@ sub _reset {
         $req->data->{startMailTime} =
           strftime( "%H:%M", localtime $startTimestamp );
 
-        # Ask if user want another confirmation email
+        # Ask if user wants an another confirmation email
         if ( $req->data->{mailAlreadySent}
             and !$req->param('resendconfirmation') )
         {
