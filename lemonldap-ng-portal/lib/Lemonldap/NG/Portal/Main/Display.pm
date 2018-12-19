@@ -418,11 +418,7 @@ sub display {
     }
 
     # Additional $req param
-    %templateParams = (
-        %templateParams,
-        TROVER => $self->trOver,
-        %{ $req->{customParameters} // {} },
-    );
+    %templateParams = ( %templateParams, %{ $req->{customParameters} // {} }, );
 
     for my $session_key ( keys %{ $req->{sessionInfo} } ) {
         $templateParams{ "session_" . $session_key } =

@@ -729,6 +729,7 @@ sub _dump {
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
+    $args{params}->{TROVER} = $self->trOver;
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
       'X-XSS-Protection'       => '1; mode=block',
