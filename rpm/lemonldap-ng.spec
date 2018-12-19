@@ -125,6 +125,10 @@ BuildRequires:  perl(IO::Select)
 BuildRequires:  perl(IO::Socket::INET)
 BuildRequires:  perl(IO::String)
 BuildRequires:  perl(JSON)
+%if 0%{?fedora} >= 29
+BuildRequires:  perl(Lasso)
+BuildRequires:  perl(Glib)
+%endif
 BuildRequires:  perl(Log::Log4perl)
 BuildRequires:  perl(LWP::Protocol::https)
 BuildRequires:  perl(LWP::UserAgent)
@@ -199,7 +203,9 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 
 %if 0%{?fedora}
 %{?perl_default_filter}
+%if 0%{?fedora} < 29
 %global __requires_exclude perl\\(lasso
+%endif
 %endif
 
 %description
