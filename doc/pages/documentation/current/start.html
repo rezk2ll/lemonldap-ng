@@ -435,10 +435,7 @@
 
 <h4 id="attacks_and_protection">Attacks and Protection</h4>
 <div class="level4">
-<div class="notetip"><ul>
-<li class="level1"><div class="li"> To learn or find out more about security, go to <a href="security.html" class="wikilink1" title="documentation:2.0:security">Security</a> documentation</div>
-</li>
-</ul>
+<div class="notetip">To learn or find out more about security, go to <a href="security.html" class="wikilink1" title="documentation:2.0:security">Security</a> documentation
 
 </div>
 <p>
@@ -480,7 +477,7 @@
 		<td class="col0"> <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">XSS</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign">    </td>
 	</tr>
 </table></div>
-<!-- EDIT12 TABLE [5913-6427] -->
+<!-- EDIT12 TABLE [5908-6422] -->
 <p>
 </div></div>
 </p>
@@ -538,7 +535,7 @@
 		<td class="col0"> <a href="restservices.html" class="wikilink1" title="documentation:2.0:restservices">REST services</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1"> REST server for <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">Proxy</a> </td>
 	</tr>
 	<tr class="row13 rowodd">
-		<td class="col0"> <a href="soapservices.html" class="wikilink1" title="documentation:2.0:soapservices">SOAP services</a> </td><td class="col1"> SOAP server for <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">Proxy</a> </td>
+		<td class="col0"> <a href="soapservices.html" class="wikilink1" title="documentation:2.0:soapservices">SOAP services</a> <em>(deprecated)</em> </td><td class="col1"> SOAP server for <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">Proxy</a> </td>
 	</tr>
 	<tr class="row14 roweven">
 		<td class="col0"> <a href="status.html" class="wikilink1" title="documentation:2.0:status">Portal Status</a> </td><td class="col1"> Experimental portal status page </td>
@@ -550,13 +547,13 @@
 		<td class="col0"> Upgrade session <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Plugin that explain to user that a more secure authentication is needed instead of rejected it </td>
 	</tr>
 </table></div>
-<!-- EDIT13 TABLE [6595-7808] -->
+<!-- EDIT13 TABLE [6590-7820] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT9 SECTION "Portal" [2025-7836] -->
+<!-- EDIT9 SECTION "Portal" [2025-7848] -->
 <h3 class="sectionedit14" id="handlers">Handlers</h3>
 <div class="level3">
 
@@ -600,7 +597,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 		<td class="col0"> <a href="applications/zimbra.html" class="wikilink1" title="documentation:2.0:applications:zimbra">Zimbra PreAuth</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 </table></div>
-<!-- EDIT15 TABLE [8111-9289] -->
+<!-- EDIT15 TABLE [8123-9301] -->
 <p>
 <em>(*): <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Node.js handler</a> has not yet reached the same level of functionalities.</em>
 </p>
@@ -610,7 +607,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Handlers" [7837-9414] -->
+<!-- EDIT14 SECTION "Handlers" [7849-9426] -->
 <h3 class="sectionedit16" id="llng_databases">LLNG databases</h3>
 <div class="level3">
 
@@ -635,7 +632,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  <a href="fileconfbackend.html" class="wikilink1" title="documentation:2.0:fileconfbackend">File (JSON)</a>  </td><td class="col1"> </td><td class="col2 leftalign">Not shareable between servers except if used in conjunction with <a href="soapconfbackend.html" class="wikilink1" title="documentation:2.0:soapconfbackend">SOAP</a> or with a shared file system (NFS,…). Selected by default during installation.  </td>
+		<td class="col0 centeralign">  <a href="fileconfbackend.html" class="wikilink1" title="documentation:2.0:fileconfbackend">File (JSON)</a>  </td><td class="col1"> </td><td class="col2 leftalign">Not shareable between servers except if used in conjunction with <a href="restconfbackend.html" class="wikilink1" title="documentation:2.0:restconfbackend">REST</a> or with a shared file system (NFS,…). Selected by default during installation.  </td>
 	</tr>
 	<tr class="row2 roweven">
 		<td class="col0 centeralign">  <a href="yamlconfbackend.html" class="wikilink1" title="documentation:2.0:yamlconfbackend">YAML</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a>  </td><td class="col1"> </td><td class="col2 leftalign">Same as <a href="fileconfbackend.html" class="wikilink1" title="documentation:2.0:fileconfbackend">File</a> but in YAML format instead of JSON  </td>
@@ -650,7 +647,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 		<td class="col0 centeralign">  <a href="mongodbconfbackend.html" class="wikilink1" title="documentation:2.0:mongodbconfbackend">MongoDB</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0 centeralign">  <a href="soapconfbackend.html" class="wikilink1" title="documentation:2.0:soapconfbackend">SOAP</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign"> Proxy backend to be used in conjunction with another configuration backend. <br/><strong>Can be used to secure another backend</strong> for remote servers.  </td>
+		<td class="col0 centeralign">  <a href="soapconfbackend.html" class="wikilink1" title="documentation:2.0:soapconfbackend">SOAP</a> <em>(deprecated)</em>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign"> Proxy backend to be used in conjunction with another configuration backend. <br/><strong>Can be used to secure another backend</strong> for remote servers.  </td>
 	</tr>
 	<tr class="row7 rowodd">
 		<td class="col0 centeralign">  <a href="restconfbackend.html" class="wikilink1" title="documentation:2.0:restconfbackend">REST</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign"> Proxy backend to be used in conjunction with another configuration backend. <br/><strong>Can be used to secure another backend</strong> for remote servers.  </td>
@@ -659,7 +656,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 		<td class="col0 centeralign">  <a href="localconfbackend.html" class="wikilink1" title="documentation:2.0:localconfbackend">Local</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a>  </td><td class="col1 leftalign">  </td><td class="col2 leftalign"> Use only lemonldap-ng.ini parameters.  </td>
 	</tr>
 </table></div>
-<!-- EDIT17 TABLE [9719-10805] --><div class="notetip">You can not start with an empty configuration, so read <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
+<!-- EDIT17 TABLE [9731-10834] --><div class="notetip">You can not start with an empty configuration, so read <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
 </div>
 <p>
 </div></div>
@@ -688,7 +685,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  <a href="filesessionbackend.html" class="wikilink1" title="documentation:2.0:filesessionbackend">File</a>  </td><td class="col1"> </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">   ✔  </td><td class="col5 leftalign">Not shareable between servers except if used in conjunction with <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP session backend</a> or with a shared file system (NFS,…). Selected by default during installation.  </td>
+		<td class="col0 centeralign">  <a href="filesessionbackend.html" class="wikilink1" title="documentation:2.0:filesessionbackend">File</a>  </td><td class="col1"> </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">   ✔  </td><td class="col5 leftalign">Not shareable between servers except if used in conjunction with <a href="restsessionbackend.html" class="wikilink1" title="documentation:2.0:restsessionbackend">REST session backend</a> or with a shared file system (NFS,…). Selected by default during installation.  </td>
 	</tr>
 	<tr class="row2 roweven">
 		<td class="col0 centeralign">  <a href="sqlsessionbackend.html" class="wikilink1" title="documentation:2.0:sqlsessionbackend">SQL</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 leftalign" rowspan="2"> Unoptimized for <a href="documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">session explorer</a> and <a href="documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">single session</a> features.  </td>
@@ -710,17 +707,17 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 <strong>Can be used to secure another backend</strong> for remote servers.  </td>
 	</tr>
 	<tr class="row8 roweven">
-		<td class="col0 centeralign">  <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 leftalign"> Proxy backend to be used in conjunction with another session backend. <br/>
+		<td class="col0 centeralign">  <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP</a> <em>(deprecated)</em>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 leftalign"> Proxy backend to be used in conjunction with another session backend. <br/>
 <strong>Can be used to secure another backend</strong> for remote servers.  </td>
 	</tr>
 </table></div>
-<!-- EDIT18 TABLE [11670-13350] -->
+<!-- EDIT18 TABLE [11699-13396] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT16 SECTION "LLNG databases" [9415-13378] -->
+<!-- EDIT16 SECTION "LLNG databases" [9427-13424] -->
 <h2 class="sectionedit19" id="applications_protection">Applications protection</h2>
 <div class="level2">
 
@@ -749,7 +746,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Applications protection" [13379-13869] -->
+<!-- EDIT19 SECTION "Applications protection" [13425-13915] -->
 <h3 class="sectionedit20" id="well_known_compatible_applications">Well known compatible applications</h3>
 <div class="level3">
 <div class="noteclassic">Here is a list of well known applications that are compatible with <abbr title="LemonLDAP::NG">LL::NG</abbr>. A full list is available on <a href="applications.html" class="wikilink1" title="documentation:2.0:applications">vendor applications page</a>.
@@ -847,7 +844,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT20 SECTION "Well known compatible applications" [13870-16083] -->
+<!-- EDIT20 SECTION "Well known compatible applications" [13916-16129] -->
 <h2 class="sectionedit21" id="advanced_features">Advanced features</h2>
 <div class="level2">
 
@@ -904,7 +901,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT21 SECTION "Advanced features" [16084-17266] -->
+<!-- EDIT21 SECTION "Advanced features" [16130-17312] -->
 <h2 class="sectionedit22" id="mini_howtos">Mini howtos</h2>
 <div class="level2">
 
@@ -922,7 +919,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </li>
 <li class="level1"><div class="li"> <a href="ldapminihowto.html" class="wikilink1" title="documentation:2.0:ldapminihowto">Configuration and sessions in LDAP</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="restminihowto.html" class="wikilink1" title="documentation:2.0:restminihowto">Configuration and sessions access by REST</a> <em>(or <a href="soapminihowto.html" class="wikilink1" title="documentation:2.0:soapminihowto">SOAP</a>)</em></div>
+<li class="level1"><div class="li"> <a href="restminihowto.html" class="wikilink1" title="documentation:2.0:restminihowto">Configuration and sessions access by REST</a></div>
 </li>
 <li class="level1"><div class="li"> <a href="activedirectoryminihowto.html" class="wikilink1" title="documentation:2.0:activedirectoryminihowto">Integration in Active Directory (LDAP and Kerberos)</a></div>
 </li>
@@ -930,7 +927,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </li>
 <li class="level1"><div class="li"> <a href="header_remote_user_conversion.html" class="wikilink1" title="documentation:2.0:header_remote_user_conversion">Convert HTTP header into environment variable</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="renater.html" class="wikilink1" title="documentation:2.0:renater">Connect to Renater Federation</a></div>
+<li class="level1"><div class="li"> <a href="renater.html" class="wikilink1" title="documentation:2.0:renater">Connect to Renater Federation</a> <a href="new.png" class="media" title="documentation:2.0:new.png"><img src="new.edf565b3f89a0ad56df9a5e7a31a6de8.png" class="media" alt="" width="35" /></a></div>
 </li>
 </ul>
 
@@ -939,7 +936,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT22 SECTION "Mini howtos" [17267-18086] -->
+<!-- EDIT22 SECTION "Mini howtos" [17313-18123] -->
 <h2 class="sectionedit23" id="exploitation">Exploitation</h2>
 <div class="level2">
 
@@ -974,7 +971,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT23 SECTION "Exploitation" [18087-18601] -->
+<!-- EDIT23 SECTION "Exploitation" [18124-18638] -->
 <h2 class="sectionedit24" id="bug_report">Bug report</h2>
 <div class="level2">
 
@@ -983,7 +980,7 @@ See <a href="bugreport.html" class="wikilink1" title="bugreport">How to report a
 </p>
 
 </div>
-<!-- EDIT24 SECTION "Bug report" [18602-18666] -->
+<!-- EDIT24 SECTION "Bug report" [18639-18703] -->
 <h2 class="sectionedit25" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -1042,6 +1039,6 @@ If you don&#039;t want to publish your translation <em>(<code>XX</code> must be 
 </ul>
 
 </div>
-<!-- EDIT25 SECTION "Developer corner" [18667-] --></div>
+<!-- EDIT25 SECTION "Developer corner" [18704-] --></div>
 </body>
 </html>

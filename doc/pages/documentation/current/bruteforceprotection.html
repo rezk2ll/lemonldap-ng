@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:bruteforceprotection</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,bruteforceprotection"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="bruteforceprotection.html"/>
@@ -52,7 +52,7 @@ bruteForceProtection plugin prevents brute force attack. Plugin DISABLED by defa
 </p>
 
 <p>
-After three failed login attempts, user must wait (30 seconds by default) before try to log in again.
+After some failed login attempts, user must wait (30 seconds by default) before try to log in again.
 </p>
 
 <p>
@@ -60,7 +60,7 @@ The aim of a brute force attack is to gain access to user accounts by repeatedly
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Brute Force Protection Addon" [1-456] -->
+<!-- EDIT1 SECTION "Brute Force Protection Addon" [1-455] -->
 <h2 class="sectionedit2" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -73,13 +73,14 @@ Go in Manager, <code>General Parameters</code> » <code>Advanced Parameters</cod
 </p>
 
 <p>
-To modify waiting time (30 seconds by default) before reAuthentication and MaxAge between current and last stored failed login (300 seconds by default) edit <code>lemonldap-ng.ini</code> in section [portal]:
+To modify waiting time (30 seconds by default) before reAuthentication, MaxAge between current and last stored failed login (300 seconds by default) or number of allowed failed login attempts (3 by default) edit <code>lemonldap-ng.ini</code> in section [portal]:
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
 <span class="re1">bruteForceProtectionTempo</span> <span class="sy0">=</span><span class="re2"> 30</span>
-<span class="re1">bruteForceProtectionMaxAge</span> <span class="sy0">=</span><span class="re2"> 300</span></pre>
+<span class="re1">bruteForceProtectionMaxAge</span> <span class="sy0">=</span><span class="re2"> 300</span>
+<span class="re1">bruteForceProtectionMaxFailed</span> <span class="sy0">=</span><span class="re2"> 3</span></pre>
 
 </div>
-<!-- EDIT2 SECTION "Configuration" [457-] --></div>
+<!-- EDIT2 SECTION "Configuration" [456-] --></div>
 </body>
 </html>

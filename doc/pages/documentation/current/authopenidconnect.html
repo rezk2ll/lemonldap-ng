@@ -155,6 +155,16 @@ In <code>General Parameters</code> &gt; <code>Authentication modules</code>, set
 </li>
 </ul>
 <div class="notetip">As passwords will not be managed by <abbr title="LemonLDAP::NG">LL::NG</abbr>, you can disable <a href="portalmenu.html#menu_modules" class="wikilink1" title="documentation:2.0:portalmenu">menu password module</a>.
+</div><div class="noteimportant">Browser implementations of formAction directive are inconsistent (e.g. Firefox doesn&#039;t block the redirects whereas Chrome does).
+Administrators may have to modify formAction value with wildcard likes *.
+<p>
+In Manager, go in : 
+</p>
+
+<p>
+<code>General Parameters</code> &gt; <code>Advanced Parameters</code> &gt; <code>Security</code> &gt; <code>Content Security Policy</code> &gt; <code>Form destination</code>
+</p>
+
 </div>
 <p>
 Then in <code>General Parameters</code> &gt; <code>Authentication modules</code> &gt; <code>OpenID Connect parameters</code>, you can set:
@@ -169,7 +179,7 @@ Then in <code>General Parameters</code> &gt; <code>Authentication modules</code>
 </ul>
 
 </div>
-<!-- EDIT7 SECTION "Authentication and UserDB" [1547-2338] -->
+<!-- EDIT7 SECTION "Authentication and UserDB" [1547-2707] -->
 <h3 class="sectionedit8" id="register_llng_to_an_openid_connect_provider">Register LL::NG to an OpenID Connect Provider</h3>
 <div class="level3">
 
@@ -195,7 +205,7 @@ After registration, the OP must give you a client ID and a client secret, that w
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Register LL::NG to an OpenID Connect Provider" [2339-3053] -->
+<!-- EDIT8 SECTION "Register LL::NG to an OpenID Connect Provider" [2708-3422] -->
 <h3 class="sectionedit9" id="declare_the_openid_connect_provider_in_llng">Declare the OpenID Connect Provider in LL::NG</h3>
 <div class="level3">
 
@@ -428,6 +438,6 @@ So you can define for example:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "Declare the OpenID Connect Provider in LL::NG" [3054-] --></div>
+<!-- EDIT9 SECTION "Declare the OpenID Connect Provider in LL::NG" [3423-] --></div>
 </body>
 </html>

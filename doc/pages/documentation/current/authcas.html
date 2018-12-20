@@ -89,6 +89,16 @@ They can then be forwarded to applications trough <a href="writingrulesand_heade
 In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose <abbr title="Central Authentication Service">CAS</abbr> for authentication.
 </p>
 <div class="notetip">You can then choose any other module for users and password.
+</div><div class="noteimportant">Browser implementations of formAction directive are inconsistent (e.g. Firefox doesn&#039;t block the redirects whereas Chrome does).
+Administrators may have to modify formAction value with wildcard likes *.
+<p>
+In Manager, go in : 
+</p>
+
+<p>
+<code>General Parameters</code> &gt; <code>Advanced Parameters</code> &gt; <code>Security</code> &gt; <code>Content Security Policy</code> &gt; <code>Form destination</code>
+</p>
+
 </div>
 <p>
 Then, go in <code><abbr title="Central Authentication Service">CAS</abbr> parameters</code>:

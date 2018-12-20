@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:status</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,status"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="status.html"/>
@@ -187,7 +187,12 @@ By default Apache handler status process listen to <code>localhost:64321</code> 
 </p>
 <pre class="code apache">  &lt;<span class="kw3">Files</span> *.fcgi&gt;
     <span class="kw1">SetHandler</span> fcgid-<span class="kw1">script</span>
-    <span class="co1">#CGIPassAuth on</span>
+    <span class="co1"># For Authorization header to be passed, please uncomment one of the following:</span>
+    <span class="co1"># for Apache &gt;= 2.4.13</span>
+    <span class="co1">#CGIPassAuth On</span>
+    <span class="co1"># for Apache &lt; 2.4.13</span>
+    <span class="co1">#RewriteCond %{HTTP:Authorization} ^(.*)</span>
+    <span class="co1">#RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]</span>
     <span class="kw1">Options</span> +ExecCGI
     <span class="kw1">header</span> unset Lm-Remote-<span class="kw1">User</span>
   &lt;/<span class="kw3">Files</span>&gt;
@@ -211,7 +216,7 @@ Then restart webserver.
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Configuration" [1127-2799] -->
+<!-- EDIT6 SECTION "Configuration" [1127-3029] -->
 <h3 class="sectionedit7" id="advanced">Advanced</h3>
 <div class="level3">
 <ol>
@@ -222,6 +227,6 @@ Then restart webserver.
 </ol>
 
 </div>
-<!-- EDIT7 SECTION "Advanced" [2800-] --></div>
+<!-- EDIT7 SECTION "Advanced" [3030-] --></div>
 </body>
 </html>

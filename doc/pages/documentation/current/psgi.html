@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:psgi</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,psgi"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="psgi.html"/>
@@ -182,10 +182,10 @@ There are also some other psgi files in examples directory.
 		<td class="col0 centeralign">  -e  </td><td class="col1 centeralign">  –engine  </td><td class="col2 centeralign">  ENGINE  </td><td class="col3"> Plack::Handler engine, default to FCGI <em>(see below)</em> </td>
 	</tr>
 	<tr class="row10 roweven">
-		<td class="col0 leftalign">  </td><td class="col1 centeralign">  –plackOptions  </td><td class="col2 leftalign">  </td><td class="col3"> Other options to path to Plack. Can bu multi-valued. Values must look like <code>key=value</code> </td>
+		<td class="col0 leftalign">  </td><td class="col1 centeralign">  –plackOptions  </td><td class="col2 leftalign">  </td><td class="col3"> Other options to path to Plack. Can bu multi-valued. Values must look like <code>–key=value</code> </td>
 	</tr>
 </table></div>
-<!-- EDIT4 TABLE [2210-2981] -->
+<!-- EDIT4 TABLE [2210-2983] -->
 <p>
 See <code>llng-fastcgi-server(1)</code> manpage.
 </p>
@@ -199,7 +199,7 @@ See <code>llng-fastcgi-server(1)</code> manpage.
 FCGI with FCGI::ProcManager::Constrained
 </p>
 <pre class="code shell">llng-fastcgi-server -u nobody -g nobody -s /run/llng.sock -n 10 -e FCGI \
-                    --plackOptions manager=FCGI::ProcManager::Constrained</pre>
+                    --plackOptions=--manager=FCGI::ProcManager::Constrained</pre>
 
 <p>
 FCGI::Engine::ProcManager
@@ -208,7 +208,7 @@ FCGI::Engine::ProcManager
                     -e FCGI::Engine::ProcManager</pre>
 
 </div>
-<!-- EDIT3 SECTION "LLNG FastCGI Server" [2111-3420] -->
+<!-- EDIT3 SECTION "LLNG FastCGI Server" [2111-3424] -->
 <h3 class="sectionedit5" id="using_uwsgi">Using uWSGI</h3>
 <div class="level3">
 
@@ -239,7 +239,7 @@ Then adapt your Nginx configuration to use this uWSGI app.
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Using uWSGI" [3421-4278] -->
+<!-- EDIT5 SECTION "Using uWSGI" [3425-4282] -->
 <h2 class="sectionedit6" id="protect_a_psgi_application">Protect a PSGI application</h2>
 <div class="level2">
 
@@ -283,6 +283,6 @@ builder <span class="br0">&#123;</span>
 </dd></dl>
 
 </div>
-<!-- EDIT6 SECTION "Protect a PSGI application" [4279-] --></div>
+<!-- EDIT6 SECTION "Protect a PSGI application" [4283-] --></div>
 </body>
 </html>

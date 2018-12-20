@@ -110,7 +110,10 @@ location /index.psgi/config {
 Change configuration in lemonldap-ng.ini :
 </p>
 <pre class="code file ini"><span class="re1">type</span>         <span class="sy0">=</span><span class="re2"> REST</span>
-<span class="re1">baseUrl</span>      <span class="sy0">=</span><span class="re2"> https://auth.example.com/index.fcgi/config</span></pre>
+<span class="co0">; Apache</span>
+<span class="re1">baseUrl</span>      <span class="sy0">=</span><span class="re2"> https://auth.example.com/index.fcgi/config</span>
+<span class="co0">; Nginx</span>
+<span class="re1">baseUrl</span>      <span class="sy0">=</span><span class="re2"> https://auth.example.com/index.psgi/config</span></pre>
 
 <p>
 You can also add some other parameters

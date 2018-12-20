@@ -111,9 +111,19 @@ For each IDP, you can configure attributes that are collected. Some can be manda
 <p>
 See <a href="samlservice.html" class="wikilink1" title="documentation:2.0:samlservice">SAML service</a> configuration chapter.
 </p>
+<div class="noteimportant">Browser implementations of formAction directive are inconsistent (e.g. Firefox doesn&#039;t block the redirects whereas Chrome does).
+Administrators may have to modify formAction value with wildcard likes *.
+<p>
+In Manager, go in : 
+</p>
+
+<p>
+<code>General Parameters</code> &gt; <code>Advanced Parameters</code> &gt; <code>Security</code> &gt; <code>Content Security Policy</code> &gt; <code>Form destination</code>
+</p>
 
 </div>
-<!-- EDIT5 SECTION "SAML Service" [721-801] -->
+</div>
+<!-- EDIT5 SECTION "SAML Service" [721-1170] -->
 <h3 class="sectionedit6" id="authentication_and_userdb">Authentication and UserDB</h3>
 <div class="level3">
 
@@ -129,7 +139,7 @@ In <code>General Parameters</code> &gt; <code>Authentication modules</code>, set
 <div class="notetip">As passwords will not be managed by <abbr title="LemonLDAP::NG">LL::NG</abbr>, you can disable <a href="portalmenu.html#menu_modules" class="wikilink1" title="documentation:2.0:portalmenu">menu password module</a>.
 </div>
 </div>
-<!-- EDIT6 SECTION "Authentication and UserDB" [802-1085] -->
+<!-- EDIT6 SECTION "Authentication and UserDB" [1171-1454] -->
 <h3 class="sectionedit7" id="register_lemonldapng_on_partner_identity_provider">Register LemonLDAP::NG on partner Identity Provider</h3>
 <div class="level3">
 
@@ -142,7 +152,7 @@ They are available at the EntityID <abbr title="Uniform Resource Locator">URL</a
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Register LemonLDAP::NG on partner Identity Provider" [1086-1332] -->
+<!-- EDIT7 SECTION "Register LemonLDAP::NG on partner Identity Provider" [1455-1701] -->
 <h3 class="sectionedit8" id="register_partner_identity_provider_on_lemonldapng">Register partner Identity Provider on LemonLDAP::NG</h3>
 <div class="level3">
 
@@ -289,6 +299,6 @@ These options override service signature options (see <a href="samlservice.html#
 </ul>
 
 </div>
-<!-- EDIT8 SECTION "Register partner Identity Provider on LemonLDAP::NG" [1333-] --></div>
+<!-- EDIT8 SECTION "Register partner Identity Provider on LemonLDAP::NG" [1702-] --></div>
 </body>
 </html>

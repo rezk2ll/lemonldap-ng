@@ -115,6 +115,16 @@ If you use Facebook as user database, declare values in exported variables:
 </li>
 </ul>
 <div class="noteimportant">Do not query user field in exported variables, as it is already registered by the authentication module in <code>$_user</code>.
+</div><div class="noteimportant">Browser implementations of formAction directive are inconsistent (e.g. Firefox doesn&#039;t block the redirects whereas Chrome does).
+Administrators may have to modify formAction value with wildcard likes *.
+<p>
+In Manager, go in : 
+</p>
+
+<p>
+<code>General Parameters</code> &gt; <code>Advanced Parameters</code> &gt; <code>Security</code> &gt; <code>Content Security Policy</code> &gt; <code>Form destination</code>
+</p>
+
 </div><div class="notetip">You can use the same Facebook access token in your applications. It is stored in session datas under the name <code>$_facebookToken</code>
 </div>
 </div>

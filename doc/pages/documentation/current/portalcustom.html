@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:portalcustom</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,portalcustom"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="portalcustom.html"/>
@@ -58,6 +58,7 @@
 <li class="level2"><div class="li"><a href="#skin_files">Skin files</a></div></li>
 <li class="level2"><div class="li"><a href="#skin_customization">Skin customization</a></div></li>
 <li class="level2"><div class="li"><a href="#messages">Messages</a></div></li>
+<li class="level2"><div class="li"><a href="#menu_tabs">Menu tabs</a></div></li>
 <li class="level2"><div class="li"><a href="#template_parameters">Template parameters</a></div></li>
 <li class="level1"><div class="li"><a href="#buttons">Buttons</a></div></li>
 <li class="level1"><div class="li"><a href="#password_management">Password management</a></div></li>
@@ -282,8 +283,24 @@ Messages are defined in source code. If they really do not please you, override 
 
 </div>
 </div>
-<!-- EDIT10 SECTION "Messages" [4400-5041] -->
-<h3 class="sectionedit11" id="template_parameters">Template parameters</h3>
+<!-- EDIT10 SECTION "Messages" [4400-5042] -->
+<h3 class="sectionedit11" id="menu_tabs">Menu tabs</h3>
+<div class="level3">
+
+<p>
+If you modify the menu template to add some tabs, you should add the new tabs in `customMenuTabs` parameter in lemonldap-ng.ini:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+&nbsp;
+<span class="re1">customMenuTabs</span> <span class="sy0">=</span><span class="re2"> test, test2</span></pre>
+
+<p>
+This will one allow to display the tab directly with this <abbr title="Uniform Resource Locator">URL</abbr>: <a href="http://auth.example.com/?tab=test" class="urlextern" title="http://auth.example.com/?tab=test"  rel="nofollow">http://auth.example.com/?tab=test</a>
+</p>
+
+</div>
+<!-- EDIT11 SECTION "Menu tabs" [5043-5349] -->
+<h3 class="sectionedit12" id="template_parameters">Template parameters</h3>
 <div class="level3">
 
 <p>
@@ -305,8 +322,8 @@ All session variables are also available in templates, with the prefix “sessio
 <pre class="code file html4strict">Hello <span class="sc2">&lt;TMPL_VAR <span class="kw3">NAME</span><span class="sy0">=</span><span class="st0">&quot;session_cn&quot;</span>&gt;</span>!</pre>
 
 </div>
-<!-- EDIT11 SECTION "Template parameters" [5042-5552] -->
-<h2 class="sectionedit12" id="buttons">Buttons</h2>
+<!-- EDIT12 SECTION "Template parameters" [5350-5861] -->
+<h2 class="sectionedit13" id="buttons">Buttons</h2>
 <div class="level2">
 
 <p>
@@ -322,8 +339,8 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT12 SECTION "Buttons" [5553-6069] -->
-<h2 class="sectionedit13" id="password_management">Password management</h2>
+<!-- EDIT13 SECTION "Buttons" [5862-6378] -->
+<h2 class="sectionedit14" id="password_management">Password management</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>Require old password</strong>: used only in the password changing module of the menu, will check the old password before updating it</div>
@@ -335,8 +352,8 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT13 SECTION "Password management" [6070-6520] -->
-<h2 class="sectionedit14" id="other_parameters">Other parameters</h2>
+<!-- EDIT14 SECTION "Password management" [6379-6829] -->
+<h2 class="sectionedit15" id="other_parameters">Other parameters</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>User attribute</strong>: which session attribute will be used to display <code>Connected as</code> in the menu</div>
@@ -354,6 +371,6 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT14 SECTION "Other parameters" [6521-] --></div>
+<!-- EDIT15 SECTION "Other parameters" [6830-] --></div>
 </body>
 </html>

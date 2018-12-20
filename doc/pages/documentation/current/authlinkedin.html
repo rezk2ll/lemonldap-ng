@@ -97,6 +97,16 @@ Then, go in <code>LinkedIn parameters</code>:
 </li>
 </ul>
 <div class="notetip">Collected fields are stored in session in <code>linkedIn_</code> keys
+</div><div class="noteimportant">Browser implementations of formAction directive are inconsistent (e.g. Firefox doesn&#039;t block the redirects whereas Chrome does).
+Administrators may have to modify formAction value with wildcard likes *.
+<p>
+In Manager, go in : 
+</p>
+
+<p>
+<code>General Parameters</code> &gt; <code>Advanced Parameters</code> &gt; <code>Security</code> &gt; <code>Content Security Policy</code> &gt; <code>Form destination</code>
+</p>
+
 </div>
 </div>
 <!-- EDIT4 SECTION "Configuration" [527-] --></div>
