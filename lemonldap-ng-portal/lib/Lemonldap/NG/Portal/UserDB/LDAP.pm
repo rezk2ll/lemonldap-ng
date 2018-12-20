@@ -2,12 +2,13 @@ package Lemonldap::NG::Portal::UserDB::LDAP;
 
 use strict;
 use Mouse;
+use utf8;
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_LDAPCONNECTFAILED PE_LDAPERROR PE_BADCREDENTIALS);
 
 extends 'Lemonldap::NG::Portal::Lib::LDAP';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.1';
 
 has ldapGroupAttributeNameSearch => (
     is      => 'rw',
@@ -100,6 +101,7 @@ sub setGroups {
         my $group_value = $self->ldap->getLdapValue( $req->data->{entry},
             $self->conf->{ldapGroupAttributeNameUser} );
 
+        utf8::downgrade($group_value);
         $self->logger->debug( "Searching LDAP groups in "
               . $self->conf->{ldapGroupBase}
               . " for $group_value" );
