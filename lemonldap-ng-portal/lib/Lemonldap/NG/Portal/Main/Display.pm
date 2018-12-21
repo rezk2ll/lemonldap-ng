@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.1';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
