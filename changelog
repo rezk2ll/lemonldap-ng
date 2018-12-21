@@ -1,3 +1,31 @@
+lemonldap-ng (2.0.1) artful; urgency=medium
+
+  * Bugs:
+    * #1564: Function authLogout is missing in package "Lemonldap::NG::Portal::Auth::SSL"
+    * #1572: Error when saving in manager (mongoDB as ConfigurationBackend)
+    * #1576: Browser doesn t select Portal appropriate language
+    * #1579: SOAP Backend error for empty collection
+    * #1582: MongoDB Conf backend looses sub hash keys
+    * #1586: Portal message override do not work on plugins and mails templates
+    * #1587: Captcha is not displayed in Register form if mail already exists
+    * #1588: Captcha is validated with additional letters
+    * #1589: Error in MailReset when asking to resend confirmation mail
+    * #1592: Cannot select a menu tab with ?tab=<tab id> in URL
+    * #1594: Cannot select oidcConsents tab in menu
+
+  * Improvements:
+    * #1565: OpenId - Default CSP value cause breakdown in OpenId authentification form
+    * #1578: Fix fcgi/psgi extensions in documentation
+    * #1583: Append parameter to configure number of allowed failed logins before brute force protection activation
+    * #1584: Browser doesn t select Manager appropriate language
+    * #1585: Fix main logo and langs icons display & double slash in lmerror 403 error URL
+    * #1591: $req->user not available in plugins authenticated routes
+    * #1593: Bad userinfo response: Unauthorized
+    * #1596: Possibility to define new tabs in Menu
+    * #1599: Usage of OpenID Connect with bad scope value result in unlimited session grow
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 21 Dec 2018 15:12:13 +0100
+
 lemonldap-ng (2.0.0) artful; urgency=medium
 
   * Bugs:

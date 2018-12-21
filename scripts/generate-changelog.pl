@@ -12,7 +12,7 @@
 use LWP::UserAgent;
 use JSON;
 
-my $milestone = '2.0.0';
+my $milestone = '2.0.1';
 my @cat = ( 'Bug', 'New feature', 'Improvement' );
 
 open F, "$ENV{HOME}/.ow2-token" or die "Unable to get OW2 token ($!)";
