@@ -292,7 +292,6 @@ sub _reset {
 
             # Return mail already sent only if it is allowed at previous step
             if ( $self->conf->{portalErrorOnMailNotFound} ) {
-                $self->captcha(0);
                 $self->setSecurity($req);
                 return PE_MAILCONFIRMATION_ALREADY_SENT;
             }
