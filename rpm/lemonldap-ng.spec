@@ -49,8 +49,8 @@
 # Main package
 #==============================================================================
 Name:           lemonldap-ng
-Version:        2.0.0
-Release:        %{?pre_release:0.}3%{?pre_release:.%{pre_release}}%{?dist}
+Version:        2.0.1
+Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
 URL:            http://lemonldap-ng.org
@@ -646,6 +646,9 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Fri Dec 21 2018 Clement Oudot <clem.oudot@gmail.com> - 2.0.1-1
+- Update to 2.0.1
+
 * Sat Dec 01 2018 Clement Oudot <clem.oudot@gmail.com> - 2.0.0-3
 - Fix warnings in Manager
 
