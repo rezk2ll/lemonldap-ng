@@ -14,7 +14,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNAUTHORIZEDPARTNER
 );
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.1';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::OpenIDConnect',
@@ -304,6 +304,13 @@ sub run {
 "Reauthentication forced because authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
                 );
                 return $self->reAuth($req);
+            }
+
+            # Check scope validity
+            unless ( $oidc_request->{'scope'} =~ /^[a-zA-Z_\-\s]+$/ ) {
+                $self->logger->error( "Submitted scope is not valid: "
+                      . $oidc_request->{'scope'} );
+                return PE_ERROR;
             }
 
             # Check openid scope
