@@ -199,6 +199,7 @@ sub _reset {
             # unless portalErrorOnMailNotFound is set
 
             if ( $self->conf->{portalErrorOnMailNotFound} ) {
+                $self->setSecurity($req);
                 return PE_MAILNOTFOUND;
             }
 
