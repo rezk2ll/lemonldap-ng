@@ -76,13 +76,14 @@
 </div>
 </div>
 <!-- TOC END -->
-
+<div class="notetip"><strong>Upgrade from 2.0.x to 2.0.x</strong> : nothing to do !
+</div>
 <h1 class="sectionedit1" id="upgrade_from_19_to_20">Upgrade from 1.9 to 2.0</h1>
 <div class="level1">
 <div class="noteimportant">2.0 is a major release, lot of things have been changed. You must read this document before upgrade.
 </div>
 </div>
-<!-- EDIT1 SECTION "Upgrade from 1.9 to 2.0" [1-164] -->
+<!-- EDIT1 SECTION "Upgrade from 1.9 to 2.0" [69-232] -->
 <h2 class="sectionedit2" id="upgrade_order_from_19">Upgrade order from 1.9.*</h2>
 <div class="level2">
 
@@ -100,7 +101,7 @@ As usual, if you use more than 1 server and don&#039;t want to stop <abbr title=
 <div class="noteimportant">You must revalidate your configuration using the manager.
 </div>
 </div>
-<!-- EDIT2 SECTION "Upgrade order from 1.9.*" [165-639] -->
+<!-- EDIT2 SECTION "Upgrade order from 1.9.*" [233-707] -->
 <h2 class="sectionedit3" id="installation">Installation</h2>
 <div class="level2">
 <div class="noteimportant">French documentation is no more available. Only English version of this documentation is maintained now.
@@ -124,7 +125,7 @@ For <abbr title="Security Assertion Markup Language">SAML</abbr> features, we re
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Installation" [640-1025] -->
+<!-- EDIT3 SECTION "Installation" [708-1093] -->
 <h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 <ul>
@@ -158,7 +159,7 @@ For <abbr title="Security Assertion Markup Language">SAML</abbr> features, we re
 
 </div>
 </div>
-<!-- EDIT4 SECTION "Configuration" [1026-2600] -->
+<!-- EDIT4 SECTION "Configuration" [1094-2668] -->
 <h3 class="sectionedit5" id="configuration_refresh">Configuration refresh</h3>
 <div class="level3">
 
@@ -168,7 +169,7 @@ Now portal has the same behavior than handlers: it looks to configuration stored
 <div class="noteimportant">If you want to use reload mechanism on a portal only host, you must install a handler in Portal host to be able to refresh local cache. Include <code>handler-nginx.conf</code> or <code>handler-apache2.conf</code> for example
 </div>
 </div>
-<!-- EDIT5 SECTION "Configuration refresh" [2601-3022] -->
+<!-- EDIT5 SECTION "Configuration refresh" [2669-3090] -->
 <h2 class="sectionedit6" id="ldap_connection">LDAP connection</h2>
 <div class="level2">
 
@@ -177,7 +178,7 @@ Now LDAP connections are kept open to improve performances. To allow that, <abbr
 </p>
 
 </div>
-<!-- EDIT6 SECTION "LDAP connection" [3023-3206] -->
+<!-- EDIT6 SECTION "LDAP connection" [3091-3274] -->
 <h2 class="sectionedit7" id="kerberos_or_ssl_usage">Kerberos or SSL usage</h2>
 <div class="level2">
 <ul>
@@ -188,7 +189,7 @@ Now LDAP connections are kept open to improve performances. To allow that, <abbr
 </ul>
 
 </div>
-<!-- EDIT7 SECTION "Kerberos or SSL usage" [3207-3715] -->
+<!-- EDIT7 SECTION "Kerberos or SSL usage" [3275-3783] -->
 <h2 class="sectionedit8" id="logs">Logs</h2>
 <div class="level2">
 <ul>
@@ -199,7 +200,7 @@ Now LDAP connections are kept open to improve performances. To allow that, <abbr
 </ul>
 
 </div>
-<!-- EDIT8 SECTION "Logs" [3716-4130] -->
+<!-- EDIT8 SECTION "Logs" [3784-4198] -->
 <h2 class="sectionedit9" id="security">Security</h2>
 <div class="level2">
 
@@ -214,7 +215,7 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "Security" [4131-4698] -->
+<!-- EDIT9 SECTION "Security" [4199-4766] -->
 <h2 class="sectionedit10" id="handlers">Handlers</h2>
 <div class="level2">
 <ul>
@@ -233,7 +234,7 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT10 SECTION "Handlers" [4699-5784] -->
+<!-- EDIT10 SECTION "Handlers" [4767-5852] -->
 <h2 class="sectionedit11" id="rules_and_headers">Rules and headers</h2>
 <div class="level2">
 <ul>
@@ -246,7 +247,7 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT11 SECTION "Rules and headers" [5785-6103] -->
+<!-- EDIT11 SECTION "Rules and headers" [5853-6171] -->
 <h2 class="sectionedit12" id="supported_servers">Supported servers</h2>
 <div class="level2">
 <ul>
@@ -255,7 +256,7 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT12 SECTION "Supported servers" [6104-6249] -->
+<!-- EDIT12 SECTION "Supported servers" [6172-6317] -->
 <h2 class="sectionedit13" id="ajax_requests">Ajax requests</h2>
 <div class="level2">
 
@@ -264,7 +265,7 @@ Before 2.0, an Ajax query launched after session timeout received a 302 code. No
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Ajax requests" [6250-6447] -->
+<!-- EDIT13 SECTION "Ajax requests" [6318-6515] -->
 <h2 class="sectionedit14" id="soaprest_services">SOAP/REST services</h2>
 <div class="level2">
 <ul>
@@ -280,7 +281,7 @@ Before 2.0, an Ajax query launched after session timeout received a 302 code. No
 <div class="noteimportant"><a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic Handler</a> uses now REST services instead of SOAP.
 </div>
 </div>
-<!-- EDIT14 SECTION "SOAP/REST services" [6448-7045] -->
+<!-- EDIT14 SECTION "SOAP/REST services" [6516-7113] -->
 <h2 class="sectionedit15" id="cas">CAS</h2>
 <div class="level2">
 
@@ -293,12 +294,12 @@ Before 2.0, an Ajax query launched after session timeout received a 302 code. No
 </p>
 
 </div>
-<!-- EDIT15 SECTION "CAS" [7046-7423] -->
+<!-- EDIT15 SECTION "CAS" [7114-7491] -->
 <h2 class="sectionedit16" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT16 SECTION "Developer corner" [7424-7453] -->
+<!-- EDIT16 SECTION "Developer corner" [7492-7521] -->
 <h3 class="sectionedit17" id="apis">APIs</h3>
 <div class="level3">
 
@@ -307,7 +308,7 @@ Portal has now many REST features and includes an <abbr title="Application Progr
 </p>
 
 </div>
-<!-- EDIT17 SECTION "APIs" [7454-7615] -->
+<!-- EDIT17 SECTION "APIs" [7522-7683] -->
 <h3 class="sectionedit18" id="portal_overview">Portal overview</h3>
 <div class="level3">
 
@@ -329,7 +330,7 @@ Requests are independent objects based on Lemonldap::NG::Portal::Main::Request w
 </p>
 
 </div>
-<!-- EDIT18 SECTION "Portal overview" [7616-8091] -->
+<!-- EDIT18 SECTION "Portal overview" [7684-8159] -->
 <h3 class="sectionedit19" id="handler">Handler</h3>
 <div class="level3">
 
@@ -342,6 +343,6 @@ If you used self protected CGI, you also need to rewrite them, see <a href="self
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Handler" [8092-] --></div>
+<!-- EDIT19 SECTION "Handler" [8160-] --></div>
 </body>
 </html>
