@@ -538,7 +538,7 @@ fi
 %files conf
 %doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
 %doc for_etc_hosts
-%license COPYING GPL
+%license COPYING LICENSE
 %dir %{lm_confdir}
 %config(noreplace) %attr(-,root,%{lm_apachegroup}) %{lm_storagefile}
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
@@ -568,7 +568,7 @@ fi
 %files doc
 %doc %{lm_sharedir}/doc
 %doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
-%license COPYING GPL
+%license COPYING LICENSE
 
 %files handler
 %{lm_bindir}/purgeLocalCache
