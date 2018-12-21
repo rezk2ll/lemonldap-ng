@@ -14,7 +14,7 @@ use strict;
 use LWP::Simple;
 use Tie::File;
 
-my $version = "2.0";
+my $version = "2.1";
 my $offline_zip_url = "http://lemonldap-ng.org/documentation/$version/start?depth=0&depthType=1.0&disableCache=1&do=siteexport&ens=documentation%3A$version%3Astart&exportLinkedPages=1&exportbody=1&renderer=&template=bootstrap3&disableplugin[]=acl&disableplugin[]=config&disableplugin[]=extension&disableplugin[]=oddeven&disableplugin[]=siteexport&disableplugin[]=usermanager";
 my $rc;
 
