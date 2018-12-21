@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.1';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -115,7 +115,10 @@ sub init {
 
     # Handler::PSGI::Try initialization
     return 0 unless ( $self->SUPER::init( $self->localConfig ) );
-    return 0 if ( $self->error );
+    if ( $self->error ) {
+        $self->logger->error( $self->error );
+        return 0;
+    }
 
     # Handle requests (other path may be declared in enabled plugins)
     $self
