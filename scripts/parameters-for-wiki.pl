@@ -77,7 +77,7 @@ print <<EOF;
 | LDAP bind password | ldapBindPassword | ::: |
 | LDAP ObjectClass | ldapObjectClass | ::: |
 | LDAP ID attribute | ldapAttributeId | ::: |
-| LDAP content atribute | ldapAttributeContent | ::: |
+| LDAP content attribute | ldapAttributeContent | ::: |
 | Certificate authorities file | caFile | ::: |
 | Certificate authorities directory | caPath | ::: |
 | MongoDB database | dbName | [[mongodbconfbackend|MongoDB]] |
