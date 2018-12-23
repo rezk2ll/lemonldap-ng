@@ -3,18 +3,16 @@
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
 describe('01 Lemonldap::NG Manager', function() {
-
   describe('Tree display', function() {
     it('Main => should display 12 main nodes', function() {
       browser.get('/');
-      var mainNodes = element.all(by.repeater('node in data track by node.id'));
-      expect(mainNodes.count()).toEqual(12);
+      expect(element.all(by.repeater('node in data track by node.id')).count()).toEqual(12);
     });
     it('General Parameters should display 10 sub nodes', function() {
       element(by.id('a-generalParameters')).click();
       expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(10);
     });
-
+    // ** General Parameters **
     // Portal
     it('General Parameters > Portal -> Append 4 sub nodes', function() {
       element(by.id('a-portalParams')).click();
@@ -52,12 +50,10 @@ describe('01 Lemonldap::NG Manager', function() {
       element(by.id('a-portalOther')).click();
       expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(52);
     });
-
     // Authentication Parameters
     it('Main => should display 12 main nodes', function() {
       browser.get('/');
-      var mainNodes = element.all(by.repeater('node in data track by node.id'));
-      expect(mainNodes.count()).toEqual(12);
+      expect(element.all(by.repeater('node in data track by node.id')).count()).toEqual(12);
     });
     it('General Parameters should display 10 sub nodes', function() {
       element(by.id('a-generalParameters')).click();
@@ -94,12 +90,12 @@ describe('01 Lemonldap::NG Manager', function() {
       var def = element.all(by.id('hashkeyinput'));
       expect(def.count()).toEqual(1);
     });
-
     // Issuer Modules
     it('Main => should display 12 main nodes', function() {
       browser.get('/');
-      var mainNodes = element.all(by.repeater('node in data track by node.id'));
-      expect(mainNodes.count()).toEqual(12);
+      //var mainNodes = element.all(by.repeater('node in data track by node.id'));
+      //expect(mainNodes.count()).toEqual(12);
+      expect(element.all(by.repeater('node in data track by node.id')).count()).toEqual(12);
     });
     it('General Parameters should display 10 sub nodes', function() {
       element(by.id('a-generalParameters')).click();
@@ -129,12 +125,10 @@ describe('01 Lemonldap::NG Manager', function() {
       element(by.id('a-issuerDBGet')).click();
       expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(32);
     });
-
     // Logs
     it('Main => should display 12 main nodes', function() {
       browser.get('/');
-      var mainNodes = element.all(by.repeater('node in data track by node.id'));
-      expect(mainNodes.count()).toEqual(12);
+      expect(element.all(by.repeater('node in data track by node.id')).count()).toEqual(12);
     });
     it('General Parameters should display 10 sub nodes', function() {
       element(by.id('a-generalParameters')).click();
@@ -144,12 +138,10 @@ describe('01 Lemonldap::NG Manager', function() {
       element(by.id('a-logParams')).click();
       expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(13);
     });
-    
     // Cookies
     it('Main => should display 12 main nodes', function() {
       browser.get('/');
-      var mainNodes = element.all(by.repeater('node in data track by node.id'));
-      expect(mainNodes.count()).toEqual(12);
+      expect(element.all(by.repeater('node in data track by node.id')).count()).toEqual(12);
     });
     it('General Parameters should display 10 sub nodes', function() {
       element(by.id('a-generalParameters')).click();
@@ -159,12 +151,10 @@ describe('01 Lemonldap::NG Manager', function() {
       element(by.id('a-cookieParams')).click();
       expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(16);
     });
-
     // Sessions
     it('Main => should display 12 main nodes', function() {
       browser.get('/');
-      var mainNodes = element.all(by.repeater('node in data track by node.id'));
-      expect(mainNodes.count()).toEqual(12);
+      expect(element.all(by.repeater('node in data track by node.id')).count()).toEqual(12);
     });
     it('General Parameters should display 10 sub nodes', function() {
       element(by.id('a-generalParameters')).click();
@@ -174,32 +164,65 @@ describe('01 Lemonldap::NG Manager', function() {
       element(by.id('a-sessionParams')).click();
       expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(18);
     });
+    it('General Parameters > Sessions > Opening conditions => New grant rule button + 2 rules', function() {
+      element(by.id('t-grantSessionRules')).click();
+      element(by.css('[ng-click="menuClick(button)"]')).click();
+      element(by.css('[ng-click="menuClick(button)"]')).click();
+      expect(element.all(by.repeater('s in currentNode.nodes')).count()).toEqual(2);
+      expect(element.all(by.xpath('//tbody/tr')).count()).toEqual(2);
+      expect(element.all(by.xpath('//tbody/tr/td/input')).count()).toEqual(6);
+    });
+    it('General Parameters > Sessions > Session storage => Append 4 sub nodes', function() {
+      element(by.id('a-sessionStorage')).click();
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(24);
+    });
+    it('General Parameters > Sessions > Multiple sessions => Append 6 sub nodes', function() {
+      element(by.id('a-multipleSessions')).click();
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(30);
+    });
+    it('General Parameters > Sessions > Persistent sessions => Append 2 sub nodes', function() {
+      element(by.id('a-persistentSessions')).click();
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(32);
+    });
+    it('General Parameters > Sessions > Persistent storage options => Append 3 sub nodes', function() {
+      element(by.id('t-persistentStorageOptions')).click();
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(35);
+      expect(element.all(by.xpath('//tbody/tr')).count()).toEqual(3);
+      expect(element.all(by.xpath('//tbody/tr/td/input')).count()).toEqual(6);
+    });
+    // Configuration reload
+    it('Main => should display 12 main nodes', function() {
+      browser.get('/');
+      expect(element.all(by.repeater('node in data track by node.id')).count()).toEqual(12);
+    });
+    it('General Parameters should display 10 sub nodes', function() {
+      element(by.id('a-generalParameters')).click();
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(10);
+    });
+    it('General Parameters > Configuration reload => Append 2 sub nodes', function() {
+      element(by.id('a-reloadParams')).click();
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(12);
+    });
+    it('General Parameters > Configuration relaod > Reload URLs => "New entry" button + 2 new URLS', function() {
+      element(by.id('t-reloadUrls')).click();
+      element(by.css('[ng-click="menuClick(button)"]')).click();
+      element(by.css('[ng-click="menuClick(button)"]')).click();
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(14);
+      expect(element.all(by.xpath('//tbody/tr')).count()).toEqual(2);
+      expect(element.all(by.xpath('//tbody/tr/td/input')).count()).toEqual(4);
+    });
 
+    // ** Variables **
+    it('Main => should display 12 main nodes', function() {
+      browser.get('/');
+      expect(element.all(by.repeater('node in data track by node.id')).count()).toEqual(12);
+    });
+    it('Variables should display 3 sub nodes', function() {
+      element(by.id('a-variables')).click();
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(3);
+    });
 
-
-
-
-
-
-
-
-
-
-    // it('-Variables should display 3 sub nodes', function() {
-    //   var gpv = element(by.id('a-variables'));
-    //   gpv.click();
-    //   var gpvNodes = element.all(by.repeater('node in node.nodes track by node.id'));
-    //   expect(gpvNodes.count()).toEqual(17);
-    // });
-
-    // it('-Virtual Hosts should display 3 sub nodes', function() {
-    //   var gvh = element(by.id('a-variables'));
-    //   gvh.click();
-    //   var gvhNodes = element.all(by.repeater('node in node.nodes track by node.id'));
-    //   expect(gvhNodes.count()).toEqual(20);
-    // });
-
-
+    // ** Virtual Hosts
     it('should find a rule', function() {
       browser.get('/#/confs/1');
       var vhs = element(by.id('a-virtualHosts'));
@@ -211,7 +234,5 @@ describe('01 Lemonldap::NG Manager', function() {
       var def = element.all(by.id("t-virtualHosts/manager.example.com/locationRules/1"));
       expect(def.count()).toEqual(1);
     });
-
-
   });
 });
