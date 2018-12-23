@@ -87,8 +87,7 @@ describe('01 Lemonldap::NG Manager', function() {
       element(by.id('a-demoParams')).click();
       element(by.id('a-demoExportedVars')).click();
       element(by.id('t-demoExportedVars/cn')).click();
-      var def = element.all(by.id('hashkeyinput'));
-      expect(def.count()).toEqual(1);
+      expect(element.all(by.id('hashkeyinput')).count()).toEqual(1);
     });
     // Issuer Modules
     it('Main => should display 12 main nodes', function() {
