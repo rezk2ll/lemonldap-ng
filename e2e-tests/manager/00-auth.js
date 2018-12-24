@@ -4,7 +4,7 @@
 
 describe('00 Lemonldap::NG', function() {
   describe('Auth mechanism', function() {
-  	it('Portal should display 10 lang flags', function() {
+  	it('Portal should display 11 lang flags', function() {
   	  browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
       browser.driver.findElements(by.className('langicon')).then(function(elems) {
         expect(elems.length).toEqual(11);
@@ -30,11 +30,22 @@ describe('00 Lemonldap::NG', function() {
         expect(elems.length).toEqual(1);
       });
     });
-    it('should want to authenticate', function() {
+    it('should want to authenticate with history', function() {
       expect(browser.driver.findElement(by.css('[trspan="back2Portal"]')).getText()).toEqual('Retourner au portail');
       browser.driver.findElement(by.css('[trspan="back2Portal"]')).click();
       browser.driver.findElement(by.xpath("//input[@name='user']")).sendKeys('dwho');
       browser.driver.findElement(by.xpath("//input[@name='password']")).sendKeys('dwho');
+      browser.driver.findElement(by.xpath("//input[@name='checkLogins']")).click();
+      browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
+      browser.driver.findElements(by.xpath('//table/tbody/tr')).then(function(elems) {
+        expect(elems.length).toEqual(1);
+      });
+      browser.driver.findElements(by.xpath('//table/tbody/tr/td')).then(function(elems) {
+      	expect(elems[1].getText()).toEqual('127.0.0.1');
+        expect(elems.length).toEqual(2);
+      });
+      expect(browser.driver.findElement(by.css('[trspan="redirectedIn"]')).getText()).toEqual("Vous allez être redirigé(e) automatiquement dans 30 secondes");
+      browser.driver.findElement(by.xpath("//button[@type='reset']")).click();
       browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
     });
   });
