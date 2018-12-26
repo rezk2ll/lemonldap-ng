@@ -81,8 +81,8 @@ sub extractFormInfo {
     }
     $self->setSecurity($req);
     $self->userLogger->notice("Good GPG signature");
-    $self->userLogger->debug("GPG out:\n$out\n$err\*****");
-    unless ( $err =~ /using .*? key (.*)$/m or $err =~ /avec la clef RSA (.*)$/m) {
+    $self->userLogger->debug("GPG out:\n$out\n$err");
+    unless ( $err =~ /using .*? key (.*)$/m ) {
         $self->logger->error("Unable to parse gpgv result:\n$err");
         return PE_ERROR;
     }
