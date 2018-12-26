@@ -3,7 +3,7 @@
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
 describe('01 Lemonldap::NG Manager', function() {
-  describe('Tree display', function() {
+  describe('Tree display -> General Parameters', function() {
     it('Main => should display 12 main nodes', function() {
       browser.get('/');
       expect(element.all(by.repeater('node in data track by node.id')).count()).toEqual(12);
@@ -12,7 +12,7 @@ describe('01 Lemonldap::NG Manager', function() {
       element(by.id('a-generalParameters')).click();
       expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(10);
     });
-    // ** General Parameters **
+
     // Portal
     it('General Parameters > Portal -> Append 4 sub nodes', function() {
       element(by.id('a-portalParams')).click();
@@ -30,25 +30,25 @@ describe('01 Lemonldap::NG Manager', function() {
       element(by.id('a-portalModules')).click();
       expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(21);
     });
-    it('General Parameters > Portal > Menu > Cat. and Apps. => Append 10 sub nodes', function() {
+    it('General Parameters > Portal > Menu > Cat. and Apps. => Append 11 sub nodes', function() {
       element(by.id('a-applicationList')).click();
-      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(31);
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(32);
     });
     it('General Parameters > Portal > Customization => Append 8 sub nodes', function() {
       element(by.id('a-portalCustomization')).click();
-      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(39);
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(40);
     });
     it('General Parameters > Portal > Customization > Buttons => Append 4 sub nodes', function() {
       element(by.id('a-portalButtons')).click();
-      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(43);
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(44);
     });
     it('General Parameters > Portal > Customization > Password Management => Append 3 sub nodes', function() {
       element(by.id('a-passwordManagement')).click();
-      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(46);
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(47);
     });
     it('General Parameters > Portal > Customization > Other => Append 6 sub nodes', function() {
       element(by.id('a-portalOther')).click();
-      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(52);
+      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(53);
     });
     // Authentication Parameters
     it('Main => should display 12 main nodes', function() {
@@ -209,29 +209,6 @@ describe('01 Lemonldap::NG Manager', function() {
       expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(14);
       expect(element.all(by.xpath('//tbody/tr')).count()).toEqual(2);
       expect(element.all(by.xpath('//tbody/tr/td/input')).count()).toEqual(4);
-    });
-
-    // ** Variables **
-    it('Main => should display 12 main nodes', function() {
-      browser.get('/');
-      expect(element.all(by.repeater('node in data track by node.id')).count()).toEqual(12);
-    });
-    it('Variables should display 3 sub nodes', function() {
-      element(by.id('a-variables')).click();
-      expect(element.all(by.repeater('node in node.nodes track by node.id')).count()).toEqual(3);
-    });
-
-    // ** Virtual Hosts
-    it('should find a rule', function() {
-      browser.get('/#/confs/1');
-      var vhs = element(by.id('a-virtualHosts'));
-      vhs.click();
-      var vh = element(by.id('a-virtualHosts/manager.example.com'));
-      vh.click();
-      var r = element(by.id('a-virtualHosts/manager.example.com/locationRules'));
-      r.click();
-      var def = element.all(by.id("t-virtualHosts/manager.example.com/locationRules/1"));
-      expect(def.count()).toEqual(1);
     });
   });
 });
