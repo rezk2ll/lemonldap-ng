@@ -609,9 +609,11 @@ sub tests {
         # Warn if Mailrest plugin is enabled without Token or Captcha
         checkMailResetSecurity => sub {
             return 1 unless ( $conf->{portalDisplayResetPassword} );
-            return ( 1,
+            return ( -1,
                 '"passwordMailReset" plugin is enabled without CSRF Token or Captcha required !!!'
-            ) unless ( $conf->{requireToken} or $conf->{captcha_mail_enabled} );
+                )
+                unless ( $conf->{requireToken}
+                or $conf->{captcha_mail_enabled} );
 
             # Return
             return 1;

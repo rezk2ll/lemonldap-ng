@@ -46,7 +46,8 @@ has warnings => (
         hdebug( 'warnings contains', $_[0]->{warnings} );
     }
 );
-has changes => ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
+has changes =>
+    ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
 has message => (
     is      => 'rw',
     isa     => 'Str',
@@ -55,10 +56,10 @@ has message => (
         hdebug( "Message becomes " . $_[0]->{message} );
     }
 );
+has needConfirmation =>
+    ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
 
 # Booleans
-has needConfirm =>
-  ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
 has confChanged => (
     is      => 'rw',
     isa     => 'Bool',
@@ -69,7 +70,7 @@ has confChanged => (
 );
 
 # Properties required during build
-has refConf => ( is => 'ro', isa      => 'HashRef', required => 1 );
+has refConf => ( is => 'ro', isa => 'HashRef', required => 1 );
 has req     => ( is => 'ro', required => 1 );
 has newConf => ( is => 'rw', isa      => 'HashRef' );
 has tree    => ( is => 'rw', isa      => 'ArrayRef' );
@@ -124,14 +125,15 @@ sub scanTree {
     # Set cfgNum to ref cfgNum (will be changed when saving), set other
     # metadata and set a value to the key if empty
     $self->newConf->{cfgNum} = $self->req->params('cfgNum');
-    $self->newConf->{cfgAuthor} =
-      $self->req->userData->{ $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}
-          || '_whatToTrace' } // "anonymous";
+    $self->newConf->{cfgAuthor}
+        = $self->req->userData
+        ->{ $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}
+            || '_whatToTrace' } // "anonymous";
     $self->newConf->{cfgAuthorIP} = $self->req->address;
     $self->newConf->{cfgDate}     = time;
     $self->newConf->{cfgVersion}  = $VERSION;
-    $self->newConf->{key} ||=
-      join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. 16 ) );
+    $self->newConf->{key}
+        ||= join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. 16 ) );
 
     return 1;
 }
@@ -158,7 +160,7 @@ sub _scanNodes {
         hdebug("Looking to $name");
 
         # subnode
-        my $subNodes     = $leaf->{nodes} // $leaf->{_nodes};
+        my $subNodes     = $leaf->{nodes}      // $leaf->{_nodes};
         my $subNodesCond = $leaf->{nodes_cond} // $leaf->{_nodes_cond};
 
         ##################################
@@ -191,7 +193,7 @@ sub _scanNodes {
                 $self->confChanged(1);
                 foreach my $deletedHost (@old) {
                     push @{ $self->changes },
-                      { key => $leaf->{id}, old => $deletedHost };
+                        { key => $leaf->{id}, old => $deletedHost };
                 }
             }
             next;
@@ -208,7 +210,7 @@ sub _scanNodes {
                 hdebug("  $host becomes $newNames{$host}");
                 $self->confChanged(1);
                 push @{ $self->changes },
-                  { key => $base, old => $host, new => $newNames{$host} };
+                    { key => $base, old => $host, new => $newNames{$host} };
             }
 
             $self->_scanNodes($subNodes);
@@ -216,15 +218,15 @@ sub _scanNodes {
         }
 
         # Other sub levels
-        elsif ( $leaf->{id} =~
-            /^($specialNodeKeys)\/([^\/]+)\/([^\/]+)(?:\/(.*))?$/io )
+        elsif ( $leaf->{id}
+            =~ /^($specialNodeKeys)\/([^\/]+)\/([^\/]+)(?:\/(.*))?$/io )
         {
-            my ( $base, $key, $oldName, $target, $h ) =
-              ( $1, $newNames{$2}, $2, $3, $4 );
+            my ( $base, $key, $oldName, $target, $h )
+                = ( $1, $newNames{$2}, $2, $3, $4 );
             hdebug(
                 "Special node chield subnode detected $leaf->{id}",
                 "  base $base, key $key, target $target, h "
-                  . ( $h ? $h : 'undef' )
+                    . ( $h ? $h : 'undef' )
             );
 
             # VirtualHosts
@@ -233,18 +235,18 @@ sub _scanNodes {
                 if ( $target =~ /^(?:locationRules|exportedHeaders|post)$/ ) {
                     if ( $leaf->{cnodes} ) {
                         hdebug('    unopened subnode');
-                        $self->newConf->{$target}->{$key} =
-                          $self->refConf->{$target}->{$oldName} // {};
+                        $self->newConf->{$target}->{$key}
+                            = $self->refConf->{$target}->{$oldName} // {};
                     }
 
                     elsif ($h) {
                         hdebug('    4 levels');
                         if ( $target eq 'locationRules' ) {
                             hdebug('    locationRules');
-                            my $k =
-                              $leaf->{comment}
-                              ? "(?#$leaf->{comment})$leaf->{re}"
-                              : $leaf->{re};
+                            my $k
+                                = $leaf->{comment}
+                                ? "(?#$leaf->{comment})$leaf->{re}"
+                                : $leaf->{re};
                             $self->set( $target, $key, $k, $leaf->{data} );
                         }
                         else {
@@ -260,7 +262,7 @@ sub _scanNodes {
                         if ( ref $subNodes ) {
                             hdebug('    has subnodes');
                             $self->_scanNodes($subNodes)
-                              or return 0;
+                                or return 0;
                         }
                         if ( exists $self->refConf->{$target}->{$key}
                             and %{ $self->refConf->{$target}->{$key} } )
@@ -274,10 +276,10 @@ sub _scanNodes {
                                     hdebug('      missing value in old conf');
                                     $self->confChanged(1);
                                     push @{ $self->changes },
-                                      {
+                                        {
                                         key => "$target, $key",
                                         old => $k,
-                                      };
+                                        };
                                 }
                             }
                         }
@@ -287,7 +289,7 @@ sub _scanNodes {
                             hdebug("    '$key' has values");
                             $self->confChanged(1);
                             push @{ $self->changes },
-                              { key => "$target", new => $key };
+                                { key => "$target", new => $key };
                         }
                     }
                 }
@@ -297,7 +299,7 @@ sub _scanNodes {
                 }
                 else {
                     push @{ $self->errors },
-                      { message => "Unknown vhost key $target" };
+                        { message => "Unknown vhost key $target" };
                     return 0;
                 }
                 next;
@@ -306,16 +308,18 @@ sub _scanNodes {
             # SAML
             elsif ( $base =~ /^saml(?:S|ID)PMetaDataNodes$/ ) {
                 hdebug('SAML');
-                if ( defined $leaf->{data} and ref( $leaf->{data} ) eq 'ARRAY' )
+                if ( defined $leaf->{data}
+                    and ref( $leaf->{data} ) eq 'ARRAY' )
                 {
                     hdebug("  SAML data is an array, serializing");
                     $leaf->{data} = join ';', @{ $leaf->{data} };
                 }
-                if ( $target =~ /^saml(?:S|ID)PMetaDataExportedAttributes$/ ) {
+                if ( $target =~ /^saml(?:S|ID)PMetaDataExportedAttributes$/ )
+                {
                     if ( $leaf->{cnodes} ) {
                         hdebug("  $target: unopened node");
-                        $self->newConf->{$target}->{$key} =
-                          $self->refConf->{$target}->{$oldName} // {};
+                        $self->newConf->{$target}->{$key}
+                            = $self->refConf->{$target}->{$oldName} // {};
                     }
                     elsif ($h) {
                         hdebug("  $target: opened node");
@@ -330,15 +334,17 @@ sub _scanNodes {
                 }
                 elsif ( $target =~ /^saml(?:S|ID)PMetaDataXML$/ ) {
                     hdebug("  $target");
-                    $self->set( $target, [ $oldName, $key ],
-                        $target, $leaf->{data} );
+                    $self->set(
+                        $target, [ $oldName, $key ],
+                        $target, $leaf->{data}
+                    );
                 }
                 elsif ( $target =~ /^saml(?:ID|S)PMetaDataOptions/ ) {
                     my $optKey = $&;
                     hdebug("  $base sub key: $target");
-                    if ( $target =~
-                        /^(?:$samlIDPMetaDataNodeKeys|$samlSPMetaDataNodeKeys)/o
-                      )
+                    if ( $target
+                        =~ /^(?:$samlIDPMetaDataNodeKeys|$samlSPMetaDataNodeKeys)/o
+                        )
                     {
                         $self->set(
                             $optKey, [ $oldName, $key ],
@@ -347,13 +353,14 @@ sub _scanNodes {
                     }
                     else {
                         push @{ $self->errors },
-                          { message => "Unknown SAML metadata option $target" };
+                            { message =>
+                                "Unknown SAML metadata option $target" };
                         return 0;
                     }
                 }
                 else {
                     push @{ $self->errors },
-                      { message => "Unknown SAML key $target" };
+                        { message => "Unknown SAML key $target" };
                     return 0;
                 }
                 next;
@@ -365,7 +372,8 @@ sub _scanNodes {
                 if ( $target =~ /^oidc(?:O|R)PMetaDataOptions$/ ) {
                     hdebug("  $target: looking for subnodes");
                     $self->_scanNodes($subNodes);
-                    $self->set( $target, $key, $leaf->{title}, $leaf->{data} );
+                    $self->set( $target, $key, $leaf->{title},
+                        $leaf->{data} );
                 }
                 elsif ( $target =~ /^oidcOPMetaData(?:JSON|JWKS)$/ ) {
                     hdebug("  $target");
@@ -375,8 +383,8 @@ sub _scanNodes {
                     hdebug("  $target");
                     if ( $leaf->{cnodes} ) {
                         hdebug('    unopened');
-                        $self->newConf->{$target}->{$key} =
-                          $self->refConf->{$target}->{$oldName} // {};
+                        $self->newConf->{$target}->{$key}
+                            = $self->refConf->{$target}->{$oldName} // {};
                     }
                     elsif ($h) {
                         hdebug('    opened');
@@ -394,8 +402,8 @@ sub _scanNodes {
                     if ( $target eq 'oidcRPMetaDataOptionsExtraClaims' ) {
                         if ( $leaf->{cnodes} ) {
                             hdebug('    unopened');
-                            $self->newConf->{$target}->{$key} =
-                              $self->refConf->{$target}->{$oldName} // {};
+                            $self->newConf->{$target}->{$key}
+                                = $self->refConf->{$target}->{$oldName} // {};
                         }
                         elsif ($h) {
                             hdebug('    opened');
@@ -407,9 +415,9 @@ sub _scanNodes {
                             $self->_scanNodes($subNodes);
                         }
                     }
-                    elsif ( $target =~
-                        /^(?:$oidcOPMetaDataNodeKeys|$oidcRPMetaDataNodeKeys)/o
-                      )
+                    elsif ( $target
+                        =~ /^(?:$oidcOPMetaDataNodeKeys|$oidcRPMetaDataNodeKeys)/o
+                        )
                     {
                         $self->set(
                             $optKey, [ $oldName, $key ],
@@ -418,13 +426,14 @@ sub _scanNodes {
                     }
                     else {
                         push @{ $self->errors },
-                          { message => "Unknown OIDC metadata option $target" };
+                            { message =>
+                                "Unknown OIDC metadata option $target" };
                         return 0;
                     }
                 }
                 else {
                     push @{ $self->errors },
-                      { message => "Unknown OIDC key $target" };
+                        { message => "Unknown OIDC key $target" };
                     return 0;
                 }
                 next;
@@ -437,14 +446,15 @@ sub _scanNodes {
                 if ( $target =~ /^cas(?:App|Srv)MetaDataOptions$/ ) {
                     hdebug("  $target: looking for subnodes");
                     $self->_scanNodes($subNodes);
-                    $self->set( $target, $key, $leaf->{title}, $leaf->{data} );
+                    $self->set( $target, $key, $leaf->{title},
+                        $leaf->{data} );
                 }
                 elsif ( $target =~ /^cas(?:App|Srv)MetaDataExportedVars$/ ) {
                     hdebug("  $target");
                     if ( $leaf->{cnodes} ) {
                         hdebug('    unopened');
-                        $self->newConf->{$target}->{$key} =
-                          $self->refConf->{$target}->{$oldName} // {};
+                        $self->newConf->{$target}->{$key}
+                            = $self->refConf->{$target}->{$oldName} // {};
                     }
                     elsif ($h) {
                         hdebug('    opened');
@@ -462,8 +472,8 @@ sub _scanNodes {
                     if ( $target eq 'casSrvMetaDataOptionsProxiedServices' ) {
                         if ( $leaf->{cnodes} ) {
                             hdebug('    unopened');
-                            $self->newConf->{$target}->{$key} =
-                              $self->refConf->{$target}->{$oldName} // {};
+                            $self->newConf->{$target}->{$key}
+                                = $self->refConf->{$target}->{$oldName} // {};
                         }
                         elsif ($h) {
                             hdebug('    opened');
@@ -475,9 +485,9 @@ sub _scanNodes {
                             $self->_scanNodes($subNodes);
                         }
                     }
-                    elsif ( $target =~
-                        /^(?:$casSrvMetaDataNodeKeys|$casAppMetaDataNodeKeys)/o
-                      )
+                    elsif ( $target
+                        =~ /^(?:$casSrvMetaDataNodeKeys|$casAppMetaDataNodeKeys)/o
+                        )
                     {
                         $self->set(
                             $optKey, [ $oldName, $key ],
@@ -486,20 +496,21 @@ sub _scanNodes {
                     }
                     else {
                         push @{ $self->errors },
-                          { message => "Unknown CAS metadata option $target" };
+                            { message =>
+                                "Unknown CAS metadata option $target" };
                         return 0;
                     }
                 }
                 else {
                     push @{ $self->errors },
-                      { message => "Unknown CAS option $target" };
+                        { message => "Unknown CAS option $target" };
                     return 0;
                 }
                 next;
             }
             else {
                 push @{ $self->errors },
-                  { message => "Fatal: unknown special sub node $base" };
+                    { message => "Fatal: unknown special sub node $base" };
                 return 0;
             }
         }
@@ -513,35 +524,34 @@ sub _scanNodes {
             hdebug( $leaf->{title} );
             if ( $leaf->{cnodes} ) {
                 hdebug('  unopened');
-                $self->newConf->{applicationList} =
-                  $self->refConf->{applicationList} // {};
+                $self->newConf->{applicationList}
+                    = $self->refConf->{applicationList} // {};
             }
             else {
                 $self->_scanNodes($subNodes) or return 0;
 
                 # Check for deleted
-                my @listCatRef =
-                  map { $self->refConf->{applicationList}->{$_}->{catname} }
-                  keys %{ $self->refConf->{applicationList} };
-                my @listCatNew =
-                  map { $self->newConf->{applicationList}->{$_}->{catname} }
-                  keys(
-                    %{
-                        ref $self->newConf->{applicationList}
+                my @listCatRef
+                    = map { $self->refConf->{applicationList}->{$_}->{catname} }
+                    keys %{ $self->refConf->{applicationList} };
+                my @listCatNew
+                    = map { $self->newConf->{applicationList}->{$_}->{catname} }
+                    keys(
+                    %{  ref $self->newConf->{applicationList}
                         ? $self->newConf->{applicationList}
                         : {}
                     }
-                  );
-                for ( my $i = 0 ; $i < @listCatNew ; $i++ ) {
+                    );
+                for ( my $i = 0; $i < @listCatNew; $i++ ) {
                     if ( not( defined $listCatRef[$i] )
                         or $listCatRef[$i] ne $listCatNew[$i] )
                     {
                         push @{ $self->changes },
-                          {
+                            {
                             key => $leaf->{id},
                             new => $listCatNew[$i],
                             old => $listCatRef[$i]
-                          };
+                            };
                     }
                 }
             }
@@ -566,8 +576,9 @@ sub _scanNodes {
                 hdebug("  looking to cat $cat");
                 unless ( defined $knownCat->{$cat} ) {
                     push @{ $self->{errors} },
-                      { message =>
-                          "Fatal: sub cat/app before parent ($leaf->{id})" };
+                        { message =>
+                            "Fatal: sub cat/app before parent ($leaf->{id})"
+                        };
                     return 0;
                 }
                 $cn = $cn->{ $knownCat->{$cat} };
@@ -584,21 +595,19 @@ sub _scanNodes {
                 hdebug('  menu cat');
                 $knownCat->{__id}++;
                 my $s = $knownCat->{$app} = sprintf '%04d-cat',
-                  $knownCat->{__id};
-                $cn->{$s} =
-                  { catname => $leaf->{title}, type => 'category' };
+                    $knownCat->{__id};
+                $cn->{$s} = { catname => $leaf->{title}, type => 'category' };
                 unless ($cmp->{$app}
                     and $cmp->{$app}->{catname} eq $cn->{$s}->{catname} )
                 {
                     $self->confChanged(1);
                     push @{ $self->changes },
-                      {
-                        key => join(
-                            ', ', 'applicationList', @path, $leaf->{title}
-                        ),
+                        {
+                        key => join( ', ',
+                            'applicationList', @path, $leaf->{title} ),
                         new => $cn->{$s}->{catname},
                         old => ( $cn->{$s} ? $cn->{$s}->{catname} : undef )
-                      };
+                        };
                 }
                 if ( ref $subNodes ) {
                     $self->_scanNodes($subNodes) or return 0;
@@ -610,10 +619,10 @@ sub _scanNodes {
                 unless ( @listCatRef == @listCatNew ) {
                     $self->confChanged(1);
                     push @{ $self->changes },
-                      {
+                        {
                         key => join( ', ', 'applicationList', @path ),
                         new => 'Changes in cat(s)/app(s)',
-                      };
+                        };
                 }
             }
 
@@ -622,16 +631,16 @@ sub _scanNodes {
                 hdebug('  new app');
                 $knownCat->{__id}++;
                 my $name = sprintf( '%04d-app', $knownCat->{__id} );
-                $cn->{$name} =
-                  { type => 'application', options => $leaf->{data} };
+                $cn->{$name}
+                    = { type => 'application', options => $leaf->{data} };
                 $cn->{$name}->{options}->{name} = $leaf->{title};
                 unless ( $cmp->{$app} ) {
                     $self->confChanged(1);
                     push @{ $self->changes },
-                      {
+                        {
                         key => join( ', ', 'applicationList', @path ),
                         new => $leaf->{title},
-                      };
+                        };
                 }
                 else {
                     foreach my $k ( keys %{ $cn->{$name}->{options} } ) {
@@ -640,13 +649,13 @@ sub _scanNodes {
                         {
                             $self->confChanged(1);
                             push @{ $self->changes },
-                              {
+                                {
                                 key => join( ', ',
                                     'applicationList', @path,
                                     $leaf->{title},    $k ),
                                 new => $cn->{$name}->{options}->{$k},
                                 old => $cmp->{$app}->{options}->{$k}
-                              };
+                                };
                         }
                     }
                 }
@@ -669,31 +678,31 @@ sub _scanNodes {
                 $self->newConf->{grantSessionRules} = {};
                 foreach my $n (@$subNodes) {
                     hdebug("  looking at $n subnode");
-                    my $k =
-                      $n->{re} . ( $n->{comment} ? "##$n->{comment}" : '' );
+                    my $k = $n->{re}
+                        . ( $n->{comment} ? "##$n->{comment}" : '' );
                     $self->newConf->{grantSessionRules}->{$k} = $n->{data};
                     $count++;
                     unless ( defined $ref->{$k} ) {
                         $self->confChanged(1);
                         push @{ $self->changes },
-                          { keys => 'grantSessionRules', new => $k };
+                            { keys => 'grantSessionRules', new => $k };
                     }
                     elsif ( $ref->{$k} ne $n->{data} ) {
                         $self->confChanged(1);
                         push @{ $self->changes },
-                          {
+                            {
                             key => "grantSessionRules, $k",
                             old => $self->refConf->{grantSessionRules}->{$k},
                             new => $n->{data}
-                          };
+                            };
                     }
                     @old = grep { $_ ne $k } @old;
                 }
                 if (@old) {
                     $self->confChanged(1);
                     push @{ $self->changes },
-                      { key => 'grantSessionRules', old => $_, }
-                      foreach (@old);
+                        { key => 'grantSessionRules', old => $_, }
+                        foreach (@old);
                 }
             }
             next;
@@ -706,7 +715,8 @@ sub _scanNodes {
             if ( $leaf->{data} ) {
                 unless ( ref $leaf->{data} eq 'ARRAY' ) {
                     push @{ $self->{errors} },
-                      { message => 'Malformed openIdIDPList ' . $leaf->{data} };
+                        { message => 'Malformed openIdIDPList '
+                            . $leaf->{data} };
                     return 0;
                 }
                 $self->set( $name, join( ';', @{ $leaf->{data} } ) );
@@ -739,7 +749,8 @@ sub _scanNodes {
                     $self->newConf->{$name} = {};
                     foreach my $node ( @{ $leaf->{nodes} } ) {
                         my $tmp;
-                        $tmp->{$_} = $node->{data}->{$_} foreach (qw(type for));
+                        $tmp->{$_} = $node->{data}->{$_}
+                            foreach (qw(type for));
                         $tmp->{over} = {};
                         foreach ( @{ $node->{data}->{over} } ) {
                             $tmp->{over}->{ $_->[0] } = $_->[1];
@@ -775,29 +786,30 @@ sub _scanNodes {
                     }
                     $self->newConf->{$name}->{ $n->{title} } = $n->{data};
                     $count++;
-                    unless ( defined $self->refConf->{$name}->{ $n->{title} } )
+                    unless (
+                        defined $self->refConf->{$name}->{ $n->{title} } )
                     {
                         $self->confChanged(1);
                         push @{ $self->changes },
-                          { key => $name, new => $n->{title}, };
+                            { key => $name, new => $n->{title}, };
                     }
-                    elsif (
-                        $self->refConf->{$name}->{ $n->{title} } ne $n->{data} )
+                    elsif ( $self->refConf->{$name}->{ $n->{title} } ne
+                        $n->{data} )
                     {
                         $self->confChanged(1);
                         push @{ $self->changes },
-                          {
+                            {
                             key => "$name, $n->{title}",
                             old => $self->refConf->{$name}->{ $n->{title} },
                             new => $n->{data}
-                          };
+                            };
                     }
                     @old = grep { $_ ne $n->{title} } @old;
                 }
                 if (@old) {
                     $self->confChanged(1);
                     push @{ $self->changes }, { key => $name, old => $_, }
-                      foreach (@old);
+                        foreach (@old);
                 }
             }
             next;
@@ -834,23 +846,23 @@ sub _scanNodes {
                     @oldKeys = keys %{ $self->refConf->{$name}->{$host} };
                 }
                 foreach my $prm ( @{ $getHost->{h} } ) {
-                    $self->newConf->{$name}->{$host}->{ $prm->{k} } =
-                      $prm->{v};
-                    if (
-                        !$change
+                    $self->newConf->{$name}->{$host}->{ $prm->{k} }
+                        = $prm->{v};
+                    if (!$change
                         and (
                             not defined(
-                                $self->refConf->{$name}->{$host}->{ $prm->{k} }
+                                $self->refConf->{$name}->{$host}
+                                    ->{ $prm->{k} }
                             )
                             or $self->newConf->{$name}->{$host}->{ $prm->{k} }
                             ne $self->refConf->{$name}->{$host}->{ $prm->{k} }
                         )
-                      )
+                        )
                     {
                         $self->confChanged(1);
                         hdebug("    key $prm->{k} has been changed");
                         push @{ $self->changes },
-                          { key => "$name/$host", new => $prm->{k} };
+                            { key => "$name/$host", new => $prm->{k} };
                     }
                     elsif ( !$change ) {
                         @oldKeys = grep { $_ ne $prm->{k} } @oldKeys;
@@ -860,15 +872,15 @@ sub _scanNodes {
                     $self->confChanged(1);
                     hdebug( "  old keys: " . join( ' ', @oldKeys ) );
                     push @{ $self->changes },
-                      { key => "$name/$host", old => $_ }
-                      foreach (@oldKeys);
+                        { key => "$name/$host", old => $_ }
+                        foreach (@oldKeys);
                 }
             }
             if (@oldHosts) {
                 $self->confChanged(1);
                 hdebug( "  old hosts " . join( ' ', @oldHosts ) );
                 push @{ $self->changes }, { key => "$name", old => $_ }
-                  foreach (@oldHosts);
+                    foreach (@oldHosts);
             }
             next;
         }
@@ -956,15 +968,16 @@ sub set {
                 or (   !defined $confs[0]->{$target}
                     and defined $self->defaultValue($target)
                     and $data eq $self->defaultValue($target) )
-              )
+                )
             {
                 $self->confChanged(1);
                 push @{ $self->changes },
-                  {
+                    {
                     key => join( ', ', @path, $target ),
-                    old => $confs[0]->{$target} // $self->defaultValue($target),
+                    old => $confs[0]->{$target}
+                        // $self->defaultValue($target),
                     new => $confs[1]->{$target}
-                  };
+                    };
             }
         };
     }
@@ -988,7 +1001,7 @@ sub defaultValue {
     die unless ($target);
     my $res = eval {
         &Lemonldap::NG::Manager::Attributes::attributes()->{$target}
-          ->{'default'};
+            ->{'default'};
     };
     return $res;
 }
@@ -1037,7 +1050,8 @@ sub _unitTest {
 
             # Check if key exists
             unless ($attr) {
-                push @{ $self->errors }, { message => "__unknownKey__: $key" };
+                push @{ $self->errors },
+                    { message => "__unknownKey__: $key" };
                 $res = 0;
                 next;
             }
@@ -1047,7 +1061,7 @@ sub _unitTest {
                 $conf->{$key} //= {};
                 unless ( ref $conf->{$key} eq 'HASH' ) {
                     push @{ $self->errors },
-                      { message => "$key is not a hash ref" };
+                        { message => "$key is not a hash ref" };
                     $res = 0;
                     next;
                 }
@@ -1060,21 +1074,20 @@ sub _unitTest {
                 or $attr->{type} =~ /Container$/ )
             {
                 my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail};
-                my $msg    = $attr->{msgFail} // $type->{msgFail};
+                my $msg    = $attr->{msgFail}    // $type->{msgFail};
                 $res = 0
-                  unless (
+                    unless (
                     $self->_execTest(
-                        {
-                            keyTest    => $attr->{keyTest} // $type->{keyTest},
+                        {   keyTest => $attr->{keyTest} // $type->{keyTest},
                             keyMsgFail => $attr->{keyMsgFail}
-                              // $type->{keyMsgFail},
-                            test    => $attr->{test} // $type->{test},
+                                // $type->{keyMsgFail},
+                            test    => $attr->{test}    // $type->{test},
                             msgFail => $attr->{msgFail} // $type->{msgFail},
                         },
                         $conf->{$key},
                         $key, $attr, undef, $conf
                     )
-                  );
+                    );
             }
             elsif ( defined $attr->{keyTest} ) {
 
@@ -1083,12 +1096,12 @@ sub _unitTest {
             else {
                 my $msg = $attr->{msgFail} // $type->{msgFail};
                 $res = 0
-                  unless (
+                    unless (
                     $self->_execTest(
                         $attr->{test} // $type->{test},
                         $conf->{$key}, $key, $attr, $msg, $conf
                     )
-                  );
+                    );
             }
         }
     }
@@ -1103,13 +1116,13 @@ sub _execTest {
     my ( $self, $test, $value, $key, $attr, $msg, $conf ) = @_;
     my $ref;
     die
-"Malformed test for $key: only regexp ref or sub are accepted (type \"$ref\")"
-      unless ( $ref = ref($test) and $ref =~ /^(CODE|Regexp|HASH)$/ );
+        "Malformed test for $key: only regexp ref or sub are accepted (type \"$ref\")"
+        unless ( $ref = ref($test) and $ref =~ /^(CODE|Regexp|HASH)$/ );
     if ( $ref eq 'CODE' ) {
         my ( $r, $m ) = ( $test->( $value, $conf, $attr ) );
         if ($m) {
             push @{ $self->{ ( $r ? 'warnings' : 'errors' ) } },
-              { message => "$key: $m" };
+                { message => "$key: $m" };
         }
         elsif ( !$r ) {
             push @{ $self->{errors} }, { message => "$key: $msg" };
@@ -1128,7 +1141,7 @@ sub _execTest {
         return $res unless ( ref($value) eq 'HASH' );
         foreach my $k ( keys %$value ) {
             $res = 0
-              unless (
+                unless (
                 $self->_execTest(
                     $test->{keyTest}, $k,                  "$key/$k",
                     $attr,            $test->{keyMsgFail}, $conf
@@ -1137,7 +1150,7 @@ sub _execTest {
                     $test->{test}, $value->{$k},     "$key/$k",
                     $attr,         $test->{msgFail}, $conf
                 )
-              );
+                );
         }
         return $res;
     }
@@ -1152,7 +1165,7 @@ sub _globalTest {
     require Lemonldap::NG::Manager::Conf::Tests;
     hdebug('# _globalTest()');
     my $result = 1;
-    my $tests  = &Lemonldap::NG::Manager::Conf::Tests::tests( $self->newConf );
+    my $tests = &Lemonldap::NG::Manager::Conf::Tests::tests( $self->newConf );
     foreach my $name ( keys %$tests ) {
         if (    $self->{skippedGlobalTests}
             and $self->{skippedGlobalTests} =~ /\b$name\b/ )
@@ -1165,7 +1178,7 @@ sub _globalTest {
         eval {
             ( $res, $msg ) = $sub->();
             if ( $res == -1 ) {
-                push @{ $self->needConfirm }, { message => $msg };
+                push @{ $self->needConfirmation }, { message => $msg };
             }
             elsif ($res) {
                 if ($msg) {

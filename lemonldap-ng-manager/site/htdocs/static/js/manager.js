@@ -170,7 +170,7 @@ This file contains:
           message: '',
           items: []
         };
-        if (data.message === '__needConfirmation__') {
+        if (data.needConfirm) {
           $scope.confirmNeeded = true;
         }
         if (data.message) {

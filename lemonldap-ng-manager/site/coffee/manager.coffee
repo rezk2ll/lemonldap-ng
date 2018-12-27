@@ -144,7 +144,7 @@ llapp.controller 'TreeCtrl', [
 				title: ''
 				message: ''
 				items: []
-			$scope.confirmNeeded = true if data.message == '__needConfirmation__'
+			$scope.confirmNeeded = true if data.needConfirm
 			$scope.message.message = data.message if data.message
 			if data.details
 				for m of data.details when m != '__changes__'
