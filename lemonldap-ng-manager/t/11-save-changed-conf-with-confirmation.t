@@ -41,7 +41,7 @@ foreach my $i (0 .. 2) {
         "Warning with 'unprotect', 'CDA' or 'retries' found"
     ) or print STDERR Dumper($resBody);
 }
-
+count(4);
 ok( @{ $resBody->{details}->{__needConfirmation__} } == 1,
     'JSON response contains 1 needConfirmation'
 ) or print STDERR Dumper($resBody);
@@ -60,7 +60,7 @@ ok( $res = &client->_post( '/confs/', 'cfgNum=1&force=1', &body, 'application/js
 );
 
 ok( -f $confFiles->[1], 'File is created' );
-count(3);
+count(5);
 my @changes = @{&changes};
 my @cmsg    = @{ $resBody->{details}->{__changes__} };
 my $bug;

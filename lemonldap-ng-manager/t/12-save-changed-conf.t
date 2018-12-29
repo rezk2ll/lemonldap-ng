@@ -37,18 +37,6 @@ foreach my $i (0 .. 1) {
     ) or print STDERR Dumper($resBody);
 }
 
-
-
-
-
-# ok( $resBody->{details}->{__warnings__}->[0]->{message}
-#         =~ /\b(unprotected|cross-domain-authentication)\b/,
-#     "Warning with 'unprotect' or 'CDA' found"
-# ) or print STDERR Dumper($resBody);
-# ok( $resBody->{details}->{__warnings__}->[1]->{message}
-#         =~ /\b(unprotected|cross-domain-authentication)\b/,
-#     "Warning with 'unprotect' or 'CDA' found"
-# ) or print STDERR Dumper($resBody);
 ok( -f $confFiles->[1], 'File is created' );
 count(3);
 my @changes = @{&changes};
