@@ -37,8 +37,13 @@ foreach my $i (0 .. 1) {
     ) or print STDERR Dumper($resBody);
 }
 
+ok( @{ $resBody->{details}->{__changes__} } == 22,
+    'JSON response contains 24 changes'
+) or print STDERR Dumper($resBody);
+#print STDERR Dumper($resBody);
+
 ok( -f $confFiles->[1], 'File is created' );
-count(3);
+count(4);
 my @changes = @{&changes};
 my @cmsg    = @{ $resBody->{details}->{__changes__} };
 my $bug;

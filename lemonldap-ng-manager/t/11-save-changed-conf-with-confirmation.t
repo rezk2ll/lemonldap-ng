@@ -51,10 +51,11 @@ ok( $resBody->{details}->{__needConfirmation__}->[0]->{message}
     "Warning with confirmation needed found"
 ) or print STDERR Dumper($resBody);
 
+
 ok( @{ $resBody->{details}->{__changes__} } == 24,
     'JSON response contains 24 changes'
 ) or print STDERR Dumper($resBody);
-
+#print STDERR Dumper($resBody);
 ok( $res = &client->_post( '/confs/', 'cfgNum=1&force=1', &body, 'application/json' ),
     "Request succeed"
 );
