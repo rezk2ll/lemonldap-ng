@@ -12,6 +12,7 @@ sub body {
 }
 
 unlink 't/conf/lmConf-2.json';
+mkdir 't/sessions';
 
 my ( $res, $resBody );
 ok( $res = &client->_post( '/confs/', 'cfgNum=1', &body, 'application/json' ),
@@ -37,8 +38,6 @@ count(9);
 
 done_testing( count() );
 
-
-
 unlink 't/conf/lmConf-2.json';
 
-`rm t/sessions/*`;
+`rm -rf t/sessions`;
