@@ -40,5 +40,5 @@ done_testing( count() );
 
 
 unlink 't/conf/lmConf-2.json';
-unlink 't/sessions/*';
+
 `rm t/sessions/*`;
