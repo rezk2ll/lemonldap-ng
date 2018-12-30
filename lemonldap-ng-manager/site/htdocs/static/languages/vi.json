@@ -236,6 +236,7 @@
 "enabled":"Đã bật",
 "enterPassword":"Nhập mật khẩu (tùy chọn)",
 "error":"Lỗi",
+"errors":"ERRORS",
 "exportedAttr":"Biến SOAP/REST đã được xuất",
 "exportedHeaders":"Tiêu đề đã được xuất",
 "exportedVars":"Biến đã được xuất",

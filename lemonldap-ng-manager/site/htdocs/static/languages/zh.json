@@ -236,6 +236,7 @@
 "enabled":"开启",
 "enterPassword":"输入密码（可选）",
 "error":"错误",
+"errors":"ERRORS",
 "exportedAttr":"SOAP/REST exported attributes",
 "exportedHeaders":"Exported headers",
 "exportedVars":"Exported Variables",

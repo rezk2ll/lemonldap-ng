@@ -236,6 +236,7 @@
 "enabled":"Abilitato",
 "enterPassword":"Inserisci password (opzionale)",
 "error":"Errore",
+"errors":"ERRORS",
 "exportedAttr":"Attributi di SOAP/REST esportati",
 "exportedHeaders":"Intestazioni esportate",
 "exportedVars":"Variabili esportate",

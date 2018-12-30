@@ -236,6 +236,7 @@
 "enabled":"مفعلة",
 "enterPassword":"أدخل كلمة المرور (اختياري)",
 "error":"خطأ",
+"errors":"ERRORS",
 "exportedAttr":"SOAP/REST السمات المصدرة",
 "exportedHeaders":"الهيدر المصدرة",
 "exportedVars":"المتغيرات المصدرة",
