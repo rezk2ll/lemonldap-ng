@@ -25,32 +25,4 @@ sub count {
     return $count;
 }
 
-sub clean_sessions {
-    opendir D, 't/sessions' or die $!;
-    foreach ( grep { /^[^\.]/ } readdir(D) ) {
-        unlink "t/sessions/$_", "t/sessions/lock/Apache-Session-$_.lock";
-    }
-    foreach my $dir (qw(t/sessions/lock t/sessions/saml/lock t/sessions/saml)) {
-        if ( -d $dir ) {
-            opendir D, $dir or die $!;
-            foreach ( grep { /^[^\.]/ } readdir(D) ) {
-                unlink "$dir/$_";
-            }
-        }
-    }
-    my $cache = getCache();
-    $cache->clear;
-}
-
-sub getCache {
-    require Cache::FileCache;
-    return Cache::FileCache->new(
-        {
-            namespace   => 'lemonldap-ng-session',
-            cache_root  => 't/',
-            cache_depth => 0,
-        }
-    );
-}
-
 1;
