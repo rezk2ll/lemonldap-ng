@@ -71,7 +71,9 @@ sub extractFormInfo {
 "Launching:\ngpgv --homedir /dev/null --keyring $self->{db} <<EOF\n$signed\nEOF"
     );
     my $lang = $ENV{LANG};
+    my $language = $ENV{LANGUAGE};
     $ENV{LANG} = 'C';
+    $ENV{LANGUAGE} = 'C';
     IPC::Run::run( [ 'gpgv', '--homedir', '/dev/null', '--keyring', $self->db ],
         \$signed, \$out, \$err, IPC::Run::timeout(10) );
     if ( $? >> 8 != 0 ) {
@@ -101,6 +103,7 @@ sub extractFormInfo {
         IPC::Run::timeout(10)
     );
     $ENV{LANG} = $lang;
+    $ENV{LANGUAGE} = $language;
     if ( $? >> 8 != 0 ) {
         $self->logger->error("gpg --list-key return an error:\n$err");
         return PE_ERROR;
