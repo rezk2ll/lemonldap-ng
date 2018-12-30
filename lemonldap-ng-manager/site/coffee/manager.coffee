@@ -148,9 +148,14 @@ llapp.controller 'TreeCtrl', [
 			$scope.message.message = data.message if data.message
 			if data.details
 				for m of data.details when m != '__changes__'
-					$scope.message.items.push
-						message: m
-						items: data.details[m]
+					if m == '__needConfirmation__'
+						$scope.message.items.unshift
+							message: m
+							items: data.details[m]
+					else
+						$scope.message.items.push
+							message: m
+							items: data.details[m]
 			$scope.waiting = false
 			if data.result == 1
 				# Force reloading page

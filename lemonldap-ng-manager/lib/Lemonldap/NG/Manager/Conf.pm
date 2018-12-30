@@ -232,13 +232,18 @@ sub newConf {
 
     # "message" fields: note that words enclosed by "__" (__word__) will be
     # translated
-    $res->{message} = $parser->{message};
-    foreach my $t (qw(errors warnings changes)) {
-        $res->{details}->{ '__' . $t . '__' } = $parser->$t
-            if ( @{ $parser->$t } );
+    $res->{details}->{'__errors__'} = $parser->{errors}
+        if ( @{ $parser->{errors} } );
+    unless ( @{ $parser->{errors} } ) {
+        $res->{details}->{'__needConfirmation__'}
+            = $parser->{needConfirmation}
+            if ( @{ $parser->{needConfirmation} } && !$req->params('force') );
+        $res->{message} = $parser->{message};
+        foreach my $t (qw(warnings changes)) {
+            $res->{details}->{ '__' . $t . '__' } = $parser->$t
+                if ( @{ $parser->$t } );
+        }
     }
-    $res->{details}->{'__needConfirmation__'} = $parser->{needConfirmation}
-        if ( @{ $parser->{needConfirmation} } && !$req->params('force') );
     if ( $res->{result} ) {
         if ( $self->{demoMode} ) {
             $res->{message} = '__demoModeOn__';

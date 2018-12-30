@@ -179,10 +179,17 @@ This file contains:
         if (data.details) {
           for (m in data.details) {
             if (m !== '__changes__') {
-              $scope.message.items.push({
-                message: m,
-                items: data.details[m]
-              });
+              if (m === '__needConfirmation__') {
+                $scope.message.items.unshift({
+                  message: m,
+                  items: data.details[m]
+                });
+              } else {
+                $scope.message.items.push({
+                  message: m,
+                  items: data.details[m]
+                });
+              }
             }
           }
         }
