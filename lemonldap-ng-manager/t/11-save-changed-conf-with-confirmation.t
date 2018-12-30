@@ -52,7 +52,7 @@ ok( $resBody->{details}->{__needConfirmation__}->[0]->{message}
 ) or print STDERR Dumper($resBody);
 
 
-ok( @{ $resBody->{details}->{__changes__} } == 24,
+ok( @{ $resBody->{details}->{__changes__} } == 22,
     'JSON response contains 24 changes'
 ) or print STDERR Dumper($resBody);
 #print STDERR Dumper($resBody);
