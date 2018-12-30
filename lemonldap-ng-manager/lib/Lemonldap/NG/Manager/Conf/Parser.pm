@@ -542,6 +542,7 @@ sub _scanNodes {
                         : {}
                     }
                     );
+
                 @listCatRef =  sort @listCatRef;
                 @listCatNew =  sort @listCatNew;
                 hdebug( '# @listCatRef : ' . \@listCatRef );
