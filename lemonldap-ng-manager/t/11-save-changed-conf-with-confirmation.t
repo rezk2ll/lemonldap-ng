@@ -6,7 +6,7 @@ use strict;
 use JSON;
 require 't/test-lib.pm';
 
-my $struct = 't/jsonfiles/13-modified-with-confirmation.json';
+my $struct = 't/jsonfiles/11-modified-with-confirmation.json';
 my $confFiles = [ 't/conf/lmConf-1.json', 't/conf/lmConf-2.json' ];
 
 sub body {
@@ -47,7 +47,7 @@ ok( @{ $resBody->{details}->{__needConfirmation__} } == 1,
 ) or print STDERR Dumper($resBody);
 
 ok( $resBody->{details}->{__needConfirmation__}->[0]->{message}
-        =~ /\bplugin is enabled without CSRF Token or Captcha required\b/,
+        =~ /\bplugin is enabled without CSRF Token neither Captcha required\b/,
     "Warning with confirmation needed found"
 ) or print STDERR Dumper($resBody);
 

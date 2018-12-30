@@ -207,8 +207,8 @@ t/99-pod.t
 t/conf/lmConf-1.json
 t/jsonfiles/01-base-tree.json
 t/jsonfiles/02-base-tree-all-nodes-opened.json
+t/jsonfiles/11-modified-with-confirmation.json
 t/jsonfiles/12-modified.json
-t/jsonfiles/13-modified-with-confirmation.json
 t/jsonfiles/14-bad.json
 t/jsonfiles/15-combination.json
 t/lemonldap-ng.ini
