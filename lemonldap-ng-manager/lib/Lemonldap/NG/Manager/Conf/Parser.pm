@@ -544,6 +544,8 @@ sub _scanNodes {
                     );
                 @listCatRef =  sort @listCatRef;
                 @listCatNew =  sort @listCatNew;
+                hdebug( '# @listCatRef : ' . \@listCatRef );
+                hdebug( '# @listCatNew : ' . \@listCatNew );
                 for ( my $i = 0; $i < @listCatNew; $i++ ) {
                     if ( not( defined $listCatRef[$i] )
                         or $listCatRef[$i] ne $listCatNew[$i] )
