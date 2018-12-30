@@ -26,20 +26,24 @@ ok( $resBody = from_json( $res->[2]->[0] ),
     "Result body contains JSON text" );
 ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
     or print STDERR Dumper($resBody);
-ok( $resBody->{details}->{__warnings__}
-        and @{ $resBody->{details}->{__warnings__} } == 2,
+ok( @{ $resBody->{details}->{__warnings__} } == 2,
     'JSON response contains 2 warnings'
 ) or print STDERR Dumper($resBody);
-ok( $resBody->{details}->{__warnings__}->[0]->{message}
-        =~ /\b(unprotected|cross-domain-authentication)\b/,
-    "Warning with 'unprotect' or 'CDA' found"
+
+foreach my $i (0 .. 1) {
+    ok( $resBody->{details}->{__warnings__}->[$i]->{message}
+            =~ /\b(unprotected|cross-domain-authentication)\b/,
+        "Warning with 'unprotect', 'CDA' or 'retries' found"
+    ) or print STDERR Dumper($resBody);
+}
+
+ok( @{ $resBody->{details}->{__changes__} } == 20,
+    'JSON response contains 24 changes'
 ) or print STDERR Dumper($resBody);
-ok( $resBody->{details}->{__warnings__}->[1]->{message}
-        =~ /\b(unprotected|cross-domain-authentication)\b/,
-    "Warning with 'unprotect' or 'CDA' found"
-) or print STDERR Dumper($resBody);
+#print STDERR Dumper($resBody);
+
 ok( -f $confFiles->[1], 'File is created' );
-count(3);
+count(4);
 my @changes = @{&changes};
 my @cmsg    = @{ $resBody->{details}->{__changes__} };
 my $bug;

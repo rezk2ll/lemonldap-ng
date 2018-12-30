@@ -36,37 +36,40 @@ sub addRoutes {
     # HTML template
     $self->addRoute( 'manager.html', undef, ['GET'] )
 
-      # READ
-      # Special keys
-      ->addRoute(
+        # READ
+        # Special keys
+        ->addRoute(
         confs => {
             ':cfgNum' => [
                 qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
-                  applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
-                  casSrvMetaDataNodes casAppMetaDataNodes
-                  authChoiceModules grantSessionRules combModules
-                  openIdIDPList)
+                    applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
+                    casSrvMetaDataNodes casAppMetaDataNodes
+                    authChoiceModules grantSessionRules combModules
+                    openIdIDPList)
             ]
         },
         ['GET']
-      )
+        )
 
-      # Other keys
-      ->addRoute( confs => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] )
+        # Other keys
+        ->addRoute( confs => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] )
 
-      # New key and conf save
-      ->addRoute(
-        confs =>
-          { newRSAKey => 'newRSAKey', raw => 'newRawConf', '*' => 'newConf' },
+        # New key and conf save
+        ->addRoute(
+        confs => {
+            newRSAKey => 'newRSAKey',
+            raw       => 'newRawConf',
+            '*'       => 'newConf'
+        },
         ['POST']
-      )
+        )
 
-      # Difference between confs
-      ->addRoute( diff => { ':conf1' => { ':conf2' => 'diff' } } )
-      ->addRoute( 'diff.html', undef, ['GET'] )
+        # Difference between confs
+        ->addRoute( diff => { ':conf1' => { ':conf2' => 'diff' } } )
+        ->addRoute( 'diff.html', undef, ['GET'] )
 
-      # Url loader
-      ->addRoute( 'prx', undef, ['POST'] );
+        # Url loader
+        ->addRoute( 'prx', undef, ['POST'] );
 }
 
 # 35 - New RSA key pair on demand
@@ -82,7 +85,7 @@ sub addRoutes {
 sub newRSAKey {
     my ( $self, $req, @others ) = @_;
     return $self->sendError( $req, 'There is no subkey for "newRSAKey"', 400 )
-      if (@others);
+        if (@others);
     my $query = $req->jsonBodyToObj;
     my $rsa   = Crypt::OpenSSL::RSA->generate_key(2048);
     my $keys  = {
@@ -124,12 +127,12 @@ sub newRSAKey {
 sub prx {
     my ( $self, $req, @others ) = @_;
     return $self->sendError( $req, 'There is no subkey for "prx"', 400 )
-      if (@others);
+        if (@others);
     my $query = $req->jsonBodyToObj;
     return $self->sendError( $req, 'Missing parameter', 400 )
-      unless ( $query->{url} );
+        unless ( $query->{url} );
     return $self->sendError( $req, 'Bad parameter', 400 )
-      unless ( $query->{url} =~ m#^(?:f|ht)tps?://\w# );
+        unless ( $query->{url} =~ m#^(?:f|ht)tps?://\w# );
     $self->ua->timeout(10);
 
     my $response = $self->ua->get( $query->{url} );
@@ -137,11 +140,12 @@ sub prx {
         return $self->sendError( $req,
             $response->code . " (" . $response->message . ")", 400 );
     }
-    unless ( $response->header('Content-Type') =~
-        m#^(?:application/json|(?:application|text)/.*xml).*$# )
+    unless ( $response->header('Content-Type')
+        =~ m#^(?:application/json|(?:application|text)/.*xml).*$# )
     {
         return $self->sendError( $req,
-            'Content refused for security reason (neither XML or JSON)', 400 );
+            'Content refused for security reason (neither XML or JSON)',
+            400 );
     }
     return $self->sendJSONresponse( $req, { content => $response->content } );
 }
@@ -185,7 +189,7 @@ sub getConfByNum {
 sub newConf {
     my ( $self, $req, @other ) = @_;
     return $self->sendError( $req, 'There is no subkey for "newConf"', 400 )
-      if (@other);
+        if (@other);
 
     # Body must be json
     my $new = $req->jsonBodyToObj;
@@ -203,9 +207,9 @@ sub newConf {
         return $self->sendError(
             $req,
             "Configuration "
-              . $req->params('cfgNum')
-              . " not available "
-              . $Lemonldap::NG::Common::Conf::msg,
+                . $req->params('cfgNum')
+                . " not available "
+                . $Lemonldap::NG::Common::Conf::msg,
             400
         );
     }
@@ -228,10 +232,17 @@ sub newConf {
 
     # "message" fields: note that words enclosed by "__" (__word__) will be
     # translated
-    $res->{message} = $parser->{message};
-    foreach my $t (qw(errors warnings changes)) {
-        $res->{details}->{ '__' . $t . '__' } = $parser->$t
-          if ( @{ $parser->$t } );
+    $res->{details}->{'__errors__'} = $parser->{errors}
+        if ( @{ $parser->{errors} } );
+    unless ( @{ $parser->{errors} } ) {
+        $res->{details}->{'__needConfirmation__'}
+            = $parser->{needConfirmation}
+            if ( @{ $parser->{needConfirmation} } && !$req->params('force') );
+        $res->{message} = $parser->{message};
+        foreach my $t (qw(warnings changes)) {
+            $res->{details}->{ '__' . $t . '__' } = $parser->$t
+                if ( @{ $parser->$t } );
+        }
     }
     if ( $res->{result} ) {
         if ( $self->{demoMode} ) {
@@ -240,7 +251,9 @@ sub newConf {
         else {
             my %args;
             $args{force} = 1 if ( $req->params('force') );
-            my $s = $self->confAcc->saveConf( $parser->newConf, %args );
+            my $s = CONFIG_WAS_CHANGED;
+            $s = $self->confAcc->saveConf( $parser->newConf, %args )
+                unless ( @{ $parser->{needConfirmation} } && !$args{force} );
             if ( $s > 0 ) {
                 $self->userLogger->notice(
                     'User ' . $self->userId($req) . " has stored conf $s" );
@@ -248,18 +261,19 @@ sub newConf {
                 $res->{cfgNum} = $s;
                 if ( my $status = $self->applyConf( $parser->newConf ) ) {
                     push @{ $res->{details}->{__applyResult__} },
-                      { message => "$_: $status->{$_}" }
-                      foreach ( keys %$status );
+                        { message => "$_: $status->{$_}" }
+                        foreach ( keys %$status );
                 }
             }
             else {
                 $self->userLogger->notice(
                     'Saving attempt rejected, asking for confirmation to '
-                      . $self->userId($req) );
+                        . $self->userId($req) );
                 $res->{result} = 0;
                 if ( $s == CONFIG_WAS_CHANGED ) {
                     $res->{needConfirm} = 1;
-                    $res->{message} .= '__needConfirmation__';
+                    $res->{message} .= '__needConfirmation__'
+                        unless @{ $parser->{needConfirmation} };
                 }
                 else {
                     $res->{message} = $Lemonldap::NG::Common::Conf::msg;
@@ -278,7 +292,7 @@ sub newConf {
 sub newRawConf {
     my ( $self, $req, @other ) = @_;
     return $self->sendError( $req, 'There is no subkey for "newConf"', 400 )
-      if (@other);
+        if (@other);
 
     # Body must be json
     my $new = $req->jsonBodyToObj;
@@ -303,7 +317,7 @@ sub newRawConf {
         else {
             $self->userLogger->notice(
                 'Raw saving attempt rejected, asking for confirmation to '
-                  . $self->userId($req) );
+                    . $self->userId($req) );
             $res->{result} = 0;
             $res->{needConfirm} = 1 if ( $s == CONFIG_WAS_CHANGED );
             $res->{message} .= '__needConfirmation__';
@@ -325,8 +339,8 @@ sub applyConf {
     $self->api->checkConf();
 
     # Get apply section values
-    my %reloadUrls =
-      %{ $self->confAcc->getLocalConf( APPLYSECTION, undef, 0 ) };
+    my %reloadUrls
+        = %{ $self->confAcc->getLocalConf( APPLYSECTION, undef, 0 ) };
     if ( !%reloadUrls && $newConf->{reloadUrls} ) {
         %reloadUrls = %{ $newConf->{reloadUrls} };
     }
@@ -342,10 +356,10 @@ sub applyConf {
             my $targetUrl = $url->scheme . "://" . $host;
             $targetUrl .= ":" . $url->port if defined( $url->port );
             $targetUrl .= $url->full_path;
-            $r =
-              HTTP::Request->new( 'GET', $targetUrl,
+            $r = HTTP::Request->new( 'GET', $targetUrl,
                 HTTP::Headers->new( Host => $url->host ) );
-            if ( defined $url->userinfo && $url->userinfo =~ /^([^:]+):(.*)$/ )
+            if ( defined $url->userinfo
+                && $url->userinfo =~ /^([^:]+):(.*)$/ )
             {
                 $r->authorization_basic( $1, $2 );
             }
@@ -353,12 +367,14 @@ sub applyConf {
 
         my $response = $self->ua->request($r);
         if ( $response->code != 200 ) {
-            $status->{$host} =
-              "Error " . $response->code . " (" . $response->message . ")";
+            $status->{$host}
+                = "Error "
+                . $response->code . " ("
+                . $response->message . ")";
             $self->logger->error( "Apply configuration for $host: error "
-                  . $response->code . " ("
-                  . $response->message
-                  . ")" );
+                    . $response->code . " ("
+                    . $response->message
+                    . ")" );
         }
         else {
             $status->{$host} = "OK";
@@ -372,14 +388,14 @@ sub applyConf {
 sub diff {
     my ( $self, $req, @path ) = @_;
     return $self->sendError( $req, 'to many arguments in path info', 400 )
-      if (@path);
-    my @cfgNum =
-      ( scalar( $req->param('conf1') ), scalar( $req->param('conf2') ) );
+        if (@path);
+    my @cfgNum
+        = ( scalar( $req->param('conf1') ), scalar( $req->param('conf2') ) );
     my @conf;
     $self->logger->debug(" Loading confs");
 
     # Load the 2 configurations
-    for ( my $i = 0 ; $i < 2 ; $i++ ) {
+    for ( my $i = 0; $i < 2; $i++ ) {
         if ( %{ $self->currentConf }
             and $cfgNum[$i] == $self->currentConf->{cfgNum} )
         {
@@ -390,7 +406,7 @@ sub diff {
                 { cfgNum => $cfgNum[$i], raw => 1, noCache => 1 } );
             return $self->sendError(
                 $req,
-"Configuration $cfgNum[$i] not available $Lemonldap::NG::Common::Conf::msg",
+                "Configuration $cfgNum[$i] not available $Lemonldap::NG::Common::Conf::msg",
                 400
             ) unless ( $conf[$i] );
         }
@@ -398,8 +414,7 @@ sub diff {
     require Lemonldap::NG::Manager::Conf::Diff;
     return $self->sendJSONresponse(
         $req,
-        [
-            $self->Lemonldap::NG::Manager::Conf::Diff::diff(
+        [   $self->Lemonldap::NG::Manager::Conf::Diff::diff(
                 $conf[0], $conf[1]
             )
         ]

@@ -236,6 +236,7 @@
 "enabled":"Activé",
 "enterPassword":"Entrer le mot de passe (optionnel)",
 "error":"Erreur",
+"errors":"ERREURS",
 "exportedAttr":"Attributs exportés par le portail (SOAP/REST)",
 "exportedHeaders":"En-têtes exportés",
 "exportedVars":"Attributs à exporter",

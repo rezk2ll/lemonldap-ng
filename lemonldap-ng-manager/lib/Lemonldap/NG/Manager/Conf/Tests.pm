@@ -260,9 +260,9 @@ sub tests {
         },
 
         # Warn if session timeout is lower than 10 minutes
-        timeoutActivity => sub {
+        sessionTimeout => sub {
             return 1 unless ( defined $conf->{timeout} );
-            return ( 1, "Session timeout should be higher than ten minutes" )
+            return ( -1, "Session timeout should be higher than ten minutes" )
                 unless ( $conf->{timeout} > 600
                 || $conf->{timeout} == 0 );
 
@@ -271,7 +271,7 @@ sub tests {
         },
 
         # Error if session Activity Timeout is equal or lower than one minute
-        timeoutActivity => sub {
+        sessionTimeoutActivity => sub {
             return 1 unless ( defined $conf->{timeoutActivity} );
             return ( 0,
                 "Session activity timeout must be higher or equal than one minute"
@@ -609,13 +609,16 @@ sub tests {
         # Warn if Mailrest plugin is enabled without Token or Captcha
         checkMailResetSecurity => sub {
             return 1 unless ( $conf->{portalDisplayResetPassword} );
-            return ( 1,
-                '"passwordMailReset" plugin is enabled without CSRF Token or Captcha required !!!'
-            ) unless ( $conf->{requireToken} or $conf->{captcha_mail_enabled} );
+            return ( -1,
+                '"passwordMailReset" plugin is enabled without CSRF Token neither Captcha required !!!'
+                )
+                unless ( $conf->{requireToken}
+                or $conf->{captcha_mail_enabled} );
 
             # Return
             return 1;
         },
+
     };
 }
 
