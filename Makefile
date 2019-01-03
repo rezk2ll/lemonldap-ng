@@ -120,6 +120,7 @@ VHOSTLISTEN="*:$(PORT)"
 TESTWEBSERVER=apache
 TESTWEBSERVERPORT=19876
 TESTUSESSL=0
+E2E_TESTS='portal/*.js'
 
 # LDAP backend test
 LLNGTESTLDAP_SLAPD_BIN=/usr/sbin/slapd
@@ -548,7 +549,7 @@ launch_protractor:
 	# Start e2e tests
 	# NB: you must have protractor installed (using npm install -g protractor)
 	# and have run update-webdriver at least once and have a node.js > 4.0
-	@TESTWEBSERVERPORT=$(TESTWEBSERVERPORT) protractor e2e-tests/protractor-conf.js
+	@E2E_TESTS=$(E2E_TESTS) TESTWEBSERVERPORT=$(TESTWEBSERVERPORT) protractor e2e-tests/protractor-conf.js
 
 stop_web_server:
 	# Stop web server
@@ -568,7 +569,7 @@ plackup:
 		-F >e2e-tests/conf/fastcgi.log 2>&1 &
 
 install_test:
-	@TESTWEBSERVERPORT=$(PORT) protractor e2e-tests/protractor-conf.js
+	@E2E_TESTS=$(E2E_TESTS) TESTWEBSERVERPORT=$(PORT) protractor e2e-tests/protractor-conf.js
 
 # Install targets
 # ---------------

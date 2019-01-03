@@ -33,7 +33,7 @@ describe('00 Lemonldap::NG', function() {
     it('should want to authenticate with history', function() {
       expect(browser.driver.findElement(by.css('[trspan="back2Portal"]')).getText()).toEqual('Retourner au portail');
       browser.driver.findElement(by.css('[trspan="back2Portal"]')).click();
-
+      
       // Failed login attempt
       browser.driver.findElement(by.xpath("//input[@name='user']")).sendKeys('dwho');
       browser.driver.findElement(by.xpath("//input[@name='password']")).sendKeys('ohwd');
@@ -41,7 +41,7 @@ describe('00 Lemonldap::NG', function() {
       browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
       expect(browser.driver.findElement(by.css('[trmsg="5"]')).getText()).toEqual('Mot de passe ou identifiant incorrect');
       browser.driver.findElement(by.css('[trspan="goToPortal"]')).click();
-
+      
       // Login attempt
       browser.driver.findElement(by.xpath("//input[@name='user']")).sendKeys('dwho');
       browser.driver.findElement(by.xpath("//input[@name='password']")).sendKeys('dwho');
@@ -49,8 +49,10 @@ describe('00 Lemonldap::NG', function() {
       browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
       browser.driver.findElement(by.xpath("//img[@title='de']")).click();
       expect(browser.driver.findElement(by.css('[trspan="info"]')).getText()).toEqual("Information");
+      
+      // Two entries
       browser.driver.findElements(by.xpath('//table/tbody/tr')).then(function(elems) {
-        expect(elems.length).toEqual(5);
+        expect(elems.length).toEqual(2);
       });
 
       // Expect history with one login and one failed login
@@ -67,11 +69,11 @@ describe('00 Lemonldap::NG', function() {
       	expect(elems[4].getText()).toEqual('Fehlermeldung');
       });
       browser.driver.findElements(by.xpath('//table/tbody/tr/td')).then(function(elems) {
-      	expect(elems.length).toEqual(11);
+      	expect(elems.length).toEqual(5);
       	expect(elems[1].getText()).toEqual('127.0.0.1');
       	expect(elems[3].getText()).toEqual('127.0.0.1');
+        expect(elems[4].getText()).toEqual('Benutzername oder Passwort nicht korrekt');
       });
-      browser.sleep(5000);
       expect(browser.driver.findElement(by.css('[trspan="PE5"]')).getText()).toEqual('Benutzername oder Passwort nicht korrekt');
       expect(browser.driver.findElement(by.id('timer')).getText()).toMatch(/^Du wirst in \d{2} Sekunden umgeleitet$/);
       browser.driver.findElement(by.xpath("//button[@type='reset']")).click();
