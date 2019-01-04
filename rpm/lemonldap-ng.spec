@@ -169,8 +169,8 @@ BuildRequires:  perl(utf8)
 BuildRequires:  perl(warnings)
 %if 0%{?fedora}
 BuildRequires:  perl(Web::ID)
-BuildRequires:  perl(XML::LibXML)
 %endif
+BuildRequires:  perl(XML::LibXML)
 BuildRequires:  perl(XML::LibXSLT)
 BuildRequires:  perl(XML::Simple)
 BuildRequires:  perl(YAML)
@@ -186,7 +186,7 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 # Setup requires filtering
 %if 0%{?rhel} >= 7
 %{?perl_default_filter}
-%global __requires_exclude perl\\(lasso|perl\\(Web::ID|perl\\(XML::LibXML|perl\\(Sentry::Raven
+%global __requires_exclude perl\\(lasso|perl\\(Web::ID|perl\\(Sentry::Raven
 %endif
 
 %if 0%{?fedora}
