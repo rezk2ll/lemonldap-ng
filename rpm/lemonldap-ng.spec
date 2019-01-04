@@ -98,12 +98,9 @@ BuildRequires:  perl(Digest::HMAC_SHA1)
 BuildRequires:  perl(Digest::MD5)
 BuildRequires:  perl(Digest::SHA)
 BuildRequires:  perl(Email::Date::Format)
-# Not available for EL6
-%if ! 0%{?el6}
 BuildRequires:  perl(Email::Sender)
 BuildRequires:  perl(Email::Sender::Simple)
 BuildRequires:  perl(Email::Sender::Transport::SMTP)
-%endif
 BuildRequires:  perl(Encode)
 BuildRequires:  perl(English)
 BuildRequires:  perl(Env)
@@ -139,9 +136,7 @@ BuildRequires:  perl(Mouse)
 BuildRequires:  perl(Net::LDAP)
 BuildRequires:  perl(Net::LDAP::Extension::SetPassword)
 BuildRequires:  perl(Net::LDAP::Util)
-%if 0%{?fedora} || 0%{?rhel} >=7
 BuildRequires:  perl(Net::OpenID::Server)
-%endif
 BuildRequires:  perl(Plack)
 BuildRequires:  perl(Plack::Handler::CGI)
 BuildRequires:  perl(Plack::Handler::FCGI)
@@ -179,9 +174,7 @@ BuildRequires:  perl(XML::LibXML)
 BuildRequires:  perl(XML::LibXSLT)
 BuildRequires:  perl(XML::Simple)
 BuildRequires:  perl(YAML)
-%if 0%{?fedora} || 0%{?rhel} >= 7
 BuildRequires:  systemd
-%endif
 
 Requires: lemonldap-ng-conf = %{version}-%{release}
 Requires: lemonldap-ng-doc = %{version}-%{release}
@@ -191,11 +184,6 @@ Requires: lemonldap-ng-portal = %{version}-%{release}
 Requires: lemonldap-ng-test = %{version}-%{release}
 
 # Setup requires filtering
-%if 0%{?rhel} == 6
-%filter_from_requires /perl(lasso/d; /perl(Net::OpenID/d; /perl(Web::ID/d; /perl(XML::LibXML/d; /perl(XML::LibXSLT/d; /perl(Sentry::Raven/d;
-%filter_setup
-%endif
-
 %if 0%{?rhel} >= 7
 %{?perl_default_filter}
 %global __requires_exclude perl\\(lasso|perl\\(Web::ID|perl\\(XML::LibXML|perl\\(XML::LibXSLT|perl\\(Sentry::Raven
