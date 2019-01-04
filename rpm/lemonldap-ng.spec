@@ -139,7 +139,7 @@ BuildRequires:  perl(Mouse)
 BuildRequires:  perl(Net::LDAP)
 BuildRequires:  perl(Net::LDAP::Extension::SetPassword)
 BuildRequires:  perl(Net::LDAP::Util)
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} >=7
 BuildRequires:  perl(Net::OpenID::Server)
 %endif
 BuildRequires:  perl(Plack)
@@ -198,7 +198,7 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 
 %if 0%{?rhel} >= 7
 %{?perl_default_filter}
-%global __requires_exclude perl\\(lasso|perl\\(Net::OpenID|perl\\(Web::ID|perl\\(XML::LibXML|perl\\(XML::LibXSLT|perl\\(Sentry::Raven
+%global __requires_exclude perl\\(lasso|perl\\(Web::ID|perl\\(XML::LibXML|perl\\(XML::LibXSLT|perl\\(Sentry::Raven
 %endif
 
 %if 0%{?fedora}
