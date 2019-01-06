@@ -18,7 +18,7 @@ describe('00 Lemonldap::NG', function() {
       browser.driver.findElement(by.xpath("//img[@title='fr']")).click();
       expect(browser.driver.findElement(by.css('[trspan="createAccount"]')).getText()).toEqual('Créer un compte');
     });
-    it('should want to crete an account', function() {
+    it('should create an account', function() {
       browser.driver.findElement(by.css('[trspan="createAccount"]')).click();
       expect(browser.driver.findElement(by.css('[trmsg="78"]')).getText()).toEqual('Merci de saisir vos informations');
 
@@ -30,7 +30,7 @@ describe('00 Lemonldap::NG', function() {
         expect(elems.length).toEqual(1);
       });
     });
-    it('should want to authenticate with history', function() {
+    it('should authenticate with history', function() {
       expect(browser.driver.findElement(by.css('[trspan="back2Portal"]')).getText()).toEqual('Retourner au portail');
       browser.driver.findElement(by.css('[trspan="back2Portal"]')).click();
       
@@ -47,14 +47,16 @@ describe('00 Lemonldap::NG', function() {
       browser.driver.findElement(by.xpath("//input[@name='password']")).sendKeys('dwho');
       browser.driver.findElement(by.xpath("//input[@name='checkLogins']")).click();
       browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
+
+      // Change lang
       browser.driver.findElement(by.xpath("//img[@title='de']")).click();
       expect(browser.driver.findElement(by.css('[trspan="info"]')).getText()).toEqual("Information");
-      
+    });
+    it('should display history', function() {
       // Two entries
       browser.driver.findElements(by.xpath('//table/tbody/tr')).then(function(elems) {
         expect(elems.length).toEqual(2);
       });
-
       // Expect history with one login and one failed login
       browser.driver.findElements(by.xpath('//form/div/div/h3')).then(function(elems) {
         expect(elems.length).toEqual(3);
