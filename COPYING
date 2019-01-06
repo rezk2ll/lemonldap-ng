@@ -109,7 +109,7 @@ License: CC-BY-NC-ND-3.0 or GFDL-1.3
 Comment: downloaded from https://commons.wikimedia.org
 
 Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular*
-Copyright: 2010-2017, Google, Inc. https://angularjs.org
+Copyright: 2010-2018, Google, Inc. https://angularjs.org
 License: Expat
 
 Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/*
@@ -121,7 +121,7 @@ Copyright: 2014, unspecified
 License: Expat
 
 Files: lemonldap-ng-*/site/htdocs/static/bwr/bootstrap/*
-Copyright: 2011-2016, Twitter Inc.
+Copyright: 2011-2018, Twitter Inc.
 License: Expat
 
 Files: lemonldap-ng-portal/site/htdocs/static/bwr/crypto-js/*
@@ -130,7 +130,7 @@ Copyright: 2009-2013 Jeff Mott
 License: Expat
 
 Files: lemonldap-ng-manager/site/htdocs/static/bwr/es5-shim/*
-Copyright: 2009-2015, Kristopher Michael Kowal and contributors
+Copyright: 2009-2015, contributors
 License: Expat
 
 Files: lemonldap-ng-manager/site/htdocs/static/bwr/file-saver.js/*
