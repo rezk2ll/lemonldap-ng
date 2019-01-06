@@ -5,12 +5,12 @@ use File::Temp 'tempdir';
 use IPC::Run;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADCREDENTIALS
-  PE_ERROR
-  PE_FIRSTACCESS
-  PE_FORMEMPTY
-  PE_NOTOKEN
-  PE_OK
+    PE_BADCREDENTIALS
+    PE_ERROR
+    PE_FIRSTACCESS
+    PE_FORMEMPTY
+    PE_NOTOKEN
+    PE_OK
 );
 
 our $VERSION = '2.0.1';
@@ -68,16 +68,16 @@ sub extractFormInfo {
     }
     my ( $out, $err );
     $self->logger->debug(
-"Launching:\ngpgv --homedir /dev/null --keyring $self->{db} <<EOF\n$signed\nEOF"
+        "Launching:\ngpgv --homedir /dev/null --keyring $self->{db} <<EOF\n$signed\nEOF"
     );
-    my $lang = $ENV{LANG};
-    my $language = $ENV{LANGUAGE};
-    $ENV{LANG} = 'C';
-    $ENV{LANGUAGE} = 'C';
-    IPC::Run::run( [ 'gpgv', '--homedir', '/dev/null', '--keyring', $self->db ],
+    my ( $lang, $language ) = ( $ENV{LANG}, $ENV{LANGUAGE} );
+    $ENV{LANG} = $ENV{LANGUAGE} = 'C';
+    IPC::Run::run(
+        [ 'gpgv', '--homedir', '/dev/null', '--keyring', $self->db ],
         \$signed, \$out, \$err, IPC::Run::timeout(10) );
     if ( $? >> 8 != 0 ) {
-        $self->userLogger->error("GPG verification fails:\n$out\n# # #\n$err");
+        $self->userLogger->error(
+            "GPG verification fails:\n$out\n# # #\n$err");
         $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }
@@ -93,8 +93,7 @@ sub extractFormInfo {
     $self->logger->debug("GPG full sign key: $key");
     my $in;
     IPC::Run::run(
-        [
-            'gpg',     '--homedir',  $self->tmp, '--keyring',
+        [   'gpg',     '--homedir',  $self->tmp, '--keyring',
             $self->db, '--list-key', $key
         ],
         \$in,
@@ -102,8 +101,7 @@ sub extractFormInfo {
         \$err,
         IPC::Run::timeout(10)
     );
-    $ENV{LANG} = $lang;
-    $ENV{LANGUAGE} = $language;
+    ( $ENV{LANG}, $ENV{LANGUAGE} ) = ( $lang, $language );
     if ( $? >> 8 != 0 ) {
         $self->logger->error("gpg --list-key return an error:\n$err");
         return PE_ERROR;
