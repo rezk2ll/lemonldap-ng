@@ -204,7 +204,7 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 %if 0%{?fedora}
 %{?perl_default_filter}
 %if 0%{?fedora} < 29
-%global __requires_exclude perl\\(lasso
+%global __requires_exclude perl\\(Lasso
 %endif
 %endif
 
