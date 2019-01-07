@@ -186,7 +186,7 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 # Setup requires filtering
 %if 0%{?rhel} >= 7
 %{?perl_default_filter}
-%global __requires_exclude perl\\(lasso|perl\\(Web::ID|perl\\(Sentry::Raven
+%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven
 %endif
 
 %if 0%{?fedora}
