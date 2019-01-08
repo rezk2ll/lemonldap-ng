@@ -248,6 +248,15 @@ sub _save {
         $saveParams->{cfgNum}      = $self->cfgNum;
         $saveParams->{cfgNumFixed} = 1;
     }
+    $new->{cfgAuthor} = 'lmConfigEditor: ' . `whoami`;
+    chomp $new->{cfgAuthor};
+    $new->{cfgAuthorIP} = '';
+    $new->{cfgDate}     = time;
+    $new->{cfgVersion}  = $VERSION;
+    $new->{cfgLog}      = '';
+    $new->{key} ||=
+      join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. 16 ) );
+
     my $s = $self->mgr->confAcc->saveConf( $new, %$saveParams );
     if ( $s > 0 ) {
         print STDERR "Saved under number $s\n";
