@@ -6,7 +6,7 @@ use strict;
 use Mouse;
 use HTML::Template;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Common::Module';
 
