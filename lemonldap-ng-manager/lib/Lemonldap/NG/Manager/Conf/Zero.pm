@@ -66,7 +66,7 @@ sub zeroConf {
                         'uri'         => 'http://lemonldap-ng.org/',
                         'display'     => 'on',
                         'logo'        => 'network.png',
-                        'name'        => 'Offical Website'
+                        'name'        => 'Official Website'
                     },
                     'type' => 'application'
                 },

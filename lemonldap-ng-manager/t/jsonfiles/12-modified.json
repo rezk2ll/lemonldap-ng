@@ -136,7 +136,7 @@
             "id": "applicationList/0008-cat/0009-app",
             "type": "menuApp"
           }, {
-            "title": "Offical Website",
+            "title": "Official Website",
             "type": "menuApp",
             "id": "applicationList/0008-cat/0010-app",
             "data": {

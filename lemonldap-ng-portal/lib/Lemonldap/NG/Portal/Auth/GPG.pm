@@ -13,7 +13,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
     PE_OK
 );
 
-our $VERSION = '2.0.1';
+our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Portal::Auth::_WebForm';
 
