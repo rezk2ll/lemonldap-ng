@@ -82,7 +82,7 @@ ok(
 
 ok(
     $res->[2]->[0] =~
-qr%<input name="code" value="" class="form-control" id="extcode" trplaceholder="code">%,
+qr%<input name="code" value="" class="form-control" id="extcode" trplaceholder="code" autocomplete="off" />%,
     'Found EXTCODE input'
 ) or print STDERR Dumper( $res->[2]->[0] );
 
