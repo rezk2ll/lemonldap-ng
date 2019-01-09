@@ -68,6 +68,8 @@ describe('01 Lemonldap::NG', function() {
         links[0].click();
         browser.sleep(1000);
       });
+    });
+    it('Should have seven links', function() {
       browser.driver.findElements(by.xpath('//main/div/div/div/div/h4')).then(function(elems) {
         expect(elems.length).toEqual(7);
         expect(elems[0].getText()).toEqual('Sample applications');
@@ -85,6 +87,42 @@ describe('01 Lemonldap::NG', function() {
         expect(elems[6].getText()).toEqual('Local documentation');
         expect(elems[7].getText()).toEqual('Official Website');
       });
+      browser.driver.findElement(by.css('[alt="Application Test 1"]')).click();
+      browser.sleep(1000);
+      expect(browser.driver.findElement(by.id('v-Host')).getText()).toEqual('test1.example.com:' + process.env.TESTWEBSERVERPORT );
+      browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
+
+      browser.driver.findElement(by.css('[alt="Application Test 2"]')).click();
+      browser.sleep(1000);
+      expect(browser.driver.findElement(by.id('v-Host')).getText()).toEqual('test2.example.com:' + process.env.TESTWEBSERVERPORT );
+      browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
+
+      browser.driver.findElement(by.css('[alt="WebSSO Manager"]')).click();
+      browser.sleep(1000);
+      expect(browser.driver.findElement(by.css('[trspan="currentConfiguration"]')).getText()).toEqual('Configuration actuelle');
+      browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
+
+      browser.driver.findElement(by.css('[alt="Sessions explorer"]')).click();
+      browser.sleep(1000);
+      expect(browser.driver.findElement(by.css('[trspan="session_s"]')).getText()).toEqual('session(s)');
+      browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
+
+      browser.driver.findElement(by.css('[alt="Notifications explorer"]')).click();
+      browser.sleep(1000);
+      expect(browser.driver.findElement(by.css('[trspan="noDatas"]')).getText()).toEqual('Aucune donnée à afficher');
+      browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
+
+      browser.driver.findElement(by.css('[alt="2FA Sessions explorer"]')).click();
+      browser.sleep(1000);
+      expect(browser.driver.findElement(by.id('a-persistent')).getText()).toEqual('Explorateur sessions 2ndFA   ');
+      browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
+
+      browser.driver.findElement(by.css('[alt="Local documentation"]')).click();
+      browser.sleep(1000);
+      expect(browser.driver.findElement(by.xpath("//body/div/h1")).getText()).toEqual('LemonLDAP::NG offline documentation');
+      browser.driver.findElement(by.tagName('a')).click();
+      expect(browser.driver.findElement(by.tagName('h1')).getText()).toEqual('Documentation for LemonLDAP::NG 2.0');
+      browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
     });
   });
 });
