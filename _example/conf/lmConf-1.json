@@ -75,7 +75,7 @@
                "description" : "Official LemonLDAP::NG Website",
                "display" : "on",
                "logo" : "network.png",
-               "name" : "Offical Website",
+               "name" : "Official Website",
                "uri" : "http://lemonldap-ng.org/"
             },
             "type" : "application"
@@ -86,7 +86,7 @@
    "authentication" : "Demo",
    "cfgAuthor" : "The LemonLDAP::NG team",
    "cfgNum" : 1,
-   "cfgVersion" : "2.0.0",
+   "cfgVersion" : "2.0.1",
    "cookieName" : "lemonldap",
    "demoExportedVars" : {
       "cn" : "cn",

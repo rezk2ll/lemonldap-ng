@@ -130,7 +130,7 @@ Copyright: 2009-2013 Jeff Mott
 License: Expat
 
 Files: lemonldap-ng-manager/site/htdocs/static/bwr/es5-shim/*
-Copyright: 2009-2015, Kristopher Michael Kowal and contributors
+Copyright: 2009-2015, contributors
 License: Expat
 
 Files: lemonldap-ng-manager/site/htdocs/static/bwr/file-saver.js/*

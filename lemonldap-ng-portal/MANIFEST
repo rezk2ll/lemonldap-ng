@@ -27,6 +27,7 @@ lib/Lemonldap/NG/Portal/Auth/Custom.pm
 lib/Lemonldap/NG/Portal/Auth/DBI.pm
 lib/Lemonldap/NG/Portal/Auth/Demo.pm
 lib/Lemonldap/NG/Portal/Auth/Facebook.pm
+lib/Lemonldap/NG/Portal/Auth/GPG.pm
 lib/Lemonldap/NG/Portal/Auth/Kerberos.pm
 lib/Lemonldap/NG/Portal/Auth/LDAP.pm
 lib/Lemonldap/NG/Portal/Auth/LinkedIn.pm
@@ -324,6 +325,7 @@ site/templates/bootstrap/customLoginHeader.tpl
 site/templates/bootstrap/error.tpl
 site/templates/bootstrap/ext2fcheck.tpl
 site/templates/bootstrap/footer.tpl
+site/templates/bootstrap/gpgform.tpl
 site/templates/bootstrap/header.tpl
 site/templates/bootstrap/idpchoice.tpl
 site/templates/bootstrap/info.tpl
@@ -402,6 +404,7 @@ t/26-AuthRemote.t
 t/27-AuthProxy.t
 t/28-AuthChoice-and-password.t
 t/28-AuthChoice-with-rules.t
+t/29-AuthGPG.t
 t/29-AuthSSL.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
@@ -499,6 +502,12 @@ t/76-2F-Ext-with-GrantSession.t
 t/76-2F-Ext-with-HISTORY.t
 t/90-Translations.t
 t/99-pod.t
+t/gpghome/key.asc
+t/gpghome/openpgp-revocs.d/9482CEFB055809CBAFE6D71AAB2D5542891D1677.rev
+t/gpghome/private-keys-v1.d/A076B0E7DB141A919271EE8B581CDFA8DA42F333.key
+t/gpghome/private-keys-v1.d/B7219440BCCD85200121CFB89F94C8D98C0397B3.key
+t/gpghome/pubring.kbx
+t/gpghome/trustdb.gpg
 t/lmConf-1.json
 t/pdata.pm
 t/README.md

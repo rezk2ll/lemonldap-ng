@@ -68,6 +68,10 @@ BEGIN {
     }
 }
 
+# Endpoints inserted after any main sub
+has 'afterSub'  => ( is => 'rw', default => sub { {} } );
+has 'aroundSub' => ( is => 'rw', default => sub { {} } );
+
 has spRules => (
     is      => 'rw',
     default => sub { {} }
@@ -363,9 +367,52 @@ sub findEP {
                     eval {
                         $obj->logger->debug("Launching ${plugin}::$callback");
                     };
-                    $obj->$callback( $_[0] );
+                    $obj->$callback(@_);
                 };
                 $self->logger->debug("  -> $callback");
+            }
+        }
+    }
+    if ( $obj->can('afterSub') ) {
+        $self->logger->debug("Found afterSub in $plugin");
+        my $h = $obj->afterSub;
+        unless ( ref $h and ref($h) eq 'HASH' ) {
+            $self->logger->error(
+                '"afterSub" endpoint must be a hashref, skipped');
+        }
+        else {
+            foreach my $ep ( keys %$h ) {
+                my $callback = $h->{$ep};
+                push @{ $self->afterSub->{$ep} }, sub {
+                    eval {
+                        $obj->logger->debug(
+                            "Launching ${plugin}::$callback afterSub $ep");
+                    };
+                    $obj->$callback(@_);
+                };
+            }
+        }
+    }
+    if ( $obj->can('aroundSub') ) {
+        $self->logger->debug("Found aroundSub in $plugin");
+        my $h = $obj->aroundSub;
+        unless ( ref $h and ref($h) eq 'HASH' ) {
+            $self->logger->error(
+                '"aroundSub" endpoint must be a hashref, skipped');
+        }
+        else {
+            foreach my $ep ( keys %$h ) {
+                my $callback = $h->{$ep};
+                my $previousSub = $self->aroundSub->{$ep} ||= sub {
+                    $self->logger->debug(
+                        "$ep launched inside ${plugin}::$callback");
+                    $self->$ep(@_);
+                };
+                $self->aroundSub->{$ep} = sub {
+                    $self->logger->debug(
+                        "Launching ${plugin}::$callback instead of $ep");
+                    $obj->$callback( $previousSub, @_ );
+                };
             }
         }
     }

@@ -1,9 +1,12 @@
 exports.config = {
   allScriptsTimeout: 11000,
 
-  specs: ['manager/*.js', 'handler/*.js'],
+  // Specific test
+  specs: process.env.E2E_TESTS,
+  // All tests
+  //specs: ['handler/*.js', 'portal/*.js', 'manager/*.js' ],
 
-  capabilities: {
+    capabilities: {
     'browserName': 'chrome'
   },
 

@@ -9,6 +9,7 @@ describe('08 Lemonldap::NG Manager', function() {
     it('should be able to add reload urls', function() {
       browser.get('/#/confs/latest');
       element(by.id('a-generalParameters')).click();
+      element(by.id('t-reloadParams')).click();
       element(by.id('t-reloadUrls')).click();
       element(by.css('.glyphicon-plus-sign')).click();
       element(by.id('a-reloadUrls')).click();
