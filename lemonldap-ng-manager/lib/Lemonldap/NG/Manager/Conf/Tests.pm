@@ -250,7 +250,7 @@ sub tests {
         cookieTTL => sub {
             return 1 unless ( defined $conf->{cookieExpiration} );
             return ( 0, "Cookie TTL must be higher than one minute" )
-                unless ( $conf->{cookieExpiration} > 60 );
+                unless ( $conf->{cookieExpiration} == 0 || $conf->{cookieExpiration} > 60 );
             return ( 1, "Cookie TTL should be higher or equal than one hour" )
                 unless ( $conf->{cookieExpiration} >= 3600
                 || $conf->{cookieExpiration} == 0 );
