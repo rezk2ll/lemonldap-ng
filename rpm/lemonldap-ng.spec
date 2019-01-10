@@ -387,6 +387,7 @@ This package installs the authentication portal.
     ETCDEFAULTDIR=%{_sysconfdir}/default \
     DNSDOMAIN=%{lm_dnsdomain} \
     APACHEVERSION=%{apache_version} \
+    APACHELOGDIR=/var/log/httpd \
     UWSGIYAMLDIR=%{_sysconfdir}/uwsgi/apps-available \
     LLNGAPPDIR=%{lm_sharedir}/llng-server \
     PROD=yes
