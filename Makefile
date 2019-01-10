@@ -111,6 +111,9 @@ UWSGIGROUP=$(APACHEGROUP)
 # Apache version
 APACHEVERSION=2.X
 
+# Apache log dir
+APACHELOGDIR=/var/log/apache2
+
 # DNS Domain for cookie and virtual hosts
 DNSDOMAIN=example.com
 
@@ -712,6 +715,7 @@ install_webserver_conf:
 			s#__MANAGERSITEDIR__#$(MANAGERSITEDIR)/#g; \
 			s#__MANAGERSTATICDIR__#$(MANAGERSTATICDIR)/#g; \
 			s#__TESTDIR__#$(TESTDIR)/#g; \
+			s#__APACHELOGDIR__#$(APACHELOGDIR)#g; \
 			s#__PORT__#$(PORT)#g; \
 			s#__CONFDIR__#$(CONFDIR)#g; \
 			s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g; \
