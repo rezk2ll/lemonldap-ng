@@ -127,7 +127,7 @@ sub scanTree {
     $self->newConf->{cfgNum} = $self->req->params('cfgNum');
     $self->newConf->{cfgAuthor}
         = $self->req->userData
-        ->{ $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}
+        ->{ $Lemonldap::NG::Handler::PSGI::Main::tsv->{whatToTrace}
             || '_whatToTrace' } // "anonymous";
     $self->newConf->{cfgAuthorIP} = $self->req->address;
     $self->newConf->{cfgDate}     = time;
