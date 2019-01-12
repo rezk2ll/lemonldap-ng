@@ -7,6 +7,7 @@ exports.config = {
   //specs: ['handler/*.js', 'portal/*.js', 'manager/*.js' ],
 
     capabilities: {
+    //'browserName': 'firefox'
     'browserName': 'chrome'
   },
 

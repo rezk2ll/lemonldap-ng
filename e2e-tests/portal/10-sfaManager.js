@@ -56,7 +56,7 @@ describe('10 Lemonldap::NG', function() {
         // Back to Portal
         links[3].click();
         browser.driver.findElement(by.xpath("//button[@type='button']")).click();
-        browser.sleep(1000);
+        browser.sleep(500);
         expect(browser.driver.findElement(by.css('[trspan="yourApps"]')).getText()).toEqual('Vos applications');
       });
     });
