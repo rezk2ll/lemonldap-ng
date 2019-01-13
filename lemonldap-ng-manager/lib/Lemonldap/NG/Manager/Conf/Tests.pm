@@ -195,7 +195,7 @@ sub tests {
         # Try to use Apache::Session module
         testApacheSession => sub {
             my ( $id, %h );
-            my $gc = $Lemonldap::NG::Handler::PSGI::Main::tsv
+            my $gc = Lemonldap::NG::Handler::Main->tsv
                 ->{sessionStorageModule};
             return 1
                 if ( ( $gc and $gc eq $conf->{globalStorage} )
