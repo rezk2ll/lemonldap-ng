@@ -235,7 +235,7 @@ sub tests {
 
         # Warn if cookie name has changed
         cookieNameChanged => sub {
-            my $cn = $Lemonldap::NG::Handler::PSGI::API::tsv->{cookieName};
+            my $cn = Lemonldap::NG::Handler::Main->tsv->{cookieName};
             return (
                 1,
                 (   $cn
