@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 # TODO: Missing:
 #  * activeTimer
@@ -551,19 +551,19 @@ sub tree {
                                         'mailCharset'
                                     ]
                                 },
-                                {   title => 'mailContent',
+                                {   title => 'mailPwdRstContent',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'mailSubject',
-                                        'mailBody',
-                                        'mailConfirmSubject',
-                                        'mailConfirmBody'
+                                        'mailPwdRstSubject',
+                                        'mailPwdRstBody',
+                                        'mailPwdRstConfirmSubject',
+                                        'mailPwdRstConfirmBody'
                                     ]
                                 },
                                 {   title => 'mailOther',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'mailUrl',
+                                        'mailPwdRstUrl',
                                         'randomPasswordRegexp',
                                         'mailTimeout',
                                         'mailSessionKey'
