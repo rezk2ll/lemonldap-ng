@@ -30,7 +30,8 @@ sub tests {
         portalIsInDomain => sub {
             return (
                 1,
-                (   index( $conf->{portal}, $conf->{domain} ) > 0
+                (
+                    index( $conf->{portal}, $conf->{domain} ) > 0
                     ? ''
                     : "Portal seems not to be in the domain $conf->{domain}"
                 )
@@ -42,7 +43,7 @@ sub tests {
 
             # Checking for ending slash
             $conf->{portal} .= '/'
-                unless ( $conf->{portal} =~ qr#/$# );
+              unless ( $conf->{portal} =~ qr#/$# );
 
             # Deleting trailing ending slash
             my $regex = qr#/+$#;
@@ -60,10 +61,11 @@ sub tests {
             }
             return (
                 1,
-                (   @pb
+                (
+                    @pb
                     ? 'Virtual hosts '
-                        . join( ', ', @pb )
-                        . " are not in $conf->{domain} and cross-domain-authentication is not set"
+                      . join( ', ', @pb )
+                      . " are not in $conf->{domain} and cross-domain-authentication is not set"
                     : undef
                 )
             );
@@ -77,9 +79,9 @@ sub tests {
             }
             if (@pb) {
                 return ( 0,
-                          'Virtual hosts '
-                        . join( ', ', @pb )
-                        . " contain a port, this is not allowed" );
+                        'Virtual hosts '
+                      . join( ', ', @pb )
+                      . " contain a port, this is not allowed" );
             }
             else { return 1; }
         },
@@ -92,9 +94,9 @@ sub tests {
             }
             if (@pb) {
                 return ( 0,
-                          'Virtual hosts '
-                        . join( ', ', @pb )
-                        . " must be in lower case" );
+                        'Virtual hosts '
+                      . join( ', ', @pb )
+                      . " must be in lower case" );
             }
             else { return 1; }
         },
@@ -102,12 +104,12 @@ sub tests {
         # Check if "userDB" and "authentication" are consistent
         authAndUserDBConsistency => sub {
             foreach
-                my $type (qw(Facebook Google OpenID OpenIDConnect SAML WebID))
+              my $type (qw(Facebook Google OpenID OpenIDConnect SAML WebID))
             {
                 return ( 0,
-                    "\"$type\" can not be used as user database without using \"$type\" for authentication"
-                    )
-                    if ($conf->{userDB} =~ /$type/
+"\"$type\" can not be used as user database without using \"$type\" for authentication"
+                  )
+                  if (  $conf->{userDB} =~ /$type/
                     and $conf->{authentication} !~ /$type/ );
             }
             return 1;
@@ -117,29 +119,30 @@ sub tests {
         checkAttrAndMacros => sub {
             my @tmp;
             foreach my $k ( keys %$conf ) {
-                if ( $k
-                    =~ /^(?:openIdSreg_(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)|whatToTrace)$/
-                    )
+                if ( $k =~
+/^(?:openIdSreg_(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)|whatToTrace)$/
+                  )
                 {
                     my $v = $conf->{$k};
                     $v =~ s/^$//;
                     next if ( $v =~ /^_/ );
                     push @tmp,
-                        $k
-                        unless (
+                      $k
+                      unless (
                         defined(
                             $conf->{exportedVars}->{$v}
-                                or defined( $conf->{macros}->{$v} )
+                              or defined( $conf->{macros}->{$v} )
                         )
-                        );
+                      );
                 }
             }
             return (
                 1,
-                (   @tmp
+                (
+                    @tmp
                     ? 'Values of parameter(s) "'
-                        . join( ', ', @tmp )
-                        . '" are not defined in exported attributes or macros'
+                      . join( ', ', @tmp )
+                      . '" are not defined in exported attributes or macros'
                     : ''
                 )
             );
@@ -151,18 +154,18 @@ sub tests {
             if ( $conf->{userDB} =~ /^Google$/ ) {
                 foreach my $k ( keys %{ $conf->{exportedVars} } ) {
                     my $v = $conf->{exportedVars}->{$k};
-                    if ( $v !~ Lemonldap::NG::Common::Regexp::GOOGLEAXATTR() )
-                    {
+                    if ( $v !~ Lemonldap::NG::Common::Regexp::GOOGLEAXATTR() ) {
                         push @tmp, $v;
                     }
                 }
             }
             return (
                 1,
-                (   @tmp
+                (
+                    @tmp
                     ? 'Values of parameter(s) "'
-                        . join( ', ', @tmp )
-                        . '" are not exported by Google'
+                      . join( ', ', @tmp )
+                      . '" are not exported by Google'
                     : ''
                 )
             );
@@ -174,8 +177,7 @@ sub tests {
             if ( $conf->{userDB} =~ /^OpenID$/ ) {
                 foreach my $k ( keys %{ $conf->{exportedVars} } ) {
                     my $v = $conf->{exportedVars}->{$k};
-                    if ( $v
-                        !~ Lemonldap::NG::Common::Regexp::OPENIDSREGATTR() )
+                    if ( $v !~ Lemonldap::NG::Common::Regexp::OPENIDSREGATTR() )
                     {
                         push @tmp, $v;
                     }
@@ -183,10 +185,11 @@ sub tests {
             }
             return (
                 1,
-                (   @tmp
+                (
+                    @tmp
                     ? 'Values of parameter(s) "'
-                        . join( ', ', @tmp )
-                        . '" are not exported by OpenID SREG'
+                      . join( ', ', @tmp )
+                      . '" are not exported by OpenID SREG'
                     : ''
                 )
             );
@@ -195,51 +198,51 @@ sub tests {
         # Try to use Apache::Session module
         testApacheSession => sub {
             my ( $id, %h );
-            my $gc = Lemonldap::NG::Handler::Main->tsv
-                ->{sessionStorageModule};
+            my $gc = Lemonldap::NG::Handler::Main->tsv->{sessionStorageModule};
             return 1
-                if ( ( $gc and $gc eq $conf->{globalStorage} )
-                or $conf->{globalStorage}
-                =~ /^Lemonldap::NG::Common::Apache::Session::/ );
+              if ( ( $gc and $gc eq $conf->{globalStorage} )
+                or $conf->{globalStorage} =~
+                /^Lemonldap::NG::Common::Apache::Session::/ );
             eval "use $conf->{globalStorage}";
             return ( -1, "Unknown package $conf->{globalStorage}" ) if ($@);
             eval {
                 tie %h, 'Lemonldap::NG::Common::Apache::Session', undef,
-                    {
+                  {
                     %{ $conf->{globalStorageOptions} },
                     backend => $conf->{globalStorage}
-                    };
+                  };
             };
             return ( -1, "Unable to create a session ($@)" )
-                if ( $@ or not tied(%h) );
+              if ( $@ or not tied(%h) );
             eval {
                 $h{a} = 1;
                 $id = $h{_session_id} or return ( -1, 'No _session_id' );
                 untie(%h);
                 tie %h, 'Lemonldap::NG::Common::Apache::Session', $id,
-                    {
+                  {
                     %{ $conf->{globalStorageOptions} },
                     backend => $conf->{globalStorage}
-                    };
+                  };
             };
             return ( -1, "Unable to insert data ($@)" ) if ($@);
             return ( -1, "Unable to recover data stored" )
-                unless ( $h{a} == 1 );
+              unless ( $h{a} == 1 );
             eval { tied(%h)->delete; };
             return ( -1, "Unable to delete session ($@)" ) if ($@);
             return ( -1,
-                'All sessions may be lost and you must restart all your Apache servers'
+'All sessions may be lost and you must restart all your Apache servers'
             ) if ( $gc and $conf->{globalStorage} ne $gc );
             return 1;
         },
 
         # Warn if cookie name has changed
         cookieNameChanged => sub {
-            my $cn = $Lemonldap::NG::Handler::PSGI::API::tsv->{cookieName};
+            my $cn = Lemonldap::NG::Handler::Main->tsv->{cookieName};
             return (
                 1,
-                (   $cn
-                        and $cn ne $conf->{cookieName}
+                (
+                    $cn
+                      and $cn ne $conf->{cookieName}
                     ? 'Cookie name has changed, you must restart all your web servers'
                     : ()
                 )
@@ -250,9 +253,10 @@ sub tests {
         cookieTTL => sub {
             return 1 unless ( defined $conf->{cookieExpiration} );
             return ( 0, "Cookie TTL must be higher than one minute" )
-                unless ( $conf->{cookieExpiration} == 0 || $conf->{cookieExpiration} > 60 );
+              unless ( $conf->{cookieExpiration} == 0
+                || $conf->{cookieExpiration} > 60 );
             return ( 1, "Cookie TTL should be higher or equal than one hour" )
-                unless ( $conf->{cookieExpiration} >= 3600
+              unless ( $conf->{cookieExpiration} >= 3600
                 || $conf->{cookieExpiration} == 0 );
 
             # Return
@@ -263,7 +267,7 @@ sub tests {
         sessionTimeout => sub {
             return 1 unless ( defined $conf->{timeout} );
             return ( -1, "Session timeout should be higher than ten minutes" )
-                unless ( $conf->{timeout} > 600
+              unless ( $conf->{timeout} > 600
                 || $conf->{timeout} == 0 );
 
             # Return
@@ -274,9 +278,9 @@ sub tests {
         sessionTimeoutActivity => sub {
             return 1 unless ( defined $conf->{timeoutActivity} );
             return ( 0,
-                "Session activity timeout must be higher or equal than one minute"
-                )
-                unless ( $conf->{timeoutActivity} > 59
+"Session activity timeout must be higher or equal than one minute"
+              )
+              unless ( $conf->{timeoutActivity} > 59
                 || $conf->{timeoutActivity} == 0 );
 
             # Return
@@ -287,11 +291,11 @@ sub tests {
         timeoutActivityInterval => sub {
             return 1 unless ( defined $conf->{timeoutActivityInterval} );
             return ( 0,
-                "Activity timeout interval must be lower than session activity timeout"
-                )
-                if ($conf->{timeoutActivity}
-                and $conf->{timeoutActivity}
-                <= $conf->{timeoutActivityInterval} );
+"Activity timeout interval must be lower than session activity timeout"
+              )
+              if (  $conf->{timeoutActivity}
+                and $conf->{timeoutActivity} <=
+                $conf->{timeoutActivityInterval} );
 
             # Return
             return 1;
@@ -301,7 +305,8 @@ sub tests {
         managerProtection => sub {
             return (
                 1,
-                (   $conf->{cfgAuthor} eq 'anonymous'
+                (
+                    $conf->{cfgAuthor} eq 'anonymous'
                     ? 'Your manager seems to be unprotected'
                     : ''
                 )
@@ -317,21 +322,21 @@ sub tests {
             # Use SMTP
             eval "use Net::SMTP";
             return ( 1, "Net::SMTP module is required to use SMTP server" )
-                if ($@);
+              if ($@);
 
             # Create SMTP object
             my $smtp = Net::SMTP->new( $conf->{SMTPServer}, Timeout => 5 );
             return ( 1,
                 "SMTP connection to " . $conf->{SMTPServer} . " failed" )
-                unless ($smtp);
+              unless ($smtp);
 
             # Skip other tests if no authentication
             return 1
-                unless ( $conf->{SMTPAuthUser} and $conf->{SMTPAuthPass} );
+              unless ( $conf->{SMTPAuthUser} and $conf->{SMTPAuthPass} );
 
             # Try authentication
             return ( 1, "SMTP authentication failed" )
-                unless $smtp->auth( $conf->{SMTPAuthUser},
+              unless $smtp->auth( $conf->{SMTPAuthUser},
                 $conf->{SMTPAuthPass} );
 
             # Return
@@ -341,14 +346,15 @@ sub tests {
         # SAML entity ID must be uniq
         samlIDPEntityIdUniqueness => sub {
             return 1
-                unless ( $conf->{samlIDPMetaDataXML}
+              unless ( $conf->{samlIDPMetaDataXML}
                 and %{ $conf->{samlIDPMetaDataXML} } );
             my @msg;
             my $res = 1;
             my %entityIds;
             foreach my $idpId ( keys %{ $conf->{samlIDPMetaDataXML} } ) {
-                unless ( $conf->{samlIDPMetaDataXML}->{$idpId}
-                    ->{samlIDPMetaDataXML} =~ /entityID=(['"])(.+?)\1/si )
+                unless (
+                    $conf->{samlIDPMetaDataXML}->{$idpId}->{samlIDPMetaDataXML}
+                    =~ /entityID=(['"])(.+?)\1/si )
                 {
                     push @msg, "$idpId SAML metadata has no EntityID";
                     $res = 0;
@@ -357,7 +363,7 @@ sub tests {
                 my $eid = $2;
                 if ( defined $entityIds{$eid} ) {
                     push @msg,
-                        "$idpId and $entityIds{$eid} have the same SAML EntityID";
+                      "$idpId and $entityIds{$eid} have the same SAML EntityID";
                     $res = 0;
                     next;
                 }
@@ -367,15 +373,15 @@ sub tests {
         },
         samlSPEntityIdUniqueness => sub {
             return 1
-                unless ( $conf->{samlSPMetaDataXML}
+              unless ( $conf->{samlSPMetaDataXML}
                 and %{ $conf->{samlSPMetaDataXML} } );
             my @msg;
             my $res = 1;
             my %entityIds;
             foreach my $spId ( keys %{ $conf->{samlSPMetaDataXML} } ) {
                 unless (
-                    $conf->{samlSPMetaDataXML}->{$spId}->{samlSPMetaDataXML}
-                    =~ /entityID=(['"])(.+?)\1/si )
+                    $conf->{samlSPMetaDataXML}->{$spId}->{samlSPMetaDataXML} =~
+                    /entityID=(['"])(.+?)\1/si )
                 {
                     push @msg, "$spId SAML metadata has no EntityID";
                     $res = 0;
@@ -384,7 +390,7 @@ sub tests {
                 my $eid = $2;
                 if ( defined $entityIds{$eid} ) {
                     push @msg,
-                        "$spId and $entityIds{$eid} have the same SAML EntityID";
+                      "$spId and $entityIds{$eid} have the same SAML EntityID";
                     $res = 0;
                     next;
                 }
@@ -398,7 +404,7 @@ sub tests {
             return 1 unless ( $conf->{authentication} eq 'Combination' );
             require Lemonldap::NG::Common::Combination::Parser;
             return ( 0, 'No module declared for combination' )
-                unless ( $conf->{combModules} and %{ $conf->{combModules} } );
+              unless ( $conf->{combModules} and %{ $conf->{combModules} } );
             my $moduleList;
             foreach my $md ( keys %{ $conf->{combModules} } ) {
                 my $entry = $conf->{combModules}->{$md};
@@ -409,8 +415,8 @@ sub tests {
                 );
             }
             eval {
-                Lemonldap::NG::Common::Combination::Parser->parse(
-                    $moduleList, $conf->{combination} );
+                Lemonldap::NG::Common::Combination::Parser->parse( $moduleList,
+                    $conf->{combination} );
             };
             return ( 0, $@ ) if ($@);
 
@@ -422,9 +428,9 @@ sub tests {
         combinationParameters => sub {
             return 1 unless ( $conf->{authentication} eq "Combination" );
             return ( 0, "Combination rule must be defined" )
-                unless ( $conf->{combination} );
+              unless ( $conf->{combination} );
             return ( 0, 'userDB must be set to "Same" to enable Combination' )
-                unless ( $conf->{userDB} eq "Same" );
+              unless ( $conf->{userDB} eq "Same" );
 
             # Return
             return 1;
@@ -447,7 +453,7 @@ sub tests {
                 eval "use Convert::Base32";
                 return ( 1,
                     "Convert::Base32 module is required to enable TOTP" )
-                    if ($@);
+                  if ($@);
             }
 
             # Use U2F
@@ -456,7 +462,7 @@ sub tests {
             {
                 eval "use Crypt::U2F::Server::Simple";
                 return ( 1,
-                    "Crypt::U2F::Server::Simple module is required to enable U2F"
+"Crypt::U2F::Server::Simple module is required to enable U2F"
                 ) if ($@);
             }
 
@@ -464,7 +470,7 @@ sub tests {
             if ( $conf->{yubikey2fActivation} ) {
                 eval "use Auth::Yubikey_WebClient";
                 return ( 1,
-                    "Auth::Yubikey_WebClient module is required to enable Yubikey"
+"Auth::Yubikey_WebClient module is required to enable Yubikey"
                 ) if ($@);
             }
 
@@ -478,7 +484,7 @@ sub tests {
             my $w = "";
             foreach ( 'totp', 'u' ) {
                 $w .= uc($_) . "2F is activated twice \n"
-                    if ( $conf->{ $_ . '2fActivation' } eq '1' );
+                  if ( $conf->{ $_ . '2fActivation' } eq '1' );
             }
             return ( 1, ( $w ? $w : () ) );
         },
@@ -489,8 +495,10 @@ sub tests {
             return 1 unless ( defined $conf->{totp2fDigits} );
             return (
                 1,
-                (   (          $conf->{totp2fDigits} == 6
-                            or $conf->{totp2fDigits} == 8
+                (
+                    (
+                             $conf->{totp2fDigits} == 6
+                          or $conf->{totp2fDigits} == 8
                     )
                     ? ''
                     : 'TOTP should be 6 or 8 digits long'
@@ -502,9 +510,9 @@ sub tests {
         totp2fParams => sub {
             return 1 unless ( $conf->{totp2fActivation} );
             return ( 0, 'TOTP range must be defined' )
-                unless ( $conf->{totp2fRange} );
+              unless ( $conf->{totp2fRange} );
             return ( 1, "TOTP interval should be higher than 10s" )
-                unless ( $conf->{totp2fInterval} > 10 );
+              unless ( $conf->{totp2fInterval} > 10 );
 
             # Return
             return 1;
@@ -515,11 +523,12 @@ sub tests {
         yubikey2fParams => sub {
             return 1 unless ( $conf->{yubikey2fActivation} );
             return ( 0, "Yubikey client ID and secret key must be set" )
-                unless ( defined $conf->{yubikey2fSecretKey}
+              unless ( defined $conf->{yubikey2fSecretKey}
                 && defined $conf->{yubikey2fClientID} );
             return (
                 1,
-                (   ( $conf->{yubikey2fPublicIDSize} == 12 )
+                (
+                    ( $conf->{yubikey2fPublicIDSize} == 12 )
                     ? ''
                     : 'Yubikey public ID size should be 12 digits long'
                 )
@@ -530,7 +539,7 @@ sub tests {
         rest2fVerifyUrl => sub {
             return 1 unless ( $conf->{rest2fActivation} );
             return ( 0, "REST 2F Verify URL must be set" )
-                unless ( defined $conf->{rest2fVerifyUrl} );
+              unless ( defined $conf->{rest2fVerifyUrl} );
 
             # Return
             return 1;
@@ -544,16 +553,15 @@ sub tests {
             my $ok  = 0;
             foreach (qw(u totp yubikey)) {
                 $ok ||= $conf->{ $_ . '2fActivation' }
-                    && $conf->{ $_ . '2fSelfRegistration' };
+                  && $conf->{ $_ . '2fSelfRegistration' };
                 last if ($ok);
             }
 
             $ok ||= $conf->{'utotp2fActivation'}
-                && ( $conf->{'u2fSelfRegistration'}
+              && ( $conf->{'u2fSelfRegistration'}
                 || $conf->{'totp2fSelfRegistration'} );
-            $msg
-                = "A self registrable module should be enabled to require 2FA"
-                unless ($ok);
+            $msg = "A self registrable module should be enabled to require 2FA"
+              unless ($ok);
 
             return ( 1, $msg );
         },
@@ -562,7 +570,7 @@ sub tests {
         ext2fCommands => sub {
             return 1 unless ( $conf->{ext2fActivation} );
             return ( 0, "External 2F Send or Validate command must be set" )
-                unless ( defined $conf->{ext2FSendCommand}
+              unless ( defined $conf->{ext2FSendCommand}
                 && defined $conf->{ext2FValidateCommand} );
 
             # Return
@@ -573,9 +581,9 @@ sub tests {
         formTimeout => sub {
             return 1 unless ( defined $conf->{formTimeout} );
             return ( 0, "XSRF form token TTL must be higher than 30s" )
-                unless ( $conf->{formTimeout} > 30 );
+              unless ( $conf->{formTimeout} > 30 );
             return ( 1, "XSRF form token TTL should not be higher than 2mn" )
-                if ( $conf->{formTimeout} > 120 );
+              if ( $conf->{formTimeout} > 120 );
 
             # Return
             return 1;
@@ -584,9 +592,8 @@ sub tests {
         # Warn if number of password reset retries is null
         passwordResetRetries => sub {
             return 1 unless ( $conf->{portalDisplayResetPassword} );
-            return ( 1,
-                "Number of reset password retries should not be null" )
-                unless ( $conf->{passwordResetAllowedRetries} );
+            return ( 1, "Number of reset password retries should not be null" )
+              unless ( $conf->{passwordResetAllowedRetries} );
 
             # Return
             return 1;
@@ -596,10 +603,10 @@ sub tests {
         bruteForceProtection => sub {
             return 1 unless ( $conf->{bruteForceProtection} );
             return ( 1,
-                '"History" plugin is required to enable "BruteForceProtection" plugin'
+'"History" plugin is required to enable "BruteForceProtection" plugin'
             ) unless ( $conf->{loginHistoryEnabled} );
             return ( 1,
-                'Number of failed logins must be higher than 2 to enable "BruteForceProtection" plugin'
+'Number of failed logins must be higher than 2 to enable "BruteForceProtection" plugin'
             ) unless ( $conf->{failedLoginNumber} > 2 );
 
             # Return
@@ -610,9 +617,9 @@ sub tests {
         checkMailResetSecurity => sub {
             return 1 unless ( $conf->{portalDisplayResetPassword} );
             return ( -1,
-                '"passwordMailReset" plugin is enabled without CSRF Token neither Captcha required !!!'
-                )
-                unless ( $conf->{requireToken}
+'"passwordMailReset" plugin is enabled without CSRF Token neither Captcha required !!!'
+              )
+              unless ( $conf->{requireToken}
                 or $conf->{captcha_mail_enabled} );
 
             # Return

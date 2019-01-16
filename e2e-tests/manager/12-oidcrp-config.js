@@ -9,12 +9,12 @@ describe('12 Lemonldap::NG Manager', function() {
     it('should add an OIDC RP', function() {
       browser.get('/#/confs/latest');
       element(by.id('t-oidcRPMetaDataNodes')).click();
-      element(by.css('.glyphicon-plus-sign')).click();
+      element.all(by.css('.glyphicon-plus-sign')).first().click();
       element(by.id('promptok')).click();
       browser.sleep(500);
       element(by.id('a-oidcRPMetaDataNodes/new__rp-example')).click();
       element(by.id('t-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataExportedVars')).click();
-      element(by.css('.glyphicon-plus-sign')).click();
+      element.all(by.css('.glyphicon-plus-sign')).first().click();
       //element(by.id('a-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataExportedVars')).click();
       element(by.id('t-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataExportedVars/n1')).click();
       element(by.id('hashkeyinput')).clear().sendKeys('MyKey');
@@ -24,7 +24,7 @@ describe('12 Lemonldap::NG Manager', function() {
       element(by.id('t-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataOptionsClientID')).click();
       element(by.id('textinput')).clear().sendKeys('MyClientID');
       element(by.id('t-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataOptionsExtraClaims')).click();
-      element(by.css('.glyphicon-plus-sign')).click();
+      element.all(by.css('.glyphicon-plus-sign')).first().click();
       //element(by.id('a-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataOptionsExtraClaims')).click();
       element(by.id('t-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataOptionsExtraClaims/n2')).click();
       element(by.id('hashkeyinput')).clear().sendKeys('MyClaim');

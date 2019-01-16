@@ -70,6 +70,7 @@ describe('01 Lemonldap::NG Manager', function() {
     });
     it('General Parameters > Authn. parameters > Users modules => Should have 7 modules availabled with "Same" selected', function() {
       element(by.id('t-userDB')).click();
+      browser.sleep(1000);
       expect(element(by.css('option[selected="selected"]')).getAttribute('Value')).toEqual('Same');
       expect(element.all(by.repeater('item in currentNode.select')).count()).toEqual(7);
     });
