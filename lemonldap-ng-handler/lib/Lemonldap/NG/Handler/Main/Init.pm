@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::Init;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -66,7 +66,9 @@ sub logLevelInit {
 # adapt server signature
 sub serverSignatureInit {
     my $class = shift;
-    $class->setServerSignature("Lemonldap::NG/$VERSION");
+    require Lemonldap::NG::Handler;
+    my $version = $Lemonldap::NG::Handler::VERSION;
+    $class->setServerSignature("Lemonldap::NG/$version");
 }
 
 ## @ifn protected void statusInit()
@@ -107,7 +109,7 @@ sub statusInit {
             exec $perl_exec, '-MLemonldap::NG::Handler::Lib::Status',
 
               # Insert @INC in Perl path
-              map( { "-I$_" } @INC ),
+              map( {"-I$_"} @INC ),
 
               # Command to launch
               '-e', '&Lemonldap::NG::Handler::Lib::Status::run()',
