@@ -103,7 +103,7 @@ sub sessions {
 
     # Case 2: list of sessions
 
-    my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
+    my $whatToTrace = Lemonldap::NG::Handler::Main->tsv->{whatToTrace};
 
     # 2.1 Get fields to require
     my @fields = ( '_httpSessionType', $self->{ipField}, $whatToTrace );
