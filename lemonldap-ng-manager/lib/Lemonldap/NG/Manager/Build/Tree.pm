@@ -506,11 +506,32 @@ sub tree {
                         'upgradeSession',
                         {   title => 'portalServers',
                             help  => 'portalservers.html',
-                            form  => 'simpleInputContainer',
                             nodes => [
-                                'wsdlServer',       'restSessionServer',
-                                'restConfigServer', 'soapSessionServer',
-                                'soapConfigServer', 'exportedAttr'
+                                'wsdlServer',
+                                'restSessionServer',
+                                'restConfigServer',
+                                'soapSessionServer',
+                                'soapConfigServer',
+                                'exportedAttr',
+                                {   title => 'SMTP',
+                                    nodes => [
+                                        'SMTPServer',
+                                        'SMTPPort',
+                                        'SMTPAuthUser',
+                                        'SMTPAuthPass',
+                                        'SMTPTLS',
+                                        'SMTPTLSOpts',
+                                        'mailSessionKey',
+                                        {   title => 'mailHeaders',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'mailFrom',
+                                                'mailReplyTo',
+                                                'mailCharset'
+                                            ]
+                                        },
+                                    ]
+                                },
                             ]
                         },
                         {   title => 'loginHistory',
@@ -537,20 +558,6 @@ sub tree {
                         {   title => 'passwordManagement',
                             help  => 'resetpassword.html',
                             nodes => [
-                                {   title => 'SMTP',
-                                    nodes => [
-                                        'SMTPServer',   'SMTPPort',
-                                        'SMTPAuthUser', 'SMTPAuthPass',
-                                        'SMTPTLS',      'SMTPTLSOpts',
-                                    ]
-                                },
-                                {   title => 'mailHeaders',
-                                    form  => 'simpleInputContainer',
-                                    nodes => [
-                                        'mailFrom', 'mailReplyTo',
-                                        'mailCharset'
-                                    ]
-                                },
                                 {   title => 'mailPwdRstContent',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -566,7 +573,7 @@ sub tree {
                                         'mailPwdRstUrl',
                                         'randomPasswordRegexp',
                                         'mailTimeout',
-                                        'mailSessionKey'
+
                                     ]
                                 }
                             ]
@@ -621,25 +628,32 @@ sub tree {
                             help  => 'u2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'u2fActivation', 'u2fSelfRegistration',
-                                'u2fAuthnLevel', 'u2fUserCanRemoveKey',
+                                'u2fActivation',
+                                'u2fSelfRegistration',
+                                'u2fAuthnLevel',
+                                'u2fUserCanRemoveKey',
                             ]
                         },
                         {   title => 'external2f',
                             help  => 'external2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'ext2fActivation',      'ext2FSendCommand',
-                                'ext2FValidateCommand', 'ext2fAuthnLevel',
+                                'ext2fActivation',
+                                'ext2FSendCommand',
+                                'ext2FValidateCommand',
+                                'ext2fAuthnLevel',
                                 'ext2fLogo',
                             ]
                         },
                         {   title => 'rest2f',
                             help  => 'rest2f.html',
                             nodes => [
-                                'rest2fActivation', 'rest2fInitUrl',
-                                'rest2fInitArgs',   'rest2fVerifyUrl',
-                                'rest2fVerifyArgs', 'rest2fAuthnLevel',
+                                'rest2fActivation',
+                                'rest2fInitUrl',
+                                'rest2fInitArgs',
+                                'rest2fVerifyUrl',
+                                'rest2fVerifyArgs',
+                                'rest2fAuthnLevel',
                                 'rest2fLogo',
                             ]
                         },
@@ -710,17 +724,20 @@ sub tree {
                             help  => 'redirections.html#portal_redirections',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'jsRedirect', 'noAjaxHook',
+                                'jsRedirect',
+                                'noAjaxHook',
                                 'skipRenewConfirmation',
                             ]
                         },
                         'nginxCustomHandlers',
-                        'logoutServices',   
+                        'logoutServices',
                         {   title => 'forms',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'infoFormMethod',     'confirmFormMethod',
-                                'redirectFormMethod', 'activeTimer',
+                                'infoFormMethod',
+                                'confirmFormMethod',
+                                'redirectFormMethod',
+                                'activeTimer',
                             ]
                         },
                     ]
@@ -932,7 +949,9 @@ sub tree {
         {   title => 'casServiceMetadata',
             nodes => [
                 'casAttr',
-                'casAccessControlPolicy', 'casStorage', 'casStorageOptions',
+                'casAccessControlPolicy',
+                'casStorage',
+                'casStorageOptions',
                 'casAttributes',
 
             ]
