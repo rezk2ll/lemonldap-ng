@@ -1,10 +1,10 @@
 exports.config = {
-  allScriptsTimeout: 11000,
+  allScriptsTimeout: 300000,
 
   // Specific test
-  specs: process.env.E2E_TESTS,
+  // specs: process.env.E2E_TESTS,
   // All tests
-  //specs: ['handler/*.js', 'portal/*.js', 'manager/*.js' ],
+  specs: ['portal/*.js', 'handler/*.js', 'manager/*.js' ],
 
     capabilities: {
     //'browserName': 'firefox'
@@ -18,6 +18,6 @@ exports.config = {
   framework: 'jasmine',
 
   jasmineNodeOpts: {
-    defaultTimeoutInterval: 30000
+    defaultTimeoutInterval: 60000
   }
 };

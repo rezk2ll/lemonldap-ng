@@ -44,7 +44,7 @@ describe('05 Lemonldap::NG Manager', function() {
       ['exportedVars', 'macros', 'groups'].forEach(function(type) {
         element(by.id('a-' + type)).click();
         element(by.id('t-' + type)).click();
-        element(by.css('.glyphicon-plus-sign')).click();
+        element.all(by.css('.glyphicon-plus-sign')).first().click();
         expect(element(by.id('t-' + type + '/n' + id)).getText()).toEqual('new');
         browser.sleep(3000);
         id++;

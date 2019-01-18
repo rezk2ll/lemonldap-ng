@@ -6,7 +6,7 @@ describe('40 Lemonldap::NG Manager', function() {
     browser.get('/');
     var links = element.all(by.repeater('l in links'));
     expect(links.count()).toEqual(4);
-    element(by.xpath("//a[@href='sessions.html']")).click();
+    element.all(by.xpath("//a[@href='sessions.html']")).first().click();
   });
 
 });

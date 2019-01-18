@@ -7,7 +7,7 @@ describe('07u Lemonldap::NG Manager', function() {
   describe('Apply mechanism', function() {
 
     it('should be able to send UTF-8 chars', function() {
-      browser.get('/#/confs/latest');
+      browser.get('/#!/confs/latest');
       element(by.id('a-generalParameters')).click();
       element(by.id('a-advancedParams')).click();
       element(by.id('a-security')).click();
@@ -18,6 +18,8 @@ describe('07u Lemonldap::NG Manager', function() {
       element(by.id('save')).click();
       element(by.id('longtextinput')).sendKeys('UTF-8 tests');
       element(by.id('saveok')).click();
+            browser.sleep(2000);
+
       element(by.id('messageok')).click();
       expect(element(by.id('cfgnum')).getText()).toEqual('2');
     });
