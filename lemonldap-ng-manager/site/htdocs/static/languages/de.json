@@ -393,7 +393,7 @@
 "mailSessionKey":"Session key containing mail address",
 "mailPwdRstSubject":"Success mail subject",
 "mailTimeout":"Validity time of a password reset request",
-"mailPwdRstUrl":"Password reset page URL",
+"mailPwdRstUrl":"Page URL",
 "maintenance":"Maintenance mode",
 "malformedValue":"Malformed value",
 "managerDn":"Account",

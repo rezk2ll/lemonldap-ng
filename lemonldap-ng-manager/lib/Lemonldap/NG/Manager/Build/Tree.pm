@@ -571,9 +571,8 @@ sub tree {
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'mailPwdRstUrl',
-                                        'randomPasswordRegexp',
                                         'mailTimeout',
-
+                                        'randomPasswordRegexp',
                                     ]
                                 }
                             ]

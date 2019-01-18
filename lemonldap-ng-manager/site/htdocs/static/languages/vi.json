@@ -393,7 +393,7 @@
 "mailSessionKey":"Khóa phiên chứa địa chỉ thư",
 "mailPwdRstSubject":"Chủ đề thư thành công",
 "mailTimeout":"Thời hạn hợp lệ của yêu cầu đặt lại mật khẩu",
-"mailPwdRstUrl":"Password reset page URL",
+"mailPwdRstUrl":"Page URL",
 "maintenance":"Chế độ bảo trì",
 "malformedValue":"Giá trị không hợp lệ",
 "managerDn":"Tài khoản",

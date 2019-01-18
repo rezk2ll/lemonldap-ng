@@ -393,7 +393,7 @@
 "mailSessionKey":"Clef de session contenant l'adresse email",
 "mailPwdRstSubject":"Sujet du message de succès",
 "mailTimeout":"Durée de validité d'une demande de réinitialisation",
-"mailPwdRstUrl":"URL de la page de réinitialisation du mot de passe",
+"mailPwdRstUrl":"URL de la page",
 "maintenance":"Mode maintenance",
 "malformedValue":"Valeur mal formée",
 "managerDn":"Compte de connexion LDAP",
