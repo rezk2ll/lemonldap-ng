@@ -49,7 +49,7 @@ for ( my $i = 0 ; $i < @test ; $i++ ) {
             open F, 'file t/lmConf-1.json |';
             $_ = join( '', <F> );
             close F;
-            ok( /(ascii|utf-?8)/si, "File is $1 encoded" );
+            ok( /(ascii|utf-?8|json\s?data)/si, "File is $1 encoded" );
             print STDERR "Result: $_\n";
             $count++;
         };
