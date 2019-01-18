@@ -1558,18 +1558,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             },
             'type' => 'keyTextContainer'
         },
-        'mailBody' => {
-            'type' => 'longtext'
-        },
         'mailCharset' => {
             'default' => 'utf-8',
             'type'    => 'text'
-        },
-        'mailConfirmBody' => {
-            'type' => 'longtext'
-        },
-        'mailConfirmSubject' => {
-            'type' => 'text'
         },
         'mailFrom' => {
             'default' => 'noreply@example.com',
@@ -1582,6 +1573,22 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 0,
             'type'    => 'bool'
         },
+        'mailPwdRstBody' => {
+            'type' => 'longtext'
+        },
+        'mailPwdRstConfirmBody' => {
+            'type' => 'longtext'
+        },
+        'mailPwdRstConfirmSubject' => {
+            'type' => 'text'
+        },
+        'mailPwdRstSubject' => {
+            'type' => 'text'
+        },
+        'mailPwdRstUrl' => {
+            'default' => 'http://auth.example.com/resetpwd',
+            'type'    => 'url'
+        },
         'mailReplyTo' => {
             'type' => 'text'
         },
@@ -1589,16 +1596,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 'mail',
             'type'    => 'text'
         },
-        'mailSubject' => {
-            'type' => 'text'
-        },
         'mailTimeout' => {
             'default' => 0,
             'type'    => 'int'
-        },
-        'mailUrl' => {
-            'default' => 'http://auth.example.com/resetpwd',
-            'type'    => 'url'
         },
         'maintenance' => {
             'default' => 0,
