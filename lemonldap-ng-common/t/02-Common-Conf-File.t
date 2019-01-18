@@ -7,6 +7,7 @@
 
 use strict;
 use Test::More;
+use v5.26.1;
 BEGIN { use_ok('Lemonldap::NG::Common::Conf') }
 
 #########################
