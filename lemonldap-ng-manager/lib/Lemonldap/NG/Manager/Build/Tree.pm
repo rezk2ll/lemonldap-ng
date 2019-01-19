@@ -513,26 +513,7 @@ sub tree {
                                 'soapSessionServer',
                                 'soapConfigServer',
                                 'exportedAttr',
-                                {   title => 'SMTP',
-                                    help  => 'portalservers.html#SMTP',
-                                    nodes => [
-                                        'mailSessionKey',
-                                        'SMTPServer',
-                                        'SMTPPort',
-                                        'SMTPAuthUser',
-                                        'SMTPAuthPass',
-                                        'SMTPTLS',
-                                        'SMTPTLSOpts',                                        
-                                        {   title => 'mailHeaders',
-                                            form  => 'simpleInputContainer',
-                                            nodes => [
-                                                'mailFrom',
-                                                'mailReplyTo',
-                                                'mailCharset'
-                                            ]
-                                        },
-                                    ]
-                                },
+
                             ]
                         },
                         {   title => 'loginHistory',
@@ -680,6 +661,26 @@ sub tree {
                     nodes => [
                         'customFunctions',
                         'multiValuesSeparator',
+                        {   title => 'SMTP',
+                                    help  => 'smtp.html',
+                                    nodes => [
+                                        'mailSessionKey',
+                                        'SMTPServer',
+                                        'SMTPPort',
+                                        'SMTPAuthUser',
+                                        'SMTPAuthPass',
+                                        'SMTPTLS',
+                                        'SMTPTLSOpts',                                        
+                                        {   title => 'mailHeaders',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'mailFrom',
+                                                'mailReplyTo',
+                                                'mailCharset'
+                                            ]
+                                        },
+                                    ]
+                        },
                         {   title => 'security',
                             help =>
                                 'security.html#configure_security_settings',
