@@ -515,13 +515,13 @@ sub tree {
                                 'exportedAttr',
                                 {   title => 'SMTP',
                                     nodes => [
+                                        'mailSessionKey',
                                         'SMTPServer',
                                         'SMTPPort',
                                         'SMTPAuthUser',
                                         'SMTPAuthPass',
                                         'SMTPTLS',
-                                        'SMTPTLSOpts',
-                                        'mailSessionKey',
+                                        'SMTPTLSOpts',                                        
                                         {   title => 'mailHeaders',
                                             form  => 'simpleInputContainer',
                                             nodes => [
@@ -571,7 +571,7 @@ sub tree {
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'mailPwdRstUrl',
-                                        'mailTimeout',
+                                        'mailPwdRstTimeout',
                                         'randomPasswordRegexp',
                                     ]
                                 }

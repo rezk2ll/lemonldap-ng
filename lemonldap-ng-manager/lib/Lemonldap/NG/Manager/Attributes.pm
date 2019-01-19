@@ -1585,6 +1585,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'mailPwdRstSubject' => {
             'type' => 'text'
         },
+        'mailPwdRstTimeout' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
         'mailPwdRstUrl' => {
             'default' => 'http://auth.example.com/resetpwd',
             'type'    => 'url'
@@ -1595,10 +1599,6 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'mailSessionKey' => {
             'default' => 'mail',
             'type'    => 'text'
-        },
-        'mailTimeout' => {
-            'default' => 0,
-            'type'    => 'int'
         },
         'maintenance' => {
             'default' => 0,

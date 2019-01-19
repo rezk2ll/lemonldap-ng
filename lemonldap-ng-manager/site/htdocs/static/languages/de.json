@@ -392,7 +392,7 @@
 "mailReplyTo":"Reply address",
 "mailSessionKey":"Session key containing mail address",
 "mailPwdRstSubject":"Success mail subject",
-"mailTimeout":"Validity time of a password reset request",
+"mailPwdRstTimeout":"Validity time of a password reset request",
 "mailPwdRstUrl":"Page URL",
 "maintenance":"Maintenance mode",
 "malformedValue":"Malformed value",

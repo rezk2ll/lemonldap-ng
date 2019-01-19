@@ -1137,19 +1137,19 @@ sub attributes {
         },
         mailReplyTo =>
             { type => 'text', documentation => 'Reply-To address' },
-        mailTimeout => {
+        mailPwdRstTimeout => {
             type          => 'int',
             default       => 0,
-            documentation => 'Mail session timeout',
+            documentation => 'Mail password reset session timeout',
         },
 
         # Password reset
         mailPwdRstBody =>
-            { type => 'longtext', documentation => 'Custom mail body', },
+            { type => 'longtext', documentation => 'Custom password reset mail body', },
 
         mailPwdRstConfirmBody => {
             type          => 'longtext',
-            documentation => 'Custom confirm mail body',
+            documentation => 'Custom confirm password reset mail body',
         },
         mailPwdRstConfirmSubject => {
             type          => 'text',
