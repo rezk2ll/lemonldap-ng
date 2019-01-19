@@ -392,7 +392,7 @@
 "mailReplyTo":"عنوان الجواب",
 "mailSessionKey":"مفتاح الجلسة الذي يحتوي على عنوان البريد الإلكتروني",
 "mailPwdRstSubject":"نجاح عنوان البريد",
-"mailTimeout":"عدم تطابق كلمت المرور",
+"mailPwdRstTimeout":"عدم تطابق كلمت المرور",
 "mailPwdRstUrl":"Page URL",
 "maintenance":"وضع الصيانة",
 "malformedValue":"قيمة سيئة التصميم",

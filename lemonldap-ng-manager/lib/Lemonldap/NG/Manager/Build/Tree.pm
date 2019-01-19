@@ -513,25 +513,7 @@ sub tree {
                                 'soapSessionServer',
                                 'soapConfigServer',
                                 'exportedAttr',
-                                {   title => 'SMTP',
-                                    nodes => [
-                                        'SMTPServer',
-                                        'SMTPPort',
-                                        'SMTPAuthUser',
-                                        'SMTPAuthPass',
-                                        'SMTPTLS',
-                                        'SMTPTLSOpts',
-                                        'mailSessionKey',
-                                        {   title => 'mailHeaders',
-                                            form  => 'simpleInputContainer',
-                                            nodes => [
-                                                'mailFrom',
-                                                'mailReplyTo',
-                                                'mailCharset'
-                                            ]
-                                        },
-                                    ]
-                                },
+
                             ]
                         },
                         {   title => 'loginHistory',
@@ -571,7 +553,7 @@ sub tree {
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'mailPwdRstUrl',
-                                        'mailTimeout',
+                                        'mailPwdRstTimeout',
                                         'randomPasswordRegexp',
                                     ]
                                 }
@@ -679,6 +661,26 @@ sub tree {
                     nodes => [
                         'customFunctions',
                         'multiValuesSeparator',
+                        {   title => 'SMTP',
+                                    help  => 'smtp.html',
+                                    nodes => [
+                                        'mailSessionKey',
+                                        'SMTPServer',
+                                        'SMTPPort',
+                                        'SMTPAuthUser',
+                                        'SMTPAuthPass',
+                                        'SMTPTLS',
+                                        'SMTPTLSOpts',                                        
+                                        {   title => 'mailHeaders',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'mailFrom',
+                                                'mailReplyTo',
+                                                'mailCharset'
+                                            ]
+                                        },
+                                    ]
+                        },
                         {   title => 'security',
                             help =>
                                 'security.html#configure_security_settings',
