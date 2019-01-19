@@ -41,18 +41,6 @@ for ( my $i = 0; $i < @test; $i++ ) {
     ok( $h->store( $test[$i] ) == 1, "Test $i is stored" )
         or print STDERR "$Lemonldap::NG::Common::Conf::msg $!";
     $count++;
-    if ( -x '/usr/bin/file' ) {
-        eval {
-            open F, 'file t/lmConf-1.json |';
-            $_ = join( '', <F> );
-            close F;
-
-            ## Debian Buster 'file' command returns JSON DATA
-            ok( /(ascii|utf-?8|json\sdata)/si, "File is $1 encoded" )
-                or print STDERR "Result: $_\n";
-            $count++;
-        };
-    }
     my $cfg;
     ok( $cfg = $h->load(1), "Test $i can be read" )
         or print STDERR $Lemonldap::NG::Common::Conf::msg;

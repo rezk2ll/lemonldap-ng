@@ -393,7 +393,7 @@
 "mailSessionKey":"Chiave di sessione contenente l'indirizzo di posta",
 "mailPwdRstSubject":"Successo del soggetto della mail",
 "mailTimeout":"Tempo di validità di una richiesta di ripristino della password",
-"mailPwdRstUrl":"URL della pagina di ripristino della password",
+"mailPwdRstUrl":"URL della pagina",
 "maintenance":"Modalità di manutenzione",
 "malformedValue":"Valore malformato",
 "managerDn":"Account",

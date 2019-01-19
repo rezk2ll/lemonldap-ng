@@ -393,7 +393,7 @@
 "mailSessionKey":"مفتاح الجلسة الذي يحتوي على عنوان البريد الإلكتروني",
 "mailPwdRstSubject":"نجاح عنوان البريد",
 "mailTimeout":"عدم تطابق كلمت المرور",
-"mailPwdRstUrl":"Password reset page URL",
+"mailPwdRstUrl":"Page URL",
 "maintenance":"وضع الصيانة",
 "malformedValue":"قيمة سيئة التصميم",
 "managerDn":"حساب",

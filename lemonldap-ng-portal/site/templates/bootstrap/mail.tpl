@@ -36,7 +36,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fa fa-eye"></i> </span>
           </div>
-          <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required />
+          <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required autocomplete="off" />
         </div>
       </TMPL_IF>
       <TMPL_IF NAME="TOKEN">
@@ -87,7 +87,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fa fa-eye"></i> </span>
           </div>
-          <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required />
+          <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required autocomplete="off"/>
         </div>
       </TMPL_IF>
 
