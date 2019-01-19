@@ -17,7 +17,7 @@ LMINIFILE=$(CONFDIR)/lemonldap-ng.ini
 CAPTCHADIR=$(LMVARDIR)/captcha
 
 %:
-	dh $@ --with systemd
+	dh $@
 
 override_dh_auto_configure:
 	$(MAKE) configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
