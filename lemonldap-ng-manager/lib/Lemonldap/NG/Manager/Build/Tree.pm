@@ -514,6 +514,7 @@ sub tree {
                                 'soapConfigServer',
                                 'exportedAttr',
                                 {   title => 'SMTP',
+                                    help  => 'portalservers.html#SMTP',
                                     nodes => [
                                         'mailSessionKey',
                                         'SMTPServer',
