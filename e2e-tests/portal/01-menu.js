@@ -1,7 +1,7 @@
 'use strict';
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
-describe('01 Lemonldap::NG', function() {
+describe('0 Lemonldap::NG', function() {
   describe('Portal should display Menu', function() {
     it('Should have four buttons', function() {
       browser.driver.findElement(by.xpath("//img[@title='fr']")).click();

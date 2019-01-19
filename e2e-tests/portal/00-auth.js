@@ -12,11 +12,14 @@ describe('00 Lemonldap::NG', function() {
       browser.driver.findElement(by.xpath("//img[@title='en']")).click();
       expect(browser.driver.findElement(by.css('[trmsg="9"]')).getText()).toEqual('Authentication required');
       expect(browser.driver.findElement(by.css('[trspan="createAccount"]')).getText()).toEqual('Create an account');
+      expect(browser.driver.findElement(by.css('[trspan="resetPwd"]')).getText()).toEqual('Reset my password');
       browser.driver.findElement(by.xpath("//img[@title='it']")).click();
       expect(browser.driver.findElement(by.css('[trmsg="9"]')).getText()).toEqual('Autenticazione necessaria');
       expect(browser.driver.findElement(by.css('[trspan="createAccount"]')).getText()).toEqual('Crea un account');
+      expect(browser.driver.findElement(by.css('[trspan="resetPwd"]')).getText()).toEqual('Reimpostare la password');
       browser.driver.findElement(by.xpath("//img[@title='fr']")).click();
       expect(browser.driver.findElement(by.css('[trspan="createAccount"]')).getText()).toEqual('Créer un compte');
+      expect(browser.driver.findElement(by.css('[trspan="resetPwd"]')).getText()).toEqual('Réinitialiser mon mot de passe');
     });
     it('should create an account', function() {
       browser.driver.findElement(by.css('[trspan="createAccount"]')).click();
@@ -29,6 +32,28 @@ describe('00 Lemonldap::NG', function() {
       browser.driver.findElements(by.className('img-thumbnail')).then(function(elems) {
         expect(elems.length).toEqual(1);
       });
+      browser.driver.findElement(by.xpath("//input[@name='firstname']")).sendKeys('doctor');
+      browser.driver.findElement(by.xpath("//input[@name='lastname']")).sendKeys('who');
+      browser.driver.findElement(by.xpath("//input[@name='mail']")).sendKeys('dwho@badwolf.com');
+      browser.driver.findElement(by.xpath("//input[@name='captcha']")).sendKeys('1234567');
+      browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
+      expect(browser.driver.findElement(by.css('[trmsg="76"]')).getText()).toEqual('Erreur dans la saisie du captcha');
+      browser.driver.findElement(by.css('[trspan="back2Portal"]')).click();
+    });
+    it('should reset my password', function() {
+      browser.driver.findElement(by.css('[trspan="resetPwd"]')).click();
+      expect(browser.driver.findElement(by.css('[trmsg="69"]')).getText()).toEqual('Merci de saisir votre adresse mail');
+      expect(browser.driver.findElement(by.css('[trspan="sendPwd"]')).getText()).toEqual('Envoyez-moi un lien');
+
+      // A one input form
+      browser.driver.findElements(by.className('input-group')).then(function(elems) {
+        expect(elems.length).toEqual(1);
+      });
+      browser.driver.findElement(by.xpath("//input[@name='mail']")).sendKeys('dwho@badwolf.com');
+      browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
+      expect(browser.driver.findElement(by.css('[trmsg="72"]')).getText()).toEqual('Un mail de confirmation vous a été envoyé');
+      expect(browser.driver.findElement(by.css('[trspan="mailSent2"]')).getText()).toEqual('Un message a été envoyé à votre adresse mail.');
+      expect(browser.driver.findElement(by.css('[trspan="linkValidUntil"]')).getText()).toEqual("Ce message contient un lien pour réinitialiser votre mot de passe, ce lien est valide jusqu'au");
     });
     it('should authenticate with history', function() {
       expect(browser.driver.findElement(by.css('[trspan="back2Portal"]')).getText()).toEqual('Retourner au portail');
