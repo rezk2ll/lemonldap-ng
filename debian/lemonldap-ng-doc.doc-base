@@ -6,6 +6,6 @@ Abstract: Those HTML documents contains all Lemonldap::NG documentation
 Section: Web Development
 
 Format: HTML
-Index: /usr/share/doc/lemonldap-ng/index.html
-Files: /usr/share/doc/lemonldap-ng/pages/documentation/current/*.html
+Index: /usr/share/doc/lemonldap-ng-doc/index.html
+Files: /usr/share/doc/lemonldap-ng-doc/*.html
 

@@ -3,7 +3,7 @@ Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
 Uploaders: Xavier Guimard <yadd@debian.org>
 Section: perl
 Priority: optional
-Build-Depends: debhelper (>= 11~),
+Build-Depends: debhelper (>= 10),
                po-debconf
 Build-Depends-Indep: libapache-session-perl,
                      libauthen-oath-perl,
