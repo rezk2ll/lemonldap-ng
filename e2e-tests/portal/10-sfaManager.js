@@ -50,10 +50,10 @@ describe('10 Lemonldap::NG', function() {
         });
         expect(browser.driver.findElement(by.className('card-footer')).getText()).toEqual('TOTP2F');
         browser.driver.findElements(by.className('btn-danger')).then(function(elems) {
-          expect(elems.length).toEqual(3);
-          elems[0].click();
+          expect(elems.length).toEqual(0);
+          // elems[0].click();
         });
-        expect(browser.driver.findElement(by.css('[trspan="choose2f"]')).getText()).toEqual("Vous n'êtes pas autorisé à faire cette requête");
+        // expect(browser.driver.findElement(by.css('[trspan="choose2f"]')).getText()).toEqual("Vous n'êtes pas autorisé à faire cette requête");
         browser.driver.findElement(by.xpath("//img[@title='totp2F']")).click();
     });
     it('Should display and submit TOTP form', function() {
