@@ -113,6 +113,7 @@ sub tree {
                     nodes_cond => [
                         {   title => 'adParams',
                             help  => 'authad.html',
+                            form  => 'simpleInputContainer',
                             nodes => [ 'ADPwdMaxAge', 'ADPwdExpireWarning' ]
                         },
                         {   title => 'choiceParams',
@@ -201,6 +202,7 @@ sub tree {
                             ]
                         },
                         {   title => 'kerberosParams',
+                            form  => 'simpleInputContainer',
                             help  => 'authkerberos.html',
                             nodes => [
                                 'krbKeytab',     'krbByJs',
