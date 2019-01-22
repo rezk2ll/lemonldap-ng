@@ -334,26 +334,38 @@ sub _displayRegister {
 
     # Parse second factors to display delete button if allowed
     my $action = '';
-    foreach (@$_2fDevices) {
-        if ( $_->{type} eq 'U2F' ) {
-            $_->{delAllowed}
-                = $self->conf->{u2fActivation}
-                && $self->conf->{u2fUserCanRemoveKey}
-                && $self->conf->{u2fSelfRegistration};
+    foreach
+        my $type ( split /,\s*/, $self->conf->{available2FSelfRegistration} )
+
+    {
+        foreach (@$_2fDevices) {
+
+            # if ( $_->{type} eq 'U2F' ) {
+            #     $_->{delAllowed}
+            #         = $self->conf->{u2fActivation}
+            #         && $self->conf->{u2fUserCanRemoveKey}
+            #         && $self->conf->{u2fSelfRegistration};
+            # }
+            # if ( $_->{type} eq 'TOTP' ) {
+            #     $_->{delAllowed}
+            #         = $self->conf->{totp2fActivation}
+            #         && $self->conf->{totp2fUserCanRemoveKey}
+            #         && $self->conf->{totp2fSelfRegistration};
+            # }
+
+            $_->{type} =~ s/^UBK$/Yubikey/;
+            if ( $_->{type} eq $type ) {
+                my $t = lc($type);
+                $t =~ s/2f$//i;
+
+                $_->{delAllowed}
+                    = $self->conf->{ $t . '2fActivation' }
+                    && $self->conf->{ $t . '2fUserCanRemoveKey' }
+                    && $self->conf->{ $t . '2fSelfRegistration' };
+            }
+            $action ||= $_->{delAllowed};
+            $_->{type} =~ s/^Yubikey$/UBK/;
         }
-        if ( $_->{type} eq 'TOTP' ) {
-            $_->{delAllowed}
-                = $self->conf->{totp2fActivation}
-                && $self->conf->{totp2fUserCanRemoveKey}
-                && $self->conf->{totp2fSelfRegistration};
-        }
-        if ( $_->{type} eq 'UBK' ) {
-            $_->{delAllowed}
-                = $self->conf->{yubikey2fActivation}
-                && $self->conf->{yubikey2fUserCanRemoveKey}
-                && $self->conf->{yubikey2fSelfRegistration};
-        }
-        $action ||= $_->{delAllowed};
     }
 
     # Display template
