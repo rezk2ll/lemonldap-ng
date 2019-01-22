@@ -339,20 +339,6 @@ sub _displayRegister {
 
     {
         foreach (@$_2fDevices) {
-
-            # if ( $_->{type} eq 'U2F' ) {
-            #     $_->{delAllowed}
-            #         = $self->conf->{u2fActivation}
-            #         && $self->conf->{u2fUserCanRemoveKey}
-            #         && $self->conf->{u2fSelfRegistration};
-            # }
-            # if ( $_->{type} eq 'TOTP' ) {
-            #     $_->{delAllowed}
-            #         = $self->conf->{totp2fActivation}
-            #         && $self->conf->{totp2fUserCanRemoveKey}
-            #         && $self->conf->{totp2fSelfRegistration};
-            # }
-
             $_->{type} =~ s/^UBK$/Yubikey/;
             if ( $_->{type} eq $type ) {
                 my $t = lc($type);
