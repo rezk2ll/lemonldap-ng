@@ -38,7 +38,7 @@
 "addU2FKey":"Add U2F key",
 "addTOTPKey":"Add TOTP key",
 "addVhost":"Add virtualhost",
-"adParams":"Active Directory Parameters",
+"adParams":"Active Directory parameters",
 "ADPwdExpireWarning":"Password expire warning",
 "ADPwdMaxAge":"Password max age",
 "advancedParams":"Advanced parameters",

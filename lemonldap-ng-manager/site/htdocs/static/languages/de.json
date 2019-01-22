@@ -38,7 +38,7 @@
 "addU2FKey":"U2F - Schlüssel hinzufügen",
 "addTOTPKey":"TOTP-Schlüssel hinzufügen",
 "addVhost":"Virtuellen Host hinzufügen",
-"adParams":"Active Directory Einstellungen",
+"adParams":"Active Directory einstellungen",
 "ADPwdExpireWarning":"Passwort - Ablauf Warnung",
 "ADPwdMaxAge":"maximales Alter",
 "advancedParams":"Weitere Einstellungen",
