@@ -17,7 +17,10 @@
           <th><span trspan="type">Type</span></th>
           <th><span trspan="name">Name</span></th>
           <th><span trspan="date">Date</span></th>
-          <th><span trspan="action">Action</span></th>
+          <th>
+            <TMPL_IF NAME="ACTION">
+              <span trspan="action">Action</span></th>
+            </TMPL_IF>
         </tr>
       </thead>
       <tbody>

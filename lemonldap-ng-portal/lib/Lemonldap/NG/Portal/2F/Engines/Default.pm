@@ -333,6 +333,7 @@ sub _displayRegister {
     }
 
     # Parse second factors to display delete button if allowed
+    my $action = '';
     foreach (@$_2fDevices) {
         if ( $_->{type} eq 'U2F' ) {
             $_->{delAllowed}
@@ -352,6 +353,7 @@ sub _displayRegister {
                 && $self->conf->{yubikey2fUserCanRemoveKey}
                 && $self->conf->{yubikey2fSelfRegistration};
         }
+        $action ||= $_->{delAllowed};
     }
 
     # Display template
@@ -363,6 +365,7 @@ sub _displayRegister {
             SKIN         => $self->conf->{portalSkin},
             MODULES      => \@am,
             SFDEVICES    => $_2fDevices,
+            ACTION       => $action,
             REG_REQUIRED => $req->data->{sfRegRequired},
         }
     );
