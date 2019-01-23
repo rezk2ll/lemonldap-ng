@@ -243,14 +243,6 @@ sub sfa {
             $self->logger->debug(
                 "Removing sessions unless a $_ device is registered");
         }
-
-        #else {
-        #    (
-        #        return $self->sendError(
-        #            $req, "Bad or Missing " . $_ . "Check parameter", 400
-        #        )
-        #    );
-        #}
     }
 
     my $total = ( keys %$res );

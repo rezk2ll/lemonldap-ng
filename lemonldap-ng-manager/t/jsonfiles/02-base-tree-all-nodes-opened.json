@@ -1512,8 +1512,8 @@
           "data": "[A-Z]{3}[a-z]{5}.\\d{2}"
         }, {
           "default": 0,
-          "id": "mailTimeout",
-          "title": "mailTimeout",
+          "id": "mailPwdRstTimeout",
+          "title": "mailPwdRstTimeout",
           "type": "int",
           "data": 0
         }, {

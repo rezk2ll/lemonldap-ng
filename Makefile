@@ -412,6 +412,7 @@ prepare_test_server:
 	#@cp -f e2e-tests/index.* e2e-tests/conf/
 	@cp -f $(SRCMANAGERDIR)/site/htdocs/manager* e2e-tests/conf/manager
 	@cp -f $(SRCPORTALDIR)/site/htdocs/index* e2e-tests/conf/portal
+	@cp e2e-tests/persistent/5efe8af397fc3577e05b483aca964f1b e2e-tests/conf/persistents
 	@cp e2e-tests/saml-sp.xml e2e-tests/conf/site/saml-sp.xml
 	@cp e2e-tests/rules.json e2e-tests/conf/site/test.json
 	@for f in $$(find e2e-tests/conf -name '*.fcgi'); do \

@@ -1,7 +1,7 @@
 'use strict';
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
-describe('01 Lemonldap::NG', function() {
+describe('0 Lemonldap::NG', function() {
   describe('Portal should display Menu', function() {
     it('Should have four buttons', function() {
       browser.driver.findElement(by.xpath("//img[@title='fr']")).click();
@@ -42,10 +42,11 @@ describe('01 Lemonldap::NG', function() {
           expect(elems[4].getText()).toEqual("Message d'erreur");
         });
         browser.driver.findElements(by.xpath('//table/tbody/tr/td')).then(function(elems) {
-          expect(elems.length).toEqual(5);
+          expect(elems.length).toEqual(7);
           expect(elems[1].getText()).toEqual('127.0.0.1');
           expect(elems[3].getText()).toEqual('127.0.0.1');
-          expect(elems[4].getText()).toEqual('Mot de passe ou identifiant incorrect');
+          expect(elems[5].getText()).toEqual('127.0.0.1');
+          expect(elems[6].getText()).toEqual('Mot de passe ou identifiant incorrect');
         });
         browser.driver.findElement(by.xpath("//button[@type='button']")).click();
         browser.sleep(1000);

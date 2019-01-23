@@ -6,17 +6,22 @@ describe('00 Lemonldap::NG', function() {
   describe('Auth mechanism', function() {
   	it('Portal should display 11 lang flags', function() {
   	  browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
+      browser.sleep(500);
       browser.driver.findElements(by.className('langicon')).then(function(elems) {
         expect(elems.length).toEqual(11);
       });
+      browser.sleep(500);
       browser.driver.findElement(by.xpath("//img[@title='en']")).click();
       expect(browser.driver.findElement(by.css('[trmsg="9"]')).getText()).toEqual('Authentication required');
       expect(browser.driver.findElement(by.css('[trspan="createAccount"]')).getText()).toEqual('Create an account');
+      expect(browser.driver.findElement(by.css('[trspan="resetPwd"]')).getText()).toEqual('Reset my password');
       browser.driver.findElement(by.xpath("//img[@title='it']")).click();
       expect(browser.driver.findElement(by.css('[trmsg="9"]')).getText()).toEqual('Autenticazione necessaria');
       expect(browser.driver.findElement(by.css('[trspan="createAccount"]')).getText()).toEqual('Crea un account');
+      expect(browser.driver.findElement(by.css('[trspan="resetPwd"]')).getText()).toEqual('Reimpostare la password');
       browser.driver.findElement(by.xpath("//img[@title='fr']")).click();
       expect(browser.driver.findElement(by.css('[trspan="createAccount"]')).getText()).toEqual('Créer un compte');
+      expect(browser.driver.findElement(by.css('[trspan="resetPwd"]')).getText()).toEqual('Réinitialiser mon mot de passe');
     });
     it('should create an account', function() {
       browser.driver.findElement(by.css('[trspan="createAccount"]')).click();
@@ -29,6 +34,28 @@ describe('00 Lemonldap::NG', function() {
       browser.driver.findElements(by.className('img-thumbnail')).then(function(elems) {
         expect(elems.length).toEqual(1);
       });
+      browser.driver.findElement(by.xpath("//input[@name='firstname']")).sendKeys('doctor');
+      browser.driver.findElement(by.xpath("//input[@name='lastname']")).sendKeys('who');
+      browser.driver.findElement(by.xpath("//input[@name='mail']")).sendKeys('dwho@badwolf.com');
+      browser.driver.findElement(by.xpath("//input[@name='captcha']")).sendKeys('1234567');
+      browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
+      expect(browser.driver.findElement(by.css('[trmsg="76"]')).getText()).toEqual('Erreur dans la saisie du captcha');
+      browser.driver.findElement(by.css('[trspan="back2Portal"]')).click();
+    });
+    it('should reset my password', function() {
+      browser.driver.findElement(by.css('[trspan="resetPwd"]')).click();
+      expect(browser.driver.findElement(by.css('[trmsg="69"]')).getText()).toEqual('Merci de saisir votre adresse mail');
+      expect(browser.driver.findElement(by.css('[trspan="sendPwd"]')).getText()).toEqual('Envoyez-moi un lien');
+
+      // A one input form
+      browser.driver.findElements(by.className('input-group')).then(function(elems) {
+        expect(elems.length).toEqual(1);
+      });
+      browser.driver.findElement(by.xpath("//input[@name='mail']")).sendKeys('dwho@badwolf.com');
+      browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
+      expect(browser.driver.findElement(by.css('[trmsg="72"]')).getText()).toEqual('Un mail de confirmation vous a été envoyé');
+      expect(browser.driver.findElement(by.css('[trspan="mailSent2"]')).getText()).toEqual('Un message a été envoyé à votre adresse mail.');
+      expect(browser.driver.findElement(by.css('[trspan="linkValidUntil"]')).getText()).toEqual("Ce message contient un lien pour réinitialiser votre mot de passe, ce lien est valide jusqu'au");
     });
     it('should authenticate with history', function() {
       expect(browser.driver.findElement(by.css('[trspan="back2Portal"]')).getText()).toEqual('Retourner au portail');
@@ -53,11 +80,11 @@ describe('00 Lemonldap::NG', function() {
       expect(browser.driver.findElement(by.css('[trspan="info"]')).getText()).toEqual("Information");
     });
     it('should display history', function() {
-      // Two entries
+      // Three entries
       browser.driver.findElements(by.xpath('//table/tbody/tr')).then(function(elems) {
-        expect(elems.length).toEqual(2);
+        expect(elems.length).toEqual(3);
       });
-      // Expect history with one login and one failed login
+      // Expect history with two logins and one failed login
       browser.driver.findElements(by.xpath('//form/div/div/h3')).then(function(elems) {
         expect(elems.length).toEqual(3);
         expect(elems[0].getText()).toEqual('Information');
@@ -71,10 +98,11 @@ describe('00 Lemonldap::NG', function() {
       	expect(elems[4].getText()).toEqual('Fehlermeldung');
       });
       browser.driver.findElements(by.xpath('//table/tbody/tr/td')).then(function(elems) {
-      	expect(elems.length).toEqual(5);
+      	expect(elems.length).toEqual(7);
       	expect(elems[1].getText()).toEqual('127.0.0.1');
       	expect(elems[3].getText()).toEqual('127.0.0.1');
-        expect(elems[4].getText()).toEqual('Benutzername oder Passwort nicht korrekt');
+        expect(elems[5].getText()).toEqual('127.0.0.1');
+        expect(elems[6].getText()).toEqual('Benutzername oder Passwort nicht korrekt');
       });
       expect(browser.driver.findElement(by.css('[trspan="PE5"]')).getText()).toEqual('Benutzername oder Passwort nicht korrekt');
       expect(browser.driver.findElement(by.id('timer')).getText()).toMatch(/^Du wirst in \d{2} Sekunden umgeleitet$/);

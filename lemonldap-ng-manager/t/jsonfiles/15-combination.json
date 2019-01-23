@@ -2077,8 +2077,8 @@
         },
         {
           "default": 0,
-          "id": "mailTimeout",
-          "title": "mailTimeout",
+          "id": "mailPwdRstTimeout",
+          "title": "mailPwdRstTimeout",
           "type": "int"
         },
         {

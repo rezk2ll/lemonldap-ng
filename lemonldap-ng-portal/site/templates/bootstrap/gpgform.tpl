@@ -23,7 +23,7 @@
     <div class="input-group-prepend">
       <span class="input-group-text"><i class="fa fa-eye"></i> </span>
     </div>
-    <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required aria-required="true"/>
+    <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required aria-required="true" autocomplete="off" />
   </div>
   </TMPL_IF>
   <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
