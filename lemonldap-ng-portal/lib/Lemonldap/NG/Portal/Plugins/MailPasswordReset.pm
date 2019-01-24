@@ -203,9 +203,9 @@ sub _reset {
                 return PE_MAILNOTFOUND;
             }
 
-            my $mailPwdRstTimeout
-                = $self->conf->{mailPwdRstTimeout} || $self->conf->{timeout};
-            my $expTimestamp = time() + $mailPwdRstTimeout;
+            my $mailTimeout
+                = $self->conf->{mailTimeout} || $self->conf->{timeout};
+            my $expTimestamp = time() + $mailTimeout;
             $req->data->{expMailDate}
                 = strftime( "%d/%m/%Y", localtime $expTimestamp );
             $req->data->{expMailTime}
@@ -227,12 +227,12 @@ sub _reset {
         # Use default session timeout and mail session timeout to compute it
         my $time        = time();
         my $timeout     = $self->conf->{timeout};
-        my $mailPwdRstTimeout = $self->conf->{mailPwdRstTimeout} || $timeout;
+        my $mailTimeout = $self->conf->{mailTimeout} || $timeout;
 
-        $infos->{_utime} = $time + ( $mailPwdRstTimeout - $timeout );
+        $infos->{_utime} = $time + ( $mailTimeout - $timeout );
 
         # Store expiration timestamp for further use
-        $infos->{mailSessionTimeoutTimestamp} = $time + $mailPwdRstTimeout;
+        $infos->{mailSessionTimeoutTimestamp} = $time + $mailTimeout;
 
         # Store start timestamp for further use
         $infos->{mailSessionStartTimestamp} = $time;
@@ -306,7 +306,7 @@ sub _reset {
         my $req_url = $req->data->{_url};
         my $skin    = $self->p->getSkin($req);
         my $url
-            = $self->conf->{mailPwdRstUrl} . '?'
+            = $self->conf->{mailUrl} . '?'
             . build_urlencoded(
             mail_token => $req->{id},
             skin       => $skin,
@@ -316,17 +316,17 @@ sub _reset {
         # Build mail content
         $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
         my $tr      = $self->translate($req);
-        my $subject = $self->conf->{mailPwdRstConfirmSubject};
+        my $subject = $self->conf->{mailConfirmSubject};
         unless ($subject) {
-            $subject = 'mailPwdRstConfirmSubject';
+            $subject = 'mailConfirmSubject';
             $tr->( \$subject );
         }
         my $body;
         my $html;
-        if ( $self->conf->{mailPwdRstConfirmBody} ) {
+        if ( $self->conf->{mailConfirmBody} ) {
 
             # We use a specific text message, no html
-            $body = $self->{mailPwdRstConfirmBody};
+            $body = $self->{mailConfirmBody};
         }
         else {
 
@@ -454,17 +454,17 @@ sub changePwd {
     # Build mail content
     $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
     my $tr      = $self->translate($req);
-    my $subject = $self->conf->{mailPwdRstSubject};
+    my $subject = $self->conf->{mailSubject};
     unless ($subject) {
-        $subject = 'mailPwdRstSubject';
+        $subject = 'mailSubject';
         $tr->( \$subject );
     }
     my $body;
     my $html;
-    if ( $self->conf->{mailPwdRstBody} ) {
+    if ( $self->conf->{mailBody} ) {
 
         # We use a specific text message, no html
-        $body = $self->{mailPwdRstBody};
+        $body = $self->{mailBody};
     }
     else {
 

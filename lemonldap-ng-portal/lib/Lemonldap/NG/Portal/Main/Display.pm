@@ -287,7 +287,7 @@ sub display {
             ASK_LOGINS            => $req->param('checkLogins') || 0,
             DISPLAY_RESETPASSWORD => $self->conf->{portalDisplayResetPassword},
             DISPLAY_REGISTER      => $self->conf->{portalDisplayRegister},
-            MAIL_URL              => $self->conf->{mailPwdRstUrl},
+            MAIL_URL              => $self->conf->{mailUrl},
             REGISTER_URL          => $self->conf->{registerUrl},
             HIDDEN_INPUTS         => $self->buildHiddenForm($req),
             STAYCONNECTED         => $self->conf->{stayConnected},

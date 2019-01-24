@@ -1137,30 +1137,30 @@ sub attributes {
         },
         mailReplyTo =>
             { type => 'text', documentation => 'Reply-To address' },
-        mailPwdRstTimeout => {
+        mailTimeout => {
             type          => 'int',
             default       => 0,
             documentation => 'Mail password reset session timeout',
         },
 
         # Password reset
-        mailPwdRstBody =>
+        mailBody =>
             { type => 'longtext', documentation => 'Custom password reset mail body', },
 
-        mailPwdRstConfirmBody => {
+        mailConfirmBody => {
             type          => 'longtext',
             documentation => 'Custom confirm password reset mail body',
         },
-        mailPwdRstConfirmSubject => {
+        mailConfirmSubject => {
             type          => 'text',
             documentation => 'Mail subject for reset confirmation',
         },
-        mailPwdRstSubject => {
+        mailSubject => {
             type          => 'text',
             documentation => 'Mail subject for new password email',
         },
 
-        mailPwdRstUrl => {
+        mailUrl => {
             type          => 'url',
             default       => 'http://auth.example.com/resetpwd',
             documentation => 'URL of password reset page',
