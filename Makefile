@@ -383,12 +383,8 @@ autopkgtest:    all
 
 e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_server
 
-nox_full_test:	test prepare_test_server start_web_server
-	X -noreset +extension GLX +extension RANDR +extension RENDER -logfile ./e2e-tests/conf/X.log -config ./e2e-tests/xorg.conf :11 & \
-		echo $$! > e2e-tests/conf/X.pid
-	-DISPLAY=:11 $(MAKE) launch_protractor
-	kill $$(cat e2e-tests/conf/X.pid)
-	$(MAKE) stop_web_server
+nox_e2e_test:
+	xvfb-run -a -s "-screen 0 1080x800x16" $(MAKE) e2e_test
 
 prepare_test_server:
 	-@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
