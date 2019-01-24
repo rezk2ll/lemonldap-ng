@@ -390,7 +390,7 @@ sub tree {
                             ]
                         },
                         {   title => 'issuerDBCAS',
-                            help  => 'idpcas.html',
+                            help  => 'idpcas.html#enabling_cas',
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'issuerDBCASActivation', 'issuerDBCASPath',
@@ -950,6 +950,7 @@ sub tree {
         'oidcOPMetaDataNodes',
         'oidcRPMetaDataNodes',
         {   title => 'casServiceMetadata',
+            help => 'idpcas.html#configuring_the_cas_service',
             nodes => [
                 'casAttr',
                 'casAccessControlPolicy',

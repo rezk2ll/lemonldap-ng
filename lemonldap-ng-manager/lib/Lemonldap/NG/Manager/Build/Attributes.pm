@@ -1712,7 +1712,7 @@ sub attributes {
         casAppMetaDataNodes => {
             type     => 'casAppMetaDataNodeContainer',
             template => 'casAppMetaDataNode',
-            help     => 'idpcas.html',
+            help     => 'idpcas.html#configuring_cas_applications',
         },
 
         # OpenID Issuer
