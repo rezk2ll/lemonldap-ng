@@ -384,7 +384,7 @@ autopkgtest:    all
 e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_server
 
 nox_e2e_test:
-	xvfb-run -a -s "-screen 0 1080x800x16" $(MAKE) e2e_test
+	xvfb-run -a -s "-screen 0 800x600x16" $(MAKE) e2e_test
 
 prepare_test_server:
 	-@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
