@@ -1330,16 +1330,16 @@
       }, {
         "_nodes": [{
           "default": "http://auth.example.com/resetpwd",
-          "id": "mailPwdRstUrl",
-          "title": "mailPwdRstUrl"
+          "id": "mailUrl",
+          "title": "mailUrl"
         }, {
           "default": "[A-Z]{3}[a-z]{5}.\\d{2}",
           "id": "randomPasswordRegexp",
           "title": "randomPasswordRegexp"
         }, {
           "default": 0,
-          "id": "mailPwdRstTimeout",
-          "title": "mailPwdRstTimeout",
+          "id": "mailTimeout",
+          "title": "mailTimeout",
           "type": "int"
         }, {
           "default": "mail",

@@ -542,20 +542,20 @@ sub tree {
                         {   title => 'passwordManagement',
                             help  => 'resetpassword.html',
                             nodes => [
-                                {   title => 'mailPwdRstContent',
+                                {   title => 'mailContent',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'mailPwdRstSubject',
-                                        'mailPwdRstBody',
-                                        'mailPwdRstConfirmSubject',
-                                        'mailPwdRstConfirmBody'
+                                        'mailSubject',
+                                        'mailBody',
+                                        'mailConfirmSubject',
+                                        'mailConfirmBody'
                                     ]
                                 },
                                 {   title => 'mailOther',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'mailPwdRstUrl',
-                                        'mailPwdRstTimeout',
+                                        'mailUrl',
+                                        'mailTimeout',
                                         'randomPasswordRegexp',
                                     ]
                                 }
