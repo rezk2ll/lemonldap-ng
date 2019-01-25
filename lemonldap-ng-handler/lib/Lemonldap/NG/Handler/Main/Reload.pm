@@ -204,7 +204,6 @@ sub defaultValuesInit {
     $class->tsv->{cipher} = Lemonldap::NG::Common::Crypto->new( $conf->{key} );
 
     foreach my $opt (qw(https port maintenance)) {
-        next unless defined $conf->{$opt};
 
         # Record default value in key '_'
         $class->tsv->{$opt} = { _ => $conf->{$opt} };
@@ -216,7 +215,7 @@ sub defaultValuesInit {
                 $conf->{vhostOptions}->{$vhost} ||= {};
                 my $val = $conf->{vhostOptions}->{$vhost}->{$name};
 
-                # Keep default value if $val is negative
+                # Keep global value if $val is negative
                 if ( defined $val and $val >= 0 ) {
                     $class->logger->debug(
                         "Options $opt for vhost $vhost: $val");
