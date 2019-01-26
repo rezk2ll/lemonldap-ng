@@ -11,7 +11,7 @@ describe('40 Lemonldap::NG Manager', function() {
 
 });
 
-describe('40 Lemonldap::NG Session explorer', function() {
+describe('40 Lemonldap::NG Sessions explorer', function() {
 
   var session, ip;
 
