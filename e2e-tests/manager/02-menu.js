@@ -35,7 +35,7 @@ describe('02 Lemonldap::NG Manger', function() {
 
     it('Should display Menu -> Links', function() {
       element(by.id("mainlangmenu")).click();
-      browser.sleep(5000);
+      browser.sleep(500);
       var links = element.all(by.repeater('menulink in menulinks'));
       expect(links.count()).toEqual(4);
       expect(links.get(0).getText()).toEqual('Retour au portail');

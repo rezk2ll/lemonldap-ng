@@ -17,6 +17,7 @@ describe('40 Lemonldap::NG Sessions explorer', function() {
 
   it('Should display at least my session', function() {
     browser.get('/sessions.html');
+    expect(element.all(by.xpath("//a[@href='sessions.html']")).first().getCssValue("color")).toEqual('rgba(157, 157, 157, 1)');
     var t = element.all(by.repeater('node in data track by node.id'));
     expect(t.count()).toBeGreaterThan(0);
     element(by.id("a-d")).click();
