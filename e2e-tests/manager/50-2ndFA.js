@@ -1,21 +1,19 @@
 'use strict';
 
 describe('50 Lemonldap::NG Manager', function() {
-
-  it('should display other modules', function() {
-    // Login attempt
-    browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
-    browser.driver.findElement(by.xpath("//input[@name='user']")).sendKeys('dwho');
-    browser.driver.findElement(by.xpath("//input[@name='password']")).sendKeys('dwho');
-    browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
+  it('should display 2FA Sessions explorer', function() {
+    //// Login attempt
+    // browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
+    // browser.driver.findElement(by.xpath("//input[@name='user']")).sendKeys('dwho');
+    // browser.driver.findElement(by.xpath("//input[@name='password']")).sendKeys('dwho');
+    // browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
 
     browser.get('/');
     var links = element.all(by.repeater('l in links'));
     expect(links.count()).toEqual(4);
-    element(by.xpath("//a[@href='2ndfa.html']")).getCssValue("color").toEqual("rgba(11, 51, 60, 1)");
-    element(by.xpath("//a[@href='2ndfa.html']")).click();
+    expect(element.all(by.xpath("//a[@href='2ndfa.html']")).first().getCssValue("color")).toEqual('rgba(157, 157, 157, 1)');
+    element.all(by.xpath("//a[@href='2ndfa.html']")).first().click();
   });
-
 });
 
 describe('50 Lemonldap::NG 2FA Sessions explorer', function() {
@@ -67,8 +65,4 @@ describe('50 Lemonldap::NG 2FA Sessions explorer', function() {
     expect(element.all(by.repeater('node in data track by node.id')).count()).toEqual(1);
     browser.sleep(500);
   });
-
-
-
-
 });

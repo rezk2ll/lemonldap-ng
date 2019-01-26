@@ -99,21 +99,25 @@ describe('0 Lemonldap::NG', function() {
       browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
 
       browser.driver.findElement(by.css('[alt="WebSSO Manager"]')).click();
+      expect(element.all(by.xpath("//a[@href='manager.html']")).first().getCssValue("color")).toEqual('rgba(157, 157, 157, 1)');
       browser.sleep(1000);
       expect(browser.driver.findElement(by.css('[trspan="currentConfiguration"]')).getText()).toEqual('Configuration actuelle');
       browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
 
       browser.driver.findElement(by.css('[alt="Sessions explorer"]')).click();
+      expect(element.all(by.xpath("//a[@href='sessions.html']")).first().getCssValue("color")).toEqual('rgba(157, 157, 157, 1)');
       browser.sleep(1000);
       expect(browser.driver.findElement(by.css('[trspan="session_s"]')).getText()).toEqual('session(s)');
       browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
 
       browser.driver.findElement(by.css('[alt="Notifications explorer"]')).click();
+      expect(element(by.xpath("//a[@href='notifications.html']")).getCssValue("color")).toEqual('rgba(157, 157, 157, 1)');
       browser.sleep(1000);
       expect(browser.driver.findElement(by.css('[trspan="noDatas"]')).getText()).toEqual('Aucune donnée à afficher');
       browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
 
       browser.driver.findElement(by.css('[alt="2FA Sessions explorer"]')).click();
+      expect(element.all(by.xpath("//a[@href='2ndfa.html']")).first().getCssValue("color")).toEqual('rgba(157, 157, 157, 1)');
       browser.sleep(1000);
       expect(browser.driver.findElement(by.id('a-persistent')).getText()).toEqual('Explorateur sessions 2ndFA   ');
       browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
