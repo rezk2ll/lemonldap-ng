@@ -12,7 +12,8 @@ describe('50 Lemonldap::NG Manager', function() {
     browser.get('/');
     var links = element.all(by.repeater('l in links'));
     expect(links.count()).toEqual(4);
-    element.all(by.xpath("//a[@href='2ndfa.html']")).first().click();
+    element(by.xpath("//a[@href='2ndfa.html']")).getCssValue("color").toEqual("rgba(11, 51, 60, 1)");
+    element(by.xpath("//a[@href='2ndfa.html']")).click();
   });
 
 });
