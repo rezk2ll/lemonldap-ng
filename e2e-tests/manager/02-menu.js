@@ -10,12 +10,12 @@ describe('02 Lemonldap::NG Manger', function() {
         "fr": "Paramètres généraux"
       };
 
-      // Login attempt
-      browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
-      browser.driver.findElement(by.xpath("//input[@name='user']")).sendKeys('dwho');
-      browser.driver.findElement(by.xpath("//input[@name='password']")).sendKeys('dwho');
-      browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
-      browser.get('/');
+      // // Login attempt
+      // browser.driver.get('http://auth.example.com:' + process.env.TESTWEBSERVERPORT + '/');
+      // browser.driver.findElement(by.xpath("//input[@name='user']")).sendKeys('dwho');
+      // browser.driver.findElement(by.xpath("//input[@name='password']")).sendKeys('dwho');
+      // browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
+      // browser.get('/');
 
       var els = element.all(by.css('[ng-click="getLanguage(lang)"]'));
       expect(els.count()).toEqual(14);
