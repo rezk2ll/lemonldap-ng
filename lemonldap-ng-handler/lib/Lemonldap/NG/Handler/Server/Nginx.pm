@@ -67,6 +67,9 @@ sub handler {
     my ( $self, $req ) = @_;
     my $hdrs = $req->{respHeaders};
     $req->{respHeaders} = [];
+    my $cookie = $req->env->{HTTP_COOKIE};
+    my $cn = $self->Lemonldap::NG::Handler::Main::tsv->{cookieName};
+    $cookie =~ s/\b$cn(http)?=[^,;]*[,;\s]*//og;
     my @convertedHdrs =
       ( 'Content-Length' => 0, Cookie => ( $req->env->{HTTP_COOKIE} // '' ) );
     my $i = 0;
