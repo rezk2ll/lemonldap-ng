@@ -823,9 +823,7 @@ This file contains:
               } else {
                 node.data = data.value;
               }
-              if (node.type && node.type.match(/^(bool|trool|boolOrExpr)$/)) {
-                node.data = node.data.toString();
-              } else if (node.type && node.type.match(/^int$/)) {
+              if (node.type && node.type.match(/^int$/)) {
                 node.data = parseInt(node.data, 10);
               } else if (node.type && node.type.match(/^(saml(Service|Assertion)|blackWhiteList)$/) && !(typeof node.data === 'object')) {
                 node.data = node.data.split(';');
