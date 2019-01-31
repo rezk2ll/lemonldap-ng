@@ -594,17 +594,6 @@ sub display {
         $tplPrm{DISPLAY_PASSWORD_FORM} = $req->sessionInfo->{pwdAllowed};
     }
 
-    # Custom template parameters
-    if ( my $customParams = $self->p->customParameters ) {
-        foreach ( keys %$customParams ) {
-            $tplPrm{$_} = $customParams->{$_};
-        }
-    }
-
-    for my $env_key ( keys %{ $req->env } ) {
-        $tplPrm{ "env_" . $env_key } = $req->env->{$env_key};
-    }
-
     return 'mail', \%tplPrm;
 }
 
