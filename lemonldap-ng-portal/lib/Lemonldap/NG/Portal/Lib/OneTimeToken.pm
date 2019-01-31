@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Lib::OneTimeToken;
 use strict;
 use Mouse;
 use JSON qw(from_json to_json);
+use Crypt::URandom;
 
 our $VERSION = '2.0.0';
 
@@ -63,7 +64,8 @@ sub createToken {
     $infos->{_type} ||= "token";
 
     if ( $self->cache ) {
-        my $id = $infos->{_utime} . '_' . int( rand(10000) );
+        my $id =
+          $infos->{_utime} . '_' . unpack( 's', Crypt::URandom::urandom(2) );
 
         # Dereference $infos
         my %h = %$infos;

@@ -1,6 +1,7 @@
 package Lemonldap::NG::Manager::Cli;
 
 use strict;
+use Crypt::URandom;
 use Mouse;
 use Data::Dumper;
 use Lemonldap::NG::Common::Conf::ReConstants;
@@ -254,8 +255,9 @@ sub _save {
     $new->{cfgDate}     = time;
     $new->{cfgVersion}  = $VERSION;
     $new->{cfgLog}      = '';
-    $new->{key} ||=
-      join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. 16 ) );
+    $new->{key} ||= join( '',
+        map { chr( int( ord( Crypt::URandom::urandom(1) ) * 94 / 256 ) + 33 ) }
+          ( 1 .. 16 ) );
 
     my $s = $self->mgr->confAcc->saveConf( $new, %$saveParams );
     if ( $s > 0 ) {

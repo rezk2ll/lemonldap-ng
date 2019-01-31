@@ -33,6 +33,7 @@ WriteMakefile(
             'Apache::Session::Browseable' => 0,
             'Convert::Base32'             => 0,
             'Cookie::Baker::XS'           => 0,
+            'Crypt::URandom'              => 0,
             'DBI'                         => 0,
             'Net::LDAP'                   => 0,
             'SOAP::Lite'                  => 0,

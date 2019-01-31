@@ -20,6 +20,7 @@ package Lemonldap::NG::Manager::Conf::Parser;
 
 use strict;
 use utf8;
+use Crypt::URandom;
 use Mouse;
 use JSON 'to_json';
 use Lemonldap::NG::Common::Conf::ReConstants;
@@ -130,8 +131,9 @@ sub scanTree {
     $self->newConf->{cfgAuthorIP} = $self->req->address;
     $self->newConf->{cfgDate}     = time;
     $self->newConf->{cfgVersion}  = $VERSION;
-    $self->newConf->{key} ||=
-      join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. 16 ) );
+    $self->newConf->{key} ||= join( '',
+        map { chr( int( ord( Crypt::URandom::urandom(1) ) * 94 / 256 ) + 33 ) }
+          ( 1 .. 16 ) );
 
     return 1;
 }

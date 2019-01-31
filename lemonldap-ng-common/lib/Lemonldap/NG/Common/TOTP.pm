@@ -5,7 +5,8 @@ package Lemonldap::NG::Common::TOTP;
 
 use strict;
 use Mouse;
-use Convert::Base32 'decode_base32';
+use Convert::Base32 qw(decode_base32 encode_base32);
+use Crypt::URandom;
 use Digest::HMAC_SHA1 'hmac_sha1_hex';
 
 our $VERSION = '2.0.0';
@@ -47,8 +48,7 @@ sub _code {
 # Simply generate new base32 secret
 sub newSecret {
     my ($self) = @_;
-    my @chars = ( 'a' .. 'z', 2 .. 7 );
-    return join( '', @chars[ map { int( rand(32) ) } 1 .. 32 ] );
+    return encode_base32( Crypt::URandom::urandom(20) );
 }
 
 1;
