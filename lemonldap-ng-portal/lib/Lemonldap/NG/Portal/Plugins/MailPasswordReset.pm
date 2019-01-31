@@ -594,12 +594,6 @@ sub display {
         $tplPrm{DISPLAY_PASSWORD_FORM} = $req->sessionInfo->{pwdAllowed};
     }
 
-    # Custom template parameters
-    if ( my $customParams = $self->p->customParameters ) {
-        foreach ( keys %$customParams ) {
-            $tplPrm{$_} = $customParams->{$_};
-        }
-    }
     return 'mail', \%tplPrm;
 }
 

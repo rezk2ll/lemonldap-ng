@@ -521,6 +521,7 @@ sub display {
             DISPLAY_PASSWORD_FORM   => 1,
         );
     }
+
     return ( 'register', \%templateParams );
 }
 

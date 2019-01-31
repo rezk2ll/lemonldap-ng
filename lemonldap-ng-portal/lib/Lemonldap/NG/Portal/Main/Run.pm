@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.1';
+our $VERSION = '2.0.2';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -843,16 +843,30 @@ sub rebuildCookies {
 }
 
 sub tplParams {
-    my $portalPath = $_[0]->conf->{portal};
+    my ( $self, $req ) = @_;
+    my %templateParams;
+
+    my $portalPath = $self->conf->{portal};
     $portalPath =~ s#^https?://[^/]+/?#/#;
     $portalPath =~ s#[^/]+\.fcgi$##;
+
+    for my $session_key ( keys %{ $req->{sessionInfo} } ) {
+        $templateParams{ "session_" . $session_key } =
+        $req->{sessionInfo}->{$session_key};
+    }
+
+    for my $env_key ( keys %{ $req->env } ) {
+        $templateParams{ "env_" . $env_key } = $req->env->{$env_key};
+    }
+
     return (
-        SKIN       => $_[0]->getSkin( $_[1] ),
-        PORTAL_URL => $_[0]->conf->{portal},
+        SKIN       => $self->getSkin( $req ),
+        PORTAL_URL => $self->conf->{portal},
         SKIN_PATH  => $portalPath . "skins",
-        ANTIFRAME  => $_[0]->conf->{portalAntiFrame},
-        SKIN_BG    => $_[0]->conf->{portalSkinBackground},
-        ( $_[0]->customParameters ? ( %{ $_[0]->customParameters } ) : () ),
+        ANTIFRAME  => $self->conf->{portalAntiFrame},
+        SKIN_BG    => $self->conf->{portalSkinBackground},
+        ( $self->customParameters ? ( %{ $self->customParameters } ) : () ),
+        %templateParams
     );
 }
 
