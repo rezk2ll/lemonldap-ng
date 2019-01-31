@@ -342,7 +342,7 @@ llapp.controller 'TreeCtrl', [
 				id: "#{node.id}/n#{id++}"
 				title: 'new'
 				type: 'samlAttribute'
-				data: [0, 'New', '', '']
+				data: ['0', 'New', '', '']
 
 		# Nodes with template
 		$scope.addVhost = ->
@@ -678,9 +678,9 @@ llapp.controller 'TreeCtrl', [
 						else
 							node.data = data.value
 						# Cast int as int (remember that booleans are int for Perl)
-						if node.type and node.type.match /^(bool|trool|boolOrExpr)$/
-							node.data = node.data.toString()
-						else if node.type and node.type.match /^int$/
+						#if node.type and node.type.match /^(bool|trool|boolOrExpr)$/
+							#node.data = node.data.toString()
+						if node.type and node.type.match /^int$/
 							node.data = parseInt(node.data, 10)				
 						# Split SAML types
 						else if node.type and node.type.match(/^(saml(Service|Assertion)|blackWhiteList)$/) and not (typeof node.data == 'object')
