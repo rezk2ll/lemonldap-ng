@@ -418,18 +418,6 @@ sub display {
 
     }
 
-    # Additional $req param
-    %templateParams = ( %templateParams, %{ $req->{customParameters} // {} }, );
-
-    for my $session_key ( keys %{ $req->{sessionInfo} } ) {
-        $templateParams{ "session_" . $session_key } =
-          $req->{sessionInfo}->{$session_key};
-    }
-
-    for my $env_key ( keys %{ $req->env } ) {
-        $templateParams{ "env_" . $env_key } = $req->env->{$env_key};
-    }
-
     $self->logger->debug("Skin returned: $skinfile");
     return ( $skinfile, \%templateParams );
 }
