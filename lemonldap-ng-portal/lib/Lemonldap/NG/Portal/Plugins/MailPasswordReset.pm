@@ -600,6 +600,11 @@ sub display {
             $tplPrm{$_} = $customParams->{$_};
         }
     }
+
+    for my $env_key ( keys %{ $req->env } ) {
+        $tplPrm{ "env_" . $env_key } = $req->env->{$env_key};
+    }
+
     return 'mail', \%tplPrm;
 }
 

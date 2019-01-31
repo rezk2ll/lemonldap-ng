@@ -521,6 +521,11 @@ sub display {
             DISPLAY_PASSWORD_FORM   => 1,
         );
     }
+
+    for my $env_key ( keys %{ $req->env } ) {
+        $templateParams{ "env_" . $env_key } = $req->env->{$env_key};
+    }
+
     return ( 'register', \%templateParams );
 }
 
