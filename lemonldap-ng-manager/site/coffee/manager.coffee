@@ -342,7 +342,7 @@ llapp.controller 'TreeCtrl', [
 				id: "#{node.id}/n#{id++}"
 				title: 'new'
 				type: 'samlAttribute'
-				data: [0, 'New', '', '']
+				data: ['0', 'New', '', '']
 
 		# Nodes with template
 		$scope.addVhost = ->
