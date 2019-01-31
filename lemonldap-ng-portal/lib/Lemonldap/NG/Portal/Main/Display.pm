@@ -426,6 +426,10 @@ sub display {
           $req->{sessionInfo}->{$session_key};
     }
 
+    for my $env_key ( keys %{ $req->env } ) {
+        $templateParams{ "env_" . $env_key } = $req->env->{$env_key};
+    }
+
     $self->logger->debug("Skin returned: $skinfile");
     return ( $skinfile, \%templateParams );
 }
