@@ -9,7 +9,7 @@ use Convert::Base32 qw(decode_base32 encode_base32);
 use Crypt::URandom;
 use Digest::HMAC_SHA1 'hmac_sha1_hex';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 # Verify that TOTP $code matches with $secret
 sub verifyCode {

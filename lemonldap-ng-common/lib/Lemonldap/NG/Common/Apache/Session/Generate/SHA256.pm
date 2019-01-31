@@ -12,7 +12,7 @@ use strict;
 use Crypt::URandom;
 use Digest::SHA qw(sha256 sha256_hex sha256_base64);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 sub generate {
     my $session = shift;
