@@ -326,7 +326,7 @@ sub _reset {
         if ( $self->conf->{mailConfirmBody} ) {
 
             # We use a specific text message, no html
-            $body = $self->{mailConfirmBody};
+            $body = $self->conf->{mailConfirmBody};
         }
         else {
 
@@ -464,7 +464,7 @@ sub changePwd {
     if ( $self->conf->{mailBody} ) {
 
         # We use a specific text message, no html
-        $body = $self->{mailBody};
+        $body = $self->conf->{mailBody};
     }
     else {
 

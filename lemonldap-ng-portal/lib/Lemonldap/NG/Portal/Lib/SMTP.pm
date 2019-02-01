@@ -199,12 +199,9 @@ sub send_mail {
                 Subject    => $subject,
                 Type       => 'TEXT',
                 Data       => $body,
+                Type       => 'text/plain',
+                Charset    => $self->charset,
             );
-
-            # Manage content type and charset
-            $message->attr( "content-type"         => "text/plain" );
-            $message->attr( "content-type.charset" => $self->charset );
-
         }
 
         # Send the mail
