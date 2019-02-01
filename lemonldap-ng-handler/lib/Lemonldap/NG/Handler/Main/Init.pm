@@ -66,7 +66,7 @@ sub logLevelInit {
 # adapt server signature
 sub serverSignatureInit {
     my $class = shift;
-    require Lemonldap::NG::Handler::Main;
+    require Lemonldap::NG::Handler;
     my $version = $Lemonldap::NG::Handler::VERSION;
     $class->setServerSignature("Lemonldap::NG/$version");
 }
