@@ -38,7 +38,6 @@ sub extractFormInfo {
                     . '"}</script>';
                 $self->logger->debug(
                     "Send JS -> " . $req->data->{customScript} );
-
             }
         }
         foreach my $mod ( values %{ $self->modules } ) {
