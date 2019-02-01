@@ -37,7 +37,7 @@
 
         <div id="<TMPL_VAR NAME="key">">
 
-          <form action="<TMPL_VAR NAME="url">" method="post" class="login <TMPL_VAR NAME="module">">
+          <form id="lform<TMPL_VAR NAME="module">" action="<TMPL_VAR NAME="url">" method="post" class="login <TMPL_VAR NAME="module">">
 
             <!-- Hidden fields -->
             <TMPL_VAR NAME="HIDDEN_INPUTS">
@@ -59,7 +59,7 @@
             </TMPL_IF>
 
             <TMPL_IF NAME="sslform">
-              <TMPL_INCLUDE NAME="sslform.tpl">
+              <TMPL_INCLUDE NAME="sslformChoice.tpl">
             </TMPL_IF>
 
             <TMPL_IF NAME="logo">

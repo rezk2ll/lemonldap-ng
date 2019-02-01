@@ -26,6 +26,20 @@ sub extractFormInfo {
     my ( $self, $req ) = @_;
     unless ( $self->checkChoice($req) ) {
         foreach my $mod ( values %{ $self->modules } ) {
+            $self->logger->debug("Auth module -> $mod");
+            if ( $mod =~ /::Auth::SSL/ ) {
+                if ( $self->conf->{sslByAjax} and not $req->param('nossl') ) {
+                    $self->logger->debug('Send SSL javascript');
+                    $req->data->{customScript}
+                        .= '<script type="application/init">{"sslHost":"'
+                        . $self->conf->{sslHost}
+                        . '"}</script>';
+                    $self->logger->debug(
+                        "Send JS -> " . $req->data->{customScript} );
+                }
+            }
+        }
+        foreach my $mod ( values %{ $self->modules } ) {
             if ( $mod->can('setSecurity') ) {
                 $mod->setSecurity($req);
                 last;

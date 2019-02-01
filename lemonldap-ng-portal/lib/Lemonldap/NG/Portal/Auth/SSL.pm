@@ -44,6 +44,7 @@ sub extractFormInfo {
             '<script type="application/init">{"sslHost":"'
           . $self->conf->{sslHost}
           . '"}</script>';
+        $self->logger->debug("Send JS -> " . $req->data->{customScript});
         return PE_FIRSTACCESS;
     }
     else {

@@ -48,6 +48,8 @@ SKIP: {
                 dbiAuthPasswordHash => '',
                 customAuth          => '::Auth::Apache',
                 customAddParams     => {},
+                sslByAjax           => 1,
+                sslHost             => 'https://authssl.example.com:19876'
             }
         }
     );
@@ -63,8 +65,11 @@ SKIP: {
     ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/SSL.png"%,
         'Found 5_ssl Logo' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] =~ m%<form action="https://test.example.com"%,
+    ok( $res->[2]->[0] =~ m%<form id="lformDemo" action="https://test.example.com"%,
         ' Redirect URL found' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ m%<script type="application/init">\{"sslHost":"https://authssl.example.com:19876"\}</script>%,
+        ' SSL AJAX URL found' )
       or print STDERR Dumper( $res->[2]->[0] );
     my $header = getHeader( $res, 'Content-Security-Policy' );
     ok( $header =~ m%;form-action \'self\'  https://test.example.com;%,
