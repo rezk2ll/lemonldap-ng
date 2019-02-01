@@ -27,10 +27,11 @@ sub set_header_in {
 
 sub unset_header_in {
     my ( $class, $req, $header ) = @_;
-    $req->{respHeaders} = [ grep { $_ ne $header } @{ $req->{respHeaders} } ];
+    $req->{respHeaders} = [ grep { $_ ne $header and $_ ne cgiName($header) }
+          @{ $req->{respHeaders} } ];
+    delete $req->{env}->{ cgiName($header) };
     $header =~ s/-/_/g;
     delete $req->{env}->{$header};
-    delete $req->{env}->{"HTTP_$header"};
 }
 
 # Inheritence is broken in this case with Debian >= jessie
