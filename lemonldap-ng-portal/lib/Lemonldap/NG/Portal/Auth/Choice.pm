@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Auth::Choice;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_FIRSTACCESS);
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_FIRSTACCESS PE_ERROR);
 
 our $VERSION = '2.0.2';
 
@@ -25,17 +25,21 @@ sub _authCancel {
 sub extractFormInfo {
     my ( $self, $req ) = @_;
     unless ( $self->checkChoice($req) ) {
-        $self->logger->debug("Searching for Auth module AJAX init/script...");
+        $self->logger->debug("Initializing Auth modules...");
         foreach my $mod ( values %{ $self->modules } ) {
-            if ( $mod->{AjaxInitScript} and $mod->{Name} ) {
+            if ( $mod->{AjaxInitScript} ) {
                 $self->logger->debug(
-                    'Append ' . $mod->Name . ' init/script' );
+                    'Append ' . $mod->{Name} . ' init/script' ) if $mod->{Name};
                 $req->data->{customScript} .= $mod->AjaxInitScript;
             }
             if ( $mod->{InitCmd} ) {
-                eval( $mod->{InitCmd} );
-                die 'Unable to launch init commmand ' . $mod->{InitCmd}
-                    if ($@);
+                $self->logger->debug(
+                    'Launch ' . $mod->{Name} . ' init command' ) if $mod->{Name};
+                my $res = eval( $mod->{InitCmd} );
+                if ($@) {
+                    $self->logger("Auth error: $@");
+                    return PE_ERROR;
+                 }
             }
         }
         foreach my $mod ( values %{ $self->modules } ) {
