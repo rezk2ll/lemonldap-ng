@@ -340,6 +340,7 @@
 "ldapGroupAttributeNameSearch":"Searched attributes",
 "ldapGroupAttributeNameUser":"User source attribute",
 "ldapGroupBase":"Search base",
+"ldapGroupDecodeSearchedValue":"Decode searched value",
 "ldapGroupObjectClass":"Object class",
 "ldapGroupRecursive":"Recursive",
 "ldapGroups":"Groups",
