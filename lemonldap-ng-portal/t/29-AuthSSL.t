@@ -26,7 +26,9 @@ ok( $res->[2]->[0]
 ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/SSL.png"%,
     'Found 5_ssl Logo' )
     or print STDERR Dumper( $res->[2]->[0] );
-count(3);
+ok( $res->[2]->[0] =~ /ssl\.(?:min\.)?js/, 'Get sslChoice javascript' )
+      or print STDERR Dumper( $res->[2]->[0] );
+count(4);
 
 ok( $res
         = $client->_get( '/',

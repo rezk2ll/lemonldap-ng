@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
     PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Portal::Main::Auth';
 
@@ -36,7 +36,7 @@ sub init {
     $self->keytab("FILE:$file");
     $self->AjaxInitScript( '<script type="text/javascript" src="'
             . $self->p->staticPrefix
-            . '/common/js/kerberos.js"></script>' )
+            . '/common/js/kerberosChoice.js"></script>' )
         if $self->conf->{krbByJs};
     return 1;
 }
@@ -103,11 +103,17 @@ sub extractFormInfo {
         # Case 3: Display kerberos auth page (with javascript)
         else {
             $self->logger->debug( 'Append ' . $self->Name . ' init/script' );
-            $req->data->{customScript} .= $self->AjaxInitScript;
+
+            # Call kerberos.js if Kerberos is the only Auth module
+            # kerberosChoice.js is used by Choice
+            $self->{AjaxInitScript} =~ s/kerberosChoice/kerberos/;
+            $req->data->{customScript} .= $self->{AjaxInitScript};
             $self->logger->debug(
                 "Send init/script -> " . $req->data->{customScript} );
+
             #$self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );
-            eval ( $self->InitCmd );
+            eval( $self->InitCmd );
+            die 'Unable to launch init commmand ' . $self->{InitCmd} if ($@);
             return PE_FIRSTACCESS;
         }
     }

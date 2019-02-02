@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
     PE_OK
 );
 
-our $VERSION = '2.0.1';
+our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Portal::Main::Auth';
 
@@ -48,8 +48,8 @@ sub extractFormInfo {
         return PE_BADCERTIFICATE;
     }
     elsif ( $self->conf->{sslByAjax} and not $req->param('nossl') ) {
-        $self->logger->debug( 'Append ' . $self->Name . ' init/script' );
-        $req->data->{customScript} .= $self->AjaxInitScript;
+        $self->logger->debug( 'Append ' . $self->{Name} . ' init/script' );
+        $req->data->{customScript} .= $self->{AjaxInitScript};
         $self->logger->debug(
             "Send init/script -> " . $req->data->{customScript} );
         return PE_FIRSTACCESS;

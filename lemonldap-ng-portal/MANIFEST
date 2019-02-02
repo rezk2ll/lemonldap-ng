@@ -146,6 +146,7 @@ site/coffee/confirm.coffee
 site/coffee/idpchoice.coffee
 site/coffee/info.coffee
 site/coffee/kerberos.coffee
+site/coffee/kerberosChoice.coffee
 site/coffee/oidcchecksession.coffee
 site/coffee/portal.coffee
 site/coffee/redirect.coffee
@@ -265,6 +266,8 @@ site/htdocs/static/common/js/info.js
 site/htdocs/static/common/js/info.min.js
 site/htdocs/static/common/js/kerberos.js
 site/htdocs/static/common/js/kerberos.min.js
+site/htdocs/static/common/js/kerberosChoice.js
+site/htdocs/static/common/js/kerberosChoice.min.js
 site/htdocs/static/common/js/oidcchecksession.js
 site/htdocs/static/common/js/oidcchecksession.min.js
 site/htdocs/static/common/js/portal.js

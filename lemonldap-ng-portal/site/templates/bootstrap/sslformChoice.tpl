@@ -1,5 +1,5 @@
 <!-- //if:jsminified
-<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/ssl.min.js"></script>
+<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/sslChoice.min.js"></script>
 //else -->
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/sslChoice.js"></script>
 <!-- //endif -->
