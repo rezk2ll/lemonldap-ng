@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 13;
+my $maintests = 17;
 
 eval { unlink 't/userdb.db' };
 
@@ -37,6 +37,7 @@ SKIP: {
 'Demo;Demo;Null;https://test.example.com;$env->{ipAddr} =~ /1.2.3.4/',
                     '5_ssl'        => 'SSL;Demo;Demo',
                     '6_FakeCustom' => 'Custom;Demo;Demo',
+                    '7_Kerberos'   => 'Kerberos;Null;Null',
                 },
 
                 dbiAuthChain        => 'dbi:SQLite:dbname=t/userdb.db',
@@ -49,7 +50,10 @@ SKIP: {
                 customAuth          => '::Auth::Apache',
                 customAddParams     => {},
                 sslByAjax           => 1,
-                sslHost             => 'https://authssl.example.com:19876'
+                sslHost             => 'https://authssl.example.com:19876',
+                krbKeytab           => '/etc/keytab',
+                krbByJs             => 1,
+                krbAuthnLevel       => 4,
             }
         }
     );
@@ -59,17 +63,28 @@ SKIP: {
     ok( $res->[2]->[0] =~ /3_demo/,       '3_demo displayed' );
     ok( $res->[2]->[0] =~ /5_ssl/,        '5_ssl displayed' );
     ok( $res->[2]->[0] =~ /6_FakeCustom/, '6_FakeCustom displayed' );
+    ok( $res->[2]->[0] =~ /7_Kerberos/,   '7_Kerberos displayed' );
+    ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/SSL.png"%,
+        'Found 5_ssl Logo' )
+      or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ qr%img src="/static/common/modules/Apache.png"%,
         'Found 6_FakeCustom Logo' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/SSL.png"%,
-        'Found 5_ssl Logo' )
+    ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/Kerberos.png"%,
+        'Found 7_Kerberos Logo' )
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%<form id="lformDemo" action="https://test.example.com"%,
         ' Redirect URL found' )
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%<script type="application/init">\{"sslHost":"https://authssl.example.com:19876"\}</script>%,
         ' SSL AJAX URL found' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    expectForm( $res, '#', undef, 'kerberos' );
+    ok( $res->[2]->[0]
+            =~ m%<input type="hidden" name="kerberos" id="kerberos" value="0" />%,
+        'Found hidden attribut "kerberos" with value="0"'
+    ) or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ /kerberos\.(?:min\.)?js/, 'Get Kerberos javascript' )
       or print STDERR Dumper( $res->[2]->[0] );
     my $header = getHeader( $res, 'Content-Security-Policy' );
     ok( $header =~ m%;form-action \'self\'  https://test.example.com;%,

@@ -32,6 +32,11 @@ sub extractFormInfo {
                     'Append ' . $mod->Name . ' init/script' );
                 $req->data->{customScript} .= $mod->AjaxInitScript;
             }
+            if ( $mod->{InitCmd} ) {
+                eval( $mod->{InitCmd} );
+                die 'Unable to launch init commmand ' . $mod->{InitCmd}
+                    if ($@);
+            }
         }
         foreach my $mod ( values %{ $self->modules } ) {
             if ( $mod->can('setSecurity') ) {
@@ -40,7 +45,8 @@ sub extractFormInfo {
             }
         }
         $self->logger->debug(
-            "Send init/script -> " . $req->data->{customScript} );
+            "Send init/script -> " . $req->data->{customScript} )
+            if $req->data->{customScript};
         return PE_FIRSTACCESS;
     }
     my $res = $req->data->{enabledMods0}->[0]->extractFormInfo($req);
