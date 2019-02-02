@@ -2525,6 +2525,11 @@ sub attributes {
             type          => 'text',
             documentation => 'LDAP filter for auth search'
         },
+        ldapGroupDecodeSearchedValue => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Decode value before searching it in LDAP groups',
+        },
         ldapGroupRecursive => {
             default       => 0,
             type          => 'bool',

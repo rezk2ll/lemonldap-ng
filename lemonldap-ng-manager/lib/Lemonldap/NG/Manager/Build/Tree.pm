@@ -241,6 +241,7 @@ sub tree {
                                         'ldapGroupAttributeName',
                                         'ldapGroupAttributeNameUser',
                                         'ldapGroupAttributeNameSearch',
+                                        'ldapGroupDecodeSearchedValue',
                                         'ldapGroupRecursive',
                                         'ldapGroupAttributeNameGroup'
                                     ]
