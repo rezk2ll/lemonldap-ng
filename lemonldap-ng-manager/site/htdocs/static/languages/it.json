@@ -340,6 +340,7 @@
 "ldapGroupAttributeNameSearch":"Attributi ricercati",
 "ldapGroupAttributeNameUser":"Attributo origine utente",
 "ldapGroupBase":"Base di ricerca",
+"ldapGroupDecodeSearchedValue":"Decode searched value",
 "ldapGroupObjectClass":"Classe oggetto",
 "ldapGroupRecursive":"Ricorsivo",
 "ldapGroups":"Gruppi",

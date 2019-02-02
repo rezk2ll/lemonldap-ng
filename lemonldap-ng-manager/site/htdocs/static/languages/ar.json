@@ -340,6 +340,7 @@
 "ldapGroupAttributeNameSearch":"السمات التي تم البحث عنها",
 "ldapGroupAttributeNameUser":"سمة مصدر المستخدم",
 "ldapGroupBase":"قاعدة البحث",
+"ldapGroupDecodeSearchedValue":"Decode searched value",
 "ldapGroupObjectClass":"أوبجكت كلاس",
 "ldapGroupRecursive":"تكراري",
 "ldapGroups":"المجموعات",

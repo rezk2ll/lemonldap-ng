@@ -340,6 +340,7 @@
 "ldapGroupAttributeNameSearch":"Thuộc tính đã tìm kiếm",
 "ldapGroupAttributeNameUser":"Thuộc tính nguồn của người dùng",
 "ldapGroupBase":"Cơ sở tìm kiếm",
+"ldapGroupDecodeSearchedValue":"Decode searched value",
 "ldapGroupObjectClass":"Lớp đối tượng",
 "ldapGroupRecursive":"Đệ quy",
 "ldapGroups":"Nhóm",
