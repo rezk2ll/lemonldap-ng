@@ -9,7 +9,7 @@ BEGIN {
     };
 }
 
-my $maintests = 24;
+my $maintests = 26;
 my ( $res, $user, $pwd, $host, $url, $query );
 my $mailSend = 0;
 
@@ -79,6 +79,12 @@ SKIP: {
 
     # Test normal first access
     # ------------------------
+    ok( $res = $client->_get( '/', accept => 'text/html' ),
+        'Get Menu', );
+    ok( $res->[2]->[0]
+            =~ m%<a class="btn btn-secondary" href="http://auth.example.com/register\?skin=bootstrap">%,
+        'Found Register link & submit button'
+    ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $res = $client->_get( '/register', accept => 'text/html' ),
         'Unauth request',
     );
@@ -103,7 +109,6 @@ SKIP: {
             =~ m%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo'
     ) or print STDERR Dumper( $res->[2]->[0] );
-
     $query .= "&captcha=$captcha";
 
     ok( $res = $client->_post(
