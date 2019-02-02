@@ -3,10 +3,10 @@ package Lemonldap::NG::Portal::Auth::SSL;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADCERTIFICATE
-  PE_CERTIFICATEREQUIRED
-  PE_FIRSTACCESS
-  PE_OK
+    PE_BADCERTIFICATE
+    PE_CERTIFICATEREQUIRED
+    PE_FIRSTACCESS
+    PE_OK
 );
 
 our $VERSION = '2.0.1';
@@ -15,7 +15,15 @@ extends 'Lemonldap::NG::Portal::Main::Auth';
 
 # INITIALIZATION
 
+has AjaxInitScript => ( is => 'rw', default => '' );
+has Name           => ( is => 'ro', default => 'SSL' );
+
 sub init {
+    my ($self) = @_;
+    $self->AjaxInitScript( '<script type="application/init">{"sslHost":"'
+            . $self->conf->{sslHost}
+            . '"}</script>' )
+        if $self->conf->{sslByAjax};
     return 1;
 }
 
@@ -25,13 +33,14 @@ sub extractFormInfo {
     my ( $self, $req ) = @_;
     my $field = $self->conf->{SSLVar};
     if ( $req->env->{SSL_CLIENT_I_DN}
-        and my $tmp =
-        $self->conf->{SSLVarIf}->{ $req->env->{SSL_CLIENT_I_DN} } )
+        and my $tmp
+        = $self->conf->{SSLVarIf}->{ $req->env->{SSL_CLIENT_I_DN} } )
     {
         $field = $tmp;
     }
     if ( $req->user( $req->env->{$field} ) ) {
-        $self->userLogger->notice( "GoodSSL authentication for " . $req->user );
+        $self->userLogger->notice(
+            "GoodSSL authentication for " . $req->user );
         return PE_OK;
     }
     elsif ( $req->env->{SSL_CLIENT_S_DN} ) {
@@ -39,12 +48,10 @@ sub extractFormInfo {
         return PE_BADCERTIFICATE;
     }
     elsif ( $self->conf->{sslByAjax} and not $req->param('nossl') ) {
-        $self->logger->debug('Send SSL javascript');
-        $req->data->{customScript} .=
-            '<script type="application/init">{"sslHost":"'
-          . $self->conf->{sslHost}
-          . '"}</script>';
-        $self->logger->debug("Send JS -> " . $req->data->{customScript});
+        $self->logger->debug( 'Append ' . $self->Name . ' init/script' );
+        $req->data->{customScript} .= $self->AjaxInitScript;
+        $self->logger->debug(
+            "Send init/script -> " . $req->data->{customScript} );
         return PE_FIRSTACCESS;
     }
     else {

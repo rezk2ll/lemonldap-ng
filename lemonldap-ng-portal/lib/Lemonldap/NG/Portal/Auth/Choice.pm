@@ -25,19 +25,12 @@ sub _authCancel {
 sub extractFormInfo {
     my ( $self, $req ) = @_;
     unless ( $self->checkChoice($req) ) {
+        $self->logger->debug("Searching for Auth module AJAX init/script...");
         foreach my $mod ( values %{ $self->modules } ) {
-            $self->logger->debug("Auth module -> $mod");
-            if (    $mod =~ /::Auth::SSL/
-                and $self->conf->{sslByAjax}
-                and not $req->param('nossl') )
-            {
-                $self->logger->debug('Send SSL javascript');
-                $req->data->{customScript}
-                    .= '<script type="application/init">{"sslHost":"'
-                    . $self->conf->{sslHost}
-                    . '"}</script>';
+            if ( $mod->{AjaxInitScript} and $mod->{Name} ) {
                 $self->logger->debug(
-                    "Send JS -> " . $req->data->{customScript} );
+                    'Append ' . $mod->Name . ' init/script' );
+                $req->data->{customScript} .= $mod->AjaxInitScript;
             }
         }
         foreach my $mod ( values %{ $self->modules } ) {
@@ -46,6 +39,8 @@ sub extractFormInfo {
                 last;
             }
         }
+        $self->logger->debug(
+            "Send init/script -> " . $req->data->{customScript} );
         return PE_FIRSTACCESS;
     }
     my $res = $req->data->{enabledMods0}->[0]->extractFormInfo($req);
