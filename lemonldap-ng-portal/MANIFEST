@@ -151,6 +151,7 @@ site/coffee/portal.coffee
 site/coffee/redirect.coffee
 site/coffee/registerbrowser.coffee
 site/coffee/ssl.coffee
+site/coffee/sslChoice.coffee
 site/coffee/totpregistration.coffee
 site/coffee/u2fcheck.coffee
 site/coffee/u2fregistration.coffee
@@ -274,6 +275,8 @@ site/htdocs/static/common/js/registerbrowser.js
 site/htdocs/static/common/js/registerbrowser.min.js
 site/htdocs/static/common/js/ssl.js
 site/htdocs/static/common/js/ssl.min.js
+site/htdocs/static/common/js/sslChoice.js
+site/htdocs/static/common/js/sslChoice.min.js
 site/htdocs/static/common/js/totpregistration.js
 site/htdocs/static/common/js/totpregistration.min.js
 site/htdocs/static/common/js/u2f-api.js
@@ -355,6 +358,7 @@ site/templates/bootstrap/samlSpSoapLogout.tpl
 site/templates/bootstrap/sessionArray.tpl
 site/templates/bootstrap/simpleInfo.tpl
 site/templates/bootstrap/sslform.tpl
+site/templates/bootstrap/sslformChoice.tpl
 site/templates/bootstrap/standardform.tpl
 site/templates/bootstrap/totp2fcheck.tpl
 site/templates/bootstrap/totp2fregister.tpl
