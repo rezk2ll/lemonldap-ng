@@ -101,7 +101,10 @@ sub setGroups {
         my $group_value = $self->ldap->getLdapValue( $req->data->{entry},
             $self->conf->{ldapGroupAttributeNameUser} );
 
-        utf8::downgrade($group_value);
+        if ( $self->conf->{ldapGroupDecodeSearchedValue} ) {
+            utf8::decode($group_value);
+        }
+
         $self->logger->debug( "Searching LDAP groups in "
               . $self->conf->{ldapGroupBase}
               . " for $group_value" );
