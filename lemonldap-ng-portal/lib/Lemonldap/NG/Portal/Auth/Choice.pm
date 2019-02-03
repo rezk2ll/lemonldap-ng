@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Auth::Choice;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_FIRSTACCESS PE_ERROR);
+use Data::Dumper;
 
 our $VERSION = '2.0.2';
 
@@ -29,19 +30,24 @@ sub extractFormInfo {
         foreach my $mod ( values %{ $self->modules } ) {
             if ( $mod->{AjaxInitScript} ) {
                 $self->logger->debug(
-                    'Append ' . $mod->{Name} . ' init/script' ) if $mod->{Name};
+                    'Append ' . $mod->{Name} . ' init/script' )
+                    if $mod->{Name};
                 $req->data->{customScript} .= $mod->AjaxInitScript;
             }
             if ( $mod->{InitCmd} ) {
                 $self->logger->debug(
-                    'Launch ' . $mod->{Name} . ' init command' ) if $mod->{Name};
+                    'Launch ' . $mod->{Name} . ' init command' )
+                    if $mod->{Name};
                 my $res = eval( $mod->{InitCmd} );
                 if ($@) {
                     $self->logger("Auth error: $@");
                     return PE_ERROR;
-                 }
+                }
             }
         }
+
+        $self->logger->debug("@@@@ Req -> " . Dumper($req) );
+
         foreach my $mod ( values %{ $self->modules } ) {
             if ( $mod->can('setSecurity') ) {
                 $mod->setSecurity($req);

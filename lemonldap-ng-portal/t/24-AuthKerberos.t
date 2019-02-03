@@ -48,7 +48,7 @@ SKIP: {
 
     expectForm( $res, '#', undef, 'kerberos' );
     ok( $res->[2]->[0]
-            =~ m%<input type="hidden" name="kerberos" id="kerberos" value="0" />%,
+            =~ m%<input type="hidden" name="kerberos" value="0" />%,
         'Found hidden attribut "kerberos" with value="0"'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ /kerberos\.(?:min\.)?js/,

@@ -55,6 +55,13 @@ sub extractFormInfo {
         return PE_FIRSTACCESS;
     }
     else {
+        if ( $self->conf->{sslByAjax} ) {
+            $self->logger->debug(
+                'Append ' . $self->{Name} . ' init/script' );
+            $req->data->{customScript} .= $self->{AjaxInitScript};
+            $self->logger->debug(
+                "Send init/script -> " . $req->data->{customScript} );
+        }
         $self->userLogger->warn('No certificate found');
         return PE_CERTIFICATEREQUIRED;
     }

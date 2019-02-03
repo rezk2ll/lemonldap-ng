@@ -460,8 +460,9 @@ sub buildHiddenForm {
           if $self->checkXSSAttack( $_, $req->{portalHiddenFormValues}->{$_} );
 
         # Build hidden input HTML code
+        # 'id' is removed to avoid warning with Choice
         #$val .= qq{<input type="hidden" name="$_" id="$_" value="}
-        $val .= qq{<input type="hidden" name="$_" id="$_" value="}
+        $val .= qq{<input type="hidden" name="$_" value="}
           . $req->{portalHiddenFormValues}->{$_} . '" />';
     }
 
