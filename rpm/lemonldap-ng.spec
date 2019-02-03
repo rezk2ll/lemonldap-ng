@@ -529,7 +529,8 @@ fi
 # Upgrade from previous version
 if [ $1 -eq 1 ] ; then
     # Remove old symlinks in Apache configuration
-    rm -f %{apache_confdir}/z-lemonldap-ng*.conf 2>&1 > /dev/null || :
+    find %{apache_confdir} -name 'z-lemonldap-ng*.conf' \
+        -type l -delete 2>&1 > /dev/null || :
 fi
 
 %post fastcgi-server
