@@ -8,6 +8,7 @@ inc/LWP/Protocol/PSGI.pm
 lib/Lemonldap/NG/Portal.pm
 lib/Lemonldap/NG/Portal/2F/Engines/Default.pm
 lib/Lemonldap/NG/Portal/2F/Ext2F.pm
+lib/Lemonldap/NG/Portal/2F/Mail2F.pm
 lib/Lemonldap/NG/Portal/2F/Register/TOTP.pm
 lib/Lemonldap/NG/Portal/2F/Register/U2F.pm
 lib/Lemonldap/NG/Portal/2F/Register/Yubikey.pm
@@ -373,6 +374,7 @@ site/templates/common/mail/fr.json
 site/templates/common/mail/it.json
 site/templates/common/mail/vi.json
 site/templates/common/mail/zh_CN.json
+site/templates/common/mail_2fcode.tpl
 site/templates/common/mail_confirm.tpl
 site/templates/common/mail_footer.tpl
 site/templates/common/mail_header.tpl
