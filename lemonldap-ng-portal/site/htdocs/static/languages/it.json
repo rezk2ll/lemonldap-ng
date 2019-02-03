@@ -87,6 +87,7 @@
 "PE85":"Il sito remoto richiede una sessione più recente (e il plug-in di UpgradeSession non viene caricato). Disconnetti e riprova",
 "PE86":"Il tuo account è bloccato. Devi attendere 30 secondi prima di autenticarti di nuovo",
 "PE87":"È necessario eseguire nuovamente l'autenticazione per accedere al Portale",
+"PE88":"Your account must have an e-mail address in order to use double factor authentication",
 "2fRegRequired":"Questo servizio richiede un'autenticazione a doppio fattore. Registrare un dispositivo ora, quindi tornare al portale.",
 "accept":"Accetta",
 "accessDenied":"Non hai un'autorizzazione di accesso per questa applicazione",

@@ -87,6 +87,7 @@
 "PE85":"Trang web từ xa yêu cầu một phiên mới (và plugin UpgradeSession không được tải). Đăng xuất và thử lại ",
 "PE86":"Your account is locked. You must wait 30s before authenticate again",
 "PE87":"You must authenticate again to access to Portal",
+"PE88":"Your account must have an e-mail address in order to use double factor authentication",
 "2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"Chấp nhận",
 "accessDenied":"Bạn không có quyền truy cập vào ứng dụng này",

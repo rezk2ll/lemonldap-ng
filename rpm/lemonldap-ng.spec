@@ -49,7 +49,7 @@
 # Main package
 #==============================================================================
 Name:           lemonldap-ng
-Version:        2.0.2
+Version:        2.0.1
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
@@ -98,12 +98,9 @@ BuildRequires:  perl(Digest::HMAC_SHA1)
 BuildRequires:  perl(Digest::MD5)
 BuildRequires:  perl(Digest::SHA)
 BuildRequires:  perl(Email::Date::Format)
-# Not available for EL6
-%if ! 0%{?el6}
 BuildRequires:  perl(Email::Sender)
 BuildRequires:  perl(Email::Sender::Simple)
 BuildRequires:  perl(Email::Sender::Transport::SMTP)
-%endif
 BuildRequires:  perl(Encode)
 BuildRequires:  perl(English)
 BuildRequires:  perl(Env)
@@ -125,6 +122,10 @@ BuildRequires:  perl(IO::Select)
 BuildRequires:  perl(IO::Socket::INET)
 BuildRequires:  perl(IO::String)
 BuildRequires:  perl(JSON)
+%if 0%{?fedora} >= 29
+BuildRequires:  perl(Lasso)
+BuildRequires:  perl(Glib)
+%endif
 BuildRequires:  perl(Log::Log4perl)
 BuildRequires:  perl(LWP::Protocol::https)
 BuildRequires:  perl(LWP::UserAgent)
@@ -135,6 +136,7 @@ BuildRequires:  perl(Mouse)
 BuildRequires:  perl(Net::LDAP)
 BuildRequires:  perl(Net::LDAP::Extension::SetPassword)
 BuildRequires:  perl(Net::LDAP::Util)
+BuildRequires:  perl(Net::OpenID::Server)
 BuildRequires:  perl(Plack)
 BuildRequires:  perl(Plack::Handler::CGI)
 BuildRequires:  perl(Plack::Handler::FCGI)
@@ -148,8 +150,9 @@ BuildRequires:  perl(Regexp::Assemble)
 BuildRequires:  perl(Regexp::Common)
 BuildRequires:  perl(Safe)
 BuildRequires:  perl(Scalar::Util)
-# https://bugzilla.redhat.com/show_bug.cgi?id=1644266
-#BuildRequires:  perl(Sentry::Raven)
+%if 0%{?fedora}
+BuildRequires:  perl(Sentry::Raven)
+%endif
 BuildRequires:  perl(SOAP::Lite)
 BuildRequires:  perl(SOAP::Transport::HTTP)
 BuildRequires:  perl(strict)
@@ -164,12 +167,14 @@ BuildRequires:  perl(URI::Escape)
 BuildRequires:  perl(URI::URL)
 BuildRequires:  perl(utf8)
 BuildRequires:  perl(warnings)
+%if 0%{?fedora}
+BuildRequires:  perl(Web::ID)
+%endif
+BuildRequires:  perl(XML::LibXML)
 BuildRequires:  perl(XML::LibXSLT)
 BuildRequires:  perl(XML::Simple)
 BuildRequires:  perl(YAML)
-%if 0%{?fedora} || 0%{?rhel} >= 7
 BuildRequires:  systemd
-%endif
 
 Requires: lemonldap-ng-conf = %{version}-%{release}
 Requires: lemonldap-ng-doc = %{version}-%{release}
@@ -179,14 +184,16 @@ Requires: lemonldap-ng-portal = %{version}-%{release}
 Requires: lemonldap-ng-test = %{version}-%{release}
 
 # Setup requires filtering
-%if 0%{?rhel} == 6
-%filter_from_requires /perl(lasso/d; /perl(Net::OpenID/d; /perl(Web::ID/d; /perl(XML::LibXML/d; /perl(XML::LibXSLT/d; /perl(Sentry::Raven/d;
-%filter_setup
+%if 0%{?rhel} >= 7
+%{?perl_default_filter}
+%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven
 %endif
 
-%if 0%{?fedora} || 0%{?rhel} >= 7
+%if 0%{?fedora}
 %{?perl_default_filter}
-%global __requires_exclude perl\\(lasso|perl\\(Net::OpenID|perl\\(Web::ID|perl\\(XML::LibXML|perl\\(XML::LibXSLT|perl\\(Sentry::Raven
+%if 0%{?fedora} < 29
+%global __requires_exclude perl\\(Lasso
+%endif
 %endif
 
 %description
@@ -387,7 +394,7 @@ This package installs the authentication portal.
     ETCDEFAULTDIR=%{_sysconfdir}/default \
     DNSDOMAIN=%{lm_dnsdomain} \
     APACHEVERSION=%{apache_version} \
-    APACHELOGDIR=/var/log/httpd \
+    APACHELOGDIR=%{_localstatedir}/log/httpd \
     UWSGIYAMLDIR=%{_sysconfdir}/uwsgi/apps-available \
     LLNGAPPDIR=%{lm_sharedir}/llng-server \
     PROD=yes
@@ -522,7 +529,8 @@ fi
 # Upgrade from previous version
 if [ $1 -eq 1 ] ; then
     # Remove old symlinks in Apache configuration
-    rm -f %{apache_confdir}/z-lemonldap-ng*.conf 2>&1 > /dev/null || :
+    find %{apache_confdir} -name 'z-lemonldap-ng*.conf' \
+        -type l -delete 2>&1 > /dev/null || :
 fi
 
 %post fastcgi-server
