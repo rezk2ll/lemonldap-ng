@@ -1611,13 +1611,15 @@
         "default": 0,
         "id": "https",
         "title": "https",
-        "type": "bool",
-        "data": 0
+        "type": "trool",
+        "default": -1,
+        "data": -1
       }, {
         "id": "port",
         "title": "port",
         "type": "int",
-        "data": null
+        "default": -1,
+        "data": -1
       }, {
         "default": 0,
         "id": "useRedirectOnForbidden",

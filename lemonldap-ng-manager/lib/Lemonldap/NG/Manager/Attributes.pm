@@ -1180,8 +1180,8 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type'    => 'bool'
         },
         'https' => {
-            'default' => 0,
-            'type'    => 'bool'
+            'default' => -1,
+            'type'    => 'trool'
         },
         'infoFormMethod' => {
             'default' => 'get',
@@ -2155,7 +2155,8 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type' => 'keyTextContainer'
         },
         'port' => {
-            'type' => 'int'
+            'default' => -1,
+            'type'    => 'int'
         },
         'portal' => {
             'default' => 'http://auth.example.com/',
