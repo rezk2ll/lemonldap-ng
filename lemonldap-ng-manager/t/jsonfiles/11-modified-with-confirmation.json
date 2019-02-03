@@ -1608,16 +1608,17 @@
       "title": "redirection",
       "type": "simpleInputContainer",
       "nodes": [{
-        "default": 0,
         "id": "https",
         "title": "https",
-        "type": "bool",
-        "data": 0
+        "type": "trool",
+        "default": -1,
+        "data": -1
       }, {
         "id": "port",
         "title": "port",
+        "default": -1,
         "type": "int",
-        "data": null
+        "data": -1
       }, {
         "default": 0,
         "id": "useRedirectOnForbidden",
