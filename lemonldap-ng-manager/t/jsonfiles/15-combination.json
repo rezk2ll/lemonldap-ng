@@ -2249,13 +2249,14 @@
     },
     {
       "_nodes": [{
-        "default": 0,
         "id": "https",
+        "default": -1,
         "title": "https",
-        "type": "bool"
+        "type": "trool"
       },
       {
         "id": "port",
+        "default": -1,
         "title": "port",
         "type": "int"
       },

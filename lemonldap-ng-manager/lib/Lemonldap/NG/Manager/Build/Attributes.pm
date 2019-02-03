@@ -293,8 +293,8 @@ sub attributes {
             flags         => 'hmp',
         },
         https => {
-            default       => 0,
-            type          => 'bool',
+            default       => -1,
+            type          => 'trool',
             documentation => 'Use HTTPS for redirection from portal',
             flags         => 'h',
         },
@@ -306,6 +306,7 @@ sub attributes {
             documentation => 'HTTP method for info page form',
         },
         port => {
+            default       => -1,
             type          => 'int',
             documentation => 'Force port in redirection',
             flags         => 'h',

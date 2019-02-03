@@ -1590,13 +1590,15 @@
         "default": 0,
         "id": "https",
         "title": "https",
-        "type": "bool",
-        "data": 0
+        "default": -1,
+        "type": "trool",
+        "data": -1
       }, {
         "id": "port",
+        "default": -1,
         "title": "port",
         "type": "int",
-        "data": null
+        "data": -1
       }, {
         "default": 0,
         "id": "useRedirectOnForbidden",
