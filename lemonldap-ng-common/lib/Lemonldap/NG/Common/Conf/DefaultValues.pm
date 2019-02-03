@@ -120,7 +120,7 @@ sub defaultValues {
         'logoutServices'         => {},
         'macros'                 => {},
         'mail2fActivation'       => 0,
-        'mail2fCodeRegex'        => '\\d\\d\\d\\d\\d\\d',
+        'mail2fCodeRegex'        => '\\d{6}',
         'mailCharset'            => 'utf-8',
         'mailFrom'               => 'noreply@example.com',
         'mailSessionKey'         => 'mail',

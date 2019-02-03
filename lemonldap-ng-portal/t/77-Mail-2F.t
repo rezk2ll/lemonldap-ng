@@ -44,7 +44,7 @@ qr%<input name="code" value="" class="form-control" id="extcode" trplaceholder="
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
-ok( mail() =~ m%<b>(\d\d\d\d)</b>%, 'Found 2F code in mail' )
+ok( mail() =~ m%<b>(\d{4})</b>%, 'Found 2F code in mail' )
   or print STDERR Dumper( mail() );
 
 my $code = $1;

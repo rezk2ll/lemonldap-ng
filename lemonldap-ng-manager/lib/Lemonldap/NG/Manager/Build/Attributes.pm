@@ -1319,7 +1319,7 @@ sub attributes {
         },
         mail2fCodeRegex => {
             type          => 'pcre',
-            default       => '\d\d\d\d\d\d',
+            default       => '\d{6}',
             documentation => 'Regular expression to create a mail OTP code',
         },
         mail2fTimeout => {
