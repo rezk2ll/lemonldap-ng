@@ -105,6 +105,7 @@ sub portalTab {
         85 => 'PE_RENEWSESSION',
         86 => 'PE_WAIT',
         87 => 'PE_MUSTAUTHN',
+        88 => 'PE_MUSTHAVEMAIL',
     };
 }
 
