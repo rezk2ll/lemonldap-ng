@@ -678,8 +678,6 @@ llapp.controller 'TreeCtrl', [
 						else
 							node.data = data.value
 						# Cast int as int (remember that booleans are int for Perl)
-						#if node.type and node.type.match /^(bool|trool|boolOrExpr)$/
-							#node.data = node.data.toString()
 						if node.type and node.type.match /^int$/
 							node.data = parseInt(node.data, 10)				
 						# Split SAML types

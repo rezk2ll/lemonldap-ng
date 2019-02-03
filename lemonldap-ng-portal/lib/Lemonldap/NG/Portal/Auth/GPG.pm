@@ -7,7 +7,6 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
     PE_BADCREDENTIALS
     PE_ERROR
-    PE_FIRSTACCESS
     PE_FORMEMPTY
     PE_NOTOKEN
     PE_OK

@@ -509,6 +509,7 @@ sub tree {
                         'upgradeSession',
                         {   title => 'portalServers',
                             help  => 'portalservers.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'wsdlServer',
                                 'restSessionServer',
@@ -516,7 +517,6 @@ sub tree {
                                 'soapSessionServer',
                                 'soapConfigServer',
                                 'exportedAttr',
-
                             ]
                         },
                         {   title => 'loginHistory',

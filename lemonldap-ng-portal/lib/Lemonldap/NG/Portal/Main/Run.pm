@@ -607,7 +607,7 @@ sub autoPost {
 
 # Add element into $self->{portalHiddenFormValues}, those values could be
 # used to hide values into HTML form.
-# @param fieldname The field name which will contain the correponding value
+# @param fieldname The field name which will contain the corresponding value
 # @param value The associated value
 # @param prefix Prefix of the field key
 # @param base64 Encode value in base64
