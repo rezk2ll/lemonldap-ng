@@ -1303,6 +1303,39 @@ sub attributes {
                 'Authentication level for users authentified by password+(U2F or TOTP)'
         },
 
+        # Mail second factor
+        mail2fActivation => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Mail second factor activation',
+        },
+        mail2fSubject => {
+            type          => 'text',
+            documentation => 'Mail subject for second factor authentication',
+        },
+        mail2fBody => {
+            type          => 'longtext',
+            documentation => 'Mail body for second factor authentication',
+        },
+        mail2fCodeRegex => {
+            type          => 'pcre',
+            default       => '\d\d\d\d\d\d',
+            documentation => 'Regular expression to create a mail OTP code',
+        },
+        mail2fTimeout => {
+            type          => 'int',
+            documentation => 'Second factor code timeout',
+        },
+        mail2fAuthnLevel => {
+            type => 'int',
+            documentation =>
+                'Authentication level for users authenticated by Mail second factor'
+        },
+        mail2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for Mail 2F',
+        },
+
         # External second factor
         ext2fActivation => {
             type          => 'boolOrExpr',
@@ -2380,7 +2413,7 @@ sub attributes {
         },
         available2F => {
             type          => 'text',
-            default       => 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey',
+            default       => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey',
             documentation => 'Available second factor modules',
         },
         available2FSelfRegistration => {

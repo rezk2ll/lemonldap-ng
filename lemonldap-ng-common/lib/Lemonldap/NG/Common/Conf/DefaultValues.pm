@@ -15,9 +15,9 @@ sub defaultValues {
                 'type'    => 'category'
             }
         },
-        'authChoiceParam'               => 'lmAuth',
-        'authentication'                => 'Demo',
-        'available2F'                   => 'UTOTP,TOTP,U2F,REST,Ext2F,Yubikey',
+        'authChoiceParam' => 'lmAuth',
+        'authentication'  => 'Demo',
+        'available2F'     => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey',
         'available2FSelfRegistration'   => 'TOTP,U2F,Yubikey',
         'bruteForceProtectionMaxAge'    => 300,
         'bruteForceProtectionMaxFailed' => 3,
@@ -119,6 +119,8 @@ sub defaultValues {
         },
         'logoutServices'         => {},
         'macros'                 => {},
+        'mail2fActivation'       => 0,
+        'mail2fCodeRegex'        => '\\d\\d\\d\\d\\d\\d',
         'mailCharset'            => 'utf-8',
         'mailFrom'               => 'noreply@example.com',
         'mailSessionKey'         => 'mail',

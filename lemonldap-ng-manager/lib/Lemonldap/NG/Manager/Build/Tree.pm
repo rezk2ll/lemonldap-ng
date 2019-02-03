@@ -618,6 +618,19 @@ sub tree {
                                 'u2fUserCanRemoveKey',
                             ]
                         },
+                        {   title => 'mail2f',
+                            help  => 'mail2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'mail2fActivation',
+                                'mail2fCodeRegex',
+                                'mail2fTimeout',
+                                'mail2fSubject',
+                                'mail2fBody',
+                                'mail2fAuthnLevel',
+                                'mail2fLogo',
+                            ]
+                        },
                         {   title => 'external2f',
                             help  => 'external2f.html',
                             form  => 'simpleInputContainer',
