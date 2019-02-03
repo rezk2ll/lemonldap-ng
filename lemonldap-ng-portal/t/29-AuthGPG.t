@@ -36,7 +36,15 @@ SKIP: {
     my ( $out, $err );
     run( [ 'gpg', '--clear-sign', '--homedir', 't/gpghome' ],
         \$token, \$out, \$err, IPC::Run::timeout(10) );
-    ok( $? == 0, "Succeed to sign" );
+
+    if ( $? == 0 ) {
+        pass 'Succeed to sign';
+    }
+    else {
+        run( [ 'gpg', '--clearsign', '--homedir', 't/gpghome' ],
+            \$token, \$out, \$err, IPC::Run::timeout(10) );
+        ok( $? == 0, "Succeed to sign" );
+    }
     $query .= '&' . build_urlencoded( password => $out );
     ok(
         $res = $client->_post(
