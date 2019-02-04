@@ -3,7 +3,6 @@ package Lemonldap::NG::Portal::Auth::Choice;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_FIRSTACCESS PE_ERROR);
-use Data::Dumper;
 
 our $VERSION = '2.0.2';
 
@@ -45,8 +44,6 @@ sub extractFormInfo {
                 }
             }
         }
-
-        $self->logger->debug("@@@@ Req -> " . Dumper($req) );
 
         foreach my $mod ( values %{ $self->modules } ) {
             if ( $mod->can('setSecurity') ) {
