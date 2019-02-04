@@ -351,7 +351,8 @@ sub display {
         # * Bad URL error
         elsif ($req->{error} == PE_LOGOUT_OK
             or $req->{error} == PE_WAIT
-            or $req->{error} == PE_BADURL )
+            or $req->{error} == PE_BADURL
+            or $req->{error} == PE_BADCREDENTIALS )
         {
             %templateParams = (
                 %templateParams,

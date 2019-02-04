@@ -7,7 +7,7 @@ package Lemonldap::NG::Portal::UserDB::Demo;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_USERNOTFOUND);
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_BADCREDENTIALS);
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -60,7 +60,7 @@ sub getUser {
     }
 
     eval { $self->p->_authentication->setSecurity($req) };
-    PE_USERNOTFOUND;
+    PE_BADCREDENTIALS;
 }
 
 ## @apmethod int setSessionInfo()
