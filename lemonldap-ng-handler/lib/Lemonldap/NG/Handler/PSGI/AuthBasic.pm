@@ -1,6 +1,6 @@
 # LLNG wrapper class to enable AuthBasic handler with auto-protected PSGI
 #
-# See http://lemonldap-ng.org/documentation/latest/handlerarch
+# See https://lemonldap-ng.org/documentation/latest/handlerarch
 package Lemonldap::NG::Handler::PSGI::AuthBasic;
 
 use strict;

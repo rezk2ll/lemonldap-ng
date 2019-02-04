@@ -1,6 +1,6 @@
 # Main FastCGI handler adapter for LLNG handler
 #
-# See http://lemonldap-ng.org/documentation/latest/handlerarch
+# See https://lemonldap-ng.org/documentation/latest/handlerarch
 package Lemonldap::NG::Handler::Server::Main;
 
 use strict;
