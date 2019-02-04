@@ -3,9 +3,9 @@ package Lemonldap::NG::Portal::Plugins::GrantSession;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_SESSIONNOTGRANTED
-  PE_BADCREDENTIALS
+    PE_OK
+    PE_SESSIONNOTGRANTED
+    PE_BADCREDENTIALS
 );
 
 our $VERSION = '2.0.0';
@@ -23,11 +23,11 @@ sub init {
         $self->logger->debug("GrantRule key -> $_");
         $self->logger->debug(
             "GrantRule value -> " . $self->conf->{grantSessionRules}->{$_} );
-        my $rule =
-          $hd->buildSub(
+        my $rule = $hd->buildSub(
             $hd->substitute( $self->conf->{grantSessionRules}->{$_} ) );
         unless ($rule) {
-            $self->error( "Bad grantSession rule " . $hd->tsv->{jail}->error );
+            $self->error(
+                "Bad grantSession rule " . $hd->tsv->{jail}->error );
             return 0;
         }
         $self->rules->{$_} = $rule;
@@ -49,7 +49,7 @@ sub run {
 
     foreach ( sort sortByComment keys %{ $self->rules } ) {
         $self->logger->debug( "Grant session condition -> "
-              . $self->conf->{grantSessionRules}->{$_} );
+                . $self->conf->{grantSessionRules}->{$_} );
         unless ( $self->rules->{$_}->( $req, $req->sessionInfo ) ) {
             $req->userData( {} );
 
@@ -58,7 +58,7 @@ sub run {
             if ($1) {
                 $self->logger->debug("Message -> $1");
 
-                # Message can contain session data as user attributes or macros
+               # Message can contain session data as user attributes or macros
                 my $hd  = $self->p->HANDLER;
                 my $msg = $hd->substitute($1);
                 unless ( $msg = $hd->buildSub($msg) ) {
@@ -72,17 +72,17 @@ sub run {
                     )
                 );
                 $self->userLogger->error( 'User '
-                      . $req->sessionInfo->{uid}
-                      . " was not granted to open session (rule -> $msg)" );
+                        . $req->sessionInfo->{uid}
+                        . " was not granted to open session (rule -> $msg)" );
                 $req->urldc( $self->conf->{portal} );
                 return $req->authResult(PE_SESSIONNOTGRANTED);
             }
             else {
                 $self->userLogger->error( 'User '
-                      . $req->sessionInfo->{uid}
-                      . " was not granted to open session (rule -> "
-                      . $self->conf->{grantSessionRules}->{$_}
-                      . ")" );
+                        . $req->sessionInfo->{uid}
+                        . " was not granted to open session (rule -> "
+                        . $self->conf->{grantSessionRules}->{$_}
+                        . ")" );
                 $req->urldc( $self->conf->{portal} );
                 return $req->authResult(PE_SESSIONNOTGRANTED);
             }
