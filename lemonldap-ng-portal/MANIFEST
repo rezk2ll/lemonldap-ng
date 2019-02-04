@@ -509,6 +509,7 @@ t/75-2F-Registers.t
 t/76-2F-Ext-with-BruteForce.t
 t/76-2F-Ext-with-GrantSession.t
 t/76-2F-Ext-with-HISTORY.t
+t/77-2F-Mail.t
 t/90-Translations.t
 t/99-pod.t
 t/gpghome/key.asc

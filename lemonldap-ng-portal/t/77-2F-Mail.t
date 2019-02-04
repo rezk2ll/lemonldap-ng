@@ -14,7 +14,7 @@ my $client = LLNG::Manager::Test->new(
         ini => {
             logLevel         => 'error',
             mail2fActivation => 1,
-            mail2fCodeRegex  => '\d\d\d\d',
+            mail2fCodeRegex  => '\d{4}',
             authentication   => 'Demo',
             userDB           => 'Same',
         }
