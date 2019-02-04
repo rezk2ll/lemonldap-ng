@@ -1,6 +1,5 @@
 package Lemonldap::NG::Portal::Plugins::GrantSession;
 
-use Data::Dumper;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
@@ -45,7 +44,7 @@ sub run {
         return !$A ? 1 : !$B ? -1 : $A cmp $B;
     }
 
-    # Avoid display notification if AuthResult not null
+    # Avoid display notification if AuthResult is not null
     return PE_BADCREDENTIALS if $req->authResult > 0;
 
     foreach ( sort sortByComment keys %{ $self->rules } ) {
