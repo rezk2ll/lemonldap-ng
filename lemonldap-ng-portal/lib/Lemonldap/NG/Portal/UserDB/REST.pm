@@ -5,7 +5,7 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_OK
-  PE_USERNOTFOUND
+  PE_BADCREDENTIALS
 );
 
 extends 'Lemonldap::NG::Common::Module', 'Lemonldap::NG::Portal::Lib::REST';
@@ -46,7 +46,7 @@ sub getUser {
     }
     unless ( $res->{result} ) {
         $self->userLogger->warn( 'User ' . $req->user . ' not found' );
-        return PE_USERNOTFOUND;
+        return PE_BADCREDENTIALS;
     }
     $req->data->{restUserDBInfo} = $res->{info} || {};
     return PE_OK;

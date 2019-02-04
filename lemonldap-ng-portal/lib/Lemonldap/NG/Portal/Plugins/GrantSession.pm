@@ -1,10 +1,12 @@
 package Lemonldap::NG::Portal::Plugins::GrantSession;
 
+use Data::Dumper;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_SESSIONNOTGRANTED
+  PE_BADCREDENTIALS
 );
 
 our $VERSION = '2.0.0';
@@ -42,6 +44,9 @@ sub run {
         my $B = ( $b =~ /^.*?##(.*)$/ )[0];
         return !$A ? 1 : !$B ? -1 : $A cmp $B;
     }
+
+    # Avoid display notification if AuthResult not null
+    return PE_BADCREDENTIALS if $req->authResult > 0;
 
     foreach ( sort sortByComment keys %{ $self->rules } ) {
         $self->logger->debug( "Grant session condition -> "
