@@ -268,6 +268,9 @@ sub loadIDPs {
         $self->idpList->{$entityID}->{confKey} = $_;
         $self->idpList->{$entityID}->{name}    = $name;
 
+
+        #####################
+
         # Set encryption mode
         my $encryption_mode = $self->conf->{samlIDPMetaDataOptions}->{$_}
           ->{samlIDPMetaDataOptionsEncryptionMode};

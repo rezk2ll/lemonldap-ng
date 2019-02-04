@@ -840,6 +840,23 @@ function templates(tpl,key) {
       "id" : "samlIDPMetaDataOptionsSecurity",
       "title" : "samlIDPMetaDataOptionsSecurity",
       "type" : "simpleInputContainer"
+   },
+   {
+      "_nodes" : [
+         {
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsDisplayName",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsDisplayName",
+            "title" : "samlIDPMetaDataOptionsDisplayName"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIcon",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIcon",
+            "title" : "samlIDPMetaDataOptionsIcon"
+         }
+      ],
+      "id" : "samlIDPMetaDataOptionsDisplay",
+      "title" : "samlIDPMetaDataOptionsDisplay",
+      "type" : "simpleInputContainer"
    }
 ]
 ;

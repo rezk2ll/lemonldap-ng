@@ -1145,8 +1145,10 @@ sub attributes {
         },
 
         # Password reset
-        mailBody =>
-            { type => 'longtext', documentation => 'Custom password reset mail body', },
+        mailBody => {
+            type          => 'longtext',
+            documentation => 'Custom password reset mail body',
+        },
 
         mailConfirmBody => {
             type          => 'longtext',
@@ -2202,6 +2204,8 @@ sub attributes {
             default => 0,
         },
         samlIDPMetaDataOptionsUserAttribute => { type => 'text', },
+        samlIDPMetaDataOptionsDisplayName  => { type => 'text', },
+        samlIDPMetaDataOptionsIcon         => { type => 'text', },
 
         # SP keys
         samlSPMetaDataExportedAttributes => {
@@ -2560,9 +2564,10 @@ sub attributes {
             documentation => 'LDAP filter for auth search'
         },
         ldapGroupDecodeSearchedValue => {
-            default       => 0,
-            type          => 'bool',
-            documentation => 'Decode value before searching it in LDAP groups',
+            default => 0,
+            type    => 'bool',
+            documentation =>
+                'Decode value before searching it in LDAP groups',
         },
         ldapGroupRecursive => {
             default       => 0,

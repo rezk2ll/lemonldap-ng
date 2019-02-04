@@ -2591,6 +2591,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 1,
             'type'    => 'bool'
         },
+        'samlIDPMetaDataOptionsDisplayName' => {
+            'type' => 'text'
+        },
         'samlIDPMetaDataOptionsEncryptionMode' => {
             'default' => 'none',
             'select'  => [
@@ -2616,6 +2619,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'samlIDPMetaDataOptionsForceUTF8' => {
             'default' => 0,
             'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsIcon' => {
+            'type' => 'text'
         },
         'samlIDPMetaDataOptionsIsPassive' => {
             'default' => 0,

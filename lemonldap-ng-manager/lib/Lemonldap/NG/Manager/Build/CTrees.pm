@@ -87,6 +87,14 @@ sub cTrees {
                     "samlIDPMetaDataOptionsCheckTime",
                     "samlIDPMetaDataOptionsCheckAudience"
                 ]
+            },
+                        {
+                title => "samlIDPMetaDataOptionsDisplay",
+                form  => 'simpleInputContainer',
+                nodes => [
+                    "samlIDPMetaDataOptionsDisplayName",
+                    "samlIDPMetaDataOptionsIcon"
+                ]
             }
         ],
         samlSPMetaDataNode => [
