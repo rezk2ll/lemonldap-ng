@@ -8,6 +8,6 @@ use strict;
 use base 'Lemonldap::NG::Handler::Lib::CDA',
   'Lemonldap::NG::Handler::PSGI::Main';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 1;
