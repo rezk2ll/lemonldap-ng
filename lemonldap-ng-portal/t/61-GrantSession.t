@@ -56,6 +56,12 @@ ok(
     'dwho rejected with PE_BADCREDENTIALS'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
+ok(
+    $res->[2]->[0] =~ m%<span trspan="goToPortal">Go to portal</span>%,
+    'Found goToPortal button'
+) or print STDERR Dumper( $res->[2]->[0] );
+count(1);
+
 
 ok(
     $res = $client->_post(
@@ -121,6 +127,11 @@ count(1);
 ok(
     $res->[2]->[0] =~ /<span trmsg="5"><\/span><\/div>/,
     'rtyler rejected with PE_BADCREDENTIALS'
+) or print STDERR Dumper( $res->[2]->[0] );
+count(1);
+ok(
+    $res->[2]->[0] =~ m%<span trspan="goToPortal">Go to portal</span>%,
+    'Found goToPortal button'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
