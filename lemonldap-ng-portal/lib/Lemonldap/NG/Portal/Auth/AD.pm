@@ -8,7 +8,7 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_PP_PASSWORD_EXPIRED PE_PP_CHANGE_AFTER_RESET);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Portal::Auth::LDAP';
 
