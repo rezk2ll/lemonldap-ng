@@ -2,7 +2,10 @@ use Test::More;
 use strict;
 use IO::String;
 
-require 't/test-lib.pm';
+BEGIN {
+    require 't/test-lib.pm';
+    eval "use GSSAPI";
+}
 
 my $res;
 my $maintests = 2;

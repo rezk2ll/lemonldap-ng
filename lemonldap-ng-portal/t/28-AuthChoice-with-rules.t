@@ -2,7 +2,10 @@ use Test::More;
 use strict;
 use IO::String;
 
-require 't/test-lib.pm';
+BEGIN {
+    require 't/test-lib.pm';
+    eval "use GSSAPI";
+}
 
 my $res;
 my $maintests = 21;
@@ -10,9 +13,9 @@ my $maintests = 21;
 eval { unlink 't/userdb.db' };
 
 SKIP: {
-    eval { require DBI; require DBD::SQLite; };
+    eval { require DBI; require DBD::SQLite; require GSSAPI; };
     if ($@) {
-        skip 'DBD::SQLite not found', $maintests;
+        skip 'Missing dependencies', $maintests;
     }
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
