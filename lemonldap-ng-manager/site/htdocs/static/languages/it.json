@@ -267,6 +267,8 @@
 "googleAuthnLevel":"Livello di autenticazione",
 "googleExportedVars":"Variabili esportate",
 "googleParams":"Parametri Google",
+"gpgDb":"GPG database",
+"gpgParams":"GPG parameters",
 "grantSessionRules":"Condizioni di apertura",
 "groups":"Gruppi",
 "hashkey":"Chiave",

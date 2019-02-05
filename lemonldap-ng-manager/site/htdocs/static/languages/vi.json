@@ -267,6 +267,8 @@
 "googleAuthnLevel":"Mức xác thực",
 "googleExportedVars":"Xuất khẩu biến",
 "googleParams":"Tham số của Google",
+"gpgDb":"GPG database",
+"gpgParams":"GPG parameters",
 "grantSessionRules":"Điều kiện mở",
 "groups":"Nhóm",
 "hashkey":"Khóa",

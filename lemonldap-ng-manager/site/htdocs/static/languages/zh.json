@@ -267,6 +267,8 @@
 "googleAuthnLevel":"认证等级",
 "googleExportedVars":"导出的参数",
 "googleParams":"Google 参数",
+"gpgDb":"GPG database",
+"gpgParams":"GPG parameters",
 "grantSessionRules":"Opening conditions",
 "groups":"Groups",
 "hashkey":"Key",

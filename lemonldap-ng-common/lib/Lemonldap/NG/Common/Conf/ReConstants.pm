@@ -42,6 +42,7 @@ our $authParameters = {
   dbiParams => [qw(dbiAuthnLevel dbiExportedVars dbiAuthChain dbiAuthUser dbiAuthPassword dbiUserChain dbiUserUser dbiUserPassword dbiAuthTable dbiUserTable dbiAuthLoginCol dbiAuthPasswordCol dbiPasswordMailCol userPivot dbiAuthPasswordHash dbiDynamicHashEnabled dbiDynamicHashValidSchemes dbiDynamicHashValidSaltedSchemes dbiDynamicHashNewPasswordScheme)],
   demoParams => [qw(demoExportedVars)],
   facebookParams => [qw(facebookAuthnLevel facebookExportedVars facebookAppId facebookAppSecret facebookUserField)],
+  gpgParams => [qw(gpgDb)],
   kerberosParams => [qw(krbKeytab krbByJs krbAuthnLevel krbRemoveDomain)],
   ldapParams => [qw(ldapAuthnLevel ldapExportedVars ldapServer ldapPort ldapBase managerDn managerPassword ldapTimeout ldapVersion ldapRaw LDAPFilter AuthLDAPFilter mailLDAPFilter ldapSearchDeref ldapGroupBase ldapGroupObjectClass ldapGroupAttributeName ldapGroupAttributeNameUser ldapGroupAttributeNameSearch ldapGroupDecodeSearchedValue ldapGroupRecursive ldapGroupAttributeNameGroup ldapPpolicyControl ldapSetPassword ldapChangePasswordAsUser ldapPwdEnc ldapUsePasswordResetAttribute ldapPasswordResetAttribute ldapPasswordResetAttributeValue ldapAllowResetExpiredPassword)],
   linkedinParams => [qw(linkedInAuthnLevel linkedInClientID linkedInClientSecret linkedInFields linkedInUserField linkedInScope)],

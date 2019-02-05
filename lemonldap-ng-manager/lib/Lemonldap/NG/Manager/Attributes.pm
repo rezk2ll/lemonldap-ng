@@ -305,6 +305,10 @@ sub attributes {
                         'v' => 'Google'
                     },
                     {
+                        'k' => 'GPG',
+                        'v' => 'GPG'
+                    },
+                    {
                         'k' => 'Kerberos',
                         'v' => 'Kerberos'
                     },
@@ -505,6 +509,10 @@ sub attributes {
                 {
                     'k' => 'Google',
                     'v' => 'Google'
+                },
+                {
+                    'k' => 'GPG',
+                    'v' => 'GPG'
                 },
                 {
                     'k' => 'Kerberos',
@@ -806,6 +814,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'Google',
                     'v' => 'Google'
+                },
+                {
+                    'k' => 'GPG',
+                    'v' => 'GPG'
                 },
                 {
                     'k' => 'Kerberos',
@@ -1130,6 +1142,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
                 'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
             },
             'type' => 'keyTextContainer'
+        },
+        'gpgDb' => {
+            'default' => '',
+            'type'    => 'text'
         },
         'grantSessionRules' => {
             'keyTest' => sub {
