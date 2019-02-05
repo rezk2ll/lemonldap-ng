@@ -66,11 +66,16 @@ sub authenticate {
     my ( $self, $req ) = @_;
     my $res = $self->SUPER::authenticate($req);
 
+    my $pls = $self->ldap->getLdapValue( $req->data->{entry}, 'pwdLastSet' );
+    my $computed = $self->ldap->getLdapValue( $req->data->{entry},
+        'msDS-User-Account-Control-Computed' );
+    my $_adUac =
+      $self->ldap->getLdapValue( $req->data->{entry}, 'userAccountControl' )
+      || 0;
+
     unless ( $res == PE_OK ) {
 
         # Check specific AD attributes
-        my $pls      = $req->{sessionInfo}->{_AD_pwdLastSet};
-        my $computed = $req->{sessionInfo}->{_AD_msDS_UACC};
         my $mask = 0xf00000;    # mask to get the 8 at 6th position
         my $expired_flag =
           0x800000;   # 8 at 6th position for flag UF_PASSWORD_EXPIRED to be set
@@ -88,14 +93,10 @@ sub authenticate {
 
     }
     else {
-
-        # get userAccountControl to ckeck password expiration flags
-        my $_adUac = $req->{sessionInfo}->{_AD_userAccountControl} || 0;
-
         my $timestamp = $self->adTime;
 
         # Compute password expiration time (date)
-        my $_pwdExpire = $req->{sessionInfo}->{_AD_pwdLastSet} || $timestamp;
+        my $_pwdExpire = $pls || $timestamp;
         $_pwdExpire += $self->adPwdMaxAge;
 
         # computing when the warning message is displayed on portal
