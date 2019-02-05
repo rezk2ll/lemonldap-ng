@@ -6,26 +6,26 @@ use Mouse;
 use POSIX qw(strftime);
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
-    PE_BADMAILTOKEN
-    PE_CAPTCHAEMPTY
-    PE_CAPTCHAERROR
-    PE_MALFORMEDUSER
-    PE_MAILCONFIRMATION_ALREADY_SENT
-    PE_MAILCONFIRMOK
-    PE_MAILERROR
-    PE_MAILOK
-    PE_NOTOKEN
-    PE_OK
-    PE_REGISTERALREADYEXISTS
-    PE_REGISTERFIRSTACCESS
-    PE_REGISTERFORMEMPTY
-    PE_TOKENEXPIRED
+  PE_BADMAILTOKEN
+  PE_CAPTCHAEMPTY
+  PE_CAPTCHAERROR
+  PE_MALFORMEDUSER
+  PE_MAILCONFIRMATION_ALREADY_SENT
+  PE_MAILCONFIRMOK
+  PE_MAILERROR
+  PE_MAILOK
+  PE_NOTOKEN
+  PE_OK
+  PE_REGISTERALREADYEXISTS
+  PE_REGISTERFIRSTACCESS
+  PE_REGISTERFORMEMPTY
+  PE_TOKENEXPIRED
 );
 
 our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
-    'Lemonldap::NG::Portal::Lib::SMTP';
+  'Lemonldap::NG::Portal::Lib::SMTP';
 
 # PROPERTIES
 
@@ -48,11 +48,11 @@ has mailott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        my $ott = $_[0]->{p}
-            ->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
         $ott->cache(0);
         $ott->timeout( $_[0]->conf->{registerTimeout}
-                || $_[0]->conf->{timeout} );
+              || $_[0]->conf->{timeout} );
         return $ott;
     }
 );
@@ -80,14 +80,14 @@ sub init {
     elsif ( $self->conf->{requireToken} ) {
         $_[0]->ott(
             $_[0]->p->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken') )
-            or return 0;
+          or return 0;
         $_[0]->ott->timeout( $_[0]->conf->{formTimeout} );
     }
 
     # Load registered module
     $self->registerModule(
         $self->p->loadPlugin( '::Register::' . $self->conf->{registerDB} ) )
-        or return 0;
+      or return 0;
 
     return 1;
 }
@@ -135,8 +135,8 @@ sub _register {
             "Token given for register: " . $req->data->{register_token} );
 
         # Get the corresponding session
-        if ( my $data
-            = $self->mailott->getToken( $req->data->{register_token} ) )
+        if ( my $data =
+            $self->mailott->getToken( $req->data->{register_token} ) )
         {
             $self->logger->debug(
                 'Token ' . $req->data->{register_token} . ' found' );
@@ -144,7 +144,7 @@ sub _register {
                 $req->data->{registerInfo}->{$_} = $data->{$_};
             }
             $self->logger->debug( "User associated to token: "
-                    . $req->data->{registerInfo}->{mail} );
+                  . $req->data->{registerInfo}->{mail} );
         }
         else {
             return PE_BADMAILTOKEN;
@@ -190,8 +190,7 @@ sub _register {
                 }
 
                 # Check captcha
-                unless ( $self->captcha->validateCaptcha( $token, $captcha ) )
-                {
+                unless ( $self->captcha->validateCaptcha( $token, $captcha ) ) {
                     $self->userLogger->info('Captcha failed: wrong code');
 
                     # Set captcha or token
@@ -213,29 +212,30 @@ sub _register {
 
     # Check mail
     return PE_MALFORMEDUSER
-        unless ( $req->data->{registerInfo}->{mail}
-        =~ m/$self->{conf}->{userControl}/o );
+      unless ( $req->data->{registerInfo}->{mail} =~
+        m/$self->{conf}->{userControl}/o );
 
     # Search for user using UserDB module
     # If the user already exists, register is forbidden
     $req->user( $req->data->{registerInfo}->{mail} );
     if ( $self->p->_userDB->getUser( $req, useMail => 1 ) == PE_OK ) {
         $self->userLogger->error(
-            "Register: refuse mail $req->{data}->{registerInfo}->{mail} because already exists in UserDB"
+"Register: refuse mail $req->{data}->{registerInfo}->{mail} because already exists in UserDB"
         );
         return PE_REGISTERALREADYEXISTS;
     }
-    my $register_session
-        = $self->getRegisterSession( $req->data->{registerInfo}->{mail} );
-    $req->data->{mail_already_sent}
-        = ( $register_session and !$req->id ) ? 1 : 0;
+    my $register_session =
+      $self->getRegisterSession( $req->data->{registerInfo}->{mail} );
+    $req->data->{mail_already_sent} =
+      ( $register_session and !$req->id ) ? 1 : 0;
 
     # Skip this step if confirmation was already sent
     unless ( $req->data->{register_token} or $register_session ) {
 
         # Create mail token
         $register_session = $self->mailott->createToken(
-            {   mail      => $req->data->{registerInfo}->{mail},
+            {
+                mail      => $req->data->{registerInfo}->{mail},
                 firstname => $req->data->{registerInfo}->{firstname},
                 lastname  => $req->data->{registerInfo}->{lastname},
                 ipAddr    => $req->data->{registerInfo}->{ipAddr},
@@ -259,26 +259,25 @@ sub _register {
         $self->logger->debug("Register session found: $register_session");
 
         # Mail session expiration date
-        my $expTimestamp
-            = ( $self->{conf}->{registerTimeout} || $self->conf->{timeout} )
-            + time;
+        my $expTimestamp =
+          ( $self->{conf}->{registerTimeout} || $self->conf->{timeout} ) + time;
 
         $self->logger->debug("Register expiration timestamp: $expTimestamp");
 
-        $req->data->{expMailDate}
-            = strftime( "%d/%m/%Y", localtime $expTimestamp );
-        $req->data->{expMailTime}
-            = strftime( "%H:%M", localtime $expTimestamp );
+        $req->data->{expMailDate} =
+          strftime( "%d/%m/%Y", localtime $expTimestamp );
+        $req->data->{expMailTime} =
+          strftime( "%H:%M", localtime $expTimestamp );
 
         # Mail session start date
         my $startTimestamp = time;
 
         $self->logger->debug("Register start timestamp: $startTimestamp");
 
-        $req->data->{startMailDate}
-            = strftime( "%d/%m/%Y", localtime $startTimestamp );
-        $req->data->{startMailTime}
-            = strftime( "%H:%M", localtime $startTimestamp );
+        $req->data->{startMailDate} =
+          strftime( "%d/%m/%Y", localtime $startTimestamp );
+        $req->data->{startMailTime} =
+          strftime( "%H:%M", localtime $startTimestamp );
 
         # Ask if user want another confirmation email
         if ( $req->data->{mail_already_sent}
@@ -290,13 +289,13 @@ sub _register {
         # Build confirmation url
         my $req_url = $req->data->{_url};
         my $skin    = $self->p->getSkin($req);
-        my $url
-            = $self->registerUrl . '?'
-            . build_urlencoded(
+        my $url =
+          $self->registerUrl . '?'
+          . build_urlencoded(
             register_token => $req->{id},
             skin           => $skin,
             ( $req_url ? ( url => $req_url ) : () ),
-            );
+          );
 
         # Build mail content
         $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
@@ -324,7 +323,7 @@ sub _register {
 
         # Send mail
         return PE_MAILERROR
-            unless $self->send_mail( $req->data->{registerInfo}->{mail},
+          unless $self->send_mail( $req->data->{registerInfo}->{mail},
             $subject, $body, $html );
 
         $self->logger->debug('Register message sent');
@@ -343,7 +342,7 @@ sub _register {
     my $result = $self->registerModule->computeLogin($req);
     unless ( $result == PE_OK ) {
         $self->logger->error( "Could not compute login for "
-                . $req->data->{registerInfo}->{mail} );
+              . $req->data->{registerInfo}->{mail} );
         return $result;
     }
 
@@ -381,10 +380,10 @@ sub _register {
     my $req_url = $req->data->{_url};
     my $skin    = $self->p->getSkin($req);
     $url .= '/?'
-        . build_urlencoded(
+      . build_urlencoded(
         skin => $skin,
         ( $req_url ? ( url => $req_url ) : () ),
-        );
+      );
 
     # Replace variables in body
     $body =~ s/\$url/$url/g;
@@ -392,7 +391,7 @@ sub _register {
 
     # Send mail
     return PE_MAILERROR
-        unless $self->send_mail( $req->data->{registerInfo}->{mail},
+      unless $self->send_mail( $req->data->{registerInfo}->{mail},
         $subject, $body, $html );
 
     return PE_MAILOK;
@@ -415,8 +414,9 @@ sub display {
         STARTMAILDATE   => $req->data->{startMailDate},
         STARTMAILTIME   => $req->data->{startMailTime},
         MAILALREADYSENT => $req->data->{mail_already_sent},
-        MAIL            => $self->p->checkXSSAttack( 'mail',
-            $req->data->{registerInfo}->{mail} ) ? ""
+        MAIL            => $self->p->checkXSSAttack(
+            'mail', $req->data->{registerInfo}->{mail}
+          ) ? ""
         : $req->data->{registerInfo}->{mail},
         FIRSTNAME => $self->p->checkXSSAttack( 'firstname',
             $req->data->{registerInfo}->{firstname} ) ? ""
@@ -430,7 +430,9 @@ sub display {
     );
 
     # Display form the first time
-    if ((      $req->error == PE_REGISTERFORMEMPTY
+    if (
+        (
+               $req->error == PE_REGISTERFORMEMPTY
             or $req->error == PE_REGISTERFIRSTACCESS
             or $req->error == PE_CAPTCHAERROR
             or $req->error == PE_CAPTCHAEMPTY
@@ -438,7 +440,7 @@ sub display {
             or $req->error == PE_TOKENEXPIRED
         )
         and !$req->param('mail_token')
-        )
+      )
     {
         %templateParams = (
             %templateParams,

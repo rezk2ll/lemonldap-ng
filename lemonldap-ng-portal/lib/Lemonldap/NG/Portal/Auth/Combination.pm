@@ -139,6 +139,7 @@ sub getDisplayType {
 sub authLogout {
     my ( $self, $req ) = @_;
     $self->getStack( $req, 'extractFormInfo' ) or return PE_ERROR;
+
     # Avoid warning msg at first access
     $req->userData->{_combinationTry} ||= '';
     my ( $res, $name ) =

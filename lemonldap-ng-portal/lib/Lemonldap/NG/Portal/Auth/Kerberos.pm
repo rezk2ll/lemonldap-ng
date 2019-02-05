@@ -5,11 +5,11 @@ use Mouse;
 use GSSAPI;
 use MIME::Base64;
 use Lemonldap::NG::Portal::Main::Constants qw(
-    PE_BADCREDENTIALS
-    PE_ERROR
-    PE_FIRSTACCESS
-    PE_OK
-    PE_SENDRESPONSE
+  PE_BADCREDENTIALS
+  PE_ERROR
+  PE_FIRSTACCESS
+  PE_OK
+  PE_SENDRESPONSE
 );
 
 our $VERSION = '2.0.2';
@@ -35,9 +35,9 @@ sub init {
     }
     $self->keytab("FILE:$file");
     $self->AjaxInitScript( '<script type="text/javascript" src="'
-            . $self->p->staticPrefix
-            . '/common/js/kerberosChoice.js"></script>' )
-        if $self->conf->{krbByJs};
+          . $self->p->staticPrefix
+          . '/common/js/kerberosChoice.js"></script>' )
+      if $self->conf->{krbByJs};
     return 1;
 }
 
@@ -45,8 +45,8 @@ sub extractFormInfo {
     my ( $self, $req ) = @_;
 
     if ( $req->data->{_krbUser} ) {
-        $self->logger->debug( 'Kerberos ticket already validated for '
-                . $req->data->{_krbUser} );
+        $self->logger->debug(
+            'Kerberos ticket already validated for ' . $req->data->{_krbUser} );
         return PE_OK;
     }
 
@@ -61,8 +61,10 @@ sub extractFormInfo {
             # Case 1.1: Ajax request
             if ( $req->wantJSON ) {
                 $req->response(
-                    [   401,
-                        [   'WWW-Authenticate' => 'Negotiate',
+                    [
+                        401,
+                        [
+                            'WWW-Authenticate' => 'Negotiate',
                             'Content-Type'     => 'application/json',
                             'Content-Length'   => 35
                         ],
@@ -75,8 +77,7 @@ sub extractFormInfo {
             #           dialog
             else {
                 $req->error(PE_BADCREDENTIALS);
-                push @{ $req->respHeaders },
-                    'WWW-Authenticate' => 'Negotiate';
+                push @{ $req->respHeaders }, 'WWW-Authenticate' => 'Negotiate';
                 my ( $tpl, $prms ) = $self->p->display($req);
                 $req->response(
                     $self->p->sendHtml(
@@ -89,10 +90,10 @@ sub extractFormInfo {
             return PE_SENDRESPONSE;
         }
 
-       # Case 2: Ajax Kerberos request has failed, and javascript has reloaded
-       # page with "kerberos=0". Return an error to be able to switch to
-       # another backend (Combination)
-       # switch to another backend
+        # Case 2: Ajax Kerberos request has failed, and javascript has reloaded
+        # page with "kerberos=0". Return an error to be able to switch to
+        # another backend (Combination)
+        # switch to another backend
         elsif ( defined $req->param('kerberos') ) {
             $self->userLogger->warn(
                 'Kerberos authentication has failed, back to portal');

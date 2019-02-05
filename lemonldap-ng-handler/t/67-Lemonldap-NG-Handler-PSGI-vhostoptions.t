@@ -5,21 +5,22 @@ use Data::Dumper;
 
 require 't/test-psgi-lib.pm';
 
-init('Lemonldap::NG::Handler::PSGI', {
-    vhostOptions => {
-        'test1.example.com' => {
-            vhostHttps => 1,
-            vhostPort => 443,
+init(
+    'Lemonldap::NG::Handler::PSGI',
+    {
+        vhostOptions => {
+            'test1.example.com' => {
+                vhostHttps => 1,
+                vhostPort  => 443,
+            },
         },
-    },
-    locationRules => {
-    },
-    exportedHeaders => {
-    },
-    https => undef,
-    port => undef,
-    maintenance => undef,
-});
+        locationRules   => {},
+        exportedHeaders => {},
+        https           => undef,
+        port            => undef,
+        maintenance     => undef,
+    }
+);
 
 my $res;
 

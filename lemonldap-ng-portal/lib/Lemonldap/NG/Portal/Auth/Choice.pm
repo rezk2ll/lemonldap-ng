@@ -30,13 +30,13 @@ sub extractFormInfo {
             if ( $mod->{AjaxInitScript} ) {
                 $self->logger->debug(
                     'Append ' . $mod->{Name} . ' init/script' )
-                    if $mod->{Name};
+                  if $mod->{Name};
                 $req->data->{customScript} .= $mod->AjaxInitScript;
             }
             if ( $mod->{InitCmd} ) {
                 $self->logger->debug(
                     'Launch ' . $mod->{Name} . ' init command' )
-                    if $mod->{Name};
+                  if $mod->{Name};
                 my $res = eval( $mod->{InitCmd} );
                 if ($@) {
                     $self->logger("Auth error: $@");
@@ -53,7 +53,7 @@ sub extractFormInfo {
         }
         $self->logger->debug(
             "Send init/script -> " . $req->data->{customScript} )
-            if $req->data->{customScript};
+          if $req->data->{customScript};
         return PE_FIRSTACCESS;
     }
     my $res = $req->data->{enabledMods0}->[0]->extractFormInfo($req);

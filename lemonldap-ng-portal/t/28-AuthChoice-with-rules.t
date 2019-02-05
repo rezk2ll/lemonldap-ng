@@ -22,7 +22,8 @@ SKIP: {
     $dbh->do("INSERT INTO users VALUES ('dwho','dwho','Doctor who')");
 
     my $client = LLNG::Manager::Test->new(
-        {   ini => {
+        {
+            ini => {
                 logLevel       => 'error',
                 useSafeJail    => 1,
                 portalMainLogo => 'common/logos/logo_llng_old.png',
@@ -34,9 +35,9 @@ SKIP: {
                     '1_demo' => 'Demo;Demo;Null;;0',
                     '2_sql'  => 'DBI;DBI;DBI;;1',
                     '3_demo' =>
-                        'Demo;Demo;Null;https://test.example.com;$env->{ipAddr} =~ /127.0.0.1/',
+'Demo;Demo;Null;https://test.example.com;$env->{ipAddr} =~ /127.0.0.1/',
                     '4_demo' =>
-                        'Demo;Demo;Null;https://test.example.com;$env->{ipAddr} =~ /1.2.3.4/',
+'Demo;Demo;Null;https://test.example.com;$env->{ipAddr} =~ /1.2.3.4/',
                     '5_ssl'        => 'SSL;Demo;Demo',
                     '6_FakeCustom' => 'Custom;Demo;Demo',
                     '7_Kerberos'   => 'Kerberos;Null;Null',
@@ -69,47 +70,51 @@ SKIP: {
     ok( $res->[2]->[0] =~ /7_Kerberos/,   '7_Kerberos displayed' );
     ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/SSL.png"%,
         'Found 5_ssl Logo' )
-        or print STDERR Dumper( $res->[2]->[0] );
+      or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ qr%img src="/static/common/modules/Apache.png"%,
         'Found 6_FakeCustom Logo' )
-        or print STDERR Dumper( $res->[2]->[0] );
+      or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/Kerberos.png"%,
-        'Found 7_Kerberos Logo'
-    ) or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0]
-            =~ m%<form id="lformDemo" action="https://test.example.com"%,
+        'Found 7_Kerberos Logo' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~
+          m%<form id="lformDemo" action="https://test.example.com"%,
         ' Redirect URL found'
     ) or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0]
-            =~ m%<script type="application/init">\{"sslHost":"https://authssl.example.com:19876"\}</script>%,
+    ok(
+        $res->[2]->[0] =~
+m%<script type="application/init">\{"sslHost":"https://authssl.example.com:19876"\}</script>%,
         ' SSL AJAX URL found'
     ) or print STDERR Dumper( $res->[2]->[0] );
     expectForm( $res, '#', undef, 'kerberos' );
-    ok( $res->[2]->[0]
-            =~ m%<input type="hidden" name="kerberos" value="0" />%,
+    ok(
+        $res->[2]->[0] =~ m%<input type="hidden" name="kerberos" value="0" />%,
         'Found hidden attribut "kerberos" with value="0"'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ /kerberosChoice\.(?:min\.)?js/,
         'Get Kerberos javascript' )
-        or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0]
-            =~ m%<form id="lformKerberos" action="#" method="post" class="login Kerberos">%,
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~
+m%<form id="lformKerberos" action="#" method="post" class="login Kerberos">%,
         ' Redirect URL found'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ /sslChoice\.(?:min\.)?js/,
         'Get sslChoice javascript' )
-        or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0]
-            =~ m%<form id="lformSSL" action="#" method="post" class="login SSL">%,
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~
+          m%<form id="lformSSL" action="#" method="post" class="login SSL">%,
         ' Action # found'
     ) or print STDERR Dumper( $res->[2]->[0] );
     my $header = getHeader( $res, 'Content-Security-Policy' );
     ok( $header =~ m%;form-action \'self\'  https://test.example.com;%,
         ' CSP URL found' )
-        or print STDERR Dumper( $res->[1] );
+      or print STDERR Dumper( $res->[1] );
     ok( $res->[2]->[0] !~ /4_demo/, '4_Demo not displayed' );
-    ok( $res->[2]->[0]
-            =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
+    ok(
+        $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo'
     ) or print STDERR Dumper( $res->[2]->[0] );
 
@@ -118,7 +123,8 @@ SKIP: {
 
     # Try yo authenticate
     # -------------------
-    ok( $res = $client->_post(
+    ok(
+        $res = $client->_post(
             '/', IO::String->new($postString),
             length => length($postString)
         ),

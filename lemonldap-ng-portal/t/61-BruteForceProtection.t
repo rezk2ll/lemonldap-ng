@@ -165,7 +165,8 @@ ok(
 );
 count(1);
 
-ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/, 'Rejected -> Protection enabled' );
+ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
+    'Rejected -> Protection enabled' );
 count(1);
 sleep 1;
 
@@ -181,7 +182,8 @@ ok(
 );
 count(1);
 
-ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/, 'Rejected -> Protection enabled' );
+ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
+    'Rejected -> Protection enabled' );
 count(1);
 sleep 2;
 
@@ -197,7 +199,8 @@ ok(
 );
 count(1);
 
-ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/, 'Rejected -> Protection enabled' );
+ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
+    'Rejected -> Protection enabled' );
 count(1);
 sleep 3;
 

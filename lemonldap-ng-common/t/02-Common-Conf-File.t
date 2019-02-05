@@ -16,8 +16,10 @@ BEGIN { use_ok('Lemonldap::NG::Common::Conf') }
 
 my $h;
 
-ok( $h = new Lemonldap::NG::Common::Conf(
-        {   type    => 'File',
+ok(
+    $h = new Lemonldap::NG::Common::Conf(
+        {
+            type    => 'File',
             dirName => "t/",
         }
     ),
@@ -37,15 +39,15 @@ my @test = (
     { cfgNum => 1, test => 'éà' }
 );
 
-for ( my $i = 0; $i < @test; $i++ ) {
+for ( my $i = 0 ; $i < @test ; $i++ ) {
     ok( $h->store( $test[$i] ) == 1, "Test $i is stored" )
-        or print STDERR "$Lemonldap::NG::Common::Conf::msg $!";
+      or print STDERR "$Lemonldap::NG::Common::Conf::msg $!";
     $count++;
     my $cfg;
     ok( $cfg = $h->load(1), "Test $i can be read" )
-        or print STDERR $Lemonldap::NG::Common::Conf::msg;
+      or print STDERR $Lemonldap::NG::Common::Conf::msg;
     ok( $cfg->{test} eq $test[$i]->{test}, "Test $i is restored" )
-        or print STDERR "Expect $cfg->{test} eq $test[$i]->{test}\n";
+      or print STDERR "Expect $cfg->{test} eq $test[$i]->{test}\n";
     $count += 2;
 }
 

@@ -88,7 +88,7 @@ sub cTrees {
                     "samlIDPMetaDataOptionsCheckAudience"
                 ]
             },
-                        {
+            {
                 title => "samlIDPMetaDataOptionsDisplay",
                 form  => 'simpleInputContainer',
                 nodes => [

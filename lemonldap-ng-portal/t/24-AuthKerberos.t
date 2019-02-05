@@ -15,7 +15,8 @@ SKIP: {
         skip 'GSSAPI not found', $maintests;
     }
     my $client = LLNG::Manager::Test->new(
-        {   ini => {
+        {
+            ini => {
                 logLevel       => $debug,
                 useSafeJail    => 1,
                 authentication => 'Kerberos',
@@ -29,10 +30,11 @@ SKIP: {
     ok( $res->[0] == 401, 'Get 401' ) or explain( $res->[0], 401 );
     ok( getHeader( $res, 'WWW-Authenticate' ) eq 'Negotiate',
         'Get negotiate header' )
-        or explain( $res->[1], 'WWW-Authenticate => Negotiate' );
+      or explain( $res->[1], 'WWW-Authenticate => Negotiate' );
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
     $client = LLNG::Manager::Test->new(
-        {   ini => {
+        {
+            ini => {
                 logLevel       => $debug,
                 useSafeJail    => 1,
                 authentication => 'Kerberos',
@@ -47,13 +49,13 @@ SKIP: {
         'First access with JS' );
 
     expectForm( $res, '#', undef, 'kerberos' );
-    ok( $res->[2]->[0]
-            =~ m%<input type="hidden" name="kerberos" value="0" />%,
+    ok(
+        $res->[2]->[0] =~ m%<input type="hidden" name="kerberos" value="0" />%,
         'Found hidden attribut "kerberos" with value="0"'
     ) or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] =~ /kerberos\.(?:min\.)?js/,
-        'Get Kerberos javascript' );
-    ok( $res = $client->_get(
+    ok( $res->[2]->[0] =~ /kerberos\.(?:min\.)?js/, 'Get Kerberos javascript' );
+    ok(
+        $res = $client->_get(
             '/',
             query  => 'kerberos=1',
             accept => 'application/json'
@@ -62,7 +64,8 @@ SKIP: {
     );
     ok( $res->[0] == 401, 'Get 401' ) or explain( $res->[0], 401 );
 
-    ok( $res = $client->_get(
+    ok(
+        $res = $client->_get(
             '/',
             query  => 'kerberos=1',
             accept => 'application/json',

@@ -47,22 +47,21 @@ ok(
 my ( $host, $url, $query ) =
   expectForm( $res, undef, '/2fchoice', 'token', 'checkLogins' );
 
-
 ok(
     $res->[2]->[0] =~
-qq%<img src="/static/bootstrap/u2f.png" alt="rest2F" title="rest2F" />%,
+      qq%<img src="/static/bootstrap/u2f.png" alt="rest2F" title="rest2F" />%,
     'Found u2f.png'
 ) or print STDERR Dumper( $res->[2]->[0] );
 
 ok(
     $res->[2]->[0] =~
-qq%<img src="/static/bootstrap/yubikey.png" alt="ext2F" title="ext2F" />%,
+      qq%<img src="/static/bootstrap/yubikey.png" alt="ext2F" title="ext2F" />%,
     'Found yubikey.png'
 ) or print STDERR Dumper( $res->[2]->[0] );
 
 ok(
     $res->[2]->[0] =~
-qq%<img src="/static/bootstrap/totp.png" alt="totp2F" title="totp2F" />%,
+      qq%<img src="/static/bootstrap/totp.png" alt="totp2F" title="totp2F" />%,
     'Found totp.png'
 ) or print STDERR Dumper( $res->[2]->[0] );
 
