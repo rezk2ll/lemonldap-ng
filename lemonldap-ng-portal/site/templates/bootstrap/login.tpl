@@ -62,6 +62,10 @@
               <TMPL_INCLUDE NAME="sslformChoice.tpl">
             </TMPL_IF>
 
+            <TMPL_IF NAME="gpgform">
+              <TMPL_INCLUDE NAME="gpgform.tpl">
+            </TMPL_IF>
+
             <TMPL_IF NAME="logo">
 
               <div class="form">

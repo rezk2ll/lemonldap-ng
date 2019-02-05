@@ -62,6 +62,7 @@ sub defaultValues {
               'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
             'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
         },
+        'gpgDb'                     => '',
         'groups'                    => {},
         'handlerInternalCache'      => 15,
         'hiddenAttributes'          => '_password',
