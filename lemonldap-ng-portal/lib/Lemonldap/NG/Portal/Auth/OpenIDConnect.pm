@@ -37,6 +37,7 @@ sub init {
     my @list = ();
 
     my $portalPath = $self->conf->{portal};
+
     #$portalPath =~ s#^https?://[^/]+/?#/#;
 
     foreach (@tab) {

@@ -109,7 +109,7 @@ sub statusInit {
             exec $perl_exec, '-MLemonldap::NG::Handler::Lib::Status',
 
               # Insert @INC in Perl path
-              map( {"-I$_"} @INC ),
+              map( { "-I$_" } @INC ),
 
               # Command to launch
               '-e', '&Lemonldap::NG::Handler::Lib::Status::run()',

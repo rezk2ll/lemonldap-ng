@@ -24,7 +24,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Portal::Main::Auth', 'Lemonldap::NG::Portal::Lib::SAML';
 
@@ -938,13 +938,14 @@ sub extractFormInfo {
         return $urlcheck unless ( $urlcheck == PE_OK );
 
         # IDP list
-        my @list = ();
+        my @list       = ();
         my $portalPath = $self->conf->{portal};
 
         foreach ( keys %{ $self->idpList } ) {
             my $idpName = $self->{idpList}->{$_}->{name};
-            $idpName = $self->{idpList}->{$_}->{displayName} if $self->{idpList}->{$_}->{displayName};
-            my $icon = $self->{idpList}->{$_}->{icon};
+            $idpName = $self->{idpList}->{$_}->{displayName}
+              if $self->{idpList}->{$_}->{displayName};
+            my $icon    = $self->{idpList}->{$_}->{icon};
             my $img_src = '';
 
             if ($icon) {
@@ -953,7 +954,9 @@ sub extractFormInfo {
                   ? $icon
                   : $portalPath . $self->p->staticPrefix . "/common/" . $icon;
             }
-            $self->logger->debug("IDP " . $self->{idpList}->{$_}->{name} . " -> DisplayName : $idpName with Icon : $img_src");
+            $self->logger->debug( "IDP "
+                  . $self->{idpList}->{$_}->{name}
+                  . " -> DisplayName : $idpName with Icon : $img_src" );
             push @list,
               {
                 val  => $_,

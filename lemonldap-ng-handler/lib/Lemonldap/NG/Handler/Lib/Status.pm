@@ -9,7 +9,7 @@ use JSON qw(to_json);
 use IO::Select;
 use IO::Socket::INET;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 our $status   = {};
 our $activity = [];

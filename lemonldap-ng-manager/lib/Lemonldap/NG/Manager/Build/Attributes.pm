@@ -2203,8 +2203,8 @@ sub attributes {
             default => 0,
         },
         samlIDPMetaDataOptionsUserAttribute => { type => 'text', },
-        samlIDPMetaDataOptionsDisplayName  => { type => 'text', },
-        samlIDPMetaDataOptionsIcon         => { type => 'text', },
+        samlIDPMetaDataOptionsDisplayName   => { type => 'text', },
+        samlIDPMetaDataOptionsIcon          => { type => 'text', },
 
         # SP keys
         samlSPMetaDataExportedAttributes => {
@@ -2563,10 +2563,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'LDAP filter for auth search'
         },
         ldapGroupDecodeSearchedValue => {
-            default => 0,
-            type    => 'bool',
-            documentation =>
-                'Decode value before searching it in LDAP groups',
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Decode value before searching it in LDAP groups',
         },
         ldapGroupRecursive => {
             default       => 0,
