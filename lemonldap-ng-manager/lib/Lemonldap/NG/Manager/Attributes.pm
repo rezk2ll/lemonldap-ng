@@ -301,10 +301,6 @@ sub attributes {
                         'v' => 'Facebook'
                     },
                     {
-                        'k' => 'Google',
-                        'v' => 'Google'
-                    },
-                    {
                         'k' => 'GPG',
                         'v' => 'GPG'
                     },
@@ -397,10 +393,6 @@ sub attributes {
                     {
                         'k' => 'Facebook',
                         'v' => 'Facebook'
-                    },
-                    {
-                        'k' => 'Google',
-                        'v' => 'Google'
                     },
                     {
                         'k' => 'LDAP',
@@ -505,10 +497,6 @@ sub attributes {
                 {
                     'k' => 'Facebook',
                     'v' => 'Facebook'
-                },
-                {
-                    'k' => 'Google',
-                    'v' => 'Google'
                 },
                 {
                     'k' => 'GPG',
@@ -810,10 +798,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'Facebook',
                     'v' => 'Facebook'
-                },
-                {
-                    'k' => 'Google',
-                    'v' => 'Google'
                 },
                 {
                     'k' => 'GPG',
