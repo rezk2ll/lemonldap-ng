@@ -953,7 +953,7 @@ sub extractFormInfo {
                   ? $icon
                   : $portalPath . $self->p->staticPrefix . "/common/" . $icon;
             }
-            $self->logger->debug("IDP " . $self->{idpList}->{$_}->{name} . " -> DisplayName : $idpName with Icon = $img_src");
+            $self->logger->debug("IDP " . $self->{idpList}->{$_}->{name} . " -> DisplayName : $idpName with Icon : $img_src");
             push @list,
               {
                 val  => $_,

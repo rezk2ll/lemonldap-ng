@@ -12,7 +12,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 17;
+my $maintests = 19;
 my $debug     = 'error';
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -58,6 +58,15 @@ SKIP: {
       or explain( $res->[1],
         'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
     ( $host, $url, $query ) = expectForm( $res, undef, undef, 'confirm', );
+    ok( $res->[2]->[0]
+            =~ m%<img src="http://auth.sp.com/static/common/icons/sfa_manager.png" class="mr-2" alt="IDP2" title="IDP2" />%,
+        'Found IDP icon and title tag'
+    ) or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0]
+            =~ /idp_Test_DisplayName/,
+        'Found IDP display name'
+    ) or print STDERR Dumper( $res->[2]->[0] );
+
     my $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Choose SAML issuer
@@ -200,10 +209,6 @@ SKIP: {
 
 # TODO
 
-# Enable Auth Choice
-# Enable SAML in Choice
-# Register at least 2 SAML provider
-# Launch authentication process
 # Select SAML Choice tab
 # Select an SAML IDP and confirm
 # -> expected result: SAML request sent
@@ -256,6 +261,9 @@ sub sp {
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
                         samlIDPMetaDataOptionsForceUTF8                => 1,
+                        samlIDPMetaDataOptionsDisplayName              => 'idp_Test_DisplayName',
+
+
                     },
                     idp2 => {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
@@ -266,6 +274,7 @@ sub sp {
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
                         samlIDPMetaDataOptionsForceUTF8                => 1,
+                        samlIDPMetaDataOptionsIcon                     => 'icons/sfa_manager.png',
                     },
                 },
                 samlIDPMetaDataExportedAttributes => {
