@@ -38,7 +38,7 @@
 "addU2FKey":"Add U2F key",
 "addTOTPKey":"Add TOTP key",
 "addVhost":"增加virtualhost",
-"adParams":"Active Directory参数",
+"adParams":"Active Directory parameters",
 "ADPwdExpireWarning":"密码过期警告",
 "ADPwdMaxAge":"密码最长有效期",
 "advancedParams":"高级参数",
