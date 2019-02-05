@@ -22,7 +22,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
     PE_TOKENEXPIRED
 );
 
-our $VERSION = '2.0.1';
+our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
     'Lemonldap::NG::Portal::Lib::SMTP';

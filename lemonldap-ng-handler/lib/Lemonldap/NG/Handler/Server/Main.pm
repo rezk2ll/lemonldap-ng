@@ -5,7 +5,7 @@ package Lemonldap::NG::Handler::Server::Main;
 
 use strict;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 use base 'Lemonldap::NG::Handler::PSGI::Main';
 

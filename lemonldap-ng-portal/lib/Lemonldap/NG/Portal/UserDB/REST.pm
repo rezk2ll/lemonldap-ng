@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Common::Module', 'Lemonldap::NG::Portal::Lib::REST';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 # INITIALIZATION
 
