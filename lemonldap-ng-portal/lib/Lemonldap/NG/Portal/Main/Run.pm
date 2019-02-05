@@ -729,8 +729,6 @@ sub _dump {
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
-    $self->{templateDir} =
-      $self->conf->{templateDir} . '/' . $self->getSkin($req);
     $args{params}->{TROVER} = $self->trOver;
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
