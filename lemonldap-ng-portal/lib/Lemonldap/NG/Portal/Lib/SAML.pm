@@ -20,7 +20,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SLO_ERROR
 );
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 # PROPERTIES
 
