@@ -268,9 +268,6 @@ sub loadIDPs {
         $self->idpList->{$entityID}->{confKey} = $_;
         $self->idpList->{$entityID}->{name}    = $name;
 
-
-        #####################
-
         # Set encryption mode
         my $encryption_mode = $self->conf->{samlIDPMetaDataOptions}->{$_}
           ->{samlIDPMetaDataOptionsEncryptionMode};
@@ -289,6 +286,13 @@ sub loadIDPs {
         }
         $self->logger->debug("Set encryption mode $encryption_mode on IDP $_");
 
+        # Set display options
+        $self->idpList->{$entityID}->{displayName} = 
+        $self->conf->{samlIDPMetaDataOptions}->{$_}->{samlIDPMetaDataOptionsDisplayName};
+        $self->idpList->{$entityID}->{icon} = 
+        $self->conf->{samlIDPMetaDataOptions}->{$_}->{samlIDPMetaDataOptionsIcon};
+
+        # Set rule
         my $cond = $self->conf->{samlIDPMetaDataOptions}->{$_}
           ->{samlIDPMetaDataOptionsResolutionRule};
         if ( length $cond ) {

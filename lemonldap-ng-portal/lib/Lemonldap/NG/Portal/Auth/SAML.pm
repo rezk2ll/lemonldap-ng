@@ -939,11 +939,26 @@ sub extractFormInfo {
 
         # IDP list
         my @list = ();
+        my $portalPath = $self->conf->{portal};
+
         foreach ( keys %{ $self->idpList } ) {
+            my $idpName = $self->{idpList}->{$_}->{name};
+            $idpName = $self->{idpList}->{$_}->{displayName} if $self->{idpList}->{$_}->{displayName};
+            my $icon = $self->{idpList}->{$_}->{icon};
+            my $img_src = '';
+
+            if ($icon) {
+                $img_src =
+                  ( $icon =~ m#^https?://# )
+                  ? $icon
+                  : $portalPath . $self->p->staticPrefix . "/common/" . $icon;
+            }
+            $self->logger->debug("IDP " . $self->{idpList}->{$_}->{name} . " -> DisplayName : $idpName with Icon = $img_src");
             push @list,
               {
                 val  => $_,
-                name => $self->idpList->{$_}->{name}
+                name => $idpName,
+                icon => $img_src,
               };
         }
         $req->data->{list}            = \@list;
