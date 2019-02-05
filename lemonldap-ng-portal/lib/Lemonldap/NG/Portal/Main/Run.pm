@@ -729,6 +729,8 @@ sub _dump {
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
+    $self->{templateDir} =
+      $self->conf->{templateDir} . '/' . $self->getSkin($req);
     $args{params}->{TROVER} = $self->trOver;
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
@@ -793,13 +795,16 @@ sub sendHtml {
 
 sub sendCss {
     my ( $self, $req ) = @_;
-    my $s =
-        'html,body{background:url("'
-      . $self->staticPrefix
-      . '/common/backgrounds/'
-      . $self->conf->{portalSkinBackground}
-      . '") no-repeat center fixed;'
-      . 'background-size:cover;}';
+    my $s = '/* LL::NG Portal CSS */';
+    if ( $self->conf->{portalSkinBackground} ) {
+        $s .=
+            'html,body{background:url("'
+          . $self->staticPrefix
+          . '/common/backgrounds/'
+          . $self->conf->{portalSkinBackground}
+          . '") no-repeat center fixed;'
+          . 'background-size:cover;}';
+    }
     return [
         200,
         [
@@ -852,7 +857,7 @@ sub tplParams {
 
     for my $session_key ( keys %{ $req->{sessionInfo} } ) {
         $templateParams{ "session_" . $session_key } =
-        $req->{sessionInfo}->{$session_key};
+          $req->{sessionInfo}->{$session_key};
     }
 
     for my $env_key ( keys %{ $req->env } ) {
@@ -860,7 +865,7 @@ sub tplParams {
     }
 
     return (
-        SKIN       => $self->getSkin( $req ),
+        SKIN       => $self->getSkin($req),
         PORTAL_URL => $self->conf->{portal},
         SKIN_PATH  => $portalPath . "skins",
         ANTIFRAME  => $self->conf->{portalAntiFrame},

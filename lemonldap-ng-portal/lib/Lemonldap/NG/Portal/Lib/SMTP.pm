@@ -15,7 +15,7 @@ use Email::Sender::Transport::SMTP qw();
 use MIME::Base64;
 use Encode;
 
-our $VERSION = '2.0.1';
+our $VERSION = '2.0.2';
 
 our $transport;
 
