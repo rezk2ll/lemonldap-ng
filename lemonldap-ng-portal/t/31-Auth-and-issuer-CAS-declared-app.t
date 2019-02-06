@@ -217,6 +217,7 @@ sub issuer {
                 authentication             => 'Demo',
                 userDB                     => 'Same',
                 issuerDBCASActivation      => 1,
+                issuerDBCASRule            => '$uid eq "french"',
                 casAttr                    => 'uid',
                 casAccessControlPolicy     => 'error',
                 multiValuesSeparator       => ';',
