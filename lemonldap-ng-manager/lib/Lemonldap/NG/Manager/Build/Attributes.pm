@@ -2403,7 +2403,7 @@ sub attributes {
             documentation => 'Password module',
         },
 
-        # Seconf Factor Engine
+        # Second Factor Engine
         sfEngine => {
             type          => 'text',
             default       => '::2F::Engines::Default',
