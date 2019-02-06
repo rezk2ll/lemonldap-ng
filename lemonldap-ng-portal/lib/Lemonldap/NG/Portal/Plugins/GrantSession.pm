@@ -45,7 +45,7 @@ sub run {
     }
 
     # Avoid display notification if AuthResult is not null
-    return PE_BADCREDENTIALS if $req->authResult > 0;
+    return PE_BADCREDENTIALS if $req->authResult > PE_OK;
 
     foreach ( sort sortByComment keys %{ $self->rules } ) {
         $self->logger->debug( "Grant session condition -> "
