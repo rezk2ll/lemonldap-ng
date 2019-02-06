@@ -12,7 +12,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 19;
+my $maintests = 20;
 my $debug     = 'error';
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -40,8 +40,10 @@ SKIP: {
         'Unauth SP request'
     );
     expectOK($res);
+    ok( $res->[2]->[0] =~ m%<form id="lformDemo" action="#" method="post" class="login Demo">%s,
+        'Found Demo choice' ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m#<form[^>]+class="login SAML".*?</form>#s,
-        'Found SAML choice' );
+        'Found SAML choice' ) or print STDERR Dumper( $res->[2]->[0] );
     $res->[2]->[0] = $&;
     my ( $host, $url, $query ) = expectForm( $res, undef, undef, 'test' );
 
@@ -206,12 +208,6 @@ SKIP: {
     expectReject($res);
 
 }
-
-# TODO
-
-# Select SAML Choice tab
-# Select an SAML IDP and confirm
-# -> expected result: SAML request sent
 
 count($maintests);
 clean_sessions();
