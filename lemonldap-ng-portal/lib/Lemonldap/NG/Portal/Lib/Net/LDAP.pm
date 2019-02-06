@@ -12,7 +12,7 @@ use Unicode::String qw(utf8);
 use Scalar::Util 'weaken';
 use utf8;
 
-our $VERSION  = '2.0.0';
+our $VERSION  = '2.0.2';
 our $ppLoaded = 0;
 
 BEGIN {
