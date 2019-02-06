@@ -310,7 +310,10 @@ sub authenticate {
         ]
     );
 
-    return PE_OK;
+    # Ignore result, process will end at least with PE_BADCREDENTIALS
+    $self->process($req);
+
+    return $ret;
 }
 
 # Third block: Session data providing
