@@ -5,7 +5,7 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_LDAPCONNECTFAILED PE_PP_CHANGE_AFTER_RESET PE_PP_PASSWORD_EXPIRED);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 # Inheritance: UserDB::LDAP provides all needed ldap functions
 extends
@@ -38,12 +38,15 @@ sub authenticate {
         password => $req->data->{password} );
 
     # Remember password if password reset needed
-    $req->data->{oldpassword} = $self->{password}
-      if (
+    if (
         $res == PE_PP_CHANGE_AFTER_RESET
         or (    $res == PE_PP_PASSWORD_EXPIRED
             and $self->conf->{ldapAllowResetExpiredPassword} )
-      );
+      )
+    {
+        $req->data->{oldpassword} = $self->{password};
+        $req->data->{noerror}     = 1;
+    }
 
     return $res;
 
