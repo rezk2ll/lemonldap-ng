@@ -27,18 +27,19 @@ has rule => ( is => 'rw', default => sub { {} } );
 
 sub init {
     my ($self) = @_;
-    my $hd = $self->p->HANDLER;
 
-    $self->logger->debug( "CAS Rule -> " . $self->conf->{issuerDBCASRule} );
+    # Parse activation rule
+    my $hd = $self->p->HANDLER;
+    $self->logger->debug( "CAS rule -> " . $self->conf->{issuerDBCASRule} );
     my $rule
         = $hd->buildSub( $hd->substitute( $self->conf->{issuerDBCASRule} ) );
     unless ($rule) {
-        $self->error( "Bad CAS rule " . $hd->tsv->{jail}->error );
+        $self->error( "Bad CAS rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
     $self->{rule} = $rule;
 
-    # Launch parents initialization subroutines, then launch IdP en SP lists
+    # Launch parents initialization subroutines, then launch IdP and SP lists
     my $res = $self->Lemonldap::NG::Portal::Main::Issuer::init();
     return 0 unless ( $self->loadApp );
     $self->addUnauthRoute(
@@ -90,6 +91,7 @@ sub storeEnvAndCheckGateway {
 sub run {
     my ( $self, $req, $target ) = @_;
 
+    # Check activation rule
     unless ( $self->rule->( $req, $req->sessionInfo ) ) {
         $self->userLogger->error('CAS service not authorized');
         return PE_CAS_SERVICE_NOT_ALLOWED;
