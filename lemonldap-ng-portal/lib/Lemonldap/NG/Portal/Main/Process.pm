@@ -312,7 +312,7 @@ sub authenticate {
 
     # Ignore result, process will end at least with PE_BADCREDENTIALS
     my $tmp = $self->process($req);
-    $ret = $tmp if ( $tmp > 0 );
+    $ret = $tmp if ( $tmp == PE_WAIT );
 
     return $ret;
 }
