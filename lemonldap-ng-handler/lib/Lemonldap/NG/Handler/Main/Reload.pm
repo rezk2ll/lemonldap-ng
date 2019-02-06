@@ -72,6 +72,7 @@ sub checkConf {
                     $class->logger->error( "Underlying object can't load conf ("
                           . ref($obj)
                           . "->$sub)" );
+                    return 0;
                 }
             }
         }
