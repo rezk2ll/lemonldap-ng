@@ -311,7 +311,8 @@ sub authenticate {
     );
 
     # Ignore result, process will end at least with PE_BADCREDENTIALS
-    $self->process($req);
+    my $tmp = $self->process($req);
+    $ret = $tmp if ( $tmp > 0 );
 
     return $ret;
 }
