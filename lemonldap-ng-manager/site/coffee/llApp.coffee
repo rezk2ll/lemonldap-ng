@@ -139,7 +139,7 @@ llapp.directive 'script', ['$htmlParams', ($htmlParams) ->
 	restrict: 'E'
 	terminal: true
 	compile: (element, attr) ->
-		if t = attr.type.match /text\/(menu|parameters)/
+		if attr.type and t = attr.type.match /text\/(menu|parameters)/
 			try
 				return $htmlParams.set t[1], JSON.parse(element[0].text)
 			catch e
