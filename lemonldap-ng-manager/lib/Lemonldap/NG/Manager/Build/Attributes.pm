@@ -2062,7 +2062,7 @@ sub attributes {
                     unless ( $v->{$idpId}->{samlIDPMetaDataXML} =~
                         /entityID="(.+?)"/si )
                     {
-                        push @msg, "$idpId SAML metadata has ne EntityID";
+                        push @msg, "$idpId SAML metadata has no EntityID";
                         $res = 0;
                         next;
                     }

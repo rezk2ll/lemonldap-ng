@@ -2777,7 +2777,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                     unless ( $v->{$idpId}{'samlIDPMetaDataXML'} =~
                         /entityID="(.+?)"/is )
                     {
-                        push @msg, "$idpId SAML metadata has ne EntityID";
+                        push @msg, "$idpId SAML metadata has no EntityID";
                         $res = 0;
                         next;
                     }
