@@ -70,7 +70,7 @@ sub get {
           . $self->dbiTable
           . " WHERE done IS NULL AND uid=?"
           . ( $ref ? " AND ref=?" : '' )
-          . "ORDER BY date",
+          . " ORDER BY date",
         $uid,
         ( $ref ? $ref : () )
     ) or return ();
@@ -98,8 +98,9 @@ sub get {
 # keys date, uid and ref.
 sub getAll {
     my $self = shift;
-    $self->_execute(
-        "SELECT * FROM $self->{dbiTable} WHERE done IS NULL ORDER BY date");
+    $self->_execute( 'SELECT * FROM '
+          . $self->dbiTable
+          . ' WHERE done IS NULL ORDER BY date' );
     my $result;
     while ( my $h = $self->sth->fetchrow_hashref() ) {
         $result->{"$h->{date}#$h->{uid}#$h->{ref}"} = {
@@ -126,9 +127,10 @@ sub delete {
     my @ts = localtime();
     $ts[5] += 1900;
     $ts[4]++;
-    return $self->_execute( "UPDATE $self->{dbiTable} "
-          . "SET done='$ts[5]-$ts[4]-$ts[3] $ts[2]:$ts[1]' "
-          . "WHERE done IS NULL AND uid=? AND ref=? AND date=?",
+    return $self->_execute( 'UPDATE '
+          . $self->dbiTable
+          . " SET done='$ts[5]-$ts[4]-$ts[3] $ts[2]:$ts[1]' "
+          . 'WHERE done IS NULL AND uid=? AND ref=? AND date=?',
         $u, $r, $d );
 }
 
@@ -144,12 +146,17 @@ sub purge {
         $self->logger->warn("Bad reference $myref");
         return 0;
     }
+    unless ( $d =~ s/^(\d{4})(\d{2})(\d{2}).*$/$1-$2-$3/ ) {
+        $self->logger->warn("Bad date $d");
+        return 0;
+    }
 
     my $clause;
     $clause = "done IS NOT NULL AND" unless ($force);
 
-    return $self->_execute( "DELETE FROM $self->{dbiTable} "
-          . "WHERE $clause uid=? AND ref=? AND date=?",
+    return $self->_execute( 'DELETE FROM '
+          . $self->dbiTable
+          . " WHERE $clause uid=? AND ref=? AND date=?",
         $u, $r, $d );
 }
 
@@ -166,12 +173,13 @@ sub newNotif {
 
     my $res =
       $condition =~ /.+/
-      ? $self->_execute(
-        "INSERT INTO $self->{dbiTable} (date,uid,ref,cond,xml) "
-          . "VALUES(?,?,?,?,?)",
+      ? $self->_execute( 'INSERT INTO '
+          . $self->dbiTable
+          . ' (date,uid,ref,cond,xml) VALUES(?,?,?,?,?)',
         $date, $uid, $ref, $condition, $xml )
-      : $self->_execute(
-        "INSERT INTO $self->{dbiTable} (date,uid,ref,xml) " . "VALUES(?,?,?,?)",
+      : $self->_execute( 'INSERT INTO '
+          . $self->dbiTable
+          . ' (date,uid,ref,xml) VALUES(?,?,?,?)',
         $date, $uid, $ref, $xml );
     return $res;
 }
@@ -182,12 +190,14 @@ sub newNotif {
 # keys notified, uid and ref.
 sub getDone {
     my ($self) = @_;
-    $self->_execute(
-        "SELECT * FROM $self->{dbiTable} WHERE done IS NOT NULL ORDER BY done");
+    $self->_execute( 'SELECT * FROM '
+          . $self->dbiTable
+          . ' WHERE done IS NOT NULL ORDER BY done' );
     my $result;
     while ( my $h = $self->sth->fetchrow_hashref() ) {
         my @t = split( /\D+/, $h->{date} );
-        my $done = timelocal( $t[5], $t[4], $t[3], $t[2], $t[1], $t[0] );
+        my $done =
+          timelocal( $t[5] || 0, $t[4] || 0, $t[3] || 0, $t[2], $t[1], $t[0] );
         $result->{"$h->{date}#$h->{uid}#$h->{ref}"} =
           { notified => $done, uid => $h->{uid}, ref => $h->{ref}, };
     }
