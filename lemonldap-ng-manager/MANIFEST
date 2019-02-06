@@ -199,6 +199,7 @@ t/14-bad-changes-in-conf.t
 t/15-combination.t
 t/20-test-coverage.t
 t/40-sessions.t
+t/50-notifications-DBI.t
 t/50-notifications.t
 t/60-2ndfa.t
 t/80-attributes.t
@@ -211,5 +212,6 @@ t/jsonfiles/11-modified-with-confirmation.json
 t/jsonfiles/12-modified.json
 t/jsonfiles/14-bad.json
 t/jsonfiles/15-combination.json
+t/lemonldap-ng-dbi.ini
 t/lemonldap-ng.ini
 t/test-lib.pm
