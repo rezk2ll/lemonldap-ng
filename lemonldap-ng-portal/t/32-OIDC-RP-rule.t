@@ -137,7 +137,8 @@ sub op {
                 portal                          => 'http://auth.op.com',
                 authentication                  => 'Demo',
                 userDB                          => 'Same',
-                issuerDBOpenIDConnectActivation => "1",
+                issuerDBOpenIDConnectActivation => 1,
+                issuerDBOpenIDConnectRule       => '$uid eq "french"',
                 oidcRPMetaDataExportedVars      => {
                     rp => {
                         email       => "mail",

@@ -12,6 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_REDIRECT
   PE_OK
   PE_UNAUTHORIZEDPARTNER
+  PE_OIDC_SERVICE_NOT_ALLOWED
 );
 
 our $VERSION = '2.0.1';
@@ -28,6 +29,7 @@ sub beforeAuth { 'exportRequestParameters' }
 
 use constant sessionKind => 'OIDCI';
 
+has rule => ( is => 'rw', default => sub { {} } );
 has configStorage => (
     is      => 'ro',
     lazy    => 1,
@@ -35,7 +37,6 @@ has configStorage => (
         $_[0]->{p}->HANDLER->localConfig->{configStorage};
     }
 );
-
 has ssoMatchUrl => ( is => 'rw' );
 
 # OIDC has 7 endpoints managed here as PSGI endpoints or in run() [Main/Issuer.pm
@@ -55,6 +56,17 @@ has ssoMatchUrl => ( is => 'rw' );
 
 sub init {
     my ($self) = @_;
+
+    # Parse activation rule
+    my $hd = $self->p->HANDLER;
+    $self->logger->debug( "OIDC rule -> " . $self->conf->{issuerDBOpenIDConnectRule} );
+    my $rule
+        = $hd->buildSub( $hd->substitute( $self->conf->{issuerDBOpenIDConnectRule} ) );
+    unless ($rule) {
+        $self->error( "Bad OIDC rule -> " . $hd->tsv->{jail}->error );
+        return 0;
+    }
+    $self->{rule} = $rule;
 
     # Initialize RP list
     return 0
@@ -113,6 +125,13 @@ sub ssoMatch {
 # run() manages only "authorize" and "logout" endpoints.
 sub run {
     my ( $self, $req, $path ) = @_;
+
+    # Check activation rule
+    unless ( $self->rule->( $req, $req->sessionInfo ) ) {
+        $self->userLogger->error('OIDC service not authorized');
+        return PE_OIDC_SERVICE_NOT_ALLOWED;
+    }
+
     if ($path) {
 
         # Convert old format OIDC Consents
