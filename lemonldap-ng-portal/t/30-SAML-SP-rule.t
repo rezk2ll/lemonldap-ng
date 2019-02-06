@@ -122,6 +122,7 @@ sub issuer {
                 authentication         => 'Demo',
                 userDB                 => 'Same',
                 issuerDBSAMLActivation => 1,
+                issuerDBSAMLRule       => '$uid eq "french"',
                 samlSPMetaDataOptions  => {
                     'sp.com' => {
                         samlSPMetaDataOptionsEncryptionMode           => 'none',
