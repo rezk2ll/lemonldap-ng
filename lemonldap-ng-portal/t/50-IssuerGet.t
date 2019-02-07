@@ -8,9 +8,10 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel              => 'error',
+            logLevel              => 'debug',
             useSafeJail           => 1,
             issuerDBGetActivation => 1,
+            issuerDBGetRule       => '$uid eq "dwho"',
             issuerDBGetPath       => '^/test/',
             issuerDBGetParameters =>
               { 'test1.example.com' => { ID => '_session_id' } }
