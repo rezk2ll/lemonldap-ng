@@ -2815,8 +2815,7 @@ sub checkDestination {
 sub getSamlSession {
     my ( $self, $id, $info ) = @_;
 
-    my $samlSession = Lemonldap::NG::Common::Session->new(
-        {
+    my $samlSession = Lemonldap::NG::Common::Session->new( {
             storageModule        => $self->aModule,
             storageModuleOptions => $self->amOpts,
             cacheModule          => $self->conf->{localSessionStorage},

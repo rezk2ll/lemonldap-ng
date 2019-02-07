@@ -182,8 +182,7 @@ sub _reset {
     }
 
     # Search user in database
-    $req->steps(
-        [
+    $req->steps( [
             'getUser',                  'setSessionInfo',
             'setMacros',                'setGroups',
             'setPersistentSessionInfo', 'setLocalGroups'
@@ -548,8 +547,7 @@ sub display {
     }
 
     # Display form the first time
-    if (
-        (
+    if ( (
                $req->error == PE_MAILFORMEMPTY
             or $req->error == PE_MAILFIRSTACCESS
             or $req->error == PE_MAILNOTFOUND

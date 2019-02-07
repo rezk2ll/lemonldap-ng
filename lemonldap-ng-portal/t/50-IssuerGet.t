@@ -6,12 +6,12 @@ require 't/test-lib.pm';
 
 my $res;
 
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel              => 'error',
             useSafeJail           => 1,
             issuerDBGetActivation => 1,
+            issuerDBGetRule       => '$uid eq "dwho"',
             issuerDBGetPath       => '^/test/',
             issuerDBGetParameters =>
               { 'test1.example.com' => { ID => '_session_id' } }

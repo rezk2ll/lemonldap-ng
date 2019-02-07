@@ -775,8 +775,7 @@ sub extractFormInfo {
 
                 $self->logger->debug("SOAP response $slo_body");
 
-                $req->response(
-                    [
+                $req->response( [
                         200,
                         [
                             'Content-Type'   => 'application/xml',
@@ -785,8 +784,7 @@ sub extractFormInfo {
                         [$slo_body]
                     ]
                 );
-                $req->steps(
-                    [
+                $req->steps( [
                         @{ $self->p->beforeLogout },
                         sub {
                             my ($req) = @_;
@@ -845,8 +843,7 @@ sub extractFormInfo {
             return PE_SAML_ART_ERROR;
         }
 
-        $req->response(
-            [
+        $req->response( [
                 200,
                 [
                     'Content-Type'   => 'application/xml',

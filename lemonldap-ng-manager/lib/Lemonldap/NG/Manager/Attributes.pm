@@ -274,9 +274,7 @@ sub attributes {
         'authChoiceModules' => {
             'keyMsgFail' => '__badChoiceKey__',
             'keyTest'    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
-            'select'     => [
-                [
-                    {
+            'select'     => [ [ {
                         'k' => 'Apache',
                         'v' => 'Apache'
                     },
@@ -373,8 +371,7 @@ sub attributes {
                         'v' => 'customModule'
                     }
                 ],
-                [
-                    {
+                [ {
                         'k' => 'AD',
                         'v' => 'Active Directory'
                     },
@@ -439,8 +436,7 @@ sub attributes {
                         'v' => 'customModule'
                     }
                 ],
-                [
-                    {
+                [ {
                         'k' => 'AD',
                         'v' => 'Active Directory'
                     },
@@ -481,8 +477,7 @@ sub attributes {
         },
         'authentication' => {
             'default' => 'Demo',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'Apache',
                     'v' => 'Apache'
                 },
@@ -637,8 +632,7 @@ sub attributes {
         },
         'casAccessControlPolicy' => {
             'default' => 'none',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'none',
                     'v' => 'None'
                 },
@@ -782,8 +776,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'combModules' => {
             'keyTest' => qr/^\w+$/,
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'Apache',
                     'v' => 'Apache'
                 },
@@ -886,8 +879,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'confirmFormMethod' => {
             'default' => 'post',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'get',
                     'v' => 'GET'
                 },
@@ -1185,8 +1177,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'infoFormMethod' => {
             'default' => 'get',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'get',
                     'v' => 'GET'
                 },
@@ -1392,8 +1383,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'ldapSearchDeref' => {
             'default' => 'find',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'never',
                     'v' => 'never'
                 },
@@ -1750,8 +1740,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'oidcOPMetaDataOptionsDisplay' => {
             'default' => '',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => '',
                     'v' => ''
                 },
@@ -1805,8 +1794,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'oidcOPMetaDataOptionsTokenEndpointAuthMethod' => {
             'default' => 'client_secret_post',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'client_secret_post',
                     'v' => 'client_secret_post'
                 },
@@ -1872,8 +1860,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'oidcRPMetaDataOptionsIDTokenSignAlg' => {
             'default' => 'HS512',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'none',
                     'v' => 'None'
                 },
@@ -1910,8 +1897,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'oidcRPMetaDataOptionsLogoutType' => {
             'default' => 'front',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'front',
                     'v' => 'Front Channel'
                 },
@@ -2108,8 +2094,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'passwordDB' => {
             'default' => 'Demo',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'AD',
                     'v' => 'Active Directory'
                 },
@@ -2235,8 +2220,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'portalSkin' => {
             'default' => 'bootstrap',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'bootstrap',
                     'v' => 'Bootstrap'
                 }
@@ -2244,8 +2228,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'portalskin'
         },
         'portalSkinBackground' => {
-            'select' => [
-                {
+            'select' => [ {
                     'k' => '',
                     'v' => 'None'
                 },
@@ -2347,8 +2330,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'redirectFormMethod' => {
             'default' => 'get',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'get',
                     'v' => 'GET'
                 },
@@ -2364,8 +2346,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'registerDB' => {
             'default' => 'Null',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'AD',
                     'v' => 'Active Directory'
                 },
@@ -2596,8 +2577,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlIDPMetaDataOptionsEncryptionMode' => {
             'default' => 'none',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'none',
                     'v' => 'None'
                 },
@@ -2629,8 +2609,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlIDPMetaDataOptionsNameIDFormat' => {
             'default' => '',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => '',
                     'v' => ''
                 },
@@ -2679,8 +2658,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlIDPMetaDataOptionsRequestedAuthnContext' => {
             'default' => '',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => '',
                     'v' => ''
                 },
@@ -2717,8 +2695,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlIDPMetaDataOptionsSLOBinding' => {
             'default' => '',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => '',
                     'v' => ''
                 },
@@ -2739,8 +2716,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlIDPMetaDataOptionsSSOBinding' => {
             'default' => '',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => '',
                     'v' => ''
                 },
@@ -2898,8 +2874,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlServiceSignatureMethod' => {
             'default' => 'RSA_SHA1',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'RSA_SHA1',
                     'v' => 'RSA SHA1'
                 },
@@ -2944,8 +2919,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlSPMetaDataOptionsEncryptionMode' => {
             'default' => 'none',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'none',
                     'v' => 'None'
                 },
@@ -2966,8 +2940,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlSPMetaDataOptionsNameIDFormat' => {
             'default' => '',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => '',
                     'v' => ''
                 },
@@ -3100,8 +3073,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'securedCookie' => {
             'default' => 0,
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => '0',
                     'v' => 'unsecuredCookie'
                 },
@@ -3221,8 +3193,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'SMTPTLS' => {
             'default' => '',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => '',
                     'v' => 'none'
                 },
@@ -3400,8 +3371,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'userDB' => {
             'default' => 'Same',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'Same',
                     'v' => 'Same'
                 },
@@ -3483,8 +3453,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'vhostType' => {
             'default' => 'Main',
-            'select'  => [
-                {
+            'select'  => [ {
                     'k' => 'Main',
                     'v' => 'Main'
                 },

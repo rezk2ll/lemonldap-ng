@@ -233,8 +233,7 @@ sub _register {
     unless ( $req->data->{register_token} or $register_session ) {
 
         # Create mail token
-        $register_session = $self->mailott->createToken(
-            {
+        $register_session = $self->mailott->createToken( {
                 mail      => $req->data->{registerInfo}->{mail},
                 firstname => $req->data->{registerInfo}->{firstname},
                 lastname  => $req->data->{registerInfo}->{lastname},
@@ -430,8 +429,7 @@ sub display {
     );
 
     # Display form the first time
-    if (
-        (
+    if ( (
                $req->error == PE_REGISTERFORMEMPTY
             or $req->error == PE_REGISTERFIRSTACCESS
             or $req->error == PE_CAPTCHAERROR

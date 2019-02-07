@@ -33,8 +33,7 @@ SKIP: {
 "INSERT INTO users VALUES ('dwho','dwho','Doctor who','dwho\@badwolf.org')"
     );
 
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel                    => 'error',
                 useSafeJail                 => 1,

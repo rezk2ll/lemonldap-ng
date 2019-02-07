@@ -16,15 +16,15 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNAUTHORIZEDPARTNER
 );
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
 
-has rule => ( is => 'rw', default => sub { {} } );
-has ssoUrlRe => ( is => 'rw' );
+has rule           => ( is => 'rw', default => sub { {} } );
+has ssoUrlRe       => ( is => 'rw' );
 has ssoUrlArtifact => ( is => 'rw' );
-has ssoGetUrl => ( is => 'rw' );
+has ssoGetUrl      => ( is => 'rw' );
 
 use constant sessionKind => 'ISAML';
 use constant lsDump      => '_lassoSessionDumpI';
@@ -43,8 +43,8 @@ sub init {
     # Parse activation rule
     my $hd = $self->p->HANDLER;
     $self->logger->debug( "SAML rule -> " . $self->conf->{issuerDBSAMLRule} );
-    my $rule
-        = $hd->buildSub( $hd->substitute( $self->conf->{issuerDBSAMLRule} ) );
+    my $rule =
+      $hd->buildSub( $hd->substitute( $self->conf->{issuerDBSAMLRule} ) );
     unless ($rule) {
         $self->error( "Bad SAML rule -> " . $hd->tsv->{jail}->error );
         return 0;
@@ -198,7 +198,7 @@ sub run {
         $self->userLogger->error('SAML service not authorized');
         return PE_SAML_SERVICE_NOT_ALLOWED;
     }
-    
+
     # Session ID
     my $session_id = $req->{sessionInfo}->{_session_id} || $req->{id};
 
@@ -913,8 +913,7 @@ sub run {
             }
 
             # HTTP-POST
-            if (
-                (
+            if ( (
                        !$artifact
                     and $protocolProfile eq
                     Lasso::Constants::LOGIN_PROTOCOL_PROFILE_BRWS_POST

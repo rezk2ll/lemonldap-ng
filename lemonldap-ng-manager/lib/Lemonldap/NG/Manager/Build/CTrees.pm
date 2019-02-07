@@ -103,8 +103,7 @@ sub cTrees {
             {
                 title => "samlSPMetaDataOptions",
                 help  => 'idpsaml.html#options',
-                nodes => [
-                    {
+                nodes => [ {
                         title => "samlSPMetaDataOptionsAuthnResponse",
                         form  => 'simpleInputContainer',
                         nodes => [
@@ -144,8 +143,7 @@ sub cTrees {
             'oidcOPMetaDataExportedVars',
             {
                 title => 'oidcOPMetaDataOptions',
-                nodes => [
-                    {
+                nodes => [ {
                         title => 'oidcOPMetaDataOptionsConfiguration',
                         form  => 'simpleInputContainer',
                         nodes => [
@@ -187,8 +185,7 @@ sub cTrees {
             'oidcRPMetaDataExportedVars',
             {
                 title => 'oidcRPMetaDataOptions',
-                nodes => [
-                    {
+                nodes => [ {
                         title => 'oidcRPMetaDataOptionsAuthentication',
                         form  => 'simpleInputContainer',
                         nodes => [
@@ -225,8 +222,7 @@ sub cTrees {
             },
             'oidcRPMetaDataOptionsExtraClaims',
         ],
-        casSrvMetaDataNode => [
-            {
+        casSrvMetaDataNode => [ {
                 title => 'casSrvMetaDataOptions',
                 form  => 'simpleInputContainer',
                 nodes => [
@@ -240,8 +236,7 @@ sub cTrees {
             'casSrvMetaDataExportedVars',
             'casSrvMetaDataOptionsProxiedServices',
         ],
-        casAppMetaDataNode => [
-            {
+        casAppMetaDataNode => [ {
                 title => 'casAppMetaDataOptions',
                 form  => 'simpleInputContainer',
                 nodes => [

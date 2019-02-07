@@ -8,8 +8,7 @@ my $maintests = 10;
 
 use_ok('Lemonldap::NG::Common::FormEncode');
 
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel             => 'error',
             rest2fActivation     => 1,

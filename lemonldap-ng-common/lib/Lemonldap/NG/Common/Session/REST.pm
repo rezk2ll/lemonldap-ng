@@ -239,8 +239,7 @@ sub session {
 
 sub getApacheSession {
     my ( $self, $mod, $id, $info, $force ) = @_;
-    my $apacheSession = Lemonldap::NG::Common::Session->new(
-        {
+    my $apacheSession = Lemonldap::NG::Common::Session->new( {
             storageModule        => $mod->{module},
             storageModuleOptions => $mod->{options},
             cacheModule =>

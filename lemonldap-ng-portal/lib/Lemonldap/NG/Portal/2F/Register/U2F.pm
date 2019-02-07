@@ -186,8 +186,7 @@ sub run {
         }
 
         # Serialize data
-        $data = to_json(
-            {
+        $data = to_json( {
                 challenge      => $data->{challenge},
                 appId          => $data->{appId},
                 registeredKeys => \@rk

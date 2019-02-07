@@ -178,8 +178,7 @@ sub configReload {
 sub jailInit {
     my ( $class, $conf ) = @_;
 
-    $class->tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new(
-        {
+    $class->tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new( {
             useSafeJail     => $conf->{useSafeJail},
             customFunctions => $conf->{customFunctions},
         }
@@ -193,8 +192,7 @@ sub jailInit {
 sub defaultValuesInit {
     my ( $class, $conf ) = @_;
 
-    $class->tsv->{$_} = $conf->{$_} foreach (
-        qw(
+    $class->tsv->{$_} = $conf->{$_} foreach ( qw(
         cookieExpiration        cookieName         customFunctions httpOnly
         securedCookie           timeout            timeoutActivity
         timeoutActivityInterval useRedirectOnError useRedirectOnForbidden

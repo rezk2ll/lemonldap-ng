@@ -499,8 +499,7 @@ sub tests {
             return 1 unless ( defined $conf->{totp2fDigits} );
             return (
                 1,
-                (
-                    (
+                ( (
                              $conf->{totp2fDigits} == 6
                           or $conf->{totp2fDigits} == 8
                     )

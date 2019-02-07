@@ -40,10 +40,14 @@ SKIP: {
         'Unauth SP request'
     );
     expectOK($res);
-    ok( $res->[2]->[0] =~ m%<form id="lformDemo" action="#" method="post" class="login Demo">%s,
-        'Found Demo choice' ) or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~
+          m%<form id="lformDemo" action="#" method="post" class="login Demo">%s,
+        'Found Demo choice'
+    ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m#<form[^>]+class="login SAML".*?</form>#s,
-        'Found SAML choice' ) or print STDERR Dumper( $res->[2]->[0] );
+        'Found SAML choice' )
+      or print STDERR Dumper( $res->[2]->[0] );
     $res->[2]->[0] = $&;
     my ( $host, $url, $query ) = expectForm( $res, undef, undef, 'test' );
 
@@ -60,14 +64,13 @@ SKIP: {
       or explain( $res->[1],
         'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
     ( $host, $url, $query ) = expectForm( $res, undef, undef, 'confirm', );
-    ok( $res->[2]->[0]
-            =~ m%<img src="http://auth.sp.com/static/common/icons/sfa_manager.png" class="mr-2" alt="IDP2" title="IDP2" />%,
+    ok(
+        $res->[2]->[0] =~
+m%<img src="http://auth.sp.com/static/common/icons/sfa_manager.png" class="mr-2" alt="IDP2" title="IDP2" />%,
         'Found IDP icon and title tag'
     ) or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0]
-            =~ /idp_Test_DisplayName/,
-        'Found IDP display name'
-    ) or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ /idp_Test_DisplayName/, 'Found IDP display name' )
+      or print STDERR Dumper( $res->[2]->[0] );
 
     my $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
@@ -221,8 +224,7 @@ sub switch {
 }
 
 sub sp {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 domain         => 'sp.com',
                 portal         => 'http://auth.sp.com',
@@ -257,8 +259,8 @@ sub sp {
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
                         samlIDPMetaDataOptionsForceUTF8                => 1,
-                        samlIDPMetaDataOptionsDisplayName              => 'idp_Test_DisplayName',
-
+                        samlIDPMetaDataOptionsDisplayName =>
+                          'idp_Test_DisplayName',
 
                     },
                     idp2 => {
@@ -270,7 +272,7 @@ sub sp {
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
                         samlIDPMetaDataOptionsForceUTF8                => 1,
-                        samlIDPMetaDataOptionsIcon                     => 'icons/sfa_manager.png',
+                        samlIDPMetaDataOptionsIcon => 'icons/sfa_manager.png',
                     },
                 },
                 samlIDPMetaDataExportedAttributes => {
@@ -379,8 +381,7 @@ XVhuG8OrWQDoS5gYHSjdw1CTJyixeJwyoqA9RGYguG5nh9zndi3LWAh7Z0lx+tIz
 }
 
 sub issuer {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel               => $debug,
                 domain                 => 'idp.com',

@@ -89,8 +89,7 @@ sub extractFormInfo {
     chomp $key;
     $self->logger->debug("GPG full sign key: $key");
     my $in;
-    IPC::Run::run(
-        [
+    IPC::Run::run( [
             'gpg',     '--homedir',  $self->tmp, '--keyring',
             $self->db, '--list-key', $key
         ],

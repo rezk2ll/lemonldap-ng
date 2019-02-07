@@ -14,8 +14,7 @@ SKIP: {
     if ($@) {
         skip 'GSSAPI not found', $maintests;
     }
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel       => $debug,
                 useSafeJail    => 1,
@@ -32,8 +31,7 @@ SKIP: {
         'Get negotiate header' )
       or explain( $res->[1], 'WWW-Authenticate => Negotiate' );
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-    $client = LLNG::Manager::Test->new(
-        {
+    $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel       => $debug,
                 useSafeJail    => 1,

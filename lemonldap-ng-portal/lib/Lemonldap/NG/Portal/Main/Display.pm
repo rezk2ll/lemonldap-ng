@@ -601,8 +601,7 @@ sub mkOidcConsent {
         'oidcConsents',
         params => {
             partners => [
-                map {
-                    {
+                map { {
                         name        => $_,
                         epoch       => $consents->{$_}->{epoch},
                         scope       => $consents->{$_}->{scope},

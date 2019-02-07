@@ -13,8 +13,7 @@ has app => ( is => 'ro', isa => 'CodeRef' );
 sub _get {
     my ( $self, $path, $query ) = @_;
     $query //= '';
-    return $self->app->(
-        {
+    return $self->app->( {
             'HTTP_ACCEPT'          => 'application/json, text/plain, */*',
             'SCRIPT_NAME'          => '',
             'HTTP_ACCEPT_ENCODING' => 'gzip, deflate',
@@ -39,8 +38,7 @@ sub _post {
     my ( $self, $path, $query, $body, $type, $len ) = @_;
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
-    return $self->app->(
-        {
+    return $self->app->( {
             'HTTP_ACCEPT'          => 'application/json, text/plain, */*',
             'SCRIPT_NAME'          => '',
             'HTTP_ACCEPT_ENCODING' => 'gzip, deflate',
@@ -69,8 +67,7 @@ sub _put {
     my ( $self, $path, $query, $body, $type, $len ) = @_;
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
-    return $self->app->(
-        {
+    return $self->app->( {
             'HTTP_ACCEPT'          => 'application/json, text/plain, */*',
             'SCRIPT_NAME'          => '',
             'HTTP_ACCEPT_ENCODING' => 'gzip, deflate',
@@ -97,8 +94,7 @@ sub _put {
 
 sub _del {
     my ( $self, $path, $query ) = @_;
-    return $self->app->(
-        {
+    return $self->app->( {
             'HTTP_ACCEPT'          => 'application/json, text/plain, */*',
             'SCRIPT_NAME'          => '',
             'HTTP_ACCEPT_ENCODING' => 'gzip, deflate',

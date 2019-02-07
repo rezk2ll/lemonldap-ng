@@ -5,18 +5,18 @@ use Mouse;
 use URI;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
-    PE_CAS_SERVICE_NOT_ALLOWED
-    PE_CONFIRM
-    PE_ERROR
-    PE_LOGOUT_OK
-    PE_OK
-    PE_SENDRESPONSE
+  PE_CAS_SERVICE_NOT_ALLOWED
+  PE_CONFIRM
+  PE_ERROR
+  PE_LOGOUT_OK
+  PE_OK
+  PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
-    'Lemonldap::NG::Portal::Lib::CAS';
+  'Lemonldap::NG::Portal::Lib::CAS';
 
 # INITIALIZATION
 
@@ -31,8 +31,8 @@ sub init {
     # Parse activation rule
     my $hd = $self->p->HANDLER;
     $self->logger->debug( "CAS rule -> " . $self->conf->{issuerDBCASRule} );
-    my $rule
-        = $hd->buildSub( $hd->substitute( $self->conf->{issuerDBCASRule} ) );
+    my $rule =
+      $hd->buildSub( $hd->substitute( $self->conf->{issuerDBCASRule} ) );
     unless ($rule) {
         $self->error( "Bad CAS rule -> " . $hd->tsv->{jail}->error );
         return 0;
@@ -63,9 +63,9 @@ sub init {
 sub storeEnvAndCheckGateway {
     my ( $self, $req ) = @_;
     my $service = $self->p->getHiddenFormValue( $req, 'service' )
-        || $req->param('service');
+      || $req->param('service');
     my $gateway = $self->p->getHiddenFormValue( $req, 'gateway' )
-        || $req->param('gateway');
+      || $req->param('gateway');
 
     if ( $gateway and $gateway eq "true" ) {
         $self->logger->debug(
@@ -123,18 +123,18 @@ sub run {
 
         # GET parameters
         my $service = $self->p->getHiddenFormValue( $req, 'service' )
-            || $req->param('service');
+          || $req->param('service');
         my $renew = $self->p->getHiddenFormValue( $req, 'renew' )
-            || $req->param('renew');
+          || $req->param('renew');
         my $gateway = $self->p->getHiddenFormValue( $req, 'gateway' )
-            || $req->param('gateway');
+          || $req->param('gateway');
         my $casServiceTicket;
 
         # Renew
         if (    $renew
             and $renew eq 'true'
-            and time - $req->sessionInfo->{_utime}
-            > $self->conf->{portalForceAuthnInterval} )
+            and time - $req->sessionInfo->{_utime} >
+            $self->conf->{portalForceAuthnInterval} )
         {
 
             # Authentication must be replayed
@@ -170,8 +170,7 @@ sub run {
             }
             if ( my $rule = $self->spRules->{$app} ) {
                 if ( $rule->( $req, $req->sessionInfo ) ) {
-                    $self->logger->debug(
-                        "CAS service $service access allowed");
+                    $self->logger->debug("CAS service $service access allowed");
                 }
 
                 else {
@@ -180,15 +179,14 @@ sub run {
 
                     if ( $casAccessControlPolicy =~ /^(error)$/i ) {
                         $self->logger->debug(
-                            "Return error instead of redirecting user on CAS service"
+"Return error instead of redirecting user on CAS service"
                         );
                         return PE_CAS_SERVICE_NOT_ALLOWED;
                     }
 
                     else {
                         $self->logger->debug(
-                            "Redirect user on CAS service with a fake ticket"
-                        );
+                            "Redirect user on CAS service with a fake ticket");
                         $casServiceTicket = "ST-F4K3T1CK3T";
                     }
                 }
@@ -200,10 +198,10 @@ sub run {
             # Check last authentication time to decide if
             # the authentication is recent or not
             my $casRenewFlag = 0;
-            my $last_authn_utime
-                = $req->{sessionInfo}->{_lastAuthnUTime} || 0;
-            if (time() - $last_authn_utime
-                < $self->conf->{portalForceAuthnInterval} )
+            my $last_authn_utime = $req->{sessionInfo}->{_lastAuthnUTime} || 0;
+            if (
+                time() - $last_authn_utime <
+                $self->conf->{portalForceAuthnInterval} )
             {
                 $self->logger->debug(
                     "Authentication is recent, will set CAS renew flag to true"
@@ -240,7 +238,7 @@ sub run {
         # Redirect to service
         my $service_url = $service;
         $service_url .= ( $service =~ /\?/ ? '&' : '?' )
-            . build_urlencoded( ticket => $casServiceTicket );
+          . build_urlencoded( ticket => $casServiceTicket );
 
         $self->logger->debug("Redirect user to $service_url");
 
@@ -326,8 +324,7 @@ sub run {
 
         # This URL must not be called by authenticated users
         $self->userLogger->info(
-            "CAS SERVICE VALIDATE URL called by authenticated user, ignore it"
-        );
+            "CAS SERVICE VALIDATE URL called by authenticated user, ignore it");
 
         return PE_OK;
     }
@@ -335,8 +332,7 @@ sub run {
     # 5. PROXY VALIDATE [CAS 2.0]
     if ( $target eq $cas_proxyValidate || $target eq $cas_p3_proxyValidate ) {
 
-        $self->logger->debug(
-            "URL $url detected as an CAS PROXY VALIDATE URL");
+        $self->logger->debug("URL $url detected as an CAS PROXY VALIDATE URL");
 
         # This URL must not be called by authenticated users
         $self->userLogger->info(
@@ -418,21 +414,20 @@ sub validate {
             or $service2_uri->rel($service1_uri) eq "./" )
         {
             $self->logger->notice(
-                "Submitted service $service1_uri does not exactly match initial service "
-                    . $service2_uri
-                    . ' but difference is tolerated.' );
+"Submitted service $service1_uri does not exactly match initial service "
+                  . $service2_uri
+                  . ' but difference is tolerated.' );
         }
         else {
             $self->logger->error(
                 "Submitted service $service does not match initial service "
-                    . $casServiceSession->data->{service} );
+                  . $casServiceSession->data->{service} );
             $self->deleteCasSession($casServiceSession);
             return $self->returnCasValidateError();
         }
     }
     else {
-        $self->logger->debug(
-            "Submitted service $service math initial servce");
+        $self->logger->debug("Submitted service $service math initial servce");
     }
 
     # Check renew
@@ -443,7 +438,7 @@ sub validate {
 
         unless ( $casServiceSession->data->{renew} ) {
             $self->logger->error(
-                "Authentication renew requested, but not done in former authentication process"
+"Authentication renew requested, but not done in former authentication process"
             );
             $self->deleteCasSession($casServiceSession);
             return $self->returnCasValidateError();
@@ -451,20 +446,20 @@ sub validate {
     }
 
     # Open local session
-    my $localSession
-        = $self->p->getApacheSession( $casServiceSession->data->{_cas_id} );
+    my $localSession =
+      $self->p->getApacheSession( $casServiceSession->data->{_cas_id} );
 
     unless ($localSession) {
         $self->logger->warn( "Local session "
-                . $casServiceSession->data->{_cas_id}
-                . " notfound" );
+              . $casServiceSession->data->{_cas_id}
+              . " notfound" );
         $self->deleteCasSession($casServiceSession);
         return $self->returnCasValidateError();
     }
 
     # Get username
     my $username = $localSession->data->{ $self->conf->{casAttr}
-            || $self->conf->{whatToTrace} };
+          || $self->conf->{whatToTrace} };
 
     $self->logger->debug("Get username $username");
 
@@ -573,8 +568,8 @@ sub _validate2 {
     }
 
     $self->logger->debug( "Get "
-            . lc($urlType)
-            . " validate request with ticket $ticket for service $service" );
+          . lc($urlType)
+          . " validate request with ticket $ticket for service $service" );
 
     # Get CAS session corresponding to ticket
     if ( $urlType eq 'SERVICE' and !( $ticket =~ s/^ST-// ) ) {
@@ -611,14 +606,14 @@ sub _validate2 {
             or $service2_uri->rel($service1_uri) eq "./" )
         {
             $self->logger->notice(
-                "Submitted service $service1_uri does not exactly match initial service "
-                    . $service2_uri
-                    . ' but difference is tolerated.' );
+"Submitted service $service1_uri does not exactly match initial service "
+                  . $service2_uri
+                  . ' but difference is tolerated.' );
         }
         else {
             $self->userLogger->error(
                 "Submitted service $service does not match initial service "
-                    . $casServiceSession->data->{service} );
+                  . $casServiceSession->data->{service} );
             $self->deleteCasSession($casServiceSession);
             return $self->returnCasServiceValidateError( $req,
                 'INVALID_SERVICE',
@@ -638,7 +633,7 @@ sub _validate2 {
 
         unless ( $casServiceSession->data->{renew} ) {
             $self->logger->error(
-                "Authentication renew requested, but not done in former authentication process"
+"Authentication renew requested, but not done in former authentication process"
             );
             $self->deleteCasSession($casServiceSession);
             return $self->returnCasValidateError();
@@ -677,7 +672,7 @@ sub _validate2 {
         if ($casProxyGrantingSession) {
 
             my $casProxyGrantingSessionID = $casProxyGrantingSession->id;
-            my $casProxyGrantingTicket = "PGT-" . $casProxyGrantingSessionID;
+            my $casProxyGrantingTicket    = "PGT-" . $casProxyGrantingSessionID;
 
             $self->logger->debug(
                 "CAS proxy granting session $casProxyGrantingSessionID created"
@@ -691,15 +686,16 @@ sub _validate2 {
                 $casProxyGrantingTicketIOU = "PGTIOU-" . $tmpCasSession->id;
                 $self->deleteCasSession($tmpCasSession);
                 $self->logger->debug(
-                    "Generate proxy granting ticket IOU $casProxyGrantingTicketIOU"
+"Generate proxy granting ticket IOU $casProxyGrantingTicketIOU"
                 );
 
                 # Request pgtUrl
-                if ($self->callPgtUrl(
+                if (
+                    $self->callPgtUrl(
                         $pgtUrl, $casProxyGrantingTicketIOU,
                         $casProxyGrantingTicket
                     )
-                    )
+                  )
                 {
                     $self->logger->debug(
                         "Proxy granting URL $pgtUrl called with success");
@@ -719,13 +715,13 @@ sub _validate2 {
     }
 
     # Open local session
-    my $localSession
-        = $self->p->getApacheSession( $casServiceSession->data->{_cas_id} );
+    my $localSession =
+      $self->p->getApacheSession( $casServiceSession->data->{_cas_id} );
 
     unless ($localSession) {
         $self->userLogger->error( "Local session "
-                . $casServiceSession->data->{_cas_id}
-                . " notfound" );
+              . $casServiceSession->data->{_cas_id}
+              . " notfound" );
         $self->deleteCasSession($casServiceSession);
         return $self->returnCasServiceValidateError( $req, 'INTERNAL_ERROR',
             'No session associated to ticket' );
@@ -733,16 +729,16 @@ sub _validate2 {
 
     # Get username
     my $username = $localSession->data->{ $self->conf->{casAttr}
-            || $self->conf->{whatToTrace} };
+          || $self->conf->{whatToTrace} };
 
     $self->logger->debug("Get username $username");
 
     # Get attributes [CAS 3.0]
     my $attributes = {};
-    my $ev
-        = ( $app and $self->conf->{casAppMetaDataExportedVars}->{$app} )
-        ? $self->conf->{casAppMetaDataExportedVars}->{$app}
-        : {};
+    my $ev =
+      ( $app and $self->conf->{casAppMetaDataExportedVars}->{$app} )
+      ? $self->conf->{casAppMetaDataExportedVars}->{$app}
+      : {};
     unless (%$ev) {
         $ev = $self->conf->{casAttributes} || {};
     }
@@ -750,7 +746,7 @@ sub _validate2 {
     foreach my $casAttribute ( keys %$ev ) {
         my $localSessionValue = $localSession->data->{ $ev->{$casAttribute} };
         $attributes->{$casAttribute} = $localSessionValue
-            if defined $localSessionValue;
+          if defined $localSessionValue;
     }
 
     # Return success message
