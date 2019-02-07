@@ -6,7 +6,7 @@ use URI::Escape;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_BADURL PE_GET_SERVICE_NOT_ALLOWED);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer';
 
