@@ -1098,7 +1098,7 @@ test-diff:
 	done
 
 tidy: clean
-	find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print -exec perltidy -b {} \;
+	find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print -exec perltidy -se -b {} \;
 	find lemon*/ -name '*.bak' -delete
 	$(MAKE) json
 

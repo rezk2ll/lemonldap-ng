@@ -1,0 +1,18 @@
+# -*- conf -*-
+#
+# Default options for perltidy for proper Perl code reformatting.
+#
+# This file is based on the one from the rra-c-util package,
+# which can be found at <https://www.eyrie.org/~eagle/software/rra-c-util/>.
+
+--nobreak-before-all-operators
+--blanks-before-comments
+--nocuddled-else
+--maximum-line-length=79
+--paren-tightness=1
+--square-bracket-tightness=1
+--space-for-semicolon
+--noopening-brace-on-new-line
+--stack-opening-tokens
+--nostack-closing-tokens
+--format-skipping
