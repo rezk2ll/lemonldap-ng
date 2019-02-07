@@ -446,8 +446,7 @@ sub retrieveSession {
 
     # 2. Get the session from cache or backend
     my $session = $req->data->{session} = (
-        Lemonldap::NG::Common::Session->new(
-            {
+        Lemonldap::NG::Common::Session->new( {
                 storageModule        => $class->tsv->{sessionStorageModule},
                 storageModuleOptions => $class->tsv->{sessionStorageOptions},
                 cacheModule          => $class->tsv->{sessionCacheModule},

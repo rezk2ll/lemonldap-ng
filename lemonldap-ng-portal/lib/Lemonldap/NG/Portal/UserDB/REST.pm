@@ -31,8 +31,7 @@ sub getUser {
     my ( $self, $req, %args ) = @_;
     my $res;
     $res = eval {
-        $self->restCall(
-            (
+        $self->restCall( (
                   $args{useMail}
                 ? $self->conf->{restMailDBUrl} || $self->conf->{restUserDBUrl}
                 : $self->conf->{restUserDBUrl}

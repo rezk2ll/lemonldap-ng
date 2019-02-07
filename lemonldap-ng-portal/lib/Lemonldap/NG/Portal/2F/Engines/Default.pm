@@ -167,8 +167,7 @@ sub run {
               $self->ott->createToken( $req->sessionInfo );
             $self->logger->debug("Just one 2F is enabled");
             $self->logger->debug(" -> Redirect to 2fregisters/");
-            $req->response(
-                [
+            $req->response( [
                     302,
                     [ Location => $self->conf->{portal} . '2fregisters/' ], []
                 ]

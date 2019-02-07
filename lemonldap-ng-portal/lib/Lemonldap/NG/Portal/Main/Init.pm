@@ -88,8 +88,7 @@ has csp => ( is => 'rw' );
 sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
-    $self->localConfig(
-        {
+    $self->localConfig( {
             %{ Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
                   ->getLocalConf('portal')
             },

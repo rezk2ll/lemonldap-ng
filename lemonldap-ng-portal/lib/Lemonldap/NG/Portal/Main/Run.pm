@@ -150,8 +150,7 @@ sub refresh {
     foreach ( keys %data ) {
         delete $data{$_} unless ( /^_/ or /^(?:startTime)$/ );
     }
-    $req->steps(
-        [
+    $req->steps( [
             'getUser',
             @{ $self->betweenAuthAndData },
             'setAuthSessionInfo',
@@ -327,8 +326,7 @@ sub getApacheSession {
         $self->logger->debug("Try to get a new $args{kind} session");
     }
 
-    my $as = Lemonldap::NG::Common::Session->new(
-        {
+    my $as = Lemonldap::NG::Common::Session->new( {
             storageModule        => $self->conf->{globalStorage},
             storageModuleOptions => $self->conf->{globalStorageOptions},
             cacheModule          => $self->conf->{localSessionStorage},
@@ -395,8 +393,7 @@ sub getPersistentSession {
 
     $info->{_session_uid} = $uid;
 
-    my $ps = Lemonldap::NG::Common::Session->new(
-        {
+    my $ps = Lemonldap::NG::Common::Session->new( {
             storageModule        => $self->conf->{persistentStorage},
             storageModuleOptions => $self->conf->{persistentStorageOptions},
             id                   => $pid,

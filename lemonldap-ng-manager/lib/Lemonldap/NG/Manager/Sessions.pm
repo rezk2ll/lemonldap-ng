@@ -236,8 +236,7 @@ sub sessions {
                 value    => $uid,
                 count    => scalar( @{ $r->{$uid} } ),
                 sessions => [
-                    map {
-                        {
+                    map { {
                             session => $_->{_sessionId},
                             date    => $_->{_utime}
                         }

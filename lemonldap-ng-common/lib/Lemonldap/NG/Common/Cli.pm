@@ -9,9 +9,7 @@ our $VERSION = '2.0.0';
 has confAccess => (
     is      => 'rw',
     builder => sub {
-        my $res = Lemonldap::NG::Common::Conf->new(
-            {
-                (
+        my $res = Lemonldap::NG::Common::Conf->new( { (
                     ref $_[0] && $_[0]->{iniFile}
                     ? ( confFile => $_[0]->{iniFile} )
                     : ()

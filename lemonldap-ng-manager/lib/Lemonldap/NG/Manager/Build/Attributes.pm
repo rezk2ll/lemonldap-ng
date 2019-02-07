@@ -2944,8 +2944,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             keyTest    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
             keyMsgFail => '__badChoiceKey__',
             test       => sub { 1 },
-            select     => [
-                [
+            select     => [ [
                     { k => 'Apache', v => 'Apache' },
                     { k => 'AD',     v => 'Active Directory' },
                     {

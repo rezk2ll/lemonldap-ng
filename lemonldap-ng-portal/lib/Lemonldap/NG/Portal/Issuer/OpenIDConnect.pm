@@ -59,9 +59,11 @@ sub init {
 
     # Parse activation rule
     my $hd = $self->p->HANDLER;
-    $self->logger->debug( "OIDC rule -> " . $self->conf->{issuerDBOpenIDConnectRule} );
-    my $rule
-        = $hd->buildSub( $hd->substitute( $self->conf->{issuerDBOpenIDConnectRule} ) );
+    $self->logger->debug(
+        "OIDC rule -> " . $self->conf->{issuerDBOpenIDConnectRule} );
+    my $rule =
+      $hd->buildSub(
+        $hd->substitute( $self->conf->{issuerDBOpenIDConnectRule} ) );
     unless ($rule) {
         $self->error( "Bad OIDC rule -> " . $hd->tsv->{jail}->error );
         return 0;
@@ -865,8 +867,7 @@ sub run {
             if ( $req->param('confirm') ) {
                 my $err;
                 if ( $req->param('confirm') == 1 ) {
-                    $req->steps(
-                        [
+                    $req->steps( [
                             @{ $self->p->beforeLogout }, 'authLogout',
                             'deleteSession'
                         ]

@@ -302,8 +302,7 @@ sub authenticate {
     }
 
     # Store failed login into history
-    $req->steps(
-        [
+    $req->steps( [
             'setSessionInfo',           'setMacros',
             'setPersistentSessionInfo', 'storeHistory',
             @{ $self->afterData }, sub { PE_BADCREDENTIALS }

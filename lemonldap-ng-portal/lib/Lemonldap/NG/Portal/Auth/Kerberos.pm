@@ -60,8 +60,7 @@ sub extractFormInfo {
 
             # Case 1.1: Ajax request
             if ( $req->wantJSON ) {
-                $req->response(
-                    [
+                $req->response( [
                         401,
                         [
                             'WWW-Authenticate' => 'Negotiate',

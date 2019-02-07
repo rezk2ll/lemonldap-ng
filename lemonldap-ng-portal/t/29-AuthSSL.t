@@ -5,8 +5,7 @@ require 't/test-lib.pm';
 
 my $res;
 
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel       => 'error',
             useSafeJail    => 1,
@@ -41,8 +40,7 @@ expectCookie($res);
 count(1);
 
 &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-$client = LLNG::Manager::Test->new(
-    {
+$client = LLNG::Manager::Test->new( {
         ini => {
             logLevel       => 'error',
             useSafeJail    => 1,

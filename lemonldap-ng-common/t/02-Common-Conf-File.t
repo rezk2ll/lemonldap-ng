@@ -17,8 +17,7 @@ BEGIN { use_ok('Lemonldap::NG::Common::Conf') }
 my $h;
 
 ok(
-    $h = new Lemonldap::NG::Common::Conf(
-        {
+    $h = new Lemonldap::NG::Common::Conf( {
             type    => 'File',
             dirName => "t/",
         }

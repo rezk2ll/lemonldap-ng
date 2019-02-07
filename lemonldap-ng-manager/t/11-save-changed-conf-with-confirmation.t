@@ -129,8 +129,7 @@ done_testing( count() );
 `rm -rf t/sessions`;
 
 sub changes {
-    return [
-        {
+    return [ {
             'key' => 'portal',
             'new' => 'http://auth2.example.com/',
             'old' => 'http://auth.example.com/'

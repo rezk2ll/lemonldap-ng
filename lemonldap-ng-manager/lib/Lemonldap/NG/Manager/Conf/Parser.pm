@@ -1070,8 +1070,7 @@ sub _unitTest {
                 my $msg    = $attr->{msgFail} // $type->{msgFail};
                 $res = 0
                   unless (
-                    $self->_execTest(
-                        {
+                    $self->_execTest( {
                             keyTest    => $attr->{keyTest} // $type->{keyTest},
                             keyMsgFail => $attr->{keyMsgFail}
                               // $type->{keyMsgFail},

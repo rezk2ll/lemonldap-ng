@@ -24,11 +24,9 @@ our $VERSION = '2.0.2';
 #  * confirmFormMethod
 #  * redirectFormMethod
 sub tree {
-    return [
-        {
+    return [ {
             title => 'generalParameters',
-            nodes => [
-                {
+            nodes => [ {
                     title => 'portalParams',
                     help  => 'portal.html',
                     nodes => [
@@ -36,8 +34,7 @@ sub tree {
                         {
                             title => 'portalMenu',
                             help  => 'portalmenu.html',
-                            nodes => [
-                                {
+                            nodes => [ {
                                     title => 'portalModules',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -119,8 +116,7 @@ sub tree {
                     nodes => [
                         'authentication', 'userDB', 'passwordDB', 'registerDB'
                     ],
-                    nodes_cond => [
-                        {
+                    nodes_cond => [ {
                             title => 'adParams',
                             help  => 'authad.html',
                             form  => 'simpleInputContainer',
@@ -152,8 +148,7 @@ sub tree {
                                 {
                                     title => 'dbiConnection',
                                     help  => 'authdbi.html#connection',
-                                    nodes => [
-                                        {
+                                    nodes => [ {
                                             title => 'dbiConnectionAuth',
                                             form  => 'simpleInputContainer',
                                             nodes => [
@@ -427,8 +422,7 @@ sub tree {
                 {
                     title => 'issuerParams',
                     help  => 'start.html#identity_provider',
-                    nodes => [
-                        {
+                    nodes => [ {
                             title => 'issuerDBSAML',
                             help  => 'idpsaml.html',
                             form  => 'simpleInputContainer',
@@ -601,8 +595,7 @@ sub tree {
                         {
                             title => 'passwordManagement',
                             help  => 'resetpassword.html',
-                            nodes => [
-                                {
+                            nodes => [ {
                                     title => 'mailContent',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -649,8 +642,7 @@ sub tree {
                 {
                     title => 'secondFactors',
                     help  => 'secondfactor.html',
-                    nodes => [
-                        {
+                    nodes => [ {
                             title => 'utotp2f',
                             help  => 'utotp2f.html',
                             form  => 'simpleInputContainer',
@@ -839,8 +831,7 @@ sub tree {
                 {
                     title => 'samlServiceSecurity',
                     help  => 'samlservice.html#security_parameters',
-                    nodes => [
-                        {
+                    nodes => [ {
                             title => 'samlServiceSecuritySig',
                             form  => 'RSAKey',
                             group => [
@@ -957,8 +948,7 @@ sub tree {
                 {
                     title => 'samlAttributeAuthorityDescriptor',
                     help  => 'samlservice.html#attribute_authority',
-                    nodes => [
-                        {
+                    nodes => [ {
                             title =>
 'samlAttributeAuthorityDescriptorAttributeService',
                             nodes => [
@@ -1026,8 +1016,7 @@ sub tree {
                 'oidcServiceMetaDataAuthnContext',
                 {
                     title => 'oidcServiceMetaDataSecurity',
-                    nodes => [
-                        {
+                    nodes => [ {
                             title => 'oidcServiceMetaDataKeys',
                             form  => 'RSAKeyNoPassword',
                             group => [

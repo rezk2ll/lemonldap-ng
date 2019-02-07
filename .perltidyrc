@@ -8,7 +8,7 @@
 --nobreak-before-all-operators
 --blanks-before-comments
 --nocuddled-else
---maximum-line-length=79
+--maximum-line-length=80
 --paren-tightness=1
 --square-bracket-tightness=1
 --space-for-semicolon
