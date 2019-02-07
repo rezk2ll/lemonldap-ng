@@ -308,7 +308,7 @@
 "issuerDBOpenIDConnect":"OpenID Connect",
 "issuerDBOpenIDConnectActivation":"Activation",
 "issuerDBOpenIDConnectPath":"Chemin",
-"issuerDBOpenIDConnectRule":"Utiliser la règle",
+"issuerDBOpenIDConnectRule":"Règle d'utilisation",
 "issuerParams":"Modules fournisseur",
 "jsRedirect":"Message de redirection",
 "jqueryButtonSelector":"Selecteur jQuery du bouton (optionnel)",
