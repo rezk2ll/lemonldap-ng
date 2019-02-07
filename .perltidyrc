@@ -14,5 +14,4 @@
 --space-for-semicolon
 --noopening-brace-on-new-line
 --stack-opening-tokens
---nostack-closing-tokens
 --format-skipping
