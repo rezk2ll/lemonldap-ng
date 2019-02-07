@@ -8,7 +8,7 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel              => 'debug',
+            logLevel              => 'error',
             useSafeJail           => 1,
             issuerDBGetActivation => 1,
             issuerDBGetRule       => '$uid eq "dwho"',
