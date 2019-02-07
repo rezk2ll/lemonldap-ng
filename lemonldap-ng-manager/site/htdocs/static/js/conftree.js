@@ -313,27 +313,27 @@ function templates(tpl,key) {
             "id" : "oidcOPMetaDataOptionsProtocol",
             "title" : "oidcOPMetaDataOptionsProtocol",
             "type" : "simpleInputContainer"
-         },
-         {
-            "_nodes" : [
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsDisplayName",
-                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsDisplayName",
-                  "title" : "oidcOPMetaDataOptionsDisplayName"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIcon",
-                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIcon",
-                  "title" : "oidcOPMetaDataOptionsIcon"
-               }
-            ],
-            "id" : "oidcOPMetaDataOptionsDisplayParams",
-            "title" : "oidcOPMetaDataOptionsDisplayParams",
-            "type" : "simpleInputContainer"
          }
       ],
       "id" : "oidcOPMetaDataOptions",
       "title" : "oidcOPMetaDataOptions"
+   },
+   {
+      "_nodes" : [
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsDisplayName",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsDisplayName",
+            "title" : "oidcOPMetaDataOptionsDisplayName"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIcon",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIcon",
+            "title" : "oidcOPMetaDataOptionsIcon"
+         }
+      ],
+      "id" : "oidcOPMetaDataOptionsDisplayParams",
+      "title" : "oidcOPMetaDataOptionsDisplayParams",
+      "type" : "simpleInputContainer"
    }
 ]
 ;
@@ -363,6 +363,13 @@ function templates(tpl,key) {
       ],
       "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars",
       "title" : "oidcRPMetaDataExportedVars",
+      "type" : "keyTextContainer"
+   },
+   {
+      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
+      "default" : [],
+      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
+      "title" : "oidcRPMetaDataOptionsExtraClaims",
       "type" : "keyTextContainer"
    },
    {
@@ -520,13 +527,6 @@ function templates(tpl,key) {
       ],
       "id" : "oidcRPMetaDataOptions",
       "title" : "oidcRPMetaDataOptions"
-   },
-   {
-      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
-      "default" : [],
-      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
-      "title" : "oidcRPMetaDataOptionsExtraClaims",
-      "type" : "keyTextContainer"
    }
 ]
 ;
@@ -545,134 +545,6 @@ function templates(tpl,key) {
       "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataExportedAttributes",
       "title" : "samlIDPMetaDataExportedAttributes",
       "type" : "samlAttributeContainer"
-   },
-   {
-      "_nodes" : [
-         {
-            "default" : "",
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsResolutionRule",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsResolutionRule",
-            "title" : "samlIDPMetaDataOptionsResolutionRule",
-            "type" : "longtext"
-         },
-         {
-            "default" : "",
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsNameIDFormat",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsNameIDFormat",
-            "select" : [
-               {
-                  "k" : "",
-                  "v" : ""
-               },
-               {
-                  "k" : "unspecified",
-                  "v" : "Unspecified"
-               },
-               {
-                  "k" : "email",
-                  "v" : "Email"
-               },
-               {
-                  "k" : "x509",
-                  "v" : "X509 certificate"
-               },
-               {
-                  "k" : "windows",
-                  "v" : "Windows"
-               },
-               {
-                  "k" : "kerberos",
-                  "v" : "Kerberos"
-               },
-               {
-                  "k" : "entity",
-                  "v" : "Entity"
-               },
-               {
-                  "k" : "persistent",
-                  "v" : "Persistent"
-               },
-               {
-                  "k" : "transient",
-                  "v" : "Transient"
-               },
-               {
-                  "k" : "encrypted",
-                  "v" : "Encrypted"
-               }
-            ],
-            "title" : "samlIDPMetaDataOptionsNameIDFormat",
-            "type" : "select"
-         },
-         {
-            "default" : 0,
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsForceAuthn",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsForceAuthn",
-            "title" : "samlIDPMetaDataOptionsForceAuthn",
-            "type" : "bool"
-         },
-         {
-            "default" : 0,
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIsPassive",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIsPassive",
-            "title" : "samlIDPMetaDataOptionsIsPassive",
-            "type" : "bool"
-         },
-         {
-            "default" : 0,
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowProxiedAuthn",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowProxiedAuthn",
-            "title" : "samlIDPMetaDataOptionsAllowProxiedAuthn",
-            "type" : "bool"
-         },
-         {
-            "default" : 0,
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowLoginFromIDP",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowLoginFromIDP",
-            "title" : "samlIDPMetaDataOptionsAllowLoginFromIDP",
-            "type" : "bool"
-         },
-         {
-            "default" : "",
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsRequestedAuthnContext",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsRequestedAuthnContext",
-            "select" : [
-               {
-                  "k" : "",
-                  "v" : ""
-               },
-               {
-                  "k" : "kerberos",
-                  "v" : "Kerberos"
-               },
-               {
-                  "k" : "password-protected-transport",
-                  "v" : "Password protected transport"
-               },
-               {
-                  "k" : "password",
-                  "v" : "Password"
-               },
-               {
-                  "k" : "tls-client",
-                  "v" : "TLS client certificate"
-               }
-            ],
-            "title" : "samlIDPMetaDataOptionsRequestedAuthnContext",
-            "type" : "select"
-         },
-         {
-            "default" : 0,
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsRelayStateURL",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsRelayStateURL",
-            "title" : "samlIDPMetaDataOptionsRelayStateURL",
-            "type" : "bool"
-         }
-      ],
-      "help" : "authsaml.html#options",
-      "id" : "samlIDPMetaDataOptions",
-      "title" : "samlIDPMetaDataOptions",
-      "type" : "simpleInputContainer"
    },
    {
       "_nodes" : [
@@ -839,6 +711,134 @@ function templates(tpl,key) {
       ],
       "id" : "samlIDPMetaDataOptionsSecurity",
       "title" : "samlIDPMetaDataOptionsSecurity",
+      "type" : "simpleInputContainer"
+   },
+   {
+      "_nodes" : [
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsResolutionRule",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsResolutionRule",
+            "title" : "samlIDPMetaDataOptionsResolutionRule",
+            "type" : "longtext"
+         },
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsNameIDFormat",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsNameIDFormat",
+            "select" : [
+               {
+                  "k" : "",
+                  "v" : ""
+               },
+               {
+                  "k" : "unspecified",
+                  "v" : "Unspecified"
+               },
+               {
+                  "k" : "email",
+                  "v" : "Email"
+               },
+               {
+                  "k" : "x509",
+                  "v" : "X509 certificate"
+               },
+               {
+                  "k" : "windows",
+                  "v" : "Windows"
+               },
+               {
+                  "k" : "kerberos",
+                  "v" : "Kerberos"
+               },
+               {
+                  "k" : "entity",
+                  "v" : "Entity"
+               },
+               {
+                  "k" : "persistent",
+                  "v" : "Persistent"
+               },
+               {
+                  "k" : "transient",
+                  "v" : "Transient"
+               },
+               {
+                  "k" : "encrypted",
+                  "v" : "Encrypted"
+               }
+            ],
+            "title" : "samlIDPMetaDataOptionsNameIDFormat",
+            "type" : "select"
+         },
+         {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsForceAuthn",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsForceAuthn",
+            "title" : "samlIDPMetaDataOptionsForceAuthn",
+            "type" : "bool"
+         },
+         {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIsPassive",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIsPassive",
+            "title" : "samlIDPMetaDataOptionsIsPassive",
+            "type" : "bool"
+         },
+         {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowProxiedAuthn",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowProxiedAuthn",
+            "title" : "samlIDPMetaDataOptionsAllowProxiedAuthn",
+            "type" : "bool"
+         },
+         {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowLoginFromIDP",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowLoginFromIDP",
+            "title" : "samlIDPMetaDataOptionsAllowLoginFromIDP",
+            "type" : "bool"
+         },
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsRequestedAuthnContext",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsRequestedAuthnContext",
+            "select" : [
+               {
+                  "k" : "",
+                  "v" : ""
+               },
+               {
+                  "k" : "kerberos",
+                  "v" : "Kerberos"
+               },
+               {
+                  "k" : "password-protected-transport",
+                  "v" : "Password protected transport"
+               },
+               {
+                  "k" : "password",
+                  "v" : "Password"
+               },
+               {
+                  "k" : "tls-client",
+                  "v" : "TLS client certificate"
+               }
+            ],
+            "title" : "samlIDPMetaDataOptionsRequestedAuthnContext",
+            "type" : "select"
+         },
+         {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsRelayStateURL",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsRelayStateURL",
+            "title" : "samlIDPMetaDataOptionsRelayStateURL",
+            "type" : "bool"
+         }
+      ],
+      "help" : "authsaml.html#options",
+      "id" : "samlIDPMetaDataOptions",
+      "title" : "samlIDPMetaDataOptions",
       "type" : "simpleInputContainer"
    },
    {

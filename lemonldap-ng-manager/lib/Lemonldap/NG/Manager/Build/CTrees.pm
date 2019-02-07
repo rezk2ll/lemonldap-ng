@@ -36,21 +36,7 @@ sub cTrees {
         samlIDPMetaDataNode => [
             'samlIDPMetaDataXML',
             'samlIDPMetaDataExportedAttributes',
-            {
-                title => 'samlIDPMetaDataOptions',
-                help  => 'authsaml.html#options',
-                form  => 'simpleInputContainer',
-                nodes => [
-                    'samlIDPMetaDataOptionsResolutionRule',
-                    'samlIDPMetaDataOptionsNameIDFormat',
-                    'samlIDPMetaDataOptionsForceAuthn',
-                    'samlIDPMetaDataOptionsIsPassive',
-                    'samlIDPMetaDataOptionsAllowProxiedAuthn',
-                    'samlIDPMetaDataOptionsAllowLoginFromIDP',
-                    'samlIDPMetaDataOptionsRequestedAuthnContext',
-                    'samlIDPMetaDataOptionsRelayStateURL',
-                ],
-            },
+
             {
                 title => "samlIDPMetaDataOptionsSession",
                 form  => 'simpleInputContainer',
@@ -87,6 +73,21 @@ sub cTrees {
                     "samlIDPMetaDataOptionsCheckTime",
                     "samlIDPMetaDataOptionsCheckAudience"
                 ]
+            },
+                        {
+                title => 'samlIDPMetaDataOptions',
+                help  => 'authsaml.html#options',
+                form  => 'simpleInputContainer',
+                nodes => [
+                    'samlIDPMetaDataOptionsResolutionRule',
+                    'samlIDPMetaDataOptionsNameIDFormat',
+                    'samlIDPMetaDataOptionsForceAuthn',
+                    'samlIDPMetaDataOptionsIsPassive',
+                    'samlIDPMetaDataOptionsAllowProxiedAuthn',
+                    'samlIDPMetaDataOptionsAllowLoginFromIDP',
+                    'samlIDPMetaDataOptionsRequestedAuthnContext',
+                    'samlIDPMetaDataOptionsRelayStateURL',
+                ],
             },
             {
                 title => "samlIDPMetaDataOptionsDisplay",
@@ -170,6 +171,9 @@ sub cTrees {
                             'oidcOPMetaDataOptionsUseNonce'
                         ]
                     },
+
+                ]
+            },
                     {
                         title => 'oidcOPMetaDataOptionsDisplayParams',
                         form  => 'simpleInputContainer',
@@ -178,11 +182,10 @@ sub cTrees {
                             'oidcOPMetaDataOptionsIcon'
                         ]
                     },
-                ]
-            },
         ],
         oidcRPMetaDataNode => [
             'oidcRPMetaDataExportedVars',
+                     'oidcRPMetaDataOptionsExtraClaims',
             {
                 title => 'oidcRPMetaDataOptions',
                 nodes => [ {
@@ -220,7 +223,7 @@ sub cTrees {
                     'oidcRPMetaDataOptionsRule',
                 ]
             },
-            'oidcRPMetaDataOptionsExtraClaims',
+   
         ],
         casSrvMetaDataNode => [ {
                 title => 'casSrvMetaDataOptions',
