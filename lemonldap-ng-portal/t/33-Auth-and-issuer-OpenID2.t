@@ -151,6 +151,7 @@ sub issuer {
                 authentication           => 'Demo',
                 userDB                   => 'Same',
                 issuerDBOpenIDActivation => 1,
+                issuerDBOpenIDRule       => '$uid eq "dwho"',
             }
         }
     );
