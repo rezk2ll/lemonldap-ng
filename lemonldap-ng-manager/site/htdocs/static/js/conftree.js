@@ -58,42 +58,6 @@ function templates(tpl,key) {
   case 'casSrvMetaDataNode':
     return [
    {
-      "_nodes" : [
-         {
-            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUrl",
-            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUrl",
-            "title" : "casSrvMetaDataOptionsUrl"
-         },
-         {
-            "default" : 0,
-            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsRenew",
-            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsRenew",
-            "title" : "casSrvMetaDataOptionsRenew",
-            "type" : "bool"
-         },
-         {
-            "default" : 0,
-            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsGateway",
-            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsGateway",
-            "title" : "casSrvMetaDataOptionsGateway",
-            "type" : "bool"
-         },
-         {
-            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsDisplayName",
-            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsDisplayName",
-            "title" : "casSrvMetaDataOptionsDisplayName"
-         },
-         {
-            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsIcon",
-            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsIcon",
-            "title" : "casSrvMetaDataOptionsIcon"
-         }
-      ],
-      "id" : "casSrvMetaDataOptions",
-      "title" : "casSrvMetaDataOptions",
-      "type" : "simpleInputContainer"
-   },
-   {
       "cnodes" : tpl+"s/"+key+"/"+"casSrvMetaDataExportedVars",
       "default" : [
          {
@@ -124,6 +88,49 @@ function templates(tpl,key) {
       "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsProxiedServices",
       "title" : "casSrvMetaDataOptionsProxiedServices",
       "type" : "keyTextContainer"
+   },
+   {
+      "_nodes" : [
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUrl",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsUrl",
+            "title" : "casSrvMetaDataOptionsUrl"
+         },
+         {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsRenew",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsRenew",
+            "title" : "casSrvMetaDataOptionsRenew",
+            "type" : "bool"
+         },
+         {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsGateway",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsGateway",
+            "title" : "casSrvMetaDataOptionsGateway",
+            "type" : "bool"
+         }
+      ],
+      "id" : "casSrvMetaDataOptions",
+      "title" : "casSrvMetaDataOptions",
+      "type" : "simpleInputContainer"
+   },
+   {
+      "_nodes" : [
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsDisplayName",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsDisplayName",
+            "title" : "casSrvMetaDataOptionsDisplayName"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsIcon",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsIcon",
+            "title" : "casSrvMetaDataOptionsIcon"
+         }
+      ],
+      "id" : "casSrvMetaDataOptionsDisplay",
+      "title" : "casSrvMetaDataOptionsDisplay",
+      "type" : "simpleInputContainer"
    }
 ]
 ;
@@ -393,23 +400,6 @@ function templates(tpl,key) {
             "type" : "simpleInputContainer"
          },
          {
-            "_nodes" : [
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsDisplayName",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsDisplayName",
-                  "title" : "oidcRPMetaDataOptionsDisplayName"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIcon",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIcon",
-                  "title" : "oidcRPMetaDataOptionsIcon"
-               }
-            ],
-            "id" : "oidcRPMetaDataOptionsDisplay",
-            "title" : "oidcRPMetaDataOptionsDisplay",
-            "type" : "simpleInputContainer"
-         },
-         {
             "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserIDAttr",
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserIDAttr",
             "title" : "oidcRPMetaDataOptionsUserIDAttr"
@@ -527,6 +517,23 @@ function templates(tpl,key) {
       ],
       "id" : "oidcRPMetaDataOptions",
       "title" : "oidcRPMetaDataOptions"
+   },
+   {
+      "_nodes" : [
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsDisplayName",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsDisplayName",
+            "title" : "oidcRPMetaDataOptionsDisplayName"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIcon",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIcon",
+            "title" : "oidcRPMetaDataOptionsIcon"
+         }
+      ],
+      "id" : "oidcRPMetaDataOptionsDisplay",
+      "title" : "oidcRPMetaDataOptionsDisplay",
+      "type" : "simpleInputContainer"
    }
 ]
 ;

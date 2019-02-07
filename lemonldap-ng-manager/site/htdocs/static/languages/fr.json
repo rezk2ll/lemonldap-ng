@@ -124,6 +124,7 @@
 "casSrv":"Serveur CAS",
 "casSrvMetaDataExportedVars":"Attributs exportés",
 "casSrvMetaDataOptions":"Options",
+"casSrvMetaDataOptionsDisplay":"Affichage",
 "casSrvMetaDataOptionsDisplayName":"Nom à afficher",
 "casSrvMetaDataOptionsGateway":"Authentification transparente",
 "casSrvMetaDataOptionsIcon":"Chemin de l'icône",

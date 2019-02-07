@@ -124,6 +124,7 @@
 "casSrv":"CAS 服务器",
 "casSrvMetaDataExportedVars":"声明的attributes",
 "casSrvMetaDataOptions":"选项",
+"casSrvMetaDataOptionsDisplay":"Display",
 "casSrvMetaDataOptionsDisplayName":"显示名称",
 "casSrvMetaDataOptionsGateway":"网关认证",
 "casSrvMetaDataOptionsIcon":"图标路径",

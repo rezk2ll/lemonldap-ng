@@ -124,6 +124,7 @@
 "casSrv":"خادم كاس",
 "casSrvMetaDataExportedVars":"السمات المصدرة",
 "casSrvMetaDataOptions":"الخيارات",
+"casSrvMetaDataOptionsDisplay":"عرض",
 "casSrvMetaDataOptionsDisplayName":"الاسم المطلوب عرضه",
 "casSrvMetaDataOptionsGateway":"بوابة إثبات الهوية",
 "casSrvMetaDataOptionsIcon":"مسارالأيقونة",

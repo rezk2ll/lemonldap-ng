@@ -124,6 +124,7 @@
 "casSrv":"CAS Server",
 "casSrvMetaDataExportedVars":"Exported attributes",
 "casSrvMetaDataOptions":"Options",
+"casSrvMetaDataOptionsDisplay":"Display",
 "casSrvMetaDataOptionsDisplayName":"Name to display",
 "casSrvMetaDataOptionsGateway":"Gateway authentication",
 "casSrvMetaDataOptionsIcon":"Icon path",

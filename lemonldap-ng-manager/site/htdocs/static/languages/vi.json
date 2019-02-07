@@ -124,6 +124,7 @@
 "casSrv":"CAS Server",
 "casSrvMetaDataExportedVars":"Thuộc tính xuất",
 "casSrvMetaDataOptions":"Tùy chọn",
+"casSrvMetaDataOptionsDisplay":"Hiển thị",
 "casSrvMetaDataOptionsDisplayName":"Tên để hiển thị",
 "casSrvMetaDataOptionsGateway":"Xác thực Gateway",
 "casSrvMetaDataOptionsIcon":"Đường dẫn Icon",
