@@ -5,7 +5,7 @@
   tryssl = function() {
     console.log('Call URL -> ', window.datas.sslHost);
     return $.ajax(window.datas.sslHost, {
-      dataType: 'json',
+      dataType: 'jsonp',
       statusCode: {
         401: function() {
           $('#lform').submit();

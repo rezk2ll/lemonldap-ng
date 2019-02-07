@@ -3,7 +3,7 @@
 tryssl = () ->
 	console.log 'Call URL -> ', window.datas.sslHost
 	$.ajax window.datas.sslHost,
-		dataType: 'json'
+		dataType: 'jsonp'
 		# PE_BADCREDENTIALS
 		statusCode:
 			401: () ->
