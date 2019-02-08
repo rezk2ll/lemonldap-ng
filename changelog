@@ -1,3 +1,45 @@
+lemonldap-ng (2.0.2) artful; urgency=medium
+
+  * Bugs:
+    * #1574: "Manager is unprotected" message when whatToTrace value is not the default
+    * #1603: Warnings with confirmation required don't work
+    * #1604: Manager unit tests randomly failed
+    * #1607: Safe errors when saving configuration with lmConfigEditor
+    * #1610: Unable to save empty value for cookie expiration time in Manager
+    * #1613: handler https redirection does not work
+    * #1614: Accents not well displayed in Portal
+    * #1618: Version in server signature is wrong
+    * #1623: ADPwdExpireWarning and ADPwdMaxAge parameters are missing in Manager
+    * #1627: Display issue with GrantSession plugin
+    * #1628: GrantSession plugin discloses its message to unlogged users
+    * #1630: SSO cookie is sent to protected applications with Nginx-based ReverseProxy
+    * #1636: SSL and Kerberos Auth Modules don t work with choice
+    * #1639: User must change password on AD is broken
+    * #1642: Unable to select skin from URL
+    * #1643: Portal CSS is sent with empty background when portalSkinBackground is not defined
+    * #1644: error while reseting password with ppolicy enabled
+
+  * New features:
+    * #1569: GPG authentication module
+    * #1629: Email-based two-factor module
+    * #1631: Allow to display "env" as template variables
+
+  * Improvements:
+    * #1486: Portal starts even if init() has failed
+    * #1600: Improve e2e tests
+    * #1601: Create LDAP option to decode DN value
+    * #1608: Date and comment not updated with lemonldap-ng-cli
+    * #1609: add autocomplete="off" to 2F form fields
+    * #1611: Improve apache configuration
+    * #1622: Display delete button in 2FAManager only if action is allowed
+    * #1625: "Use rule" option in issuer modules seem not to be used anymore
+    * #1633: Better random generation
+    * #1634: Improve management of template parameters
+    * #1635: SAML attribut default value is not set
+    * #1637: Add display options for SAML IDP like OIDC and CAS providers
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 08 Feb 2019 11:27:04 +0100
+
 lemonldap-ng (2.0.1) artful; urgency=medium
 
   * Bugs:
