@@ -258,14 +258,6 @@ sub setDefault {
         $conf->{$k} //= $defaultValues->{$k};
     }
 
-    # Convert old option useXForwardedForIP into trustedProxies
-    if ( defined $conf->{useXForwardedForIP}
-        and $conf->{useXForwardedForIP} == 1 )
-    {
-        $conf->{trustedProxies} = '*';
-        delete $conf->{useXForwardedForIP};
-    }
-
     # Some parameters expect key name (example), not variable ($example)
     if ( defined $conf->{whatToTrace} ) {
         $conf->{whatToTrace} =~ s/^\$//;

@@ -712,11 +712,6 @@ sub attributes {
             default       => 60,
             documentation => 'Update session timeout interval on server side',
         },
-        trustedProxies => {
-            type          => 'text',
-            default       => '',
-            documentation => 'Trusted proxies',
-        },
         userControl => {
             type          => 'pcre',
             default       => '^[\w\.\-@]+$',

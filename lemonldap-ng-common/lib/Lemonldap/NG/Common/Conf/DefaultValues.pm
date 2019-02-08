@@ -276,7 +276,6 @@ sub defaultValues {
         'totp2fRange'                             => 1,
         'totp2fSelfRegistration'                  => 0,
         'totp2fUserCanRemoveKey'                  => 1,
-        'trustedProxies'                          => '',
         'twitterAuthnLevel'                       => 1,
         'twitterUserField'                        => 'screen_name',
         'u2fActivation'                           => 0,

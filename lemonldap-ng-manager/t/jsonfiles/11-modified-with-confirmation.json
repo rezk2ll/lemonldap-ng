@@ -1157,11 +1157,6 @@
     "title": "logParams",
     "type": "simpleInputContainer",
     "nodes": [{
-      "default": "",
-      "id": "trustedProxies",
-      "title": "trustedProxies",
-      "data": ""
-    }, {
       "default": "uid",
       "id": "whatToTrace",
       "title": "whatToTrace",

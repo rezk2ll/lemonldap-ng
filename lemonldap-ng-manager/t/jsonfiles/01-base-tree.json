@@ -1004,10 +1004,6 @@
     "title": "issuerParams"
   }, {
     "_nodes": [{
-      "default": "",
-      "id": "trustedProxies",
-      "title": "trustedProxies"
-    }, {
       "default": "uid",
       "id": "whatToTrace",
       "title": "whatToTrace"
