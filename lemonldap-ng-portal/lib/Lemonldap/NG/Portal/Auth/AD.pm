@@ -133,12 +133,16 @@ sub authenticate {
     }
 
     # Remember password if password reset needed
-    $req->data->{oldpassword} = $req->data->{password}
-      if (
+    if (
         $res == PE_PP_CHANGE_AFTER_RESET
         or (    $res == PE_PP_PASSWORD_EXPIRED
             and $self->conf->{ldapAllowResetExpiredPassword} )
-      );
+      )
+    {
+        $req->data->{oldpassword} = $self->{password};
+        $req->data->{noerror}     = 1;
+        $self->setSecurity($req);
+    }
 
     return $res;
 }

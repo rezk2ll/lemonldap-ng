@@ -11,6 +11,10 @@
     </TMPL_IF>
     <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
 
+    <TMPL_IF NAME="TOKEN">
+      <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
+    </TMPL_IF>
+
     <TMPL_IF NAME="LOGIN">
     <div class="input-group mb-3">
       <input name="user" type="hidden" value="<TMPL_VAR NAME=LOGIN>" />

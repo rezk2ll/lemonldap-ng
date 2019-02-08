@@ -46,6 +46,7 @@ sub authenticate {
     {
         $req->data->{oldpassword} = $self->{password};
         $req->data->{noerror}     = 1;
+        $self->setSecurity($req);
     }
 
     return $res;
