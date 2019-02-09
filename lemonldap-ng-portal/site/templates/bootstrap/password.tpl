@@ -21,7 +21,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fa fa-user"></i></span>
       </div>
-      <p class="form-control-static"><TMPL_VAR NAME=LOGIN></p>
+      <input id="staticUser" type="text" readonly class="form-control" value="<TMPL_VAR NAME=LOGIN>" />
     </div>
     </TMPL_IF>
 
@@ -34,7 +34,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fa fa-lock"></i></span>
           </div>
-          <input id="oldpassword" name="oldpassword" type="password" value="<TMPL_VAR NAME=OLDPASSWORD>" class="form-control" trplaceholder="currentPwd" required/ aria-required="true">
+          <input id="oldpassword" name="oldpassword" type="password" value="<TMPL_VAR NAME=OLDPASSWORD>" class="form-control" trplaceholder="currentPwd" required aria-required="true">
         </div>
       </TMPL_IF>
 
