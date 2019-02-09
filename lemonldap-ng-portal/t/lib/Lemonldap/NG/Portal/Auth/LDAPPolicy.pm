@@ -32,7 +32,7 @@ sub authenticate {
         $self->setSecurity($req);
         return PE_PP_PASSWORD_EXPIRED;
     }
-    if ( $req->data->{newpassword} eq 'newp' ) {
+    if ( $req->data->{newpassword} and $req->data->{newpassword} eq 'newp' ) {
         $req->data->{noerror} = 1;
         $self->setSecurity($req);
         return PE_PP_PASSWORD_TOO_SHORT;

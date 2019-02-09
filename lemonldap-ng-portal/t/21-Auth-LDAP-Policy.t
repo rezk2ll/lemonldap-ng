@@ -98,6 +98,9 @@ SKIP: {
     my $id = expectCookie($res);
     expectRedirection( $res, 'http://auth.example.com/' );
     $client->logout($id);
+    ok($res = $client->_post('/', IO::String->new('user=dwho&password=newpassword'),length=>30), 'Auth query');
+    count(1);
+    expectCookie($res);
 }
 clean_sessions();
 count($maintests);
