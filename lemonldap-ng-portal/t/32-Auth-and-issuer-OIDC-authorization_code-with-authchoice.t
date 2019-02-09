@@ -112,7 +112,7 @@ SKIP: {
     my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Try to authenticate to OP
-    $query =~ s/user=&?//;
+    $query =~ s/(?:password|user)=&?//g;
     $query = "user=dwho&password=dwho&$query";
     ok(
         $res = $op->_post(
