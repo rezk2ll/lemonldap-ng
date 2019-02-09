@@ -88,13 +88,26 @@ has csp => ( is => 'rw' );
 sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
-    $self->localConfig( {
-            %{ Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
-                  ->getLocalConf('portal')
+    $self->localConfig(
+        {   %{ Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
+                    ->getLocalConf('portal')
             },
             %$args
         }
     );
+
+    if ( $self->{localConfig}->{translations} ) {
+        open my $tr_file, '<', $self->{localConfig}->{translations}
+            or die "can't open"
+            . $self->{localConfig}->{translations} . " : $!";
+        while (<$tr_file>) {
+            chomp;
+            my @kv = split /\s+=\s+/;
+            $self->{localConfig}->{ $kv[0] } = $kv[1];
+        }
+        close $tr_file or die "can't close $tr_file: $!";
+    }
+
     foreach my $k ( keys %{ $self->localConfig } ) {
         if ( $k =~ /tpl_(.*)/ ) {
             $self->customParameters->{$1} = $self->localConfig->{$k};
@@ -126,33 +139,33 @@ sub init {
     # Handle requests (other path may be declared in enabled plugins)
     $self
 
-      # "/" or undeclared paths
-      ->addUnauthRoute( '*' => 'login',     ['GET'] )
-      ->addUnauthRoute( '*' => 'postLogin', ['POST'] )
-      ->addAuthRoute( '*' => 'authenticatedRequest',     ['GET'] )
-      ->addAuthRoute( '*' => 'postAuthenticatedRequest', ['POST'] )
+        # "/" or undeclared paths
+        ->addUnauthRoute( '*' => 'login',     ['GET'] )
+        ->addUnauthRoute( '*' => 'postLogin', ['POST'] )
+        ->addAuthRoute( '*' => 'authenticatedRequest',     ['GET'] )
+        ->addAuthRoute( '*' => 'postAuthenticatedRequest', ['POST'] )
 
-      # psgi.js
-      ->addUnauthRoute( 'psgi.js' => 'sendJs', ['GET'] )
-      ->addAuthRoute( 'psgi.js' => 'sendJs', ['GET'] )
+        # psgi.js
+        ->addUnauthRoute( 'psgi.js' => 'sendJs', ['GET'] )
+        ->addAuthRoute( 'psgi.js' => 'sendJs', ['GET'] )
 
-      # portal.css
-      ->addUnauthRoute( 'portal.css' => 'sendCss', ['GET'] )
-      ->addAuthRoute( 'portal.css' => 'sendCss', ['GET'] )
+        # portal.css
+        ->addUnauthRoute( 'portal.css' => 'sendCss', ['GET'] )
+        ->addAuthRoute( 'portal.css' => 'sendCss', ['GET'] )
 
-      # lmerror
-      ->addUnauthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
-      ->addAuthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
+        # lmerror
+        ->addUnauthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
+        ->addAuthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
 
-      # Core REST API
-      ->addUnauthRoute( ping => 'pleaseAuth', ['GET'] )
-      ->addAuthRoute( ping => 'authenticated', ['GET'] )
+        # Core REST API
+        ->addUnauthRoute( ping => 'pleaseAuth', ['GET'] )
+        ->addAuthRoute( ping => 'authenticated', ['GET'] )
 
-      # Refresh session
-      ->addAuthRoute( refresh => 'refresh', ['GET'] )
+        # Refresh session
+        ->addAuthRoute( refresh => 'refresh', ['GET'] )
 
-      # Logout
-      ->addAuthRoute( logout => 'logout', ['GET'] );
+        # Logout
+        ->addAuthRoute( logout => 'logout', ['GET'] );
 
     # Default routes must point to routines declared above
     $self->defaultAuthRoute('');
@@ -186,8 +199,8 @@ sub reloadConf {
     $self->csp($csp);
 
     # Initialize templateDir
-    $self->{templateDir} =
-      $self->conf->{templateDir} . '/' . $self->conf->{portalSkin};
+    $self->{templateDir}
+        = $self->conf->{templateDir} . '/' . $self->conf->{portalSkin};
     unless ( -d $self->{templateDir} ) {
         $self->error("Template dir $self->{templateDir} doesn't exist");
         return $self->fail;
@@ -207,8 +220,8 @@ sub reloadConf {
     # Initialize persistent session DB
     unless ( $self->conf->{persistentStorage} ) {
         $self->conf->{persistentStorage} = $self->conf->{globalStorage};
-        $self->conf->{persistentStorageOptions} =
-          $self->conf->{globalStorageOptions};
+        $self->conf->{persistentStorageOptions}
+            = $self->conf->{globalStorageOptions};
     }
 
     # Initialize cookie domain
@@ -232,19 +245,19 @@ sub reloadConf {
             return $self->fail;
         }
         $mod = $self->conf->{$type}
-          unless ( $self->conf->{$type} eq 'Same' );
+            unless ( $self->conf->{$type} eq 'Same' );
         my $module = '::' . ucfirst($type) . '::' . $mod;
         $module =~ s/Authentication/Auth/;
 
         # Launch and initialize module
         return $self->fail
-          unless ( $self->{"_$type"} = $self->loadPlugin($module) );
+            unless ( $self->{"_$type"} = $self->loadPlugin($module) );
     }
 
     # Load second-factor engine
     return $self->fail
-      unless $self->{_sfEngine} =
-      $self->loadPlugin( $self->conf->{'sfEngine'} );
+        unless $self->{_sfEngine}
+        = $self->loadPlugin( $self->conf->{'sfEngine'} );
 
     # Initialize trusted domain regexp
     if (    $self->conf->{trustedDomains}
@@ -267,8 +280,8 @@ sub reloadConf {
                 #  - $domainlabel.$td
                 # $domainlabel is build looking RFC2396
                 # (see Regexp::Common::URI::RFC2396)
-                $_ =~
-                  s/\*\\\./(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]\\.)*/g;
+                $_
+                    =~ s/\*\\\./(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]\\.)*/g;
                 $re->add("$_");
             }
         }
@@ -279,8 +292,8 @@ sub reloadConf {
             $self->logger->debug("Vhost $vhost added in trusted domains");
             $re->add( quotemeta($vhost) );
             $self->conf->{vhostOptions} ||= {};
-            if ( my $tmp =
-                $self->conf->{vhostOptions}->{$vhost}->{vhostAliases} )
+            if ( my $tmp
+                = $self->conf->{vhostOptions}->{$vhost}->{vhostAliases} )
             {
                 foreach my $alias ( split /\s+/, $tmp ) {
                     $self->logger->debug(
@@ -298,22 +311,22 @@ sub reloadConf {
         $self->{"_$type"} = {};
         if ( $self->conf->{$type} ) {
             for my $name ( sort keys %{ $self->conf->{$type} } ) {
-                my $sub =
-                  HANDLER->buildSub(
+                my $sub = HANDLER->buildSub(
                     HANDLER->substitute( $self->conf->{$type}->{$name} ) );
                 if ($sub) {
                     $self->{"_$type"}->{$name} = $sub;
                 }
                 else {
                     $self->logger->error( "$type $name returns an error: "
-                          . HANDLER->tsv->{jail}->error );
+                            . HANDLER->tsv->{jail}->error );
                 }
             }
         }
     }
-    $self->{_jsRedirect} =
-      HANDLER->buildSub( HANDLER->substitute( $self->conf->{jsRedirect} ) )
-      or $self->logger->error(
+    $self->{_jsRedirect}
+        = HANDLER->buildSub(
+        HANDLER->substitute( $self->conf->{jsRedirect} ) )
+        or $self->logger->error(
         'jsRedirect returns an error: ' . HANDLER->tsv->{jail}->error );
 
     # Load plugins
@@ -349,7 +362,7 @@ sub loadPlugin {
     }
     my $obj;
     return 0
-      unless ( $obj = $self->loadModule("$plugin") );
+        unless ( $obj = $self->loadModule("$plugin") );
     return $self->findEP( $plugin, $obj );
 }
 
@@ -421,7 +434,7 @@ sub findEP {
     if ( $obj->can('spRules') ) {
         foreach my $k ( keys %{ $obj->{spRules} } ) {
             $self->logger->info(
-"$k is defined more than one time, it can have some bad effect on Menu display"
+                "$k is defined more than one time, it can have some bad effect on Menu display"
             ) if ( $self->spRules->{$k} );
             $self->spRules->{$k} = $obj->{spRules}->{$k};
         }
