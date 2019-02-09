@@ -246,14 +246,32 @@ m@<form.+?action="(?:(?:http://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
             }
             count(1);
         }
+
+        # Fields with values
         my %fields =
           ( $res->[2]->[0] =~
-              m#<input.+?name="([^"]+)"[^>]+?value="([^"]*?)"#gs );
-        my $query = join( '&',
-            map { "$_=" . uri_escape( uri_unescape( $fields{$_} ) ) }
-              keys(%fields) );
+              m#<input.+?name="([^"]+)"[^>]+(?:value="([^"]*?)")#gs );
+
+        # Add fields without values
+        %fields = (
+            $res->[2]->[0] =~
+              m#<input.+?name="([^"]+)"[^>]+(?:value="([^"]*?)")?#gs,
+            %fields
+        );
+        my $query = join(
+            '&',
+            map {
+                "$_="
+                  . (
+                    $fields{$_}
+                    ? uri_escape( uri_unescape( $fields{$_} ) )
+                    : ''
+                  )
+              }
+              keys(%fields)
+        );
         foreach my $f (@requiredFields) {
-            ok( defined $fields{$f}, qq{ Field "$f" is defined} );
+            ok( exists $fields{$f}, qq{ Field "$f" is defined} );
             count(1);
         }
         exceptCspFormOK( $res, $host );
