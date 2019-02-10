@@ -73,7 +73,7 @@ SKIP: {
     expectOK($res);
     my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
-    # Try to authenticate with unauthorized user to IdP
+    # Try to authenticate with an unauthorized user to IdP
     $s = "user=dwho&password=dwho&$s";
     ok(
         $res = $issuer->_post(
@@ -85,8 +85,8 @@ SKIP: {
         ),
         'Post authentication'
     );
-    ok( $res->[2]->[0] =~ /trmsg="89"/, 'Reject reason is 89' );
-
+    ok( $res->[2]->[0] =~ /trmsg="89"/, 'Reject reason is 89' )
+        or print STDERR Dumper( $res->[2]->[0] );
     # Simple SP access
     ok(
         $res = $sp->_get(
@@ -118,7 +118,7 @@ SKIP: {
     $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
 
-    # Try to authenticate with authorized user to IdP
+    # Try to authenticate with an authorized user to IdP
     $s = "user=french&password=french&$s";
     ok(
         $res = $issuer->_post(
