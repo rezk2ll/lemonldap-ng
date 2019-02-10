@@ -58,11 +58,6 @@ SKIP: {
     ok( $sp = sp(), 'SP portal' );
     $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
 
-
-
-
-
-
     # Simple SP access
     my $res;
     ok(

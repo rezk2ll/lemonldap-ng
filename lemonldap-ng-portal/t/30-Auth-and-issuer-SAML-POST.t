@@ -117,7 +117,6 @@ SKIP: {
     expectOK($res);
     $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
-
     # Try to authenticate with an authorized user to IdP
     $s = "user=french&password=french&$s";
     ok(
