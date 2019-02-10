@@ -4,18 +4,18 @@ use strict;
 use Mouse;
 use String::Random;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADCREDENTIALS
-  PE_ERROR
-  PE_FORMEMPTY
-  PE_OK
-  PE_SENDRESPONSE
-  PE_MUSTHAVEMAIL
+    PE_BADCREDENTIALS
+    PE_ERROR
+    PE_FORMEMPTY
+    PE_OK
+    PE_SENDRESPONSE
+    PE_MUSTHAVEMAIL
 );
 
 our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor',
-  'Lemonldap::NG::Portal::Lib::SMTP';
+    'Lemonldap::NG::Portal::Lib::SMTP';
 
 # INITIALIZATION
 
@@ -31,10 +31,10 @@ has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        my $ott = $_[0]->{p}
+            ->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
         $ott->timeout( $_[0]->{conf}->{mail2fTimeout}
-              || $_[0]->{conf}->{formTimeout} );
+                || $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
 );
@@ -48,7 +48,7 @@ sub init {
         }
     }
     $self->logo( $self->conf->{mail2fLogo} )
-      if ( $self->conf->{mail2fLogo} );
+        if ( $self->conf->{mail2fLogo} );
     return $self->SUPER::init();
 }
 
@@ -66,7 +66,7 @@ sub run {
     my $dest = $req->{sessionInfo}->{ $self->conf->{mailSessionKey} };
     unless ($dest) {
         $self->logger->error( "Could not find mail attribute for login "
-              . $req->{sessionInfo}->{_user} );
+                . $req->{sessionInfo}->{_user} );
         return PE_MUSTHAVEMAIL;
     }
 
@@ -80,8 +80,7 @@ sub run {
         $subject = 'mail2fSubject';
         $tr->( \$subject );
     }
-    my $body;
-    my $html;
+    my ($body, $html);
     if ( $self->conf->{mail2fBody} ) {
 
         # We use a specific text message, no html
@@ -139,16 +138,14 @@ sub verify {
         return PE_ERROR;
     }
 
-    $self->logger->debug("Verifying Mail 2F code: $usercode againt $savedcode");
+    $self->logger->debug(
+        "Verifying Mail 2F code: $usercode against $savedcode");
 
-    if ( $usercode eq $savedcode ) {
-        return PE_OK;
-    }
-    else {
-        $self->userLogger->warn( 'Second factor failed for '
-              . $session->{ $self->conf->{whatToTrace} } );
-        return PE_BADCREDENTIALS;
-    }
+    return PE_OK if ( $usercode eq $savedcode );
+
+    $self->userLogger->warn( 'Second factor failed for '
+            . $session->{ $self->conf->{whatToTrace} } );
+    return PE_BADCREDENTIALS;
 }
 
 1;
