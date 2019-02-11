@@ -54,6 +54,8 @@ sign:
     expire_in: 1 day
     paths:
       - result/*
+  only:
+    - master
 
 pages:
   image: buildpkg/debian:stretch
