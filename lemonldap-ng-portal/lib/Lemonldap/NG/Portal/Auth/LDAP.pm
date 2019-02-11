@@ -17,6 +17,14 @@ sub init {
           and $self->Lemonldap::NG::Portal::Lib::LDAP::init );
 }
 
+has authnLevel => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        $_[0]->conf->{ldapAuthnLevel};
+    }
+);
+
 # RUNNING METHODS
 
 sub authenticate {
