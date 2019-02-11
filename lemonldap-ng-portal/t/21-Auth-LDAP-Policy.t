@@ -7,15 +7,16 @@ require 't/test-lib.pm';
 use lib 't/lib';
 
 my $res;
+my $maintests = 16;
 
 SKIP: {
-    skip 'LLNGTESTLDAP is not set' unless ( $ENV{LLNGTESTLDAP} );
+    skip( 'LLNGTESTLDAP is not set', $maintests ) unless ( $ENV{LLNGTESTLDAP} );
     require 't/test-ldap.pm';
 
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel                      => 'warn',
+                logLevel                      => 'error',
                 useSafeJail                   => 1,
                 authentication                => 'LDAP',
                 portal                        => 'http://auth.example.com/',
@@ -54,7 +55,6 @@ SKIP: {
         );
         my $match = 'trmsg="' . $code . '"';
         ok( $res->[2]->[0] =~ /$match/, "Code is $code" );
-        count(2);
 
         #open F, '>../e2e-tests/conf/portal/result.html' or die $!;
         #print F $res->[2]->[0];
@@ -64,7 +64,6 @@ SKIP: {
             'confirmpassword' );
         ok( $query =~ /user=$user/, "User is $user" )
           or explain( $query, "user=$user" );
-        count(1);
         $query =~ s/(oldpassword)=/$1=$user/g;
         $query =~ s/((?:confirm|new)password)=/$1=newp/g;
         ok(
@@ -75,9 +74,8 @@ SKIP: {
             ),
             'Post new password'
         );
-        my $match = 'trmsg="' . PE_PASSWORD_OK . '"';
+        $match = 'trmsg="' . PE_PASSWORD_OK . '"';
         ok( $res->[2]->[0] =~ /$match/, 'Password is changed' );
-        count(2);
 
         $postString = "user=$user&password=newp";
         ok(
@@ -87,7 +85,6 @@ SKIP: {
             ),
             'Auth query'
         );
-        count(1);
         expectCookie($res) or print STDERR Dumper($res);
     }
     my $user       = 'lock';
@@ -106,7 +103,6 @@ SKIP: {
     );
     my $match = 'trmsg="' . $code . '"';
     ok( $res->[2]->[0] =~ /$match/, 'Account is locked' );
-    count(2);
 
     # Try to change anyway
     my $query =
@@ -119,11 +115,12 @@ SKIP: {
         ),
         'Post new password'
     );
-    my $match = 'trmsg="' . PE_PASSWORD_OK . '"';
+    $match = 'trmsg="' . PE_PASSWORD_OK . '"';
     ok( $res->[2]->[0] !~ /$match/s, 'Password is not changed' );
 
     #print STDERR Dumper($res);
 }
+count($maintests);
 clean_sessions();
 stopLdapServer() if $ENV{LLNGTESTLDAP};
 done_testing( count() );
