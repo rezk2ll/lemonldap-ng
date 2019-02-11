@@ -65,6 +65,15 @@ pwdPolicySubentry: cn=passwordlock,ou=ppolicies,dc=example,dc=com
 pwdAccountLockedTime: 20190101000000Z
 pwdFailureTime: 20181231000000.000000Z
 
+dn: uid=short,ou=users,dc=example,dc=com
+objectClass: inetOrgPerson
+uid: short
+cn: short
+sn: short
+mail: short@badwolf.org
+userPassword: passwordnottooshort
+pwdPolicySubentry: cn=passwordshort,ou=ppolicies,dc=example,dc=com
+
 dn: ou=ppolicies,dc=example,dc=com
 objectClass: top
 objectClass: organizationalUnit
@@ -97,4 +106,13 @@ pwdAllowUserChange: TRUE
 pwdCheckQuality: 0
 pwdLockout: TRUE
 pwdMaxFailure: 1
+
+dn: cn=passwordshort,ou=ppolicies,dc=example,dc=com
+objectClass: device
+objectClass: pwdPolicy
+cn: passwordshort
+pwdAttribute: userPassword
+pwdAllowUserChange: TRUE
+pwdCheckQuality: 2
+pwdMinLength: 6
 
