@@ -70,36 +70,11 @@ SKIP: {
         ),
         'Post new password'
     );
-    #$match = 'trmsg="'
-    #  . &Lemonldap::NG::Portal::Main::Constants::PE_PP_PASSWORD_TOO_SHORT . '"';
-    #ok( $res->[2]->[0] =~ /$match/, 'Password is too short' ) or skip('Stop here');
-    #count(1);
+    my $match = 'trmsg="'
+      . &Lemonldap::NG::Portal::Main::Constants::PE_PASSWORD_OK . '"';
+    ok( $res->[2]->[0] =~ /$match/, 'Password is expired' );
+    count(1);
 
-    ##open F, '>../e2e-tests/conf/portal/result.html' or die $!;
-    ##print F $res->[2]->[0];
-    ##close F;
-    #( $host, $url, $query ) =
-    #  expectForm( $res, '#', undef, 'user', 'oldpassword', 'newpassword',
-    #    'confirmpassword' );
-    #ok( $query =~ /user=reset/, 'User is reset' )
-    #  or explain( $query, 'user=reset' );
-    #count(1);
-    #$query =~ s/(oldpassword)=/$1=reset/g;
-    #$query =~ s/((?:confirm|new)password)=/$1=newpassword/g;
-    #ok(
-    #    $res = $client->_post(
-    #        '/', IO::String->new($query),
-    #        length => length($query),
-    #        accept => 'text/html',
-    #    ),
-    #    'Post new password'
-    #);
-    #count(1);
-
-    ##print STDERR Dumper($res);
-    my $id = expectCookie($res);
-    expectRedirection( $res, 'http://auth.example.com/' );
-    $client->logout($id);
     ok(
         $res = $client->_post(
             '/', IO::String->new('user=reset&password=newp'),

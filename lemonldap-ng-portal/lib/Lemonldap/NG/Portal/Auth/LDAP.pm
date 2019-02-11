@@ -2,8 +2,14 @@ package Lemonldap::NG::Portal::Auth::LDAP;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants
-  qw(PE_OK PE_LDAPCONNECTFAILED PE_PP_CHANGE_AFTER_RESET PE_PP_PASSWORD_EXPIRED);
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
+  PE_DONE
+  PE_ERROR
+  PE_LDAPCONNECTFAILED
+  PE_PP_CHANGE_AFTER_RESET
+  PE_PP_PASSWORD_EXPIRED
+);
 
 our $VERSION = '2.0.2';
 
@@ -41,6 +47,17 @@ sub authenticate {
         }
     }
 
+    unless ( $req->data->{password} ) {
+        $self->p->{user} = $req->userData->{_dn} = $req->data->{dn};
+        unless($self->p->{_passwordDB}) {
+            $self->logger->error('No password database configured, aborting');
+            return PE_ERROR;
+        }
+        my $res = $self->p->{_passwordDB}->_modifyPassword( $req, 1 );
+
+        # Security: never create session here
+        return $res || PE_DONE;
+    }
     my $res =
       $self->userBind( $req, $req->data->{dn},
         password => $req->data->{password} );
