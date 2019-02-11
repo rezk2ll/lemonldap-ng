@@ -15,7 +15,7 @@ SKIP: {
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel                      => 'error',
+                logLevel                      => 'warn',
                 useSafeJail                   => 1,
                 authentication                => 'LDAP',
                 portal                        => 'http://auth.example.com/',
@@ -32,7 +32,7 @@ SKIP: {
         }
     );
     use Lemonldap::NG::Portal::Main::Constants 'PE_PP_CHANGE_AFTER_RESET',
-      'PE_PP_PASSWORD_EXPIRED', 'PE_PASSWORD_OK';
+      'PE_PP_PASSWORD_EXPIRED', 'PE_PASSWORD_OK', 'PE_PP_ACCOUNT_LOCKED';
     foreach my $tpl (
         [ 'reset',  PE_PP_CHANGE_AFTER_RESET ],
         [ 'expire', PE_PP_PASSWORD_EXPIRED ]
@@ -53,7 +53,7 @@ SKIP: {
             'Auth query'
         );
         my $match = 'trmsg="' . $code . '"';
-        ok( $res->[2]->[0] =~ /$match/, 'Password is expired' );
+        ok( $res->[2]->[0] =~ /$match/, "Code is $code" );
         count(2);
 
         #open F, '>../e2e-tests/conf/portal/result.html' or die $!;
@@ -90,6 +90,39 @@ SKIP: {
         count(1);
         expectCookie($res) or print STDERR Dumper($res);
     }
+    my $user       = 'lock';
+    my $code       = PE_PP_ACCOUNT_LOCKED;
+    my $postString = "user=$user&password=$user";
+
+    # Try yo authenticate
+    # -------------------
+    ok(
+        $res = $client->_post(
+            '/', IO::String->new($postString),
+            length => length($postString),
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+    my $match = 'trmsg="' . $code . '"';
+    ok( $res->[2]->[0] =~ /$match/, 'Account is locked' );
+    count(2);
+
+    # Try to change anyway
+    my $query =
+      'user=lock&oldpassword=lock&newpassword=newp&confirmpassword=newp';
+    ok(
+        $res = $client->_post(
+            '/', IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Post new password'
+    );
+    my $match = 'trmsg="' . PE_PASSWORD_OK . '"';
+    ok( $res->[2]->[0] !~ /$match/s, 'Password is not changed' );
+
+    #print STDERR Dumper($res);
 }
 clean_sessions();
 stopLdapServer() if $ENV{LLNGTESTLDAP};
