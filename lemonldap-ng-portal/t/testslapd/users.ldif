@@ -34,3 +34,67 @@ sn:: 0KDRg9GB0YHQutC40Lk=
 mail: russian@badwolf.org
 userPassword: russian
 
+dn: uid=reset,ou=users,dc=example,dc=com
+objectClass: inetOrgPerson
+uid: reset
+cn: reset
+sn: reset
+mail: reset@badwolf.org
+userPassword: reset
+pwdPolicySubentry: cn=passwordreset,ou=ppolicies,dc=example,dc=com
+pwdReset: TRUE
+
+dn: uid=expire,ou=users,dc=example,dc=com
+objectClass: inetOrgPerson
+uid: expire
+cn: expire
+sn: expire
+mail: expire@badwolf.org
+userPassword: expire
+pwdPolicySubentry: cn=passwordexpire,ou=ppolicies,dc=example,dc=com
+pwdChangedTime: 20190101000000Z
+
+dn: uid=lock,ou=users,dc=example,dc=com
+objectClass: inetOrgPerson
+uid: lock
+cn: lock
+sn: lock
+mail: lock@badwolf.org
+userPassword: lock
+pwdPolicySubentry: cn=passwordlock,ou=ppolicies,dc=example,dc=com
+pwdAccountLockedTime: 20190101000000Z
+pwdFailureTime: 20181231000000.000000Z
+
+dn: ou=ppolicies,dc=example,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: ppolicies
+
+dn: cn=passwordreset,ou=ppolicies,dc=example,dc=com
+objectClass: device
+objectClass: pwdPolicy
+cn: passwordreset
+pwdAttribute: userPassword
+pwdAllowUserChange: TRUE
+pwdCheckQuality: 0
+pwdMustChange: TRUE
+
+dn: cn=passwordexpire,ou=ppolicies,dc=example,dc=com
+objectClass: device
+objectClass: pwdPolicy
+cn: passwordexpire
+pwdAttribute: userPassword
+pwdAllowUserChange: TRUE
+pwdCheckQuality: 0
+pwdMaxAge: 5
+
+dn: cn=passwordlock,ou=ppolicies,dc=example,dc=com
+objectClass: device
+objectClass: pwdPolicy
+cn: passwordlock
+pwdAttribute: userPassword
+pwdAllowUserChange: TRUE
+pwdCheckQuality: 0
+pwdLockout: TRUE
+pwdMaxFailure: 1
+
