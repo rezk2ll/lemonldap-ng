@@ -13,13 +13,14 @@ SKIP: {
     skip 'LLNGTESTLDAP is not set', $maintests unless ( $ENV{LLNGTESTLDAP} );
     require 't/test-ldap.pm';
 
-    my $client = LLNG::Manager::Test->new( {
+    my $client = LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                      => 'error',
                 useSafeJail                   => 1,
-                authentication                => 'LDAPPolicy',
+                authentication                => 'LDAP',
                 portal                        => 'http://auth.example.com/',
-                userDB                        => 'LDAP',
+                userDB                        => 'Same',
                 passwordDB                    => 'LDAP',
                 portalRequireOldPassword      => 1,
                 ldapServer                    => 'ldap://127.0.0.1:19389/',
@@ -27,13 +28,14 @@ SKIP: {
                 managerDn                     => 'cn=admin,dc=example,dc=com',
                 managerPassword               => 'admin',
                 ldapAllowResetExpiredPassword => 1,
+                ldapPpolicyControl            => 1,
             }
         }
     );
     my $postString = 'user='
-      . ( $ENV{LDAPACCOUNT} || 'dwho' )
+      . ( $ENV{LDAPACCOUNT} || 'reset' )
       . '&password='
-      . ( $ENV{LDAPPWD} || 'dwho' );
+      . ( $ENV{LDAPPWD} || 'reset' );
 
     # Try yo authenticate
     # -------------------
@@ -46,7 +48,7 @@ SKIP: {
         'Auth query'
     );
     my $match = 'trmsg="'
-      . &Lemonldap::NG::Portal::Main::Constants::PE_PP_PASSWORD_EXPIRED . '"';
+      . &Lemonldap::NG::Portal::Main::Constants::PE_PP_CHANGE_AFTER_RESET . '"';
     ok( $res->[2]->[0] =~ /$match/, 'Password is expired' );
 
     #open F, '>../e2e-tests/conf/portal/result.html' or die $!;
@@ -55,10 +57,10 @@ SKIP: {
     my ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'user', 'oldpassword', 'newpassword',
         'confirmpassword' );
-    ok( $query =~ /user=dwho/, 'User is dwho' )
-      or explain( $query, 'user=dwho' );
+    ok( $query =~ /user=reset/, 'User is reset' )
+      or explain( $query, 'user=reset' );
     count(1);
-    $query =~ s/(oldpassword)=/$1=dwho/g;
+    $query =~ s/(oldpassword)=/$1=reset/g;
     $query =~ s/((?:confirm|new)password)=/$1=newp/g;
     ok(
         $res = $client->_post(
@@ -68,39 +70,45 @@ SKIP: {
         ),
         'Post new password'
     );
-    $match = 'trmsg="'
-      . &Lemonldap::NG::Portal::Main::Constants::PE_PP_PASSWORD_TOO_SHORT . '"';
-    ok( $res->[2]->[0] =~ /$match/, 'Password is too short' );
-    count(1);
+    #$match = 'trmsg="'
+    #  . &Lemonldap::NG::Portal::Main::Constants::PE_PP_PASSWORD_TOO_SHORT . '"';
+    #ok( $res->[2]->[0] =~ /$match/, 'Password is too short' ) or skip('Stop here');
+    #count(1);
 
-    open F, '>../e2e-tests/conf/portal/result.html' or die $!;
-    print F $res->[2]->[0];
-    close F;
-    ( $host, $url, $query ) =
-      expectForm( $res, '#', undef, 'user', 'oldpassword', 'newpassword',
-        'confirmpassword' );
-    ok( $query =~ /user=dwho/, 'User is dwho' )
-      or explain( $query, 'user=dwho' );
-    count(1);
-    $query =~ s/(oldpassword)=/$1=dwho/g;
-    $query =~ s/((?:confirm|new)password)=/$1=newpassword/g;
-    ok(
-        $res = $client->_post(
-            '/', IO::String->new($query),
-            length => length($query),
-            accept => 'text/html',
-        ),
-        'Post new password'
-    );
-    count(1);
+    ##open F, '>../e2e-tests/conf/portal/result.html' or die $!;
+    ##print F $res->[2]->[0];
+    ##close F;
+    #( $host, $url, $query ) =
+    #  expectForm( $res, '#', undef, 'user', 'oldpassword', 'newpassword',
+    #    'confirmpassword' );
+    #ok( $query =~ /user=reset/, 'User is reset' )
+    #  or explain( $query, 'user=reset' );
+    #count(1);
+    #$query =~ s/(oldpassword)=/$1=reset/g;
+    #$query =~ s/((?:confirm|new)password)=/$1=newpassword/g;
+    #ok(
+    #    $res = $client->_post(
+    #        '/', IO::String->new($query),
+    #        length => length($query),
+    #        accept => 'text/html',
+    #    ),
+    #    'Post new password'
+    #);
+    #count(1);
 
-    #print STDERR Dumper($res);
+    ##print STDERR Dumper($res);
     my $id = expectCookie($res);
     expectRedirection( $res, 'http://auth.example.com/' );
     $client->logout($id);
-    ok($res = $client->_post('/', IO::String->new('user=dwho&password=newpassword'),length=>30), 'Auth query');
+    ok(
+        $res = $client->_post(
+            '/', IO::String->new('user=reset&password=newp'),
+            length => 24
+        ),
+        'Auth query'
+    );
     count(1);
-    expectCookie($res);
+    expectCookie($res) or print STDERR Dumper($res);
 }
 clean_sessions();
 count($maintests);
