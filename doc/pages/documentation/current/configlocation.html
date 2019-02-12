@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:configlocation</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,configlocation"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="configlocation.html"/>
@@ -721,7 +721,7 @@ These parameters can be overwritten in LemonLDAP::NG ini file, in the section <c
 <div class="notetip">You only need a reload <abbr title="Uniform Resource Locator">URL</abbr> per physical servers, as Handlers share the same configuration cache on each physical server.
 </div>
 <p>
-The <code>reload</code> target is managed in Apache or Nginx configuration, inside a virtual host protected by LemonLDAP::NG Handler (see below examples in Apache→handler or Nginx→Handler).
+The <code>reload</code> target is managed in Apache or Nginx configuration, inside a virtual host protected by LemonLDAP::NG Handler (see below examples in Apache-&gt;handler or Nginx-&gt;Handler).
 </p>
 <div class="noteimportant">You must allow access to declared URLs to your Manager <abbr title="Internet Protocol">IP</abbr>.
 </div><div class="noteimportant">If you want to use reload mechanism on a portal only host, you must install a handler in Portal host to be able to refresh local cache. Include <code>handler-nginx.conf</code> or <code>handler-apache2.conf</code> for example

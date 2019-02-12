@@ -91,11 +91,11 @@ This feature uses <a href="https://metacpan.org/pod/Crypt::U2F::Server::Simple" 
 In the manager (second factors), you just have to enable it:
 </p>
 <ul>
-<li class="level1"><div class="li"> U2F ⇒ Activation: set it to “on”</div>
+<li class="level1"><div class="li"> U2F =&gt; Activation: set it to “on”</div>
 </li>
-<li class="level1"><div class="li"> U2F ⇒ Self registration: set it to “on” if users are authorized to register their keys</div>
+<li class="level1"><div class="li"> U2F =&gt; Self registration: set it to “on” if users are authorized to register their keys</div>
 </li>
-<li class="level1"><div class="li"> U2F ⇒ Authentication level: you can overwrite here auth level for U2F registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only for enrolled users</strong></div>
+<li class="level1"><div class="li"> U2F =&gt; Authentication level: you can overwrite here auth level for U2F registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only for enrolled users</strong></div>
 </li>
 </ul>
 <div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule: <code>$_2fDevices =~ /“type”:\s*“U2F”/s</code>, else U2F will be required even if users are not registered. This is automatically done when “activation” is set to “on”.

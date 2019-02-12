@@ -80,14 +80,14 @@ To edit <abbr title="Single Sign On">SSO</abbr> cookie parameters, go in Manager
 </li>
 <li class="level1"><div class="li"> <strong>Javascript protection</strong>: set httpOnly flag, to prevent cookie from being caught by javascript code</div>
 </li>
-<li class="level1"><div class="li"> <strong>Cookie expiration time</strong>: by default, <abbr title="Single Sign On">SSO</abbr> cookie is a session cookie, which means it will be destroyed when browser is closed. You can change this behavior by setting a cookie expiration time. It must be an integer. <strong>Cookie Expiration Time</strong> value is a number of seconds until the cookie expires. A zero or negative number will expire the cookie immediately.</div>
+<li class="level1"><div class="li"> <strong>Cookie expiration time</strong>: by default, <abbr title="Single Sign On">SSO</abbr> cookie is a session cookie, which means it will be destroyed when browser is closed. You can change this behavior by setting a cookie expiration time. It must be an integer. <strong>Cookie Expiration Time</strong> value is a number of seconds until the cookie expires. Set a zero value to disable expiration time and use a session cookie.</div>
 </li>
 </ul>
 <div class="notewarning">When you change cookie expiration time, it is written on the user hard disk unlike session cookie
 </div><div class="noteimportant">Changing the domain value will not update other configuration parameters, like virtual host names, portal <abbr title="Uniform Resource Locator">URL</abbr>, etc. You have to update them by yourself.
 </div>
 </div>
-<!-- EDIT2 SECTION "SSO cookie" [59-1928] -->
+<!-- EDIT2 SECTION "SSO cookie" [59-1936] -->
 <h2 class="sectionedit3" id="portal_url">Portal URL</h2>
 <div class="level2">
 
@@ -103,6 +103,6 @@ Portal <abbr title="Uniform Resource Locator">URL</abbr> is the address used to 
 <div class="notewarning">The portal <abbr title="Uniform Resource Locator">URL</abbr> <strong>must</strong> be inside <abbr title="Single Sign On">SSO</abbr> domain. If secured cookie is enabled, the portal <abbr title="Uniform Resource Locator">URL</abbr> <strong>must</strong> be HTTPS.
 </div>
 </div>
-<!-- EDIT3 SECTION "Portal URL" [1929-] --></div>
+<!-- EDIT3 SECTION "Portal URL" [1937-] --></div>
 </body>
 </html>

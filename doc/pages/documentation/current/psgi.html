@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:psgi</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,psgi"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="psgi.html"/>
@@ -130,10 +130,10 @@ A <code>llng-server.psgi</code> is provided in example directory. It is designed
 <li class="level1"><div class="li"> with uWSGI <em><strong>(see below)</strong></em></div>
 </li>
 </ul>
-<div class="noteimportant">Starman, Twiggy,… are HTTP servers, not FastCGI ones !
+<div class="noteimportant">Starman, Twiggy,... are HTTP servers, not FastCGI ones !
 </div>
 <p>
-You can also replace only a part of it to create a specialized FastCGI server (portal,…). Look at <code>llng-server.psgi</code> example and take the part you want to use.
+You can also replace only a part of it to create a specialized FastCGI server (portal,...). Look at <code>llng-server.psgi</code> example and take the part you want to use.
 </p>
 
 <p>
@@ -158,31 +158,31 @@ There are also some other psgi files in examples directory.
 	</tr>
 	</thead>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  -p  </td><td class="col1 centeralign">  –pid  </td><td class="col2 centeralign">  PID  </td><td class="col3 leftalign"> Process PID  </td>
+		<td class="col0 centeralign">  -p  </td><td class="col1 centeralign">  --pid  </td><td class="col2 centeralign">  PID  </td><td class="col3 leftalign"> Process PID  </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 centeralign">  -u  </td><td class="col1 centeralign">  –user  </td><td class="col2 centeralign">  USER  </td><td class="col3"> Unix uid </td>
+		<td class="col0 centeralign">  -u  </td><td class="col1 centeralign">  --user  </td><td class="col2 centeralign">  USER  </td><td class="col3"> Unix uid </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0 centeralign">  -g  </td><td class="col1 centeralign">  –group  </td><td class="col2 centeralign">  GROUP  </td><td class="col3"> Unix gid </td>
+		<td class="col0 centeralign">  -g  </td><td class="col1 centeralign">  --group  </td><td class="col2 centeralign">  GROUP  </td><td class="col3"> Unix gid </td>
 	</tr>
 	<tr class="row5 rowodd">
-		<td class="col0 centeralign">  -n  </td><td class="col1 centeralign">  –proc  </td><td class="col2 centeralign">  NPROC  </td><td class="col3"> Number of process to launch <em>(FCGI::ProcManager*)</em> </td>
+		<td class="col0 centeralign">  -n  </td><td class="col1 centeralign">  --proc  </td><td class="col2 centeralign">  NPROC  </td><td class="col3"> Number of process to launch <em>(FCGI::ProcManager*)</em> </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0 centeralign">  -s  </td><td class="col1 centeralign">  –socket  </td><td class="col2 centeralign">  SOCKET  </td><td class="col3"> Socket to listen to </td>
+		<td class="col0 centeralign">  -s  </td><td class="col1 centeralign">  --socket  </td><td class="col2 centeralign">  SOCKET  </td><td class="col3"> Socket to listen to </td>
 	</tr>
 	<tr class="row7 rowodd">
-		<td class="col0 centeralign">  -l  </td><td class="col1 centeralign">  –listen  </td><td class="col2 centeralign">  LISTEN  </td><td class="col3"> Listening address. Examples: <code>host:port</code>, <code>:port</code>, <code>/socket/path</code> </td>
+		<td class="col0 centeralign">  -l  </td><td class="col1 centeralign">  --listen  </td><td class="col2 centeralign">  LISTEN  </td><td class="col3"> Listening address. Examples: <code>host:port</code>, <code>:port</code>, <code>/socket/path</code> </td>
 	</tr>
 	<tr class="row8 roweven">
-		<td class="col0 centeralign">  -f  </td><td class="col1 centeralign">  –customFunctionsFile  </td><td class="col2 centeralign">  CUSTOM_FUNCTIONS_FILE  </td><td class="col3"> File to load for custom functions </td>
+		<td class="col0 centeralign">  -f  </td><td class="col1 centeralign">  --customFunctionsFile  </td><td class="col2 centeralign">  CUSTOM_FUNCTIONS_FILE  </td><td class="col3"> File to load for custom functions </td>
 	</tr>
 	<tr class="row9 rowodd">
-		<td class="col0 centeralign">  -e  </td><td class="col1 centeralign">  –engine  </td><td class="col2 centeralign">  ENGINE  </td><td class="col3"> Plack::Handler engine, default to FCGI <em>(see below)</em> </td>
+		<td class="col0 centeralign">  -e  </td><td class="col1 centeralign">  --engine  </td><td class="col2 centeralign">  ENGINE  </td><td class="col3"> Plack::Handler engine, default to FCGI <em>(see below)</em> </td>
 	</tr>
 	<tr class="row10 roweven">
-		<td class="col0 leftalign">  </td><td class="col1 centeralign">  –plackOptions  </td><td class="col2 leftalign">  </td><td class="col3"> Other options to path to Plack. Can bu multi-valued. Values must look like <code>–key=value</code> </td>
+		<td class="col0 leftalign">  </td><td class="col1 centeralign">  --plackOptions  </td><td class="col2 leftalign">  </td><td class="col3"> Other options to path to Plack. Can bu multi-valued. Values must look like <code>--key=value</code> </td>
 	</tr>
 </table></div>
 <!-- EDIT4 TABLE [2210-2983] -->

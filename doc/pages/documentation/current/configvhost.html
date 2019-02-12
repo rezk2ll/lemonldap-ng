@@ -167,7 +167,7 @@ To learn more about using Apache as reverse-proxy, see <a href="http://httpd.apa
 <p>
 A little floating menu can be added to application with this simple Apache configuration:
 </p>
-<pre class="code file apache">PerlModule Lemonldap::NG::Handler::Menu
+<pre class="code file apache">PerlModule Lemonldap::NG::Handler::Apache2::Menu
 PerlOutputFilterHandler Lemonldap::NG::Handler::ApacheMP2::Menu-&gt;run</pre>
 
 <p>
@@ -179,7 +179,7 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::ApacheMP2::Menu-&gt;run
 <div class="noteimportant">You need to disable mod_deflate to use the floating menu
 </div>
 </div>
-<!-- EDIT5 SECTION "Add a floating menu" [2576-3114] -->
+<!-- EDIT5 SECTION "Add a floating menu" [2576-3123] -->
 <h2 class="sectionedit6" id="nginx_configuration">Nginx configuration</h2>
 <div class="level2">
 
@@ -253,7 +253,7 @@ Then you can take any virtual host and modify it:
   }</pre>
 
 </div>
-<!-- EDIT6 SECTION "Nginx configuration" [3115-5001] -->
+<!-- EDIT6 SECTION "Nginx configuration" [3124-5010] -->
 <h3 class="sectionedit7" id="hosted_application1">Hosted application</h3>
 <div class="level3">
 
@@ -312,7 +312,7 @@ server {
 }</pre>
 
 </div>
-<!-- EDIT7 SECTION "Hosted application" [5002-6630] -->
+<!-- EDIT7 SECTION "Hosted application" [5011-6639] -->
 <h3 class="sectionedit8" id="reverse_proxy1">Reverse proxy</h3>
 <div class="level3">
 
@@ -363,7 +363,7 @@ server {
 }</pre>
 
 </div>
-<!-- EDIT8 SECTION "Reverse proxy" [6631-7924] -->
+<!-- EDIT8 SECTION "Reverse proxy" [6640-7933] -->
 <h2 class="sectionedit9" id="lemonldapng_configuration">LemonLDAP::NG configuration</h2>
 <div class="level2">
 
@@ -390,7 +390,7 @@ A virtual host contains:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7925-8524] -->
+<!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7934-8533] -->
 <h3 class="sectionedit10" id="access_rules_and_http_headers">Access rules and HTTP headers</h3>
 <div class="level3">
 
@@ -399,7 +399,7 @@ See <strong><a href="writingrulesand_headers.html" class="wikilink1" title="docu
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Access rules and HTTP headers" [8525-8717] -->
+<!-- EDIT10 SECTION "Access rules and HTTP headers" [8534-8726] -->
 <h3 class="sectionedit11" id="post_data">POST data</h3>
 <div class="level3">
 
@@ -408,7 +408,7 @@ See <strong><a href="formreplay.html" class="wikilink1" title="documentation:2.0
 </p>
 
 </div>
-<!-- EDIT11 SECTION "POST data" [8718-8852] -->
+<!-- EDIT11 SECTION "POST data" [8727-8861] -->
 <h3 class="sectionedit12" id="options">Options</h3>
 <div class="level3">
 
@@ -422,9 +422,9 @@ Some options are available:
 </li>
 <li class="level1"><div class="li"> Maintenance mode: reject all requests with a maintenance message</div>
 </li>
-<li class="level1"><div class="li"> Aliases: list of aliases for this virtual host <em>(avoid to rewrite rules,…)</em></div>
+<li class="level1"><div class="li"> Aliases: list of aliases for this virtual host <em>(avoid to rewrite rules,...)</em></div>
 </li>
-<li class="level1"><div class="li"> Type: handler type <em>(normal, <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps Handler</a>,…)</em></div>
+<li class="level1"><div class="li"> Type: handler type <em>(normal, <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps Handler</a>,...)</em></div>
 </li>
 <li class="level1"><div class="li"> Authentication level required: this options avoid to reject user with a rule based on <code>$_authenticationLevel</code>. When user hasn&#039;t the required level, he is redirected to an upgrade page in the portal</div>
 </li>
@@ -435,6 +435,6 @@ Some options are available:
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Options" [8853-] --></div>
+<!-- EDIT12 SECTION "Options" [8862-] --></div>
 </body>
 </html>

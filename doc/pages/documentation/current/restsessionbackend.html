@@ -124,7 +124,7 @@ To configure it, REST session backend will be set trough Manager in global confi
 <div class="level3">
 
 <p>
-First, active SOAP in <code>General parameters</code> » <code>Advanced parameters</code> » <code>Portal servers</code> » <code>SOAP session server</code>.
+First, activate REST in <code>General parameters</code> » <code>Plugins</code> » <code>Portal servers</code> » <code>REST session server</code>.
 </p>
 
 <p>
@@ -152,27 +152,27 @@ Then, set <code>Lemonldap::NG::Common::Apache::Session::REST</code> in <code>Gen
 		<td class="col0 centeralign">  <strong>password</strong>  </td><td class="col1"> Password to use for auth basic mechanism </td><td class="col2 leftalign">   </td>
 	</tr>
 </table></div>
-<!-- EDIT4 TABLE [1800-2126] -->
+<!-- EDIT4 TABLE [1790-2116] -->
 </div>
-<!-- EDIT3 SECTION "Manager" [1452-2127] -->
+<!-- EDIT3 SECTION "Manager" [1452-2117] -->
 <h3 class="sectionedit5" id="apache">Apache</h3>
 <div class="level3">
 
 <p>
 Sessions REST end points access must be allowed in Apache portal configuration (for example, access by <abbr title="Internet Protocol">IP</abbr> range):
 </p>
-<pre class="code file apache"><span class="co1"># SOAP functions for sessions management (disabled by default)</span>
+<pre class="code file apache"><span class="co1"># REST/SOAP functions for sessions access (disabled by default)</span>
 &lt;<span class="kw3">Location</span> /index.fcgi/sessions&gt;
     <span class="kw1">Require</span> 192.168.2.0/<span class="nu0">24</span>
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT5 SECTION "Apache" [2128-2417] -->
+<!-- EDIT5 SECTION "Apache" [2118-2408] -->
 <h3 class="sectionedit6" id="real_session_backend">Real session backend</h3>
 <div class="level3">
 
 <p>
-Real session backend will be configured in <code>lemonldap-ng.ini</code>, in <code>portal</code> section (the portal hosts the REST service for sessions, and will do the link between SOAP requests and real sessions).
+Real session backend will be configured in <code>lemonldap-ng.ini</code>, in <code>portal</code> section (the portal hosts the REST service for sessions, and will do the link between REST requests and real sessions).
 </p>
 
 <p>
@@ -184,6 +184,6 @@ For example, if real sessions are stored in <a href="filesessionbackend.html" cl
 <div class="notetip">Session explorer and “single session” features can&#039;t be used using this backend. Session explorer and portal must be launched with real backend.
 </div>
 </div>
-<!-- EDIT6 SECTION "Real session backend" [2418-] --></div>
+<!-- EDIT6 SECTION "Real session backend" [2409-] --></div>
 </body>
 </html>

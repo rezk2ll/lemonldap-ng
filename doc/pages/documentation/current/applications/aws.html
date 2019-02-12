@@ -60,13 +60,13 @@
 </li>
 <li class="level1"><div class="li"> Go to <a href="https://your.portal.com/saml/metadata" class="urlextern" title="https://your.portal.com/saml/metadata"  rel="nofollow">https://your.portal.com/saml/metadata</a> and save the resulting file locally.</div>
 </li>
-<li class="level1"><div class="li"> In each AWS account, go to IAM → Identity providers → Create Provider.</div>
+<li class="level1"><div class="li"> In each AWS account, go to IAM -&gt; Identity providers -&gt; Create Provider.</div>
 </li>
 <li class="level1"><div class="li"> Select <code><abbr title="Security Assertion Markup Language">SAML</abbr></code> as the provider type</div>
 </li>
 <li class="level1"><div class="li"> Choose a name (best if kept consistent between accounts), and then choose the metadata file you saved above.</div>
 </li>
-<li class="level1"><div class="li"> Looking again at the links on the left side of the page, go to Roles → Create role</div>
+<li class="level1"><div class="li"> Looking again at the links on the left side of the page, go to Roles -&gt; Create role</div>
 </li>
 <li class="level1"><div class="li"> Choose <code><abbr title="Security Assertion Markup Language">SAML</abbr> / Saml 2.0 federation</code></div>
 </li>
@@ -92,15 +92,15 @@ similar, using whatever attribute makes sense to you.  For example:<pre class="c
   <span class="re0">ou</span>:<span class="re1"> root</span></pre>
 
 </div><ul>
-<li class="level1"><div class="li"> Assuming you use the web interface to manage lemonldap, go to General Parameters → Authentication parameters → LDAP parameters → Exported variables. Here set the key to the LDAP attribute and the value to something sensible. I keep them the same to make it easy.</div>
+<li class="level1"><div class="li"> Assuming you use the web interface to manage lemonldap, go to General Parameters -&gt; Authentication parameters -&gt; LDAP parameters -&gt; Exported variables. Here set the key to the LDAP attribute and the value to something sensible. I keep them the same to make it easy.</div>
 </li>
-<li class="level1"><div class="li"> Now go to *Variables → Macros*.  Here set up variables which will be computed based on the attributes you exported above.  You will need to emit strings in this format <code>arn:aws:iam::account-number:role/role-name1,arn:aws:iam::account-number:saml-provider/provider-name</code>. The parts you need to change are <code>account-number</code>, <code>role-name1</code> and <code>provier-name</code>. The last two will be the provider name and role names you just set up in AWS.</div>
+<li class="level1"><div class="li"> Now go to *Variables -&gt; Macros*.  Here set up variables which will be computed based on the attributes you exported above.  You will need to emit strings in this format <code>arn:aws:iam::account-number:role/role-name1,arn:aws:iam::account-number:saml-provider/provider-name</code>. The parts you need to change are <code>account-number</code>, <code>role-name1</code> and <code>provier-name</code>. The last two will be the provider name and role names you just set up in AWS.</div>
 </li>
-<li class="level1"><div class="li"> Perl works in here, so something like this is valid:  <code>aws_eu_role</code> →  <code>$ou =~ sysadmin ? “arn:aws…” : “arn:…”</code></div>
+<li class="level1"><div class="li"> Perl works in here, so something like this is valid:  <code>aws_eu_role</code> -&gt;  <code>$ou =~ sysadmin ? “arn:aws...” : “arn:...”</code></div>
 </li>
-<li class="level1"><div class="li"> If it easier, split multiple roles into different macros.  Then tie all the variables you define together into one string concatenating them  with whatever is in General Parameters → Advanced Parameters → Separator. Actually click into this field and move around with the arrow keys to see if there is a space, since spaces can be part of the separator.</div>
+<li class="level1"><div class="li"> If it easier, split multiple roles into different macros.  Then tie all the variables you define together into one string concatenating them  with whatever is in General Parameters -&gt; Advanced Parameters -&gt; Separator. Actually click into this field and move around with the arrow keys to see if there is a space, since spaces can be part of the separator.</div>
 </li>
-<li class="level1"><div class="li"> Remember macros are defined alphanumerically, so you want one right at the end, like <code>z_aws_roles</code> → <code>join(“; ”, $role_name1, $role_name2, …)</code></div>
+<li class="level1"><div class="li"> Remember macros are defined alphanumerically, so you want one right at the end, like <code>z_aws_roles</code> -&gt; <code>join(“; ”, $role_name1, $role_name2, ...)</code></div>
 </li>
 <li class="level1"><div class="li"> On the left again, click <code><abbr title="Security Assertion Markup Language">SAML</abbr> service providers</code>, then <code>Add <abbr title="Security Assertion Markup Language">SAML</abbr> SP</code>.</div>
 </li>
@@ -108,15 +108,15 @@ similar, using whatever attribute makes sense to you.  For example:<pre class="c
 </li>
 <li class="level1"><div class="li"> Click <code>Exported attributes</code> on the left, then <code>Add attribute</code> twice to add two attributes. The first field is the name of a variable set in the user&#039;s session:</div>
 <ul>
-<li class="level2"><div class="li"> <code>_whatToTrace</code> → <code><a href="https://aws.amazon.com/SAML/Attributes/RoleSessionName" class="urlextern" title="https://aws.amazon.com/SAML/Attributes/RoleSessionName"  rel="nofollow">https://aws.amazon.com/SAML/Attributes/RoleSessionName</a></code> (leave the rest)</div>
+<li class="level2"><div class="li"> <code>_whatToTrace</code> -&gt; <code><a href="https://aws.amazon.com/SAML/Attributes/RoleSessionName" class="urlextern" title="https://aws.amazon.com/SAML/Attributes/RoleSessionName"  rel="nofollow">https://aws.amazon.com/SAML/Attributes/RoleSessionName</a></code> (leave the rest)</div>
 </li>
-<li class="level2"><div class="li"> <code>z_aws_roles</code> (the macro name you defined above) → <code><a href="https://aws.amazon.com/SAML/Attributes/Role" class="urlextern" title="https://aws.amazon.com/SAML/Attributes/Role"  rel="nofollow">https://aws.amazon.com/SAML/Attributes/Role</a></code> (leave the rest)</div>
+<li class="level2"><div class="li"> <code>z_aws_roles</code> (the macro name you defined above) -&gt; <code><a href="https://aws.amazon.com/SAML/Attributes/Role" class="urlextern" title="https://aws.amazon.com/SAML/Attributes/Role"  rel="nofollow">https://aws.amazon.com/SAML/Attributes/Role</a></code> (leave the rest)</div>
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> On the left, select Options → Security →  Enable use of IDP initiated <abbr title="Uniform Resource Locator">URL</abbr> → On</div>
+<li class="level1"><div class="li"> On the left, select Options -&gt; Security -&gt;  Enable use of IDP initiated <abbr title="Uniform Resource Locator">URL</abbr> -&gt; On</div>
 </li>
-<li class="level1"><div class="li"> Select General Parameters → Portal → Menu → Categories and applications</div>
+<li class="level1"><div class="li"> Select General Parameters -&gt; Portal -&gt; Menu -&gt; Categories and applications</div>
 </li>
 <li class="level1"><div class="li"> Select a category or create a new one if you need to.  Then click <code>New application</code>.  </div>
 </li>

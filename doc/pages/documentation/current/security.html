@@ -66,6 +66,7 @@
 <li class="level2"><div class="li"><a href="#order_your_rules">Order your rules</a></div></li>
 <li class="level2"><div class="li"><a href="#be_careful_with_url_parameters">Be careful with URL parameters</a></div></li>
 <li class="level2"><div class="li"><a href="#encoded_characters">Encoded characters</a></div></li>
+<li class="level2"><div class="li"><a href="#ip_in_rules">IP in rules</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#secure_reverse-proxies">Secure reverse-proxies</a></div></li>
@@ -116,7 +117,7 @@ By default, the manager is restricted to the user &#039;dwho&#039; (default back
 <div class="level3">
 
 <p>
-You can use any of the mechanisms proposed by Apache: SSL, Auth-Basic, Kerberos,… Example
+You can use any of the mechanisms proposed by Apache: SSL, Auth-Basic, Kerberos,... Example
 </p>
 <pre class="code apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">443</span>&gt;
     <span class="kw1">ServerName</span> manager.example.com
@@ -312,12 +313,18 @@ You can use the following rules instead:
 <div class="level3">
 
 <p>
-Some characters are encoded in URLs by the browser (such as space,…). To avoid problems, <abbr title="LemonLDAP::NG">LL::NG</abbr> decode them using <a href="https://metacpan.org/pod/Apache2::URI#unescape_url" class="urlextern" title="https://metacpan.org/pod/Apache2::URI#unescape_url"  rel="nofollow">https://metacpan.org/pod/Apache2::URI#unescape_url</a>. So write your rules using normal characters.
+Some characters are encoded in URLs by the browser (such as space,...). To avoid problems, <abbr title="LemonLDAP::NG">LL::NG</abbr> decode them using <a href="https://metacpan.org/pod/Apache2::URI#unescape_url" class="urlextern" title="https://metacpan.org/pod/Apache2::URI#unescape_url"  rel="nofollow">https://metacpan.org/pod/Apache2::URI#unescape_url</a>. So write your rules using normal characters.
 </p>
 
 </div>
 <!-- EDIT15 SECTION "Encoded characters" [5248-5495] -->
-<h2 class="sectionedit16" id="secure_reverse-proxies">Secure reverse-proxies</h2>
+<h3 class="sectionedit16" id="ip_in_rules">IP in rules</h3>
+<div class="level3">
+<div class="notewarning">If you are running LemonLDAP::NG behind a reverse proxy, make sure you check the <a href="behindproxyminihowto.html" class="wikilink1" title="documentation:2.0:behindproxyminihowto">Reverse Proxy how-to</a> so that the rule applies to the real user <abbr title="Internet Protocol">IP</abbr> and not the reverse proxy&#039;s <abbr title="Internet Protocol">IP</abbr>. Make sure you only specify trusted proxy addresses so that an attacker cannot forge the <code>X-Forwarded-For</code> header
+</div>
+</div>
+<!-- EDIT16 SECTION "IP in rules" [5496-5859] -->
+<h2 class="sectionedit17" id="secure_reverse-proxies">Secure reverse-proxies</h2>
 <div class="level2">
 
 <p>
@@ -362,8 +369,8 @@ It is recommended to secure the channel between reverse-proxies and application 
 </ul>
 
 </div>
-<!-- EDIT16 SECTION "Secure reverse-proxies" [5496-7164] -->
-<h2 class="sectionedit17" id="configure_security_settings">Configure security settings</h2>
+<!-- EDIT17 SECTION "Secure reverse-proxies" [5860-7528] -->
+<h2 class="sectionedit18" id="configure_security_settings">Configure security settings</h2>
 <div class="level2">
 
 <p>
@@ -386,7 +393,7 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 </li>
 <li class="level1"><div class="li"> <strong>Brute-Force Attack protection</strong>: set to &#039;On&#039; to enable it. The aim of a brute force attack is to gain access to user accounts by repeatedly trying to guess the password of a user. If it is disabled, automated tools may submit thousands of password attempts in a matter of seconds, making it easy for an attacker to beat a password-based authentication system.</div>
 </li>
-<li class="level1"><div class="li"> <strong>LWP::UserAgent and SSL options</strong>: insert here options to pass to LWP::UserAgent object (used by <abbr title="Security Assertion Markup Language">SAML</abbr> or OpenID-Connect to query partners). Example: <code>verify_hostname ⇒ 0</code>, <code>SSL_verify_mode ⇒ 0</code></div>
+<li class="level1"><div class="li"> <strong>LWP::UserAgent and SSL options</strong>: insert here options to pass to LWP::UserAgent object (used by <abbr title="Security Assertion Markup Language">SAML</abbr> or OpenID-Connect to query partners). Example: <code>verify_hostname =&gt; 0</code>, <code>SSL_verify_mode =&gt; 0</code></div>
 </li>
 <li class="level1"><div class="li"> <strong>Content Security Policy</strong>:  Portal builds dynamically this header. You can modify default values. Browser implementations of formAction directive are inconsistent (e.g. Firefox doesn&#039;t block the redirects whereas Chrome does). Administrators may have to modify formAction value with wildcard likes *.</div>
 </li>
@@ -399,8 +406,8 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 </ul>
 
 </div>
-<!-- EDIT17 SECTION "Configure security settings" [7165-9494] -->
-<h2 class="sectionedit18" id="fail2ban">Fail2ban</h2>
+<!-- EDIT18 SECTION "Configure security settings" [7529-9858] -->
+<h2 class="sectionedit19" id="fail2ban">Fail2ban</h2>
 <div class="level2">
 
 <p>
@@ -451,8 +458,8 @@ Restart fail2ban
 </p>
 
 </div>
-<!-- EDIT18 SECTION "Fail2ban" [9495-10549] -->
-<h2 class="sectionedit19" id="sessions_identifier">Sessions identifier</h2>
+<!-- EDIT19 SECTION "Fail2ban" [9859-10913] -->
+<h2 class="sectionedit20" id="sessions_identifier">Sessions identifier</h2>
 <div class="level2">
 
 <p>
@@ -464,8 +471,8 @@ We recommend to use : <code>Lemonldap::NG::Common::Apache::Session::Generate::SH
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Sessions identifier" [10550-10812] -->
-<h2 class="sectionedit20" id="saml">SAML</h2>
+<!-- EDIT20 SECTION "Sessions identifier" [10914-11176] -->
+<h2 class="sectionedit21" id="saml">SAML</h2>
 <div class="level2">
 
 <p>
@@ -473,6 +480,6 @@ See <a href="samlservice.html#security_parameters" class="wikilink1" title="docu
 </p>
 
 </div>
-<!-- EDIT20 SECTION "SAML" [10813-] --></div>
+<!-- EDIT21 SECTION "SAML" [11177-] --></div>
 </body>
 </html>

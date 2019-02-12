@@ -80,7 +80,8 @@ LLNG can propose to users to register this kind of software to increase authenti
 This feature uses libconvert-base32-perl. Before enable it, on Debian you must install libconvert-base32-perl by :
 </p>
 <pre class="code">apt update
-apt install libconvert-base32-perl</pre>
+apt install libconvert-base32-perl
+apt install libdigest-hmac-perl</pre>
 
 <p>
 Or from CPAN repository :
@@ -88,7 +89,7 @@ Or from CPAN repository :
 <pre class="code">cpanm Convert::Base32</pre>
 
 </div>
-<!-- EDIT2 SECTION "Prerequisites and dependencies" [627-911] -->
+<!-- EDIT2 SECTION "Prerequisites and dependencies" [627-943] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -96,29 +97,29 @@ Or from CPAN repository :
 In the manager (advanced parameters), you just have to enable it:
 </p>
 <ul>
-<li class="level1"><div class="li"> TOTP ⇒ Activation: set it to “on”</div>
+<li class="level1"><div class="li"> TOTP =&gt; Activation: set it to “on”</div>
 </li>
-<li class="level1"><div class="li"> TOTP ⇒ Self registration: set it to “on” if users are authorized to generate themselves a TOTP secret</div>
+<li class="level1"><div class="li"> TOTP =&gt; Self registration: set it to “on” if users are authorized to generate themselves a TOTP secret</div>
 </li>
-<li class="level1"><div class="li"> TOTP ⇒ Authentication level: you can overwrite here auth level for TOTP registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only to users enrolled</strong></div>
+<li class="level1"><div class="li"> TOTP =&gt; Authentication level: you can overwrite here auth level for TOTP registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only to users enrolled</strong></div>
 </li>
-<li class="level1"><div class="li"> TOTP ⇒ Issuer: default to portal hostname</div>
+<li class="level1"><div class="li"> TOTP =&gt; Issuer: default to portal hostname</div>
 </li>
-<li class="level1"><div class="li"> TOTP ⇒ Interval: interval for TOTP algorithm (default: 30)</div>
+<li class="level1"><div class="li"> TOTP =&gt; Interval: interval for TOTP algorithm (default: 30)</div>
 </li>
-<li class="level1"><div class="li"> TOTP ⇒ Range: number of additional intervals to test (default: 1)</div>
+<li class="level1"><div class="li"> TOTP =&gt; Range: number of additional intervals to test (default: 1)</div>
 </li>
-<li class="level1"><div class="li"> TOTP ⇒ Digits: number of digit by codes (default: 6)</div>
+<li class="level1"><div class="li"> TOTP =&gt; Digits: number of digit by codes (default: 6)</div>
 </li>
-<li class="level1"><div class="li"> TOTP ⇒ Display existing secret: display an already registered secret (default: disabled)</div>
+<li class="level1"><div class="li"> TOTP =&gt; Display existing secret: display an already registered secret (default: disabled)</div>
 </li>
-<li class="level1"><div class="li"> TOTP ⇒ Change existing secret: authorize a user to change its previoulsy registered TOTP secret</div>
+<li class="level1"><div class="li"> TOTP =&gt; Change existing secret: authorize a user to change its previoulsy registered TOTP secret</div>
 </li>
 </ul>
 <div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule that <code>$_2fDevices =~ /“type”:\s*“TOTP”/s</code> is set, else TOTP will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
 </div>
 </div>
-<!-- EDIT3 SECTION "Configuration" [912-2242] -->
+<!-- EDIT3 SECTION "Configuration" [944-2274] -->
 <h2 class="sectionedit4" id="enrollment">Enrollment</h2>
 <div class="level2">
 
@@ -127,7 +128,7 @@ If you&#039;ve enabled self registration, users can register their keys by using
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Enrollment" [2243-2370] -->
+<!-- EDIT4 SECTION "Enrollment" [2275-2402] -->
 <h2 class="sectionedit5" id="assistance">Assistance</h2>
 <div class="level2">
 
@@ -141,7 +142,7 @@ To enable manager Second Factor Administration Module, set <code>enabledModules<
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
 
 </div>
-<!-- EDIT5 SECTION "Assistance" [2371-2686] -->
+<!-- EDIT5 SECTION "Assistance" [2403-2718] -->
 <h2 class="sectionedit6" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -151,6 +152,6 @@ If you have another TOTP registration interface, you have to set these keys in S
 <pre class="code file json">[{&quot;name&quot; : &quot;MyTOTP&quot; , &quot;type&quot; : &quot;TOTP&quot; , &quot;_secret&quot; : &quot;########&quot; , &quot;epoch&quot;:&quot;1524078936&quot;}, ...]</pre>
 
 </div>
-<!-- EDIT6 SECTION "Developer corner" [2687-] --></div>
+<!-- EDIT6 SECTION "Developer corner" [2719-] --></div>
 </body>
 </html>

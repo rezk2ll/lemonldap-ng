@@ -140,7 +140,7 @@ Different repositories are necessary for LemonLDAP::NG dependencies:
 </li>
 <li class="level1"><div class="li"> Additional packages available on repository.linagora.org or lemonldap-ng.org</div>
 </li>
-<li class="level1"><div class="li"> Suse SDK repository is advised for building packages (yast2 → Software → Software Repositories → Add –&gt; Extensions and modules from Registration Server)</div>
+<li class="level1"><div class="li"> Suse SDK repository is advised for building packages (yast2 -&gt; Software -&gt; Software Repositories -&gt; Add --&gt; Extensions and modules from Registration Server)</div>
 </li>
 </ul>
 
@@ -274,7 +274,7 @@ If you decide to use SSL, you should also activate the appopriate flag:
 <p>
 By default, <abbr title="Domain Name System">DNS</abbr> domain is <code>example.com</code>. You can change it quick with a sed command. For example, we change it to <code>ow2.org</code>:
 </p>
-<pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/{*.conf,*.ini,for_etc_hosts} /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
+<pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/{*.conf,*.ini,for_etc_hosts} /var/lib/lemonldap-ng/conf/lmConf-1</pre>
 
 <p>
 Check Apache configuration and restart:
@@ -283,7 +283,7 @@ Check Apache configuration and restart:
 apachectl restart</pre>
 
 </div>
-<!-- EDIT12 SECTION "Change default DNS domain" [5072-5514] -->
+<!-- EDIT12 SECTION "Change default DNS domain" [5072-5478] -->
 <h3 class="sectionedit13" id="dns">DNS</h3>
 <div class="level3">
 
@@ -304,7 +304,7 @@ Follow the <a href="start.html#configuration" class="wikilink1" title="documenta
 </p>
 
 </div>
-<!-- EDIT13 SECTION "DNS" [5515-5819] -->
+<!-- EDIT13 SECTION "DNS" [5479-5783] -->
 <h2 class="sectionedit14" id="file_location">File location</h2>
 <div class="level2">
 <ul>
@@ -321,7 +321,7 @@ Follow the <a href="start.html#configuration" class="wikilink1" title="documenta
 </ul>
 
 </div>
-<!-- EDIT14 SECTION "File location" [5820-6175] -->
+<!-- EDIT14 SECTION "File location" [5784-6139] -->
 <h2 class="sectionedit15" id="build_your_packages">Build your packages</h2>
 <div class="level2">
 
@@ -350,6 +350,6 @@ Alternatively, you can use the automatic script “create-lemonldap-packages.sh�
 </p>
 
 </div>
-<!-- EDIT15 SECTION "Build your packages" [6176-] --></div>
+<!-- EDIT15 SECTION "Build your packages" [6140-] --></div>
 </body>
 </html>

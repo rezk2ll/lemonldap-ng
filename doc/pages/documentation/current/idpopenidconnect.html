@@ -135,7 +135,7 @@ Go in <code>General Parameters</code> » <code>Issuer modules</code> » <code>Op
 <ul>
 <li class="level1"><div class="li"> <strong>Activation</strong>: set to <code>On</code>.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Path</strong>: keep <code>^/oauth2/</code> unless you need to use another path (in this case, you need to adapt Apache configuration)</div>
+<li class="level1"><div class="li"> <strong>Path</strong>: keep <code>^/oauth2/</code> unless you need to use another path</div>
 </li>
 <li class="level1"><div class="li"> <strong>Use rule</strong>: a rule to allow user to use this module, set to <code>1</code> to always allow.</div>
 </li>
@@ -145,7 +145,7 @@ Go in <code>General Parameters</code> » <code>Issuer modules</code> » <code>Op
 
 </div>
 </div>
-<!-- EDIT5 SECTION "IssuerDB" [1060-1545] -->
+<!-- EDIT5 SECTION "IssuerDB" [1060-1490] -->
 <h3 class="sectionedit6" id="configuration_of_llng_in_relying_party">Configuration of LL::NG in Relying Party</h3>
 <div class="level3">
 
@@ -227,7 +227,7 @@ An example of its content:
 <span class="br0">&#125;</span></pre>
 
 </div>
-<!-- EDIT6 SECTION "Configuration of LL::NG in Relying Party" [1546-3524] -->
+<!-- EDIT6 SECTION "Configuration of LL::NG in Relying Party" [1491-3469] -->
 <h3 class="sectionedit7" id="configuration_of_relying_party_in_llng">Configuration of Relying Party in LL::NG</h3>
 <div class="level3">
 
@@ -342,11 +342,11 @@ You can map here the attribute names from the <abbr title="LemonLDAP::NG">LL::NG
 So you can define for example:
 </p>
 <ul>
-<li class="level1"><div class="li"> name ⇒ cn</div>
+<li class="level1"><div class="li"> name =&gt; cn</div>
 </li>
-<li class="level1"><div class="li"> family_name ⇒ sn</div>
+<li class="level1"><div class="li"> family_name =&gt; sn</div>
 </li>
-<li class="level1"><div class="li"> email ⇒ mail</div>
+<li class="level1"><div class="li"> email =&gt; mail</div>
 </li>
 </ul>
 <div class="noteimportant">The specific <code>sub</code> attribute is not defined here, but in User attribute parameter (see below).
@@ -355,9 +355,9 @@ So you can define for example:
 You can also define extra claims and link them to attributes (see below). Then you just have to define the mapping of this new attributes, for example:
 </p>
 <ul>
-<li class="level1"><div class="li"> birthplace ⇒ l</div>
+<li class="level1"><div class="li"> birthplace =&gt; l</div>
 </li>
-<li class="level1"><div class="li"> birthcountry ⇒ co</div>
+<li class="level1"><div class="li"> birthcountry =&gt; co</div>
 </li>
 </ul>
 
@@ -402,10 +402,10 @@ You can also define extra claims and link them to attributes (see below). Then y
 <div class="level4">
 
 <p>
-Associate attributes to extra claims if the RP request them, for example <code>birth</code> ⇒ <code>birthplace birthcountry</code>
+Associate attributes to extra claims if the RP request them, for example <code>birth</code> =&gt; <code>birthplace birthcountry</code>
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Configuration of Relying Party in LL::NG" [3525-] --></div>
+<!-- EDIT7 SECTION "Configuration of Relying Party in LL::NG" [3470-] --></div>
 </body>
 </html>

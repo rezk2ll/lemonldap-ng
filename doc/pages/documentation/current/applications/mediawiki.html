@@ -165,7 +165,7 @@ Add then extension configuration, for example:
 If necessary, use the code below to patch the extension:
 </p>
 <pre class="code">sed -i &quot;s/&#039;wpPassword&#039; =&gt; &#039;&#039;/&#039;wpPassword&#039; =&gt; &#039;none&#039;/&quot; extensions/Auth_remoteuser/Auth_remoteuser.body.php</pre>
-<div class="notewarning">In last version of Auth_remoteuser and Mediawiki, auto-provisioning requires REMOTE_USER to match the normalized mediawiki username (for example: john_doe → john doe), so you may need to patch the extension code if you get the error:
+<div class="notewarning">In last version of Auth_remoteuser and Mediawiki, auto-provisioning requires REMOTE_USER to match the normalized mediawiki username (for example: john_doe -&gt; john doe), so you may need to patch the extension code if you get the error:
 “Unexpected REMOTE_USER authentication failure. Login Error was:WrongPluginPass”
 </div>
 <p>

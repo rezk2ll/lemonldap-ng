@@ -154,11 +154,11 @@ You can get Gitlab <abbr title="Security Assertion Markup Language">SAML</abbr> 
 Register them in <abbr title="LemonLDAP::NG">LL::NG</abbr> and send these <abbr title="Security Assertion Markup Language">SAML</abbr> attributes:
 </p>
 <ul>
-<li class="level1"><div class="li"> mail ⇒ email</div>
+<li class="level1"><div class="li"> mail =&gt; email</div>
 </li>
-<li class="level1"><div class="li"> uid ⇒ uid</div>
+<li class="level1"><div class="li"> uid =&gt; uid</div>
 </li>
-<li class="level1"><div class="li"> cn ⇒ name</div>
+<li class="level1"><div class="li"> cn =&gt; name</div>
 </li>
 </ul>
 <div class="noteimportant">The value from <abbr title="LemonLDAP::NG">LL::NG</abbr> mail session attribute must be the email of the user in Gitlab database, in order to associate accounts.
@@ -182,7 +182,7 @@ You can pass groups to Gitlab. For this, declare groups attribute in gitlab.rb:
 And in <abbr title="LemonLDAP::NG">LL::NG</abbr>, export the groups attribute:
 </p>
 <ul>
-<li class="level1"><div class="li"> groups ⇒ groups</div>
+<li class="level1"><div class="li"> groups =&gt; groups</div>
 </li>
 </ul>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:idpcas</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,idpcas"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="idpcas.html"/>
@@ -79,7 +79,7 @@ AS server
 <abbr title="LemonLDAP::NG">LL::NG</abbr> can be used as a <abbr title="Central Authentication Service">CAS</abbr> server. It can allow one to federate <abbr title="LemonLDAP::NG">LL::NG</abbr> with:
 </p>
 <ul>
-<li class="level1"><div class="li"> Another <a href="authcas.html" class="wikilink1" title="documentation:2.1:authcas">CAS authentication</a> <abbr title="LemonLDAP::NG">LL::NG</abbr> provider</div>
+<li class="level1"><div class="li"> Another <a href="authcas.html" class="wikilink1" title="documentation:2.0:authcas">CAS authentication</a> <abbr title="LemonLDAP::NG">LL::NG</abbr> provider</div>
 </li>
 <li class="level1"><div class="li"> Any <abbr title="Central Authentication Service">CAS</abbr> consumer</div>
 </li>
@@ -107,10 +107,15 @@ In the Manager, go in <code>General Parameters</code> » <code>Issuer modules</c
 </li>
 <li class="level1"><div class="li"> <strong>Path</strong>: it is recommended to keep the default value (<code>^/cas/</code>)</div>
 </li>
+<li class="level1"><div class="li"> <strong>Use rule</strong>: a rule to allow user to use this module, set to <code>1</code> to always allow.</div>
+</li>
 </ul>
+<div class="notetip">For example, to allow only users with a strong authentication level:
+<pre class="code">$authenticationLevel &gt; 2</pre>
 
 </div>
-<!-- EDIT3 SECTION "Enabling CAS" [417-640] -->
+</div>
+<!-- EDIT3 SECTION "Enabling CAS" [417-858] -->
 <h3 class="sectionedit4" id="configuring_the_cas_service">Configuring the CAS Service</h3>
 <div class="level3">
 
@@ -132,13 +137,13 @@ Then go in <code><abbr title="Central Authentication Service">CAS</abbr> Service
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> <strong><abbr title="Central Authentication Service">CAS</abbr> session module name and options</strong>: choose a specific module if you do not want to mix <abbr title="Central Authentication Service">CAS</abbr> sessions and normal sessions (see <a href="samlservice.html#saml_sessions_module_name_and_options" class="wikilink1" title="documentation:2.1:samlservice">why</a>).</div>
+<li class="level1"><div class="li"> <strong><abbr title="Central Authentication Service">CAS</abbr> session module name and options</strong>: choose a specific module if you do not want to mix <abbr title="Central Authentication Service">CAS</abbr> sessions and normal sessions (see <a href="samlservice.html#saml_sessions_module_name_and_options" class="wikilink1" title="documentation:2.0:samlservice">why</a>).</div>
 </li>
 </ul>
 <div class="notetip">If <code><abbr title="Central Authentication Service">CAS</abbr> login</code> is not set, it uses <code>General Parameters</code> » <code>Logs</code> » <code>REMOTE_USER</code> data, which is set to <code>uid</code> by default
 </div>
 </div>
-<!-- EDIT4 SECTION "Configuring the CAS Service" [641-1923] -->
+<!-- EDIT4 SECTION "Configuring the CAS Service" [859-2141] -->
 <h3 class="sectionedit5" id="configuring_cas_applications">Configuring CAS Applications</h3>
 <div class="level3">
 
@@ -180,6 +185,6 @@ The attributes defined here will completely replace any attributes you may have 
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Configuring CAS Applications" [1924-] --></div>
+<!-- EDIT5 SECTION "Configuring CAS Applications" [2142-] --></div>
 </body>
 </html>

@@ -138,7 +138,7 @@ If you want to add another, you must write:
 </li>
 <li class="level1"><div class="li"> write the main platform file (<code>Lemonldap::NG::Handler::MyPlatform::Main</code>) that provides required method <em>(see <code>lemonldap-ng-handler/lib/Lemonldap/NG/Handler/*/Main</code> for examples)</em> and inherits from <code>Lemonldap::NG::Handler::Main</code></div>
 </li>
-<li class="level1"><div class="li"> write the “type” wrapper files (AuthBasic,…).</div>
+<li class="level1"><div class="li"> write the “type” wrapper files (AuthBasic,...).</div>
 </li>
 </ul>
 
@@ -161,9 +161,9 @@ Wrapper usually look at this:
 Three actions are needed:
 </p>
 <ul>
-<li class="level1"><div class="li"> declare your own module in the manager “General Parameters » Advanced Parameters » Custom handlers (Nginx)”. Key is the name that will be used below and value is the name of the custom package,</div>
+<li class="level1"><div class="li"> declare your own module in the manager “General Parameters &gt;&gt; Advanced Parameters &gt;&gt; Custom handlers (Nginx)”. Key is the name that will be used below and value is the name of the custom package,</div>
 </li>
-<li class="level1"><div class="li"> in your Nginx configuration file, add <code>LLTYPE=&lt;name&gt;;</code> in the <code>location = /lmauth {…}</code> paragraph</div>
+<li class="level1"><div class="li"> in your Nginx configuration file, add <code>LLTYPE=&lt;name&gt;;</code> in the <code>location = /lmauth {...}</code> paragraph</div>
 </li>
 <li class="level1"><div class="li"> restart FastCGI server(s) <em>(reload is not enough here)</em></div>
 </li>

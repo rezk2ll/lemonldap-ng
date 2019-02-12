@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authsaml</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authsaml"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authsaml.html"/>
@@ -131,15 +131,15 @@ In Manager, go in :
 In <code>General Parameters</code> &gt; <code>Authentication modules</code>, set:
 </p>
 <ul>
-<li class="level1"><div class="li"> Authentication module: <abbr title="Security Assertion Markup Language">SAML</abbr></div>
+<li class="level1"><div class="li"> Authentication module: <abbr title="Security Assertion Markup Language">SAML</abbr> v2</div>
 </li>
-<li class="level1"><div class="li">  Users module: <abbr title="Security Assertion Markup Language">SAML</abbr></div>
+<li class="level1"><div class="li">  Users module: Same (eq <abbr title="Security Assertion Markup Language">SAML</abbr>)</div>
 </li>
 </ul>
 <div class="notetip">As passwords will not be managed by <abbr title="LemonLDAP::NG">LL::NG</abbr>, you can disable <a href="portalmenu.html#menu_modules" class="wikilink1" title="documentation:2.0:portalmenu">menu password module</a>.
 </div>
 </div>
-<!-- EDIT6 SECTION "Authentication and UserDB" [1171-1454] -->
+<!-- EDIT6 SECTION "Authentication and UserDB" [1171-1467] -->
 <h3 class="sectionedit7" id="register_lemonldapng_on_partner_identity_provider">Register LemonLDAP::NG on partner Identity Provider</h3>
 <div class="level3">
 
@@ -152,7 +152,7 @@ They are available at the EntityID <abbr title="Uniform Resource Locator">URL</a
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Register LemonLDAP::NG on partner Identity Provider" [1455-1701] -->
+<!-- EDIT7 SECTION "Register LemonLDAP::NG on partner Identity Provider" [1468-1714] -->
 <h3 class="sectionedit8" id="register_partner_identity_provider_on_lemonldapng">Register partner Identity Provider on LemonLDAP::NG</h3>
 <div class="level3">
 
@@ -299,6 +299,22 @@ These options override service signature options (see <a href="samlservice.html#
 </ul>
 
 </div>
-<!-- EDIT8 SECTION "Register partner Identity Provider on LemonLDAP::NG" [1702-] --></div>
+
+<h5 id="display">Display</h5>
+<div class="level5">
+
+<p>
+Used only if you have more than 1 <abbr title="Security Assertion Markup Language">SAML</abbr> Identity Provider declared
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Display name</strong>: Name of the IDP</div>
+</li>
+<li class="level1"><div class="li"> <strong>Logo</strong>: Logo of the IDP</div>
+</li>
+</ul>
+<div class="notetip">The chosen logo must be in Portal icons directory (<code>portal/static/common/icons/</code>). You can set a custom icon by setting the icon file name directly in the field and copy the logo file in portal icons directory
+</div>
+</div>
+<!-- EDIT8 SECTION "Register partner Identity Provider on LemonLDAP::NG" [1715-] --></div>
 </body>
 </html>

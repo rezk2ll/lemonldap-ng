@@ -123,7 +123,7 @@ Each module that will be used in combination rule must be declared. You must set
 <ul>
 <li class="level1"><div class="li"> the name used in the rule (a uniq string)</div>
 </li>
-<li class="level1"><div class="li"> the type (LDAP, <abbr title="Database Interface">DBI</abbr>,…)</div>
+<li class="level1"><div class="li"> the type (LDAP, <abbr title="Database Interface">DBI</abbr>,...)</div>
 </li>
 <li class="level1"><div class="li"> the scope:</div>
 <ul>
@@ -135,7 +135,7 @@ Each module that will be used in combination rule must be declared. You must set
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> overloaded parameters: you can redefine any LLNG string parameters. For example, if you use 2 different LDAP, the first can use normal configuration and for the second, overwritten parameter can redefine ldapServer,…</div>
+<li class="level1"><div class="li"> overloaded parameters: you can redefine any LLNG string parameters. For example, if you use 2 different LDAP, the first can use normal configuration and for the second, overwritten parameter can redefine ldapServer,...</div>
 </li>
 </ul>
 <div class="noteclassic">To overload parameters, you must select a module, add a parameter and set its value.
@@ -154,7 +154,7 @@ For example:
 		<td class="col0"> DB1 </td><td class="col1"> <abbr title="Database Interface">DBI</abbr> </td><td class="col2"> Auth only </td><td class="col3"> </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0"> DB2 </td><td class="col1"> <abbr title="Database Interface">DBI</abbr> </td><td class="col2"> User DB only </td><td class="col3"> dbiAuthChain ⇒ “mysql:…” </td>
+		<td class="col0"> DB2 </td><td class="col1"> <abbr title="Database Interface">DBI</abbr> </td><td class="col2"> User DB only </td><td class="col3"> dbiAuthChain =&gt; “mysql:...” </td>
 	</tr>
 </table></div>
 <!-- EDIT6 TABLE [1133-1256] -->
@@ -174,6 +174,8 @@ Combination allows:
 <li class="level1"><div class="li"> to chain schemes (example: <code>[LDAP] and [<abbr title="Database Interface">DBI</abbr>]</code>)</div>
 </li>
 <li class="level1"><div class="li"> to test different schemes (example: <code>[LDAP] or [<abbr title="Database Interface">DBI</abbr>]</code>)</div>
+</li>
+<li class="level1"><div class="li"> to mix schemes (example: <code>[Kerberos,LDAP] or [LDAP,LDAP]</code>)</div>
 </li>
 <li class="level1"><div class="li"> to choose authentication scheme depending on some request values</div>
 </li>
@@ -210,7 +212,7 @@ Remember that schemes in rules are the names declared above.
 		<td class="col0 leftalign"> <code>[mySSL and myLDAP, myLDAP ]</code>         </td><td class="col1"> Use mySSL and myLDAP to authentify, myLDAP to get user </td>
 	</tr>
 </table></div>
-<!-- EDIT8 TABLE [2124-2555] --><div class="noteimportant">Note that “or” can&#039;t be used inside a scheme.
+<!-- EDIT8 TABLE [2189-2620] --><div class="noteimportant">Note that “or” can&#039;t be used inside a scheme.
 If you think to “[mySSL or myLDAP, myLDAP]”, you must write <code>[mySSL, myLDAP] or [myLDAP, myLDAP]</code>
 
 </div><div class="table sectionedit9"><table class="inline table table-bordered table-striped">
@@ -226,7 +228,7 @@ If you think to “[mySSL or myLDAP, myLDAP]”, you must write <code>[mySSL, my
 		<td class="col0"> <code>[myDBI1] and [myDBI2] or [myLDAP] and [myDBI2]</code> </td><td class="col1"> Try myDBI1 and myDBI2, if it fails, try myLDAP and myDBI2 </td>
 	</tr>
 </table></div>
-<!-- EDIT9 TABLE [2728-2972] --><div class="noteimportant">You can&#039;t use brackets in a boolean expression and “and” has precedence on “or”.
+<!-- EDIT9 TABLE [2793-3037] --><div class="noteimportant">You can&#039;t use brackets in a boolean expression and “and” has precedence on “or”.
 <p>
 If you think to “( [myLDAP] or [myDBI1] ) and [myDBI2]”, you must write <code>[myLDAP] and [myDBI2] or [myDBI1] and [myDBI2]</code>
 </p>
@@ -247,15 +249,15 @@ Test can use only the <code>$env</code> variable. It contains the FastCGI enviro
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0"> <code>if($env→{REMOTE_ADDR} =~ /^10\./) then [myLDAP] else [mySSL, myLDAP]</code> </td><td class="col1"> If user doesn&#039;t come from 10.0.0.0/8 network, use SSL as authentication module </td>
+		<td class="col0"> <code>if($env-&gt;{REMOTE_ADDR} =~ /^10\./) then [myLDAP] else [mySSL, myLDAP]</code> </td><td class="col1"> If user doesn&#039;t come from 10.0.0.0/8 network, use SSL as authentication module </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0"> <code>if($env→{REMOTE_ADDR} =~ /^10\./) then [myLDAP] else if($env→{REMOTE_ADDR} =~ /^192/) then [myDBI1] else [myDBI2]</code> </td><td class="col1"> Chain tests </td>
+		<td class="col0"> <code>if($env-&gt;{REMOTE_ADDR} =~ /^10\./) then [myLDAP] else if($env-&gt;{REMOTE_ADDR} =~ /^192/) then [myDBI1] else [myDBI2]</code> </td><td class="col1"> Chain tests </td>
 	</tr>
 </table></div>
-<!-- EDIT10 TABLE [3308-3630] --><div class="noteimportant">Note that brackets can&#039;t be used except to enclose test.
+<!-- EDIT10 TABLE [3373-3695] --><div class="noteimportant">Note that brackets can&#039;t be used except to enclose test.
 <p>
-If you wants to write <code>if(…) then if…</code>, you must write <code>if(not …) then … else if(…)…</code>
+If you wants to write <code>if(...) then if...</code>, you must write <code>if(not ...) then ... else if(...)...</code>
 </p>
 
 </div>
@@ -269,11 +271,11 @@ The following rule is valid:
 </p>
 
 <p>
-<code>if($env→{REMOTE_ADDR} =~ /^192\./) then [mySSL, myLDAP] or [myLDAP] else [myLDAP and myDBI, myLDAP]</code>
+<code>if($env-&gt;{REMOTE_ADDR} =~ /^192\./) then [mySSL, myLDAP] or [myLDAP] else [myLDAP and myDBI, myLDAP]</code>
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Rule chain" [1671-3977] -->
+<!-- EDIT7 SECTION "Rule chain" [1671-4042] -->
 <h3 class="sectionedit11" id="combine_second_factor">Combine second factor</h3>
 <div class="level3">
 
@@ -298,7 +300,7 @@ Now if you want to authenticate users either by LDAP or LDAP+U2F <em>(to have 2 
 </ul>
 
 </div>
-<!-- EDIT11 SECTION "Combine second factor" [3978-4627] -->
+<!-- EDIT11 SECTION "Combine second factor" [4043-4692] -->
 <h3 class="sectionedit12" id="display_multiple_forms">Display multiple forms</h3>
 <div class="level3">
 
@@ -309,12 +311,12 @@ Combination module returns the form corresponding to the first authentication sc
 <span class="re1">combinationForms</span> <span class="sy0">=</span><span class="re2"> standardform, openidform</span></pre>
 
 </div>
-<!-- EDIT12 SECTION "Display multiple forms" [4628-4956] -->
+<!-- EDIT12 SECTION "Display multiple forms" [4693-5021] -->
 <h2 class="sectionedit13" id="known_problems">Known problems</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT13 SECTION "Known problems" [4957-4984] -->
+<!-- EDIT13 SECTION "Known problems" [5022-5049] -->
 <h3 class="sectionedit14" id="federation_protocols">Federation protocols</h3>
 <div class="level3">
 
@@ -334,9 +336,9 @@ Combination module returns the form corresponding to the first authentication sc
 		<td class="col0"> <em><code>[<abbr title="Security Assertion Markup Language">SAML</abbr>] and [LDAP] or [LDAP]</code></em> </td><td class="col1"> <code>[<abbr title="Security Assertion Markup Language">SAML</abbr>, <abbr title="Security Assertion Markup Language">SAML</abbr> and LDAP] or [LDAP]</code> </td><td class="col2"> Authentication is done by <abbr title="Security Assertion Markup Language">SAML</abbr> or LDAP but user must match an LDAP entry </td>
 	</tr>
 </table></div>
-<!-- EDIT15 TABLE [5284-5616] -->
+<!-- EDIT15 TABLE [5349-5681] -->
 </div>
-<!-- EDIT14 SECTION "Federation protocols" [4985-5617] -->
+<!-- EDIT14 SECTION "Federation protocols" [5050-5682] -->
 <h3 class="sectionedit16" id="authapache_authentication">Auth::Apache authentication</h3>
 <div class="level3">
 
@@ -354,7 +356,7 @@ To bypass this, follow the documentation of <a href="authapache.html" class="wik
 </p>
 
 </div>
-<!-- EDIT16 SECTION "Auth::Apache authentication" [5618-6229] -->
+<!-- EDIT16 SECTION "Auth::Apache authentication" [5683-6294] -->
 <h3 class="sectionedit17" id="ssl_authentication">SSL authentication</h3>
 <div class="level3">
 
@@ -363,6 +365,6 @@ To chain SSL, you have to set “SSLRequire optional” in Apache configuration,
 </p>
 
 </div>
-<!-- EDIT17 SECTION "SSL authentication" [6230-] --></div>
+<!-- EDIT17 SECTION "SSL authentication" [6295-] --></div>
 </body>
 </html>

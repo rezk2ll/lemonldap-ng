@@ -97,17 +97,17 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </p>
 
 <p>
-<a href="llng_deps.png_documentation_2.0_prereq.html" class="media" title="documentation:2.0:llng_deps.png"><img src="llng_deps.480eb0864712527af24b7886eca761d1.png" class="mediacenter" alt="" width="600" /></a>
+<a href="documentation/llng_deps.png_documentation_2.0_prereq.html" class="media" title="documentation:llng_deps.png"><img src="documentation/llng_deps.5777cea9f5c8fa98053294e9fcbf9e90.png" class="mediacenter" alt="" width="600" /></a>
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Web Server" [48-610] -->
+<!-- EDIT2 SECTION "Web Server" [48-594] -->
 <h2 class="sectionedit3" id="perl">Perl</h2>
 <div class="level2">
 <div class="noteclassic">Here the list of Perl modules used in LemonLDAP::NG. Core modules must be installed on the system. Other modules are required only if you plan to use related features.
 </div>
 </div>
-<!-- EDIT3 SECTION "Perl" [611-810] -->
+<!-- EDIT3 SECTION "Perl" [595-794] -->
 <h3 class="sectionedit4" id="core">Core</h3>
 <div class="level3">
 <ul>
@@ -128,6 +128,8 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 <li class="level1"><div class="li"> Crypt::OpenSSL::X509</div>
 </li>
 <li class="level1"><div class="li"> Crypt::Rijndael</div>
+</li>
+<li class="level1"><div class="li"> Crypt::URandom</div>
 </li>
 <li class="level1"><div class="li"> <abbr title="Database Interface">DBI</abbr></div>
 </li>
@@ -182,7 +184,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Core" [811-1434] -->
+<!-- EDIT4 SECTION "Core" [795-1437] -->
 <h3 class="sectionedit5" id="deprecated_features">Deprecated features</h3>
 <div class="level3">
 <ul>
@@ -205,7 +207,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </ul>
 
 </div>
-<!-- EDIT5 SECTION "Deprecated features" [1435-1603] -->
+<!-- EDIT5 SECTION "Deprecated features" [1438-1606] -->
 <h3 class="sectionedit6" id="saml2">SAML2</h3>
 <div class="level3">
 <ul>
@@ -218,7 +220,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </ul>
 
 </div>
-<!-- EDIT6 SECTION "SAML2" [1604-1689] -->
+<!-- EDIT6 SECTION "SAML2" [1607-1692] -->
 <h3 class="sectionedit7" id="second_factor">Second factor</h3>
 <div class="level3">
 <ul>
@@ -229,7 +231,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </ul>
 
 </div>
-<!-- EDIT7 SECTION "Second factor" [1690-1783] -->
+<!-- EDIT7 SECTION "Second factor" [1693-1786] -->
 <h3 class="sectionedit8" id="specific_authentication_backends">Specific authentication backends</h3>
 <div class="level3">
 <ul>
@@ -272,7 +274,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </ul>
 
 </div>
-<!-- EDIT8 SECTION "Specific authentication backends" [1784-2012] -->
+<!-- EDIT8 SECTION "Specific authentication backends" [1787-2015] -->
 <h3 class="sectionedit9" id="smtpreset_password_by_mail">SMTP / Reset password by mail</h3>
 <div class="level3">
 <ul>
@@ -285,7 +287,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "SMTP / Reset password by mail" [2013-2105] -->
+<!-- EDIT9 SECTION "SMTP / Reset password by mail" [2016-2108] -->
 <h3 class="sectionedit10" id="unit_tests">Unit tests</h3>
 <div class="level3">
 <ul>
@@ -302,7 +304,7 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </ul>
 
 </div>
-<!-- EDIT10 SECTION "Unit tests" [2106-2219] -->
+<!-- EDIT10 SECTION "Unit tests" [2109-2222] -->
 <h2 class="sectionedit11" id="other">Other</h2>
 <div class="level2">
 <ul>
@@ -311,20 +313,20 @@ For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-
 </ul>
 
 </div>
-<!-- EDIT11 SECTION "Other" [2220-2354] -->
+<!-- EDIT11 SECTION "Other" [2223-2357] -->
 <h2 class="sectionedit12" id="install_dependencies_on_your_system">Install dependencies on your system</h2>
 <div class="level2">
 <div class="notewarning">You don&#039;t need to install them if you use <abbr title="LemonLDAP::NG">LL::NG</abbr> packages. With <code>apt</code> or <code>yum</code>, dependencies will be automatically installed.
 </div>
 </div>
-<!-- EDIT12 SECTION "Install dependencies on your system" [2355-2554] -->
+<!-- EDIT12 SECTION "Install dependencies on your system" [2358-2557] -->
 <h3 class="sectionedit13" id="apt">APT</h3>
 <div class="level3">
 
 <p>
 Perl dependencies:
 </p>
-<pre class="code">apt install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhtml-template-perl libio-string-perl libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl libxml-libxslt-perl</pre>
+<pre class="code">apt install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhtml-template-perl libio-string-perl libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl libxml-libxslt-perl libcrypt-urandom-perl</pre>
 
 <p>
 For Apache:
@@ -337,7 +339,7 @@ For Nginx:
 <pre class="code">apt install nginx nginx-extras</pre>
 
 </div>
-<!-- EDIT13 SECTION "APT" [2555-3333] -->
+<!-- EDIT13 SECTION "APT" [2558-3358] -->
 <h3 class="sectionedit14" id="yum">YUM</h3>
 <div class="level3">
 <div class="notetip">You need  <a href="http://fedoraproject.org/wiki/EPEL/" class="urlextern" title="http://fedoraproject.org/wiki/EPEL/"  rel="nofollow">EPEL</a> repository. See below how to enable this repository: <a href="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse" class="urlextern" title="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse"  rel="nofollow">http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</a>
@@ -359,6 +361,6 @@ For Nginx:
 <div class="noteimportant">As you need a recent version of Nginx, the best is to install <a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-red-hat-centos-packages" class="urlextern" title="https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-red-hat-centos-packages"  rel="nofollow">Nginx official packages</a>.
 </div>
 </div>
-<!-- EDIT14 SECTION "YUM" [3334-] --></div>
+<!-- EDIT14 SECTION "YUM" [3359-] --></div>
 </body>
 </html>

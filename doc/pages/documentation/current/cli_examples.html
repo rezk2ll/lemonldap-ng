@@ -76,7 +76,7 @@ This page shows some examples of <abbr title="LemonLDAP::NG">LL::NG</abbr> Comma
 <div class="level2">
 
 <p>
-When setting HTTPS, you first need to modify Apache/Nginx configuration, then you must configure <abbr title="LemonLDAP::NG">LL::NG</abbr> to change portal <abbr title="Uniform Resource Locator">URL</abbr>, Handler redirections, cookie settings, …
+When setting HTTPS, you first need to modify Apache/Nginx configuration, then you must configure <abbr title="LemonLDAP::NG">LL::NG</abbr> to change portal <abbr title="Uniform Resource Locator">URL</abbr>, Handler redirections, cookie settings, ...
 </p>
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set portal https://auth.example.com https 1 securedCookie 1</pre>
 
@@ -154,9 +154,9 @@ In this example we have:
 </li>
 <li class="level1"><div class="li"> Access rules:</div>
 <ul>
-<li class="level2"><div class="li"> default ⇒ accept</div>
+<li class="level2"><div class="li"> default =&gt; accept</div>
 </li>
-<li class="level2"><div class="li"> Logout: ^/logout\.php ⇒ logout_sso</div>
+<li class="level2"><div class="li"> Logout: ^/logout\.php =&gt; logout_sso</div>
 </li>
 </ul>
 </li>
@@ -190,17 +190,17 @@ In this example we use:
 </li>
 <li class="level1"><div class="li"> LDAP attributes:</div>
 <ul>
-<li class="level2"><div class="li"> uid ⇒ uid</div>
+<li class="level2"><div class="li"> uid =&gt; uid</div>
 </li>
-<li class="level2"><div class="li"> cn ⇒ cn</div>
+<li class="level2"><div class="li"> cn =&gt; cn</div>
 </li>
-<li class="level2"><div class="li"> mail ⇒ mail</div>
+<li class="level2"><div class="li"> mail =&gt; mail</div>
 </li>
-<li class="level2"><div class="li"> sn ⇒ sn</div>
+<li class="level2"><div class="li"> sn =&gt; sn</div>
 </li>
-<li class="level2"><div class="li"> givenName ⇒ givenName</div>
+<li class="level2"><div class="li"> givenName =&gt; givenName</div>
 </li>
-<li class="level2"><div class="li"> mobile ⇒ mobile</div>
+<li class="level2"><div class="li"> mobile =&gt; mobile</div>
 </li>
 </ul>
 </li>
@@ -309,11 +309,11 @@ In this example we have:
 </li>
 <li class="level1"><div class="li"> Exported attributes:</div>
 <ul>
-<li class="level2"><div class="li"> email ⇒ mail</div>
+<li class="level2"><div class="li"> email =&gt; mail</div>
 </li>
-<li class="level2"><div class="li"> familiy_name ⇒ sn</div>
+<li class="level2"><div class="li"> familiy_name =&gt; sn</div>
 </li>
-<li class="level2"><div class="li"> name ⇒ cn</div>
+<li class="level2"><div class="li"> name =&gt; cn</div>
 </li>
 </ul>
 </li>
@@ -346,17 +346,21 @@ In this example we have:
 
 <p>
 Create the category “applications”:
-```
-/usr/share/lemonldap-ng/bin/lemonldap-ng-cli addKey applicationList/applications type category  applicationList/applications catname Applications
-```
 </p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli addKey \
+applicationList/applications type category \
+applicationList/applications catname Applications</pre>
 
 <p>
 Create the application “sample” inside category “applications”:
-```
-/usr/share/lemonldap-ng/bin/lemonldap-ng-cli addKey applicationList/icons/kmultiple.png” applicationList/applications/sample/options name “Sample application” applicationList/applications/sample/options uri “<a href="https://sample.example.com/" class="urlextern" title="https://sample.example.com/"  rel="nofollow">https://sample.example.com/</a>”
-```
 </p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli addKey \
+applicationList/applications/sample type application \
+applicationList/applications/sample/options description &quot;A sample application&quot; \
+applicationList/applications/sample/options display &quot;auto&quot; \
+applicationList/icons/kmultiple.png&quot; \
+applicationList/applications/sample/options name &quot;Sample application&quot; \
+applicationList/applications/sample/options uri &quot;https://sample.example.com/&quot;</pre>
 
 </div>
 <!-- EDIT10 SECTION "Categories and applications in menu" [9178-] --></div>

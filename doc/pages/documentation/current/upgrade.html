@@ -141,7 +141,7 @@ For <abbr title="Security Assertion Markup Language">SAML</abbr> features, we re
 </li>
 <li class="level1"><div class="li"> Portal skins are now in <code>/usr/share/lemonldap-ng/portal/templates</code>. See <a href="portalcustom.html#skin_customization" class="wikilink1" title="documentation:2.0:portalcustom">skin customization</a> to adapt your templates.</div>
 </li>
-<li class="level1"><div class="li"> User module in authentication parameters now provides a “Same as authentication” value. You must revalidate it in the manager since all special values must be replaced by this <em>(Multi, Choice, Proxy, Slave, <abbr title="Security Assertion Markup Language">SAML</abbr>, OpenID*,…)</em></div>
+<li class="level1"><div class="li"> User module in authentication parameters now provides a “Same as authentication” value. You must revalidate it in the manager since all special values must be replaced by this <em>(Multi, Choice, Proxy, Slave, <abbr title="Security Assertion Markup Language">SAML</abbr>, OpenID*,...)</em></div>
 </li>
 <li class="level1"><div class="li"> <strong>“Multi” doesn&#039;t exist anymore</strong>: it is replaced by <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination</a>, a more powerful module.</div>
 </li>
@@ -152,14 +152,18 @@ For <abbr title="Security Assertion Markup Language">SAML</abbr> features, we re
 </ul>
 <pre class="code :perl">  mailUrl <span class="sy0">=&gt;</span> <span class="st_h">'http://auth.example.com/resetpwd'</span><span class="sy0">,</span>
   registerUrl <span class="sy0">=&gt;</span> <span class="st_h">'http://auth.example.com/register'</span><span class="sy0">,</span></pre>
-<div class="noteimportant">Apache mod_perl has got lot of troubleshooting problems since 2.4 version<em>(many segfaults,…)</em>, especially when using mpm-worker. That&#039;s why <abbr title="LemonLDAP::NG">LL::NG</abbr> doesn&#039;t use anymore ModPerl::Registry: all is now handled by FastCGI <em>(portal and manager)</em>.
+<ul>
+<li class="level1"><div class="li"> Option <code>trustedProxies</code> was removed, you must now configure your Web Server to manage <code>X-Forwarded-For</code> header, see <a href="behindproxyminihowto.html" class="wikilink1" title="documentation:2.0:behindproxyminihowto">how to run LL::NG behind a reverse proxy</a>.</div>
+</li>
+</ul>
+<div class="noteimportant">Apache mod_perl has got lot of troubleshooting problems since 2.4 version <em>(many segfaults,...)</em>, especially when using MPM worker or MPM event. That&#039;s why <abbr title="LemonLDAP::NG">LL::NG</abbr> doesn&#039;t use anymore ModPerl::Registry: all is now handled by FastCGI <em>(portal and manager)</em>, except for Apache2 Handler.
 <p>
-<strong>For Handlers, it is now recommended to migrate to Nginx</strong>, but Apache 2 is still supported
+<strong>For Handlers, it is now recommended to migrate to Nginx</strong>, but Apache 2.4 is still supported with MPM prefork.
 </p>
 
 </div>
 </div>
-<!-- EDIT4 SECTION "Configuration" [1094-2668] -->
+<!-- EDIT4 SECTION "Configuration" [1094-2921] -->
 <h3 class="sectionedit5" id="configuration_refresh">Configuration refresh</h3>
 <div class="level3">
 
@@ -169,7 +173,7 @@ Now portal has the same behavior than handlers: it looks to configuration stored
 <div class="noteimportant">If you want to use reload mechanism on a portal only host, you must install a handler in Portal host to be able to refresh local cache. Include <code>handler-nginx.conf</code> or <code>handler-apache2.conf</code> for example
 </div>
 </div>
-<!-- EDIT5 SECTION "Configuration refresh" [2669-3090] -->
+<!-- EDIT5 SECTION "Configuration refresh" [2922-3343] -->
 <h2 class="sectionedit6" id="ldap_connection">LDAP connection</h2>
 <div class="level2">
 
@@ -178,7 +182,7 @@ Now LDAP connections are kept open to improve performances. To allow that, <abbr
 </p>
 
 </div>
-<!-- EDIT6 SECTION "LDAP connection" [3091-3274] -->
+<!-- EDIT6 SECTION "LDAP connection" [3344-3527] -->
 <h2 class="sectionedit7" id="kerberos_or_ssl_usage">Kerberos or SSL usage</h2>
 <div class="level2">
 <ul>
@@ -189,7 +193,7 @@ Now LDAP connections are kept open to improve performances. To allow that, <abbr
 </ul>
 
 </div>
-<!-- EDIT7 SECTION "Kerberos or SSL usage" [3275-3783] -->
+<!-- EDIT7 SECTION "Kerberos or SSL usage" [3528-4036] -->
 <h2 class="sectionedit8" id="logs">Logs</h2>
 <div class="level2">
 <ul>
@@ -197,10 +201,12 @@ Now LDAP connections are kept open to improve performances. To allow that, <abbr
 </li>
 <li class="level1"><div class="li"> <strong>Apache2</strong>: Portal doesn&#039;t use anymore Apache2 logger. Logs are always written to Apache error.log but Apache “LogLevel” parameter has no more effect on it. Portal is now a FastCGI application and doesn&#039;t use anymore ModPerl. See <a href="logs.html" class="wikilink1" title="documentation:2.0:logs">logs</a> for more.</div>
 </li>
+<li class="level1"><div class="li"> If you are running behind a proxy, make sure LemonLDAP::NG can <a href="behindproxyminihowto.html" class="wikilink1" title="documentation:2.0:behindproxyminihowto">see the original IP address</a> of incoming HTTP connections</div>
+</li>
 </ul>
 
 </div>
-<!-- EDIT8 SECTION "Logs" [3784-4198] -->
+<!-- EDIT8 SECTION "Logs" [4037-4618] -->
 <h2 class="sectionedit9" id="security">Security</h2>
 <div class="level2">
 
@@ -215,7 +221,7 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "Security" [4199-4766] -->
+<!-- EDIT9 SECTION "Security" [4619-5186] -->
 <h2 class="sectionedit10" id="handlers">Handlers</h2>
 <div class="level2">
 <ul>
@@ -229,12 +235,12 @@ LLNG portal now embeds the following features:
 </li>
 <li class="level1"><div class="li"> <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a>, <a href="documentation/latest/applications/zimbra.html" class="wikilink1" title="documentation:latest:applications:zimbra">ZimbraPreAuth</a>, <a href="securetoken.html" class="wikilink1" title="documentation:2.0:securetoken">SecureToken</a> and <a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic</a> are now <a href="handlerarch.html" class="wikilink1" title="documentation:2.0:handlerarch">Handler Types</a>. So there is no more special file to load: you just have to choose “VirtualHost type” in the manager/VirtualHosts.</div>
 </li>
-<li class="level1"><div class="li"> <a href="ssocookie.html" class="wikilink1" title="documentation:2.0:ssocookie">SSOCookie</a>: Since Firefox 60 and Chrome 68, “+2d, +5M, 12h and so on…” cookie expiration time notation is no more supported. CookieExpiration value is a number of seconds until the cookie expires. A zero or negative number will expire the cookie immediately.</div>
+<li class="level1"><div class="li"> <a href="ssocookie.html" class="wikilink1" title="documentation:2.0:ssocookie">SSOCookie</a>: Since Firefox 60 and Chrome 68, “+2d, +5M, 12h and so on...” cookie expiration time notation is no more supported. CookieExpiration value is a number of seconds until the cookie expires. A zero or negative number will expire the cookie immediately.</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT10 SECTION "Handlers" [4767-5852] -->
+<!-- EDIT10 SECTION "Handlers" [5187-6272] -->
 <h2 class="sectionedit11" id="rules_and_headers">Rules and headers</h2>
 <div class="level2">
 <ul>
@@ -247,7 +253,7 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT11 SECTION "Rules and headers" [5853-6171] -->
+<!-- EDIT11 SECTION "Rules and headers" [6273-6591] -->
 <h2 class="sectionedit12" id="supported_servers">Supported servers</h2>
 <div class="level2">
 <ul>
@@ -256,7 +262,7 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT12 SECTION "Supported servers" [6172-6317] -->
+<!-- EDIT12 SECTION "Supported servers" [6592-6737] -->
 <h2 class="sectionedit13" id="ajax_requests">Ajax requests</h2>
 <div class="level2">
 
@@ -265,7 +271,7 @@ Before 2.0, an Ajax query launched after session timeout received a 302 code. No
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Ajax requests" [6318-6515] -->
+<!-- EDIT13 SECTION "Ajax requests" [6738-6935] -->
 <h2 class="sectionedit14" id="soaprest_services">SOAP/REST services</h2>
 <div class="level2">
 <ul>
@@ -281,7 +287,7 @@ Before 2.0, an Ajax query launched after session timeout received a 302 code. No
 <div class="noteimportant"><a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic Handler</a> uses now REST services instead of SOAP.
 </div>
 </div>
-<!-- EDIT14 SECTION "SOAP/REST services" [6516-7113] -->
+<!-- EDIT14 SECTION "SOAP/REST services" [6936-7533] -->
 <h2 class="sectionedit15" id="cas">CAS</h2>
 <div class="level2">
 
@@ -294,12 +300,12 @@ Before 2.0, an Ajax query launched after session timeout received a 302 code. No
 </p>
 
 </div>
-<!-- EDIT15 SECTION "CAS" [7114-7491] -->
+<!-- EDIT15 SECTION "CAS" [7534-7911] -->
 <h2 class="sectionedit16" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT16 SECTION "Developer corner" [7492-7521] -->
+<!-- EDIT16 SECTION "Developer corner" [7912-7941] -->
 <h3 class="sectionedit17" id="apis">APIs</h3>
 <div class="level3">
 
@@ -308,7 +314,7 @@ Portal has now many REST features and includes an <abbr title="Application Progr
 </p>
 
 </div>
-<!-- EDIT17 SECTION "APIs" [7522-7683] -->
+<!-- EDIT17 SECTION "APIs" [7942-8103] -->
 <h3 class="sectionedit18" id="portal_overview">Portal overview</h3>
 <div class="level3">
 
@@ -330,7 +336,7 @@ Requests are independent objects based on Lemonldap::NG::Portal::Main::Request w
 </p>
 
 </div>
-<!-- EDIT18 SECTION "Portal overview" [7684-8159] -->
+<!-- EDIT18 SECTION "Portal overview" [8104-8579] -->
 <h3 class="sectionedit19" id="handler">Handler</h3>
 <div class="level3">
 
@@ -343,6 +349,6 @@ If you used self protected CGI, you also need to rewrite them, see <a href="self
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Handler" [8160-] --></div>
+<!-- EDIT19 SECTION "Handler" [8580-] --></div>
 </body>
 </html>
