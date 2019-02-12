@@ -5,6 +5,18 @@ objectClass: dcObject
 dc: example
 o: Example
 
+dn: ou=dsa,dc=example,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: dsa
+
+dn: cn=lemonldapng,ou=dsa,dc=example,dc=com
+objectClass: top
+objectClass: organizationalRole
+objectClass: simpleSecurityObject
+cn: lemonldapng
+userPassword: lemonldapng
+
 dn: ou=users,dc=example,dc=com
 objectClass: top
 objectClass: organizationalUnit

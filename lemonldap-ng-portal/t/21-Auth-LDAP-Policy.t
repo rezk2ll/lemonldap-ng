@@ -25,8 +25,8 @@ SKIP: {
                 portalRequireOldPassword      => 1,
                 ldapServer                    => 'ldap://127.0.0.1:19389/',
                 ldapBase                      => 'ou=users,dc=example,dc=com',
-                managerDn                     => 'cn=admin,dc=example,dc=com',
-                managerPassword               => 'admin',
+                managerDn                     => 'cn=lemonldapng,ou=dsa,dc=example,dc=com',
+                managerPassword               => 'lemonldapng',
                 ldapAllowResetExpiredPassword => 1,
                 ldapPpolicyControl            => 1,
             }
