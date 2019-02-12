@@ -7,7 +7,7 @@ require 't/test-lib.pm';
 use lib 't/lib';
 
 my $res;
-my $maintests = 16;
+my $maintests = 22;
 
 SKIP: {
     skip( 'LLNGTESTLDAP is not set', $maintests ) unless ( $ENV{LLNGTESTLDAP} );
@@ -33,7 +33,11 @@ SKIP: {
         }
     );
     use Lemonldap::NG::Portal::Main::Constants 'PE_PP_CHANGE_AFTER_RESET',
-      'PE_PP_PASSWORD_EXPIRED', 'PE_PASSWORD_OK', 'PE_PP_ACCOUNT_LOCKED';
+      'PE_PP_PASSWORD_EXPIRED', 'PE_PASSWORD_OK', 'PE_PP_ACCOUNT_LOCKED',
+      'PE_PP_PASSWORD_TOO_SHORT';
+
+    # 1 - TEST PE_PP_CHANGE_AFTER_RESET AND PE_PP_PASSWORD_EXPIRED
+    # ------------------------------------------------------------
     foreach my $tpl (
         [ 'reset',  PE_PP_CHANGE_AFTER_RESET ],
         [ 'expire', PE_PP_PASSWORD_EXPIRED ]
@@ -87,6 +91,9 @@ SKIP: {
         );
         expectCookie($res) or print STDERR Dumper($res);
     }
+
+    # 2 - TEST PE_PP_ACCOUNT_LOCKED
+    # -------------------------
     my $user       = 'lock';
     my $code       = PE_PP_ACCOUNT_LOCKED;
     my $postString = "user=$user&password=$user";
@@ -118,7 +125,60 @@ SKIP: {
     $match = 'trmsg="' . PE_PASSWORD_OK . '"';
     ok( $res->[2]->[0] !~ /$match/s, 'Password is not changed' );
 
-    #print STDERR Dumper($res);
+    # 3 - TEST PE_PP_PASSWORD_TOO_SHORT
+    # ---------------------------------
+    $user = 'short';
+    $code = PE_PP_PASSWORD_TOO_SHORT;
+    $postString = "user=$user&password=passwordnottooshort";
+
+    # Try yo authenticate
+    # -------------------
+    ok(
+        $res = $client->_post(
+            '/', IO::String->new($postString),
+            length => length($postString),
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+    my $id = expectCookie($res);
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new(
+                'oldpassword=passwordnottooshort&newpassword=test&confirmpassword=test'),
+            cookie => "lemonldap=$id",
+            accept => 'text/html',
+            length => 69
+        ),
+        'Change password'
+    );
+    $match = 'trmsg="' . PE_PP_PASSWORD_TOO_SHORT . '"';
+    ok( $res->[2]->[0] =~ /$match/s, 'Password is not changed' );
+    # Verify that password isn't changed
+    $client->logout($id);
+    ok(
+        $res = $client->_post(
+            '/', IO::String->new($postString),
+            length => length($postString),
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+    my $id = expectCookie($res);
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new(
+                'oldpassword=passwordnottooshort&newpassword=testmore&confirmpassword=testmore'),
+            cookie => "lemonldap=$id",
+            accept => 'text/html',
+            length => 54
+        ),
+        'Change password'
+    );
+    $match = 'trmsg="' . PE_PASSWORD_OK . '"';
+    ok( $res->[2]->[0] !~ /$match/s, 'Password is not changed' );
 }
 count($maintests);
 clean_sessions();
