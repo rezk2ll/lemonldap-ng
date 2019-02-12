@@ -16,17 +16,17 @@ SKIP: {
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel                      => 'error',
-                useSafeJail                   => 1,
-                authentication                => 'LDAP',
-                portal                        => 'http://auth.example.com/',
-                userDB                        => 'Same',
-                passwordDB                    => 'LDAP',
-                portalRequireOldPassword      => 1,
-                ldapServer                    => 'ldap://127.0.0.1:19389/',
-                ldapBase                      => 'ou=users,dc=example,dc=com',
-                managerDn                     => 'cn=lemonldapng,ou=dsa,dc=example,dc=com',
-                managerPassword               => 'lemonldapng',
+                logLevel                 => 'error',
+                useSafeJail              => 1,
+                authentication           => 'LDAP',
+                portal                   => 'http://auth.example.com/',
+                userDB                   => 'Same',
+                passwordDB               => 'LDAP',
+                portalRequireOldPassword => 1,
+                ldapServer               => 'ldap://127.0.0.1:19389/',
+                ldapBase                 => 'ou=users,dc=example,dc=com',
+                managerDn       => 'cn=lemonldapng,ou=dsa,dc=example,dc=com',
+                managerPassword => 'lemonldapng',
                 ldapAllowResetExpiredPassword => 1,
                 ldapPpolicyControl            => 1,
             }
@@ -127,8 +127,8 @@ SKIP: {
 
     # 3 - TEST PE_PP_PASSWORD_TOO_SHORT
     # ---------------------------------
-    $user = 'short';
-    $code = PE_PP_PASSWORD_TOO_SHORT;
+    $user       = 'short';
+    $code       = PE_PP_PASSWORD_TOO_SHORT;
     $postString = "user=$user&password=passwordnottooshort";
 
     # Try yo authenticate
@@ -142,19 +142,21 @@ SKIP: {
         'Auth query'
     );
     my $id = expectCookie($res);
+    $query =
+      'oldpassword=passwordnottooshort&newpassword=test&confirmpassword=test';
     ok(
         $res = $client->_post(
             '/',
-            IO::String->new(
-                'oldpassword=passwordnottooshort&newpassword=test&confirmpassword=test'),
+            IO::String->new($query),
             cookie => "lemonldap=$id",
             accept => 'text/html',
-            length => 69
+            length => length($query),
         ),
         'Change password'
     );
     $match = 'trmsg="' . PE_PP_PASSWORD_TOO_SHORT . '"';
     ok( $res->[2]->[0] =~ /$match/s, 'Password is not changed' );
+
     # Verify that password isn't changed
     $client->logout($id);
     ok(
@@ -165,20 +167,21 @@ SKIP: {
         ),
         'Auth query'
     );
-    my $id = expectCookie($res);
+    $id = expectCookie($res);
+    $query =
+'oldpassword=passwordnottooshort&newpassword=testmore&confirmpassword=testmore';
     ok(
         $res = $client->_post(
             '/',
-            IO::String->new(
-                'oldpassword=passwordnottooshort&newpassword=testmore&confirmpassword=testmore'),
+            IO::String->new($query),
             cookie => "lemonldap=$id",
             accept => 'text/html',
-            length => 54
+            length => length($query),
         ),
         'Change password'
     );
     $match = 'trmsg="' . PE_PASSWORD_OK . '"';
-    ok( $res->[2]->[0] !~ /$match/s, 'Password is not changed' );
+    ok( $res->[2]->[0] =~ /$match/s, 'Password is changed' );
 }
 count($maintests);
 clean_sessions();
