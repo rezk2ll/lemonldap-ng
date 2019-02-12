@@ -1,4 +1,4 @@
-lemonldap-ng (2.0.2) artful; urgency=medium
+lemonldap-ng (2.0.2) bionic; urgency=medium
 
   * Bugs:
     * #1574: "Manager is unprotected" message when whatToTrace value is not the default
@@ -18,6 +18,8 @@ lemonldap-ng (2.0.2) artful; urgency=medium
     * #1642: Unable to select skin from URL
     * #1643: Portal CSS is sent with empty background when portalSkinBackground is not defined
     * #1644: error while reseting password with ppolicy enabled
+    * #1648: ldapAuthnLevel and dbiAuthnLevel are ignored
+    * #1649: Error about Handler when saving configuration in lmConfigEditor
 
   * New features:
     * #1569: GPG authentication module
@@ -38,7 +40,7 @@ lemonldap-ng (2.0.2) artful; urgency=medium
     * #1635: SAML attribut default value is not set
     * #1637: Add display options for SAML IDP like OIDC and CAS providers
 
- -- Clément <clem.oudot@gmail.com>  Fri, 08 Feb 2019 11:27:04 +0100
+ -- Clément <clem.oudot@gmail.com>  Tue, 12 Feb 2019 08:57:14 +0100
 
 lemonldap-ng (2.0.1) artful; urgency=medium
 
