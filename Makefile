@@ -1011,18 +1011,18 @@ manager_uninstall:	manager
 dist:	clean
 	@mkdir -p lemonldap-ng-$(VERSION)
 	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|debian\|rpm\)") lemonldap-ng-$(VERSION)
-	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
 	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
+	@rm -rf lemonldap-ng-$(VERSION)/node_modules
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
 rpm-dist:	clean
 	@mkdir -p lemonldap-ng-$(VERSION)
 	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|debian\)") lemonldap-ng-$(VERSION)
-	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
 	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
+	@rm -rf lemonldap-ng-$(VERSION)/node_modules
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
@@ -1030,13 +1030,13 @@ rpm-dist:	clean
 debian-dist:	clean
 	@mkdir -p lemonldap-ng-$(VERSION)
 	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|rpm\)") lemonldap-ng-$(VERSION)
-	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
 	@find $$dir -name '*.bak' -delete
 	@cp lemonldap-ng-$(VERSION)/_example/etc/handler-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/handler-apache2.conf
 	@cp lemonldap-ng-$(VERSION)/_example/etc/manager-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/manager-apache2.conf
 	@cp lemonldap-ng-$(VERSION)/_example/etc/portal-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/portal-apache2.conf
 	@cp lemonldap-ng-$(VERSION)/_example/etc/test-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/test-apache2.conf
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
+	@rm -rf lemonldap-ng-$(VERSION)/node_modules
 	@$(COMPRESS) lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
