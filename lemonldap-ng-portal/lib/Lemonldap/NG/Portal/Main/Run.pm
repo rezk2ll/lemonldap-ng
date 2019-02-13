@@ -732,7 +732,10 @@ sub sendHtml {
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
       'X-XSS-Protection'       => '1; mode=block',
-      'X-Content-Type-Options' => 'nosniff';
+      'X-Content-Type-Options' => 'nosniff',
+      'Cache-Control'          => 'no-cache, no-store, must-revalidate',# HTTP 1.1
+      'Pragma'                 => 'no-cache',                           # HTTP 1.0
+      'Expires'                => '0';                                  # Proxies
 
     # Set authorized URL for POST
     my $csp = $self->csp . "form-action " . $self->conf->{cspFormAction};
