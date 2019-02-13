@@ -4,22 +4,22 @@ Upstream-Contact: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues
 Source: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tags?sort=updated_desc
 
 Files: *
-Copyright: 2005-2018, Xavier Guimard <yadd@debian.org>
- 2006-2018, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2019, Xavier Guimard <yadd@debian.org>
+ 2006-2019, Clement Oudot <clem.oudot@gmail.com>
  2008, Mikael Ates <mikael.ates@univ-st-etienne.fr>
  2008-2011, Thomas Chemineau <thomas.chemineau@gmail.com>
  2012-2013, Sandro Cazzaniga <cazzaniga.sandro@gmail.com>
  2012-2015, François-Xavier Deltombe <fxdeltombe@gmail.com>
  2012-2015, David Coutadeur <david.coutadeur@gmail.com>
- 2018, Christophe Maudoux <chrmdx@gmail.com>
- 2005-2018, Gendarmerie nationale <https://www.gendarmerie.interieur.gouv.fr>
+ 2018-2019, Christophe Maudoux <chrmdx@gmail.com>
+ 2005-2019, Gendarmerie nationale <https://www.gendarmerie.interieur.gouv.fr>
  2006-2015, LINAGORA <info@linagora.com>
  2015-2018, Savoir-faire Linux <contact@savoirfairelinux.com>
- 2018, Worteks <info@worteks.com>
+ 2018-2019, Worteks <info@worteks.com>
 License: GPL-2+
 
 Files: lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Auth/PAM.pm
-Copyright: 2017-2018, Xavier Guimard <x.guimard@free.fr>
+Copyright: 2017-2019, Xavier Guimard <x.guimard@free.fr>
 License: GPL-2+
 Comment: idea taken from Authen::Simple::PAM (copyright Christian Hansen
  <chansen@cpan.org>
@@ -29,15 +29,17 @@ Copyright: 2011, Tatsuhiko Miyagawa <miyagawa@bulknews.net>
 License: Artistic or GPL-1+
 
 Files: *.js
-Copyright: 2005-2018, Xavier Guimard <yadd@debian.org>
- 2006-2018, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2019, Xavier Guimard <yadd@debian.org>
+ 2006-2019, Clement Oudot <clem.oudot@gmail.com>
  2008-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
+ 2018-2019, Christophe Maudoux <chrmdx@gmail.com>
 License: GPL-2+
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/js/portal.js
-Copyright: 2005-2018, Xavier Guimard <yadd@debian.org>
- 2006-2018, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2019, Xavier Guimard <yadd@debian.org>
+ 2006-2019, Clement Oudot <clem.oudot@gmail.com>
  2008-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
+ 2018-2019, Christophe Maudoux <chrmdx@gmail.com>
 License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
  (https://snipplr.com/view/29434/)
@@ -202,7 +204,7 @@ Copyright: 2004, Entr'ouvert <https://www.entrouvert.com/>
 License: GPL-2+
 
 Files: debian/*
-Copyright: 2005-2018, Xavier Guimard <yadd@debian.org>
+Copyright: 2005-2019, Xavier Guimard <yadd@debian.org>
 License: GPL-2+
 
 License: Apache-2.0
