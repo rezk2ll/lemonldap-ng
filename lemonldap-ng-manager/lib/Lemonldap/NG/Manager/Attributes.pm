@@ -1069,7 +1069,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'ext2fCodeActivation' => {
             'default' => '\\d{6}',
-            'type'    => 'boolOrExpr'
+            'type'    => 'pcre'
         },
         'ext2fLogo' => {
             'type' => 'text'
