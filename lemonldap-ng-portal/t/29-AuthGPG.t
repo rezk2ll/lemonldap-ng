@@ -42,7 +42,10 @@ SKIP: {
     else {
         run( [ 'gpg', '--clearsign', '--homedir', 't/gpghome' ],
             \$token, \$out, \$err, IPC::Run::timeout(10) );
-        ok( $? == 0, "Succeed to sign" );
+        unless ( $? == 0 ) {
+            skip "Local GPG signature fails, aborting", 2;
+        }
+        pass("Succeed to sign");
     }
     $query .= '&' . build_urlencoded( password => $out );
     ok(
