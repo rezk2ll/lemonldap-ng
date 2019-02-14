@@ -10,8 +10,9 @@ count(1);
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel             => 'error',
+            logLevel             => 'debug',
             ext2fActivation      => 1,
+            ext2fCodeActivation  => 0,
             ext2FSendCommand     => 't/sendOTP.pl -uid $uid',
             ext2FValidateCommand => 't/vrfyOTP.pl -uid $uid -code $code',
             authentication       => 'Demo',

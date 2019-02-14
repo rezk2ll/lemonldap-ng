@@ -19,6 +19,7 @@ my $client = LLNG::Manager::Test->new( {
             rest2fLogo           => 'u2f.png',
             totp2fActivation     => '$uid eq "dwho"',
             ext2fActivation      => 1,
+            ext2fCodeActivation  => 0,
             ext2FSendCommand     => 't/sendOTP.pl -uid $uid',
             ext2FValidateCommand => 't/vrfyOTP.pl -uid $uid -code $code',
             ext2fLogo            => 'yubikey.png',
