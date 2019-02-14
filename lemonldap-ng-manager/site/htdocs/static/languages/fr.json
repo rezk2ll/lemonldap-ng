@@ -243,6 +243,7 @@
 "exportedVars":"Attributs à exporter",
 "external2f":"Second facteur externe",
 "ext2fActivation":"Activation",
+"ext2fCodeActivation":"2F code généré par le Portail",
 "ext2fAuthnLevel":"Niveau de l'authentification",
 "ext2fLogo":"Logo",
 "ext2FSendCommand":"Commande pour l'envoi",
