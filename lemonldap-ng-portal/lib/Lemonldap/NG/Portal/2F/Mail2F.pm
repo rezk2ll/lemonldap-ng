@@ -41,18 +41,15 @@ has ott => (
 
 sub init {
     my ($self) = @_;
-    foreach (qw(mail2fCodeRegex mailSessionKey)) {
-        unless ( $self->conf->{$_} ) {
-            $self->error("Missing $_ parameter, aborting");
-            return 0;
-        }
+    $self->{conf}->{mail2fCodeRegex} ||= '\d{6}';
+    unless ( $self->conf->{mailSessionKey} ) {
+        $self->error("Missing 'mailSessionKey' parameter, aborting");
+        return 0;
     }
     $self->logo( $self->conf->{mail2fLogo} )
         if ( $self->conf->{mail2fLogo} );
     return $self->SUPER::init();
 }
-
-# RUNNING METHODS
 
 sub run {
     my ( $self, $req, $token ) = @_;
@@ -80,7 +77,7 @@ sub run {
         $subject = 'mail2fSubject';
         $tr->( \$subject );
     }
-    my ($body, $html);
+    my ( $body, $html );
     if ( $self->conf->{mail2fBody} ) {
 
         # We use a specific text message, no html
