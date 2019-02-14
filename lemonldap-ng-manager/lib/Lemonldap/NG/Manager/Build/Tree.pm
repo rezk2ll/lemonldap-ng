@@ -691,9 +691,9 @@ sub tree {
                             help  => 'external2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'ext2fActivation',      'ext2FSendCommand',
-                                'ext2FValidateCommand', 'ext2fAuthnLevel',
-                                'ext2fLogo',
+                                'ext2fActivation',  'ext2fCodeActivation',
+                                'ext2FSendCommand', 'ext2FValidateCommand',
+                                'ext2fAuthnLevel',  'ext2fLogo',
                             ]
                         },
                         {

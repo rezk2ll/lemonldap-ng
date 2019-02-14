@@ -50,6 +50,7 @@ sub defaultValues {
             'UA' => 'HTTP_USER_AGENT'
         },
         'ext2fActivation'      => 0,
+        'ext2fCodeActivation'  => '\\d{6}',
         'facebookAuthnLevel'   => 1,
         'facebookExportedVars' => {},
         'facebookUserField'    => 'id',
