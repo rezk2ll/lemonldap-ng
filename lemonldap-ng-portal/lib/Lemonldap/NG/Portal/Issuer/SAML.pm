@@ -16,12 +16,12 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNAUTHORIZEDPARTNER
 );
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.3';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
 
-has rule           => ( is => 'rw', default => sub { {} } );
+has rule           => ( is => 'rw' );
 has ssoUrlRe       => ( is => 'rw' );
 has ssoUrlArtifact => ( is => 'rw' );
 has ssoGetUrl      => ( is => 'rw' );

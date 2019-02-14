@@ -16,7 +16,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OID_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.3';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer';
 
@@ -50,7 +50,7 @@ has spList => (
 
 has openidPortal => ( is => 'rw' );
 
-has rule => ( is => 'rw', default => sub { {} } );
+has rule => ( is => 'rw' );
 
 # INITIALIZATION
 

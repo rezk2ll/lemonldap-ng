@@ -6,11 +6,11 @@ use URI::Escape;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_BADURL PE_GET_SERVICE_NOT_ALLOWED);
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.3';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer';
 
-has rule => ( is => 'rw', default => sub { {} } );
+has rule => ( is => 'rw' );
 
 # INITIALIZATION
 
