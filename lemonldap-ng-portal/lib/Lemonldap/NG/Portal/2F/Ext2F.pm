@@ -33,9 +33,11 @@ sub init {
             if ( $self->conf->{ext2fLogo} );
         return $self->SUPER::init();
     }
-    if (    $self->conf->{ext2fCodeActivation}
-        and $self->conf->{ext2FSendCommand} )
-    {
+    if ( $self->conf->{ext2fCodeActivation} ) {
+        unless ( $self->conf->{ext2FSendCommand} ) {
+            $self->error("Missing 'ext2FSendCommand' parameter, aborting");
+            return 0;
+        }
         $self->random( String::Random->new );
         $self->logo( $self->conf->{ext2fLogo} )
             if ( $self->conf->{ext2fLogo} );
@@ -52,10 +54,11 @@ sub run {
     my $checkLogins = $req->param('checkLogins');
     $self->logger->debug("Ext2F checkLogins set") if ($checkLogins);
 
-    # Generate OTP to send
-    if ( $self->{random} ) {
-        my $code
-            = $self->random->randregex( $self->conf->{ext2fOTPActivation} );
+    # Generate Code to send
+    my $code;
+    if ( $self->conf->{ext2fCodeActivation} ) {
+        $code
+            = $self->random->randregex( $self->conf->{ext2fCodeActivation} );
         $self->logger->debug("Generated ext2f code : $code");
         $self->ott->updateToken( $token, __ext2fcode => $code );
     }
@@ -64,7 +67,7 @@ sub run {
     $self->logger->debug( 'Launching "Send" external 2F command -> '
             . $self->conf->{ext2FSendCommand} );
     if ( my $c
-        = $self->launch( $req->sessionInfo, $self->conf->{ext2FSendCommand} )
+        = $self->launch( $req->sessionInfo, $self->conf->{ext2FSendCommand}, $code )
         )
     {
         $self->logger->error("External send command failed (code $c)");
@@ -92,7 +95,7 @@ sub verify {
     my ( $self, $req, $session ) = @_;
     my $usercode;
     unless ( $usercode = $req->param('code') ) {
-        $self->userLogger->error('External 2F: no code');
+        $self->userLogger->error('External 2F: no code found');
         return PE_FORMEMPTY;
     }
 
