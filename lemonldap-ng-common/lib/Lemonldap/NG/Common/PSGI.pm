@@ -242,6 +242,9 @@ sub sendHtml {
     $args{headers} ||= $req->respHeaders || [];
     my $htpl;
     $template = ( $args{templateDir} // $self->templateDir ) . "/$template.tpl";
+    unless (-f $template){
+        $template = $self->templateDir . "/bootstrap/$template.tpl";
+    }
     return $self->sendError( $req, "Unable to read $template", 500 )
       unless ( -r $template and -f $template );
     eval {
