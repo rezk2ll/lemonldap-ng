@@ -66,8 +66,9 @@ sub run {
     # Prepare command and launch it
     $self->logger->debug( 'Launching "Send" external 2F command -> '
             . $self->conf->{ext2FSendCommand} );
-    if ( my $c
-        = $self->launch( $req->sessionInfo, $self->conf->{ext2FSendCommand}, $code )
+    if (my $c = $self->launch(
+            $req->sessionInfo, $self->conf->{ext2FSendCommand}, $code
+        )
         )
     {
         $self->logger->error("External send command failed (code $c)");
