@@ -241,13 +241,7 @@ sub sendHtml {
     $args{code} ||= 200;
     $args{headers} ||= $req->respHeaders || [];
     my $htpl;
-    my $tmpl = $template;
     $template = ( $args{templateDir} // $self->templateDir ) . "/$template.tpl";
-    unless (-f $template){
-        $self->logger->debug("$template NOT found!!!");
-        $template = $self->conf->{templateDir} . '/bootstrap/' . "$tmpl.tpl";
-        $self->logger->debug("-> Try to load $template");
-    }
     return $self->sendError( $req, "Unable to read $template", 500 )
       unless ( -r $template and -f $template );
     eval {
