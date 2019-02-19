@@ -78,6 +78,7 @@ LemonLDAP::NG Portal jQuery scripts
         return console.log('JSON', $(this).text());
       }
     });
+    console.log(values);
     return values;
   };
 

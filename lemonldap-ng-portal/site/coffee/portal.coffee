@@ -53,6 +53,7 @@ getValues = () ->
 		catch e
 			console.log 'Parsing error', e
 			console.log 'JSON', $(this).text()
+	console.log values
 	values
 
 # Code from http://snipplr.com/view/29434/

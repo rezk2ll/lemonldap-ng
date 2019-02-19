@@ -1,4 +1,6 @@
 <TMPL_INCLUDE NAME="header.tpl">
+<TMPL_INCLUDE NAME="error.json">
+
 <div id="errorcontent" class="container">
   <TMPL_IF AUTH_ERROR>
     <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
