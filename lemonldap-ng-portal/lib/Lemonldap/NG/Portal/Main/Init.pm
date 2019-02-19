@@ -97,14 +97,16 @@ sub init {
     );
 
     # Load override messages from file and lemonldap-ng.ini
-    if ( $self->{localConfig}->{translations} and -f $self->{localConfig}->{translations} and -r $self->{localConfig}->{translations} ) {
+    if ( $self->{localConfig}->{translations}
+        and -r $self->{localConfig}->{translations} )
+    {
         open my $tr_file, '<', $self->{localConfig}->{translations}
             or die "Can't open"
             . $self->{localConfig}->{translations} . " : $!";
         while (<$tr_file>) {
             chomp;
             $_ =~ /^([\w_]+)\s+=\s+(.+)$/;
-            $self->{localConfig}->{ $1 } = $2;
+            $self->{localConfig}->{$1} = $2;
         }
         close $tr_file or die "Can't close $tr_file : $!";
     }
