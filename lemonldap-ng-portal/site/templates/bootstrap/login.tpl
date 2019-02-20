@@ -1,5 +1,4 @@
 <TMPL_INCLUDE NAME="header.tpl">
-<TMPL_INCLUDE NAME="login.json">
 
 <main id="logincontent" class="container">
 

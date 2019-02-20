@@ -39,6 +39,7 @@
   <link rel="openid2.provider" href="<TMPL_VAR NAME="PROVIDERURI">" />
  </TMPL_IF>
  <TMPL_INCLUDE NAME="../common/script.tpl">
+ <TMPL_INCLUDE NAME="../common/trover.tpl">
 <!-- //if:usedebianlibs
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.min.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/portal.min.js"></script>

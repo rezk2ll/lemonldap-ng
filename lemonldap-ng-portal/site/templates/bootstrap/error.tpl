@@ -1,5 +1,4 @@
 <TMPL_INCLUDE NAME="header.tpl">
-<TMPL_INCLUDE NAME="error.json">
 
 <div id="errorcontent" class="container">
   <TMPL_IF AUTH_ERROR>

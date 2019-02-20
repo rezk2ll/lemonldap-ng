@@ -720,12 +720,26 @@ sub sendHtml {
     $args{params}->{TROVER} = $self->trOver;
     $args{templateDir}
         = $self->conf->{templateDir} . '/' . $self->getSkin($req);
-    my $tmpl = $args{templateDir} . "/$template.tpl";
+    my $tmpl       = $args{templateDir} . "/$template.tpl";
+    my $troverJson = $args{templateDir} . "/$template.json";
     unless ( -f $tmpl ) {
         $self->logger->debug("Template : $tmpl NOT found!!!");
         $args{templateDir} = $self->conf->{templateDir} . '/bootstrap';
-        $tmpl = $args{templateDir} . "/$template.tpl";
+        $tmpl              = $args{templateDir} . "/$template.tpl";
+        $troverJson        = $args{templateDir} . "/$template.json";
         $self->logger->debug("-> Trying to load $tmpl");
+    }
+    if ( -r $troverJson ) {
+        open my $tr_file, '<', $troverJson
+            or die "Can't open"
+            . $troverJson . " : $!";
+        while (<$tr_file>) {
+            chomp;
+            $args{params}->{TROVERbyJSON} .= $_;
+        }
+        close $tr_file or die "Can't close $tr_file : $!";
+        $self->logger->debug(" -> Overriding messages with $troverJson");
+        $self->logger->debug("   -> File content : $args{params}->{TROVERbyJSON}");
     }
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
