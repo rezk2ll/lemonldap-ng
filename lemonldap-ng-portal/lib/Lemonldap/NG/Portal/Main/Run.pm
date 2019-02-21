@@ -15,6 +15,7 @@ package Lemonldap::NG::Portal::Main;
 
 use strict;
 use URI::Escape;
+use JSON;
 
 # List constants
 sub authProcess {qw(extractFormInfo getUser authenticate)}
@@ -729,17 +730,25 @@ sub sendHtml {
         $troverJson        = $args{templateDir} . "/$template.json";
         $self->logger->debug("-> Trying to load $tmpl");
     }
+
     if ( -r $troverJson ) {
         open my $tr_file, '<', $troverJson
-            or die "Can't open"
-            . $troverJson . " : $!";
+            or die "Can't open" . $troverJson . " : $!";
         while (<$tr_file>) {
             chomp;
             $args{params}->{TROVERbyJSON} .= $_;
         }
         close $tr_file or die "Can't close $tr_file : $!";
-        $self->logger->debug(" -> Overriding messages with $troverJson");
-        $self->logger->debug("   -> File content : $args{params}->{TROVERbyJSON}");
+        eval { decode_json( $args{params}->{TROVERbyJSON} ) };
+        if ($@) {
+            $self->logger->debug("$troverJson is NOT a regular JSON file!!!");
+            $args{params}->{TROVERbyJSON} = '';
+        }
+        else {
+            $self->logger->debug(" -> Overriding messages with $troverJson");
+            $self->logger->debug(
+                "   -> File content : $args{params}->{TROVERbyJSON}");
+        }
     }
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
