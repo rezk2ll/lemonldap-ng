@@ -36,30 +36,53 @@ sub init {
 # RUNNING METHOD
 
 sub check {
-    my ( $self, $req ) = @_;
-    my $hdrs = my $attrs = {};
-    my $auth = 0;
-    my $msg  = 'checkUser';
+    my ( $self, $req )   = @_;
+    my ( $hdrs, $attrs, $array_attrs, $array_hdrs ) = ( {}, {}, [],[] );
+    my $msg         = 'checkUser';
+    my $auth        = 0;
 
     ## Check user attributes
     # Use submitted attribute if exists
+    my $url = $req->param('url') || '';
     $req->{user} = $req->param('user') if ( $req->param('user') );
+    $self->logger->debug("Check requested for $req->{user}");
     $attrs = $self->_attributes($req);
-    $self->logger->debug( "######## " . Dumper($attrs) );
-
     if ( $req->error ) {
         $msg   = 'PE' . $req->{error};
         $attrs = {};
     }
 
+    $self->logger->debug( "######## " . Dumper($attrs) );
+
+    # Create an array of hashes for template loop
+    while ( my ( $k, $v ) = each %$attrs ) {
+        push @$array_attrs, { key => $k, value => $v };
+
+        ##### TODO -> DELETE hidden attributes
+
+    }
+
+    $self->logger->debug( "******** " . Dumper($array_attrs) );
+
     # Check if user is allowed to access submitted URL and compute headers
-    if ( $req->param('url') and %$attrs ) {
+    if ( $url and %$attrs ) {
 
         # User is allowed ?
-        $auth = $self->_authorized( $req, $req->param('url') );
-        $self->logger->debug( "******** " . $auth );
+        $auth = $self->_authorized( $req, $url );
+        $self->logger->debug(
+            "checkUser requested for user: $req->{user} and URL: $url");
+        my $result = $auth ? "ALLOWED" : "FORBIDDEN";
+        $self->userLogger->notice(
+            "checkUser -> $req->{user} is $result to access: $url");
+
         # Return VirtualHost headers
-        $hdrs = $self->_headers( $req, $req->param('url') );
+        $hdrs = $self->_headers( $req, $url );
+        while ( my ( $k, $v ) = each %$hdrs ) {
+            push @$array_hdrs, { key => $k, value => $v };
+        }
+
+        $self->logger->debug( "+++++++++++++ " . Dumper($array_hdrs) );
+        
     }
 
     # Display form
@@ -67,13 +90,15 @@ sub check {
         $req,
         'checkuser',
         params => {
+            PORTAL     => $self->conf->{portal},
             MAIN_LOGO  => $self->conf->{portalMainLogo},
             LANGS      => $self->conf->{showLanguages},
             MSG        => $msg,
-            HEADERS    => %$hdrs,
-            ATTRIBUTES => %$attrs,
+            LOGIN      => $req->{user},
+            URL        => $url,
             ALLOWED    => $auth,
-            PORTAL     => $self->conf->{portal},
+            HEADERS    => $array_hdrs,
+            ATTRIBUTES => $array_attrs,
         }
     );
 }
@@ -90,10 +115,11 @@ sub _attributes {
     );
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_USERNOTFOUND ) {
-            $self->userLogger->warn( "Check asked for an unvalid user ("
-                    . $req->param('user')
+            $self->userLogger->warn( "Check requested for an unvalid user ("
+                    . $req->{user}
                     . ")" );
         }
+        $self->logger->debug("Process returned error: $error");
         return $req->error($error);
     }
     return $req->{sessionInfo};
@@ -101,7 +127,7 @@ sub _attributes {
 
 sub _headers {
     my ( $self, $req ) = @_;
-    return {};
+    return { 'HEADER1' => 'TEST' };
 }
 
 sub _authorized {
@@ -112,8 +138,8 @@ sub _authorized {
     $vhost =~ s/:\d+$//;
     $vhost = $self->p->HANDLER->resolveAlias($vhost);
     $appuri ||= '/';
-    return $self->p->HANDLER->grant( $req, $req->{sessionInfo}, $appuri, undef,
-        $vhost );
+    return $self->p->HANDLER->grant( $req, $req->{sessionInfo}, $appuri,
+        undef, $vhost );
 }
 
 1;

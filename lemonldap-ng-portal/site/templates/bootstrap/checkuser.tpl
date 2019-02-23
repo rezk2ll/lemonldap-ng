@@ -18,7 +18,7 @@
     <div class="input-group-prepend">
       <span class="input-group-text"><i class="fa fa-link"></i> </span>
     </div>
-    <input name="url" type="text" class="form-control" trplaceholder="URL" aria-required="true"/>
+    <input name="url" type="text" class="form-control" value="<TMPL_VAR NAME="URL">" trplaceholder="URL" aria-required="true"/>
   </div>
   <div class="buttons">
     <button type="submit" class="btn btn-success">
@@ -32,5 +32,7 @@
   </div>
 </form>
 </div>
+
+
 
 <TMPL_INCLUDE NAME="footer.tpl">
