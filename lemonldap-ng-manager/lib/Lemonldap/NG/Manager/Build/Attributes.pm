@@ -584,6 +584,12 @@ sub attributes {
             documentation => 'Enable Check user',
             flags         => 'p',
         },
+        checkUserHiddenAttributes => {
+            type          => 'text',
+            default       => 'UA',
+            documentation => 'Attributes to hide in CheckUser plugin',
+            flags         => 'p',
+        },
         checkXSS => {
             default       => 1,
             type          => 'bool',

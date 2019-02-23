@@ -33,6 +33,54 @@
 </form>
 </div>
 
+<TMPL_IF NAME="ALLOWED">
+<div class="message message-positive alert"><span trspan="<TMPL_VAR NAME="ALLOWED">"></span></div>
+</TMPL_IF>
 
+<TMPL_IF NAME="HEADERS">
+  <div class="card mb-3 border-secondary">
+  <div class="card-body table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th><span trspan="key">Key</span></th>
+        <th><span trspan="value">Value</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <TMPL_LOOP NAME="HEADERS">
+        <tr>
+          <td class="align-middle"><TMPL_VAR NAME="key"></td>
+          <td class="align-middle"><TMPL_VAR NAME="value"></td>
+        </tr>
+      </TMPL_LOOP>
+    </tbody>
+  </table>
+  </div>
+  </div>
+</TMPL_IF>
+
+<TMPL_IF NAME="ATTRIBUTES">
+  <div class="card mb-3 border-secondary">
+  <div class="card-body table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th><span trspan="key">Key</span></th>
+        <th><span trspan="value">Value</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <TMPL_LOOP NAME="ATTRIBUTES">
+        <tr>
+          <td class="align-middle"><TMPL_VAR NAME="key"></td>
+          <td class="align-middle"><TMPL_VAR NAME="value"></td>
+        </tr>
+      </TMPL_LOOP>
+    </tbody>
+  </table>
+  </div>
+  </div>
+</TMPL_IF>
 
 <TMPL_INCLUDE NAME="footer.tpl">

@@ -27,6 +27,10 @@ has ott => (
     }
 );
 
+sub hAttr {
+    $_[0]->{conf}->{checkUserHiddenAttributes} . ' ' . $_[0]->{conf}->{hiddenAttributes} ;
+}
+
 sub init {
     my ($self) = @_;
     $self->addAuthRoute( checkuser => 'check', [ 'GET', 'POST' ] );
@@ -37,9 +41,10 @@ sub init {
 
 sub check {
     my ( $self, $req )   = @_;
-    my ( $hdrs, $attrs, $array_attrs, $array_hdrs ) = ( {}, {}, [],[] );
-    my $msg         = 'checkUser';
-    my $auth        = 0;
+    my ( $hdrs, $attrs, $array_attrs, $array_hdrs ) = ( {}, {}, [], [] );
+    my $msg    = 'checkUser';
+    my $result = '';
+    my $auth   = 0;
 
     ## Check user attributes
     # Use submitted attribute if exists
@@ -56,12 +61,12 @@ sub check {
 
     # Create an array of hashes for template loop
     while ( my ( $k, $v ) = each %$attrs ) {
-        push @$array_attrs, { key => $k, value => $v };
 
-        ##### TODO -> DELETE hidden attributes
+        # Ignore hidden attributes
+        push @$array_attrs, { key => $k, value => $v } unless ( $self->hAttr =~ /\b$k\b/ );
 
     }
-
+    @$array_attrs =  sort { $a->{key} cmp $b->{key} } @$array_attrs;
     $self->logger->debug( "******** " . Dumper($array_attrs) );
 
     # Check if user is allowed to access submitted URL and compute headers
@@ -71,7 +76,7 @@ sub check {
         $auth = $self->_authorized( $req, $url );
         $self->logger->debug(
             "checkUser requested for user: $req->{user} and URL: $url");
-        my $result = $auth ? "ALLOWED" : "FORBIDDEN";
+        $result = $auth ? "ALLOWED" : "FORBIDDEN";
         $self->userLogger->notice(
             "checkUser -> $req->{user} is $result to access: $url");
 
@@ -82,7 +87,7 @@ sub check {
         }
 
         $self->logger->debug( "+++++++++++++ " . Dumper($array_hdrs) );
-        
+
     }
 
     # Display form
@@ -96,7 +101,7 @@ sub check {
             MSG        => $msg,
             LOGIN      => $req->{user},
             URL        => $url,
-            ALLOWED    => $auth,
+            ALLOWED    => $result,
             HEADERS    => $array_hdrs,
             ATTRIBUTES => $array_attrs,
         }
@@ -110,7 +115,8 @@ sub _attributes {
     $req->steps(
         [   'getUser',                  'setSessionInfo',
             'setMacros',                'setGroups',
-            'setPersistentSessionInfo', 'setLocalGroups'
+            #'setPersistentSessionInfo', 'setLocalGroups'
+            'setLocalGroups'
         ]
     );
     if ( my $error = $self->p->process($req) ) {
@@ -125,11 +131,6 @@ sub _attributes {
     return $req->{sessionInfo};
 }
 
-sub _headers {
-    my ( $self, $req ) = @_;
-    return { 'HEADER1' => 'TEST' };
-}
-
 sub _authorized {
     my ( $self, $req, $uri ) = @_;
 
@@ -140,6 +141,11 @@ sub _authorized {
     $appuri ||= '/';
     return $self->p->HANDLER->grant( $req, $req->{sessionInfo}, $appuri,
         undef, $vhost );
+}
+
+sub _headers {
+    my ( $self, $req ) = @_;
+    return { 'HEADER1' => 'TEST' };
 }
 
 1;
