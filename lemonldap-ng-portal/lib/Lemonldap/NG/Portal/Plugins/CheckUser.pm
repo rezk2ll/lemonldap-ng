@@ -37,14 +37,15 @@ sub init {
 
 sub check {
     my ( $self, $req ) = @_;
-    my $hdrs  = my $attrs = {};
-    my $auth  = 0;
-    my $msg   = 'checkUser';
+    my $hdrs = my $attrs = {};
+    my $auth = 0;
+    my $msg  = 'checkUser';
 
     ## Check user attributes
     # Use submitted attribute if exists
     $req->{user} = $req->param('user') if ( $req->param('user') );
     $attrs = $self->_attributes($req);
+    $self->logger->debug( "######## " . Dumper($attrs) );
 
     if ( $req->error ) {
         $msg   = 'PE' . $req->{error};
@@ -52,13 +53,13 @@ sub check {
     }
 
     # Check if user is allowed to access submitted URL and compute headers
-    if ( $req->param('url') ) {
-
-        # Return VirtualHost headers
-        $hdrs = $self->_headers($req);
+    if ( $req->param('url') and %$attrs ) {
 
         # User is allowed ?
-        $auth = $self->_authorized($req);
+        $auth = $self->_authorized( $req, $req->param('url') );
+        $self->logger->debug( "******** " . $auth );
+        # Return VirtualHost headers
+        $hdrs = $self->_headers( $req, $req->param('url') );
     }
 
     # Display form
@@ -104,8 +105,15 @@ sub _headers {
 }
 
 sub _authorized {
-    my ( $self, $req ) = @_;
-    return 1;
+    my ( $self, $req, $uri ) = @_;
+
+    # Check rights
+    my ( $vhost, $appuri ) = $uri =~ m#^https?://([^/]*)(.*)#;
+    $vhost =~ s/:\d+$//;
+    $vhost = $self->p->HANDLER->resolveAlias($vhost);
+    $appuri ||= '/';
+    return $self->p->HANDLER->grant( $req, $req->{sessionInfo}, $appuri, undef,
+        $vhost );
 }
 
 1;
