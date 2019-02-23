@@ -63,11 +63,9 @@ sub check {
     while ( my ( $k, $v ) = each %$attrs ) {
 
         # Ignore hidden attributes
-        push @$array_attrs, { key => $k, value => $v } unless ( $self->hAttr =~ /\b$k\b/ );
-
+        push @$array_attrs, { key => $k, value => $v } unless ( $self->hAttr =~ /\b$k\b/ or !$v );
     }
     @$array_attrs =  sort { $a->{key} cmp $b->{key} } @$array_attrs;
-    $self->logger->debug( "******** " . Dumper($array_attrs) );
 
     # Check if user is allowed to access submitted URL and compute headers
     if ( $url and %$attrs ) {
@@ -85,9 +83,9 @@ sub check {
         while ( my ( $k, $v ) = each %$hdrs ) {
             push @$array_hdrs, { key => $k, value => $v };
         }
+        @$array_hdrs =  sort { $a->{key} cmp $b->{key} } @$array_hdrs;
 
         $self->logger->debug( "+++++++++++++ " . Dumper($array_hdrs) );
-
     }
 
     # Display form

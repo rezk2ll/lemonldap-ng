@@ -772,7 +772,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'checkUserHiddenAttributes' => {
-            'default' => 'UA',
+            'default' => 'UA _2fDevices',
             'type'    => 'text'
         },
         'checkXSS' => {

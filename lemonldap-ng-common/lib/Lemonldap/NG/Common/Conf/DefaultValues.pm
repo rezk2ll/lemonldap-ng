@@ -29,7 +29,7 @@ sub defaultValues {
         'casAuthnLevel'                 => 1,
         'checkTime'                     => 600,
         'checkUser'                     => 1,
-        'checkUserHiddenAttributes'     => 'UA',
+        'checkUserHiddenAttributes'     => 'UA _2fDevices',
         'checkXSS'                      => 1,
         'confirmFormMethod'             => 'post',
         'cookieName'                    => 'lemonldap',

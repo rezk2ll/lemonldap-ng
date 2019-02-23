@@ -586,7 +586,7 @@ sub attributes {
         },
         checkUserHiddenAttributes => {
             type          => 'text',
-            default       => 'UA',
+            default       => 'UA _2fDevices',
             documentation => 'Attributes to hide in CheckUser plugin',
             flags         => 'p',
         },
