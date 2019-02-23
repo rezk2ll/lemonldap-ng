@@ -25,6 +25,7 @@ our @pList = (
     autoSigninRules            => '::Plugins::AutoSignin',
     checkState                 => '::Plugins::CheckState',
     portalForceAuthn           => '::Plugins::ForceAuthn',
+    checkUser                  => '::Plugins::CheckUser',
 );
 
 ##@method list enabledPlugins

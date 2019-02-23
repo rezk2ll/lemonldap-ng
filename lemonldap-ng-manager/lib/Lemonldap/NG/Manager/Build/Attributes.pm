@@ -578,6 +578,12 @@ sub attributes {
             documentation => 'Enable Cross Domain Authentication',
             flags         => 'hp',
         },
+        checkUser => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Enable Check user',
+            flags         => 'p',
+        },
         checkXSS => {
             default       => 1,
             type          => 'bool',

@@ -767,6 +767,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 600,
             'type'    => 'int'
         },
+        'checkUser' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'checkXSS' => {
             'default' => 1,
             'type'    => 'bool'
