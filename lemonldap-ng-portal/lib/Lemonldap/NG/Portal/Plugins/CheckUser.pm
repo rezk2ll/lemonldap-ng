@@ -1,6 +1,5 @@
 package Lemonldap::NG::Portal::Plugins::CheckUser;
 
-use Data::Dumper;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
@@ -47,33 +46,30 @@ sub check {
     my $result = '';
     my $auth   = 0;
 
-    ## Check user attributes
+    ## Check user session datas
     # Use submitted attribute if exists
     my $url = $req->param('url') || '';
     $req->{user} = $req->param('user') if ( $req->param('user') );
     $self->logger->debug("Check requested for $req->{user}");
-    $attrs = $self->_attributes($req);
+    $attrs = $self->_userDatas($req);
     if ( $req->error ) {
         $msg   = 'PE' . $req->{error};
         $attrs = {};
     }
 
-    $self->logger->debug( "######## " . Dumper($attrs) );
-
     # Create an array of hashes for template loop
-    while ( my ( $k, $v ) = each %$attrs ) {
+    foreach my $k ( sort keys %$attrs ) {
 
         # Ignore hidden attributes
-        push @$array_attrs, { key => $k, value => $v }
-            unless ( $self->hAttr =~ /\b$k\b/ or !$v );
+        push @$array_attrs, { key => $k, value => $attrs->{$k} }
+            unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
     }
-    @$array_attrs = sort { $a->{key} cmp $b->{key} } @$array_attrs;
 
     # Check if user is allowed to access submitted URL and compute headers
     if ( $url and %$attrs ) {
 
         # User is allowed ?
-        $auth = $self->_authorized( $req, $url );
+        $auth = $self->_authorization( $req, $url );
         $self->logger->debug(
             "checkUser requested for user: $req->{user} and URL: $url");
         $result = $auth ? "ALLOWED" : "FORBIDDEN";
@@ -89,23 +85,25 @@ sub check {
         $req,
         'checkuser',
         params => {
-            PORTAL    => $self->conf->{portal},
-            MAIN_LOGO => $self->conf->{portalMainLogo},
-            LANGS     => $self->conf->{showLanguages},
-            MSG       => $msg,
-            LOGIN     => $req->{user},
-            URL       => $url,
-            ALLOWED   => $result,
+            PORTAL     => $self->conf->{portal},
+            MAIN_LOGO  => $self->conf->{portalMainLogo},
+            LANGS      => $self->conf->{showLanguages},
+            MSG        => $msg,
+            LOGIN      => $req->{user},
+            URL        => $url,
+            ALLOWED    => $result,
             HEADERS    => $array_hdrs,
             ATTRIBUTES => $array_attrs,
         }
     );
 }
 
-sub _attributes {
+sub _userDatas {
     my ( $self, $req ) = @_;
 
     # Search user in database
+    my $steps = ['getUser',   'setSessionInfo','setMacros', 'setGroups', ];
+    push @$steps, 0 ? 'setPersistentSessionInfo', 'setLocalGroups' : 'setLocalGroups';
     $req->steps(
         [   'getUser',   'setSessionInfo',
             'setMacros', 'setGroups',
@@ -126,7 +124,7 @@ sub _attributes {
     return $req->{sessionInfo};
 }
 
-sub _authorized {
+sub _authorization {
     my ( $self, $req, $uri ) = @_;
 
     # Check rights
