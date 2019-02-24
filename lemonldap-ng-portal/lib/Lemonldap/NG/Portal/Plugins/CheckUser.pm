@@ -28,7 +28,8 @@ has ott => (
 );
 
 sub hAttr {
-    $_[0]->{conf}->{checkUserHiddenAttributes} . ' ' . $_[0]->{conf}->{hiddenAttributes} ;
+    $_[0]->{conf}->{checkUserHiddenAttributes} . ' '
+        . $_[0]->{conf}->{hiddenAttributes};
 }
 
 sub init {
@@ -40,7 +41,7 @@ sub init {
 # RUNNING METHOD
 
 sub check {
-    my ( $self, $req )   = @_;
+    my ( $self, $req ) = @_;
     my ( $hdrs, $attrs, $array_attrs, $array_hdrs ) = ( {}, {}, [], [] );
     my $msg    = 'checkUser';
     my $result = '';
@@ -63,9 +64,10 @@ sub check {
     while ( my ( $k, $v ) = each %$attrs ) {
 
         # Ignore hidden attributes
-        push @$array_attrs, { key => $k, value => $v } unless ( $self->hAttr =~ /\b$k\b/ or !$v );
+        push @$array_attrs, { key => $k, value => $v }
+            unless ( $self->hAttr =~ /\b$k\b/ or !$v );
     }
-    @$array_attrs =  sort { $a->{key} cmp $b->{key} } @$array_attrs;
+    @$array_attrs = sort { $a->{key} cmp $b->{key} } @$array_attrs;
 
     # Check if user is allowed to access submitted URL and compute headers
     if ( $url and %$attrs ) {
@@ -79,13 +81,7 @@ sub check {
             "checkUser -> $req->{user} is $result to access: $url");
 
         # Return VirtualHost headers
-        $hdrs = $self->_headers( $req, $url );
-        while ( my ( $k, $v ) = each %$hdrs ) {
-            push @$array_hdrs, { key => $k, value => $v };
-        }
-        @$array_hdrs =  sort { $a->{key} cmp $b->{key} } @$array_hdrs;
-
-        $self->logger->debug( "+++++++++++++ " . Dumper($array_hdrs) );
+        $array_hdrs = $self->_headers( $req, $url );
     }
 
     # Display form
@@ -93,13 +89,13 @@ sub check {
         $req,
         'checkuser',
         params => {
-            PORTAL     => $self->conf->{portal},
-            MAIN_LOGO  => $self->conf->{portalMainLogo},
-            LANGS      => $self->conf->{showLanguages},
-            MSG        => $msg,
-            LOGIN      => $req->{user},
-            URL        => $url,
-            ALLOWED    => $result,
+            PORTAL    => $self->conf->{portal},
+            MAIN_LOGO => $self->conf->{portalMainLogo},
+            LANGS     => $self->conf->{showLanguages},
+            MSG       => $msg,
+            LOGIN     => $req->{user},
+            URL       => $url,
+            ALLOWED   => $result,
             HEADERS    => $array_hdrs,
             ATTRIBUTES => $array_attrs,
         }
@@ -111,8 +107,9 @@ sub _attributes {
 
     # Search user in database
     $req->steps(
-        [   'getUser',                  'setSessionInfo',
-            'setMacros',                'setGroups',
+        [   'getUser',   'setSessionInfo',
+            'setMacros', 'setGroups',
+
             #'setPersistentSessionInfo', 'setLocalGroups'
             'setLocalGroups'
         ]
@@ -142,8 +139,12 @@ sub _authorized {
 }
 
 sub _headers {
-    my ( $self, $req ) = @_;
-    return { 'HEADER1' => 'TEST' };
+    my ( $self, $req, $uri ) = @_;
+    my ( $vhost, $appuri ) = $uri =~ m#^https?://([^/]*)(.*)#;
+    $vhost =~ s/:\d+$//;
+    $req->{env}->{HTTP_HOST} = $vhost;
+    $self->p->HANDLER->headersInit( $self->{conf} );
+    return $self->p->HANDLER->checkHeaders( $req, $req->{sessionInfo} );
 }
 
 1;
