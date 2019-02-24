@@ -103,15 +103,8 @@ sub _userDatas {
 
     # Search user in database
     my $steps = ['getUser',   'setSessionInfo','setMacros', 'setGroups', ];
-    push @$steps, 0 ? 'setPersistentSessionInfo', 'setLocalGroups' : 'setLocalGroups';
-    $req->steps(
-        [   'getUser',   'setSessionInfo',
-            'setMacros', 'setGroups',
-
-            #'setPersistentSessionInfo', 'setLocalGroups'
-            'setLocalGroups'
-        ]
-    );
+    0 ? push @$steps, 'setPersistentSessionInfo', 'setLocalGroups' : push @$steps, 'setLocalGroups';
+    $req->steps( $steps );
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_USERNOTFOUND ) {
             $self->userLogger->warn( "Check requested for an unvalid user ("
