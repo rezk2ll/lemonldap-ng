@@ -60,13 +60,16 @@ sub _run {
             $self->routes( $self->authRoutes );
             $req->userData( $self->api->data );
         }
-        else {
+        elsif ( $res->[0] != 403 ) {
             # Unset headers (handler adds a Location header)
             $self->logger->debug(
                 "User not authenticated, Try in use, cancel redirection");
             $req->userData( {} );
             $req->respHeaders( [] );
             $self->routes( $self->unAuthRoutes );
+        }
+        else {
+            return $res;
         }
         $res = $self->handler($req);
 
