@@ -70,6 +70,7 @@ sub check {
                 MAIN_LOGO => $self->conf->{portalMainLogo},
                 LANGS     => $self->conf->{showLanguages},
                 MSG       => "PE$msg",
+                ALERTE    => 'message-warning',
                 TOKEN     => $token,
             }
         ) if $msg;
@@ -126,6 +127,7 @@ sub check {
             MAIN_LOGO => $self->conf->{portalMainLogo},
             LANGS     => $self->conf->{showLanguages},
             MSG       => $msg,
+            ALERTE    => 'message-positive',
             LOGIN     => (
                   $self->p->checkXSSAttack( 'LOGIN', $req->{user} ) ? ""
                 : $req->{user}
@@ -134,10 +136,11 @@ sub check {
                   $self->p->checkXSSAttack( 'URL', $url ) ? ""
                 : $url
             ),
-            ALLOWED    => $result,
-            HEADERS    => $array_hdrs,
-            ATTRIBUTES => $array_attrs,
-            TOKEN      => $token,
+            ALLOWED     => $result,
+            ALERTE_AUTH => ($result eq 'allowed' ? "alert-success" : "alert-danger"),
+            HEADERS     => $array_hdrs,
+            ATTRIBUTES  => $array_attrs,
+            TOKEN       => $token,
         }
     );
 }
@@ -155,6 +158,7 @@ sub display {
             MAIN_LOGO => $self->conf->{portalMainLogo},
             LANGS     => $self->conf->{showLanguages},
             MSG       => 'checkUser',
+            ALERTE    => 'message-positive',
             LOGIN     => (
                 $self->p->checkXSSAttack( 'LOGIN', $req->{user} )
                 ? ""
@@ -176,7 +180,7 @@ sub _userDatas {
     $req->steps($steps);
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_USERNOTFOUND ) {
-            $self->userLogger->warn( "Check requested for an unvalid user ("
+            $self->userLogger->warn( 'Check requested for an unvalid user ('
                     . $req->{user}
                     . ")" );
         }

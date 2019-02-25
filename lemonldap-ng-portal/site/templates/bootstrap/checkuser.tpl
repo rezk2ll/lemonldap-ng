@@ -1,18 +1,16 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
 <div id="errorcontent" class="container">
-<div class="message message-positive alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
-
-<form id="checkuser" action="/checkuser" method="post" class="password" role="form">
-
-      <TMPL_IF NAME="TOKEN">
-        <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
-      </TMPL_IF>
-  
   <!--
-  <input type="hidden" name="confirm" value="<TMPL_VAR NAME="CONFIRMKEY">">
-  <input type="hidden" name="url" value="<TMPL_VAR NAME="URL">">
-  -->
+<div class="message message-positive alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
+-->
+<div class="message <TMPL_VAR NAME="ALERTE"> alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
+<form id="checkuser" action="/checkuser" method="post" class="password" role="form">
+  
+  <TMPL_IF NAME="TOKEN">
+    <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
+  </TMPL_IF>
+
   <div class="input-group mb-3">
     <div class="input-group-prepend">
       <span class="input-group-text"><i class="fa fa-user"></i> </span>
@@ -28,7 +26,7 @@
 
 
 <TMPL_IF NAME="ALLOWED">
-<div class="message message-positive alert"><span trspan="<TMPL_VAR NAME="ALLOWED">"></span></div>
+<div class="alert <TMPL_VAR NAME="ALERTE_AUTH">"><span trspan="<TMPL_VAR NAME="ALLOWED">"></span></div>
 </TMPL_IF>
 
 <TMPL_IF NAME="HEADERS">
