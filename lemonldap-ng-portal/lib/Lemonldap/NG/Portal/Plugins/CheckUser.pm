@@ -87,8 +87,8 @@ sub check {
     }
 
     # Create an array of hashes for template loop
+    $self->logger->debug("Delete hidden attributes");
     foreach my $k ( sort keys %$attrs ) {
-        $self->logger->debug("Delete hidden attributes");
 
         # Ignore hidden attributes or empty values
         if ( $self->conf->{checkUserDisplayEmptyValues} ) {
