@@ -51,38 +51,28 @@ sub check {
     # Check token
     if ( $self->conf->{requireToken} ) {
         my $token = $req->param('token');
+        my $msg   = '';
         unless ($token) {
             $self->userLogger->warn('CheckUser try without token');
-my $token = $self->ott->createToken( $req->sessionInfo );
-            #return $self->p->sendError( $req, 'Unable to build Metadata' );
-            return $self->p->sendHtml(
-                $req,
-                'checkuser',
-                params => {
-                    PORTAL    => $self->conf->{portal},
-                    MAIN_LOGO => $self->conf->{portalMainLogo},
-                    LANGS     => $self->conf->{showLanguages},
-                    MSG       => 'CheckUser try without token',
-                    TOKEN      => $token,
-                }
-            );
+            $msg   = PE_NOTOKEN;
+            $token = $self->ott->createToken( $req->sessionInfo );
         }
         unless ( $self->ott->getToken($token) ) {
             $self->userLogger->warn('Ask try with expired/bad token');
-my $token = $self->ott->createToken( $req->sessionInfo );
-            #return $self->p->sendError( $req, 'Unable to build Metadata' );
-            return $self->p->sendHtml(
-                $req,
-                'checkuser',
-                params => {
-                    PORTAL    => $self->conf->{portal},
-                    MAIN_LOGO => $self->conf->{portalMainLogo},
-                    LANGS     => $self->conf->{showLanguages},
-                    MSG       => 'Ask try with expired/bad token',
-                    TOKEN      => $token,
-                }
-            );
+            $msg   = PE_TOKENEXPIRED;
+            $token = $self->ott->createToken( $req->sessionInfo );
         }
+        return $self->p->sendHtml(
+            $req,
+            'checkuser',
+            params => {
+                PORTAL    => $self->conf->{portal},
+                MAIN_LOGO => $self->conf->{portalMainLogo},
+                LANGS     => $self->conf->{showLanguages},
+                MSG       => "PE$msg",
+                TOKEN     => $token,
+            }
+        ) if $msg;
     }
 
     ## Check user session datas
@@ -100,9 +90,15 @@ my $token = $self->ott->createToken( $req->sessionInfo );
     foreach my $k ( sort keys %$attrs ) {
         $self->logger->debug("Delete hidden attributes");
 
-        # Ignore hidden attributes
-        push @$array_attrs, { key => $k, value => $attrs->{$k} }
-            unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
+        # Ignore hidden attributes or empty values
+        if ( $self->conf->{checkUserDisplayEmptyValues} ) {
+            push @$array_attrs, { key => $k, value => $attrs->{$k} }
+                unless ( $self->hAttr =~ /\b$k\b/ );
+        }
+        else {
+            push @$array_attrs, { key => $k, value => $attrs->{$k} }
+                unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
+        }
     }
 
     # Check if user is allowed to access submitted URL and compute headers
@@ -112,7 +108,7 @@ my $token = $self->ott->createToken( $req->sessionInfo );
         $auth = $self->_authorization( $req, $url );
         $self->logger->debug(
             "checkUser requested for user: $req->{user} and URL: $url");
-        $result = $auth ? "ALLOWED" : "FORBIDDEN";
+        $result = $auth ? "allowed" : "forbidden";
         $self->userLogger->notice(
             "checkUser -> $req->{user} is $result to access: $url");
 
@@ -126,12 +122,18 @@ my $token = $self->ott->createToken( $req->sessionInfo );
         $req,
         'checkuser',
         params => {
-            PORTAL     => $self->conf->{portal},
-            MAIN_LOGO  => $self->conf->{portalMainLogo},
-            LANGS      => $self->conf->{showLanguages},
-            MSG        => $msg,
-            LOGIN      => $req->{user},
-            URL        => $url,
+            PORTAL    => $self->conf->{portal},
+            MAIN_LOGO => $self->conf->{portalMainLogo},
+            LANGS     => $self->conf->{showLanguages},
+            MSG       => $msg,
+            LOGIN     => (
+                  $self->p->checkXSSAttack( 'LOGIN', $req->{user} ) ? ""
+                : $req->{user}
+            ),
+            URL => (
+                  $self->p->checkXSSAttack( 'URL', $url ) ? ""
+                : $url
+            ),
             ALLOWED    => $result,
             HEADERS    => $array_hdrs,
             ATTRIBUTES => $array_attrs,
@@ -153,8 +155,12 @@ sub display {
             MAIN_LOGO => $self->conf->{portalMainLogo},
             LANGS     => $self->conf->{showLanguages},
             MSG       => 'checkUser',
-            LOGIN     => $req->{user},
-            TOKEN     => $token,
+            LOGIN     => (
+                $self->p->checkXSSAttack( 'LOGIN', $req->{user} )
+                ? ""
+                : $req->{user}
+            ),
+            TOKEN => $token,
         }
     );
 }
@@ -164,7 +170,7 @@ sub _userDatas {
 
     # Search user in database
     my $steps = [ 'getUser', 'setSessionInfo', 'setMacros', 'setGroups' ];
-    1
+    $self->conf->{checkUserDisplayPersistentInfo}
         ? push @$steps, 'setPersistentSessionInfo', 'setLocalGroups'
         : push @$steps, 'setLocalGroups';
     $req->steps($steps);
