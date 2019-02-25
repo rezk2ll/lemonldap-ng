@@ -7,6 +7,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
     PE_OK
     PE_TOKENEXPIRED
     PE_USERNOTFOUND
+    PE_NOTOKEN
 );
 
 our $VERSION = '2.0.3';
@@ -33,7 +34,8 @@ sub hAttr {
 
 sub init {
     my ($self) = @_;
-    $self->addAuthRoute( checkuser => 'check', [ 'GET', 'POST' ] );
+    $self->addAuthRoute( checkuser => 'check',   ['POST'] );
+    $self->addAuthRoute( checkuser => 'display', ['GET'] );
     return 1;
 }
 
@@ -45,6 +47,43 @@ sub check {
     my $msg    = 'checkUser';
     my $result = '';
     my $auth   = 0;
+
+    # Check token
+    if ( $self->conf->{requireToken} ) {
+        my $token = $req->param('token');
+        unless ($token) {
+            $self->userLogger->warn('CheckUser try without token');
+my $token = $self->ott->createToken( $req->sessionInfo );
+            #return $self->p->sendError( $req, 'Unable to build Metadata' );
+            return $self->p->sendHtml(
+                $req,
+                'checkuser',
+                params => {
+                    PORTAL    => $self->conf->{portal},
+                    MAIN_LOGO => $self->conf->{portalMainLogo},
+                    LANGS     => $self->conf->{showLanguages},
+                    MSG       => 'CheckUser try without token',
+                    TOKEN      => $token,
+                }
+            );
+        }
+        unless ( $self->ott->getToken($token) ) {
+            $self->userLogger->warn('Ask try with expired/bad token');
+my $token = $self->ott->createToken( $req->sessionInfo );
+            #return $self->p->sendError( $req, 'Unable to build Metadata' );
+            return $self->p->sendHtml(
+                $req,
+                'checkuser',
+                params => {
+                    PORTAL    => $self->conf->{portal},
+                    MAIN_LOGO => $self->conf->{portalMainLogo},
+                    LANGS     => $self->conf->{showLanguages},
+                    MSG       => 'Ask try with expired/bad token',
+                    TOKEN      => $token,
+                }
+            );
+        }
+    }
 
     ## Check user session datas
     # Use submitted attribute if exists
@@ -59,6 +98,7 @@ sub check {
 
     # Create an array of hashes for template loop
     foreach my $k ( sort keys %$attrs ) {
+        $self->logger->debug("Delete hidden attributes");
 
         # Ignore hidden attributes
         push @$array_attrs, { key => $k, value => $attrs->{$k} }
@@ -79,6 +119,7 @@ sub check {
         # Return VirtualHost headers
         $array_hdrs = $self->_headers( $req, $url );
     }
+    my $token = $self->ott->createToken( $req->sessionInfo );
 
     # Display form
     return $self->p->sendHtml(
@@ -94,6 +135,26 @@ sub check {
             ALLOWED    => $result,
             HEADERS    => $array_hdrs,
             ATTRIBUTES => $array_attrs,
+            TOKEN      => $token,
+        }
+    );
+}
+
+sub display {
+    my ( $self, $req ) = @_;
+    my $token = $self->ott->createToken( $req->sessionInfo );
+
+    # Display form
+    return $self->p->sendHtml(
+        $req,
+        'checkuser',
+        params => {
+            PORTAL    => $self->conf->{portal},
+            MAIN_LOGO => $self->conf->{portalMainLogo},
+            LANGS     => $self->conf->{showLanguages},
+            MSG       => 'checkUser',
+            LOGIN     => $req->{user},
+            TOKEN     => $token,
         }
     );
 }
@@ -102,9 +163,11 @@ sub _userDatas {
     my ( $self, $req ) = @_;
 
     # Search user in database
-    my $steps = ['getUser',   'setSessionInfo','setMacros', 'setGroups', ];
-    0 ? push @$steps, 'setPersistentSessionInfo', 'setLocalGroups' : push @$steps, 'setLocalGroups';
-    $req->steps( $steps );
+    my $steps = [ 'getUser', 'setSessionInfo', 'setMacros', 'setGroups' ];
+    1
+        ? push @$steps, 'setPersistentSessionInfo', 'setLocalGroups'
+        : push @$steps, 'setLocalGroups';
+    $req->steps($steps);
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_USERNOTFOUND ) {
             $self->userLogger->warn( "Check requested for an unvalid user ("

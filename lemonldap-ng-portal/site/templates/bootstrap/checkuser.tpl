@@ -4,6 +4,11 @@
 <div class="message message-positive alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
 
 <form id="checkuser" action="/checkuser" method="post" class="password" role="form">
+
+      <TMPL_IF NAME="TOKEN">
+        <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
+      </TMPL_IF>
+  
   <!--
   <input type="hidden" name="confirm" value="<TMPL_VAR NAME="CONFIRMKEY">">
   <input type="hidden" name="url" value="<TMPL_VAR NAME="URL">">
