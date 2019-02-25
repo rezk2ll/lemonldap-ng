@@ -579,15 +579,27 @@ sub attributes {
             flags         => 'hp',
         },
         checkUser => {
-            default       => 1,
+            default       => 0,
             type          => 'bool',
-            documentation => 'Enable Check user',
+            documentation => 'Enable check user',
             flags         => 'p',
         },
         checkUserHiddenAttributes => {
             type          => 'text',
-            default       => 'UA _2fDevices',
+            default       => 'UA _2fDevices _loginHistory',
             documentation => 'Attributes to hide in CheckUser plugin',
+            flags         => 'p',
+        },
+        checkUserDisplayPersistentInfo => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Display persistent session info',
+            flags         => 'p',
+        },
+        checkUserDisplayEmptyValues => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Display session empty values',
             flags         => 'p',
         },
         checkXSS => {

@@ -768,11 +768,19 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'int'
         },
         'checkUser' => {
-            'default' => 1,
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'checkUserDisplayEmptyValues' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'checkUserDisplayPersistentInfo' => {
+            'default' => 0,
             'type'    => 'bool'
         },
         'checkUserHiddenAttributes' => {
-            'default' => 'UA _2fDevices',
+            'default' => 'UA _2fDevices _loginHistory',
             'type'    => 'text'
         },
         'checkXSS' => {
