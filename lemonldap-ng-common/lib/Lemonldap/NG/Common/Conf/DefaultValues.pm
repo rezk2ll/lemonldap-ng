@@ -28,6 +28,7 @@ sub defaultValues {
         'casAccessControlPolicy'        => 'none',
         'casAuthnLevel'                 => 1,
         'checkTime'                     => 600,
+        'checkUserHiddenAttributes'     => 'UA _2fDevices _loginHistory',
         'checkXSS'                      => 1,
         'confirmFormMethod'             => 'post',
         'cookieName'                    => 'lemonldap',

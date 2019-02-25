@@ -578,6 +578,30 @@ sub attributes {
             documentation => 'Enable Cross Domain Authentication',
             flags         => 'hp',
         },
+        checkUser => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable check user',
+            flags         => 'p',
+        },
+        checkUserHiddenAttributes => {
+            type          => 'text',
+            default       => 'UA _2fDevices _loginHistory',
+            documentation => 'Attributes to hide in CheckUser plugin',
+            flags         => 'p',
+        },
+        checkUserDisplayPersistentInfo => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Display persistent session info',
+            flags         => 'p',
+        },
+        checkUserDisplayEmptyValues => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Display session empty values',
+            flags         => 'p',
+        },
         checkXSS => {
             default       => 1,
             type          => 'bool',

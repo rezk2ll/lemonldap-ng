@@ -637,6 +637,17 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [ 'checkState', 'checkStateSecret', ],
                         },
+                        {
+                            title => 'checkUsers',
+                            help  => 'checkuser.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'checkUser',
+                                'checkUserHiddenAttributes',
+                                'checkUserDisplayPersistentInfo',
+                                'checkUserDisplayEmptyValues',
+                            ]
+                        },
                     ]
                 },
                 {
