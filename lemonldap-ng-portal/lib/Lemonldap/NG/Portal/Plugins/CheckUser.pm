@@ -3,8 +3,8 @@ package Lemonldap::NG::Portal::Plugins::CheckUser;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
+    PE_BADCREDENTIALS
     PE_TOKENEXPIRED
-    PE_USERNOTFOUND
     PE_NOTOKEN
 );
 
@@ -81,21 +81,23 @@ sub check {
         $msg   = 'PE' . $req->{error};
         $attrs = {};
     }
-    else { $msg = 'checkUser' }
+    else {
 
-    # Create an array of hashes for template loop
-    $self->logger->debug("Delete hidden attributes");
-    foreach my $k ( sort keys %$attrs ) {
+        # Create an array of hashes for template loop
+        $self->logger->debug("Delete hidden or empty attributes");
+        foreach my $k ( sort keys %$attrs ) {
 
-        # Ignore hidden attributes or empty values
-        if ( $self->conf->{checkUserDisplayEmptyValues} ) {
-            push @$array_attrs, { key => $k, value => $attrs->{$k} }
-                unless ( $self->hAttr =~ /\b$k\b/ );
+            # Ignore hidden attributes or empty values
+            if ( $self->conf->{checkUserDisplayEmptyValues} ) {
+                push @$array_attrs, { key => $k, value => $attrs->{$k} }
+                    unless ( $self->hAttr =~ /\b$k\b/ );
+            }
+            else {
+                push @$array_attrs, { key => $k, value => $attrs->{$k} }
+                    unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
+            }
         }
-        else {
-            push @$array_attrs, { key => $k, value => $attrs->{$k} }
-                unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
-        }
+        $msg = 'checkUser';
     }
 
     # Check if user is allowed to access submitted URL and compute headers
@@ -106,8 +108,9 @@ sub check {
         $self->logger->debug(
             "checkUser requested for user: $req->{user} and URL: $url");
         $auth = $auth ? "allowed" : "forbidden";
-        $self->userLogger->notice(
-            "checkUser -> $req->{user} is $auth to access: $url");
+        $self->userLogger->notice( "checkUser -> $req->{user} is "
+                . uc($auth)
+                . " to access: $url" );
 
         # Return VirtualHost headers
         $array_hdrs = $self->_headers( $req, $url );
@@ -123,8 +126,9 @@ sub check {
             MAIN_LOGO => $self->conf->{portalMainLogo},
             LANGS     => $self->conf->{showLanguages},
             MSG       => $msg,
-            ALERTE    => 'alert-info',
-            LOGIN     => (
+            ALERTE =>
+                ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
+            LOGIN => (
                   $self->p->checkXSSAttack( 'LOGIN', $req->{user} ) ? ""
                 : $req->{user}
             ),
@@ -134,7 +138,7 @@ sub check {
             ),
             ALLOWED => $auth,
             ALERTE_AUTH =>
-                ( $auth eq 'allowed' ? "alert-success" : "alert-danger" ),
+                ( $auth eq 'allowed' ? 'alert-success' : 'alert-danger' ),
             HEADERS    => $array_hdrs,
             ATTRIBUTES => $array_attrs,
             TOKEN      => $token,
@@ -176,7 +180,7 @@ sub _userDatas {
         : push @$steps, 'setLocalGroups';
     $req->steps($steps);
     if ( my $error = $self->p->process($req) ) {
-        if ( $error == PE_USERNOTFOUND ) {
+        if ( $error == PE_BADCREDENTIALS ) {
             $self->userLogger->warn( 'Check requested for an unvalid user ('
                     . $req->{user}
                     . ")" );
