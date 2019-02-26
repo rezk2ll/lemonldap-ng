@@ -40,7 +40,7 @@
   <div class="card-body table-responsive">
   <table class="table table-hover">
     <thead>
-      <tr class="align-middle">HEADERS</tr>
+      <tr class="align-middle"><span trspan="headers">HEADERS</span></tr>
       <tr>
         <th class="align-middle"><span trspan="key">Key</span></th>
         <th class="align-middle"><span trspan="value">Value</span></th>
@@ -64,7 +64,7 @@
   <div class="card-body table-responsive">
   <table class="table table-hover">
     <thead>
-      <tr class="align-middle">ATTRIBUTES</tr>
+      <tr class="align-middle"><span trspan="attributes">ATTRIBUTES</span></tr>
       <tr>
         <th class="align-middle"><span trspan="key">Key</span></th>
         <th class="align-middle"><span trspan="value">Value</span></th>
