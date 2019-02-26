@@ -28,15 +28,22 @@
 <TMPL_IF NAME="ALLOWED">
 <div class="alert <TMPL_VAR NAME="ALERTE_AUTH">"><span trspan="<TMPL_VAR NAME="ALLOWED">"></span></div>
 </TMPL_IF>
-
 <TMPL_IF NAME="HEADERS">
+  <div class="buttons">
+    <button type="submit" class="btn btn-success">
+      <span class="fa fa-sign-in"></span>
+      <span trspan="checkUser">Check user</span>
+    </button>
+  </div>
+  <div>&nbsp;</div>
   <div class="card mb-3 border-secondary">
   <div class="card-body table-responsive">
   <table class="table table-hover">
     <thead>
+      <tr class="align-middle">HEADERS</tr>
       <tr>
-        <th><span trspan="key">Key</span></th>
-        <th><span trspan="value">Value</span></th>
+        <th class="align-middle"><span trspan="key">Key</span></th>
+        <th class="align-middle"><span trspan="value">Value</span></th>
       </tr>
     </thead>
     <tbody>
@@ -57,9 +64,10 @@
   <div class="card-body table-responsive">
   <table class="table table-hover">
     <thead>
+      <tr class="align-middle">ATTRIBUTES</tr>
       <tr>
-        <th><span trspan="key">Key</span></th>
-        <th><span trspan="value">Value</span></th>
+        <th class="align-middle"><span trspan="key">Key</span></th>
+        <th class="align-middle"><span trspan="value">Value</span></th>
       </tr>
     </thead>
     <tbody>
