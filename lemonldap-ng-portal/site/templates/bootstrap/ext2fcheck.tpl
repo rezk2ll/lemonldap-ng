@@ -13,8 +13,8 @@
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fa fa-lock"></i> </span>
-        <input name="code" value="" class="form-control" id="extcode" trplaceholder="code" autocomplete="off" />
       </div>
+      <input name="code" value="" class="form-control" id="extcode" trplaceholder="code" autocomplete="off" />
     </div>
   </div>
   <div class="buttons">
