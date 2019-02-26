@@ -3,8 +3,6 @@ package Lemonldap::NG::Portal::Plugins::CheckUser;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-    PE_CONFIRM
-    PE_OK
     PE_TOKENEXPIRED
     PE_USERNOTFOUND
     PE_NOTOKEN
@@ -43,15 +41,12 @@ sub init {
 
 sub check {
     my ( $self, $req ) = @_;
-    my ( $hdrs, $attrs, $array_attrs, $array_hdrs ) = ( {}, {}, [], [] );
-    my $msg    = 'checkUser';
-    my $result = '';
-    my $auth   = 0;
+    my ( $attrs, $array_attrs, $array_hdrs ) = ( {}, [], [] );
+    my $msg = my $auth = '';
 
     # Check token
     if ( $self->conf->{requireToken} ) {
         my $token = $req->param('token');
-        my $msg   = '';
         unless ($token) {
             $self->userLogger->warn('CheckUser try without token');
             $msg   = PE_NOTOKEN;
@@ -86,6 +81,7 @@ sub check {
         $msg   = 'PE' . $req->{error};
         $attrs = {};
     }
+    else { $msg = 'checkUser' }
 
     # Create an array of hashes for template loop
     $self->logger->debug("Delete hidden attributes");
@@ -109,9 +105,9 @@ sub check {
         $auth = $self->_authorization( $req, $url );
         $self->logger->debug(
             "checkUser requested for user: $req->{user} and URL: $url");
-        $result = $auth ? "allowed" : "forbidden";
+        $auth = $auth ? "allowed" : "forbidden";
         $self->userLogger->notice(
-            "checkUser -> $req->{user} is $result to access: $url");
+            "checkUser -> $req->{user} is $auth to access: $url");
 
         # Return VirtualHost headers
         $array_hdrs = $self->_headers( $req, $url );
@@ -136,11 +132,12 @@ sub check {
                   $self->p->checkXSSAttack( 'URL', $url ) ? ""
                 : $url
             ),
-            ALLOWED     => $result,
-            ALERTE_AUTH => ($result eq 'allowed' ? "alert-success" : "alert-danger"),
-            HEADERS     => $array_hdrs,
-            ATTRIBUTES  => $array_attrs,
-            TOKEN       => $token,
+            ALLOWED => $auth,
+            ALERTE_AUTH =>
+                ( $auth eq 'allowed' ? "alert-success" : "alert-danger" ),
+            HEADERS    => $array_hdrs,
+            ATTRIBUTES => $array_attrs,
+            TOKEN      => $token,
         }
     );
 }
