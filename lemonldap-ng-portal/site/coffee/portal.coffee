@@ -29,6 +29,9 @@ translatePage = (lang) ->
 			$(this).text txt
 		$("[trmsg]").each ->
 			$(this).text translate "PE#{$(this).attr 'trmsg'}"
+			msg = translate "PE#{$(this).attr 'trmsg'}"
+			if msg.match /_null_/
+				$(this).parent().hide()
 		$("[trplaceholder]").each ->
 			$(this).attr 'placeholder', translate($(this).attr('trplaceholder'))
 		$("[localtime]").each ->

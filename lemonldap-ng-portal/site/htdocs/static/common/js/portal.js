@@ -37,7 +37,12 @@ LemonLDAP::NG Portal jQuery scripts
         return $(this).text(txt);
       });
       $("[trmsg]").each(function() {
-        return $(this).text(translate("PE" + ($(this).attr('trmsg'))));
+        var msg;
+        $(this).text(translate("PE" + ($(this).attr('trmsg'))));
+        msg = translate("PE" + ($(this).attr('trmsg')));
+        if (msg.match(/_null_/)) {
+          return $(this).parent().hide();
+        }
       });
       $("[trplaceholder]").each(function() {
         return $(this).attr('placeholder', translate($(this).attr('trplaceholder')));
