@@ -645,9 +645,11 @@ sub sendHeaders {
     }
 }
 
+## @rfunction array ref checkHeaders()
+# Return computed headers by forgeHeadersInit() for the current virtual host
 sub checkHeaders {
     my ( $class, $req, $session ) = @_;
-    my $vhost          = $class->resolveAlias($req);
+    my $vhost         = $class->resolveAlias($req);
     my $array_headers = [];
     if ( defined $class->tsv->{forgeHeaders}->{$vhost} ) {
 
