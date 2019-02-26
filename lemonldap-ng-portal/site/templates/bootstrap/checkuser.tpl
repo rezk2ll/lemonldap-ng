@@ -4,7 +4,7 @@
   <!--
 <div class="message message-positive alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
 -->
-<div class="message <TMPL_VAR NAME="ALERTE"> alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
+<div class="alert <TMPL_VAR NAME="ALERTE"> alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
 <form id="checkuser" action="/checkuser" method="post" class="password" role="form">
 
   <TMPL_IF NAME="TOKEN">

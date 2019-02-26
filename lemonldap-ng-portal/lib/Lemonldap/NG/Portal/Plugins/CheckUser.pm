@@ -70,7 +70,7 @@ sub check {
                 MAIN_LOGO => $self->conf->{portalMainLogo},
                 LANGS     => $self->conf->{showLanguages},
                 MSG       => "PE$msg",
-                ALERTE    => 'message-warning',
+                ALERTE    => 'alert-warning',
                 TOKEN     => $token,
             }
         ) if $msg;
@@ -127,7 +127,7 @@ sub check {
             MAIN_LOGO => $self->conf->{portalMainLogo},
             LANGS     => $self->conf->{showLanguages},
             MSG       => $msg,
-            ALERTE    => 'message-positive',
+            ALERTE    => 'alert-info',
             LOGIN     => (
                   $self->p->checkXSSAttack( 'LOGIN', $req->{user} ) ? ""
                 : $req->{user}
@@ -158,7 +158,7 @@ sub display {
             MAIN_LOGO => $self->conf->{portalMainLogo},
             LANGS     => $self->conf->{showLanguages},
             MSG       => 'checkUser',
-            ALERTE    => 'message-positive',
+            ALERTE    => 'alert-info',
             LOGIN     => (
                 $self->p->checkXSSAttack( 'LOGIN', $req->{user} )
                 ? ""
