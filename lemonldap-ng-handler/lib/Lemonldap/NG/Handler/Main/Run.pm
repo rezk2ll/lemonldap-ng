@@ -647,6 +647,7 @@ sub sendHeaders {
 
 ## @rfunction array ref checkHeaders()
 # Return computed headers by forgeHeadersInit() for the current virtual host
+# [ { key => 'header1', value => 'value1' }, { key => 'header2', value => 'value2' }, ...]
 sub checkHeaders {
     my ( $class, $req, $session ) = @_;
     my $vhost         = $class->resolveAlias($req);
@@ -657,8 +658,9 @@ sub checkHeaders {
         my %headers
             = $class->tsv->{forgeHeaders}->{$vhost}->( $req, $session );
         foreach my $h ( sort keys %headers ) {
-            push @$array_headers, { key => $h, value => $headers{$h} }
-                if ( defined $headers{$h} );
+            defined $headers{$h}
+            ? push @$array_headers, { key => $h, value => $headers{$h} }
+            : push @$array_headers, { key => $h, value => '' };
         }
     }
     return $array_headers;
