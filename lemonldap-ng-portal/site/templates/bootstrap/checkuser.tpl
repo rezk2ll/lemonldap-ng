@@ -6,7 +6,7 @@
 -->
 <div class="message <TMPL_VAR NAME="ALERTE"> alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
 <form id="checkuser" action="/checkuser" method="post" class="password" role="form">
-  
+
   <TMPL_IF NAME="TOKEN">
     <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
   </TMPL_IF>
@@ -21,7 +21,7 @@
     <div class="input-group-prepend">
       <span class="input-group-text"><i class="fa fa-link"></i> </span>
     </div>
-    <input name="url" type="text" class="form-control" value="<TMPL_VAR NAME="URL">" trplaceholder="URL" aria-required="true"/>
+    <input name="url" type="text" class="form-control" value="<TMPL_VAR NAME="URL">" trplaceholder="http://auth.example.com" aria-required="true"/>
   </div>
 
 
