@@ -23,13 +23,13 @@
       <span trspan="connect">Connect</span>
     </button>
   </div>
-  <br/>
   <div class="buttons">
   <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1" class="btn btn-primary" role="button">
     <span class="fa fa-home"></span>
     <span trspan="cancel">Cancel</span>
   </a>
   </div>
+</form>
 </div>
 </main>
 
