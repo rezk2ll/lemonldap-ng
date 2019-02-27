@@ -23,7 +23,7 @@ my $dataStart = tell(DATA);
 # SAML 2 description.
 # @return string
 sub serviceToXML {
-    my ( $self, $conf ) = @_;
+    my ( $self, $conf, $type ) = @_;
 
     seek DATA, $dataStart, 0;
     my $s = join '', <DATA>;
@@ -40,6 +40,14 @@ sub serviceToXML {
       samlOrganizationDisplayName
       samlOrganizationURL
     );
+
+    if ($type eq 'idp') {
+	    $template->param( 'hideSPMetadata', 1);
+    }
+
+    if ($type eq 'sp') {
+	    $template->param( 'hideIDPMetadata', 1);
+    }
 
     foreach (@param_auto) {
         $template->param( $_, $self->getValue( $_, $conf ) );
@@ -195,6 +203,7 @@ __DATA__
     xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
     entityID="<TMPL_VAR NAME="samlEntityID">">
 
+  <TMPL_UNLESS NAME="hideIDPMetadata">
   <IDPSSODescriptor
       WantAuthnRequestsSigned="<TMPL_VAR NAME="samlIDPSSODescriptorWantAuthnRequestsSigned">"
       protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
@@ -253,7 +262,9 @@ __DATA__
       ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPArtifactResponseLocation">"
       </TMPL_IF>/>
   </IDPSSODescriptor>
+  </TMPL_UNLESS>
 
+  <TMPL_UNLESS NAME="hideSPMetadata">
   <SPSSODescriptor
       AuthnRequestsSigned="<TMPL_VAR NAME="samlSPSSODescriptorAuthnRequestsSigned">"
       WantAssertionsSigned="<TMPL_VAR NAME="samlSPSSODescriptorWantAssertionsSigned">"
@@ -305,7 +316,9 @@ __DATA__
       Binding="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPPostBinding">"
       Location="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPPostLocation">" />
   </SPSSODescriptor>
+  </TMPL_UNLESS>
 
+  <TMPL_UNLESS NAME="hideIDPMetadata">
   <AttributeAuthorityDescriptor
     protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
     <KeyDescriptor use="signing">
@@ -328,6 +341,7 @@ __DATA__
     <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
   </AttributeAuthorityDescriptor>
+  </TMPL_UNLESS>
   
   <Organization>
     <OrganizationName xml:lang="en"><TMPL_VAR NAME="samlOrganizationName"></OrganizationName>
