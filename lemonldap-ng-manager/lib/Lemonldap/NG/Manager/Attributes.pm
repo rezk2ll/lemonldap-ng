@@ -2885,6 +2885,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 'http://www.example.com',
             'type'    => 'text'
         },
+        'samlOverrideIDPEntityID' => {
+            'default' => '',
+            'type'    => 'text'
+        },
         'samlRelayStateTimeout' => {
             'default' => 600,
             'type'    => 'int'

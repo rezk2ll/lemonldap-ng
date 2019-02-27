@@ -2021,6 +2021,11 @@ sub attributes {
             default       => 600,
             documentation => 'SAML timeout of relay state',
         },
+        samlOverrideIDPEntityID => {
+            type          => 'text',
+            documentation => 'Override SAML EntityID when acting as an IDP',
+            default       => '',
+        },
         samlUseQueryStringSpecific => {
             default       => 0,
             type          => 'bool',

@@ -245,6 +245,7 @@ sub defaultValues {
         'samlOrganizationDisplayName'                 => 'Example',
         'samlOrganizationName'                        => 'Example',
         'samlOrganizationURL'        => 'http://www.example.com',
+        'samlOverrideIDPEntityID'    => '',
         'samlRelayStateTimeout'      => 600,
         'samlServiceSignatureMethod' => 'RSA_SHA1',
         'samlSPSSODescriptorArtifactResolutionServiceArtifact' =>

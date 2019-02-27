@@ -53,6 +53,11 @@ sub serviceToXML {
         $template->param( $_, $self->getValue( $_, $conf ) );
     }
 
+    # When asked to provide only IDP metadata, take into account EntityID override
+    if ( $type eq "idp" and $conf->{samlOverrideIDPEntityID} ) {
+        $template->param( 'samlEntityID', $conf->{samlOverrideIDPEntityID} );
+    }
+
     # Boolean parameters
     my @param_boolean = qw(
       samlSPSSODescriptorAuthnRequestsSigned
