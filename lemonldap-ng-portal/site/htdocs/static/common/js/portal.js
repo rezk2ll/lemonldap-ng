@@ -40,7 +40,7 @@ LemonLDAP::NG Portal jQuery scripts
         var msg;
         $(this).text(translate("PE" + ($(this).attr('trmsg'))));
         msg = translate("PE" + ($(this).attr('trmsg')));
-        if (msg.match(/_null_/)) {
+        if (msg.match(/_hide_/)) {
           return $(this).parent().hide();
         }
       });

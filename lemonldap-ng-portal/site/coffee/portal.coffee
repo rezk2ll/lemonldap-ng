@@ -30,7 +30,7 @@ translatePage = (lang) ->
 		$("[trmsg]").each ->
 			$(this).text translate "PE#{$(this).attr 'trmsg'}"
 			msg = translate "PE#{$(this).attr 'trmsg'}"
-			if msg.match /_null_/
+			if msg.match /_hide_/
 				$(this).parent().hide()
 		$("[trplaceholder]").each ->
 			$(this).attr 'placeholder', translate($(this).attr('trplaceholder'))
