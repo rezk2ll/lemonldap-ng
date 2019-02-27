@@ -145,11 +145,11 @@ sub init {
 
     return 0 unless ( $self->lassoServer( $self->loadService ) );
     $self->addUnauthRoute(
-        ( $self->{path} || 'saml' ) => { 'metadata' => 'metadata' },
+        ( $self->{path} || 'saml' ) => { 'metadata' => { ':type' => 'metadata' }},
         ['GET']
     );
     $self->addAuthRoute(
-        ( $self->{path} || 'saml' ) => { 'metadata' => 'metadata' },
+        ( $self->{path} || 'saml' ) => { 'metadata' => { ':type' => 'metadata' }},
         ['GET']
     );
     return 1;
@@ -3072,9 +3072,10 @@ sub importRealSession {
 
 sub metadata {
     my ( $self, $req ) = @_;
+    my $type = $req->param('type');
     require Lemonldap::NG::Common::Conf::SAML::Metadata;
     if ( my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new() ) {
-        my $s = $metadata->serviceToXML( $self->conf );
+        my $s = $metadata->serviceToXML( $self->conf, $type);
         return [
             200,
             [
