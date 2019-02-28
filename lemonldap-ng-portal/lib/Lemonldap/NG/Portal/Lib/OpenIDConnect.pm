@@ -564,7 +564,7 @@ sub checkIDTokenValidity {
             $self->logger->error("Auth time was not returned by OP $op");
             return 0;
         }
-        if ( $auth_time + $max_age > time ) {
+        if ( time > $auth_time + $max_age ) {
             $self->userLogger->error(
 "Authentication time ($auth_time) is too old (Max age: $max_age)"
             );
