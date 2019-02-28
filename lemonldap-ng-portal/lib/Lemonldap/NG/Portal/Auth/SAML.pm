@@ -893,6 +893,10 @@ sub extractFormInfo {
         $self->logger->debug(
             "Will try to use SAML Discovery Protocol for IDP resolution");
 
+        if ($req->urldc) {
+            $req->pdata->{_url} = encode_base64($req->urldc, '');
+        }
+
         my $disco_url = $self->conf->{samlDiscoveryProtocolURL};
 
         my $portal = $self->conf->{portal};
