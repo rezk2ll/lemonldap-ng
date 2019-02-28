@@ -5,8 +5,9 @@ package Lemonldap::NG::Portal::Main::Plugin;
 use strict;
 use Mouse;
 use HTML::Template;
+use Data::Dumper;
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.3';
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -38,13 +39,13 @@ sub _addRoute {
             return sub {
                 shift;
                 return $sub->( $self, @_ );
-              }
+                }
         }
         else {
             return sub {
                 shift;
                 return $self->$sub(@_);
-              }
+                }
         }
     };
     $self->p->$type( $word, $subName, $methods, $transform );
@@ -54,6 +55,21 @@ sub _addRoute {
 sub loadTemplate {
     my $self = shift;
     return $self->p->loadTemplate(@_);
+}
+
+sub accessCtrl {
+    my ( $self, $req, $uri ) = @_;
+    my $url = $self->conf->{portal} . $uri;
+    $self->logger->debug("Plugin call setSecurity for URL: $url");
+
+    # Check access rule
+    my ( $vhost, $appuri ) = $url =~ m#^https?://([^/]*)(.*)#;
+    $vhost =~ s/:\d+$//;
+    $appuri ||= '/';
+    $self->logger->debug(
+        "grant function call with VH: $vhost and URI: $appuri");
+    return $self->p->HANDLER->grant( $req, $req->{userData}, $appuri,
+        undef, $vhost );
 }
 
 1;

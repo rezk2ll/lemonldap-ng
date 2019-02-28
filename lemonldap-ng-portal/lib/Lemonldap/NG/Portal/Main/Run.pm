@@ -848,8 +848,8 @@ sub sendCss {
 }
 
 sub lmError {
-    my ( $self, $req ) = @_;
-    my $httpError = $req->param('code');
+    my ( $self, $req, $error ) = @_;
+    my $httpError = $req->param('code') || $error;
 
     # Check URL
     $self->controlUrl($req);

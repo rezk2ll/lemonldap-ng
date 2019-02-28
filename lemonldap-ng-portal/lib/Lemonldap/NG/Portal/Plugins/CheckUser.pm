@@ -44,6 +44,14 @@ sub check {
     my ( $attrs, $array_attrs, $array_hdrs ) = ( {}, [], [] );
     my $msg = my $auth = '';
 
+    # Check access rule
+    unless ( $self->accessCtrl( $req, 'checkuser' ) ) {
+        $self->userLogger->error(
+            "$req->{user} not allowed to access /checkuser");
+        return $self->p->lmError( $req, 403 );
+    }
+    $self->userLogger->notice("$req->{user} is allowed to access /checkuser");
+
     # Check token
     if ( $self->conf->{requireToken} ) {
         my $token = $req->param('token');
@@ -148,6 +156,14 @@ sub check {
 
 sub display {
     my ( $self, $req ) = @_;
+
+    # Check access rule
+    unless ( $self->accessCtrl( $req, 'checkuser' ) ) {
+        $self->userLogger->error(
+            "$req->{user} not allowed to access /checkuser");
+        return $self->p->lmError( $req, 403 );
+    }
+    $self->userLogger->notice("$req->{user} is allowed to access /checkuser");
     my $token = $self->ott->createToken( $req->sessionInfo );
 
     # Display form
@@ -193,11 +209,8 @@ sub _userDatas {
 
 sub _authorization {
     my ( $self, $req, $uri ) = @_;
-
-    # Check rights
     my ( $vhost, $appuri ) = $uri =~ m#^https?://([^/]*)(.*)#;
     $vhost =~ s/:\d+$//;
-    $vhost = $self->p->HANDLER->resolveAlias($vhost);
     $appuri ||= '/';
     return $self->p->HANDLER->grant( $req, $req->{sessionInfo}, $appuri,
         undef, $vhost );
