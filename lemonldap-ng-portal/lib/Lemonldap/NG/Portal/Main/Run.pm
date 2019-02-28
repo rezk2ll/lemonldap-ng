@@ -469,8 +469,8 @@ sub updateSession {
         ## sessionInfo updated if $id defined : quite strange !!
         ## See https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/430
         foreach ( keys %$infos ) {
-            $self->logger->debug(
-                "Update sessionInfo $_ with " . $infos->{$_} );
+            $self->logger->debug("Update sessionInfo $_");
+            $self->_dump( $infos->{$_} );
             $req->{sessionInfo}->{$_} = $self->HANDLER->data->{$_}
                 = $infos->{$_};
         }
