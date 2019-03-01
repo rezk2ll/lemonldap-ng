@@ -586,7 +586,7 @@ sub attributes {
         },
         checkUserHiddenAttributes => {
             type          => 'text',
-            default       => 'UA _2fDevices _loginHistory',
+            default       => '_2fDevices _loginHistory hGroups',
             documentation => 'Attributes to hide in CheckUser plugin',
             flags         => 'p',
         },

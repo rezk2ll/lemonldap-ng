@@ -47,10 +47,10 @@ sub check {
     # Check access rule
     unless ( $self->accessCtrl( $req, 'checkuser' ) ) {
         $self->userLogger->error(
-            "$req->{user} not allowed to access /checkuser");
+            "user $req->{user} not allowed to access /checkuser");
         return $self->p->lmError( $req, 403 );
     }
-    $self->userLogger->notice("$req->{user} is allowed to access /checkuser");
+    $self->userLogger->notice("user $req->{user} is allowed to access /checkuser");
 
     # Check token
     if ( $self->conf->{requireToken} ) {
@@ -90,22 +90,29 @@ sub check {
         $attrs = {};
     }
     else {
+        $msg = 'checkUser';
 
         # Create an array of hashes for template loop
         $self->logger->debug("Delete hidden or empty attributes");
-        foreach my $k ( sort keys %$attrs ) {
+        if ( $self->conf->{checkUserDisplayEmptyValues} ) {
+            foreach my $k ( sort keys %$attrs ) {
 
-            # Ignore hidden attributes or empty values
-            if ( $self->conf->{checkUserDisplayEmptyValues} ) {
+                # Ignore hidden attributes
                 push @$array_attrs, { key => $k, value => $attrs->{$k} }
                     unless ( $self->hAttr =~ /\b$k\b/ );
             }
-            else {
+        }
+        else {
+            foreach my $k ( sort keys %$attrs ) {
+
+                # Ignore hidden attributes and empty values
                 push @$array_attrs, { key => $k, value => $attrs->{$k} }
                     unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
             }
         }
-        $msg = 'checkUser';
+
+        # ARRAY_REF = [ A_REF GROUPS, A_REF MACROS, A_REF OTHERS ]
+        $array_attrs = $self->_splitAttributes($array_attrs);
     }
 
     # Check if user is allowed to access submitted URL and compute headers
@@ -148,7 +155,9 @@ sub check {
             ALERTE_AUTH =>
                 ( $auth eq 'allowed' ? 'alert-success' : 'alert-danger' ),
             HEADERS    => $array_hdrs,
-            ATTRIBUTES => $array_attrs,
+            ATTRIBUTES => $array_attrs->[2],
+            MACROS     => $array_attrs->[1],
+            GROUPS     => $array_attrs->[0],
             TOKEN      => $token,
         }
     );
@@ -160,10 +169,10 @@ sub display {
     # Check access rule
     unless ( $self->accessCtrl( $req, 'checkuser' ) ) {
         $self->userLogger->error(
-            "$req->{user} not allowed to access /checkuser");
+            "user $req->{user} not allowed to access /checkuser");
         return $self->p->lmError( $req, 403 );
     }
-    $self->userLogger->notice("$req->{user} is allowed to access /checkuser");
+    $self->userLogger->notice("user $req->{user} is allowed to access /checkuser");
     my $token = $self->ott->createToken( $req->sessionInfo );
 
     # Display form
@@ -223,6 +232,33 @@ sub _headers {
     $req->{env}->{HTTP_HOST} = $vhost;
     $self->p->HANDLER->headersInit( $self->{conf} );
     return $self->p->HANDLER->checkHeaders( $req, $req->{sessionInfo} );
+}
+
+sub _splitAttributes {
+    my ( $self, $attrs ) = @_;
+    my ( $grps, $mcrs, $others ) = ( [], [], [] );
+    my $macros = $self->{conf}->{macros};
+    $self->logger->debug("Dispatching attributes...");
+    while (@$attrs) {
+        my $element = shift @$attrs;
+        my $ok      = 0;
+
+        if ( $element->{key} eq 'groups' ) {
+            my $separator = $self->{conf}->{multiValuesSeparator};
+            my @tmp = split /\Q$separator/, $element->{value};
+            $grps = [ map { { value => $_ } } sort @tmp ];
+            next;
+        }
+        foreach my $key ( sort keys %$macros ) {
+            if ( $element->{key} eq $key ) {
+                push @$mcrs, $element;
+                $ok = 1;
+                last;
+            }
+        }
+        push @$others, $element unless $ok;
+    }
+    return [ $grps, $mcrs, $others ];
 }
 
 1;

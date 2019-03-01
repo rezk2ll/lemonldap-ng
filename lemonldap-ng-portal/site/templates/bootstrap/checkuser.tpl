@@ -83,6 +83,49 @@
   </div>
 </TMPL_IF>
 
+<TMPL_IF NAME="MACROS">
+  <div class="card mb-3 border-secondary">
+  <div class="card-body table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr class="align-middle"><span trspan="macros">MACROS</span></tr>
+      <tr>
+        <th class="align-middle"><span trspan="key">Key</span></th>
+        <th class="align-middle"><span trspan="value">Value</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <TMPL_LOOP NAME="MACROS">
+        <tr>
+          <td class="align-middle"><TMPL_VAR NAME="key"></td>
+          <td class="align-middle"><TMPL_VAR NAME="value"></td>
+        </tr>
+      </TMPL_LOOP>
+    </tbody>
+  </table>
+  </div>
+  </div>
+</TMPL_IF>
+
+<TMPL_IF NAME="GROUPS">
+  <div class="card mb-3 border-secondary">
+  <div class="card-body table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr class="align-middle"><span trspan="groups_sso">GROUPS SSO</span></tr>
+    </thead>
+    <tbody>
+      <TMPL_LOOP NAME="GROUPS">
+        <tr>
+          <td class="align-middle"><TMPL_VAR NAME="value"></td>
+        </tr>
+      </TMPL_LOOP>
+    </tbody>
+  </table>
+  </div>
+  </div>
+</TMPL_IF>
+
   <div class="buttons">
     <button type="submit" class="btn btn-success">
       <span class="fa fa-sign-in"></span>

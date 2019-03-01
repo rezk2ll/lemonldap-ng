@@ -151,7 +151,7 @@
 "clickHereToForce":"Nhấp vào đây để bắt buộc",
 "checkState":"Kích hoạt",
 "checkStateSecret":"Shared secret",
-"checkUsers":"Session check",
+"checkUsers":"Session Check",
 "checkUser":"Activation",
 "checkUserHiddenAttributes":"Hidden attributes",
 "checkUserDisplayPersistentInfo":"Display persistent session",

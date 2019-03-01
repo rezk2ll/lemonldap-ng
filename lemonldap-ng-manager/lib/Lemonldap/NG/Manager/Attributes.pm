@@ -780,7 +780,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'checkUserHiddenAttributes' => {
-            'default' => 'UA _2fDevices _loginHistory',
+            'default' => '_2fDevices _loginHistory hGroups',
             'type'    => 'text'
         },
         'checkXSS' => {
