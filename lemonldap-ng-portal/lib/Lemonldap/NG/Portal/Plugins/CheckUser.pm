@@ -87,7 +87,7 @@ sub check {
     $attrs = $self->_userDatas($req);
     if ( $req->error ) {
         $msg   = 'PE' . $req->{error};
-        $attrs = {};
+        $array_attrs  = [ [], [], [] ];
     }
     else {
         $msg = 'checkUser';
