@@ -184,7 +184,7 @@ sub loadService {
 
     # Create Lasso server with service metadata
     my $server = $self->createServer(
-        $service_metadata->serviceToXML( $self->conf ),
+        $service_metadata->serviceToXML( $self->conf, ''),
         $self->conf->{samlServicePrivateKeySig},
         $self->conf->{samlServicePrivateKeySigPwd},
 
@@ -3072,7 +3072,7 @@ sub importRealSession {
 
 sub metadata {
     my ( $self, $req ) = @_;
-    my $type = $req->param('type');
+    my $type = $req->param('type') || 'all';
     require Lemonldap::NG::Common::Conf::SAML::Metadata;
     if ( my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new() ) {
         my $s = $metadata->serviceToXML( $self->conf, $type);
