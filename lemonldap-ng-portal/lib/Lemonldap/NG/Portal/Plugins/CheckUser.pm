@@ -242,7 +242,6 @@ sub _splitAttributes {
     while (@$attrs) {
         my $element = shift @$attrs;
         my $ok      = 0;
-
         if ( $element->{key} eq 'groups' ) {
             my $separator = $self->{conf}->{multiValuesSeparator};
             my @tmp = split /\Q$separator/, $element->{value};
