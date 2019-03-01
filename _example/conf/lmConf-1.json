@@ -119,6 +119,10 @@
       "namespace" : "lemonldap-ng-sessions"
    },
    "locationRules" : {
+      "auth.__DNSDOMAIN__" : {
+         "(?#checkUser)/checkuser" : "$uid eq \"dwho\"",
+         "default" : "deny"
+      },
       "manager.__DNSDOMAIN__" : {
          "(?#Configuration)^/(manager\\.html|conf/)" : "$uid eq \"dwho\"",
          "(?#Notifications)/notifications" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
