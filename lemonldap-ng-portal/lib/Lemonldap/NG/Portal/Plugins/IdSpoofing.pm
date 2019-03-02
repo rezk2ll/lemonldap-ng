@@ -12,6 +12,11 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 use constant endAuth => 'run';
 
+sub hAttr {
+    $_[0]->{conf}->{idSpoofingHiddenAttributes} . ' '
+        . $_[0]->{conf}->{hiddenAttributes};
+}
+
 sub init {1}
 
 # RUNNING METHOD
@@ -24,31 +29,36 @@ sub run {
     my ( $realSession, $spoofSession ) = ( {}, {} );
     my $spk = '';
     foreach my $k ( keys %{ $req->{sessionInfo} } ) {
-
-        # next unless defined $req->{sessionInfo}->{$k};
-        $spk = "real_$k";
-        $realSession->{$spk} = $req->{sessionInfo}->{$k};
-        $self->logger->debug("-> Store $k in realSession key: $spk");
+        if ( $self->{conf}->{idSpoofingSkipEmptyValues} ) {
+            next unless defined $req->{sessionInfo}->{$k};
+        }
+        $spk = "$self->{conf}->{idSpoofingPrefix}$k";
+        unless ( $self->hAttr =~ /\b$k\b/ ) {
+            $realSession->{$spk} = $req->{sessionInfo}->{$k};
+            $self->logger->debug("-> Store $k in realSession key: $spk");
+        }
     }
     $self->logger->debug( "**** req before " . Data::Dumper::Dumper($req) );
-$self->logger->debug( "+++++ realSession " . Data::Dumper::Dumper($realSession) );
+    $self->logger->debug(
+        "+++++ realSession " . Data::Dumper::Dumper($realSession) );
     $req->{user} = $spoofId;
     $spoofSession = $self->_userDatas($req);
 
-$self->logger->debug( "+++++ spoofSession " . Data::Dumper::Dumper($spoofSession) );
+    $self->logger->debug(
+        "+++++ spoofSession " . Data::Dumper::Dumper($spoofSession) );
     $self->logger->debug( "**** req after " . Data::Dumper::Dumper($req) );
 
+    $spoofSession = { %$spoofSession, %$realSession };
 
- $spoofSession = { %$spoofSession, %$realSession };
-
-$self->logger->debug( "!!!!!!!!!!!!!!!!!! spoofSession " . Data::Dumper::Dumper($spoofSession) );
-
-    $self->p->updateSession( $req, $spoofSession );
-
-    return PE_OK;
+    $self->logger->debug( "!!!!!!!!!!!!!!!!!! spoofSession "
+            . Data::Dumper::Dumper($spoofSession) );
 
     # Main session
-    #$self->p->updateSession( $req, $spoofSession );
+    $self->p->updateSession( $req, $spoofSession );
+
+    #$self->p->updatePersistentSession( $req, $spoofSession ); #?????
+
+    return PE_OK;
 }
 
 sub _userDatas {
@@ -57,9 +67,11 @@ sub _userDatas {
 
     # Search user in database
     $req->steps(
-        [   'getUser',                  'setSessionInfo',
-            'setMacros',                'setGroups',
-            'setPersistentSessionInfo', 'setLocalGroups'
+        [   'getUser',   'setSessionInfo',
+            'setMacros', 'setGroups',
+
+            #'setPersistentSessionInfo', 'setLocalGroups'
+            'setLocalGroups'
         ]
     );
     if ( my $error = $self->p->process($req) ) {
