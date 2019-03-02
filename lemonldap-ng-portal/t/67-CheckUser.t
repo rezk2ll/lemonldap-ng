@@ -17,6 +17,7 @@ my $client = LLNG::Manager::Test->new(
             brutForceProtection => 0,
             portalMainLogo      => 'common/logos/logo_llng_old.png',
             checkUser           => 1,
+            requireToken        => 0,
             checkUserDisplayPersistentInfo => 1,
             checkUserDisplayEmptyValues    => 1,
         }
@@ -80,7 +81,7 @@ ok( $res = $client->_get(
 );
 count(1);
 my ( $host, $url, $query )
-    = expectForm( $res, undef, '/checkuser', 'user', 'url', 'token' );
+    = expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%,
     'Found trspan="checkUser"' )
     or explain( $res->[2]->[0], 'trspan="checkUser"' );
@@ -101,7 +102,7 @@ ok( $res = $client->_post(
 count(1);
 
 ( $host, $url, $query )
-    = expectForm( $res, undef, '/checkuser', 'user', 'url', 'token' );
+    = expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%,
     'Found trspan="checkUser"' )
     or explain( $res->[2]->[0], 'trspan="checkUser"' );
