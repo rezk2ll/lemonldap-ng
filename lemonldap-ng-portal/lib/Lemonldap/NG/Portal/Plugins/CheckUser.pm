@@ -50,7 +50,8 @@ sub check {
             "user $req->{user} not allowed to access /checkuser");
         return $self->p->lmError( $req, 403 );
     }
-    $self->userLogger->notice("user $req->{user} is allowed to access /checkuser");
+    $self->userLogger->notice(
+        "user $req->{user} is allowed to access /checkuser");
 
     # Check token
     if ( $self->conf->{requireToken} ) {
@@ -61,7 +62,7 @@ sub check {
             $token = $self->ott->createToken( $req->sessionInfo );
         }
         unless ( $self->ott->getToken($token) ) {
-            $self->userLogger->warn('Ask try with expired/bad token');
+            $self->userLogger->warn('Checkuser try with expired/bad token');
             $msg   = PE_TOKENEXPIRED;
             $token = $self->ott->createToken( $req->sessionInfo );
         }
@@ -86,8 +87,8 @@ sub check {
     $self->logger->debug("Check requested for $req->{user}");
     $attrs = $self->_userDatas($req);
     if ( $req->error ) {
-        $msg   = 'PE' . $req->{error};
-        $array_attrs  = [ [], [], [] ];
+        $msg = 'PE' . $req->{error};
+        $array_attrs = [ [], [], [] ];
     }
     else {
         $msg = 'checkUser';
@@ -130,7 +131,6 @@ sub check {
         # Return VirtualHost headers
         $array_hdrs = $self->_headers( $req, $url );
     }
-    my $token = $self->ott->createToken( $req->sessionInfo );
 
     # Display form
     return $self->p->sendHtml(
@@ -158,7 +158,11 @@ sub check {
             ATTRIBUTES => $array_attrs->[2],
             MACROS     => $array_attrs->[1],
             GROUPS     => $array_attrs->[0],
-            TOKEN      => $token,
+            TOKEN      => (
+                  $self->conf->{requireToken}
+                ? $self->ott->createToken( $req->sessionInfo )
+                : ''
+            )
         }
     );
 }
@@ -172,8 +176,8 @@ sub display {
             "user $req->{user} not allowed to access /checkuser");
         return $self->p->lmError( $req, 403 );
     }
-    $self->userLogger->notice("user $req->{user} is allowed to access /checkuser");
-    my $token = $self->ott->createToken( $req->sessionInfo );
+    $self->userLogger->notice(
+        "user $req->{user} is allowed to access /checkuser");
 
     # Display form
     return $self->p->sendHtml(
@@ -190,7 +194,11 @@ sub display {
                 ? ""
                 : $req->{user}
             ),
-            TOKEN => $token,
+            TOKEN => (
+                  $self->conf->{requireToken}
+                ? $self->ott->createToken( $req->sessionInfo )
+                : ''
+            )
         }
     );
 }
@@ -243,6 +251,7 @@ sub _splitAttributes {
         my $element = shift @$attrs;
         my $ok      = 0;
         if ( $element->{key} eq 'groups' ) {
+            $self->logger->debug('Key "groups" found');
             my $separator = $self->{conf}->{multiValuesSeparator};
             my @tmp = split /\Q$separator/, $element->{value};
             $grps = [ map { { value => $_ } } sort @tmp ];

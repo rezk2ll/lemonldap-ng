@@ -60,7 +60,7 @@ sub loadTemplate {
 sub accessCtrl {
     my ( $self, $req, $uri ) = @_;
     my $url = $self->conf->{portal} . $uri;
-    $self->logger->debug("Plugin call setSecurity for URL: $url");
+    $self->logger->debug("Plugin calls accessCtrl for URL: $url");
 
     # Check access rule
     my ( $vhost, $appuri ) = $url =~ m#^https?://([^/]*)(.*)#;
