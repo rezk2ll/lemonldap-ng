@@ -416,6 +416,37 @@ sub attributes {
             type          => 'text',
             documentation => 'Secret token for CheckState plugin',
         },
+        checkUser => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable check user',
+            flags         => 'p',
+        },
+        checkUserHiddenAttributes => {
+            type          => 'text',
+            default       => '_2fDevices _loginHistory hGroups',
+            documentation => 'Attributes to hide in CheckUser plugin',
+            flags         => 'p',
+        },
+        checkUserDisplayPersistentInfo => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Display persistent session info',
+            flags         => 'p',
+        },
+        checkUserDisplayEmptyValues => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Display session empty values',
+            flags         => 'p',
+        },
+        idSpoofing => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Enable Id Spoofing plugin',
+            flags         => 'p',
+        },
+
         skipRenewConfirmation => {
             type    => 'bool',
             default => 0,
@@ -577,30 +608,6 @@ sub attributes {
             type          => 'bool',
             documentation => 'Enable Cross Domain Authentication',
             flags         => 'hp',
-        },
-        checkUser => {
-            default       => 0,
-            type          => 'bool',
-            documentation => 'Enable check user',
-            flags         => 'p',
-        },
-        checkUserHiddenAttributes => {
-            type          => 'text',
-            default       => '_2fDevices _loginHistory hGroups',
-            documentation => 'Attributes to hide in CheckUser plugin',
-            flags         => 'p',
-        },
-        checkUserDisplayPersistentInfo => {
-            default       => 0,
-            type          => 'bool',
-            documentation => 'Display persistent session info',
-            flags         => 'p',
-        },
-        checkUserDisplayEmptyValues => {
-            default       => 0,
-            type          => 'bool',
-            documentation => 'Display session empty values',
-            flags         => 'p',
         },
         checkXSS => {
             default       => 1,
