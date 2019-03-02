@@ -443,10 +443,32 @@ sub attributes {
         idSpoofing => {
             default       => 1,
             type          => 'bool',
-            documentation => 'Enable Id Spoofing plugin',
+            documentation => 'Enable IdSpoofing plugin',
             flags         => 'p',
         },
-
+        idSpoofingPrefix => {
+            type          => 'text',
+            default       => 'real_',
+            documentation => 'Prefix to rename real session attributes',
+            flags         => 'p',
+        },
+        idSpoofingRule => {
+            type          => 'boolOrExpr',
+            default       => 1,
+            documentation => 'IdSpoofing activation rule',
+        },
+        idSpoofingHiddenAttributes => {
+            type          => 'text',
+            default       => '_2fDevices _loginHistory',
+            documentation => 'Attributes to skip',
+            flags         => 'p',
+        },
+        idSpoofingSkipEmptyValues => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Skip session empty values',
+            flags         => 'p',
+        },
         skipRenewConfirmation => {
             type    => 'bool',
             default => 0,
