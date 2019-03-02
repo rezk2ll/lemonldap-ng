@@ -70,6 +70,7 @@ sub defaultValues {
         'hiddenAttributes'          => '_password',
         'httpOnly'                  => 1,
         'https'                     => -1,
+        'idSpoofing'                => 1,
         'infoFormMethod'            => 'get',
         'issuerDBCASPath'           => '^/cas/',
         'issuerDBCASRule'           => 1,

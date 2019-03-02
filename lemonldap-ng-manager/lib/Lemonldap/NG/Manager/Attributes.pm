@@ -1195,6 +1195,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => -1,
             'type'    => 'trool'
         },
+        'idSpoofing' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'infoFormMethod' => {
             'default' => 'get',
             'select'  => [ {
