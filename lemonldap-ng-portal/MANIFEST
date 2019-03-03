@@ -104,6 +104,7 @@ lib/Lemonldap/NG/Portal/Plugins/CheckUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuthn.pm
 lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
 lib/Lemonldap/NG/Portal/Plugins/History.pm
+lib/Lemonldap/NG/Portal/Plugins/IdSpoofing.pm
 lib/Lemonldap/NG/Portal/Plugins/MailPasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
