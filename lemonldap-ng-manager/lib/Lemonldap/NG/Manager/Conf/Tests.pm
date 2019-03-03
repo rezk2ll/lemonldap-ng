@@ -629,6 +629,18 @@ sub tests {
             return 1;
         },
 
+        # Warn if IdSpoofing plugin is enabled
+        checkIdSpoofing => sub {
+            return 1 unless ( $conf->{idSpoofing} );
+            return ( -1,
+                '"IdSpoofing" plugin is enabled!!!'
+                )
+                if ( $conf->{idSpoofing} );
+
+            # Return
+            return 1;
+        },
+
     };
 }
 

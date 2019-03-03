@@ -648,6 +648,18 @@ sub tree {
                                 'checkUserDisplayEmptyValues',
                             ]
                         },
+                        {
+                            title => 'spoofingIds',
+                            help  => 'idspoofing.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'idSpoofing',
+                                'idSpoofingRule',
+                                'idSpoofingPrefix',
+                                'idSpoofingHiddenAttributes',
+                                'idSpoofingSkipEmptyValues',
+                            ]
+                        },
                     ]
                 },
                 {

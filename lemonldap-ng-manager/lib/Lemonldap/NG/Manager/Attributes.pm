@@ -1195,6 +1195,26 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => -1,
             'type'    => 'trool'
         },
+        'idSpoofing' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'idSpoofingHiddenAttributes' => {
+            'default' => '_2fDevices _loginHistory',
+            'type'    => 'text'
+        },
+        'idSpoofingPrefix' => {
+            'default' => 'real_',
+            'type'    => 'text'
+        },
+        'idSpoofingRule' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'idSpoofingSkipEmptyValues' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'infoFormMethod' => {
             'default' => 'get',
             'select'  => [ {

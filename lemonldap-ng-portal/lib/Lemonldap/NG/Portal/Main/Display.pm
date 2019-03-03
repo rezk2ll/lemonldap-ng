@@ -291,6 +291,7 @@ sub display {
             REGISTER_URL          => $self->conf->{registerUrl},
             HIDDEN_INPUTS         => $self->buildHiddenForm($req),
             STAYCONNECTED         => $self->conf->{stayConnected},
+            SPOOFID               => $self->conf->{idSpoofing},
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
