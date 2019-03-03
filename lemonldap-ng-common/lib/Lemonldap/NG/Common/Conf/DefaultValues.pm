@@ -70,7 +70,6 @@ sub defaultValues {
         'hiddenAttributes'           => '_password',
         'httpOnly'                   => 1,
         'https'                      => -1,
-        'idSpoofing'                 => 1,
         'idSpoofingHiddenAttributes' => '_2fDevices _loginHistory',
         'idSpoofingPrefix'           => 'real_',
         'idSpoofingRule'             => 1,

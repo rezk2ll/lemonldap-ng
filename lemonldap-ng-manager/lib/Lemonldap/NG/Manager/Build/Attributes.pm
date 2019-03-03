@@ -441,7 +441,7 @@ sub attributes {
             flags         => 'p',
         },
         idSpoofing => {
-            default       => 1,
+            default       => 0,
             type          => 'bool',
             documentation => 'Enable IdSpoofing plugin',
             flags         => 'p',

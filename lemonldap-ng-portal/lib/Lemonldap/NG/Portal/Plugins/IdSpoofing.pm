@@ -23,7 +23,8 @@ sub init {1}
 
 sub run {
     my ( $self, $req ) = @_;
-    my $spoofId = $req->param('spoofId') || 'rtyler';
+    my $spoofId = $req->param('spoofId') || '';
+    return PE_OK unless $spoofId;
 
     # Fill spoof session
     my ( $realSession, $spoofSession ) = ( {}, {} );
