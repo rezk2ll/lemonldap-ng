@@ -13,6 +13,15 @@
     <input name="password" type="password" class="form-control" trplaceholder="password" required aria-required="true"/>
   </div>
 
+  <TMPL_IF NAME="SPOOFID">
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text"><i class="fa fa-user"></i> </span>
+    </div>
+    <input name="spoofId" type="text" class="form-control" trplaceholder="spoofId" aria-required="false"/>
+  </div>
+  </TMPL_IF>
+
   <TMPL_IF NAME=CAPTCHA_SRC>
   <div class="form-group">
     <img src="<TMPL_VAR NAME=CAPTCHA_SRC>" class="img-thumbnail" />
