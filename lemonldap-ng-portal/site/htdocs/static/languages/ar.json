@@ -218,6 +218,7 @@
 "serviceProvidedBy":"الخدمة المقدمة من قبل",
 "sessionsDeleted":"الجلسات التالية تم غلقها",
 "sfaManager":"2ndFA Manager",
+"spoofId":"Spoofed Id",
 "SSOSessionInactive":"جلسة الدخول الموحد غير نشطة",
 "stayConnected":"ابق على اتصال على هذا الجهاز",
 "submit":"قدم",

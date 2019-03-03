@@ -218,6 +218,7 @@
 "serviceProvidedBy":"Service provided by",
 "sessionsDeleted":"The following sessions have been closed",
 "sfaManager":"2ndFA Manager",
+"spoofId":"Spoofed Id",
 "SSOSessionInactive":"SSO session inactive",
 "stayConnected":"Stay connected on this device",
 "submit":"提交",

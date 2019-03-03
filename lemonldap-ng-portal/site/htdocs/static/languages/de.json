@@ -218,6 +218,7 @@
 "serviceProvidedBy":"Dienst angeboten von",
 "sessionsDeleted":"Die folgenden Sitzungen wurden geschlossen",
 "sfaManager":"2ndFA Manager",
+"spoofId":"Spoofed Id",
 "SSOSessionInactive":"SSO Sitzung inaktiv",
 "stayConnected":"Auf diesem Gerät verbunden bleiben",
 "submit":"Absenden",
