@@ -28,6 +28,7 @@ sub run {
 
     # Fill spoof session
     my ( $realSession, $spoofSession ) = ( {}, {} );
+    $self->logger->debug("Spoofing Id: $spoofId...");
     my $spk = '';
     foreach my $k ( keys %{ $req->{sessionInfo} } ) {
         if ( $self->{conf}->{idSpoofingSkipEmptyValues} ) {
@@ -39,26 +40,14 @@ sub run {
             $self->logger->debug("-> Store $k in realSession key: $spk");
         }
     }
-    $self->logger->debug( "**** req before " . Data::Dumper::Dumper($req) );
-    $self->logger->debug(
-        "+++++ realSession " . Data::Dumper::Dumper($realSession) );
     $req->{user} = $spoofId;
     $spoofSession = $self->_userDatas($req);
-
-    $self->logger->debug(
-        "+++++ spoofSession " . Data::Dumper::Dumper($spoofSession) );
-    $self->logger->debug( "**** req after " . Data::Dumper::Dumper($req) );
-
     $spoofSession = { %$spoofSession, %$realSession };
 
-    $self->logger->debug( "!!!!!!!!!!!!!!!!!! spoofSession "
-            . Data::Dumper::Dumper($spoofSession) );
-
     # Main session
-    $self->p->updateSession( $req, $spoofSession );
-
     #$self->p->updatePersistentSession( $req, $spoofSession ); #?????
 
+    $self->p->updateSession( $req, $spoofSession );
     return PE_OK;
 }
 
@@ -85,6 +74,7 @@ sub _userDatas {
         $self->logger->debug("Process returned error: $error");
         return $req->error($error);
     }
+    $self->logger->debug("Populating spoofed session...");
     return $req->{sessionInfo};
 }
 
