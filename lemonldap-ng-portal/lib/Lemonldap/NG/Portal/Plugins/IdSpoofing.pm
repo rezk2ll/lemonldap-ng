@@ -2,7 +2,8 @@ package Lemonldap::NG::Portal::Plugins::IdSpoofing;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw( PE_OK PE_BADCREDENTIALS );
+use Lemonldap::NG::Portal::Main::Constants
+    qw( PE_OK PE_BADCREDENTIALS PE_IDSPOOFING_SERVICE_NOT_ALLOWED );
 
 our $VERSION = '2.0.3';
 
@@ -12,19 +13,44 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 use constant endAuth => 'run';
 
+has rule => ( is => 'rw', default => sub {1} );
+
 sub hAttr {
     $_[0]->{conf}->{idSpoofingHiddenAttributes} . ' '
         . $_[0]->{conf}->{hiddenAttributes};
 }
 
-sub init {1}
+sub init {
+    my ($self) = @_;
+
+    # Parse activation rule
+    my $hd = $self->p->HANDLER;
+    $self->logger->debug(
+        "IdSpoofing rule -> " . $self->conf->{idSpoofingRule} );
+    my $rule
+        = $hd->buildSub( $hd->substitute( $self->conf->{idSpoofingRule} ) );
+    unless ($rule) {
+        $self->error( "Bad IdSpoofing rule -> " . $hd->tsv->{jail}->error );
+        return 0;
+    }
+    $self->{rule} = $rule;
+    return 1;
+}
 
 # RUNNING METHOD
 
 sub run {
     my ( $self, $req ) = @_;
     my $spoofId = $req->param('spoofId') || '';
+
+    # Skip if no submitted SpoofId
     return PE_OK unless $spoofId;
+
+    # Check activation rule
+    unless ( $self->rule->( $req, $req->sessionInfo ) ) {
+        $self->userLogger->error('IdSpoofing service not authorized');
+        return PE_IDSPOOFING_SERVICE_NOT_ALLOWED;
+    }
 
     # Fill spoof session
     my ( $realSession, $spoofSession ) = ( {}, {} );
