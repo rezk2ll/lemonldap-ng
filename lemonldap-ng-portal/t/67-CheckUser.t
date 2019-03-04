@@ -80,6 +80,8 @@ ok( $res = $client->_get(
     'CheckUser form',
 );
 count(1);
+
+# Request with bad VH
 my ( $host, $url, $query )
     = expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%,
@@ -88,8 +90,33 @@ ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%,
 count(1);
 
 $query =~ s/user=dwho/user=rtyler/;
-$query =~ s/url=/url=http%3A%2F%2Ftest1.example.com/;
+$query =~ s/url=/url=http%3A%2F%2Ftry.example.com/;
+ok( $res = $client->_post(
+        '/checkuser',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'POST checkuser'
+);
+count(1);
 
+( $host, $url, $query )
+    = expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok( $res->[2]->[0] =~ m%<span trspan="VHnotFound">%,
+    'Found trspan="VHnotFound"' )
+    or explain( $res->[2]->[0], 'trspan="VHnotFound"' );
+count(1);
+
+( $host, $url, $query )
+    = expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%,
+    'Found trspan="checkUser"' )
+    or explain( $res->[2]->[0], 'trspan="checkUser"' );
+count(1);
+
+$query =~ s/url=http%3A%2F%2Ftry.example.com/url=http%3A%2F%2Ftest1.example.com/;
 ok( $res = $client->_post(
         '/checkuser',
         IO::String->new($query),
@@ -136,14 +163,13 @@ ok( $res->[2]->[0] =~ m%<td class="align-middle">su</td>%, 'Found su' )
 ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
     'Found _whatToTrace' )
     or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">uid</td>%, 'Found uid' )
-    or explain( $res->[2]->[0], 'Macro Value uid' );
+ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%, 'Found uid' )
+    or explain( $res->[2]->[0], 'Attribute Value uid' );
 count(11);
 
 $query =~ s/user=dwho/user=msmith/;
 $query
     =~ s/url=http%3A%2F%2Ftest1.example.com/url=http%3A%2F%2Fmanager.example.com%2Fmanager.html/;
-
 ok( $res = $client->_post(
         '/checkuser',
         IO::String->new($query),

@@ -131,8 +131,8 @@ ok( $res->[2]->[0] =~ m%<td class="align-middle">su</td>%, 'Found su' )
 ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
     'Found _whatToTrace' )
     or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">uid</td>%, 'Found uid' )
-    or explain( $res->[2]->[0], 'Macro Value uid' );
+ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%, 'Found uid' )
+    or explain( $res->[2]->[0], 'Attribute Value uid' );
 count(11);
 
 $query =~ s/user=dwho/user=msmith/;
