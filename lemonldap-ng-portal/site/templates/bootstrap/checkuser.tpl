@@ -31,7 +31,7 @@
   </div>
   &nbsp;
 <TMPL_IF NAME="ALLOWED">
-<div class="alert <TMPL_VAR NAME="ALERTE_AUTH">"><span trspan="<TMPL_VAR NAME="ALLOWED">"></span></div>
+<div class="alert <TMPL_VAR NAME="ALERTE_AUTH">"><b><span trspan="<TMPL_VAR NAME="ALLOWED">"></span></b></div>
 </TMPL_IF>
 <TMPL_IF NAME="HEADERS">
   <div class="card mb-3 border-secondary">
