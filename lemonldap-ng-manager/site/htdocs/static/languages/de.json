@@ -151,7 +151,7 @@
 "clickHereToForce":"Click here to force",
 "checkState":"Activation",
 "checkStateSecret":"Shared secret",
-"checkUsers":"Session Check",
+"checkUsers":"SSO profile Check",
 "choiceParams":"Choice parameters",
 "checkUser":"Activation",
 "checkUserHiddenAttributes":"Hidden attributes",

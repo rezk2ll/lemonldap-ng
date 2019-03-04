@@ -151,7 +151,7 @@
 "clickHereToForce":"Cliquer ici pour forcer",
 "checkState":"Activation",
 "checkStateSecret":"Secret partagé",
-"checkUsers":"Vérification de session",
+"checkUsers":"Vérification des profils SSO",
 "checkUser":"Activation",
 "checkUserHiddenAttributes":"Attributs masqués",
 "checkUserDisplayPersistentInfo":"Afficher les données de session persistante",
