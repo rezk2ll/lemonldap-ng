@@ -89,6 +89,7 @@ sub check {
     if ( $req->error ) {
         $msg = 'PE' . $req->{error};
         $array_attrs = [ [], [], [] ];
+        $attrs = {};
     }
     else {
         $msg = 'checkUser';
@@ -123,14 +124,26 @@ sub check {
         $auth = $self->_authorization( $req, $url );
         $self->logger->debug(
             "checkUser requested for user: $req->{user} and URL: $url");
-        $auth = $auth ? "allowed" : "forbidden";
-        $self->userLogger->notice( "checkUser -> $req->{user} is "
-                . uc($auth)
-                . " to access: $url" );
+        if ( $auth >= 0 ) {
 
-        # Return VirtualHost headers
-        $array_hdrs = $self->_headers( $req, $url );
+            $auth = $auth ? "allowed" : "forbidden";
+            $self->userLogger->notice( "checkUser -> $req->{user} is "
+                    . uc($auth)
+                    . " to access: $url" );
+
+            # Return VirtualHost headers
+            $array_hdrs = $self->_headers( $req, $url );
+        }
+        else {
+            $auth = 'VHnotFound';
+            $self->userLogger->notice(
+                "checkUser -> URL: $url has no configuration");
+        }
     }
+
+    my $alert_auth = 'alert-warning';
+    if    ( $auth eq 'allowed' )   { $alert_auth = 'alert-success' }
+    elsif ( $auth eq 'forbidden' ) { $alert_auth = 'alert-danger' }
 
     # Display form
     return $self->p->sendHtml(
@@ -151,14 +164,13 @@ sub check {
                   $self->p->checkXSSAttack( 'URL', $url ) ? ""
                 : $url
             ),
-            ALLOWED => $auth,
-            ALERTE_AUTH =>
-                ( $auth eq 'allowed' ? 'alert-success' : 'alert-danger' ),
-            HEADERS    => $array_hdrs,
-            ATTRIBUTES => $array_attrs->[2],
-            MACROS     => $array_attrs->[1],
-            GROUPS     => $array_attrs->[0],
-            TOKEN      => (
+            ALLOWED     => $auth,
+            ALERTE_AUTH => $alert_auth,
+            HEADERS     => $array_hdrs,
+            ATTRIBUTES  => $array_attrs->[2],
+            MACROS      => $array_attrs->[1],
+            GROUPS      => $array_attrs->[0],
+            TOKEN       => (
                   $self->conf->{requireToken}
                 ? $self->ott->createToken( $req->sessionInfo )
                 : ''
@@ -190,8 +202,7 @@ sub display {
             MSG       => 'checkUser',
             ALERTE    => 'alert-info',
             LOGIN     => (
-                $self->p->checkXSSAttack( 'LOGIN', $req->{user} )
-                ? ""
+                  $self->p->checkXSSAttack( 'LOGIN', $req->{user} ) ? ""
                 : $req->{user}
             ),
             TOKEN => (
@@ -227,10 +238,22 @@ sub _userDatas {
 sub _authorization {
     my ( $self, $req, $uri ) = @_;
     my ( $vhost, $appuri ) = $uri =~ m#^https?://([^/]*)(.*)#;
+    my $exist = 0;
     $vhost =~ s/:\d+$//;
     $appuri ||= '/';
-    return $self->p->HANDLER->grant( $req, $req->{sessionInfo}, $appuri,
-        undef, $vhost );
+
+    foreach my $vh ( keys %{$self->conf->{locationRules}} ) {
+        if ( $vh eq $vhost ) {
+            $exist = 1;
+            $self->logger->debug("VirtualHost: $vh found in Conf");
+            last;
+        }
+    }
+
+    return $exist
+        ? $self->p->HANDLER->grant( $req, $req->{sessionInfo}, $appuri,
+        undef, $vhost )
+        : -1;
 }
 
 sub _headers {
