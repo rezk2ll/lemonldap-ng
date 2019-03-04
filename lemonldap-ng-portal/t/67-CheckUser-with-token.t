@@ -107,7 +107,7 @@ ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%,
     'Found trspan="checkUser"' )
     or explain( $res->[2]->[0], 'trspan="checkUser"' );
 ok( $res->[2]->[0]
-        =~ m%<div class="alert alert-success"><span trspan="allowed"></span></div>%,
+        =~ m%<div class="alert alert-success"><b><span trspan="allowed"></span></b></div>%,
     'Found trspan="allowed"'
 ) or explain( $res->[2]->[0], 'trspan="allowed"' );
 ok( $res->[2]->[0] =~ m%<span trspan="headers">%, 'Found trspan="headers"' )
@@ -149,7 +149,7 @@ ok( $res = $client->_post(
     'POST checkuser'
 );
 ok( $res->[2]->[0]
-        =~ m%<div class="alert alert-danger"><span trspan="forbidden"></span></div>%,
+        =~ m%<div class="alert alert-danger"><b><span trspan="forbidden"></span></b></div>%,
     'Found trspan="forbidden"'
 ) or explain( $res->[2]->[0], 'trspan="forbidden"' );
 count(2);
