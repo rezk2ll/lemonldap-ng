@@ -121,6 +121,7 @@ sub check {
     if ( $url and %$attrs ) {
 
         # User is allowed ?
+        $url = 'http://' . $url unless ( $url =~ m#^https?://[^/]*.*# );
         $auth = $self->_authorization( $req, $url );
         $self->logger->debug(
             "checkUser requested for user: $req->{user} and URL: $url");
