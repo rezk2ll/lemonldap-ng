@@ -31,8 +31,8 @@ sub new {
         $self->env->{PATH_INFO} =~ s|^$tmp|/|;
     }
     $self->env->{PATH_INFO} ||= '/';
+    $self->env->{REQUEST_URI} =~ s|^//+|/|g;
     $self->{uri} = uri_unescape( $self->env->{REQUEST_URI} );
-    $self->{uri} =~ s|^//+|/|g;
     $self->{data}        = {};
     $self->{error}       = 0;
     $self->{respHeaders} = [];
