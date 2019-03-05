@@ -68,11 +68,33 @@ sub run {
     }
     $req->{user} = $spoofId;
     $spoofSession = $self->_userDatas($req);
+
+    # Merging SSO groups and hGroups & Dedup
+    if ( $self->{conf}->{idSpoofingMergeSSOgroups} ) {
+        $self->userLogger->warn("MERGING SSO groups and hGroups...");
+        my $spg       = "$self->{conf}->{idSpoofingPrefix}groups";
+        my $sphg      = "$self->{conf}->{idSpoofingPrefix}hGroups";
+        my $separator = $self->{conf}->{multiValuesSeparator};
+        if (    $spoofSession->{groups}
+            and $realSession->{$spg} )
+        {
+            $self->logger->debug("Processing groups...");
+            my @spoofGrps = split /\Q$separator/, $spoofSession->{groups};
+            my @realGrps  = split /\Q$separator/, $realSession->{$spg};
+            @spoofGrps = ( @spoofGrps, @realGrps );
+            my %hash = map { $_, 1 } @spoofGrps;
+            $spoofSession->{groups} = join $separator, sort keys %hash;
+
+            $self->logger->debug("Processing hGroups...");
+            $spoofSession->{hGroups} = { %{ $spoofSession->{hGroups} },
+                %{ $realSession->{$sphg} } };
+        }
+    }
+
+    # Create spoofed session
     $spoofSession = { %$spoofSession, %$realSession };
 
     # Main session
-    #$self->p->updatePersistentSession( $req, $spoofSession ); #?????
-
     $self->p->updateSession( $req, $spoofSession );
     return PE_OK;
 }
@@ -85,8 +107,6 @@ sub _userDatas {
     $req->steps(
         [   'getUser',   'setSessionInfo',
             'setMacros', 'setGroups',
-
-            #'setPersistentSessionInfo', 'setLocalGroups'
             'setLocalGroups'
         ]
     );
