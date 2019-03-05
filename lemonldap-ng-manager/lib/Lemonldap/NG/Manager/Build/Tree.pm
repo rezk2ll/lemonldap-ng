@@ -652,12 +652,12 @@ sub tree {
                             title => 'spoofingIds',
                             help  => 'idspoofing.html',
                             form  => 'simpleInputContainer',
-                            nodes => [
-                                'idSpoofing',
+                            nodes => [ 
                                 'idSpoofingRule',
                                 'idSpoofingPrefix',
                                 'idSpoofingHiddenAttributes',
                                 'idSpoofingSkipEmptyValues',
+                                'idSpoofingMergeSSOgroups',
                             ]
                         },
                     ]

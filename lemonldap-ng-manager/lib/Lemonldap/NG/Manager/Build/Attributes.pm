@@ -440,10 +440,10 @@ sub attributes {
             documentation => 'Display session empty values',
             flags         => 'p',
         },
-        idSpoofing => {
+        idSpoofingMergeSSOgroups => {
             default       => 0,
             type          => 'bool',
-            documentation => 'Enable IdSpoofing plugin',
+            documentation => 'Merge spoofed and real SSO groups',
             flags         => 'p',
         },
         idSpoofingPrefix => {

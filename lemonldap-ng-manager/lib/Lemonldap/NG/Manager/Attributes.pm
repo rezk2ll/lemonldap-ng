@@ -1195,13 +1195,13 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => -1,
             'type'    => 'trool'
         },
-        'idSpoofing' => {
-            'default' => 0,
-            'type'    => 'bool'
-        },
         'idSpoofingHiddenAttributes' => {
             'default' => '_2fDevices _loginHistory',
             'type'    => 'text'
+        },
+        'idSpoofingMergeSSOgroups' => {
+            'default' => 0,
+            'type'    => 'bool'
         },
         'idSpoofingPrefix' => {
             'default' => 'real_',

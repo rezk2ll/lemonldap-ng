@@ -290,6 +290,7 @@
 "idSpoofing":"Activation",
 "idSpoofingRule":"Use rule",
 "idSpoofingHiddenAttributes":"Hidden attributes",
+"idSpoofingMergeSSOgroups":"Merge spoofed and real SSO groups",
 "idSpoofingPrefix":"Real attributes prefix",
 "idSpoofingSkipEmptyValues":"Skip empty values",
 "incompleteForm":"Required fields are missing",
