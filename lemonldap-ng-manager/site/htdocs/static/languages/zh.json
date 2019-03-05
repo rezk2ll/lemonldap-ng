@@ -287,7 +287,6 @@
 "httpOnly":"Javascript protection",
 "https":"HTTPS",
 "spoofingIds":"Id Spoofing",
-"idSpoofing":"Activation",
 "idSpoofingRule":"Use rule",
 "idSpoofingHiddenAttributes":"Hidden attributes",
 "idSpoofingMergeSSOgroups":"Merge spoofed and real SSO groups",
