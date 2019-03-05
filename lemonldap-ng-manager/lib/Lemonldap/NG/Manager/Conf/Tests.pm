@@ -629,17 +629,16 @@ sub tests {
             return 1;
         },
 
-        # Warn if IdSpoofing plugin is disabled by rule
-        checkIdSpoofing => sub {
-            return 1 unless ( $conf->{idSpoofing} );
-            return ( -1,
-                '"IdSpoofing" plugin is disabled by rule!!!'
-                )
-                unless ( $conf->{idSpoofingRule} );
+        ## Warn if IdSpoofing plugin is enabled
+        # checkIdSpoofing => sub {
+        #     return ( -1,
+        #         '"IdSpoofing" plugin is enabled!!!'
+        #         )
+        #         if ( $conf->{idSpoofingRule} );
 
-            # Return
-            return 1;
-        },
+        #     # Return
+        #     return 1;
+        # },
     };
 }
 
