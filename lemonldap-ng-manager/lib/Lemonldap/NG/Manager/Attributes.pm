@@ -1208,7 +1208,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type'    => 'text'
         },
         'idSpoofingRule' => {
-            'default' => 1,
+            'default' => 0,
             'type'    => 'boolOrExpr'
         },
         'idSpoofingSkipEmptyValues' => {

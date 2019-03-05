@@ -454,7 +454,7 @@ sub attributes {
         },
         idSpoofingRule => {
             type          => 'boolOrExpr',
-            default       => 1,
+            default       => 0,
             documentation => 'IdSpoofing activation rule',
         },
         idSpoofingHiddenAttributes => {

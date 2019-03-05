@@ -72,7 +72,7 @@ sub defaultValues {
         'https'                      => -1,
         'idSpoofingHiddenAttributes' => '_2fDevices _loginHistory',
         'idSpoofingPrefix'           => 'real_',
-        'idSpoofingRule'             => 1,
+        'idSpoofingRule'             => 0,
         'idSpoofingSkipEmptyValues'  => 1,
         'infoFormMethod'             => 'get',
         'issuerDBCASPath'            => '^/cas/',
