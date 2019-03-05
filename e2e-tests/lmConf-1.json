@@ -142,8 +142,9 @@
   },
   "locationRules": {
     "auth.example.com" : {
-       "(?#checkUser)/checkuser" : "$uid eq \"dwho\"",
-       "default" : "deny"
+      "(?#checkUser)^/checkuser": "$uid eq \"dwho\"",
+      "(?#errors)^/lmerror/": "accept",
+      "default" : "accept"
     },
     "manager.example.com": {
       "(?#Configuration)^/(manager\\.html|conf/)": "$uid eq \"dwho\"",

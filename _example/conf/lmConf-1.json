@@ -119,20 +119,25 @@
       "namespace" : "lemonldap-ng-sessions"
    },
    "locationRules" : {
-      "manager.__DNSDOMAIN__" : {
-         "(?#Configuration)^/(manager\\.html|conf/)" : "$uid eq \"dwho\"",
-         "(?#Notifications)/notifications" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
-         "(?#Sessions)/sessions" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
-         "default" : "$uid eq \"dwho\" or $uid eq \"rtyler\""
-      },
-      "test1.__DNSDOMAIN__" : {
-         "^/logout" : "logout_sso",
-         "default" : "accept"
-      },
-      "test2.__DNSDOMAIN__" : {
-         "^/logout" : "logout_sso",
-         "default" : "accept"
-      }
+    "auth.__DNSDOMAIN__" : {
+      "(?#checkUser)^/checkuser": "$uid eq \"dwho\"",
+      "(?#errors)^/lmerror/": "accept",
+      "default" : "accept"
+    },
+    "manager.__DNSDOMAIN__" : {
+      "(?#Configuration)^/(manager\\.html|conf/)" : "$uid eq \"dwho\"",
+      "(?#Notifications)/notifications" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
+      "(?#Sessions)/sessions" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
+      "default" : "$uid eq \"dwho\" or $uid eq \"rtyler\""
+    },
+    "test1.__DNSDOMAIN__" : {
+      "^/logout" : "logout_sso",
+      "default" : "accept"
+    },
+    "test2.__DNSDOMAIN__" : {
+      "^/logout" : "logout_sso",
+      "default" : "accept"
+    }
    },
    "loginHistoryEnabled" : 1,
    "macros" : {

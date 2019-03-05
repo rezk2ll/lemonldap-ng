@@ -44,15 +44,6 @@ sub check {
     my ( $attrs, $array_attrs, $array_hdrs ) = ( {}, [], [] );
     my $msg = my $auth = '';
 
-    # Check access rule
-    unless ( $self->accessCtrl( $req, 'checkuser' ) ) {
-        $self->userLogger->error(
-            "user $req->{user} not allowed to access /checkuser");
-        return $self->p->lmError( $req, 403 );
-    }
-    $self->userLogger->notice(
-        "user $req->{user} is allowed to access /checkuser");
-
     # Check token
     if ( $self->conf->{requireToken} ) {
         my $token = $req->param('token');
@@ -182,15 +173,6 @@ sub check {
 
 sub display {
     my ( $self, $req ) = @_;
-
-    # Check access rule
-    unless ( $self->accessCtrl( $req, 'checkuser' ) ) {
-        $self->userLogger->error(
-            "user $req->{user} not allowed to access /checkuser");
-        return $self->p->lmError( $req, 403 );
-    }
-    $self->userLogger->notice(
-        "user $req->{user} is allowed to access /checkuser");
 
     # Display form
     return $self->p->sendHtml(

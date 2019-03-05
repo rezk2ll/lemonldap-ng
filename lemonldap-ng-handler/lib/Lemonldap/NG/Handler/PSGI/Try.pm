@@ -51,7 +51,6 @@ sub defaultUnauthRoute {
 
 sub _run {
     my $self = shift;
-    $self->rule(1);
 
     return sub {
         my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
