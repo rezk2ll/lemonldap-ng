@@ -28,9 +28,11 @@ sub init {
     $self->logger->debug(
         "impersonation rule -> " . $self->conf->{impersonationRule} );
     my $rule
-        = $hd->buildSub( $hd->substitute( $self->conf->{impersonationRule} ) );
+        = $hd->buildSub(
+        $hd->substitute( $self->conf->{impersonationRule} ) );
     unless ($rule) {
-        $self->error( "Bad impersonation rule -> " . $hd->tsv->{jail}->error );
+        $self->error(
+            "Bad impersonation rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
     $self->{rule} = $rule;
@@ -92,6 +94,11 @@ sub run {
     }
 
     # Create spoofed session
+    foreach (qw (_auth _userDB)) {
+        $self->logger->debug("Processing $_...");
+        $spk = "$self->{conf}->{impersonationPrefix}$_";
+        $spoofSession->{$_} = $realSession->{$spk};
+    }
     $spoofSession = { %$spoofSession, %$realSession };
 
     # Main session
