@@ -67,7 +67,6 @@ ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%,
     or explain( $res->[2]->[0], 'trspan="checkUser"' );
 count(1);
 
-
 $query =~ s/url=/url=test1.example.com/;
 
 ok( $res = $client->_post(

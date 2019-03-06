@@ -74,9 +74,20 @@ sub check {
     ## Check user session datas
     # Use submitted attribute if exists
     my $url = $req->param('url') || '';
-    $req->{user} = $req->param('user') if ( $req->param('user') );
-    $self->logger->debug("Check requested for $req->{user}");
-    $attrs = $self->_userDatas($req);
+
+    if ( $req->param('user') eq $req->{user} or !$req->param('user') ) {
+        $self->userLogger->notice("Retrieve session from Sessions database");
+        $self->userLogger->warn("Using spoofed SSO groups if exist!!!")
+            if ( $self->conf->{impersonationRule} );
+        $attrs = $req->userData;
+    }
+    else {
+        $self->logger->debug("Check requested for $req->{user}");
+        $req->{user} = $req->param('user');
+        $self->userLogger->notice("Retrieve session from userDB and compute Groups & Macros");
+        $attrs = $self->_userDatas($req);
+    }
+
     if ( $req->error ) {
         $msg         = 'PE' . $req->{error};
         $array_attrs = [ [], [], [] ];
@@ -255,7 +266,9 @@ sub _splitAttributes {
     $self->logger->debug("Dispatching attributes...");
     while (@$attrs) {
         my $element = shift @$attrs;
-        my $ok      = 0;
+        $self->logger->debug(
+            'Processing element: ' . Data::Dumper::Dumper($element) );
+        my $ok = 0;
         if ( $element->{key} eq 'groups' ) {
             $self->logger->debug('Key "groups" found');
             my $separator = $self->{conf}->{multiValuesSeparator};
@@ -264,9 +277,9 @@ sub _splitAttributes {
             next;
         }
         if (%$macros) {
-            $self->logger->debug('Macros found');
             foreach my $key ( sort keys %$macros ) {
                 if ( $element->{key} eq $key ) {
+                    $self->logger->debug('Macro found');
                     push @$mcrs, $element;
                     $ok = 1;
                     last;
