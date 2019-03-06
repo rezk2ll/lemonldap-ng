@@ -77,17 +77,22 @@ sub run {
         my $spg       = "$self->{conf}->{impersonationPrefix}groups";
         my $sphg      = "$self->{conf}->{impersonationPrefix}hGroups";
         my $separator = $self->{conf}->{multiValuesSeparator};
-        if (    $spoofSession->{groups}
-            and $realSession->{$spg} )
+        if (   $spoofSession->{groups}
+            or $realSession->{$spg} )
         {
             $self->logger->debug("Processing groups...");
-            my @spoofGrps = split /\Q$separator/, $spoofSession->{groups};
-            my @realGrps  = split /\Q$separator/, $realSession->{$spg};
+            my @spoofGrps = my @realGrps = ();
+            @spoofGrps = split /\Q$separator/, $spoofSession->{groups}
+                if $spoofSession->{groups};
+            @realGrps = split /\Q$separator/, $realSession->{$spg}
+                if $realSession->{$spg};
             @spoofGrps = ( @spoofGrps, @realGrps );
             my %hash = map { $_, 1 } @spoofGrps;
             $spoofSession->{groups} = join $separator, sort keys %hash;
 
             $self->logger->debug("Processing hGroups...");
+            $spoofSession->{hGroups} ||= {};
+            $realSession->{$sphg} ||= {};
             $spoofSession->{hGroups} = { %{ $spoofSession->{hGroups} },
                 %{ $realSession->{$sphg} } };
         }

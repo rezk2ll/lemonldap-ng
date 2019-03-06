@@ -263,6 +263,8 @@ sub _splitAttributes {
             $grps = [ map { { value => $_ } } sort @tmp ];
             next;
         }
+        if ( %$macros ) {
+            $self->logger->debug('Macros found');
         foreach my $key ( sort keys %$macros ) {
             if ( $element->{key} eq $key ) {
                 push @$mcrs, $element;
@@ -270,6 +272,7 @@ sub _splitAttributes {
                 last;
             }
         }
+    }
         push @$others, $element unless $ok;
     }
     return [ $grps, $mcrs, $others ];
