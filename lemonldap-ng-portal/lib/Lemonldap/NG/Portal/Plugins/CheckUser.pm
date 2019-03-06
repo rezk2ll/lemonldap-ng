@@ -78,9 +78,9 @@ sub check {
     $self->logger->debug("Check requested for $req->{user}");
     $attrs = $self->_userDatas($req);
     if ( $req->error ) {
-        $msg = 'PE' . $req->{error};
+        $msg         = 'PE' . $req->{error};
         $array_attrs = [ [], [], [] ];
-        $attrs = {};
+        $attrs       = {};
     }
     else {
         $msg = 'checkUser';
@@ -225,7 +225,7 @@ sub _authorization {
     $vhost =~ s/:\d+$//;
     $appuri ||= '/';
 
-    foreach my $vh ( keys %{$self->conf->{locationRules}} ) {
+    foreach my $vh ( keys %{ $self->conf->{locationRules} } ) {
         if ( $vh eq $vhost ) {
             $exist = 1;
             $self->logger->debug("VirtualHost: $vh found in Conf");
@@ -263,16 +263,16 @@ sub _splitAttributes {
             $grps = [ map { { value => $_ } } sort @tmp ];
             next;
         }
-        if ( %$macros ) {
+        if (%$macros) {
             $self->logger->debug('Macros found');
-        foreach my $key ( sort keys %$macros ) {
-            if ( $element->{key} eq $key ) {
-                push @$mcrs, $element;
-                $ok = 1;
-                last;
+            foreach my $key ( sort keys %$macros ) {
+                if ( $element->{key} eq $key ) {
+                    push @$mcrs, $element;
+                    $ok = 1;
+                    last;
+                }
             }
         }
-    }
         push @$others, $element unless $ok;
     }
     return [ $grps, $mcrs, $others ];
