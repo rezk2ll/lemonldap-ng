@@ -92,7 +92,7 @@
 "PE90":"Access non granted on OIDC service",
 "PE91":"Access non granted on OID service",
 "PE92":"Access non granted on GET service",
-"PE93":"Access non granted on IdSpoofing service",
+"PE93":"Access non granted on IMPERSONATION service",
 "2fRegRequired":"Questo servizio richiede un'autenticazione a doppio fattore. Registrare un dispositivo ora, quindi tornare al portale.",
 "accept":"Accetta",
 "accessDenied":"Non hai un'autorizzazione di accesso per questa applicazione",

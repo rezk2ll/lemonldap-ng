@@ -1,9 +1,9 @@
-package Lemonldap::NG::Portal::Plugins::IdSpoofing;
+package Lemonldap::NG::Portal::Plugins::Impersonation;
 
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants
-    qw( PE_OK PE_BADCREDENTIALS PE_IDSPOOFING_SERVICE_NOT_ALLOWED );
+    qw( PE_OK PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED );
 
 our $VERSION = '2.0.3';
 
@@ -16,7 +16,7 @@ use constant endAuth => 'run';
 has rule => ( is => 'rw', default => sub {1} );
 
 sub hAttr {
-    $_[0]->{conf}->{idSpoofingHiddenAttributes} . ' '
+    $_[0]->{conf}->{impersonationHiddenAttributes} . ' '
         . $_[0]->{conf}->{hiddenAttributes};
 }
 
@@ -26,11 +26,11 @@ sub init {
     # Parse activation rule
     my $hd = $self->p->HANDLER;
     $self->logger->debug(
-        "IdSpoofing rule -> " . $self->conf->{idSpoofingRule} );
+        "impersonation rule -> " . $self->conf->{impersonationRule} );
     my $rule
-        = $hd->buildSub( $hd->substitute( $self->conf->{idSpoofingRule} ) );
+        = $hd->buildSub( $hd->substitute( $self->conf->{impersonationRule} ) );
     unless ($rule) {
-        $self->error( "Bad IdSpoofing rule -> " . $hd->tsv->{jail}->error );
+        $self->error( "Bad impersonation rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
     $self->{rule} = $rule;
@@ -48,8 +48,8 @@ sub run {
 
     # Check activation rule
     unless ( $self->rule->( $req, $req->sessionInfo ) ) {
-        $self->userLogger->error('IdSpoofing service not authorized');
-        return PE_IDSPOOFING_SERVICE_NOT_ALLOWED;
+        $self->userLogger->error('Impersonation service not authorized');
+        return PE_IMPERSONATION_SERVICE_NOT_ALLOWED;
     }
 
     # Fill spoof session
@@ -57,10 +57,10 @@ sub run {
     $self->logger->debug("Spoofing Id: $spoofId...");
     my $spk = '';
     foreach my $k ( keys %{ $req->{sessionInfo} } ) {
-        if ( $self->{conf}->{idSpoofingSkipEmptyValues} ) {
+        if ( $self->{conf}->{impersonationSkipEmptyValues} ) {
             next unless defined $req->{sessionInfo}->{$k};
         }
-        $spk = "$self->{conf}->{idSpoofingPrefix}$k";
+        $spk = "$self->{conf}->{impersonationPrefix}$k";
         unless ( $self->hAttr =~ /\b$k\b/ ) {
             $realSession->{$spk} = $req->{sessionInfo}->{$k};
             $self->logger->debug("-> Store $k in realSession key: $spk");
@@ -70,10 +70,10 @@ sub run {
     $spoofSession = $self->_userDatas($req);
 
     # Merging SSO groups and hGroups & Dedup
-    if ( $self->{conf}->{idSpoofingMergeSSOgroups} ) {
+    if ( $self->{conf}->{impersonationMergeSSOgroups} ) {
         $self->userLogger->warn("MERGING SSO groups and hGroups...");
-        my $spg       = "$self->{conf}->{idSpoofingPrefix}groups";
-        my $sphg      = "$self->{conf}->{idSpoofingPrefix}hGroups";
+        my $spg       = "$self->{conf}->{impersonationPrefix}groups";
+        my $sphg      = "$self->{conf}->{impersonationPrefix}hGroups";
         my $separator = $self->{conf}->{multiValuesSeparator};
         if (    $spoofSession->{groups}
             and $realSession->{$spg} )
@@ -113,7 +113,7 @@ sub _userDatas {
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_BADCREDENTIALS ) {
             $self->userLogger->warn(
-                      'IdSpoofing requested for an unvalid user ('
+                      'Impersonation requested for an unvalid user ('
                     . $req->{user}
                     . ")" );
         }

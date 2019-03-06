@@ -649,15 +649,15 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'spoofingIds',
-                            help  => 'idspoofing.html',
+                            title => 'impersonation',
+                            help  => 'impersonation.html',
                             form  => 'simpleInputContainer',
                             nodes => [ 
-                                'idSpoofingRule',
-                                'idSpoofingPrefix',
-                                'idSpoofingHiddenAttributes',
-                                'idSpoofingSkipEmptyValues',
-                                'idSpoofingMergeSSOgroups',
+                                'impersonationRule',
+                                'impersonationPrefix',
+                                'impersonationHiddenAttributes',
+                                'impersonationSkipEmptyValues',
+                                'impersonationMergeSSOgroups',
                             ]
                         },
                     ]

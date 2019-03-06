@@ -440,30 +440,30 @@ sub attributes {
             documentation => 'Display session empty values',
             flags         => 'p',
         },
-        idSpoofingMergeSSOgroups => {
+        impersonationMergeSSOgroups => {
             default       => 0,
             type          => 'bool',
             documentation => 'Merge spoofed and real SSO groups',
             flags         => 'p',
         },
-        idSpoofingPrefix => {
+        impersonationPrefix => {
             type          => 'text',
             default       => 'real_',
             documentation => 'Prefix to rename real session attributes',
             flags         => 'p',
         },
-        idSpoofingRule => {
+        impersonationRule => {
             type          => 'boolOrExpr',
             default       => 0,
-            documentation => 'IdSpoofing activation rule',
+            documentation => 'Impersonation activation rule',
         },
-        idSpoofingHiddenAttributes => {
+        impersonationHiddenAttributes => {
             type          => 'text',
             default       => '_2fDevices _loginHistory',
             documentation => 'Attributes to skip',
             flags         => 'p',
         },
-        idSpoofingSkipEmptyValues => {
+        impersonationSkipEmptyValues => {
             default       => 1,
             type          => 'bool',
             documentation => 'Skip session empty values',

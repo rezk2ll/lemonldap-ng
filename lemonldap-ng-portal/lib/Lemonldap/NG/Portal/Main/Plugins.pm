@@ -26,7 +26,7 @@ our @pList = (
     checkState                 => '::Plugins::CheckState',
     portalForceAuthn           => '::Plugins::ForceAuthn',
     checkUser                  => '::Plugins::CheckUser',
-    idSpoofingRule             => '::Plugins::IdSpoofing',
+    impersonationRule          => '::Plugins::Impersonation',
 );
 
 ##@method list enabledPlugins
