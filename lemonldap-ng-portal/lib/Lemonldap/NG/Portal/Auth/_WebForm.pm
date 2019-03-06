@@ -8,14 +8,15 @@ package Lemonldap::NG::Portal::Auth::_WebForm;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_CAPTCHAEMPTY
-  PE_CAPTCHAERROR
-  PE_FIRSTACCESS
-  PE_FORMEMPTY
-  PE_NOTOKEN
-  PE_OK
-  PE_PASSWORDFORMEMPTY
-  PE_TOKENEXPIRED
+    PE_CAPTCHAEMPTY
+    PE_CAPTCHAERROR
+    PE_FIRSTACCESS
+    PE_FORMEMPTY
+    PE_NOTOKEN
+    PE_OK
+    PE_PASSWORDFORMEMPTY
+    PE_TOKENEXPIRED
+    PE_MALFORMEDUSER
 );
 
 our $VERSION = '2.0.0';
@@ -52,6 +53,13 @@ sub init {
 # Read username and password from POST data
 sub extractFormInfo {
     my ( $self, $req ) = @_;
+    
+    if ( $req->param('user') ) {
+        unless ( $req->param('user') =~ /$self->{conf}->{userControl}/o ) {
+            $self->setSecurity($req);
+            return PE_MALFORMEDUSER;
+        }
+    }
 
     # Detect first access and empty forms
     my $defUser        = defined $req->param('user');
@@ -67,18 +75,20 @@ sub extractFormInfo {
     # 2. If user and password defined -> login form
     elsif ( $defUser and $defPassword ) {
         $res = PE_FORMEMPTY
-          unless ( ( $req->{user} = $req->param('user') )
+            unless ( ( $req->{user} = $req->param('user') )
             && ( $req->data->{password} = $req->param('password') ) );
     }
 
     # 3. If user and oldpassword defined -> password form
     elsif ( $defUser and $defOldPassword ) {
         $res = PE_PASSWORDFORMEMPTY
-          unless ( ( $req->{user} = $req->param('user') )
+            unless (
+               ( $req->{user} = $req->param('user') )
             && ( $req->data->{oldpassword} = $req->param('oldpassword') )
             && ( $req->data->{newpassword} = $req->param('newpassword') )
-            && ( $req->data->{confirmpassword} =
-                $req->param('confirmpassword') ) );
+            && ( $req->data->{confirmpassword}
+                = $req->param('confirmpassword') )
+            );
     }
 
     # If form seems empty
@@ -138,7 +148,7 @@ sub setAuthSessionInfo {
     # WARNING: it can be a security hole
     if ( $self->conf->{storePassword} ) {
         $req->{sessionInfo}->{'_password'} = $req->data->{'newpassword'}
-          || $req->data->{'password'};
+            || $req->data->{'password'};
     }
 
     # Store user timezone

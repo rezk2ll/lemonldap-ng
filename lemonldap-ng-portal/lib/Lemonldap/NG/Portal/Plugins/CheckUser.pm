@@ -6,6 +6,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
     PE_BADCREDENTIALS
     PE_TOKENEXPIRED
     PE_NOTOKEN
+    PE_MALFORMEDUSER
 );
 
 our $VERSION = '2.0.3';
@@ -74,6 +75,10 @@ sub check {
     ## Check user session datas
     # Use submitted attribute if exists
     my $url = $req->param('url') || '';
+
+    unless ( $req->param('user') =~ /$self->{conf}->{userControl}/o ) {
+        return PE_MALFORMEDUSER;
+    }
 
     if ( $req->param('user') eq $req->{user} or !$req->param('user') ) {
         $self->userLogger->notice("Retrieve session from Sessions database");

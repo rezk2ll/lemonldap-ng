@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Plugins::Impersonation;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants
-    qw( PE_OK PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED );
+    qw( PE_OK PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED PE_MALFORMEDUSER );
 
 our $VERSION = '2.0.3';
 
@@ -43,6 +43,11 @@ sub init {
 
 sub run {
     my ( $self, $req ) = @_;
+
+    unless ( $req->param('spoofId') =~ /$self->{conf}->{userControl}/o ) {
+        return PE_MALFORMEDUSER;
+    }
+
     my $spoofId = $req->param('spoofId') || '';
 
     # Skip if no submitted SpoofId
