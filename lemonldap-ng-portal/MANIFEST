@@ -339,6 +339,7 @@ site/templates/bootstrap/footer.tpl
 site/templates/bootstrap/gpgform.tpl
 site/templates/bootstrap/header.tpl
 site/templates/bootstrap/idpchoice.tpl
+site/templates/bootstrap/impersonation.tpl
 site/templates/bootstrap/info.tpl
 site/templates/bootstrap/ldapPpGrace.tpl
 site/templates/bootstrap/login.json
