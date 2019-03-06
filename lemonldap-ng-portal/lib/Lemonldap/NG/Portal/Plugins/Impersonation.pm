@@ -67,9 +67,12 @@ sub run {
             $realSession->{$spk} = $req->{sessionInfo}->{$k};
             $self->logger->debug("-> Store $k in realSession key: $spk");
         }
+        $self->logger->debug("Delete $k");
+        delete $req->{sessionInfo}->{$k};
     }
     $req->{user} = $spoofId;
     $spoofSession = $self->_userDatas($req);
+    $spoofSession->{groups} ||= '';
 
     # Merging SSO groups and hGroups & Dedup
     if ( $self->{conf}->{impersonationMergeSSOgroups} ) {
@@ -77,25 +80,22 @@ sub run {
         my $spg       = "$self->{conf}->{impersonationPrefix}groups";
         my $sphg      = "$self->{conf}->{impersonationPrefix}hGroups";
         my $separator = $self->{conf}->{multiValuesSeparator};
-        if (   $spoofSession->{groups}
-            or $realSession->{$spg} )
-        {
-            $self->logger->debug("Processing groups...");
-            my @spoofGrps = my @realGrps = ();
-            @spoofGrps = split /\Q$separator/, $spoofSession->{groups}
-                if $spoofSession->{groups};
-            @realGrps = split /\Q$separator/, $realSession->{$spg}
-                if $realSession->{$spg};
-            @spoofGrps = ( @spoofGrps, @realGrps );
-            my %hash = map { $_, 1 } @spoofGrps;
-            $spoofSession->{groups} = join $separator, sort keys %hash;
+        $spoofSession->{groups} ||= '';
+        $realSession->{$spg} ||= '';
+        
+        $self->logger->debug("Processing groups...");
+        my @spoofGrps = my @realGrps = ();
+        @spoofGrps = split /\Q$separator/, $spoofSession->{groups};
+        @realGrps = split /\Q$separator/, $realSession->{$spg};
+        @spoofGrps = ( @spoofGrps, @realGrps );
+        my %hash = map { $_, 1 } @spoofGrps;
+        $spoofSession->{groups} = join $separator, sort keys %hash;
 
-            $self->logger->debug("Processing hGroups...");
-            $spoofSession->{hGroups} ||= {};
-            $realSession->{$sphg} ||= {};
-            $spoofSession->{hGroups} = { %{ $spoofSession->{hGroups} },
-                %{ $realSession->{$sphg} } };
-        }
+        $self->logger->debug("Processing hGroups...");
+        $spoofSession->{hGroups} ||= {};
+        $realSession->{$sphg} ||= {};
+        $spoofSession->{hGroups} = { %{ $spoofSession->{hGroups} },
+            %{ $realSession->{$sphg} } };
     }
 
     # Create spoofed session

@@ -10,7 +10,7 @@ my $res;
 
 my $client = LLNG::Manager::Test->new(
     {   ini => {
-            logLevel            => 'debug',
+            logLevel            => 'error',
             authentication      => 'Demo',
             userDB              => 'Same',
             loginHistoryEnabled => 0,
@@ -21,7 +21,7 @@ my $client = LLNG::Manager::Test->new(
             impersonationRule   => 1,
             checkUserDisplayPersistentInfo => 0,
             checkUserDisplayEmptyValues    => 0,
-            impersonationMergeSSOgroups    => 1,
+            impersonationMergeSSOgroups    => 0,
         }
     }
 );
@@ -91,9 +91,11 @@ ok( $res->[2]->[0]
 ) or explain( $res->[2]->[0], 'trspan="allowed"' );
 ok( $res->[2]->[0] =~ m%<span trspan="headers">%, 'Found trspan="headers"' )
     or explain( $res->[2]->[0], 'trspan="headers"' );
-ok( $res->[2]->[0] =~ m%<span trspan="groups_sso">%,
-    'Found trspan="groups_sso"' )
+
+ok( $res->[2]->[0] !~ m%<span trspan="groups_sso">%,
+    'trspan="groups_sso" NOT found' )
     or explain( $res->[2]->[0], 'trspan="groups_sso"' );
+
 ok( $res->[2]->[0] =~ m%<span trspan="macros">%, 'Found trspan="macros"' )
     or explain( $res->[2]->[0], 'trspan="macros"' );
 ok( $res->[2]->[0] =~ m%<span trspan="attributes">%,
@@ -106,16 +108,25 @@ ok( $res->[2]->[0] =~ m%<td class="align-middle">Auth-User</td>%,
     'Found Auth-User' )
     or explain( $res->[2]->[0], 'Header Key: Auth-User' );
 ok( $res->[2]->[0] =~ m%<td class="align-middle">dwho</td>%,
-    'Found rtyler' )
+    'Found dwho' )
     or explain( $res->[2]->[0], 'Header Value: dwho' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">su</td>%, 'Found su' )
-    or explain( $res->[2]->[0], 'SSO Groups: su' );
+
 ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
     'Found _whatToTrace' )
     or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%, 'Found uid' )
-    or explain( $res->[2]->[0], 'Attribute Value uid' );
-count(12);
+ok( $res->[2]->[0] =~ m%<td class="text-left">real_groups</td>%,
+    'Found real_groups' )
+    or explain( $res->[2]->[0], 'real_groups' );
+ok( $res->[2]->[0] =~ m%<td class="text-left">su</td>%,
+    'Found su' )
+    or explain( $res->[2]->[0], 'su' );
+ok( $res->[2]->[0] =~ m%<td class="text-left">real_uid</td>%,
+    'Found real_uid' )
+    or explain( $res->[2]->[0], 'real_groups' );
+ok( $res->[2]->[0] =~ m%<td class="text-left">rtyler</td>%,
+    'Found rtyler' )
+    or explain( $res->[2]->[0], 'su' );
+count(14);
 
 
 $client->logout($id);

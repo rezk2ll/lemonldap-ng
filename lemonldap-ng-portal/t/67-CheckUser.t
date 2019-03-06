@@ -28,7 +28,7 @@ my $client = LLNG::Manager::Test->new( {
 ok(
     $res = $client->_post(
         '/',
-        IO::String->new('user=rtyler&password=rtyler'),
+        IO::String->new('user=msmith&password=msmith'),
         length => 27,
         accept => 'text/html',
     ),
