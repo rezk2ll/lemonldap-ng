@@ -13,15 +13,6 @@
     <input name="password" type="password" class="form-control" trplaceholder="password" required aria-required="true"/>
   </div>
 
-  <TMPL_IF NAME="SPOOFID">
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text"><i class="fa fa-user icon-blue"></i> </span>
-    </div>
-    <input name="spoofId" type="text" class="form-control" trplaceholder="spoofId" aria-required="false"/>
-  </div>
-  </TMPL_IF>
-
   <TMPL_IF NAME=CAPTCHA_SRC>
   <div class="form-group">
     <img src="<TMPL_VAR NAME=CAPTCHA_SRC>" class="img-thumbnail" />
@@ -37,6 +28,7 @@
     <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
   </TMPL_IF>
 
+  <TMPL_INCLUDE NAME="impersonation.tpl">
   <TMPL_INCLUDE NAME="checklogins.tpl">
 
   <button type="submit" class="btn btn-success" >

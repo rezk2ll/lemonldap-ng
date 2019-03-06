@@ -80,7 +80,6 @@ sub run {
         my $spg       = "$self->{conf}->{impersonationPrefix}groups";
         my $sphg      = "$self->{conf}->{impersonationPrefix}hGroups";
         my $separator = $self->{conf}->{multiValuesSeparator};
-        $spoofSession->{groups} ||= '';
         $realSession->{$spg} ||= '';
         
         $self->logger->debug("Processing groups...");
