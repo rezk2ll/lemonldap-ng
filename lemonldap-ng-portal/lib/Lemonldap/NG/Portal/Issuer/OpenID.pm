@@ -62,8 +62,7 @@ sub init {
     $self->logger->debug(
         "OpenID rule -> " . $self->conf->{issuerDBOpenIDRule} );
     my $rule =
-      $hd->buildSub(
-        $hd->substitute( $self->conf->{issuerDBOpenIDRule} ) );
+      $hd->buildSub( $hd->substitute( $self->conf->{issuerDBOpenIDRule} ) );
     unless ($rule) {
         $self->error( "Bad OpenID rule -> " . $hd->tsv->{jail}->error );
         return 0;

@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Plugins::Impersonation;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants
-    qw( PE_OK PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED PE_MALFORMEDUSER );
+  qw( PE_OK PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED PE_MALFORMEDUSER );
 
 our $VERSION = '2.0.3';
 
@@ -13,11 +13,11 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 use constant endAuth => 'run';
 
-has rule => ( is => 'rw', default => sub {1} );
+has rule => ( is => 'rw', default => sub { 1 } );
 
 sub hAttr {
     $_[0]->{conf}->{impersonationHiddenAttributes} . ' '
-        . $_[0]->{conf}->{hiddenAttributes};
+      . $_[0]->{conf}->{hiddenAttributes};
 }
 
 sub init {
@@ -27,12 +27,10 @@ sub init {
     my $hd = $self->p->HANDLER;
     $self->logger->debug(
         "impersonation rule -> " . $self->conf->{impersonationRule} );
-    my $rule
-        = $hd->buildSub(
-        $hd->substitute( $self->conf->{impersonationRule} ) );
+    my $rule =
+      $hd->buildSub( $hd->substitute( $self->conf->{impersonationRule} ) );
     unless ($rule) {
-        $self->error(
-            "Bad impersonation rule -> " . $hd->tsv->{jail}->error );
+        $self->error( "Bad impersonation rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
     $self->{rule} = $rule;
@@ -45,7 +43,9 @@ sub run {
     my ( $self, $req ) = @_;
 
     my $spoofId = $req->param('spoofId') || '';
-    if ( $spoofId and $req->param('spoofId') !~ /$self->{conf}->{userControl}/o ) {
+    if (    $spoofId
+        and $req->param('spoofId') !~ /$self->{conf}->{userControl}/o )
+    {
         return PE_MALFORMEDUSER;
     }
 
@@ -97,8 +97,8 @@ sub run {
         $self->logger->debug("Processing hGroups...");
         $spoofSession->{hGroups} ||= {};
         $realSession->{$sphg} ||= {};
-        $spoofSession->{hGroups}
-            = { %{ $spoofSession->{hGroups} }, %{ $realSession->{$sphg} } };
+        $spoofSession->{hGroups} =
+          { %{ $spoofSession->{hGroups} }, %{ $realSession->{$sphg} } };
     }
 
     # Create spoofed session
@@ -119,8 +119,8 @@ sub _userDatas {
     $req->{sessionInfo} = {};
 
     # Search user in database
-    $req->steps(
-        [   'getUser',   'setSessionInfo',
+    $req->steps( [
+            'getUser',   'setSessionInfo',
             'setMacros', 'setGroups',
             'setLocalGroups'
         ]
@@ -128,9 +128,9 @@ sub _userDatas {
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_BADCREDENTIALS ) {
             $self->userLogger->warn(
-                      'Impersonation requested for an unvalid user ('
-                    . $req->{user}
-                    . ")" );
+                    'Impersonation requested for an unvalid user ('
+                  . $req->{user}
+                  . ")" );
         }
         $self->logger->debug("Process returned error: $error");
         return $req->error($error);

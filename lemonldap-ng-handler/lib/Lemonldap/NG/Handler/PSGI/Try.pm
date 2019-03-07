@@ -60,6 +60,7 @@ sub _run {
             $req->userData( $self->api->data );
         }
         elsif ( $res->[0] != 403 ) {
+
             # Unset headers (handler adds a Location header)
             $self->logger->debug(
                 "User not authenticated, Try in use, cancel redirection");

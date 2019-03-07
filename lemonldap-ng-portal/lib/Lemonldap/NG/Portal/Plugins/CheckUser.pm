@@ -3,10 +3,10 @@ package Lemonldap::NG::Portal::Plugins::CheckUser;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-    PE_BADCREDENTIALS
-    PE_TOKENEXPIRED
-    PE_NOTOKEN
-    PE_MALFORMEDUSER
+  PE_BADCREDENTIALS
+  PE_TOKENEXPIRED
+  PE_NOTOKEN
+  PE_MALFORMEDUSER
 );
 
 our $VERSION = '2.0.3';
@@ -19,8 +19,8 @@ has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        my $ott = $_[0]->{p}
-            ->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
         $ott->timeout( $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
@@ -28,7 +28,7 @@ has ott => (
 
 sub hAttr {
     $_[0]->{conf}->{checkUserHiddenAttributes} . ' '
-        . $_[0]->{conf}->{hiddenAttributes};
+      . $_[0]->{conf}->{hiddenAttributes};
 }
 
 sub init {
@@ -66,12 +66,10 @@ sub check {
             ALERTE    => 'alert-warning',
             TOKEN     => $token,
         };
-        return $self->p->sendJSONresponse( $req, $params ) if ($req->wantJSON);
-        return $self->p->sendHtml(
-            $req,
-            'checkuser',
-            params => $params,
-        ) if $msg;
+        return $self->p->sendJSONresponse( $req, $params )
+          if ( $req->wantJSON );
+        return $self->p->sendHtml( $req, 'checkuser', params => $params, )
+          if $msg;
     }
 
     ## Check user session datas
@@ -79,10 +77,11 @@ sub check {
     my $url  = $req->param('url')  || '';
     my $user = $req->param('user') || '';
 
-    if ($user and $user !~ /$self->{conf}->{userControl}/o ) {
+    if ( $user and $user !~ /$self->{conf}->{userControl}/o ) {
         $user  = '';
         $attrs = {};
-        return $self->p->sendError($req, 'Malformed user', 400) if ($req->wantJSON);
+        return $self->p->sendError( $req, 'Malformed user', 400 )
+          if ( $req->wantJSON );
         return $self->p->sendHtml(
             $req,
             'checkuser',
@@ -105,7 +104,7 @@ sub check {
     if ( $user eq $req->{user} or !$user ) {
         $self->userLogger->notice("Retrieve session from Sessions database");
         $self->userLogger->warn("Using spoofed SSO groups if exist!!!")
-            if ( $self->conf->{impersonationRule} );
+          if ( $self->conf->{impersonationRule} );
         $attrs = $req->userData;
     }
     else {
@@ -131,7 +130,7 @@ sub check {
 
                 # Ignore hidden attributes
                 push @$array_attrs, { key => $k, value => $attrs->{$k} }
-                    unless ( $self->hAttr =~ /\b$k\b/ );
+                  unless ( $self->hAttr =~ /\b$k\b/ );
             }
         }
         else {
@@ -139,7 +138,7 @@ sub check {
 
                 # Ignore hidden attributes and empty values
                 push @$array_attrs, { key => $k, value => $attrs->{$k} }
-                    unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
+                  unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
             }
         }
 
@@ -159,8 +158,8 @@ sub check {
 
             $auth = $auth ? "allowed" : "forbidden";
             $self->userLogger->notice( "checkUser -> $req->{user} is "
-                    . uc($auth)
-                    . " to access: $url" );
+                  . uc($auth)
+                  . " to access: $url" );
 
             # Return VirtualHost headers
             $array_hdrs = $self->_headers( $req, $url );
@@ -182,9 +181,8 @@ sub check {
         MAIN_LOGO => $self->conf->{portalMainLogo},
         LANGS     => $self->conf->{showLanguages},
         MSG       => $msg,
-        ALERTE =>
-            ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
-        LOGIN => (
+        ALERTE    => ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
+        LOGIN     => (
               $self->p->checkXSSAttack( 'LOGIN', $req->{user} ) ? ""
             : $req->{user}
         ),
@@ -204,13 +202,10 @@ sub check {
             : ''
         )
     };
-    return $self->p->sendJSONresponse($req, $params) if ($req->wantJSON);
+    return $self->p->sendJSONresponse( $req, $params ) if ( $req->wantJSON );
+
     # Display form
-    return $self->p->sendHtml(
-        $req,
-        'checkuser',
-        params => $params,
-    );
+    return $self->p->sendHtml( $req, 'checkuser', params => $params, );
 }
 
 sub display {
@@ -233,12 +228,8 @@ sub display {
             : ''
         )
     };
-    return $self->sendJSONresponse( $req, $params ) if ($req->wantJSON);
-    return $self->p->sendHtml(
-        $req,
-        'checkuser',
-        params => $params,
-    );
+    return $self->sendJSONresponse( $req, $params ) if ( $req->wantJSON );
+    return $self->p->sendHtml( $req, 'checkuser', params => $params, );
 }
 
 sub _userDatas {
@@ -247,14 +238,13 @@ sub _userDatas {
     # Search user in database
     my $steps = [ 'getUser', 'setSessionInfo', 'setMacros', 'setGroups' ];
     $self->conf->{checkUserDisplayPersistentInfo}
-        ? push @$steps, 'setPersistentSessionInfo', 'setLocalGroups'
-        : push @$steps, 'setLocalGroups';
+      ? push @$steps, 'setPersistentSessionInfo', 'setLocalGroups'
+      : push @$steps, 'setLocalGroups';
     $req->steps($steps);
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_BADCREDENTIALS ) {
-            $self->userLogger->warn( 'Check requested for an unvalid user ('
-                    . $req->{user}
-                    . ")" );
+            $self->userLogger->warn(
+                'Check requested for an unvalid user (' . $req->{user} . ")" );
         }
         $self->logger->debug("Process returned error: $error");
         return $req->error($error);
@@ -277,9 +267,9 @@ sub _authorization {
         }
     }
     return $exist
-        ? $self->p->HANDLER->grant( $req, $req->{userData}, $appuri,
+      ? $self->p->HANDLER->grant( $req, $req->{userData}, $appuri,
         undef, $vhost )
-        : -1;
+      : -1;
 }
 
 sub _headers {

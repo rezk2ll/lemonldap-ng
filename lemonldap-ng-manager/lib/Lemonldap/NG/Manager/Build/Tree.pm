@@ -498,8 +498,7 @@ sub tree {
                     title => 'logParams',
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
-                    nodes =>
-                      [ 'whatToTrace', 'hiddenAttributes' ]
+                    nodes => [ 'whatToTrace', 'hiddenAttributes' ]
                 },
                 {
                     title => 'cookieParams',
@@ -652,7 +651,7 @@ sub tree {
                             title => 'impersonation',
                             help  => 'impersonation.html',
                             form  => 'simpleInputContainer',
-                            nodes => [ 
+                            nodes => [
                                 'impersonationRule',
                                 'impersonationPrefix',
                                 'impersonationHiddenAttributes',

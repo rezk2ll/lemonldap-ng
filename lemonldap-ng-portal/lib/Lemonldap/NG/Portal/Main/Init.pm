@@ -352,7 +352,7 @@ sub reloadConf {
     };
     my $portal = $self->conf->{portal};
     $portal =~ s#^https?://(.*?)(?:/|$)/#$1#;
-    HANDLER->tsv->{defaultCondition}->{$portal} ||= sub {1};
+    HANDLER->tsv->{defaultCondition}->{$portal} ||= sub { 1 };
 
     1;
 }

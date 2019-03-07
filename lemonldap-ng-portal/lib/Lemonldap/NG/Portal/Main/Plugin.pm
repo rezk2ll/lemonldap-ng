@@ -39,13 +39,13 @@ sub _addRoute {
             return sub {
                 shift;
                 return $sub->( $self, @_ );
-                }
+              }
         }
         else {
             return sub {
                 shift;
                 return $self->$sub(@_);
-                }
+              }
         }
     };
     $self->p->$type( $word, $subName, $methods, $transform );

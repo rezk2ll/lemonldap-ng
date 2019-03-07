@@ -4,18 +4,18 @@ use strict;
 use Mouse;
 use String::Random;
 use Lemonldap::NG::Portal::Main::Constants qw(
-    PE_BADCREDENTIALS
-    PE_ERROR
-    PE_FORMEMPTY
-    PE_OK
-    PE_SENDRESPONSE
-    PE_MUSTHAVEMAIL
+  PE_BADCREDENTIALS
+  PE_ERROR
+  PE_FORMEMPTY
+  PE_OK
+  PE_SENDRESPONSE
+  PE_MUSTHAVEMAIL
 );
 
 our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor',
-    'Lemonldap::NG::Portal::Lib::SMTP';
+  'Lemonldap::NG::Portal::Lib::SMTP';
 
 # INITIALIZATION
 
@@ -31,10 +31,10 @@ has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        my $ott = $_[0]->{p}
-            ->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
         $ott->timeout( $_[0]->{conf}->{mail2fTimeout}
-                || $_[0]->{conf}->{formTimeout} );
+              || $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
 );
@@ -47,7 +47,7 @@ sub init {
         return 0;
     }
     $self->logo( $self->conf->{mail2fLogo} )
-        if ( $self->conf->{mail2fLogo} );
+      if ( $self->conf->{mail2fLogo} );
     return $self->SUPER::init();
 }
 
@@ -63,7 +63,7 @@ sub run {
     my $dest = $req->{sessionInfo}->{ $self->conf->{mailSessionKey} };
     unless ($dest) {
         $self->logger->error( "Could not find mail attribute for login "
-                . $req->{sessionInfo}->{_user} );
+              . $req->{sessionInfo}->{_user} );
         return PE_MUSTHAVEMAIL;
     }
 
@@ -141,7 +141,7 @@ sub verify {
     return PE_OK if ( $usercode eq $savedcode );
 
     $self->userLogger->warn( 'Second factor failed for '
-            . $session->{ $self->conf->{whatToTrace} } );
+          . $session->{ $self->conf->{whatToTrace} } );
     return PE_BADCREDENTIALS;
 }
 

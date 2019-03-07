@@ -25,11 +25,9 @@ ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu' );
 ok( $res->[2]->[0] !~ m%<span id="languages"></span>%,
     ' No language icon found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ m%"trOver"%,
-    ' trOver found' )
+ok( $res->[2]->[0] =~ m%"trOver"%, ' trOver found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ m%"all":\{\}%,
-    ' all found' )
+ok( $res->[2]->[0] =~ m%"all":\{\}%, ' all found' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%"en":\{"PE9":"You are welcome! Please login..."\}%,
     ' en found' )
@@ -40,14 +38,11 @@ ok( $res->[2]->[0] =~ m%"PE0":"Souriez, vous êtes surveillés !"%,
 ok( $res->[2]->[0] =~ m%"selectIdP":"Portail de Fédération des Identités"%,
     ' selectIdP found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ m%"fr":\{%,
-    ' fr found' )
+ok( $res->[2]->[0] =~ m%"fr":\{%, ' fr found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ m%"PE85":"From lemonlap-ng.ini"%,
-    ' PE85 found' )
+ok( $res->[2]->[0] =~ m%"PE85":"From lemonlap-ng.ini"%, ' PE85 found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(9);
-
 
 # Try yo authenticate
 # -------------------
@@ -60,8 +55,7 @@ ok(
     ),
     'Auth query'
 );
-ok( $res->[2]->[0] =~ m%<span trmsg="40"></span>%,
-    ' PE40 found' )
+ok( $res->[2]->[0] =~ m%<span trmsg="40"></span>%, ' PE40 found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 

@@ -49,7 +49,7 @@ sub authenticate {
 
     unless ( $req->data->{password} ) {
         $self->p->{user} = $req->userData->{_dn} = $req->data->{dn};
-        unless($self->p->{_passwordDB}) {
+        unless ( $self->p->{_passwordDB} ) {
             $self->logger->error('No password database configured, aborting');
             return PE_ERROR;
         }

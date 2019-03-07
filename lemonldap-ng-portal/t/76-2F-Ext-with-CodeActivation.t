@@ -10,12 +10,12 @@ count(1);
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel             => 'error',
-            ext2fActivation      => 1,
-            ext2fCodeActivation  => 'A1b2C0',
-            ext2FSendCommand     => 't/sendCode.pl -uid $uid -code $code',
-            authentication       => 'Demo',
-            userDB               => 'Same',
+            logLevel            => 'error',
+            ext2fActivation     => 1,
+            ext2fCodeActivation => 'A1b2C0',
+            ext2FSendCommand    => 't/sendCode.pl -uid $uid -code $code',
+            authentication      => 'Demo',
+            userDB              => 'Same',
         }
     }
 );

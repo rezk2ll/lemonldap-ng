@@ -41,12 +41,12 @@ sub serviceToXML {
       samlOrganizationURL
     );
 
-    if ($type and $type eq 'idp') {
-	    $template->param( 'hideSPMetadata', 1);
+    if ( $type and $type eq 'idp' ) {
+        $template->param( 'hideSPMetadata', 1 );
     }
 
-    if ($type and $type eq 'sp') {
-	    $template->param( 'hideIDPMetadata', 1);
+    if ( $type and $type eq 'sp' ) {
+        $template->param( 'hideIDPMetadata', 1 );
     }
 
     foreach (@param_auto) {
