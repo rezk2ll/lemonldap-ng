@@ -43,11 +43,9 @@ sub run {
     my ( $self, $req ) = @_;
 
     my $spoofId = $req->param('spoofId') || '';
-    if (    $spoofId
-        and $req->param('spoofId') !~ /$self->{conf}->{userControl}/o )
-    {
-        return PE_MALFORMEDUSER;
-    }
+    return PE_MALFORMEDUSER
+      if (  $spoofId
+        and $req->param('spoofId') !~ /$self->{conf}->{userControl}/o );
 
     # Skip if no submitted SpoofId
     return PE_OK unless $spoofId;
