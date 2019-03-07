@@ -54,6 +54,22 @@ count(9);
 ok(
     $res = $client->_post(
         '/',
+        IO::String->new('user=dwho*&password=dwho'),
+        accept => 'text/html',
+        length => 24
+    ),
+    'Auth query'
+);
+ok( $res->[2]->[0] =~ m%<span trmsg="40"></span>%,
+    ' PE40 found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(2);
+
+# Try yo authenticate
+# -------------------
+ok(
+    $res = $client->_post(
+        '/',
         IO::String->new('user=dwho&password=dwho'),
         length => 23
     ),

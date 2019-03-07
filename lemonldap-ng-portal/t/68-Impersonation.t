@@ -26,6 +26,31 @@ my $client = LLNG::Manager::Test->new(
     }
 );
 
+## Try to authenticate with bad spoofed user
+ok( $res = $client->_get( '/', accept => 'text/html' ),
+    'Get Menu', );
+count(1);
+my ( $host, $url, $query ) =
+  expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
+
+$query =~ s/user=/user=rtyler/;
+$query =~ s/password=/password=rtyler/;
+$query =~ s/spoofId=/spoofId=dwho*/;
+ok( $res = $client->_post(
+        '/',
+        IO::String->new($query),
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'Auth query'
+);
+ok( $res->[2]->[0] =~ m%<span trmsg="40"></span>%,
+    ' PE40 found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(2);
+
+my $id = expectCookie($res);
+$client->logout($id);
 
 ## Try to authenticate
 ok( $res = $client->_get( '/', accept => 'text/html' ),
@@ -47,7 +72,7 @@ ok( $res = $client->_post(
 );
 count(1);
 
-my $id = expectCookie($res);
+$id = expectCookie($res);
 expectRedirection( $res, 'http://auth.example.com/' );
 
 # CheckUser form
