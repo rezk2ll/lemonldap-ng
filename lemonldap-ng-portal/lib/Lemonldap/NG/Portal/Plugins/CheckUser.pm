@@ -58,17 +58,19 @@ sub check {
             $msg   = PE_TOKENEXPIRED;
             $token = $self->ott->createToken( $req->userData );
         }
+        my $params = {
+            PORTAL    => $self->conf->{portal},
+            MAIN_LOGO => $self->conf->{portalMainLogo},
+            LANGS     => $self->conf->{showLanguages},
+            MSG       => "PE$msg",
+            ALERTE    => 'alert-warning',
+            TOKEN     => $token,
+        };
+        return $self->p->sendJSONresponse( $req, $params ) if ($req->wantJSON);
         return $self->p->sendHtml(
             $req,
             'checkuser',
-            params => {
-                PORTAL    => $self->conf->{portal},
-                MAIN_LOGO => $self->conf->{portalMainLogo},
-                LANGS     => $self->conf->{showLanguages},
-                MSG       => "PE$msg",
-                ALERTE    => 'alert-warning',
-                TOKEN     => $token,
-            }
+            params => $params,
         ) if $msg;
     }
 
@@ -77,28 +79,27 @@ sub check {
     my $url  = $req->param('url')  || '';
     my $user = $req->param('user') || '';
 
-    if ($user) {
-        unless ( $user =~ /$self->{conf}->{userControl}/o ) {
-            $user  = '';
-            $attrs = {};
-            return $self->p->sendHtml(
-                $req,
-                'checkuser',
-                params => {
-                    PORTAL    => $self->conf->{portal},
-                    MAIN_LOGO => $self->conf->{portalMainLogo},
-                    LANGS     => $self->conf->{showLanguages},
-                    MSG       => 'PE' . PE_MALFORMEDUSER,
-                    ALERTE    => 'alert-warning',
-                    LOGIN     => $req->{user},
-                    TOKEN     => (
-                          $self->conf->{requireToken}
-                        ? $self->ott->createToken( $req->userData )
-                        : ''
-                    )
-                }
-            );
-        }
+    if ($user and $user !~ /$self->{conf}->{userControl}/o ) {
+        $user  = '';
+        $attrs = {};
+        return $self->p->sendError($req, 'Malformed user', 400) if ($req->wantJSON);
+        return $self->p->sendHtml(
+            $req,
+            'checkuser',
+            params => {
+                PORTAL    => $self->conf->{portal},
+                MAIN_LOGO => $self->conf->{portalMainLogo},
+                LANGS     => $self->conf->{showLanguages},
+                MSG       => 'PE' . PE_MALFORMEDUSER,
+                ALERTE    => 'alert-warning',
+                LOGIN     => $req->{user},
+                TOKEN     => (
+                      $self->conf->{requireToken}
+                    ? $self->ott->createToken( $req->userData )
+                    : ''
+                )
+            }
+        );
     }
 
     if ( $user eq $req->{user} or !$user ) {
@@ -175,37 +176,40 @@ sub check {
     if    ( $auth eq 'allowed' )   { $alert_auth = 'alert-success' }
     elsif ( $auth eq 'forbidden' ) { $alert_auth = 'alert-danger' }
 
+    # TODO:
+    my $params = {
+        PORTAL    => $self->conf->{portal},
+        MAIN_LOGO => $self->conf->{portalMainLogo},
+        LANGS     => $self->conf->{showLanguages},
+        MSG       => $msg,
+        ALERTE =>
+            ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
+        LOGIN => (
+              $self->p->checkXSSAttack( 'LOGIN', $req->{user} ) ? ""
+            : $req->{user}
+        ),
+        URL => (
+              $self->p->checkXSSAttack( 'URL', $url ) ? ""
+            : $url
+        ),
+        ALLOWED     => $auth,
+        ALERTE_AUTH => $alert_auth,
+        HEADERS     => $array_hdrs,
+        ATTRIBUTES  => $array_attrs->[2],
+        MACROS      => $array_attrs->[1],
+        GROUPS      => $array_attrs->[0],
+        TOKEN       => (
+              $self->conf->{requireToken}
+            ? $self->ott->createToken( $req->userData )
+            : ''
+        )
+    };
+    return $self->p->sendJSONresponse($req, $params) if ($req->wantJSON);
     # Display form
     return $self->p->sendHtml(
         $req,
         'checkuser',
-        params => {
-            PORTAL    => $self->conf->{portal},
-            MAIN_LOGO => $self->conf->{portalMainLogo},
-            LANGS     => $self->conf->{showLanguages},
-            MSG       => $msg,
-            ALERTE =>
-                ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
-            LOGIN => (
-                  $self->p->checkXSSAttack( 'LOGIN', $req->{user} ) ? ""
-                : $req->{user}
-            ),
-            URL => (
-                  $self->p->checkXSSAttack( 'URL', $url ) ? ""
-                : $url
-            ),
-            ALLOWED     => $auth,
-            ALERTE_AUTH => $alert_auth,
-            HEADERS     => $array_hdrs,
-            ATTRIBUTES  => $array_attrs->[2],
-            MACROS      => $array_attrs->[1],
-            GROUPS      => $array_attrs->[0],
-            TOKEN       => (
-                  $self->conf->{requireToken}
-                ? $self->ott->createToken( $req->userData )
-                : ''
-            )
-        }
+        params => $params,
     );
 }
 
@@ -213,25 +217,27 @@ sub display {
     my ( $self, $req ) = @_;
 
     # Display form
+    my $params = {
+        PORTAL    => $self->conf->{portal},
+        MAIN_LOGO => $self->conf->{portalMainLogo},
+        LANGS     => $self->conf->{showLanguages},
+        MSG       => 'checkUser',
+        ALERTE    => 'alert-info',
+        LOGIN     => (
+              $self->p->checkXSSAttack( 'LOGIN', $req->{user} ) ? ""
+            : $req->{user}
+        ),
+        TOKEN => (
+              $self->conf->{requireToken}
+            ? $self->ott->createToken( $req->userData )
+            : ''
+        )
+    };
+    return $self->sendJSONresponse( $req, $params ) if ($req->wantJSON);
     return $self->p->sendHtml(
         $req,
         'checkuser',
-        params => {
-            PORTAL    => $self->conf->{portal},
-            MAIN_LOGO => $self->conf->{portalMainLogo},
-            LANGS     => $self->conf->{showLanguages},
-            MSG       => 'checkUser',
-            ALERTE    => 'alert-info',
-            LOGIN     => (
-                  $self->p->checkXSSAttack( 'LOGIN', $req->{user} ) ? ""
-                : $req->{user}
-            ),
-            TOKEN => (
-                  $self->conf->{requireToken}
-                ? $self->ott->createToken( $req->userData )
-                : ''
-            )
-        }
+        params => $params,
     );
 }
 
