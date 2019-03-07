@@ -51,12 +51,12 @@ sub check {
         unless ($token) {
             $self->userLogger->warn('CheckUser try without token');
             $msg   = PE_NOTOKEN;
-            $token = $self->ott->createToken( $req->sessionInfo );
+            $token = $self->ott->createToken( $req->userData );
         }
         unless ( $self->ott->getToken($token) ) {
             $self->userLogger->warn('Checkuser try with expired/bad token');
             $msg   = PE_TOKENEXPIRED;
-            $token = $self->ott->createToken( $req->sessionInfo );
+            $token = $self->ott->createToken( $req->userData );
         }
         return $self->p->sendHtml(
             $req,
@@ -93,7 +93,7 @@ sub check {
                     LOGIN     => $req->{user},
                     TOKEN     => (
                           $self->conf->{requireToken}
-                        ? $self->ott->createToken( $req->sessionInfo )
+                        ? $self->ott->createToken( $req->userData )
                         : ''
                     )
                 }
@@ -202,7 +202,7 @@ sub check {
             GROUPS      => $array_attrs->[0],
             TOKEN       => (
                   $self->conf->{requireToken}
-                ? $self->ott->createToken( $req->sessionInfo )
+                ? $self->ott->createToken( $req->userData )
                 : ''
             )
         }
@@ -228,7 +228,7 @@ sub display {
             ),
             TOKEN => (
                   $self->conf->{requireToken}
-                ? $self->ott->createToken( $req->sessionInfo )
+                ? $self->ott->createToken( $req->userData )
                 : ''
             )
         }
@@ -270,9 +270,8 @@ sub _authorization {
             last;
         }
     }
-
     return $exist
-        ? $self->p->HANDLER->grant( $req, $req->{sessionInfo}, $appuri,
+        ? $self->p->HANDLER->grant( $req, $req->{userData}, $appuri,
         undef, $vhost )
         : -1;
 }
@@ -283,7 +282,7 @@ sub _headers {
     $vhost =~ s/:\d+$//;
     $req->{env}->{HTTP_HOST} = $vhost;
     $self->p->HANDLER->headersInit( $self->{conf} );
-    return $self->p->HANDLER->checkHeaders( $req, $req->{sessionInfo} );
+    return $self->p->HANDLER->checkHeaders( $req, $req->{userData} );
 }
 
 sub _splitAttributes {
