@@ -76,8 +76,10 @@ sub check {
     # Use submitted attribute if exists
     my $url = $req->param('url') || '';
 
-    unless ( $req->param('user') =~ /$self->{conf}->{userControl}/o ) {
-        return PE_MALFORMEDUSER;
+    if ( $req->param('user') ) {
+        unless ( $req->param('user') =~ /$self->{conf}->{userControl}/o ) {
+            return PE_MALFORMEDUSER;
+        }
     }
 
     if ( $req->param('user') eq $req->{user} or !$req->param('user') ) {
@@ -89,7 +91,8 @@ sub check {
     else {
         $self->logger->debug("Check requested for $req->{user}");
         $req->{user} = $req->param('user');
-        $self->userLogger->notice("Retrieve session from userDB and compute Groups & Macros");
+        $self->userLogger->notice(
+            "Retrieve session from userDB and compute Groups & Macros");
         $attrs = $self->_userDatas($req);
     }
 

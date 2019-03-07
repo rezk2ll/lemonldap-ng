@@ -43,9 +43,10 @@ sub init {
 
 sub run {
     my ( $self, $req ) = @_;
-
-    unless ( $req->param('spoofId') =~ /$self->{conf}->{userControl}/o ) {
-        return PE_MALFORMEDUSER;
+    if ( $req->param('spoofId') ) {
+        unless ( $req->param('spoofId') =~ /$self->{conf}->{userControl}/o ) {
+            return PE_MALFORMEDUSER;
+        }
     }
 
     my $spoofId = $req->param('spoofId') || '';
@@ -86,11 +87,11 @@ sub run {
         my $sphg      = "$self->{conf}->{impersonationPrefix}hGroups";
         my $separator = $self->{conf}->{multiValuesSeparator};
         $realSession->{$spg} ||= '';
-        
+
         $self->logger->debug("Processing groups...");
         my @spoofGrps = my @realGrps = ();
         @spoofGrps = split /\Q$separator/, $spoofSession->{groups};
-        @realGrps = split /\Q$separator/, $realSession->{$spg};
+        @realGrps  = split /\Q$separator/, $realSession->{$spg};
         @spoofGrps = ( @spoofGrps, @realGrps );
         my %hash = map { $_, 1 } @spoofGrps;
         $spoofSession->{groups} = join $separator, sort keys %hash;
@@ -98,8 +99,8 @@ sub run {
         $self->logger->debug("Processing hGroups...");
         $spoofSession->{hGroups} ||= {};
         $realSession->{$sphg} ||= {};
-        $spoofSession->{hGroups} = { %{ $spoofSession->{hGroups} },
-            %{ $realSession->{$sphg} } };
+        $spoofSession->{hGroups}
+            = { %{ $spoofSession->{hGroups} }, %{ $realSession->{$sphg} } };
     }
 
     # Create spoofed session
