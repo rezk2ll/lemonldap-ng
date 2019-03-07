@@ -767,7 +767,7 @@ sub attributes {
         },
         userControl => {
             type          => 'pcre',
-            default       => '^[\w\.\-@]+$',
+            default       => '^[\w\.\-@\d]+$',
             documentation => 'Regular expression to validate login',
         },
         useRedirectOnError => {

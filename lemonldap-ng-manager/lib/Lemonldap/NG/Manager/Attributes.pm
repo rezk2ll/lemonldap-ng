@@ -3402,7 +3402,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'bool'
         },
         'userControl' => {
-            'default' => '^[\\w\\.\\-@]+$',
+            'default' => '^[\\w\\.\\-@\\d]+$',
             'type'    => 'pcre'
         },
         'userDB' => {
