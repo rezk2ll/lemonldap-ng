@@ -288,7 +288,7 @@ sub defaultValues {
         'u2fSelfRegistration'                     => 0,
         'u2fUserCanRemoveKey'                     => 1,
         'upgradeSession'                          => 1,
-        'userControl'                             => '^[\\w\\.\\-@\\d]+$',
+        'userControl'                             => '^[\\w\\.\\-@]+$',
         'userDB'                                  => 'Same',
         'useRedirectOnError'                      => 1,
         'useSafeJail'                             => 1,

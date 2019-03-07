@@ -2153,7 +2153,7 @@
     },
     {
       "_nodes": [{
-        "default": "^[\\w\\.\\-@\\d]+$",
+        "default": "^[\\w\\.\\-@]+$",
         "id": "userControl",
         "title": "userControl"
       },
