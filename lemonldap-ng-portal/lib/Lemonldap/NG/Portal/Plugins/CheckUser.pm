@@ -74,15 +74,34 @@ sub check {
 
     ## Check user session datas
     # Use submitted attribute if exists
-    my $url = $req->param('url') || '';
+    my $url  = $req->param('url')  || '';
+    my $user = $req->param('user') || '';
 
-    if ( $req->param('user') ) {
-        unless ( $req->param('user') =~ /$self->{conf}->{userControl}/o ) {
-            return PE_MALFORMEDUSER;
+    if ($user) {
+        unless ( $user =~ /$self->{conf}->{userControl}/o ) {
+            $user  = '';
+            $attrs = {};
+            return $self->p->sendHtml(
+                $req,
+                'checkuser',
+                params => {
+                    PORTAL    => $self->conf->{portal},
+                    MAIN_LOGO => $self->conf->{portalMainLogo},
+                    LANGS     => $self->conf->{showLanguages},
+                    MSG       => 'PE' . PE_MALFORMEDUSER,
+                    ALERTE    => 'alert-warning',
+                    LOGIN     => $req->{user},
+                    TOKEN     => (
+                          $self->conf->{requireToken}
+                        ? $self->ott->createToken( $req->sessionInfo )
+                        : ''
+                    )
+                }
+            );
         }
     }
 
-    if ( $req->param('user') eq $req->{user} or !$req->param('user') ) {
+    if ( $user eq $req->{user} or !$user ) {
         $self->userLogger->notice("Retrieve session from Sessions database");
         $self->userLogger->warn("Using spoofed SSO groups if exist!!!")
             if ( $self->conf->{impersonationRule} );
@@ -90,7 +109,7 @@ sub check {
     }
     else {
         $self->logger->debug("Check requested for $req->{user}");
-        $req->{user} = $req->param('user');
+        $req->{user} = $user;
         $self->userLogger->notice(
             "Retrieve session from userDB and compute Groups & Macros");
         $attrs = $self->_userDatas($req);
