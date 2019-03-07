@@ -1561,10 +1561,10 @@
       "title": "security",
       "type": "simpleInputContainer",
       "nodes": [{
-        "default": "^[\\w\\.\\-@]+$",
+        "default": "^[\\w\\.\\-@\\d]+$",
         "id": "userControl",
         "title": "userControl",
-        "data": "^[\\w\\.\\-@]+$"
+        "data": "^[\\w\\.\\-@\\d]+$"
       }, {
         "default": "p2@Pol9Lo_Ze&j*P",
         "id": "key",

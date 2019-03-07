@@ -1386,7 +1386,7 @@
       "type": "simpleInputContainer"
     }, {
       "_nodes": [{
-        "default": "^[\\w\\.\\-@]+$",
+        "default": "^[\\w\\.\\-@\\d]+$",
         "id": "userControl",
         "title": "userControl"
       }, {
