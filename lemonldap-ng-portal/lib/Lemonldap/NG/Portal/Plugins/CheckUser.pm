@@ -49,12 +49,12 @@ sub check {
     if ( $self->conf->{requireToken} ) {
         my $token = $req->param('token');
         unless ($token) {
-            $self->userLogger->warn('CheckUser try without token');
+            $self->userLogger->warn('checkUser try without token');
             $msg   = PE_NOTOKEN;
             $token = $self->ott->createToken( $req->userData );
         }
         unless ( $self->ott->getToken($token) ) {
-            $self->userLogger->warn('Checkuser try with expired/bad token');
+            $self->userLogger->warn('checkUser try with expired/bad token');
             $msg   = PE_TOKENEXPIRED;
             $token = $self->ott->createToken( $req->userData );
         }
@@ -108,7 +108,7 @@ sub check {
         $attrs = $req->userData;
     }
     else {
-        $self->logger->debug("Check requested for $req->{user}");
+        $self->logger->debug("checkUser requested for $req->{user}");
         $req->{user} = $user;
         $self->userLogger->notice(
             "Retrieve session from userDB and compute Groups & Macros");
@@ -244,7 +244,9 @@ sub _userDatas {
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_BADCREDENTIALS ) {
             $self->userLogger->warn(
-                'Check requested for an unvalid user (' . $req->{user} . ")" );
+                    'checkUser requested for an unvalid user ('
+                  . $req->{user}
+                  . ")" );
         }
         $self->logger->debug("Process returned error: $error");
         return $req->error($error);
