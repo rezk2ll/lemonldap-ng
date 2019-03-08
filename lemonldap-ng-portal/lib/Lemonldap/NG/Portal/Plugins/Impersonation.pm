@@ -13,7 +13,8 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 use constant endAuth => 'run';
 
-has rule => ( is => 'rw', default => sub { 1 } );
+has rule   => ( is => 'rw', default => sub { 1 } );
+has idRule => ( is => 'rw', default => sub { 1 } );
 
 sub hAttr {
     $_[0]->{conf}->{impersonationHiddenAttributes} . ' '
@@ -22,11 +23,11 @@ sub hAttr {
 
 sub init {
     my ($self) = @_;
+    my $hd = $self->p->HANDLER;
 
     # Parse activation rule
-    my $hd = $self->p->HANDLER;
     $self->logger->debug(
-        "impersonation rule -> " . $self->conf->{impersonationRule} );
+        "Impersonation rule -> " . $self->conf->{impersonationRule} );
     my $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{impersonationRule} ) );
     unless ($rule) {
@@ -34,6 +35,19 @@ sub init {
         return 0;
     }
     $self->{rule} = $rule;
+
+    # Parse identity rule
+    $self->logger->debug( "Impersonation identity rule -> "
+          . $self->conf->{impersonationIdRule} );
+    $rule =
+      $hd->buildSub( $hd->substitute( $self->conf->{impersonationIdRule} ) );
+    unless ($rule) {
+        $self->error(
+            "Bad impersonation identity rule -> " . $hd->tsv->{jail}->error );
+        return 0;
+    }
+    $self->{idRule} = $rule;
+
     return 1;
 }
 
@@ -74,6 +88,9 @@ sub run {
     }
     $req->{user} = $spoofId;
     $spoofSession = $self->_userDatas($req);
+
+    return $req->error if $req->error;
+
     $spoofSession->{groups} ||= '';
 
     # Merging SSO groups and hGroups & Dedup
@@ -133,6 +150,18 @@ sub _userDatas {
         $self->logger->debug("Process returned error: $error");
         return $req->error($error);
     }
+
+    # Check identity rule
+    unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
+        $self->userLogger->warn(
+                'Impersonation requested for an unvalid user ('
+              . $req->{user}
+              . ")" );
+
+        $self->logger->debug('Identity not authorized');
+        return $req->error(PE_BADCREDENTIALS);
+    }
+
     $self->logger->debug("Populating spoofed session...");
     return $req->{sessionInfo};
 }

@@ -71,6 +71,7 @@ sub defaultValues {
         'httpOnly'                      => 1,
         'https'                         => -1,
         'impersonationHiddenAttributes' => '_2fDevices _loginHistory',
+        'impersonationIdRule'           => 1,
         'impersonationPrefix'           => 'real_',
         'impersonationRule'             => 0,
         'impersonationSkipEmptyValues'  => 1,

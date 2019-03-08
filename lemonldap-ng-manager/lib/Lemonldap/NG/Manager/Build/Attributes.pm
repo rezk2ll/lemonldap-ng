@@ -457,6 +457,12 @@ sub attributes {
             default       => 0,
             documentation => 'Impersonation activation rule',
         },
+        impersonationIdRule => {
+            type          => 'text',
+            test          => $perlExpr,
+            default       => 1,
+            documentation => 'Impersonation identity rule',
+        },
         impersonationHiddenAttributes => {
             type          => 'text',
             default       => '_2fDevices _loginHistory',

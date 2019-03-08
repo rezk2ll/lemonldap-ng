@@ -288,6 +288,7 @@
 "https":"إتش تي تي بي س",
 "impersonation":"Impersonation",
 "impersonationRule":"Use rule",
+"impersonationIdRule":"Identities use rule",
 "impersonationHiddenAttributes":"Hidden attributes",
 "impersonationMergeSSOgroups":"Merge spoofed and real SSO groups",
 "impersonationPrefix":"Real attributes prefix",

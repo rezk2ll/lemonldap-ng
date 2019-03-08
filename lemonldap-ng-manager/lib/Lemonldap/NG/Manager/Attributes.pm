@@ -1199,6 +1199,21 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => '_2fDevices _loginHistory',
             'type'    => 'text'
         },
+        'impersonationIdRule' => {
+            'default' => 1,
+            'test'    => sub {
+                my ( $val, $conf ) = @_;
+                my $s = '';
+                'Safe'->new->reval("BEGIN { warnings->unimport; } $s $val");
+                my $err = join(
+                    '',
+                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
+                        split( /\n/, $@, 0 ) )
+                );
+                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+            },
+            'type' => 'text'
+        },
         'impersonationMergeSSOgroups' => {
             'default' => 0,
             'type'    => 'bool'

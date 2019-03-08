@@ -653,6 +653,7 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'impersonationRule',
+                                'impersonationIdRule',
                                 'impersonationPrefix',
                                 'impersonationHiddenAttributes',
                                 'impersonationSkipEmptyValues',

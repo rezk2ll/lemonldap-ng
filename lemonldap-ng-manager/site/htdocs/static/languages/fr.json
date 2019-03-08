@@ -288,6 +288,7 @@
 "https":"HTTPS",
 "impersonation":"Usurpation d'identité",
 "impersonationRule":"Règle d'utilisation",
+"impersonationIdRule":"Règle d'utilisation des identités",
 "impersonationHiddenAttributes":"Attributs masqués",
 "impersonationMergeSSOgroups":"Fusionner les groupes SSO réels et usurpés",
 "impersonationPrefix":"Préfix des vrais attributs",
