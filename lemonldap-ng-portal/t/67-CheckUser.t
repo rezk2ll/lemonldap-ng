@@ -18,6 +18,7 @@ my $client = LLNG::Manager::Test->new( {
             portalMainLogo                 => 'common/logos/logo_llng_old.png',
             checkUser                      => 1,
             requireToken                   => 0,
+            checkUserIdRule                => 1,
             checkUserDisplayPersistentInfo => 1,
             checkUserDisplayEmptyValues    => 1,
         }
@@ -90,7 +91,7 @@ ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
   or explain( $res->[2]->[0], 'trspan="checkUser"' );
 count(1);
 
-$query =~ s/user=dwho/user=rtyler/;
+$query =~ s/user=/user=rtyler/;
 $query =~ s/url=/url=http%3A%2F%2Ftry.example.com/;
 ok(
     $res = $client->_post(
