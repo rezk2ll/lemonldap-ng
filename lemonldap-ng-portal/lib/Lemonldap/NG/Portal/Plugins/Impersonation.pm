@@ -86,14 +86,22 @@ sub run {
         $self->logger->debug("Delete $k");
         delete $req->{sessionInfo}->{$k};
     }
-    $req->{user} = $spoofId;
-    $spoofSession = $self->_userDatas($req);
 
+    # Compute Macros and Groups with real and spoofed sessions
+    $req->{sessionInfo} = {%$realSession};
+    $req->{user}        = $spoofId;
+    $spoofSession       = $self->_userDatas($req);
     return $req->error if $req->error;
 
-    $spoofSession->{groups} ||= '';
+    # Update spoofed session
+    foreach (qw (_auth _userDB)) {
+        $self->logger->debug("Processing $_...");
+        $spk = "$self->{conf}->{impersonationPrefix}$_";
+        $spoofSession->{$_} = $realSession->{$spk};
+    }
 
     # Merging SSO groups and hGroups & Dedup
+    $spoofSession->{groups} ||= '';
     if ( $self->{conf}->{impersonationMergeSSOgroups} ) {
         $self->userLogger->warn("MERGING SSO groups and hGroups...");
         my $spg       = "$self->{conf}->{impersonationPrefix}groups";
@@ -116,14 +124,6 @@ sub run {
           { %{ $spoofSession->{hGroups} }, %{ $realSession->{$sphg} } };
     }
 
-    # Create spoofed session
-    foreach (qw (_auth _userDB)) {
-        $self->logger->debug("Processing $_...");
-        $spk = "$self->{conf}->{impersonationPrefix}$_";
-        $spoofSession->{$_} = $realSession->{$spk};
-    }
-    $spoofSession = { %$spoofSession, %$realSession };
-
     # Main session
     $self->p->updateSession( $req, $spoofSession );
     return PE_OK;
@@ -131,7 +131,6 @@ sub run {
 
 sub _userDatas {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo} = {};
 
     # Search user in database
     $req->steps( [
