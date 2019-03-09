@@ -642,6 +642,7 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'checkUser',
+                                'checkUserIdRule',
                                 'checkUserHiddenAttributes',
                                 'checkUserDisplayPersistentInfo',
                                 'checkUserDisplayEmptyValues',

@@ -153,6 +153,7 @@
 "checkStateSecret":"Segreto condiviso",
 "checkUsers":"SSO profile Check",
 "checkUser":"Activation",
+"checkUserIdRule":"Identities use rule",
 "checkUserHiddenAttributes":"Hidden attributes",
 "checkUserDisplayPersistentInfo":"Display persistent session",
 "checkUserDisplayEmptyValues":"Display empty values",

@@ -25,6 +25,7 @@ has ott => (
         return $ott;
     }
 );
+has idRule => ( is => 'rw', default => sub { 1 } );
 
 sub hAttr {
     $_[0]->{conf}->{checkUserHiddenAttributes} . ' '
@@ -33,8 +34,22 @@ sub hAttr {
 
 sub init {
     my ($self) = @_;
+    my $hd = $self->p->HANDLER;
     $self->addAuthRoute( checkuser => 'check',   ['POST'] );
     $self->addAuthRoute( checkuser => 'display', ['GET'] );
+
+    # Parse identity rule
+    $self->logger->debug(
+        "checkUser identities rule -> " . $self->conf->{checkUserIdRule} );
+    my $rule =
+      $hd->buildSub( $hd->substitute( $self->conf->{checkUserIdRule} ) );
+    unless ($rule) {
+        $self->error(
+            "Bad checkUser identities rule -> " . $hd->tsv->{jail}->error );
+        return 0;
+    }
+    $self->{idRule} = $rule;
+
     return 1;
 }
 
@@ -91,7 +106,7 @@ sub check {
                 LANGS     => $self->conf->{showLanguages},
                 MSG       => 'PE' . PE_MALFORMEDUSER,
                 ALERTE    => 'alert-warning',
-                LOGIN     => $req->{user},
+                LOGIN     => '',
                 TOKEN     => (
                       $self->conf->{requireToken}
                     ? $self->ott->createToken( $req->userData )
@@ -183,8 +198,8 @@ sub check {
         MSG       => $msg,
         ALERTE    => ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
         LOGIN     => (
-              $self->p->checkXSSAttack( 'LOGIN', $req->{user} ) ? ""
-            : $req->{user}
+              $self->p->checkXSSAttack( 'LOGIN', $req->{userData}->{uid} ) ? ""
+            : $req->{userData}->{uid}
         ),
         URL => (
               $self->p->checkXSSAttack( 'URL', $url ) ? ""
@@ -218,11 +233,8 @@ sub display {
         LANGS     => $self->conf->{showLanguages},
         MSG       => 'checkUser',
         ALERTE    => 'alert-info',
-        LOGIN     => (
-              $self->p->checkXSSAttack( 'LOGIN', $req->{user} ) ? ""
-            : $req->{user}
-        ),
-        TOKEN => (
+        LOGIN     => '',
+        TOKEN     => (
               $self->conf->{requireToken}
             ? $self->ott->createToken( $req->userData )
             : ''
@@ -251,6 +263,17 @@ sub _userDatas {
         $self->logger->debug("Process returned error: $error");
         return $req->error($error);
     }
+
+    # Check identities rule
+    unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
+        $self->userLogger->warn(
+            'checkUser requested for an unvalid user (' . $req->{user} . ")" );
+        $req->{sessionInfo} = {};
+        $self->logger->debug('Identity not authorized');
+        return $req->error(PE_BADCREDENTIALS);
+    }
+
+    $self->logger->debug("Return \"$req->{user}\" sessionInfo");
     return $req->{sessionInfo};
 }
 
@@ -268,6 +291,8 @@ sub _authorization {
             last;
         }
     }
+
+    $self->logger->debug("Return \"$req->{user}\" authorization");
     return $exist
       ? $self->p->HANDLER->grant( $req, $req->{userData}, $appuri,
         undef, $vhost )
@@ -280,6 +305,8 @@ sub _headers {
     $vhost =~ s/:\d+$//;
     $req->{env}->{HTTP_HOST} = $vhost;
     $self->p->HANDLER->headersInit( $self->{conf} );
+
+    $self->logger->debug("Return \"$req->{user}\" headers");
     return $self->p->HANDLER->checkHeaders( $req, $req->{userData} );
 }
 

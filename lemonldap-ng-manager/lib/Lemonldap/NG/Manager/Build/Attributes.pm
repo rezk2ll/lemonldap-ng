@@ -422,6 +422,12 @@ sub attributes {
             documentation => 'Enable check user',
             flags         => 'p',
         },
+        checkUserIdRule => {
+            type          => 'text',
+            test          => $perlExpr,
+            default       => 1,
+            documentation => 'checkUser identities rule',
+        },
         checkUserHiddenAttributes => {
             type          => 'text',
             default       => '_2fDevices _loginHistory hGroups',
@@ -461,7 +467,7 @@ sub attributes {
             type          => 'text',
             test          => $perlExpr,
             default       => 1,
-            documentation => 'Impersonation identity rule',
+            documentation => 'Impersonation identities rule',
         },
         impersonationHiddenAttributes => {
             type          => 'text',
