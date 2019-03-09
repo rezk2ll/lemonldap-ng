@@ -156,7 +156,7 @@ sub _userDatas {
                 'Impersonation requested for an unvalid user ('
               . $req->{user}
               . ")" );
-
+        $req->sessionInfo = {};
         $self->logger->debug('Identity not authorized');
         return $req->error(PE_BADCREDENTIALS);
     }
