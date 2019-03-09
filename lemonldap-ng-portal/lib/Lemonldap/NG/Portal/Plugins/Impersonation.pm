@@ -37,13 +37,13 @@ sub init {
     $self->{rule} = $rule;
 
     # Parse identity rule
-    $self->logger->debug( "Impersonation identity rule -> "
+    $self->logger->debug( "Impersonation identities rule -> "
           . $self->conf->{impersonationIdRule} );
     $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{impersonationIdRule} ) );
     unless ($rule) {
         $self->error(
-            "Bad impersonation identity rule -> " . $hd->tsv->{jail}->error );
+            "Bad impersonation identities rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
     $self->{idRule} = $rule;
@@ -150,13 +150,13 @@ sub _userDatas {
         return $req->error($error);
     }
 
-    # Check identity rule
+    # Check identities rule
     unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
         $self->userLogger->warn(
                 'Impersonation requested for an unvalid user ('
               . $req->{user}
               . ")" );
-        $req->sessionInfo = {};
+        $req->{sessionInfo} = {};
         $self->logger->debug('Identity not authorized');
         return $req->error(PE_BADCREDENTIALS);
     }
