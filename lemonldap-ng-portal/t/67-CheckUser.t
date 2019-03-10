@@ -10,7 +10,7 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                       => 'error',
+            logLevel                       => 'debug',
             authentication                 => 'Demo',
             userDB                         => 'Same',
             loginHistoryEnabled            => 0,
@@ -203,7 +203,7 @@ m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
 count(2);
 
 # Request an unvalid identity
-$query =~ s/user=dwho/user=$*/;
+$query =~ s/user=dwho/user=%*'/;
 ok(
     $res = $client->_post(
         '/checkuser',
