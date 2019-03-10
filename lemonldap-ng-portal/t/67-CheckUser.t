@@ -179,8 +179,8 @@ ok(
 ok(
     $res->[2]->[0] =~
 m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
-    'PE5 found'
-) or explain( $res->[2]->[0], 'PE5' );
+    ' PE5 found'
+) or explain( $res->[2]->[0], 'PE5 - Forbidden identity' );
 count(2);
 
 # Request an unknown identity
@@ -198,8 +198,8 @@ ok(
 ok(
     $res->[2]->[0] =~
 m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
-    'PE5 found'
-) or explain( $res->[2]->[0], 'PE5' );
+    ' PE5 found'
+) or explain( $res->[2]->[0], 'PE5 - Unknown identity' );
 count(2);
 
 # Request an unvalid identity
@@ -217,8 +217,8 @@ ok(
 ok(
     $res->[2]->[0] =~
 m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
-    'PE5 found'
-) or explain( $res->[2]->[0], 'PE5' );
+    ' PE5 found'
+) or explain( $res->[2]->[0], 'PE5 - Unvalid identity' );
 count(2);
 
 $client->logout($id);

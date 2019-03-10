@@ -18,7 +18,8 @@ my $client = LLNG::Manager::Test->new( {
             portalMainLogo                 => 'common/logos/logo_llng_old.png',
             requireToken                   => 0,
             checkUser                      => 1,
-            impersonationRule              => 1,
+            impersonationRule              => '$uid ne "msmith"',
+            impersonationIdRule            => '$uid ne "msmith"',
             checkUserDisplayPersistentInfo => 0,
             checkUserDisplayEmptyValues    => 0,
             impersonationMergeSSOgroups    => 0,
@@ -26,7 +27,7 @@ my $client = LLNG::Manager::Test->new( {
     }
 );
 
-## Try to authenticate with bad spoofed user
+## Try to impersonate with a bad spoofed user
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
 count(1);
 my ( $host, $url, $query ) =
@@ -45,16 +46,72 @@ ok(
     'Auth query'
 );
 ok( $res->[2]->[0] =~ m%<span trmsg="40"></span>%, ' PE40 found' )
-  or print STDERR Dumper( $res->[2]->[0] );
+  or explain( $res->[2]->[0], "PE40 - Bad formed user" );
 count(2);
 
 my $id = expectCookie($res);
 $client->logout($id);
 
+## Try to impersonate with a forbidden identity
+ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
+count(1);
+( $host, $url, $query ) =
+  expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
+
+$query =~ s/user=/user=rtyler/;
+$query =~ s/password=/password=rtyler/;
+$query =~ s/spoofId=/spoofId=msmith/;
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new($query),
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'Auth query'
+);
+ok(
+    $res->[2]->[0] =~
+m%<div class="message message-negative alert"><span trmsg="5"></span></div>%,
+    ' PE5 found'
+) or explain( $res->[2]->[0], "PE5 - Forbidden identity" );
+count(2);
+
+$id = expectCookie($res);
+$client->logout($id);
+
+## An unauthorized user try to impersonate
+ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
+count(1);
+( $host, $url, $query ) =
+  expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
+
+$query =~ s/user=/user=msmith/;
+$query =~ s/password=/password=msmith/;
+$query =~ s/spoofId=/spoofId=rtyler/;
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new($query),
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'Auth query'
+);
+ok(
+    $res->[2]->[0] =~
+m%<div class="message message-negative alert"><span trmsg="93"></span></div>%,
+    ' PE93 found'
+) or explain( $res->[2]->[0], "PE93 - Impersonation service not allowed" );
+count(2);
+
+$id = expectCookie($res);
+$client->logout($id);
+
 ## Try to authenticate
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
 count(1);
-my ( $host, $url, $query ) =
+( $host, $url, $query ) =
   expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
 
 $query =~ s/user=/user=rtyler/;
