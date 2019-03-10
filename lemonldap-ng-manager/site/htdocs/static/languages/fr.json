@@ -153,7 +153,7 @@
 "checkStateSecret":"Secret partagé",
 "checkUsers":"Vérification des profils SSO",
 "checkUser":"Activation",
-"checkUserIdRule":"Identities use rule",
+"checkUserIdRule":"Règle d'utilisation des identités",
 "checkUserHiddenAttributes":"Attributs masqués",
 "checkUserDisplayPersistentInfo":"Afficher les données de session persistante",
 "checkUserDisplayEmptyValues":"Afficher les valeurs nulles",
