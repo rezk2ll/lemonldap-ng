@@ -66,7 +66,7 @@ count(1);
 
 # Expired token
 sleep 3;
-$query =~ s/user=dwho/user=rtyler/;
+$query =~ s/user=/user=rtyler/;
 $query =~ s/url=/url=http%3A%2F%2Ftest1.example.com/;
 
 ok(
@@ -87,7 +87,7 @@ count(2);
 
 # Valid token
 $query =~ s/user=/user=rtyler/;
-$query =~ s/url=/url=test1.example.com/;
+$query =~ s/url=/url=http%3A%2F%2Ftest1.example.com/;
 
 ok(
     $res = $client->_post(

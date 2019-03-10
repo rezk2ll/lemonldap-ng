@@ -18,7 +18,7 @@ my $client = LLNG::Manager::Test->new( {
             portalMainLogo                 => 'common/logos/logo_llng_old.png',
             checkUser                      => 1,
             requireToken                   => 0,
-            checkUserIdRule                => 1,
+            checkUserIdRule                => '$uid ne "msmith"',
             checkUserDisplayPersistentInfo => 1,
             checkUserDisplayEmptyValues    => 1,
         }
@@ -112,12 +112,7 @@ ok( $res->[2]->[0] =~ m%<span trspan="VHnotFound">%,
   or explain( $res->[2]->[0], 'trspan="VHnotFound"' );
 count(1);
 
-( $host, $url, $query ) =
-  expectForm( $res, undef, '/checkuser', 'user', 'url' );
-ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
-  or explain( $res->[2]->[0], 'trspan="checkUser"' );
-count(1);
-
+# Request with good VH & user
 $query =~
   s/url=http%3A%2F%2Ftry.example.com/url=http%3A%2F%2Ftest1.example.com/;
 ok(
@@ -169,9 +164,8 @@ ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%, 'Found uid' )
   or explain( $res->[2]->[0], 'Attribute Value uid' );
 count(11);
 
-$query =~ s/user=dwho/user=msmith/;
-$query =~
-s/url=http%3A%2F%2Ftest1.example.com/url=http%3A%2F%2Fmanager.example.com%2Fmanager.html/;
+# Request a forbidden identity
+$query =~ s/user=rtyler/user=msmith/;
 ok(
     $res = $client->_post(
         '/checkuser',
@@ -184,9 +178,47 @@ ok(
 );
 ok(
     $res->[2]->[0] =~
-m%<div class="alert alert-danger"><b><span trspan="forbidden"></span></b></div>%,
-    'Found trspan="forbidden"'
-) or explain( $res->[2]->[0], 'trspan="forbidden"' );
+m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
+    'PE5 found'
+) or explain( $res->[2]->[0], 'PE5' );
+count(2);
+
+# Request an unknown identity
+$query =~ s/user=msmith/user=davros/;
+ok(
+    $res = $client->_post(
+        '/checkuser',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'POST checkuser'
+);
+ok(
+    $res->[2]->[0] =~
+m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
+    'PE5 found'
+) or explain( $res->[2]->[0], 'PE5' );
+count(2);
+
+# Request an unvalid identity
+$query =~ s/user=dwho/user=$*/;
+ok(
+    $res = $client->_post(
+        '/checkuser',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'POST checkuser'
+);
+ok(
+    $res->[2]->[0] =~
+m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
+    'PE5 found'
+) or explain( $res->[2]->[0], 'PE5' );
 count(2);
 
 $client->logout($id);
