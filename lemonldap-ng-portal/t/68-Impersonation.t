@@ -23,6 +23,11 @@ my $client = LLNG::Manager::Test->new( {
             checkUserDisplayPersistentInfo => 0,
             checkUserDisplayEmptyValues    => 0,
             impersonationMergeSSOgroups    => 0,
+            macros                         => {
+                test_impersonation => '"$real__user/$_user"',
+                _whatToTrace =>
+                  '$_auth eq "SAML" ? "$_user@$_idpConfKey" : $_user',
+            },
         }
     }
 );
@@ -203,7 +208,11 @@ ok( $res->[2]->[0] =~ m%<td class="text-left">real_uid</td>%, 'Found real_uid' )
   or explain( $res->[2]->[0], 'real_groups' );
 ok( $res->[2]->[0] =~ m%<td class="text-left">rtyler</td>%, 'Found rtyler' )
   or explain( $res->[2]->[0], 'su' );
-count(14);
+ok( $res->[2]->[0] =~ m%<td class="align-middle">test_impersonation</td>%, 'Found macro test_impersonation' )
+  or explain( $res->[2]->[0], 'test_impersonation' );
+ok( $res->[2]->[0] =~ m%<td class="align-middle">rtyler/dwho</td>%, 'Found rtyler/dwo' )
+  or explain( $res->[2]->[0], 'Found rtyler/dwo' );
+count(16);
 
 $client->logout($id);
 clean_sessions();
