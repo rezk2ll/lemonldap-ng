@@ -79,6 +79,7 @@ sub check {
             LANGS     => $self->conf->{showLanguages},
             MSG       => "PE$msg",
             ALERTE    => 'alert-warning',
+            LOGIN     => '',
             TOKEN     => $token,
         };
         return $self->p->sendJSONresponse( $req, $params )
