@@ -242,6 +242,7 @@
 "verify":"Verify",
 "VHnotFound":"Virtual Host not found",
 "wait":"Warten",
+"waitingmessage":"Authentication in progress, please wait",
 "warning":"Warnung",
 "welcomeOnPortal":"Willkommen in Ihrem gesicherten Authentifizierungsportal.",
 "yesResendMail":"Ja, Mail erneut senden.",

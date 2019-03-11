@@ -242,6 +242,7 @@
 "verify":"验证",
 "VHnotFound":"Virtual Host not found",
 "wait":"等待",
+"waitingmessage":"Authentication in progress, please wait",
 "warning":"警告",
 "welcomeOnPortal":"欢迎来到您的加密认证 portal",
 "yesResendMail":"好的，重新发送邮件",

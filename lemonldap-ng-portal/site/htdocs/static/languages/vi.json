@@ -242,6 +242,7 @@
 "verify":"Xác minh",
 "VHnotFound":"Virtual Host not found",
 "wait":"Hãy đợi",
+"waitingmessage":"Authentication in progress, please wait",
 "warning":"Cảnh báo",
 "welcomeOnPortal":"Chào mừng bạn đến với cổng thông tin xác thực được bảo mật của bạn.",
 "yesResendMail":"Có, gửi lại thư",

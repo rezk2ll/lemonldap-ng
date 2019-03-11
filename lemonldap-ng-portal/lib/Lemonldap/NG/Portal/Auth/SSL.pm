@@ -51,6 +51,7 @@ sub extractFormInfo {
         $req->data->{customScript} .= $self->{AjaxInitScript};
         $self->logger->debug(
             "Send init/script -> " . $req->data->{customScript} );
+        $req->data->{waitingMessage} = 1;
         return PE_FIRSTACCESS;
     }
     else {

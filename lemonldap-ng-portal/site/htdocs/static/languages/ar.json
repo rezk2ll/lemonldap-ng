@@ -242,6 +242,7 @@
 "verify":"التحقق",
 "VHnotFound":"Virtual Host not found",
 "wait":"انتظر",
+"waitingmessage":"Authentication in progress, please wait",
 "warning":"تحذير",
 "welcomeOnPortal":"مرحبا بك على بوابة إثبات الهوية الآمنة.",
 "yesResendMail":"نعم، أعد إرسال البريد",

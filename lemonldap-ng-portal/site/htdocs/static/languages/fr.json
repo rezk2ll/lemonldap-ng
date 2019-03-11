@@ -242,6 +242,7 @@
 "verify": "Vérifier",
 "VHnotFound":"Hôte virtuel erroné ou inexistant",
 "wait":"Attendre",
+"waitingmessage":"Authentification en cours, merci de patienter",
 "warning":"Attention",
 "welcomeOnPortal":"Bienvenue sur votre portail d'authentification sécurisée.",
 "yesResendMail":"Oui, renvoyer le mail",
