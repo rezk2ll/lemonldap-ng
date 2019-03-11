@@ -1924,7 +1924,16 @@ sub imgnok {
 
 sub sendImage {
     my ( $self, $req,, $img ) = @_;
-    return $self->p->staticFile( $req, "common/$img", 'image/png' );
+    return [
+        302,
+        [
+                'Location' => $self->conf->{portal}
+              . $self->p->staticPrefix
+              . '/common/'
+              . $img,
+        ],
+        [],
+    ];
 }
 
 # Normalize url to be tolerant to SAML Path
