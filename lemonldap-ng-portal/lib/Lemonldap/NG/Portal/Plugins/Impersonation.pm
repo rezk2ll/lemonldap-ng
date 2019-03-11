@@ -55,24 +55,30 @@ sub init {
 
 sub run {
     my ( $self, $req ) = @_;
-
     my $spoofId = $req->param('spoofId') || $req->{user};
-    return PE_MALFORMEDUSER
-      if (  $spoofId
-        and $spoofId !~ /$self->{conf}->{userControl}/o );
+    $self->logger->debug("No impersonation required") if ( $spoofId eq $req->{user} );
+    my $statut = PE_OK;
 
-    # Skip if no submitted SpoofId
-    return PE_OK unless $spoofId;
+    if ( $spoofId !~ /$self->{conf}->{userControl}/o ) {
+        $self->userLogger->error('Malformed spoofed Id');
+        $self->logger->debug("Impersonation tried with spoofed Id: $spoofId");
+        $spoofId = $req->{user};
+        $statut  = PE_MALFORMEDUSER;
+    }
 
     # Check activation rule
-    unless ( $self->rule->( $req, $req->sessionInfo ) ) {
-        $self->userLogger->error('Impersonation service not authorized');
-        return PE_IMPERSONATION_SERVICE_NOT_ALLOWED;
+    if ( $spoofId ne $req->{user} ) {
+        $self->logger->debug("Spoofied Id: $spoofId / Real Id: $req->{user}");
+        unless ( $self->rule->( $req, $req->sessionInfo ) ) {
+            $self->userLogger->error('Impersonation service not authorized');
+            $spoofId = $req->{user};
+            $statut  = PE_IMPERSONATION_SERVICE_NOT_ALLOWED;
+        }
     }
 
     # Fill spoof session
     my ( $realSession, $spoofSession ) = ( {}, {} );
-    $self->logger->debug("Spoofing Id: $spoofId...");
+    $self->logger->debug("Rename real attributes...");
     my $spk = '';
     foreach my $k ( keys %{ $req->{sessionInfo} } ) {
         if ( $self->{conf}->{impersonationSkipEmptyValues} ) {
@@ -87,20 +93,25 @@ sub run {
         delete $req->{sessionInfo}->{$k};
     }
 
-    # Compute Macros and Groups with real and spoofed sessions
-    $req->{sessionInfo} = {%$realSession};
-    $req->{user}        = $spoofId;
-    $spoofSession       = $self->_userDatas($req);
-    return $req->error if $req->error;
+    $spoofSession = $self->_userDatas( $req, $spoofId, $realSession );
+    if ( $req->error ) {
+        if ( $req->error == PE_BADCREDENTIALS ) {
+            $statut = PE_BADCREDENTIALS;
+        }
+        else {
+            return $req->error;
+        }
+    }
 
     # Update spoofed session
+    $self->logger->debug("Populating spoofed session...");
     foreach (qw (_auth _userDB)) {
         $self->logger->debug("Processing $_...");
         $spk = "$self->{conf}->{impersonationPrefix}$_";
         $spoofSession->{$_} = $realSession->{$spk};
     }
 
-    # Merging SSO groups and hGroups & Dedup
+    # Merging SSO Groups and hGroups & dedup
     $spoofSession->{groups} ||= '';
     if ( $self->{conf}->{impersonationMergeSSOgroups} ) {
         $self->userLogger->warn("MERGING SSO groups and hGroups...");
@@ -126,11 +137,17 @@ sub run {
 
     # Main session
     $self->p->updateSession( $req, $spoofSession );
-    return PE_OK;
+    return $statut;
 }
 
 sub _userDatas {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $spoofId, $realSession ) = @_;
+    my $realId = $req->{user};
+    $req->{user} = $spoofId;
+    my $raz = 0;
+
+    # Compute Macros and Groups with real and spoofed sessions
+    $req->{sessionInfo} = {%$realSession};
 
     # Search user in database
     $req->steps( [
@@ -147,21 +164,41 @@ sub _userDatas {
                   . ")" );
         }
         $self->logger->debug("Process returned error: $error");
-        return $req->error($error);
+        $req->error($error);
+        $raz = 1;
     }
 
-    # Check identities rule
-    unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
-        $self->userLogger->warn(
-                'Impersonation requested for an unvalid user ('
-              . $req->{user}
-              . ")" );
+    # Check identity rule if impersonation required
+    if ( $realId ne $spoofId ) {
+        unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
+            $self->userLogger->warn(
+                    'Impersonation requested for an unvalid user ('
+                  . $req->{user}
+                  . ")" );
+            $self->logger->debug('Identity not authorized');
+            $raz = 1;
+        }
+    }
+
+    # Same real and spoofed session - Compute Macros and Groups
+    if ($raz) {
         $req->{sessionInfo} = {};
-        $self->logger->debug('Identity not authorized');
-        return $req->error(PE_BADCREDENTIALS);
+        $req->{sessionInfo} = {%$realSession};
+        $req->{user}        = $realId;
+        $req->steps( [
+                'getUser',   'setSessionInfo',
+                'setMacros', 'setGroups',
+                'setLocalGroups'
+            ]
+        );
+        $self->logger->debug('Spoofed session equal real session');
+        $req->error(PE_BADCREDENTIALS);
+        if ( my $error = $self->p->process($req) ) {
+            $self->logger->debug("Process returned error: $error");
+            $req->error($error);
+        }
     }
 
-    $self->logger->debug("Populating spoofed session...");
     return $req->{sessionInfo};
 }
 
