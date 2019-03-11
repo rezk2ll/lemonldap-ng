@@ -113,6 +113,67 @@ count(2);
 $id = expectCookie($res);
 $client->logout($id);
 
+## An unauthorized user to impersonate tries to authenticate
+ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
+count(1);
+( $host, $url, $query ) =
+  expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
+
+$query =~ s/user=/user=msmith/;
+$query =~ s/password=/password=msmith/;
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new($query),
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'Auth query'
+);
+count(1);
+
+$id = expectCookie($res);
+expectRedirection( $res, 'http://auth.example.com/' );
+
+# CheckUser form
+# ------------------------
+ok(
+    $res = $client->_get(
+        '/checkuser',
+        cookie => "lemonldap=$id",
+        accept => 'text/html'
+    ),
+    'CheckUser form',
+);
+count(1);
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
+  or explain( $res->[2]->[0], 'trspan="checkUser"' );
+count(1);
+
+ok(
+    $res = $client->_post(
+        '/checkuser',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'POST checkuser'
+);
+count(1);
+
+ok( $res->[2]->[0] =~ m%<td class="align-middle">test_impersonation</td>%,
+    'Found macro test_impersonation' )
+  or explain( $res->[2]->[0], 'test_impersonation' );
+ok( $res->[2]->[0] =~ m%<td class="align-middle">msmith/msmith</td>%,
+    'Found msmith/msmith' )
+  or explain( $res->[2]->[0], 'Found msmith/msmith' );
+count(2);
+
+$client->logout($id);
+
 ## Try to authenticate
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
 count(1);

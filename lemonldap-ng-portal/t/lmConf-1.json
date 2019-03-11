@@ -35,7 +35,7 @@
   "key": "qwertyui",
   "locationRules": {
     "auth.example.com" : {
-       "(?#checkUser)^/checkuser" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
+       "(?#checkUser)^/checkuser" : "$uid eq \"dwho\" or $uid eq \"msmith\"",
        "(?#errors)^/lmerror/": "accept",
        "default" : "accept"
     },
