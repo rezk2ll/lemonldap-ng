@@ -74,6 +74,7 @@ expectRedirection( $res, 'http://auth.example.com/' );
 
 # CheckUser form -> granted
 # ------------------------
+
 ok(
     $res = $client->_get(
         '/checkuser',
