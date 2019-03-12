@@ -226,16 +226,47 @@ sub check {
 
 sub display {
     my ( $self, $req ) = @_;
+    my ( $attrs, $array_attrs ) = ( {}, [] );
+
+    $self->userLogger->notice("Retrieve session from Sessions database");
+    $self->userLogger->warn("Using spoofed SSO groups if exist!!!")
+      if ( $self->conf->{impersonationRule} );
+    $attrs = $req->userData;
+
+    # Create an array of hashes for template loop
+    $self->logger->debug("Delete hidden or empty attributes");
+    if ( $self->conf->{checkUserDisplayEmptyValues} ) {
+        foreach my $k ( sort keys %$attrs ) {
+
+            # Ignore hidden attributes
+            push @$array_attrs, { key => $k, value => $attrs->{$k} }
+              unless ( $self->hAttr =~ /\b$k\b/ );
+        }
+    }
+    else {
+        foreach my $k ( sort keys %$attrs ) {
+
+            # Ignore hidden attributes and empty values
+            push @$array_attrs, { key => $k, value => $attrs->{$k} }
+              unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
+        }
+    }
+
+    # ARRAY_REF = [ A_REF GROUPS, A_REF MACROS, A_REF OTHERS ]
+    $array_attrs = $self->_splitAttributes($array_attrs);
 
     # Display form
     my $params = {
-        PORTAL    => $self->conf->{portal},
-        MAIN_LOGO => $self->conf->{portalMainLogo},
-        LANGS     => $self->conf->{showLanguages},
-        MSG       => 'checkUser',
-        ALERTE    => 'alert-info',
-        LOGIN     => '',
-        TOKEN     => (
+        PORTAL     => $self->conf->{portal},
+        MAIN_LOGO  => $self->conf->{portalMainLogo},
+        LANGS      => $self->conf->{showLanguages},
+        MSG        => 'checkUser',
+        ALERTE     => 'alert-info',
+        LOGIN      => $req->{userData}->{uid},
+        ATTRIBUTES => $array_attrs->[2],
+        MACROS     => $array_attrs->[1],
+        GROUPS     => $array_attrs->[0],
+        TOKEN      => (
               $self->conf->{requireToken}
             ? $self->ott->createToken( $req->userData )
             : ''
