@@ -165,6 +165,8 @@ sub storeEnv {
       $self->checkMessage( $req, $req->uri, $req->method, $req->content_type );
     return PE_OK if ( $artifact or !$request );
     my $login = $self->createLogin( $self->lassoServer );
+    $self->disableSignatureVerification($login);
+    $self->processAuthnRequestMsg( $login, $request );
     if ( my $sp = $login->remote_providerID() ) {
         $req->env->{llng_saml_sp} = $sp;
         if ( my $spConfKey = $self->spList->{$sp}->{confKey} ) {
