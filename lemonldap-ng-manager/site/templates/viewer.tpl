@@ -22,6 +22,7 @@
           <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
             <ul class="nav navbar-nav">
               <li><a class="link" ng-click="home()"><i class="glyphicon glyphicon-home"></i></a></li>
+              <!--
               <li>
                 <a id="save" class="link" ng-click="save()" tabIndex="-1">
                   <i class="glyphicon glyphicon-cloud-upload"></i>
@@ -31,6 +32,7 @@
               <li >
                 <input id="forcesave" type="checkbox" ng-model="forceSave" uib-tooltip="{{translate('forceSave')}}" tooltip-placement="right" ng-show="confirmNeeded||currentCfg.next" role="checkbox" aria-label="Force save">
               </li>
+              -->
               <li uib-dropdown>
                 <a id="navmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i> {{translate('browse')}} <span class="caret"></span></a>
                 <ul uib-dropdown-menu aria-labelled-by="navmenu">
@@ -40,7 +42,9 @@
                 </ul>
               </li>
               <li><a class="link hidden-xs" ng-click="setShowHelp()"><i class="glyphicon" ng-class="{'glyphicon-eye-close': showH,'glyphicon-eye-open': !showH}" ></i> {{ translate((showH ? 'hideHelp' : 'showHelp')) }}</a></li>
+              <!--
               <li ng-repeat="button in menu()" ng-include="'menubutton.html'"></li>
+              -->
               <li uib-dropdown class="visible-xs">
                 <a id="langmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{translate('menu')}} <span class="caret"></span></a>
                 <ul uib-dropdown-menu aria-labelled-by="langmenu" role="grid">
@@ -190,11 +194,11 @@
   <!-- //if:jsminified
     <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/conftree.min.js"></script>
     <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/filterFunctions.min.js"></script>
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/manager.min.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/viewer.min.js"></script>
   //else -->
     <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/conftree.js"></script>
     <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/filterFunctions.js"></script>
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/manager.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/viewer.js"></script>
   <!-- //endif -->
 
 <TMPL_INCLUDE NAME="footer.tpl">

@@ -138,71 +138,71 @@ llapp.controller 'TreeCtrl', [
 
 		# SAVE FUNCTIONS
 
-		# Private method called by $scope.save()
-		_checkSaveResponse = (data) ->
-			$scope.message =
-				title: ''
-				message: ''
-				items: []
-			$scope.confirmNeeded = true if data.needConfirm
-			$scope.message.message = data.message if data.message
-			if data.details
-				for m of data.details when m != '__changes__'
-					if m == '__needConfirmation__'
-						$scope.message.items.unshift
-							message: m
-							items: data.details[m]
-					else
-						$scope.message.items.push
-							message: m
-							items: data.details[m]
-			$scope.waiting = false
-			if data.result == 1
-				# Force reloading page
-				$location.path '/confs/'
-				$scope.message.title = 'successfullySaved'
-			else
-				$scope.message.title = 'saveReport'
-			$scope.showModal 'message.html'
+#		# Private method called by $scope.save()
+#		_checkSaveResponse = (data) ->
+#			$scope.message =
+#				title: ''
+#				message: ''
+#				items: []
+#			$scope.confirmNeeded = true if data.needConfirm
+#			$scope.message.message = data.message if data.message
+#			if data.details
+#				for m of data.details when m != '__changes__'
+#					if m == '__needConfirmation__'
+#						$scope.message.items.unshift
+#							message: m
+#							items: data.details[m]
+#					else
+#						$scope.message.items.push
+#							message: m
+#							items: data.details[m]
+#			$scope.waiting = false
+#			if data.result == 1
+#				# Force reloading page
+#				$location.path '/confs/'
+#				$scope.message.title = 'successfullySaved'
+#			else
+#				$scope.message.title = 'saveReport'
+#			$scope.showModal 'message.html'
 
 		# Download raw conf
 		$scope.downloadConf = () ->
 			window.open $scope.confPrefix + $scope.currentCfg.cfgNum + '?full=1'
 
-		# Main save function
-		$scope.save = ->
-			$scope.showModal('save.html').then ->
-				$scope.waiting = true
-				$scope.data.push
-					id: "cfgLog"
-					title: "cfgLog"
-					data: if $scope.result then $scope.result else ''
-				$http.post("#{window.confPrefix}?cfgNum=#{$scope.currentCfg.cfgNum}#{if $scope.forceSave then "&force=1" else ''}", $scope.data).then (response) ->
-					$scope.data.pop()
-					_checkSaveResponse response.data
-				,(response) ->
-					readError response
-					$scope.data.pop()
-			, ->
-				console.log 'Saving canceled'
-			$scope.showM = false
-
-		# Raw save function
-		$scope.saveRawConf = ($fileContent) ->
-			$scope.waiting = true
-			$http.post("#{window.confPrefix}/raw", $fileContent).then (response) ->
-				_checkSaveResponse(response.data)
-			, readError
-
-		# Restore raw conffunction
-		$scope.restore = ->
-			$scope.currentNode = null
-			$scope.form = 'restore'
-
-		# Cancel save function
-		$scope.cancel = ->
-			$scope.currentNode.data = null
-			$scope.getKey($scope.currentNode)
+#		# Main save function
+#		$scope.save = ->
+#			$scope.showModal('save.html').then ->
+#				$scope.waiting = true
+#				$scope.data.push
+#					id: "cfgLog"
+#					title: "cfgLog"
+#					data: if $scope.result then $scope.result else ''
+#				$http.post("#{window.confPrefix}?cfgNum=#{$scope.currentCfg.cfgNum}#{if $scope.forceSave then "&force=1" else ''}", $scope.data).then (response) ->
+#					$scope.data.pop()
+#					_checkSaveResponse response.data
+#				,(response) ->
+#					readError response
+#					$scope.data.pop()
+#			, ->
+#				console.log 'Saving canceled'
+#			$scope.showM = false
+#
+#		# Raw save function
+#		$scope.saveRawConf = ($fileContent) ->
+#			$scope.waiting = true
+#			$http.post("#{window.confPrefix}/raw", $fileContent).then (response) ->
+#				_checkSaveResponse(response.data)
+#			, readError
+#
+#		# Restore raw conffunction
+#		$scope.restore = ->
+#			$scope.currentNode = null
+#			$scope.form = 'restore'
+#
+#		# Cancel save function
+#		$scope.cancel = ->
+#			$scope.currentNode.data = null
+#			$scope.getKey($scope.currentNode)
 
 		# NODES MANAGEMENT
 		id = 1
@@ -219,202 +219,202 @@ llapp.controller 'TreeCtrl', [
 				cs = cs.$parentNodeScope
 			return cs
 
-		# Add grant rule entry
-		$scope.newGrantRule = ->
-			node = $scope._findContainer()
-			l = node.nodes.length
-			n = if l > 0 then l - 1 else 0
-			node.nodes.push
-				id: "#{node.id}/n#{id++}"
-				title: 'New rule'
-				re: 'Message'
-				comment: 'New rule'
-				data: '1'
-				type: "grant"
+#		# Add grant rule entry
+#		$scope.newGrantRule = ->
+#			node = $scope._findContainer()
+#			l = node.nodes.length
+#			n = if l > 0 then l - 1 else 0
+#			node.nodes.push
+#				id: "#{node.id}/n#{id++}"
+#				title: 'New rule'
+#				re: 'Message'
+#				comment: 'New rule'
+#				data: '1'
+#				type: "grant"
+#
+#		# Add rules entry
+#		$scope.newRule = ->
+#			node = $scope._findContainer()
+#			l = node.nodes.length
+#			n = if l > 0 then l - 1 else 0
+#			node.nodes.splice n, 0,
+#				id: "#{node.id}/n#{id++}"
+#				title: 'New rule'
+#				re: '^/new'
+#				comment: 'New rule'
+#				data: 'accept'
+#				type: "rule"
+#
+#		# Add form replay
+#		$scope.newPost = ->
+#			node = $scope._findContainer()
+#			node.nodes.push
+#				id: "#{node.id}/n#{id++}"
+#				title: "/absolute/path/to/form"
+#				data: {}
+#				type: "post"
+#
+#		$scope.newPostVar = ->
+#			$scope.currentNode.data.vars = [] unless $scope.currentNode.data.vars?
+#			$scope.currentNode.data.vars.push ['var1', '$uid']
+#
+#		# Add auth chain entry to authChoice
+#		$scope.newAuthChoice = ->
+#			node = $scope._findContainer()
+#			node.nodes.push
+#				id: "#{node.id}/n#{id++}"
+#				title: "1_Key"
+#				data: ['Null', 'Null', 'Null']
+#				type: "authChoice"
+#			$scope.execFilters $scope._findScopeByKey 'authParams'
+#
+#		# Add hash entry
+#		$scope.newHashEntry = ->
+#			node = $scope._findContainer()
+#			node.nodes.push
+#				id: "#{node.id}/n#{id++}"
+#				title: 'new'
+#				data: ''
+#				type: "keyText"
+#
+#		# Menu cat entry
+#		$scope.newCat = ->
+#			cs = $scope.currentScope
+#			if cs.$modelValue.type == 'menuApp'
+#				cs = cs.$parentNodeScope
+#			cs.$modelValue.nodes.push
+#				id: "#{cs.$modelValue.id}/n#{id++}"
+#				title: "New category"
+#				type: "menuCat"
+#				nodes: []
+#
+#		# Menu app entry
+#		$scope.newApp = ->
+#			cs = $scope.currentScope
+#			if cs.$modelValue.type == 'menuApp'
+#				cs = cs.$parentNodeScope
+#			cs.$modelValue.nodes.push
+#				id: "#{cs.$modelValue.id}/n#{id++}"
+#				title: "New application"
+#				type: "menuApp"
+#				data:
+#					description: "New app description"
+#					uri: "https://test.example.com/"
+#					logo: "network.png"
+#					display: "auto"
+#
+#		# Combination module
+#		$scope.newCmbMod = ->
+#			node = $scope._findContainer()
+#			node.nodes.push
+#				id: "#{node.id}/n#{id++}"
+#				title: 'new'
+#				type: 'cmbModule'
+#				data:
+#					type: 'LDAP'
+#					for: '0'
+#					over: []
+#			$scope.execFilters $scope._findScopeByKey 'authParams'
+#
+#		$scope.newCmbOver = ->
+#			d = $scope.currentNode.data
+#			d.over = [] unless d.over
+#			d.over.push ["new#{id++}", '']
+#
+#		$scope.newChoiceOver = ->
+#			d = $scope.currentNode.data
+#			console.log "data", d
+#			d[5] = [] unless d[5]
+#			d[5].push ["new#{id++}", '']
+#
+#		# Add host
+#		$scope.addHost = () ->
+#			cn = $scope.currentNode
+#			cn.data=[] unless cn.data
+#			cn.data.push
+#				k: "newHost"
+#				h: [{"k":"key","v":"uid"}]
+#
+#		# SAML attribute entry
+#		$scope.addSamlAttribute = ->
+#			node = $scope._findContainer()
+#			node.nodes.push
+#				id: "#{node.id}/n#{id++}"
+#				title: 'new'
+#				type: 'samlAttribute'
+#				data: ['0', 'New', '', '']
+#
+#		# Nodes with template
+#		$scope.addVhost = ->
+#			name = if $scope.domain then ".#{$scope.domain.data}" else '.example.com'
+#			$scope.message =
+#				title: 'virtualHostName'
+#				field: 'hostname'
+#			$scope.showModal('prompt.html', name).then ->
+#				n= $scope.result
+#				if n
+#					$scope.addTemplateNode n, 'virtualHost'
+#
+#		$scope.duplicateVhost = ->
+#			name = if $scope.domain then ".#{$scope.domain.data}" else '.example.com'
+#			$scope.message =
+#				title: 'virtualHostName',
+#				field: 'hostname'
+#			$scope.showModal('prompt.html', name).then ->
+#				n = $scope.result
+#				return $scope.duplicateNode n, 'virtualHost', $scope.currentNode.title
+#
+#		$scope.addSamlIDP = ->
+#			$scope.newTemplateNode 'samlIDPMetaDataNode', 'samlPartnerName', 'idp-example'
+#
+#		$scope.addSamlSP = ->
+#			$scope.newTemplateNode 'samlSPMetaDataNode', 'samlPartnerName', 'sp-example'
+#
+#		$scope.addOidcOp = ->
+#			$scope.newTemplateNode 'oidcOPMetaDataNode', 'oidcOPName', 'op-example'
+#
+#		$scope.addOidcRp = ->
+#			$scope.newTemplateNode 'oidcRPMetaDataNode', 'oidcRPName', 'rp-example'
+#
+#		$scope.addCasSrv = ->
+#			$scope.newTemplateNode 'casSrvMetaDataNode', 'casPartnerName', 'srv-example'
+#
+#		$scope.addCasApp = ->
+#			$scope.newTemplateNode 'casAppMetaDataNode', 'casPartnerName', 'app-example'
+#
+#		$scope.newTemplateNode = (type, title, init) ->
+#			$scope.message =
+#				title: title
+#				field: 'name'
+#			$scope.showModal('prompt.html', init).then ->
+#				name = $scope.result
+#				if (name)
+#					$scope.addTemplateNode name, type
+#
+#		$scope.addTemplateNode = (name, type) ->
+#			cs = $scope.currentScope
+#			while cs.$modelValue.title != "#{type}s"
+#				cs = cs.$parentNodeScope
+#			t =
+#				id: "#{type}s/new__#{name}"
+#				title: name
+#				type: type
+#				nodes: templates type, "new__#{name}"
+#			setDefault t.nodes
+#			cs.$modelValue.nodes.push t
+#			cs.expand()
+#			return t
 
-		# Add rules entry
-		$scope.newRule = ->
-			node = $scope._findContainer()
-			l = node.nodes.length
-			n = if l > 0 then l - 1 else 0
-			node.nodes.splice n, 0,
-				id: "#{node.id}/n#{id++}"
-				title: 'New rule'
-				re: '^/new'
-				comment: 'New rule'
-				data: 'accept'
-				type: "rule"
-
-		# Add form replay
-		$scope.newPost = ->
-			node = $scope._findContainer()
-			node.nodes.push
-				id: "#{node.id}/n#{id++}"
-				title: "/absolute/path/to/form"
-				data: {}
-				type: "post"
-
-		$scope.newPostVar = ->
-			$scope.currentNode.data.vars = [] unless $scope.currentNode.data.vars?
-			$scope.currentNode.data.vars.push ['var1', '$uid']
-
-		# Add auth chain entry to authChoice
-		$scope.newAuthChoice = ->
-			node = $scope._findContainer()
-			node.nodes.push
-				id: "#{node.id}/n#{id++}"
-				title: "1_Key"
-				data: ['Null', 'Null', 'Null']
-				type: "authChoice"
-			$scope.execFilters $scope._findScopeByKey 'authParams'
-
-		# Add hash entry
-		$scope.newHashEntry = ->
-			node = $scope._findContainer()
-			node.nodes.push
-				id: "#{node.id}/n#{id++}"
-				title: 'new'
-				data: ''
-				type: "keyText"
-
-		# Menu cat entry
-		$scope.newCat = ->
-			cs = $scope.currentScope
-			if cs.$modelValue.type == 'menuApp'
-				cs = cs.$parentNodeScope
-			cs.$modelValue.nodes.push
-				id: "#{cs.$modelValue.id}/n#{id++}"
-				title: "New category"
-				type: "menuCat"
-				nodes: []
-
-		# Menu app entry
-		$scope.newApp = ->
-			cs = $scope.currentScope
-			if cs.$modelValue.type == 'menuApp'
-				cs = cs.$parentNodeScope
-			cs.$modelValue.nodes.push
-				id: "#{cs.$modelValue.id}/n#{id++}"
-				title: "New application"
-				type: "menuApp"
-				data:
-					description: "New app description"
-					uri: "https://test.example.com/"
-					logo: "network.png"
-					display: "auto"
-
-		# Combination module
-		$scope.newCmbMod = ->
-			node = $scope._findContainer()
-			node.nodes.push
-				id: "#{node.id}/n#{id++}"
-				title: 'new'
-				type: 'cmbModule'
-				data:
-					type: 'LDAP'
-					for: '0'
-					over: []
-			$scope.execFilters $scope._findScopeByKey 'authParams'
-
-		$scope.newCmbOver = ->
-			d = $scope.currentNode.data
-			d.over = [] unless d.over
-			d.over.push ["new#{id++}", '']
-
-		$scope.newChoiceOver = ->
-			d = $scope.currentNode.data
-			console.log "data", d
-			d[5] = [] unless d[5]
-			d[5].push ["new#{id++}", '']
-
-		# Add host
-		$scope.addHost = () ->
-			cn = $scope.currentNode
-			cn.data=[] unless cn.data
-			cn.data.push
-				k: "newHost"
-				h: [{"k":"key","v":"uid"}]
-
-		# SAML attribute entry
-		$scope.addSamlAttribute = ->
-			node = $scope._findContainer()
-			node.nodes.push
-				id: "#{node.id}/n#{id++}"
-				title: 'new'
-				type: 'samlAttribute'
-				data: ['0', 'New', '', '']
-
-		# Nodes with template
-		$scope.addVhost = ->
-			name = if $scope.domain then ".#{$scope.domain.data}" else '.example.com'
-			$scope.message =
-				title: 'virtualHostName'
-				field: 'hostname'
-			$scope.showModal('prompt.html', name).then ->
-				n= $scope.result
-				if n
-					$scope.addTemplateNode n, 'virtualHost'
-
-		$scope.duplicateVhost = ->
-			name = if $scope.domain then ".#{$scope.domain.data}" else '.example.com'
-			$scope.message =
-				title: 'virtualHostName',
-				field: 'hostname'
-			$scope.showModal('prompt.html', name).then ->
-				n = $scope.result
-				return $scope.duplicateNode n, 'virtualHost', $scope.currentNode.title
-
-		$scope.addSamlIDP = ->
-			$scope.newTemplateNode 'samlIDPMetaDataNode', 'samlPartnerName', 'idp-example'
-
-		$scope.addSamlSP = ->
-			$scope.newTemplateNode 'samlSPMetaDataNode', 'samlPartnerName', 'sp-example'
-
-		$scope.addOidcOp = ->
-			$scope.newTemplateNode 'oidcOPMetaDataNode', 'oidcOPName', 'op-example'
-
-		$scope.addOidcRp = ->
-			$scope.newTemplateNode 'oidcRPMetaDataNode', 'oidcRPName', 'rp-example'
-
-		$scope.addCasSrv = ->
-			$scope.newTemplateNode 'casSrvMetaDataNode', 'casPartnerName', 'srv-example'
-
-		$scope.addCasApp = ->
-			$scope.newTemplateNode 'casAppMetaDataNode', 'casPartnerName', 'app-example'
-
-		$scope.newTemplateNode = (type, title, init) ->
-			$scope.message =
-				title: title
-				field: 'name'
-			$scope.showModal('prompt.html', init).then ->
-				name = $scope.result
-				if (name)
-					$scope.addTemplateNode name, type
-
-		$scope.addTemplateNode = (name, type) ->
-			cs = $scope.currentScope
-			while cs.$modelValue.title != "#{type}s"
-				cs = cs.$parentNodeScope
-			t =
-				id: "#{type}s/new__#{name}"
-				title: name
-				type: type
-				nodes: templates type, "new__#{name}"
-			setDefault t.nodes
-			cs.$modelValue.nodes.push t
-			cs.expand()
-			return t
-
-		setDefault = (node) ->
-			for n in node
-				if n.cnodes and n.default
-					delete n.cnodes
-					n._nodes = n.default
-				if n._nodes
-					setDefault n._nodes
-				else if n.default or n.default == 0
-					n.data = n.default
-			node
+#		setDefault = (node) ->
+#			for n in node
+#				if n.cnodes and n.default
+#					delete n.cnodes
+#					n._nodes = n.default
+#				if n._nodes
+#					setDefault n._nodes
+#				else if n.default or n.default == 0
+#					n.data = n.default
+#			node
 
 		_getAll = (node) ->
 			d = $q.defer()
@@ -439,24 +439,24 @@ llapp.controller 'TreeCtrl', [
 					d2.resolve()
 			return d2.promise
 
-		$scope.duplicateNode = (name, type, idkey) ->
-			cs = $scope.currentScope
-			_getAll($scope.currentNode).then ->
-				while cs.$modelValue.title != "#{type}s"
-					cs = cs.$parentNodeScope
-				t = JSON.parse JSON.stringify($scope.currentNode).replace(new RegExp(idkey, 'g'), 'new__' + name)
-				t.id = "#{type}s/new__#{name}"
-				t.title = name
-				cs.$modelValue.nodes.push(t)
-				return t
+#		$scope.duplicateNode = (name, type, idkey) ->
+#			cs = $scope.currentScope
+#			_getAll($scope.currentNode).then ->
+#				while cs.$modelValue.title != "#{type}s"
+#					cs = cs.$parentNodeScope
+#				t = JSON.parse JSON.stringify($scope.currentNode).replace(new RegExp(idkey, 'g'), 'new__' + name)
+#				t.id = "#{type}s/new__#{name}"
+#				t.title = name
+#				cs.$modelValue.nodes.push(t)
+#				return t
 
-		$scope.del = (a, i) ->
-			a.splice(i, 1)
+#		$scope.del = (a, i) ->
+#			a.splice(i, 1)
 
-		$scope.deleteEntry = ->
-			p = $scope.currentScope.$parentNodeScope
-			$scope.currentScope.remove()
-			$scope.displayForm p
+#		$scope.deleteEntry = ->
+#			p = $scope.currentScope.$parentNodeScope
+#			$scope.currentScope.remove()
+#			$scope.displayForm p
 
 		$scope.down = ->
 			id = $scope.currentNode.id
@@ -608,44 +608,44 @@ llapp.controller 'TreeCtrl', [
 			$scope.showT = false
 			setHelp scope
 
-		$scope.keyWritable = (scope) ->
-			node = scope.$modelValue
-			# regexp-assemble of:
-			#  authChoice
-			#  keyText
-			#  cmbModule
-			#  virtualHost
-			#  rule
-			#  menuCat
-			#  menuApp
-			#  samlAttribute
-			#  samlIDPMetaDataNode
-			#  samlSPMetaDataNode
-			return if node.type and node.type.match /^(?:(?:saml(?:(?:ID|S)PMetaDataNod|Attribut)|(?:cmbMod|r)ul|authChoic)e|(?:virtualHos|keyTex)t|menu(?:App|Cat))$/ then true else false
-
+#		$scope.keyWritable = (scope) ->
+#			node = scope.$modelValue
+#			# regexp-assemble of:
+#			#  authChoice
+#			#  keyText
+#			#  cmbModule
+#			#  virtualHost
+#			#  rule
+#			#  menuCat
+#			#  menuApp
+#			#  samlAttribute
+#			#  samlIDPMetaDataNode
+#			#  samlSPMetaDataNode
+#			return if node.type and node.type.match /^(?:(?:saml(?:(?:ID|S)PMetaDataNod|Attribut)|(?:cmbMod|r)ul|authChoic)e|(?:virtualHos|keyTex)t|menu(?:App|Cat))$/ then true else false
+#
 		# RSA keys generation
-		$scope.newRSAKey = ->
-			$scope.showModal('password.html').then ->
-				$scope.waiting = true
-				currentNode = $scope.currentNode
-				password = $scope.result
-				$http.post("#{window.confPrefix}/newRSAKey", {"password": password}).then (response) ->
-					currentNode.data[0].data = response.data.private
-					currentNode.data[1].data = password
-					currentNode.data[2].data = response.data.public
-					$scope.waiting = false
-				, readError
-			, ->
-				console.log('New key cancelled')
+#		$scope.newRSAKey = ->
+#			$scope.showModal('password.html').then ->
+#				$scope.waiting = true
+#				currentNode = $scope.currentNode
+#				password = $scope.result
+#				$http.post("#{window.confPrefix}/newRSAKey", {"password": password}).then (response) ->
+#					currentNode.data[0].data = response.data.private
+#					currentNode.data[1].data = password
+#					currentNode.data[2].data = response.data.public
+#					$scope.waiting = false
+#				, readError
+#			, ->
+#				console.log('New key cancelled')
 
-		$scope.newRSAKeyNoPassword = ->
-			$scope.waiting = true
-			currentNode = $scope.currentNode
-			$http.post("#{window.confPrefix}/newRSAKey", {"password": ''}).then (response) ->
-				currentNode.data[0].data = response.data.private
-				currentNode.data[1].data = response.data.public
-				$scope.waiting = false
-			, readError
+#		$scope.newRSAKeyNoPassword = ->
+#			$scope.waiting = true
+#			currentNode = $scope.currentNode
+#			$http.post("#{window.confPrefix}/newRSAKey", {"password": ''}).then (response) ->
+#				currentNode.data[0].data = response.data.private
+#				currentNode.data[1].data = response.data.public
+#				$scope.waiting = false
+#			, readError
 
 		# method `getKey()`:
 		# - return a promise with the data:
@@ -679,7 +679,7 @@ llapp.controller 'TreeCtrl', [
 							node.data = data.value
 						# Cast int as int (remember that booleans are int for Perl)
 						if node.type and node.type.match /^int$/
-							node.data = parseInt(node.data, 10)				
+							node.data = parseInt(node.data, 10)
 						# Split SAML types
 						else if node.type and node.type.match(/^(saml(Service|Assertion)|blackWhiteList)$/) and not (typeof node.data == 'object')
 							node.data = node.data.split ';'
@@ -696,9 +696,9 @@ llapp.controller 'TreeCtrl', [
 		# Called when $location.path() change, launch getCfg() with the new
 		# configuration number
 		pathEvent = (event, next, current) ->
-			n = next.match(new RegExp('#!?/confs/(latest|[0-9]+)'))
+			n = next.match(new RegExp('#!?/view/(latest|[0-9]+)'))
 			if n == null
-				$location.path '/confs/latest'
+				$location.path '/view/latest'
 			else
 				console.log "Trying to get cfg number #{n[1]}"
 				$scope.getCfg n[1]
@@ -713,7 +713,7 @@ llapp.controller 'TreeCtrl', [
 					d = new Date $scope.currentCfg.cfgDate * 1000
 					$scope.currentCfg.date = d.toLocaleString()
 					console.log "Metadatas of cfg #{n} loaded"
-					$location.path "/confs/#{n}"
+					$location.path "/view/#{n}"
 					$scope.init()
 				, (response) ->
 					readError(response).then ->
@@ -763,31 +763,31 @@ llapp.controller 'TreeCtrl', [
 				$scope.waiting = false
 			, readError
 			# Colorized link
-			$scope.activeModule = "conf"
+			$scope.activeModule = "viewer"
 			$scope.myStyle = {color: '#ffb84d'}
-					
-		c = $location.path().match(new RegExp('^/confs/(latest|[0-9]+)'))
+
+		c = $location.path().match(new RegExp('^/view/(latest|[0-9]+)'))
 		unless c
-			console.log "Redirecting to /confs/latest"
-			$location.path '/confs/latest'
+			console.log "Redirecting to /view/latest"
+			$location.path '/view/latest'
 
 		# File form function
-		$scope.replaceContentByUrl = (node, url) ->
-			$scope.waiting = true
-			$http.post(window.scriptname + "prx", {url: url}).then (response) ->
-				node.data = response.data.content
-				$scope.waiting = false
-			, readError
-		$scope.replaceContent = (node, $fileContent) ->
-			node.data = $fileContent
+		#$scope.replaceContentByUrl = (node, url) ->
+		#	$scope.waiting = true
+		#	$http.post(window.scriptname + "prx", {url: url}).then (response) ->
+		#		node.data = response.data.content
+		#		$scope.waiting = false
+		#	, readError
+		#$scope.replaceContent = (node, $fileContent) ->
+		#	node.data = $fileContent
 
-		# Import Filesaver.js saveAs()
-		$scope.saveAs = (content, type, filename) ->
-			saveAs(new Blob([content], {"type": type}), filename)
+		## Import Filesaver.js saveAs()
+		#$scope.saveAs = (content, type, filename) ->
+		#	saveAs(new Blob([content], {"type": type}), filename)
 
-		# Save as pem, text,...
-		$scope.saveAsPem = (cs,scope) ->
-			scope.saveAs "#{cs.data[0].data}\n#{cs.data[2].data}", 'application/x-pem-file', "#{cs.title}.pem"
-		$scope.saveAsText = (cs,scope) ->
-			scope.saveAs cs.data, 'text/plain', "#{cs.title}.txt"
+		## Save as pem, text,...
+		#$scope.saveAsPem = (cs,scope) ->
+		#	scope.saveAs "#{cs.data[0].data}\n#{cs.data[2].data}", 'application/x-pem-file', "#{cs.title}.pem"
+		#$scope.saveAsText = (cs,scope) ->
+		#	scope.saveAs cs.data, 'text/plain', "#{cs.title}.txt"
 ]

@@ -39,7 +39,7 @@ sub addRoutes {
       # READ
       # Special keys
       ->addRoute(
-        confs => {
+        view => {
             ':cfgNum' => [
                 qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
                   applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
@@ -52,19 +52,12 @@ sub addRoutes {
       )
 
       # Other keys
-      ->addRoute( confs => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] )
+      ->addRoute( view => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] )
 
       # Difference between confs
       ->addRoute( diff => { ':conf1' => { ':conf2' => 'diff' } } )
       ->addRoute( 'diff.html', undef, ['GET'] )
 }
-
-# 35 - New RSA key pair on demand
-#      --------------------------
-
-
-# 36 - URL File loader
-#      ---------------
 
 ##@method public PSGI-JSON-response prx()
 # Load file using posted URL and return its content
