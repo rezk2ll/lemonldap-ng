@@ -91,7 +91,15 @@ ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
   or explain( $res->[2]->[0], 'trspan="checkUser"' );
 count(1);
 
-$query =~ s/user=/user=rtyler/;
+ok( $res->[2]->[0] =~ m%<td class="text-left">_user</td>%,
+    'Found attribute _user' )
+  or explain( $res->[2]->[0], 'Attribute _user' );
+ok( $res->[2]->[0] =~ m%<td class="text-left">dwho</td>%,
+    'Found value dwho' )
+  or explain( $res->[2]->[0], 'Value dwho' );
+count(2);
+
+$query =~ s/user=dwho/user=rtyler/;
 $query =~ s/url=/url=http%3A%2F%2Ftry.example.com/;
 ok(
     $res = $client->_post(
