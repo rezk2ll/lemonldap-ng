@@ -25,7 +25,7 @@ sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;
 
-    # Parse activation rule
+    ## Parse activation rule
     $self->logger->debug(
         "Impersonation rule -> " . $self->conf->{impersonationRule} );
     my $rule =
