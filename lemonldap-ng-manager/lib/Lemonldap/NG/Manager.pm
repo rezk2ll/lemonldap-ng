@@ -139,7 +139,7 @@ sub tplParams {
 sub javascript {
     my ($self) = @_;
     return
-      'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";'
+      'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";var viewPrefix=scriptname+"view/";'
       . ( $self->links ? 'var links=' . to_json( $self->links ) . ';' : '' )
       . (
         $self->menuLinks
