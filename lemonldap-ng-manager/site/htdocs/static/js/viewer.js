@@ -35,7 +35,7 @@ This file contains:
       $scope.showT = false;
       $scope.form = 'home';
       $scope.currentCfg = {};
-      $scope.confPrefix = window.confPrefix;
+      $scope.viewPrefix = window.viewPrefix;
       $scope.message = {};
       $scope.result = '';
       $scope.translateTitle = function(node) {
@@ -164,7 +164,7 @@ This file contains:
         return $scope.showM = false;
       };
       $scope.downloadConf = function() {
-        return window.open($scope.confPrefix + $scope.currentCfg.cfgNum + '?full=1');
+        return window.open($scope.viewPrefix + $scope.currentCfg.cfgNum + '?full=1');
       };
       id = 1;
       $scope._findContainer = function() {
@@ -331,7 +331,7 @@ This file contains:
         d = $q.defer();
         d.notify('Trying to get datas');
         $scope.waiting = true;
-        $http.get("" + window.confPrefix + $scope.currentCfg.cfgNum + "/" + node.cnodes).then(function(response) {
+        $http.get("" + window.viewPrefix + $scope.currentCfg.cfgNum + "/" + node.cnodes).then(function(response) {
           var a, data, l, len;
           data = response.data;
           if (!data) {
@@ -433,7 +433,7 @@ This file contains:
               return $scope.waiting = false;
             });
           } else {
-            $http.get("" + window.confPrefix + $scope.currentCfg.cfgNum + "/" + (node.get ? node.get : node.title)).then(function(response) {
+            $http.get("" + window.viewPrefix + $scope.currentCfg.cfgNum + "/" + (node.get ? node.get : node.title)).then(function(response) {
               var data;
               data = response.data;
               if ((data.value === null || (data.error && data.error.match(/setDefault$/))) && node['default'] !== null) {
@@ -471,7 +471,7 @@ This file contains:
       $scope.$on('$locationChangeSuccess', pathEvent);
       $scope.getCfg = function(n) {
         if ($scope.currentCfg.cfgNum !== n) {
-          return $http.get("" + window.confPrefix + n).then(function(response) {
+          return $http.get("" + window.viewPrefix + n).then(function(response) {
             var d;
             $scope.currentCfg = response.data;
             d = new Date($scope.currentCfg.cfgDate * 1000);

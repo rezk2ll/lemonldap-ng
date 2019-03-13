@@ -29,7 +29,7 @@ llapp.controller 'TreeCtrl', [
 		$scope.showT = false
 		$scope.form = 'home'
 		$scope.currentCfg = {}
-		$scope.confPrefix = window.confPrefix
+		$scope.viewPrefix = window.viewPrefix
 		$scope.message = {}
 		$scope.result = ''
 
@@ -167,7 +167,7 @@ llapp.controller 'TreeCtrl', [
 
 		# Download raw conf
 		$scope.downloadConf = () ->
-			window.open $scope.confPrefix + $scope.currentCfg.cfgNum + '?full=1'
+			window.open $scope.viewPrefix + $scope.currentCfg.cfgNum + '?full=1'
 
 #		# Main save function
 #		$scope.save = ->
@@ -177,7 +177,7 @@ llapp.controller 'TreeCtrl', [
 #					id: "cfgLog"
 #					title: "cfgLog"
 #					data: if $scope.result then $scope.result else ''
-#				$http.post("#{window.confPrefix}?cfgNum=#{$scope.currentCfg.cfgNum}#{if $scope.forceSave then "&force=1" else ''}", $scope.data).then (response) ->
+#				$http.post("#{window.viewPrefix}?cfgNum=#{$scope.currentCfg.cfgNum}#{if $scope.forceSave then "&force=1" else ''}", $scope.data).then (response) ->
 #					$scope.data.pop()
 #					_checkSaveResponse response.data
 #				,(response) ->
@@ -190,7 +190,7 @@ llapp.controller 'TreeCtrl', [
 #		# Raw save function
 #		$scope.saveRawConf = ($fileContent) ->
 #			$scope.waiting = true
-#			$http.post("#{window.confPrefix}/raw", $fileContent).then (response) ->
+#			$http.post("#{window.viewPrefix}/raw", $fileContent).then (response) ->
 #				_checkSaveResponse(response.data)
 #			, readError
 #
@@ -535,7 +535,7 @@ llapp.controller 'TreeCtrl', [
 			d = $q.defer()
 			d.notify 'Trying to get datas'
 			$scope.waiting = true
-			$http.get("#{window.confPrefix}#{$scope.currentCfg.cfgNum}/#{node.cnodes}").then (response) ->
+			$http.get("#{window.viewPrefix}#{$scope.currentCfg.cfgNum}/#{node.cnodes}").then (response) ->
 				data = response.data
 				# Manage datas errors
 				if not data
@@ -629,7 +629,7 @@ llapp.controller 'TreeCtrl', [
 #				$scope.waiting = true
 #				currentNode = $scope.currentNode
 #				password = $scope.result
-#				$http.post("#{window.confPrefix}/newRSAKey", {"password": password}).then (response) ->
+#				$http.post("#{window.viewPrefix}/newRSAKey", {"password": password}).then (response) ->
 #					currentNode.data[0].data = response.data.private
 #					currentNode.data[1].data = password
 #					currentNode.data[2].data = response.data.public
@@ -641,7 +641,7 @@ llapp.controller 'TreeCtrl', [
 #		$scope.newRSAKeyNoPassword = ->
 #			$scope.waiting = true
 #			currentNode = $scope.currentNode
-#			$http.post("#{window.confPrefix}/newRSAKey", {"password": ''}).then (response) ->
+#			$http.post("#{window.viewPrefix}/newRSAKey", {"password": ''}).then (response) ->
 #				currentNode.data[0].data = response.data.private
 #				currentNode.data[1].data = response.data.public
 #				$scope.waiting = false
@@ -670,7 +670,7 @@ llapp.controller 'TreeCtrl', [
 						d.reject response.statusLine
 						$scope.waiting = false
 				else
-					$http.get("#{window.confPrefix}#{$scope.currentCfg.cfgNum}/#{if node.get then node.get else node.title}").then (response) ->
+					$http.get("#{window.viewPrefix}#{$scope.currentCfg.cfgNum}/#{if node.get then node.get else node.title}").then (response) ->
 						# Set default value if response is null or if asked by server
 						data = response.data
 						if (data.value == null or (data.error and data.error.match /setDefault$/ ) ) and node['default'] != null
@@ -708,7 +708,7 @@ llapp.controller 'TreeCtrl', [
 		# Download configuration metadatas
 		$scope.getCfg = (n) ->
 			if $scope.currentCfg.cfgNum != n
-				$http.get("#{window.confPrefix}#{n}").then (response) ->
+				$http.get("#{window.viewPrefix}#{n}").then (response) ->
 					$scope.currentCfg = response.data
 					d = new Date $scope.currentCfg.cfgDate * 1000
 					$scope.currentCfg.date = d.toLocaleString()
