@@ -977,5 +977,6 @@
 "samlCommonDomainCookieReader":"يو آر إل القارئ",
 "samlCommonDomainCookieWriter":"يو آر إل الكاتب",
 "samlRelayStateTimeout":"تناوب حالة مهلة الجلسة ",
-"samlUseQueryStringSpecific":"استخدام أسلوب query_string المعين"
+"samlUseQueryStringSpecific":"استخدام أسلوب query_string المعين",
+"samlOverrideIDPEntityID": "Override Entity ID when acting as IDP"
 }

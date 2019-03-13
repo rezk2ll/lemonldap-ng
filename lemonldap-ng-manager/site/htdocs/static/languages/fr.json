@@ -977,5 +977,6 @@
 "samlCommonDomainCookieReader":"URL de lecture",
 "samlCommonDomainCookieWriter":"URL d'écriture",
 "samlRelayStateTimeout":"Durée de vie d'une session RelayState",
-"samlUseQueryStringSpecific":"Utilisation d'une fonction spécifique pour query_string"
+"samlUseQueryStringSpecific":"Utilisation d'une fonction spécifique pour query_string",
+"samlOverrideIDPEntityID": "Valeur de l'Entity ID en mode IDP"
 }

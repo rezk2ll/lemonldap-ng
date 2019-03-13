@@ -91,6 +91,11 @@ qr/^($saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_u
     );
     return 0 unless ($res);
 
+    if ( $self->conf->{samlOverrideIDPEntityID} ) {
+        $self->lassoServer->ProviderID(
+            $self->conf->{samlOverrideIDPEntityID} );
+    }
+
     # Single logout routes
     $self->addUnauthRouteFromMetaDataURL(
         "samlIDPSSODescriptorSingleLogoutServiceSOAP",
