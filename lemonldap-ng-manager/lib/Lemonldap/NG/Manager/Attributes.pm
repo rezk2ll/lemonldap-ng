@@ -3504,6 +3504,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             ],
             'type' => 'select'
         },
+        'viewerHiddenPK' => {
+            'default' => 'virtualHosts',
+            'type'    => 'text'
+        },
         'virtualHosts' => {
             'type' => 'virtualHostContainer'
         },

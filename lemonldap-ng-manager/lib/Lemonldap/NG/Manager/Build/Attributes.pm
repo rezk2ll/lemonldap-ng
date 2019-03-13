@@ -874,6 +874,14 @@ sub attributes {
             flags         => 'hp',
         },
 
+        # Viewer
+        viewerHiddenPK => {
+            type          => 'text',
+            default       => 'virtualHosts',
+            documentation => 'ConfTree hidden primary keys',
+            flags         => 'm',
+        },
+
         # Notification
         oldNotifFormat => {
             type          => 'bool',

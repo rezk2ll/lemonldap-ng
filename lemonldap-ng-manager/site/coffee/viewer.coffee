@@ -1,5 +1,5 @@
 ###
-LemonLDAP::NG Manager client
+LemonLDAP::NG Viewer client
 
 This is the main app file. Other are:
  - struct.json and js/confTree.js that contains the full tree
