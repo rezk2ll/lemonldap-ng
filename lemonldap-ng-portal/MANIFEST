@@ -100,9 +100,11 @@ lib/Lemonldap/NG/Portal/Plugins/AutoSignin.pm
 lib/Lemonldap/NG/Portal/Plugins/BruteForceProtection.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckState.pm
+lib/Lemonldap/NG/Portal/Plugins/CheckUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuthn.pm
 lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
 lib/Lemonldap/NG/Portal/Plugins/History.pm
+lib/Lemonldap/NG/Portal/Plugins/Impersonation.pm
 lib/Lemonldap/NG/Portal/Plugins/MailPasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
@@ -323,6 +325,7 @@ site/templates/bootstrap/2fchoice.tpl
 site/templates/bootstrap/2fregisters.tpl
 site/templates/bootstrap/casBack2Url.tpl
 site/templates/bootstrap/checklogins.tpl
+site/templates/bootstrap/checkuser.tpl
 site/templates/bootstrap/confirm.tpl
 site/templates/bootstrap/customfooter.tpl
 site/templates/bootstrap/customhead.tpl
@@ -336,6 +339,7 @@ site/templates/bootstrap/footer.tpl
 site/templates/bootstrap/gpgform.tpl
 site/templates/bootstrap/header.tpl
 site/templates/bootstrap/idpchoice.tpl
+site/templates/bootstrap/impersonation.tpl
 site/templates/bootstrap/info.tpl
 site/templates/bootstrap/ldapPpGrace.tpl
 site/templates/bootstrap/login.json
@@ -499,6 +503,10 @@ t/66-CDA-already-auth.t
 t/66-CDA-with-REST.t
 t/66-CDA-with-SOAP.t
 t/66-CDA.t
+t/67-CheckUser-with-token.t
+t/67-CheckUser.t
+t/68-Impersonation-with-merge.t
+t/68-Impersonation.t
 t/70-2F-TOTP-with-History.t
 t/70-2F-TOTP.t
 t/70-2F-TOTP_8.t

@@ -91,6 +91,11 @@ qr/^($saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_u
     );
     return 0 unless ($res);
 
+    if ( $self->conf->{samlOverrideIDPEntityID} ) {
+        $self->lassoServer->ProviderID(
+            $self->conf->{samlOverrideIDPEntityID} );
+    }
+
     # Single logout routes
     $self->addUnauthRouteFromMetaDataURL(
         "samlIDPSSODescriptorSingleLogoutServiceSOAP",
@@ -165,6 +170,8 @@ sub storeEnv {
       $self->checkMessage( $req, $req->uri, $req->method, $req->content_type );
     return PE_OK if ( $artifact or !$request );
     my $login = $self->createLogin( $self->lassoServer );
+    $self->disableSignatureVerification($login);
+    $self->processAuthnRequestMsg( $login, $request );
     if ( my $sp = $login->remote_providerID() ) {
         $req->env->{llng_saml_sp} = $sp;
         if ( my $spConfKey = $self->spList->{$sp}->{confKey} ) {
@@ -1924,7 +1931,16 @@ sub imgnok {
 
 sub sendImage {
     my ( $self, $req,, $img ) = @_;
-    return $self->p->staticFile( $req, "common/$img", 'image/png' );
+    return [
+        302,
+        [
+                'Location' => $self->conf->{portal}
+              . $self->p->staticPrefix
+              . '/common/'
+              . $img,
+        ],
+        [],
+    ];
 }
 
 # Normalize url to be tolerant to SAML Path

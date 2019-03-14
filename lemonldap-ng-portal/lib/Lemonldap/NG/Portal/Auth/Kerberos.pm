@@ -114,6 +114,7 @@ sub extractFormInfo {
             #$self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );
             eval( $self->InitCmd );
             die 'Unable to launch init commmand ' . $self->{InitCmd} if ($@);
+            $req->data->{waitingMessage} = 1;
             return PE_FIRSTACCESS;
         }
     }

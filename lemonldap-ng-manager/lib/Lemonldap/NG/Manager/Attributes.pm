@@ -783,6 +783,21 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '_2fDevices _loginHistory hGroups',
             'type'    => 'text'
         },
+        'checkUserIdRule' => {
+            'default' => 1,
+            'test'    => sub {
+                my ( $val, $conf ) = @_;
+                my $s = '';
+                'Safe'->new->reval("BEGIN { warnings->unimport; } $s $val");
+                my $err = join(
+                    '',
+                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
+                        split( /\n/, $@, 0 ) )
+                );
+                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+            },
+            'type' => 'text'
+        },
         'checkXSS' => {
             'default' => 1,
             'type'    => 'bool'
@@ -1194,6 +1209,41 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'https' => {
             'default' => -1,
             'type'    => 'trool'
+        },
+        'impersonationHiddenAttributes' => {
+            'default' => '_2fDevices _loginHistory',
+            'type'    => 'text'
+        },
+        'impersonationIdRule' => {
+            'default' => 1,
+            'test'    => sub {
+                my ( $val, $conf ) = @_;
+                my $s = '';
+                'Safe'->new->reval("BEGIN { warnings->unimport; } $s $val");
+                my $err = join(
+                    '',
+                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
+                        split( /\n/, $@, 0 ) )
+                );
+                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+            },
+            'type' => 'text'
+        },
+        'impersonationMergeSSOgroups' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'impersonationPrefix' => {
+            'default' => 'real_',
+            'type'    => 'text'
+        },
+        'impersonationRule' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'impersonationSkipEmptyValues' => {
+            'default' => 1,
+            'type'    => 'bool'
         },
         'infoFormMethod' => {
             'default' => 'get',
@@ -2863,6 +2913,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlOrganizationURL' => {
             'default' => 'http://www.example.com',
+            'type'    => 'text'
+        },
+        'samlOverrideIDPEntityID' => {
+            'default' => '',
             'type'    => 'text'
         },
         'samlRelayStateTimeout' => {

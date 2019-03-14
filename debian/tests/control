@@ -1,14 +1,38 @@
 # debian/tests/runner launch pkg-perl-autopkgtest tests for each library
-Test-Command: ./debian/tests/runner build-deps
-Depends: @, @builddeps@, pkg-perl-autopkgtest, libmouse-perl
+Test-Command: ./debian/tests/runner build-deps lemonldap-ng-common
+Depends: liblemonldap-ng-common-perl, @builddeps@, pkg-perl-autopkgtest
 
-Test-Command: ./debian/tests/runner runtime-deps
-Depends: @, pkg-perl-autopkgtest, libmouse-perl
+Test-Command: ./debian/tests/runner build-deps lemonldap-ng-handler
+Depends: liblemonldap-ng-handler-perl, @builddeps@, pkg-perl-autopkgtest
+
+Test-Command: ./debian/tests/runner build-deps lemonldap-ng-portal
+Depends: liblemonldap-ng-portal-perl, @builddeps@, pkg-perl-autopkgtest
+
+Test-Command: ./debian/tests/runner build-deps lemonldap-ng-manager
+Depends: liblemonldap-ng-manager-perl, @builddeps@, pkg-perl-autopkgtest
+
+Test-Command: ./debian/tests/runner runtime-deps lemonldap-ng-common
+Depends: liblemonldap-ng-common-perl, pkg-perl-autopkgtest, libmouse-perl
+Restrictions: superficial, skippable
+
+# Disable this one: skipped
+#Test-Command: ./debian/tests/runner runtime-deps lemonldap-ng-handler
+#Depends: liblemonldap-ng-handler-perl, pkg-perl-autopkgtest, libmouse-perl
+#Restrictions: superficial, skippable
+
+Test-Command: ./debian/tests/runner runtime-deps lemonldap-ng-portal
+Depends: liblemonldap-ng-portal-perl, pkg-perl-autopkgtest, libmouse-perl
+Restrictions: superficial, skippable
+
+Test-Command: ./debian/tests/runner runtime-deps lemonldap-ng-manager
+Depends: liblemonldap-ng-manager-perl, pkg-perl-autopkgtest, libmouse-perl
+Restrictions: superficial, skippable
 
 # Use pkg-perl-autopkgtest test for runtime-deps-and-recommends
 # Some portal suggested dependencies are added here
 Test-Command: /usr/share/pkg-perl-autopkgtest/runner runtime-deps-and-recommends
-Depends: @, @builddeps@, pkg-perl-autopkgtest, libyaml-perl, liblog-log4perl-perl, libauthen-pam-perl, libauthen-radius-perl, libweb-id-perl, libipc-run-perl
+Depends: @, @builddeps@, pkg-perl-autopkgtest, libyaml-perl, liblog-log4perl-perl, libauthen-pam-perl, libauthen-radius-perl, libweb-id-perl
+Restrictions: superficial
 
 #Test-Command: ./debian/tests/runner heavy-deps
 #Depends: @, pkg-perl-autopkgtest, pkg-perl-autopkgtest-heavy, libmouse-perl

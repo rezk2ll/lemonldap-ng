@@ -4,11 +4,11 @@ use strict;
 use Mouse;
 use String::Random;
 use Lemonldap::NG::Portal::Main::Constants qw(
-    PE_BADCREDENTIALS
-    PE_ERROR
-    PE_FORMEMPTY
-    PE_OK
-    PE_SENDRESPONSE
+  PE_BADCREDENTIALS
+  PE_ERROR
+  PE_FORMEMPTY
+  PE_OK
+  PE_SENDRESPONSE
 );
 
 our $VERSION = '2.0.3';
@@ -30,7 +30,7 @@ sub init {
             }
         }
         $self->logo( $self->conf->{ext2fLogo} )
-            if ( $self->conf->{ext2fLogo} );
+          if ( $self->conf->{ext2fLogo} );
         return $self->SUPER::init();
     }
     if ( $self->conf->{ext2fCodeActivation} ) {
@@ -40,7 +40,7 @@ sub init {
         }
         $self->random( String::Random->new );
         $self->logo( $self->conf->{ext2fLogo} )
-            if ( $self->conf->{ext2fLogo} );
+          if ( $self->conf->{ext2fLogo} );
         return $self->SUPER::init();
     }
     return 0;
@@ -57,22 +57,22 @@ sub run {
     # Generate Code to send
     my $code;
     if ( $self->conf->{ext2fCodeActivation} ) {
-        $code
-            = $self->random->randregex( $self->conf->{ext2fCodeActivation} );
+        $code = $self->random->randregex( $self->conf->{ext2fCodeActivation} );
         $self->logger->debug("Generated ext2f code : $code");
         $self->ott->updateToken( $token, __ext2fcode => $code );
     }
 
     # Prepare command and launch it
     $self->logger->debug( 'Launching "Send" external 2F command -> '
-            . $self->conf->{ext2FSendCommand} );
-    if (my $c = $self->launch(
+          . $self->conf->{ext2FSendCommand} );
+    if (
+        my $c = $self->launch(
             $req->sessionInfo, $self->conf->{ext2FSendCommand}, $code
         )
-        )
+      )
     {
         $self->logger->error("External send command failed (code $c)");
-        return $self->p->do( $req, [ sub {PE_ERROR} ] );
+        return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
     # Prepare form
@@ -104,15 +104,16 @@ sub verify {
 
         # Prepare command and launch it
         $self->logger->debug( 'Launching "Validate" external 2F command -> '
-                . $self->conf->{ext2FValidateCommand} );
+              . $self->conf->{ext2FValidateCommand} );
         $self->logger->debug(" code -> $usercode");
-        if (my $c = $self->launch(
+        if (
+            my $c = $self->launch(
                 $session, $self->conf->{ext2FValidateCommand}, $usercode
             )
-            )
+          )
         {
             $self->userLogger->warn( 'Second factor failed for '
-                    . $session->{ $self->conf->{whatToTrace} } );
+                  . $session->{ $self->conf->{whatToTrace} } );
             $self->logger->error("External verify command failed (code $c)");
             return PE_BADCREDENTIALS;
         }
@@ -130,7 +131,7 @@ sub verify {
     return PE_OK if ( $usercode eq $savedcode );
 
     $self->userLogger->warn( 'Second factor failed for '
-            . $session->{ $self->conf->{whatToTrace} } );
+          . $session->{ $self->conf->{whatToTrace} } );
     return PE_BADCREDENTIALS;
 }
 

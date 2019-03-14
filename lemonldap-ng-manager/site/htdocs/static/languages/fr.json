@@ -151,8 +151,9 @@
 "clickHereToForce":"Cliquer ici pour forcer",
 "checkState":"Activation",
 "checkStateSecret":"Secret partagé",
-"checkUsers":"Vérification de session",
+"checkUsers":"Vérification des profils SSO",
 "checkUser":"Activation",
+"checkUserIdRule":"Règle d'utilisation des identités",
 "checkUserHiddenAttributes":"Attributs masqués",
 "checkUserDisplayPersistentInfo":"Afficher les données de session persistante",
 "checkUserDisplayEmptyValues":"Afficher les valeurs nulles",
@@ -286,6 +287,13 @@
 "hideTree":"Masquer l'arbre",
 "httpOnly":"Protection contre javascript",
 "https":"HTTPS",
+"impersonation":"Usurpation d'identité",
+"impersonationRule":"Règle d'utilisation",
+"impersonationIdRule":"Règle d'utilisation des identités",
+"impersonationHiddenAttributes":"Attributs masqués",
+"impersonationMergeSSOgroups":"Fusionner les groupes SSO réels et usurpés",
+"impersonationPrefix":"Préfix des vrais attributs",
+"impersonationSkipEmptyValues":"Ignorer les valeurs nulles",
 "incompleteForm":"Des champs requis manquent",
 "index":"Index",
 "infoFormMethod":"Méthode du formulaire d'information",
@@ -969,5 +977,6 @@
 "samlCommonDomainCookieReader":"URL de lecture",
 "samlCommonDomainCookieWriter":"URL d'écriture",
 "samlRelayStateTimeout":"Durée de vie d'une session RelayState",
-"samlUseQueryStringSpecific":"Utilisation d'une fonction spécifique pour query_string"
+"samlUseQueryStringSpecific":"Utilisation d'une fonction spécifique pour query_string",
+"samlOverrideIDPEntityID": "Valeur de l'Entity ID en mode IDP"
 }

@@ -16,6 +16,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_PASSWORDFORMEMPTY
   PE_TOKENEXPIRED
+  PE_MALFORMEDUSER
 );
 
 our $VERSION = '2.0.0';
@@ -52,6 +53,13 @@ sub init {
 # Read username and password from POST data
 sub extractFormInfo {
     my ( $self, $req ) = @_;
+
+    if ( $req->param('user') ) {
+        unless ( $req->param('user') =~ /$self->{conf}->{userControl}/o ) {
+            $self->setSecurity($req);
+            return PE_MALFORMEDUSER;
+        }
+    }
 
     # Detect first access and empty forms
     my $defUser        = defined $req->param('user');

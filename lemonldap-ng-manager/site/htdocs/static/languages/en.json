@@ -151,8 +151,9 @@
 "clickHereToForce":"Click here to force",
 "checkState":"Activation",
 "checkStateSecret":"Shared secret",
-"checkUsers":"Session Check",
+"checkUsers":"SSO profile Check",
 "checkUser":"Activation",
+"checkUserIdRule":"Identities use rule",
 "checkUserHiddenAttributes":"Hidden attributes",
 "checkUserDisplayPersistentInfo":"Display persistent session",
 "checkUserDisplayEmptyValues":"Display empty values",
@@ -286,6 +287,13 @@
 "hideTree":"Hide tree",
 "httpOnly":"Javascript protection",
 "https":"HTTPS",
+"impersonation":"Impersonation",
+"impersonationRule":"Use rule",
+"impersonationIdRule":"Identities use rule",
+"impersonationHiddenAttributes":"Hidden attributes",
+"impersonationMergeSSOgroups":"Merge spoofed and real SSO groups",
+"impersonationPrefix":"Real attributes prefix",
+"impersonationSkipEmptyValues":"Skip empty values",
 "incompleteForm":"Required fields are missing",
 "index":"Index",
 "infoFormMethod":"Method for info form",
@@ -969,5 +977,6 @@
 "samlCommonDomainCookieReader":"Reader URL",
 "samlCommonDomainCookieWriter":"Writer URL",
 "samlRelayStateTimeout":"RelayState session timeout",
-"samlUseQueryStringSpecific":"Use specific query_string method"
+"samlUseQueryStringSpecific":"Use specific query_string method",
+"samlOverrideIDPEntityID": "Override Entity ID when acting as IDP"
 }

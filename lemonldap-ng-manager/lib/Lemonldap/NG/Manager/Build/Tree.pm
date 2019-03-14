@@ -498,8 +498,7 @@ sub tree {
                     title => 'logParams',
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
-                    nodes =>
-                      [ 'whatToTrace', 'hiddenAttributes' ]
+                    nodes => [ 'whatToTrace', 'hiddenAttributes' ]
                 },
                 {
                     title => 'cookieParams',
@@ -643,9 +642,23 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'checkUser',
+                                'checkUserIdRule',
                                 'checkUserHiddenAttributes',
                                 'checkUserDisplayPersistentInfo',
                                 'checkUserDisplayEmptyValues',
+                            ]
+                        },
+                        {
+                            title => 'impersonation',
+                            help  => 'impersonation.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'impersonationRule',
+                                'impersonationIdRule',
+                                'impersonationPrefix',
+                                'impersonationHiddenAttributes',
+                                'impersonationSkipEmptyValues',
+                                'impersonationMergeSSOgroups',
                             ]
                         },
                     ]
@@ -997,7 +1010,8 @@ sub tree {
                                 'samlDiscoveryProtocolPolicy',
                                 'samlDiscoveryProtocolIsPassive'
                             ]
-                        }
+                        },
+                        'samlOverrideIDPEntityID',
                     ]
                 }
             ]

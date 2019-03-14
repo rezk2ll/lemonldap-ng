@@ -6,6 +6,7 @@
 -->
 <div class="alert <TMPL_VAR NAME="ALERTE"> alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
 <form id="checkuser" action="/checkuser" method="post" class="password" role="form">
+  <div class="buttons">
 
   <TMPL_IF NAME="TOKEN">
     <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
@@ -21,26 +22,23 @@
     <div class="input-group-prepend">
       <span class="input-group-text"><i class="fa fa-link"></i> </span>
     </div>
-    <input name="url" type="text" class="form-control" value="<TMPL_VAR NAME="URL">" trplaceholder="http://auth.example.com" aria-required="true"/>
+    <input name="url" type="text" class="form-control" value="<TMPL_VAR NAME="URL">" trplaceholder="URL / DNS" aria-required="true"/>
   </div>
-
-
-<TMPL_IF NAME="ALLOWED">
-<div class="alert <TMPL_VAR NAME="ALERTE_AUTH">"><span trspan="<TMPL_VAR NAME="ALLOWED">"></span></div>
-</TMPL_IF>
-<TMPL_IF NAME="HEADERS">
-  <div class="buttons">
     <button type="submit" class="btn btn-success">
-      <span class="fa fa-sign-in"></span>
-      <span trspan="checkUser">Check user</span>
+      <span class="fa fa-search"></span>
+      <span trspan="search">Search</span>
     </button>
   </div>
-  <div>&nbsp;</div>
+  &nbsp;
+<TMPL_IF NAME="ALLOWED">
+<div class="alert <TMPL_VAR NAME="ALERTE_AUTH">"><b><span trspan="<TMPL_VAR NAME="ALLOWED">"></span></b></div>
+</TMPL_IF>
+<TMPL_IF NAME="HEADERS">
   <div class="card mb-3 border-secondary">
   <div class="card-body table-responsive">
   <table class="table table-hover">
     <thead>
-      <tr class="align-middle"><span trspan="headers">HEADERS</span></tr>
+      <tr class="align-middle"><b><span trspan="headers">HEADERS</span></b></tr>
       <tr>
         <th class="align-middle"><span trspan="key">Key</span></th>
         <th class="align-middle"><span trspan="value">Value</span></th>
@@ -62,11 +60,11 @@
 <div class="container">
 <div class="row">
 <TMPL_IF NAME="GROUPS">
-  <div class="card col-md-4 border-secondary">
+  <div class="card col-md-2 border-secondary">
   <div class="card-body table-responsive">
   <table class="table table-hover">
     <thead>
-      <tr class="align-middle"><span trspan="groups_sso">GROUPS SSO</span></tr>
+      <tr class="align-middle"><b><span trspan="groups_sso">SSO GROUPS</span></b></tr>
     </thead>
     <tbody>
       <TMPL_LOOP NAME="GROUPS">
@@ -85,7 +83,7 @@
   <div class="card-body table-responsive">
   <table class="table table-hover">
     <thead>
-      <tr class="align-middle"><span trspan="macros">MACROS</span></tr>
+      <tr class="align-middle"><b><span trspan="macros">MACROS</span></b></tr>
       <tr>
         <th class="align-middle"><span trspan="key">Key</span></th>
         <th class="align-middle"><span trspan="value">Value</span></th>
@@ -105,21 +103,21 @@
 </TMPL_IF>
 
 <TMPL_IF NAME="ATTRIBUTES">
-  <div class="card col-md-4 border-secondary">
+  <div class="card col-md-6 border-secondary">
   <div class="card-body table-responsive">
   <table class="table table-hover">
     <thead>
-      <tr class="align-middle"><span trspan="attributes">ATTRIBUTES</span></tr>
+      <tr class="align-middle"><b><span trspan="attributes">ATTRIBUTES</span></b></tr>
       <tr>
-        <th class="align-middle"><span trspan="key">Key</span></th>
-        <th class="align-middle"><span trspan="value">Value</span></th>
+        <th class="text-left"><span trspan="key">Key</span></th>
+        <th class="text-left"><span trspan="value">Value</span></th>
       </tr>
     </thead>
     <tbody>
       <TMPL_LOOP NAME="ATTRIBUTES">
         <tr>
-          <td class="align-middle"><TMPL_VAR NAME="key"></td>
-          <td class="align-middle"><TMPL_VAR NAME="value"></td>
+          <td class="text-left"><TMPL_VAR NAME="key"></td>
+          <td class="text-left"><TMPL_VAR NAME="value"></td>
         </tr>
       </TMPL_LOOP>
     </tbody>
@@ -131,10 +129,12 @@
 </div>
 
   <div class="buttons">
+    <!--
     <button type="submit" class="btn btn-success">
       <span class="fa fa-sign-in"></span>
-      <span trspan="checkUser">Check user</span>
+      <span trspan="search">Search</span>
     </button>
+    -->
     <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
       <span class="fa fa-home"></span>
       <span trspan="goToPortal">Go to portal</span>

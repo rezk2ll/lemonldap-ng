@@ -151,8 +151,9 @@
 "clickHereToForce":"Nhấp vào đây để bắt buộc",
 "checkState":"Kích hoạt",
 "checkStateSecret":"Shared secret",
-"checkUsers":"Session Check",
+"checkUsers":"SSO profile Check",
 "checkUser":"Activation",
+"checkUserIdRule":"Identities use rule",
 "checkUserHiddenAttributes":"Hidden attributes",
 "checkUserDisplayPersistentInfo":"Display persistent session",
 "checkUserDisplayEmptyValues":"Display empty values",
@@ -286,6 +287,13 @@
 "hideTree":"Ẩn cây",
 "httpOnly":"Bảo vệ Javascript",
 "https":"HTTPS",
+"impersonation":"Impersonation",
+"impersonationRule":"Use rule",
+"impersonationIdRule":"Identities use rule",
+"impersonationHiddenAttributes":"Hidden attributes",
+"impersonationMergeSSOgroups":"Merge spoofed and real SSO groups",
+"impersonationPrefix":"Real attributes prefix",
+"impersonationSkipEmptyValues":"Skip empty values",
 "incompleteForm":"Các trường bắt buộc bị thiếu",
 "index":"Chỉ mục",
 "infoFormMethod":"Phương pháp cho mẫu thông tin",
@@ -969,5 +977,6 @@
 "samlCommonDomainCookieReader":"Trình đọc URL",
 "samlCommonDomainCookieWriter":"Trình viết URL",
 "samlRelayStateTimeout":"Thời gian hết hạn phiên RelayState ",
-"samlUseQueryStringSpecific":"Sử dụng phương pháp query_string cụ thể"
+"samlUseQueryStringSpecific":"Sử dụng phương pháp query_string cụ thể",
+"samlOverrideIDPEntityID": "Override Entity ID when acting as IDP"
 }

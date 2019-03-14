@@ -151,8 +151,9 @@
 "clickHereToForce":"Clicca qui per forzare",
 "checkState":"Attivazione",
 "checkStateSecret":"Segreto condiviso",
-"checkUsers":"Session Check",
+"checkUsers":"SSO profile Check",
 "checkUser":"Activation",
+"checkUserIdRule":"Identities use rule",
 "checkUserHiddenAttributes":"Hidden attributes",
 "checkUserDisplayPersistentInfo":"Display persistent session",
 "checkUserDisplayEmptyValues":"Display empty values",
@@ -286,6 +287,13 @@
 "hideTree":"Nascondi l'albero",
 "httpOnly":"Protezione Javascript",
 "https":"HTTPS",
+"impersonation":"Impersonation",
+"impersonationRule":"Use rule",
+"impersonationIdRule":"Identities use rule",
+"impersonationHiddenAttributes":"Hidden attributes",
+"impersonationMergeSSOgroups":"Merge spoofed and real SSO groups",
+"impersonationPrefix":"Real attributes prefix",
+"impersonationSkipEmptyValues":"Skip empty values",
 "incompleteForm":"Mancano campi obbligatori",
 "index":"Indice",
 "infoFormMethod":"Metodo per il modulo informazioni",
@@ -969,5 +977,6 @@
 "samlCommonDomainCookieReader":"URL del lettore",
 "samlCommonDomainCookieWriter":"URL dell'autore",
 "samlRelayStateTimeout":"Timeout di sessione di RelayState",
-"samlUseQueryStringSpecific":"Utilizza il metodo specifico query_string"
+"samlUseQueryStringSpecific":"Utilizza il metodo specifico query_string",
+"samlOverrideIDPEntityID": "Override Entity ID when acting as IDP"
 }

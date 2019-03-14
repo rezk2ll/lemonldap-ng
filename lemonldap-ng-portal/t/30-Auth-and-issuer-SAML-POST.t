@@ -86,7 +86,8 @@ SKIP: {
         'Post authentication'
     );
     ok( $res->[2]->[0] =~ /trmsg="89"/, 'Reject reason is 89' )
-        or print STDERR Dumper( $res->[2]->[0] );
+      or print STDERR Dumper( $res->[2]->[0] );
+
     # Simple SP access
     ok(
         $res = $sp->_get(

@@ -41,16 +41,21 @@ sub serviceToXML {
       samlOrganizationURL
     );
 
-    if ($type and $type eq 'idp') {
-	    $template->param( 'hideSPMetadata', 1);
+    if ( $type and $type eq 'idp' ) {
+        $template->param( 'hideSPMetadata', 1 );
     }
 
-    if ($type and $type eq 'sp') {
-	    $template->param( 'hideIDPMetadata', 1);
+    if ( $type and $type eq 'sp' ) {
+        $template->param( 'hideIDPMetadata', 1 );
     }
 
     foreach (@param_auto) {
         $template->param( $_, $self->getValue( $_, $conf ) );
+    }
+
+    # When asked to provide only IDP metadata, take into account EntityID override
+    if ( $type eq "idp" and $conf->{samlOverrideIDPEntityID} ) {
+        $template->param( 'samlEntityID', $conf->{samlOverrideIDPEntityID} );
     }
 
     # Boolean parameters

@@ -51,7 +51,6 @@ sub defaultUnauthRoute {
 
 sub _run {
     my $self = shift;
-    $self->rule(1);
 
     return sub {
         my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
@@ -61,6 +60,7 @@ sub _run {
             $req->userData( $self->api->data );
         }
         elsif ( $res->[0] != 403 ) {
+
             # Unset headers (handler adds a Location header)
             $self->logger->debug(
                 "User not authenticated, Try in use, cancel redirection");

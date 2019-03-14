@@ -113,7 +113,7 @@ sub display {
               && $req->data->{login},
             ASK_LOGINS => $req->param('checkLogins') || 0,
             CONFIRMKEY => $self->stamp(),
-            LIST       => $req->data->{list} || [],
+            LIST       => $req->data->{list}         || [],
             REMEMBER   => $req->data->{confirmRemember},
             (
                 $req->data->{customScript}
@@ -291,6 +291,7 @@ sub display {
             REGISTER_URL          => $self->conf->{registerUrl},
             HIDDEN_INPUTS         => $self->buildHiddenForm($req),
             STAYCONNECTED         => $self->conf->{stayConnected},
+            SPOOFID               => $self->conf->{impersonationRule},
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -417,6 +418,10 @@ sub display {
 
         }
 
+    }
+
+    if ( $req->data->{waitingMessage} ) {
+        $templateParams{WAITING_MESSAGE} = 1;
     }
 
     $self->logger->debug("Skin returned: $skinfile");

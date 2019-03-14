@@ -151,8 +151,9 @@
 "clickHereToForce":"انقر هنا لإجبار",
 "checkState":"Activation",
 "checkStateSecret":"Shared secret",
-"checkUsers":"Session Check",
+"checkUsers":"SSO profile Check",
 "checkUser":"Activation",
+"checkUserIdRule":"Identities use rule",
 "checkUserHiddenAttributes":"Hidden attributes",
 "checkUserDisplayPersistentInfo":"Display persistent session",
 "checkUserDisplayEmptyValues":"Display empty values",
@@ -286,6 +287,13 @@
 "hideTree":"إخفاء الشجرة",
 "httpOnly":"الحماية بواسطة جافا سكريبت",
 "https":"إتش تي تي بي س",
+"impersonation":"Impersonation",
+"impersonationRule":"Use rule",
+"impersonationIdRule":"Identities use rule",
+"impersonationHiddenAttributes":"Hidden attributes",
+"impersonationMergeSSOgroups":"Merge spoofed and real SSO groups",
+"impersonationPrefix":"Real attributes prefix",
+"impersonationSkipEmptyValues":"Skip empty values",
 "incompleteForm":"الحقول المطلوبة مفقودة",
 "index":"فهرس",
 "infoFormMethod":"طريقة للحصول على معلومات الإستمارة",
@@ -969,5 +977,6 @@
 "samlCommonDomainCookieReader":"يو آر إل القارئ",
 "samlCommonDomainCookieWriter":"يو آر إل الكاتب",
 "samlRelayStateTimeout":"تناوب حالة مهلة الجلسة ",
-"samlUseQueryStringSpecific":"استخدام أسلوب query_string المعين"
+"samlUseQueryStringSpecific":"استخدام أسلوب query_string المعين",
+"samlOverrideIDPEntityID": "Override Entity ID when acting as IDP"
 }
