@@ -1046,7 +1046,7 @@ zip-dist:
 manifest:   configure
 	@for i in ${SRCCOMMONDIR} ${SRCHANDLERDIR} ${SRCPORTALDIR} ${SRCMANAGERDIR}; do \
 		cd $$i; \
-		rm -vf MANIFEST*; \
+		rm -vf MANIFEST MANIFEST*bak; \
 		make manifest; \
 		cd -; \
 	done
