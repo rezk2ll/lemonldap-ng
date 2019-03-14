@@ -22,17 +22,15 @@
           <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
             <ul class="nav navbar-nav">
               <li><a class="link" ng-click="home()"><i class="glyphicon glyphicon-home"></i></a></li>
+              
+
               <!--
-              <li>
-                <a id="save" class="link" ng-click="save()" tabIndex="-1">
-                  <i class="glyphicon glyphicon-cloud-upload"></i>
-                  {{translate('save')}}
-                </a>
-              </li>
               <li >
                 <input id="forcesave" type="checkbox" ng-model="forceSave" uib-tooltip="{{translate('forceSave')}}" tooltip-placement="right" ng-show="confirmNeeded||currentCfg.next" role="checkbox" aria-label="Force save">
               </li>
               -->
+              <TMPL_IF NAME="ALLOWDIFF">
+
               <li uib-dropdown>
                 <a id="navmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i> {{translate('browse')}} <span class="caret"></span></a>
                 <ul uib-dropdown-menu aria-labelled-by="navmenu">
@@ -41,6 +39,9 @@
                   <li><a class="link" ng-click="getCfg('latest')" title="Latest configuration"><i class="glyphicon glyphicon-refresh"></i> {{translate('latest')}}</a></li>
                 </ul>
               </li>
+
+              </TMPL_IF>
+
               <li><a class="link hidden-xs" ng-click="setShowHelp()"><i class="glyphicon" ng-class="{'glyphicon-eye-close': showH,'glyphicon-eye-open': !showH}" ></i> {{ translate((showH ? 'hideHelp' : 'showHelp')) }}</a></li>
               <!--
               <li ng-repeat="button in menu()" ng-include="'menubutton.html'"></li>
@@ -52,6 +53,12 @@
                   <li ng-repeat="menulink in menulinks"><a href="{{menulink.target}}" role="row"><i ng-if="menulink.icon" class="glyphicon glyphicon-{{menulink.icon}}"></i> {{translate(menulink.title)}}</a></li>
                   <li ng-include="'languages.html'"></li>
                 </ul>
+              </li>
+                            <li>
+                
+                  <i class="glyphicon glyphicon-lock"></i>
+                  <u>{{translate('You are on Read-Only mode')}}</u>
+                
               </li>
             </ul>
           </div>

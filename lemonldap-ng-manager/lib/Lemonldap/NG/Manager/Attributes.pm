@@ -3558,6 +3558,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             ],
             'type' => 'select'
         },
+        'viewerAllowDiff' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'viewerHiddenPK' => {
             'default' => 'virtualHosts',
             'type'    => 'text'
