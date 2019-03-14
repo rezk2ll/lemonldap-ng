@@ -1046,10 +1046,11 @@ zip-dist:
 manifest:   configure
 	@for i in ${SRCCOMMONDIR} ${SRCHANDLERDIR} ${SRCPORTALDIR} ${SRCMANAGERDIR}; do \
 		cd $$i; \
-		rm -vf MANIFEST*; \
+		rm -vf MANIFEST MANIFEST*bak; \
 		make manifest; \
 		cd -; \
 	done
+	perl -i -ne 'print unless/proverc/' */MANIFEST
 
 cpan:	clean configure common_cpan handler_cpan portal_cpan manager_cpan
 	for i in Common Portal Handler Manager; do \
