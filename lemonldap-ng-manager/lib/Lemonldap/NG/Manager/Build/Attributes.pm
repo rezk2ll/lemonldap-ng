@@ -922,6 +922,11 @@ sub attributes {
             documentation => 'ConfTree hidden primary keys',
             flags         => 'm',
         },
+        viewerAllowDiff => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Allow configuration comparator',
+        },
 
         # Notification
         oldNotifFormat => {

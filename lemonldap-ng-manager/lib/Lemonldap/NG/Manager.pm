@@ -133,7 +133,7 @@ sub init {
 }
 
 sub tplParams {
-    return ( VERSION => $VERSION, );
+    return ( VERSION => $VERSION, ALLOWDIFF => 0 );
 }
 
 sub javascript {
