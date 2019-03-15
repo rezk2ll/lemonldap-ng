@@ -11,8 +11,8 @@ use utf8;
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::UserAgent;
-use Crypt::OpenSSL::RSA;
-use Convert::PEM;
+#use Crypt::OpenSSL::RSA;
+#use Convert::PEM;
 use URI::URL;
 
 use feature 'state';
@@ -60,12 +60,11 @@ sub addRoutes {
       )
 
       # Other keys
-      ->addRoute( view => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] );
-}
+      ->addRoute( view => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] )
 
-sub prx {
-    my ( $self, $req, @others ) = @_;
-    $self->SUPER::prx( $req, @others );
+      # Difference between confs
+      ->addRoute( diff => { ':conf1' => { ':conf2' => 'diff' } } )
+      ->addRoute( 'diff.html', undef, ['GET'] );
 }
 
 sub getConfByNum {

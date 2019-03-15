@@ -23,6 +23,7 @@ extends 'Lemonldap::NG::Common::Conf::AccessLib',
   'Lemonldap::NG::Handler::PSGI::Router';
 
 has csp => ( is => 'rw' );
+has brw => ( is => 'rw', default => 0 );
 
 ## @method boolean init($args)
 # Launch initialization method
@@ -86,7 +87,7 @@ sub init {
     $self->csp(
         "default-src 'self' $portal;frame-ancestors 'none';form-action 'self';"
     );
-
+    $self->brw( $conf->{viewerAllowBrowser} );
     $self->defaultRoute( $working[0]->defaultRoute );
 
 # Find out more glyphicones at https://www.w3schools.com/icons/bootstrap_icons_glyphicons.asp
@@ -133,7 +134,8 @@ sub init {
 }
 
 sub tplParams {
-    return ( VERSION => $VERSION, ALLOWDIFF => 0 );
+    my ($self) = @_;
+    return ( VERSION => $VERSION, ALLOWBROWSER => $self->brw );
 }
 
 sub javascript {

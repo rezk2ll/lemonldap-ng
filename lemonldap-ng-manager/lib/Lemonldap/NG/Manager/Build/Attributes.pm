@@ -918,14 +918,14 @@ sub attributes {
         # Viewer
         viewerHiddenPK => {
             type          => 'text',
-            default       => 'virtualHosts',
+            default       => 'samlIDPMetaDataNodes samlSPMetaDataNodes',
             documentation => 'ConfTree hidden primary keys',
             flags         => 'm',
         },
-        viewerAllowDiff => {
-            type          => 'bool',
-            default       => 1,
-            documentation => 'Allow configuration comparator',
+        viewerAllowBrowser => {
+            type           => 'bool',
+            default        => 0,
+            documentation  => 'Allow configuration browser',
         },
 
         # Notification
