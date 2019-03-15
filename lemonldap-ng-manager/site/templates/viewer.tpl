@@ -35,7 +35,6 @@
               </TMPL_IF>
 
               <li><a class="link hidden-xs" ng-click="setShowHelp()"><i class="glyphicon" ng-class="{'glyphicon-eye-close': showH,'glyphicon-eye-open': !showH}" ></i> {{ translate((showH ? 'hideHelp' : 'showHelp')) }}</a></li>
-
               <li uib-dropdown class="visible-xs">
                 <a id="langmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{translate('menu')}} <span class="caret"></span></a>
                 <ul uib-dropdown-menu aria-labelled-by="langmenu" role="grid">
