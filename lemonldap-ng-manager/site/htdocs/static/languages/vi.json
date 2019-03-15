@@ -977,5 +977,6 @@
 "samlCommonDomainCookieReader":"Trình đọc URL",
 "samlCommonDomainCookieWriter":"Trình viết URL",
 "samlRelayStateTimeout":"Thời gian hết hạn phiên RelayState ",
-"samlUseQueryStringSpecific":"Sử dụng phương pháp query_string cụ thể"
+"samlUseQueryStringSpecific":"Sử dụng phương pháp query_string cụ thể",
+"samlOverrideIDPEntityID": "Override Entity ID when acting as IDP"
 }

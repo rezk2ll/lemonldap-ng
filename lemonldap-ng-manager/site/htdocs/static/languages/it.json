@@ -977,5 +977,6 @@
 "samlCommonDomainCookieReader":"URL del lettore",
 "samlCommonDomainCookieWriter":"URL dell'autore",
 "samlRelayStateTimeout":"Timeout di sessione di RelayState",
-"samlUseQueryStringSpecific":"Utilizza il metodo specifico query_string"
+"samlUseQueryStringSpecific":"Utilizza il metodo specifico query_string",
+"samlOverrideIDPEntityID": "Override Entity ID when acting as IDP"
 }

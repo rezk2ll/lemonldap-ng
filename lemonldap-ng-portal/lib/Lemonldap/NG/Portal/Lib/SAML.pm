@@ -186,7 +186,7 @@ sub loadService {
 
     # Create Lasso server with service metadata
     my $server = $self->createServer(
-        $service_metadata->serviceToXML( $self->conf ),
+        $service_metadata->serviceToXML( $self->conf, ''),
         $self->conf->{samlServicePrivateKeySig},
         $self->conf->{samlServicePrivateKeySigPwd},
 
@@ -2385,6 +2385,18 @@ sub samldate2timestamp {
 sub sendLogoutResponseToServiceProvider {
     my ( $self, $req, $logout, $method ) = @_;
 
+    my $httpmethod = $self->getFirstHttpMethod(
+        $self->lassoServer,
+        $logout->remote_providerID,
+        Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT
+    );
+    if ( $httpmethod == Lasso::Constants::HTTP_METHOD_NONE ) {
+        $self->logger->warn( "Provider "
+              . $logout->remote_providerID
+              . " has no SingleLogoutService in metadata, staying on portal" );
+        return $self->p->do( $req, [] );
+    }
+
     # Logout response
     unless ( $self->buildLogoutResponseMsg($logout) ) {
         return $self->p->sendError( $req, "Unable to build SLO response", 500 );
@@ -3074,7 +3086,7 @@ sub importRealSession {
 
 sub metadata {
     my ( $self, $req ) = @_;
-    my $type = $req->param('type');
+    my $type = $req->param('type') || 'all';
     require Lemonldap::NG::Common::Conf::SAML::Metadata;
     if ( my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new() ) {
         my $s = $metadata->serviceToXML( $self->conf, $type );

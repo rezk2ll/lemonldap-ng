@@ -10,8 +10,12 @@ TESTDIR=${BASE}/${TYPE}.d
 
 LLSOURCEDIR=`pwd`
 
+LIST=$2
+
+test "$LIST" == "" 2>/dev/null && LIST=lemonldap-ng-*
+
 EXITCODE=0
-for LLLIB in lemonldap-ng-*; do
+for LLLIB in $LIST; do
     mkdir -p $LLSOURCEDIR/$LLLIB/debian/tests/pkg-perl
     for llfile in debian/tests/pkg-perl/${LLLIB}*; do
         if [ -r $llfile ]; then

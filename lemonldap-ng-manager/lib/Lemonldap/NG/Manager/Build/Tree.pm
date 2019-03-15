@@ -1010,7 +1010,8 @@ sub tree {
                                 'samlDiscoveryProtocolPolicy',
                                 'samlDiscoveryProtocolIsPassive'
                             ]
-                        }
+                        },
+                        'samlOverrideIDPEntityID',
                     ]
                 }
             ]
