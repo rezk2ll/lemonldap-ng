@@ -210,6 +210,12 @@ sub do {
     if ( $err == PE_SENDRESPONSE ) {
         return $req->response;
     }
+
+    # Remove userData if authentication fails
+    if ( $err == PE_BADCREDENTIALS ) {
+        $req->userData( {} );
+    }
+
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
         if ( ( $err > 0 and !$req->id ) or $err eq PE_SESSIONNOTGRANTED ) {
