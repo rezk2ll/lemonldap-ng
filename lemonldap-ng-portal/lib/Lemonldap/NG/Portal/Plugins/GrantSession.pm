@@ -45,7 +45,12 @@ sub run {
     }
 
     # Avoid display notification if AuthResult is not null
-    return PE_BADCREDENTIALS if $req->authResult > PE_OK;
+    if ( $req->authResult > PE_OK ) {
+        $self->logger->debug(
+            "Bad authentication, do not check grant session rules");
+        $req->userData( {} );
+        return PE_BADCREDENTIALS;
+    }
 
     foreach ( sort sortByComment keys %{ $self->rules } ) {
         $self->logger->debug( "Grant session condition -> "
