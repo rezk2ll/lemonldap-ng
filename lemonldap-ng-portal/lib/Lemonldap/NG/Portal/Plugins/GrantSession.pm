@@ -48,7 +48,6 @@ sub run {
     if ( $req->authResult > PE_OK ) {
         $self->logger->debug(
             "Bad authentication, do not check grant session rules");
-        $req->userData( {} );
         return PE_BADCREDENTIALS;
     }
 
