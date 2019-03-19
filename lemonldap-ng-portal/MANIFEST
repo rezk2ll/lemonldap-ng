@@ -427,6 +427,7 @@ t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
 t/30-Auth-and-issuer-SAML-Metadata.t
 t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
+t/30-Auth-and-issuer-SAML-POST-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-POST.t
 t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Redirect.t
@@ -460,8 +461,10 @@ t/36-Combination-Kerberos-or-Demo.t
 t/36-Combination-with-over.t
 t/36-Combination-with-token.t
 t/36-Combination.t
+t/37-CAS-App-to-SAML-IdP-POST-with-WAYF.t
 t/37-CAS-App-to-SAML-IdP-POST.t
 t/37-Logout-from-OIDC-RP-to-SAML-SP.t
+t/37-OIDC-RP-to-SAML-IdP-GET-with-WAYF.t
 t/37-OIDC-RP-to-SAML-IdP-GET.t
 t/37-OIDC-RP-to-SAML-IdP-POST.t
 t/37-SAML-SP-GET-to-OIDC-OP.t
