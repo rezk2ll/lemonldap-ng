@@ -401,7 +401,6 @@ site/templates/common/redirect.tpl
 site/templates/common/registerBrowser.tpl
 site/templates/common/script.tpl
 site/templates/common/trover.tpl
-site/templates/localeTranslations.txt
 t/01-AuthDemo.t
 t/01-pdata.t
 t/02-Password-Demo.t
