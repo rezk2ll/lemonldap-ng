@@ -42,7 +42,7 @@ sub addRoutes {
 
         # Ignore hidden ConfTree Primary Keys
         push @enabledPK, $_
-          unless ( $conf->{viewerHiddenPK} =~ /\b$_\b/ );
+          unless ( $self->{viewerHiddenPK} =~ /\b$_\b/ );
     }
 
     # HTML template
@@ -55,10 +55,17 @@ sub addRoutes {
             ':cfgNum' => \@enabledPK
         },
         ['GET']
-      )
+      );
 
-      # Other keys
-      ->addRoute( view => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] )
+    foreach ( split /\s+/, $self->{viewerHiddenPK} ) {
+        $self->addRoute(
+            view => { ':cfgNum' => { $_ => 'rejectKey' } },
+            ['GET']
+        );
+    }
+
+    # Other keys
+    $self->addRoute( view => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] )
 
       # Difference between confs
       ->addRoute( diff => { ':conf1' => { ':conf2' => 'diff' } } )
@@ -73,6 +80,11 @@ sub getConfByNum {
 sub diff {
     my ( $self, $req, @path ) = @_;
     $self->SUPER::diff( $req, @path );
+}
+
+sub rejectKey {
+    my ( $self, $req ) = @_;
+    return $self->sendJSONresponse( $req, { 'value' => '_Hidden_' } );
 }
 
 1;
