@@ -47,6 +47,10 @@ sub changeUrldc {
 
             $self->p->updateSession( $req, $cdaInfos, $cdaSession->id );
 
+            # We are about to redirect the user to the CDA application,
+            # dismiss any previously stored redirections (#1650)
+            delete $req->{pdata}->{_url};
+
             $req->{urldc} .=
                 ( $urldc =~ /\?/ ? '&' : '?' )
               . $self->{conf}->{cookieName} . "cda="
