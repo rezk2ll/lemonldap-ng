@@ -332,7 +332,6 @@ site/templates/bootstrap/customhead.tpl
 site/templates/bootstrap/customheader.tpl
 site/templates/bootstrap/customLoginFooter.tpl
 site/templates/bootstrap/customLoginHeader.tpl
-site/templates/bootstrap/error.json.example
 site/templates/bootstrap/error.tpl
 site/templates/bootstrap/ext2fcheck.tpl
 site/templates/bootstrap/footer.tpl
@@ -342,7 +341,6 @@ site/templates/bootstrap/idpchoice.tpl
 site/templates/bootstrap/impersonation.tpl
 site/templates/bootstrap/info.tpl
 site/templates/bootstrap/ldapPpGrace.tpl
-site/templates/bootstrap/login.json
 site/templates/bootstrap/login.tpl
 site/templates/bootstrap/mail.tpl
 site/templates/bootstrap/menu.tpl
@@ -400,7 +398,6 @@ site/templates/common/oidc_checksession.tpl
 site/templates/common/redirect.tpl
 site/templates/common/registerBrowser.tpl
 site/templates/common/script.tpl
-site/templates/common/trover.tpl
 t/01-AuthDemo.t
 t/01-pdata.t
 t/02-Password-Demo.t

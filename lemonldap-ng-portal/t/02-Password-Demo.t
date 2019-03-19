@@ -28,14 +28,9 @@ ok( $res->[2]->[0] =~ m%"trOver"%, ' trOver found' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%"all":\{\}%, ' all found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ m%"en":\{"PE9":"You are welcome! Please login..."\}%,
-    ' en found' )
-  or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ m%"fr":\{%, ' fr found' )
-  or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%"PE85":"From lemonlap-ng.ini"%, ' PE85 found' )
   or print STDERR Dumper( $res->[2]->[0] );
-count(7);
+count(5);
 
 # Try to authenticate
 # -------------------
