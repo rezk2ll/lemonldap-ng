@@ -441,6 +441,10 @@ This file contains:
               } else {
                 node.data = data.value;
               }
+              if (node.data.toString().match(/_Hidden_$/)) {
+                node.type = 'text';
+                node.data = '######';
+              }
               if (node.type && node.type.match(/^int$/)) {
                 node.data = parseInt(node.data, 10);
               } else if (node.type && node.type.match(/^(saml(Service|Assertion)|blackWhiteList)$/) && !(typeof node.data === 'object')) {
@@ -454,6 +458,10 @@ This file contains:
             });
           }
         } else {
+          if (node.data.toString().match(/_Hidden_$/)) {
+            node.type = 'text';
+            node.data = '######';
+          }
           d.resolve(node.data);
         }
         return d.promise;

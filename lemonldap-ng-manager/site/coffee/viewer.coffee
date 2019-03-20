@@ -136,35 +136,6 @@ llapp.controller 'TreeCtrl', [
 			$scope.form = 'home'
 			$scope.showM = false
 
-		# SAVE FUNCTIONS
-
-#		# Private method called by $scope.save()
-#		_checkSaveResponse = (data) ->
-#			$scope.message =
-#				title: ''
-#				message: ''
-#				items: []
-#			$scope.confirmNeeded = true if data.needConfirm
-#			$scope.message.message = data.message if data.message
-#			if data.details
-#				for m of data.details when m != '__changes__'
-#					if m == '__needConfirmation__'
-#						$scope.message.items.unshift
-#							message: m
-#							items: data.details[m]
-#					else
-#						$scope.message.items.push
-#							message: m
-#							items: data.details[m]
-#			$scope.waiting = false
-#			if data.result == 1
-#				# Force reloading page
-#				$location.path '/confs/'
-#				$scope.message.title = 'successfullySaved'
-#			else
-#				$scope.message.title = 'saveReport'
-#			$scope.showModal 'message.html'
-
 		# Download raw conf
 		$scope.downloadConf = () ->
 			window.open $scope.viewPrefix + $scope.currentCfg.cfgNum + '?full=1'
@@ -379,6 +350,9 @@ llapp.controller 'TreeCtrl', [
 							node.data = node['default']
 						else
 							node.data = data.value
+						if node.data.toString().match /_Hidden_$/
+							node.type = 'text'
+							node.data = '######'
 						# Cast int as int (remember that booleans are int for Perl)
 						if node.type and node.type.match /^int$/
 							node.data = parseInt(node.data, 10)
@@ -391,6 +365,9 @@ llapp.controller 'TreeCtrl', [
 						readError response
 						d.reject response.status
 			else
+				if node.data.toString().match /_Hidden_$/
+					node.type = 'text'
+					node.data = '######'
 				d.resolve node.data
 			return d.promise
 
