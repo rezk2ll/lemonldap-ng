@@ -87,7 +87,7 @@ sub init {
     $self->csp(
         "default-src 'self' $portal;frame-ancestors 'none';form-action 'self';"
     );
-    $self->brw( $conf->{viewerAllowBrowser} );
+    $self->brw( $self->{viewerAllowBrowser} || $conf->{viewerAllowBrowser} );
     $self->defaultRoute( $working[0]->defaultRoute );
 
 # Find out more glyphicones at https://www.w3schools.com/icons/bootstrap_icons_glyphicons.asp
