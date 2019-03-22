@@ -915,6 +915,19 @@ sub attributes {
             flags         => 'hp',
         },
 
+        # Viewer
+        viewerHiddenPK => {
+            type          => 'text',
+            default       => 'samlIDPMetaDataNodes samlSPMetaDataNodes',
+            documentation => 'ConfTree hidden primary keys',
+            flags         => 'm',
+        },
+        viewerAllowBrowser => {
+            type           => 'bool',
+            default        => 0,
+            documentation  => 'Allow configuration browser',
+        },
+
         # Notification
         oldNotifFormat => {
             type          => 'bool',

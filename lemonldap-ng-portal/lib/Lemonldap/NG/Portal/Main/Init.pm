@@ -96,19 +96,7 @@ sub init {
         }
     );
 
-    # Load override messages from file and lemonldap-ng.ini
-    if ( $self->{localConfig}->{translations}
-        and -r $self->{localConfig}->{translations} )
-    {
-        open my $tr_file, '<', $self->{localConfig}->{translations}
-          or die "Can't open" . $self->{localConfig}->{translations} . " : $!";
-        while (<$tr_file>) {
-            chomp;
-            $_ =~ /^([\w_]+)\s+=\s+(.+)$/;
-            $self->{localConfig}->{$1} = $2;
-        }
-        close $tr_file or die "Can't close $tr_file : $!";
-    }
+    # Load override messages from lemonldap-ng.ini
     foreach my $k ( keys %{ $self->localConfig } ) {
         if ( $k =~ /tpl_(.*)/ ) {
             $self->customParameters->{$1} = $self->localConfig->{$k};

@@ -3558,6 +3558,14 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             ],
             'type' => 'select'
         },
+        'viewerAllowBrowser' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'viewerHiddenPK' => {
+            'default' => 'samlIDPMetaDataNodes samlSPMetaDataNodes',
+            'type'    => 'text'
+        },
         'virtualHosts' => {
             'type' => 'virtualHostContainer'
         },

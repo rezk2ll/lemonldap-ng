@@ -23,6 +23,7 @@ extends 'Lemonldap::NG::Common::Conf::AccessLib',
   'Lemonldap::NG::Handler::PSGI::Router';
 
 has csp => ( is => 'rw' );
+has brw => ( is => 'rw', default => 0 );
 
 ## @method boolean init($args)
 # Launch initialization method
@@ -86,7 +87,7 @@ sub init {
     $self->csp(
         "default-src 'self' $portal;frame-ancestors 'none';form-action 'self';"
     );
-
+    $self->brw( $self->{viewerAllowBrowser} || $conf->{viewerAllowBrowser} );
     $self->defaultRoute( $working[0]->defaultRoute );
 
 # Find out more glyphicones at https://www.w3schools.com/icons/bootstrap_icons_glyphicons.asp
@@ -94,7 +95,8 @@ sub init {
         'conf'          => 'cog',
         'sessions'      => 'duplicate',
         'notifications' => 'bell',
-        '2ndFA'         => 'wrench'
+        '2ndFA'         => 'wrench',
+        'viewer'        => 'eye-open',
     };
 
     $self->links( [] );
@@ -132,13 +134,14 @@ sub init {
 }
 
 sub tplParams {
-    return ( VERSION => $VERSION, );
+    my ($self) = @_;
+    return ( VERSION => $VERSION, ALLOWBROWSER => $self->brw );
 }
 
 sub javascript {
     my ($self) = @_;
     return
-      'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";'
+      'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";var viewPrefix=scriptname+"view/";'
       . ( $self->links ? 'var links=' . to_json( $self->links ) . ';' : '' )
       . (
         $self->menuLinks

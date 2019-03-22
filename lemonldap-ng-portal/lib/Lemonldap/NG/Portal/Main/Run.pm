@@ -210,6 +210,12 @@ sub do {
     if ( $err == PE_SENDRESPONSE ) {
         return $req->response;
     }
+
+    # Remove userData if authentication fails
+    if ( $err == PE_BADCREDENTIALS ) {
+        $req->userData( {} );
+    }
+
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
         if ( ( $err > 0 and !$req->id ) or $err eq PE_SESSIONNOTGRANTED ) {
@@ -728,38 +734,39 @@ sub _dump {
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
 
-    $args{params}->{TROVER} = $self->trOver;
-    $args{templateDir} =
-      $self->conf->{templateDir} . '/' . $self->getSkin($req);
-    my $tmpl       = $args{templateDir} . "/$template.tpl";
-    my $troverJson = $args{templateDir} . "/$template.json";
+    my $templateDir = $self->conf->{templateDir} . '/' . $self->getSkin($req);
+
+    # Check template
+    $args{templateDir} = $templateDir;
+    my $tmpl = $args{templateDir} . "/$template.tpl";
     unless ( -f $tmpl ) {
-        $self->logger->debug("Template : $tmpl NOT found!!!");
+        $self->logger->debug("Template $tmpl not found");
         $args{templateDir} = $self->conf->{templateDir} . '/bootstrap';
-        $tmpl              = $args{templateDir} . "/$template.tpl";
-        $troverJson        = $args{templateDir} . "/$template.json";
+        $tmpl = $args{templateDir} . "/$template.tpl";
         $self->logger->debug("-> Trying to load $tmpl");
     }
 
-    if ( -r $troverJson ) {
-        open my $tr_file, '<', $troverJson
-          or die "Can't open" . $troverJson . " : $!";
-        while (<$tr_file>) {
-            chomp;
-            $args{params}->{TROVERbyJSON} .= $_;
-        }
-        close $tr_file or die "Can't close $tr_file : $!";
-        eval { decode_json( $args{params}->{TROVERbyJSON} ) };
-        if ($@) {
-            $self->logger->debug("$troverJson is NOT a regular JSON file!!!");
-            $args{params}->{TROVERbyJSON} = '';
+    # Override messages
+    my $trOverMessages = JSON::from_json( $self->trOver );
+
+    opendir( DIR, $templateDir );
+    my @langfiles = grep( /\.json$/, readdir(DIR) );
+    close(DIR);
+
+    foreach my $file (@langfiles) {
+        my ($lang) = ( $file =~ /^(\w+)\.json/ );
+        $self->logger->debug("Use $file to override messages");
+        if ( open my $json, "<", $templateDir . "/" . $file ) {
+            local $/ = undef;
+            $trOverMessages->{$lang} = JSON::from_json(<$json>);
         }
         else {
-            $self->logger->debug(" -> Overriding messages with $troverJson");
-            $self->logger->debug(
-                "   -> File content : $args{params}->{TROVERbyJSON}");
+            $self->logger->error("Unable to read $file");
         }
     }
+
+    $args{params}->{TROVER} = JSON::to_json($trOverMessages);
+
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
       'X-XSS-Protection'       => '1; mode=block',
