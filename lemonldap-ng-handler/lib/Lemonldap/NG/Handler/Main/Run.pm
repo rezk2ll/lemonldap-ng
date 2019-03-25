@@ -809,7 +809,8 @@ sub postJavascript {
       : "form.submit();\n";
 
     my $jqueryUrl = $formParams->{jqueryUrl} || "";
-    $jqueryUrl = &{ $class->tsv->{portal} } . "skins/common/js/jquery-1.10.2.js"
+    $jqueryUrl =
+      &{ $class->tsv->{portal} } . "static/bwr/jquery/dist/jquery.min.js"
       if ( $jqueryUrl eq "default" );
     $jqueryUrl = "<script type='text/javascript' src='$jqueryUrl'></script>\n"
       if ($jqueryUrl);
