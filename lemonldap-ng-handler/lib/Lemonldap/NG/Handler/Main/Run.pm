@@ -780,7 +780,11 @@ sub postInputFilter {
         my %data =
           $class->tsv->{inputPostData}->{$vhost}->{$uri}->( $req, $session );
         foreach ( keys %data ) {
-            $data{$_} = uri_escape( $data{$_} );
+            my $post_key   = uri_escape($_);
+            my $post_value = uri_escape( $data{$_} );
+            delete $data{$_};
+            $data{$post_key} = $post_value;
+            $class->logger->debug("Send key $post_key with value $post_value");
         }
         $class->setPostParams( $req, \%data );
     }
