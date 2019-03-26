@@ -159,8 +159,7 @@ sub authLogout {
 
 sub deleteSession {
     my ( $self, $req ) = @_;
-    $req->userData( {} );
-    if ( my $id = $req->id ) {
+    if ( my $id = $req->id || $req->userData->{_session_id} ) {
         my $apacheSession = $self->getApacheSession( $req->id );
         unless ($apacheSession) {
             $self->logger->debug("Session $id already deleted");
@@ -211,6 +210,7 @@ sub deleteSession {
             $req->urldc( $req->script_name . "?logout=1" );
         }
     }
+    $req->userData( {} );
 
     # Redirect or Post if asked by authLogout
     if ( $req->urldc and $req->urldc ne $self->conf->{portal} ) {
