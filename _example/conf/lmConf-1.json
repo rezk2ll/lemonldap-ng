@@ -86,7 +86,7 @@
    "authentication" : "Demo",
    "cfgAuthor" : "The LemonLDAP::NG team",
    "cfgNum" : 1,
-   "cfgVersion" : "2.0.2",
+   "cfgVersion" : "2.0.3",
    "cookieName" : "lemonldap",
    "demoExportedVars" : {
       "cn" : "cn",
@@ -119,8 +119,13 @@
       "namespace" : "lemonldap-ng-sessions"
    },
    "locationRules" : {
+      "auth.__DNSDOMAIN__" : {
+         "(?#checkUser)^/checkuser" : "$uid eq \"dwho\"",
+         "(?#errors)^/lmerror/" : "accept",
+         "default" : "accept"
+      },
       "manager.__DNSDOMAIN__" : {
-         "(?#Configuration)^/(manager\\.html|conf/)" : "$uid eq \"dwho\"",
+         "(?#Configuration)^/(manager\\.html|$)" : "$uid eq \"dwho\"",
          "(?#Notifications)/notifications" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
          "(?#Sessions)/sessions" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
          "default" : "$uid eq \"dwho\" or $uid eq \"rtyler\""
