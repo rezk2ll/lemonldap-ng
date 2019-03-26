@@ -1621,7 +1621,7 @@ sub sloServer {
             $req->{urldc} =
               $self->conf->{portal} . '/saml/relaySingleLogoutTermination';
             $self->p->setHiddenFormValue( $req, 'relay', $relayID );
-            return $self->do( $req, [] );
+            return $self->p->do( $req, [] );
         }
 
     }
