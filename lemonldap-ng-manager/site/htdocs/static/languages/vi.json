@@ -124,7 +124,7 @@
 "casSrv":"CAS Server",
 "casSrvMetaDataExportedVars":"Thuộc tính xuất",
 "casSrvMetaDataOptions":"Tùy chọn",
-"casSrvMetaDataOptionsDisplay":"Hiển thị",
+"casSrvMetaDataOptionsDisplay":"Display",
 "casSrvMetaDataOptionsDisplayName":"Tên để hiển thị",
 "casSrvMetaDataOptionsGateway":"Xác thực Gateway",
 "casSrvMetaDataOptionsIcon":"Đường dẫn Icon",
@@ -980,5 +980,5 @@
 "samlCommonDomainCookieWriter":"Trình viết URL",
 "samlRelayStateTimeout":"Thời gian hết hạn phiên RelayState ",
 "samlUseQueryStringSpecific":"Sử dụng phương pháp query_string cụ thể",
-"samlOverrideIDPEntityID": "Override Entity ID when acting as IDP"
+"samlOverrideIDPEntityID":"Override Entity ID when acting as IDP"
 }
