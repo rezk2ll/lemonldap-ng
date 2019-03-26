@@ -1,9 +1,3 @@
-# This module implements all the methods that responds to '/confs/*' requests
-# It contains 2 sections:
-#  - initialization methods
-#  - upload method
-#
-# Read methods are inherited from Lemonldap::NG::Common::Conf::RESTServer
 package Lemonldap::NG::Manager::Viewer;
 
 use 5.10.0;
@@ -31,8 +25,8 @@ sub addRoutes {
     my ( $self, $conf ) = @_;
     $self->ua( Lemonldap::NG::Common::UserAgent->new($conf) );
 
-    my $hiddenPK  = '';
-    $hiddenPK     = $self->{viewerHiddenPK} || $conf->{viewerHiddenPK};
+    my $hiddenPK = '';
+    $hiddenPK = $self->{viewerHiddenPK} || $conf->{viewerHiddenPK};
     my @enabledPK = ();
     my @keys      = qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
       applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
@@ -62,6 +56,12 @@ sub addRoutes {
     foreach ( split /\s+/, $hiddenPK ) {
         $self->addRoute(
             view => { ':cfgNum' => { $_ => 'rejectKey' } },
+            ['GET']
+        );
+    }
+    unless ( $self->{viewerAllowBrowser} || $conf->{viewerAllowBrowser} ) {
+        $self->addRoute(
+            view => { ':cfgNum' => 'rejectKey' },
             ['GET']
         );
     }
