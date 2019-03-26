@@ -780,7 +780,11 @@ sub postInputFilter {
         my %data =
           $class->tsv->{inputPostData}->{$vhost}->{$uri}->( $req, $session );
         foreach ( keys %data ) {
-            $data{$_} = uri_escape( $data{$_} );
+            my $post_key   = uri_escape($_);
+            my $post_value = uri_escape( $data{$_} );
+            delete $data{$_};
+            $data{$post_key} = $post_value;
+            $class->logger->debug("Send key $post_key with value $post_value");
         }
         $class->setPostParams( $req, \%data );
     }
@@ -809,7 +813,8 @@ sub postJavascript {
       : "form.submit();\n";
 
     my $jqueryUrl = $formParams->{jqueryUrl} || "";
-    $jqueryUrl = &{ $class->tsv->{portal} } . "skins/common/js/jquery-1.10.2.js"
+    $jqueryUrl =
+      &{ $class->tsv->{portal} } . "static/bwr/jquery/dist/jquery.min.js"
       if ( $jqueryUrl eq "default" );
     $jqueryUrl = "<script type='text/javascript' src='$jqueryUrl'></script>\n"
       if ($jqueryUrl);

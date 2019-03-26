@@ -359,11 +359,11 @@ sub _filterHash {
 
             # If a specific rule exists, get it from cache or compile it
             if ( $appdisplay !~ /^auto$/i ) {
-                if ( $self->specific->{$appuri} ) {
-                    $cond = $self->specific->{$appuri};
+                if ( $self->specific->{$key} ) {
+                    $cond = $self->specific->{$key};
                 }
                 else {
-                    $cond = $self->specific->{$appuri} =
+                    $cond = $self->specific->{$key} =
                       $self->p->HANDLER->buildSub(
                         $self->p->HANDLER->substitute($appdisplay) );
                 }

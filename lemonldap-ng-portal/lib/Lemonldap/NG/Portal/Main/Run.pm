@@ -17,6 +17,8 @@ use strict;
 use URI::Escape;
 use JSON;
 
+has trOverCache => ( is => 'rw', default => sub { {} } );
+
 # List constants
 sub authProcess { qw(extractFormInfo getUser authenticate) }
 
@@ -184,8 +186,9 @@ sub logout {
     return $self->do(
         $req,
         [
-            'controlUrl', @{ $self->beforeLogout },
-            'authLogout', 'deleteSession'
+            'importHandlerData',      'controlUrl',
+            @{ $self->beforeLogout }, 'authLogout',
+            'deleteSession'
         ]
     );
 }
@@ -749,23 +752,26 @@ sub sendHtml {
     # Override messages
     my $trOverMessages = JSON::from_json( $self->trOver );
 
-    opendir( DIR, $templateDir );
-    my @langfiles = grep( /\.json$/, readdir(DIR) );
-    close(DIR);
+    unless ( $self->trOverCache->{$templateDir} ) {
+        opendir( DIR, $templateDir );
+        my @langfiles = grep( /\.json$/, readdir(DIR) );
+        close(DIR);
 
-    foreach my $file (@langfiles) {
-        my ($lang) = ( $file =~ /^(\w+)\.json/ );
-        $self->logger->debug("Use $file to override messages");
-        if ( open my $json, "<", $templateDir . "/" . $file ) {
-            local $/ = undef;
-            $trOverMessages->{$lang} = JSON::from_json(<$json>);
+        foreach my $file (@langfiles) {
+            my ($lang) = ( $file =~ /^(\w+)\.json/ );
+            $self->logger->debug("Use $file to override messages");
+            if ( open my $json, "<", $templateDir . "/" . $file ) {
+                local $/ = undef;
+                $trOverMessages->{$lang} = JSON::from_json(<$json>);
+            }
+            else {
+                $self->logger->error("Unable to read $file");
+            }
         }
-        else {
-            $self->logger->error("Unable to read $file");
-        }
+
+        $self->trOverCache->{$templateDir} = JSON::to_json($trOverMessages);
     }
-
-    $args{params}->{TROVER} = JSON::to_json($trOverMessages);
+    $args{params}->{TROVER} = $self->trOverCache->{$templateDir};
 
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },

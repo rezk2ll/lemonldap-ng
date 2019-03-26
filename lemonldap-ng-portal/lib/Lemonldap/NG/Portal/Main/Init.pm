@@ -181,7 +181,7 @@ sub reloadConf {
 
     # Initialize content-security-policy header
     my $csp = '';
-    foreach (qw(default img src style font connect)) {
+    foreach (qw(default img src style font connect script)) {
         my $prm = $self->conf->{ 'csp' . ucfirst($_) };
         $csp .= "$_-src $prm;" if ($prm);
     }

@@ -923,9 +923,9 @@ sub attributes {
             flags         => 'm',
         },
         viewerAllowBrowser => {
-            type           => 'bool',
-            default        => 0,
-            documentation  => 'Allow configuration browser',
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Allow configuration browser',
         },
 
         # Notification
@@ -3108,6 +3108,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'GPG',      v => 'GPG' },
                 { k => 'Kerberos', v => 'Kerberos' },
                 { k => 'LDAP',     v => 'LDAP' },
+                { k => 'LinkedIn', v => 'LinkedIn' },
                 { k => 'PAM',      v => 'PAM' },
                 { k => 'Radius',   v => 'Radius' },
                 { k => 'REST',     v => 'REST' },

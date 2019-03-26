@@ -294,6 +294,8 @@ $(SRCPORTALDIR)/site/htdocs/static/common/js/%.js: $(SRCPORTALDIR)/site/coffee/%
 	@if which coffee >/dev/null; then \
 		echo "Compiling $(SRCPORTALDIR)/site/coffee/$*.coffee"; \
 		coffee -c -o $(SRCPORTALDIR)/site/htdocs/static/common/js/ $(SRCPORTALDIR)/site/coffee/$*.coffee; \
+	else \
+		echo "Can't find coffee"; \
 	fi
 
 $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coffee
