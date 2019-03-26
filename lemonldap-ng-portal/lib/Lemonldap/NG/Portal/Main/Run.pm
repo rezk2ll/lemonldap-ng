@@ -186,8 +186,9 @@ sub logout {
     return $self->do(
         $req,
         [
-            'controlUrl', @{ $self->beforeLogout },
-            'authLogout', 'deleteSession'
+            'importHandlerData',      'controlUrl',
+            @{ $self->beforeLogout }, 'authLogout',
+            'deleteSession'
         ]
     );
 }
