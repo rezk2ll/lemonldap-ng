@@ -92,6 +92,11 @@ sub run {
             }
         }
     }
+
+    # Log
+    my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+    my $mod  = $req->{sessionInfo}->{_auth};
+    $self->userLogger->notice("Session granted for $user by $mod"." (".$req->{sessionInfo}->{ipAddr}.")") if ($user);
     return PE_OK;
 }
 
