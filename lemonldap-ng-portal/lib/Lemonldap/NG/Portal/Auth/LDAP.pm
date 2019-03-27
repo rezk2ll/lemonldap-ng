@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PP_PASSWORD_EXPIRED
 );
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.3';
 
 # Inheritance: UserDB::LDAP provides all needed ldap functions
 extends
@@ -54,6 +54,9 @@ sub authenticate {
             return PE_ERROR;
         }
         my $res = $self->p->{_passwordDB}->_modifyPassword( $req, 1 );
+
+        # Refresh entry
+        $self->p->{_userDB}->getUser($req);
 
         # Security: never create session here
         return $res || PE_DONE;

@@ -207,6 +207,7 @@ t/40-sessions.t
 t/50-notifications-DBI.t
 t/50-notifications.t
 t/60-2ndfa.t
+t/70-viewer.t
 t/80-attributes.t
 t/90-translations.t
 t/99-pod.t
@@ -218,5 +219,6 @@ t/jsonfiles/12-modified.json
 t/jsonfiles/14-bad.json
 t/jsonfiles/15-combination.json
 t/lemonldap-ng-dbi.ini
+t/lemonldap-ng-noBrowser.ini
 t/lemonldap-ng.ini
 t/test-lib.pm

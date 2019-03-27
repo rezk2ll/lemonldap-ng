@@ -78,7 +78,7 @@ has wsdl => (
 
         my $attrList = join "\n", map {
             "<element name='$_' type='xsd:string' nillable='true'></element>"
-        } $self->exportedAttr;
+        } @{ $self->exportedAttr };
         my $resp = join( '', <DATA> );
         close DATA;
         $resp =~ s/\$cookieList/$cookieList/g;

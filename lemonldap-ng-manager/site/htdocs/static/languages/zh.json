@@ -980,5 +980,5 @@
 "samlCommonDomainCookieWriter":"Writer URL",
 "samlRelayStateTimeout":"RelayState session timeout",
 "samlUseQueryStringSpecific":"Use specific query_string method",
-"samlOverrideIDPEntityID": "Override Entity ID when acting as IDP"
+"samlOverrideIDPEntityID":"Override Entity ID when acting as IDP"
 }
