@@ -887,9 +887,9 @@
 "samlIDPMetaDataOptionsSession":"جلسة",
 "samlIDPMetaDataOptionsSignature":"توقيع",
 "samlIDPMetaDataOptionsBinding":"ربط",
-"samlIDPMetaDataOptionsDisplay":"Display",
+"samlIDPMetaDataOptionsDisplay":"عرض",
 "samlIDPMetaDataOptionsDisplayName":"Display name",
-"samlIDPMetaDataOptionsDisplayParams":"Display",
+"samlIDPMetaDataOptionsDisplayParams":"عرض",
 "samlIDPMetaDataOptionsIcon":"Logo",
 "samlIDPMetaDataOptionsSecurity":"الحماية",
 "samlIDPMetaDataOptionsStoreSAMLToken":"حفظ SAML توكن",
@@ -980,5 +980,5 @@
 "samlCommonDomainCookieWriter":"يو آر إل الكاتب",
 "samlRelayStateTimeout":"تناوب حالة مهلة الجلسة ",
 "samlUseQueryStringSpecific":"استخدام أسلوب query_string المعين",
-"samlOverrideIDPEntityID": "Override Entity ID when acting as IDP"
+"samlOverrideIDPEntityID":"Override Entity ID when acting as IDP"
 }

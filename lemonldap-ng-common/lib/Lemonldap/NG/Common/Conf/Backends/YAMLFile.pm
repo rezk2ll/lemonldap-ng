@@ -7,6 +7,7 @@ use Encode;
 
 our $VERSION = '2.0.0';
 our $initDone;
+$YAML::Numify = 1;
 
 sub Lemonldap::NG::Common::Conf::_yamlLock {
     my ( $self, $cfgNum ) = @_;
