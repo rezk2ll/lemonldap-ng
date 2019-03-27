@@ -58,7 +58,7 @@ sub logLevelInit {
     $logger = $class->localConfig->{userLogger} || $logger;
     eval "require $logger";
     die $@ if ($@);
-    $class->userLogger( $logger->new( $class->localConfig ), user => 1 );
+    $class->userLogger( $logger->new( $class->localConfig, user => 1 ) );
     $class->logger->debug("User logger $logger loaded");
 }
 
