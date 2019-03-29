@@ -56,7 +56,10 @@ sub authenticate {
         my $res = $self->p->{_passwordDB}->_modifyPassword( $req, 1 );
 
         # Refresh entry
-        $self->p->{_userDB}->getUser($req);
+        if ( $self->p->{_userDB}->getUser($req) != PE_OK ) {
+            $self->logger->error(
+                "Unable to refresh entry for " . $self->p->{user} );
+        }
 
         # Security: never create session here
         return $res || PE_DONE;
