@@ -143,7 +143,6 @@ qr/^($saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_u
         'samlAttributeAuthorityDescriptorAttributeServiceSOAP',
         1, 'attributeServer', ['POST'] );
 
-    # TODO: @coudot, why this URL isn't managed with a conf param ?
     $self->addUnauthRoute(
         $self->path => { relaySingleLogoutSOAP => 'sloRelaySoap' },
         [ 'GET', 'POST' ]
@@ -154,6 +153,10 @@ qr/^($saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_u
     );
     $self->addUnauthRoute(
         $self->path => { relaySingleLogoutPOST => 'sloRelayPost' },
+        [ 'GET', 'POST' ]
+    );
+    $self->addUnauthRoute(
+        $self->path => { relaySingleLogoutTermination => 'sloRelayTerm' },
         [ 'GET', 'POST' ]
     );
     return $res;
@@ -1412,6 +1415,112 @@ sub sloRelayPost {
     return $self->p->do( $req, ['autoPost'] );
 }
 
+sub sloRelayTerm {
+    my ( $self, $req ) = @_;
+    $self->logger->debug( "URL "
+          . $req->uri
+          . " detected as a SLO Termination relay service URL" );
+
+    # Check if relay parameter is present (mandatory)
+    my $relayID = $self->p->getHiddenFormValue( $req, 'relay', '', 0 )
+      || $req->param('relay');
+    unless ($relayID) {
+        return $self->p->sendError( $req, 'No relayID detected' );
+    }
+
+    # Retrieve the corresponding data from samlStorage
+    my $relayInfos = $self->getSamlSession($relayID);
+    unless ($relayInfos) {
+        return $self->p->sendError( $req,
+            "Could not get relay session $relayID" );
+    }
+
+    $self->logger->debug("Found relay session $relayID");
+
+    # Get data from relay session
+    my $logout_dump  = $relayInfos->data->{_logout};
+    my $session_dump = $relayInfos->data->{_session};
+    my $method       = $relayInfos->data->{_method};
+
+    unless ($logout_dump) {
+        $self->logger->error("Could not get logout dump");
+        return PE_SAML_SLO_ERROR;
+    }
+
+    # Rebuild Lasso::Logout object
+    my $logout = $self->createLogout( $self->lassoServer, $logout_dump );
+
+    unless ($logout) {
+        $self->logger->error("Could not build Lasso::Logout");
+        return PE_SAML_SLO_ERROR;
+    }
+
+    # Inject session
+    unless ($session_dump) {
+        $self->logger->error("Could not get session dump");
+        return PE_SAML_SLO_ERROR;
+    }
+
+    unless ( $self->setSessionFromDump( $logout, $session_dump ) ) {
+        $self->logger->error("Could not set session from dump");
+        return PE_SAML_SLO_ERROR;
+    }
+
+    # Get Lasso::Session
+    my $session = $logout->get_session();
+
+    unless ($session) {
+        $self->lmLog( "Could not get session from logout", 'error' );
+        return PE_SAML_SLO_ERROR;
+    }
+
+    # Loop on assertions and remove them if SLO status is OK
+    $self->resetProviderIdIndex($logout);
+
+    while ( my $sp = $self->getNextProviderId($logout) ) {
+
+        # Try to get SLO status from SLO session
+        my $spConfKey = $self->spList->{$sp}->{confKey};
+        my $status    = $relayInfos->data->{$spConfKey};
+
+        # Remove assertion if status is OK
+        if ($status) {
+            eval { $session->remove_assertion($sp); };
+
+            if ($@) {
+                $self->logger->warn("Unable to remove assertion for $sp");
+            }
+            else {
+                $self->logger->debug("Assertion removed for $sp");
+            }
+        }
+        else {
+            $self->logger->debug(
+                "SLO status was not ok for $sp, assertion not removed");
+        }
+    }
+
+    # Reinject session
+    unless ( $session->is_empty() ) {
+        $self->setSessionFromDump( $logout, $session->dump );
+    }
+
+    # Delete relay session
+    $relayInfos->remove();
+
+    # Send SLO response
+    if ( my $tmp =
+        $self->sendLogoutResponseToServiceProvider( $req, $logout, $method ) )
+    {
+        return $tmp;
+    }
+    else {
+        $self->logger->error("Fail to send SLO response");
+        return PE_SAML_SLO_ERROR;
+    }
+
+}
+
 sub authSloServer {
     my ( $self, $req ) = @_;
     $self->p->importHandlerData($req);
@@ -1584,6 +1693,8 @@ sub sloServer {
         my $sloStatusSessionInfo = $self->getSamlSession( undef, $sloInfos );
         my $relayID = $sloStatusSessionInfo->id;
 
+        $self->logger->debug("Create relay session $relayID");
+
         # Prepare logout on all others SP
         my $provider_nb =
           $self->sendLogoutRequestToProviders( $req, $logout, $relayID );
@@ -1620,10 +1731,9 @@ sub sloServer {
         else {
             $req->{urldc} =
               $self->conf->{portal} . '/saml/relaySingleLogoutTermination';
-            $self->p->setHiddenFormValue( $req, 'relay', $relayID );
+            $self->p->setHiddenFormValue( $req, 'relay', $relayID, '', 0 );
             return $self->p->do( $req, [] );
         }
-
     }
 
     elsif ($response) {
