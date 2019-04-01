@@ -833,7 +833,7 @@ sub sendHtml {
           ( $req->info =~ /<iframe.*?src="(.*?)"/sg );
     }
     if (@url) {
-        $csp .= join( ' ', 'child-src', @url ) . ';';
+        $csp .= join( ' ', 'child-src', @url, "'self'" ) . ';';
     }
 
     # Set CSP header
