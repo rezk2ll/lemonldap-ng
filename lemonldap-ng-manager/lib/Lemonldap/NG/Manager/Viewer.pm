@@ -26,7 +26,7 @@ sub addRoutes {
     $self->ua( Lemonldap::NG::Common::UserAgent->new($conf) );
 
     my $hiddenPK = '';
-    $hiddenPK = $self->{viewerHiddenPK} || $conf->{viewerHiddenPK};
+    $hiddenPK = $self->{viewerHiddenKeys} || $conf->{viewerHiddenKeys};
     my @enabledPK = ();
     my @keys      = qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
       applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
@@ -109,7 +109,7 @@ sub viewDiff {
     require Lemonldap::NG::Manager::Conf::Diff;
     my @res =
       $self->Lemonldap::NG::Manager::Conf::Diff::diff( $conf[0], $conf[1] );
-    my $hiddenKeys = $self->{viewerHiddenPK} || '';
+    my $hiddenKeys = $self->{viewerHiddenKeys} || '';
     $self->logger->debug("Deleting hidden Conf keys...");
     foreach ( split /\s+/, $hiddenKeys ) {
         $self->logger->debug("Delete hidden Conf keys");

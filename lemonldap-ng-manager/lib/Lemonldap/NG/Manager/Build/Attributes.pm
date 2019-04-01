@@ -916,10 +916,10 @@ sub attributes {
         },
 
         # Viewer
-        viewerHiddenPK => {
+        viewerHiddenKeys => {
             type          => 'text',
             default       => 'samlIDPMetaDataNodes samlSPMetaDataNodes',
-            documentation => 'ConfTree hidden primary keys',
+            documentation => 'Hidden Conf keys',
             flags         => 'm',
         },
         viewerAllowBrowser => {
