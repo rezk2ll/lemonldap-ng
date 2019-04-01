@@ -247,14 +247,16 @@ sub do {
     }
     else {
         if (
-                $err
-            and $err != PE_LOGOUT_OK
-            and (
-                $err != PE_REDIRECT
-                or (    $err == PE_REDIRECT
-                    and $req->data->{redirectFormMethod}
-                    and $req->data->{redirectFormMethod} eq 'post' )
-                or $req->info
+            $req->info
+            or (
+                    $err
+                and $err != PE_LOGOUT_OK
+                and (
+                    $err != PE_REDIRECT
+                    or (    $err == PE_REDIRECT
+                        and $req->data->{redirectFormMethod}
+                        and $req->data->{redirectFormMethod} eq 'post' )
+                )
             )
           )
         {
