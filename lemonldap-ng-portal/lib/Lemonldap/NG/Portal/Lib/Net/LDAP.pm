@@ -207,9 +207,7 @@ sub userBind {
 
             # Get expiration warning and graces
             if ( $resp->grace_authentications_remaining ) {
-
-                # TODO
-                $self->info(
+                $req->info(
                     $self->{portal}->loadTemplate(
                         'ldapPpGrace',
                         params => {
