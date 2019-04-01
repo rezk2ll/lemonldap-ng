@@ -210,7 +210,7 @@ sub userBind {
 
                 # TODO
                 $self->info(
-                    $self->loadTemplate(
+                    $self->{portal}->loadTemplate(
                         'ldapPpGrace',
                         params => {
                             number => $resp->grace_authentications_remaining
@@ -221,7 +221,7 @@ sub userBind {
 
             if ( $resp->time_before_expiration ) {
                 $req->info(
-                    $self->loadTemplate(
+                    $self->{portal}->loadTemplate(
                         'simpleInfo',
                         params => {
                             trspan => 'authRemaining,'
