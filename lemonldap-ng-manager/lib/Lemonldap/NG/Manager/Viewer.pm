@@ -70,8 +70,9 @@ sub addRoutes {
     $self->addRoute( view => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] )
 
       # Difference between confs
-      ->addRoute( diff => { ':conf1' => { ':conf2' => 'diff' } } )
-      ->addRoute( 'diff.html', undef, ['GET'] );
+      ->addRoute(
+        view => { diff => { ':conf1' => { ':conf2' => 'viewDiff' } } } )
+      ->addRoute( 'viewDiff.html', undef, ['GET'] );
 }
 
 sub getConfByNum {
@@ -79,9 +80,44 @@ sub getConfByNum {
     $self->SUPER::getConfByNum( $cfgNum, @args );
 }
 
-sub diff {
+sub viewDiff {
     my ( $self, $req, @path ) = @_;
-    $self->SUPER::diff( $req, @path );
+    return $self->sendError( $req, 'to many arguments in path info', 400 )
+      if (@path);
+    my @cfgNum =
+      ( scalar( $req->param('conf1') ), scalar( $req->param('conf2') ) );
+    my @conf;
+    $self->logger->debug(" Loading confs");
+
+    # Load the 2 configurations
+    for ( my $i = 0 ; $i < 2 ; $i++ ) {
+        if ( %{ $self->currentConf }
+            and $cfgNum[$i] == $self->currentConf->{cfgNum} )
+        {
+            $conf[$i] = $self->currentConf;
+        }
+        else {
+            $conf[$i] = $self->confAcc->getConf(
+                { cfgNum => $cfgNum[$i], raw => 1, noCache => 1 } );
+            return $self->sendError(
+                $req,
+"Configuration $cfgNum[$i] not available $Lemonldap::NG::Common::Conf::msg",
+                400
+            ) unless ( $conf[$i] );
+        }
+    }
+    require Lemonldap::NG::Manager::Conf::Diff;
+    my @res =
+      $self->Lemonldap::NG::Manager::Conf::Diff::diff( $conf[0], $conf[1] );
+    my $hiddenKeys = $self->{viewerHiddenPK} || '';
+    $self->logger->debug("Deleting hidden Conf keys...");
+    foreach ( split /\s+/, $hiddenKeys ) {
+        $self->logger->debug("Delete hidden Conf keys");
+        $self->logger->debug("-> Delete $_");
+        delete $res[0]->{$_};
+        delete $res[1]->{$_};
+    }
+    return $self->sendJSONresponse( $req, [@res] );
 }
 
 sub rejectKey {

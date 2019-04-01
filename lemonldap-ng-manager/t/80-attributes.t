@@ -48,7 +48,7 @@ my @notManagedAttributes = (
     'log4perlConfFile', 'userSyslogFacility', 'logger', 'sentryDsn',
     'syslogFacility',   'userLogger',         'logLevel',
     # Viewer
-    'viewerHiddenPK', 'viewerAllowBrowser',
+    'viewerHiddenPK', 'viewerAllowBrowser', 'viewerAllowDiff',
 
     # Other ini-only prms
     'configStorage', 'status', 'localStorageOptions', 'localStorage',

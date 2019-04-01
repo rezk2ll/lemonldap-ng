@@ -24,6 +24,7 @@ extends 'Lemonldap::NG::Common::Conf::AccessLib',
 
 has csp => ( is => 'rw' );
 has brw => ( is => 'rw', default => 0 );
+has dif => ( is => 'rw', default => 0 );
 
 ## @method boolean init($args)
 # Launch initialization method
@@ -88,6 +89,7 @@ sub init {
         "default-src 'self' $portal;frame-ancestors 'none';form-action 'self';"
     );
     $self->brw( $self->{viewerAllowBrowser} || $conf->{viewerAllowBrowser} );
+    $self->dif( $self->{viewerAllowDiff} || $conf->{viewerAllowDiff} );
     $self->defaultRoute( $working[0]->defaultRoute );
 
 # Find out more glyphicones at https://www.w3schools.com/icons/bootstrap_icons_glyphicons.asp
@@ -135,7 +137,7 @@ sub init {
 
 sub tplParams {
     my ($self) = @_;
-    return ( VERSION => $VERSION, ALLOWBROWSER => $self->brw );
+    return ( VERSION => $VERSION, ALLOWBROWSER => $self->brw, ALLOWDIFF => $self->dif );
 }
 
 sub javascript {

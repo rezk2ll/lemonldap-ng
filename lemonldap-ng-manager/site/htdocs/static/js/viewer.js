@@ -33,7 +33,7 @@ This file contains:
       $scope.waiting = true;
       $scope.showM = false;
       $scope.showT = false;
-      $scope.form = 'home';
+      $scope.form = 'homeViewer';
       $scope.currentCfg = {};
       $scope.viewPrefix = window.viewPrefix;
       $scope.message = {};
@@ -160,7 +160,7 @@ This file contains:
         return $scope.showM = false;
       };
       $scope.home = function() {
-        $scope.form = 'home';
+        $scope.form = 'homeViewer';
         return $scope.showM = false;
       };
       $scope.downloadConf = function() {
@@ -528,7 +528,7 @@ This file contains:
             };
             $scope.showModal('message.html');
           }
-          $scope.form = 'home';
+          $scope.form = 'homeViewer';
           return $scope.waiting = false;
         }, readError);
         $scope.activeModule = "viewer";

@@ -50,7 +50,9 @@
             </ul>
           </div>
         </div>
-        <form class="form-group slide-animate-container" ng-include="formPrefix+form+'.html'" scope="$scope" />
+        <TMPL_IF NAME="ALLOWDIFF">
+          <form class="form-group slide-animate-container" ng-include="formPrefix+form+'.html'" scope="$scope" />
+        </TMPL_IF>
       </div>
       <!-- Help container -->
       <div id="bottom" ng-if="showH" class="hidden-xs">

@@ -927,6 +927,11 @@ sub attributes {
             default       => 0,
             documentation => 'Allow configuration browser',
         },
+        viewerAllowDiff => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Allow configuration diff',
+        },
 
         # Notification
         oldNotifFormat => {

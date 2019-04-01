@@ -3566,6 +3566,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'bool'
         },
+        'viewerAllowDiff' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'viewerHiddenPK' => {
             'default' => 'samlIDPMetaDataNodes samlSPMetaDataNodes',
             'type'    => 'text'
