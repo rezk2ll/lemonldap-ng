@@ -296,7 +296,7 @@ sub defaultValues {
         'useRedirectOnError'                      => 1,
         'useSafeJail'                             => 1,
         'utotp2fActivation'                       => 0,
-        'viewerHiddenPK'        => 'samlIDPMetaDataNodes samlSPMetaDataNodes',
+        'viewerHiddenKeys'      => 'samlIDPMetaDataNodes samlSPMetaDataNodes',
         'webIDAuthnLevel'       => 1,
         'webIDExportedVars'     => {},
         'whatToTrace'           => 'uid',

@@ -112,7 +112,6 @@ sub viewDiff {
     my $hiddenKeys = $self->{viewerHiddenKeys} || '';
     $self->logger->debug("Deleting hidden Conf keys...");
     foreach ( split /\s+/, $hiddenKeys ) {
-        $self->logger->debug("Delete hidden Conf keys");
         $self->logger->debug("-> Delete $_");
         delete $res[0]->{$_};
         delete $res[1]->{$_};
