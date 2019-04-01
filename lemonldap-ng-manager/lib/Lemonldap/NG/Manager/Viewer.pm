@@ -66,13 +66,15 @@ sub addRoutes {
         );
     }
 
-    # Other keys
-    $self->addRoute( view => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] )
+    # Difference between confs
+    if ( $self->{viewerAllowDiff} ) {
+        $self->addRoute(
+            view => { diff => { ':conf1' => { ':conf2' => 'viewDiff' } } } )
+          ->addRoute( 'viewDiff.html', undef, ['GET'] );
+    }
 
-      # Difference between confs
-      ->addRoute(
-        view => { diff => { ':conf1' => { ':conf2' => 'viewDiff' } } } )
-      ->addRoute( 'viewDiff.html', undef, ['GET'] );
+    # Other keys
+    $self->addRoute( view => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] );
 }
 
 sub getConfByNum {
