@@ -17,7 +17,7 @@ use JSON;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.3';
 
 extends 'Lemonldap::NG::Common::Conf::AccessLib',
   'Lemonldap::NG::Handler::PSGI::Router';
@@ -137,13 +137,14 @@ sub init {
 
 sub tplParams {
     my ($self) = @_;
-    return ( VERSION => $VERSION, ALLOWBROWSER => $self->brw, ALLOWDIFF => $self->dif );
+    return ( VERSION => $VERSION, ALLOWBROWSER => $self->brw );
 }
 
 sub javascript {
     my ($self) = @_;
     return
       'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";var viewPrefix=scriptname+"view/";'
+      . 'var allowDiff=' . $self->dif . ';'
       . ( $self->links ? 'var links=' . to_json( $self->links ) . ';' : '' )
       . (
         $self->menuLinks

@@ -67,7 +67,7 @@ sub addRoutes {
     }
 
     # Difference between confs
-    if ( $self->{viewerAllowDiff} ) {
+    if ( $self->{viewerAllowDiff} || $conf->{viewerAllowDiff} ) {
         $self->addRoute(
             view => { diff => { ':conf1' => { ':conf2' => 'viewDiff' } } } )
           ->addRoute( 'viewDiff.html', undef, ['GET'] );

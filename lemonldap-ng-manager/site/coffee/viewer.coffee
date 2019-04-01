@@ -30,6 +30,7 @@ llapp.controller 'TreeCtrl', [
 		$scope.form = 'homeViewer'
 		$scope.currentCfg = {}
 		$scope.viewPrefix = window.viewPrefix
+		$scope.allowDiff = window.allowDiff
 		$scope.message = {}
 		$scope.result = ''
 

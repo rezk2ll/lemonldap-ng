@@ -36,6 +36,7 @@ This file contains:
       $scope.form = 'homeViewer';
       $scope.currentCfg = {};
       $scope.viewPrefix = window.viewPrefix;
+      $scope.allowDiff = window.allowDiff;
       $scope.message = {};
       $scope.result = '';
       $scope.translateTitle = function(node) {
