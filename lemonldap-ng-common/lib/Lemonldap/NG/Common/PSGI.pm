@@ -174,7 +174,7 @@ body{background:#000;color:#fff;padding:10px 50px;font-family:sans-serif;}a{text
 <body>
 <h1>$title</h1>
 <p>$err</p>
-<center><a href=\"http://lemonldap-ng.org\">LemonLDAP::NG</a></center>'
+<center><a href=\"https://lemonldap-ng.org\">LemonLDAP::NG</a></center>
 </body>
 </html>";
         return [
