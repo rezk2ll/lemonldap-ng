@@ -61,6 +61,9 @@ sub authenticate {
                 "Unable to refresh entry for " . $self->p->{user} );
         }
 
+        $req->data->{noerror} = 1;
+        $self->setSecurity($req);
+
         # Security: never create session here
         return $res || PE_DONE;
     }
