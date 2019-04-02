@@ -165,8 +165,10 @@ sub check {
     # Check if user is allowed to access submitted URL and compute headers
     if ( $url and %$attrs ) {
 
+        # Check url format
+        $url = $self->_urlFormat($url);
+
         # User is allowed ?
-        $url = 'http://' . $url unless ( $url =~ m#^https?://[^/]*.*# );
         $auth = $self->_authorization( $req, $url );
         $self->logger->debug(
             "checkUser requested for user: $req->{user} and URL: $url");
@@ -276,6 +278,16 @@ sub display {
     return $self->p->sendHtml( $req, 'checkuser', params => $params, );
 }
 
+sub _urlFormat {
+    my ( $self, $url ) = @_;
+
+    $url = 'http://' . $url unless ( $url =~ m#^https?://[^/]*.*# );
+    my ( $proto, $vhost, $appuri ) = $url =~ m#^(https?://)([^/]*)(.*)#;
+    $vhost .= $self->conf->{domain} unless ( $vhost =~ /\./ );
+    $appuri ||= '/';
+    return "$proto$vhost$appuri";
+}
+
 sub _userDatas {
     my ( $self, $req ) = @_;
 
@@ -313,9 +325,8 @@ sub _authorization {
     my ( $self, $req, $uri ) = @_;
     my ( $vhost, $appuri ) = $uri =~ m#^https?://([^/]*)(.*)#;
     my $exist = 0;
-    $vhost =~ s/:\d+$//;
-    $appuri ||= '/';
 
+    $vhost =~ s/:\d+$//;
     foreach my $vh ( keys %{ $self->conf->{locationRules} } ) {
         if ( $vh eq $vhost ) {
             $exist = 1;
