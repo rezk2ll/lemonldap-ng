@@ -363,7 +363,7 @@ sub logout {
     my $session_id = $req->{sessionInfo}->{_session_id} || $req->{id};
 
     # Delete linked CAS sessions
-    $self->deleteCasSecondarySessions($session_id);
+    $self->deleteCasSecondarySessions($session_id) if ($session_id);
 
     return PE_OK;
 }
