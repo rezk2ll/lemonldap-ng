@@ -283,9 +283,12 @@ sub _urlFormat {
 
     $url = 'http://' . $url unless ( $url =~ m#^https?://[^/]*.*# );
     my ( $proto, $vhost, $appuri ) = $url =~ m#^(https?://)([^/]*)(.*)#;
+    my ( $port ) = $vhost =~ m#^.+(:\d+)$#;
+    $port ||= '';
+    $vhost =~ s/:\d+$//;
     $vhost .= $self->conf->{domain} unless ( $vhost =~ /\./ );
     $appuri ||= '/';
-    return "$proto$vhost$appuri";
+    return "$proto$vhost$port$appuri";
 }
 
 sub _userDatas {
@@ -344,7 +347,8 @@ sub _authorization {
 
 sub _headers {
     my ( $self, $req, $uri ) = @_;
-    my ( $vhost, $appuri ) = $uri =~ m#^https?://([^/]*)(.*)#;
+    my ( $vhost ) = $uri =~ m#^https?://([^/]*).*#;
+
     $vhost =~ s/:\d+$//;
     $req->{env}->{HTTP_HOST} = $vhost;
     $self->p->HANDLER->headersInit( $self->{conf} );
