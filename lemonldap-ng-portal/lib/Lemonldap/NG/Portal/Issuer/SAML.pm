@@ -1738,13 +1738,70 @@ sub sloServer {
 
     elsif ($response) {
 
-        # No SLO response should be here
-        # else it means SSO session was not closed: launching it
-        $self->logger->debug(
-            "SLO response found on an active SSO session, ignoring it");
-        $req->data->{samlSLOCalled} = 1;
-        return $self->p->do( $req,
-            [ @{ $self->p->beforeLogout }, 'deleteSession' ] );
+        # Process logout response
+        my $result = $self->processLogoutResponseMsg( $logout, $response );
+
+        unless ($result) {
+            $self->logger->error("Fail to process logout response");
+            $self->imgnok($req);
+        }
+
+        $self->logger->debug("Logout response is valid");
+
+        # Check Destination
+        $self->imgnok($req)
+          unless ( $self->checkDestination( $logout->response, $url ) );
+
+        # Get SP entityID
+        my $sp = $logout->remote_providerID();
+
+        $self->logger->debug("Found entityID $sp in SAML message");
+
+        # SP conf key
+        my $spConfKey = $self->spList->{$sp}->{confKey};
+
+        unless ($spConfKey) {
+            $self->logger->error("$sp do not match any SP in configuration");
+            $self->imgnok($req);
+        }
+
+        $self->logger->debug("$sp match $spConfKey SP in configuration");
+
+        # Do we check signature?
+        my $checkSLOMessageSignature =
+          $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+          ->{samlSPMetaDataOptionsCheckSLOMessageSignature};
+
+        if ($checkSLOMessageSignature) {
+            unless ( $self->checkSignatureStatus($logout) ) {
+                $self->logger->error("Signature is not valid");
+                $self->imgnok($req);
+            }
+            else {
+                $self->logger->debug("Signature is valid");
+            }
+        }
+        else {
+            $self->logger->debug("Message signature will not be checked");
+        }
+
+        # Store success status for this SLO request
+        my $sloStatusSessionInfos = $self->getSamlSession($relaystate);
+
+        if ($sloStatusSessionInfos) {
+            $sloStatusSessionInfos->update( { $spConfKey => 1 } );
+            $self->logger->debug(
+                "Store SLO status for $spConfKey in session $relaystate");
+        }
+        else {
+            $self->logger->warn(
+"Unable to store SLO status for $spConfKey in session $relaystate"
+            );
+        }
+
+        # SLO response is OK
+        $self->logger->debug("Display OK status for SLO on $spConfKey");
+        $self->imgok($req);
     }
 
     else {
