@@ -88,7 +88,7 @@ sub genRoute {
                 $routes->{$word} = $dest;
             }
             else {
-                die "Type $t unauthorizated in routes";
+                die "Type $t unauthorized in routes";
             }
         }
         elsif ( $self->can($dest) ) {
