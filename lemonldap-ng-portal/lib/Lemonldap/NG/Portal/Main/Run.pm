@@ -917,7 +917,6 @@ sub tplParams {
         SKIN       => $self->getSkin($req),
         PORTAL_URL => $self->conf->{portal},
         SKIN_PATH  => $portalPath . "skins",
-        ANTIFRAME  => $self->conf->{portalAntiFrame},
         SKIN_BG    => $self->conf->{portalSkinBackground},
         ( $self->customParameters ? ( %{ $self->customParameters } ) : () ),
         %templateParams
