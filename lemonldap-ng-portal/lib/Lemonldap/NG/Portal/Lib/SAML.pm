@@ -2385,21 +2385,12 @@ sub samldate2timestamp {
 sub sendLogoutResponseToServiceProvider {
     my ( $self, $req, $logout, $method ) = @_;
 
-    my $httpmethod = $self->getFirstHttpMethod(
-        $self->lassoServer,
-        $logout->remote_providerID,
-        Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT
-    );
-    if ( $httpmethod == Lasso::Constants::HTTP_METHOD_NONE ) {
-        $self->logger->warn( "Provider "
-              . $logout->remote_providerID
-              . " has no SingleLogoutService in metadata, staying on portal" );
-        return $self->p->do( $req, [] );
-    }
-
     # Logout response
     unless ( $self->buildLogoutResponseMsg($logout) ) {
-        return $self->p->sendError( $req, "Unable to build SLO response", 500 );
+        $self->logger->warn( "Could not build a logout response for provider "
+              . $logout->remote_providerID
+              . ", staying on portal" );
+        return $self->p->do( $req, [] );
     }
 
     # Send response depending on request method
