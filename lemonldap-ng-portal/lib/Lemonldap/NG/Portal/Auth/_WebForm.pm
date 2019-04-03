@@ -34,16 +34,31 @@ has authnLevel => (
 
 has captcha => ( is => 'rw' );
 has ott     => ( is => 'rw' );
+has ottRule => ( is => 'rw', default => sub { 1 } );
 
 # INITIALIZATION
 
 sub init {
-    if ( $_[0]->{conf}->{captcha_login_enabled} ) {
-        $_[0]->captcha( $_[0]->p->loadModule('::Lib::Captcha') ) or return 0;
+    my ($self) = @_;
+    my $hd = $self->p->HANDLER;
+
+    # Parse OTT activation rule
+    $self->logger->debug(
+        "OTT activation rule -> " . $self->conf->{requireToken} );
+    my $rule =
+      $hd->buildSub( $hd->substitute( $self->conf->{requireToken} ) );
+    unless ($rule) {
+        $self->error( "Bad OTT activation rule -> " . $hd->tsv->{jail}->error );
+        return 0;
     }
-    elsif ( $_[0]->{conf}->{requireToken} ) {
-        $_[0]->ott( $_[0]->p->loadModule('::Lib::OneTimeToken') ) or return 0;
-        $_[0]->ott->timeout( $_[0]->conf->{formTimeout} );
+    $self->{ottRule} = $rule;
+
+    if ( $self->{conf}->{captcha_login_enabled} ) {
+        $self->captcha( $self->p->loadModule('::Lib::Captcha') ) or return 0;
+    }
+    else {
+        $self->ott( $self->p->loadModule('::Lib::OneTimeToken') ) or return 0;
+        $self->ott->timeout( $self->conf->{formTimeout} );
     }
     return 1;
 }
@@ -96,13 +111,14 @@ sub extractFormInfo {
     }
 
     # Security: check for captcha or token
-    if ( $self->captcha or $self->ott ) {
+    if ( $self->captcha or $self->ottRule->( $req, $req->env ) ) {
         my $token;
         unless ( $token = $req->param('token') ) {
             $self->userLogger->error('Authentication tried without token');
             $self->ott->setToken($req);
             return PE_NOTOKEN;
         }
+
         if ( $self->captcha ) {
             my $code = $req->param('captcha');
             unless ($code) {
@@ -117,7 +133,7 @@ sub extractFormInfo {
             }
             $self->logger->debug("Captcha code verified");
         }
-        elsif ( $self->ott ) {
+        elsif ( $self->ottRule->( $req, $req->env ) ) {
             unless ( $req->data->{tokenVerified}
                 or $self->ott->getToken($token) )
             {
@@ -169,7 +185,7 @@ sub setSecurity {
     }
 
     # Else get token
-    elsif ( $self->ott ) {
+    elsif ( $self->ottRule->( $req, $req->env ) ) {
         $self->ott->setToken($req);
     }
 }

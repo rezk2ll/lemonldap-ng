@@ -48,7 +48,7 @@ our %EXPORT_TAGS = (
           APPLYSECTION
           NO
           $hashParameters
-          @sessionTypes 
+          @sessionTypes
           )
     ]
 );

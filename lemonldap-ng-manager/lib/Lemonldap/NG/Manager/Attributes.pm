@@ -2486,7 +2486,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'requireToken' => {
             'default' => 1,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'rest2fActivation' => {
             'default' => 0,

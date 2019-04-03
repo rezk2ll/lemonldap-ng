@@ -629,7 +629,7 @@ sub attributes {
         },
         requireToken => {
             default       => 1,
-            type          => 'bool',
+            type          => 'boolOrExpr',
             documentation => 'Enable token for forms',
         },
         tokenUseGlobalStorage => {
