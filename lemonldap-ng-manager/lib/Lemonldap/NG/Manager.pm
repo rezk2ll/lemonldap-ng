@@ -88,8 +88,10 @@ sub init {
     $self->csp(
         "default-src 'self' $portal;frame-ancestors 'none';form-action 'self';"
     );
-    $self->brw( $self->{viewerAllowBrowser} || $conf->{viewerAllowBrowser} );
-    $self->dif( $self->{viewerAllowDiff} || $conf->{viewerAllowDiff} );
+    $self->brw( $self->{viewerAllowBrowser}
+          || $conf->{viewerAllowBrowser}
+          || 0 );
+    $self->dif( $self->{viewerAllowDiff} || $conf->{viewerAllowDiff} || 0 );
     $self->defaultRoute( $working[0]->defaultRoute );
 
 # Find out more glyphicones at https://www.w3schools.com/icons/bootstrap_icons_glyphicons.asp
@@ -143,8 +145,9 @@ sub tplParams {
 sub javascript {
     my ($self) = @_;
     return
-      'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";var viewPrefix=scriptname+"view/";'
-      . 'var allowDiff=' . $self->dif . ';'
+'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";var viewPrefix=scriptname+"view/";'
+      . 'var allowDiff='
+      . $self->dif . ';'
       . ( $self->links ? 'var links=' . to_json( $self->links ) . ';' : '' )
       . (
         $self->menuLinks
