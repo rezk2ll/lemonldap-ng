@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 12;
+my $maintests = 13;
 my $debug     = 'error';
 my ( $idp, $proxy, $app, $res );
 my %handlerOR = ( idp => [], proxy => [], app => [] );
@@ -105,7 +105,7 @@ SKIP: {
     ok(
         $res = $proxy->_get(
             "/",
-            query  => "idp=".uri_escape("http://auth.idp.com/saml/metadata"),
+            query  => "idp=" . uri_escape("http://auth.idp.com/saml/metadata"),
             accept => 'text/html',
             cookie => $proxyPdata,
         ),
@@ -155,6 +155,10 @@ SKIP: {
     ( $host, $url, $query ) = expectAutoPost($res);
     $query =~ s/\+/%2B/g;
     my $idpId = expectCookie($res);
+
+    # Expect pdata to be cleared
+    $idpPdata = expectCookie( $res, 'lemonldappdata' );
+    ok( $idpPdata !~ 'issuerRequestsaml', 'SAML request cleared from pdata' );
 
     # Post SAML response
     switch ('proxy');
@@ -330,9 +334,9 @@ sub proxy {
                 issuerDBCASActivation => 1,
                 casAttr               => 'uid',
                 casAttributes => { cn => 'cn', uid => 'uid', mail => 'mail', },
-                casAccessControlPolicy            => 'none',
-                multiValuesSeparator              => ';',
-                samlDiscoveryProtocolURL          => 'http://discovery.example.com/',
+                casAccessControlPolicy   => 'none',
+                multiValuesSeparator     => ';',
+                samlDiscoveryProtocolURL => 'http://discovery.example.com/',
                 samlDiscoveryProtocolActivation   => 1,
                 samlIDPMetaDataExportedAttributes => {
                     idp => {
