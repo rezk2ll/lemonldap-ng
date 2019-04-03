@@ -585,7 +585,7 @@ sub run {
             $self->logger->debug(
                 "NameID Content is " . $login->nameIdentifier->content );
 
-            # Push mandatory attributes
+            # Push attributes
             my @attributes;
 
             foreach (
@@ -605,20 +605,21 @@ sub run {
                 # Name is required
                 next unless $name;
 
-                # Do not send attribute if not mandatory
-                unless ($mandatory) {
-                    $self->logger->debug(
-                        "SAML2 attribute $name is not mandatory");
-                    next;
-                }
-
                 # Error if corresponding attribute is not in user session
                 my $value = $req->{sessionInfo}->{$_};
                 unless ( defined $value ) {
-                    $self->logger->warn(
-                        "Session key $_ is required to set SAML $name attribute"
-                    );
-                    return PE_SAML_SSO_ERROR;
+                    if ($mandatory) {
+                        $self->logger->error(
+"Session key $_ is required to set SAML $name attribute"
+                        );
+                        return PE_SAML_SSO_ERROR;
+                    }
+                    else {
+                        $self->logger->debug(
+"SAML2 attribute $name has no value but is not mandatory, skip it"
+                        );
+                        next;
+                    }
                 }
 
                 $self->logger->debug(
