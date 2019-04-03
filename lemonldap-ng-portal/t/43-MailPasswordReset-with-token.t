@@ -31,7 +31,7 @@ SKIP: {
                 userDB                     => 'Same',
                 passwordDB                 => 'Demo',
                 captcha_mail_enabled       => 0,
-                requireToken               => 1,
+                requireToken               => '$ipAddr eq "127.0.0.1"',
                 portalDisplayResetPassword => 1,
                 portalMainLogo             => 'common/logos/logo_llng_old.png',
             }

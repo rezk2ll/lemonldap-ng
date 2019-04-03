@@ -72,7 +72,7 @@ sub iniCmb {
         my $res = LLNG::Manager::Test->new( {
                 ini => {
                     logLevel       => 'error',
-                    requireToken   => 1,
+                    requireToken   => '$ipAddr eq "127.0.0.1"',
                     useSafeJail    => 1,
                     authentication => 'Combination',
                     userDB         => 'Same',
