@@ -143,6 +143,7 @@ MANIFEST			This list of files
 META.json
 META.yml
 README
+scripts/llngDeleteSession
 site/coffee/2fregistration.coffee
 site/coffee/autoRenew.coffee
 site/coffee/confirm.coffee

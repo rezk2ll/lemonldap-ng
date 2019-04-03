@@ -599,6 +599,7 @@ install_bin:	install_conf_dir
 	@cp -f\
 		${SRCHANDLERDIR}/eg/scripts/purgeLocalCache \
 		${SRCPORTALDIR}/site/cron/purgeCentralCache \
+		${SRCPORTALDIR}/scripts/llngDeleteSession \
 		${SRCCOMMONDIR}/scripts/convertConfig \
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
 		${SRCCOMMONDIR}/scripts/rotateOidcKeys \
