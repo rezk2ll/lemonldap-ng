@@ -3423,8 +3423,8 @@ Send logout request to a provider
 
 Send logout response issue from a logout request to all other
 providers. If information have to be displayed to users, such as
-iframe to send HTTP-Redirect or HTTP-POST logout request, then          
-$self->{_info} will be updated.                                         
+iframe to send HTTP-Redirect or HTTP-POST logout request, then
+$self->{_info} will be updated.
 
 =head2 checkSignatureStatus
 

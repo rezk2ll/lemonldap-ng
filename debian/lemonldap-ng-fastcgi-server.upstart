@@ -8,7 +8,7 @@ respawn
 
 pre-start script
         [ -x /usr/sbin/llng-fastcgi-server ] || { stop; exit 0; }
-end script              
+end script
 
 exec mkdir /var/run/llng-fastcgi-server; chown www-data:www-data /var/run/llng-fastcgi-server && /usr/sbin/llng-fastcgi-server -u www-data -g www-data -s /var/run/llng-fastcgi-server/llng-fastcgi.sock -p /var/run/llng-fastcgi-server/llng-fastcgi-server.pid
 

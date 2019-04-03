@@ -22,7 +22,7 @@
           <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
             <ul class="nav navbar-nav">
               <li><a class="link" ng-click="home()"><i class="glyphicon glyphicon-home"></i></a></li>
-              
+
               <TMPL_IF NAME="ALLOWBROWSER">
               <li uib-dropdown>
                 <a id="navmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i> {{translate('browse')}} <span class="caret"></span></a>
@@ -45,7 +45,7 @@
               </li>
               <li>
                   <i class="glyphicon glyphicon-lock"></i>
-                  <u>{{translate('readOnlyMode')}}</u> 
+                  <u>{{translate('readOnlyMode')}}</u>
               </li>
             </ul>
           </div>
@@ -58,7 +58,7 @@
           <div class="panel-body">
             <iframe id="helpframe" width="100%" height="100%" ng-src="{{translate('/doc/')+'pages/documentation/current/'+helpUrl}}" frameborder="0"></iframe>
           </div>
-        </div> 
+        </div>
       </div>
     </div>
   </div>

@@ -78,8 +78,7 @@ for ( my $i = 0 ; $i < NB ; $i++ ) {
 
 print "Result
 +-----+-----------+----------+---------+-----------------------------------------+
-| Req | Auth form | Post req |  Menu   |    5 access to test1.example.com      
-   |
+| Req | Auth form | Post req |  Menu   |    5 access to test1.example.com        |
 +-----+-----------+----------+---------+-----------------------------------------+
 ";
 

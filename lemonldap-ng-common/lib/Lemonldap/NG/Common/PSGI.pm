@@ -481,7 +481,7 @@ Syslog facility. If empty, STDERR will be used for logging
 
 L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Handler>,
 L<Plack>, L<PSGI>, L<Lemonldap::NG::Common::PSGI::Router>,
-L<Lemonldap::NG::Common::PSGI::Request>, L<HTML::Template>, 
+L<Lemonldap::NG::Common::PSGI::Request>, L<HTML::Template>,
 
 =head1 AUTHORS
 

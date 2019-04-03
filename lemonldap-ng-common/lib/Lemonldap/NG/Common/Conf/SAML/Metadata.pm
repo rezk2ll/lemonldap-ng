@@ -347,7 +347,7 @@ __DATA__
     <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
   </AttributeAuthorityDescriptor>
   </TMPL_UNLESS>
-  
+
   <Organization>
     <OrganizationName xml:lang="en"><TMPL_VAR NAME="samlOrganizationName"></OrganizationName>
     <OrganizationDisplayName xml:lang="en"><TMPL_VAR NAME="samlOrganizationDisplayName"></OrganizationDisplayName>

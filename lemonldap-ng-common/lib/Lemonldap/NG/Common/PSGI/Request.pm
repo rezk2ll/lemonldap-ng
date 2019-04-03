@@ -187,7 +187,7 @@ Example:
   # Set headers
   $req->respHeaders( "Location" => "http://x.y.z/", Etag => "XYZ", );
   # Add header
-  $req->respHeaders->{"X-Key"} = "Value"; 
+  $req->respHeaders->{"X-Key"} = "Value";
 
 =head2 set_param( $key, $value )
 
@@ -220,7 +220,7 @@ contains "application/json" or "text/json").
 
 L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Common::PSGI>,
 L<Lemonldap::NG::Hander::PSGI>, L<Plack::Request>,
-L<Lemonldap::NG::Portal::Main::Constants>, 
+L<Lemonldap::NG::Portal::Main::Constants>,
 
 =head1 AUTHORS
 

@@ -30,7 +30,7 @@ for LLLIB in $LIST; do
     if [ -f "$SKIPLIST" ]; then
         grep -v '^ *#' "$SKIPLIST" |grep -v '^ *$' > "$SKIPTMP"
     fi
-    
+
     for T in $(run-parts --list --regex '(^[a-z0-9.]+$)' ${TESTDIR} | \
                grep -v -F -f "$SKIPTMP") ; do
         if echo "$T" | grep -q '\.t$'
