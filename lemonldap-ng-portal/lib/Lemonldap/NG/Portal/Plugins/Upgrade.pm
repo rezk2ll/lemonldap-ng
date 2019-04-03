@@ -76,7 +76,7 @@ sub confirm {
         $self->p->setHiddenFormValue(
             $req,
             upgrading => $self->ott->createToken,
-            ''
+            '', 0
         );    # Insert token
         return $self->p->login($req);
     }

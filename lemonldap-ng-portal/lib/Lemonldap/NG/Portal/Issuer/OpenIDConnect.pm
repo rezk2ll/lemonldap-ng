@@ -198,8 +198,8 @@ sub run {
 "Override $_ OIDC param by value present in request parameter"
                     );
                     $oidc_request->{$_} = $request->{$_};
-                    $self->p->setHiddenFormValue( $req, $_, $request->{$_},
-                        '' );
+                    $self->p->setHiddenFormValue( $req, $_, $request->{$_}, '',
+                        0 );
                 }
             }
 
@@ -855,7 +855,8 @@ sub run {
                     $self->logger->debug( "OIDC request parameter $param: "
                           . $oidc_request->{$param} );
                     $self->p->setHiddenFormValue( $req, $param,
-                        $oidc_request->{$param}, '' );
+                        $oidc_request->{$param},
+                        '', 0 );
                 }
             }
 
