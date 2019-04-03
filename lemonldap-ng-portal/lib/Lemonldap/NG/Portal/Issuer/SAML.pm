@@ -1786,16 +1786,23 @@ sub sloServer {
         }
 
         # Store success status for this SLO request
-        my $sloStatusSessionInfos = $self->getSamlSession($relaystate);
+        if ($relaystate) {
+            my $sloStatusSessionInfos = $self->getSamlSession($relaystate);
 
-        if ($sloStatusSessionInfos) {
-            $sloStatusSessionInfos->update( { $spConfKey => 1 } );
-            $self->logger->debug(
-                "Store SLO status for $spConfKey in session $relaystate");
+            if ($sloStatusSessionInfos) {
+                $sloStatusSessionInfos->update( { $spConfKey => 1 } );
+                $self->logger->debug(
+                    "Store SLO status for $spConfKey in session $relaystate");
+            }
+            else {
+                $self->logger->warn(
+"Unable to store SLO status for $spConfKey in session $relaystate"
+                );
+            }
         }
         else {
             $self->logger->warn(
-"Unable to store SLO status for $spConfKey in session $relaystate"
+"Unable to store SLO status for $spConfKey because there is no RelayState"
             );
         }
 
