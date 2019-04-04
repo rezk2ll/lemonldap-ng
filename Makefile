@@ -552,7 +552,7 @@ launch_protractor:
 	# NB: you must have protractor installed (using npm install -g protractor)
 	# and have run update-webdriver at least once and have a node.js > 4.0
 	# Install test keys
-	cp -f e2e-tests/persistent/5efe8af397fc3577e05b483aca964f1b.e2e-test e2e-tests/conf/persistent/5efe8af397fc3577e05b483aca964f1b
+	cp -f e2e-tests/persistent/5efe8af397fc3577e05b483aca964f1b.e2e-test e2e-tests/conf/persistents/5efe8af397fc3577e05b483aca964f1b
 	@E2E_TESTS=$(E2E_TESTS) TESTWEBSERVERPORT=$(TESTWEBSERVERPORT) protractor e2e-tests/protractor-conf.js
 
 stop_web_server:
