@@ -51,6 +51,7 @@ lib/Lemonldap/NG/Portal/Issuer/Get.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenID.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Issuer/SAML.pm
+lib/Lemonldap/NG/Portal/Lib/_tokenRule.pm
 lib/Lemonldap/NG/Portal/Lib/Captcha.pm
 lib/Lemonldap/NG/Portal/Lib/CAS.pm
 lib/Lemonldap/NG/Portal/Lib/Choice.pm
@@ -428,6 +429,8 @@ t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-POST-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-POST.t
 t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t
+t/30-Auth-and-issuer-SAML-Redirect-MultipleSP-Missing-SLO.t
+t/30-Auth-and-issuer-SAML-Redirect-MultipleSP.t
 t/30-Auth-and-issuer-SAML-Redirect.t
 t/30-Auth-SAML-with-choice.t
 t/30-CDC.t
