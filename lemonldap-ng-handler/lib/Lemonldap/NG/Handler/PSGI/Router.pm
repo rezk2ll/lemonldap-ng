@@ -7,7 +7,7 @@ require Lemonldap::NG::Handler::PSGI::Main;
 extends 'Lemonldap::NG::Handler::Lib::PSGI',
   'Lemonldap::NG::Common::PSGI::Router';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.3';
 
 sub init {
     $_[0]->api('Lemonldap::NG::Handler::PSGI::Main');

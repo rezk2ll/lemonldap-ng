@@ -5,9 +5,8 @@ package Lemonldap::NG::Portal::Main::Plugin;
 use strict;
 use Mouse;
 use HTML::Template;
-use Data::Dumper;
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.2';
 
 extends 'Lemonldap::NG::Common::Module';
 
