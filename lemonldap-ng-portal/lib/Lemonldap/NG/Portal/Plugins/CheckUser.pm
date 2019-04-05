@@ -11,7 +11,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.3';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin';
+extends 'Lemonldap::NG::Portal::Main::Plugin',
+  'Lemonldap::NG::Portal::Lib::_tokenRule';
 
 # INITIALIZATION
 
@@ -61,7 +62,7 @@ sub check {
     my $msg = my $auth = '';
 
     # Check token
-    if ( $self->conf->{requireToken} ) {
+    if ( $self->ottRule->( $req, {} ) ) {
         my $token = $req->param('token');
         unless ($token) {
             $self->userLogger->warn('checkUser try without token');
@@ -109,7 +110,7 @@ sub check {
                 ALERTE    => 'alert-warning',
                 LOGIN     => '',
                 TOKEN     => (
-                      $self->conf->{requireToken}
+                      $self->ottRule->( $req, {} )
                     ? $self->ott->createToken( $req->userData )
                     : ''
                 )
@@ -215,7 +216,7 @@ sub check {
         MACROS      => $array_attrs->[1],
         GROUPS      => $array_attrs->[0],
         TOKEN       => (
-              $self->conf->{requireToken}
+              $self->ottRule->( $req, {} )
             ? $self->ott->createToken( $req->userData )
             : ''
         )
@@ -269,7 +270,7 @@ sub display {
         MACROS     => $array_attrs->[1],
         GROUPS     => $array_attrs->[0],
         TOKEN      => (
-              $self->conf->{requireToken}
+              $self->ottRule->( $req, {} )
             ? $self->ott->createToken( $req->userData )
             : ''
         )
@@ -283,7 +284,7 @@ sub _urlFormat {
 
     $url = 'http://' . $url unless ( $url =~ m#^https?://[^/]*.*# );
     my ( $proto, $vhost, $appuri ) = $url =~ m#^(https?://)([^/]*)(.*)#;
-    my ( $port ) = $vhost =~ m#^.+(:\d+)$#;
+    my ($port) = $vhost =~ m#^.+(:\d+)$#;
     $port ||= '';
     $vhost =~ s/:\d+$//;
     $vhost .= $self->conf->{domain} unless ( $vhost =~ /\./ );
@@ -347,7 +348,7 @@ sub _authorization {
 
 sub _headers {
     my ( $self, $req, $uri ) = @_;
-    my ( $vhost ) = $uri =~ m#^https?://([^/]*).*#;
+    my ($vhost) = $uri =~ m#^https?://([^/]*).*#;
 
     $vhost =~ s/:\d+$//;
     $req->{env}->{HTTP_HOST} = $vhost;
