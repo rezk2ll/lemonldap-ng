@@ -72,7 +72,7 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{SSLAuthnLevel};
+    $req->sessionInfo->{authenticationLevel} = $self->conf->{SSLAuthnLevel};
     PE_OK;
 }
 

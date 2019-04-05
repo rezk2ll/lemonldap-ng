@@ -27,7 +27,7 @@ has InitCmd => (
 # INITIALIZATION
 
 sub init {
-    my ($self) = @_;
+    my $self = shift;
     my $file;
     unless ( $file = $self->conf->{krbKeytab} ) {
         $self->error('Keytab not defined');
