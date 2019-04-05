@@ -53,6 +53,7 @@ sub setAuthSessionInfo {
     $self->SUPER::setAuthSessionInfo($req);
     $req->sessionInfo->{$_} = $req->data->{restAuthInfo}->{$_}
       foreach ( keys %{ $req->data->{restAuthInfo} } );
+    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{restAuthnLevel};
     return PE_OK;
 }
 
