@@ -3,12 +3,7 @@ package Lemonldap::NG::Portal::Lib::_tokenRule;
 use strict;
 use Mouse;
 
-#use JSON qw(from_json to_json);
-#use Crypt::URandom;
-
 our $VERSION = '2.0.3';
-
-#extends 'Lemonldap::NG::Common::Module';
 
 has ottRule => (
     is      => 'rw',
