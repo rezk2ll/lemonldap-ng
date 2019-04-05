@@ -21,7 +21,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.3';
 
-extends 'Lemonldap::NG::Portal::Main::Auth';
+extends 'Lemonldap::NG::Portal::Main::Auth',
+  'Lemonldap::NG::Portal::Lib::_tokenRule';
 
 has authnLevel => (
     is      => 'rw',
@@ -34,24 +35,11 @@ has authnLevel => (
 
 has captcha => ( is => 'rw' );
 has ott     => ( is => 'rw' );
-has ottRule => ( is => 'rw', default => sub { 1 } );
 
 # INITIALIZATION
 
 sub init {
-    my ($self) = @_;
-    my $hd = $self->p->HANDLER;
-
-    # Parse OTT activation rule
-    $self->logger->debug(
-        "OTT activation rule -> " . $self->conf->{requireToken} );
-    my $rule =
-      $hd->buildSub( $hd->substitute( $self->conf->{requireToken} ) );
-    unless ($rule) {
-        $self->error( "Bad OTT activation rule -> " . $hd->tsv->{jail}->error );
-        return 0;
-    }
-    $self->{ottRule} = $rule;
+    my $self = shift;
 
     if ( $self->{conf}->{captcha_login_enabled} ) {
         $self->captcha( $self->p->loadModule('::Lib::Captcha') ) or return 0;
@@ -111,7 +99,7 @@ sub extractFormInfo {
     }
 
     # Security: check for captcha or token
-    if ( $self->captcha or $self->ottRule->( $req, $req->env ) ) {
+    if ( $self->captcha or $self->ottRule->( $req, {} ) ) {
         my $token;
         unless ( $token = $req->param('token') ) {
             $self->userLogger->error('Authentication tried without token');
@@ -133,7 +121,7 @@ sub extractFormInfo {
             }
             $self->logger->debug("Captcha code verified");
         }
-        elsif ( $self->ottRule->( $req, $req->env ) ) {
+        elsif ( $self->ottRule->( $req, {} ) ) {
             unless ( $req->data->{tokenVerified}
                 or $self->ott->getToken($token) )
             {
@@ -185,7 +173,7 @@ sub setSecurity {
     }
 
     # Else get token
-    elsif ( $self->ottRule->( $req, $req->env ) ) {
+    elsif ( $self->ottRule->( $req, {} ) ) {
         $self->ott->setToken($req);
     }
 }
