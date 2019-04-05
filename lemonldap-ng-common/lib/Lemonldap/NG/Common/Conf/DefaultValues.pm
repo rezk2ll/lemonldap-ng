@@ -65,6 +65,7 @@ sub defaultValues {
               'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
             'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
         },
+        'gpgAuthnLevel'                 => 3,
         'gpgDb'                         => '',
         'groups'                        => {},
         'handlerInternalCache'          => 15,
@@ -216,6 +217,7 @@ sub defaultValues {
         },
         'requireToken'     => 1,
         'rest2fActivation' => 0,
+        'restAuthnLevel'   => 2,
         'samlAttributeAuthorityDescriptorAttributeServiceSOAP' =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
         'samlAuthnContextMapKerberos'                   => 4,

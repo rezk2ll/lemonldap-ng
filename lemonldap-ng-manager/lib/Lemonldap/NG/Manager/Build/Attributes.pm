@@ -1570,6 +1570,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Enable REST config server',
         },
+        restAuthnLevel => {
+            type          => 'int',
+            default       => 2,
+            documentation => 'REST authentication level',
+        },
 
         # SOAP server
         soapSessionServer => {
@@ -2790,6 +2795,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             default       => '',
             documentation => 'GPG keys database',
+        },
+        gpgAuthnLevel => {
+            type          => 'int',
+            default       => 3,
+            documentation => 'GPG authentication level',
         },
 
         # Radius

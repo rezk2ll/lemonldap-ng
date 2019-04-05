@@ -1158,6 +1158,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             },
             'type' => 'keyTextContainer'
         },
+        'gpgAuthnLevel' => {
+            'default' => 3,
+            'type'    => 'int'
+        },
         'gpgDb' => {
             'default' => '',
             'type'    => 'text'
@@ -2517,6 +2521,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'msgFail'    => '__badValue__',
             'test'       => qr/^\w+$/,
             'type'       => 'url'
+        },
+        'restAuthnLevel' => {
+            'default' => 2,
+            'type'    => 'int'
         },
         'restAuthUrl' => {
             'type' => 'url'
