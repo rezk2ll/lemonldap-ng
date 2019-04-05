@@ -28,10 +28,10 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_USERNOTFOUND
 );
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.3';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
-  'Lemonldap::NG::Portal::Lib::SMTP';
+  'Lemonldap::NG::Portal::Lib::SMTP', 'Lemonldap::NG::Portal::Lib::_tokenRule';
 
 # PROPERTIES
 
@@ -109,7 +109,7 @@ sub _reset {
 
     # OTHER FORMS
     if ($mailToken) {
-        $self->logger->debug( "Token given for password reset: $mailToken" );
+        $self->logger->debug("Token given for password reset: $mailToken");
 
         # Check if token is valid
         my $mailSession = $self->p->getApacheSession($mailToken);
@@ -137,7 +137,7 @@ sub _reset {
 
         # Check if token exists
         my $token;
-        if ( $self->conf->{requireToken} or $self->captcha ) {
+        if ( $self->ottRule->( $req, {} ) or $self->captcha ) {
             $token = $req->param('token');
             unless ($token) {
                 $self->setSecurity($req);
@@ -168,7 +168,7 @@ sub _reset {
             }
             $self->logger->debug('Captcha code verified');
         }
-        elsif ( $self->conf->{requireToken} ) {
+        elsif ( $self->ottRule->( $req, {} ) ) {
             unless ( $self->ott->getToken($token) ) {
                 $self->setSecurity($req);
                 $self->userLogger->warn('Reset try with expired/bad token');
@@ -405,14 +405,12 @@ sub changePwd {
     # Check if user wants to generate the new password
     if ( $req->param('reset') ) {
         $self->logger->debug(
-            "Reset password request for $req->{sessionInfo}->{_user}" );
+            "Reset password request for $req->{sessionInfo}->{_user}");
 
         # Generate a complex password
         my $password =
           $self->gen_password( $self->conf->{randomPasswordRegexp} );
-
-        $self->logger->debug( "Generated password: $password" );
-
+        $self->logger->debug("Generated password: $password");
         $req->data->{newpassword}     = $password;
         $req->data->{confirmpassword} = $password;
         $req->data->{forceReset}      = 1;
@@ -498,7 +496,7 @@ sub setSecurity {
     if ( $self->captcha ) {
         $self->captcha->setCaptcha($req);
     }
-    elsif ( $self->conf->{requireToken} ) {
+    elsif ( $self->ottRule->( $req, {} ) ) {
         $self->ott->setToken($req);
     }
     return 1;
@@ -533,7 +531,8 @@ sub display {
         DISPLAY_PASSWORD_FORM   => 0,
     );
     if ( $req->data->{mailToken}
-        and not $self->p->checkXSSAttack( 'mail_token', $req->data->{mailToken} ) )
+        and
+        not $self->p->checkXSSAttack( 'mail_token', $req->data->{mailToken} ) )
     {
         $tplPrm{MAIL_TOKEN} = $req->data->{mailToken};
     }
