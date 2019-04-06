@@ -14,9 +14,7 @@ has ottRule => (
         $rule = $hd->buildSub( $hd->substitute($rule) );
         unless ($rule) {
             $_[0]->logger->error(
-                    'Unable to compile "requireToken" rule, forcing token ('
-                  . $hd->tsv->{jail}->error
-                  . ')' );
+                'Unable to compile "requireToken" rule => Forcing token');
             $rule = sub { 1 };
         }
         return $rule;
