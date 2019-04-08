@@ -4,7 +4,7 @@ use IO::String;
 use JSON;
 use Test::More;
 
-our $debug = 'debug';
+our $debug = 'error';
 my ( $p, $res, $spId );
 $| = 1;
 
@@ -52,6 +52,8 @@ ok(
     'AuthBasic request'
 );
 count(1);
+expectOK($res);
+expectAuthenticatedAs($res,'dwho');
 
 ok(
     $res = handler(
@@ -68,6 +70,7 @@ ok(
 );
 count(1);
 expectOK($res);
+expectAuthenticatedAs($res,'dwho');
 
 end_handler();
 clean_sessions();
