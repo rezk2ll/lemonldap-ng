@@ -455,6 +455,7 @@ t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-SOAP-Server.t
 t/35-My-session.t
 t/35-REST-config-backend.t
+t/35-REST-sessions-with-AuthBasic-handler.t
 t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-config-backend.t
 t/35-SOAP-sessions-with-SOAP-server.t
@@ -529,12 +530,14 @@ t/76-2F-Ext-with-History.t
 t/77-2F-Mail.t
 t/90-Translations.t
 t/99-pod.t
+t/auth-basic.pm
 t/gpghome/key.asc
 t/gpghome/openpgp-revocs.d/9482CEFB055809CBAFE6D71AAB2D5542891D1677.rev
 t/gpghome/private-keys-v1.d/A076B0E7DB141A919271EE8B581CDFA8DA42F333.key
 t/gpghome/private-keys-v1.d/B7219440BCCD85200121CFB89F94C8D98C0397B3.key
 t/gpghome/pubring.kbx
 t/gpghome/trustdb.gpg
+t/lib/Lemonldap/NG/Handler/Test.pm
 t/lib/Lemonldap/NG/Portal/Auth/LDAPPolicy.pm
 t/lmConf-1.json
 t/pdata.pm
