@@ -22,6 +22,7 @@ ok( getHeader( $res, 'WWW-Authenticate' ) eq 'Basic realm="LemonLDAP::NG"',
     'Get WWW-Authenticate header' );
 count(2);
 
+my $subtest = 0;
 ok(
     $res = handler(
         req => [
@@ -30,7 +31,8 @@ ok(
         ],
         sub => sub {
             my ($res) = @_;
-            subtest 'Portal request' => sub {
+            $subtest++;
+            subtest 'REST request to Portal' => sub {
                 plan tests => 3;
                 ok( $res->[0] eq 'POST', 'Get POST request' );
                 my ( $url, $query ) = split /\?/, $res->[1];
@@ -51,9 +53,10 @@ ok(
     ),
     'AuthBasic request'
 );
-count(1);
+ok( $subtest == 1, 'REST request was done by handler' );
+count(2);
 expectOK($res);
-expectAuthenticatedAs($res,'dwho');
+expectAuthenticatedAs( $res, 'dwho' );
 
 ok(
     $res = handler(
@@ -62,15 +65,17 @@ ok(
             [ 'Authorization' => 'Basic ZHdobzpkd2hv' ]
         ],
         sub => sub {
+            $subtest++;
             fail "Cache didn't work";
             return [ 500, [], [] ];
         },
     ),
     'New AuthBasic request'
 );
-count(1);
+ok( $subtest == 1, 'Handler used its local cache' );
+count(2);
 expectOK($res);
-expectAuthenticatedAs($res,'dwho');
+expectAuthenticatedAs( $res, 'dwho' );
 
 end_handler();
 clean_sessions();
