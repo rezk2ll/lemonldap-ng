@@ -639,6 +639,7 @@ sub sendHeaders {
                 $class->logger->debug("Send header $h with value $v");
             }
             else {
+                $headers{$h} = '';
                 $class->logger->debug("Send header $h with empty value");
             }
         }
