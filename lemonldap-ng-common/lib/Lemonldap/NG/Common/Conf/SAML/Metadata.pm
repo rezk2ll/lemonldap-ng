@@ -14,7 +14,7 @@ use MIME::Base64;
 use Safe;
 use Encode;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.3';
 
 my $dataStart = tell(DATA);
 
@@ -347,7 +347,7 @@ __DATA__
     <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
   </AttributeAuthorityDescriptor>
   </TMPL_UNLESS>
-  
+
   <Organization>
     <OrganizationName xml:lang="en"><TMPL_VAR NAME="samlOrganizationName"></OrganizationName>
     <OrganizationDisplayName xml:lang="en"><TMPL_VAR NAME="samlOrganizationDisplayName"></OrganizationDisplayName>

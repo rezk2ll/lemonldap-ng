@@ -20,7 +20,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SLO_ERROR
 );
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.3';
 
 # PROPERTIES
 
@@ -2385,21 +2385,12 @@ sub samldate2timestamp {
 sub sendLogoutResponseToServiceProvider {
     my ( $self, $req, $logout, $method ) = @_;
 
-    my $httpmethod = $self->getFirstHttpMethod(
-        $self->lassoServer,
-        $logout->remote_providerID,
-        Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT
-    );
-    if ( $httpmethod == Lasso::Constants::HTTP_METHOD_NONE ) {
-        $self->logger->warn( "Provider "
-              . $logout->remote_providerID
-              . " has no SingleLogoutService in metadata, staying on portal" );
-        return $self->p->do( $req, [] );
-    }
-
     # Logout response
     unless ( $self->buildLogoutResponseMsg($logout) ) {
-        return $self->p->sendError( $req, "Unable to build SLO response", 500 );
+        $self->logger->warn( "Could not build a logout response for provider "
+              . $logout->remote_providerID
+              . ", staying on portal" );
+        return $self->p->do( $req, [] );
     }
 
     # Send response depending on request method
@@ -3432,8 +3423,8 @@ Send logout request to a provider
 
 Send logout response issue from a logout request to all other
 providers. If information have to be displayed to users, such as
-iframe to send HTTP-Redirect or HTTP-POST logout request, then          
-$self->{_info} will be updated.                                         
+iframe to send HTTP-Redirect or HTTP-POST logout request, then
+$self->{_info} will be updated.
 
 =head2 checkSignatureStatus
 

@@ -60,7 +60,7 @@ describe('00 Lemonldap::NG', function() {
     it('should authenticate with history', function() {
       expect(browser.driver.findElement(by.css('[trspan="back2Portal"]')).getText()).toEqual('Retourner au portail');
       browser.driver.findElement(by.css('[trspan="back2Portal"]')).click();
-      
+
       // Failed login attempt
       browser.driver.findElement(by.xpath("//input[@name='user']")).sendKeys('dwho');
       browser.driver.findElement(by.xpath("//input[@name='password']")).sendKeys('ohwd');
@@ -68,7 +68,7 @@ describe('00 Lemonldap::NG', function() {
       browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
       expect(browser.driver.findElement(by.css('[trmsg="5"]')).getText()).toEqual('Mot de passe ou identifiant incorrect');
       browser.driver.findElement(by.css('[trspan="goToPortal"]')).click();
-      
+
       // Login attempt
       browser.driver.findElement(by.xpath("//input[@name='user']")).sendKeys('dwho');
       browser.driver.findElement(by.xpath("//input[@name='password']")).sendKeys('dwho');

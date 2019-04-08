@@ -27,9 +27,10 @@ llapp.controller 'TreeCtrl', [
 		$scope.waiting = true
 		$scope.showM = false
 		$scope.showT = false
-		$scope.form = 'home'
+		$scope.form = 'homeViewer'
 		$scope.currentCfg = {}
 		$scope.viewPrefix = window.viewPrefix
+		$scope.allowDiff = window.allowDiff
 		$scope.message = {}
 		$scope.result = ''
 
@@ -133,7 +134,7 @@ llapp.controller 'TreeCtrl', [
 
 		# Display main form
 		$scope.home = ->
-			$scope.form = 'home'
+			$scope.form = 'homeViewer'
 			$scope.showM = false
 
 		# Download raw conf
@@ -438,7 +439,7 @@ llapp.controller 'TreeCtrl', [
 						title: 'emptyConf'
 						message: '__zeroConfExplanations__'
 					$scope.showModal 'message.html'
-				$scope.form = 'home'
+				$scope.form = 'homeViewer'
 				$scope.waiting = false
 			, readError
 			# Colorized link

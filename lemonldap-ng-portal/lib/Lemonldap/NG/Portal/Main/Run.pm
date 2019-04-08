@@ -247,14 +247,16 @@ sub do {
     }
     else {
         if (
-                $err
-            and $err != PE_LOGOUT_OK
-            and (
-                $err != PE_REDIRECT
-                or (    $err == PE_REDIRECT
-                    and $req->data->{redirectFormMethod}
-                    and $req->data->{redirectFormMethod} eq 'post' )
-                or $req->info
+            $req->info
+            or (
+                    $err
+                and $err != PE_LOGOUT_OK
+                and (
+                    $err != PE_REDIRECT
+                    or (    $err == PE_REDIRECT
+                        and $req->data->{redirectFormMethod}
+                        and $req->data->{redirectFormMethod} eq 'post' )
+                )
             )
           )
         {
@@ -560,7 +562,10 @@ sub _deleteSession {
 
     # Log
     my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
-    $self->userLogger->notice("User $user has been disconnected") if $user;
+    my $mod  = $req->{sessionInfo}->{_auth};
+    $self->userLogger->notice(
+"User $user has been disconnected from $mod ($req->{sessionInfo}->{ipAddr})"
+    ) if $user;
 
     return $session->error ? 0 : 1;
 }
@@ -631,7 +636,7 @@ sub setHiddenFormValue {
     if ( defined $val or !( $val & ~$val ) ) {
         $key = $prefix . $key;
 
-        #$val =~ s/\+/%2B/g;
+        $val = encode_base64($val) if $base64;
         $req->{portalHiddenFormValues}->{$key} = $val;
         $self->logger->debug("Store $val in hidden key $key");
     }
@@ -828,7 +833,7 @@ sub sendHtml {
           ( $req->info =~ /<iframe.*?src="(.*?)"/sg );
     }
     if (@url) {
-        $csp .= join( ' ', 'child-src', @url ) . ';';
+        $csp .= join( ' ', 'child-src', @url, "'self'" ) . ';';
     }
 
     # Set CSP header
@@ -912,7 +917,6 @@ sub tplParams {
         SKIN       => $self->getSkin($req),
         PORTAL_URL => $self->conf->{portal},
         SKIN_PATH  => $portalPath . "skins",
-        ANTIFRAME  => $self->conf->{portalAntiFrame},
         SKIN_BG    => $self->conf->{portalSkinBackground},
         ( $self->customParameters ? ( %{ $self->customParameters } ) : () ),
         %templateParams

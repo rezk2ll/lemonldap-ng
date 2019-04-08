@@ -228,8 +228,6 @@ $(document).ready ->
 	datas = getValues()
 	# Export datas for other scripts
 	window.datas = datas
-	if datas['antiframe'] and top != self
-		top.location.href = location.href
 
 	$("#appslist").sortable
 		axis: "y"

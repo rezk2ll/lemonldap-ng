@@ -64,7 +64,7 @@ describe('10 Lemonldap::NG', function() {
         expect(links[2].getText()).toEqual('Gestionnaire 2ndFA');
         expect(links[3].getText()).toEqual('Aller au portail');
         expect(browser.driver.findElement(by.css('[trspan="yourNewTotpKey"]')).getText()).toEqual('Votre nouvelle clef TOTP. Testez-la et entrez le code');
-        
+
         // Submit an empty form
         browser.driver.findElement(by.id('verify')).click();
         expect(browser.driver.findElement(by.css('[trspan="yourNewTotpKey"]')).getText()).toEqual('Remplissez le formulaire');

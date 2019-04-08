@@ -11,7 +11,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.3';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin';
+extends 'Lemonldap::NG::Portal::Main::Plugin',
+  'Lemonldap::NG::Portal::Lib::_tokenRule';
 
 # INITIALIZATION
 
@@ -61,7 +62,7 @@ sub check {
     my $msg = my $auth = '';
 
     # Check token
-    if ( $self->conf->{requireToken} ) {
+    if ( $self->ottRule->( $req, {} ) ) {
         my $token = $req->param('token');
         unless ($token) {
             $self->userLogger->warn('checkUser try without token');
@@ -109,7 +110,7 @@ sub check {
                 ALERTE    => 'alert-warning',
                 LOGIN     => '',
                 TOKEN     => (
-                      $self->conf->{requireToken}
+                      $self->ottRule->( $req, {} )
                     ? $self->ott->createToken( $req->userData )
                     : ''
                 )
@@ -165,8 +166,10 @@ sub check {
     # Check if user is allowed to access submitted URL and compute headers
     if ( $url and %$attrs ) {
 
+        # Check url format
+        $url = $self->_urlFormat($url);
+
         # User is allowed ?
-        $url = 'http://' . $url unless ( $url =~ m#^https?://[^/]*.*# );
         $auth = $self->_authorization( $req, $url );
         $self->logger->debug(
             "checkUser requested for user: $req->{user} and URL: $url");
@@ -213,7 +216,7 @@ sub check {
         MACROS      => $array_attrs->[1],
         GROUPS      => $array_attrs->[0],
         TOKEN       => (
-              $self->conf->{requireToken}
+              $self->ottRule->( $req, {} )
             ? $self->ott->createToken( $req->userData )
             : ''
         )
@@ -267,13 +270,26 @@ sub display {
         MACROS     => $array_attrs->[1],
         GROUPS     => $array_attrs->[0],
         TOKEN      => (
-              $self->conf->{requireToken}
+              $self->ottRule->( $req, {} )
             ? $self->ott->createToken( $req->userData )
             : ''
         )
     };
     return $self->sendJSONresponse( $req, $params ) if ( $req->wantJSON );
     return $self->p->sendHtml( $req, 'checkuser', params => $params, );
+}
+
+sub _urlFormat {
+    my ( $self, $url ) = @_;
+
+    $url = 'http://' . $url unless ( $url =~ m#^https?://[^/]*.*# );
+    my ( $proto, $vhost, $appuri ) = $url =~ m#^(https?://)([^/]*)(.*)#;
+    my ($port) = $vhost =~ m#^.+(:\d+)$#;
+    $port ||= '';
+    $vhost =~ s/:\d+$//;
+    $vhost .= $self->conf->{domain} unless ( $vhost =~ /\./ );
+    $appuri ||= '/';
+    return "$proto$vhost$port$appuri";
 }
 
 sub _userDatas {
@@ -313,9 +329,8 @@ sub _authorization {
     my ( $self, $req, $uri ) = @_;
     my ( $vhost, $appuri ) = $uri =~ m#^https?://([^/]*)(.*)#;
     my $exist = 0;
-    $vhost =~ s/:\d+$//;
-    $appuri ||= '/';
 
+    $vhost =~ s/:\d+$//;
     foreach my $vh ( keys %{ $self->conf->{locationRules} } ) {
         if ( $vh eq $vhost ) {
             $exist = 1;
@@ -333,7 +348,8 @@ sub _authorization {
 
 sub _headers {
     my ( $self, $req, $uri ) = @_;
-    my ( $vhost, $appuri ) = $uri =~ m#^https?://([^/]*)(.*)#;
+    my ($vhost) = $uri =~ m#^https?://([^/]*).*#;
+
     $vhost =~ s/:\d+$//;
     $req->{env}->{HTTP_HOST} = $vhost;
     $self->p->HANDLER->headersInit( $self->{conf} );

@@ -19,7 +19,7 @@ use Mouse;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.3';
 
 # OpenID Connect standard claims
 use constant PROFILE => [

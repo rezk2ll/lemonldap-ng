@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.3';
 
 # TODO: Missing:
 #  * activeTimer
@@ -220,8 +220,8 @@ sub tree {
                             form  => 'simpleInputContainer',
                             help  => 'authkerberos.html',
                             nodes => [
-                                'krbKeytab',     'krbByJs',
-                                'krbAuthnLevel', 'krbRemoveDomain'
+                                'krbAuthnLevel', 'krbKeytab',
+                                'krbByJs',       'krbRemoveDomain'
                             ]
                         },
                         {
@@ -325,15 +325,15 @@ sub tree {
                             title => 'gpgParams',
                             help  => 'authgpg.html',
                             form  => 'simpleInputContainer',
-                            nodes => ['gpgDb'],
+                            nodes => [ 'gpgAuthnLevel', 'gpgDb' ],
                         },
                         {
                             title => 'proxyParams',
                             help  => 'authproxy.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'proxyAuthService', 'proxySessionService',
-                                'remoteCookieName', 'proxyAuthnLevel',
+                                'proxyAuthnLevel',     'proxyAuthService',
+                                'proxySessionService', 'remoteCookieName',
                                 'proxyUseSoap'
                             ]
                         },
@@ -341,7 +341,7 @@ sub tree {
                             title => 'pamParams',
                             help  => 'authpam.html',
                             form  => 'simpleInputContainer',
-                            nodes => [ 'pamService', 'pamAuthnLevel', ]
+                            nodes => [ 'pamAuthnLevel', 'pamService' ]
                         },
                         {
                             title => 'radiusParams',
@@ -357,8 +357,9 @@ sub tree {
                             help  => 'authrest.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'restAuthUrl',       'restUserDBUrl',
-                                'restPwdConfirmUrl', 'restPwdModifyUrl'
+                                'restAuthnLevel', 'restAuthUrl',
+                                'restUserDBUrl',  'restPwdConfirmUrl',
+                                'restPwdModifyUrl'
                             ]
                         },
                         {

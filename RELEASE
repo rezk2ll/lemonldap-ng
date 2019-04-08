@@ -28,7 +28,7 @@ Before release
 
   Replace https://lemonldap-ng.org/documentation/X.X/parameterlist by
   /tmp/prmlist.txt content
-  
+
   $ make documentation
 
 - Update changelog:
@@ -56,7 +56,7 @@ For major release
 
 - Go on gitlab and create a new tag: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tags/new
 
-- Change "latest" symlink in dokuwiki 
+- Change "latest" symlink in dokuwiki
 
 - Edit scripts/doc.pl in trunk to point on the new documentation path
 

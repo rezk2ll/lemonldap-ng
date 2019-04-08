@@ -7,7 +7,7 @@ require 't/test-lib.pm';
 use lib 't/lib';
 
 my $res;
-my $maintests = 22;
+my $maintests = 24;
 
 SKIP: {
     skip( 'LLNGTESTLDAP is not set', $maintests ) unless ( $ENV{LLNGTESTLDAP} );
@@ -33,7 +33,7 @@ SKIP: {
     );
     use Lemonldap::NG::Portal::Main::Constants 'PE_PP_CHANGE_AFTER_RESET',
       'PE_PP_PASSWORD_EXPIRED', 'PE_PASSWORD_OK', 'PE_PP_ACCOUNT_LOCKED',
-      'PE_PP_PASSWORD_TOO_SHORT';
+      'PE_PP_PASSWORD_TOO_SHORT', 'PE_PP_GRACE';
 
     # 1 - TEST PE_PP_CHANGE_AFTER_RESET AND PE_PP_PASSWORD_EXPIRED
     # ------------------------------------------------------------
@@ -46,7 +46,7 @@ SKIP: {
         my $code       = $tpl->[1];
         my $postString = "user=$user&password=$user";
 
-        # Try yo authenticate
+        # Try to authenticate
         # -------------------
         ok(
             $res = $client->_post(
@@ -91,13 +91,32 @@ SKIP: {
         expectCookie($res) or print STDERR Dumper($res);
     }
 
-    # 2 - TEST PE_PP_ACCOUNT_LOCKED
+    # 2 - TEST PE_PP_GRACE
+    # -------------------------
+    my $user       = 'grace';
+    my $code       = "ppGrace";
+    my $postString = "user=$user&password=$user";
+
+    # Try to authenticate
+    # -------------------
+    ok(
+        $res = $client->_post(
+            '/', IO::String->new($postString),
+            length => length($postString),
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+    my $match = 'trmsg="' . $code . '"';
+    ok( $res->[2]->[0] =~ /$match/, 'Grace remaining' );
+
+    # 3 - TEST PE_PP_ACCOUNT_LOCKED
     # -------------------------
     my $user       = 'lock';
     my $code       = PE_PP_ACCOUNT_LOCKED;
     my $postString = "user=$user&password=$user";
 
-    # Try yo authenticate
+    # Try to authenticate
     # -------------------
     ok(
         $res = $client->_post(
@@ -124,13 +143,13 @@ SKIP: {
     $match = 'trmsg="' . PE_PASSWORD_OK . '"';
     ok( $res->[2]->[0] !~ /$match/s, 'Password is not changed' );
 
-    # 3 - TEST PE_PP_PASSWORD_TOO_SHORT
+    # 4 - TEST PE_PP_PASSWORD_TOO_SHORT
     # ---------------------------------
     $user       = 'short';
     $code       = PE_PP_PASSWORD_TOO_SHORT;
     $postString = "user=$user&password=passwordnottooshort";
 
-    # Try yo authenticate
+    # Try to authenticate
     # -------------------
     ok(
         $res = $client->_post(

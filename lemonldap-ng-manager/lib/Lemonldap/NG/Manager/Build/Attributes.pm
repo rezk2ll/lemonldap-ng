@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.3';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -629,7 +629,7 @@ sub attributes {
         },
         requireToken => {
             default       => 1,
-            type          => 'bool',
+            type          => 'boolOrExpr',
             documentation => 'Enable token for forms',
         },
         tokenUseGlobalStorage => {
@@ -916,16 +916,21 @@ sub attributes {
         },
 
         # Viewer
-        viewerHiddenPK => {
+        viewerHiddenKeys => {
             type          => 'text',
             default       => 'samlIDPMetaDataNodes samlSPMetaDataNodes',
-            documentation => 'ConfTree hidden primary keys',
+            documentation => 'Hidden Conf keys',
             flags         => 'm',
         },
         viewerAllowBrowser => {
             type          => 'bool',
             default       => 0,
             documentation => 'Allow configuration browser',
+        },
+        viewerAllowDiff => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Allow configuration diff',
         },
 
         # Notification
@@ -1564,6 +1569,11 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Enable REST config server',
+        },
+        restAuthnLevel => {
+            type          => 'int',
+            default       => 2,
+            documentation => 'REST authentication level',
         },
 
         # SOAP server
@@ -2785,6 +2795,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             default       => '',
             documentation => 'GPG keys database',
+        },
+        gpgAuthnLevel => {
+            type          => 'int',
+            default       => 3,
+            documentation => 'GPG authentication level',
         },
 
         # Radius
