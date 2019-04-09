@@ -47,7 +47,7 @@ sub set_user {
 sub set_header_in {
     my ( $class, $req, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        $req->{env}->{ cgiName($h) } = $v;
+        $req->{env}->{ cgiName($h) } = $v if ( defined $v );
     }
 }
 
