@@ -401,7 +401,7 @@
 "mail2fTimeout":"Code timeout",
 "mail2fSubject":"Mail subject",
 "mail2fBody":"Mail body",
-"mail2fAuthnLevel":"Authentication level",
+"mail2fAuthnLevel":"Livello di autenticazione",
 "mail2fLogo":"Logo",
 "mailBody":"Successo contenuto di posta",
 "mailCharset":"Charset",
