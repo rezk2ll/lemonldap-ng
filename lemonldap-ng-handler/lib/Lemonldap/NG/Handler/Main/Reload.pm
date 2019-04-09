@@ -362,7 +362,7 @@ sub headersInit {
         my $sub = '';
         foreach ( keys %headers ) {
             my $val = $class->substitute( $headers{$_} );
-            $sub .= "('$_' => $val),";
+            $sub .= "('$_' => $val || ''),";
         }
 
         unless ( $class->tsv->{forgeHeaders}->{$vhost} =
