@@ -625,7 +625,7 @@ sub isUnprotected {
 }
 
 ## @rmethod void sendHeaders()
-# Launch function compiled by forgeHeadersInit() for the current virtual host
+# Launch function compiled by headersInit() for the current virtual host
 sub sendHeaders {
     my ( $class, $req, $session ) = @_;
     my $vhost = $class->resolveAlias($req);
@@ -647,7 +647,7 @@ sub sendHeaders {
 }
 
 ## @rfunction array ref checkHeaders()
-# Return computed headers by forgeHeadersInit() for the current virtual host
+# Return computed headers by headersInit() for the current virtual host
 # [ { key => 'header1', value => 'value1' }, { key => 'header2', value => 'value2' }, ...]
 sub checkHeaders {
     my ( $class, $req, $session ) = @_;

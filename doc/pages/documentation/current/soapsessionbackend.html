@@ -118,7 +118,7 @@ Then, set <code>Lemonldap::NG::Common::Apache::Session::SOAP</code> in <code>Gen
 <!-- EDIT4 TABLE [1163-1324] --><div class="notetip">Use /adminSessions if the Handler need to modify the session, for example if you configured an idle timeout.
 </div>
 <p>
-By default, only few sessions keys are shared by SOAP (ipAddr, _utime, _session_id), you need to define which other keys you want to share in <code>General parameters</code> » <code>Advanced parameters</code> » <code>SOAP</code> » <code>Exported attributes</code>.
+By default, only few sessions keys are shared by SOAP (authenticationLevel, groups, ipAddr, _startTime, _utime, _lastSeen, _session_id), you need to define which other keys you want to share in <code>General parameters</code> » <code>Plugins</code> » <code>Portal servers</code> » <code>SOAP/REST exported attributes</code>.
 </p>
 
 <p>
@@ -132,7 +132,7 @@ To share only the listed attributes:
 <pre class="code">_utime _session_id uid cn mail</pre>
 
 </div>
-<!-- EDIT3 SECTION "Manager" [852-1889] -->
+<!-- EDIT3 SECTION "Manager" [852-1949] -->
 <h3 class="sectionedit5" id="apache">Apache</h3>
 <div class="level3">
 
@@ -150,7 +150,7 @@ Sessions SOAP end points access must be allowed in Apache portal configuration (
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT5 SECTION "Apache" [1890-2315] -->
+<!-- EDIT5 SECTION "Apache" [1950-2375] -->
 <h3 class="sectionedit6" id="real_session_backend">Real session backend</h3>
 <div class="level3">
 
@@ -167,6 +167,6 @@ For example, if real sessions are stored in <a href="filesessionbackend.html" cl
 <div class="notetip">If your sessions explorer is on the same server that the portal, either use the <strong>adminSessions</strong> end point in Manager configuration, or override the <code>globalStorage</code> and <code>globalStorageOptions</code> parameters in section all (and not portal) of <code>lemonldap-ng.ini</code>. 
 </div>
 </div>
-<!-- EDIT6 SECTION "Real session backend" [2316-] --></div>
+<!-- EDIT6 SECTION "Real session backend" [2376-] --></div>
 </body>
 </html>

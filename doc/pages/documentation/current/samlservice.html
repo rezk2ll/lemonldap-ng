@@ -138,7 +138,7 @@ This documentation explains how configure <abbr title="Security Assertion Markup
 </p>
 
 <p>
-SAML2 implementation is based on <a href="http://lasso.entrouvert.org" class="urlextern" title="http://lasso.entrouvert.org"  rel="nofollow">Lasso</a>. You will need a very recent version of Lasso (&gt;= 2.5.0).
+SAML2 implementation is based on <a href="http://lasso.entrouvert.org" class="urlextern" title="http://lasso.entrouvert.org"  rel="nofollow">Lasso</a>. You will need a very recent version of Lasso (&gt;= 2.6.0).
 </p>
 
 </div>
@@ -203,10 +203,9 @@ Your EntityID, often use as metadata <abbr title="Uniform Resource Locator">URL<
   ...
 <span class="sc3"><span class="re1">&lt;/EntityDescriptor<span class="re2">&gt;</span></span></span></pre>
 
-</div><div class="notewarning">If you modify <code>/saml/metadata</code> suffix you have to change corresponding Apache rewrite rule.
 </div>
 </div>
-<!-- EDIT6 SECTION "Entry Identifier" [1793-2190] -->
+<!-- EDIT6 SECTION "Entry Identifier" [1793-2074] -->
 <h3 class="sectionedit7" id="security_parameters">Security parameters</h3>
 <div class="level3">
 
@@ -233,8 +232,7 @@ To define keys, you can:
 You can import a certificate containing the public key instead the raw public key. However, certificate will not be really validated by other <abbr title="Security Assertion Markup Language">SAML</abbr> components (expiration date, common name, etc.), but will just be a public key wrapper.
 </p>
 <div class="notetip">You can easily generate a certificate to replace your public key by saving the private key in a file, and use <code>openssl</code> commands to issue a self-signed certificate:
-<pre class="code">$ openssl req -new -key private.key -out cert.csr
-$ openssl x509 -req -days 3650 -in cert.csr -signkey private.key -out cert.pem</pre>
+<pre class="code">$ openssl req -new -key private.key -out cert.pem -x509 -days 3650</pre>
 
 </div><ul>
 <li class="level1"><div class="li"> <strong>Use certificate in response</strong>: Certificate will be sent inside <abbr title="Security Assertion Markup Language">SAML</abbr> responses.</div>
@@ -245,7 +243,7 @@ $ openssl x509 -req -days 3650 -in cert.csr -signkey private.key -out cert.pem</
 <div class="noteimportant">Default value is RSA SHA1 for compatibility purpose but we recommend to use RSA SHA256. This requires to test all partners to check their compatibility.
 </div>
 </div>
-<!-- EDIT7 SECTION "Security parameters" [2191-3653] -->
+<!-- EDIT7 SECTION "Security parameters" [2075-3475] -->
 <h3 class="sectionedit8" id="nameid_formats">NameID formats</h3>
 <div class="level3">
 
@@ -282,7 +280,7 @@ Other NameID formats are automatically managed:
 </ul>
 
 </div>
-<!-- EDIT8 SECTION "NameID formats" [3654-4412] -->
+<!-- EDIT8 SECTION "NameID formats" [3476-4234] -->
 <h3 class="sectionedit9" id="authentication_contexts">Authentication contexts</h3>
 <div class="level3">
 
@@ -306,7 +304,7 @@ Customizable NameID formats are:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "Authentication contexts" [4413-5136] -->
+<!-- EDIT9 SECTION "Authentication contexts" [4235-4958] -->
 <h3 class="sectionedit10" id="organization">Organization</h3>
 <div class="level3">
 <div class="noteclassic">This concerns all parameters for the Organization metadata section:
@@ -326,7 +324,7 @@ Customizable NameID formats are:
 </ul>
 
 </div>
-<!-- EDIT10 SECTION "Organization" [5137-5648] -->
+<!-- EDIT10 SECTION "Organization" [4959-5470] -->
 <h3 class="sectionedit11" id="service_provider">Service Provider</h3>
 <div class="level3">
 <div class="noteclassic">This concerns all parameters for the Service Provider metadata section: 
@@ -409,7 +407,7 @@ The only authorized binding is SOAP. This should be set as Default.
 </p>
 
 </div>
-<!-- EDIT11 SECTION "Service Provider" [5649-6703] -->
+<!-- EDIT11 SECTION "Service Provider" [5471-6525] -->
 <h3 class="sectionedit12" id="identity_provider">Identity Provider</h3>
 <div class="level3">
 <div class="noteclassic">This concerns all parameters for the Service Provider metadata section:
@@ -494,7 +492,7 @@ The only authorized binding is SOAP. This should be set as Default.
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Identity Provider" [6704-7692] -->
+<!-- EDIT12 SECTION "Identity Provider" [6526-7514] -->
 <h3 class="sectionedit13" id="attribute_authority">Attribute Authority</h3>
 <div class="level3">
 <div class="noteclassic">This concerns all parameters for the Attribute Authority metadata section
@@ -517,7 +515,7 @@ Response Location should be empty, as SOAP responses are directly returned (sync
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Attribute Authority" [7693-8104] -->
+<!-- EDIT13 SECTION "Attribute Authority" [7515-7926] -->
 <h3 class="sectionedit14" id="advanced">Advanced</h3>
 <div class="level3">
 
@@ -528,6 +526,12 @@ These parameters are not mandatory to run <abbr title="Security Assertion Markup
 <li class="level1"><div class="li"> <strong>IDP resolution cookie name</strong>: by default, it&#039;s the <abbr title="LemonLDAP::NG">LL::NG</abbr> cookie name suffixed by <code>idp</code>, for example: <code>lemonldapidp</code>.</div>
 </li>
 <li class="level1"><div class="li"> <strong>UTF8 metadata conversion</strong>: set to On to force  partner&#039;s metadata conversion.</div>
+</li>
+<li class="level1"><div class="li"> <strong>RelayState session timeout</strong>: timeout for RelayState sessions. By default, the RelayState session is deleted when it is read. This timeout allows one to purge sessions of lost RelayState.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Use specific query_string method</strong>: the CGI query_string method may break invalid <abbr title="Uniform Resource Locator">URL</abbr> encoded signatures (issued for example by ADFS). This option allows one to use a specific method to extract query string, that should be compliant with non standard <abbr title="Uniform Resource Locator">URL</abbr> encoded parameters.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Override Entity ID when acting as IDP</strong>: By default, <abbr title="Security Assertion Markup Language">SAML</abbr> entityID is the same for SP and IDP roles. Some federations (like <a href="renater.html" class="wikilink1" title="documentation:2.0:renater">Renater</a>) can require a different entityID for IDP. In this case, you can fill here the IDP entityID, for example: <code><a href="https://auth.example.com/saml/metadata/idp" class="urlextern" title="https://auth.example.com/saml/metadata/idp"  rel="nofollow">https://auth.example.com/saml/metadata/idp</a></code>.</div>
 </li>
 </ul>
 
@@ -544,13 +548,7 @@ By default, the main session module is used to store <abbr title="Security Asser
 This is not the case of <a href="memcachedsessionbackend.html" class="wikilink1" title="documentation:2.0:memcachedsessionbackend">Memcached</a> for example. In this case, you can choose a different module to manage <abbr title="Security Assertion Markup Language">SAML</abbr> sessions.
 </p>
 <div class="notetip">You can also choose a different session module to split <abbr title="Single Sign On">SSO</abbr> sessions and <abbr title="Security Assertion Markup Language">SAML</abbr> sessions.
-</div><ul>
-<li class="level1"><div class="li"> <strong>RelayState session timeout</strong>: timeout for RelayState sessions. By default, the RelayState session is deleted when it is read. This timeout allows one to purge sessions of lost RelayState.</div>
-</li>
-<li class="level1"><div class="li"> <strong>Use specific query_string method</strong>: the CGI query_string method may break invalid <abbr title="Uniform Resource Locator">URL</abbr> encoded signatures (issued for example by ADFS). This option allows one to use a specific method to extract query string, that should be compliant with non standard <abbr title="Uniform Resource Locator">URL</abbr> encoded parameters.</div>
-</li>
-</ul>
-
+</div>
 </div>
 
 <h4 id="common_domain_cookie">Common Domain Cookie</h4>
@@ -600,6 +598,6 @@ Configuration parameters are:
 </ul>
 
 </div>
-<!-- EDIT14 SECTION "Advanced" [8105-] --></div>
+<!-- EDIT14 SECTION "Advanced" [7927-] --></div>
 </body>
 </html>

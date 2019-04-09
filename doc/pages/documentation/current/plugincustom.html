@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:plugincustom</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,plugincustom"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="plugincustom.html"/>
@@ -110,7 +110,8 @@ See also <code>Lemonldap::NG::Portal::Main::Plugin</code> man page.
 Create for example the MyPlugin module:
 </p>
 <pre class="code">vi /usr/share/perl5/Lemonldap/NG/Portal/MyPlugin.pm</pre>
-<pre class="code file perl"><a href="http://perldoc.perl.org/functions/package.html"><span class="kw3">package</span></a> Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Portal</span><span class="sy0">::</span><span class="me2">MyPlugin</span><span class="sy0">;</span>
+<div class="notetip">If you do not want to mix files from the distribution with your own work, put your own code in <code>/usr/local/lib/site_perl/Lemonldap/NG/Portal/MyPlugin.pm</code>
+</div><pre class="code file perl"><a href="http://perldoc.perl.org/functions/package.html"><span class="kw3">package</span></a> Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Portal</span><span class="sy0">::</span><span class="me2">MyPlugin</span><span class="sy0">;</span>
 &nbsp;
 <span class="kw2">use</span> Mouse<span class="sy0">;</span>
 <span class="kw2">use</span> Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Portal</span><span class="sy0">::</span><span class="me2">Main</span><span class="sy0">::</span><span class="me2">Constants</span><span class="sy0">;</span>
@@ -146,7 +147,7 @@ extends <span class="st_h">'Lemonldap::NG::Portal::Main::Plugin'</span><span cla
 <span class="nu0">1</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- EDIT4 SECTION "Plugin Perl module" [816-1917] -->
+<!-- EDIT4 SECTION "Plugin Perl module" [816-2090] -->
 <h3 class="sectionedit5" id="configuration">Configuration</h3>
 <div class="level3">
 
@@ -159,6 +160,6 @@ customPlugins <span class="sy0">=</span> Lemonldap<span class="sy0">::</span><sp
 <span class="sy0">;</span>customPlugins <span class="sy0">=</span> Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Portal</span><span class="sy0">::</span><span class="me2">MyPlugin1</span><span class="sy0">,</span> Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Portal</span><span class="sy0">::</span><span class="me2">MyPlugin2</span><span class="sy0">,</span> <span class="sy0">...</span></pre>
 
 </div>
-<!-- EDIT5 SECTION "Configuration" [1918-] --></div>
+<!-- EDIT5 SECTION "Configuration" [2091-] --></div>
 </body>
 </html>

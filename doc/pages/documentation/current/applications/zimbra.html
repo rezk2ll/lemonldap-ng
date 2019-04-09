@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:applications:zimbra</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,applications,zimbra"/>
 <link rel="search" type="application/opensearchdescription+xml" href="../lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="zimbra.html"/>
@@ -82,10 +82,9 @@
 Zimbra use a specific <a href="http://wiki.zimbra.com/index.php?title=Preauth" class="urlextern" title="http://wiki.zimbra.com/index.php?title=Preauth"  rel="nofollow">preauthentication protocol</a> to provide <abbr title="Single Sign On">SSO</abbr> on its application. This protocol is implemented in an <abbr title="LemonLDAP::NG">LL::NG</abbr> specific Handler.
 </p>
 <div class="notetip">Zimbra can also be connected to <abbr title="LemonLDAP::NG">LL::NG</abbr> via <a href="../idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML protocol</a> (see <a href="http://blog.zimbra.com/blog/archives/2010/06/using-saml-assertions-to-access-zimbra.html" class="urlextern" title="http://blog.zimbra.com/blog/archives/2010/06/using-saml-assertions-to-access-zimbra.html"  rel="nofollow">Zimbra blog</a>).
-</div><div class="noteimportant">For now, Zimbra isn&#039;t supported by Nginx handler. You have to use Apache.
 </div>
 </div>
-<!-- EDIT2 SECTION "Presentation" [61-1097] -->
+<!-- EDIT2 SECTION "Presentation" [61-999] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -104,7 +103,7 @@ The integration with <abbr title="LemonLDAP::NG">LL::NG</abbr> is the following:
 </ul>
 
 </div>
-<!-- EDIT3 SECTION "Configuration" [1098-1438] -->
+<!-- EDIT3 SECTION "Configuration" [1000-1340] -->
 <h3 class="sectionedit4" id="zimbra_preauth_key">Zimbra preauth key</h3>
 <div class="level3">
 
@@ -117,7 +116,7 @@ See <a href="http://wiki.zimbra.com/index.php?title=Preauth#Preparing_a_domain_f
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Zimbra preauth key" [1439-1637] -->
+<!-- EDIT4 SECTION "Zimbra preauth key" [1341-1539] -->
 <h3 class="sectionedit5" id="zimbra_application_in_menu">Zimbra application in menu</h3>
 <div class="level3">
 
@@ -126,7 +125,7 @@ Choose for example <a href="http://zimbra.example.com/zimbrasso" class="urlexter
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Zimbra application in menu" [1638-1819] -->
+<!-- EDIT5 SECTION "Zimbra application in menu" [1540-1721] -->
 <h3 class="sectionedit6" id="zimbra_virtual_host">Zimbra virtual host</h3>
 <div class="level3">
 
@@ -135,7 +134,7 @@ You just have to set “Type: ZimbraPreAuth” in virtualhost options and reload
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Zimbra virtual host" [1820-1959] -->
+<!-- EDIT6 SECTION "Zimbra virtual host" [1722-1861] -->
 <h3 class="sectionedit7" id="zimbra_handler_parameters">Zimbra Handler parameters</h3>
 <div class="level3">
 
@@ -164,6 +163,6 @@ Zimbra parameters are the following:
 
 </div>
 </div>
-<!-- EDIT7 SECTION "Zimbra Handler parameters" [1960-] --></div>
+<!-- EDIT7 SECTION "Zimbra Handler parameters" [1862-] --></div>
 </body>
 </html>

@@ -282,14 +282,14 @@ sub display {
 sub _urlFormat {
     my ( $self, $url ) = @_;
 
-    $url = 'http://' . $url unless ( $url =~ m#^https?://[^/]*.*# );
-    my ( $proto, $vhost, $appuri ) = $url =~ m#^(https?://)([^/]*)(.*)#;
+    $url = 'http://' . $url unless ( $url =~ m#^https?://[^/]*.*#i );
+    my ( $proto, $vhost, $appuri ) = $url =~ m#^(https?://)([^/]*)(.*)#i;
     my ($port) = $vhost =~ m#^.+(:\d+)$#;
     $port ||= '';
     $vhost =~ s/:\d+$//;
     $vhost .= $self->conf->{domain} unless ( $vhost =~ /\./ );
-    $appuri ||= '/';
-    return "$proto$vhost$port$appuri";
+    #$appuri ||= '/';
+    return lc ("$proto$vhost$port") . "$appuri";
 }
 
 sub _userDatas {

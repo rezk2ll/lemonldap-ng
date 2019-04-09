@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authgpg</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authgpg"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authgpg.html"/>
@@ -68,14 +68,25 @@ LLNG can use GPG to authenticate users. It is not useful for day-to-day authenti
 
 </div>
 <!-- EDIT3 SECTION "Presentation" [91-329] -->
-<h2 class="sectionedit4" id="configuration">Configuration</h2>
-<div class="level2">
+<h3 class="sectionedit4" id="configuration_of_lemonldapng">Configuration of LemonLDAP::NG</h3>
+<div class="level3">
 
 <p>
 In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose GPG for authentication, users and/or password modules. Then you just have to set GPG database. For example <code>/usr/share/keyrings/debian-keyring.gpg</code>
 </p>
+<div class="notetip">You can then choose any other module for users and password.
+</div>
+<p>
+Then, go in <code>GPG parameters</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Authentication level</strong>: authentication level for this module</div>
+</li>
+<li class="level1"><div class="li"> <strong>GPG database</strong>: database to store users GPG public key</div>
+</li>
+</ul>
 
 </div>
-<!-- EDIT4 SECTION "Configuration" [330-] --></div>
+<!-- EDIT4 SECTION "Configuration of LemonLDAP::NG" [330-] --></div>
 </body>
 </html>

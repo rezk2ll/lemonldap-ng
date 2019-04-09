@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:security</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,security"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="security.html"/>
@@ -397,16 +397,21 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 </li>
 <li class="level1"><div class="li"> <strong>Content Security Policy</strong>:  Portal builds dynamically this header. You can modify default values. Browser implementations of formAction directive are inconsistent (e.g. Firefox doesn&#039;t block the redirects whereas Chrome does). Administrators may have to modify formAction value with wildcard likes *.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Required token for forms</strong>: To prevent CSRF attack, a token is build for each form. To disable it, set this parameter to &#039;Off&#039;.</div>
+<li class="level1"><div class="li"> <strong>Required token for forms</strong>: To prevent CSRF attack, a token is build for each form. To disable it, set this parameter to &#039;Off&#039; or set a special rule</div>
 </li>
 <li class="level1"><div class="li"> <strong>Form timeout</strong>: Form token timeout (default to 120 seconds)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Use global storage</strong>: Local cache is used by default for one time tokens. To use global storage, set it to &#039;On&#039;</div>
 </li>
 </ul>
+<div class="notewarning">If URLs are protected with AuthBasic handler, you have to disable CSRF token by setting a special rule based on callers <abbr title="Internet Protocol">IP</abbr> address like this :
+<p>
+requireToken =&gt; $env-&gt;{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
+</p>
 
 </div>
-<!-- EDIT18 SECTION "Configure security settings" [7529-9858] -->
+</div>
+<!-- EDIT18 SECTION "Configure security settings" [7529-10106] -->
 <h2 class="sectionedit19" id="fail2ban">Fail2ban</h2>
 <div class="level2">
 
@@ -458,7 +463,7 @@ Restart fail2ban
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Fail2ban" [9859-10913] -->
+<!-- EDIT19 SECTION "Fail2ban" [10107-11161] -->
 <h2 class="sectionedit20" id="sessions_identifier">Sessions identifier</h2>
 <div class="level2">
 
@@ -471,7 +476,7 @@ We recommend to use : <code>Lemonldap::NG::Common::Apache::Session::Generate::SH
 </p>
 
 </div>
-<!-- EDIT20 SECTION "Sessions identifier" [10914-11176] -->
+<!-- EDIT20 SECTION "Sessions identifier" [11162-11424] -->
 <h2 class="sectionedit21" id="saml">SAML</h2>
 <div class="level2">
 
@@ -480,6 +485,6 @@ See <a href="samlservice.html#security_parameters" class="wikilink1" title="docu
 </p>
 
 </div>
-<!-- EDIT21 SECTION "SAML" [11177-] --></div>
+<!-- EDIT21 SECTION "SAML" [11425-] --></div>
 </body>
 </html>
