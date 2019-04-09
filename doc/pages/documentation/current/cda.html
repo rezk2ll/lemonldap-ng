@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:cda</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,cda"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="cda.html"/>
@@ -104,9 +104,14 @@ To use this feature only locally, edit <code>lemonldap-ng.ini</code> in section 
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>all<span class="br0">&#93;</span></span>
 <span class="re1">cda</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
+<div class="noteimportant">If your handler is being served by Nginx, you have to uncomment the following lines in your nginx configuration file:
+<pre class="code"># If CDA is used, uncomment this 
+auth_request_set $cookie_value $upstream_http_set_cookie; 
+add_header Set-Cookie $cookie_value;</pre>
 
 </div>
-<!-- EDIT5 SECTION "Configuration" [139-374] -->
+</div>
+<!-- EDIT5 SECTION "Configuration" [139-662] -->
 <h3 class="sectionedit6" id="handlers">Handlers</h3>
 <div class="level3">
 
@@ -115,6 +120,6 @@ Choose “<abbr title="Cross Domain Authentication">CDA</abbr>” as type for ea
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Handlers" [375-] --></div>
+<!-- EDIT6 SECTION "Handlers" [663-] --></div>
 </body>
 </html>

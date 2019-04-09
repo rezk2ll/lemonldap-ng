@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:checkuser</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,checkuser"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="checkuser.html"/>
+<link rel="contents" href="checkuser.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:checkuser","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.js"></script>
+<!-- //endif -->
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<h1 class="sectionedit1" id="check_user_plugin">Check user plugin</h1>
+<div class="level1">
+
+<p>
+This plugin allows us to check session attributes, access rights and transmitted headers for a specific user and <abbr title="Uniform Resource Locator">URL</abbr>. This can be useful for IT Ops, dev teams or administrators to debug or check rules. Plugin DISABLED by default.
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Check user plugin" [1-264] -->
+<h2 class="sectionedit2" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+Just enable it in the manager (section “plugins”).
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Parameters</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> <strong>Activation</strong>: Enable / Disable this plugin</div>
+</li>
+<li class="level2"><div class="li"> <strong>Hidden attributes</strong>: Attributes not displayed</div>
+</li>
+<li class="level2"><div class="li"> <strong>Display persistent session</strong>: Display persistent session attributes</div>
+</li>
+<li class="level2"><div class="li"> <strong>Display empty value</strong>: Display ALL attributes even empty ones</div>
+</li>
+</ul>
+</li>
+</ul>
+<div class="noteimportant">Be careful to not display secret attributes.
+<p>
+checkUser plugin hidden attributes are concatenation of
+</p>
+
+<p>
+<code>checkUserHiddenAttributes</code> and <code>hiddenAttributes</code>.
+</p>
+
+<p>
+You just have to append checkUser specific attributes.
+</p>
+
+</div><div class="notewarning">This plugin displays ALL user session attributes except the hidden ones.
+<p>
+You have to restrict access to specific users (administrators, DevOps, power users and so on...) 
+</p>
+
+<p>
+by setting an access rule like other VirtualHosts.
+</p>
+
+<p>
+By example: <code>$groups =~ /\bsu\b/</code>
+</p>
+
+</div>
+</div>
+<!-- EDIT2 SECTION "Configuration" [265-1147] -->
+<h2 class="sectionedit3" id="usage">Usage</h2>
+<div class="level2">
+
+<p>
+When enabled, <code>/checkuser</code> <abbr title="Uniform Resource Locator">URL</abbr> path is handled by this plugin.
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Usage" [1148-] --></div>
+</body>
+</html>

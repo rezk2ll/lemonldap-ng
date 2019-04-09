@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:portalcustom</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,portalcustom"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="portalcustom.html"/>
@@ -223,9 +223,13 @@ We include some template files that can be customized:
 <ul>
 <li class="level1"><div class="li"> customhead.tpl : <abbr title="HyperText Markup Language">HTML</abbr> header markups (like <abbr title="Cascading Style Sheets">CSS</abbr>, js inclusion)</div>
 </li>
-<li class="level1"><div class="li"> customheader.tpl : <abbr title="HyperText Markup Language">HTML</abbr> code int the header div</div>
+<li class="level1"><div class="li"> customheader.tpl : <abbr title="HyperText Markup Language">HTML</abbr> code in the header</div>
 </li>
-<li class="level1"><div class="li"> customfooter.tpm : <abbr title="HyperText Markup Language">HTML</abbr> code in the footer div</div>
+<li class="level1"><div class="li"> customfooter.tpm : <abbr title="HyperText Markup Language">HTML</abbr> code in the footer</div>
+</li>
+<li class="level1"><div class="li"> customLoginHeader.tpl : <abbr title="HyperText Markup Language">HTML</abbr> code int the login header</div>
+</li>
+<li class="level1"><div class="li"> customLoginFooter.tpl : <abbr title="HyperText Markup Language">HTML</abbr> code int the login footer</div>
 </li>
 </ul>
 
@@ -261,17 +265,21 @@ To configure your new skin in Manager, select the custom skin, and enter your sk
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set portalSkin &#039;myskin&#039; portalSkinBackground &#039;&#039;</pre>
 
 </div>
-<!-- EDIT9 SECTION "Skin customization" [2473-4399] -->
+<!-- EDIT9 SECTION "Skin customization" [2473-4508] -->
 <h3 class="sectionedit10" id="messages">Messages</h3>
 <div class="level3">
 
 <p>
-Messages are defined in source code. If they really do not please you, override them! You just need to know the ID of the message (look at Portal/Simple.pm) and then : 
+Messages are defined in source code. If they really do not please you, override them! You just need to know the ID of the message (look at Portal/Simple.pm).
 </p>
 
 <p>
-* <strong>add to</strong> <code>lemonldap-ng.ini</code> :
+There are two methods to do this:
 </p>
+<ul>
+<li class="level1"><div class="li"> Use <code>lemonldap-ng.ini</code>:</div>
+</li>
+</ul>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
 &nbsp;
 # Custom error messages
@@ -281,19 +289,34 @@ Messages are defined in source code. If they really do not please you, override 
 <span class="re1">msg_lastLogins</span> <span class="sy0">=</span><span class="re2"> Your last connections</span></pre>
 
 <p>
-* <strong>or declare a translation file in</strong> <code>lemonldap-ng.ini</code> :
+You can also define messages in several languages or disable message boxes by using the bareword <code>_hide_</code> :
 </p>
-<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
-&nbsp;
-# Custom messages
-<span class="re1">translations</span> <span class="sy0">=</span><span class="re2"> site/templates/localeTranslations.txt</span></pre>
-<div class="notetip">You can also define messages in several languages:<pre class="code file ini"><span class="re1">error_en_0</span> <span class="sy0">=</span><span class="re2"> Big brother is watching you, authenticated user</span>
-<span class="re1">error_fr_0</span> <span class="sy0">=</span><span class="re2"> Souriez vous êtes surveillés !</span>
-<span class="re1">msg_fr_lastLogins</span> <span class="sy0">=</span><span class="re2"> Dernières connexions</span></pre>
+<pre class="code file ini"><span class="re1">error_en_0</span>        <span class="sy0">=</span><span class="re2"> Big brother is watching you, authenticated user</span>
+<span class="re1">error_fr_0</span>        <span class="sy0">=</span><span class="re2"> Souriez vous êtes surveillés !</span>
+<span class="re1">msg_fr_lastLogins</span> <span class="sy0">=</span><span class="re2"> Dernières connexions</span>
+<span class="re1">error_9</span>           <span class="sy0">=</span><span class="re2"> _hide_</span></pre>
+<ul>
+<li class="level1"><div class="li"> Create a lang file in custom skin:</div>
+</li>
+</ul>
+
+<p>
+If you have a custom skin, then you can create a lang file in <code>templates/&lt;your skin</code> similar to the default lang files provided in <code>htdocs/static/languages/</code>.
+</p>
+
+<p>
+For example <code>htdocs/static/languages/en.json</code>:
+</p>
+<pre class="code file javascript"><span class="br0">&#123;</span>
+<span class="st0">&quot;PE9&quot;</span><span class="sy0">:</span><span class="st0">&quot;Please authenticate!&quot;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+You can also create a file called <code>all.json</code> to override messages in all languages.
+</p>
 
 </div>
-</div>
-<!-- EDIT10 SECTION "Messages" [4400-5210] -->
+<!-- EDIT10 SECTION "Messages" [4509-5651] -->
 <h3 class="sectionedit11" id="menu_tabs">Menu tabs</h3>
 <div class="level3">
 
@@ -309,7 +332,7 @@ This will allow one to display the tab directly with this <abbr title="Uniform R
 </p>
 
 </div>
-<!-- EDIT11 SECTION "Menu tabs" [5211-5517] -->
+<!-- EDIT11 SECTION "Menu tabs" [5652-5958] -->
 <h3 class="sectionedit12" id="template_parameters">Template parameters</h3>
 <div class="level3">
 
@@ -337,7 +360,7 @@ You can also display environment variables, with the prefix <code>env_</code>:
 <pre class="code file html4strict">Your IP is <span class="sc2">&lt;TMPL_VAR <span class="kw3">NAME</span><span class="sy0">=</span><span class="st0">&quot;env_REMOTE_ADDR&quot;</span>&gt;</span></pre>
 
 </div>
-<!-- EDIT12 SECTION "Template parameters" [5518-6165] -->
+<!-- EDIT12 SECTION "Template parameters" [5959-6606] -->
 <h2 class="sectionedit13" id="buttons">Buttons</h2>
 <div class="level2">
 
@@ -354,7 +377,7 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT13 SECTION "Buttons" [6166-6682] -->
+<!-- EDIT13 SECTION "Buttons" [6607-7123] -->
 <h2 class="sectionedit14" id="password_management">Password management</h2>
 <div class="level2">
 <ul>
@@ -367,7 +390,7 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT14 SECTION "Password management" [6683-7133] -->
+<!-- EDIT14 SECTION "Password management" [7124-7574] -->
 <h2 class="sectionedit15" id="other_parameters">Other parameters</h2>
 <div class="level2">
 <ul>
@@ -375,7 +398,7 @@ This node allows one to enable/disable buttons on the login page:
 </li>
 <li class="level1"><div class="li"> <strong>New window</strong>: open menu links in new window</div>
 </li>
-<li class="level1"><div class="li"> <strong>Anti iframe protection</strong>: will kill parent frames to avoid some well known attacks</div>
+<li class="level1"><div class="li"> <strong>Anti iframe protection</strong>: Set <code>X-Frame-Options</code> and CSP <code>frame-ancestors</code> headers (see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options#Browser_compatibility" class="urlextern" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options#Browser_compatibility"  rel="nofollow">Browser compatibility</a>)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Ping interval</strong>: Number of milliseconds between each ping (Ajax request) on the portal menu. Set to 0 to dismiss checks.</div>
 </li>
@@ -386,6 +409,6 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT15 SECTION "Other parameters" [7134-] --></div>
+<!-- EDIT15 SECTION "Other parameters" [7575-] --></div>
 </body>
 </html>

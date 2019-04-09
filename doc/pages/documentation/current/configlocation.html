@@ -185,7 +185,16 @@ When all modifications are done, click on <code>Save</code> to store configurati
 <p>
 LemonLDAP::NG provide a script that allows one to edit configuration without graphical interface, this script is called <code>lmConfigEditor</code> and is stored in the LemonLDAP::NG bin/ directory, for example /usr/share/lemonldap-ng/bin:
 </p>
+<ul>
+<li class="level1"><div class="li"> On Debian:</div>
+</li>
+</ul>
 <pre class="code">/usr/share/lemonldap-ng/bin/lmConfigEditor</pre>
+<ul>
+<li class="level1"><div class="li"> On CentOS:</div>
+</li>
+</ul>
+<pre class="code">/usr/libexec/lemonldap-ng/bin/lmConfigEditor</pre>
 <div class="notetip">This script must be run as root, it will then use the Apache user and group to access configuration.
 </div>
 <p>
@@ -212,14 +221,23 @@ If a modification is done, the configuration is saved with a new configuration n
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Configuration text editor" [3237-4465] -->
+<!-- EDIT4 SECTION "Configuration text editor" [3237-4556] -->
 <h2 class="sectionedit5" id="command_line_interface_cli">Command Line Interface (CLI)</h2>
 <div class="level2">
 
 <p>
 LemonLDAP::NG provide a script that allows one to edit configuration items in non interactive mode. This script is called <code>lemonldap-ng-cli</code> and is stored in the LemonLDAP::NG bin/ directory, for example /usr/share/lemonldap-ng/bin:
 </p>
+<ul>
+<li class="level1"><div class="li"> On Debian:</div>
+</li>
+</ul>
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli</pre>
+<ul>
+<li class="level1"><div class="li"> On CentOS:</div>
+</li>
+</ul>
+<pre class="code">/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli</pre>
 <div class="notetip">This script must be run as root, it will then use the Apache user and group to access configuration.
 </div>
 <p>
@@ -272,7 +290,7 @@ Some examples:
 <div class="notetip">See <a href="cli_examples.html" class="wikilink1" title="documentation:2.0:cli_examples">other examples</a>.
 </div>
 </div>
-<!-- EDIT5 SECTION "Command Line Interface (CLI)" [4466-6260] -->
+<!-- EDIT5 SECTION "Command Line Interface (CLI)" [4557-6445] -->
 <h2 class="sectionedit6" id="apache">Apache</h2>
 <div class="level2">
 <div class="noteimportant">LemonLDAP::NG does not manage Apache configuration
@@ -294,7 +312,7 @@ See <a href="configapache.html" class="wikilink1" title="documentation:2.0:confi
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Apache" [6261-6659] -->
+<!-- EDIT6 SECTION "Apache" [6446-6844] -->
 <h3 class="sectionedit7" id="portal">Portal</h3>
 <div class="level3">
 
@@ -373,7 +391,7 @@ In Portal virtual host, you will find several configuration parts:
     &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT7 SECTION "Portal" [6660-9007] -->
+<!-- EDIT7 SECTION "Portal" [6845-9192] -->
 <h3 class="sectionedit8" id="manager1">Manager</h3>
 <div class="level3">
 
@@ -420,7 +438,7 @@ Configuration interface access is not protected by Apache but by LemonLDAP::NG i
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Manager" [9008-10551] -->
+<!-- EDIT8 SECTION "Manager" [9193-10736] -->
 <h3 class="sectionedit9" id="handler">Handler</h3>
 <div class="level3">
 <ul>
@@ -473,7 +491,7 @@ Then, to protect a standard virtual host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler::Apache2</pre>
 
 </div>
-<!-- EDIT9 SECTION "Handler" [10552-11941] -->
+<!-- EDIT9 SECTION "Handler" [10737-12126] -->
 <h2 class="sectionedit10" id="nginx">Nginx</h2>
 <div class="level2">
 <div class="noteimportant">LemonLDAP::NG does not manage Nginx configuration
@@ -496,7 +514,7 @@ See <a href="confignginx.html" class="wikilink1" title="documentation:2.0:config
 <div class="notewarning"><a href="fastcgiserver.html" class="wikilink1" title="documentation:2.0:fastcgiserver">LL::NG FastCGI</a> server must be loaded separately.
 </div>
 </div>
-<!-- EDIT10 SECTION "Nginx" [11942-12395] -->
+<!-- EDIT10 SECTION "Nginx" [12127-12580] -->
 <h3 class="sectionedit11" id="portal1">Portal</h3>
 <div class="level3">
 
@@ -507,7 +525,14 @@ In Portal virtual host, you will find several configuration parts:
 <li class="level1"><div class="li"> Standard virtual host directives, to serve portal pages:</div>
 </li>
 </ul>
-<pre class="code file nginx">server {
+<pre class="code file nginx">## map directive must be in http context
+#map $ssl_client_s_dn  $ssl_client_s_dn_cn {
+#           default           &quot;&quot;;
+#           ~/CN=(?&lt;CN&gt;[^/]+) $CN;
+#      }
+#fastcgi_param  SSL_CLIENT_S_DN_CN $ssl_client_s_dn_cn;
+&nbsp;
+server {
   listen 80;
   server_name auth.example.com;
   root /var/lib/lemonldap-ng/portal/;
@@ -523,12 +548,6 @@ In Portal virtual host, you will find several configuration parts:
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     fastcgi_split_path_info ^(.*\.psgi)(/.*)$;
     fastcgi_param PATH_INFO  $fastcgi_path_info;
-    # Uncomment this if you use Auth SSL:
-    #map $ssl_client_s_dn  $ssl_client_s_dn_cn {
-    #  default           &quot;&quot;;
-    #  ~/CN=(?&lt;CN&gt;[^/]+) $CN;
-    #}
-    #fastcgi_param  SSL_CLIENT_S_DN_CN $ssl_client_s_dn_cn
   }
 &nbsp;
   index index.psgi;
@@ -536,7 +555,7 @@ In Portal virtual host, you will find several configuration parts:
     try_files $uri $uri/ =404;
 &nbsp;
     # Uncomment this if you use https only
-    #add_header Strict-Transport-Security &quot;15768000&quot;;
+    #add_header Strict-Transport-Security max-age=15768000;
   }
 &nbsp;
   location /static/ {
@@ -568,7 +587,7 @@ In Portal virtual host, you will find several configuration parts:
   }</pre>
 
 </div>
-<!-- EDIT11 SECTION "Portal" [12396-14187] -->
+<!-- EDIT11 SECTION "Portal" [12581-14383] -->
 <h3 class="sectionedit12" id="manager2">Manager</h3>
 <div class="level3">
 
@@ -602,7 +621,7 @@ By default, configuration interface access is not protected by Nginx but by Lemo
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Manager" [14188-14933] -->
+<!-- EDIT12 SECTION "Manager" [14384-15129] -->
 <h3 class="sectionedit13" id="handler1">Handler</h3>
 <div class="level3">
 
@@ -702,7 +721,7 @@ Then, to protect a standard virtual host, you must insert this (or create an inc
     # Insert then your configuration (fastcgi_* or proxy_*)</pre>
 
 </div>
-<!-- EDIT13 SECTION "Handler" [14934-18015] -->
+<!-- EDIT13 SECTION "Handler" [15130-18211] -->
 <h2 class="sectionedit14" id="configuration_reload">Configuration reload</h2>
 <div class="level2">
 <div class="noteclassic">As Handlers keep configuration in cache, when configuration change, it should be updated in Handlers. An Apache restart will work, but LemonLDAP::NG offers the mean to reload them through an HTTP request. Configuration reload will then be effective in less than 10 minutes. If you want to change this timeout, set <code>checkTime = 240</code> in your lemonldap-ng.ini file <em>(values in seconds)</em>
@@ -724,6 +743,23 @@ These parameters can be overwritten in LemonLDAP::NG ini file, in the section <c
 The <code>reload</code> target is managed in Apache or Nginx configuration, inside a virtual host protected by LemonLDAP::NG Handler (see below examples in Apache-&gt;handler or Nginx-&gt;Handler).
 </p>
 <div class="noteimportant">You must allow access to declared URLs to your Manager <abbr title="Internet Protocol">IP</abbr>.
+</div><div class="noteimportant">If reload <abbr title="Uniform Resource Locator">URL</abbr> is served in HTTPS, to avoid “Error 500 (certificate verify failed)”, Go to : 
+<p>
+<code>General Parameters &gt; Advanced Parameters &gt; Security &gt; SSL options for server requests</code>
+</p>
+
+<p>
+and set :
+</p>
+
+<p>
+<strong>verify_hostname =&gt; 0</strong>
+</p>
+
+<p>
+<strong>SSL_verify_mode =&gt; 0</strong>
+</p>
+
 </div><div class="noteimportant">If you want to use reload mechanism on a portal only host, you must install a handler in Portal host to be able to refresh local cache. Include <code>handler-nginx.conf</code> or <code>handler-apache2.conf</code> for example
 </div>
 <p>
@@ -743,7 +779,7 @@ You also need to adjust the protection of the reload vhost, for example:
     &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT14 SECTION "Configuration reload" [18016-20299] -->
+<!-- EDIT14 SECTION "Configuration reload" [18212-20768] -->
 <h2 class="sectionedit15" id="local_file">Local file</h2>
 <div class="level2">
 
@@ -777,6 +813,6 @@ For example, to override configured skin for portal:
 <div class="notetip">You need to know the technical name of configuration parameter to do this. You can refer to <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">parameter list</a> to find it.
 </div>
 </div>
-<!-- EDIT15 SECTION "Local file" [20300-] --></div>
+<!-- EDIT15 SECTION "Local file" [20769-] --></div>
 </body>
 </html>

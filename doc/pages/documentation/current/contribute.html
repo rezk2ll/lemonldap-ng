@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:contribute</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="keywords" content="documentation,2.0,contribute"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="contribute.html"/>
+<link rel="contents" href="contribute.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:contribute","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.js"></script>
+<!-- //endif -->
+</head>
+<body>
+<div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#configure_ssh">Configure SSH</a></div></li>
+<li class="level1"><div class="li"><a href="#install_basic_tools">Install basic tools</a></div>
+<ul class="toc">
+<li class="clear">
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#debian">Debian</a></div></li>
+<li class="level3"><div class="li"><a href="#configure_git">Configure Git</a></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><a href="#import_project">Import Project</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#install_dependencies">Install dependencies</a></div></li>
+<li class="level1"><div class="li"><a href="#working_project">Working Project</a></div></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<strong>Do you want to contribute to LemonLdap::NG project ?</strong>
+</p>
+
+<h1 class="sectionedit1" id="contribute_to_project">Contribute to Project</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT1 SECTION "Contribute to Project" [59-95] -->
+<h2 class="sectionedit2" id="configure_ssh">Configure SSH</h2>
+<div class="level2">
+
+<p>
+<em>On Debian developper station :</em>
+</p>
+<pre class="code">ssh-keygen -o -t rsa -b 4096 -C &quot;your@email&quot;</pre>
+
+<p>
+Go to your gitlab account :
+<a href="https://gitlab.ow2.org/profile/keys" class="urlextern" title="https://gitlab.ow2.org/profile/keys"  rel="nofollow">https://gitlab.ow2.org/profile/keys</a>
+</p>
+<pre class="code">cat ~/.ssh/id_rsa.pub</pre>
+
+<p>
+copy id_rsa.pub content to key section and enter a name into “Title” tans “Add key” button
+Test ssh connexion :
+</p>
+<pre class="code">ssh -T git@gitlab.com</pre>
+
+<p>
+accept messages
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Configure SSH" [96-447] -->
+<h2 class="sectionedit3" id="install_basic_tools">Install basic tools</h2>
+<div class="level2">
+
+</div>
+
+<h4 id="debian">Debian</h4>
+<div class="level4">
+
+<p>
+<em>root :</em>
+</p>
+<pre class="code">apt install aptitude
+aptitude install vim make devscripts yui-compressor git git-gui libjs-uglify coffeescript cpanminus
+aptitude install libauth-yubikey-webclient-perl libnet-smtp-server-perl
+
+cpanm Authen::U2F Authen::U2F::Tester Crypt::U2F::Server::Simple 
+
+npm install -g protractor # end-2-end tests
+webdriver-manager update # install/update selenium driver</pre>
+
+</div>
+
+<h4 id="configure_git">Configure Git</h4>
+<div class="level4">
+
+<p>
+<em>user :</em>
+</p>
+<pre class="code">git config --global user.name &quot;Name Surname&quot;
+git config --global user.email &quot;your@mail&quot;
+git config --global core.editor vim
+git config --global merge.tool vimdiff
+git config --global color.ui true
+git config --list</pre>
+
+</div>
+<!-- EDIT3 SECTION "Install basic tools" [448-1151] -->
+<h3 class="sectionedit4" id="import_project">Import Project</h3>
+<div class="level3">
+
+<p>
+<em>user :</em>
+create directory
+in directory :
+</p>
+<pre class="code">git clone git@gitlab.ow2.org://user///lemonldap-ng.git
+cd lemonldap-ng/
+git log
+git checkout master # go to master branch
+git remote add upstream https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng.git # to connect to remote branch
+git fetch upstream  # import branch
+git checkout v2.0 # to change branch
+git fetch upstream</pre>
+
+<p>
+<em>on gitlab, create working branch, one per thematic</em>
+<em>on linux station :</em>
+</p>
+<pre class="code">git checkout workingbranch
+git log
+git status
+git merge upstream/v2.0  # merge branch 2.0 in working branch
+git commit -am &quot;explanations (#number gitlab ticket)&quot;
+git commit --amend file(s) # to modify a commit
+git checkout -- file(s) # revert
+git push # to send on remote working branch</pre>
+
+<p>
+On gitlab, submit merge request when tests are corrects.
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Import Project" [1152-1997] -->
+<h2 class="sectionedit5" id="install_dependencies">Install dependencies</h2>
+<div class="level2">
+<pre class="code">aptitude install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhtml-template-perl libio-string-perl libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl libxml-libxslt-perl libcrypt-urandom-perl libconvert-base32-perl
+aptitude install apache2 libapache2-mod-fcgid libapache2-mod-perl2  # install Apache
+aptitude install nginx nginx-extras  # install Nginx
+aptitude install perltidy</pre>
+
+</div>
+<!-- EDIT5 SECTION "Install dependencies" [1998-2840] -->
+<h2 class="sectionedit6" id="working_project">Working Project</h2>
+<div class="level2">
+<pre class="code">make test # or manager_test, portal_test, ... to launch unit tests
+make start_web_server # TESTUSESSL=1 to enable SSL engine (only available for Apache)
+make start_web_server TESTWEBSERVER=nginx # to use Nginx web server
+make stop_web_server
+make reload_web_server # to reload LL:NG conf
+make clean # to clean test files
+make minify # to minify and compile coffeescript
+make json # to build conf and manager tree
+make manifest # to update manifest
+make tidy # to magnify perl files (perl best pratices)
+cd lemonldap-ng-portal &amp;&amp; prove t/XXXX # To launch specific unit test</pre>
+
+</div>
+<!-- EDIT6 SECTION "Working Project" [2841-] --></div>
+</body>
+</html>

@@ -94,6 +94,21 @@ To configure sessions, go in Manager, <code>General Parameters</code> » <code>S
 <div class="noteimportant">Note that since HTTP protocol is not connected, restrictions are not applied to the new session: the oldest are destroyed.
 </div>
 </div>
+<!-- EDIT1 SECTION "Sessions" [1-2284] -->
+<h1 class="sectionedit2" id="command-line_tools">Command-line tools</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> LLNG Portal provides a simple tool to delete a session: <code>llngDeleteSession</code>. To use it, simply give it the user identifier <em>(wildcard are authorizated)</em>:</div>
+</li>
+</ul>
+<pre class="code shell"># Delete all sessions opened by user &quot;dwho&quot;
+$ llngDeleteSession dwho 
+# Delete all sessions opened by user starting with &quot;dh&quot;
+$ llngDeleteSession dh*
+# Delete all sessions:
+$ llngDeleteSession *</pre>
+
 </div>
+<!-- EDIT2 SECTION "Command-line tools" [2285-] --></div>
 </body>
 </html>

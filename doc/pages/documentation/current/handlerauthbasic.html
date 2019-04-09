@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:handlerauthbasic</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,handlerauthbasic"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="handlerauthbasic.html"/>
@@ -52,8 +52,8 @@
 <li class="level1"><div class="li"><a href="#presentation">Presentation</a></div></li>
 <li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
 <ul class="toc">
+<li class="level2"><div class="li"><a href="#portal">Portal</a></div></li>
 <li class="level2"><div class="li"><a href="#virtual_host">Virtual host</a></div></li>
-<li class="level2"><div class="li"><a href="#nginx">Nginx</a></div></li>
 <li class="level2"><div class="li"><a href="#handler_parameters">Handler parameters</a></div></li>
 </ul></li>
 </ul>
@@ -88,7 +88,16 @@ This feature can be useful to allow a third party application to access a virtua
 
 </div>
 <!-- EDIT3 SECTION "Configuration" [625-651] -->
-<h3 class="sectionedit4" id="virtual_host">Virtual host</h3>
+<h3 class="sectionedit4" id="portal">Portal</h3>
+<div class="level3">
+
+<p>
+<a href="restservices.html" class="wikilink1" title="documentation:2.0:restservices">REST server</a> must be enabled on portal.
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Portal" [652-726] -->
+<h3 class="sectionedit5" id="virtual_host">Virtual host</h3>
 <div class="level3">
 
 <p>
@@ -106,52 +115,20 @@ If you want to protect only a virtualHost part, keep type on “Main” and set 
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Virtual host" [652-1042] -->
-<h3 class="sectionedit5" id="nginx">Nginx</h3>
-<div class="level3">
-
-<p>
-Since 1.9.6, LLNG FastCGI server can handle AuthBasic handler. To call it, you just have to add <code>fastcgi_param VHOSTTYPE AuthBasic;</code> in the FastCGI server call and remove <code>error_page 401</code> directive:
-</p>
-<pre class="file">location = /lmauth {
-  internal;
-  include /etc/nginx/fastcgi_params;
-  fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
-  fastcgi_param VHOSTTYPE AuthBasic;
-
-  # Drop post datas
-  fastcgi_pass_request_body  off;
-  fastcgi_param CONTENT_LENGTH &quot;&quot;;
-
-  # Keep original hostname
-  fastcgi_param HOST $http_host;
-
-  # Keep original request (LLNG server will receive /lmauth)
-  fastcgi_param X_ORIGINAL_URI  $request_uri;
-}
-location / {
-  ...
-  ##################################
-  # CALLING AUTHENTICATION         #
-  ##################################
-  auth_request /lmauth;
-  auth_request_set $lmremote_user $upstream_http_lm_remote_user;
-  auth_request_set $lmlocation $upstream_http_location;
-  # Remove this for AuthBasic handler
-  #error_page 401 $lmlocation;
-  ...
-}</pre>
-
-</div>
-<!-- EDIT5 SECTION "Nginx" [1043-2065] -->
+<!-- EDIT5 SECTION "Virtual host" [727-1117] -->
 <h3 class="sectionedit6" id="handler_parameters">Handler parameters</h3>
 <div class="level3">
 
 <p>
-No parameters needed. But you have to allow sessions web services, see <a href="restsessionbackend.html" class="wikilink1" title="documentation:2.0:restsessionbackend">REST sessions backend</a>.
+No parameters needed. But you have to allow REST sessions web services, see <a href="restsessionbackend.html" class="wikilink1" title="documentation:2.0:restsessionbackend">REST sessions backend</a> and to enable local cache (enabled by default in lemonldap-ng.ini).
+</p>
+<div class="notewarning">With AuthBasic handler, you have to disable CSRF token by setting a special rule based on callers <abbr title="Internet Protocol">IP</abbr> address like this :
+<p>
+requireToken =&gt; $env-&gt;{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Handler parameters" [2066-] --></div>
+</div>
+<!-- EDIT6 SECTION "Handler parameters" [1118-] --></div>
 </body>
 </html>

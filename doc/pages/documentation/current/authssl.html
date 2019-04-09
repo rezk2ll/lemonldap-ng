@@ -59,7 +59,11 @@
 <li class="level3"><div class="li"><a href="#apache_portal_ssl_configuration">Apache portal SSL configuration</a></div></li>
 </ul>
 </li>
-<li class="level2"><div class="li"><a href="#with_nginx">With Nginx</a></div></li>
+<li class="level2"><div class="li"><a href="#with_nginx">With Nginx</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#nginx_ssl_virtual_host_example_with_uwsgi">Nginx SSL Virtual Host example with uWSGI</a></div></li>
+</ul>
+</li>
 <li class="level2"><div class="li"><a href="#configuration_of_lemonldapng">Configuration of LemonLDAP::NG</a></div></li>
 <li class="level2"><div class="li"><a href="#auto_reloading_ssl_certificates">Auto reloading SSL Certificates</a></div></li>
 </ul>
@@ -206,14 +210,53 @@ ssl_crl /etc/nginx/ssl/crl/my.crl;</pre>
 <p>
 You must also export SSL_CLIENT_S_<abbr title="Distinguished Name">DN</abbr>_CN in FastCGI params:
 </p>
-<pre class="code file nginx">map $ssl_client_s_dn  $ssl_client_s_dn_cn {
+<pre class="code file nginx"># map directive must be in http context
+map $ssl_client_s_dn  $ssl_client_s_dn_cn {
            default           &quot;&quot;;
            ~/CN=(?&lt;CN&gt;[^/]+) $CN;
       }
 fastcgi_param  SSL_CLIENT_S_DN_CN $ssl_client_s_dn_cn;</pre>
 
 </div>
-<!-- EDIT6 SECTION "With Nginx" [2685-3246] -->
+
+<h4 id="nginx_ssl_virtual_host_example_with_uwsgi">Nginx SSL Virtual Host example with uWSGI</h4>
+<div class="level4">
+<pre class="code file nginx">server {
+  listen 443;
+  server_name authssl.example.com;
+  root /usr/share/lemonldap-ng/portal/htdocs/;
+  # Use &quot;lm_app&quot; format to get username in nginx.log (see nginx-lmlog.conf)
+  access_log /var/log/nginx/access.log lm_app;
+&nbsp;
+  ssl_verify_client on;
+  ssl_verify_depth 3;
+&nbsp;
+  # Full chain CRL is required
+  # All CRLs must be concatenated in a single .pem format file
+  ssl_crl /etc/nginx/ssl/crl/crls.pem;
+  if ($uri !~ ^/((static|javascript|favicon).*|.*\.psgi)) {
+    rewrite ^/(.*)$ /index.psgi/$1 break;
+  }
+&nbsp;
+  location ~ ^(?&lt;sc&gt;/.*\.psgi)(?:$|/) {
+    # uWSGI Configuration
+    include /etc/nginx/uwsgi_params;
+    uwsgi_pass 127.0.0.1:5000;
+    uwsgi_param LLTYPE psgi;
+    uwsgi_param SCRIPT_FILENAME $document_root$sc;
+    uwsgi_param SCRIPT_NAME $sc;
+    uwsgi_param  SSL_CLIENT_S_DN_CN $ssl_client_s_dn_cn;
+  }
+&nbsp;
+  #index index.psgi;
+  location / {
+    try_files $uri $uri/ =404;
+    add_header Strict-Transport-Security max-age=15768000;
+  }
+}</pre>
+
+</div>
+<!-- EDIT6 SECTION "With Nginx" [2685-4318] -->
 <h3 class="sectionedit7" id="configuration_of_lemonldapng">Configuration of LemonLDAP::NG</h3>
 <div class="level3">
 
@@ -233,7 +276,7 @@ Then, go in <code>SSL parameters</code>:
 </ul>
 
 </div>
-<!-- EDIT7 SECTION "Configuration of LemonLDAP::NG" [3247-3672] -->
+<!-- EDIT7 SECTION "Configuration of LemonLDAP::NG" [4319-4744] -->
 <h3 class="sectionedit8" id="auto_reloading_ssl_certificates">Auto reloading SSL Certificates</h3>
 <div class="level3">
 
@@ -341,7 +384,7 @@ $('.enteteBouton').click( function (e) {
 <div class="notewarning">It is incompatible with authentication combination because of Apache parameter “SSLVerifyClient”, which must have the value “require”. To enable SSL with <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination</a>, use <a href="#ssl_by_ajax" title="documentation:2.0:authssl ↵" class="wikilink1">SSL by Ajax</a>
 </div>
 </div>
-<!-- EDIT8 SECTION "Auto reloading SSL Certificates" [3673-6936] -->
+<!-- EDIT8 SECTION "Auto reloading SSL Certificates" [4745-8008] -->
 <h2 class="sectionedit9" id="ssl_by_ajax">SSL by Ajax</h2>
 <div class="level2">
 
@@ -358,8 +401,32 @@ If you enable this feature, you must configure 2 portal virtual hosts:
 <p>
 then declare the second <abbr title="Uniform Resource Locator">URL</abbr> in SSL options in the Manager. That&#039;s all ! Then you can chain it in a <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">combination</a>.
 </p>
+<div class="noteclassic">With <a href="authchoice.html" class="wikilink1" title="documentation:2.0:authchoice">choice</a>, the second <abbr title="Uniform Resource Locator">URL</abbr> should be also declared in module <abbr title="Uniform Resource Locator">URL</abbr> parameter to redirect user to Portal menu.
+
+</div><div class="noteimportant"><strong>Content Security Policy</strong> may prevent to submit Ajax Request.
+To avoid security warning,
+<p>
+Go to : <code>General Parameters &gt; Advanced Parameters &gt; Security &gt; Content security policy</code>
+</p>
+
+<p>
+and set :
+</p>
+
+<p>
+<strong>Default value</strong>     =&gt; &#039;self&#039; “Ajax request <abbr title="Uniform Resource Locator">URL</abbr>”
+</p>
+
+<p>
+<strong>Form destinations</strong> =&gt; &#039;self&#039; “Ajax request <abbr title="Uniform Resource Locator">URL</abbr>”
+</p>
+
+<p>
+<strong>Ajax destinations</strong> =&gt; &#039;self&#039; “Ajax request <abbr title="Uniform Resource Locator">URL</abbr>”
+</p>
 
 </div>
-<!-- EDIT9 SECTION "SSL by Ajax" [6937-] --></div>
+</div>
+<!-- EDIT9 SECTION "SSL by Ajax" [8009-] --></div>
 </body>
 </html>
