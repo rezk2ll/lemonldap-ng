@@ -530,7 +530,6 @@ t/76-2F-Ext-with-History.t
 t/77-2F-Mail.t
 t/90-Translations.t
 t/99-pod.t
-t/auth-basic.pm
 t/gpghome/key.asc
 t/gpghome/openpgp-revocs.d/9482CEFB055809CBAFE6D71AAB2D5542891D1677.rev
 t/gpghome/private-keys-v1.d/A076B0E7DB141A919271EE8B581CDFA8DA42F333.key
@@ -545,6 +544,7 @@ t/README.md
 t/saml-lib.pm
 t/sendCode.pl
 t/sendOTP.pl
+t/separate-handler.pm
 t/sessions/lock/.exists
 t/sessions/saml/lock/.exists
 t/sessions2/6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101

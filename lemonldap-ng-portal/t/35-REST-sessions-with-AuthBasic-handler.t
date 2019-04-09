@@ -2,13 +2,14 @@ use lib 'inc';
 use strict;
 use IO::String;
 use JSON;
+use MIME::Base64;
 use Test::More;
 
 our $debug = 'error';
 my ( $p, $res, $spId );
 $| = 1;
 
-require 't/auth-basic.pm';
+require 't/separate-handler.pm';
 
 require "t/test-lib.pm";
 
@@ -23,59 +24,70 @@ ok( getHeader( $res, 'WWW-Authenticate' ) eq 'Basic realm="LemonLDAP::NG"',
 count(2);
 
 my $subtest = 0;
-ok(
-    $res = handler(
-        req => [
-            GET => 'http://test2.example.com/',
-            [ 'Authorization' => 'Basic ZHdobzpkd2hv' ]
-        ],
-        sub => sub {
-            my ($res) = @_;
-            $subtest++;
-            subtest 'REST request to Portal' => sub {
-                plan tests => 3;
-                ok( $res->[0] eq 'POST', 'Get POST request' );
-                my ( $url, $query ) = split /\?/, $res->[1];
-                ok(
-                    $res = $p->_post(
-                        $url, IO::String->new( $res->[3] ),
-                        length => length( $res->[3] ),
-                        query  => $query,
-                    ),
-                    'Push request to portal'
-                );
-                ok( $res->[0] == 200, 'Response is 200' );
+foreach my $user (qw(dwho rtyler)) {
+    ok(
+        $res = handler(
+            req => [
+                GET => 'http://test2.example.com/',
+                [
+                    'Authorization' => 'Basic '
+                      . encode_base64( "$user:$user", '' )
+                ]
+            ],
+            sub => sub {
+                my ($res) = @_;
+                $subtest++;
+                subtest 'REST request to Portal' => sub {
+                    plan tests => 3;
+                    ok( $res->[0] eq 'POST', 'Get POST request' );
+                    my ( $url, $query ) = split /\?/, $res->[1];
+                    ok(
+                        $res = $p->_post(
+                            $url, IO::String->new( $res->[3] ),
+                            length => length( $res->[3] ),
+                            query  => $query,
+                        ),
+                        'Push request to portal'
+                    );
+                    ok( $res->[0] == 200, 'Response is 200' );
+                    return $res;
+                };
+                count(1);
                 return $res;
-            };
-            count(1);
-            return $res;
-        },
-    ),
-    'AuthBasic request'
-);
-ok( $subtest == 1, 'REST request was done by handler' );
-count(2);
-expectOK($res);
-expectAuthenticatedAs( $res, 'dwho' );
+            },
+        ),
+        'AuthBasic request'
+    );
+    count(1);
+    expectOK($res);
+    expectAuthenticatedAs( $res, $user );
+}
+ok( $subtest == 2, 'REST requests were done by handler' );
+count(1);
 
-ok(
-    $res = handler(
-        req => [
-            GET => 'http://test2.example.com/',
-            [ 'Authorization' => 'Basic ZHdobzpkd2hv' ]
-        ],
-        sub => sub {
-            $subtest++;
-            fail "Cache didn't work";
-            return [ 500, [], [] ];
-        },
-    ),
-    'New AuthBasic request'
-);
-ok( $subtest == 1, 'Handler used its local cache' );
-count(2);
-expectOK($res);
-expectAuthenticatedAs( $res, 'dwho' );
+foreach my $user (qw(dwho rtyler)) {
+    ok(
+        $res = handler(
+            req => [
+                GET => 'http://test2.example.com/',
+                [
+                    'Authorization' => 'Basic '
+                      . encode_base64( "$user:$user", '' )
+                ]
+            ],
+            sub => sub {
+                $subtest++;
+                fail "Cache didn't work";
+                return [ 500, [], [] ];
+            },
+        ),
+        'New AuthBasic request'
+    );
+    ok( $subtest == 2, 'Handler used its local cache' );
+    count(2);
+    expectOK($res);
+    expectAuthenticatedAs( $res, $user );
+}
 
 end_handler();
 clean_sessions();
