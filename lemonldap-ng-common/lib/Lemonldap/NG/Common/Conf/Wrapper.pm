@@ -3,7 +3,7 @@ package Lemonldap::NG::Common::Conf::Wrapper;
 use strict;
 use JSON;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.3';
 
 sub TIEHASH {
     my ( $class, $conf, $overrides ) = @_;
