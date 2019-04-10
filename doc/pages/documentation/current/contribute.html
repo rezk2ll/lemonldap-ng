@@ -58,7 +58,7 @@
 <li class="level3"><div class="li"><a href="#configure_git">Configure Git</a></div></li>
 </ul>
 </li>
-<li class="level2"><div class="li"><a href="#import_project">Import Project</a></div></li>
+<li class="level2"><div class="li"><a href="#import_project_and_using_git">Import Project and using Git</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#install_dependencies">Install dependencies</a></div></li>
@@ -140,7 +140,7 @@ git config --list</pre>
 
 </div>
 <!-- EDIT3 SECTION "Install basic tools" [448-1151] -->
-<h3 class="sectionedit4" id="import_project">Import Project</h3>
+<h3 class="sectionedit4" id="import_project_and_using_git">Import Project and using Git</h3>
 <div class="level3">
 
 <p>
@@ -158,15 +158,24 @@ git checkout v2.0 # to change branch
 git fetch upstream</pre>
 
 <p>
+<em>import version branch</em>
+<em>on linux station :</em>
+</p>
+<pre class="code">git checkout v2.0
+git fetch upstream --all
+git rebase upstream/v2.0 # to align to parent project remote branch
+git push # to push to working remote branch</pre>
+
+<p>
 <em>on gitlab, create working branch, one per thematic</em>
 <em>on linux station :</em>
 </p>
 <pre class="code">git checkout workingbranch
 git log
 git status
-git merge upstream/v2.0  # merge branch 2.0 in working branch
 git commit -am &quot;explanations (#number gitlab ticket)&quot;
 git commit --amend file(s) # to modify a commit
+git rebase v2.0 # align local working branch to local 2.0
 git checkout -- file(s) # revert
 git push # to send on remote working branch</pre>
 
@@ -175,7 +184,7 @@ On gitlab, submit merge request when tests are corrects.
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Import Project" [1152-1997] -->
+<!-- EDIT4 SECTION "Import Project and using Git" [1152-2220] -->
 <h2 class="sectionedit5" id="install_dependencies">Install dependencies</h2>
 <div class="level2">
 <pre class="code">aptitude install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhtml-template-perl libio-string-perl libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl libxml-libxslt-perl libcrypt-urandom-perl libconvert-base32-perl
@@ -189,7 +198,7 @@ aptitude install perltidy</pre>
 <pre class="code">aptitude install liblasso-perl libglib-perl </pre>
 
 </div>
-<!-- EDIT5 SECTION "Install dependencies" [1998-2898] -->
+<!-- EDIT5 SECTION "Install dependencies" [2221-3121] -->
 <h2 class="sectionedit6" id="working_project">Working Project</h2>
 <div class="level2">
 <pre class="code">make test # or manager_test, portal_test, ... to launch unit tests
@@ -205,6 +214,6 @@ make tidy # to magnify perl files (perl best pratices)
 cd lemonldap-ng-portal &amp;&amp; prove t/XXXX # To launch specific unit test</pre>
 
 </div>
-<!-- EDIT6 SECTION "Working Project" [2899-] --></div>
+<!-- EDIT6 SECTION "Working Project" [3122-] --></div>
 </body>
 </html>
