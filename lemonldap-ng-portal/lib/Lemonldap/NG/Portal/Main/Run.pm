@@ -878,6 +878,7 @@ sub lmError {
         LOGOUT_URL => $self->conf->{portal} . "?logout=1",
         URL        => $req->{urldc},
     );
+    $req->pdata( {} );
 
     # Error code
     $templateParams{"ERROR$_"} = ( $httpError == $_ ? 1 : 0 )
@@ -889,8 +890,8 @@ sub rebuildCookies {
     my ( $self, $req ) = @_;
     my @tmp;
     for ( my $i = 0 ; $i < @{ $req->{respHeaders} } ; $i += 2 ) {
-        push @tmp, $req->respHeaders->[0], $req->respHeaders->[1]
-          unless ( $req->respHeaders->[0] eq 'Set-Cookie' );
+        push @tmp, $req->respHeaders->[$i], $req->respHeaders->[ $i + 1 ]
+          unless ( $req->respHeaders->[$i] eq 'Set-Cookie' );
     }
     $req->{respHeaders} = \@tmp;
     $self->buildCookie($req);

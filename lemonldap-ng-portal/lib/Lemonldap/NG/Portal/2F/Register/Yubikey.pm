@@ -128,7 +128,7 @@ sub run {
             $self->p->updatePersistentSession( $req,
                 { _2fDevices => to_json($_2fDevices) } );
             $self->userLogger->notice(
-                "Yubikey registration of $keyName succeeds for $user");
+                "Yubikey registration of $UBKName succeeds for $user");
 
             return $self->p->sendHtml(
                 $req, 'error',
