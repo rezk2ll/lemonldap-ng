@@ -186,7 +186,7 @@ sub loadService {
 
     # Create Lasso server with service metadata
     my $server = $self->createServer(
-        $service_metadata->serviceToXML( $self->conf, ''),
+        $service_metadata->serviceToXML( $self->conf, '' ),
         $self->conf->{samlServicePrivateKeySig},
         $self->conf->{samlServicePrivateKeySigPwd},
 
@@ -295,6 +295,9 @@ sub loadIDPs {
         $self->idpList->{$entityID}->{icon} =
           $self->conf->{samlIDPMetaDataOptions}->{$_}
           ->{samlIDPMetaDataOptionsIcon};
+        $self->idpList->{$entityID}->{order} =
+          $self->conf->{samlIDPMetaDataOptions}->{$_}
+          ->{samlIDPMetaDataOptionsSortNumber};
 
         # Set rule
         my $cond = $self->conf->{samlIDPMetaDataOptions}->{$_}

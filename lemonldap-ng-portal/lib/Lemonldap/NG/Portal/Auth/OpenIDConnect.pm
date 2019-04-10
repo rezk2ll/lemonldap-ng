@@ -16,7 +16,7 @@ extends 'Lemonldap::NG::Portal::Main::Auth',
 
 # INTERFACE
 
-has opList => ( is => 'rw', default => sub { [] } );
+has opList   => ( is => 'rw', default => sub { [] } );
 has opNumber => ( is => 'rw', default => 0 );
 has path     => ( is => 'rw', default => 'oauth2' );
 
@@ -45,6 +45,8 @@ sub init {
           ->{oidcOPMetaDataOptionsDisplayName};
         my $icon = $self->conf->{oidcOPMetaDataOptions}->{$_}
           ->{oidcOPMetaDataOptionsIcon};
+        my $order = $self->conf->{oidcOPMetaDataOptions}->{$_}
+          ->{oidcOPMetaDataOptionsSortNumber};
         my $img_src;
 
         if ($icon) {
@@ -60,6 +62,7 @@ sub init {
             name  => $name,
             icon  => $img_src,
             class => "openidconnect",
+            order => $order
           };
     }
     $self->addRouteFromConf(
@@ -73,7 +76,11 @@ sub init {
         oidcServiceMetaDataBackChannelURI  => 'backLogout',
     );
     @list =
-      sort { $a->{name} cmp $b->{name} or $a->{val} cmp $b->{val} } @list;
+      sort {
+             $a->{order} <=> $b->{order}
+          or $a->{name} cmp $b->{name}
+          or $a->{val} cmp $b->{val}
+      } @list;
     $self->opList( [@list] );
     return 1;
 }

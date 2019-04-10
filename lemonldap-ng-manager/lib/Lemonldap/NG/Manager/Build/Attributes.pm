@@ -2298,6 +2298,7 @@ sub attributes {
         samlIDPMetaDataOptionsUserAttribute => { type => 'text', },
         samlIDPMetaDataOptionsDisplayName   => { type => 'text', },
         samlIDPMetaDataOptionsIcon          => { type => 'text', },
+        samlIDPMetaDataOptionsSortNumber    => { type => 'int', },
 
         # SP keys
         samlSPMetaDataExportedAttributes => {
@@ -3342,6 +3343,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsDisplayName  => { type => 'text', },
         oidcOPMetaDataOptionsIcon         => { type => 'text', },
         oidcOPMetaDataOptionsStoreIDToken => { type => 'bool', default => 0 },
+        oidcOPMetaDataOptionsSortNumber   => { type => 'int', },
 
         oidcRPMetaDataOptionsRule => {
             type          => 'text',
