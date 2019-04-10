@@ -16,7 +16,7 @@ extends 'Lemonldap::NG::Portal::Main::Auth',
 
 # INTERFACE
 
-has opList   => ( is => 'rw', default => sub { [] } );
+has opList => ( is => 'rw', default => sub { [] } );
 has opNumber => ( is => 'rw', default => 0 );
 has path     => ( is => 'rw', default => 'oauth2' );
 
@@ -41,12 +41,16 @@ sub init {
     #$portalPath =~ s#^https?://[^/]+/?#/#;
 
     foreach (@tab) {
-        my $name = $self->conf->{oidcOPMetaDataOptions}->{$_}
+        my $name = $_;
+        $name =
+          $self->conf->{oidcOPMetaDataOptions}->{$_}
+          ->{oidcOPMetaDataOptionsDisplayName}
+          if $self->conf->{oidcOPMetaDataOptions}->{$_}
           ->{oidcOPMetaDataOptionsDisplayName};
         my $icon = $self->conf->{oidcOPMetaDataOptions}->{$_}
           ->{oidcOPMetaDataOptionsIcon};
         my $order = $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsSortNumber};
+          ->{oidcOPMetaDataOptionsSortNumber} // 0;
         my $img_src;
 
         if ($icon) {

@@ -40,12 +40,16 @@ sub init {
     $portalPath =~ s#^https?://[^/]+/?#/#;
 
     foreach (@tab) {
-        my $name = $self->conf->{casSrvMetaDataOptions}->{$_}
+        my $name = $_;
+        $name =
+          $self->conf->{casSrvMetaDataOptions}->{$_}
+          ->{casSrvMetaDataOptionsDisplayName}
+          if $self->conf->{casSrvMetaDataOptions}->{$_}
           ->{casSrvMetaDataOptionsDisplayName};
         my $icon = $self->conf->{casSrvMetaDataOptions}->{$_}
           ->{casSrvMetaDataOptionsIcon};
         my $order = $self->conf->{casSrvMetaDataOptions}->{$_}
-          ->{casSrvMetaDataOptionsSortNumber};
+          ->{casSrvMetaDataOptionsSortNumber} // 0;
         my $img_src;
 
         if ($icon) {
