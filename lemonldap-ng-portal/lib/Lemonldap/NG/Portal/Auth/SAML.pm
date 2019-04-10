@@ -945,7 +945,7 @@ sub extractFormInfo {
             $idpName = $self->{idpList}->{$_}->{displayName}
               if $self->{idpList}->{$_}->{displayName};
             my $icon    = $self->{idpList}->{$_}->{icon};
-            my $order   = $self->{idpList}->{$_}->{order};
+            my $order   = $self->{idpList}->{$_}->{order} // 0;
             my $img_src = '';
 
             if ($icon) {
