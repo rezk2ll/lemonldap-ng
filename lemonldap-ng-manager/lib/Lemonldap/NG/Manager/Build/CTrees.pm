@@ -179,7 +179,8 @@ sub cTrees {
                 form  => 'simpleInputContainer',
                 nodes => [
                     'oidcOPMetaDataOptionsDisplayName',
-                    'oidcOPMetaDataOptionsIcon'
+                    'oidcOPMetaDataOptionsIcon',
+                    'oidcOPMetaDataOptionsSortNumber'
                 ]
             },
         ],

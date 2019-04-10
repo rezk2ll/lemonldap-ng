@@ -1866,6 +1866,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 'openid profile',
             'type'    => 'text'
         },
+        'oidcOPMetaDataOptionsSortNumber' => {
+            'type' => 'int'
+        },
         'oidcOPMetaDataOptionsStoreIDToken' => {
             'default' => 0,
             'type'    => 'bool'

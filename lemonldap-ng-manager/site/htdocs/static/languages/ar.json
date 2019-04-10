@@ -499,6 +499,7 @@
 "oidcOPMetaDataOptionsDisplayName":"عرض الاسم",
 "oidcOPMetaDataOptionsDisplayParams":"عرض",
 "oidcOPMetaDataOptionsIcon":"شعار",
+"oidcOPMetaDataOptionsSortNumber":"Order",
 "oidcOPMetaDataOptionsJWKSTimeout":"مهلة بيانات JWKS",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"جلسة مطلوب",
 "oidcRPMetaDataOptionsLogoutType":"نوع",

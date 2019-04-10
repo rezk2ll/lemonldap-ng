@@ -336,6 +336,12 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIcon",
             "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIcon",
             "title" : "oidcOPMetaDataOptionsIcon"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSortNumber",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSortNumber",
+            "title" : "oidcOPMetaDataOptionsSortNumber",
+            "type" : "int"
          }
       ],
       "id" : "oidcOPMetaDataOptionsDisplayParams",

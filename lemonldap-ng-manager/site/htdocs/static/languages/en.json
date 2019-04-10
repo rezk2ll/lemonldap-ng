@@ -499,6 +499,7 @@
 "oidcOPMetaDataOptionsDisplayName":"Display name",
 "oidcOPMetaDataOptionsDisplayParams":"Display",
 "oidcOPMetaDataOptionsIcon":"Logo",
+"oidcOPMetaDataOptionsSortNumber":"Order",
 "oidcOPMetaDataOptionsJWKSTimeout":"JWKS data timeout",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"Session required",
 "oidcRPMetaDataOptionsLogoutType":"Type",

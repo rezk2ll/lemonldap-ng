@@ -499,6 +499,7 @@
 "oidcOPMetaDataOptionsDisplayName":"Tên hiển thị",
 "oidcOPMetaDataOptionsDisplayParams":"Hiển thị",
 "oidcOPMetaDataOptionsIcon":"Logo",
+"oidcOPMetaDataOptionsSortNumber":"Order",
 "oidcOPMetaDataOptionsJWKSTimeout":"Thời gian chờ của dữ liệu JWKS",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"Phiên yêu cầu",
 "oidcRPMetaDataOptionsLogoutType":"Loại",
