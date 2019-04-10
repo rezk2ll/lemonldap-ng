@@ -894,6 +894,7 @@
 "samlIDPMetaDataOptionsDisplayParams":"Affichage",
 "samlIDPMetaDataOptionsIcon":"Logo",
 "samlIDPMetaDataOptionsSecurity":"Sécurité",
+"samlIDPMetaDataOptionsSortNumber":"Ordre",
 "samlIDPMetaDataOptionsStoreSAMLToken":"Conserver le jeton SAML",
 "samlIDPMetaDataOptionsRelayStateURL":"Pemettre une URL dans le RelayState",
 "samlIDPMetaDataOptionsUserAttribute":"Attribut contenant l'identité de l'utilisateur",

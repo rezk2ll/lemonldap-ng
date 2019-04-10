@@ -2298,6 +2298,7 @@ sub attributes {
         samlIDPMetaDataOptionsUserAttribute => { type => 'text', },
         samlIDPMetaDataOptionsDisplayName   => { type => 'text', },
         samlIDPMetaDataOptionsIcon          => { type => 'text', },
+        samlIDPMetaDataOptionsSortNumber    => { type => 'int', },
 
         # SP keys
         samlSPMetaDataExportedAttributes => {

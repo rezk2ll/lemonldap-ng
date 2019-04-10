@@ -295,6 +295,9 @@ sub loadIDPs {
         $self->idpList->{$entityID}->{icon} =
           $self->conf->{samlIDPMetaDataOptions}->{$_}
           ->{samlIDPMetaDataOptionsIcon};
+        $self->idpList->{$entityID}->{order} =
+          $self->conf->{samlIDPMetaDataOptions}->{$_}
+          ->{samlIDPMetaDataOptionsSortNumber};
 
         # Set rule
         my $cond = $self->conf->{samlIDPMetaDataOptions}->{$_}

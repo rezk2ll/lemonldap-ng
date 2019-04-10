@@ -894,6 +894,7 @@
 "samlIDPMetaDataOptionsDisplayParams":"Display",
 "samlIDPMetaDataOptionsIcon":"Logo",
 "samlIDPMetaDataOptionsSecurity":"Sicurezza",
+"samlIDPMetaDataOptionsSortNumber":"Order",
 "samlIDPMetaDataOptionsStoreSAMLToken":"Store SAML Token",
 "samlIDPMetaDataOptionsRelayStateURL":"Consenti l'URL come RelayState",
 "samlIDPMetaDataOptionsUserAttribute":"Attributo che contiene l'identificatore dell'utente",

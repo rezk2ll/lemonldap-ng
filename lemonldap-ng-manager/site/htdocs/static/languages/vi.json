@@ -894,6 +894,7 @@
 "samlIDPMetaDataOptionsDisplayParams":"Display",
 "samlIDPMetaDataOptionsIcon":"Logo",
 "samlIDPMetaDataOptionsSecurity":"Bảo mật",
+"samlIDPMetaDataOptionsSortNumber":"Order",
 "samlIDPMetaDataOptionsStoreSAMLToken":"Lưu trữ token SAML",
 "samlIDPMetaDataOptionsRelayStateURL":"Cho phép URL như RelayState",
 "samlIDPMetaDataOptionsUserAttribute":"Attribute containing user identifier",

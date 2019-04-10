@@ -945,6 +945,7 @@ sub extractFormInfo {
             $idpName = $self->{idpList}->{$_}->{displayName}
               if $self->{idpList}->{$_}->{displayName};
             my $icon    = $self->{idpList}->{$_}->{icon};
+            my $order   = $self->{idpList}->{$_}->{order};
             my $img_src = '';
 
             if ($icon) {
@@ -955,16 +956,17 @@ sub extractFormInfo {
             }
             $self->logger->debug( "IDP "
                   . $self->{idpList}->{$_}->{name}
-                  . " -> DisplayName : $idpName with Icon : $img_src" );
+                  . " -> DisplayName : $idpName with Icon : $img_src at order : $order" );
             push @list,
               {
-                val  => $_,
-                name => $idpName,
-                icon => $img_src,
+                val   => $_,
+                name  => $idpName,
+                icon  => $img_src,
+                order => $order,
               };
         }
         @list =
-          sort { $a->{name} cmp $b->{name} or $a->{val} cmp $b->{val} } @list;
+          sort { $a->{order} <=> $b->{order} or $a->{name} cmp $b->{name} or $a->{val} cmp $b->{val} } @list;
         $req->data->{list}            = \@list;
         $req->data->{confirmRemember} = 1;
 

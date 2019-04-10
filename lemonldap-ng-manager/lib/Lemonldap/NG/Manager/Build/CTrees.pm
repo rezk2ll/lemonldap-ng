@@ -94,7 +94,8 @@ sub cTrees {
                 form  => 'simpleInputContainer',
                 nodes => [
                     "samlIDPMetaDataOptionsDisplayName",
-                    "samlIDPMetaDataOptionsIcon"
+                    "samlIDPMetaDataOptionsIcon",
+		    "samlIDPMetaDataOptionsSortNumber"
                 ]
             }
         ],
