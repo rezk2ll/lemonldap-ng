@@ -12,7 +12,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 20;
+my $maintests = 23;
 my $debug     = 'error';
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -64,6 +64,12 @@ SKIP: {
       or explain( $res->[1],
         'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
     ( $host, $url, $query ) = expectForm( $res, undef, undef, 'confirm', );
+
+    # IDP must be sorted
+    my @idp = map /val="http:\/\/(.+?)\/saml\/metadata">/g, $res->[2]->[0];
+    ok( $idp[0] eq 'auth.idp2.com', ) or print STDERR Dumper( \@idp );
+    ok( $idp[1] eq 'auth.idp3.com', ) or print STDERR Dumper( \@idp );
+    ok( $idp[2] eq 'auth.idp.com', )  or print STDERR Dumper( \@idp );
     ok(
         $res->[2]->[0] =~
 m%<img src="http://auth.sp.com/static/common/icons/sfa_manager.png" class="mr-2" alt="IDP2" title="IDP2" />%,
@@ -248,6 +254,11 @@ sub sp {
                         uid  => "1;uid",
                         cn   => "0;cn"
                     },
+                    idp3 => {
+                        mail => "0;mail;;",
+                        uid  => "1;uid",
+                        cn   => "0;cn"
+                    },
                 },
                 samlIDPMetaDataOptions => {
                     idp => {
@@ -259,6 +270,7 @@ sub sp {
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
                         samlIDPMetaDataOptionsForceUTF8                => 1,
+                        samlIDPMetaDataOptionsSortNumber               => 2,
                         samlIDPMetaDataOptionsDisplayName =>
                           'idp_Test_DisplayName',
 
@@ -274,6 +286,18 @@ sub sp {
                         samlIDPMetaDataOptionsForceUTF8                => 1,
                         samlIDPMetaDataOptionsIcon => 'icons/sfa_manager.png',
                     },
+                    idp3 => {
+                        samlIDPMetaDataOptionsEncryptionMode => 'none',
+                        samlIDPMetaDataOptionsSSOBinding     => 'post',
+                        samlIDPMetaDataOptionsSLOBinding     => 'post',
+                        samlIDPMetaDataOptionsSignSSOMessage => 1,
+                        samlIDPMetaDataOptionsSignSLOMessage => 1,
+                        samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
+                        samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
+                        samlIDPMetaDataOptionsForceUTF8                => 1,
+                        samlIDPMetaDataOptionsSortNumber               => 1,
+                        samlIDPMetaDataOptionsDisplayName => 'Test_Sort',
+                    },
                 },
                 samlIDPMetaDataExportedAttributes => {
                     idp => {
@@ -281,6 +305,10 @@ sub sp {
                         "cn"  => "1;cn;;",
                     },
                     idp2 => {
+                        "uid" => "0;uid;;",
+                        "cn"  => "1;cn;;",
+                    },
+                    idp3 => {
                         "uid" => "0;uid;;",
                         "cn"  => "1;cn;;",
                     },
@@ -293,7 +321,11 @@ sub sp {
                     idp2 => {
                         samlIDPMetaDataXML =>
                           samlIDPMetaDataXML( 'idp2', 'HTTP-POST' )
-                    }
+                    },
+                    idp3 => {
+                        samlIDPMetaDataXML =>
+                          samlIDPMetaDataXML( 'idp3', 'HTTP-POST' )
+                    },
                 },
                 samlOrganizationDisplayName => "SP",
                 samlOrganizationName        => "SP",
