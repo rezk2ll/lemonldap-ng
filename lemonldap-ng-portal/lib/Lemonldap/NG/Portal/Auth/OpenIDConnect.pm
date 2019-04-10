@@ -76,7 +76,11 @@ sub init {
         oidcServiceMetaDataBackChannelURI  => 'backLogout',
     );
     @list =
-      sort { $a->{order} <=> $b->{order} or $a->{name} cmp $b->{name} or $a->{val} cmp $b->{val} } @list;
+      sort {
+        $a->{order} <=> $b->{order}
+          or $a->{name} cmp $b->{name}
+          or $a->{val} cmp $b->{val}
+      } @list;
     $self->opList( [@list] );
     return 1;
 }

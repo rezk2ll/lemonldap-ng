@@ -791,7 +791,7 @@ sub extractFormInfo {
                             my $res = $self->p->deleteSession($req);
                             return (
                                 $res eq PE_LOGOUT_OK ? PE_SENDRESPONSE : $res );
-                        }
+                          }
                     ]
                 );
 
@@ -897,7 +897,7 @@ sub extractFormInfo {
             $req->pdata->{_url} = encode_base64( $req->urldc, '' );
         }
         my $disco_url = $self->conf->{samlDiscoveryProtocolURL};
-        my $portal = $self->conf->{portal};
+        my $portal    = $self->conf->{portal};
         $disco_url .= ( $disco_url =~ /\?/ ? '&' : '?' )
           . build_urlencoded(
             entityID      => $self->getMetaDataURL( 'samlEntityID', 0, 1 ),
@@ -956,7 +956,8 @@ sub extractFormInfo {
             }
             $self->logger->debug( "IDP "
                   . $self->{idpList}->{$_}->{name}
-                  . " -> DisplayName : $idpName with Icon : $img_src at order : $order" );
+                  . " -> DisplayName : $idpName with Icon : $img_src at order : $order"
+            );
             push @list,
               {
                 val   => $_,
@@ -966,7 +967,11 @@ sub extractFormInfo {
               };
         }
         @list =
-          sort { $a->{order} <=> $b->{order} or $a->{name} cmp $b->{name} or $a->{val} cmp $b->{val} } @list;
+          sort {
+            $a->{order} <=> $b->{order}
+              or $a->{name} cmp $b->{name}
+              or $a->{val} cmp $b->{val}
+          } @list;
         $req->data->{list}            = \@list;
         $req->data->{confirmRemember} = 1;
 
