@@ -72,6 +72,9 @@ sub init {
         oidcServiceMetaDataFrontChannelURI => 'frontLogout',
         oidcServiceMetaDataBackChannelURI  => 'backLogout',
     );
+    @list = sort { $a->{name} cmp $b->{name} or
+                   $a->{val} cmp $b->{val}
+		 } @list;
     $self->opList( [@list] );
     return 1;
 }

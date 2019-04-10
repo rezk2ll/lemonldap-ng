@@ -965,6 +965,9 @@ sub extractFormInfo {
                 icon => $img_src,
               };
         }
+	@list = sort { $a->{name} cmp $b->{name} or
+	               $a->{val} cmp $b->{val}
+		     } @list;
         $req->data->{list}            = \@list;
         $req->data->{confirmRemember} = 1;
 
