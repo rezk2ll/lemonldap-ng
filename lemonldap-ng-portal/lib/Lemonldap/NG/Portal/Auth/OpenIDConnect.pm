@@ -16,7 +16,7 @@ extends 'Lemonldap::NG::Portal::Main::Auth',
 
 # INTERFACE
 
-has opList   => ( is => 'rw', default => sub { [] } );
+has opList => ( is => 'rw', default => sub { [] } );
 has opNumber => ( is => 'rw', default => 0 );
 has path     => ( is => 'rw', default => 'oauth2' );
 
@@ -72,9 +72,8 @@ sub init {
         oidcServiceMetaDataFrontChannelURI => 'frontLogout',
         oidcServiceMetaDataBackChannelURI  => 'backLogout',
     );
-    @list = sort { $a->{name} cmp $b->{name} or
-                   $a->{val} cmp $b->{val}
-		 } @list;
+    @list =
+      sort { $a->{name} cmp $b->{name} or $a->{val} cmp $b->{val} } @list;
     $self->opList( [@list] );
     return 1;
 }
