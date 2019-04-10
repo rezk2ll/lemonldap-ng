@@ -44,6 +44,8 @@ sub init {
           ->{casSrvMetaDataOptionsDisplayName};
         my $icon = $self->conf->{casSrvMetaDataOptions}->{$_}
           ->{casSrvMetaDataOptionsIcon};
+        my $order = $self->conf->{casSrvMetaDataOptions}->{$_}
+          ->{casSrvMetaDataOptionsSortNumber};
         my $img_src;
 
         if ($icon) {
@@ -52,15 +54,21 @@ sub init {
               ? $icon
               : $portalPath . $self->p->staticPrefix . "/common/" . $icon;
         }
-
         push @list,
           {
             val   => $_,
             name  => $name,
             icon  => $img_src,
+            order => $order,
             class => "openidconnect",
           };
     }
+    @list =
+      sort {
+             $a->{order} <=> $b->{order}
+          or $a->{name} cmp $b->{name}
+          or $a->{val} cmp $b->{val}
+      } @list;
     $self->srvList( \@list );
     return 1;
 }

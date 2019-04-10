@@ -128,6 +128,7 @@
 "casSrvMetaDataOptionsDisplayName":"Name to display",
 "casSrvMetaDataOptionsGateway":"Gateway authentication",
 "casSrvMetaDataOptionsIcon":"Icon path",
+"casSrvMetaDataOptionsSortNumber":"Order",
 "casSrvMetaDataOptionsRenew":"Renew authentication",
 "casSrvMetaDataOptionsProxiedServices":"Proxied services",
 "casSrvMetaDataOptionsUrl":"Server URL",

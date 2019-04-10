@@ -128,6 +128,7 @@
 "casSrvMetaDataOptionsDisplayName":"الاسم المطلوب عرضه",
 "casSrvMetaDataOptionsGateway":"بوابة إثبات الهوية",
 "casSrvMetaDataOptionsIcon":"مسارالأيقونة",
+"casSrvMetaDataOptionsSortNumber":"Order",
 "casSrvMetaDataOptionsRenew":"تجديد إثبات الهوية",
 "casSrvMetaDataOptionsProxiedServices":"خدمات البروكسي",
 "casSrvMetaDataOptionsUrl":" يو أر ل الخادم",

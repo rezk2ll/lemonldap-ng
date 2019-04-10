@@ -128,6 +128,7 @@
 "casSrvMetaDataOptionsDisplayName":"Nom à afficher",
 "casSrvMetaDataOptionsGateway":"Authentification transparente",
 "casSrvMetaDataOptionsIcon":"Chemin de l'icône",
+"casSrvMetaDataOptionsSortNumber":"Ordre",
 "casSrvMetaDataOptionsRenew":"Renouveller l'authentification",
 "casSrvMetaDataOptionsProxiedServices":"Services mandatés",
 "casSrvMetaDataOptionsUrl":"URL du serveur",

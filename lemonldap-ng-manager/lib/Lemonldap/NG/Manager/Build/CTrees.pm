@@ -243,6 +243,7 @@ sub cTrees {
                 nodes => [
                     'casSrvMetaDataOptionsDisplayName',
                     'casSrvMetaDataOptionsIcon',
+                    'casSrvMetaDataOptionsSortNumber',
                 ]
             },
         ],

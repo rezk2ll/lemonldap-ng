@@ -126,6 +126,12 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsIcon",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsIcon",
             "title" : "casSrvMetaDataOptionsIcon"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSortNumber",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSortNumber",
+            "title" : "casSrvMetaDataOptionsSortNumber",
+            "type" : "int"
          }
       ],
       "id" : "casSrvMetaDataOptionsDisplay",
