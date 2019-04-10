@@ -743,6 +743,7 @@ sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
 
     my $templateDir = $self->conf->{templateDir} . '/' . $self->getSkin($req);
+    $self->templateDir( [ $templateDir, @{ $self->templateDir } ] );
 
     # Check template
     $args{templateDir} = $templateDir;
@@ -1004,17 +1005,14 @@ sub _sumUpSession {
 sub loadTemplate {
     my ( $self, $name, %prm ) = @_;
     $name .= '.tpl';
-    my $file =
-        $self->conf->{templateDir} . '/'
-      . $self->conf->{portalSkin} . '/'
-      . $name;
-    $file = $self->conf->{templateDir} . '/common/' . $name
-      unless ( -e $file );
-    unless ( -e $file ) {
-        die "Unable to find $name in $self->conf->{templateDir}";
-    }
     my $tpl = HTML::Template->new(
-        filename               => $file,
+        filename => $name,
+        path     => [
+            $self->conf->{templateDir} . '/' . $self->conf->{portalSkin},
+            $self->conf->{templateDir} . '/bootstrap/',
+            $self->conf->{templateDir} . '/common/'
+        ],
+        search_path_on_include => 1,
         die_on_bad_params      => 0,
         die_on_missing_include => 1,
         cache                  => 1,

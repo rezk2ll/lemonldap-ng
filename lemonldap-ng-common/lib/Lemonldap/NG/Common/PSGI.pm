@@ -17,7 +17,7 @@ has languages    => ( is => 'rw', isa     => 'Str', default => 'en' );
 has logLevel     => ( is => 'rw', isa     => 'Str', default => 'info' );
 has portal       => ( is => 'rw', isa     => 'Str' );
 has staticPrefix => ( is => 'rw', isa     => 'Str' );
-has templateDir  => ( is => 'rw', isa     => 'Str' );
+has templateDir  => ( is => 'rw', isa     => 'Str|ArrayRef' );
 has links        => ( is => 'rw', isa     => 'ArrayRef' );
 has menuLinks    => ( is => 'rw', isa     => 'ArrayRef' );
 has logger     => ( is => 'rw' );
@@ -250,6 +250,7 @@ sub sendHtml {
         $htpl = HTML::Template->new(
             filehandle             => IO::File->new($template),
             path                   => $self->templateDir,
+            search_path_on_include => 1,
             die_on_bad_params      => 0,
             die_on_missing_include => 1,
             cache                  => 0,

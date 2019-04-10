@@ -194,6 +194,8 @@ sub reloadConf {
         $self->error("Template dir $self->{templateDir} doesn't exist");
         return $self->fail;
     }
+    $self->templateDir(
+        [ $self->{templateDir}, $self->conf->{templateDir} . '/bootstrap' ] );
 
     $self->{staticPrefix} = $self->conf->{staticPrefix} || '/static';
     $self->{languages}    = $self->conf->{languages}    || '/';
