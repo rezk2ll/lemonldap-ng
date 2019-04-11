@@ -1,7 +1,23 @@
-use Lemonldap::NG::Portal::Lib::DBI;
 use MIME::Base64;
 
-{
+use Test::More;
+use strict;
+use IO::String;
+
+require 't/test-lib.pm';
+
+my $res;
+my $maintests = 6;
+
+eval { unlink 't/userdb.db' };
+
+SKIP: {
+    eval
+'require DBD::SQLite; use Digest::SHA; use Lemonldap::NG::Portal::Lib::DBI';
+    if ($@) {
+        skip 'DBI/DBD::SQLite not found', $maintests;
+    }
+    eval q`
     no warnings 'redefine';
 
     sub Lemonldap::NG::Portal::Lib::DBI::hash_password_from_database {
@@ -72,24 +88,8 @@ use MIME::Base64;
 
         # Return encode_base64(SQL_METHOD(password + salt) + salt)
     }
-}
+`;
 
-use Test::More;
-use strict;
-use IO::String;
-
-require 't/test-lib.pm';
-
-my $res;
-my $maintests = 6;
-
-eval { unlink 't/userdb.db' };
-
-SKIP: {
-    eval { require DBI; require DBD::SQLite; use Digest::SHA };
-    if ($@) {
-        skip 'DBD::SQLite not found', $maintests;
-    }
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
 
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
@@ -106,7 +106,8 @@ SKIP: {
     $dbh->do(
 "INSERT INTO users VALUES ('jsmith','{ssha512}wr0zU/I6f7U4bVoeOlJnNFbhF0a9np59LUeNnhokohVI/wiNzt8Y4JujfOfNQiGuiVgY+xrYggfmgpke6KdjxKS7W0GR1ZCe','John Smith')"
     );
-    my $client = LLNG::Manager::Test->new( {
+    my $client = LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                   => 'error',
                 useSafeJail                => 1,
