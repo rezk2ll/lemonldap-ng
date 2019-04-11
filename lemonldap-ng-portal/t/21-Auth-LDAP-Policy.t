@@ -35,6 +35,8 @@ SKIP: {
       'PE_PP_PASSWORD_EXPIRED', 'PE_PASSWORD_OK', 'PE_PP_ACCOUNT_LOCKED',
       'PE_PP_PASSWORD_TOO_SHORT', 'PE_PP_GRACE';
 
+    my ( $user, $code, $postString, $match );
+
     # 1 - TEST PE_PP_CHANGE_AFTER_RESET AND PE_PP_PASSWORD_EXPIRED
     # ------------------------------------------------------------
     foreach my $tpl (
@@ -42,9 +44,9 @@ SKIP: {
         [ 'expire', PE_PP_PASSWORD_EXPIRED ]
       )
     {
-        my $user       = $tpl->[0];
-        my $code       = $tpl->[1];
-        my $postString = "user=$user&password=$user";
+        $user       = $tpl->[0];
+        $code       = $tpl->[1];
+        $postString = "user=$user&password=$user";
 
         # Try to authenticate
         # -------------------
@@ -56,7 +58,7 @@ SKIP: {
             ),
             'Auth query'
         );
-        my $match = 'trmsg="' . $code . '"';
+        $match = 'trmsg="' . $code . '"';
         ok( $res->[2]->[0] =~ /$match/, "Code is $code" );
 
         #open F, '>../e2e-tests/conf/portal/result.html' or die $!;
@@ -93,9 +95,9 @@ SKIP: {
 
     # 2 - TEST PE_PP_GRACE
     # -------------------------
-    my $user       = 'grace';
-    my $code       = "ppGrace";
-    my $postString = "user=$user&password=$user";
+    $user       = 'grace';
+    $code       = "ppGrace";
+    $postString = "user=$user&password=$user";
 
     # Try to authenticate
     # -------------------
@@ -107,14 +109,14 @@ SKIP: {
         ),
         'Auth query'
     );
-    my $match = 'trmsg="' . $code . '"';
+    $match = 'trmsg="' . $code . '"';
     ok( $res->[2]->[0] =~ /$match/, 'Grace remaining' );
 
     # 3 - TEST PE_PP_ACCOUNT_LOCKED
     # -------------------------
-    my $user       = 'lock';
-    my $code       = PE_PP_ACCOUNT_LOCKED;
-    my $postString = "user=$user&password=$user";
+    $user       = 'lock';
+    $code       = PE_PP_ACCOUNT_LOCKED;
+    $postString = "user=$user&password=$user";
 
     # Try to authenticate
     # -------------------
@@ -126,7 +128,7 @@ SKIP: {
         ),
         'Auth query'
     );
-    my $match = 'trmsg="' . $code . '"';
+    $match = 'trmsg="' . $code . '"';
     ok( $res->[2]->[0] =~ /$match/, 'Account is locked' );
 
     # Try to change anyway

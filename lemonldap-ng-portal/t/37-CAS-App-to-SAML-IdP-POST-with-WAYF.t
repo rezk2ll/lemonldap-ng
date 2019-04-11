@@ -98,7 +98,7 @@ SKIP: {
     );
     my $proxyPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
-    my ( $url, $query ) =
+    ( $url, $query ) =
       expectRedirection( $res, qr#^http://discovery.example.com/# );
 
     # Return from WAYF
