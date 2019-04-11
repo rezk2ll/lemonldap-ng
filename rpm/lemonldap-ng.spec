@@ -656,6 +656,9 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Thu Apr 11 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.3-1
+- Update to 2.0.3
+
 * Tue Feb 12 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.2-1
 - Update to 2.0.2
 
