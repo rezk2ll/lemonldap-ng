@@ -67,10 +67,22 @@ sub run {
         my ( $req, $res );
         $req = HTTP::Request->new( @{ JSON::from_json($_) } );
         $res = $server->request($req);
+        my @flatten = &flatten($res);
         print $out JSON::to_json(
-            [ $res->code, [ $res->flatten ], [ $res->content ] ] )
+            [ $res->code, [@flatten], [ $res->content ] ] )
           . "\n";
     }
+}
+
+# Copy from HTTP::Headers code
+sub flatten {
+    my ($self) = @_;
+    (
+        map {
+            my $k = $_;
+            map { ( $k => $_ ) } $self->header($_);
+        } $self->header_field_names
+    );
 }
 
 1;
