@@ -21,13 +21,10 @@ ok(
     'Client object'
 );
 
-# Try to display latest conf
-my $res = $client2->jsonResponse('/view/1');
-ok( $res->{value} eq '_Hidden_', 'Browser is NOT allowed' );
-count(2);
+
 
 # Try to compare confs 1 & 2
-ok( $res = $client2->_post( '/confs/', 'cfgNum=1&force=1', &body, 'application/json' ),
+ok( my $res = $client2->_post( '/confs/', 'cfgNum=1&force=1', &body, 'application/json' ),
     "Request succeed" );
 ok( $res->[0] == 200, "Result code is 200" );
 my $resBody;
@@ -44,6 +41,11 @@ count(2);
 $res = $client2->jsonResponse('/view/diff/1/2');
 ok( $res->{value} eq '_Hidden_', 'Diff is NOT allowed' );
 count(1);
+
+# Try to display latest conf
+$res = $client2->jsonResponse('/view/2');
+ok( $res->{value} eq '_Hidden_', 'Browser is NOT allowed' );
+count(2);
 
 # Remove new conf
 `rm -rf t/conf/lmConf-2.json`;
