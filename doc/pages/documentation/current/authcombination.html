@@ -170,9 +170,10 @@ For example, if <abbr title="Database Interface">DBI</abbr> is configured to use
 You can also override a complex key like ldapExportedVars, by setting a JSON value:
 </p>
 <pre class="code javascript"><span class="br0">&#123;</span><span class="st0">&quot;cn&quot;</span> <span class="sy0">=&gt;</span> <span class="st0">&quot;cn&quot;</span><span class="sy0">,</span> <span class="st0">&quot;uid&quot;</span> <span class="sy0">=&gt;</span> <span class="st0">&quot;sAMAccounName&quot;</span><span class="sy0">,</span> <span class="st0">&quot;mail&quot;</span> <span class="sy0">=&gt;</span> <span class="st0">&quot;mail&quot;</span><span class="br0">&#125;</span></pre>
-
+<div class="noteimportant">If your JSON is corrupted, LLNG will use it as string and just report a warning in logs.
 </div>
-<!-- EDIT5 SECTION "Modules declaration" [516-1840] -->
+</div>
+<!-- EDIT5 SECTION "Modules declaration" [516-1953] -->
 <h3 class="sectionedit7" id="rule_chain">Rule chain</h3>
 <div class="level3">
 
@@ -221,7 +222,7 @@ Remember that schemes in rules are the names declared above.
 		<td class="col0 leftalign"> <code>[mySSL and myLDAP, myLDAP ]</code>         </td><td class="col1"> Use mySSL and myLDAP to authentify, myLDAP to get user </td>
 	</tr>
 </table></div>
-<!-- EDIT8 TABLE [2359-2790] --><div class="noteimportant">Note that “or” can&#039;t be used inside a scheme.
+<!-- EDIT8 TABLE [2472-2903] --><div class="noteimportant">Note that “or” can&#039;t be used inside a scheme.
 If you think to “[mySSL or myLDAP, myLDAP]”, you must write <code>[mySSL, myLDAP] or [myLDAP, myLDAP]</code>
 
 </div><div class="table sectionedit9"><table class="inline table table-bordered table-striped">
@@ -237,7 +238,7 @@ If you think to “[mySSL or myLDAP, myLDAP]”, you must write <code>[mySSL, my
 		<td class="col0"> <code>[myDBI1] and [myDBI2] or [myLDAP] and [myDBI2]</code> </td><td class="col1"> Try myDBI1 and myDBI2, if it fails, try myLDAP and myDBI2 </td>
 	</tr>
 </table></div>
-<!-- EDIT9 TABLE [2963-3207] --><div class="noteimportant">You can&#039;t use brackets in a boolean expression and “and” has precedence on “or”.
+<!-- EDIT9 TABLE [3076-3320] --><div class="noteimportant">You can&#039;t use brackets in a boolean expression and “and” has precedence on “or”.
 <p>
 If you think to “( [myLDAP] or [myDBI1] ) and [myDBI2]”, you must write <code>[myLDAP] and [myDBI2] or [myDBI1] and [myDBI2]</code>
 </p>
@@ -264,7 +265,7 @@ Test can use only the <code>$env</code> variable. It contains the FastCGI enviro
 		<td class="col0"> <code>if($env-&gt;{REMOTE_ADDR} =~ /^10\./) then [myLDAP] else if($env-&gt;{REMOTE_ADDR} =~ /^192/) then [myDBI1] else [myDBI2]</code> </td><td class="col1"> Chain tests </td>
 	</tr>
 </table></div>
-<!-- EDIT10 TABLE [3543-3865] --><div class="noteimportant">Note that brackets can&#039;t be used except to enclose test.
+<!-- EDIT10 TABLE [3656-3978] --><div class="noteimportant">Note that brackets can&#039;t be used except to enclose test.
 <p>
 If you wants to write <code>if(...) then if...</code>, you must write <code>if(not ...) then ... else if(...)...</code>
 </p>
@@ -284,7 +285,7 @@ The following rule is valid:
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Rule chain" [1841-4212] -->
+<!-- EDIT7 SECTION "Rule chain" [1954-4325] -->
 <h3 class="sectionedit11" id="combine_second_factor">Combine second factor</h3>
 <div class="level3">
 
@@ -309,7 +310,7 @@ Now if you want to authenticate users either by LDAP or LDAP+U2F <em>(to have 2 
 </ul>
 
 </div>
-<!-- EDIT11 SECTION "Combine second factor" [4213-4862] -->
+<!-- EDIT11 SECTION "Combine second factor" [4326-4975] -->
 <h3 class="sectionedit12" id="display_multiple_forms">Display multiple forms</h3>
 <div class="level3">
 
@@ -320,12 +321,12 @@ Combination module returns the form corresponding to the first authentication sc
 <span class="re1">combinationForms</span> <span class="sy0">=</span><span class="re2"> standardform, openidform</span></pre>
 
 </div>
-<!-- EDIT12 SECTION "Display multiple forms" [4863-5191] -->
+<!-- EDIT12 SECTION "Display multiple forms" [4976-5304] -->
 <h2 class="sectionedit13" id="known_problems">Known problems</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT13 SECTION "Known problems" [5192-5219] -->
+<!-- EDIT13 SECTION "Known problems" [5305-5332] -->
 <h3 class="sectionedit14" id="federation_protocols">Federation protocols</h3>
 <div class="level3">
 
@@ -345,9 +346,9 @@ Combination module returns the form corresponding to the first authentication sc
 		<td class="col0"> <em><code>[<abbr title="Security Assertion Markup Language">SAML</abbr>] and [LDAP] or [LDAP]</code></em> </td><td class="col1"> <code>[<abbr title="Security Assertion Markup Language">SAML</abbr>, <abbr title="Security Assertion Markup Language">SAML</abbr> and LDAP] or [LDAP]</code> </td><td class="col2"> Authentication is done by <abbr title="Security Assertion Markup Language">SAML</abbr> or LDAP but user must match an LDAP entry </td>
 	</tr>
 </table></div>
-<!-- EDIT15 TABLE [5519-5851] -->
+<!-- EDIT15 TABLE [5632-5964] -->
 </div>
-<!-- EDIT14 SECTION "Federation protocols" [5220-5852] -->
+<!-- EDIT14 SECTION "Federation protocols" [5333-5965] -->
 <h3 class="sectionedit16" id="authapache_authentication">Auth::Apache authentication</h3>
 <div class="level3">
 
@@ -365,7 +366,7 @@ To bypass this, follow the documentation of <a href="authapache.html" class="wik
 </p>
 
 </div>
-<!-- EDIT16 SECTION "Auth::Apache authentication" [5853-6464] -->
+<!-- EDIT16 SECTION "Auth::Apache authentication" [5966-6577] -->
 <h3 class="sectionedit17" id="ssl_authentication">SSL authentication</h3>
 <div class="level3">
 
@@ -374,6 +375,6 @@ To chain SSL, you have to set “SSLRequire optional” in Apache configuration,
 </p>
 
 </div>
-<!-- EDIT17 SECTION "SSL authentication" [6465-] --></div>
+<!-- EDIT17 SECTION "SSL authentication" [6578-] --></div>
 </body>
 </html>
