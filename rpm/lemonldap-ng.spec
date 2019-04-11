@@ -439,6 +439,8 @@ sed -i 's/nobody/%{lm_apacheuser}/' \
 sed -i 's/nobody/%{lm_apacheuser}/g' \
     %{buildroot}%{lm_bindir}/lemonldap-ng-cli
 sed -i 's/nobody/%{lm_apacheuser}/g' \
+    %{buildroot}%{lm_bindir}/llngDeleteSession
+sed -i 's/nobody/%{lm_apacheuser}/g' \
     %{buildroot}%{_sysconfdir}/default/llng-fastcgi-server
 
 # Set UNIX rights
@@ -593,6 +595,7 @@ fi
 %{lm_examplesdir}/manager
 %{lm_bindir}/lmConfigEditor
 %{lm_bindir}/lemonldap-ng-cli
+%{lm_bindir}/llngDeleteSession
 %{_mandir}/man1/lemonldap-ng-cli*
 
 %files portal
