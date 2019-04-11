@@ -11,8 +11,8 @@ lemonldap-ng (2.0.2) bionic; urgency=medium
     * #1618: Version in server signature is wrong
     * #1623: ADPwdExpireWarning and ADPwdMaxAge parameters are missing in Manager
     * #1627: Display issue with GrantSession plugin
-    * #1628: GrantSession plugin discloses its message to unlogged users
-    * #1630: SSO cookie is sent to protected applications with Nginx-based ReverseProxy
+    * #1628: [Security:minor] GrantSession plugin discloses its message to unlogged users
+    * #1630: [Security:minor] SSO cookie is sent to protected applications with Nginx-based ReverseProxy
     * #1636: SSL and Kerberos Auth Modules don t work with choice
     * #1639: User must change password on AD is broken
     * #1642: Unable to select skin from URL
