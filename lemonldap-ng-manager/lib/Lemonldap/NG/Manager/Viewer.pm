@@ -59,22 +59,24 @@ sub addRoutes {
             ['GET']
         );
     }
-    unless ( $self->{viewerAllowBrowser} || $conf->{viewerAllowBrowser} ) {
+
+    # Difference between confs
+    if ( $self->{viewerAllowDiff} ) {
+        $self->addRoute(
+            view => { diff => { ':conf1' => { ':conf2' => 'viewDiff' } } } )
+          ->addRoute( 'viewDiff.html', undef, ['GET'] );
+    }
+    unless ( $self->{viewerAllowBrowser} ) {
         $self->addRoute(
             view => { ':cfgNum' => 'rejectKey' },
             ['GET']
         );
     }
 
-    # Difference between confs
-    if ( $self->{viewerAllowDiff} || $conf->{viewerAllowDiff} ) {
-        $self->addRoute(
-            view => { diff => { ':conf1' => { ':conf2' => 'viewDiff' } } } )
-          ->addRoute( 'viewDiff.html', undef, ['GET'] );
-    }
-
     # Other keys
-    $self->addRoute( view => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] );
+    else {
+        $self->addRoute( view => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] );
+    }
 }
 
 sub getConfByNum {
