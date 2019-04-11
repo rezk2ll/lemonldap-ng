@@ -1,3 +1,54 @@
+lemonldap-ng (2.0.3) bionic; urgency=medium
+
+  * Bugs:
+    * #1543: Redirection lost with CAS RP -> Choice -> SAML Discovery Protocol -> SAML IDP
+    * #1654: Password must change on AD still not fully working
+    * #1656: No IP shown in history logon
+    * #1667: [Security:medium] Option userControl is not applied anymore in standard login process
+    * #1671: Error in SP-initiated saml logout with multiple SP
+    * #1672: In SAML Issuer, environment variables to store current SP are not filled
+    * #1673: Application list display and specific rules
+    * #1675: [Security:minor] Using /logout instead of /?logout=1 does not work
+    * #1676: Active Directory connection information not saved
+    * #1679: Default jQuery URL in form replay has changed
+    * #1680: In form replay, POST data keys are not URL encoded
+    * #1682: LinkedIn OAuth2 authentication is not available in combination modules list
+    * #1683: Changing configuration option cspScript has no effect
+    * #1684: UI manager: boolean values do not appears in configuration forms with Yaml config format
+    * #1686: SOAP Portal WSDL file is invalid
+    * #1691: Password policy can't display messages
+    * #1692: Parameter base64 is ignored in setHiddenFormValue
+    * #1693: Information is not displayed in logout process
+    * #1698: Invalid pdata causes SAML login to fail after logout
+    * #1703: Fix faulty headers on a null value
+    * #1708: lmerror page loops on url parameter
+
+  * New features:
+    * #1632: Optionally let Ext2F module handle code generation
+    * #1658: CheckUser plugin
+    * #1661: Configuration viewer module
+    * #1664: Impersonation plugin
+    * #1697: Command-line tool to delete session for specific user(s)
+
+  * Improvements:
+    * #1549: Option to override IDP entityID
+    * #1595: Possibility to override message with a custom JSON file in template
+    * #1651: Disable cache on portal page
+    * #1653: Allow failback to default skin when a template is not found in custom theme
+    * #1660: Restore possibility to hide message in portal template
+    * #1666: Display errors on login form
+    * #1668: As IDP SAML, do not try to send SLO response if no SLO endpoint defined in SP metadata
+    * #1670: Display "authentication in progress" when using Ajax with Kerberos
+    * #1681: Change behavior with SAML mandatory/optional attributes in SAML Issuer
+    * #1687: Add granted log for user and connexion informations
+    * #1694: Disable CSRF token with AuthBasic
+    * #1696: Remove unnecessary antiframe protection in portal javascript
+    * #1699: Authentication level for REST and GPG authentication
+    * #1700: Update AuthBasic handler doc : REST server is required
+    * #1704: Append parameter to sort IDP, OP and CAS servers in Auth menu loop
+
+ -- Clément <clem.oudot@gmail.com>  Thu, 11 Apr 2019 10:09:35 +0200
+
 lemonldap-ng (2.0.2) bionic; urgency=medium
 
   * Bugs:
