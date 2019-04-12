@@ -11,7 +11,7 @@ use feature 'state';
 
 extends 'Lemonldap::NG::Manager::Conf';
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.4';
 
 #############################
 # I. INITIALIZATION METHODS #
@@ -26,7 +26,7 @@ sub addRoutes {
     $self->ua( Lemonldap::NG::Common::UserAgent->new($conf) );
 
     my $hiddenPK = '';
-    $hiddenPK = $self->{viewerHiddenKeys} || $conf->{viewerHiddenKeys};
+    $hiddenPK = $self->{viewerHiddenKeys};
     my @enabledPK = ();
     my @keys      = qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
       applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
@@ -66,17 +66,9 @@ sub addRoutes {
             view => { diff => { ':conf1' => { ':conf2' => 'viewDiff' } } } )
           ->addRoute( 'viewDiff.html', undef, ['GET'] );
     }
-    unless ( $self->{viewerAllowBrowser} ) {
-        $self->addRoute(
-            view => { ':cfgNum' => 'rejectKey' },
-            ['GET']
-        );
-    }
 
     # Other keys
-    else {
-        $self->addRoute( view => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] );
-    }
+    $self->addRoute( view => { ':cfgNum' => { '*' => 'viewKey' } }, ['GET'] );
 }
 
 sub getConfByNum {
@@ -124,8 +116,32 @@ sub viewDiff {
 }
 
 sub rejectKey {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, @args ) = @_;
     return $self->sendJSONresponse( $req, { 'value' => '_Hidden_' } );
+}
+
+sub viewKey {
+    my ( $self, $req, @args ) = @_;
+    my $lastConf;
+    $self->logger->debug("Viewer requested URI -> $req->{env}->{REQUEST_URI}");
+    if ( $self->{viewerAllowBrowser} ) {
+        $self->logger->debug(" No restriction");
+        $self->SUPER::getKey( $req, @args );
+    }
+    else {
+        if ( $req->{env}->{REQUEST_URI} =~ m%/view/(?:latest|\d+/\w+)$% ) {
+            $self->logger->debug(" $req->{env}->{REQUEST_URI} -> URI allowed");
+            $self->SUPER::getKey( $req, @args );
+        }
+        else {
+            $self->logger->debug(
+                " $req->{env}->{REQUEST_URI} -> URI FORBIDDEN");
+            my $user = $req->{userData}->{_whatToTrace} || 'anonymous';
+            $self->userLogger->warn("$user tried to browse configurations!!!");
+            $self->rejectKey( $req, @args );
+        }
+
+    }
 }
 
 1;
