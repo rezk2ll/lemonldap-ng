@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.4';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -240,7 +240,7 @@ sub do {
                 $req,
                 {
                     result => 1,
-                    code   => $err,
+                    error  => $err,
                     id     => $req->id
                 }
             );
