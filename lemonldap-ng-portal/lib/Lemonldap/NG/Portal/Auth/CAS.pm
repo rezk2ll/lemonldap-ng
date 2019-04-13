@@ -35,9 +35,7 @@ sub init {
     }
     $self->srvNumber( scalar @tab );
     my @list;
-
     my $portalPath = $self->conf->{portal};
-    $portalPath =~ s#^https?://[^/]+/?#/#;
 
     foreach (@tab) {
         my $name = $_;

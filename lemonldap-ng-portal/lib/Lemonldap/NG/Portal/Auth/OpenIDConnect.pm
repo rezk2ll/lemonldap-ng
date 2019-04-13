@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
 );
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.4';
 
 extends 'Lemonldap::NG::Portal::Main::Auth',
   'Lemonldap::NG::Portal::Lib::OpenIDConnect';
@@ -35,10 +35,7 @@ sub init {
     }
     $self->opNumber( scalar @tab );
     my @list = ();
-
     my $portalPath = $self->conf->{portal};
-
-    #$portalPath =~ s#^https?://[^/]+/?#/#;
 
     foreach (@tab) {
         my $name = $_;
@@ -243,7 +240,7 @@ sub extractFormInfo {
         else {
 
             # IDP list
-            my $portalPath = $self->{portal};
+            my $portalPath = $self->{conf}->{portal};
             $portalPath =~ s#^https?://[^/]+/?#/#;
 
             $req->data->{list}            = $self->opList;
