@@ -11,7 +11,7 @@ BEGIN {
 }
 eval { unlink 't/userdb.db' };
 
-my $maintests = 13;
+my $maintests = 14;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -109,6 +109,13 @@ SKIP: {
     ok( $idp[1] eq 'idp3', '2nd = idp3' ) or print STDERR Dumper( \@idp );
     ok( $idp[2] eq 'idp4', '3rd = idp4' ) or print STDERR Dumper( \@idp );
     ok( $idp[3] eq 'idp2', '4th= idp2' )  or print STDERR Dumper( \@idp );
+
+    # Found Cancel button
+    ok(
+        $res->[2]->[0] =~
+qr%<a href="http://auth.sp.com\?cancel=1" class="btn btn-primary" role="button">%,
+        'Found Cancel button'
+    ) or print STDERR Dumper( $res->[2]->[0] );
 
     # Found CAS idp logo and display name
     ok(
