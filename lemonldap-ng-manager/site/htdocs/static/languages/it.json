@@ -293,7 +293,7 @@
 "impersonationRule":"Usa la regola",
 "impersonationIdRule":"Le identità usano la regola",
 "impersonationHiddenAttributes":"Attributi nascosti",
-"impersonationMergeSSOgroups":"Unisci gruppi SSO falsificati e reali",
+"impersonationMergeSSOgroups":"Unisci gruppi SSO usurpati e reali",
 "impersonationPrefix":"Prefisso degli attributi reali",
 "impersonationSkipEmptyValues":"Salta valori vuoti",
 "incompleteForm":"Mancano campi obbligatori",
