@@ -847,7 +847,7 @@
 "yubikey2fNonce":"Nonce",
 "yubikey2fPublicIDSize":"حجم الجزء العام لي OTP آي دي",
 "yubikey2fSecretKey":"مفتاح سرأل API",
-"yubikey2fSelfRegistration":"Self registration",
+"yubikey2fSelfRegistration":"التسجيل الذاتي",
 "yubikey2fUrl":"خدمة أل يو أر ل",
 "yubikey2fUserCanRemoveKey":"Authorize user to remove Yubikey",
 "zeroConfExplanations":"لا يحتوي الخادم على إعدادات. استخدام قالب لحفظ الأول",
