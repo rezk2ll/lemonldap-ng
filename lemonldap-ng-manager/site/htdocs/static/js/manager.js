@@ -168,7 +168,10 @@ This file contains:
         $scope.message = {
           title: '',
           message: '',
-          items: []
+          items: [],
+          itemsE: [],
+          itemsNC: [],
+          itemsW: []
         };
         if (data.needConfirm) {
           $scope.confirmNeeded = true;
@@ -180,18 +183,27 @@ This file contains:
           for (m in data.details) {
             if (m !== '__changes__') {
               if (m === '__needConfirmation__') {
-                $scope.message.items.unshift({
+                $scope.message.itemsNC.push({
                   message: m,
                   items: data.details[m]
                 });
+                console.log('NeedConfirmation:', $scope.message.itemsNC);
+              } else if (m === '__warnings__') {
+                $scope.message.itemsW.push({
+                  message: m,
+                  items: data.details[m]
+                });
+                console.log('Warnings:', $scope.message.itemsW);
               } else {
-                $scope.message.items.push({
+                $scope.message.itemsE.push({
                   message: m,
                   items: data.details[m]
                 });
+                console.log('Errors:', $scope.message.itemsE);
               }
             }
           }
+          $scope.message.items = $scope.message.itemsE.concat($scope.message.itemsNC.concat($scope.message.itemsW));
         }
         $scope.waiting = false;
         if (data.result === 1) {

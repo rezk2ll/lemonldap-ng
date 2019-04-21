@@ -144,18 +144,30 @@ llapp.controller 'TreeCtrl', [
 				title: ''
 				message: ''
 				items: []
+				itemsE:[]
+				itemsNC: []
+				itemsW: []
 			$scope.confirmNeeded = true if data.needConfirm
 			$scope.message.message = data.message if data.message
+			# Sort messages
 			if data.details
 				for m of data.details when m != '__changes__'
 					if m == '__needConfirmation__'
-						$scope.message.items.unshift
+						$scope.message.itemsNC.push
 							message: m
 							items: data.details[m]
+						console.log 'NeedConfirmation:', $scope.message.itemsNC
+					else if m == '__warnings__'
+						$scope.message.itemsW.push
+							message: m
+							items: data.details[m]
+						console.log 'Warnings:', $scope.message.itemsW
 					else
-						$scope.message.items.push
+						$scope.message.itemsE.push
 							message: m
 							items: data.details[m]
+						console.log 'Errors:', $scope.message.itemsE
+				$scope.message.items =  $scope.message.itemsE.concat $scope.message.itemsNC.concat $scope.message.itemsW
 			$scope.waiting = false
 			if data.result == 1
 				# Force reloading page
