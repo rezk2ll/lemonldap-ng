@@ -1162,7 +1162,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type' => 'keyTextContainer'
         },
         'gpgAuthnLevel' => {
-            'default' => 3,
+            'default' => 5,
             'type'    => 'int'
         },
         'gpgDb' => {

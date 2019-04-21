@@ -2803,7 +2803,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         gpgAuthnLevel => {
             type          => 'int',
-            default       => 3,
+            default       => 5,
             documentation => 'GPG authentication level',
         },
 
