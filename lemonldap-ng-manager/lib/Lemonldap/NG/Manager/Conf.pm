@@ -34,18 +34,15 @@ has brwRule  => ( is => 'rw', default => sub { 0 } );
 sub addRoutes {
     my ( $self, $conf ) = @_;
     $self->ua( Lemonldap::NG::Common::UserAgent->new($conf) );
+    my $hd = "Lemonldap::NG::Handler::PSGI::Main";
 
     # Parse Diff activation rule
     $self->logger->debug(
         "Diff activation rule -> " . $self->{viewerAllowDiff} );
-    my $rule = Lemonldap::NG::Handler::PSGI::Main->buildSub(
-        Lemonldap::NG::Handler::PSGI::Main->substitute(
-            $self->{viewerAllowDiff}
-        )
-    );
+    my $rule = $hd->buildSub( $hd->substitute( $self->{viewerAllowDiff} ) );
     unless ($rule) {
-        $self->error( "Bad Diff activation rule -> "
-              . Lemonldap::NG::Handler::PSGI::Main->tsv->{jail}->error );
+        $self->error(
+            "Bad Diff activation rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
     $self->diffRule($rule);
@@ -53,14 +50,10 @@ sub addRoutes {
     # Parse Browser activation rule
     $self->logger->debug(
         "Browser activation rule -> " . $self->{viewerAllowBrowser} );
-    $rule = Lemonldap::NG::Handler::PSGI::Main->buildSub(
-        Lemonldap::NG::Handler::PSGI::Main->substitute(
-            $self->{viewerAllowBrowser}
-        )
-    );
+    $rule = $hd->buildSub( $hd->substitute( $self->{viewerAllowBrowser} ) );
     unless ($rule) {
-        $self->error( "Bad Browser activation rule -> "
-              . Lemonldap::NG::Handler::PSGI::Main->tsv->{jail}->error );
+        $self->error(
+            "Bad Browser activation rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
     $self->brwRule($rule);
