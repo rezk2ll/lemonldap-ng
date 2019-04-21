@@ -34,7 +34,7 @@ sub init {
         $self->error( "Bad impersonation rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
-    $self->{rule} = $rule;
+    $self->rule($rule);
 
     # Parse identity rule
     $self->logger->debug( "Impersonation identities rule -> "
@@ -46,7 +46,7 @@ sub init {
             "Bad impersonation identities rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
-    $self->{idRule} = $rule;
+    $self->idRule($rule);
 
     return 1;
 }

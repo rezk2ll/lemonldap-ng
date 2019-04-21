@@ -49,7 +49,7 @@ sub init {
             "Bad checkUser identities rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
-    $self->{idRule} = $rule;
+    $self->idRule($rule);
 
     return 1;
 }
