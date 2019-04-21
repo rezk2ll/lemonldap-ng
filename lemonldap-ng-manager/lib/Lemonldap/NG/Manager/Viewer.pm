@@ -41,8 +41,17 @@ sub addRoutes {
           unless ( $hiddenPK =~ /\b$_\b/ );
     }
 
-    # HTML template
+    # Forbid hidden keys
+    foreach ( split /\s+/, $hiddenPK ) {
+        $self->addRoute(
+            view => { ':cfgNum' => { $_ => 'rejectKey' } },
+            ['GET']
+        );
+    }
+
+    # HTML templates
     $self->addRoute( 'viewer.html', undef, ['GET'] )
+      ->addRoute( 'viewDiff.html', undef, ['GET'] )
 
       # READ
       # Special keys
@@ -51,24 +60,14 @@ sub addRoutes {
             ':cfgNum' => \@enabledPK
         },
         ['GET']
-      );
+      )
 
-    foreach ( split /\s+/, $hiddenPK ) {
-        $self->addRoute(
-            view => { ':cfgNum' => { $_ => 'rejectKey' } },
-            ['GET']
-        );
-    }
+      # Difference between confs
+      ->addRoute(
+        view => { diff => { ':conf1' => { ':conf2' => 'viewDiff' } } } )
 
-    # Difference between confs
-    if ( $self->{viewerAllowDiff} ) {
-        $self->addRoute(
-            view => { diff => { ':conf1' => { ':conf2' => 'viewDiff' } } } )
-          ->addRoute( 'viewDiff.html', undef, ['GET'] );
-    }
-
-    # Other keys
-    $self->addRoute( view => { ':cfgNum' => { '*' => 'viewKey' } }, ['GET'] );
+      # Other keys
+      ->addRoute( view => { ':cfgNum' => { '*' => 'viewKey' } }, ['GET'] );
 }
 
 sub getConfByNum {
@@ -78,6 +77,14 @@ sub getConfByNum {
 
 sub viewDiff {
     my ( $self, $req, @path ) = @_;
+
+    # Check Diff activation rule
+    unless ( $self->diffRule->( $req, $req->{userData} ) ) {
+        my $user = $req->{userData}->{_whatToTrace} || 'anonymous';
+        $self->userLogger->warn("$user tried to compare configurations!!!");
+        return $self->sendJSONresponse( $req, { 'value' => '_Hidden_' } );
+    }
+
     return $self->sendError( $req, 'to many arguments in path info', 400 )
       if (@path);
     my @cfgNum =
@@ -122,9 +129,10 @@ sub rejectKey {
 
 sub viewKey {
     my ( $self, $req, @args ) = @_;
-    my $lastConf;
     $self->logger->debug("Viewer requested URI -> $req->{env}->{REQUEST_URI}");
-    if ( $self->{viewerAllowBrowser} ) {
+
+    # Check Browser activation rule
+    if ( $self->brwRule->( $req, $req->{userData} ) ) {
         $self->logger->debug(" No restriction");
         $self->SUPER::getKey( $req, @args );
     }
@@ -140,7 +148,6 @@ sub viewKey {
             $self->userLogger->warn("$user tried to browse configurations!!!");
             $self->rejectKey( $req, @args );
         }
-
     }
 }
 
