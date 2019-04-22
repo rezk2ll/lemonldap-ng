@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.4';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -1695,14 +1695,15 @@ sub attributes {
         vhostType    => {
             type   => 'select',
             select => [
-                { k => 'Main',         v => 'Main' },
-                { k => 'Zimbra',       v => 'ZimbraPreAuth' },
                 { k => 'AuthBasic',    v => 'AuthBasic' },
-                { k => 'SecureToken',  v => 'SecureToken' },
                 { k => 'CDA',          v => 'CDA' },
                 { k => 'DevOps',       v => 'DevOps' },
                 { k => 'DevOpsST',     v => 'DevOpsST' },
+                { k => 'Main',         v => 'Main' },
+                { k => 'OAuth2',       v => 'OAuth2' },
+                { k => 'SecureToken',  v => 'SecureToken' },
                 { k => 'ServiceToken', v => 'ServiceToken' },
+                { k => 'Zimbra',       v => 'ZimbraPreAuth' },
             ],
             default       => 'Main',
             documentation => 'Handler type',
@@ -2771,7 +2772,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Path of CAS Server Icon',
         },
         casSrvMetaDataOptionsSortNumber => {
-            type => 'int',
+            type          => 'int',
             documentation => 'Number to sort buttons',
         },
 

@@ -1140,20 +1140,8 @@ function templates(tpl,key) {
             "id" : tpl+"s/"+key+"/"+"vhostType",
             "select" : [
                {
-                  "k" : "Main",
-                  "v" : "Main"
-               },
-               {
-                  "k" : "Zimbra",
-                  "v" : "ZimbraPreAuth"
-               },
-               {
                   "k" : "AuthBasic",
                   "v" : "AuthBasic"
-               },
-               {
-                  "k" : "SecureToken",
-                  "v" : "SecureToken"
                },
                {
                   "k" : "CDA",
@@ -1168,8 +1156,24 @@ function templates(tpl,key) {
                   "v" : "DevOpsST"
                },
                {
+                  "k" : "Main",
+                  "v" : "Main"
+               },
+               {
+                  "k" : "OAuth2",
+                  "v" : "OAuth2"
+               },
+               {
+                  "k" : "SecureToken",
+                  "v" : "SecureToken"
+               },
+               {
                   "k" : "ServiceToken",
                   "v" : "ServiceToken"
+               },
+               {
+                  "k" : "Zimbra",
+                  "v" : "ZimbraPreAuth"
                }
             ],
             "title" : "vhostType",
