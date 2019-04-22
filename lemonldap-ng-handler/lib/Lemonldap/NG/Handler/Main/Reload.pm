@@ -326,7 +326,7 @@ sub sessionStorageInit {
 
     # OIDC session storage
     if ( $conf->{oidcStorage} ) {
-        eval "use " . $class->tsv->{oidcStorage};
+        eval "use " . $conf->{oidcStorage};
         die($@) if ($@);
         $class->tsv->{oidcStorageModule}  = $conf->{oidcStorage};
         $class->tsv->{oidcStorageOptions} = $conf->{oidcStorageOptions};
