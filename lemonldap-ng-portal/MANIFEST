@@ -316,6 +316,7 @@ site/htdocs/static/languages/ar.json
 site/htdocs/static/languages/de.json
 site/htdocs/static/languages/en.json
 site/htdocs/static/languages/es.json
+site/htdocs/static/languages/fi.json
 site/htdocs/static/languages/fr.json
 site/htdocs/static/languages/it.json
 site/htdocs/static/languages/nl.json
@@ -383,6 +384,7 @@ site/templates/common/bullet_go.png
 site/templates/common/key.png
 site/templates/common/mail/ar.json
 site/templates/common/mail/en.json
+site/templates/common/mail/fi.json
 site/templates/common/mail/fr.json
 site/templates/common/mail/it.json
 site/templates/common/mail/vi.json
@@ -439,6 +441,7 @@ t/30-SAML-ReAuth-with-choice.t
 t/30-SAML-ReAuth.t
 t/30-SAML-SP-rule.t
 t/31-Auth-and-issuer-CAS-declared-app.t
+t/31-Auth-and-issuer-CAS-declared-apps.t
 t/31-Auth-and-issuer-CAS-default.t
 t/31-Auth-and-issuer-CAS-gateway.t
 t/31-Auth-and-issuer-CAS-proxied.t
