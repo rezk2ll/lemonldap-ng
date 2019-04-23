@@ -36,6 +36,7 @@ lib/Lemonldap/NG/Handler/PSGI.pm
 lib/Lemonldap/NG/Handler/PSGI/AuthBasic.pm
 lib/Lemonldap/NG/Handler/PSGI/CDA.pm
 lib/Lemonldap/NG/Handler/PSGI/Main.pm
+lib/Lemonldap/NG/Handler/PSGI/OAuth2.pm
 lib/Lemonldap/NG/Handler/PSGI/Router.pm
 lib/Lemonldap/NG/Handler/PSGI/ServiceToken.pm
 lib/Lemonldap/NG/Handler/PSGI/Try.pm
