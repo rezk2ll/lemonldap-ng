@@ -38,7 +38,7 @@ sub addRoutes {
 
     # Parse Diff activation rule
     $self->logger->debug(
-        "Diff activation rule -> " . $self->{viewerAllowDiff} );
+        "Diff activation rule -> " . ( $self->{viewerAllowDiff} // 0 ) );
     my $rule = $hd->buildSub( $hd->substitute( $self->{viewerAllowDiff} ) );
     unless ($rule) {
         $self->error(
@@ -49,7 +49,7 @@ sub addRoutes {
 
     # Parse Browser activation rule
     $self->logger->debug(
-        "Browser activation rule -> " . $self->{viewerAllowBrowser} );
+        "Browser activation rule -> " . ( $self->{viewerAllowBrowser} // 0 ) );
     $rule = $hd->buildSub( $hd->substitute( $self->{viewerAllowBrowser} ) );
     unless ($rule) {
         $self->error(
