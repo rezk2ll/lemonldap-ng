@@ -116,6 +116,7 @@
 "casAppMetaDataOptions":"Options",
 "casAppMetaDataOptionsService":"Service URL",
 "casAppMetaDataOptionsRule":"Rule",
+"casAppMetaDataOptionsUserAttribute":"User attribute",
 "casAppName":"CAS App Name",
 "casAttr":"CAS login",
 "casAttributes":"CAS exported attributes",

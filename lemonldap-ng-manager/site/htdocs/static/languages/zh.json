@@ -116,6 +116,7 @@
 "casAppMetaDataOptions":"选项",
 "casAppMetaDataOptionsService":"服务 URL",
 "casAppMetaDataOptionsRule":"规则",
+"casAppMetaDataOptionsUserAttribute":"User attribute",
 "casAppName":"CAS App 名称",
 "casAttr":"CAS 登录",
 "casAttributes":"CAS 声明的attributes",

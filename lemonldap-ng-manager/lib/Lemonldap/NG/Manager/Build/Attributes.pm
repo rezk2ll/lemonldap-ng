@@ -1824,6 +1824,10 @@ sub attributes {
             type          => 'url',
             documentation => 'CAS App service',
         },
+        casAppMetaDataOptionsUserAttribute => {
+            type          => 'text',
+            documentation => 'CAS User attribute',
+        },
         casAppMetaDataOptionsRule => {
             type          => 'text',
             test          => $perlExpr,

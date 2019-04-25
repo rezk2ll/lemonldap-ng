@@ -458,8 +458,17 @@ sub validate {
     }
 
     # Get username
-    my $username = $localSession->data->{ $self->conf->{casAttr}
-          || $self->conf->{whatToTrace} };
+    my $app = $casServiceSession->data->{_casApp};
+    my $username_attribute =
+      (       $app
+          and $self->conf->{casAppMetaDataOptions}->{$app}
+          ->{casAppMetaDataOptionsUserAttribute} )
+      ? $self->conf->{casAppMetaDataOptions}->{$app}
+      ->{casAppMetaDataOptionsUserAttribute}
+      : (    $self->conf->{casAttr}
+          || $self->conf->{whatToTrace} );
+
+    my $username = $localSession->data->{$username_attribute};
 
     $self->logger->debug("Get username $username");
 
@@ -728,8 +737,16 @@ sub _validate2 {
     }
 
     # Get username
-    my $username = $localSession->data->{ $self->conf->{casAttr}
-          || $self->conf->{whatToTrace} };
+    my $username_attribute =
+      (       $app
+          and $self->conf->{casAppMetaDataOptions}->{$app}
+          ->{casAppMetaDataOptionsUserAttribute} )
+      ? $self->conf->{casAppMetaDataOptions}->{$app}
+      ->{casAppMetaDataOptionsUserAttribute}
+      : (    $self->conf->{casAttr}
+          || $self->conf->{whatToTrace} );
+
+    my $username = $localSession->data->{$username_attribute};
 
     $self->logger->debug("Get username $username");
 

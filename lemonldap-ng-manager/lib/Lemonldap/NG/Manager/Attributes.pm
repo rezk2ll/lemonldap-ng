@@ -678,6 +678,9 @@ sub attributes {
         'casAppMetaDataOptionsService' => {
             'type' => 'url'
         },
+        'casAppMetaDataOptionsUserAttribute' => {
+            'type' => 'text'
+        },
         'casAttr' => {
             'type' => 'text'
         },

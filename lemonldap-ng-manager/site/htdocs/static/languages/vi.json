@@ -116,6 +116,7 @@
 "casAppMetaDataOptions":"Tùy chọn",
 "casAppMetaDataOptionsService":"Dịch vụ URL",
 "casAppMetaDataOptionsRule":"Quy tắc",
+"casAppMetaDataOptionsUserAttribute":"User attribute",
 "casAppName":"Tên ứng dụng CAS",
 "casAttr":"Đăng nhập CAS ",
 "casAttributes":"Thuộc tính CAS đã được xuất",

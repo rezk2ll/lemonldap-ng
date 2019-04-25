@@ -252,6 +252,7 @@ sub cTrees {
                 form  => 'simpleInputContainer',
                 nodes => [
                     'casAppMetaDataOptionsService',
+                    'casAppMetaDataOptionsUserAttribute',
                     'casAppMetaDataOptionsRule'
                 ]
             },

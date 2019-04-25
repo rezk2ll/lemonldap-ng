@@ -116,6 +116,7 @@
 "casAppMetaDataOptions":"Opzioni",
 "casAppMetaDataOptionsService":"URL del servizio",
 "casAppMetaDataOptionsRule":"Regola",
+"casAppMetaDataOptionsUserAttribute":"User attribute",
 "casAppName":"Nome App CAS",
 "casAttr":"Login CAS",
 "casAttributes":"Attributi CAS esportati",
