@@ -287,17 +287,19 @@ sub run {
             $_2fDevices = [];
         }
 
-        my @keep = ();
-        while (@$_2fDevices) {
-            my $element = shift @$_2fDevices;
-            $self->logger->debug("Looking for 2F device to delete ...");
-            push @keep, $element unless ( $element->{epoch} eq $epoch );
-        }
+        # my @keep = ();
+        # while (@$_2fDevices) {
+        #     my $element = shift @$_2fDevices;
+        #     $self->logger->debug("Looking for 2F device to delete ...");
+        #     push @keep, $element unless ( $element->{epoch} eq $epoch );
+        # }
 
+        # Delete U2F device
+        @$_2fDevices = grep { $_->{epoch} ne $epoch } @$_2fDevices;
         $self->logger->debug(
             "Delete 2F Device : { type => 'U2F', epoch => $epoch }");
         $self->p->updatePersistentSession( $req,
-            { _2fDevices => to_json( \@keep ) } );
+            { _2fDevices => to_json( $_2fDevices ) } );
         $self->userLogger->notice('U2F key unregistration succeed');
         return [
             200,
