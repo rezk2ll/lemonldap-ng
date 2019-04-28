@@ -465,7 +465,7 @@ sub validate {
 
     # Return success message
     $self->deleteCasSession($casServiceSession);
-    return $self->returnCasValidateSuccess($username);
+    return $self->returnCasValidateSuccess( $req, $username );
 }
 
 sub proxy {
