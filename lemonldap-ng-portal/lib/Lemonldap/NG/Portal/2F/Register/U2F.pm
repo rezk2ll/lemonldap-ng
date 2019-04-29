@@ -287,13 +287,6 @@ sub run {
             $_2fDevices = [];
         }
 
-        # my @keep = ();
-        # while (@$_2fDevices) {
-        #     my $element = shift @$_2fDevices;
-        #     $self->logger->debug("Looking for 2F device to delete ...");
-        #     push @keep, $element unless ( $element->{epoch} eq $epoch );
-        # }
-
         # Delete U2F device
         @$_2fDevices = grep { $_->{epoch} ne $epoch } @$_2fDevices;
         $self->logger->debug(
