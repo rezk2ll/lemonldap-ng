@@ -507,6 +507,7 @@
 "oidcRPMetaDataOptionsLogoutType":"Tipo",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
 "oidcOPMetaDataOptionsProtocol":"Protocollo",
+"oidcRPMetaDataOptionsPublic":"Public client",
 "oidcRPMetaDataOptionsRule":"Regola di accesso",
 "oidcOPMetaDataOptionsScope":"Scopo",
 "oidcOPMetaDataOptionsStoreIDToken":"Immagazzina ID Token",

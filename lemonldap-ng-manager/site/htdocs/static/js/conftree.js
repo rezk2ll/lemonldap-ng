@@ -410,6 +410,13 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsClientSecret",
                   "title" : "oidcRPMetaDataOptionsClientSecret",
                   "type" : "password"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsPublic",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsPublic",
+                  "title" : "oidcRPMetaDataOptionsPublic",
+                  "type" : "bool"
                }
             ],
             "id" : "oidcRPMetaDataOptionsAuthentication",

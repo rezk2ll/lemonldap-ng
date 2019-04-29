@@ -507,6 +507,7 @@
 "oidcRPMetaDataOptionsLogoutType":"نوع",
 "oidcRPMetaDataOptionsLogoutUrl":"يو آر إل",
 "oidcOPMetaDataOptionsProtocol":"بروتوكول",
+"oidcRPMetaDataOptionsPublic":"Public client",
 "oidcRPMetaDataOptionsRule":"قاعدة الدخول",
 "oidcOPMetaDataOptionsScope":"نطاق",
 "oidcOPMetaDataOptionsStoreIDToken":"مخزن تعريف التوكن",

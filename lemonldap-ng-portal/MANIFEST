@@ -440,6 +440,7 @@ t/30-SAML-Head-to-Tail-POST.t
 t/30-SAML-ReAuth-with-choice.t
 t/30-SAML-ReAuth.t
 t/30-SAML-SP-rule.t
+t/31-Auth-and-issuer-CAS-declared-app-userattr.t
 t/31-Auth-and-issuer-CAS-declared-app.t
 t/31-Auth-and-issuer-CAS-declared-apps.t
 t/31-Auth-and-issuer-CAS-default.t
@@ -448,11 +449,13 @@ t/31-Auth-and-issuer-CAS-proxied.t
 t/31-Auth-and-issuer-CAS-with-choice-and-cancel.t
 t/31-Auth-and-issuer-CAS-with-choice.t
 t/32-Auth-and-issuer-OIDC-authorization_code-OP-logout.t
+t/32-Auth-and-issuer-OIDC-authorization_code-public_client.t
 t/32-Auth-and-issuer-OIDC-authorization_code-with-authchoice.t
 t/32-Auth-and-issuer-OIDC-authorization_code.t
 t/32-Auth-and-issuer-OIDC-hybrid.t
 t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-sorted.t
+t/32-CAS-10.t
 t/32-OIDC-RP-rule.t
 t/33-Auth-and-issuer-OpenID2.t
 t/34-Auth-Proxy-and-REST-Server.t

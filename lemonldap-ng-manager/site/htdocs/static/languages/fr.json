@@ -507,6 +507,7 @@
 "oidcRPMetaDataOptionsLogoutType":"Type",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
 "oidcOPMetaDataOptionsProtocol":"Protocole",
+"oidcRPMetaDataOptionsPublic":"Client publique",
 "oidcRPMetaDataOptionsRule":"Règle d'accès",
 "oidcOPMetaDataOptionsScope":"Étendue",
 "oidcOPMetaDataOptionsStoreIDToken":"Conserver le jeton d'identité",

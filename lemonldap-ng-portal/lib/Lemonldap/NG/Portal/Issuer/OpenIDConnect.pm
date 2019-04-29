@@ -15,7 +15,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OIDC_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.4';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::OpenIDConnect',
@@ -944,7 +944,7 @@ sub token {
     my ( $client_id, $client_secret ) =
       $self->getEndPointAuthenticationCredentials($req);
 
-    unless ( $client_id && $client_secret ) {
+    unless ($client_id) {
         $self->logger->error(
 "No authentication provided to get token, or authentication type not supported"
         );
@@ -964,11 +964,25 @@ sub token {
     }
 
     # Check client_secret
-    unless ( $client_secret eq $self->conf->{oidcRPMetaDataOptions}->{$rp}
-        ->{oidcRPMetaDataOptionsClientSecret} )
+    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
+        ->{oidcRPMetaDataOptionsPublic} )
     {
-        $self->logger->error("Wrong credentials for $rp");
-        return $self->p->sendError( 'invalid_request', 400 );
+        $self->logger->debug(
+            "Relying Party $rp is public, do not check client secret");
+    }
+    else {
+        unless ($client_secret) {
+            $self->logger->error(
+"Relying Party $rp is confidential but no client secret was provided to authenticate on token endpoint"
+            );
+            return $self->p->sendError( 'invalid_request', 400 );
+        }
+        unless ( $client_secret eq $self->conf->{oidcRPMetaDataOptions}->{$rp}
+            ->{oidcRPMetaDataOptionsClientSecret} )
+        {
+            $self->logger->error("Wrong credentials for $rp");
+            return $self->p->sendError( 'invalid_request', 400 );
+        }
     }
 
     # Get code session

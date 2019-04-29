@@ -507,6 +507,7 @@
 "oidcRPMetaDataOptionsLogoutType":"Loại",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
 "oidcOPMetaDataOptionsProtocol":"Giao thức",
+"oidcRPMetaDataOptionsPublic":"Public client",
 "oidcRPMetaDataOptionsRule":"Quy tắc truy cập",
 "oidcOPMetaDataOptionsScope":"Phạm vi",
 "oidcOPMetaDataOptionsStoreIDToken":"Mã thông báo Cửa hàng",

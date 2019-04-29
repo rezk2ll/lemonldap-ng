@@ -3353,11 +3353,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsIcon         => { type => 'text', },
         oidcOPMetaDataOptionsStoreIDToken => { type => 'bool', default => 0 },
         oidcOPMetaDataOptionsSortNumber   => { type => 'int', },
-        oidcRPMetaDataOptionsRule => {
-            type          => 'text',
-            test          => $perlExpr,
-            documentation => 'Rule to grant access to this SP',
-        },
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {
@@ -3416,6 +3411,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             default       => 0,
             documentation => 'Session required for logout',
+        },
+        oidcRPMetaDataOptionsPublic => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Declare this RP as public client',
+        },
+        oidcRPMetaDataOptionsRule => {
+            type          => 'text',
+            test          => $perlExpr,
+            documentation => 'Rule to grant access to this RP',
         },
     };
 }

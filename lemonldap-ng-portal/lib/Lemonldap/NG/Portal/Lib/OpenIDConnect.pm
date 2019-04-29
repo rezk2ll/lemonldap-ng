@@ -19,7 +19,7 @@ use Mouse;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.4';
 
 # OpenID Connect standard claims
 use constant PROFILE => [
@@ -1046,6 +1046,10 @@ sub getEndPointAuthenticationCredentials {
         $self->logger->debug("Method client_secret_post used");
         $client_id     = $req->param('client_id');
         $client_secret = $req->param('client_secret');
+    }
+    elsif ( $req->param('client_id') and !$req->param('client_secret') ) {
+        $self->logger->debug("Method none used");
+        $client_id = $req->param('client_id');
     }
 
     return ( $client_id, $client_secret );

@@ -2001,6 +2001,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcRPMetaDataOptionsPostLogoutRedirectUris' => {
             'type' => 'text'
         },
+        'oidcRPMetaDataOptionsPublic' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcRPMetaDataOptionsRedirectUris' => {
             'type' => 'text'
         },
