@@ -2008,6 +2008,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcRPMetaDataOptionsRedirectUris' => {
             'type' => 'text'
         },
+        'oidcRPMetaDataOptionsRequirePKCE' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcRPMetaDataOptionsRule' => {
             'test' => sub {
                 my ( $val, $conf ) = @_;

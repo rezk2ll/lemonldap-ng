@@ -196,6 +196,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsClientID',
                             'oidcRPMetaDataOptionsClientSecret',
                             'oidcRPMetaDataOptionsPublic',
+                            'oidcRPMetaDataOptionsRequirePKCE',
                         ]
                     },
                     'oidcRPMetaDataOptionsUserIDAttr',

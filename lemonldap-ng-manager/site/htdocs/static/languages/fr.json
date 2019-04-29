@@ -508,6 +508,7 @@
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
 "oidcOPMetaDataOptionsProtocol":"Protocole",
 "oidcRPMetaDataOptionsPublic":"Client publique",
+"oidcRPMetaDataOptionsRequirePKCE":"PKCE requis",
 "oidcRPMetaDataOptionsRule":"Règle d'accès",
 "oidcOPMetaDataOptionsScope":"Étendue",
 "oidcOPMetaDataOptionsStoreIDToken":"Conserver le jeton d'identité",

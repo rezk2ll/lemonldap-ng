@@ -417,6 +417,13 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsPublic",
                   "title" : "oidcRPMetaDataOptionsPublic",
                   "type" : "bool"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequirePKCE",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequirePKCE",
+                  "title" : "oidcRPMetaDataOptionsRequirePKCE",
+                  "type" : "bool"
                }
             ],
             "id" : "oidcRPMetaDataOptionsAuthentication",

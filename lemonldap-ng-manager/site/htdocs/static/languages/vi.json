@@ -508,6 +508,7 @@
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
 "oidcOPMetaDataOptionsProtocol":"Giao thức",
 "oidcRPMetaDataOptionsPublic":"Public client",
+"oidcRPMetaDataOptionsRequirePKCE":"Require PKCE",
 "oidcRPMetaDataOptionsRule":"Quy tắc truy cập",
 "oidcOPMetaDataOptionsScope":"Phạm vi",
 "oidcOPMetaDataOptionsStoreIDToken":"Mã thông báo Cửa hàng",

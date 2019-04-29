@@ -508,6 +508,7 @@
 "oidcRPMetaDataOptionsLogoutUrl":"يو آر إل",
 "oidcOPMetaDataOptionsProtocol":"بروتوكول",
 "oidcRPMetaDataOptionsPublic":"Public client",
+"oidcRPMetaDataOptionsRequirePKCE":"Require PKCE",
 "oidcRPMetaDataOptionsRule":"قاعدة الدخول",
 "oidcOPMetaDataOptionsScope":"نطاق",
 "oidcOPMetaDataOptionsStoreIDToken":"مخزن تعريف التوكن",

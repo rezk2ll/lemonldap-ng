@@ -508,6 +508,7 @@
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
 "oidcOPMetaDataOptionsProtocol":"Protocol",
 "oidcRPMetaDataOptionsPublic":"Public client",
+"oidcRPMetaDataOptionsRequirePKCE":"Require PKCE",
 "oidcRPMetaDataOptionsRule":"Access rule",
 "oidcOPMetaDataOptionsScope":"Scope",
 "oidcOPMetaDataOptionsStoreIDToken":"Store ID Token",
