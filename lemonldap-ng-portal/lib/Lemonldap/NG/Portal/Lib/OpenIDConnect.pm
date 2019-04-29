@@ -1389,6 +1389,52 @@ sub addRouteFromConf {
     }
 }
 
+# Validate PKCE code challenge with given code challenge method
+# @param code_verifier
+# @param code_challenge
+# @param code_challenge_method
+# @return boolean 1 if challenge succeed, 0 else
+sub validatePKCEChallenge {
+    my ( $self, $code_verifier, $code_challenge, $code_challenge_method ) = @_;
+
+    unless ($code_verifier) {
+        $self->logger->error("PKCE required but no code verifier provided");
+        return 0;
+    }
+
+    $self->logger->debug("PKCE code verifier received: $code_verifier");
+
+    if ( !$code_challenge_method or $code_challenge_method eq "plain" ) {
+        if ( $code_verifier eq $code_challenge ) {
+            $self->logger->debug("PKCE challenge validated (plain method)");
+            return 1;
+        }
+        else {
+            $self->logger->error("PKCE challenge failed (plain method)");
+            return 0;
+        }
+    }
+
+    elsif ( $code_challenge_method eq "S256" ) {
+        my $code_verifier_hashed = encode_base64url( sha256($code_verifier) );
+        if ( $code_verifier_hashed eq $code_challenge ) {
+            $self->logger->debug("PKCE challenge validated (S256 method)");
+            return 1;
+        }
+        else {
+            $self->logger->error("PKCE challenge failed (S256 method)");
+            return 0;
+        }
+    }
+
+    else {
+        $self->logger->error("PKCE challenge method not valid");
+        return 0;
+    }
+
+    return 0;
+}
+
 1;
 
 __END__
@@ -1546,6 +1592,10 @@ Build Logout Response URI
 
 Build a Lemonldap::NG::Common::PSGI::Router route from OIDC configuration
 attribute
+
+=head2 validatePKCEChallenge
+
+Validate PKCE code challenge with given code challenge method
 
 =head1 SEE ALSO
 
