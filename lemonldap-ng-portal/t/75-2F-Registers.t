@@ -4,7 +4,7 @@ use IO::String;
 use Data::Dumper;
 
 require 't/test-lib.pm';
-my $maintests = 45;
+my $maintests = 51;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -172,7 +172,7 @@ SKIP: {
     ) or print STDERR Dumper( $res->[2]->[0] );
 
     # Wait to have two different epoch values
-    sleep 2;
+    sleep 1;
 
     # Ajax registration request
     ok(
@@ -268,6 +268,13 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         'Found 2fregisters/totp link' )
       or print STDERR Dumper($res);
 
+    # Two 2F devices must be registered
+    my @sf = map m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g, $res->[2]->[0];
+    ok( scalar @sf == 2, 'Two 2F devices found' )
+      or print STDERR Dumper($res);
+    ok( $sf[0] eq 'TOTP', 'TOTP device found' ) or print STDERR Dumper( \@sf );
+    ok( $sf[1] eq 'U2F', 'U2F device found' ) or print STDERR Dumper( \@sf );
+
     # Unregister TOTP
     ok( $res->[2]->[0] =~ qr%TOTP.*epoch.*(\d{10})%m, "TOTP epoch $1 found" )
       or print STDERR Dumper( $res->[2]->[0] );
@@ -299,6 +306,12 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         'Found 2fregisters/totp link' )
       or print STDERR Dumper($res);
 
+    # One 2F device must be registered
+    @sf = map m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g, $res->[2]->[0];
+    ok( scalar @sf == 1, 'One 2F device found' )
+      or print STDERR Dumper($res);
+    ok( $sf[0] eq 'U2F', 'U2F device found' ) or print STDERR Dumper( \@sf );
+
     # Unregister U2F key
     ok( $res->[2]->[0] =~ qr%U2F.*epoch.*(\d{10})%m, "U2F key epoch $1 found" )
       or print STDERR Dumper( $res->[2]->[0] );
@@ -313,6 +326,11 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     );
     ok( $data->{result} == 1, 'U2F key is unregistered' )
       or explain( $data, '"result":1' );
+
+    # No more 2F device must be registered
+    @sf = map m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g, $res->[2]->[0];
+    ok( scalar @sf == 0, 'No 2F device found' )
+      or print STDERR Dumper($res);
 
     $client->logout($id);
 }
