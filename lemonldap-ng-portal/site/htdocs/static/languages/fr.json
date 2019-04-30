@@ -189,7 +189,7 @@
 "pwdWillExpire":"%s jours, %s heures, %s minutes et %s secondes avant expiration de votre mot de passe, pensez à le changer !",
 "redirectedFrom":"Vous avez été redirigé depuis ",
 "redirectedIn":"Vous allez être redirigé(e) automatiquement dans 30 secondes",
-"redirectionInProgres":"Redirection en cours ...",
+"redirectionInProgress":"Redirection en cours ...",
 "redirectionToIdp":"Redirection vers votre fournisseur d'identité",
 "refreshrights": "Rafraîchir mes droits",
 "refuse":"Refuser",

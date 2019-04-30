@@ -189,7 +189,7 @@
 "pwdWillExpire":"%d päivää, %d tuntia, %d minuuttia ja %sekunttia jäljellä salasanan vanhentumiseen, vaihda salasana!",
 "redirectedFrom":"Olet uudelleenohjattu",
 "redirectedIn":"You'll be redirected in 30 seconds",
-"redirectionInProgres":"Redirection in progress...",
+"redirectionInProgress":"Redirection in progress...",
 "redirectionToIdp":"Redirection to your Identity Provider",
 "refreshrights":"Refresh my rights",
 "refuse":"Refuse",

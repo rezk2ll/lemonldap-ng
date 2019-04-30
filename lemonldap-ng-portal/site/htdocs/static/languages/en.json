@@ -189,7 +189,7 @@
 "pwdWillExpire":"%s days, %s hours, %s minutes and %s seconds before password expiration, change it!",
 "redirectedFrom":"You were redirect from ",
 "redirectedIn":"You'll be redirected in 30 seconds",
-"redirectionInProgres":"Redirection in progress...",
+"redirectionInProgress":"Redirection in progress...",
 "redirectionToIdp":"Redirection to your Identity Provider",
 "refreshrights": "Refresh my rights",
 "refuse":"Refuse",

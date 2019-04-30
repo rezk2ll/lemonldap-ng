@@ -189,7 +189,7 @@
 "pwdWillExpire":"%s ngày, %s giờ, %s phút và %s giây trước khi hết hạn mật khẩu, hãy thay đổi nó!",
 "redirectedFrom":"Bạn đã được chuyển hướng từ",
 "redirectedIn":"Bạn sẽ được chuyển hướng trong 30 giây",
-"redirectionInProgres":"Đang tiến hành chuyển hướng...",
+"redirectionInProgress":"Đang tiến hành chuyển hướng...",
 "redirectionToIdp":"Chuyển hướng tới Bộ cung cấp Nhận dạng của bạn",
 "refreshrights":"Làm mới lại quyền của tôi",
 "refuse":"Từ chối",

@@ -189,7 +189,7 @@
 "pwdWillExpire":"%s giorni, %s ore, %s minuti e %s secondi prima della scadenza della password, cambiala!",
 "redirectedFrom":"Sei stato reindirizzato da",
 "redirectedIn":"Sarai reindirizzato in 30 secondi",
-"redirectionInProgres":"Reindirizzamento in corso ...",
+"redirectionInProgress":"Reindirizzamento in corso ...",
 "redirectionToIdp":"Reindirizzamento al tuo provider di identità",
 "refreshrights":"Aggiorna i miei diritti",
 "refuse":"Rifiuta",

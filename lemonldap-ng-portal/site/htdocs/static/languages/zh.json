@@ -189,7 +189,7 @@
 "pwdWillExpire":"距离密码失效还有 %d 天, %d 小时, %d 分钟, %d 秒, 请修改!",
 "redirectedFrom":"您重定向自",
 "redirectedIn":"您将30秒后重定向",
-"redirectionInProgres":"重定向进行中",
+"redirectionInProgress":"重定向进行中",
 "redirectionToIdp":"重定向至你的Identity Provider",
 "refreshrights":"刷新我的权限",
 "refuse":"拒绝",

@@ -189,7 +189,7 @@
 "pwdWillExpire":"%s Tage, %s Stunden, %s Minuten und %s Sekunden bevor dein Passwort abläuft, bitte ändere es!",
 "redirectedFrom":"Du wurdest umgeleitet von",
 "redirectedIn":"Du wirst in 30 Sekunden umgeleitet",
-"redirectionInProgres":"Umleitung läuft ...",
+"redirectionInProgress":"Umleitung läuft ...",
 "redirectionToIdp":"Weiterleitung an deinen Identitätsanbieter",
 "refreshrights":"Aktualisiere meine Rechte",
 "refuse":"Verweigern",
