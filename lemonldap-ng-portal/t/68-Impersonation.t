@@ -54,8 +54,9 @@ ok( $res->[2]->[0] =~ m%<span trmsg="40"></span>%, ' PE40 found' )
   or explain( $res->[2]->[0], "PE40 - Bad formed user" );
 count(2);
 
-my $id = expectCookie($res);
-$client->logout($id);
+ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
+count(1);
+expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
 
 ## Try to impersonate with a forbidden identity
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
@@ -82,8 +83,9 @@ m%<div class="message message-negative alert"><span trmsg="5"></span></div>%,
 ) or explain( $res->[2]->[0], "PE5 - Forbidden identity" );
 count(2);
 
-$id = expectCookie($res);
-$client->logout($id);
+ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
+count(1);
+expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
 
 ## An unauthorized user try to impersonate
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
@@ -110,8 +112,9 @@ m%<div class="message message-negative alert"><span trmsg="93"></span></div>%,
 ) or explain( $res->[2]->[0], "PE93 - Impersonation service not allowed" );
 count(2);
 
-$id = expectCookie($res);
-$client->logout($id);
+ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
+count(1);
+expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
 
 ## An unauthorized user to impersonate tries to authenticate
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
@@ -132,7 +135,7 @@ ok(
 );
 count(1);
 
-$id = expectCookie($res);
+my $id = expectCookie($res);
 expectRedirection( $res, 'http://auth.example.com/' );
 
 # CheckUser form
