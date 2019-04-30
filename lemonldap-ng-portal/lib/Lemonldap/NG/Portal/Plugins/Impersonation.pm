@@ -5,13 +5,13 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants
   qw( PE_OK PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED PE_MALFORMEDUSER );
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.4';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 # INITIALIZATION
 
-use constant endAuth => 'run';
+use constant afterData => 'run';
 
 has rule   => ( is => 'rw', default => sub { 1 } );
 has idRule => ( is => 'rw', default => sub { 1 } );
@@ -137,6 +137,8 @@ sub run {
 
     # Main session
     $self->p->updateSession( $req, $spoofSession );
+    $req->steps( [ $self->p->validSession, @{ $self->p->endAuth } ] );
+
     return $statut;
 }
 
