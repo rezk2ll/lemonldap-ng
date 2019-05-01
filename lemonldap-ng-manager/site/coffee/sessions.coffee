@@ -320,6 +320,17 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 				if a.title > b.title then 1
 				else if a.title < b.title then -1
 				else 0
+			# Sort by real and spoofed attributes
+			real = []
+			spoof = []
+			for element in tmp
+				if element.title.match(new RegExp('^real_.+$'))
+					console.log element, '-> real attribute'
+					real.push element
+				else
+					console.log element, '-> spoofed attribute'
+					spoof.push element
+			tmp = spoof.concat real
 
 			res.push
 				title: '__attributesAndMacros__'
