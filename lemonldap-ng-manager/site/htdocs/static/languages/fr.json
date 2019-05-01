@@ -507,7 +507,7 @@
 "oidcRPMetaDataOptionsLogoutType":"Type",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
 "oidcOPMetaDataOptionsProtocol":"Protocole",
-"oidcRPMetaDataOptionsPublic":"Client publique",
+"oidcRPMetaDataOptionsPublic":"Client public",
 "oidcRPMetaDataOptionsRequirePKCE":"PKCE requis",
 "oidcRPMetaDataOptionsRule":"Règle d'accès",
 "oidcOPMetaDataOptionsScope":"Étendue",
