@@ -344,7 +344,7 @@ sub op {
                         oidcRPMetaDataOptionsDisplayName       => "RP",
                         oidcRPMetaDataOptionsIDTokenExpiration => 3600,
                         oidcRPMetaDataOptionsClientID          => "rpid",
-                        oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
+                        oidcRPMetaDataOptionsIDTokenSignAlg    => "RS512",
                         oidcRPMetaDataOptionsBypassConsent     => 0,
                         oidcRPMetaDataOptionsPublic            => 1,
                         oidcRPMetaDataOptionsUserIDAttr        => "",
