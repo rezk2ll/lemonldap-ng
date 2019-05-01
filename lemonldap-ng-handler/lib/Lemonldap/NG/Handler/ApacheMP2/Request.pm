@@ -67,4 +67,11 @@ sub data {
     return $self->{data} ||= {};
 }
 
+sub wantJSON {
+    return 1
+      if ( defined $_[0]->accept
+        and $_[0]->accept =~ m#(?:application|text)/json# );
+    return 0;
+}
+
 1;
