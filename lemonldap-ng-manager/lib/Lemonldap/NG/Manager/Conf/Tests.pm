@@ -288,7 +288,7 @@ sub tests {
             return 1;
         },
 
-        # Error if session Activity Timeout is equal or lower than one minute
+    # Error if activity timeout interval is higher than session activity timeout
         timeoutActivityInterval => sub {
             return 1 unless ( defined $conf->{timeoutActivityInterval} );
             return ( 0,
@@ -402,6 +402,16 @@ sub tests {
                 $entityIds{$eid} = $spId;
             }
             return ( $res, join( ', ', @msg ) );
+        },
+
+        #  Test if SAML private and public keys signature keys are set
+        samlSecretKeys => sub {
+            return 1 unless ( $conf->{issuerDBSAMLActivation} );
+            return ( 0,
+                'SAML service private and public keys signature must be set' )
+              unless ( $conf->{samlServicePrivateKeySig}
+                && $conf->{samlServicePublicKeySig} );
+            return 1;
         },
 
         # Try to parse combination with declared modules
@@ -632,17 +642,6 @@ sub tests {
             # Return
             return 1;
         },
-
-        ## Warn if IdSpoofing plugin is enabled
-        # checkIdSpoofing => sub {
-        #     return ( -1,
-        #         '"IdSpoofing" plugin is enabled!!!'
-        #         )
-        #         if ( $conf->{idSpoofingRule} );
-
-        #     # Return
-        #     return 1;
-        # },
     };
 }
 
