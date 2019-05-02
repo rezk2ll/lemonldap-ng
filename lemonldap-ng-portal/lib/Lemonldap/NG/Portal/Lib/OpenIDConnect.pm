@@ -1165,6 +1165,11 @@ sub createJWT {
         my $client_secret =
           $self->conf->{oidcRPMetaDataOptions}->{$rp}
           ->{oidcRPMetaDataOptionsClientSecret};
+        unless ($client_secret) {
+            $self->logger->error(
+                "Algorithm $alg needs a Client Secret to sign JWT");
+            return;
+        }
 
         my $digest;
 
@@ -1194,6 +1199,12 @@ sub createJWT {
 
         # Get signing private key
         my $priv_key = $self->conf->{oidcServicePrivateKeySig};
+        unless ($priv_key) {
+            $self->logger->error(
+                "Algorithm $alg needs a Private Key to sign JWT");
+            return;
+        }
+
         my $rsa_priv = Crypt::OpenSSL::RSA->new_private_key($priv_key);
 
         if ( $alg eq "RS256" ) {
