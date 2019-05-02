@@ -20,8 +20,8 @@ sub fetchId {
     }
 
     # Get access token session
-    if ( my $infos = $class->getOIDCInfos($access_token) ) {
-        my $_session_id = $infos->{user_session_id};
+    my $infos = $class->getOIDCInfos($access_token);
+    if ( my $_session_id = $infos->{user_session_id} ) {
         $class->logger->debug( 'Get user session id ' . $_session_id );
         return $_session_id;
     }
