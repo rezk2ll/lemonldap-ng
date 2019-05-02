@@ -130,6 +130,7 @@
       $scope.staticPrefix = staticPrefix;
       $scope.scriptname = scriptname;
       $scope.formPrefix = formPrefix;
+      $scope.impPrefix = impPrefix;
       $scope.availableLanguages = availableLanguages;
       $scope.waiting = true;
       $scope.showM = false;
@@ -400,7 +401,7 @@
           spoof = [];
           for (p = 0, len5 = tmp.length; p < len5; p++) {
             element = tmp[p];
-            if (element.title.match(new RegExp('^real_.+$'))) {
+            if (element.title.match(new RegExp('^' + $scope.impPrefix + '.+$'))) {
               console.log(element, '-> real attribute');
               real.push(element);
             } else {

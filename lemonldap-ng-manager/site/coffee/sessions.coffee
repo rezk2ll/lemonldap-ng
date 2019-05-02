@@ -107,6 +107,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.staticPrefix = staticPrefix
 	$scope.scriptname = scriptname
 	$scope.formPrefix = formPrefix
+	$scope.impPrefix = impPrefix
 	$scope.availableLanguages = availableLanguages
 	$scope.waiting = true
 	$scope.showM = false
@@ -324,7 +325,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			real = []
 			spoof = []
 			for element in tmp
-				if element.title.match(new RegExp('^real_.+$'))
+				if element.title.match(new RegExp('^' + $scope.impPrefix + '.+$'))
 					console.log element, '-> real attribute'
 					real.push element
 				else

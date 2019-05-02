@@ -141,9 +141,12 @@ sub tplParams {
 sub javascript {
     my ( $self, $req ) = @_;
     my $res = $self->diffRule->( $req, $req->{userData} ) || 0;
+    my $impPrefix = $self->{impersonationPrefix};
+
     return
 'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";var viewPrefix=scriptname+"view/";'
       . 'var allowDiff=' . "$res;"
+      . 'var impPrefix=' . "'" . $impPrefix . "'" . ';'
       . ( $self->links ? 'var links=' . to_json( $self->links ) . ';' : '' )
       . (
         $self->menuLinks
