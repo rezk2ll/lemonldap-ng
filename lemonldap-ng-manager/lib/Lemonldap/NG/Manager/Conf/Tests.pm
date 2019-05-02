@@ -404,7 +404,7 @@ sub tests {
             return ( $res, join( ', ', @msg ) );
         },
 
-        #  Test if SAML private and public keys signature keys are set
+        # Test if SAML private and public keys signature keys are set
         samlSecretKeys => sub {
             return 1 unless ( $conf->{issuerDBSAMLActivation} );
             return ( 0,
