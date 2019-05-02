@@ -70,7 +70,7 @@ sub data {
 sub wantJSON {
     return 1
       if ( defined $_[0]->accept
-        and $_[0]->accept =~ m#(?:application|text)/json# );
+        and $_[0]->env->{HTTP_ACCEPT} =~ m#(?:application|text)/json#i );
     return 0;
 }
 
