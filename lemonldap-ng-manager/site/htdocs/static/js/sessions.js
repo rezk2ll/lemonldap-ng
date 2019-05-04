@@ -131,6 +131,7 @@
       $scope.scriptname = scriptname;
       $scope.formPrefix = formPrefix;
       $scope.impPrefix = impPrefix;
+      $scope.sessionTTL = sessionTTL;
       $scope.availableLanguages = availableLanguages;
       $scope.waiting = true;
       $scope.showM = false;
@@ -431,6 +432,16 @@
         var d;
         d = new Date(s * 1000);
         return d.toLocaleString();
+      };
+      $scope.isValid = function(epoch) {
+        var now, valid;
+        now = Date.now() / 1000;
+        valid = now - epoch < 60;
+        console.log("session epoch", epoch);
+        console.log("current date", now);
+        console.log("sessions TTL", sessionTTL);
+        console.log("Valid ?", valid);
+        return valid;
       };
       $scope.strToLocaleDate = function(s) {
         var arrayDate, d;

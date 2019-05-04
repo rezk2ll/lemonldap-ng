@@ -118,7 +118,12 @@
         <a class="btn btn-node btn-sm" ng-click="displaySession(this)">
           <span class="glyphicon glyphicon-eye-open"></span>
         </a>
-        <span id="s-{{node.session}}" ng-click="displaySession(this)">{{localeDate(node.date)}}</span>
+        <span ng-if="isValid(node.date)">
+          <span id="s-{{node.session}}" ng-click="displaySession(this)">{{localeDate(node.date)}}</span>
+        </span>
+        <span ng-if="!isValid(node.date)">
+          <span id="s-{{node.session}}" ng-click="displaySession(this)" ng-style="{color: '#337Ab7'}">{{localeDate(node.date)}}</span>
+        </span>
       </span>
     </div>
     <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">

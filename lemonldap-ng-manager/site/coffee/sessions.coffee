@@ -108,6 +108,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.scriptname = scriptname
 	$scope.formPrefix = formPrefix
 	$scope.impPrefix = impPrefix
+	$scope.sessionTTL = sessionTTL
 	$scope.availableLanguages = availableLanguages
 	$scope.waiting = true
 	$scope.showM = false
@@ -351,6 +352,15 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.localeDate = (s) ->
 		d = new Date(s * 1000)
 		return d.toLocaleString()
+
+	$scope.isValid = (epoch) ->
+		now = Date.now() / 1000
+		valid = now - epoch < $scope.sessionTTL
+		console.log "session epoch", epoch
+		console.log "current date", now
+		console.log "sessions TTL", sessionTTL
+		console.log "Valid ?", valid
+		return valid
 
 	$scope.strToLocaleDate = (s) ->
 		arrayDate = s.match /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/
