@@ -20,11 +20,12 @@ my $client = LLNG::Manager::Test->new( {
             checkUser                      => 1,
             impersonationRule              => '$uid ne "msmith"',
             impersonationIdRule            => '$uid ne "msmith"',
+            impersonationPrefix            => 'testPrefix_',
             checkUserDisplayPersistentInfo => 0,
             checkUserDisplayEmptyValues    => 0,
             impersonationMergeSSOgroups    => 0,
             macros                         => {
-                test_impersonation => '"$real__user/$_user"',
+                test_impersonation => '"$testPrefix__user/$_user"',
                 _whatToTrace =>
                   '$_auth eq "SAML" ? "$_user@$_idpConfKey" : $_user',
             },
@@ -263,13 +264,13 @@ ok( $res->[2]->[0] =~ m%<td class="align-middle">dwho</td>%, 'Found dwho' )
 ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
     'Found _whatToTrace' )
   or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">real_groups</td>%,
-    'Found real_groups' )
-  or explain( $res->[2]->[0], 'real_groups' );
+ok( $res->[2]->[0] =~ m%<td class="text-left">testPrefix_groups</td>%,
+    'Found testPrefix_groups' )
+  or explain( $res->[2]->[0], 'testPrefix_groups' );
 ok( $res->[2]->[0] =~ m%<td class="text-left">su</td>%, 'Found su' )
   or explain( $res->[2]->[0], 'su' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">real_uid</td>%, 'Found real_uid' )
-  or explain( $res->[2]->[0], 'real_groups' );
+ok( $res->[2]->[0] =~ m%<td class="text-left">testPrefix_uid</td>%, 'Found testPrefix_uid' )
+  or explain( $res->[2]->[0], 'testPrefix_groups' );
 ok( $res->[2]->[0] =~ m%<td class="text-left">rtyler</td>%, 'Found rtyler' )
   or explain( $res->[2]->[0], 'su' );
 ok( $res->[2]->[0] =~ m%<td class="align-middle">test_impersonation</td>%,
@@ -286,9 +287,9 @@ ok( scalar @attributes == 58, 'Found 58 attributes' )
 ok( $attributes[0] eq '_auth', '_auth' ) or print STDERR Dumper( \@attributes );
 ok( $attributes[1] eq 'Demo',  'Demo' )  or print STDERR Dumper( \@attributes );
 ok( $attributes[26] eq 'uid',  'uid' )   or print STDERR Dumper( \@attributes );
-ok( $attributes[28] eq 'real__auth', 'real__auth' )
+ok( $attributes[28] eq 'testPrefix__auth', 'testPrefix__auth' )
   or print STDERR Dumper( \@attributes );
-ok( $attributes[56] eq 'real_uid', 'real_uid' )
+ok( $attributes[56] eq 'testPrefix_uid', 'testPrefix_uid' )
   or print STDERR Dumper( \@attributes );
 ok( $attributes[57] eq 'rtyler', 'rtyler' )
   or print STDERR Dumper( \@attributes );
