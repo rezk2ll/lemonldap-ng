@@ -436,7 +436,7 @@
       $scope.isValid = function(epoch) {
         var now, valid;
         now = Date.now() / 1000;
-        valid = now - epoch < 60;
+        valid = now - epoch < $scope.sessionTTL;
         console.log("session epoch", epoch);
         console.log("current date", now);
         console.log("sessions TTL", sessionTTL);
