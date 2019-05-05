@@ -353,14 +353,23 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		d = new Date(s * 1000)
 		return d.toLocaleString()
 
-	$scope.isValid = (epoch) ->
+	$scope.isValid = (epoch, type) ->
+		path = $location.path()
 		now = Date.now() / 1000
-		valid = now - epoch < $scope.sessionTTL
-		console.log "session epoch", epoch
-		console.log "current date", now
-		console.log "sessions TTL", sessionTTL
-		console.log "Valid ?", valid
-		return valid
+		console.log "Path", path
+		console.log "Session epoch", epoch
+		console.log "Current date", now
+		console.log "Session TTL", sessionTTL
+		isValid = now - epoch < sessionTTL || $location.path().match(/^\/persistent/)
+		if type == 'msg'
+			console.log "Return msg"
+			if isValid then return "info" else return "warning"
+		else if type == 'style'
+			console.log "Return style"
+			if isValid then return {} else return {'color': '#627990', 'font-style': 'italic'}
+		else
+			console.log "Return isValid"
+			return isValid
 
 	$scope.strToLocaleDate = (s) ->
 		arrayDate = s.match /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/
@@ -459,6 +468,8 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.init = ->
 		$scope.waiting = true
 		$scope.data = []
+		$scope.currentScope = null
+		$scope.currentSession = null
 		$q.all [
 			$translator.init $scope.lang
 			$scope.updateTree '', $scope.data, 0, 0
