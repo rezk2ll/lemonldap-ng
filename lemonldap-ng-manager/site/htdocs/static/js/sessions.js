@@ -406,7 +406,6 @@
               console.log(element, '-> real attribute');
               real.push(element);
             } else {
-              console.log(element, '-> spoofed attribute');
               spoof.push(element);
             }
           }
