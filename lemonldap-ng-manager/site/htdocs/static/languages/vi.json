@@ -713,6 +713,7 @@
 "session_s":"session (s)",
 "sessionDataToRemember":"Dữ liệu phiên để lưu trữ",
 "sessionDeleted":"Phiên đã bị xóa",
+"sessionExpired":"The session is expired",
 "sessionParams":"Phiên",
 "sessionStartedAt":"Phiên bắt đầu lúc",
 "sessionStorage":"Sessions lưu trữ",

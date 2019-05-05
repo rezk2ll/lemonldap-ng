@@ -713,6 +713,7 @@
 "session_s":"جلسة( أو جلسات )",
 "sessionDataToRemember":"بيانات الجلسة التي سيتم تخزينها",
 "sessionDeleted":"تم حذف الجلسة",
+"sessionExpired":"The session is expired",
 "sessionParams":"الجلسات",
 "sessionStartedAt":"بدأت الجلسة",
 "sessionStorage":"تخزين الجلسات",

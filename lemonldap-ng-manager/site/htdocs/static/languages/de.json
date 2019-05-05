@@ -713,6 +713,7 @@
 "session_s":"session(s)",
 "sessionDataToRemember":"Session data to store",
 "sessionDeleted":"The session was deleted",
+"sessionExpired":"The session is expired",
 "sessionParams":"Sessions",
 "sessionStartedAt":"Session started on",
 "sessionStorage":"Sessions Storage",
