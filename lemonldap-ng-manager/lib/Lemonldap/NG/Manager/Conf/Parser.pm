@@ -130,7 +130,7 @@ sub scanTree {
           || '_whatToTrace' } // "anonymous";
     $self->newConf->{cfgAuthorIP} = $self->req->address;
     $self->newConf->{cfgDate}     = time;
-    $self->newConf->{cfgVersion}  = $VERSION;
+    $self->newConf->{cfgVersion}  = $Lemonldap::NG::Manager::VERSION;
     $self->newConf->{key} ||= join( '',
         map { chr( int( ord( Crypt::URandom::urandom(1) ) * 94 / 256 ) + 33 ) }
           ( 1 .. 16 ) );
