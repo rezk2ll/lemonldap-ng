@@ -146,6 +146,7 @@ sub launch {
         s#\$(\w+)#$session->{$1} // ''#ge;
         push @args, $_;
     }
+    $self->logger->debug( "Executing command: " . join( " ", @args ) );
     return system @args;
 }
 
