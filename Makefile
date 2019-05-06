@@ -318,8 +318,18 @@ fastcgi-server/man/llng-fastcgi-server.1p: fastcgi-server/sbin/llng-fastcgi-serv
 
 # Perl libraries configuration
 
-json:	$(MANAGERJSONDST) fastcgi-server/man/llng-fastcgi-server.1p
+json:	$(MANAGERJSONDST) fastcgi-server/man/llng-fastcgi-server.1p debian/*cron*
 	@if which yui-compressor >/dev/null; then $(MAKE) minify; fi
+
+debian/liblemonldap-ng-handler-perl.cron.d: lemonldap-ng-handler/eg/scripts/purgeLocalCache.cron.d
+	@perl -pe 's/__APACHEUSER__/www-data/g;s@__BINDIR__@/usr/share/lemonldap-ng/bin@g' \
+		lemonldap-ng-handler/eg/scripts/purgeLocalCache.cron.d \
+		> debian/liblemonldap-ng-handler-perl.cron.d
+
+debian/liblemonldap-ng-portal-perl.cron.d: lemonldap-ng-portal/site/cron/purgeCentralCache.cron.d
+	@perl -pe 's/__APACHEUSER__/www-data/g;s@__BINDIR__@/usr/share/lemonldap-ng/bin@g' \
+		lemonldap-ng-portal/site/cron/purgeCentralCache.cron.d \
+		> debian/liblemonldap-ng-portal-perl.cron.d
 
 $(MANAGERJSONDST):	$(MANAGERJSONSRC)
 	./scripts/jsongenerator.pl
