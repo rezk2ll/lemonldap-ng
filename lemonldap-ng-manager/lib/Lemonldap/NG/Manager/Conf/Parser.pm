@@ -70,7 +70,7 @@ has confChanged => (
 );
 
 # Properties required during build
-has refConf => ( is => 'ro', isa      => 'HashRef', required => 1 );
+has refConf => ( is => 'ro', isa => 'HashRef', required => 1 );
 has req     => ( is => 'ro', required => 1 );
 has newConf => ( is => 'rw', isa      => 'HashRef' );
 has tree    => ( is => 'rw', isa      => 'ArrayRef' );
@@ -160,7 +160,7 @@ sub _scanNodes {
         hdebug("Looking to $name");
 
         # subnode
-        my $subNodes     = $leaf->{nodes} // $leaf->{_nodes};
+        my $subNodes     = $leaf->{nodes}      // $leaf->{_nodes};
         my $subNodesCond = $leaf->{nodes_cond} // $leaf->{_nodes_cond};
 
         ##################################
@@ -536,22 +536,38 @@ sub _scanNodes {
                     }
                   );
 
+                @listCatRef = map { $_ ? $_ : () } @listCatRef;
+                @listCatNew = map { $_ ? $_ : () } @listCatNew;
                 @listCatRef = sort @listCatRef;
                 @listCatNew = sort @listCatNew;
-                hdebug( '# @listCatRef : ' . \@listCatRef );
-                hdebug( '# @listCatNew : ' . \@listCatNew );
-                for ( my $i = 0 ; $i < @listCatNew ; $i++ ) {
-                    if ( not( defined $listCatRef[$i] )
-                        or $listCatRef[$i] ne $listCatNew[$i] )
-                    {
-                        push @{ $self->changes },
-                          {
-                            key => $leaf->{id},
-                            new => $listCatNew[$i],
-                            old => $listCatRef[$i]
-                          };
-                    }
+                hdebug( '# @listCatRef : ', \@listCatRef );
+                hdebug( '# @listCatNew : ', \@listCatNew );
+
+                # Check for deleted
+                my @diff =
+                  grep !${ { map { $_, 1 } @listCatNew } }{$_}, @listCatRef;
+                if ( scalar @diff ) {
+                    $self->confChanged(1);
+                    push @{ $self->changes },
+                      {
+                        new => join( ', ', 'categoryList',      @listCatNew ),
+                        key => join( ', ',  'Deletes in cat(s)', @diff ),
+                        old => join( ', ', 'categoryList',      @listCatRef ),
+                      };
                 }
+
+                # for ( my $i = 0 ; $i < @listCatNew ; $i++ ) {
+                #     if ( not( defined $listCatRef[$j] )
+                #         or $listCatRef[$j] ne $listCatNew[$i] )
+                #     {
+                #         push @{ $self->changes },
+                #           {
+                #             key => $leaf->{id},
+                #             new => $listCatNew[$i],
+                #             old => $listCatRef[$i]
+                #           };
+                #     }
+                # }
             }
             next;
         }
@@ -1067,14 +1083,14 @@ sub _unitTest {
                 or $attr->{type} =~ /Container$/ )
             {
                 my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail};
-                my $msg    = $attr->{msgFail} // $type->{msgFail};
+                my $msg    = $attr->{msgFail}    // $type->{msgFail};
                 $res = 0
                   unless (
                     $self->_execTest( {
-                            keyTest    => $attr->{keyTest} // $type->{keyTest},
+                            keyTest => $attr->{keyTest} // $type->{keyTest},
                             keyMsgFail => $attr->{keyMsgFail}
                               // $type->{keyMsgFail},
-                            test    => $attr->{test} // $type->{test},
+                            test    => $attr->{test}    // $type->{test},
                             msgFail => $attr->{msgFail} // $type->{msgFail},
                         },
                         $conf->{$key},
