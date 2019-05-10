@@ -377,15 +377,15 @@ sub headersInit {
         $class->tsv->{headerList}->{$vhost} = [ keys %headers ];
         my $sub = '';
         foreach ( keys %headers ) {
-            my $val = $class->substitute( $headers{$_} );
-            $sub .= "('$_' => $val || ''),";
+            my $val = $class->substitute( $headers{$_} ) . " || ''";
+            $sub .= "('$_' => $val),";
         }
 
         unless ( $class->tsv->{forgeHeaders}->{$vhost} =
             $class->buildSub($sub) )
         {
             $class->tsv->{maintenance}->{$vhost} = 1;
-            $class->logger->error( "$class Unable to forge headers: "
+            $class->logger->error( "$class Unable to forge $vhost headers: "
                   . $class->tsv->{jail}->error );
         }
     }
