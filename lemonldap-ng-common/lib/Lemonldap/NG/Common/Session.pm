@@ -140,7 +140,10 @@ sub BUILD {
     # Load session data into object
     if ($data) {
         if ( $self->kind ) {
-            return undef unless ( $data->{_session_kind} eq $self->kind );
+            unless ( $data->{_session_kind} eq $self->kind ) {
+                $self->error("Session kind mismatch : $data->{_session_kind} is not ".$self->kind );
+                return undef;
+            }
         }
         $self->_save_data($data);
         $self->kind( $data->{_session_kind} );
