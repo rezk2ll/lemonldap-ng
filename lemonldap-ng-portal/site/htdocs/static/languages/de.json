@@ -171,7 +171,7 @@
 "noU2FKeyFound":"Kein U2F Schlüssel gefunden",
 "oidcConsent":"Die Anwendung %s möchte wissen:",
 "oidcConsents":"OIDC consents",
-"oidcConsentsFull":"OpenID-Connect consents",
+"oidcConsentsFull":"OpenID Connect consents",
 "openidAp":"Stimmst du folgenden Parametern zu ?",
 "openIdExample":"zum Beispiel: http://myopenid.org/toto",
 "openidExchange":"Willst du dich bei %s authentifizieren ?",

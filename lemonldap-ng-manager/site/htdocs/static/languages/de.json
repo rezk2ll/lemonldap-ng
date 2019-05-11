@@ -755,7 +755,7 @@
 "stateCheck":"State Check",
 "stayConnected":"Persistent connections",
 "successfullySaved":"Successfully saved",
-"storePassword":"Store user password in session datas",
+"storePassword":"Store user password in session",
 "successLoginNumber":"Number of registered logins",
 "sympaHandler":"Sympa",
 "sympaMailKey":"Mail session key",
