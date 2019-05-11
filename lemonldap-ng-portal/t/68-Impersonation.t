@@ -269,7 +269,8 @@ ok( $res->[2]->[0] =~ m%<td class="text-left">testPrefix_groups</td>%,
   or explain( $res->[2]->[0], 'testPrefix_groups' );
 ok( $res->[2]->[0] =~ m%<td class="text-left">su</td>%, 'Found su' )
   or explain( $res->[2]->[0], 'su' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">testPrefix_uid</td>%, 'Found testPrefix_uid' )
+ok( $res->[2]->[0] =~ m%<td class="text-left">testPrefix_uid</td>%,
+    'Found testPrefix_uid' )
   or explain( $res->[2]->[0], 'testPrefix_groups' );
 ok( $res->[2]->[0] =~ m%<td class="text-left">rtyler</td>%, 'Found rtyler' )
   or explain( $res->[2]->[0], 'su' );

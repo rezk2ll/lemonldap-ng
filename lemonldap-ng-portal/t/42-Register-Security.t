@@ -27,7 +27,7 @@ SKIP: {
                 userDB                   => 'Same',
                 registerDB               => 'Demo',
                 captcha_register_enabled => 0,
-                tokenUseGlobalStorage => 1,
+                tokenUseGlobalStorage    => 1,
             }
         }
     );

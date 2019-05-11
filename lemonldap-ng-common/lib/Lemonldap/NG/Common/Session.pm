@@ -141,7 +141,9 @@ sub BUILD {
     if ($data) {
         if ( $self->kind and $data->{_session_kind} ) {
             unless ( $data->{_session_kind} eq $self->kind ) {
-                $self->error("Session kind mismatch : $data->{_session_kind} is not ".$self->kind );
+                $self->error(
+                    "Session kind mismatch : $data->{_session_kind} is not "
+                      . $self->kind );
                 return undef;
             }
         }

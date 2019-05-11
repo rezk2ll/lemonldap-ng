@@ -646,7 +646,8 @@ sub tests {
         # Warn if Impersonation is enabled without prefix
         impersonationPrefix => sub {
             return 1 unless ( $conf->{impersonationRule} );
-            return ( 1, "Impersonation is enabled without real attributes prefix" )
+            return ( 1,
+                "Impersonation is enabled without real attributes prefix" )
               unless ( $conf->{impersonationPrefix} );
 
             # Return

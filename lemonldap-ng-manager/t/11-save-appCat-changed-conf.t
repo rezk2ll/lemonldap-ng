@@ -6,9 +6,8 @@ use strict;
 use JSON;
 require 't/test-lib.pm';
 
-my @struct =
-  qw[t/jsonfiles/03-base-tree-appCat-modifed.json];
-my @desc = ( 'Changed conf with deleted Category' );
+my @struct    = qw[t/jsonfiles/03-base-tree-appCat-modifed.json];
+my @desc      = ('Changed conf with deleted Category');
 my $confFiles = [ 't/conf/lmConf-1.json', 't/conf/lmConf-2.json' ];
 
 sub body {
@@ -42,15 +41,21 @@ while ( my $body = &body() ) {
     ok( @{ $resBody->{details}->{__changes__} } eq 1,
         "$desc: conf has changed" )
       or print STDERR Dumper($resBody);
-    ok( $resBody->{details}->{__changes__}->[0]->{new} eq 'categoryList, Administration, Documentation',
-        "$desc: new key received" )
-      or print STDERR Dumper($resBody);
-    ok( $resBody->{details}->{__changes__}->[0]->{old} eq 'categoryList, Administration, Documentation, Sample applications',
-        "$desc: old key received" )
-      or print STDERR Dumper($resBody);
-    ok( $resBody->{details}->{__changes__}->[0]->{key} eq 'Deletes in cat(s), Sample applications',
-        "$desc: key received" )
-      or print STDERR Dumper($resBody);
+    ok(
+        $resBody->{details}->{__changes__}->[0]->{new} eq
+          'categoryList, Administration, Documentation',
+        "$desc: new key received"
+    ) or print STDERR Dumper($resBody);
+    ok(
+        $resBody->{details}->{__changes__}->[0]->{old} eq
+          'categoryList, Administration, Documentation, Sample applications',
+        "$desc: old key received"
+    ) or print STDERR Dumper($resBody);
+    ok(
+        $resBody->{details}->{__changes__}->[0]->{key} eq
+          'Deletes in cat(s), Sample applications',
+        "$desc: key received"
+    ) or print STDERR Dumper($resBody);
     ok( -e $confFiles->[1], "$desc: file is created" );
 
     #print STDERR Dumper($resBody);

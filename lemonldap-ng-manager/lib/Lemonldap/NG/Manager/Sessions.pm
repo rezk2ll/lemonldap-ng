@@ -53,7 +53,7 @@ sub addRoutes {
 
     $self->{ipField}              ||= 'ipAddr';
     $self->{multiValuesSeparator} ||= '; ';
-    $self->{impersonationPrefix}  = $conf->{impersonationPrefix} || 'real_';
+    $self->{impersonationPrefix} = $conf->{impersonationPrefix} || 'real_';
     $self->{hiddenAttributes} //= "_password";
 }
 

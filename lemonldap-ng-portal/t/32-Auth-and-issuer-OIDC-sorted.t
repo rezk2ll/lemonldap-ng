@@ -80,7 +80,7 @@ expectOK($res);
 my $metadata = $res->[2]->[0];
 count(3);
 
-switch('rp');
+switch ('rp');
 &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
 count(1);

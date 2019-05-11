@@ -269,11 +269,12 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
       or print STDERR Dumper($res);
 
     # Two 2F devices must be registered
-    my @sf = map m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g, $res->[2]->[0];
+    my @sf = map m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g,
+      $res->[2]->[0];
     ok( scalar @sf == 2, 'Two 2F devices found' )
       or print STDERR Dumper($res);
     ok( $sf[0] eq 'TOTP', 'TOTP device found' ) or print STDERR Dumper( \@sf );
-    ok( $sf[1] eq 'U2F', 'U2F device found' ) or print STDERR Dumper( \@sf );
+    ok( $sf[1] eq 'U2F',  'U2F device found' )  or print STDERR Dumper( \@sf );
 
     # Unregister TOTP
     ok( $res->[2]->[0] =~ qr%TOTP.*epoch.*(\d{10})%m, "TOTP epoch $1 found" )

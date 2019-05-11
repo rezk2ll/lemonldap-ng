@@ -140,14 +140,15 @@ sub tplParams {
 
 sub javascript {
     my ( $self, $req ) = @_;
-    my $res = $self->diffRule->( $req, $req->{userData} ) || 0;
+    my $res       = $self->diffRule->( $req, $req->{userData} ) || 0;
     my $impPrefix = $self->{impersonationPrefix};
-    my $ttl = $self->{timeout} || 72000;
+    my $ttl       = $self->{timeout} || 72000;
 
     return
 'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";var viewPrefix=scriptname+"view/";'
       . 'var allowDiff=' . "$res;"
-      . 'var impPrefix=' . "'" . $impPrefix . "'" . ';'
+      . 'var impPrefix=' . "'"
+      . $impPrefix . "'" . ';'
       . 'var sessionTTL=' . "$ttl;"
       . ( $self->links ? 'var links=' . to_json( $self->links ) . ';' : '' )
       . (

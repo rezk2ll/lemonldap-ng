@@ -113,8 +113,8 @@ sub load {
         $Lemonldap::NG::Common::Conf::msg .= "YAML fails to read file: $@ \n";
         return undef;
     }
-    foreach (keys %$ret) {
-        if($_ =~ $boolKeys) {
+    foreach ( keys %$ret ) {
+        if ( $_ =~ $boolKeys ) {
             $ret->{$_} = $ret->{$_} ? 1 : 0;
         }
     }

@@ -64,7 +64,7 @@ count(2);
 # Try to display previous conf
 $res = &client->jsonResponse('/view/1');
 ok( $res->{cfgNum} eq '1', 'Browser is allowed' )
-or print STDERR Dumper($res);
+  or print STDERR Dumper($res);
 count(1);
 
 # Remove new conf

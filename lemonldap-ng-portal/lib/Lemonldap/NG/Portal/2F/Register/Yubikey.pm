@@ -186,7 +186,7 @@ sub run {
         $self->logger->debug(
             "Delete 2F Device : { type => 'UBK', epoch => $epoch }");
         $self->p->updatePersistentSession( $req,
-            { _2fDevices => to_json( $_2fDevices ) } );
+            { _2fDevices => to_json($_2fDevices) } );
         $self->userLogger->notice('Yubikey deletion succeed');
         return [
             200,

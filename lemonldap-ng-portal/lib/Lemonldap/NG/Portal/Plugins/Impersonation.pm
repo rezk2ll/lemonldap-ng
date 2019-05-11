@@ -57,7 +57,8 @@ sub run {
     my ( $self, $req ) = @_;
     my $savedHttpSession = $req->{sessionInfo}->{_httpSession} //= '';
     my $spoofId = $req->param('spoofId') || $req->{user};
-    $self->logger->debug("No impersonation required") if ( $spoofId eq $req->{user} );
+    $self->logger->debug("No impersonation required")
+      if ( $spoofId eq $req->{user} );
     my $statut = PE_OK;
 
     if ( $spoofId !~ /$self->{conf}->{userControl}/o ) {
@@ -141,7 +142,8 @@ sub run {
     $req->steps( [ $self->p->validSession, @{ $self->p->endAuth } ] );
 
     # Restore _httpSession for double Cookies
-    $req->{sessionInfo}->{_httpSession} = $savedHttpSession if $savedHttpSession;
+    $req->{sessionInfo}->{_httpSession} = $savedHttpSession
+      if $savedHttpSession;
     return $statut;
 }
 
