@@ -551,23 +551,10 @@ sub _scanNodes {
                     push @{ $self->changes },
                       {
                         new => join( ', ', 'categoryList',      @listCatNew ),
-                        key => join( ', ',  'Deletes in cat(s)', @diff ),
+                        key => join( ', ', 'Deletes in cat(s)', @diff ),
                         old => join( ', ', 'categoryList',      @listCatRef ),
                       };
                 }
-
-                # for ( my $i = 0 ; $i < @listCatNew ; $i++ ) {
-                #     if ( not( defined $listCatRef[$j] )
-                #         or $listCatRef[$j] ne $listCatNew[$i] )
-                #     {
-                #         push @{ $self->changes },
-                #           {
-                #             key => $leaf->{id},
-                #             new => $listCatNew[$i],
-                #             old => $listCatRef[$i]
-                #           };
-                #     }
-                # }
             }
             next;
         }
