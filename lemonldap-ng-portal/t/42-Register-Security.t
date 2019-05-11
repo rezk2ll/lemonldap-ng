@@ -59,7 +59,6 @@ SKIP: {
     $query = $1;
     ok( $query =~ /register_token=([^&]+)/, 'Found register_token' );
     my $token = $1;
-    print STDERR "$token\n";
 
     ok(
         $res = $client->_get(
