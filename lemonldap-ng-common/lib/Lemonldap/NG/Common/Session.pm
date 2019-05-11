@@ -139,7 +139,7 @@ sub BUILD {
 
     # Load session data into object
     if ($data) {
-        if ( $self->kind ) {
+        if ( $self->kind and $data->{_session_kind} ) {
             unless ( $data->{_session_kind} eq $self->kind ) {
                 $self->error("Session kind mismatch : $data->{_session_kind} is not ".$self->kind );
                 return undef;
@@ -164,7 +164,7 @@ sub _tie_session {
         if ( $self->storageModule =~ /^Lemonldap::NG::Common::Apache::Session/ )
         {
             tie %h, $self->storageModule, $self->id,
-              { %{ $self->options }, %$options };
+              { %{ $self->options }, %$options, kind => $self->kind };
         }
         else {
             tie %h, 'Lemonldap::NG::Common::Apache::Session', $self->id,

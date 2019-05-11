@@ -271,6 +271,9 @@ sub getMod {
         $self->error('Unknown (or unconfigured) session type');
         return ();
     }
+    if(my $kind = $req->params('kind')) {
+        $m->{kind} = $kind;
+    }
     return $m;
 }
 
