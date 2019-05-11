@@ -399,7 +399,6 @@ site/templates/common/mail_register_done.tpl
 site/templates/common/notification.xsl
 site/templates/common/notifinclude.tpl
 site/templates/common/oidc_checksession.tpl
-site/templates/common/redirect.tpl
 site/templates/common/registerBrowser.tpl
 site/templates/common/script.tpl
 t/01-AuthDemo.t
