@@ -291,8 +291,9 @@ ok( scalar @attributes == 62, 'Found 61 attributes' )
   : "Too much attributes -> " . scalar @attributes;
 ok( $attributes[0] eq '_auth', '_auth' ) or print STDERR Dumper( \@attributes );
 ok( $attributes[1] eq 'Demo',  'Demo' )  or print STDERR Dumper( \@attributes );
-ok( $attributes[2] eq '_httpSession',  '_httpSession' )  or print STDERR Dumper( \@attributes );
-ok( $attributes[28] eq 'uid',  'uid' )   or print STDERR Dumper( \@attributes );
+ok( $attributes[2] eq '_httpSession', '_httpSession' )
+  or print STDERR Dumper( \@attributes );
+ok( $attributes[28] eq 'uid', 'uid' ) or print STDERR Dumper( \@attributes );
 ok( $attributes[30] eq 'testPrefix__auth', 'testPrefix__auth' )
   or print STDERR Dumper( \@attributes );
 ok( $attributes[32] eq 'testPrefix__httpSession', 'testPrefix__httpSession' )

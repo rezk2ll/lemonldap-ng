@@ -141,7 +141,9 @@ sub run {
     $req->steps( [ $self->p->validSession, @{ $self->p->endAuth } ] );
 
     # Restore _httpSession for double Cookies
-    $req->{sessionInfo}->{_httpSession} = $req->{sessionInfo}->{real__httpSession} if $req->{sessionInfo}->{real__httpSession};
+    $req->{sessionInfo}->{_httpSession} =
+      $req->{sessionInfo}->{real__httpSession}
+      if $req->{sessionInfo}->{real__httpSession};
     return $statut;
 }
 
