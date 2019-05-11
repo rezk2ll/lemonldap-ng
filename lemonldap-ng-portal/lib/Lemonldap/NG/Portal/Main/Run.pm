@@ -331,7 +331,7 @@ sub autoRedirect {
 # If $id is set to undef or if $args{force} is true, return a new session.
 sub getApacheSession {
     my ( $self, $id, %args ) = @_;
-    $args{kind} ||= "SSO";
+    $args{kind} //= "SSO";
     if ($id) {
         $self->logger->debug("Try to get $args{kind} session $id");
     }
