@@ -694,7 +694,9 @@ llapp.controller 'TreeCtrl', [
 							if typeof node.data == 'string' and node.data.match /^(?:-1|0|1)$/
 								node.data = parseInt(node.data, 10)
 						if node.type and node.type.match /^int$/
-							node.data = parseInt(node.data, 10)				
+							node.data = parseInt(node.data, 10)
+						if node.type and node.type.match /^select$/
+							node.data = node.data.toString()
 						# Split SAML types
 						else if node.type and node.type.match(/^(saml(Service|Assertion)|blackWhiteList)$/) and not (typeof node.data == 'object')
 							node.data = node.data.split ';'

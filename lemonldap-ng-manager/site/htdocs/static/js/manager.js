@@ -842,6 +842,9 @@ This file contains:
               }
               if (node.type && node.type.match(/^int$/)) {
                 node.data = parseInt(node.data, 10);
+              }
+              if (node.type && node.type.match(/^select$/)) {
+                node.data = node.data.toString();
               } else if (node.type && node.type.match(/^(saml(Service|Assertion)|blackWhiteList)$/) && !(typeof node.data === 'object')) {
                 node.data = node.data.split(';');
               }
