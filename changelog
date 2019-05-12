@@ -242,6 +242,20 @@ lemonldap-ng (2.0.0~alpha2) testing; urgency=low
 
 lemonldap-ng (2.0.0~alpha1) testing; urgency=low
 
+lemonldap-ng (1.9.19) oldstable; urgency=high
+
+  * Bugs:
+    * #1509: InactivityTimeout for applications don't work
+    * #1520: lemonldap-ng-cli adds a new item when deleting an item that does not exist.
+    * #1567: Captcha session id is too weak
+    * #1580: Error when saving in manager (mongoDB as ConfigurationBackend)
+    * #1662: id_token validity not correctly evaluated
+    * #1744: [Security: low] register_token used for account creation can be used as a valid session identifier
+
+  * Improvements:
+    * #1516: All IDP conf not usable if only one IDP misconfigured
+    * #1519: Cross domain authentication, ajax request and same origin policy
+
 lemonldap-ng (1.9.18) stable; urgency=high
 
     * #1479: App Category order - Cannot save

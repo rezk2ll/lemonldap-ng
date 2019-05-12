@@ -660,6 +660,9 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Sun May 12 2019 Clement Oudot <clem.oudot@gmail.com> - 1.9.19-1
+- Update to 1.9.19
+
 * Thu Apr 11 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.3-1
 - Update to 2.0.3
 
