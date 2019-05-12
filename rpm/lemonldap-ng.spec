@@ -49,7 +49,7 @@
 # Main package
 #==============================================================================
 Name:           lemonldap-ng
-Version:        2.0.3
+Version:        2.0.4
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
@@ -660,6 +660,9 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Sun May 12 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.4-1
+- Update to 2.0.4
+
 * Sun May 12 2019 Clement Oudot <clem.oudot@gmail.com> - 1.9.19-1
 - Update to 1.9.19
 

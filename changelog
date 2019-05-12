@@ -1,3 +1,40 @@
+lemonldap-ng (2.0.4) bionic; urgency=medium
+
+  * Bugs:
+    * #1684: UI manager: boolean values do not appears in configuration forms with Yaml config format
+    * #1709: ViewDiff template not displayed
+    * #1710: Configuration keys not displayed in Viewer
+    * #1716: [Security:minor] Update jQuery
+    * #1720: Duplicate session opening when using multiple Kerberos instances in Combination
+    * #1724: CAS 1.0 /validate endpoint does not return username
+    * #1726: Deb package: missing dependency IO::String
+    * #1733: Invalid default crontab in RPM
+    * #1736: Configuration version in Manager is different from software version
+    * #1738: Error not well catched with Ext2F
+    * #1741: Deleted category is not detected as a change when saving conf.
+    * #1742: [Security: high] Setting tokenUseGlobalStorage allows unauthenticated users to access the portal (and applications without rules)
+    * #1743: [Security: low] register_token used for account creation can be used as a valid session identifier
+    * #1746: Impersonation does not work with double cookies authentication
+
+  * New features:
+    * #1146: Allow Handler to read OAuth2 access token instead of browser cookie
+    * #1722: [Security: improvement] PKCE to secure OIDC Authorization Code flow
+
+  * Improvements:
+    * #1703: Fix faulty headers on a null value
+    * #1711: Return Session ID when authentication is done via REST
+    * #1712: Display idpChoice cancel button only if AuthChoice is enabled
+    * #1713: CAS : Allow per application CAS login override
+    * #1714: Check logLevel value
+    * #1725: Allow unauthenticated clients on OIDC token endpoint
+    * #1728: Improve redirect page
+    * #1729: Display error if SAML service is enabled without private and public keys signature
+    * #1730: Sort real and spoofed attributes in CheckUser and Session explorer
+    * #1735: Highlight valid SSO sessions in sessions explorer
+    * #1739: Improve log in Grant Session plugin
+
+ -- Clément <clem.oudot@gmail.com>  Sun, 12 May 2019 16:17:01 +0200
+
 lemonldap-ng (2.0.3) bionic; urgency=medium
 
   * Bugs:
