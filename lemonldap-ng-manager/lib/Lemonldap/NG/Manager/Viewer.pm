@@ -25,9 +25,9 @@ sub addRoutes {
     my ( $self, $conf ) = @_;
     $self->ua( Lemonldap::NG::Common::UserAgent->new($conf) );
 
-    my $hiddenPK = '';
-    $hiddenPK = $self->{viewerHiddenKeys};
-    my @enabledPK = ();
+    my $hiddenKeys = '';
+    $hiddenKeys = $self->{viewerHiddenKeys};
+    my @enabledKeys = ();
     my @keys      = qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
       applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
       casSrvMetaDataNodes casAppMetaDataNodes
@@ -37,12 +37,12 @@ sub addRoutes {
     foreach (@keys) {
 
         # Ignore hidden ConfTree Primary Keys
-        push @enabledPK, $_
-          unless ( $hiddenPK =~ /\b$_\b/ );
+        push @enabledKeys, $_
+          unless ( $hiddenKeys =~ /\b$_\b/ );
     }
 
     # Forbid hidden keys
-    foreach ( split /\s+/, $hiddenPK ) {
+    foreach ( split /\s+/, $hiddenKeys ) {
         $self->addRoute(
             view => { ':cfgNum' => { $_ => 'rejectKey' } },
             ['GET']
@@ -57,7 +57,7 @@ sub addRoutes {
       # Special keys
       ->addRoute(
         view => {
-            ':cfgNum' => \@enabledPK
+            ':cfgNum' => \@enabledKeys
         },
         ['GET']
       )
