@@ -536,6 +536,7 @@ t/76-2F-Ext-with-BruteForce.t
 t/76-2F-Ext-with-CodeActivation.t
 t/76-2F-Ext-with-GrantSession.t
 t/76-2F-Ext-with-History.t
+t/77-2F-Mail-with-global-storage.t
 t/77-2F-Mail.t
 t/90-Translations.t
 t/99-pod.t

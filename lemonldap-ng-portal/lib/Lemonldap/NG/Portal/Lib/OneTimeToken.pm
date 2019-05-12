@@ -5,7 +5,7 @@ use Mouse;
 use JSON qw(from_json to_json);
 use Crypt::URandom;
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.4';
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -134,7 +134,11 @@ sub updateToken {
         return $id;
     }
     else {
-        $self->p->getApacheSession( $id, $k => $v );
+        $self->p->getApacheSession(
+            $id,
+            kind => "TOKEN",
+            info => { $k => $v }
+        );
         return $id;
     }
 }
