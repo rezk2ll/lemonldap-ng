@@ -121,7 +121,7 @@ First create a PSGI module based on Lemonldap::NG::Handler:
 </p>
 <pre class="code perl"><a href="http://perldoc.perl.org/functions/package.html"><span class="kw3">package</span></a> My<span class="sy0">::</span><span class="me2">PSGI</span><span class="sy0">;</span>
 &nbsp;
-<span class="kw2">use</span> base <span class="st0">&quot;Lemonldap::NG::Handler::PSGI&quot;</span><span class="sy0">;</span>
+<span class="kw2">use</span> base <span class="st0">&quot;Lemonldap::NG::Handler::PSGI&quot;</span><span class="sy0">;</span> <span class="co1"># or Lemonldap::NG::Handler::PSGI::OAuth2, etc…</span>
 &nbsp;
 <span class="kw2">sub</span> init <span class="br0">&#123;</span>
     <span class="kw1">my</span> <span class="br0">&#40;</span><span class="re0">$self</span><span class="sy0">,</span><span class="re0">$args</span><span class="br0">&#41;</span> <span class="sy0">=</span> <span class="co5">@_</span><span class="sy0">;</span>

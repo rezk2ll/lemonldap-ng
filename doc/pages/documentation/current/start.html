@@ -529,7 +529,7 @@
 		<td class="col0"> <a href="forcereauthn.html" class="wikilink1" title="documentation:2.0:forcereauthn">Force Authentication</a> </td><td class="col1"> Force authentication to access to Portal </td>
 	</tr>
 	<tr class="row9 rowodd">
-		<td class="col0"> <a href="sessions.html" class="wikilink1" title="documentation:2.0:sessions">Grant Sessions rules</a> </td><td class="col1"></td>
+		<td class="col0"> <a href="grantsession.html" class="wikilink1" title="documentation:2.0:grantsession">Grant Sessions</a> </td><td class="col1"> Rules to apply before allowing a user to open a session </td>
 	</tr>
 	<tr class="row10 roweven">
 		<td class="col0"> <a href="impersonation.html" class="wikilink1" title="documentation:2.0:impersonation">Impersonation </a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Allow users to use another identity </td>
@@ -559,13 +559,13 @@
 		<td class="col0"> Upgrade session <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Plugin that explain to user that a more secure authentication is needed instead of rejected it </td>
 	</tr>
 </table></div>
-<!-- EDIT13 TABLE [6795-8293] -->
+<!-- EDIT13 TABLE [6795-8349] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT9 SECTION "Portal" [2031-8321] -->
+<!-- EDIT9 SECTION "Portal" [2031-8377] -->
 <h3 class="sectionedit14" id="handlers">Handlers</h3>
 <div class="level3">
 
@@ -581,45 +581,50 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 <div class="table sectionedit15"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
-		<th class="col0"> Handler type </th><th class="col1 centeralign">  Apache  </th><th class="col2 centeralign">  Nginx  </th><th class="col3 rightalign">  <a href="https://plackperl.org" class="urlextern" title="https://plackperl.org"  rel="nofollow">Plack* servers</a></th><th class="col4 centeralign">  Node.js    </th><th class="col5 centeralign">  Comment  </th><td class="col6"></td>
+		<th class="col0"> Handler type </th><th class="col1 centeralign">  Apache  </th><th class="col2 centeralign">  Nginx  </th><th class="col3 rightalign">  <a href="https://plackperl.org" class="urlextern" title="https://plackperl.org"  rel="nofollow">Plack* servers</a></th><th class="col4 centeralign">  Node.js  </th><th class="col5 centeralign">  <a href="selfmadeapplication.html#perl_auto-protected_cgi" class="wikilink1" title="documentation:2.0:selfmadeapplication">Self protected apps</a>  </th><th class="col6 centeralign">  Comment  </th>
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0"> Main <em>(default handler)</em> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Partial</a> (*)  </td><td class="col5 leftalign">  </td><td class="col6"></td>
+		<td class="col0"> Main <em>(default handler)</em> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Partial</a> <strong>(1)</strong>  </td><td class="col5 centeralign">  ✔  </td><td class="col6 leftalign">  </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0"> <a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5"> Designed for some server-to-server applications </td><td class="col6"></td>
+		<td class="col0"> <a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 centeralign">  ✔  </td><td class="col6"> Designed for some server-to-server applications </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0"> <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5"> For Cross Domain Authentication </td><td class="col6"></td>
+		<td class="col0"> <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 centeralign">  ✔  </td><td class="col6"> For Cross Domain Authentication </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0"> <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps</a> <em>(<a href="ssoaas.html" class="wikilink1" title="documentation:2.0:ssoaas">SSOaaS</a>)</em> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5"> Allows application developers to define their own rules and headers inside their applications </td><td class="col6"></td>
+		<td class="col0"> <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps</a> <em>(<a href="ssoaas.html" class="wikilink1" title="documentation:2.0:ssoaas">SSOaaS</a>)</em> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 leftalign">  </td><td class="col6"> Allows application developers to define their own rules and headers inside their applications </td>
 	</tr>
 	<tr class="row5 rowodd">
-		<td class="col0"> <a href="devopssthandler.html" class="wikilink1" title="documentation:2.0:devopssthandler">DevOpsST</a> <em>(<a href="ssoaas.html" class="wikilink1" title="documentation:2.0:ssoaas">SSOaaS</a>)</em> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5"> Enables both <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps</a> and <a href="servertoserver.html" class="wikilink1" title="documentation:2.0:servertoserver">Service Token</a> </td><td class="col6"></td>
+		<td class="col0"> <a href="devopssthandler.html" class="wikilink1" title="documentation:2.0:devopssthandler">DevOpsST</a> <em>(<a href="ssoaas.html" class="wikilink1" title="documentation:2.0:ssoaas">SSOaaS</a>)</em> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 leftalign">  </td><td class="col6"> Enables both <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps</a> and <a href="servertoserver.html" class="wikilink1" title="documentation:2.0:servertoserver">Service Token</a> </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0"> <a href="securetoken.html" class="wikilink1" title="documentation:2.0:securetoken">Secure Token</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5"> Designed to secure exchanges between a LLNG reverse-proxy and a remote app </td><td class="col6"></td>
+		<td class="col0"> <a href="oauth2handler.html" class="wikilink1" title="documentation:2.0:oauth2handler">OAuth2</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> <strong>(2)</strong> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 centeralign">  ✔  </td><td class="col6"> Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services </td>
 	</tr>
 	<tr class="row7 rowodd">
-		<td class="col0"> <a href="servertoserver.html" class="wikilink1" title="documentation:2.0:servertoserver">Service Token</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> <em>(Server-to-Server)</em> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5"> Designed to permit underlying requests <em>(<abbr title="Application Programming Interface">API</abbr>-Based Infrastructure)</em> </td><td class="col6"></td>
+		<td class="col0"> <a href="securetoken.html" class="wikilink1" title="documentation:2.0:securetoken">Secure Token</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td><td class="col6"> Designed to secure exchanges between a LLNG reverse-proxy and a remote app </td>
 	</tr>
 	<tr class="row8 roweven">
+		<td class="col0"> <a href="servertoserver.html" class="wikilink1" title="documentation:2.0:servertoserver">Service Token</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> <em>(Server-to-Server)</em> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 centeralign">  ✔  </td><td class="col6"> Designed to permit underlying requests <em>(<abbr title="Application Programming Interface">API</abbr>-Based Infrastructure)</em> </td>
+	</tr>
+	<tr class="row9 rowodd">
 		<td class="col0"> <a href="applications/zimbra.html" class="wikilink1" title="documentation:2.0:applications:zimbra">Zimbra PreAuth</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 </table></div>
-<!-- EDIT15 TABLE [8596-9783] -->
-<p>
-<em>(*): <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Node.js handler</a> has not yet reached the same level of functionalities.</em>
-</p>
+<!-- EDIT15 TABLE [8652-10173] --><ul>
+<li class="level1"><div class="li"> <em>(1): <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Node.js handler</a> has not yet reached the same level of functionalities.</em></div>
+</li>
+<li class="level1"><div class="li"> <em>(2): <a href="oauth2handler.html" class="wikilink1" title="documentation:2.0:oauth2handler">OAuth2 Handler</a> is available with LLNG ≥ 2.0.4</em></div>
+</li>
+</ul>
 
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Handlers" [8322-9908] -->
+<!-- EDIT14 SECTION "Handlers" [8378-10381] -->
 <h3 class="sectionedit16" id="llng_databases">LLNG databases</h3>
 <div class="level3">
 
@@ -668,7 +673,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 		<td class="col0 centeralign">  <a href="localconfbackend.html" class="wikilink1" title="documentation:2.0:localconfbackend">Local</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a>  </td><td class="col1 leftalign">  </td><td class="col2 leftalign"> Use only lemonldap-ng.ini parameters.  </td>
 	</tr>
 </table></div>
-<!-- EDIT17 TABLE [10213-11325] --><div class="notetip">You can not start with an empty configuration, so read <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
+<!-- EDIT17 TABLE [10686-11798] --><div class="notetip">You can not start with an empty configuration, so read <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
 </div>
 <p>
 </div></div>
@@ -723,13 +728,13 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 <strong>Can be used to secure another backend</strong> for remote servers.  </td>
 	</tr>
 </table></div>
-<!-- EDIT18 TABLE [12190-13890] -->
+<!-- EDIT18 TABLE [12663-14363] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT16 SECTION "LLNG databases" [9909-13918] -->
+<!-- EDIT16 SECTION "LLNG databases" [10382-14391] -->
 <h2 class="sectionedit19" id="applications_protection">Applications protection</h2>
 <div class="level2">
 
@@ -758,7 +763,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Applications protection" [13919-14409] -->
+<!-- EDIT19 SECTION "Applications protection" [14392-14882] -->
 <h3 class="sectionedit20" id="well_known_compatible_applications">Well known compatible applications</h3>
 <div class="level3">
 <div class="noteclassic">Here is a list of well known applications that are compatible with <abbr title="LemonLDAP::NG">LL::NG</abbr>. A full list is available on <a href="applications.html" class="wikilink1" title="documentation:2.0:applications">vendor applications page</a>.
@@ -862,7 +867,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT20 SECTION "Well known compatible applications" [14410-16748] -->
+<!-- EDIT20 SECTION "Well known compatible applications" [14883-17221] -->
 <h2 class="sectionedit21" id="advanced_features">Advanced features</h2>
 <div class="level2">
 
@@ -921,7 +926,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT21 SECTION "Advanced features" [16749-17968] -->
+<!-- EDIT21 SECTION "Advanced features" [17222-18441] -->
 <h2 class="sectionedit22" id="mini_howtos">Mini howtos</h2>
 <div class="level2">
 
@@ -958,7 +963,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT22 SECTION "Mini howtos" [17969-18863] -->
+<!-- EDIT22 SECTION "Mini howtos" [18442-19336] -->
 <h2 class="sectionedit23" id="exploitation">Exploitation</h2>
 <div class="level2">
 
@@ -993,7 +998,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT23 SECTION "Exploitation" [18864-19381] -->
+<!-- EDIT23 SECTION "Exploitation" [19337-19854] -->
 <h2 class="sectionedit24" id="bug_report">Bug report</h2>
 <div class="level2">
 
@@ -1002,7 +1007,7 @@ See <a href="bugreport.html" class="wikilink1" title="bugreport">How to report a
 </p>
 
 </div>
-<!-- EDIT24 SECTION "Bug report" [19382-19446] -->
+<!-- EDIT24 SECTION "Bug report" [19855-19919] -->
 <h2 class="sectionedit25" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -1069,6 +1074,6 @@ If you don&#039;t want to publish your translation <em>(<code>XX</code> must be 
 </ul>
 
 </div>
-<!-- EDIT25 SECTION "Developer corner" [19447-] --></div>
+<!-- EDIT25 SECTION "Developer corner" [19920-] --></div>
 </body>
 </html>

@@ -48,10 +48,12 @@
 <div class="level1">
 
 <p>
-Go in General Parameters &gt; Extended Parameters &gt; SMTP
+Go in <code>General Parameters</code> &gt; <code>Advanced Parameters</code> &gt; <code>SMTP</code>:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>SMTP Server</strong>: <abbr title="Internet Protocol">IP</abbr> or hostname of the SMTP server</div>
+<li class="level1"><div class="li"> <strong> Session key containing mail address</strong>: choose which session field contains mail address</div>
+</li>
+<li class="level2"><div class="li"> <strong>SMTP Server</strong>: <abbr title="Internet Protocol">IP</abbr> or hostname of the SMTP server</div>
 </li>
 <li class="level2"><div class="li"> <strong>SMTP Port</strong>: Port of the SMTP server</div>
 </li>
@@ -59,13 +61,15 @@ Go in General Parameters &gt; Extended Parameters &gt; SMTP
 </li>
 <li class="level2"><div class="li"> <strong>SMTP Password</strong>: SMTP password if authentication is required</div>
 </li>
+<li class="level2"><div class="li"> <strong> SSL/TLS protocol</strong> and <strong>SSL/TLS options</strong>: Here you can enable SMTPS or startTLS</div>
+</li>
 </ul>
 <div class="notetip"><ul>
 <li class="level1"><div class="li"> If no SMTP server is configured, the mail will be sent via the local sendmail program. Else, Net::SMTP module is required to use the SMTP server</div>
 </li>
 <li class="level1"><div class="li"> The SMTP server value can hold the port, for example: <code>mail.example.com:25</code></div>
 </li>
-<li class="level1"><div class="li"> If authentication is configured, Authen::SASL and MIME::Base64 modules are required</div>
+<li class="level1"><div class="li"> If authentication is configured, <code>Authen::SASL</code> and <code>MIME::Base64</code> modules are required</div>
 </li>
 </ul>
 
@@ -76,7 +80,7 @@ Go in General Parameters &gt; Extended Parameters &gt; SMTP
 </li>
 <li class="level2"><div class="li"> <strong>Reply address</strong>: address seen in the “Reply-To” field</div>
 </li>
-<li class="level2"><div class="li"> <strong>Mail charset</strong>: Charset used for the body of the mail (default: utf-8)</div>
+<li class="level2"><div class="li"> <strong>charset</strong>: Charset used for the body of the mail (default: utf-8)</div>
 </li>
 </ul>
 </li>

@@ -65,14 +65,12 @@
 </div>
 <!-- TOC END -->
 
-<p>
-AS server
-</p>
+<h1 class="sectionedit1" id="cas_server">CAS server</h1>
 <div class="level1">
 
 </div>
-
-<h2 class="sectionedit1" id="presentation">Presentation</h2>
+<!-- EDIT1 SECTION "CAS server" [1-26] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
@@ -90,13 +88,13 @@ AS server
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Presentation" [19-389] -->
-<h2 class="sectionedit2" id="configuration">Configuration</h2>
+<!-- EDIT2 SECTION "Presentation" [27-397] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT2 SECTION "Configuration" [390-416] -->
-<h3 class="sectionedit3" id="enabling_cas">Enabling CAS</h3>
+<!-- EDIT3 SECTION "Configuration" [398-424] -->
+<h3 class="sectionedit4" id="enabling_cas">Enabling CAS</h3>
 <div class="level3">
 
 <p>
@@ -115,15 +113,15 @@ In the Manager, go in <code>General Parameters</code> » <code>Issuer modules</c
 
 </div>
 </div>
-<!-- EDIT3 SECTION "Enabling CAS" [417-858] -->
-<h3 class="sectionedit4" id="configuring_the_cas_service">Configuring the CAS Service</h3>
+<!-- EDIT4 SECTION "Enabling CAS" [425-866] -->
+<h3 class="sectionedit5" id="configuring_the_cas_service">Configuring the CAS Service</h3>
 <div class="level3">
 
 <p>
 Then go in <code><abbr title="Central Authentication Service">CAS</abbr> Service</code> to define:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong><abbr title="Central Authentication Service">CAS</abbr> login</strong>: the session key transmitted to <abbr title="Central Authentication Service">CAS</abbr> client as the main identifier (<abbr title="Central Authentication Service">CAS</abbr> Principal)</div>
+<li class="level1"><div class="li"> <strong><abbr title="Central Authentication Service">CAS</abbr> login</strong>: the session key transmitted to <abbr title="Central Authentication Service">CAS</abbr> client as the main identifier (<abbr title="Central Authentication Service">CAS</abbr> Principal). This setting can be overriden per-application.</div>
 </li>
 <li class="level1"><div class="li"> <strong><abbr title="Central Authentication Service">CAS</abbr> attributes</strong>: list of attributes that will be transmitted by default in the validate response. Keys are the name of attribute in the <abbr title="Central Authentication Service">CAS</abbr> response, values are the name of session key. </div>
 </li>
@@ -143,8 +141,8 @@ Then go in <code><abbr title="Central Authentication Service">CAS</abbr> Service
 <div class="notetip">If <code><abbr title="Central Authentication Service">CAS</abbr> login</code> is not set, it uses <code>General Parameters</code> » <code>Logs</code> » <code>REMOTE_USER</code> data, which is set to <code>uid</code> by default
 </div>
 </div>
-<!-- EDIT4 SECTION "Configuring the CAS Service" [859-2141] -->
-<h3 class="sectionedit5" id="configuring_cas_applications">Configuring CAS Applications</h3>
+<!-- EDIT5 SECTION "Configuring the CAS Service" [867-2197] -->
+<h3 class="sectionedit6" id="configuring_cas_applications">Configuring CAS Applications</h3>
 <div class="level3">
 
 <p>
@@ -166,6 +164,8 @@ You can then access the configuration of this application.
 <ul>
 <li class="level1"><div class="li"> <strong>Service <abbr title="Uniform Resource Locator">URL</abbr></strong> : the service (user-facing) <abbr title="Uniform Resource Locator">URL</abbr> of the <abbr title="Central Authentication Service">CAS</abbr>-enabled application.</div>
 </li>
+<li class="level1"><div class="li"> <strong>User attribute</strong> : session field that will be used as main identifier.</div>
+</li>
 <li class="level1"><div class="li"> <strong>Rule</strong> : The access control rule to enforce on this application. If left blank, access will be allowed for everyone.</div>
 </li>
 </ul>
@@ -185,6 +185,6 @@ The attributes defined here will completely replace any attributes you may have 
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Configuring CAS Applications" [2142-] --></div>
+<!-- EDIT6 SECTION "Configuring CAS Applications" [2198-] --></div>
 </body>
 </html>

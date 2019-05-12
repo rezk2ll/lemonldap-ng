@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:security</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,security"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="security.html"/>
@@ -165,15 +165,16 @@ LLNG portal now embeds the following features:
 <li class="level1"><div class="li"> <a href="https://en.wikipedia.org/wiki/Brute-force_attack" class="urlextern" title="https://en.wikipedia.org/wiki/Brute-force_attack"  rel="nofollow">Brute-force attack</a> protection: after some failed logins, user must wait before re-try to log into Portal.</div>
 </li>
 </ul>
-<div class="noteimportant">* Brute-force attack protection is DISABLED by default
-<p>
-* Browser implementations of formAction directive are inconsistent (e.g. Firefox doesn&#039;t block the redirects whereas Chrome does).
-Administrators may have to modify formAction value with wildcard likes *.
-</p>
+<div class="noteimportant"><ul>
+<li class="level1"><div class="li"> Brute-force attack protection is DISABLED by default</div>
+</li>
+<li class="level1"><div class="li"> Browser implementations of formAction directive are inconsistent (e.g. Firefox doesn&#039;t block the redirects whereas Chrome does). Administrators may have to modify formAction value with wildcard likes <code>*</code>.</div>
+</li>
+</ul>
 
 </div>
 </div>
-<!-- EDIT6 SECTION "Portal" [2106-3211] -->
+<!-- EDIT6 SECTION "Portal" [2106-3218] -->
 <h3 class="sectionedit7" id="split_portal_when_using_soaprest">Split portal when using SOAP/REST</h3>
 <div class="level3">
 
@@ -182,12 +183,12 @@ If you use <a href="soapsessionbackend.html" class="wikilink1" title="documentat
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Split portal when using SOAP/REST" [3212-3402] -->
+<!-- EDIT7 SECTION "Split portal when using SOAP/REST" [3219-3409] -->
 <h2 class="sectionedit8" id="write_good_rules">Write good rules</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT8 SECTION "Write good rules" [3403-3432] -->
+<!-- EDIT8 SECTION "Write good rules" [3410-3439] -->
 <h3 class="sectionedit9" id="order_your_rules">Order your rules</h3>
 <div class="level3">
 
@@ -220,7 +221,7 @@ For example, if these rules are used without comments:
 		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT10 TABLE [3846-3956] -->
+<!-- EDIT10 TABLE [3853-3963] -->
 <p>
 Then the second rule will be applied first, so every authenticated user will access to <code>/pub/admin</code> directory.
 </p>
@@ -241,7 +242,7 @@ Use comment to correct this:
 		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> 2_pub </td>
 	</tr>
 </table></div>
-<!-- EDIT11 TABLE [4101-4225] --><div class="notetip"><ul>
+<!-- EDIT11 TABLE [4108-4232] --><div class="notetip"><ul>
 <li class="level1"><div class="li"> Reload the Manager to see the effective order</div>
 </li>
 <li class="level1"><div class="li"> Use rule comments to order your rules</div>
@@ -250,7 +251,7 @@ Use comment to correct this:
 
 </div>
 </div>
-<!-- EDIT9 SECTION "Order your rules" [3433-4338] -->
+<!-- EDIT9 SECTION "Order your rules" [3440-4345] -->
 <h3 class="sectionedit12" id="be_careful_with_url_parameters">Be careful with URL parameters</h3>
 <div class="level3">
 
@@ -274,7 +275,7 @@ For example with this rule on the <code>access</code> parameter:
 		<td class="col0"> default </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT13 TABLE [4575-4709] -->
+<!-- EDIT13 TABLE [4582-4716] -->
 <p>
 Then a user that try to access to one of the following <em class="u">will be granted</em> !
 </p>
@@ -304,11 +305,11 @@ You can use the following rules instead:
 		<td class="col0"> default </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT14 TABLE [4907-5110] --><div class="notetip"><strong>(?i)</strong> means case no sensitive.
+<!-- EDIT14 TABLE [4914-5117] --><div class="notetip"><strong>(?i)</strong> means case no sensitive.
 </div><div class="notewarning">Remember that rules written on GET parameters must be tested.
 </div>
 </div>
-<!-- EDIT12 SECTION "Be careful with URL parameters" [4339-5247] -->
+<!-- EDIT12 SECTION "Be careful with URL parameters" [4346-5254] -->
 <h3 class="sectionedit15" id="encoded_characters">Encoded characters</h3>
 <div class="level3">
 
@@ -317,13 +318,13 @@ Some characters are encoded in URLs by the browser (such as space,...). To avoid
 </p>
 
 </div>
-<!-- EDIT15 SECTION "Encoded characters" [5248-5495] -->
+<!-- EDIT15 SECTION "Encoded characters" [5255-5502] -->
 <h3 class="sectionedit16" id="ip_in_rules">IP in rules</h3>
 <div class="level3">
 <div class="notewarning">If you are running LemonLDAP::NG behind a reverse proxy, make sure you check the <a href="behindproxyminihowto.html" class="wikilink1" title="documentation:2.0:behindproxyminihowto">Reverse Proxy how-to</a> so that the rule applies to the real user <abbr title="Internet Protocol">IP</abbr> and not the reverse proxy&#039;s <abbr title="Internet Protocol">IP</abbr>. Make sure you only specify trusted proxy addresses so that an attacker cannot forge the <code>X-Forwarded-For</code> header
 </div>
 </div>
-<!-- EDIT16 SECTION "IP in rules" [5496-5859] -->
+<!-- EDIT16 SECTION "IP in rules" [5503-5866] -->
 <h2 class="sectionedit17" id="secure_reverse-proxies">Secure reverse-proxies</h2>
 <div class="level2">
 
@@ -369,7 +370,7 @@ It is recommended to secure the channel between reverse-proxies and application 
 </ul>
 
 </div>
-<!-- EDIT17 SECTION "Secure reverse-proxies" [5860-7528] -->
+<!-- EDIT17 SECTION "Secure reverse-proxies" [5867-7535] -->
 <h2 class="sectionedit18" id="configure_security_settings">Configure security settings</h2>
 <div class="level2">
 
@@ -411,7 +412,7 @@ requireToken =&gt; $env-&gt;{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
 
 </div>
 </div>
-<!-- EDIT18 SECTION "Configure security settings" [7529-10106] -->
+<!-- EDIT18 SECTION "Configure security settings" [7536-10113] -->
 <h2 class="sectionedit19" id="fail2ban">Fail2ban</h2>
 <div class="level2">
 
@@ -463,7 +464,7 @@ Restart fail2ban
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Fail2ban" [10107-11161] -->
+<!-- EDIT19 SECTION "Fail2ban" [10114-11168] -->
 <h2 class="sectionedit20" id="sessions_identifier">Sessions identifier</h2>
 <div class="level2">
 
@@ -476,7 +477,7 @@ We recommend to use : <code>Lemonldap::NG::Common::Apache::Session::Generate::SH
 </p>
 
 </div>
-<!-- EDIT20 SECTION "Sessions identifier" [11162-11424] -->
+<!-- EDIT20 SECTION "Sessions identifier" [11169-11431] -->
 <h2 class="sectionedit21" id="saml">SAML</h2>
 <div class="level2">
 
@@ -485,6 +486,6 @@ See <a href="samlservice.html#security_parameters" class="wikilink1" title="docu
 </p>
 
 </div>
-<!-- EDIT21 SECTION "SAML" [11425-] --></div>
+<!-- EDIT21 SECTION "SAML" [11432-] --></div>
 </body>
 </html>

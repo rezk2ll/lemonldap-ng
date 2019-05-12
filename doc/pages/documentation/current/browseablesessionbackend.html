@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:browseablesessionbackend</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,browseablesessionbackend"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="browseablesessionbackend.html"/>
@@ -92,7 +92,7 @@ The following table list fields to index depending on the feature you want to in
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0"> Database cleaup <em>(cron)</em> </td><td class="col1 centeralign">  _session_kind _utime  </td>
+		<td class="col0"> Database cleanup <em>(cron)</em> </td><td class="col1 centeralign">  _session_kind _utime  </td>
 	</tr>
 	<tr class="row2 roweven">
 		<td class="col0"> Session explorer </td><td class="col1 centeralign">  _session_kind ipAddr <em>WHATTOTRACE</em>  </td>
@@ -106,8 +106,11 @@ The following table list fields to index depending on the feature you want to in
 	<tr class="row5 rowodd">
 		<td class="col0"> Password reset by email </td><td class="col1 centeralign">  user  </td>
 	</tr>
+	<tr class="row6 roweven">
+		<td class="col0"> <abbr title="Security Assertion Markup Language">SAML</abbr> Session </td><td class="col1 centeralign">  _saml_id  </td>
+	</tr>
 </table></div>
-<!-- EDIT3 TABLE [871-1199] -->
+<!-- EDIT3 TABLE [871-1230] -->
 <p>
 See Apache::Session::Browseable::* man page to see how use indexes.
 </p>
@@ -116,7 +119,7 @@ See Apache::Session::Browseable::* man page to see how use indexes.
 </div><div class="noteclassic">Documentation below explains how set index on ipAddr and _whatToTrace. Adapt it to configure the index you need.
 </div>
 </div>
-<!-- EDIT2 SECTION "Presentation" [43-1722] -->
+<!-- EDIT2 SECTION "Presentation" [43-1753] -->
 <h2 class="sectionedit4" id="browseable_nosql">Browseable NoSQL</h2>
 <div class="level2">
 
@@ -143,15 +146,15 @@ You then just have to add the <code>Index</code> parameter  in <code>General par
 		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [2010-2167] -->
+<!-- EDIT5 TABLE [2041-2198] -->
 </div>
-<!-- EDIT4 SECTION "Browseable NoSQL" [1723-2168] -->
+<!-- EDIT4 SECTION "Browseable NoSQL" [1754-2199] -->
 <h2 class="sectionedit6" id="browseable_sql">Browseable SQL</h2>
 <div class="level2">
 <div class="noteclassic">This documentation concerns PostgreSQL. Some adaptations are needed with other databases.
 </div>
 </div>
-<!-- EDIT6 SECTION "Browseable SQL" [2169-2300] -->
+<!-- EDIT6 SECTION "Browseable SQL" [2200-2331] -->
 <h3 class="sectionedit7" id="prepare_database">Prepare database</h3>
 <div class="level3">
 
@@ -185,7 +188,7 @@ CREATE INDEX ip1  ON sessions USING BTREE (ipAddr);</pre>
 <div class="notetip">With new Apache::Session::Browseable::<strong>PgHstore</strong> and <strong>PgJSON</strong>, you don&#039;t need to declare indexes in <code>CREATE TABLE</code> since “json” and “hstore” type are browseable. You should anyway add some indexes <em>(see manpage)</em>.
 </div>
 </div>
-<!-- EDIT7 SECTION "Prepare database" [2301-3935] -->
+<!-- EDIT7 SECTION "Prepare database" [2332-3966] -->
 <h3 class="sectionedit8" id="manager">Manager</h3>
 <div class="level3">
 
@@ -214,14 +217,14 @@ Go in the Manager and set the session module (<a href="https://metacpan.org/pod/
 		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr _session_kind _utime </td>
 	</tr>
 </table></div>
-<!-- EDIT9 TABLE [4258-4603] --><div class="notetip">Apache::Session::Browseable::MySQL doesn&#039;t use locks so performances are keeped.
+<!-- EDIT9 TABLE [4289-4634] --><div class="notetip">Apache::Session::Browseable::MySQL doesn&#039;t use locks so performances are keeped.
 <p>
 For databases like PostgreSQL, don&#039;t forget to add “Commit” with a value of 1
 </p>
 
 </div>
 </div>
-<!-- EDIT8 SECTION "Manager" [3936-4782] -->
+<!-- EDIT8 SECTION "Manager" [3967-4813] -->
 <h2 class="sectionedit10" id="browseable_ldap">Browseable LDAP</h2>
 <div class="level2">
 
@@ -275,9 +278,9 @@ You need to add the <code>Index</code> field and can also configure the <code>ld
 		<td class="col0 centeralign">  <strong>ldapAttributeIndex</strong>  </td><td class="col1"> Attribute storing index </td><td class="col2"> ou </td>
 	</tr>
 </table></div>
-<!-- EDIT11 TABLE [5134-5868] -->
+<!-- EDIT11 TABLE [5165-5899] -->
 </div>
-<!-- EDIT10 SECTION "Browseable LDAP" [4783-5869] -->
+<!-- EDIT10 SECTION "Browseable LDAP" [4814-5900] -->
 <h2 class="sectionedit12" id="security">Security</h2>
 <div class="level2">
 
@@ -290,7 +293,7 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Security" [5870-6089] -->
+<!-- EDIT12 SECTION "Security" [5901-6120] -->
 <h2 class="sectionedit13" id="performances">Performances</h2>
 <div class="level2">
 
@@ -332,6 +335,6 @@ CREATE INDEX _u1 ON sessions (_utime);
 CREATE INDEX ip1 ON sessions (ipAddr) USING BTREE;</pre>
 
 </div>
-<!-- EDIT13 SECTION "Performances" [6090-] --></div>
+<!-- EDIT13 SECTION "Performances" [6121-] --></div>
 </body>
 </html>

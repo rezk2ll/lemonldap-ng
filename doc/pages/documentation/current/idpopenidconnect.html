@@ -108,15 +108,21 @@ As an OP, <abbr title="LemonLDAP::NG">LL::NG</abbr> supports a lot of OpenID Con
 </li>
 <li class="level1"><div class="li"> Session management</div>
 </li>
+<li class="level1"><div class="li"> FrontChannel Logout</div>
+</li>
+<li class="level1"><div class="li"> BackChannel Logout</div>
+</li>
+<li class="level1"><div class="li"> PKCE (Since <code>2.0.4</code>)</div>
+</li>
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Presentation" [40-922] -->
+<!-- EDIT2 SECTION "Presentation" [40-996] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Configuration" [923-949] -->
+<!-- EDIT3 SECTION "Configuration" [997-1023] -->
 <h3 class="sectionedit4" id="openid_connect_service">OpenID Connect Service</h3>
 <div class="level3">
 
@@ -125,7 +131,7 @@ See <a href="openidconnectservice.html" class="wikilink1" title="documentation:2
 </p>
 
 </div>
-<!-- EDIT4 SECTION "OpenID Connect Service" [950-1059] -->
+<!-- EDIT4 SECTION "OpenID Connect Service" [1024-1133] -->
 <h3 class="sectionedit5" id="issuerdb">IssuerDB</h3>
 <div class="level3">
 
@@ -145,7 +151,7 @@ Go in <code>General Parameters</code> » <code>Issuer modules</code> » <code>Op
 
 </div>
 </div>
-<!-- EDIT5 SECTION "IssuerDB" [1060-1490] -->
+<!-- EDIT5 SECTION "IssuerDB" [1134-1564] -->
 <h3 class="sectionedit6" id="configuration_of_llng_in_relying_party">Configuration of LL::NG in Relying Party</h3>
 <div class="level3">
 
@@ -227,7 +233,7 @@ An example of its content:
 <span class="br0">&#125;</span></pre>
 
 </div>
-<!-- EDIT6 SECTION "Configuration of LL::NG in Relying Party" [1491-3469] -->
+<!-- EDIT6 SECTION "Configuration of LL::NG in Relying Party" [1565-3543] -->
 <h3 class="sectionedit7" id="configuration_of_relying_party_in_llng">Configuration of Relying Party in LL::NG</h3>
 <div class="level3">
 
@@ -372,6 +378,10 @@ You can also define extra claims and link them to attributes (see below). Then y
 </li>
 <li class="level2"><div class="li"> <strong>Client secret</strong>: Client secret for this RP (can be use for symmetric signature)</div>
 </li>
+<li class="level2"><div class="li"> <strong>Public client</strong> (since version <code>2.0.4</code>): set this RP as public client, so authentication is not needed on token endpoint</div>
+</li>
+<li class="level2"><div class="li"> <strong>Require PKCE</strong> (since version <code>2.0.4</code>): a code challenge is required at token endpoint (see <a href="https://tools.ietf.org/html/rfc7636" class="urlextern" title="https://tools.ietf.org/html/rfc7636"  rel="nofollow">RFC7636</a>)</div>
+</li>
 </ul>
 </li>
 <li class="level1"><div class="li"> <strong>Display</strong>:</div>
@@ -382,7 +392,7 @@ You can also define extra claims and link them to attributes (see below). Then y
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> <strong>User attribute</strong>: session field that with be used as main identifier (<code>sub</code>)</div>
+<li class="level1"><div class="li"> <strong>User attribute</strong>: session field that will be used as main identifier (<code>sub</code>)</div>
 </li>
 <li class="level1"><div class="li"> <strong>ID Token signature algorithm</strong>: Select one of <code>none</code>, <code>HS256</code>, <code>HS384</code>, <code>HS512</code>, <code>RS256</code>, <code>RS384</code>, <code>RS512</code></div>
 </li>
@@ -406,6 +416,6 @@ Associate attributes to extra claims if the RP request them, for example <code>b
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Configuration of Relying Party in LL::NG" [3470-] --></div>
+<!-- EDIT7 SECTION "Configuration of Relying Party in LL::NG" [3544-] --></div>
 </body>
 </html>

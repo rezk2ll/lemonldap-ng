@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:performances</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,performances"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="performances.html"/>
@@ -49,7 +49,11 @@
 <div>
 
 <ul class="toc">
-<li class="level1"><div class="li"><a href="#global_performance">Global performance</a></div></li>
+<li class="level1"><div class="li"><a href="#global_performance">Global performance</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#cron_optimization">Cron optimization</a></div></li>
+</ul>
+</li>
 <li class="level1"><div class="li"><a href="#handler_performance">Handler performance</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#macros_and_groups">Macros and groups</a></div></li>
@@ -107,7 +111,22 @@ To bypass this, you can:
 
 </div>
 <!-- EDIT2 SECTION "Global performance" [250-650] -->
-<h2 class="sectionedit3" id="handler_performance">Handler performance</h2>
+<h3 class="sectionedit3" id="cron_optimization">Cron optimization</h3>
+<div class="level3">
+
+<p>
+LLNG installs its cron files without knowing how many servers are installed. You should optimize this to launch:
+</p>
+<ul>
+<li class="level1"><div class="li"> purgeCentralCache: only 1 time every 10 minutes for the whole system</div>
+</li>
+<li class="level1"><div class="li"> purgeLocalCache: ~ 1 time per hour on each server</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT3 SECTION "Cron optimization" [651-920] -->
+<h2 class="sectionedit4" id="handler_performance">Handler performance</h2>
 <div class="level2">
 
 <p>
@@ -123,8 +142,8 @@ Handlers check rights and calculate headers for each HTTP hit. So to improve per
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Handler performance" [651-1080] -->
-<h3 class="sectionedit4" id="macros_and_groups">Macros and groups</h3>
+<!-- EDIT4 SECTION "Handler performance" [921-1350] -->
+<h3 class="sectionedit5" id="macros_and_groups">Macros and groups</h3>
 <div class="level3">
 
 <p>
@@ -184,8 +203,8 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 </div><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
 </div>
 </div>
-<!-- EDIT4 SECTION "Macros and groups" [1081-3175] -->
-<h3 class="sectionedit5" id="local_macros">Local macros</h3>
+<!-- EDIT5 SECTION "Macros and groups" [1351-3445] -->
+<h3 class="sectionedit6" id="local_macros">Local macros</h3>
 <div class="level3">
 
 <p>
@@ -198,13 +217,13 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 <div class="notetip">Note that this feature is interesting only for the Lemonldap::NG systems protecting a high number of applications
 </div>
 </div>
-<!-- EDIT5 SECTION "Local macros" [3176-3837] -->
-<h2 class="sectionedit6" id="portal_performances">Portal performances</h2>
+<!-- EDIT6 SECTION "Local macros" [3446-4107] -->
+<h2 class="sectionedit7" id="portal_performances">Portal performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT6 SECTION "Portal performances" [3838-3870] -->
-<h3 class="sectionedit7" id="general_performances">General performances</h3>
+<!-- EDIT7 SECTION "Portal performances" [4108-4140] -->
+<h3 class="sectionedit8" id="general_performances">General performances</h3>
 <div class="level3">
 
 <p>
@@ -226,8 +245,8 @@ By default it uses local storage to store its tokens. If you have more than 1 po
 
 </div>
 </div>
-<!-- EDIT7 SECTION "General performances" [3871-4748] -->
-<h3 class="sectionedit8" id="apachesession_performances">Apache::Session performances</h3>
+<!-- EDIT8 SECTION "General performances" [4141-5018] -->
+<h3 class="sectionedit9" id="apachesession_performances">Apache::Session performances</h3>
 <div class="level3">
 
 <p>
@@ -289,7 +308,7 @@ Look at <a href="browseablesessionbackend.html" class="wikilink1" title="documen
 <p>
 This test isn&#039;t an “only-backend” test but embedded some LLNG methods, so real differences between engines are mitigate here.
 </p>
-<div class="table sectionedit9"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit10"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign" colspan="2">  Backend  </th><th class="col2 centeralign" colspan="3">  Portal and handlers  </th><th class="col5 centeralign" colspan="3">  Session explorer and one-off sessions  </th>
@@ -338,7 +357,7 @@ This test isn&#039;t an “only-backend” test but embedded some LLNG methods, 
 		<td class="col0 centeralign" colspan="8">  <em>The source of this test is available in sources: e2e-tests/sbperf.pl</em>  </td>
 	</tr>
 </table></div>
-<!-- EDIT9 TABLE [7640-9543] --><ul>
+<!-- EDIT10 TABLE [7910-9813] --><ul>
 <li class="level1"><div class="li"> <em><strong>(1) :</strong> “purge” test is done with Apache::Session::Browseable-1.2.5 and LLG-2.0. Earlier results are not so good.</em></div>
 </li>
 <li class="level1"><div class="li"> <em><strong>(2) :</strong> “purge” test is done with Apache::Session::Browseable-1.2.6 and LLG-2.0.</em></div>
@@ -362,8 +381,8 @@ Analysis:
 </ul>
 
 </div>
-<!-- EDIT8 SECTION "Apache::Session performances" [4749-10321] -->
-<h3 class="sectionedit10" id="ldap_performances">LDAP performances</h3>
+<!-- EDIT9 SECTION "Apache::Session performances" [5019-10591] -->
+<h3 class="sectionedit11" id="ldap_performances">LDAP performances</h3>
 <div class="level3">
 
 <p>
@@ -399,13 +418,13 @@ Now ldapgroups contains “admin su”
 
 </div>
 </div>
-<!-- EDIT10 SECTION "LDAP performances" [10322-11456] -->
-<h2 class="sectionedit11" id="manager_performances">Manager performances</h2>
+<!-- EDIT11 SECTION "LDAP performances" [10592-11726] -->
+<h2 class="sectionedit12" id="manager_performances">Manager performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT11 SECTION "Manager performances" [11457-11490] -->
-<h3 class="sectionedit12" id="disable_unused_modules">Disable unused modules</h3>
+<!-- EDIT12 SECTION "Manager performances" [11727-11760] -->
+<h3 class="sectionedit13" id="disable_unused_modules">Disable unused modules</h3>
 <div class="level3">
 
 <p>
@@ -415,8 +434,8 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
 </div>
-<!-- EDIT12 SECTION "Disable unused modules" [11491-11752] -->
-<h3 class="sectionedit13" id="use_static_html_files">Use static HTML files</h3>
+<!-- EDIT13 SECTION "Disable unused modules" [11761-12022] -->
+<h3 class="sectionedit14" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
 <p>
@@ -442,6 +461,6 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Use static HTML files" [11753-] --></div>
+<!-- EDIT14 SECTION "Use static HTML files" [12023-] --></div>
 </body>
 </html>

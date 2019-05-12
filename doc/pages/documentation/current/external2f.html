@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:external2f</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,external2f"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="external2f.html"/>
@@ -43,6 +43,23 @@
 </head>
 <body>
 <div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#commands">Commands</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#configuration">Configuration</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#selinux_note">SELinux note</a></div></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
 
 <h1 class="sectionedit1" id="external_second_factor">External Second Factor</h1>
 <div class="level1">
@@ -84,6 +101,27 @@ All parameters are configured in “General Parameters » Portal Parameters » E
 </ul>
 <div class="noteimportant">The command line is split in an array and launched with exec(). So you don&#039;t need to enclose arguments in “” and this feature protects your system against shell injection. However, you can not use any space except to separate arguments.
 </div>
+</div>
+
+<h4 id="selinux_note">SELinux note</h4>
+<div class="level4">
+
+<p>
+If your server is enforcing SELinux policies, make sure your external script has a label that is allowed to be executed by <code>httpd</code>.
+</p>
+
+<p>
+For example, storing your script in <code>/usr/local/bin/</code> will give it a <code>bin_t</code> label that will work correctly.
+</p>
+
+<p>
+If your script has a <code>httpd_sys_script_exec_t</code> type, it will only be able to do external network requests if the SELinux boolean <code>httpd_can_network_connect</code> is enabled.
+</p>
+
+<p>
+If your script has any other label, it will probably not work at all.
+</p>
+
 </div>
 <!-- EDIT3 SECTION "Configuration" [477-] --></div>
 </body>

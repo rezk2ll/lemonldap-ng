@@ -135,9 +135,10 @@ Now configure all <abbr title="Security Assertion Markup Language">SAML</abbr> p
 <li class="level1"><div class="li"> <strong>Change password <abbr title="Uniform Resource Locator">URL</abbr></strong>: where users can change their password. Example: <a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a></div>
 </li>
 </ul>
-
+<div class="noteimportant">You must check the option <code>Use a specific domain transmitter</code> to force Google Apps to send the full entityId.
 </div>
-<!-- EDIT4 SECTION "Google Apps control panel" [688-1671] -->
+</div>
+<!-- EDIT4 SECTION "Google Apps control panel" [688-1806] -->
 <h3 class="sectionedit5" id="certificate">Certificate</h3>
 <div class="level3">
 
@@ -157,7 +158,7 @@ You can now the upload the certificate (<code>cert.pem</code>) on Google Apps.
 <div class="notetip">You can also use the certificate instead of public key in <abbr title="Security Assertion Markup Language">SAML</abbr> metadata, see <a href="../samlservice.html#security_parameters" class="wikilink1" title="documentation:2.0:samlservice">SAML service configuration</a>
 </div>
 </div>
-<!-- EDIT5 SECTION "Certificate" [1672-2407] -->
+<!-- EDIT5 SECTION "Certificate" [1807-2542] -->
 <h3 class="sectionedit6" id="new_service_provider">New Service Provider</h3>
 <div class="level3">
 
@@ -189,7 +190,7 @@ Now we will add Google Apps as a new <abbr title="Security Assertion Markup Lang
 <div class="noteimportant">Change <strong>mydomain.org</strong> (in <code>AssertionConsumerService</code> markup, parameter <code>Location</code>) into your Google Apps domain. Also adapt your entityID to match the Assertion issuer: google.com/a/mydomain.org 
 </div>
 </div>
-<!-- EDIT6 SECTION "New Service Provider" [2408-3803] -->
+<!-- EDIT6 SECTION "New Service Provider" [2543-3938] -->
 <h3 class="sectionedit7" id="application_menu">Application menu</h3>
 <div class="level3">
 
@@ -209,7 +210,7 @@ You need to adapt some parameters:
 <div class="noteimportant">Change <strong>mydomain.org</strong> into your Google Apps domain
 </div>
 </div>
-<!-- EDIT7 SECTION "Application menu" [3804-4317] -->
+<!-- EDIT7 SECTION "Application menu" [3939-4452] -->
 <h3 class="sectionedit8" id="logout">Logout</h3>
 <div class="level3">
 
@@ -228,6 +229,6 @@ To manage the other way (<abbr title="LemonLDAP::NG">LL::NG</abbr> → Google Ap
 <div class="noteimportant">Change <strong>mydomain.org</strong> into your Google Apps domain
 </div>
 </div>
-<!-- EDIT8 SECTION "Logout" [4318-] --></div>
+<!-- EDIT8 SECTION "Logout" [4453-] --></div>
 </body>
 </html>
