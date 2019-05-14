@@ -31,6 +31,8 @@ has yes => ( is => 'rw', isa => 'Bool', default => 0 );
 
 has force => ( is => 'rw', isa => 'Bool', default => 0 );
 
+has log => ( is => 'rw' );
+
 sub get {
     my ( $self, @keys ) = @_;
     die 'get requires at least one key' unless (@keys);
@@ -250,10 +252,10 @@ sub _save {
     }
     $new->{cfgAuthor} = 'lmConfigEditor: ' . `whoami`;
     chomp $new->{cfgAuthor};
-    $new->{cfgAuthorIP} = '';
+    $new->{cfgAuthorIP} = '127.0.0.1';
     $new->{cfgDate}     = time;
-    $new->{cfgVersion}  = $VERSION;
-    $new->{cfgLog}      = '';
+    $new->{cfgVersion}  = $Lemonldap::NG::Manager::VERSION;
+    $new->{cfgLog}      = $self->log || '';
     $new->{key} ||= join( '',
         map { chr( int( ord( Crypt::URandom::urandom(1) ) * 94 / 256 ) + 33 ) }
           ( 1 .. 16 ) );
@@ -394,6 +396,10 @@ Set it to 1 to save a configuration earlier than latest
 =head3 format()
 
 Confirmation array line format. Default to "%-25s | %-25s | %-25s"
+
+=head3 log()
+
+String to insert in configuration log field (cfgLog)
 
 =head2 run()
 
