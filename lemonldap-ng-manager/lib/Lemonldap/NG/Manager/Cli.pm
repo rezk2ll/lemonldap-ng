@@ -255,7 +255,7 @@ sub _save {
     $new->{cfgAuthorIP} = '127.0.0.1';
     $new->{cfgDate}     = time;
     $new->{cfgVersion}  = $Lemonldap::NG::Manager::VERSION;
-    $new->{cfgLog}      = $self->log || '';
+    $new->{cfgLog}      = $self->log // 'Modified using LLNG cli';
     $new->{key} ||= join( '',
         map { chr( int( ord( Crypt::URandom::urandom(1) ) * 94 / 256 ) + 33 ) }
           ( 1 .. 16 ) );
