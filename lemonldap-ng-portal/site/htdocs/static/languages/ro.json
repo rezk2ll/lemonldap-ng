@@ -108,6 +108,7 @@
 "changePwd":"Change your password",
 "checkLastLogins":"Check my last logins",
 "checkUser":"Check user SSO profile",
+"checkUserMerged":"Check user SSO profile. Real and Spoofed SSO groups are merged!!!",
 "choose2f":"Choose your second factor",
 "chooseApp":"Choose an application your are allowed to access to",
 "clickHere":"Please click here",

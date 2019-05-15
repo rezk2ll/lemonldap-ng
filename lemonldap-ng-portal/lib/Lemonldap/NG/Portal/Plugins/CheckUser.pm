@@ -66,13 +66,15 @@ sub check {
         my $token = $req->param('token');
         unless ($token) {
             $self->userLogger->warn('checkUser try without token');
-            $msg   = PE_NOTOKEN;
-            $token = $self->ott->createToken( $req->userData );
+            $msg = PE_NOTOKEN;
+            $token = $self->ott->createToken( { _user => $req->{_user}, } );
         }
-        unless ( $self->ott->getToken($token) ) {
+        $token = $self->ott->getToken($token);
+        #unless ( $token and $token->{_user} eq $req->{_user} ) {
+        unless ( $token ) {
             $self->userLogger->warn('checkUser try with expired/bad token');
-            $msg   = PE_TOKENEXPIRED;
-            $token = $self->ott->createToken( $req->userData );
+            $msg = PE_TOKENEXPIRED;
+            $token = $self->ott->createToken( { _user => $req->{_user}, } );
         }
         my $params = {
             PORTAL    => $self->conf->{portal},
@@ -111,7 +113,7 @@ sub check {
                 LOGIN     => '',
                 TOKEN     => (
                       $self->ottRule->( $req, {} )
-                    ? $self->ott->createToken( $req->userData )
+                    ? $self->ott->createToken( { _user => $req->{_user}, } )
                     : ''
                 )
             }
@@ -138,7 +140,10 @@ sub check {
         $attrs       = {};
     }
     else {
-        $msg = 'checkUser';
+        #$msg = 'checkUser';
+
+        $msg = $self->{conf}->{impersonationMergeSSOgroups} ? 'checkUserMerged'
+            : 'checkUser';
 
         # Create an array of hashes for template loop
         $self->logger->debug("Delete hidden or empty attributes");
@@ -217,7 +222,7 @@ sub check {
         GROUPS      => $array_attrs->[0],
         TOKEN       => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createToken( $req->userData )
+            ? $self->ott->createToken( { _user => $req->{_user}, } )
             : ''
         )
     };
@@ -260,18 +265,24 @@ sub display {
 
     # Display form
     my $params = {
-        PORTAL     => $self->conf->{portal},
-        MAIN_LOGO  => $self->conf->{portalMainLogo},
-        LANGS      => $self->conf->{showLanguages},
-        MSG        => 'checkUser',
-        ALERTE     => 'alert-info',
+        PORTAL    => $self->conf->{portal},
+        MAIN_LOGO => $self->conf->{portalMainLogo},
+        LANGS     => $self->conf->{showLanguages},
+        MSG       => (
+            $self->{conf}->{impersonationMergeSSOgroups} ? 'checkUserMerged'
+            : 'checkUser'
+        ),
+        ALERTE => (
+            $self->{conf}->{impersonationMergeSSOgroups} ? 'alert-warning'
+            : 'alert-info'
+        ),
         LOGIN      => $req->{userData}->{uid},
         ATTRIBUTES => $array_attrs->[2],
         MACROS     => $array_attrs->[1],
         GROUPS     => $array_attrs->[0],
         TOKEN      => (
               $self->ottRule->( $req, {} )
-            ? $self->ott->createToken( $req->userData )
+            ? $self->ott->createToken( { _user => $req->{_user}, } )
             : ''
         )
     };

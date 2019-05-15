@@ -108,6 +108,7 @@
 "changePwd":"Changez votre mot de passe",
 "checkLastLogins":"Voir mes dernières connexions",
 "checkUser":"Vérifier le profil SSO d'un utilisateur",
+"checkUserMerged":"Vérifier le profil SSO d'un utilisateur. Les groupes SSO réels et usurpés sont fusionnés !!!",
 "choose2f":"Choisissez votre second facteur",
 "chooseApp":"Choisissez une application à laquelle vous êtes autorisé à accéder",
 "clickHere":"Cliquez ici",
