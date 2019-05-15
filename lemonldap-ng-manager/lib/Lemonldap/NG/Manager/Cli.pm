@@ -250,7 +250,7 @@ sub _save {
         $saveParams->{cfgNum}      = $self->cfgNum;
         $saveParams->{cfgNumFixed} = 1;
     }
-    $new->{cfgAuthor} = 'lmConfigEditor: ' . `whoami`;
+    $new->{cfgAuthor} = 'lmConfigEditor: ' . scalar( getpwuid $< );
     chomp $new->{cfgAuthor};
     $new->{cfgAuthorIP} = '127.0.0.1';
     $new->{cfgDate}     = time;
