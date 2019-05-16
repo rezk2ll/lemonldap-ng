@@ -5,7 +5,7 @@ use Mouse;
 use JSON qw(from_json to_json);
 use Crypt::URandom;
 
-our $VERSION = '2.0.4';
+our $VERSION = '2.0.5';
 
 extends 'Lemonldap::NG::Common::Module';
 

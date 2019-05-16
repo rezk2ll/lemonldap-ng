@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MALFORMEDUSER
 );
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.5';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::_tokenRule';
@@ -70,8 +70,9 @@ sub check {
             $token = $self->ott->createToken( { _user => $req->{_user}, } );
         }
         $token = $self->ott->getToken($token);
+
         #unless ( $token and $token->{_user} eq $req->{_user} ) {
-        unless ( $token ) {
+        unless ($token) {
             $self->userLogger->warn('checkUser try with expired/bad token');
             $msg = PE_TOKENEXPIRED;
             $token = $self->ott->createToken( { _user => $req->{_user}, } );
@@ -142,8 +143,10 @@ sub check {
     else {
         #$msg = 'checkUser';
 
-        $msg = $self->{conf}->{impersonationMergeSSOgroups} ? 'checkUserMerged'
-            : 'checkUser';
+        $msg =
+          $self->{conf}->{impersonationMergeSSOgroups}
+          ? 'checkUserMerged'
+          : 'checkUser';
 
         # Create an array of hashes for template loop
         $self->logger->debug("Delete hidden or empty attributes");
