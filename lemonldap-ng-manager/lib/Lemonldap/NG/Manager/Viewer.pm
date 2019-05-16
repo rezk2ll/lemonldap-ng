@@ -28,7 +28,7 @@ sub addRoutes {
     my $hiddenKeys = '';
     $hiddenKeys = $self->{viewerHiddenKeys};
     my @enabledKeys = ();
-    my @keys      = qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
+    my @keys        = qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
       applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
       casSrvMetaDataNodes casAppMetaDataNodes
       authChoiceModules grantSessionRules combModules

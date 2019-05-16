@@ -62,7 +62,8 @@ ok(
 count(1);
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
-ok( $res->[2]->[0] =~ m%<span trspan="checkUserMerged">%, 'Found trspan="checkUserMerged"' )
+ok( $res->[2]->[0] =~ m%<span trspan="checkUserMerged">%,
+    'Found trspan="checkUserMerged"' )
   or explain( $res->[2]->[0], 'trspan="checkUserMerged"' );
 count(1);
 
@@ -82,7 +83,8 @@ count(1);
 
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
-ok( $res->[2]->[0] =~ m%<span trspan="checkUserMerged">%, 'Found trspan="checkUserMerged"' )
+ok( $res->[2]->[0] =~ m%<span trspan="checkUserMerged">%,
+    'Found trspan="checkUserMerged"' )
   or explain( $res->[2]->[0], 'trspan="checkUserMerged"' );
 ok(
     $res->[2]->[0] =~
