@@ -873,6 +873,15 @@ sub lmError {
 
     # Check URL
     $self->controlUrl($req);
+    $req->pdata( {} );
+
+    if ( $req->wantJSON ) {
+        return $self->sendJSONresponse(
+            $req,
+            { error => $httpError, result => 0 },
+            code => $httpError
+        );
+    }
 
     my %templateParams = (
         MAIN_LOGO  => $self->conf->{portalMainLogo},
@@ -880,7 +889,6 @@ sub lmError {
         LOGOUT_URL => $self->conf->{portal} . "?logout=1",
         URL        => $req->{urldc},
     );
-    $req->pdata( {} );
 
     # Error code
     $templateParams{"ERROR$_"} = ( $httpError == $_ ? 1 : 0 )
