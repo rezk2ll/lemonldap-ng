@@ -10,7 +10,7 @@ sub new {
     my $show = 1;
     foreach (qw(error warn notice info debug)) {
         if ($show) {
-            eval qq'sub $_ {print STDERR "[$_] \$_[1]\n"}';
+            eval qq'sub $_ {print STDERR "[".localtime."] [LLNG:\$\$] [$_] \$_[1]\n"}';
         }
         else {
             eval qq'sub $_ {1}';
