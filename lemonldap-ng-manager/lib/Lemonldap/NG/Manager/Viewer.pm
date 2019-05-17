@@ -25,8 +25,7 @@ sub addRoutes {
     my ( $self, $conf ) = @_;
     $self->ua( Lemonldap::NG::Common::UserAgent->new($conf) );
 
-    my $hiddenKeys = '';
-    $hiddenKeys = $self->{viewerHiddenKeys};
+    my $hiddenKeys  = $self->{viewerHiddenKeys} || '';
     my @enabledKeys = ();
     my @keys        = qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
       applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
