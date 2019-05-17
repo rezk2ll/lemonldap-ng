@@ -11,8 +11,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.5';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin',
-  'Lemonldap::NG::Portal::Lib::_tokenRule';
+extends qw(Lemonldap::NG::Portal::Main::Plugin
+  Lemonldap::NG::Portal::Lib::_tokenRule);
 
 # INITIALIZATION
 
@@ -66,17 +66,16 @@ sub check {
         my $token = $req->param('token');
         unless ($token) {
             $self->userLogger->warn('checkUser try without token');
-            $msg = PE_NOTOKEN;
-            $token = $self->ott->createToken( { _user => $req->{_user}, } );
+            $msg   = PE_NOTOKEN;
+            $token = $self->ott->createToken();
         }
-        $token = $self->ott->getToken($token);
 
-        #unless ( $token and $token->{_user} eq $req->{_user} ) {
-        unless ($token) {
+        unless ( $self->ott->getToken($token) ) {
             $self->userLogger->warn('checkUser try with expired/bad token');
-            $msg = PE_TOKENEXPIRED;
-            $token = $self->ott->createToken( { _user => $req->{_user}, } );
+            $msg   = PE_TOKENEXPIRED;
+            $token = $self->ott->createToken();
         }
+
         my $params = {
             PORTAL    => $self->conf->{portal},
             MAIN_LOGO => $self->conf->{portalMainLogo},
@@ -114,7 +113,7 @@ sub check {
                 LOGIN     => '',
                 TOKEN     => (
                       $self->ottRule->( $req, {} )
-                    ? $self->ott->createToken( { _user => $req->{_user}, } )
+                    ? $self->ott->createToken()
                     : ''
                 )
             }
@@ -141,8 +140,6 @@ sub check {
         $attrs       = {};
     }
     else {
-        #$msg = 'checkUser';
-
         $msg =
           $self->{conf}->{impersonationMergeSSOgroups}
           ? 'checkUserMerged'
@@ -224,8 +221,7 @@ sub check {
         MACROS      => $array_attrs->[1],
         GROUPS      => $array_attrs->[0],
         TOKEN       => (
-              $self->ottRule->( $req, {} )
-            ? $self->ott->createToken( { _user => $req->{_user}, } )
+            $self->ottRule->( $req, {} ) ? $self->ott->createToken()
             : ''
         )
     };
@@ -284,8 +280,7 @@ sub display {
         MACROS     => $array_attrs->[1],
         GROUPS     => $array_attrs->[0],
         TOKEN      => (
-              $self->ottRule->( $req, {} )
-            ? $self->ott->createToken( { _user => $req->{_user}, } )
+            $self->ottRule->( $req, {} ) ? $self->ott->createToken()
             : ''
         )
     };
