@@ -515,8 +515,10 @@ t/66-CDA-already-auth.t
 t/66-CDA-with-REST.t
 t/66-CDA-with-SOAP.t
 t/66-CDA.t
+t/67-CheckUser-with-Global-token.t
 t/67-CheckUser-with-token.t
 t/67-CheckUser.t
+t/68-doubleCookies.t
 t/68-Impersonation-with-doubleCookies.t
 t/68-Impersonation-with-merge.t
 t/68-Impersonation.t
