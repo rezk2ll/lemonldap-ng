@@ -123,6 +123,18 @@ sub clean_sessions {
     $cache->clear;
 }
 
+sub count_sessions {
+    my $dir = shift;
+    $dir ||= 't/sessions';
+    my $nbr = 0;
+
+    opendir D, $dir or die $!;
+    foreach ( grep { /^\w{64}$/ } readdir(D) ) {
+        $nbr++;
+    }
+    $nbr;
+}
+
 sub getCache {
     require Cache::FileCache;
     return Cache::FileCache->new( {

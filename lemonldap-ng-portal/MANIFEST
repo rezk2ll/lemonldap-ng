@@ -518,10 +518,11 @@ t/66-CDA.t
 t/67-CheckUser-with-Global-token.t
 t/67-CheckUser-with-token.t
 t/67-CheckUser.t
-t/68-doubleCookies.t
 t/68-Impersonation-with-doubleCookies.t
 t/68-Impersonation-with-merge.t
 t/68-Impersonation.t
+t/69-Double-cookies-for-a-Single-session.t
+t/69-Double-cookies-for-Double-sessions.t
 t/70-2F-TOTP-with-History.t
 t/70-2F-TOTP.t
 t/70-2F-TOTP_8.t
