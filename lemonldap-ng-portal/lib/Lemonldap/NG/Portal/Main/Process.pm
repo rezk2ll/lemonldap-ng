@@ -404,7 +404,6 @@ sub setPersistentSessionInfo {
             }
         }
     }
-
     PE_OK;
 }
 
@@ -434,19 +433,13 @@ sub store {
 
     # Create second session for unsecure cookie
     if ( $self->conf->{securedCookie} == 2 ) {
-
         my %infos = %{ $req->{sessionInfo} };
         $infos{_httpSessionType} = 1;
 
         my $session2 = $self->getApacheSession( undef, info => \%infos );
-
+        $self->logger->debug("Create second session for unsecured cookie...");
         $req->{sessionInfo}->{_httpSession} = $session2->id;
-    }
-
-    # Compute unsecure cookie value if needed
-    if ( $self->conf->{securedCookie} == 3 ) {
-        $req->{sessionInfo}->{_httpSession} =
-          $self->conf->{cipher}->encryptHex( $req->{id}, "http" );
+        $self->logger->debug( " -> Cookie value : " . $session2->id );
     }
 
     # Fill session
@@ -473,6 +466,13 @@ sub store {
     return PE_APACHESESSIONERROR unless ($session);
     $req->id( $session->{id} );
 
+    # Compute unsecured cookie value if needed
+    if ( $self->conf->{securedCookie} == 3 ) {
+        $req->{sessionInfo}->{_httpSession} =
+          $self->conf->{cipher}->encryptHex( $req->{id}, "http" );
+        $self->logger->debug( " -> Compute unsecured cookie value : "
+              . $req->{sessionInfo}->{_httpSession} );
+    }
     PE_OK;
 }
 
