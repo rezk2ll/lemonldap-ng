@@ -16,7 +16,6 @@ my $client = LLNG::Manager::Test->new( {
             brutForceProtection => 0,
             portalMainLogo      => 'common/logos/logo_llng_old.png',
             requireToken        => 0,
-            checkUser           => 0,
             securedCookie       => 2,
             https               => 0,
         }
@@ -26,9 +25,7 @@ my $client = LLNG::Manager::Test->new( {
 ## Try to authenticate
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
 count(1);
-my ( $host, $url, $query ) =
-  expectForm( $res, '#', undef, 'user', 'password' );
-
+my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'user', 'password' );
 $query =~ s/user=/user=dwho/;
 $query =~ s/password=/password=dwho/;
 ok(

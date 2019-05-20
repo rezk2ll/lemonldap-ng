@@ -9,15 +9,15 @@ BEGIN {
 my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                    => 'error',
-            authentication              => 'Demo',
-            userDB                      => 'Same',
-            loginHistoryEnabled         => 0,
-            brutForceProtection         => 0,
-            portalMainLogo              => 'common/logos/logo_llng_old.png',
-            requireToken                => 0,
-            securedCookie               => 3,
-            https                       => 0,
+            logLevel            => 'error',
+            authentication      => 'Demo',
+            userDB              => 'Same',
+            loginHistoryEnabled => 0,
+            brutForceProtection => 0,
+            portalMainLogo      => 'common/logos/logo_llng_old.png',
+            requireToken        => 0,
+            securedCookie       => 3,
+            https               => 0,
         }
     }
 );
@@ -25,8 +25,7 @@ my $client = LLNG::Manager::Test->new( {
 ## Try to authenticate
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
 count(1);
-my ( $host, $url, $query ) =
-  expectForm( $res, '#', undef, 'user', 'password' );
+my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'user', 'password' );
 $query =~ s/user=/user=dwho/;
 $query =~ s/password=/password=dwho/;
 ok(
