@@ -1,6 +1,8 @@
 Changes
 eg/handler.psgi
 eg/llng-server.psgi
+eg/scripts/liblemonldap-ng-handler-perl.service
+eg/scripts/llng-handler.systemd.timer
 eg/scripts/purgeLocalCache
 eg/scripts/purgeLocalCache.cron.d
 lib/Lemonldap/NG/Handler.pm

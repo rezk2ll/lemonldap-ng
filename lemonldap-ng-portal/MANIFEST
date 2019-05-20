@@ -161,6 +161,8 @@ site/coffee/sslChoice.coffee
 site/coffee/totpregistration.coffee
 site/coffee/u2fcheck.coffee
 site/coffee/u2fregistration.coffee
+site/cron/liblemonldap-ng-portal-perl.service
+site/cron/llng-portal.systemd.timer
 site/cron/purgeCentralCache
 site/cron/purgeCentralCache.cron.d
 site/htdocs/index.fcgi
@@ -523,6 +525,8 @@ t/68-Impersonation-with-merge.t
 t/68-Impersonation.t
 t/69-Double-cookies-for-a-Single-session.t
 t/69-Double-cookies-for-Double-sessions.t
+t/69-Double-cookies-Refresh-and-Logout.t
+t/69-HTTPS-cookie-Refresh-and-Logout.t
 t/70-2F-TOTP-with-History.t
 t/70-2F-TOTP.t
 t/70-2F-TOTP_8.t
