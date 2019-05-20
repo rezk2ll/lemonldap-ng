@@ -1,4 +1,5 @@
 #
-# Regular cron jobs for LemonLDAP::NG Portal
+# Regular cron jobs to clean Lemonldap::NG sessions DB
+# Launched only if systemd isn't running
 #
-*/10 *	* * *	www-data	[ -x /usr/share/lemonldap-ng/bin/purgeCentralCache ] && /usr/share/lemonldap-ng/bin/purgeCentralCache
+7 *	* * *	www-data	[ -d /run/systemd/system ] || [ ! -x /usr/share/lemonldap-ng/bin/purgeCentralCache ] || /usr/share/lemonldap-ng/bin/purgeCentralCache

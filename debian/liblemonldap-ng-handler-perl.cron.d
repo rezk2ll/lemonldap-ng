@@ -1,4 +1,5 @@
 #
-# Regular cron jobs for LemonLDAP::NG Handler
+# Regular cron jobs for the Lemonldap::NG handler
+# Launched only if systemd isn't running
 #
-1 *	* * *	www-data	[ -x /usr/share/lemonldap-ng/bin/purgeLocalCache ] && /usr/share/lemonldap-ng/bin/purgeLocalCache
+17-59/30 *	* * *	www-data	[ -d /run/systemd/system ] || [ ! -x /usr/share/lemonldap-ng/bin/purgeLocalCache ] || /usr/share/lemonldap-ng/bin/purgeLocalCache
