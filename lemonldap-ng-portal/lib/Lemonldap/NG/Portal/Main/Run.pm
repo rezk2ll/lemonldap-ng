@@ -163,6 +163,7 @@ sub refresh {
             'setLocalGroups',
             sub {
                 $req->sessionInfo->{$_} = $data{$_} foreach ( keys %data );
+                $req->refresh(1);
                 return PE_OK;
             },
             'store',

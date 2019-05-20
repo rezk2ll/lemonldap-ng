@@ -1,6 +1,6 @@
 package Lemonldap::NG::Portal::Main::Process;
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.5';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -432,7 +432,7 @@ sub store {
     $req->userData( $req->sessionInfo );
 
     # Create second session for unsecure cookie
-    if ( $self->conf->{securedCookie} == 2 ) {
+    if ( $self->conf->{securedCookie} == 2 and !$req->refresh() ) {
         my %infos = %{ $req->{sessionInfo} };
         $infos{_httpSessionType} = 1;
 
@@ -467,12 +467,14 @@ sub store {
     $req->id( $session->{id} );
 
     # Compute unsecured cookie value if needed
-    if ( $self->conf->{securedCookie} == 3 ) {
+    if ( $self->conf->{securedCookie} == 3 and !$req->refresh() ) {
         $req->{sessionInfo}->{_httpSession} =
           $self->conf->{cipher}->encryptHex( $req->{id}, "http" );
         $self->logger->debug( " -> Compute unsecured cookie value : "
               . $req->{sessionInfo}->{_httpSession} );
     }
+    $req->refresh(0);
+
     PE_OK;
 }
 
