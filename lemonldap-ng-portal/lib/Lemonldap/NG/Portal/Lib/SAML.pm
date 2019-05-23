@@ -1287,7 +1287,7 @@ sub getAttributeValue {
             $value .= $content . $self->conf->{multiValuesSeparator}
               if $content;
         }
-        $value =~ s/$self->{conf}->{multiValuesSeparator}$//;
+        $value =~ s/$self->{conf}->{multiValuesSeparator}$// if $value;
 
         # Encode UTF-8 if force_utf8 flag
         $value = encode( "utf8", $value ) if $force_utf8;
