@@ -324,6 +324,7 @@ Nginx support for LemonLDAP::NG.
 #==============================================================================
 %package -n perl-Lemonldap-NG-Common
 Summary:        LemonLDAP-NG Common Modules
+Requires:       perl(JSON::XS)
 
 %description -n perl-Lemonldap-NG-Common
 This package installs the configuration libraries used by other LemonLDAP::NG
