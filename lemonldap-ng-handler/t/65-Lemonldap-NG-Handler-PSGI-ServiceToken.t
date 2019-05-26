@@ -15,6 +15,12 @@ init(
                 vhostPort           => 80,
                 vhostMaintenance    => 0,
                 vhostServiceTokenTTL => 3,
+            },
+            'test2.example.com' => {
+                vhostHttps          => 0,
+                vhostPort           => 80,
+                vhostMaintenance    => 0,
+                vhostServiceTokenTTL => 5,
             }
         },
     }
@@ -22,7 +28,7 @@ init(
 
 my $res;
 my $crypt = Lemonldap::NG::Common::Crypto->new('qwertyui');
-my $token = $crypt->encrypt( join ':', time, $sessionId, 'test1.example.com' );
+my $token = $crypt->encrypt( join ':', time, $sessionId, 'test1.example.com', 'test2.example.com' );
 
 ok(
     $res = $client->_get(
@@ -61,9 +67,35 @@ ok(
 ok( $res->[0] == 302, 'Code is 200' ) or explain( $res->[0], 302 );
 count(2);
 
+sleep 1;
+
 ok(
     $res = $client->_get(
         '/', undef, 'test2.example.com', undef,
+        VHOSTTYPE           => 'ServiceToken',
+        'HTTP_X_LLNG_TOKEN' => $token,
+    ),
+    'Query with token'
+);
+ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
+count(2);
+
+sleep 1;
+
+ok(
+    $res = $client->_get(
+        '/', undef, 'test2.example.com', undef,
+        VHOSTTYPE           => 'ServiceToken',
+        'HTTP_X_LLNG_TOKEN' => $token,
+    ),
+    'Query with token'
+);
+ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
+count(2);
+
+ok(
+    $res = $client->_get(
+        '/', undef, 'test3.example.com', undef,
         VHOSTTYPE           => 'ServiceToken',
         'HTTP_X_LLNG_TOKEN' => $token,
     ),
