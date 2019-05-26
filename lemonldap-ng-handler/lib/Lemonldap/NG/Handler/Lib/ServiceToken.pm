@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler::Lib::ServiceToken;
 
 use strict;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.5';
 
 sub fetchId {
     my ( $class, $req ) = @_;
@@ -24,6 +24,7 @@ sub fetchId {
     }
 
     # Is token in good interval ?
+
     unless ( $t <= time and $t > time - 30 ) {
         $class->userLogger->warn('Expired service token');
         return 0;
@@ -33,7 +34,7 @@ sub fetchId {
     my $vh = $class->resolveAlias($req);
     unless ( grep { $_ eq $vh } @vhosts ) {
         $class->userLogger->error(
-            "$vh not authorizated in token (" . join( ', ', @vhosts ) . ')' );
+            "$vh not authorized in token (" . join( ', ', @vhosts ) . ')' );
         return 0;
     }
     return $_session_id;
