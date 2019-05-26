@@ -18,8 +18,8 @@ sub fetchId {
     # time:_session_id:vhost1:vhost2,...
     my ( $t, $_session_id, @vhosts ) = split /:/, $s;
 
-    # At least one vhost
-    unless (@vhosts) {
+    # $_session_id and at least one vhost
+    unless (@vhosts and $_session_id) {
         $class->userLogger->error('Bad service token');
         return 0;
     }
