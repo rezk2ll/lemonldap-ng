@@ -25,7 +25,7 @@ sub fetchId {
 
     # Is token in good interval ?
 
-    unless ( $t <= time and $t > time - 30 ) {
+    unless ( $t <= time and $t > time - $class->tsv->{handlerServiceTokenTTL} ) {
         $class->userLogger->warn('Expired service token');
         return 0;
     }

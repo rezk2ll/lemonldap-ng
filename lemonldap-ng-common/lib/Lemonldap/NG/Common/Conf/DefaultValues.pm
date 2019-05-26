@@ -69,6 +69,7 @@ sub defaultValues {
         'gpgDb'                         => '',
         'groups'                        => {},
         'handlerInternalCache'          => 15,
+        'handlerServiceTokenTTL'        => 30,
         'hiddenAttributes'              => '_password',
         'httpOnly'                      => 1,
         'https'                         => -1,
