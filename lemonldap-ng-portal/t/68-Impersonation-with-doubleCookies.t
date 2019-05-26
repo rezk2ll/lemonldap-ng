@@ -139,7 +139,29 @@ ok(
 count(1);
 
 my $id = expectCookie($res);
+my $id2 = expectCookie( $res, 'lemonldaphttp' );
 expectRedirection( $res, 'http://auth.example.com/' );
+
+# Check lemonldap Cookie
+ok( $id =~ /^\w{64}$/, " -> Get cookie : lemonldap=something" )
+  or explain( $res->[1], "Set-Cookie: lemonldap=$id" );
+ok( ${ $res->[1] }[3] =~ /HttpOnly=1/, " -> Cookie 'lemonldap' is HttpOnly" )
+  or explain( $res->[1] );
+ok( ${ $res->[1] }[3] =~ /secure/, " -> Cookie 'lemonldap' is secure" )
+  or explain( $res->[1] );
+count(3);
+
+# ????????
+# # Check lemonldaphttp Cookie
+# ok( $id2 =~ /^\w{64}$/, " -> Get cookie lemonldaphttp=something" )
+#   or explain( $res->[1], "Set-Cookie: lemonldaphttp=$id2" );
+# ok(
+#     ${ $res->[1] }[5] =~ /HttpOnly=1/,
+#     " -> Cookie 'lemonldaphttp' is HttpOnly"
+# ) or explain( $res->[1] );
+# ok( ${ $res->[1] }[5] !~ /secure/, " -> Cookie 'lemonldaphttp' is NOT secure" )
+#   or explain( $res->[1] );
+# count(3);
 
 # CheckUser form
 # ------------------------
@@ -202,6 +224,25 @@ count(1);
 
 $id = expectCookie($res);
 expectRedirection( $res, 'http://auth.example.com/' );
+
+# Get Menu
+# ------------------------
+ok(
+    $res = $client->_get(
+        '/',
+        cookie => "lemonldap=$id",
+        accept => 'text/html'
+    ),
+    'Get Menu',
+);
+count(1);
+expectOK($res);
+ok(
+    $res->[2]->[0] =~
+m%<span trspan="connectedAs">Connected as</span> dwho%,
+    'Connected as dwho'
+) or print STDERR Dumper( $res->[2]->[0] );
+count(1);
 
 # CheckUser form
 # ------------------------

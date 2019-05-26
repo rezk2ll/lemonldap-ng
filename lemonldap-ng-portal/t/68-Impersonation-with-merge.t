@@ -49,6 +49,25 @@ count(1);
 my $id = expectCookie($res);
 expectRedirection( $res, 'http://auth.example.com/' );
 
+# Get Menu
+# ------------------------
+ok(
+    $res = $client->_get(
+        '/',
+        cookie => "lemonldap=$id",
+        accept => 'text/html'
+    ),
+    'Get Menu',
+);
+count(1);
+expectOK($res);
+ok(
+    $res->[2]->[0] =~
+m%<span trspan="connectedAs">Connected as</span> dwho%,
+    'Connected as dwho'
+) or print STDERR Dumper( $res->[2]->[0] );
+count(1);
+
 # CheckUser form
 # ------------------------
 ok(
