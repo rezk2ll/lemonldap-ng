@@ -7,6 +7,7 @@ BEGIN {
 init(
     'Lemonldap::NG::Handler::Server',
     {
+        logLevel               => 'error',
         handlerServiceTokenTTL => 2,
     }
 );
