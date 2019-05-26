@@ -493,7 +493,12 @@ sub attributes {
             documentation => 'Handler internal cache timeout',
             flags         => 'hp',
         },
-
+        handlerServiceTokenTTL => {
+            type          => 'int',
+            default       => 30,
+            documentation => 'Handler ServiceToken timeout',
+            flags         => 'hp',
+        },
         # Loggers (ini only)
         logLevel => {
             type          => 'text',

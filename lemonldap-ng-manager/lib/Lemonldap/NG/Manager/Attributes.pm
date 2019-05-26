@@ -1208,6 +1208,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 15,
             'type'    => 'int'
         },
+        'handlerServiceTokenTTL' => {
+            'default' => 30,
+            'type'    => 'int'
+        },
         'hiddenAttributes' => {
             'default' => '_password',
             'type'    => 'text'
