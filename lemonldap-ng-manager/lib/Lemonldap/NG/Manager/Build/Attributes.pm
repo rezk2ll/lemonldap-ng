@@ -1696,6 +1696,10 @@ sub attributes {
             type    => 'bool',
             default => 0,
         },
+        vhostServiceTokenTTL => {
+            type    => 'int',
+            default => 30,
+        },
         vhostAliases => { type => 'text', },
         vhostType    => {
             type   => 'select',

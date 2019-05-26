@@ -826,6 +826,7 @@
 "vhostMaintenance":"وضع الصيانة",
 "vhostOptions":"الخيارات",
 "vhostPort":"المنفذ",
+"vhostServiceTokenTTL":"ServiceToken timeout",
 "vhostType":"نوع",
 "view":"عرض",
 "viewer":"Viewer",

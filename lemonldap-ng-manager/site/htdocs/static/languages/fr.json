@@ -826,6 +826,7 @@
 "vhostMaintenance":"Mode maintenance",
 "vhostOptions":"Options",
 "vhostPort":"Port",
+"vhostServiceTokenTTL":"Durée de validité du ServiceToken",
 "vhostType":"Type",
 "view":"Aperçu",
 "viewer":"Explorateur",

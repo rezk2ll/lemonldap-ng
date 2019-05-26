@@ -1,6 +1,7 @@
 package Lemonldap::NG::Handler::Lib::ServiceToken;
 
 use strict;
+use Data::Dumper;
 
 our $VERSION = '2.0.5';
 
@@ -23,13 +24,6 @@ sub fetchId {
         return 0;
     }
 
-    # Is token in good interval ?
-
-    unless ( $t <= time and $t > time - $class->tsv->{handlerServiceTokenTTL} ) {
-        $class->userLogger->warn('Expired service token');
-        return 0;
-    }
-
     # Is vhost listed in token ?
     my $vh = $class->resolveAlias($req);
     unless ( grep { $_ eq $vh } @vhosts ) {
@@ -37,6 +31,15 @@ sub fetchId {
             "$vh not authorized in token (" . join( ', ', @vhosts ) . ')' );
         return 0;
     }
+
+    # Is token in good interval ?
+    my $localConfig = $class->localConfig;
+    my $ttl = $localConfig->{vhostOptions}->{$vh}->{vhostServiceTokenTTL} || $class->tsv->{handlerServiceTokenTTL};
+    unless ( $t <= time and $t > time - $ttl ) {
+        $class->userLogger->warn('Expired service token');
+        return 0;
+    }
+
     return $_session_id;
 }
 

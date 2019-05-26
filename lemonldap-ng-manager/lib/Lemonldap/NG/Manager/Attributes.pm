@@ -3557,6 +3557,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => -1,
             'type'    => 'int'
         },
+        'vhostServiceTokenTTL' => {
+            'default' => 30,
+            'type'    => 'int'
+        },
         'vhostType' => {
             'default' => 'Main',
             'select'  => [ {
