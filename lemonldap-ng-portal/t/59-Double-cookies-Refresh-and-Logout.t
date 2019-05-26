@@ -9,15 +9,17 @@ BEGIN {
 my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel            => 'error',
-            authentication      => 'Demo',
-            userDB              => 'Same',
-            loginHistoryEnabled => 0,
-            brutForceProtection => 0,
-            portalMainLogo      => 'common/logos/logo_llng_old.png',
-            requireToken        => 0,
-            securedCookie       => 2,
-            https               => 0,
+            logLevel             => 'error',
+            authentication       => 'Demo',
+            userDB               => 'Same',
+            loginHistoryEnabled  => 0,
+            brutForceProtection  => 0,
+            portalMainLogo       => 'common/logos/logo_llng_old.png',
+            requireToken         => 0,
+            securedCookie        => 2,
+            https                => 0,
+            checkUser            => 1,
+            handlerInternalCache => 0,
         }
     }
 );
@@ -80,12 +82,48 @@ ok(
 );
 count(1);
 expectOK($res);
-ok(
-    $res->[2]->[0] =~
-m%<span trspan="connectedAs">Connected as</span> dwho%,
-    'Connected as Dwho'
-) or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> dwho%,
+    'Connected as Dwho' )
+  or print STDERR Dumper( $res->[2]->[0] );
 count(1);
+
+# CheckUser form
+# ------------------------
+ok(
+    $res = $client->_get(
+        '/checkuser',
+        cookie => "lemonldap=$id1,lemonldaphttp=$id2",
+        accept => 'text/html'
+    ),
+    'CheckUser form',
+);
+count(1);
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
+  or explain( $res->[2]->[0], 'trspan="checkUser"' );
+count(1);
+
+ok(
+    $res = $client->_post(
+        '/checkuser',
+        IO::String->new($query),
+        cookie => "lemonldap=$id1,lemonldaphttp=$id2",
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'POST checkuser'
+);
+my @attributes = map /<td class="text-left">(.+)?<\/td>/g, $res->[2]->[0];
+ok( scalar @attributes == 30, 'Found 30 attributes' )
+  or print STDERR "Missing attributes -> " . scalar @attributes;
+ok( $attributes[12] eq '_updateTime', '_updateTime' )
+  or print STDERR Dumper( \@attributes );
+ok( $attributes[13] =~ /^\d{14}$/, 'Timestamp found' )
+  or print STDERR Dumper( \@attributes );
+count(4);
+
+sleep 3;
 
 # Refresh rights
 # ------------------------
@@ -113,11 +151,49 @@ ok(
 count(1);
 expectOK($res);
 
+ok( $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> dwho%,
+    'Connected as Dwho' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(1);
+
+# CheckUser form
+# ------------------------
 ok(
-    $res->[2]->[0] =~
-m%<span trspan="connectedAs">Connected as</span> dwho%,
-    'Connected as Dwho'
-) or print STDERR Dumper( $res->[2]->[0] );
+    $res = $client->_get(
+        '/checkuser',
+        cookie => "lemonldap=$id1,lemonldaphttp=$id2",
+        accept => 'text/html'
+    ),
+    'CheckUser form',
+);
+count(1);
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
+  or explain( $res->[2]->[0], 'trspan="checkUser"' );
+count(1);
+
+ok(
+    $res = $client->_post(
+        '/checkuser',
+        IO::String->new($query),
+        cookie => "lemonldap=$id1,lemonldaphttp=$id2",
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'POST checkuser'
+);
+my @attributes2 = map /<td class="text-left">(.+)?<\/td>/g, $res->[2]->[0];
+ok( scalar @attributes2 == 30, 'Found 30 attributes' )
+  or print STDERR "Missing attributes -> " . scalar @attributes2;
+ok( $attributes2[12] eq '_updateTime', '_updateTime' )
+  or print STDERR Dumper( \@attributes2 );
+ok( $attributes2[13] =~ /^\d{14}$/, 'Timestamp found' )
+  or print STDERR Dumper( \@attributes2 );
+count(4);
+
+ok( $attributes2[13] - $attributes[13] >= 3, '_updateTime has been updated' )
+  or print STDERR Dumper( \@attributes2 );
 count(1);
 
 # Log out request
