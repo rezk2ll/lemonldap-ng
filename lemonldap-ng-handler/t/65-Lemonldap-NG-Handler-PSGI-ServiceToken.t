@@ -39,6 +39,17 @@ ok(
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 count(2);
 
+ok(
+    $res = $client->_get(
+        '/', undef, 'test2.example.com', undef,
+        VHOSTTYPE           => 'ServiceToken',
+        'HTTP_X_LLNG_TOKEN' => $token,
+    ),
+    'Query with token'
+);
+ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
+count(2);
+
 done_testing( count() );
 
 clean();
