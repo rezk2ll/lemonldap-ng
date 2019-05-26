@@ -434,6 +434,8 @@ sub store {
     # Create second session for unsecure cookie
     if ( $self->conf->{securedCookie} == 2 and !$req->refresh() ) {
         my %infos = %{ $req->{sessionInfo} };
+        $infos{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
+        $self->logger->debug( "Set _updateTime with $infos{_updateTime}" );
         $infos{_httpSessionType} = 1;
 
         my $session2 = $self->getApacheSession( undef, info => \%infos );
