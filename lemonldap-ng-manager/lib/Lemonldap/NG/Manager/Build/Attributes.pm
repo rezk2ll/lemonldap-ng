@@ -1698,7 +1698,7 @@ sub attributes {
         },
         vhostServiceTokenTTL => {
             type    => 'int',
-            default => 30,
+            default => -1,
         },
         vhostAliases => { type => 'text', },
         vhostType    => {

@@ -1205,7 +1205,7 @@ function templates(tpl,key) {
             "type" : "int"
          },
          {
-            "default" : 30,
+            "default" : -1,
             "get" : tpl+"s/"+key+"/"+"vhostServiceTokenTTL",
             "id" : tpl+"s/"+key+"/"+"vhostServiceTokenTTL",
             "title" : "vhostServiceTokenTTL",

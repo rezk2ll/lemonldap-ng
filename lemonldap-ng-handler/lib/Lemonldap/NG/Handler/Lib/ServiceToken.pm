@@ -19,7 +19,7 @@ sub fetchId {
     my ( $t, $_session_id, @vhosts ) = split /:/, $s;
 
     # $_session_id and at least one vhost
-    unless (@vhosts and $_session_id) {
+    unless ( @vhosts and $_session_id ) {
         $class->userLogger->error('Bad service token');
         return 0;
     }
@@ -34,7 +34,10 @@ sub fetchId {
 
     # Is token in good interval ?
     my $localConfig = $class->localConfig;
-    my $ttl = $localConfig->{vhostOptions}->{$vh}->{vhostServiceTokenTTL} || $class->tsv->{handlerServiceTokenTTL};
+    my $ttl =
+        $localConfig->{vhostOptions}->{$vh}->{vhostServiceTokenTTL} <= 0
+      ? $class->tsv->{handlerServiceTokenTTL}
+      : $localConfig->{vhostOptions}->{$vh}->{vhostServiceTokenTTL};
     unless ( $t <= time and $t > time - $ttl ) {
         $class->userLogger->warn('Expired service token');
         return 0;
