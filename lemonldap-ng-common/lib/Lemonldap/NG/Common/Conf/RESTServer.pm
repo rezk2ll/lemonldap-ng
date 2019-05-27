@@ -644,7 +644,14 @@ sub _scanCatsAndApps {
     my ( $self, $apps, $baseId ) = @_;
     my @res;
 
-    foreach my $cat ( grep { not /^(?:catname|type)$/ } sort keys %$apps ) {
+    foreach my $cat (
+        sort {
+            ( $apps->{$a}->{order} || 0 ) <=> ( $apps->{$b}->{order} || 0 )
+              or $a cmp $b
+        }
+        grep { not /^(?:catname|type|order)$/ } keys %$apps
+      )
+    {
         my $item = { id => "$baseId/$cat" };
         if ( $apps->{$cat}->{type} eq 'category' ) {
             $item->{title} = $apps->{$cat}->{catname};
