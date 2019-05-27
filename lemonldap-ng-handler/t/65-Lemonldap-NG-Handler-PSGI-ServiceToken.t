@@ -28,7 +28,7 @@ init(
 
 my $res;
 my $crypt = Lemonldap::NG::Common::Crypto->new('qwertyui');
-my $token = $crypt->encrypt( join ':', time, $sessionId, 'test1.example.com', 'test2.example.com' );
+my $token = $crypt->encrypt( join ':', time, $sessionId, 'test1.example.com', 'test2.example.com', '*.example.com' );
 
 ok(
     $res = $client->_get(
