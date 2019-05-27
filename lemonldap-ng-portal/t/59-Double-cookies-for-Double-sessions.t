@@ -18,6 +18,7 @@ my $client = LLNG::Manager::Test->new( {
             requireToken        => 0,
             securedCookie       => 2,
             https               => 0,
+            singleSession       => 1,
         }
     }
 );
