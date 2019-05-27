@@ -17,7 +17,7 @@ sub run {
     my ( $self, $req ) = @_;
     my $deleted       = [];
     my $otherSessions = [];
-
+    my $httpSessionId = '';
     my $moduleOptions = $self->conf->{globalStorageOptions} || {};
     $moduleOptions->{backend} = $self->conf->{globalStorage};
 
@@ -26,8 +26,17 @@ sub run {
         $self->conf->{whatToTrace},
         $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
     );
+
+    if ( $self->conf->{securedCookie} == 2 ){
+        $self->logger->debug("Looking for double sessions...");
+        foreach my $id ( keys %$sessions ) {
+            $httpSessionId = $sessions->{$id}->{_session_id} if $sessions->{$id}->{_httpSessionType};
+        }
+    }
+
     foreach my $id ( keys %$sessions ) {
         next if ( $req->id eq $id );
+        next if ( $httpSessionId and $id eq $httpSessionId );
         my $session = $self->p->getApacheSession($id) or next;
         if (
             $self->conf->{singleSession}
