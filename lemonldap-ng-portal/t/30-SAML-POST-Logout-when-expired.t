@@ -13,7 +13,7 @@ BEGIN {
 
 my $maintests = 18;
 my $debug     = 'error';
-my $timeout   = 1;
+my $timeout   = 6;
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
