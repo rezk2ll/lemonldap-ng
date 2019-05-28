@@ -249,6 +249,7 @@ site/htdocs/static/common/de.png
 site/htdocs/static/common/en.png
 site/htdocs/static/common/es.png
 site/htdocs/static/common/favicon.ico
+site/htdocs/static/common/fi.png
 site/htdocs/static/common/fr.png
 site/htdocs/static/common/icons/application_cascade.png
 site/htdocs/static/common/icons/arrow_refresh.png
@@ -438,6 +439,7 @@ t/30-Auth-and-issuer-SAML-Redirect.t
 t/30-Auth-SAML-with-choice.t
 t/30-CDC.t
 t/30-SAML-Head-to-Tail-POST.t
+t/30-SAML-POST-Logout-when-expired.t
 t/30-SAML-ReAuth-with-choice.t
 t/30-SAML-ReAuth.t
 t/30-SAML-SP-rule.t
@@ -503,6 +505,10 @@ t/43-MailPasswordReset-with-captcha.t
 t/43-MailPasswordReset-with-token.t
 t/43-MailPasswordReset.t
 t/50-IssuerGet.t
+t/59-Double-cookies-for-a-Single-session.t
+t/59-Double-cookies-for-Double-sessions.t
+t/59-Double-cookies-Refresh-and-Logout.t
+t/59-Secured-cookie-Refresh-and-Logout.t
 t/60-Status.t
 t/61-BruteForceProtection.t
 t/61-ForceAuthn.t
@@ -523,10 +529,6 @@ t/67-CheckUser.t
 t/68-Impersonation-with-doubleCookies.t
 t/68-Impersonation-with-merge.t
 t/68-Impersonation.t
-t/69-Double-cookies-for-a-Single-session.t
-t/69-Double-cookies-for-Double-sessions.t
-t/69-Double-cookies-Refresh-and-Logout.t
-t/69-HTTPS-cookie-Refresh-and-Logout.t
 t/70-2F-TOTP-with-History.t
 t/70-2F-TOTP.t
 t/70-2F-TOTP_8.t
