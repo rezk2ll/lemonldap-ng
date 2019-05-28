@@ -571,7 +571,8 @@ sub authChoiceModules {
 #@return PSGI JSON response
 sub grantSessionRules {
     my ( $self, $req, $key ) = @_;
-    return $self->sendError( 'Subkeys forbidden for grantSessionRules', 400 )
+    return $self->sendError( $req, 'Subkeys forbidden for grantSessionRules',
+        400 )
       if ($key);
     my $value = $self->getConfKey( $req, 'grantSessionRules' );
     my @res;
@@ -605,7 +606,7 @@ sub grantSessionRules {
 # Split openIdIDPList parameter into 2 elements
 sub openIdIDPList {
     my ( $self, $req, $key ) = @_;
-    return $self->sendError( 'Subkeys forbidden for openIdIDPList', 400 )
+    return $self->sendError( $req, 'Subkeys forbidden for openIdIDPList', 400 )
       if ($key);
     my $value = $self->getConfKey( $req, 'openIdIDPList' );
     $value //= '0;';
@@ -673,7 +674,7 @@ sub _scanCatsAndApps {
 # Returns raw value, just transform "over" key
 sub combModules {
     my ( $self, $req, $key ) = @_;
-    return $self->sendError( 'Subkeys forbidden for combModules', 400 )
+    return $self->sendError( $req, 'Subkeys forbidden for combModules', 400 )
       if ($key);
     my $val = $self->getConfKey( $req, 'combModules' ) // {};
     my $res = [];

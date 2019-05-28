@@ -996,13 +996,13 @@ sub token {
             $self->logger->error(
 "Relying Party $rp is confidential but no client secret was provided to authenticate on token endpoint"
             );
-            return $self->p->sendError( 'invalid_request', 400 );
+            return $self->p->sendError( $req, 'invalid_request', 400 );
         }
         unless ( $client_secret eq $self->conf->{oidcRPMetaDataOptions}->{$rp}
             ->{oidcRPMetaDataOptionsClientSecret} )
         {
             $self->logger->error("Wrong credentials for $rp");
-            return $self->p->sendError( 'invalid_request', 400 );
+            return $self->p->sendError( $req, 'invalid_request', 400 );
         }
     }
 
