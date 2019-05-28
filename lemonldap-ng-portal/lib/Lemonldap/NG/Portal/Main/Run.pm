@@ -154,7 +154,8 @@ sub refresh {
         delete $data{$_} unless ( /^_/ or /^(?:startTime)$/ );
     }
     $data{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
-    $self->logger->debug( "Set session $req->{id} _updateTime with $data{_updateTime}" );
+    $self->logger->debug(
+        "Set session $req->{id} _updateTime with $data{_updateTime}");
     $req->steps( [
             'getUser',
             @{ $self->betweenAuthAndData },
@@ -876,7 +877,7 @@ sub lmError {
 
     # Check URL
     $self->controlUrl($req);
-    $req->pdata( {} );
+    $req->pdata( {} ) unless ( $httpError == 404 );
 
     if ( $req->wantJSON ) {
         return $self->sendJSONresponse(
