@@ -41,6 +41,7 @@ ok(
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
 
+diag 'Waiting';
 sleep 2;
 
 ok(
@@ -54,6 +55,7 @@ ok(
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
 
+diag 'Waiting';
 sleep 1;
 
 ok(
@@ -67,6 +69,7 @@ ok(
 ok( $res->[0] == 302, 'Code is 200' ) or explain( $res->[0], 302 );
 count(2);
 
+diag 'Waiting';
 sleep 1;
 
 ok(
@@ -80,6 +83,7 @@ ok(
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
 
+diag 'Waiting';
 sleep 1;
 
 ok(
