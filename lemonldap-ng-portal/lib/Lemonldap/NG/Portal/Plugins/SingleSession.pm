@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.5';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::OtherSessions';
@@ -15,10 +15,10 @@ sub init { 1 }
 
 sub run {
     my ( $self, $req ) = @_;
-    my $deleted       = [];
-    my $otherSessions = [];
-    my $httpSessionId = '';
-    my $moduleOptions = $self->conf->{globalStorageOptions} || {};
+    my $deleted         = [];
+    my $otherSessions   = [];
+    my $linkedSessionId = '';
+    my $moduleOptions   = $self->conf->{globalStorageOptions} || {};
     $moduleOptions->{backend} = $self->conf->{globalStorage};
 
     my $sessions = $self->module->searchOn(
@@ -27,16 +27,19 @@ sub run {
         $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
     );
 
-    if ( $self->conf->{securedCookie} == 2 ){
+    if ( $self->conf->{securedCookie} == 2 ) {
         $self->logger->debug("Looking for double sessions...");
-        foreach my $id ( keys %$sessions ) {
-            $httpSessionId = $sessions->{$id}->{_session_id} if $sessions->{$id}->{_httpSessionType};
-        }
+        $linkedSessionId = $sessions->{ $req->id }->{_httpSession};
+        my $msg =
+          $linkedSessionId
+          ? "Linked session found -> $linkedSessionId / " . $req->id
+          : "NO linked session found!";
+        $self->logger->debug($msg);
     }
 
     foreach my $id ( keys %$sessions ) {
         next if ( $req->id eq $id );
-        next if ( $httpSessionId and $id eq $httpSessionId );
+        next if ( $linkedSessionId and $id eq $linkedSessionId );
         my $session = $self->p->getApacheSession($id) or next;
         if (
             $self->conf->{singleSession}
