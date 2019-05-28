@@ -143,7 +143,6 @@ sub check {
             my $session = $self->p->getApacheSession($id) or next;
 
             if ( $session->{data}->{_utime} gt $age ) {
-
                 $attrs = $session->{data};
                 $age   = $session->{data}->{_utime};
             }
