@@ -1617,7 +1617,7 @@ sub sloServer {
 
             unless ($local_session) {
                 $self->logger->error("No local session found");
-                return $self->sendSLOErrorResponse( $logout, $method );
+                return $self->sendSLOErrorResponse( $req, $logout, $method );
             }
 
             # Load Session and Identity if they exist
@@ -1668,7 +1668,7 @@ sub sloServer {
         }
 
         # Check Destination
-        return $self->sendSLOErrorResponse( $logout, $method )
+        return $self->sendSLOErrorResponse( $req, $logout, $method )
           unless ( $self->checkDestination( $logout->request, $url ) );
 
         # Validate request if no previous error
@@ -1718,7 +1718,7 @@ sub sloServer {
 
         unless ($signSLOMessage) {
             $self->logger->debug("Do not sign this SLO response");
-            return $self->sendSLOErrorResponse( $logout, $method )
+            return $self->sendSLOErrorResponse( $req, $logout, $method )
               unless ( $self->disableSignature($logout) );
         }
 
