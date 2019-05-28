@@ -193,7 +193,7 @@ sub _buildCategoryHash {
     # Extract applications from hash
     my $apphash;
     foreach my $catkey ( sort keys %$cathash ) {
-        next if $catkey =~ /(type|options|catname)/;
+        next if $catkey =~ /(type|options|catname|order)/;
         if ( $cathash->{$catkey}->{type} eq "application" ) {
             $apphash->{$catkey} = $cathash->{$catkey};
         }
@@ -201,15 +201,29 @@ sub _buildCategoryHash {
 
     # Display applications first
     if ( scalar keys %$apphash > 0 ) {
-        foreach my $appkey ( sort keys %$apphash ) {
+        foreach my $appkey (
+            sort {
+                ($apphash->{$a}->{order} || 0) <=> ($apphash->{$b}->{order} || 0)
+                  or $a cmp $b
+            }
+            keys %$apphash
+          )
+        {
             push @$applications,
               $self->_buildApplicationHash( $appkey, $apphash->{$appkey} );
         }
     }
 
     # Display subcategories
-    foreach my $catkey ( sort keys %$cathash ) {
-        next if $catkey =~ /(type|options|catname)/;
+    foreach my $catkey (
+        sort {
+                ($cathash->{$a}->{order} || 0) <=> ($cathash->{$b}->{order} || 0)
+              or $a cmp $b
+        }
+        grep { not /^(?:catname|type|options|order)$/ } keys %$cathash
+      )
+    {
+
         if ( $cathash->{$catkey}->{type} eq "category" ) {
             push @$categories,
               $self->_buildCategoryHash( $req, $catkey, $cathash->{$catkey},
@@ -246,7 +260,7 @@ sub _buildApplicationHash {
     # Detect sub applications
     my $subapphash;
     foreach my $key ( sort keys %$apphash ) {
-        next if $key =~ /(type|options|catname)/;
+        next if $key =~ /(type|options|catname|order)/;
         if ( $apphash->{$key}->{type} eq "application" ) {
             $subapphash->{$key} = $apphash->{$key};
         }
@@ -254,7 +268,14 @@ sub _buildApplicationHash {
 
     # Display sub applications
     if ( scalar keys %$subapphash > 0 ) {
-        foreach my $appkey ( sort keys %$subapphash ) {
+        foreach my $appkey (
+            sort {
+                ($subapphash->{$a}->{order} || 0)  <=> ( $subapphash->{$b}->{order} || 0 )
+                  or $a cmp $b
+            }
+            keys %$subapphash
+          )
+        {
             push @$applications,
               $self->_buildApplicationHash( $appkey, $subapphash->{$appkey} );
         }
@@ -305,7 +326,7 @@ sub _filterHash {
     my ( $self, $req, $apphash ) = @_;
 
     foreach my $key ( keys %$apphash ) {
-        next if $key =~ /(type|options|catname)/;
+        next if $key =~ /(type|options|catname|order)/;
         if (    $apphash->{$key}->{type}
             and $apphash->{$key}->{type} eq "category" )
         {
@@ -319,7 +340,7 @@ sub _filterHash {
 
             # Find sub applications and filter them
             foreach my $appkey ( keys %{ $apphash->{$key} } ) {
-                next if $appkey =~ /(type|options|catname)/;
+                next if $appkey =~ /(type|options|catname|order)/;
 
                 # We have sub elements, so we filter them
                 $self->_filterHash( $req, $apphash->{$key} );
@@ -393,7 +414,7 @@ sub _isCategoryEmpty {
 
     # Test sub categories
     foreach $key ( keys %$apphash ) {
-        next if $key =~ /(type|options|catname)/;
+        next if $key =~ /(type|options|catname|order)/;
         if (    $apphash->{$key}->{type}
             and $apphash->{$key}->{type} eq "category" )
         {
@@ -408,10 +429,12 @@ sub _isCategoryEmpty {
         # Temporary store 'options'
         my $tmp_options = $apphash->{options};
         my $tmp_catname = $apphash->{catname};
+        my $tmp_order   = $apphash->{order};
 
         delete $apphash->{type};
         delete $apphash->{options};
         delete $apphash->{catname};
+        delete $apphash->{order};
 
         if ( scalar( keys %$apphash ) ) {
 
@@ -420,6 +443,7 @@ sub _isCategoryEmpty {
             $apphash->{type}    = "category";
             $apphash->{options} = $tmp_options;
             $apphash->{catname} = $tmp_catname;
+            $apphash->{order}   = $tmp_order;
 
             # Return false
             return 0;

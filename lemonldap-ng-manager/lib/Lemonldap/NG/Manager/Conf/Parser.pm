@@ -70,7 +70,7 @@ has confChanged => (
 );
 
 # Properties required during build
-has refConf => ( is => 'ro', isa      => 'HashRef', required => 1 );
+has refConf => ( is => 'ro', isa => 'HashRef', required => 1 );
 has req     => ( is => 'ro', required => 1 );
 has newConf => ( is => 'rw', isa      => 'HashRef' );
 has tree    => ( is => 'rw', isa      => 'ArrayRef' );
@@ -160,7 +160,7 @@ sub _scanNodes {
         hdebug("Looking to $name");
 
         # subnode
-        my $subNodes     = $leaf->{nodes} // $leaf->{_nodes};
+        my $subNodes     = $leaf->{nodes}      // $leaf->{_nodes};
         my $subNodesCond = $leaf->{nodes_cond} // $leaf->{_nodes_cond};
 
         ##################################
@@ -587,6 +587,22 @@ sub _scanNodes {
                 $cmp = $cmp->{$cat};
             }
 
+            my $newapp = $app;
+
+         # Compute a nice name for new nodes, taking care of potential conflicts
+         # For some reason, the manager sends /nNaN sometimes
+            if ( $newapp =~ /^n(\d+|NaN)$/ ) {
+
+                # Remove all special characters
+                my $baseName = $leaf->{title} =~ s/\W//gr;
+                $baseName = lc $baseName;
+                $newapp   = $baseName;
+                my $cnt = 1;
+                while ( exists $cn->{$newapp} ) {
+                    $newapp = "${baseName}_" . $cnt++;
+                }
+            }
+
             # Create new category
             #
             # Note that this works because nodes are ordered so "cat/cat2/app"
@@ -594,11 +610,14 @@ sub _scanNodes {
             if ( $leaf->{type} eq 'menuCat' ) {
                 hdebug('  menu cat');
                 $knownCat->{__id}++;
-                my $s = $knownCat->{$app} = sprintf '%04d-cat',
-                  $knownCat->{__id};
-                $cn->{$s} = { catname => $leaf->{title}, type => 'category' };
+                $knownCat->{$app} = $newapp;
+                $cn->{$newapp}    = {
+                    catname => $leaf->{title},
+                    type    => 'category',
+                    order   => $knownCat->{__id}
+                };
                 unless ($cmp->{$app}
-                    and $cmp->{$app}->{catname} eq $cn->{$s}->{catname} )
+                    and $cmp->{$app}->{catname} eq $cn->{$newapp}->{catname} )
                 {
                     $self->confChanged(1);
                     push @{ $self->changes },
@@ -606,15 +625,17 @@ sub _scanNodes {
                         key => join(
                             ', ', 'applicationList', @path, $leaf->{title}
                         ),
-                        new => $cn->{$s}->{catname},
-                        old => ( $cn->{$s} ? $cn->{$s}->{catname} : undef )
+                        new => $cn->{$newapp}->{catname},
+                        old => (
+                            $cn->{$newapp} ? $cn->{$newapp}->{catname} : undef
+                        )
                       };
                 }
                 if ( ref $subNodes ) {
                     $self->_scanNodes($subNodes) or return 0;
                 }
                 my @listCatRef = keys %{ $cmp->{$app} };
-                my @listCatNew = keys %{ $cn->{$s} };
+                my @listCatNew = keys %{ $cn->{$newapp} };
 
                 # Check for deleted
                 unless ( @listCatRef == @listCatNew ) {
@@ -631,10 +652,12 @@ sub _scanNodes {
             else {
                 hdebug('  new app');
                 $knownCat->{__id}++;
-                my $name = sprintf( '%04d-app', $knownCat->{__id} );
-                $cn->{$name} =
-                  { type => 'application', options => $leaf->{data} };
-                $cn->{$name}->{options}->{name} = $leaf->{title};
+                $cn->{$newapp} = {
+                    type    => 'application',
+                    options => $leaf->{data},
+                    order   => $knownCat->{__id}
+                };
+                $cn->{$newapp}->{options}->{name} = $leaf->{title};
                 unless ( $cmp->{$app} ) {
                     $self->confChanged(1);
                     push @{ $self->changes },
@@ -644,9 +667,17 @@ sub _scanNodes {
                       };
                 }
                 else {
-                    foreach my $k ( keys %{ $cn->{$name}->{options} } ) {
+                    # Check for change in ordering
+                    if ( ( $cn->{$newapp}->{order} || 0 ) !=
+                        ( $cmp->{$newapp}->{order} || 0 ) )
+                    {
+                        $self->confChanged(1);
+                    }
+
+                    # Check for change in options
+                    foreach my $k ( keys %{ $cn->{$newapp}->{options} } ) {
                         unless ( $cmp->{$app}->{options}->{$k} eq
-                            $cn->{$name}->{options}->{$k} )
+                            $cn->{$newapp}->{options}->{$k} )
                         {
                             $self->confChanged(1);
                             push @{ $self->changes },
@@ -654,7 +685,7 @@ sub _scanNodes {
                                 key => join( ', ',
                                     'applicationList', @path,
                                     $leaf->{title},    $k ),
-                                new => $cn->{$name}->{options}->{$k},
+                                new => $cn->{$newapp}->{options}->{$k},
                                 old => $cmp->{$app}->{options}->{$k}
                               };
                         }
@@ -1070,14 +1101,14 @@ sub _unitTest {
                 or $attr->{type} =~ /Container$/ )
             {
                 my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail};
-                my $msg    = $attr->{msgFail} // $type->{msgFail};
+                my $msg    = $attr->{msgFail}    // $type->{msgFail};
                 $res = 0
                   unless (
                     $self->_execTest( {
-                            keyTest    => $attr->{keyTest} // $type->{keyTest},
+                            keyTest => $attr->{keyTest} // $type->{keyTest},
                             keyMsgFail => $attr->{keyMsgFail}
                               // $type->{keyMsgFail},
-                            test    => $attr->{test} // $type->{test},
+                            test    => $attr->{test}    // $type->{test},
                             msgFail => $attr->{msgFail} // $type->{msgFail},
                         },
                         $conf->{$key},
