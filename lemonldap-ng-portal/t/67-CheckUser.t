@@ -61,6 +61,21 @@ $client->logout($id);
 ok(
     $res = $client->_post(
         '/',
+        IO::String->new('user=rtyler&password=rtyler'),
+        length => 27,
+        accept => 'text/html',
+    ),
+    'Auth query'
+);
+count(1);
+
+$id = expectCookie($res);
+expectRedirection( $res, 'http://auth.example.com/' );
+
+## Try to authenticate
+ok(
+    $res = $client->_post(
+        '/',
         IO::String->new('user=dwho&password=dwho'),
         length => 23,
         accept => 'text/html',
@@ -85,7 +100,6 @@ ok(
 );
 count(1);
 
-# Request with bad VH
 my ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
@@ -99,8 +113,7 @@ ok( $res->[2]->[0] =~ m%<td class="text-left">dwho</td>%, 'Found value dwho' )
   or explain( $res->[2]->[0], 'Value dwho' );
 count(2);
 
-$query =~ s/user=dwho/user=rtyler/;
-$query =~ s/url=/url=http%3A%2F%2Ftry.example.com/;
+$query =~ s/url=/url=http%3A%2F%2Ftest1.example.com/;
 ok(
     $res = $client->_post(
         '/checkuser',
@@ -113,6 +126,39 @@ ok(
 );
 count(1);
 
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
+  or explain( $res->[2]->[0], 'trspan="checkUser"' );
+
+count(2);
+ok( $res->[2]->[0] =~ m%<td class="align-middle">Auth-User</td>%,
+    'Found Auth-User' )
+  or explain( $res->[2]->[0], 'Header Key: Auth-User' );
+ok( $res->[2]->[0] =~ m%<td class="align-middle">dwho</td>%, 'Found dwho' )
+  or explain( $res->[2]->[0], 'Header Value: dwho' );
+ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
+    'Found _whatToTrace' )
+  or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
+ok( $res->[2]->[0] =~ m%<td class="align-middle">dwho</td>%, 'Found dwho' )
+  or explain( $res->[2]->[0], 'Macro Value dwho' );
+count(3);
+
+$query =~ s/user=dwho/user=rtyler/;
+$query =~ s/url=http%3A%2F%2Ftest1.example.com/url=http%3A%2F%2Ftry.example.com/;
+ok(
+    $res = $client->_post(
+        '/checkuser',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'POST checkuser'
+);
+count(1);
+
+# Request with bad VH
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok( $res->[2]->[0] =~ m%<span trspan="VHnotFound">%,

@@ -11,8 +11,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.5';
 
-extends qw(Lemonldap::NG::Portal::Main::Plugin
-  Lemonldap::NG::Portal::Lib::_tokenRule);
+extends
+  qw(Lemonldap::NG::Portal::Main::Plugin Lemonldap::NG::Portal::Lib::_tokenRule Lemonldap::NG::Portal::Lib::OtherSessions);
 
 # INITIALIZATION
 
@@ -121,17 +121,39 @@ sub check {
     }
 
     if ( $user eq $req->{user} or !$user ) {
-        $self->userLogger->notice("Retrieve session from Sessions database");
+        $self->logger->debug("checkUser requested for myself");
+        $self->userLogger->notice("Return userData...");
         $self->userLogger->warn("Using spoofed SSO groups if exist!!!")
           if ( $self->conf->{impersonationRule} );
         $attrs = $req->userData;
+        $user  = $req->{user};
     }
     else {
-        $self->logger->debug("checkUser requested for $req->{user}");
-        $req->{user} = $user;
-        $self->userLogger->notice(
-            "Retrieve session from userDB and compute Groups & Macros");
-        $attrs = $self->_userDatas($req);
+        $self->logger->debug("checkUser requested for $user");
+
+        # Try to retrieve session from sessions DB
+        $self->userLogger->notice('Try to retrieve session from DB...');
+        my $moduleOptions = $self->conf->{globalStorageOptions} || {};
+        $moduleOptions->{backend} = $self->conf->{globalStorage};
+        my $sessions =
+          $self->module->searchOn( $moduleOptions, $self->conf->{whatToTrace},
+            $user );
+        my $age = '1';
+        foreach my $id ( keys %$sessions ) {
+            my $session = $self->p->getApacheSession($id) or next;
+
+            if ( $session->{data}->{_utime} gt $age ) {
+
+                $attrs = $session->{data};
+                $age   = $session->{data}->{_utime};
+            }
+        }
+        unless ( defined $attrs->{_session_id} ) {
+            $req->{user} = $user;
+            $self->userLogger->notice(
+                "NO session found in DB. Compute userData...");
+            $attrs = $self->_userData($req);
+        }
     }
 
     if ( $req->error ) {
@@ -206,11 +228,8 @@ sub check {
         LANGS     => $self->conf->{showLanguages},
         MSG       => $msg,
         ALERTE    => ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
-        LOGIN     => (
-              $self->p->checkXSSAttack( 'LOGIN', $req->{userData}->{uid} ) ? ""
-            : $req->{userData}->{uid}
-        ),
-        URL => (
+        LOGIN     => $user,
+        URL       => (
               $self->p->checkXSSAttack( 'URL', $url ) ? ""
             : $url
         ),
@@ -302,10 +321,10 @@ sub _urlFormat {
     return lc("$proto$vhost$port") . "$appuri";
 }
 
-sub _userDatas {
+sub _userData {
     my ( $self, $req ) = @_;
 
-    # Search user in database
+    # Compute session
     my $steps = [ 'getUser', 'setSessionInfo', 'setMacros', 'setGroups' ];
     $self->conf->{checkUserDisplayPersistentInfo}
       ? push @$steps, 'setPersistentSessionInfo', 'setLocalGroups'
