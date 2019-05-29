@@ -351,7 +351,12 @@ sub _userData {
         $self->logger->debug('Identity not authorized');
         return $req->error(PE_BADCREDENTIALS);
     }
+    unless ( defined $req->sessionInfo->{uid} ) {
 
+        # Avoid error with SAML, OIDC, etc...
+        $self->logger->debug("\"$req->{user}\" NOT found in userDB");
+        return $req->error(PE_BADCREDENTIALS);
+    }
     $self->logger->debug("Return \"$req->{user}\" sessionInfo");
     return $req->{sessionInfo};
 }
