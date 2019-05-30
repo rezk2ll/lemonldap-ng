@@ -194,7 +194,7 @@ sub lastCfg {
     return $self->jsonResponse('/confs/latest')->{cfgNum};
 }
 
-sub dump {
+sub save {
     my ($self) = @_;
     my $conf = $self->jsonResponse( '/confs/latest', 'full=1' );
     my $json = JSON->new->indent->canonical;
@@ -311,7 +311,7 @@ sub run {
     }
     $self->cfgNum( $self->lastCfg ) unless ( $self->cfgNum );
     my $action = shift;
-    unless ( $action =~ /^(?:get|set|addKey|delKey|dump)$/ ) {
+    unless ( $action =~ /^(?:get|set|addKey|delKey|save)$/ ) {
         die
 "unknown action $action. Only get, set, addKey or delKey are accepted";
     }
