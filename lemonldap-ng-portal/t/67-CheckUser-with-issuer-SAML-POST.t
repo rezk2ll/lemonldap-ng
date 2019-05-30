@@ -11,8 +11,8 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 19;
-my $debug     = 'debug';
+my $maintests = 18;
+my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -156,51 +156,55 @@ SKIP: {
     expectRedirection( $res, 'http://auth.sp.com' );
     my $spId = expectCookie($res);
 
-    ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId", accept => 'text/html' ), 'Get / on SP' );
-    print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res =
+          $sp->_get( '/', cookie => "lemonldap=$spId", accept => 'text/html' ),
+        'Get / on SP'
+    );
+    count(1);
     expectOK($res);
     expectAuthenticatedAs( $res, 'fa@badwolf.org@idp' );
 
-
     # CheckUser form -> granted
-# ------------------------
+    # ------------------------
+    ok(
+        $res = $sp->_get(
+            '/checkuser',
+            cookie => "lemonldap=$spId",
+            accept => 'text/html'
+        ),
+        'CheckUser form',
+    );
+    my ( $host, $url, $query ) =
+      expectForm( $res, undef, '/checkuser', 'user', 'url' );
+    ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%,
+        'Found trspan="checkUser"' )
+      or explain( $res->[2]->[0], 'trspan="checkUser"' );
+    ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%,
+        'Found attribute _user' )
+      or explain( $res->[2]->[0], 'Attribute uid' );
+    ok( $res->[2]->[0] =~ m%<td class="text-left">french</td>%,
+        'Found value french' )
+      or explain( $res->[2]->[0], 'Value french' );
+    count(4);
 
-ok(
-    $res = $sp->_get(
-        '/checkuser',
-        cookie => "lemonldap=$spId",
-        accept => 'text/html'
-    ),
-    'CheckUser form',
-);
-count(1);
-print STDERR Dumper( $res->[2]->[0] );
-my ( $host, $url, $query ) =
-  expectForm( $res, undef, '/checkuser', 'user', 'url' );
-ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
-  or explain( $res->[2]->[0], 'trspan="checkUser"' );
-count(1);
-
-ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%,
-    'Found attribute _user' )
-  or explain( $res->[2]->[0], 'Attribute uid' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">french</td>%, 'Found value french' )
-  or explain( $res->[2]->[0], 'Value french' );
-count(2);
-
-$query =~ s/user=french/user=rtyler/;
-ok(
-    $res = $sp->_post(
-        '/checkuser',
-        IO::String->new($query),
-        cookie => "lemonldap=$spId",
-        length => length($query),
-        accept => 'text/html',
-    ),
-    'POST checkuser'
-);
-count(1);
-print STDERR Dumper( $res->[2]->[0] );
+    $query =~ s/user=french/user=rtyler/;
+    ok(
+        $res = $sp->_post(
+            '/checkuser',
+            IO::String->new($query),
+            cookie => "lemonldap=$spId",
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'POST checkuser'
+    );
+    ok(
+        $res->[2]->[0] =~
+m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
+        ' PE5 found'
+    ) or explain( $res->[2]->[0], 'PE5 - Unknown identity' );
+    count(2);
 
     # Logout initiated by SP
     ok(
