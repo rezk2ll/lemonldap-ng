@@ -61,13 +61,18 @@ schemes =
 
 overScheme =
 	_whatToTrace: (t,v,level,over) ->
-		if level == 1 and v.length > over
+		if level == 1 and v.length < max
 			"#{t}=#{v}*&groupBy=substr(#{t},#{(level+over+1)})"
 		else
 			null
 	ipAddr: (t,v,level,over) ->
 		if level > 0 and level < 4
 			"#{t}=#{v}*&groupBy=net(#{t},#{16*level+4*(over+1)},2)"
+		else
+			null
+	_startTime: (t,v,level,over) ->
+		if level > 3
+			"#{t}=#{v}*&groupBy=substr(#{t},#{(9+level+over+1)})"
 		else
 			null
 
@@ -410,7 +415,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		scheme = if schemes[$scope.type]
 			schemes[$scope.type]
 
-		#  - _updateTime must be displayed as startDate
+		#  - _updateTime must be displayed as startTime
 		else if $scope.type == '_updateTime'
 			schemes._startTime
 

@@ -74,7 +74,7 @@
 
   overScheme = {
     _whatToTrace: function(t, v, level, over) {
-      if (level === 1 && v.length > over) {
+      if (level === 1 && v.length < max) {
         return t + "=" + v + "*&groupBy=substr(" + t + "," + (level + over + 1) + ")";
       } else {
         return null;
@@ -83,6 +83,13 @@
     ipAddr: function(t, v, level, over) {
       if (level > 0 && level < 4) {
         return t + "=" + v + "*&groupBy=net(" + t + "," + (16 * level + 4 * (over + 1)) + ",2)";
+      } else {
+        return null;
+      }
+    },
+    _startTime: function(t, v, level, over) {
+      if (level > 3) {
+        return t + "=" + v + "*&groupBy=substr(" + t + "," + (9 + level + over + 1) + ")";
       } else {
         return null;
       }
