@@ -298,7 +298,7 @@ m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
 count(2);
 
 # Request an unknown identity
-$query =~ s/user=msmith/user=davros/;
+$query =~ s/user=msmith/user=dalek/;
 ok(
     $res = $client->_post(
         '/checkuser',
