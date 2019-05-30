@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 18;
+my $maintests = 24;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -119,7 +119,7 @@ SKIP: {
     $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     # Try to authenticate with an authorized user to IdP
-    $s = "user=french&password=french&$s";
+    $s = "user=davros&password=davros&$s";
     ok(
         $res = $issuer->_post(
             $url,
@@ -163,6 +163,85 @@ SKIP: {
     );
     count(1);
     expectOK($res);
+    expectAuthenticatedAs( $res, 'davros@badguy.org@idp' );
+
+    # Simple SP access
+    my $res;
+    ok(
+        $res = $sp->_get(
+            '/', accept => 'text/html',
+        ),
+        'Unauth SP request'
+    );
+    expectOK($res);
+    ok( expectCookie( $res, 'lemonldapidp' ), 'IDP cookie defined' )
+      or explain(
+        $res->[1],
+'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
+      );
+    my ( $host, $url, $s ) =
+      expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn',
+        'SAMLRequest' );
+
+    # Push SAML request to IdP
+    switch ('issuer');
+    ok(
+        $res = $issuer->_post(
+            $url,
+            IO::String->new($s),
+            accept => 'text/html',
+            length => length($s)
+        ),
+        'Post SAML request to IdP'
+    );
+    expectOK($res);
+    my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+
+    # Try to authenticate with an authorized user to IdP
+    $s = "user=french&password=french&$s";
+    ok(
+        $res = $issuer->_post(
+            $url,
+            IO::String->new($s),
+            accept => 'text/html',
+            cookie => $pdata,
+            length => length($s),
+        ),
+        'Post authentication'
+    );
+    $idpId = expectCookie($res);
+
+    # Expect pdata to be cleared
+    $pdata = expectCookie( $res, 'lemonldappdata' );
+    ok( $pdata !~ 'issuerRequestsaml', 'SAML request cleared from pdata' );
+
+    ( $host, $url, $s ) =
+      expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleSignOnPost',
+        'SAMLResponse' );
+
+    # Post SAML response to SP
+    switch ('sp');
+    ok(
+        $res = $sp->_post(
+            $url, IO::String->new($s),
+            accept => 'text/html',
+            length => length($s),
+            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
+        ),
+        'Post SAML response to SP'
+    );
+
+    # Verify authentication on SP
+    expectRedirection( $res, 'http://auth.sp.com' );
+    $spId = expectCookie($res);
+
+    ok(
+        $res =
+          $sp->_get( '/', cookie => "lemonldap=$spId", accept => 'text/html' ),
+        'Get / on SP'
+    );
+    count(1);
+    expectOK($res);
     expectAuthenticatedAs( $res, 'fa@badwolf.org@idp' );
 
     # CheckUser form -> granted
@@ -181,13 +260,14 @@ SKIP: {
         'Found trspan="checkUser"' )
       or explain( $res->[2]->[0], 'trspan="checkUser"' );
     ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%,
-        'Found attribute _user' )
+        'Found attribute uid' )
       or explain( $res->[2]->[0], 'Attribute uid' );
     ok( $res->[2]->[0] =~ m%<td class="text-left">french</td>%,
         'Found value french' )
       or explain( $res->[2]->[0], 'Value french' );
     count(4);
 
+    # CheckUser request with unknown user
     $query =~ s/user=french/user=rtyler/;
     ok(
         $res = $sp->_post(
@@ -205,6 +285,35 @@ m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
         ' PE5 found'
     ) or explain( $res->[2]->[0], 'PE5 - Unknown identity' );
     count(2);
+
+    # CheckUser request with an already authneticated user
+    $query =~ s/user=rtyler/user=davros/;
+    ok(
+        $res = $sp->_post(
+            '/checkuser',
+            IO::String->new($query),
+            cookie => "lemonldap=$spId",
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'POST checkuser'
+    );
+
+    my ( $host, $url, $query ) =
+      expectForm( $res, undef, '/checkuser', 'user', 'url' );
+    ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%,
+        'Found trspan="checkUser"' )
+      or explain( $res->[2]->[0], 'trspan="checkUser"' );
+    ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%,
+        'Found attribute uid' )
+      or explain( $res->[2]->[0], 'Attribute uid' );
+    ok( $res->[2]->[0] =~ m%<td class="text-left">mail</td>%,
+        'Found attribute mail' )
+      or explain( $res->[2]->[0], 'Attribute mail' );
+    ok( $res->[2]->[0] =~ m%<td class="text-left">davros\@badguy.org</td>%,
+        'Found value davros@badguy.org' )
+      or explain( $res->[2]->[0], 'Value davros@badguy.org' );
+    count(5);
 
     # Logout initiated by SP
     ok(
@@ -293,7 +402,7 @@ sub issuer {
                 authentication         => 'Demo',
                 userDB                 => 'Same',
                 issuerDBSAMLActivation => 1,
-                issuerDBSAMLRule       => '$uid eq "french"',
+                issuerDBSAMLRule       => '$uid =~ /(?:french|davros)/',
                 samlSPMetaDataOptions  => {
                     'sp.com' => {
                         samlSPMetaDataOptionsEncryptionMode           => 'none',

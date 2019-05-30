@@ -547,6 +547,11 @@ has ini => (
             cn   => 'Frédéric Accents',
             mail => 'fa@badwolf.org',
         };
+        $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{davros} = {
+            uid  => 'davros',
+            cn   => 'Bad Guy',
+            mail => 'davros@badguy.org',
+        };
         $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{russian} = {
             uid  => 'russian',
             cn   => 'Русский',
