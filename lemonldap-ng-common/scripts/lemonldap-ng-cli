@@ -22,7 +22,7 @@ for ( my $i = 0 ; $i < @ARGV ; $i++ ) {
 
 $action ||= "help";
 
-if ( $action =~ /^(?:[gs]et|(?:add|del)Key|save)$/ ) {
+if ( $action =~ /^(?:[gs]et|(?:add|del)Key|save|restore)$/ ) {
     eval { require Lemonldap::NG::Manager::Cli; };
     die "Manager libraries not available, aborting ($@)" if ($@);
     Lemonldap::NG::Manager::Cli->run(@ARGV);
@@ -73,6 +73,12 @@ Save configuration
 
   $ lemonldap-ng-cli save >conf.json
 
+Restore configuration
+
+  $ lemonldap-ng-cli restore conf.json
+  # OR
+  $ lemonldap-ng-cli restore - <conf.json
+
 Get a configuration parameter value
 
   $ lemonldap-ng-cli get portal domain cookieName
@@ -98,6 +104,8 @@ and L<Lemonldap::NG::Common::CLi>
 =item update-cache
 
 =item save
+
+=item restore
 
 =item get
 

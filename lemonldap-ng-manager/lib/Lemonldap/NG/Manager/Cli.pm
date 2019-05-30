@@ -201,6 +201,24 @@ sub save {
     print $json->encode($conf);
 }
 
+sub restore {
+    my ( $self, $file ) = @_;
+    require IO::String;
+    my $conf;
+    if ( $file eq '-' ) {
+        $conf = join '', <STDIN>;
+    }
+    else {
+        open my $f, $file;
+        $conf = join '', <$f>;
+        close $f;
+    }
+    my $res = $self->_post( '/confs/raw', '', IO::String->new($conf),
+        'application/json', length($conf) );
+    use Data::Dumper;
+    print STDERR Dumper($res);
+}
+
 sub _getKey {
     my ( $self, $key ) = @_;
     my $sep = $self->sep;
@@ -311,7 +329,7 @@ sub run {
     }
     $self->cfgNum( $self->lastCfg ) unless ( $self->cfgNum );
     my $action = shift;
-    unless ( $action =~ /^(?:get|set|addKey|delKey|save)$/ ) {
+    unless ( $action =~ /^(?:get|set|addKey|delKey|save|restore)$/ ) {
         die
 "unknown action $action. Only get, set, addKey or delKey are accepted";
     }
