@@ -22,7 +22,7 @@ for ( my $i = 0 ; $i < @ARGV ; $i++ ) {
 
 $action ||= "help";
 
-if ( $action =~ /^(?:[gs]et|(?:add|del)Key)$/ ) {
+if ( $action =~ /^(?:[gs]et|(?:add|del)Key|dump)$/ ) {
     eval { require Lemonldap::NG::Manager::Cli; };
     die "Manager libraries not available, aborting ($@)" if ($@);
     Lemonldap::NG::Manager::Cli->run(@ARGV);
