@@ -66,6 +66,7 @@ ok(
 m%<span trspan="connectedAs">Connected as</span> dwho%,
     'Connected as dwho'
 ) or print STDERR Dumper( $res->[2]->[0] );
+expectAuthenticatedAs( $res, 'dwho' );
 count(1);
 
 # CheckUser form
