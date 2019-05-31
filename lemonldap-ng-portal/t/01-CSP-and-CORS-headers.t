@@ -11,7 +11,8 @@ my $client = LLNG::Manager::Test->new( {
             logLevel            => 'error',
             useSafeJail         => 1,
             'corsAllow_Origin'  => '',
-            'corsAllow_Methods' => 'POST'
+            'corsAllow_Methods' => 'POST',
+            'cspFormAction'     => '*'
         }
     }
 );
@@ -36,6 +37,7 @@ ok( $res->[2]->[0] =~ m%<span id="languages"></span>%, ' Language icons found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
+# CORS
 ok( $res->[1]->[12] eq 'Access-Control-Allow-Origin', ' CORS origin found' )
   or print STDERR Dumper( $res->[1] );
 ok( $res->[1]->[13] eq '', " CORS origin ''" )
@@ -56,14 +58,23 @@ ok( $res->[1]->[19] eq 'POST', " CORS methods 'POST'" )
 ok( $res->[1]->[20] eq 'Access-Control-Expose-Headers',
     " CORS expose-headers found" )
   or print STDERR Dumper( $res->[1] );
-ok( $res->[1]->[21] eq '*',
-    " CORS expose-headers '*'" )
+ok( $res->[1]->[21] eq '*', " CORS expose-headers '*'" )
   or print STDERR Dumper( $res->[1] );
 ok( $res->[1]->[22] eq 'Access-Control-Max-Age', ' CORS max-age found' )
   or print STDERR Dumper( $res->[1] );
 ok( $res->[1]->[23] == 86400, ' CORS max-age 86400' )
   or print STDERR Dumper( $res->[1] );
 count(12);
+
+#CSP
+ok( $res->[1]->[26] eq 'Content-Security-Policy', ' CSP found' )
+  or print STDERR Dumper( $res->[1] );
+ok(
+    $res->[1]->[27] =~
+/default-src 'self';img-src 'self' data:;style-src 'self';font-src 'self';connect-src 'self';script-src 'self';form-action \*;frame-ancestors 'none'/,
+    ' CSP headers found'
+) or print STDERR Dumper( $res->[1] );
+count(2);
 
 # Try to authenticate with good password
 # --------------------------------------
@@ -124,8 +135,7 @@ ok( $res->[1]->[21] eq 'POST', " CORS methods 'POST'" )
 ok( $res->[1]->[22] eq 'Access-Control-Expose-Headers',
     " CORS expose-headers found" )
   or print STDERR Dumper( $res->[1] );
-ok( $res->[1]->[23] eq '*',
-    " CORS expose-headers '*'" )
+ok( $res->[1]->[23] eq '*', " CORS expose-headers '*'" )
   or print STDERR Dumper( $res->[1] );
 ok( $res->[1]->[24] eq 'Access-Control-Max-Age', ' CORS max-age found' )
   or print STDERR Dumper( $res->[1] );
