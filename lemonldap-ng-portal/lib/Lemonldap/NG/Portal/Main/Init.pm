@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.5';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -80,8 +80,11 @@ has spRules => (
 # Custom template parameters
 has customParameters => ( is => 'rw', default => sub { {} } );
 
-# Content-Security-Policy header
+# Content-Security-Policy headers
 has csp => ( is => 'rw' );
+
+# Cross-Origine Resource Sharing headers
+has cors => ( is => 'rw' );
 
 # INITIALIZATION
 
@@ -179,13 +182,29 @@ sub reloadConf {
         $self->{conf}->{$key} ||= $conf->{$key};
     }
 
-    # Initialize content-security-policy header
+    # Initialize content-security-policy headers
     my $csp = '';
     foreach (qw(default img src style font connect script)) {
         my $prm = $self->conf->{ 'csp' . ucfirst($_) };
         $csp .= "$_-src $prm;" if ($prm);
     }
     $self->csp($csp);
+    $self->logger->debug( "Initialized CSP headers : " . $self->csp );
+
+    # Initialize Cross-Origin Resource Sharing headers
+    my $cors = '';
+    foreach (
+        qw(Allow_Origin Allow_Credentials Allow_Headers Allow_Methods Expose_Headers Max_Age)
+      )
+    {
+        my $header = $_;
+        my $prm    = $self->conf->{ 'cors' . $_ };
+        $header =~ s/_/-/;
+        $prm =~ s/\s+//;
+        $cors .= "Access-Control-$header; $prm;";
+    }
+    $self->cors($cors);
+    $self->logger->debug( "Initialized CORS headers : " . $self->cors );
 
     # Initialize templateDir
     $self->{templateDir} =

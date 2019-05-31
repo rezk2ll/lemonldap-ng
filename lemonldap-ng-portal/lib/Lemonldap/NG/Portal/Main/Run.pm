@@ -792,6 +792,9 @@ sub sendHtml {
       'Pragma'        => 'no-cache',                               # HTTP 1.0
       'Expires'       => '0';                                      # Proxies
 
+    my @cors = split /;/, $self->cors;
+    push @{ $res->[1] }, @cors if $self->conf->{corsEnabled};
+
     # Set authorized URL for POST
     my $csp = $self->csp . "form-action " . $self->conf->{cspFormAction};
     if ( my $url = $req->urldc ) {

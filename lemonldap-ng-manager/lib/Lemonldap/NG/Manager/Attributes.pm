@@ -940,6 +940,34 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'test'    => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
             'type'    => 'text'
         },
+        'corsAllow_Credentials' => {
+            'default' => 'true',
+            'type'    => 'text'
+        },
+        'corsAllow_Headers' => {
+            'default' => '*',
+            'type'    => 'text'
+        },
+        'corsAllow_Methods' => {
+            'default' => 'POST,GET',
+            'type'    => 'text'
+        },
+        'corsAllow_Origin' => {
+            'default' => '*',
+            'type'    => 'text'
+        },
+        'corsEnabled' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'corsExpose_Headers' => {
+            'default' => '*',
+            'type'    => 'text'
+        },
+        'corsMax_Age' => {
+            'default' => '86400',
+            'type'    => 'text'
+        },
         'cspConnect' => {
             'default' => '\'self\'',
             'type'    => 'text'

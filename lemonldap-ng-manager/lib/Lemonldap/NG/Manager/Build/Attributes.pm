@@ -705,6 +705,47 @@ sub attributes {
             type          => 'password',
             documentation => 'Secret key',
         },
+        corsEnabled => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Enable Cross-Origin Resource Sharing',
+        },
+        corsAllow_Credentials => {
+            type    => 'text',
+            default => 'true',
+            documentation =>
+              'Allow credentials for Cross-Origin Resource Sharing',
+        },
+        corsAllow_Headers => {
+            type    => 'text',
+            default => '*',
+            documentation =>
+              'Allowed headers for Cross-Origin Resource Sharing',
+        },
+        corsAllow_Methods => {
+            type    => 'text',
+            default => 'POST,GET',
+            documentation =>
+              'Allowed methods for Cross-Origin Resource Sharing',
+        },
+        corsAllow_Origin => {
+            type    => 'text',
+            default => '*',
+            documentation =>
+              'Allowed origine for Cross-Origin Resource Sharing',
+        },
+        corsExpose_Headers => {
+            type    => 'text',
+            default => '*',
+            documentation =>
+              'Exposed headers for Cross-Origin Resource Sharing',
+        },
+        corsMax_Age => {
+            type    => 'text',
+            default => '86400', # 24 hours
+            documentation =>
+              'MAx-age for Cross-Origin Resource Sharing',
+        },
         cspDefault => {
             type          => 'text',
             default       => "'self'",

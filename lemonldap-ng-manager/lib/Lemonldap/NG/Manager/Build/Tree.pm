@@ -805,6 +805,17 @@ sub tree {
                                         'cspConnect',
                                     ]
                                 },
+                                {
+                                    title => 'crossOrigineResourceSharing',
+                                    help  => 'security.html#portal',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'corsEnabled', 'corsAllow_Credentials', 
+                                        'corsAllow_Headers',  'corsAllow_Methods',
+                                        'corsAllow_Origin',    'corsExpose_Headers',
+                                        'corsMax_Age',
+                                    ]
+                                },
                             ]
                         },
                         {
