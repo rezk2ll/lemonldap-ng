@@ -58,7 +58,7 @@ SKIP: {
       )
     {
 
-        # Try yo authenticate
+        # Try to authenticate
         # -------------------
         ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get menu' );
         my @form = ( $res->[2]->[0] =~ m#<form.*?</form>#sg );
