@@ -55,11 +55,12 @@ sub init {
 
 sub run {
     my ( $self, $req ) = @_;
+    $req->{user} ||= $req->{sessionInfo}->{_impUser};
     my $spoofId =
          $req->param('spoofId')
       || $req->{sessionInfo}->{_impSpoofId}
-      || $req->{user}
-      || $req->{sessionInfo}->{_impUser};
+      || $req->{user};
+
     $self->logger->debug("No impersonation required")
       if ( $spoofId eq $req->{user} );
     my $statut = PE_OK;
@@ -72,7 +73,7 @@ sub run {
     }
 
     # Check activation rule
-    if ( $spoofId ne $req->{user} ) {
+    if ( $req->{user} and $spoofId ne $req->{user} ) {
         $self->logger->debug("Spoofied Id: $spoofId / Real Id: $req->{user}");
         unless ( $self->rule->( $req, $req->sessionInfo ) ) {
             $self->userLogger->error('Impersonation service not authorized');
