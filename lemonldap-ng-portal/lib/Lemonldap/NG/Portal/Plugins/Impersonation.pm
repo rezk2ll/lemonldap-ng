@@ -55,7 +55,11 @@ sub init {
 
 sub run {
     my ( $self, $req ) = @_;
-    my $spoofId = $req->param('spoofId') || $req->{user};
+    my $spoofId =
+         $req->param('spoofId')
+      || $req->{sessionInfo}->{_impSpoofId}
+      || $req->{user}
+      || $req->{sessionInfo}->{_impUser};
     $self->logger->debug("No impersonation required")
       if ( $spoofId eq $req->{user} );
     my $statut = PE_OK;
@@ -86,7 +90,9 @@ sub run {
             next unless defined $req->{sessionInfo}->{$k};
         }
         $spk = "$self->{conf}->{impersonationPrefix}$k";
-        unless ( $self->hAttr =~ /\b$k\b/ ) {
+        unless ( $self->hAttr =~ /\b$k\b/
+            || $k =~ /^(?:_imp|token|_type)\w*\b/ )
+        {
             $realSession->{$spk} = $req->{sessionInfo}->{$k};
             $self->logger->debug("-> Store $k in realSession key: $spk");
         }

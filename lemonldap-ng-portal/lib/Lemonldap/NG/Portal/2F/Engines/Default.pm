@@ -139,6 +139,7 @@ sub run {
     my ( $self, $req ) = @_;
 
     my $checkLogins = $req->param('checkLogins');
+    my $spoofId = $req->param('spoofId') || '';
     $self->logger->debug("2F checkLogins set") if ($checkLogins);
 
     # Skip 2F unless a module has been registered
@@ -186,6 +187,8 @@ sub run {
     $req->sessionInfo->{_2fRealSession} = $req->id;
     $req->sessionInfo->{_2fUrldc}       = $req->urldc;
     $req->sessionInfo->{_2fUtime}       = $req->{sessionInfo}->{_utime};
+    $req->sessionInfo->{_impSpoofId}    = $spoofId;
+    $req->sessionInfo->{_impUser}       = $req->user;
     my $token = $self->ott->createToken( $req->sessionInfo );
     delete $req->{authResult};
 
