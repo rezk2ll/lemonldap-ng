@@ -14,7 +14,6 @@ my $client = LLNG::Manager::Test->new( {
             authentication           => 'Choice',
             userDB                   => 'Same',
             passwordDB               => 'Choice',
-            portalRequireOldPassword => 1,
             requireToken             => 1,
             authChoiceParam          => 'test',
             authChoiceModules        => {
@@ -46,7 +45,7 @@ ok(
         length => length($query),
         accept => 'text/html',
     ),
-    'Auth query with unknown user'
+    'Auth query with an unknown user'
 );
 ( $host, $url, $query ) =
   expectForm( $res, '#', undef, 'user', 'password', 'token' );
@@ -57,9 +56,6 @@ ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span><\/div>/,
 
 # Try to authenticate
 # -------------------
-#ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get menu' );
-#my ( $host, $url, $query ) =
-#  expectForm( $res, '#', undef, 'user', 'password', 'token' );
 @form = ( $res->[2]->[0] =~ m#<form.*?</form>#sg );
 ok( @form == 2, 'Display 2 choices' );
 foreach (@form) {
