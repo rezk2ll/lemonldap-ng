@@ -66,6 +66,7 @@ ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
 count(1);
 
 # Expired token
+diag 'Waiting';
 sleep 3;
 $query =~ s/user=/user=rtyler/;
 $query =~ s/url=/url=http%3A%2F%2Ftest1.example.com/;

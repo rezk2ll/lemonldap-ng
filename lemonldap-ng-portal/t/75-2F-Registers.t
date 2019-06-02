@@ -172,6 +172,7 @@ SKIP: {
     ) or print STDERR Dumper( $res->[2]->[0] );
 
     # Wait to have two different epoch values
+    diag 'Waiting';
     sleep 1;
 
     # Ajax registration request

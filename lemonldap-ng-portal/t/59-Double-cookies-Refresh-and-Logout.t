@@ -123,6 +123,7 @@ ok( $attributes[13] =~ /^\d{14}$/, 'Timestamp found' )
   or print STDERR Dumper( \@attributes );
 count(4);
 
+diag 'Waiting';
 sleep 3;
 
 # Refresh rights
