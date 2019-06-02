@@ -5,7 +5,7 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants
   qw( PE_OK PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED PE_MALFORMEDUSER );
 
-our $VERSION = '2.0.4';
+our $VERSION = '2.0.5';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -37,17 +37,16 @@ sub init {
     $self->rule($rule);
 
     # Parse identity rule
-    $self->logger->debug( "Impersonation identities rule -> "
+    $self->logger->debug( "Impersonation identity rule -> "
           . $self->conf->{impersonationIdRule} );
     $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{impersonationIdRule} ) );
     unless ($rule) {
         $self->error(
-            "Bad impersonation identities rule -> " . $hd->tsv->{jail}->error );
+            "Bad impersonation identity rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
     $self->idRule($rule);
-
     return 1;
 }
 
@@ -55,15 +54,19 @@ sub init {
 
 sub run {
     my ( $self, $req ) = @_;
-    $req->{user} ||= $req->{sessionInfo}->{_impUser};
-    my $spoofId =
-         $req->param('spoofId')
-      || $req->{sessionInfo}->{_impSpoofId}
-      || $req->{user};
+
+    return $req->authResult if $req->authResult > PE_OK; # Skip Impersonation if error during Auth process
+
+    my $statut = PE_OK;
+    my $loginHistory =
+      $req->{sessionInfo}->{_loginHistory};    # Store login history
+    $req->{user} ||= $req->{sessionInfo}->{_impUser};    # If 2FA is enabled
+    my $spoofId = $req->param('spoofId')       # Impersonation required
+      || $req->{sessionInfo}->{_impSpoofId}    # If 2FA is enabled
+      || $req->{user};                         # NO Impersonation required
 
     $self->logger->debug("No impersonation required")
       if ( $spoofId eq $req->{user} );
-    my $statut = PE_OK;
 
     if ( $spoofId !~ /$self->{conf}->{userControl}/o ) {
         $self->userLogger->error('Malformed spoofed Id');
@@ -73,8 +76,8 @@ sub run {
     }
 
     # Check activation rule
-    if ( $req->{user} and $spoofId ne $req->{user} ) {
-        $self->logger->debug("Spoofied Id: $spoofId / Real Id: $req->{user}");
+    if ( $spoofId ne $req->{user} ) {
+        $self->logger->debug("Spoof Id: $spoofId / Real Id: $req->{user}");
         unless ( $self->rule->( $req, $req->sessionInfo ) ) {
             $self->userLogger->error('Impersonation service not authorized');
             $spoofId = $req->{user};
@@ -101,7 +104,7 @@ sub run {
         delete $req->{sessionInfo}->{$k};
     }
 
-    $spoofSession = $self->_userDatas( $req, $spoofId, $realSession );
+    $spoofSession = $self->_userData( $req, $spoofId, $realSession );
     if ( $req->error ) {
         if ( $req->error == PE_BADCREDENTIALS ) {
             $statut = PE_BADCREDENTIALS;
@@ -111,8 +114,8 @@ sub run {
         }
     }
 
-    # Update spoofed session
-    $self->logger->debug("Populating spoofed session...");
+    # Update spoof session
+    $self->logger->debug("Populating spoof session...");
     foreach (qw (_auth _userDB)) {
         $self->logger->debug("Processing $_...");
         $spk = "$self->{conf}->{impersonationPrefix}$_";
@@ -145,9 +148,11 @@ sub run {
 
     # Main session
     $self->p->updateSession( $req, $spoofSession );
+    $req->{sessionInfo}->{_loginHistory} =
+      $loginHistory;    # Restore login history
     $req->steps( [ $self->p->validSession, @{ $self->p->endAuth } ] );
 
-    # Restore _httpSession for double Cookies
+    # Restore _httpSession for Double Cookies
     if ( $self->conf->{securedCookie} >= 2 ) {
         $self->p->updateSession( $req, $spoofSession,
             $req->{sessionInfo}->{real__httpSession} );
@@ -157,13 +162,13 @@ sub run {
     return $statut;
 }
 
-sub _userDatas {
+sub _userData {
     my ( $self, $req, $spoofId, $realSession ) = @_;
     my $realId = $req->{user};
     $req->{user} = $spoofId;
     my $raz = 0;
 
-    # Compute Macros and Groups with real and spoofed sessions
+    # Compute Macros and Groups with real and spoof sessions
     $req->{sessionInfo} = {%$realSession};
 
     # Search user in database
@@ -185,7 +190,7 @@ sub _userDatas {
         $raz = 1;
     }
 
-    # Check identity rule if impersonation required
+    # Check identity rule if Impersonation required
     if ( $realId ne $spoofId ) {
         unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
             $self->userLogger->warn(
@@ -197,7 +202,7 @@ sub _userDatas {
         }
     }
 
-    # Same real and spoofed session - Compute Macros and Groups
+    # Same real and spoof session - Compute Macros and Groups
     if ($raz) {
         $req->{sessionInfo} = {};
         $req->{sessionInfo} = {%$realSession};
@@ -208,14 +213,13 @@ sub _userDatas {
                 'setLocalGroups'
             ]
         );
-        $self->logger->debug('Spoofed session equal real session');
+        $self->logger->debug('Spoof session equal real session');
         $req->error(PE_BADCREDENTIALS);
         if ( my $error = $self->p->process($req) ) {
             $self->logger->debug("Process returned error: $error");
             $req->error($error);
         }
     }
-
     return $req->{sessionInfo};
 }
 
