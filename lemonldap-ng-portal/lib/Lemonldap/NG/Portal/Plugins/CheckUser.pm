@@ -62,7 +62,7 @@ sub init {
 sub check {
     my ( $self, $req ) = @_;
     my ( $attrs, $array_attrs, $array_hdrs ) = ( {}, [], [] );
-    my $msg = my $auth = '';
+    my $msg = my $auth = my $compute = '';
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
@@ -136,6 +136,7 @@ sub check {
 
         # Try to retrieve session from sessions DB
         $self->userLogger->notice('Try to retrieve session from DB...');
+        $self->logger->debug('Try to retrieve session from DB...');
         my $moduleOptions = $self->conf->{globalStorageOptions} || {};
         $moduleOptions->{backend} = $self->conf->{globalStorage};
         my $sessions =
@@ -154,7 +155,10 @@ sub check {
             $req->{user} = $user;
             $self->userLogger->notice(
                 "NO session found in DB. Compute userData...");
+            $self->logger->debug(
+                "NO session found in DB. Compute userData...");
             $attrs = $self->_userData($req);
+            $compute = 1;
         }
     }
 
@@ -168,6 +172,7 @@ sub check {
           $self->{conf}->{impersonationMergeSSOgroups}
           ? 'checkUserMerged'
           : 'checkUser';
+        $msg = 'checkUserComputeSession' if $compute;
 
         # Create an array of hashes for template loop
         $self->logger->debug("Delete hidden or empty attributes");
@@ -199,13 +204,12 @@ sub check {
         $url = $self->_urlFormat($url);
 
         # User is allowed ?
-        $auth = $self->_authorization( $req, $url );
         $self->logger->debug(
-            "checkUser requested for user: $req->{user} and URL: $url");
+            "checkUser requested for user: $attrs->{ $self->{conf}->{whatToTrace} } and URL: $url");
+        $auth = $self->_authorization( $req, $url, $attrs );
         if ( $auth >= 0 ) {
-
             $auth = $auth ? "allowed" : "forbidden";
-            $self->userLogger->notice( "checkUser -> $req->{user} is "
+            $self->userLogger->notice( "checkUser -> $attrs->{ $self->{conf}->{whatToTrace} } is "
                   . uc($auth)
                   . " to access: $url" );
 
@@ -362,7 +366,7 @@ sub _userData {
 }
 
 sub _authorization {
-    my ( $self, $req, $uri ) = @_;
+    my ( $self, $req, $uri, $attrs ) = @_;
     my ( $vhost, $appuri ) = $uri =~ m#^https?://([^/]*)(.*)#;
     my $exist = 0;
 
@@ -375,9 +379,9 @@ sub _authorization {
         }
     }
 
-    $self->logger->debug("Return \"$req->{user}\" authorization");
+    $self->logger->debug("Return \"$attrs->{ $self->{conf}->{whatToTrace} }\" authorization");
     return $exist
-      ? $self->p->HANDLER->grant( $req, $req->{userData}, $appuri,
+      ? $self->p->HANDLER->grant( $req, $attrs, $appuri,
         undef, $vhost )
       : -1;
 }
