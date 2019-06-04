@@ -109,6 +109,7 @@
 "checkLastLogins":"Überprüfe meine letzten Logins",
 "checkUser":"Check user SSO profile",
 "checkUserMerged":"Check user SSO profile. Real and Spoofed SSO groups are merged!!!",
+"checkUserComputeSession":"Computed session data!!!",
 "choose2f":"Wählen deinen Ihren zweiten Faktor",
 "chooseApp":"Wählen Sie eine Anwendung aus, auf die du zugreifen darfst",
 "clickHere":"Bitte hier klicken",
