@@ -214,7 +214,7 @@ sub check {
                   . " to access: $url" );
 
             # Return VirtualHost headers
-            $array_hdrs = $self->_headers( $req, $url );
+            $array_hdrs = $self->_headers( $req, $url, $attrs );
         }
         else {
             $auth = 'VHnotFound';
@@ -260,6 +260,7 @@ sub display {
     my ( $self, $req ) = @_;
     my ( $attrs, $array_attrs ) = ( {}, [] );
 
+    $self->logger->debug("Display current session data...");
     $self->userLogger->notice("Retrieve session from Sessions database");
     $self->userLogger->warn("Using spoofed SSO groups if exist!!!")
       if ( $self->conf->{impersonationRule} );
@@ -323,7 +324,6 @@ sub _urlFormat {
     $vhost =~ s/:\d+$//;
     $vhost .= $self->conf->{domain} unless ( $vhost =~ /\./ );
 
-    #$appuri ||= '/';
     return lc("$proto$vhost$port") . "$appuri";
 }
 
@@ -347,6 +347,13 @@ sub _userData {
         return $req->error($error);
     }
 
+    unless ( defined $req->sessionInfo->{uid} ) {
+
+        # Avoid error with SAML, OIDC, etc...
+        $self->logger->debug("\"$req->{user}\" NOT found in userDB");
+        return $req->error(PE_BADCREDENTIALS);
+    }
+
     # Check identities rule
     unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
         $self->userLogger->warn(
@@ -355,12 +362,7 @@ sub _userData {
         $self->logger->debug('Identity not authorized');
         return $req->error(PE_BADCREDENTIALS);
     }
-    unless ( defined $req->sessionInfo->{uid} ) {
 
-        # Avoid error with SAML, OIDC, etc...
-        $self->logger->debug("\"$req->{user}\" NOT found in userDB");
-        return $req->error(PE_BADCREDENTIALS);
-    }
     $self->logger->debug("Return \"$req->{user}\" sessionInfo");
     return $req->{sessionInfo};
 }
@@ -387,15 +389,14 @@ sub _authorization {
 }
 
 sub _headers {
-    my ( $self, $req, $uri ) = @_;
+    my ( $self, $req, $uri, $attrs ) = @_;
     my ($vhost) = $uri =~ m#^https?://([^/]*).*#;
 
     $vhost =~ s/:\d+$//;
     $req->{env}->{HTTP_HOST} = $vhost;
     $self->p->HANDLER->headersInit( $self->{conf} );
-
-    $self->logger->debug("Return \"$req->{user}\" headers");
-    return $self->p->HANDLER->checkHeaders( $req, $req->{userData} );
+    $self->logger->debug("Return \"$attrs->{ $self->{conf}->{whatToTrace} }\" headers");
+    return $self->p->HANDLER->checkHeaders( $req, $attrs );
 }
 
 sub _splitAttributes {
