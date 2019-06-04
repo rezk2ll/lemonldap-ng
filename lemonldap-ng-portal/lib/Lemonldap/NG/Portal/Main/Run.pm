@@ -795,7 +795,8 @@ sub sendHtml {
     my @cors = split /;/, $self->cors;
     if ( $self->conf->{corsEnabled} ) {
         push @{ $res->[1] }, @cors;
-        $self->logger->debug("Apply following CORS policy : @cors");
+        $self->logger->debug(
+            "Apply following CORS policy : " . Data::Dumper::Dumper(\@cors) );
     }
 
     # Set authorized URL for POST
