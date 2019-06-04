@@ -267,7 +267,7 @@ SKIP: {
       or explain( $res->[2]->[0], 'Value french' );
     count(4);
 
-    # CheckUser request with unknown user
+    # CheckUser request with an unknown user
     $query =~ s/user=french/user=rtyler/;
     ok(
         $res = $sp->_post(
@@ -286,7 +286,7 @@ m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
     ) or explain( $res->[2]->[0], 'PE5 - Unknown identity' );
     count(2);
 
-    # CheckUser request with an already authneticated user
+    # CheckUser request with an already authenticated user
     $query =~ s/user=rtyler/user=davros/;
     ok(
         $res = $sp->_post(
