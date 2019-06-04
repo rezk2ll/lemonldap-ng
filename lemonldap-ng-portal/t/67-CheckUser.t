@@ -144,6 +144,7 @@ ok( $res->[2]->[0] =~ m%<td class="align-middle">dwho</td>%, 'Found dwho' )
   or explain( $res->[2]->[0], 'Macro Value dwho' );
 count(3);
 
+# Request with bad VH
 $query =~ s/user=dwho/user=rtyler/;
 $query =~ s/url=http%3A%2F%2Ftest1.example.com/url=http%3A%2F%2Ftry.example.com/;
 ok(
@@ -157,8 +158,6 @@ ok(
     'POST checkuser'
 );
 count(1);
-
-# Request with bad VH
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok( $res->[2]->[0] =~ m%<span trspan="VHnotFound">%,
@@ -166,10 +165,30 @@ ok( $res->[2]->[0] =~ m%<span trspan="VHnotFound">%,
   or explain( $res->[2]->[0], 'trspan="VHnotFound"' );
 count(1);
 
+# Request with forbidden URL
+$query =~ s#url=http%3A%2F%2Ftry.example.com#url=http%3A%2F%2Fauth.example.com/checkuser#;
+ok(
+    $res = $client->_post(
+        '/checkuser',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'POST checkuser'
+);
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok(
+    $res->[2]->[0] =~
+m%<div class="alert alert-danger"><b><span trspan="forbidden"></span></b></div>%,
+    'Found trspan="forbidden"'
+) or explain( $res->[2]->[0], 'trspan="forbidden"' );
+count(2);
+
 # Request with good VH & user
 $query =~
-s#url=http%3A%2F%2Ftry.example.com#url=hTTp%3A%2F%2FTest1.exAmple.cOm/UriTesT#;
-
+s#url=http%3A%2F%2Fauth.example.com%2Fcheckuser#url=hTTp%3A%2F%2FTest1.exAmple.cOm/UriTesT#;
 ok(
     $res = $client->_post(
         '/checkuser',
@@ -221,6 +240,10 @@ ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
 ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%, 'Found uid' )
   or explain( $res->[2]->[0], 'Attribute Value uid' );
 count(11);
+
+my @c = ( $res->[2]->[0] =~ /<td class="align-middle">rtyler/gs );
+ok( @c == 2, ' -> Two entries found' );
+count(1);
 
 # Request with short VH url & user
 $query =~
