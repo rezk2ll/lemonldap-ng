@@ -793,7 +793,10 @@ sub sendHtml {
       'Expires'       => '0';                                      # Proxies
 
     my @cors = split /;/, $self->cors;
-    push @{ $res->[1] }, @cors if $self->conf->{corsEnabled};
+    if ( $self->conf->{corsEnabled} ) {
+        push @{ $res->[1] }, @cors;
+        $self->logger->debug("Apply following CORS policy : @cors");
+    }
 
     # Set authorized URL for POST
     my $csp = $self->csp . "form-action " . $self->conf->{cspFormAction};
