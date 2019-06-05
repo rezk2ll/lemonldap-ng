@@ -12,7 +12,7 @@ use Unicode::String qw(utf8);
 use Scalar::Util 'weaken';
 use utf8;
 
-our $VERSION  = '2.0.3';
+our $VERSION  = '2.0.5';
 our $ppLoaded = 0;
 
 BEGIN {
@@ -163,8 +163,7 @@ sub loadPP {
 # @param %args See Net::LDAP(3) manpage for more
 # @return Lemonldap::NG portal error code
 sub userBind {
-    my $self = shift;
-    my $req  = shift;
+    my ( $self, $req ) = @_;
 
     if ( $self->{conf}->{ldapPpolicyControl} ) {
 
