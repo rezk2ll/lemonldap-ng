@@ -70,7 +70,7 @@ sub authenticate {
     my $res =
       $self->userBind( $req, $req->data->{dn},
         password => $req->data->{password} );
-    $self->setSecurity($req) if ($res);
+    $self->setSecurity($req) if ( $res > PE_OK );
 
     # Remember password if password reset needed
     if (
