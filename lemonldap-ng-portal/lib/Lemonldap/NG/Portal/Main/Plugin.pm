@@ -151,6 +151,11 @@ Example:
       return $self->p->sendHtml($req, 'template', params => { WELLCOME => 1 });
   }
 
+If you want to get a "protected application" behavior, you can use
+B<addAuthRouteWithRedirect>. This methods calls B<addAuthRoute> with given
+arguments and build a "unAuth" route that build a redirection after
+authentication.
+
 =head3 Entry point in auth process
 
 A plugin which wants to be inserted in authentication process has to declare
