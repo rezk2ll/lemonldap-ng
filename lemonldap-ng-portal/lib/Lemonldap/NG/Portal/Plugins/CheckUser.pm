@@ -39,8 +39,8 @@ sub hAttr {
 sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;
-    $self->addAuthRoute( checkuser => 'check',   ['POST'] );
-    $self->addAuthRoute( checkuser => 'display', ['GET'] );
+    $self->addAuthRoute( checkuser => 'check', ['POST'] );
+    $self->addAuthRouteWithRedirect( checkuser => 'display', ['GET'] );
 
     # Parse identity rule
     $self->logger->debug(
@@ -155,9 +155,8 @@ sub check {
             $req->{user} = $user;
             $self->userLogger->notice(
                 "NO session found in DB. Compute userData...");
-            $self->logger->debug(
-                "NO session found in DB. Compute userData...");
-            $attrs = $self->_userData($req);
+            $self->logger->debug("NO session found in DB. Compute userData...");
+            $attrs   = $self->_userData($req);
             $compute = 1;
         }
     }
@@ -205,11 +204,13 @@ sub check {
 
         # User is allowed ?
         $self->logger->debug(
-            "checkUser requested for user: $attrs->{ $self->{conf}->{whatToTrace} } and URL: $url");
+"checkUser requested for user: $attrs->{ $self->{conf}->{whatToTrace} } and URL: $url"
+        );
         $auth = $self->_authorization( $req, $url, $attrs );
         if ( $auth >= 0 ) {
             $auth = $auth ? "allowed" : "forbidden";
-            $self->userLogger->notice( "checkUser -> $attrs->{ $self->{conf}->{whatToTrace} } is "
+            $self->userLogger->notice(
+                    "checkUser -> $attrs->{ $self->{conf}->{whatToTrace} } is "
                   . uc($auth)
                   . " to access: $url" );
 
@@ -381,10 +382,10 @@ sub _authorization {
         }
     }
 
-    $self->logger->debug("Return \"$attrs->{ $self->{conf}->{whatToTrace} }\" authorization");
+    $self->logger->debug(
+        "Return \"$attrs->{ $self->{conf}->{whatToTrace} }\" authorization");
     return $exist
-      ? $self->p->HANDLER->grant( $req, $attrs, $appuri,
-        undef, $vhost )
+      ? $self->p->HANDLER->grant( $req, $attrs, $appuri, undef, $vhost )
       : -1;
 }
 
@@ -395,7 +396,8 @@ sub _headers {
     $vhost =~ s/:\d+$//;
     $req->{env}->{HTTP_HOST} = $vhost;
     $self->p->HANDLER->headersInit( $self->{conf} );
-    $self->logger->debug("Return \"$attrs->{ $self->{conf}->{whatToTrace} }\" headers");
+    $self->logger->debug(
+        "Return \"$attrs->{ $self->{conf}->{whatToTrace} }\" headers");
     return $self->p->HANDLER->checkHeaders( $req, $attrs );
 }
 

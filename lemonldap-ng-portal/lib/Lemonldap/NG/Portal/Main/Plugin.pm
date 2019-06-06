@@ -30,6 +30,11 @@ sub addUnauthRoute {
     return $self->_addRoute( 'addUnauthRoute', @_ );
 }
 
+sub addAuthRouteWithRedirect {
+    my $self = shift;
+    return $self->_addRoute( 'addAuthRouteWithRedirect', @_ );
+}
+
 sub _addRoute {
     my ( $self, $type, $word, $subName, $methods, $transform ) = @_;
     $transform //= sub {

@@ -25,6 +25,13 @@ my $client = LLNG::Manager::Test->new( {
     }
 );
 
+ok( $res = $client->_get( '/checkuser', accept => 'text/html' ),
+    'Test unauth redirection' );
+expectRedirection( $res,
+    'http://auth.example.com/?url=aHR0cDovL2F1dGguZXhhbXBsZS5jb20vY2hlY2t1c2Vy'
+);
+count(1);
+
 ## Try to authenticate
 ok(
     $res = $client->_post(
@@ -36,7 +43,6 @@ ok(
     'Auth query'
 );
 count(1);
-
 my $id = expectCookie($res);
 expectRedirection( $res, 'http://auth.example.com/' );
 
@@ -146,7 +152,8 @@ count(3);
 
 # Request with bad VH
 $query =~ s/user=dwho/user=rtyler/;
-$query =~ s/url=http%3A%2F%2Ftest1.example.com/url=http%3A%2F%2Ftry.example.com/;
+$query =~
+  s/url=http%3A%2F%2Ftest1.example.com/url=http%3A%2F%2Ftry.example.com/;
 ok(
     $res = $client->_post(
         '/checkuser',
@@ -166,7 +173,8 @@ ok( $res->[2]->[0] =~ m%<span trspan="VHnotFound">%,
 count(1);
 
 # Request with forbidden URL
-$query =~ s#url=http%3A%2F%2Ftry.example.com#url=http%3A%2F%2Fauth.example.com/checkuser#;
+$query =~
+s#url=http%3A%2F%2Ftry.example.com#url=http%3A%2F%2Fauth.example.com/checkuser#;
 ok(
     $res = $client->_post(
         '/checkuser',
