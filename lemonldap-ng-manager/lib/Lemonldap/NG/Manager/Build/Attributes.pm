@@ -6,14 +6,20 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.0.4';
+our $VERSION = '2.0.5';
 use strict;
 use Regexp::Common qw/URI/;
 
 my $perlExpr = sub {
     my ( $val, $conf ) = @_;
-    my $s = '';
-    Safe->new->reval("BEGIN { warnings->unimport; } $s $val");
+    my $s   = '';
+    my $cpt = new Safe;
+    $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
+    $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
+        [ '&encrypt', '&token' ] );
+    $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
+        $Lemonldap::NG::Common::Safelib::functions );
+    $cpt->reval("BEGIN { warnings->unimport; } $s $val");
     my $err = join( '',
         grep { $_ =~ /Undefined subroutine/ ? () : $_ } split( /\n/, $@ ) );
     return $err ? ( 1, "__badExpression__: $err" ) : (1);
@@ -499,6 +505,7 @@ sub attributes {
             documentation => 'Handler ServiceToken timeout',
             flags         => 'hp',
         },
+
         # Loggers (ini only)
         logLevel => {
             type          => 'text',
@@ -742,9 +749,8 @@ sub attributes {
         },
         corsMax_Age => {
             type    => 'text',
-            default => '86400', # 24 hours
-            documentation =>
-              'MAx-age for Cross-Origin Resource Sharing',
+            default => '86400',    # 24 hours
+            documentation => 'MAx-age for Cross-Origin Resource Sharing',
         },
         cspDefault => {
             type          => 'text',
@@ -1680,7 +1686,13 @@ sub attributes {
                           : ( 0, '__badUrl__' );
                     }
                     $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
-                    Safe->new->reval("BEGIN { warnings->unimport; } $s");
+                    my $cpt = new Safe;
+                    $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
+                    $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
+                        [ '&encrypt', '&token' ] );
+                    $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
+                        $Lemonldap::NG::Common::Safelib::functions );
+                    $cpt->reval("BEGIN { warnings->unimport; } $s");
                     my $err = join( '',
                         grep { $_ =~ /Undefined subroutine/ ? () : $_ }
                           split( /\n/, $@ ) );
@@ -1704,8 +1716,14 @@ sub attributes {
                 keyMsgFail => '__badHeaderName__',
                 test       => sub {
                     my ( $val, $conf ) = @_;
-                    my $s = $val;
-                    Safe->new->reval("BEGIN { warnings->unimport; } $s");
+                    my $s   = $val;
+                    my $cpt = new Safe;
+                    $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
+                    $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
+                        [ '&encrypt', '&token' ] );
+                    $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
+                        $Lemonldap::NG::Common::Safelib::functions );
+                    $cpt->reval("BEGIN { warnings->unimport; } $s");
                     my $err = join( '',
                         grep { $_ =~ /Undefined subroutine/ ? () : $_ }
                           split( /\n/, $@ ) );
