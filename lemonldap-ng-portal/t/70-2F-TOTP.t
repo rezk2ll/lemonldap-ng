@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 16;
+my $maintests = 17;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -17,6 +17,7 @@ SKIP: {
                 logLevel               => 'error',
                 totp2fSelfRegistration => 1,
                 totp2fActivation       => 1,
+                totp2fTTL              => 2,
                 portalMainLogo         => 'common/logos/logo_llng_old.png',
             }
         }
@@ -82,7 +83,7 @@ SKIP: {
     ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
         'Code' );
     ok( $code =~ /^\d{6}$/, 'Code contains 6 digits' );
-    my $s = "code=$code&token=$token";
+    my $s = "code=$code&token=$token&TOTPName=myTOTP";
     ok(
         $res = $client->_post(
             '/2fregisters/totp/verify',
@@ -122,6 +123,22 @@ SKIP: {
     );
     $id = expectCookie($res);
     $client->logout($id);
+
+    diag 'Waiting';
+    sleep 3;
+
+    # Try to sign-in
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+    $id = expectCookie($res);
+    expectRedirection( $res, 'http://auth.example.com/' );
 }
 count($maintests);
 
