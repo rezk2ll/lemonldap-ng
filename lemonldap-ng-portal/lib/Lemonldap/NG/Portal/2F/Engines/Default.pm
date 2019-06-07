@@ -20,7 +20,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_TOKENEXPIRED
 );
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.5';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -126,7 +126,6 @@ sub init {
             );
         }
     }
-
     return 1;
 }
 
@@ -137,13 +136,77 @@ sub init {
 # run() is called at each authentication, just after sessionInfo populated
 sub run {
     my ( $self, $req ) = @_;
-
     my $checkLogins = $req->param('checkLogins');
     my $spoofId = $req->param('spoofId') || '';
     $self->logger->debug("2F checkLogins set") if ($checkLogins);
 
     # Skip 2F unless a module has been registered
     return PE_OK unless ( @{ $self->sfModules } );
+
+    # Remove expired 2F devices
+    my $session = $req->sessionInfo;
+    if ( $session->{_2fDevices} ) {
+        $self->logger->debug("Loading 2F Devices ...");
+
+        # Read existing 2FDevices
+        my $_2fDevices =
+          eval { from_json( $session->{_2fDevices}, { allow_nonref => 1 } ); };
+        if ($@) {
+            $self->logger->error("Bad encoding in _2fDevices: $@");
+            return PE_ERROR;
+        }
+        $self->logger->debug(" -> 2F Device(s) found");
+
+        my $u2fTTL = $self->conf->{u2fTTL}
+          && $self->conf->{u2fTTL} > 0 ? $self->conf->{u2fTTL} : 0;
+        my $totpTTL = $self->conf->{totp2fTTL}
+          && $self->conf->{totp2fTTL} > 0 ? $self->conf->{totp2fTTL} : 0;
+        my $ubkTTL = $self->conf->{yubikey2fTTL}
+          && $self->conf->{yubikey2fTTL} > 0 ? $self->conf->{yubikey2fTTL} : 0;
+
+        if ( $u2fTTL || $totpTTL || $ubkTTL ) {
+            my $now     = time();
+            my $removed = 0;
+            $self->logger->debug("Looking for expired 2F device(s)...");
+            foreach (@$_2fDevices) {
+                if ( $_->{type} eq 'U2F' ) {
+                    if ( $u2fTTL && $now - $_->{epoch} > $u2fTTL ) {
+                        $self->logger->debug(
+                            "Remove U2F -> $_->{name} / $_->{epoch}");
+                        $self->userLogger->info("Remove expired U2F");
+                        $_->{type} = 'EXPIRED';
+                        $removed++;
+                    }
+                }
+                if ( $_->{type} eq 'UBK' ) {
+                    if ( $ubkTTL && $now - $_->{epoch} > $ubkTTL ) {
+                        $self->logger->debug(
+                            "Remove Yubikey -> $_->{name} / $_->{epoch}");
+                        $self->userLogger->info("Remove expired Yubiked");
+                        $_->{type} = 'EXPIRED';
+                        $removed++;
+                    }
+                }
+                if ( $_->{type} eq 'TOTP' ) {
+                    if ( $totpTTL && $now - $_->{epoch} > $totpTTL ) {
+                        $self->logger->debug(
+                            "Remove TOTP -> $_->{name} / $_->{epoch}");
+                        $self->userLogger->info("Remove expired TOTP");
+                        $_->{type} = 'EXPIRED';
+                        $removed++;
+                    }
+                }
+            }
+            if ($removed) {
+                $self->logger->debug(
+                    "Found EXPIRED 2F device(s) => Update persistent session");
+                @$_2fDevices =
+                  map { $_->{type} =~ /\bEXPIRED\b/ ? () : $_ } @$_2fDevices;
+                $self->p->updatePersistentSession( $req,
+                    { _2fDevices => to_json($_2fDevices) } );
+            }
+        }
+    }
 
     # Search for authorized modules for this user
     my @am;

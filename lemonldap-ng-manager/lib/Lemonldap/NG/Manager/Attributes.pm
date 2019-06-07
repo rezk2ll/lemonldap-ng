@@ -3524,6 +3524,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'boolOrExpr'
         },
+        'totp2fTTL' => {
+            'type' => 'int'
+        },
         'totp2fUserCanChangeKey' => {
             'default' => 0,
             'type'    => 'bool'
@@ -3562,6 +3565,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'u2fSelfRegistration' => {
             'default' => 0,
             'type'    => 'boolOrExpr'
+        },
+        'u2fTTL' => {
+            'type' => 'int'
         },
         'u2fUserCanRemoveKey' => {
             'default' => 1,
@@ -3763,6 +3769,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'yubikey2fSelfRegistration' => {
             'default' => 0,
             'type'    => 'boolOrExpr'
+        },
+        'yubikey2fTTL' => {
+            'type' => 'int'
         },
         'yubikey2fUrl' => {
             'type' => 'text'

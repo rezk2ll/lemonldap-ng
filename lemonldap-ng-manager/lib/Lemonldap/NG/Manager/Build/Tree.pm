@@ -689,6 +689,7 @@ sub tree {
                                 'totp2fDisplayExistingSecret',
                                 'totp2fUserCanChangeKey',
                                 'totp2fUserCanRemoveKey',
+                                'totp2fTTL',
                             ]
                         },
                         {
@@ -698,6 +699,7 @@ sub tree {
                             nodes => [
                                 'u2fActivation', 'u2fSelfRegistration',
                                 'u2fAuthnLevel', 'u2fUserCanRemoveKey',
+                                'u2fTTL',
                             ]
                         },
                         {
@@ -745,6 +747,7 @@ sub tree {
                                 'yubikey2fUrl',
                                 'yubikey2fPublicIDSize',
                                 'yubikey2fUserCanRemoveKey',
+                                'yubikey2fTTL',
                             ],
                         },
                         'sfRequired',

@@ -1369,7 +1369,10 @@ sub attributes {
             default       => 1,
             documentation => 'Authorize users to remove existing U2F key',
         },
-
+        u2fTTL => {
+            type          => 'int',
+            documentation => 'U2F device time to live',
+        },
         # TOTP second factor
         totp2fActivation => {
             type          => 'boolOrExpr',
@@ -1420,6 +1423,10 @@ sub attributes {
             type          => 'bool',
             default       => 1,
             documentation => 'Authorize users to remove existing TOTP secret',
+        },
+        totp2fTTL => {
+            type          => 'int',
+            documentation => 'TOTP device time to live ',
         },
 
         # UTOTP 2F
@@ -1577,6 +1584,10 @@ sub attributes {
             type          => 'bool',
             default       => 1,
             documentation => 'Authorize users to remove existing Yubikey',
+        },
+        yubikey2fTTL => {
+            type          => 'int',
+            documentation => 'Yubikey device time to live',
         },
 
         # Single session
