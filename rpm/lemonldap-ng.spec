@@ -50,13 +50,14 @@
 #==============================================================================
 Name:           lemonldap-ng
 Version:        2.0.4
-Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
+Release:        %{?pre_release:0.}2%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
 URL:            http://lemonldap-ng.org
 Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_release:~%{pre_release}}.tar.gz
 BuildArch:      noarch
 
+BuildRequires:  gnupg
 BuildRequires:  perl-generators
 BuildRequires:  perl-interpreter
 BuildRequires:  perl(Apache2::Connection)
@@ -661,6 +662,9 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Fri Jun 07 2019 Xavier Bachelot <xavier@bachelot.org> - 2.0.4-2
+- BR: gnupg to fix test 29-AuthGPG.t failure in manager.
+
 * Sun May 12 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.4-1
 - Update to 2.0.4
 
