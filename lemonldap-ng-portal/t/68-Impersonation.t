@@ -154,8 +154,7 @@ ok(
 count(1);
 expectOK($res);
 ok(
-    $res->[2]->[0] =~
-m%<span trspan="connectedAs">Connected as</span> msmith%,
+    $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> msmith%,
     'Connected as msmith'
 ) or print STDERR Dumper( $res->[2]->[0] );
 expectAuthenticatedAs( $res, 'msmith' );
@@ -235,11 +234,9 @@ ok(
 );
 count(1);
 expectOK($res);
-ok(
-    $res->[2]->[0] =~
-m%<span trspan="connectedAs">Connected as</span> dwho%,
-    'Connected as dwho'
-) or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> dwho%,
+    'Connected as dwho' )
+  or print STDERR Dumper( $res->[2]->[0] );
 expectAuthenticatedAs( $res, 'dwho' );
 count(1);
 
@@ -309,7 +306,8 @@ ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
 ok( $res->[2]->[0] =~ m%<td class="text-left">testPrefix_groups</td>%,
     'Found testPrefix_groups' )
   or explain( $res->[2]->[0], 'testPrefix_groups' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">su</td>%, 'Found su' )
+ok( $res->[2]->[0] =~ m%<td class="text-left">su; su_test; test_su</td>%,
+    'Found "su; su_test; test_su"' )
   or explain( $res->[2]->[0], 'su' );
 ok( $res->[2]->[0] =~ m%<td class="text-left">testPrefix_uid</td>%,
     'Found testPrefix_uid' )

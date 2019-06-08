@@ -31,7 +31,7 @@
     "LockDirectory": "t/sessions/lock",
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
-  "groups": { "su":"$uid eq \"rtyler\"" },
+  "groups": { "su":"$uid eq \"rtyler\"", "test_su": "$uid eq \"rtyler\"", "su_test": "$uid eq \"rtyler\"" },
   "key": "qwertyui",
   "locationRules": {
     "auth.example.com" : {
