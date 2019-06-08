@@ -168,7 +168,7 @@ sub check {
     }
     else {
         $msg =
-          $self->{conf}->{impersonationMergeSSOgroups}
+          $self->{conf}->{impersonationMergeSSOgroups} eq 1
           ? 'checkUserMerged'
           : 'checkUser';
         $msg = 'checkUserComputeSession' if $compute;
