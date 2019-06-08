@@ -117,6 +117,7 @@ lib/Lemonldap/NG/Portal/Plugins/Status.pm
 lib/Lemonldap/NG/Portal/Plugins/StayConnected.pm
 lib/Lemonldap/NG/Portal/Plugins/Upgrade.pm
 lib/Lemonldap/NG/Portal/Register/AD.pm
+lib/Lemonldap/NG/Portal/Register/Base.pm
 lib/Lemonldap/NG/Portal/Register/Custom.pm
 lib/Lemonldap/NG/Portal/Register/Demo.pm
 lib/Lemonldap/NG/Portal/Register/LDAP.pm
