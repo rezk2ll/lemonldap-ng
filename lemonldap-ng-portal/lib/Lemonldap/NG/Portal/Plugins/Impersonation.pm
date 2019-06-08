@@ -55,7 +55,9 @@ sub init {
 sub run {
     my ( $self, $req ) = @_;
 
-    return $req->authResult if $req->authResult > PE_OK; # Skip Impersonation if error during Auth process
+    return $req->authResult
+      if $req->authResult >
+      PE_OK;    # Skip Impersonation if error during Auth process
 
     my $statut = PE_OK;
     my $loginHistory =
@@ -131,17 +133,37 @@ sub run {
         my $separator = $self->{conf}->{multiValuesSeparator};
         $realSession->{$spg} ||= '';
 
-        $self->logger->debug("Processing groups...");
+        ## GROUPS
         my @spoofGrps = my @realGrps = ();
         @spoofGrps = split /\Q$separator/, $spoofSession->{groups};
         @realGrps  = split /\Q$separator/, $realSession->{$spg};
+
+        ## hGROUPS
+        $spoofSession->{hGroups} ||= {};
+        $realSession->{$sphg} ||= {};
+
+        # Merge specified groups only
+        unless ( $self->{conf}->{impersonationMergeSSOgroups} eq 1 ) {
+            my %SSOgroups = map { $_, 1 } split /\Q$separator/,
+              $self->{conf}->{impersonationMergeSSOgroups};
+
+            $self->logger->debug("Filtering specified groups/hGroups...");
+            @realGrps = grep { exists $SSOgroups{$_} } @realGrps;
+            my %intersct =
+              map {
+                $realSession->{$sphg}->{$_}
+                  ? ( $_, $realSession->{$sphg}->{$_} )
+                  : ()
+              } keys %SSOgroups;
+            $realSession->{$sphg} = \%intersct;
+        }
+
+        $self->logger->debug("Processing groups...");
         @spoofGrps = ( @spoofGrps, @realGrps );
         my %hash = map { $_, 1 } @spoofGrps;
         $spoofSession->{groups} = join $separator, sort keys %hash;
 
         $self->logger->debug("Processing hGroups...");
-        $spoofSession->{hGroups} ||= {};
-        $realSession->{$sphg} ||= {};
         $spoofSession->{hGroups} =
           { %{ $spoofSession->{hGroups} }, %{ $realSession->{$sphg} } };
     }

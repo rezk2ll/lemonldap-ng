@@ -454,7 +454,7 @@ sub attributes {
         },
         impersonationMergeSSOgroups => {
             default       => 0,
-            type          => 'bool',
+            type          => 'boolOrExpr',
             documentation => 'Merge spoofed and real SSO groups',
             flags         => 'p',
         },

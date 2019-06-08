@@ -1319,7 +1319,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'impersonationMergeSSOgroups' => {
             'default' => 0,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'impersonationPrefix' => {
             'default' => 'real_',

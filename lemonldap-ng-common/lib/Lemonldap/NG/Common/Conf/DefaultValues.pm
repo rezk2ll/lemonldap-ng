@@ -82,6 +82,7 @@ sub defaultValues {
         'https'                         => -1,
         'impersonationHiddenAttributes' => '_2fDevices _loginHistory',
         'impersonationIdRule'           => 1,
+        'impersonationMergeSSOgroups'   => 0,
         'impersonationPrefix'           => 'real_',
         'impersonationRule'             => 0,
         'impersonationSkipEmptyValues'  => 1,
