@@ -103,6 +103,8 @@ sub run {
             $self->logger->debug("-> Store $k in realSession key: $spk");
         }
         $self->logger->debug("Delete $k");
+
+        #$req->{sessionInfo}->{$k} = '';
         delete $req->{sessionInfo}->{$k};
     }
 
@@ -126,23 +128,21 @@ sub run {
 
     # Merging SSO Groups and hGroups & dedup
     $spoofSession->{groups} ||= '';
+    $spoofSession->{hGroups} ||= {};
     if ( $self->{conf}->{impersonationMergeSSOgroups} ) {
         $self->userLogger->warn("MERGING SSO groups and hGroups...");
         my $spg       = "$self->{conf}->{impersonationPrefix}groups";
         my $sphg      = "$self->{conf}->{impersonationPrefix}hGroups";
         my $separator = $self->{conf}->{multiValuesSeparator};
-        $realSession->{$spg} ||= '';
 
         ## GROUPS
-        my @spoofGrps = my @realGrps = ();
-        @spoofGrps = split /\Q$separator/, $spoofSession->{groups};
-        @realGrps  = split /\Q$separator/, $realSession->{$spg};
+        my @spoofGrps = split /\Q$separator/, $spoofSession->{groups};
+        my @realGrps  = split /\Q$separator/, $realSession->{$spg};
 
         ## hGROUPS
-        $spoofSession->{hGroups} ||= {};
         $realSession->{$sphg} ||= {};
 
-        # Merge specified groups only
+        # Merge specified groups/hGroups only
         unless ( $self->{conf}->{impersonationMergeSSOgroups} eq 1 ) {
             my %SSOgroups = map { $_, 1 } split /\Q$separator/,
               $self->{conf}->{impersonationMergeSSOgroups};
