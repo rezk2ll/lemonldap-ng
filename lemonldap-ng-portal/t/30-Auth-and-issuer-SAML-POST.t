@@ -134,7 +134,8 @@ SKIP: {
 
     # Expect pdata to be cleared
     $pdata = expectCookie( $res, 'lemonldappdata' );
-    ok( $pdata !~ 'issuerRequestsaml', 'SAML request cleared from pdata' );
+    ok( $pdata !~ 'issuerRequestsaml', 'SAML request cleared from pdata' )
+      or explain( $pdata, 'not issuerRequestsaml' );
 
     ( $host, $url, $s ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleSignOnPost',

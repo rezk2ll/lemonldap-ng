@@ -140,24 +140,24 @@ sub init {
 
       # psgi.js
       ->addUnauthRoute( 'psgi.js' => 'sendJs', ['GET'] )
-      ->addAuthRoute( 'psgi.js' => 'sendJs', ['GET'] )
+      ->addAuthRoute( 'psgi.js' => 'sendJs',   ['GET'] )
 
       # portal.css
       ->addUnauthRoute( 'portal.css' => 'sendCss', ['GET'] )
-      ->addAuthRoute( 'portal.css' => 'sendCss', ['GET'] )
+      ->addAuthRoute( 'portal.css' => 'sendCss',   ['GET'] )
 
       # lmerror
       ->addUnauthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
-      ->addAuthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
+      ->addAuthRoute( lmerror => { ':code'   => 'lmError' }, ['GET'] )
 
       # Core REST API
-      ->addUnauthRoute( ping => 'pleaseAuth', ['GET'] )
+      ->addUnauthRoute( ping => 'pleaseAuth',  ['GET'] )
       ->addAuthRoute( ping => 'authenticated', ['GET'] )
 
       # Refresh session
       ->addAuthRoute( refresh => 'refresh', ['GET'] )
 
-      ->addAuthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
+      ->addAuthRoute( '*' => 'corsPreflight',   ['OPTIONS'] )
       ->addUnauthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
 
       # Logout
@@ -356,11 +356,18 @@ sub reloadConf {
 
     # Clean $req->pdata after authentication
     push @{ $self->endAuth }, sub {
-        unless ( $_[0]->pdata->{keepPdata} ) {
-            $self->logger->debug('Cleaning pdata');
-            $_[0]->pdata( {} );
-            $self->userLogger->notice( $_[0]->user . ' connected' )
-              if $_[0]->user;
+        my $tmp = $_[0]->pdata->{keepPdata} //= [];
+        foreach my $k ( keys %{ $_[0]->pdata } ) {
+            unless ( grep { $_ eq $k } @$tmp ) {
+                $self->logger->debug("Removing $k from pdata");
+                delete $_[0]->pdata->{$k};
+            }
+        }
+        $self->userLogger->notice( $_[0]->user . ' connected' ) if $_[0]->user;
+        if (@$tmp) {
+            $self->logger->debug(
+                'Add ' . join( ',', @$tmp ) . ' in keepPdata' );
+            $_[0]->pdata->{keepPdata} = $tmp;
         }
         return PE_OK;
     };
