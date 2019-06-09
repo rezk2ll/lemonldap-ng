@@ -103,8 +103,6 @@ sub run {
             $self->logger->debug("-> Store $k in realSession key: $spk");
         }
         $self->logger->debug("Delete $k");
-
-        #$req->{sessionInfo}->{$k} = '';
         delete $req->{sessionInfo}->{$k};
     }
 
