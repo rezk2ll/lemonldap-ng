@@ -10,16 +10,15 @@ our $VERSION = '2.0.5';
 use strict;
 use Regexp::Common qw/URI/;
 
-my $perlExpr = sub {
+sub perlExpr {
     my ( $val, $conf ) = @_;
-    my $s   = '';
     my $cpt = new Safe;
     $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
     $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
         [ '&encrypt', '&token' ] );
     $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
-    $cpt->reval("BEGIN { warnings->unimport; } $s $val");
+    $cpt->reval("BEGIN { warnings->unimport; } $val");
     my $err = join( '',
         grep { $_ =~ /Undefined subroutine/ ? () : $_ } split( /\n/, $@ ) );
     return $err ? ( 1, "__badExpression__: $err" ) : (1);
@@ -96,7 +95,7 @@ sub types {
             msgFail => '__authorizedValues__: -1, 0, 1',
         },
         boolOrExpr => {
-            test    => $perlExpr,
+            test    => sub { return perlExpr(@_) },
             msgFail => '__notAValidPerlExpression__',
         },
         keyTextContainer => {
@@ -430,7 +429,7 @@ sub attributes {
         },
         checkUserIdRule => {
             type          => 'text',
-            test          => $perlExpr,
+            test          => sub { return perlExpr(@_) },
             default       => 1,
             documentation => 'checkUser identities rule',
         },
@@ -471,7 +470,7 @@ sub attributes {
         },
         impersonationIdRule => {
             type          => 'text',
-            test          => $perlExpr,
+            test          => sub { return perlExpr(@_) },
             default       => 1,
             documentation => 'Impersonation identities rule',
         },
@@ -626,7 +625,7 @@ sub attributes {
         portalSkinRules => {
             type          => 'keyTextContainer',
             help          => 'portalcustom.html',
-            keyTest       => $perlExpr,
+            keyTest       => sub { return perlExpr(@_) },
             keyMsgFail    => '__badSkinRule__',
             test          => qr/^\w+$/,
             msgFail       => '__badValue__',
@@ -699,7 +698,7 @@ sub attributes {
         },
         grantSessionRules => {
             type          => 'grantContainer',
-            keyTest       => $perlExpr,
+            keyTest       => sub { return perlExpr(@_) },
             test          => sub { 1 },
             documentation => 'Rules to grant sessions',
         },
@@ -1058,7 +1057,7 @@ sub attributes {
             type => 'keyTextContainer',
             help =>
               'exportedvars.html#extend_variables_using_macros_and_groups',
-            test          => $perlExpr,
+            test          => sub { return perlExpr(@_) },
             default       => {},
             documentation => 'Groups',
         },
@@ -1068,7 +1067,7 @@ sub attributes {
               'exportedvars.html#extend_variables_using_macros_and_groups',
             keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
             keyMsgFail    => '__badMacroName__',
-            test          => $perlExpr,
+            test          => sub { return perlExpr(@_) },
             default       => {},
             documentation => 'Macros',
         },
@@ -1373,6 +1372,7 @@ sub attributes {
             type          => 'int',
             documentation => 'U2F device time to live',
         },
+
         # TOTP second factor
         totp2fActivation => {
             type          => 'boolOrExpr',
@@ -1697,17 +1697,7 @@ sub attributes {
                           : ( 0, '__badUrl__' );
                     }
                     $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
-                    my $cpt = new Safe;
-                    $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                    $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                        [ '&encrypt', '&token' ] );
-                    $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                        $Lemonldap::NG::Common::Safelib::functions );
-                    $cpt->reval("BEGIN { warnings->unimport; } $s");
-                    my $err = join( '',
-                        grep { $_ =~ /Undefined subroutine/ ? () : $_ }
-                          split( /\n/, $@ ) );
-                    return $err ? ( 1, "__badExpression__: $err" ) : (1);
+                    return &perlExpr( $s, $conf );
                 },
                 msgFail => '__badExpression__',
             },
@@ -1725,21 +1715,7 @@ sub attributes {
             test       => {
                 keyTest    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
                 keyMsgFail => '__badHeaderName__',
-                test       => sub {
-                    my ( $val, $conf ) = @_;
-                    my $s   = $val;
-                    my $cpt = new Safe;
-                    $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                    $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                        [ '&encrypt', '&token' ] );
-                    $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                        $Lemonldap::NG::Common::Safelib::functions );
-                    $cpt->reval("BEGIN { warnings->unimport; } $s");
-                    my $err = join( '',
-                        grep { $_ =~ /Undefined subroutine/ ? () : $_ }
-                          split( /\n/, $@ ) );
-                    return $err ? ( 1, "__badExpression__: $err" ) : (1);
-                }
+                test       => sub { return perlExpr(@_) },
             },
             documentation => 'Virtualhost headers',
             flags         => 'h',
@@ -1909,7 +1885,7 @@ sub attributes {
         },
         casAppMetaDataOptionsRule => {
             type          => 'text',
-            test          => $perlExpr,
+            test          => sub { return perlExpr(@_) },
             documentation => 'CAS App rule',
         },
 
@@ -2513,7 +2489,7 @@ sub attributes {
         },
         samlSPMetaDataOptionsRule => {
             type          => 'text',
-            test          => $perlExpr,
+            test          => sub { return perlExpr(@_) },
             documentation => 'Rule to grant access to this SP',
         },
 
@@ -3503,7 +3479,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         oidcRPMetaDataOptionsRule => {
             type          => 'text',
-            test          => $perlExpr,
+            test          => sub { return perlExpr(@_) },
             documentation => 'Rule to grant access to this RP',
         },
     };

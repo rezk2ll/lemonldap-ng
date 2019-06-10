@@ -3,6 +3,22 @@ package Lemonldap::NG::Manager::Attributes;
 
 our $VERSION = '2.0.5';
 
+sub perlExpr {
+    my ( $val, $conf ) = @_;
+    my $cpt = 'Safe'->new;
+    $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
+    $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
+        [ '&encrypt', '&token' ] );
+    $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
+        $Lemonldap::NG::Common::Safelib::functions );
+    $cpt->reval("BEGIN { warnings->unimport; } $val");
+    my $err = join(
+        '',
+        grep( { $_ =~ /Undefined subroutine/ ? () : $_; } split( /\n/, $@, 0 ) )
+    );
+    return $err ? ( 1, "__badExpression__: $err" ) : 1;
+}
+
 sub types {
     return {
         'array' => {
@@ -27,21 +43,7 @@ sub types {
         'boolOrExpr' => {
             'msgFail' => '__notAValidPerlExpression__',
             'test'    => sub {
-                my ( $val, $conf ) = @_;
-                my $s   = '';
-                my $cpt = 'Safe'->new;
-                $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                    [ '&encrypt', '&token' ] );
-                $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                    $Lemonldap::NG::Common::Safelib::functions );
-                $cpt->reval("BEGIN { warnings->unimport; } $s $val");
-                my $err = join(
-                    '',
-                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
-                        split( /\n/, $@, 0 ) )
-                );
-                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+                return perlExpr(@_);
             }
         },
         'catAndAppList' => {
@@ -669,21 +671,7 @@ sub attributes {
         },
         'casAppMetaDataOptionsRule' => {
             'test' => sub {
-                my ( $val, $conf ) = @_;
-                my $s   = '';
-                my $cpt = 'Safe'->new;
-                $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                    [ '&encrypt', '&token' ] );
-                $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                    $Lemonldap::NG::Common::Safelib::functions );
-                $cpt->reval("BEGIN { warnings->unimport; } $s $val");
-                my $err = join(
-                    '',
-                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
-                        split( /\n/, $@, 0 ) )
-                );
-                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+                return perlExpr(@_);
             },
             'type' => 'text'
         },
@@ -804,21 +792,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'checkUserIdRule' => {
             'default' => 1,
             'test'    => sub {
-                my ( $val, $conf ) = @_;
-                my $s   = '';
-                my $cpt = 'Safe'->new;
-                $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                    [ '&encrypt', '&token' ] );
-                $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                    $Lemonldap::NG::Common::Safelib::functions );
-                $cpt->reval("BEGIN { warnings->unimport; } $s $val");
-                my $err = join(
-                    '',
-                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
-                        split( /\n/, $@, 0 ) )
-                );
-                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+                return perlExpr(@_);
             },
             'type' => 'text'
         },
@@ -1124,21 +1098,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
                 'keyMsgFail' => '__badHeaderName__',
                 'keyTest'    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
                 'test'       => sub {
-                    my ( $val, $conf ) = @_;
-                    my $s   = $val;
-                    my $cpt = 'Safe'->new;
-                    $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                    $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                        [ '&encrypt', '&token' ] );
-                    $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                        $Lemonldap::NG::Common::Safelib::functions );
-                    $cpt->reval("BEGIN { warnings->unimport; } $s");
-                    my $err = join(
-                        '',
-                        grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
-                            split( /\n/, $@, 0 ) )
-                    );
-                    return $err ? ( 1, "__badExpression__: $err" ) : 1;
+                    return perlExpr(@_);
                 }
             },
             'type' => 'keyTextContainer'
@@ -1226,21 +1186,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'grantSessionRules' => {
             'keyTest' => sub {
-                my ( $val, $conf ) = @_;
-                my $s   = '';
-                my $cpt = 'Safe'->new;
-                $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                    [ '&encrypt', '&token' ] );
-                $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                    $Lemonldap::NG::Common::Safelib::functions );
-                $cpt->reval("BEGIN { warnings->unimport; } $s $val");
-                my $err = join(
-                    '',
-                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
-                        split( /\n/, $@, 0 ) )
-                );
-                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+                return perlExpr(@_);
             },
             'test' => sub {
                 1;
@@ -1250,21 +1196,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'groups' => {
             'default' => {},
             'test'    => sub {
-                my ( $val, $conf ) = @_;
-                my $s   = '';
-                my $cpt = 'Safe'->new;
-                $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                    [ '&encrypt', '&token' ] );
-                $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                    $Lemonldap::NG::Common::Safelib::functions );
-                $cpt->reval("BEGIN { warnings->unimport; } $s $val");
-                my $err = join(
-                    '',
-                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
-                        split( /\n/, $@, 0 ) )
-                );
-                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+                return perlExpr(@_);
             },
             'type' => 'keyTextContainer'
         },
@@ -1299,21 +1231,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'impersonationIdRule' => {
             'default' => 1,
             'test'    => sub {
-                my ( $val, $conf ) = @_;
-                my $s   = '';
-                my $cpt = 'Safe'->new;
-                $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                    [ '&encrypt', '&token' ] );
-                $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                    $Lemonldap::NG::Common::Safelib::functions );
-                $cpt->reval("BEGIN { warnings->unimport; } $s $val");
-                my $err = join(
-                    '',
-                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
-                        split( /\n/, $@, 0 ) )
-                );
-                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+                return perlExpr(@_);
             },
             'type' => 'text'
         },
@@ -1659,19 +1577,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
                           : ( 0, '__badUrl__' );
                     }
                     $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
-                    my $cpt = 'Safe'->new;
-                    $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                    $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                        [ '&encrypt', '&token' ] );
-                    $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                        $Lemonldap::NG::Common::Safelib::functions );
-                    $cpt->reval("BEGIN { warnings->unimport; } $s");
-                    my $err = join(
-                        '',
-                        grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
-                            split( /\n/, $@, 0 ) )
-                    );
-                    return $err ? ( 1, "__badExpression__: $err" ) : 1;
+                    return &perlExpr( $s, $conf );
                 }
             },
             'type' => 'ruleContainer'
@@ -1704,21 +1610,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'keyMsgFail' => '__badMacroName__',
             'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
             'test'       => sub {
-                my ( $val, $conf ) = @_;
-                my $s   = '';
-                my $cpt = 'Safe'->new;
-                $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                    [ '&encrypt', '&token' ] );
-                $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                    $Lemonldap::NG::Common::Safelib::functions );
-                $cpt->reval("BEGIN { warnings->unimport; } $s $val");
-                my $err = join(
-                    '',
-                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
-                        split( /\n/, $@, 0 ) )
-                );
-                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+                return perlExpr(@_);
             },
             'type' => 'keyTextContainer'
         },
@@ -2100,21 +1992,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'oidcRPMetaDataOptionsRule' => {
             'test' => sub {
-                my ( $val, $conf ) = @_;
-                my $s   = '';
-                my $cpt = 'Safe'->new;
-                $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                    [ '&encrypt', '&token' ] );
-                $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                    $Lemonldap::NG::Common::Safelib::functions );
-                $cpt->reval("BEGIN { warnings->unimport; } $s $val");
-                my $err = join(
-                    '',
-                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
-                        split( /\n/, $@, 0 ) )
-                );
-                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+                return perlExpr(@_);
             },
             'type' => 'text'
         },
@@ -2451,21 +2329,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'portalSkinRules' => {
             'keyMsgFail' => '__badSkinRule__',
             'keyTest'    => sub {
-                my ( $val, $conf ) = @_;
-                my $s   = '';
-                my $cpt = 'Safe'->new;
-                $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                    [ '&encrypt', '&token' ] );
-                $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                    $Lemonldap::NG::Common::Safelib::functions );
-                $cpt->reval("BEGIN { warnings->unimport; } $s $val");
-                my $err = join(
-                    '',
-                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
-                        split( /\n/, $@, 0 ) )
-                );
-                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+                return perlExpr(@_);
             },
             'msgFail' => '__badValue__',
             'test'    => qr/^\w+$/,
@@ -3200,21 +3064,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlSPMetaDataOptionsRule' => {
             'test' => sub {
-                my ( $val, $conf ) = @_;
-                my $s   = '';
-                my $cpt = 'Safe'->new;
-                $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
-                $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-                    [ '&encrypt', '&token' ] );
-                $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
-                    $Lemonldap::NG::Common::Safelib::functions );
-                $cpt->reval("BEGIN { warnings->unimport; } $s $val");
-                my $err = join(
-                    '',
-                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
-                        split( /\n/, $@, 0 ) )
-                );
-                return $err ? ( 1, "__badExpression__: $err" ) : 1;
+                return perlExpr(@_);
             },
             'type' => 'text'
         },
