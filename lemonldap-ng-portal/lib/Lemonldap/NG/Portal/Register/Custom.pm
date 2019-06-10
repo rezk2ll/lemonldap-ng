@@ -2,6 +2,8 @@ package Lemonldap::NG::Portal::Register::Custom;
 
 use strict;
 
+extends 'Lemonldap::NG::Portal::Register::Base';
+
 sub new {
     my ( $class, $self ) = @_;
     unless ( $self->{conf}->{customRegister} ) {
