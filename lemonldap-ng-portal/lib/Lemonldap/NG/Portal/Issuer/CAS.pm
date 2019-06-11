@@ -125,6 +125,7 @@ sub run {
         # GET parameters
         my $service = $self->p->getHiddenFormValue( $req, 'service' )
           || $req->param('service');
+        $service = '' if ( $self->p->checkXSSAttack( 'service', $service ) );
         my $renew = $self->p->getHiddenFormValue( $req, 'renew' )
           || $req->param('renew');
         my $gateway = $self->p->getHiddenFormValue( $req, 'gateway' )
@@ -261,6 +262,8 @@ sub run {
         # GET parameters
         my $logout_url     = $req->param('url');        # CAS 2.0
         my $logout_service = $req->param('service');    # CAS 3.0
+        $logout_service = ''
+          if ( $self->p->checkXSSAttack( 'service', $logout_service ) );
 
         # Delete linked CAS sessions
         $self->deleteCasSecondarySessions($session_id);

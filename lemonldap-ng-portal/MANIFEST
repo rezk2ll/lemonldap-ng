@@ -162,8 +162,6 @@ site/coffee/sslChoice.coffee
 site/coffee/totpregistration.coffee
 site/coffee/u2fcheck.coffee
 site/coffee/u2fregistration.coffee
-site/cron/liblemonldap-ng-portal-perl.service
-site/cron/llng-portal.systemd.timer
 site/cron/purgeCentralCache
 site/cron/purgeCentralCache.cron.d
 site/htdocs/index.fcgi
@@ -452,9 +450,12 @@ t/31-Auth-and-issuer-CAS-declared-app.t
 t/31-Auth-and-issuer-CAS-declared-apps.t
 t/31-Auth-and-issuer-CAS-default.t
 t/31-Auth-and-issuer-CAS-gateway.t
+t/31-Auth-and-issuer-CAS-Logout-20.t
+t/31-Auth-and-issuer-CAS-Logout-30.t
 t/31-Auth-and-issuer-CAS-proxied.t
 t/31-Auth-and-issuer-CAS-with-choice-and-cancel.t
 t/31-Auth-and-issuer-CAS-with-choice.t
+t/31-Auth-and-issuer-CAS-XSS-on-logout.t
 t/32-Auth-and-issuer-OIDC-authorization_code-OP-logout.t
 t/32-Auth-and-issuer-OIDC-authorization_code-public_client.t
 t/32-Auth-and-issuer-OIDC-authorization_code-with-authchoice.t
