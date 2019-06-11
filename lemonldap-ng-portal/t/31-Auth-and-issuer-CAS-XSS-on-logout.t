@@ -152,7 +152,7 @@ count(1);
 # Query IdP with bad character
 my $url = $1;
 $query = $2;
-$query .= '?<script>';
+$query .= '%3F%3Cscript%3E';
 
 switch ('issuer');
 ok(
