@@ -64,6 +64,7 @@ sub storeEnvAndCheckGateway {
     my ( $self, $req ) = @_;
     my $service = $self->p->getHiddenFormValue( $req, 'service' )
       || $req->param('service');
+    $service = '' if ( $self->p->checkXSSAttack( 'service', $service ) );
     my $gateway = $self->p->getHiddenFormValue( $req, 'gateway' )
       || $req->param('gateway');
 
