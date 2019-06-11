@@ -18,6 +18,18 @@ sub fetchId {
     # time:_session_id:vhost1:vhost2,...
     my ( $t, $_session_id, @vhosts ) = split /:/, $s;
 
+    # Search if XFromVH is defined
+    my $vh = $class->resolveAlias($req);
+    my $XFromVH;
+    my @XFromVH = grep { $_ =~ s/^XFromVH=([\w-.]+)/$1/ } @vhosts;
+    if (@XFromVH) {
+        $XFromVH = $XFromVH[0];
+        $class->logger->debug("Found XFromVH -> $XFromVH");
+        $class->headersInit( undef,
+            { $vh => { 'XFromVH' => "qw($XFromVH)" } } );
+        @vhosts = map { $_ =~ /^XFromVH=[\w-.]+/ ? () : $_ } @vhosts;
+    }
+
     # $_session_id and at least one vhost
     unless ( @vhosts and $_session_id ) {
         $class->userLogger->error('Bad service token');
@@ -25,7 +37,6 @@ sub fetchId {
     }
 
     # Is vhost listed in token ?
-    my $vh = $class->resolveAlias($req);
     unless ( grep { $_ eq $vh } @vhosts ) {
         $class->userLogger->error(
             "$vh not authorized in token (" . join( ', ', @vhosts ) . ')' );

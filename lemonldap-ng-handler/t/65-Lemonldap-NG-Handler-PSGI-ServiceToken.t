@@ -7,19 +7,19 @@ BEGIN {
 init(
     'Lemonldap::NG::Handler::Server',
     {
-        logLevel               => 'error',
+        logLevel               => 'debug',
         handlerServiceTokenTTL => 2,
         vhostOptions           => {
             'test1.example.com' => {
-                vhostHttps          => 0,
-                vhostPort           => 80,
-                vhostMaintenance    => 0,
+                vhostHttps           => 0,
+                vhostPort            => 80,
+                vhostMaintenance     => 0,
                 vhostServiceTokenTTL => 3,
             },
             'test2.example.com' => {
-                vhostHttps          => 0,
-                vhostPort           => 80,
-                vhostMaintenance    => 0,
+                vhostHttps           => 0,
+                vhostPort            => 80,
+                vhostMaintenance     => 0,
                 vhostServiceTokenTTL => 5,
             }
         },
@@ -28,7 +28,10 @@ init(
 
 my $res;
 my $crypt = Lemonldap::NG::Common::Crypto->new('qwertyui');
-my $token = $crypt->encrypt( join ':', time, $sessionId, 'test1.example.com', 'test2.example.com', '*.example.com' );
+my $token =
+  $crypt->encrypt( join ':', time, $sessionId, 'test1.example.com',
+    'XFromVH=app1-auth.example.com',
+    'test2.example.com', '*.example.com' );
 
 ok(
     $res = $client->_get(
