@@ -6,7 +6,7 @@ use URI;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_CAS_SERVICE_NOT_ALLOWED
-  PE_CONFIRM
+  PE_INFO
   PE_ERROR
   PE_LOGOUT_OK
   PE_OK
@@ -283,7 +283,8 @@ sub run {
                 );
                 $req->data->{activeTimer} = 0;
 
-                return PE_CONFIRM;
+                delete $req->pdata->{_url};
+                return PE_INFO;
             }
 
             if ($logout_service) {
