@@ -14,8 +14,8 @@ sub fetchId {
     # Decrypt token
     my $s = $class->tsv->{cipher}->decrypt($token);
 
-    # Token format:
-    # time:_session_id:vhost1:vhost2:serviceHeader1=value1:serviceHeader2=value2,...
+# Token format:
+# time:_session_id:vhost1:vhost2:serviceHeader1=value1:serviceHeader2=value2,...
     my ( $t, $_session_id, @vhosts ) = split /:/, $s;
 
     # Looking for service headers
