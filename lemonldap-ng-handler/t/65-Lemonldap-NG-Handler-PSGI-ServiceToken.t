@@ -73,8 +73,8 @@ ok(
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
 
-my @headers = grep { /service/ } @{ $res->[1] };
-my @values  = grep { /\.example\.com/ } @{ $res->[1] };
+@headers = grep { /service/ } @{ $res->[1] };
+@values  = grep { /\.example\.com/ } @{ $res->[1] };
 ok( @headers == 4, 'Found 4 service headers' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 ok( @values == 2, 'Found 2 service header values' )
@@ -95,7 +95,7 @@ ok(
 ok( $res->[0] == 302, 'Code is 200' ) or explain( $res->[0], 302 );
 count(2);
 
-my @headers = grep { /service/ } @{ $res->[1] };
+@headers = grep { /service/ } @{ $res->[1] };
 ok( @headers == 0, 'NONE service header found' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(1);
@@ -114,8 +114,8 @@ ok(
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
 
-my @headers = grep { /service/ } @{ $res->[1] };
-my @values  = grep { /\.example\.com/ } @{ $res->[1] };
+@headers = grep { /service/ } @{ $res->[1] };
+@values  = grep { /\.example\.com/ } @{ $res->[1] };
 ok( @headers == 4, 'Found 4 service headers' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 ok( @values == 2, 'Found 2 service header values' )
@@ -136,7 +136,7 @@ ok(
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 count(2);
 
-my @headers = grep { /service/ } @{ $res->[1] };
+@headers = grep { /service/ } @{ $res->[1] };
 ok( @headers == 0, 'NONE service header found' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(1);
@@ -152,7 +152,7 @@ ok(
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 count(2);
 
-my @headers = grep { /service/ } @{ $res->[1] };
+@headers = grep { /service/ } @{ $res->[1] };
 ok( @headers == 0, 'NONE service header found' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(1);
@@ -169,7 +169,7 @@ ok(
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 count(2);
 
-my @headers = grep { /service/ } @{ $res->[1] };
+@headers = grep { /service/ } @{ $res->[1] };
 ok( @headers == 0, 'NONE service header found' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(1);

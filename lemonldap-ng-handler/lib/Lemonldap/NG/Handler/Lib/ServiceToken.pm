@@ -20,13 +20,15 @@ sub fetchId {
 
     # Looking for service headers
     my $vh = $class->resolveAlias($req);
-    my %serviceHeaders =
-      map { $_ =~ /^([\w-]+)=([\w-.]+$)/ ? ( $1 => $2 ) : () } @vhosts;
-    if (%serviceHeaders) {
-        $class->logger->debug( "Found service header(s) -> "
-              . Data::Dumper::Dumper( \%serviceHeaders ) );
-        @vhosts = map { $_ =~ /^[\w-]+=[\w-.]+$/ ? () : $_ } @vhosts;
-    }
+    my %serviceHeaders;
+    @vhosts = grep {
+        if (/^([\w\-]+)=(.+)$/) {
+            $serviceHeaders{$1} = $2;
+            $class->logger->debug( "Found service header: $1 => $2");
+            0;
+        }
+        else { 1 }
+    } @vhosts;
 
     # $_session_id and at least one vhost
     unless ( @vhosts and $_session_id ) {
