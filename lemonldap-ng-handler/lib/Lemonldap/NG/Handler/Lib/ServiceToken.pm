@@ -15,19 +15,17 @@ sub fetchId {
     my $s = $class->tsv->{cipher}->decrypt($token);
 
     # Token format:
-    # time:_session_id:vhost1:vhost2,...
+    # time:_session_id:vhost1:vhost2:serviceHeader1=value1:serviceHeader2=value2,...
     my ( $t, $_session_id, @vhosts ) = split /:/, $s;
 
-    # Search if XFromVH is defined
+    # Looking for service headers
     my $vh = $class->resolveAlias($req);
-    my $XFromVH;
-    my @XFromVH = grep { $_ =~ s/^XFromVH=([\w-.]+)/$1/ } @vhosts;
-    if (@XFromVH) {
-        $XFromVH = $XFromVH[0];
-        $class->logger->debug("Found XFromVH -> $XFromVH");
-        $class->headersInit( undef,
-            { $vh => { 'XFromVH' => "qw($XFromVH)" } } );
-        @vhosts = map { $_ =~ /^XFromVH=[\w-.]+/ ? () : $_ } @vhosts;
+    my %serviceHeaders =
+      map { $_ =~ /^([\w-]+)=([\w-.]+$)/ ? ( $1 => $2 ) : () } @vhosts;
+    if (%serviceHeaders) {
+        $class->logger->debug( "Found service header(s) -> "
+              . Data::Dumper::Dumper( \%serviceHeaders ) );
+        @vhosts = map { $_ =~ /^[\w-]+=[\w-.]+$/ ? () : $_ } @vhosts;
     }
 
     # $_session_id and at least one vhost
@@ -52,6 +50,11 @@ sub fetchId {
     unless ( $t <= time and $t > time - $ttl ) {
         $class->userLogger->warn('Expired service token');
         return 0;
+    }
+
+    if (%serviceHeaders) {
+        $class->logger->debug("Append service header(s)...");
+        $class->set_header_out( $req, %serviceHeaders );
     }
 
     return $_session_id;
