@@ -22,6 +22,7 @@ SKIP: {
                 totp2fSelfRegistration => 1,
                 totp2fActivation       => 1,
                 totp2fDigits           => 8,
+                totp2fTTL              => -1,
             }
         }
     );

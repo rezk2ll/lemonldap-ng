@@ -18,6 +18,7 @@ SKIP: {
                 u2fSelfRegistration => 1,
                 u2fActivation       => 1,
                 portalMainLogo      => 'common/logos/logo_llng_old.png',
+                totp2fTTL           => 2,
             }
         }
     );
