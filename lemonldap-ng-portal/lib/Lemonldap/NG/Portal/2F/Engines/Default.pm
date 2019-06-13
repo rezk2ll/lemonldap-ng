@@ -162,7 +162,7 @@ sub run {
         my $removed = 0;
         $self->logger->debug("Looking for expired 2F device(s)...");
         foreach my $device (@$_2fDevices) {
-            my $ttl = $self->conf->{ lc( $device->{type} ) . 'TTL' };
+            my $ttl = $self->conf->{ lc( $device->{type} ) . '2fTTL' };
             if ( $ttl and $ttl > 0 and $now - $device->{epoch} > $ttl ) {
                 $self->logger->debug(
 "Remove $device->{type} -> $device->{name} / $device->{epoch}"
