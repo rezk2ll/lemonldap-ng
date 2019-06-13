@@ -114,14 +114,12 @@ ok(
     ),
     'POST checkuser'
 );
-my @attributes = map /<td class="text-left">(.+)?<\/td>/g, $res->[2]->[0];
-ok( scalar @attributes == 30, 'Found 30 attributes' )
-  or print STDERR "Missing attributes -> " . scalar @attributes;
-ok( $attributes[12] eq '_updateTime', '_updateTime' )
-  or print STDERR Dumper( \@attributes );
-ok( $attributes[13] =~ /^\d{14}$/, 'Timestamp found' )
-  or print STDERR Dumper( \@attributes );
-count(4);
+my %attributes = map /<td class="text-left">(.+)?<\/td>/g, $res->[2]->[0];
+ok( scalar keys %attributes == 16, 'Found 16 attributes' )
+  or print STDERR "Missing attributes -> " . scalar keys %attributes;
+ok( $attributes{'_updateTime'} =~ /^\d{14}$/, 'Timestamp found' )
+  or print STDERR Dumper( \%attributes );
+count(3);
 
 diag 'Waiting';
 sleep 3;
@@ -184,17 +182,15 @@ ok(
     ),
     'POST checkuser'
 );
-my @attributes2 = map /<td class="text-left">(.+)?<\/td>/g, $res->[2]->[0];
-ok( scalar @attributes2 == 30, 'Found 30 attributes' )
-  or print STDERR "Missing attributes -> " . scalar @attributes2;
-ok( $attributes2[12] eq '_updateTime', '_updateTime' )
-  or print STDERR Dumper( \@attributes2 );
-ok( $attributes2[13] =~ /^\d{14}$/, 'Timestamp found' )
-  or print STDERR Dumper( \@attributes2 );
-count(4);
+my %attributes2 = map /<td class="text-left">(.+)?<\/td>/g, $res->[2]->[0];
+ok( scalar keys %attributes2 == 16, 'Found 16 attributes' )
+  or print STDERR "Missing attributes -> " . scalar keys %attributes2;
+ok( $attributes2{'_updateTime'} =~ /^\d{14}$/, 'Timestamp found' )
+  or print STDERR Dumper( \%attributes2 );
+count(3);
 
-ok( $attributes2[13] - $attributes[13] >= 3, '_updateTime has been updated' )
-  or print STDERR Dumper( \@attributes2 );
+ok( $attributes2{_updateTime} - $attributes{_updateTime} >= 3, '_updateTime has been updated' )
+  or print STDERR Dumper( \%attributes2 );
 count(1);
 
 # Log out request

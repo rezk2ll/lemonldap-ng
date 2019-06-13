@@ -324,25 +324,22 @@ ok( $res->[2]->[0] =~ m%<td class="align-middle">rtyler/dwho</td>%,
   or explain( $res->[2]->[0], 'Found rtyler/dwo' );
 count(16);
 
-my @attributes = map /<td class="text-left">(.+)?<\/td>/g, $res->[2]->[0];
-ok( scalar @attributes == 62, 'Found 61 attributes' )
-  or print STDERR ( @attributes < 62 )
-  ? "Missing attributes -> " . scalar @attributes
-  : "Too much attributes -> " . scalar @attributes;
-ok( $attributes[0] eq '_auth', '_auth' ) or print STDERR Dumper( \@attributes );
-ok( $attributes[1] eq 'Demo',  'Demo' )  or print STDERR Dumper( \@attributes );
-ok( $attributes[2] eq '_httpSession', '_httpSession' )
-  or print STDERR Dumper( \@attributes );
-ok( $attributes[28] eq 'uid', 'uid' ) or print STDERR Dumper( \@attributes );
-ok( $attributes[30] eq 'testPrefix__auth', 'testPrefix__auth' )
-  or print STDERR Dumper( \@attributes );
-ok( $attributes[32] eq 'testPrefix__httpSession', 'testPrefix__httpSession' )
-  or print STDERR Dumper( \@attributes );
-ok( $attributes[60] eq 'testPrefix_uid', 'testPrefix_uid' )
-  or print STDERR Dumper( \@attributes );
-ok( $attributes[61] eq 'rtyler', 'rtyler' )
-  or print STDERR Dumper( \@attributes );
-count(9);
+my %attributes = map /<td class="text-left">(.+)?<\/td>/g, $res->[2]->[0];
+ok( scalar keys %attributes == 33, 'Found 33 attributes' )
+  or print STDERR ( keys %attributes < 33 )
+  ? "Missing attributes -> " . scalar keys %attributes
+  : "Too much attributes -> " . scalar keys %attributes;
+ok( $attributes{'_auth'} eq 'Demo', '_auth' ) or print STDERR Dumper( \%attributes );
+ok( $attributes{'_httpSession'}, '_httpSession' )
+  or print STDERR Dumper( \%attributes );
+ok( $attributes{'uid'}, 'uid' ) or print STDERR Dumper( \%attributes );
+ok( $attributes{'testPrefix__auth'}, 'testPrefix__auth' )
+  or print STDERR Dumper( \%attributes );
+ok( $attributes{'testPrefix__httpSession'}, 'testPrefix__httpSession' )
+  or print STDERR Dumper( \%attributes );
+ok( $attributes{'testPrefix_uid'} eq 'rtyler', 'testPrefix_uid' )
+  or print STDERR Dumper( \%attributes );
+count(7);
 
 $client->logout($id);
 clean_sessions();
