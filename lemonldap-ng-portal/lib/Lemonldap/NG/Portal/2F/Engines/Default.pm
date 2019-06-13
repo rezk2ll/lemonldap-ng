@@ -157,48 +157,32 @@ sub run {
         }
         $self->logger->debug(" -> 2F Device(s) found");
 
-        # Initialize 2FDevices TTL
-        my $u2fTTL = $self->conf->{u2fTTL}
-          && $self->conf->{u2fTTL} > 0 ? $self->conf->{u2fTTL} : 0;
-        my $totpTTL = $self->conf->{totp2fTTL}
-          && $self->conf->{totp2fTTL} > 0 ? $self->conf->{totp2fTTL} : 0;
-        my $ubkTTL = $self->conf->{yubikey2fTTL}
-          && $self->conf->{yubikey2fTTL} > 0 ? $self->conf->{yubikey2fTTL} : 0;
-
         # Processing if at least one TTL is set
-        if ( $u2fTTL || $totpTTL || $ubkTTL ) {
-            my $now     = time();
-            my $removed = 0;
-            $self->logger->debug("Looking for expired 2F device(s)...");
-            foreach my $device (@$_2fDevices) {
-                foreach my $type (qw(TOTP U2F UBK)) {
-                    if ( $device->{type} eq $type ) {
-                        if ( eval( '$' . lc($type) . 'TTL' )
-                            && $now - $device->{epoch} >
-                            eval( '$' . lc($type) . 'TTL' ) )
-                        {
-                            $self->logger->debug(
-"Remove $type -> $device->{name} / $device->{epoch}"
-                            );
-                            $self->userLogger->info("Remove expired $type");
-                            $device->{type} = 'EXPIRED';
-                            $removed++;
-                            last;
-                        }
-                    }
-                }
-            }
-            if ($removed) {
+        my $now     = time();
+        my $removed = 0;
+        $self->logger->debug("Looking for expired 2F device(s)...");
+        foreach my $device (@$_2fDevices) {
+            my $ttl = $self->conf->{ lc( $device->{type} ) . 'TTL' };
+            if ( $ttl and $ttl > 0 and $now - $device->{epoch} > $ttl ) {
                 $self->logger->debug(
-"Found $removed EXPIRED 2F device(s) => Update persistent session"
+"Remove $device->{type} -> $device->{name} / $device->{epoch}"
                 );
-                $self->userLogger->notice(
-                    " -> $removed EXPIRED 2F device(s) removed");
-                @$_2fDevices =
-                  map { $_->{type} =~ /\bEXPIRED\b/ ? () : $_ } @$_2fDevices;
-                $self->p->updatePersistentSession( $req,
-                    { _2fDevices => to_json($_2fDevices) } );
+                $self->userLogger->info("Remove expired $device->{type}");
+                $device->{type} = 'EXPIRED';
+                $removed++;
+                last;
             }
+        }
+        if ($removed) {
+            $self->logger->debug(
+"Found $removed EXPIRED 2F device(s) => Update persistent session"
+            );
+            $self->userLogger->notice(
+                " -> $removed EXPIRED 2F device(s) removed");
+            @$_2fDevices =
+              map { $_->{type} =~ /\bEXPIRED\b/ ? () : $_ } @$_2fDevices;
+            $self->p->updatePersistentSession( $req,
+                { _2fDevices => to_json($_2fDevices) } );
         }
     }
 

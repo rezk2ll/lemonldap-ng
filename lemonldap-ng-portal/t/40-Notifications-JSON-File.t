@@ -51,6 +51,7 @@ count(1);
 expectOK($res);
 my $id = expectCookie($res);
 expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
+print STDERR Dumper($client);
 
 # Verify that cookie is ciphered (session unvalid)
 ok(
