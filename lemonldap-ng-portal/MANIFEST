@@ -408,6 +408,7 @@ t/01-CSP-and-CORS-headers.t
 t/01-pdata.t
 t/02-Password-Demo.t
 t/03-XSS-protection.t
+t/04-language-selection.t
 t/19-Auth-Null.t
 t/20-Auth-and-password-DBI-dynamic-hash.t
 t/20-Auth-and-password-DBI.t
@@ -475,6 +476,7 @@ t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-config-backend.t
 t/35-SOAP-sessions-with-SOAP-server.t
 t/36-Combination-Kerberos-or-Demo.t
+t/36-Combination-with-Choice.t
 t/36-Combination-with-over.t
 t/36-Combination-with-token.t
 t/36-Combination.t
