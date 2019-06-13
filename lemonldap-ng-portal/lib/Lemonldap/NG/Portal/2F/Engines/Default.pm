@@ -164,7 +164,7 @@ sub run {
         foreach my $device (@$_2fDevices) {
             my $type = lc( $device->{type} );
             $type =~ s/2f$//i;
-            $type = 'yubikey' if $type eq 'UBK';
+            $type = 'yubikey' if $type eq 'ubk';
             my $ttl = $self->conf->{ $type . '2fTTL' };
             if ( $ttl and $ttl > 0 and $now - $device->{epoch} > $ttl ) {
                 $self->logger->debug(
