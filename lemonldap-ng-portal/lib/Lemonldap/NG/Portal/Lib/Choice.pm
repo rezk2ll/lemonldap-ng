@@ -231,8 +231,10 @@ sub _buildAuthLoop {
 
                 # Get displayType for this module
                 no strict 'refs';
-                my $displayType = "Lemonldap::NG::Portal::Auth::${auth}"
-                  ->can('getDisplayType')->( $self, $req );
+                my $displayType = eval {
+                    "Lemonldap::NG::Portal::Auth::${auth}"
+                      ->can('getDisplayType')->( $self, $req );
+                } || 'logo';
 
                 $self->logger->debug(
                     "Display type $displayType for module $auth");

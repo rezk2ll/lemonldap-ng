@@ -388,7 +388,8 @@ sub display {
             else {
 
                 my $displayType =
-                  eval { $self->_authentication->getDisplayType($req) };
+                  eval { $self->_authentication->getDisplayType($req) }
+                  || 'logo';
 
                 $self->logger->debug("Display type $displayType ");
 

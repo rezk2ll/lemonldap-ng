@@ -31,8 +31,9 @@ SKIP: {
 
                 authChoiceParam   => 'test',
                 authChoiceModules => {
-                    ldap => 'LDAP;LDAP;LDAP',
-                    sql  => 'DBI;DBI;DBI',
+                    ldap  => 'LDAP;LDAP;LDAP',
+                    sql   => 'DBI;DBI;DBI',
+                    slave => 'Slave;LDAP;LDAP',
                 },
 
                 dbiAuthChain        => 'dbi:SQLite:dbname=t/userdb.db',
@@ -47,6 +48,11 @@ SKIP: {
                 ldapBase        => 'ou=users,dc=example,dc=com',
                 managerDn       => 'cn=admin,dc=example,dc=com',
                 managerPassword => 'admin',
+
+                slaveUserHeader   => 'My-Test',
+                slaveExportedVars => {
+                    name => 'Name',
+                }
             }
         }
     );
