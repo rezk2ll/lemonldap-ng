@@ -322,19 +322,16 @@ ok( $res->[2]->[0] =~ m%<td class="align-middle">rtyler/dwho</td>%,
   or explain( $res->[2]->[0], 'Found rtyler/dwo' );
 count(16);
 
-my @attributes = map /<td class="text-left">(.+)?<\/td>/g, $res->[2]->[0];
-ok( scalar @attributes == 58, 'Found 58 attributes' )
-  or print STDERR "Missing attributes -> " . scalar @attributes;
-ok( $attributes[0] eq '_auth', '_auth' ) or print STDERR Dumper( \@attributes );
-ok( $attributes[1] eq 'Demo',  'Demo' )  or print STDERR Dumper( \@attributes );
-ok( $attributes[26] eq 'uid',  'uid' )   or print STDERR Dumper( \@attributes );
-ok( $attributes[28] eq 'testPrefix__auth', 'testPrefix__auth' )
-  or print STDERR Dumper( \@attributes );
-ok( $attributes[56] eq 'testPrefix_uid', 'testPrefix_uid' )
-  or print STDERR Dumper( \@attributes );
-ok( $attributes[57] eq 'rtyler', 'rtyler' )
-  or print STDERR Dumper( \@attributes );
-count(7);
+my %attributes = map /<td class="text-left">(.+)?<\/td>/g, $res->[2]->[0];
+ok( keys %attributes == 31, 'Found 31 attributes' )
+  or print STDERR "Missing attributes -> " . scalar %attributes;
+ok( $attributes{'_auth'} eq 'Demo', '_auth' ) or print STDERR Dumper( \%attributes );
+ok( $attributes{'uid'},  'uid' )   or print STDERR Dumper( \%attributes );
+ok( $attributes{'testPrefix__auth'}, 'testPrefix__auth' )
+  or print STDERR Dumper( \%attributes );
+ok( $attributes{'testPrefix_uid'} eq 'rtyler', 'testPrefix_uid' )
+  or print STDERR Dumper( \%attributes );
+count(5);
 
 $client->logout($id);
 clean_sessions();

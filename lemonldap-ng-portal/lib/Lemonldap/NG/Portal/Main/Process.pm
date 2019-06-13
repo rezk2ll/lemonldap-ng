@@ -356,6 +356,9 @@ sub setSessionInfo {
           if $self->conf->{timeoutActivity};
     }
 
+    # Currently selected language
+    $req->{sessionInfo}->{_language} = $req->cookies->{llnglanguage} || 'en';
+
     # Store URL origin in session
     $req->{sessionInfo}->{_url} = $req->{urldc};
 
