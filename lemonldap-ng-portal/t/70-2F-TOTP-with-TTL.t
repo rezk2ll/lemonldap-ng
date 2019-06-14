@@ -138,6 +138,7 @@ SKIP: {
     );
     $id = expectCookie($res);
     expectRedirection( $res, 'http://auth.example.com/' );
+    $client->logout($id);
 }
 count($maintests);
 
