@@ -105,7 +105,8 @@ count(1);
 
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkuser', 'user', 'url', 'token' );
-ok( $res->[2]->[0] =~ m%<span trspan="checkUserComputeSession">%, 'Found trspan="checkUserComputeSession"' )
+ok( $res->[2]->[0] =~ m%<span trspan="checkUserComputeSession">%,
+    'Found trspan="checkUserComputeSession"' )
   or explain( $res->[2]->[0], 'trspan="checkUserComputeSession"' );
 ok(
     $res->[2]->[0] =~

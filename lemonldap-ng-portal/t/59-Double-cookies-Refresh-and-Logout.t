@@ -189,7 +189,8 @@ ok( $attributes2{'_updateTime'} =~ /^\d{14}$/, 'Timestamp found' )
   or print STDERR Dumper( \%attributes2 );
 count(3);
 
-ok( $attributes2{_updateTime} - $attributes{_updateTime} >= 3, '_updateTime has been updated' )
+ok( $attributes2{_updateTime} - $attributes{_updateTime} >= 3,
+    '_updateTime has been updated' )
   or print STDERR Dumper( \%attributes2 );
 count(1);
 

@@ -370,7 +370,8 @@ EOF
         } keys(%$attributes)
     };
     $managerAttr = mydump( $managerAttr, 'attributes' );
-    my $managerSub = Dumper( \&Lemonldap::NG::Manager::Build::Attributes::perlExpr );
+    my $managerSub =
+      Dumper( \&Lemonldap::NG::Manager::Build::Attributes::perlExpr );
     $managerSub =~ s/\$VAR1 = sub/sub perlExpr/s;
     $managerSub =~ s/^\s*(?:use strict;|package .*?;|)\n//gm;
     my $managerTypes =

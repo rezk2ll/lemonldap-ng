@@ -9,14 +9,14 @@ my $maintests = 6;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                 => 'error',
-            useSafeJail              => 1,
-            authentication           => 'Choice',
-            userDB                   => 'Same',
-            passwordDB               => 'Choice',
-            requireToken             => 1,
-            authChoiceParam          => 'test',
-            authChoiceModules        => {
+            logLevel          => 'error',
+            useSafeJail       => 1,
+            authentication    => 'Choice',
+            userDB            => 'Same',
+            passwordDB        => 'Choice',
+            requireToken      => 1,
+            authChoiceParam   => 'test',
+            authChoiceModules => {
                 '1_demo' => 'Demo;Demo;Null',
                 '2_ssl'  => 'SSL;Demo;Null',
             },

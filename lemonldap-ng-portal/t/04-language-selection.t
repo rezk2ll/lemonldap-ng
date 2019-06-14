@@ -8,8 +8,11 @@ BEGIN {
 
 my ( $client, $res, $id );
 
-$client = LLNG::Manager::Test->new(
-    { ini => { logLevel => 'error', restSessionServer => 1, useSafeJail => 1 }, } );
+$client = LLNG::Manager::Test->new( {
+        ini =>
+          { logLevel => 'error', restSessionServer => 1, useSafeJail => 1 },
+    }
+);
 
 # Try to authenticate
 # -------------------
@@ -24,12 +27,12 @@ ok(
 count(1);
 expectOK($res);
 $id = expectCookie($res);
-    
+
 ok( $res = $client->_get("/sessions/global/$id"), 'Get session' );
 count(1);
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-    or print STDERR $@;
+  or print STDERR $@;
 count(1);
 ok( $res->{_language} eq 'en', 'Default value for _language' );
 count(1);
@@ -49,16 +52,15 @@ ok(
 count(1);
 expectOK($res);
 $id = expectCookie($res);
-    
+
 ok( $res = $client->_get("/sessions/global/$id"), 'Get session' );
 count(1);
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-    or print STDERR $@;
+  or print STDERR $@;
 count(1);
 ok( $res->{_language} eq 'fr', 'Correct value for _language' );
 count(1);
-
 
 # Test logout
 $client->logout($id);

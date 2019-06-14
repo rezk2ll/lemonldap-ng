@@ -329,7 +329,8 @@ ok( scalar keys %attributes == 33, 'Found 33 attributes' )
   or print STDERR ( keys %attributes < 33 )
   ? "Missing attributes -> " . scalar keys %attributes
   : "Too much attributes -> " . scalar keys %attributes;
-ok( $attributes{'_auth'} eq 'Demo', '_auth' ) or print STDERR Dumper( \%attributes );
+ok( $attributes{'_auth'} eq 'Demo', '_auth' )
+  or print STDERR Dumper( \%attributes );
 ok( $attributes{'_httpSession'}, '_httpSession' )
   or print STDERR Dumper( \%attributes );
 ok( $attributes{'uid'}, 'uid' ) or print STDERR Dumper( \%attributes );

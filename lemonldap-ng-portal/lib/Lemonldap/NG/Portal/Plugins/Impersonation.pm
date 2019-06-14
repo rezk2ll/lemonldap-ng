@@ -125,7 +125,7 @@ sub run {
     }
 
     # Merging SSO Groups and hGroups & dedup
-    $spoofSession->{groups} ||= '';
+    $spoofSession->{groups}  ||= '';
     $spoofSession->{hGroups} ||= {};
     if ( $self->{conf}->{impersonationMergeSSOgroups} ) {
         $self->userLogger->warn("MERGING SSO groups and hGroups...");

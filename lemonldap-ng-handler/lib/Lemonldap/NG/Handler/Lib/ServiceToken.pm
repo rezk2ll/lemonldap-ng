@@ -24,7 +24,7 @@ sub fetchId {
     @vhosts = grep {
         if (/^([\w\-]+)=(.+)$/) {
             $serviceHeaders{$1} = $2;
-            $class->logger->debug( "Found service header: $1 => $2");
+            $class->logger->debug("Found service header: $1 => $2");
             0;
         }
         else { 1 }

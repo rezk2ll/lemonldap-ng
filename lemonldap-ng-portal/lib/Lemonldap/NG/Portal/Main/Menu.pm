@@ -203,7 +203,8 @@ sub _buildCategoryHash {
     if ( scalar keys %$apphash > 0 ) {
         foreach my $appkey (
             sort {
-                ($apphash->{$a}->{order} || 0) <=> ($apphash->{$b}->{order} || 0)
+                ( $apphash->{$a}->{order} || 0 )
+                  <=> ( $apphash->{$b}->{order} || 0 )
                   or $a cmp $b
             }
             keys %$apphash
@@ -217,7 +218,8 @@ sub _buildCategoryHash {
     # Display subcategories
     foreach my $catkey (
         sort {
-                ($cathash->{$a}->{order} || 0) <=> ($cathash->{$b}->{order} || 0)
+            ( $cathash->{$a}->{order} || 0 )
+              <=> ( $cathash->{$b}->{order} || 0 )
               or $a cmp $b
         }
         grep { not /^(?:catname|type|options|order)$/ } keys %$cathash
@@ -270,7 +272,8 @@ sub _buildApplicationHash {
     if ( scalar keys %$subapphash > 0 ) {
         foreach my $appkey (
             sort {
-                ($subapphash->{$a}->{order} || 0)  <=> ( $subapphash->{$b}->{order} || 0 )
+                ( $subapphash->{$a}->{order} || 0 )
+                  <=> ( $subapphash->{$b}->{order} || 0 )
                   or $a cmp $b
             }
             keys %$subapphash

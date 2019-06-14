@@ -325,8 +325,9 @@ count(16);
 my %attributes = map /<td class="text-left">(.+)?<\/td>/g, $res->[2]->[0];
 ok( keys %attributes == 31, 'Found 31 attributes' )
   or print STDERR "Missing attributes -> " . scalar %attributes;
-ok( $attributes{'_auth'} eq 'Demo', '_auth' ) or print STDERR Dumper( \%attributes );
-ok( $attributes{'uid'},  'uid' )   or print STDERR Dumper( \%attributes );
+ok( $attributes{'_auth'} eq 'Demo', '_auth' )
+  or print STDERR Dumper( \%attributes );
+ok( $attributes{'uid'}, 'uid' ) or print STDERR Dumper( \%attributes );
 ok( $attributes{'testPrefix__auth'}, 'testPrefix__auth' )
   or print STDERR Dumper( \%attributes );
 ok( $attributes{'testPrefix_uid'} eq 'rtyler', 'testPrefix_uid' )

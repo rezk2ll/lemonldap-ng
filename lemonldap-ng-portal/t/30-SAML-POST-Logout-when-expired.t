@@ -205,7 +205,7 @@ SKIP: {
         ),
         'Post SAML response to SP'
     );
-    ok($res->[2]->[0] =~ /trmsg="56"/, 'Found SLO error');
+    ok( $res->[2]->[0] =~ /trmsg="56"/, 'Found SLO error' );
 }
 
 count($maintests);

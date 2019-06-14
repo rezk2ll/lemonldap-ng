@@ -61,11 +61,9 @@ ok(
 );
 count(1);
 expectOK($res);
-ok(
-    $res->[2]->[0] =~
-m%<span trspan="connectedAs">Connected as</span> dwho%,
-    'Connected as dwho'
-) or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> dwho%,
+    'Connected as dwho' )
+  or print STDERR Dumper( $res->[2]->[0] );
 expectAuthenticatedAs( $res, 'dwho' );
 count(1);
 
@@ -139,11 +137,14 @@ ok( $res->[2]->[0] =~ m%<td class="align-middle">dwho</td>%, 'Found dwho' )
   or explain( $res->[2]->[0], 'Header Value: dwho' );
 ok( $res->[2]->[0] =~ m%<td class="align-middle">su</td>%, 'Found su' )
   or explain( $res->[2]->[0], 'SSO Groups: su' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">su_test</td>%, 'Found su_test' )
+ok( $res->[2]->[0] =~ m%<td class="align-middle">su_test</td>%,
+    'Found su_test' )
   or explain( $res->[2]->[0], 'SSO Groups: su_test' );
-ok( $res->[2]->[0] !~ m%<td class="align-middle">_test_</td>%, 'NOT found _test_' )
+ok( $res->[2]->[0] !~ m%<td class="align-middle">_test_</td>%,
+    'NOT found _test_' )
   or explain( $res->[2]->[0], 'SSO Groups: _test_' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">test_su</td>%, 'Found test_su' )
+ok( $res->[2]->[0] =~ m%<td class="align-middle">test_su</td>%,
+    'Found test_su' )
   or explain( $res->[2]->[0], 'SSO Groups: test_su' );
 ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
     'Found _whatToTrace' )

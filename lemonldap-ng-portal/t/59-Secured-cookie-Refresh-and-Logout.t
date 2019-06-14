@@ -68,11 +68,9 @@ ok(
 );
 count(1);
 expectOK($res);
-ok(
-    $res->[2]->[0] =~
-m%<span trspan="connectedAs">Connected as</span> dwho%,
-    'Connected as Dwho'
-) or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> dwho%,
+    'Connected as Dwho' )
+  or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 # Refresh rights
@@ -101,11 +99,9 @@ ok(
 count(1);
 expectOK($res);
 
-ok(
-    $res->[2]->[0] =~
-m%<span trspan="connectedAs">Connected as</span> dwho%,
-    'Connected as Dwho'
-) or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> dwho%,
+    'Connected as Dwho' )
+  or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 # Log out request
