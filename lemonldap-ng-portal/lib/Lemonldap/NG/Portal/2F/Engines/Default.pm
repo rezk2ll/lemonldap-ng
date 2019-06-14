@@ -168,9 +168,8 @@ sub run {
             $self->logger->error("Bad encoding in _2fDevices: $@");
             return PE_ERROR;
         }
-        $self->logger->debug(" -> 2F Device(s) found");
 
-        # Processing if at least one TTL is set
+        $self->logger->debug(" -> 2F Device(s) found");
         my $now     = time();
         my $removed = 0;
         $self->logger->debug("Looking for expired 2F device(s)...");
@@ -186,36 +185,9 @@ sub run {
                 $self->userLogger->info("Remove expired $device->{type}");
                 $device->{type} = 'EXPIRED';
                 $removed++;
-                last;
-                $self->userLogger->notice(
-                    " -> $removed EXPIRED 2F device(s) removed");
-                @$_2fDevices =
-                  map { $_->{type} =~ /\bEXPIRED\b/ ? () : $_ } @$_2fDevices;
-                $self->p->updatePersistentSession( $req,
-                    { _2fDevices => to_json($_2fDevices) } );
-
-                # Display message if required
-                if ( $self->sfMsg->( $req, $req->sessionInfo ) ) {
-                    $req->info(
-                        $self->loadTemplate(
-                            'simpleInfo',
-                            (
-                                $removed > 1
-                                ? (
-                                    params => {
-                                        trspan => "expired2Fremoved, $removed"
-                                    }
-                                  )
-                                : ( params =>
-                                      { trspan => "oneExpired2Fremoved" } )
-                              )
-
-                        )
-                    );
-                    return PE_INFO;
-                }
             }
         }
+
         if ($removed) {
             $self->logger->debug(
 "Found $removed EXPIRED 2F device(s) => Update persistent session"
@@ -226,6 +198,25 @@ sub run {
               map { $_->{type} =~ /\bEXPIRED\b/ ? () : $_ } @$_2fDevices;
             $self->p->updatePersistentSession( $req,
                 { _2fDevices => to_json($_2fDevices) } );
+
+            # Display message if required
+            if ( $self->sfMsg->( $req, $req->sessionInfo ) ) {
+                $req->info(
+                    $self->loadTemplate(
+                        'simpleInfo',
+                        (
+                            $removed > 1
+                            ? (
+                                params => {
+                                    trspan => "expired2Fremoved, $removed"
+                                }
+                              )
+                            : ( params => { trspan => "oneExpired2Fremoved" } )
+                        )
+                    )
+                );
+                return PE_INFO;
+            }
         }
     }
 
