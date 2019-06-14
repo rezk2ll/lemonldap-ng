@@ -1,6 +1,7 @@
 package Lemonldap::NG::Portal::Register::Custom;
 
 use strict;
+use Mouse;
 
 extends 'Lemonldap::NG::Portal::Register::Base';
 
