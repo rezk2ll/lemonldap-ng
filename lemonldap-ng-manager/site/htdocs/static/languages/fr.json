@@ -697,7 +697,7 @@
 "rest2fLogo":"Logo",
 "rest2fVerifyArgs":"Arguments de vérification",
 "rest2fVerifyUrl":"URL de vérification",
-"restExportSecretKeys":"Export secret attributes in REST",
+"restExportSecretKeys":"Exporter les attributs secrets en REST",
 "restParams":"Paramètres REST",
 "restPwdConfirmUrl":"URL de confirmation de mot-de-passe",
 "restPwdModifyUrl":"URL de modification de mot-de-passe",
