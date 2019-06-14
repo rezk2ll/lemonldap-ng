@@ -1009,6 +1009,11 @@ sub token {
     # Get code session
     my $code = $req->param('code');
 
+    unless ($code) {
+        $self->logger->error("No code found on token endpoint");
+        return $self->p->sendError( $req, 'invalid_request', 400 );
+    }
+
     $self->logger->debug("OpenID Connect Code: $code");
 
     my $codeSession = $self->getOpenIDConnectSession($code);
