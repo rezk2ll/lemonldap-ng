@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 17;
+my $maintests = 18;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -59,7 +59,6 @@ SKIP: {
         $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo'
     ) or print STDERR Dumper( $res->[2]->[0] );
-    count(1);
 
     # JS query
     ok(

@@ -729,6 +729,7 @@
 "sessionTitle":"محتوى الجلسة",
 "sfaTitle":"Second Factors Authentication",
 "sfRequired":"Require 2FA",
+"sfRemovedMsg":"Display a message if an expired SF is removed",
 "show":"عرض",
 "showHelp":"عرض المساعدة",
 "showLanguages":"Show languages choice",

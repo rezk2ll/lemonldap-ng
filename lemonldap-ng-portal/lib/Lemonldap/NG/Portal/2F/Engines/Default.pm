@@ -18,6 +18,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_SENDRESPONSE
   PE_TOKENEXPIRED
+  PE_INFO
 );
 
 our $VERSION = '2.0.5';
@@ -26,11 +27,10 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 # INITIALIZATION
 
-has sfModules => ( is => 'rw', default => sub { [] } );
-
+has sfModules  => ( is => 'rw', default => sub { [] } );
 has sfRModules => ( is => 'rw', default => sub { [] } );
-
-has sfReq => ( is => 'rw' );
+has sfReq      => ( is => 'rw' );
+has sfMsg      => ( is => 'rw' );
 
 has ott => (
     is      => 'rw',
@@ -106,6 +106,19 @@ sub init {
         return 0;
     }
 
+    unless (
+        $self->sfMsg(
+            $self->p->HANDLER->buildSub(
+                $self->p->HANDLER->substitute( $self->conf->{sfRemovedMsg} )
+            )
+        )
+      )
+    {
+        $self->error( 'Error in sfRemovedMsg rule'
+              . $self->p->HANDLER->tsv->{jail}->error );
+        return 0;
+    }
+
     # Enable REST request only if more than 1 2F module is enabled
     if ( @{ $self->{sfModules} } > 1 ) {
         $self->addUnauthRoute( '2fchoice' => '_choice',   ['POST'] );
@@ -174,6 +187,33 @@ sub run {
                 $device->{type} = 'EXPIRED';
                 $removed++;
                 last;
+                $self->userLogger->notice(
+                    " -> $removed EXPIRED 2F device(s) removed");
+                @$_2fDevices =
+                  map { $_->{type} =~ /\bEXPIRED\b/ ? () : $_ } @$_2fDevices;
+                $self->p->updatePersistentSession( $req,
+                    { _2fDevices => to_json($_2fDevices) } );
+
+                # Display message if required
+                if ( $self->sfMsg->( $req, $req->sessionInfo ) ) {
+                    $req->info(
+                        $self->loadTemplate(
+                            'simpleInfo',
+                            (
+                                $removed > 1
+                                ? (
+                                    params => {
+                                        trspan => "expired2Fremoved, $removed"
+                                    }
+                                  )
+                                : ( params =>
+                                      { trspan => "oneExpired2Fremoved" } )
+                              )
+
+                        )
+                    );
+                    return PE_INFO;
+                }
             }
         }
         if ($removed) {

@@ -729,6 +729,7 @@
 "sessionTitle":"Nội dung phiên",
 "sfaTitle":"Second Factors Authentication",
 "sfRequired":"Require 2FA",
+"sfRemovedMsg":"Display a message if an expired SF is removed",
 "show":"Hiển thị",
 "showHelp":"Hiển thị trợ giúp",
 "showLanguages":"Show languages choice",

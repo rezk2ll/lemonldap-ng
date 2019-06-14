@@ -751,7 +751,7 @@ sub tree {
                                 'yubikey2fTTL',
                             ],
                         },
-                        'sfRequired',
+                        'sfRequired', 'sfRemovedMsg',
                     ]
                 },
                 {

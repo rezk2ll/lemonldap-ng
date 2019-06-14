@@ -3186,6 +3186,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '::2F::Engines::Default',
             'type'    => 'text'
         },
+        'sfRemovedMsg' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
         'sfRequired' => {
             'default' => 0,
             'type'    => 'boolOrExpr'

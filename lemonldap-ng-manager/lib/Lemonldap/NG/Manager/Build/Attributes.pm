@@ -2575,6 +2575,12 @@ sub attributes {
             help          => 'secondfactor.html',
             documentation => 'Second factor required',
         },
+        sfRemovedMsg => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            help          => 'secondfactor.html',
+            documentation => 'Display a message if at leat one expired SF has been removed',
+        },
         available2F => {
             type          => 'text',
             default       => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey',

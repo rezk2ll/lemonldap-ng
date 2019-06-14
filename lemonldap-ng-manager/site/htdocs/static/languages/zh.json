@@ -729,6 +729,7 @@
 "sessionTitle":"Session content",
 "sfaTitle":"Second Factors Authentication",
 "sfRequired":"Require 2FA",
+"sfRemovedMsg":"Display a message if an expired SF is removed",
 "show":"Show",
 "showHelp":"Show help",
 "showLanguages":"Show languages choice",

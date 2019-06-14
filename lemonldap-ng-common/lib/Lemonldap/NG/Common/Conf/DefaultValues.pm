@@ -277,6 +277,7 @@ sub defaultValues {
         'samlSPSSODescriptorWantAssertionsSigned' => 1,
         'securedCookie'                           => 0,
         'sfEngine'                                => '::2F::Engines::Default',
+        'sfRemovedMsg'                            => 0,
         'sfRequired'                              => 0,
         'showLanguages'                           => 1,
         'slaveAuthnLevel'                         => 2,
