@@ -2512,6 +2512,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'restExportSecretKeys' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'restPwdConfirmUrl' => {
             'type' => 'url'
         },

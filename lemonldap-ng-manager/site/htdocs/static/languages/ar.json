@@ -697,6 +697,7 @@
 "rest2fLogo":"شعار",
 "rest2fVerifyArgs":"Verify Arguments",
 "rest2fVerifyUrl":"Verify URL",
+"restExportSecretKeys":"Export secret attributes in REST",
 "restParams":"معايير ريست",
 "restPwdConfirmUrl":"عنوان اليو آر إل لتأكيد كلمة المرور",
 "restPwdModifyUrl":"عنوان اليو آر إل لتغيير كلمة المرور",

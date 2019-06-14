@@ -564,9 +564,10 @@ sub tree {
                             help  => 'portalservers.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'wsdlServer',       'restSessionServer',
-                                'restConfigServer', 'soapSessionServer',
-                                'soapConfigServer', 'exportedAttr',
+                                'wsdlServer',           'restSessionServer',
+                                'restExportSecretKeys', 'restConfigServer',
+                                'soapSessionServer',    'soapConfigServer',
+                                'exportedAttr',
                             ]
                         },
                         {
@@ -813,9 +814,12 @@ sub tree {
                                     help  => 'security.html#portal',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'corsEnabled', 'corsAllow_Credentials', 
-                                        'corsAllow_Headers',  'corsAllow_Methods',
-                                        'corsAllow_Origin',    'corsExpose_Headers',
+                                        'corsEnabled',
+                                        'corsAllow_Credentials',
+                                        'corsAllow_Headers',
+                                        'corsAllow_Methods',
+                                        'corsAllow_Origin',
+                                        'corsExpose_Headers',
                                         'corsMax_Age',
                                     ]
                                 },

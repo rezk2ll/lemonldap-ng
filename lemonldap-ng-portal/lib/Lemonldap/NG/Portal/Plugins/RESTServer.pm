@@ -134,7 +134,13 @@ sub init {
 
         # Methods inherited from Lemonldap::NG::Common::Session::REST
         $self->addUnauthRoute(
-            sessions => { ':sessionType' => 'rawSession' },
+            sessions => {
+                ':sessionType' => (
+                    $self->conf->{restExportSecretKeys}
+                    ? 'rawSession'
+                    : 'session'
+                )
+            },
             ['GET']
         );
         $self->addUnauthRoute(

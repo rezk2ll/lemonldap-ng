@@ -22,7 +22,7 @@ sub perlExpr {
     my $err = join( '',
         grep { $_ =~ /Undefined subroutine/ ? () : $_ } split( /\n/, $@ ) );
     return $err ? ( 1, "__badExpression__: $err" ) : (1);
-};
+}
 
 my $url = $RE{URI}{HTTP}{ -scheme => "https?" };
 $url =~ s/(?<=[^\\])\$/\\\$/g;
@@ -1627,6 +1627,12 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Enable REST session server',
+        },
+        restExportSecretKeys => {
+            default => 0,
+            type    => 'bool',
+            documentation =>
+              'Allow to export secret keys in REST session server',
         },
         restConfigServer => {
             default       => 0,
