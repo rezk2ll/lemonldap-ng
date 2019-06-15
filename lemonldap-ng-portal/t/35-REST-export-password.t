@@ -111,6 +111,7 @@ ok( $res->{_session_id} eq $spId, ' Good ID' )
   or explain( $res, "_session_id => $spId" );
 ok( $res->{_password} eq 'french', ' Password is exported' )
   or explain( $res, '_password => french' );
+count(4);
 
 clean_sessions();
 done_testing( count() );
