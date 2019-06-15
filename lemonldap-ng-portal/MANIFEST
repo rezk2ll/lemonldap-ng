@@ -471,6 +471,7 @@ t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-SOAP-Server.t
 t/35-My-session.t
 t/35-REST-config-backend.t
+t/35-REST-export-password.t
 t/35-REST-sessions-with-AuthBasic-handler.t
 t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-config-backend.t
@@ -542,8 +543,11 @@ t/68-Impersonation-with-TOTP.t
 t/68-Impersonation.t
 t/70-2F-TOTP-8.t
 t/70-2F-TOTP-with-History.t
+t/70-2F-TOTP-with-TTL-and-msg.t
 t/70-2F-TOTP-with-TTL.t
 t/71-2F-U2F-with-History.t
+t/71-2F-U2F-with-TTL-and-msg.t
+t/71-2F-U2F-with-TTL.t
 t/71-2F-U2F.t
 t/72-2F-REST-with-History.t
 t/73-2F-UTOTP-TOTP-and-U2F-with-History.t
