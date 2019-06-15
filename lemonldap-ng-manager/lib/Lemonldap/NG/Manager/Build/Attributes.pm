@@ -704,7 +704,7 @@ sub attributes {
         },
         hiddenAttributes => {
             type          => 'text',
-            default       => '_password',
+            default       => '_password _2fDevices',
             documentation => 'Name of attributes to hide in logs',
         },
         key => {

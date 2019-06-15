@@ -1209,7 +1209,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type'    => 'int'
         },
         'hiddenAttributes' => {
-            'default' => '_password',
+            'default' => '_password _2fDevices',
             'type'    => 'text'
         },
         'hideOldPassword' => {

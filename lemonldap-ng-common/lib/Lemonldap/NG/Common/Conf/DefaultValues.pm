@@ -77,7 +77,7 @@ sub defaultValues {
         'groups'                        => {},
         'handlerInternalCache'          => 15,
         'handlerServiceTokenTTL'        => 30,
-        'hiddenAttributes'              => '_password',
+        'hiddenAttributes'              => '_password _2fDevices',
         'httpOnly'                      => 1,
         'https'                         => -1,
         'impersonationHiddenAttributes' => '_2fDevices _loginHistory',
