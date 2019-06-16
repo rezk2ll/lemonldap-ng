@@ -4,6 +4,7 @@ use IO::String;
 
 require 't/test-lib.pm';
 my $maintests = 20;
+my $file      = '20190616_dwho_Tm90aWZpY2F0aW9uX1NG.json';
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -14,12 +15,17 @@ SKIP: {
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel               => 'error',
-                totp2fSelfRegistration => 1,
-                totp2fActivation       => 1,
-                totp2fTTL              => 2,
-                sfRemovedMsg           => '$uid eq "dwho"',
-                portalMainLogo         => 'common/logos/logo_llng_old.png',
+                logLevel                   => 'error',
+                totp2fSelfRegistration     => 1,
+                totp2fActivation           => 1,
+                totp2fTTL                  => 2,
+                sfRemovedNotifRule         => '$uid eq "dwho"',
+                portalMainLogo             => 'common/logos/logo_llng_old.png',
+                notification               => 1,
+                templatesDir               => 'site/templates/',
+                notificationStorage        => 'File',
+                notificationStorageOptions => { dirName => 't' },
+                oldNotifFormat             => 1,
             }
         }
     );
@@ -140,15 +146,19 @@ SKIP: {
     expectOK($res);
     ok(
         $res->[2]->[0] =~
-          qr%<h3 trspan="oneExpired2Fremoved">oneExpired2Fremoved</h3>%,
-        'Found expired 2F message'
+          qr%<input type="hidden" name="reference1x1" value="Notification_SF">%,
+        'Notification reference found'
     ) or print STDERR Dumper( $res->[2]->[0] );
-    my $c = getCookies($res);
-    ok( not(%$c), 'No cookie' );
+    ok(
+        $res->[2]->[0] =~
+qr%<p class="notifText">1 expired second factor\(s\) has/have been removed!</p>%,
+        'Notification message found'
+    ) or print STDERR Dumper( $res->[2]->[0] );
+    $id = expectCookie($res);
+    $client->logout($id);
 }
 count($maintests);
-
+system 'rm -f t/*_dwho_Tm90aWZpY2F0aW9uX1NG.xml';
 clean_sessions();
 
 done_testing( count() );
-

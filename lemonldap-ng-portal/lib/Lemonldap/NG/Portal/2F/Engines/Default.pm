@@ -12,6 +12,7 @@ package Lemonldap::NG::Portal::2F::Engines::Default;
 use strict;
 use Mouse;
 use JSON qw(from_json to_json);
+use POSIX qw(strftime);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_NOTOKEN
@@ -30,7 +31,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 has sfModules  => ( is => 'rw', default => sub { [] } );
 has sfRModules => ( is => 'rw', default => sub { [] } );
 has sfReq      => ( is => 'rw' );
-has sfMsg      => ( is => 'rw' );
+has sfRule => ( is => 'rw' );
 
 has ott => (
     is      => 'rw',
@@ -107,9 +108,11 @@ sub init {
     }
 
     unless (
-        $self->sfMsg(
+        $self->sfRule(
             $self->p->HANDLER->buildSub(
-                $self->p->HANDLER->substitute( $self->conf->{sfRemovedMsg} )
+                $self->p->HANDLER->substitute(
+                    $self->conf->{sfRemovedNotifRule}
+                )
             )
         )
       )
@@ -199,23 +202,21 @@ sub run {
             $self->p->updatePersistentSession( $req,
                 { _2fDevices => to_json($_2fDevices) } );
 
-            # Display message if required
-            if ( $self->sfMsg->( $req, $req->sessionInfo ) ) {
-                $req->info(
-                    $self->loadTemplate(
-                        'simpleInfo',
-                        (
-                            $removed > 1
-                            ? (
-                                params => {
-                                    trspan => "expired2Fremoved, $removed"
-                                }
-                              )
-                            : ( params => { trspan => "oneExpired2Fremoved" } )
-                        )
-                    )
-                );
-                return PE_INFO;
+            # Display notification or message if required
+            my $res = 0;
+            if ( $self->sfRule->( $req, $req->sessionInfo ) ) {
+                if ( my $notifEngine =
+                    $self->p->loadedModules->{
+                        'Lemonldap::NG::Portal::Plugins::Notifications'} )
+                {
+                    $self->logger->debug("Notifications plugin enabled");
+                    $res =
+                      $self->_sendNotification( $req, $notifEngine, $removed );
+                }
+                else {
+                    $res = $self->_sendInfo( $req, $removed );
+                }
+                return $res if $res;
             }
         }
     }
@@ -492,6 +493,55 @@ sub restoreSession {
     return $req->method eq 'POST'
       ? $self->register( $req, @path )
       : $self->_displayRegister( $req, @path );
+}
+
+sub _sendInfo {
+    my ( $self, $req, $removed ) = @_;
+    $self->logger->debug("Return simpleInfo template");
+    $req->info(
+        $self->loadTemplate(
+            'simpleInfo',
+            (
+                $removed > 1
+                ? (
+                    params => {
+                        trspan => "expired2Fremoved, $removed"
+                    }
+                  )
+                : ( params => { trspan => "oneExpired2Fremoved" } )
+            )
+        )
+    );
+    return PE_INFO;
+}
+
+sub _sendNotification {
+    my ( $self, $req, $notifEngine, $removed ) = @_;
+    my $uid   = $req->user;
+    my $date  = strftime "%Y-%m-%d", localtime;
+    my $title = $self->conf->{sfRemovedNotifTitle} || 'Second factor notification';
+    my $msg   = $self->conf->{sfRemovedNotifMsg} || "$removed expired second factor(s) has/have been removed!";
+    $msg =~ s/_removedSF_/$removed/;
+
+    # Prepare notification
+    my $content =
+      $self->conf->{oldNotifFormat}
+      ? '<?xml version="1.0" encoding="UTF-8"?><root><notification uid="_uid_" date="_date_" reference="Notification_SF"><title>_title_</title><text>_msg_</text></notification></root>'
+      : '[{"uid":"_uid_","date":"_date_","title":"_title_","reference":"Notification_SF","text":"_msg_"}]';
+    $content =~ s/_uid_/$uid/;
+    $content =~ s/_date_/$date/;
+    $content =~ s/_title_/$title/;
+    $content =~ s/_msg_/$msg/;
+
+    if ( $notifEngine->module->notifObject->newNotification($content) ) {
+        $self->logger->debug("Notification SF successfully appended");
+        $self->userLogger->notice("Notification SF successfully appended");
+        return PE_OK;
+    }
+    else {
+        $self->logger->debug("Notification NOT created!");
+        return $self->_sendInfo( $req, $removed );
+    }
 }
 
 1;

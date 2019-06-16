@@ -2575,11 +2575,23 @@ sub attributes {
             help          => 'secondfactor.html',
             documentation => 'Second factor required',
         },
-        sfRemovedMsg => {
-            type          => 'boolOrExpr',
-            default       => 0,
+        sfRemovedNotifRule => {
+            type           => 'boolOrExpr',
+            default        => 0,
+            help           => 'secondfactor.html',
+            documentation  => 'Display a message if at leat one expired SF has been removed',
+        },
+        sfRemovedNotifTitle => {
+            type            => 'text',
+            default         => 'Second factor notification',
+            help            => 'secondfactor.html',
+            documentation   => 'Notification title',
+        },
+        sfRemovedNotifMsg => {
+            type          => 'text',
+            default       => '_removedSF_ expired second factor(s) has/have been removed!',
             help          => 'secondfactor.html',
-            documentation => 'Display a message if at leat one expired SF has been removed',
+            documentation => 'Notification message',
         },
         available2F => {
             type          => 'text',

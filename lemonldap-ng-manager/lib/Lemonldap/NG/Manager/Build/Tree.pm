@@ -751,7 +751,16 @@ sub tree {
                                 'yubikey2fTTL',
                             ],
                         },
-                        'sfRequired', 'sfRemovedMsg',
+                        {
+                            title => 'sfRemovedNotification',
+                            help  => 'secondfactor.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'sfRemovedNotifRule', 'sfRemovedNotifTitle',
+                                'sfRemovedNotifMsg',
+                            ],
+                        },
+                        'sfRequired',
                     ]
                 },
                 {
