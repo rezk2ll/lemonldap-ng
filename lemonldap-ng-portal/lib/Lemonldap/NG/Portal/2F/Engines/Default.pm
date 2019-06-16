@@ -526,8 +526,8 @@ sub _sendNotification {
     # Prepare notification
     my $content =
       $self->conf->{oldNotifFormat}
-      ? '<?xml version="1.0" encoding="UTF-8"?><root><notification uid="_uid_" date="_date_" reference="Notification_SF"><title>_title_</title><text>_msg_</text></notification></root>'
-      : '[{"uid":"_uid_","date":"_date_","title":"_title_","reference":"Notification_SF","text":"_msg_"}]';
+      ? '<?xml version="1.0" encoding="UTF-8"?><root><notification uid="_uid_" date="_date_" reference="RemoveSF"><title>_title_</title><text>_msg_</text></notification></root>'
+      : '[{"uid":"_uid_","date":"_date_","title":"_title_","reference":"RemoveSF","text":"_msg_"}]';
     $content =~ s/_uid_/$uid/;
     $content =~ s/_date_/$date/;
     $content =~ s/_title_/$title/;
