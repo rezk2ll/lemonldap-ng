@@ -146,7 +146,7 @@ SKIP: {
     expectOK($res);
     ok(
         $res->[2]->[0] =~
-          qr%<input type="hidden" name="reference1x1" value="Notification_SF">%,
+          qr%<input type="hidden" name="reference1x1" value="RemoveSF">%,
         'Notification reference found'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok(
@@ -158,7 +158,7 @@ qr%<p class="notifText">1 expired second factor\(s\) has/have been removed!</p>%
     $client->logout($id);
 }
 count($maintests);
-system 'rm -f t/*_dwho_Tm90aWZpY2F0aW9uX1NG.xml';
+system 'rm -f t/*_dwho_UmVtb3ZlU0Y=.xml';
 clean_sessions();
 
 done_testing( count() );
