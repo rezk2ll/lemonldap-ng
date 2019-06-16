@@ -21,6 +21,10 @@ my $client = LLNG::Manager::Test->new( {
             checkUserIdRule                => '$uid ne "msmith"',
             checkUserDisplayPersistentInfo => 1,
             checkUserDisplayEmptyValues    => 1,
+            totp2fSelfRegistration         => 1,
+            totp2fActivation               => 1,
+            totp2fDigits                   => 6,
+            #hiddenAttributes               => 'test',
         }
     }
 );
@@ -93,8 +97,94 @@ count(1);
 $id = expectCookie($res);
 expectRedirection( $res, 'http://auth.example.com/' );
 
+# TOTP form
+ok(
+    $res = $client->_get(
+        '/2fregisters',
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+    ),
+    'Form registration'
+);
+expectRedirection( $res, qr#/2fregisters/totp$# );
+ok(
+    $res = $client->_get(
+        '/2fregisters/totp',
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+    ),
+    'Form registration'
+);
+ok( $res->[2]->[0] =~ /totpregistration\.(?:min\.)?js/, 'Found TOTP js' );
+
+# JS query
+ok(
+    $res = $client->_post(
+        '/2fregisters/totp/getkey', IO::String->new(''),
+        cookie => "lemonldap=$id",
+        length => 0,
+    ),
+    'Get new key'
+);
+eval { $res = JSON::from_json( $res->[2]->[0] ) };
+ok( not($@), 'Content is JSON' )
+  or explain( $res->[2]->[0], 'JSON content' );
+my ( $key, $token );
+ok( $key   = $res->{secret}, 'Found secret' );
+ok( $token = $res->{token},  'Found token' );
+$key = Convert::Base32::decode_base32($key);
+
+# Post code
+my $code;
+ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
+    'Code' );
+ok( $code =~ /^\d{6}$/, 'Code contains 6 digits' );
+my $s = "code=$code&token=$token";
+ok(
+    $res = $client->_post(
+        '/2fregisters/totp/verify',
+        IO::String->new($s),
+        length => length($s),
+        cookie => "lemonldap=$id",
+    ),
+    'Post code'
+);
+eval { $res = JSON::from_json( $res->[2]->[0] ) };
+ok( not($@), 'Content is JSON' )
+  or explain( $res->[2]->[0], 'JSON content' );
+ok( $res->{result} == 1, 'Key is registered' );
+count(12);
+
+# Try to sign-in
+$client->logout($id);
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new('user=dwho&password=dwho'),
+        length => 23,
+        accept => 'text/html',
+    ),
+    'Auth query'
+);
+my ( $host, $url, $query ) = expectForm( $res, undef, '/totp2fcheck', 'token' );
+
+# Generate TOTP with LLNG
+
+my $totp = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 );
+
+$query =~ s/code=/code=$code/;
+ok(
+    $res = $client->_post(
+        '/totp2fcheck',
+        IO::String->new($query),
+        length => length($query),
+    ),
+    'Post code'
+);
+$id = expectCookie($res);
+
 # CheckUser form -> granted
-# ------------------------
+# -------------------------
 
 ok(
     $res = $client->_get(
@@ -104,20 +194,20 @@ ok(
     ),
     'CheckUser form',
 );
-count(1);
+count(3);
 
 my ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
   or explain( $res->[2]->[0], 'trspan="checkUser"' );
-count(1);
-
 ok( $res->[2]->[0] =~ m%<td class="text-left">_user</td>%,
     'Found attribute _user' )
   or explain( $res->[2]->[0], 'Attribute _user' );
 ok( $res->[2]->[0] =~ m%<td class="text-left">dwho</td>%, 'Found value dwho' )
   or explain( $res->[2]->[0], 'Value dwho' );
-count(2);
+ok( $res->[2]->[0] !~ m%_2fDevices</td>%, '_2fDevices NOT Found!' )
+  or explain( $res->[2]->[0], 'Value _2fDevices' );
+count(4);
 
 $query =~ s/url=/url=http%3A%2F%2Ftest1.example.com/;
 ok(

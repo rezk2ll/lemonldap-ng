@@ -786,7 +786,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'checkUserHiddenAttributes' => {
-            'default' => '_2fDevices _loginHistory hGroups',
+            'default' => '_loginHistory hGroups',
             'type'    => 'text'
         },
         'checkUserIdRule' => {
