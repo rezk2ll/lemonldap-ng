@@ -2705,7 +2705,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'LDAP password encoding',
         },
         ldapUsePasswordResetAttribute => {
-            default       => 0,
             type          => 'bool',
             default       => 1,
             documentation => 'LDAP store reset flag in an attribute',
