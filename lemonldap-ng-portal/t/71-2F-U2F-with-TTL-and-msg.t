@@ -20,7 +20,7 @@ SKIP: {
                 portalMainLogo      => 'common/logos/logo_llng_old.png',
                 totp2fTTL           => 2,
                 u2fTTL              => 2,
-                sfRemovedNotifRule  => 1,
+                sfRemovedMsgRule    => 1,
             }
         }
     );

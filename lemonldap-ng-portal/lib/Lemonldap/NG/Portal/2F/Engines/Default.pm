@@ -31,7 +31,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 has sfModules  => ( is => 'rw', default => sub { [] } );
 has sfRModules => ( is => 'rw', default => sub { [] } );
 has sfReq      => ( is => 'rw' );
-has sfRule => ( is => 'rw' );
+has sfRule     => ( is => 'rw' );
 
 has ott => (
     is      => 'rw',
@@ -111,7 +111,7 @@ sub init {
         $self->sfRule(
             $self->p->HANDLER->buildSub(
                 $self->p->HANDLER->substitute(
-                    $self->conf->{sfRemovedNotifRule}
+                    $self->conf->{sfRemovedMsgRule}
                 )
             )
         )
@@ -205,10 +205,9 @@ sub run {
             # Display notification or message if required
             my $res = 0;
             if ( $self->sfRule->( $req, $req->sessionInfo ) ) {
-                if ( my $notifEngine =
-                    $self->p->loadedModules->{
-                        'Lemonldap::NG::Portal::Plugins::Notifications'} )
-                {
+                my $notifEngine = $self->p->loadedModules->{
+                    'Lemonldap::NG::Portal::Plugins::Notifications'};
+                if ( $notifEngine && $self->conf->{sfRemovedUseNotif} ) {
                     $self->logger->debug("Notifications plugin enabled");
                     $res =
                       $self->_sendNotification( $req, $notifEngine, $removed );
@@ -517,18 +516,22 @@ sub _sendInfo {
 
 sub _sendNotification {
     my ( $self, $req, $notifEngine, $removed ) = @_;
-    my $uid   = $req->user;
-    my $date  = strftime "%Y-%m-%d", localtime;
-    my $title = $self->conf->{sfRemovedNotifTitle} || 'Second factor notification';
-    my $msg   = $self->conf->{sfRemovedNotifMsg} || "$removed expired second factor(s) has/have been removed!";
+    my $uid = $req->user;
+    my $date = strftime "%Y-%m-%d", localtime;
+    my $ref = $self->conf->{sfRemovedNotifRef} || 'RemoveSF';
+    my $title =
+      $self->conf->{sfRemovedNotifTitle} || 'Second factor notification';
+    my $msg = $self->conf->{sfRemovedNotifMsg}
+      || "$removed expired second factor(s) has/have been removed!";
     $msg =~ s/_removedSF_/$removed/;
 
     # Prepare notification
     my $content =
       $self->conf->{oldNotifFormat}
-      ? '<?xml version="1.0" encoding="UTF-8"?><root><notification uid="_uid_" date="_date_" reference="RemoveSF"><title>_title_</title><text>_msg_</text></notification></root>'
-      : '[{"uid":"_uid_","date":"_date_","title":"_title_","reference":"RemoveSF","text":"_msg_"}]';
+      ? '<?xml version="1.0" encoding="UTF-8"?><root><notification uid="_uid_" date="_date_" reference="_ref_"><title>_title_</title><text>_msg_</text></notification></root>'
+      : '[{"uid":"_uid_","date":"_date_","title":"_title_","reference":"_ref_","text":"_msg_"}]';
     $content =~ s/_uid_/$uid/;
+    $content =~ s/_ref_/$ref/;
     $content =~ s/_date_/$date/;
     $content =~ s/_title_/$title/;
     $content =~ s/_msg_/$msg/;

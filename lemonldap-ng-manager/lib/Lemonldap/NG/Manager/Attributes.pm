@@ -3186,18 +3186,26 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '::2F::Engines::Default',
             'type'    => 'text'
         },
+        'sfRemovedMsgRule' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
         'sfRemovedNotifMsg' => {
             'default' =>
               '_removedSF_ expired second factor(s) has/have been removed!',
             'type' => 'text'
         },
-        'sfRemovedNotifRule' => {
-            'default' => 0,
-            'type'    => 'boolOrExpr'
+        'sfRemovedNotifRef' => {
+            'default' => 'RemoveSF',
+            'type'    => 'text'
         },
         'sfRemovedNotifTitle' => {
             'default' => 'Second factor notification',
             'type'    => 'text'
+        },
+        'sfRemovedUseNotif' => {
+            'default' => 0,
+            'type'    => 'bool'
         },
         'sfRequired' => {
             'default' => 0,

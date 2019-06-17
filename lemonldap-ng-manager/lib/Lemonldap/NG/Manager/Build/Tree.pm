@@ -756,7 +756,8 @@ sub tree {
                             help  => 'secondfactor.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'sfRemovedNotifRule', 'sfRemovedNotifTitle',
+                                'sfRemovedMsgRule',  'sfRemovedUseNotif',
+                                'sfRemovedNotifRef', 'sfRemovedNotifTitle',
                                 'sfRemovedNotifMsg',
                             ],
                         },

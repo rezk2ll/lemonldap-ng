@@ -277,9 +277,10 @@ sub defaultValues {
         'samlSPSSODescriptorWantAssertionsSigned' => 1,
         'securedCookie'                           => 0,
         'sfEngine'                                => '::2F::Engines::Default',
+        'sfRemovedMsgRule'                        => 0,
         'sfRemovedNotifMsg' =>
           '_removedSF_ expired second factor(s) has/have been removed!',
-        'sfRemovedNotifRule'      => 0,
+        'sfRemovedNotifRef'       => 'RemoveSF',
         'sfRemovedNotifTitle'     => 'Second factor notification',
         'sfRequired'              => 0,
         'showLanguages'           => 1,
