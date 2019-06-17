@@ -205,7 +205,7 @@ SKIP: {
       or explain( $res->[2]->[0], 'trspan="checkUserMerged"' );
     ok(
         $res->[2]->[0] =~
-m%<div class="alert alert-success"><b><span trspan="allowed"></span></b></div>%,
+m%<div class="alert alert-success"><div class="text-center"><b><span trspan="allowed"></span></b></div></div>%,
         'Found trspan="allowed"'
     ) or explain( $res->[2]->[0], 'trspan="allowed"' );
     ok( $res->[2]->[0] =~ m%<span trspan="headers">%, 'Found trspan="headers"' )
@@ -213,26 +213,24 @@ m%<div class="alert alert-success"><b><span trspan="allowed"></span></b></div>%,
     ok( $res->[2]->[0] =~ m%<span trspan="groups_sso">%,
         'Found trspan="groups_sso"' )
       or explain( $res->[2]->[0], 'trspan="groups_sso"' );
-    ok( $res->[2]->[0] =~ m%<span trspan="macros">%, 'Found trspan="macros"' )
-      or explain( $res->[2]->[0], 'trspan="macros"' );
     ok( $res->[2]->[0] =~ m%<span trspan="attributes">%,
         'Found trspan="attributes"' )
       or explain( $res->[2]->[0], 'trspan="attributes"' );
-    ok( $res->[2]->[0] =~ m%<td class="text-left">_userDB</td>%,
-        'Found _userDB' )
-      or explain( $res->[2]->[0], '_userDB' );
-    ok( $res->[2]->[0] =~ m%<td class="align-middle">Auth-User</td>%,
-        'Found Auth-User' )
+    ok( $res->[2]->[0] =~ m%<span trspan="macros">%, 'Found trspan="macros"' )
+      or explain( $res->[2]->[0], 'trspan="macros"' );
+    ok( $res->[2]->[0] =~ m%<td scope="row">_userDB</td>%, 'Found _userDB' )
+      or explain( $res->[2]->[0], 'Attribute Value: _userDB' );
+    ok( $res->[2]->[0] =~ m%Auth-User: %, 'Found Auth-User' )
       or explain( $res->[2]->[0], 'Header Key: Auth-User' );
-    ok( $res->[2]->[0] =~ m%<td class="align-middle">dwho</td>%, 'Found dwho' )
+    ok( $res->[2]->[0] =~ m%: dwho<br/>%, 'Found dwho' )
       or explain( $res->[2]->[0], 'Header Value: dwho' );
-    ok( $res->[2]->[0] =~ m%<td class="align-middle">su</td>%, 'Found su' )
+    ok( $res->[2]->[0] =~ m%<div class="col">su</div>%, 'Found su' )
       or explain( $res->[2]->[0], 'SSO Groups: su' );
-    ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
+    ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found uid' )
+      or explain( $res->[2]->[0], 'Attribute Value uid' );
+    ok( $res->[2]->[0] =~ m%<td scope="row">_whatToTrace</td>%,
         'Found _whatToTrace' )
       or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
-    ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%, 'Found uid' )
-      or explain( $res->[2]->[0], 'Attribute Value uid' );
     count(12);
 
     $client->logout($id);

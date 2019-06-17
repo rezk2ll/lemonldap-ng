@@ -24,6 +24,7 @@ my $client = LLNG::Manager::Test->new( {
             totp2fSelfRegistration         => 1,
             totp2fActivation               => 1,
             totp2fDigits                   => 6,
+
             #hiddenAttributes               => 'test',
         }
     }
@@ -184,7 +185,7 @@ ok(
 $id = expectCookie($res);
 
 # CheckUser form -> granted
-# -------------------------
+# ------------------------
 
 ok(
     $res = $client->_get(
@@ -200,10 +201,9 @@ my ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
   or explain( $res->[2]->[0], 'trspan="checkUser"' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">_user</td>%,
-    'Found attribute _user' )
+ok( $res->[2]->[0] =~ m%<td scope="row">_user</td>%, 'Found attribute _user' )
   or explain( $res->[2]->[0], 'Attribute _user' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">dwho</td>%, 'Found value dwho' )
+ok( $res->[2]->[0] =~ m%<td scope="row">dwho</td>%, 'Found value dwho' )
   or explain( $res->[2]->[0], 'Value dwho' );
 ok( $res->[2]->[0] !~ m%_2fDevices</td>%, '_2fDevices NOT Found!' )
   or explain( $res->[2]->[0], 'Value _2fDevices' );
@@ -228,15 +228,14 @@ ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
   or explain( $res->[2]->[0], 'trspan="checkUser"' );
 
 count(2);
-ok( $res->[2]->[0] =~ m%<td class="align-middle">Auth-User</td>%,
-    'Found Auth-User' )
+ok( $res->[2]->[0] =~ m%Auth-User: %, 'Found Auth-User' )
   or explain( $res->[2]->[0], 'Header Key: Auth-User' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">dwho</td>%, 'Found dwho' )
+ok( $res->[2]->[0] =~ m%: dwho<br/>%, 'Found dwho' )
   or explain( $res->[2]->[0], 'Header Value: dwho' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
+ok( $res->[2]->[0] =~ m%<td scope="row">_whatToTrace</td>%,
     'Found _whatToTrace' )
   or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">dwho</td>%, 'Found dwho' )
+ok( $res->[2]->[0] =~ m%<td scope="row">dwho</td>%, 'Found dwho' )
   or explain( $res->[2]->[0], 'Macro Value dwho' );
 count(3);
 
@@ -279,7 +278,7 @@ ok(
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok(
     $res->[2]->[0] =~
-m%<div class="alert alert-danger"><b><span trspan="forbidden"></span></b></div>%,
+m%<div class="alert alert-danger"><div class="text-center"><b><span trspan="forbidden"></span></b></div></div>%,
     'Found trspan="forbidden"'
 ) or explain( $res->[2]->[0], 'trspan="forbidden"' );
 count(2);
@@ -312,7 +311,7 @@ ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
   or explain( $res->[2]->[0], 'trspan="checkUser"' );
 ok(
     $res->[2]->[0] =~
-m%<div class="alert alert-success"><b><span trspan="allowed"></span></b></div>%,
+m%<div class="alert alert-success"><div class="text-center"><b><span trspan="allowed"></span></b></div></div>%,
     'Found trspan="allowed"'
 ) or explain( $res->[2]->[0], 'trspan="allowed"' );
 ok( $res->[2]->[0] =~ m%<span trspan="headers">%, 'Found trspan="headers"' )
@@ -320,27 +319,26 @@ ok( $res->[2]->[0] =~ m%<span trspan="headers">%, 'Found trspan="headers"' )
 ok( $res->[2]->[0] =~ m%<span trspan="groups_sso">%,
     'Found trspan="groups_sso"' )
   or explain( $res->[2]->[0], 'trspan="groups_sso"' );
-ok( $res->[2]->[0] =~ m%<span trspan="macros">%, 'Found trspan="macros"' )
-  or explain( $res->[2]->[0], 'trspan="macros"' );
 ok( $res->[2]->[0] =~ m%<span trspan="attributes">%,
     'Found trspan="attributes"' )
   or explain( $res->[2]->[0], 'trspan="attributes"' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">Auth-User</td>%,
-    'Found Auth-User' )
+ok( $res->[2]->[0] =~ m%<span trspan="macros">%, 'Found trspan="macros"' )
+  or explain( $res->[2]->[0], 'trspan="macros"' );
+ok( $res->[2]->[0] =~ m%Auth-User: %, 'Found Auth-User' )
   or explain( $res->[2]->[0], 'Header Key: Auth-User' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">rtyler</td>%, 'Found rtyler' )
+ok( $res->[2]->[0] =~ m%: rtyler<br/>%, 'Found rtyler' )
   or explain( $res->[2]->[0], 'Header Value: rtyler' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">su</td>%, 'Found su' )
+ok( $res->[2]->[0] =~ m%<div class="col">su</div>%, 'Found su' )
   or explain( $res->[2]->[0], 'SSO Groups: su' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
+ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found uid' )
+  or explain( $res->[2]->[0], 'Attribute Value uid' );
+ok( $res->[2]->[0] =~ m%<td scope="row">_whatToTrace</td>%,
     'Found _whatToTrace' )
   or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%, 'Found uid' )
-  or explain( $res->[2]->[0], 'Attribute Value uid' );
 count(11);
 
-my @c = ( $res->[2]->[0] =~ /<td class="align-middle">rtyler/gs );
-ok( @c == 2, ' -> Two entries found' );
+my @c = ( $res->[2]->[0] =~ /<td scope="row">rtyler<\/td>/gs );
+ok( @c == 3, ' -> Three entries found' );
 count(1);
 
 # Request with short VH url & user
@@ -372,7 +370,7 @@ ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
   or explain( $res->[2]->[0], 'trspan="checkUser"' );
 ok(
     $res->[2]->[0] =~
-m%<div class="alert alert-success"><b><span trspan="allowed"></span></b></div>%,
+m%<div class="alert alert-success"><div class="text-center"><b><span trspan="allowed"></span></b></div></div>%,
     'Found trspan="allowed"'
 ) or explain( $res->[2]->[0], 'trspan="allowed"' );
 ok( $res->[2]->[0] =~ m%<span trspan="headers">%, 'Found trspan="headers"' )
@@ -380,23 +378,22 @@ ok( $res->[2]->[0] =~ m%<span trspan="headers">%, 'Found trspan="headers"' )
 ok( $res->[2]->[0] =~ m%<span trspan="groups_sso">%,
     'Found trspan="groups_sso"' )
   or explain( $res->[2]->[0], 'trspan="groups_sso"' );
-ok( $res->[2]->[0] =~ m%<span trspan="macros">%, 'Found trspan="macros"' )
-  or explain( $res->[2]->[0], 'trspan="macros"' );
 ok( $res->[2]->[0] =~ m%<span trspan="attributes">%,
     'Found trspan="attributes"' )
   or explain( $res->[2]->[0], 'trspan="attributes"' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">Auth-User</td>%,
-    'Found Auth-User' )
+ok( $res->[2]->[0] =~ m%<span trspan="macros">%, 'Found trspan="macros"' )
+  or explain( $res->[2]->[0], 'trspan="macros"' );
+ok( $res->[2]->[0] =~ m%Auth-User: %, 'Found Auth-User' )
   or explain( $res->[2]->[0], 'Header Key: Auth-User' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">rtyler</td>%, 'Found rtyler' )
+ok( $res->[2]->[0] =~ m%: rtyler<br/>%, 'Found rtyler' )
   or explain( $res->[2]->[0], 'Header Value: rtyler' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">su</td>%, 'Found su' )
+ok( $res->[2]->[0] =~ m%<div class="col">su</div>%, 'Found su' )
   or explain( $res->[2]->[0], 'SSO Groups: su' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
+ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found uid' )
+  or explain( $res->[2]->[0], 'Attribute Value uid' );
+ok( $res->[2]->[0] =~ m%<td scope="row">_whatToTrace</td>%,
     'Found _whatToTrace' )
   or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%, 'Found uid' )
-  or explain( $res->[2]->[0], 'Attribute Value uid' );
 count(11);
 
 # Request a forbidden identity

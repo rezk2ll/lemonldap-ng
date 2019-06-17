@@ -259,11 +259,9 @@ SKIP: {
     ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%,
         'Found trspan="checkUser"' )
       or explain( $res->[2]->[0], 'trspan="checkUser"' );
-    ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%,
-        'Found attribute uid' )
+    ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found attribute uid' )
       or explain( $res->[2]->[0], 'Attribute uid' );
-    ok( $res->[2]->[0] =~ m%<td class="text-left">french</td>%,
-        'Found value french' )
+    ok( $res->[2]->[0] =~ m%<td scope="row">french</td>%, 'Found value french' )
       or explain( $res->[2]->[0], 'Value french' );
     count(4);
 
@@ -304,13 +302,11 @@ m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
     ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%,
         'Found trspan="checkUser"' )
       or explain( $res->[2]->[0], 'trspan="checkUser"' );
-    ok( $res->[2]->[0] =~ m%<td class="text-left">uid</td>%,
-        'Found attribute uid' )
+    ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found attribute uid' )
       or explain( $res->[2]->[0], 'Attribute uid' );
-    ok( $res->[2]->[0] =~ m%<td class="text-left">mail</td>%,
-        'Found attribute mail' )
+    ok( $res->[2]->[0] =~ m%<td scope="row">mail</td>%, 'Found attribute mail' )
       or explain( $res->[2]->[0], 'Attribute mail' );
-    ok( $res->[2]->[0] =~ m%<td class="text-left">davros\@badguy.org</td>%,
+    ok( $res->[2]->[0] =~ m%<td scope="row">davros\@badguy.org</td>%,
         'Found value davros@badguy.org' )
       or explain( $res->[2]->[0], 'Value davros@badguy.org' );
     count(5);
