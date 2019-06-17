@@ -189,10 +189,10 @@ ok(
 );
 count(1);
 
-ok( $res->[2]->[0] =~ m%<td class="align-middle">test_impersonation</td>%,
+ok( $res->[2]->[0] =~ m%<td scope="row">test_impersonation</td>%,
     'Found macro test_impersonation' )
   or explain( $res->[2]->[0], 'test_impersonation' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">msmith/msmith</td>%,
+ok( $res->[2]->[0] =~ m%<td scope="row">msmith/msmith</td>%,
     'Found msmith/msmith' )
   or explain( $res->[2]->[0], 'Found msmith/msmith' );
 count(2);
@@ -277,7 +277,7 @@ ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
   or explain( $res->[2]->[0], 'trspan="checkUser"' );
 ok(
     $res->[2]->[0] =~
-m%<div class="alert alert-success"><b><span trspan="allowed"></span></b></div>%,
+m%<div class="alert alert-success"><div class="text-center"><b><span trspan="allowed"></span></b></div></div>%,
     'Found trspan="allowed"'
 ) or explain( $res->[2]->[0], 'trspan="allowed"' );
 ok( $res->[2]->[0] =~ m%<span trspan="headers">%, 'Found trspan="headers"' )
@@ -292,38 +292,36 @@ ok( $res->[2]->[0] =~ m%<span trspan="macros">%, 'Found trspan="macros"' )
 ok( $res->[2]->[0] =~ m%<span trspan="attributes">%,
     'Found trspan="attributes"' )
   or explain( $res->[2]->[0], 'trspan="attributes"' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">_userDB</td>%, 'Found _userDB' )
+ok( $res->[2]->[0] =~ m%<td scope="row">_userDB</td>%, 'Found _userDB' )
   or explain( $res->[2]->[0], '_userDB' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">Auth-User</td>%,
-    'Found Auth-User' )
+ok( $res->[2]->[0] =~ m%Auth-User: %, 'Found Auth-User' )
   or explain( $res->[2]->[0], 'Header Key: Auth-User' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">dwho</td>%, 'Found dwho' )
+ok( $res->[2]->[0] =~ m%: dwho<br/>%, 'Found dwho' )
   or explain( $res->[2]->[0], 'Header Value: dwho' );
 
-ok( $res->[2]->[0] =~ m%<td class="align-middle">_whatToTrace</td>%,
+ok( $res->[2]->[0] =~ m%<td scope="row">_whatToTrace</td>%,
     'Found _whatToTrace' )
   or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">testPrefix_groups</td>%,
+ok( $res->[2]->[0] =~ m%<td scope="row">testPrefix_groups</td>%,
     'Found testPrefix_groups' )
   or explain( $res->[2]->[0], 'testPrefix_groups' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">su; su_test; test_su</td>%,
+ok( $res->[2]->[0] =~ m%<td scope="row">su; su_test; test_su</td>%,
     'Found "su; su_test; test_su"' )
   or explain( $res->[2]->[0], 'su' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">testPrefix_uid</td>%,
+ok( $res->[2]->[0] =~ m%<td scope="row">testPrefix_uid</td>%,
     'Found testPrefix_uid' )
   or explain( $res->[2]->[0], 'testPrefix_groups' );
-ok( $res->[2]->[0] =~ m%<td class="text-left">rtyler</td>%, 'Found rtyler' )
+ok( $res->[2]->[0] =~ m%<td scope="row">rtyler</td>%, 'Found rtyler' )
   or explain( $res->[2]->[0], 'su' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">test_impersonation</td>%,
+ok( $res->[2]->[0] =~ m%<td scope="row">test_impersonation</td>%,
     'Found macro test_impersonation' )
   or explain( $res->[2]->[0], 'test_impersonation' );
-ok( $res->[2]->[0] =~ m%<td class="align-middle">rtyler/dwho</td>%,
-    'Found rtyler/dwo' )
+ok( $res->[2]->[0] =~ m%<td scope="row">rtyler/dwho</td>%, 'Found rtyler/dwo' )
   or explain( $res->[2]->[0], 'Found rtyler/dwo' );
 count(16);
 
-my %attributes = map /<td class="text-left">(.+)?<\/td>/g, $res->[2]->[0];
-ok( keys %attributes == 31, 'Found 31 attributes' )
+my %attributes = map /<td scope="row">(.+)?<\/td>/g, $res->[2]->[0];
+ok( keys %attributes == 33, 'Found 33 attributes' )
   or print STDERR "Missing attributes -> " . scalar %attributes;
 ok( $attributes{'_auth'} eq 'Demo', '_auth' )
   or print STDERR Dumper( \%attributes );
