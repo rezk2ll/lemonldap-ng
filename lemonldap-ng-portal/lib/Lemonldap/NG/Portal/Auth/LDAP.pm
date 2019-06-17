@@ -41,19 +41,9 @@ sub authenticate {
 
     # Set the dn unless done before
     unless ( $req->data->{dn} ) {
-        my $class = ref $self;
-        $class =~ s/::Auth::/::UserDB::/;
-        $class->logger->warn(
-            'Auth::LDAP used without UserDB::LDAP, LLNG may fail');
-        my $tmp = eval { $self->p->loadedModules->{$class}->getUser($req) };
-        if ($@) {
-            $self->logger->error(
-"Unable to authenticate using Auth::LDAP without having a UserDB::LDAP search: $@"
-            );
-            return PE_ERROR;
-        }
-        if ($tmp) {
-            $self->setSecurity($req);
+        if ( my $tmp = $self->getUser($req) ) {
+            eval { $self->setSecurity($req) };
+            $self->logger->warn($@) if ($@);
             return $tmp;
         }
     }
