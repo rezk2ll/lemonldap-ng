@@ -44,7 +44,7 @@ GetOptions(
 );
 
 if ($group) {
-    my $grp = getgrnam($group) or die "Can't change uid to $group";
+    my $grp = getgrnam($group) or die "Can't change gid to $group";
     POSIX::setgid($grp) or die "setgid: $!";
 }
 
