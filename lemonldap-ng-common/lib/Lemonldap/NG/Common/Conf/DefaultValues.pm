@@ -5,11 +5,12 @@ our $VERSION = '2.0.5';
 
 sub defaultValues {
     return {
-        'activeTimer'        => 1,
-        'ADPwdExpireWarning' => 0,
-        'ADPwdMaxAge'        => 0,
-        'apacheAuthnLevel'   => 4,
-        'applicationList'    => {
+        'activeTimer'            => 1,
+        'adminImpersonationRule' => 1,
+        'ADPwdExpireWarning'     => 0,
+        'ADPwdMaxAge'            => 0,
+        'apacheAuthnLevel'       => 4,
+        'applicationList'        => {
             'default' => {
                 'catname' => 'Default category',
                 'type'    => 'category'

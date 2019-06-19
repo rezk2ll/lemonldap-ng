@@ -67,6 +67,12 @@
                 <span trspan="sfaManager">sfaManager</span>
               </a></li>
             </TMPL_IF>
+            <TMPL_IF NAME="adminImpersonation">
+              <li class="dropdown-item"><a href="/impersonate" class="nav-link">
+                <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/sfa_manager.png" width="16" height="16" alt="refresh" />
+                <span trspan="adminImpersonate">adminImpersonate</span>
+              </a></li>
+            </TMPL_IF>
             <li class="dropdown-item"><a href="/refresh" class="nav-link">
               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/arrow_refresh.png" width="16" height="16" alt="refresh" />
               <span trspan="refreshrights">Refresh</span>

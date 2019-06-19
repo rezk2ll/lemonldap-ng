@@ -114,6 +114,16 @@ sub params {
       $self->p->_sfEngine->display2fRegisters( $req, $req->userData );
     $self->logger->debug("Display 2fRegisters link") if $res{sfaManager};
 
+    # Display adminImpersonation link only if allowed
+    my $impPlugin = $self->p->loadedModules->{
+        'Lemonldap::NG::Portal::Plugins::AdminImpersonation'};
+    $res{adminImpersonation} =
+        $impPlugin
+      ? $impPlugin->displayAdminImpersonation( $req, $req->userData )
+      : '';
+    $self->logger->debug("Display AdminImpersonation link")
+      if $res{adminImpersonation};
+
     return %res;
 }
 

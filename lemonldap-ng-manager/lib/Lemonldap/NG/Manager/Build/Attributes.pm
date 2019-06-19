@@ -486,6 +486,11 @@ sub attributes {
             documentation => 'Skip session empty values',
             flags         => 'p',
         },
+        adminImpersonationRule => {
+            type          => 'boolOrExpr',
+            default       => 1,
+            documentation => 'adminImpersonation activation rule',
+        },
         skipRenewConfirmation => {
             type    => 'bool',
             default => 0,

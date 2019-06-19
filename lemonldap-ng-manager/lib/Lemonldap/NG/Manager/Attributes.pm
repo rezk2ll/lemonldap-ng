@@ -257,6 +257,10 @@ sub attributes {
             'default' => 1,
             'type'    => 'bool'
         },
+        'adminImpersonationRule' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
         'ADPwdExpireWarning' => {
             'default' => 0,
             'type'    => 'int'
