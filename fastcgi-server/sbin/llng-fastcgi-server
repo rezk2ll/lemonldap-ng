@@ -44,13 +44,13 @@ GetOptions(
 );
 
 if ($group) {
-    my $grp = getgrnam($group) or warn "Can't change uid to $group";
-    POSIX::setgid($grp);
+    my $grp = getgrnam($group) or die "Can't change uid to $group";
+    POSIX::setgid($grp) or die "setgid: $!";
 }
 
 if ($user) {
-    my $uid = getpwnam($user) or warn "Can't change uid to $user";
-    POSIX::setuid($uid);
+    my $uid = getpwnam($user) or die "Can't change uid to $user";
+    POSIX::setuid($uid) or die "setuid: $!";
 }
 
 unless ($>) {
