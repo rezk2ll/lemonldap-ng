@@ -42,7 +42,7 @@ SKIP: {
       or print STDERR $@;
     ok(
         ( $res->{demo} eq 'rtyler' and $res->{dbi} eq 'rtyler' ),
-        ' Demo and DBI exported variables exists in session'
+        ' Demo and DBI exported variables exist in session'
     );
     expectCookie( try('dvador') );
     expectReject( try('dwho') );
