@@ -1,3 +1,4 @@
+/etc/lemonldap-ng/nginx*
 /etc/lemonldap-ng/handler-apache2.conf
 /etc/lemonldap-ng/handler-nginx.conf
 /etc/lemonldap-ng/test-apache2.conf

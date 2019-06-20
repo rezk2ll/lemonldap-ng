@@ -23,7 +23,7 @@ sub generate {
 
     eval {
         $session->{data}->{_session_id} =
-          unpack( 'H*', Crypt::URandom::urandom(32) );
+          unpack( 'H*', Crypt::URandom::urandom( int( $length / 2 ) ) );
     };
     if ($@) {
         print STDERR "Crypt::URandom::urandom failed: $@\n";
