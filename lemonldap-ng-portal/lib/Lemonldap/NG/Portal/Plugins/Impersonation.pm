@@ -37,13 +37,13 @@ sub init {
     $self->rule($rule);
 
     # Parse identity rule
-    $self->logger->debug( "Impersonation identity rule -> "
+    $self->logger->debug( "Impersonation identities rule -> "
           . $self->conf->{impersonationIdRule} );
     $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{impersonationIdRule} ) );
     unless ($rule) {
         $self->error(
-            "Bad impersonation identity rule -> " . $hd->tsv->{jail}->error );
+            "Bad impersonation identities rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
     $self->idRule($rule);

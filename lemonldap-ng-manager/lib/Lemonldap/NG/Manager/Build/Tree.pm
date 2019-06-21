@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.6';
 
 # TODO: Missing:
 #  * activeTimer
@@ -657,10 +657,20 @@ sub tree {
                             nodes => [
                                 'impersonationRule',
                                 'impersonationIdRule',
-                                'impersonationPrefix',
                                 'impersonationHiddenAttributes',
                                 'impersonationSkipEmptyValues',
                                 'impersonationMergeSSOgroups',
+                            ]
+                        },
+                        {
+                            title => 'contextSwitching',
+                            help  => 'contextswitching.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'contextSwitchingRule',
+                                'contextSwitchingIdRule',
+                                'contextSwitchingStopWithLogout',
+                                'contextSwitchingHiddenAttributes',
                             ]
                         },
                     ]

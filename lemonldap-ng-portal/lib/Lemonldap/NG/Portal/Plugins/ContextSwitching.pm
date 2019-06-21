@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::AdminImpersonation;
+package Lemonldap::NG::Portal::Plugins::ContextSwitching;
 
 use strict;
 use Mouse;
@@ -16,7 +16,7 @@ has rule   => ( is => 'rw', default => sub { 1 } );
 has idRule => ( is => 'rw', default => sub { 1 } );
 
 sub hAttr {
-    $_[0]->{conf}->{impersonationHiddenAttributes} . ' '
+    $_[0]->{conf}->{contextSwitchingHiddenAttributes} . ' '
       . $_[0]->{conf}->{hiddenAttributes};
 }
 
@@ -34,29 +34,29 @@ has ott => (
 sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;
-    $self->addAuthRoute( impersonate => 'run',     ['POST'] );
-    $self->addAuthRoute( impersonate => 'display', ['GET'] );
+    $self->addAuthRoute( switchcontext => 'run',     ['POST'] );
+    $self->addAuthRoute( switchcontext => 'display', ['GET'] );
 
     # Parse activation rule
     $self->logger->debug(
-        'AdminImpersonation rule -> ' . $self->conf->{adminImpersonationRule} );
+        'ContextSwitching rule -> ' . $self->conf->{contextSwitchingRule} );
     my $rule =
-      $hd->buildSub( $hd->substitute( $self->conf->{adminImpersonationRule} ) );
+      $hd->buildSub( $hd->substitute( $self->conf->{contextSwitchingRule} ) );
     unless ($rule) {
         $self->error(
-            'Bad adminImpersonation rule -> ' . $hd->tsv->{jail}->error );
+            'Bad contextSwitching rule -> ' . $hd->tsv->{jail}->error );
         return 0;
     }
     $self->rule($rule);
 
     # Parse identity rule
-    $self->logger->debug( "Impersonation identity rule -> "
-          . $self->conf->{impersonationIdRule} );
+    $self->logger->debug( "ContextSwitching identities rule -> "
+          . $self->conf->{contextSwitchingIdRule} );
     $rule =
-      $hd->buildSub( $hd->substitute( $self->conf->{impersonationIdRule} ) );
+      $hd->buildSub( $hd->substitute( $self->conf->{contextSwitchingIdRule} ) );
     unless ($rule) {
         $self->error(
-            "Bad impersonation identity rule -> " . $hd->tsv->{jail}->error );
+            "Bad contextSwitching identities rule -> " . $hd->tsv->{jail}->error );
         return 0;
     }
     $self->idRule($rule);
@@ -73,10 +73,10 @@ sub display {
         PORTAL    => $self->conf->{portal},
         MAIN_LOGO => $self->conf->{portalMainLogo},
         LANGS     => $self->conf->{showLanguages},
-        MSG       => 'impersonate',
+        MSG       => 'contextSwitching',
         ALERTE    => 'alert-danger',
         LOGIN     => '',
-        SPOOFID   => $self->conf->{adminImpersonationRule},
+        SPOOFID   => $self->conf->{contextSwitchingRule},
         TOKEN     => (
               $self->ottRule->( $req, {} )
             ? $self->ott->createToken()
@@ -84,7 +84,7 @@ sub display {
         )
     };
 
-    return $self->p->sendHtml( $req, 'adminImpersonation', params => $params, );
+    return $self->p->sendHtml( $req, 'contextSwitching', params => $params, );
 }
 
 sub run {
@@ -93,7 +93,7 @@ sub run {
     my $spoofId = $req->param('spoofId') || '';    # Impersonation required ?
 
     unless ($spoofId) {
-        $self->logger->debug("No impersonation required");
+        $self->logger->debug("No context switching required");
         $req->mustRedirect(1);
         return $self->p->do( $req, [ sub { PE_OK } ] );
     }
@@ -101,7 +101,7 @@ sub run {
     unless ( $spoofId =~ /$self->{conf}->{userControl}/o ) {
         $self->userLogger->error('Malformed spoofed Id');
         $self->logger->debug(
-            "AdminImpersonation tried with spoofed Id: $spoofId");
+            "Context switching tried with spoofed Id: $spoofId");
         $spoofId = $req->{user};
         $statut  = PE_MALFORMEDUSER;
     }
@@ -111,7 +111,7 @@ sub run {
         $self->logger->debug("Spoof Id: $spoofId");
         unless ( $self->rule->( $req, $req->sessionInfo ) ) {
             $self->userLogger->error(
-                'adminImpersonation service not authorized');
+                'Context switching service not authorized');
             $spoofId = '';
             $statut  = PE_IMPERSONATION_SERVICE_NOT_ALLOWED;
         }
@@ -122,9 +122,9 @@ sub run {
     $self->logger->debug("Rename real attributes...");
     my $spk = '';
     foreach my $k ( keys %{ $req->{userData} } ) {
-        if ( $self->{conf}->{impersonationSkipEmptyValues} ) {
-            next unless defined $req->{userData}->{$k};
-        }
+        # if ( $self->{conf}->{impersonationSkipEmptyValues} ) {
+        #     next unless defined $req->{userData}->{$k};
+        # }
         $spk = "$self->{conf}->{impersonationPrefix}$k";
         unless ( $self->hAttr =~ /\b$k\b/
             || $k =~ /^(?:_imp|token|_type)\w*\b/ )
@@ -157,7 +157,7 @@ sub run {
     # Merging SSO Groups and hGroups & dedup
     $spoofSession->{groups}  ||= '';
     $spoofSession->{hGroups} ||= {};
-    if ( $self->{conf}->{impersonationMergeSSOgroups} ) {
+    #if ( $self->{conf}->{impersonationMergeSSOgroups} ) {
         $self->userLogger->warn("MERGING SSO groups and hGroups...");
         my $spg       = "$self->{conf}->{impersonationPrefix}groups";
         my $sphg      = "$self->{conf}->{impersonationPrefix}hGroups";
@@ -171,20 +171,20 @@ sub run {
         $realSession->{$sphg} ||= {};
 
         # Merge specified groups/hGroups only
-        unless ( $self->{conf}->{impersonationMergeSSOgroups} eq 1 ) {
-            my %SSOgroups = map { $_, 1 } split /\Q$separator/,
-              $self->{conf}->{impersonationMergeSSOgroups};
+        # unless ( $self->{conf}->{impersonationMergeSSOgroups} eq 1 ) {
+        #     my %SSOgroups = map { $_, 1 } split /\Q$separator/,
+        #       $self->{conf}->{impersonationMergeSSOgroups};
 
-            $self->logger->debug("Filtering specified groups/hGroups...");
-            @realGrps = grep { exists $SSOgroups{$_} } @realGrps;
-            my %intersct =
-              map {
-                $realSession->{$sphg}->{$_}
-                  ? ( $_, $realSession->{$sphg}->{$_} )
-                  : ()
-              } keys %SSOgroups;
-            $realSession->{$sphg} = \%intersct;
-        }
+        #     $self->logger->debug("Filtering specified groups/hGroups...");
+        #     @realGrps = grep { exists $SSOgroups{$_} } @realGrps;
+        #     my %intersct =
+        #       map {
+        #         $realSession->{$sphg}->{$_}
+        #           ? ( $_, $realSession->{$sphg}->{$_} )
+        #           : ()
+        #       } keys %SSOgroups;
+        #     $realSession->{$sphg} = \%intersct;
+        # }
 
         $self->logger->debug("Processing groups...");
         @spoofGrps = ( @spoofGrps, @realGrps );
@@ -194,7 +194,7 @@ sub run {
         $self->logger->debug("Processing hGroups...");
         $spoofSession->{hGroups} =
           { %{ $spoofSession->{hGroups} }, %{ $realSession->{$sphg} } };
-    }
+   # }
 
     # Main session
     $self->p->updateSession( $req, $spoofSession );
@@ -262,10 +262,10 @@ sub _userData {
     return $req->{sessionInfo};
 }
 
-sub displayAdminImpersonation {
+sub displaySwitchContext {
     my ( $self, $req ) = @_;
-    return $self->rule->( $req, $req->userData )
-      || $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
+    return 2 if $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
+    return $self->rule->( $req, $req->userData );
 }
 
 1;

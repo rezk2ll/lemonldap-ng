@@ -143,6 +143,8 @@
 "groups_sso":"GROUPES SSO",
 "headers":"ENTETES",
 "id":"Id",
+"contextSwitching":"Endosser l'identité d'un autre utilisateur",
+"switchContext":"Changer de contexte",
 "imSure":"Je suis sûr",
 "info":"Information",
 "ipAddr":"Adresse IP",

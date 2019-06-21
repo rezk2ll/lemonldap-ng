@@ -143,6 +143,8 @@
 "groups_sso":"SSO GROUPS",
 "headers":"HEADERS",
 "id":"Id",
+"contextSwitching":"Impersonate another user",
+"switchContext":"Switch context",
 "imSure":"我确认",
 "info":"信息",
 "ipAddr":"IP 地址",

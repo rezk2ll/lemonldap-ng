@@ -5,7 +5,7 @@
   <div class="message message-positive alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
 -->
   <div class="alert <TMPL_VAR NAME="ALERTE"> alert"><div class="text-center"><span trspan="<TMPL_VAR NAME="MSG">"></span></div></div>
-  <form id="adminImpersonation" action="/impersonate" method="post" class="password" role="form">
+  <form id="contextSwitching" action="/switchcontext" method="post" class="password" role="form">
     <div class="buttons">
       <TMPL_IF NAME="TOKEN">
       <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
@@ -15,7 +15,7 @@
 
       <button type="submit" class="btn btn-success">
         <span class="fa fa-random"></span>
-        <span trspan="impersonate">Impersonate</span>
+        <span trspan="switchContext">switchContext</span>
       </button>
     </div>
   </form>

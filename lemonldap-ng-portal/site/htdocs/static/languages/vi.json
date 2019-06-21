@@ -143,6 +143,8 @@
 "groups_sso":"SSO GROUPS",
 "headers":"HEADERS",
 "id":"Id",
+"contextSwitching":"Impersonate another user",
+"switchContext":"Switch context",
 "imSure":"Tôi chắc chắn",
 "info":"Thông tin",
 "ipAddr":"Địa chỉ IP",

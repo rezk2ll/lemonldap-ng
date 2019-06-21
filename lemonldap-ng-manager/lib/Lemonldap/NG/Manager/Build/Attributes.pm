@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.6';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -486,10 +486,27 @@ sub attributes {
             documentation => 'Skip session empty values',
             flags         => 'p',
         },
-        adminImpersonationRule => {
+        contextSwitchingRule => {
             type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Context switching activation rule',
+        },
+        contextSwitchingIdRule => {
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
             default       => 1,
-            documentation => 'adminImpersonation activation rule',
+            documentation => 'Context switching identities rule',
+        },
+        contextSwitchingStopWithLogout => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Stop context switching by logout',
+        },
+        contextSwitchingHiddenAttributes => {
+            type          => 'text',
+            default       => '',
+            documentation => 'Attributes to skip',
+            flags         => 'p',
         },
         skipRenewConfirmation => {
             type    => 'bool',

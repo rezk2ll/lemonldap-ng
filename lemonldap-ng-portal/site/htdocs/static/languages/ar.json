@@ -143,6 +143,8 @@
 "groups_sso":"SSO GROUPS",
 "headers":"HEADERS",
 "id":"Id",
+"contextSwitching":"Impersonate another user",
+"switchContext":"Switch context",
 "imSure":"انا متاكد",
 "info":"معلومات",
 "ipAddr":"عنوان الأي بي",
