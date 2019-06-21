@@ -55,8 +55,8 @@ sub init {
     $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{contextSwitchingIdRule} ) );
     unless ($rule) {
-        $self->error(
-            "Bad contextSwitching identities rule -> " . $hd->tsv->{jail}->error );
+        $self->error( "Bad contextSwitching identities rule -> "
+              . $hd->tsv->{jail}->error );
         return 0;
     }
     $self->idRule($rule);
@@ -92,36 +92,35 @@ sub run {
     my $statut = PE_OK;
     my $spoofId = $req->param('spoofId') || '';    # Impersonation required ?
 
-    unless ($spoofId) {
-        $self->logger->debug("No context switching required");
-        $req->mustRedirect(1);
-        return $self->p->do( $req, [ sub { PE_OK } ] );
-    }
-
-    unless ( $spoofId =~ /$self->{conf}->{userControl}/o ) {
-        $self->userLogger->error('Malformed spoofed Id');
-        $self->logger->debug(
-            "Context switching tried with spoofed Id: $spoofId");
-        $spoofId = $req->{user};
-        $statut  = PE_MALFORMEDUSER;
-    }
-
     # Check activation rule
+    unless ( $self->rule->( $req, $req->userData ) ) {
+        $self->userLogger->error('Context switching service not authorized');
+        $spoofId = '';
+        $statut  = PE_IMPERSONATION_SERVICE_NOT_ALLOWED;
+    }
+
     if ($spoofId) {
         $self->logger->debug("Spoof Id: $spoofId");
-        unless ( $self->rule->( $req, $req->sessionInfo ) ) {
-            $self->userLogger->error(
-                'Context switching service not authorized');
-            $spoofId = '';
-            $statut  = PE_IMPERSONATION_SERVICE_NOT_ALLOWED;
+        unless ( $spoofId =~ /$self->{conf}->{userControl}/o ) {
+            $self->userLogger->error('Malformed spoofed Id');
+            $self->logger->debug(
+                "Context switching tried with spoofed Id: $spoofId");
+            $statut  = PE_MALFORMEDUSER;
         }
     }
+    else {
+        $self->logger->debug("No context switching required");
+        $req->mustRedirect(1);
+    }
+
+    return $self->p->do( $req, [ sub { $statut } ] ) if $statut;
 
     # Fill spoof session
     my ( $realSession, $spoofSession ) = ( {}, {} );
     $self->logger->debug("Rename real attributes...");
     my $spk = '';
     foreach my $k ( keys %{ $req->{userData} } ) {
+
         # if ( $self->{conf}->{impersonationSkipEmptyValues} ) {
         #     next unless defined $req->{userData}->{$k};
         # }
@@ -142,7 +141,7 @@ sub run {
             $statut = PE_BADCREDENTIALS;
         }
         else {
-            return $req->error;
+            $statut = $req->error;
         }
     }
 
@@ -157,44 +156,46 @@ sub run {
     # Merging SSO Groups and hGroups & dedup
     $spoofSession->{groups}  ||= '';
     $spoofSession->{hGroups} ||= {};
+
     #if ( $self->{conf}->{impersonationMergeSSOgroups} ) {
-        $self->userLogger->warn("MERGING SSO groups and hGroups...");
-        my $spg       = "$self->{conf}->{impersonationPrefix}groups";
-        my $sphg      = "$self->{conf}->{impersonationPrefix}hGroups";
-        my $separator = $self->{conf}->{multiValuesSeparator};
+    $self->userLogger->warn("MERGING SSO groups and hGroups...");
+    my $spg       = "$self->{conf}->{impersonationPrefix}groups";
+    my $sphg      = "$self->{conf}->{impersonationPrefix}hGroups";
+    my $separator = $self->{conf}->{multiValuesSeparator};
 
-        ## GROUPS
-        my @spoofGrps = split /\Q$separator/, $spoofSession->{groups};
-        my @realGrps  = split /\Q$separator/, $realSession->{$spg};
+    ## GROUPS
+    my @spoofGrps = split /\Q$separator/, $spoofSession->{groups};
+    my @realGrps  = split /\Q$separator/, $realSession->{$spg};
 
-        ## hGROUPS
-        $realSession->{$sphg} ||= {};
+    ## hGROUPS
+    $realSession->{$sphg} ||= {};
 
-        # Merge specified groups/hGroups only
-        # unless ( $self->{conf}->{impersonationMergeSSOgroups} eq 1 ) {
-        #     my %SSOgroups = map { $_, 1 } split /\Q$separator/,
-        #       $self->{conf}->{impersonationMergeSSOgroups};
+    # Merge specified groups/hGroups only
+    # unless ( $self->{conf}->{impersonationMergeSSOgroups} eq 1 ) {
+    #     my %SSOgroups = map { $_, 1 } split /\Q$separator/,
+    #       $self->{conf}->{impersonationMergeSSOgroups};
 
-        #     $self->logger->debug("Filtering specified groups/hGroups...");
-        #     @realGrps = grep { exists $SSOgroups{$_} } @realGrps;
-        #     my %intersct =
-        #       map {
-        #         $realSession->{$sphg}->{$_}
-        #           ? ( $_, $realSession->{$sphg}->{$_} )
-        #           : ()
-        #       } keys %SSOgroups;
-        #     $realSession->{$sphg} = \%intersct;
-        # }
+    #     $self->logger->debug("Filtering specified groups/hGroups...");
+    #     @realGrps = grep { exists $SSOgroups{$_} } @realGrps;
+    #     my %intersct =
+    #       map {
+    #         $realSession->{$sphg}->{$_}
+    #           ? ( $_, $realSession->{$sphg}->{$_} )
+    #           : ()
+    #       } keys %SSOgroups;
+    #     $realSession->{$sphg} = \%intersct;
+    # }
 
-        $self->logger->debug("Processing groups...");
-        @spoofGrps = ( @spoofGrps, @realGrps );
-        my %hash = map { $_, 1 } @spoofGrps;
-        $spoofSession->{groups} = join $separator, sort keys %hash;
+    $self->logger->debug("Processing groups...");
+    @spoofGrps = ( @spoofGrps, @realGrps );
+    my %hash = map { $_, 1 } @spoofGrps;
+    $spoofSession->{groups} = join $separator, sort keys %hash;
 
-        $self->logger->debug("Processing hGroups...");
-        $spoofSession->{hGroups} =
-          { %{ $spoofSession->{hGroups} }, %{ $realSession->{$sphg} } };
-   # }
+    $self->logger->debug("Processing hGroups...");
+    $spoofSession->{hGroups} =
+      { %{ $spoofSession->{hGroups} }, %{ $realSession->{$sphg} } };
+
+    # }
 
     # Main session
     $self->p->updateSession( $req, $spoofSession );
@@ -264,7 +265,8 @@ sub _userData {
 
 sub displaySwitchContext {
     my ( $self, $req ) = @_;
-    return 2 if $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
+    return 2
+      if $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
     return $self->rule->( $req, $req->userData );
 }
 

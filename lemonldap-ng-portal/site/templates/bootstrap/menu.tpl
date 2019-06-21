@@ -69,8 +69,8 @@
             </TMPL_IF>
             <TMPL_IF NAME="contextSwitching">
               <li class="dropdown-item"><a href="/switchcontext" class="nav-link">
-                <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/switchcontext1.png" width="16" height="16" alt="refresh" />
-                <span trspan="contextSwitching">contextSwitching</span>
+                <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/switchcontext<TMPL_VAR NAME="contextSwitching">.png" width="20" height="20" alt="refresh" />
+                <span trspan="contextSwitching<TMPL_VAR NAME="contextSwitching">">contextSwitching<TMPL_VAR NAME="contextSwitching"></span>
               </a></li>
             </TMPL_IF>
             <li class="dropdown-item"><a href="/refresh" class="nav-link">
