@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Plugins::ContextSwitching;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants
-  qw( PE_OK PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED PE_MALFORMEDUSER );
+  qw( PE_OK PE_REDIRECT PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED PE_MALFORMEDUSER );
 
 our $VERSION = '2.0.6';
 
@@ -68,12 +68,26 @@ sub init {
 sub display {
     my ( $self, $req ) = @_;
 
+    # Check access rules
+    unless ( $self->rule->( $req, $req->userData )
+        || $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} )
+    {
+        $self->userLogger->error('Context switching service not authorized');
+        return $self->p->do( $req,
+            [ sub { PE_IMPERSONATION_SERVICE_NOT_ALLOWED } ] );
+    }
+
+    if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
+        $self->p->updateSession( $req, $self->stopImpersonation($req) );
+        return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
+    }
+
     # Display form
     my $params = {
         PORTAL    => $self->conf->{portal},
         MAIN_LOGO => $self->conf->{portalMainLogo},
         LANGS     => $self->conf->{showLanguages},
-        MSG       => 'contextSwitching',
+        MSG       => 'contextSwitching1',
         ALERTE    => 'alert-danger',
         LOGIN     => '',
         SPOOFID   => $self->conf->{contextSwitchingRule},
@@ -90,55 +104,55 @@ sub display {
 sub run {
     my ( $self, $req ) = @_;
     my $statut = PE_OK;
+
+    if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
+        $self->p->updateSession( $req, $self->stopImpersonation($req) );
+        return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
+    }
+
     my $spoofId = $req->param('spoofId') || '';    # Impersonation required ?
 
     # Check activation rule
     unless ( $self->rule->( $req, $req->userData ) ) {
         $self->userLogger->error('Context switching service not authorized');
         $spoofId = '';
-        $statut  = PE_IMPERSONATION_SERVICE_NOT_ALLOWED;
+        return $self->p->do( $req,
+            [ sub { PE_IMPERSONATION_SERVICE_NOT_ALLOWED } ] );
     }
 
-    if ($spoofId) {
+    if ( $spoofId && $spoofId ne $req->{user} ) {
         $self->logger->debug("Spoof Id: $spoofId");
         unless ( $spoofId =~ /$self->{conf}->{userControl}/o ) {
             $self->userLogger->error('Malformed spoofed Id');
             $self->logger->debug(
                 "Context switching tried with spoofed Id: $spoofId");
-            $statut  = PE_MALFORMEDUSER;
+            return $self->p->do( $req, [ sub { PE_MALFORMEDUSER } ] );
         }
     }
     else {
         $self->logger->debug("No context switching required");
-        $req->mustRedirect(1);
+        $req->urldc( $self->conf->{portal} );
+        return $self->p->do( $req, [ sub { PE_OK } ] );
     }
-
-    return $self->p->do( $req, [ sub { $statut } ] ) if $statut;
 
     # Fill spoof session
     my ( $realSession, $spoofSession ) = ( {}, {} );
     $self->logger->debug("Rename real attributes...");
     my $spk = '';
-    foreach my $k ( keys %{ $req->{userData} } ) {
-
-        # if ( $self->{conf}->{impersonationSkipEmptyValues} ) {
-        #     next unless defined $req->{userData}->{$k};
-        # }
-        $spk = "$self->{conf}->{impersonationPrefix}$k";
-        unless ( $self->hAttr =~ /\b$k\b/
-            || $k =~ /^(?:_imp|token|_type)\w*\b/ )
-        {
-            $realSession->{$spk} = $req->{userData}->{$k};
-            $self->logger->debug("-> Store $k in realSession key: $spk");
-        }
-        $self->logger->debug("Delete $k");
-        delete $req->{userData}->{$k};
+    foreach ( keys %{ $req->{userData} } ) {
+        $spk = "$self->{conf}->{impersonationPrefix}$_";
+        $realSession->{$spk} = $req->{userData}->{$_};
+        $self->logger->debug("-> Store $_ in realSession key: $spk");
+        $self->logger->debug("Delete $_");
+        delete $req->{userData}->{$_};
     }
 
     $spoofSession = $self->_userData( $req, $spoofId, $realSession );
+    $self->logger->debug(
+        "..............." . Data::Dumper::Dumper($spoofSession) );
     if ( $req->error ) {
         if ( $req->error == PE_BADCREDENTIALS ) {
-            $statut = PE_BADCREDENTIALS;
+            $statut = PE_MALFORMEDUSER;
         }
         else {
             $statut = $req->error;
@@ -146,56 +160,14 @@ sub run {
     }
 
     # Update spoof session
-    $self->logger->debug("Populating spoof session...");
-    foreach (qw (_auth _userDB _session_id)) {
-        $self->logger->debug("Processing $_...");
-        $spk = "$self->{conf}->{impersonationPrefix}$_";
-        $spoofSession->{$_} = $realSession->{$spk};
+    unless ($statut) {
+        $self->logger->debug("Populating spoof session...");
+        foreach (qw (_auth _userDB _session_id)) {
+            $self->logger->debug("Processing $_...");
+            $spk = "$self->{conf}->{impersonationPrefix}$_";
+            $spoofSession->{$_} = $realSession->{$spk};
+        }
     }
-
-    # Merging SSO Groups and hGroups & dedup
-    $spoofSession->{groups}  ||= '';
-    $spoofSession->{hGroups} ||= {};
-
-    #if ( $self->{conf}->{impersonationMergeSSOgroups} ) {
-    $self->userLogger->warn("MERGING SSO groups and hGroups...");
-    my $spg       = "$self->{conf}->{impersonationPrefix}groups";
-    my $sphg      = "$self->{conf}->{impersonationPrefix}hGroups";
-    my $separator = $self->{conf}->{multiValuesSeparator};
-
-    ## GROUPS
-    my @spoofGrps = split /\Q$separator/, $spoofSession->{groups};
-    my @realGrps  = split /\Q$separator/, $realSession->{$spg};
-
-    ## hGROUPS
-    $realSession->{$sphg} ||= {};
-
-    # Merge specified groups/hGroups only
-    # unless ( $self->{conf}->{impersonationMergeSSOgroups} eq 1 ) {
-    #     my %SSOgroups = map { $_, 1 } split /\Q$separator/,
-    #       $self->{conf}->{impersonationMergeSSOgroups};
-
-    #     $self->logger->debug("Filtering specified groups/hGroups...");
-    #     @realGrps = grep { exists $SSOgroups{$_} } @realGrps;
-    #     my %intersct =
-    #       map {
-    #         $realSession->{$sphg}->{$_}
-    #           ? ( $_, $realSession->{$sphg}->{$_} )
-    #           : ()
-    #       } keys %SSOgroups;
-    #     $realSession->{$sphg} = \%intersct;
-    # }
-
-    $self->logger->debug("Processing groups...");
-    @spoofGrps = ( @spoofGrps, @realGrps );
-    my %hash = map { $_, 1 } @spoofGrps;
-    $spoofSession->{groups} = join $separator, sort keys %hash;
-
-    $self->logger->debug("Processing hGroups...");
-    $spoofSession->{hGroups} =
-      { %{ $spoofSession->{hGroups} }, %{ $realSession->{$sphg} } };
-
-    # }
 
     # Main session
     $self->p->updateSession( $req, $spoofSession );
@@ -221,7 +193,7 @@ sub _userData {
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_BADCREDENTIALS ) {
             $self->userLogger->warn(
-                    'Impersonation requested for an unvalid user ('
+                    'ContextSwitching requested for an unvalid user ('
                   . $req->{user}
                   . ")" );
         }
@@ -231,36 +203,17 @@ sub _userData {
     }
 
     # Check identity rule if Impersonation required
-    if ( $realId ne $spoofId ) {
-        unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
-            $self->userLogger->warn(
-                    'Impersonation requested for an unvalid user ('
-                  . $req->{user}
-                  . ")" );
-            $self->logger->debug('Identity not authorized');
-            $raz = 1;
-        }
+    unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
+        $self->userLogger->warn(
+                'ContextSwitching requested for an unvalid user ('
+              . $req->{user}
+              . ")" );
+        $self->logger->debug('Identity not authorized');
+        $req->error(PE_MALFORMEDUSER);
+        $raz = 1;
     }
 
-    # Same real and spoof session - Compute Macros and Groups
-    if ($raz) {
-        $req->{sessionInfo} = {};
-        $req->{sessionInfo} = {%$realSession};
-        $req->{user}        = $realId;
-        $req->steps( [
-                'getUser',   'setSessionInfo',
-                'setMacros', 'setGroups',
-                'setLocalGroups'
-            ]
-        );
-        $self->logger->debug('Spoof session equal real session');
-        $req->error(PE_BADCREDENTIALS);
-        if ( my $error = $self->p->process($req) ) {
-            $self->logger->debug("Process returned error: $error");
-            $req->error($error);
-        }
-    }
-    return $req->{sessionInfo};
+    return $raz ? $self->abortImpersonation($req) : $req->{sessionInfo};
 }
 
 sub displaySwitchContext {
@@ -268,6 +221,48 @@ sub displaySwitchContext {
     return 2
       if $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
     return $self->rule->( $req, $req->userData );
+}
+
+sub stopImpersonation {
+    my ( $self, $req ) = @_;
+    $self->logger->debug("stopImpersonation required");
+    $req->{user} = $req->{userData}->{real__user};
+    my $realSession = {};
+    foreach ( keys %{ $req->{userData} } ) {
+        if (/^$self->{conf}->{impersonationPrefix}/) {
+            my $key = $_;
+            $key =~ s/^$self->{conf}->{impersonationPrefix}//;
+            $realSession->{$key} = $req->{userData}->{$_};
+            $self->logger->debug("Rename userData keys -> $_");
+            delete $req->{userData}->{$_};
+        }
+    }
+    $req->urldc( $self->conf->{portal} );
+
+    #$req->{id} = $realSession->{_session_id};
+    return $realSession;
+}
+
+sub abortImpersonation {
+    my ( $self, $req ) = @_;
+    $self->logger->debug("abortImpersonation required");
+    $req->{user} = $req->{sessionInfo}->{real__user};
+    my $realSession = {};
+    foreach ( keys %{ $req->{sessionInfo} } ) {
+        if (/^$self->{conf}->{impersonationPrefix}/) {
+            my $key = $_;
+            $key =~ s/^$self->{conf}->{impersonationPrefix}//;
+            $realSession->{$key} = $req->{sessionInfo}->{$_};
+            $self->logger->debug("Rename sessionInfo keys -> $_");
+            delete $req->{sessionInfo}->{$_};
+        }
+    }
+    $req->urldc( $self->conf->{portal} );
+    $req->{userData} = { $realSession };
+    
+
+    #$req->{id} = $realSession->{_session_id};
+    return $realSession;
 }
 
 1;
