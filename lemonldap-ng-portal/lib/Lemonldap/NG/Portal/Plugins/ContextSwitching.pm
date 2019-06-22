@@ -60,6 +60,7 @@ sub init {
         return 0;
     }
     $self->idRule($rule);
+    
     return 1;
 }
 
@@ -238,8 +239,6 @@ sub stopImpersonation {
         }
     }
     $req->urldc( $self->conf->{portal} );
-
-    #$req->{id} = $realSession->{_session_id};
     return $realSession;
 }
 
@@ -259,9 +258,6 @@ sub abortImpersonation {
     }
     $req->urldc( $self->conf->{portal} );
     $req->{userData} = { $realSession };
-    
-
-    #$req->{id} = $realSession->{_session_id};
     return $realSession;
 }
 
