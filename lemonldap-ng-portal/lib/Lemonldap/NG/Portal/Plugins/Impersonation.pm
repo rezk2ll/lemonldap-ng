@@ -5,7 +5,7 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants
   qw( PE_OK PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED PE_MALFORMEDUSER );
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -90,12 +90,11 @@ sub run {
     # Fill spoof session
     my ( $realSession, $spoofSession ) = ( {}, {} );
     $self->logger->debug("Rename real attributes...");
-    my $spk = '';
     foreach my $k ( keys %{ $req->{sessionInfo} } ) {
         if ( $self->{conf}->{impersonationSkipEmptyValues} ) {
             next unless defined $req->{sessionInfo}->{$k};
         }
-        $spk = "$self->{conf}->{impersonationPrefix}$k";
+        my $spk = "$self->{conf}->{impersonationPrefix}$k";
         unless ( $self->hAttr =~ /\b$k\b/
             || $k =~ /^(?:_imp|token|_type)\w*\b/ )
         {
@@ -120,7 +119,7 @@ sub run {
     $self->logger->debug("Populating spoof session...");
     foreach (qw (_auth _userDB)) {
         $self->logger->debug("Processing $_...");
-        $spk = "$self->{conf}->{impersonationPrefix}$_";
+        my $spk = "$self->{conf}->{impersonationPrefix}$_";
         $spoofSession->{$_} = $realSession->{$spk};
     }
 
