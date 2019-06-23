@@ -88,7 +88,7 @@ sub display {
         PORTAL    => $self->conf->{portal},
         MAIN_LOGO => $self->conf->{portalMainLogo},
         LANGS     => $self->conf->{showLanguages},
-        MSG       => 'contextSwitching1',
+        MSG       => 'contextSwitching_ON',
         ALERTE    => 'alert-danger',
         LOGIN     => '',
         SPOOFID   => $self->conf->{contextSwitchingRule},
@@ -219,9 +219,9 @@ sub _userData {
 
 sub displaySwitchContext {
     my ( $self, $req ) = @_;
-    return 2
+    return 'OFF'
       if $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
-    return $self->rule->( $req, $req->userData );
+    return 'ON' if $self->rule->( $req, $req->userData );
 }
 
 sub stopImpersonation {

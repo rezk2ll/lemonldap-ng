@@ -121,7 +121,7 @@ sub params {
         $cswPlugin
       ? $cswPlugin->displaySwitchContext( $req, $req->userData )
       : '';
-    $self->logger->debug("Display SwitchContext link")
+    $self->logger->debug("Display SwitchContext link -> $res{contextSwitching}")
       if $res{contextSwitching};
 
     return %res;
