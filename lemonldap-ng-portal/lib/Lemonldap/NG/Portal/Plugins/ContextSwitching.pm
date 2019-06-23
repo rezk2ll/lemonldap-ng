@@ -60,7 +60,7 @@ sub init {
         return 0;
     }
     $self->idRule($rule);
-    
+
     return 1;
 }
 
@@ -79,8 +79,16 @@ sub display {
     }
 
     if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
-        $self->p->updateSession( $req, $self->stopImpersonation($req) );
-        return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
+        if ( $self->conf->{contextSwitchingStopWithLogout} ) {
+            $self->logger->debug('Stop context switching -> Logout requested');
+            return $self->p->do( $req,
+                [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ]
+            );
+        }
+        else {
+            $self->p->updateSession( $req, $self->_stopImpersonation($req) );
+            return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
+        }
     }
 
     # Display form
@@ -106,10 +114,18 @@ sub run {
     my ( $self, $req ) = @_;
     my $statut = PE_OK;
 
-    if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
-        $self->p->updateSession( $req, $self->stopImpersonation($req) );
-        return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
-    }
+# if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
+#     if ( $self->conf->{contextSwitchingStopWithLogout} ) {
+#         $self->userLogger->error('Stop context switching -> Logout requested');
+#         return $self->p->do( $req,
+#             [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ]
+#         );
+#     }
+#     else {
+#         $self->p->updateSession( $req, $self->_stopImpersonation($req) );
+#         return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
+#     }
+# }
 
     my $spoofId = $req->param('spoofId') || '';    # Impersonation required ?
 
@@ -139,9 +155,11 @@ sub run {
     # Fill spoof session
     my ( $realSession, $spoofSession ) = ( {}, {} );
     $self->logger->debug("Rename real attributes...");
-    my $spk = '';
-    foreach ( keys %{ $req->{userData} } ) {
-        $spk = "$self->{conf}->{impersonationPrefix}$_";
+
+    foreach ( grep { !/^$self->{conf}->{impersonationPrefix}/ }
+        keys %{ $req->{userData} } )
+    {
+        my $spk = "$self->{conf}->{impersonationPrefix}$_";
         $realSession->{$spk} = $req->{userData}->{$_};
         $self->logger->debug("-> Store $_ in realSession key: $spk");
         $self->logger->debug("Delete $_");
@@ -149,8 +167,6 @@ sub run {
     }
 
     $spoofSession = $self->_userData( $req, $spoofId, $realSession );
-    $self->logger->debug(
-        "..............." . Data::Dumper::Dumper($spoofSession) );
     if ( $req->error ) {
         if ( $req->error == PE_BADCREDENTIALS ) {
             $statut = PE_MALFORMEDUSER;
@@ -214,7 +230,7 @@ sub _userData {
         $raz = 1;
     }
 
-    return $raz ? $self->abortImpersonation($req) : $req->{sessionInfo};
+    return $raz ? $self->_abortImpersonation($req) : $req->{sessionInfo};
 }
 
 sub displaySwitchContext {
@@ -224,7 +240,7 @@ sub displaySwitchContext {
     return 'ON' if $self->rule->( $req, $req->userData );
 }
 
-sub stopImpersonation {
+sub _stopImpersonation {
     my ( $self, $req ) = @_;
     $self->logger->debug("stopImpersonation required");
     $req->{user} = $req->{userData}->{real__user};
@@ -234,15 +250,18 @@ sub stopImpersonation {
             my $key = $_;
             $key =~ s/^$self->{conf}->{impersonationPrefix}//;
             $realSession->{$key} = $req->{userData}->{$_};
+            $realSession->{$_}   = '';
             $self->logger->debug("Rename userData keys -> $_");
             delete $req->{userData}->{$_};
         }
     }
     $req->urldc( $self->conf->{portal} );
+    $req->{id} = $realSession->{_session_id};
+
     return $realSession;
 }
 
-sub abortImpersonation {
+sub _abortImpersonation {
     my ( $self, $req ) = @_;
     $self->logger->debug("abortImpersonation required");
     $req->{user} = $req->{sessionInfo}->{real__user};
@@ -257,7 +276,9 @@ sub abortImpersonation {
         }
     }
     $req->urldc( $self->conf->{portal} );
-    $req->{userData} = { $realSession };
+    $req->{userData} = {$realSession};
+    $req->{id}       = $realSession->{_session_id};
+
     return $realSession;
 }
 
