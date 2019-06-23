@@ -14,12 +14,6 @@ extends
 
 has rule   => ( is => 'rw', default => sub { 1 } );
 has idRule => ( is => 'rw', default => sub { 1 } );
-
-sub hAttr {
-    $_[0]->{conf}->{contextSwitchingHiddenAttributes} . ' '
-      . $_[0]->{conf}->{hiddenAttributes};
-}
-
 has ott => (
     is      => 'rw',
     lazy    => 1,
@@ -30,6 +24,11 @@ has ott => (
         return $ott;
     }
 );
+
+sub hAttr {
+    $_[0]->{conf}->{contextSwitchingHiddenAttributes} . ' '
+      . $_[0]->{conf}->{hiddenAttributes};
+}
 
 sub init {
     my ($self) = @_;
@@ -181,7 +180,7 @@ sub run {
         $self->logger->debug("Populating spoof session...");
         foreach (qw (_auth _userDB _session_id)) {
             $self->logger->debug("Processing $_...");
-            $spk = "$self->{conf}->{impersonationPrefix}$_";
+            my $spk = "$self->{conf}->{impersonationPrefix}$_";
             $spoofSession->{$_} = $realSession->{$spk};
         }
     }
@@ -243,6 +242,7 @@ sub displaySwitchContext {
 sub _stopImpersonation {
     my ( $self, $req ) = @_;
     $self->logger->debug("stopImpersonation required");
+    $self->userLogger->info("stopImpersonation required");
     $req->{user} = $req->{userData}->{real__user};
     my $realSession = {};
     foreach ( keys %{ $req->{userData} } ) {
@@ -251,7 +251,7 @@ sub _stopImpersonation {
             $key =~ s/^$self->{conf}->{impersonationPrefix}//;
             $realSession->{$key} = $req->{userData}->{$_};
             $realSession->{$_}   = '';
-            $self->logger->debug("Rename userData keys -> $_");
+            $self->logger->debug("Rename userData key -> $_");
             delete $req->{userData}->{$_};
         }
     }
@@ -264,6 +264,7 @@ sub _stopImpersonation {
 sub _abortImpersonation {
     my ( $self, $req ) = @_;
     $self->logger->debug("abortImpersonation required");
+    $self->userLogger->notice("abortImpersonation required");
     $req->{user} = $req->{sessionInfo}->{real__user};
     my $realSession = {};
     foreach ( keys %{ $req->{sessionInfo} } ) {
@@ -271,7 +272,7 @@ sub _abortImpersonation {
             my $key = $_;
             $key =~ s/^$self->{conf}->{impersonationPrefix}//;
             $realSession->{$key} = $req->{sessionInfo}->{$_};
-            $self->logger->debug("Rename sessionInfo keys -> $_");
+            $self->logger->debug("Rename sessionInfo key -> $_");
             delete $req->{sessionInfo}->{$_};
         }
     }
