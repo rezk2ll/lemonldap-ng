@@ -502,12 +502,12 @@ sub attributes {
             default       => 1,
             documentation => 'Stop context switching by logout',
         },
-        contextSwitchingHiddenAttributes => {
-            type          => 'text',
-            default       => '',
-            documentation => 'Attributes to skip',
-            flags         => 'p',
-        },
+        # contextSwitchingHiddenAttributes => {
+        #     type          => 'text',
+        #     default       => '',
+        #     documentation => 'Attributes to skip',
+        #     flags         => 'p',
+        # },
         skipRenewConfirmation => {
             type    => 'bool',
             default => 0,

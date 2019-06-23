@@ -670,7 +670,7 @@ sub tree {
                                 'contextSwitchingRule',
                                 'contextSwitchingIdRule',
                                 'contextSwitchingStopWithLogout',
-                                'contextSwitchingHiddenAttributes',
+                                #'contextSwitchingHiddenAttributes',
                             ]
                         },
                     ]

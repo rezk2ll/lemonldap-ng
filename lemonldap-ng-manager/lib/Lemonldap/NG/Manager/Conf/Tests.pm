@@ -643,12 +643,11 @@ sub tests {
             return 1;
         },
 
-        # Warn if Impersonation is enabled without prefix
-        impersonationPrefix => sub {
-            return 1 unless ( $conf->{impersonationRule} );
+        # Warn if Impersonation and ContextSwitching are simultaneously enabled
+        impersonation => sub {
             return ( 1,
-                "Impersonation is enabled without real attributes prefix" )
-              unless ( $conf->{impersonationPrefix} );
+                "Impersonation and ContextSwitching are simultaneously enabled" )
+              if ( $conf->{impersonationRule} && $conf->{contextSwitchingRule} );
 
             # Return
             return 1;

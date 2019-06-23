@@ -923,10 +923,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             ],
             'type' => 'select'
         },
-        'contextSwitchingHiddenAttributes' => {
-            'default' => '',
-            'type'    => 'text'
-        },
         'contextSwitchingIdRule' => {
             'default' => 1,
             'test'    => sub {
