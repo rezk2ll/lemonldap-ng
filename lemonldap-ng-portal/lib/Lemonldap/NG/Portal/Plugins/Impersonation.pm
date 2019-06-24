@@ -71,7 +71,7 @@ sub run {
       if ( $spoofId eq $req->{user} );
 
     unless ( $spoofId =~ /$self->{conf}->{userControl}/o ) {
-        $self->userLogger->error('Malformed spoofed Id');
+        $self->userLogger->warn('Malformed spoofed Id');
         $self->logger->debug("Impersonation tried with spoofed Id: $spoofId");
         $spoofId = $req->{user};
         $statut  = PE_MALFORMEDUSER;
@@ -81,7 +81,7 @@ sub run {
     if ( $spoofId ne $req->{user} ) {
         $self->logger->debug("Spoof Id: $spoofId / Real Id: $req->{user}");
         unless ( $self->rule->( $req, $req->sessionInfo ) ) {
-            $self->userLogger->error('Impersonation service not authorized');
+            $self->userLogger->warn('Impersonation service not authorized');
             $spoofId = $req->{user};
             $statut  = PE_IMPERSONATION_SERVICE_NOT_ALLOWED;
         }
@@ -216,7 +216,7 @@ sub _userData {
                     'Impersonation requested for an unvalid user ('
                   . $req->{user}
                   . ")" );
-            $self->logger->debug('Identity not authorized');
+            $self->logger->debug('Identity NOT authorized');
             $raz = 1;
         }
     }
