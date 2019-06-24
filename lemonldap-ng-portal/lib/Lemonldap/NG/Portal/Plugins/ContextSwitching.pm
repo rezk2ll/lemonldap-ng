@@ -14,7 +14,7 @@ extends
 
 has rule   => ( is => 'rw', default => sub { 1 } );
 has idRule => ( is => 'rw', default => sub { 1 } );
-has ott => (
+has ott    => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -78,14 +78,15 @@ sub display {
     }
 
     if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
+        $self->logger->debug('Stop context switching');
         if ( $self->conf->{contextSwitchingStopWithLogout} ) {
-            $self->logger->debug('Stop context switching -> Logout requested');
+            $self->logger->debug('Send logout request');
             return $self->p->do( $req,
                 [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ]
             );
         }
         else {
-            $self->p->updateSession( $req, $self->_stopImpersonation($req) );
+            $req = $self->_stopImpersonation($req);
             return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
         }
     }
@@ -112,34 +113,21 @@ sub display {
 sub run {
     my ( $self, $req ) = @_;
     my $statut = PE_OK;
-
-# if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
-#     if ( $self->conf->{contextSwitchingStopWithLogout} ) {
-#         $self->userLogger->error('Stop context switching -> Logout requested');
-#         return $self->p->do( $req,
-#             [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ]
-#         );
-#     }
-#     else {
-#         $self->p->updateSession( $req, $self->_stopImpersonation($req) );
-#         return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
-#     }
-# }
-
-    my $spoofId = $req->param('spoofId') || '';    # Impersonation required ?
+    my $spoofId = $req->param('spoofId') || '';    # ContextSwitching required ?
 
     # Check activation rule
     unless ( $self->rule->( $req, $req->userData ) ) {
-        $self->userLogger->error('Context switching service not authorized');
+        $self->userLogger->warn('Context switching service not authorized');
         $spoofId = '';
         return $self->p->do( $req,
             [ sub { PE_IMPERSONATION_SERVICE_NOT_ALLOWED } ] );
     }
 
+    # ContextSwitching required -> Check user Id
     if ( $spoofId && $spoofId ne $req->{user} ) {
         $self->logger->debug("Spoof Id: $spoofId");
         unless ( $spoofId =~ /$self->{conf}->{userControl}/o ) {
-            $self->userLogger->error('Malformed spoofed Id');
+            $self->userLogger->warn('Malformed spoofed Id');
             $self->logger->debug(
                 "Context switching tried with spoofed Id: $spoofId");
             return $self->p->do( $req, [ sub { PE_MALFORMEDUSER } ] );
@@ -151,21 +139,8 @@ sub run {
         return $self->p->do( $req, [ sub { PE_OK } ] );
     }
 
-    # Fill spoof session
-    my ( $realSession, $spoofSession ) = ( {}, {} );
-    $self->logger->debug("Rename real attributes...");
-
-    foreach ( grep { !/^$self->{conf}->{impersonationPrefix}/ }
-        keys %{ $req->{userData} } )
-    {
-        my $spk = "$self->{conf}->{impersonationPrefix}$_";
-        $realSession->{$spk} = $req->{userData}->{$_};
-        $self->logger->debug("-> Store $_ in realSession key: $spk");
-        $self->logger->debug("Delete $_");
-        delete $req->{userData}->{$_};
-    }
-
-    $spoofSession = $self->_userData( $req, $spoofId, $realSession );
+    # Create spoofed session
+    $req = $self->_switchContext( $req, $spoofId );
     if ( $req->error ) {
         if ( $req->error == PE_BADCREDENTIALS ) {
             $statut = PE_MALFORMEDUSER;
@@ -175,37 +150,19 @@ sub run {
         }
     }
 
-    # Update spoof session
-    unless ($statut) {
-        $self->logger->debug("Populating spoof session...");
-        foreach (qw (_auth _userDB _session_id)) {
-            $self->logger->debug("Processing $_...");
-            my $spk = "$self->{conf}->{impersonationPrefix}$_";
-            $spoofSession->{$_} = $realSession->{$spk};
-        }
-    }
-
     # Main session
-    $self->p->updateSession( $req, $spoofSession );
+    $self->p->updateSession( $req, $req->sessionInfo );
     return $self->p->do( $req, [ sub { $statut } ] );
 }
 
-sub _userData {
-    my ( $self, $req, $spoofId, $realSession ) = @_;
-    my $realId = $req->{user};
+sub _switchContext {
+    my ( $self, $req, $spoofId ) = @_;
+    my $realSessionId = $req->userData->{_session_id};
     $req->{user} = $spoofId;
     my $raz = 0;
 
-    # Compute Macros and Groups with real and spoof sessions
-    $req->{sessionInfo} = {%$realSession};
-
-    # Search user in database
-    $req->steps( [
-            'getUser',   'setSessionInfo',
-            'setMacros', 'setGroups',
-            'setLocalGroups'
-        ]
-    );
+    # Search user in database & create session
+    $req->steps( [ 'getUser', $self->p->sessionData, 'buildCookie' ] );
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_BADCREDENTIALS ) {
             $self->userLogger->warn(
@@ -218,18 +175,59 @@ sub _userData {
         $raz = 1;
     }
 
-    # Check identity rule if Impersonation required
+    # Check identity rule if ContextSwitching required
     unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
         $self->userLogger->warn(
                 'ContextSwitching requested for an unvalid user ('
               . $req->{user}
               . ")" );
-        $self->logger->debug('Identity not authorized');
-        $req->error(PE_MALFORMEDUSER);
+        $self->logger->debug('Identity NOT authorized');
+        $req->error(PE_MALFORMEDUSER);    # Hide error to preserve protected Id
         $raz = 1;
     }
 
-    return $raz ? $self->_abortImpersonation($req) : $req->{sessionInfo};
+    $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"} =
+      $realSessionId;
+
+    return $raz ? $self->_abortImpersonation($req) : $req;
+}
+
+sub _stopImpersonation {
+    my ( $self, $req, $abort ) = @_;
+    my $realSessionId =
+      $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
+    my $session = $self->p->getApacheSession($realSessionId)->data;
+
+    $self->logger->debug('STOP ContextSwitching');
+    $self->userLogger->notice('STOP ContextSwitching');
+
+    # Restore real session
+    $req->{userData} = {%$session};
+    $req->{user}     = $session->{_user};
+    $req->urldc( $self->conf->{portal} );
+    $req->id($realSessionId);
+    $self->p->buildCookie($req);
+    $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} = '';
+    $self->p->updateSession( $req, $req->userData );
+
+    return $req;
+}
+
+sub _abortImpersonation {
+    my ( $self, $req ) = @_;
+    my $realSessionId =
+      $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"};
+    my $session = $self->p->getApacheSession($realSessionId)->data;
+
+    $self->logger->debug('ABORT ContextSwitching');
+    $self->userLogger->notice('ABORT ContextSwitching');
+
+    # Restore real session
+    $req->{sessionInfo} = {%$session};
+    $req->{user}        = $session->{_user};
+    $req->urldc( $self->conf->{portal} );
+
+    return $req;
 }
 
 sub displaySwitchContext {
@@ -237,50 +235,6 @@ sub displaySwitchContext {
     return 'OFF'
       if $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
     return 'ON' if $self->rule->( $req, $req->userData );
-}
-
-sub _stopImpersonation {
-    my ( $self, $req ) = @_;
-    $self->logger->debug("stopImpersonation required");
-    $self->userLogger->info("stopImpersonation required");
-    $req->{user} = $req->{userData}->{real__user};
-    my $realSession = {};
-    foreach ( keys %{ $req->{userData} } ) {
-        if (/^$self->{conf}->{impersonationPrefix}/) {
-            my $key = $_;
-            $key =~ s/^$self->{conf}->{impersonationPrefix}//;
-            $realSession->{$key} = $req->{userData}->{$_};
-            $realSession->{$_}   = '';
-            $self->logger->debug("Rename userData key -> $_");
-            delete $req->{userData}->{$_};
-        }
-    }
-    $req->urldc( $self->conf->{portal} );
-    $req->{id} = $realSession->{_session_id};
-
-    return $realSession;
-}
-
-sub _abortImpersonation {
-    my ( $self, $req ) = @_;
-    $self->logger->debug("abortImpersonation required");
-    $self->userLogger->notice("abortImpersonation required");
-    $req->{user} = $req->{sessionInfo}->{real__user};
-    my $realSession = {};
-    foreach ( keys %{ $req->{sessionInfo} } ) {
-        if (/^$self->{conf}->{impersonationPrefix}/) {
-            my $key = $_;
-            $key =~ s/^$self->{conf}->{impersonationPrefix}//;
-            $realSession->{$key} = $req->{sessionInfo}->{$_};
-            $self->logger->debug("Rename sessionInfo key -> $_");
-            delete $req->{sessionInfo}->{$_};
-        }
-    }
-    $req->urldc( $self->conf->{portal} );
-    $req->{userData} = {$realSession};
-    $req->{id}       = $realSession->{_session_id};
-
-    return $realSession;
 }
 
 1;
