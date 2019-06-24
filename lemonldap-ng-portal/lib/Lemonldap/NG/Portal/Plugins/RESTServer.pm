@@ -48,7 +48,7 @@ use Mouse;
 use JSON qw(from_json to_json);
 use MIME::Base64;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.5';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -203,7 +203,7 @@ sub newSession {
         if ( $t =
                 $self->conf->{cipher}->decrypt($s)
             and $t <= time
-            and $t > time - 30 )
+            and $t > time - 15 )
         {
             $force = 1;
         }
@@ -212,6 +212,18 @@ sub newSession {
         }
     }
 
+    if ( $req->param('all') and not $id ) {
+        return $self->p->sendError( $req,
+            'Bad key, refuse to send all sessions', 400 )
+          unless ($force);
+        my $data = $infos->{data};
+        my $opts = $self->conf->{globalStorageOptions} || {};
+        $opts->{backend} = $self->conf->{globalStorage};
+        my $sessions =
+          Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+            $opts, $data );
+        return $self->p->sendJSONresponse( $req, $sessions );
+    }
     my $session = $self->getApacheSession( $mod, $id, $infos, $force );
     return $self->p->sendError( $req, 'Unable to create session', 500 )
       unless ($session);

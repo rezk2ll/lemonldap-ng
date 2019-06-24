@@ -5,7 +5,7 @@ use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::Apache::Session::Generate::SHA256;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.5';
 
 our @ISA = qw(Lemonldap::NG::Common::Apache::Session::Generate::SHA256);
 
@@ -270,26 +270,43 @@ sub delete {
 ## @method get_key_from_all_sessions()
 # Not documented.
 sub get_key_from_all_sessions() {
-    die "Not implemented";
     my ( $class, $args, $data ) = @_;
     my $self = bless {}, $class;
-    foreach (qw(baseUrl user password realm)) {
+    foreach (qw(baseUrl user password realm lwpOpts lwpSslOpts kind)) {
         $self->{$_} = $args->{$_};
     }
     die('baseUrl is required') unless ( $self->{baseUrl} );
-    if ( ref($data) eq 'CODE' ) {
+    my $req = HTTP::Request->new( POST => $self->base . '?all=1' );
+    $self->{data} = { data => ( ref($data) eq 'CODE' ? {} : $data ) };
+    eval {
+        $self->{data}->{__secret} =
+          Lemonldap::NG::Handler::Main->tsv->{cipher}->encrypt(time);
+    };
+    print STDERR "$@\n" if ($@);
+    $req->content( to_json( $self->{data} ) );
+    delete $self->{data}->{__secret};
+    $req->header( 'Content-Type' => 'application/json' );
+    my $resp = $self->ua->request($req);
 
-        #my $r = $self->_soapCall( "get_key_from_all_sessions", $args );
-        #my $res;
-        #if ($r) {
-        #    foreach my $k ( keys %$r ) {
-        #        my $tmp = &$data( $r->{$k}, $k );
-        #        $res->{$k} = $tmp if ( defined($tmp) );
-        #    }
-        #}
+    if ( $resp->is_success ) {
+        my $res;
+        eval { $res = from_json( $resp->content, { allow_nonref => 1 } ) };
+        if ($@) {
+            die "Bad REST response: $@";
+        }
+        if ( ref($data) eq 'CODE' ) {
+            my $r;
+            foreach my $k ( keys %$res ) {
+                my $tmp = &$data( $res->{$k}, $k );
+                $r->{$k} = $tmp if ( defined($tmp) );
+            }
+            $res = $r;
+        }
+        return $res;
     }
     else {
-        #return $self->_soapCall( "get_key_from_all_sessions", $args, $data );
+        print STDERR "REST server returns " . $resp->status_line;
+        return;
     }
 }
 
