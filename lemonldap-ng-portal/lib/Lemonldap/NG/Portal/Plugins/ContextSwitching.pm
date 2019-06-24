@@ -12,8 +12,6 @@ extends
 
 # INITIALIZATION
 
-has rule   => ( is => 'rw', default => sub { 1 } );
-has idRule => ( is => 'rw', default => sub { 1 } );
 has ott    => (
     is      => 'rw',
     lazy    => 1,
@@ -24,6 +22,8 @@ has ott    => (
         return $ott;
     }
 );
+has rule   => ( is => 'rw', default => sub { 1 } );
+has idRule => ( is => 'rw', default => sub { 1 } );
 
 sub hAttr {
     $_[0]->{conf}->{contextSwitchingHiddenAttributes} . ' '
@@ -87,6 +87,7 @@ sub display {
         }
         else {
             $req = $self->_stopImpersonation($req);
+            $self->p->updateSession( $req, $req->userData );
             return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
         }
     }
@@ -158,8 +159,8 @@ sub run {
 sub _switchContext {
     my ( $self, $req, $spoofId ) = @_;
     my $realSessionId = $req->userData->{_session_id};
-    $req->{user} = $spoofId;
     my $raz = 0;
+    $req->{user} = $spoofId;
 
     # Search user in database & create session
     $req->steps( [ 'getUser', $self->p->sessionData, 'buildCookie' ] );
@@ -202,13 +203,13 @@ sub _stopImpersonation {
     $self->userLogger->notice('STOP ContextSwitching');
 
     # Restore real session
+    $self->p->deleteSession($req);
     $req->{userData} = {%$session};
     $req->{user}     = $session->{_user};
     $req->urldc( $self->conf->{portal} );
     $req->id($realSessionId);
     $self->p->buildCookie($req);
     $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} = '';
-    $self->p->updateSession( $req, $req->userData );
 
     return $req;
 }
@@ -223,9 +224,13 @@ sub _abortImpersonation {
     $self->userLogger->notice('ABORT ContextSwitching');
 
     # Restore real session
+    $self->p->deleteSession($req);
     $req->{sessionInfo} = {%$session};
     $req->{user}        = $session->{_user};
     $req->urldc( $self->conf->{portal} );
+    $req->id($realSessionId);
+    $self->p->buildCookie($req);
+    $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"} = '';
 
     return $req;
 }
