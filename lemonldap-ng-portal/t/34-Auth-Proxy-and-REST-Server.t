@@ -179,17 +179,46 @@ ok(
     'Search all sessions'
 );
 
+my ( $c1, $c2 ) = ( 0, 0 );
 if ( ok( ref($res) eq 'HASH', ' Result is an hash' ) ) {
     my $tmp = 1;
     foreach ( keys %$res ) {
-        unless ( $res->{$_}->{_session_id}, ' session id exists' ) {
+        $c1++;
+        unless ( $res->{$_}->{_session_id} ) {
             $tmp = 0;
             diag "Bad session:\n" . Dumper( $res->{$_} );
         }
     }
+    ok( $c1,  " Found $c1 sessions" );
     ok( $tmp, ' All sessions are valid' );
-    count(1);
+    count(2);
 }
+count(3);
+
+ok(
+    $res = Lemonldap::NG::Common::Apache::Session::REST->searchOn( {
+            baseUrl => 'http://auth.idp.com/sessions/global/'
+        },
+        'uid', 'dwho'
+    ),
+    'Search dwho sessions'
+);
+if ( ok( ref($res) eq 'HASH', ' Result is an hash' ) ) {
+    my $tmp = 1;
+    foreach ( keys %$res ) {
+        $c2++;
+        unless ( $res->{$_}->{_session_id} ) {
+            $tmp = 0;
+            diag "Bad session:\n" . Dumper( $res->{$_} );
+        }
+    }
+    ok( $c2,  " Found $c2 sessions" );
+    ok( $tmp, ' All sessions are valid' );
+    count(2);
+}
+
+ok( $c2 < $c1,
+    'searchOn() count is lower than get_key_from_all_sessions() count' );
 count(3);
 
 # Del new session

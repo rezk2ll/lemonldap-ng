@@ -219,9 +219,20 @@ sub newSession {
         my $data = $infos->{data};
         my $opts = $self->conf->{globalStorageOptions} || {};
         $opts->{backend} = $self->conf->{globalStorage};
-        my $sessions =
-          Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
-            $opts, $data );
+        my $sessions;
+        if ( my $query = $req->param('search') ) {
+            my ( $field, @values ) = split /,/, $query;
+            $sessions = Lemonldap::NG::Common::Apache::Session->searchOn(
+                $opts, $field,
+                join( ',', @values ),
+                ( $data ? @$data : () )
+            );
+        }
+        else {
+            $sessions =
+              Lemonldap::NG::Common::Apache::Session
+              ->get_key_from_all_sessions( $opts, $data );
+        }
         return $self->p->sendJSONresponse( $req, $sessions );
     }
     my $session = $self->getApacheSession( $mod, $id, $infos, $force );
