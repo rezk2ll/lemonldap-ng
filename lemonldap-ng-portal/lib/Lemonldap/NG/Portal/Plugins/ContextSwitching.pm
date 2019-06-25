@@ -12,7 +12,7 @@ extends
 
 # INITIALIZATION
 
-has ott    => (
+has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -86,7 +86,7 @@ sub display {
             );
         }
         else {
-            $req = $self->_stopImpersonation($req);
+            $req = $self->_abortImpersonation( $req, 0 );
             $self->p->updateSession( $req, $req->userData );
             return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
         }
@@ -159,7 +159,7 @@ sub run {
 sub _switchContext {
     my ( $self, $req, $spoofId ) = @_;
     my $realSessionId = $req->userData->{_session_id};
-    my $raz = 0;
+    my $raz           = 0;
     $req->{user} = $spoofId;
 
     # Search user in database & create session
@@ -190,50 +190,56 @@ sub _switchContext {
     $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"} =
       $realSessionId;
 
-    return $raz ? $self->_abortImpersonation($req) : $req;
-}
-
-sub _stopImpersonation {
-    my ( $self, $req, $abort ) = @_;
-    my $realSessionId =
-      $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
-    my $session = $self->p->getApacheSession($realSessionId)->data;
-
-    $self->logger->debug('STOP ContextSwitching');
-    $self->userLogger->notice('STOP ContextSwitching');
-
-    # Restore real session
-    $self->p->deleteSession($req);
-    $req->{userData} = {%$session};
-    $req->{user}     = $session->{_user};
-    $req->urldc( $self->conf->{portal} );
-    $req->id($realSessionId);
-    $self->p->buildCookie($req);
-    $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} = '';
-
-    return $req;
+    return $raz ? $self->_abortImpersonation( $req, 1 ) : $req;
 }
 
 sub _abortImpersonation {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $abort ) = @_;
+    my $type = $abort ? 'sessionInfo' : 'userData';
     my $realSessionId =
-      $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"};
+      $req->{$type}->{"$self->{conf}->{impersonationPrefix}_session_id"};
     my $session = $self->p->getApacheSession($realSessionId)->data;
-
-    $self->logger->debug('ABORT ContextSwitching');
-    $self->userLogger->notice('ABORT ContextSwitching');
+    if ($abort) {
+        $self->logger->debug('ABORT ContextSwitching');
+        $self->userLogger->notice('ABORT ContextSwitching');
+    }
+    else {
+        $self->logger->debug('STOP ContextSwitching');
+        $self->userLogger->notice('STOP ContextSwitching');
+    }
 
     # Restore real session
-    $self->p->deleteSession($req);
-    $req->{sessionInfo} = {%$session};
-    $req->{user}        = $session->{_user};
+    $self->p->deleteSession($req) unless $abort;
+    $req->{$type} = {%$session};
+    $req->{user} = $session->{_user};
     $req->urldc( $self->conf->{portal} );
     $req->id($realSessionId);
     $self->p->buildCookie($req);
-    $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"} = '';
+    $req->{$type}->{"$self->{conf}->{impersonationPrefix}_session_id"} = '';
 
     return $req;
 }
+
+# sub _abortImpersonation {
+#     my ( $self, $req ) = @_;
+#     my $realSessionId =
+#       $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"};
+#     my $session = $self->p->getApacheSession($realSessionId)->data;
+
+#     $self->logger->debug('ABORT ContextSwitching');
+#     $self->userLogger->notice('ABORT ContextSwitching');
+
+#     # Restore real session
+#     $self->p->deleteSession($req);
+#     $req->{sessionInfo} = {%$session};
+#     $req->{user}        = $session->{_user};
+#     $req->urldc( $self->conf->{portal} );
+#     $req->id($realSessionId);
+#     $self->p->buildCookie($req);
+#     $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"} = '';
+
+#     return $req;
+# }
 
 sub displaySwitchContext {
     my ( $self, $req ) = @_;
