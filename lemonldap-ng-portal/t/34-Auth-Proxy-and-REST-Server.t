@@ -211,7 +211,7 @@ if ( ok( ref($res) eq 'HASH', ' Result is an hash' ) ) {
     ok( $tmp, ' All sessions are valid' );
     count(2);
 }
-count(1);
+count(2);
 
 ok(
     $res = Lemonldap::NG::Common::Apache::Session::REST->searchOn( {
