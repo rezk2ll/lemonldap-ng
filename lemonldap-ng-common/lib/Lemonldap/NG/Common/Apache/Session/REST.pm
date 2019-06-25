@@ -299,7 +299,7 @@ sub _getAll {
     foreach (qw(baseUrl user password realm lwpOpts lwpSslOpts kind)) {
         $self->{$_} = $args->{$_};
     }
-    $self->{data} = { data => ( ref($data) eq 'CODE' ? {} : $data ) };
+    $self->{data} = { data => ( ref($data) eq 'CODE' ? undef : $data ) };
     die('baseUrl is required') unless ( $self->{baseUrl} );
     my $req = HTTP::Request->new( POST => $self->base . "?$query" );
     eval {
