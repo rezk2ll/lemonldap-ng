@@ -6,6 +6,8 @@
 #   * GET /sessions/<type>/<session-id>/<key>    : get a session key value
 #   * GET /sessions/<type>/<session-id>/[k1,k2]  : get some session key value
 #   * POST /sessions/<type>                      : create a session
+#   * POST /sessions/<type>?all=1                : get all sessions (needs a token)
+#   * POST /sessions/<type>?all=1&search=uid,dwho: search all sessions where uid=dwho (needs a token)
 #   * PUT /sessions/<type>/<session-id>          : update some keys
 #   * DELETE /sessions/<type>/<session-id>       : delete a session
 #
@@ -219,9 +221,20 @@ sub newSession {
         my $data = $infos->{data};
         my $opts = $self->conf->{globalStorageOptions} || {};
         $opts->{backend} = $self->conf->{globalStorage};
-        my $sessions =
-          Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
-            $opts, $data );
+        my $sessions;
+        if ( my $query = $req->param('search') ) {
+            my ( $field, @values ) = split /,/, $query;
+            $sessions = Lemonldap::NG::Common::Apache::Session->searchOn(
+                $opts, $field,
+                join( ',', @values ),
+                ( $data ? @$data : () )
+            );
+        }
+        else {
+            $sessions =
+              Lemonldap::NG::Common::Apache::Session
+              ->get_key_from_all_sessions( $opts, $data );
+        }
         return $self->p->sendJSONresponse( $req, $sessions );
     }
     my $session = $self->getApacheSession( $mod, $id, $infos, $force );

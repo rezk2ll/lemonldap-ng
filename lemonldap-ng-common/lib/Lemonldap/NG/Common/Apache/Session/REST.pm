@@ -227,9 +227,11 @@ sub save {
           Lemonldap::NG::Handler::Main->tsv->{cipher}->encrypt(time);
     };
     print STDERR "$@\n" if ($@);
-    $req->content( to_json( $self->{data} ) );
+    my $content = to_json( $self->{data} );
+    $req->content($content);
     delete $self->{data}->{__secret};
-    $req->header( 'Content-Type' => 'application/json' );
+    $req->header( 'Content-Type'   => 'application/json' );
+    $req->header( 'Content-Length' => length($content) );
     my $resp = $self->ua->request($req);
 
     if ( $resp->is_success ) {
@@ -267,23 +269,47 @@ sub delete {
     return ( $resp->is_success ? 1 : 0 );
 }
 
+sub searchOn {
+    my ( $class, $args, $selectField, $value, @fields ) = @_;
+    return $class->_getAll( "all=1&search=$selectField,$value",
+        $args, ( @fields ? \@fields : () ) );
+}
+
 ## @method get_key_from_all_sessions()
 # Not documented.
 sub get_key_from_all_sessions() {
     my ( $class, $args, $data ) = @_;
+    my $res = $class->_getAll( 'all=1', $args, $data );
+    return unless $res;
+
+    if ( ref($data) eq 'CODE' ) {
+        my $r;
+        foreach my $k ( keys %$res ) {
+            my $tmp = &$data( $res->{$k}, $k );
+            $r->{$k} = $tmp if ( defined($tmp) );
+        }
+        $res = $r;
+    }
+    return $res;
+}
+
+sub _getAll {
+    my ( $class, $query, $args, $data ) = @_;
     my $self = bless {}, $class;
     foreach (qw(baseUrl user password realm lwpOpts lwpSslOpts kind)) {
         $self->{$_} = $args->{$_};
     }
+    $self->{data} = { data => ( ref($data) eq 'CODE' ? undef : $data ) };
     die('baseUrl is required') unless ( $self->{baseUrl} );
-    my $req = HTTP::Request->new( POST => $self->base . '?all=1' );
-    $self->{data} = { data => ( ref($data) eq 'CODE' ? {} : $data ) };
+    my $req = HTTP::Request->new( POST => $self->base . "?$query" );
     eval {
         $self->{data}->{__secret} =
           Lemonldap::NG::Handler::Main->tsv->{cipher}->encrypt(time);
     };
     print STDERR "$@\n" if ($@);
-    $req->content( to_json( $self->{data} ) );
+    my $content = to_json( $self->{data} );
+    $req->content($content);
+    $req->header( 'Content-Length' => length($content) );
     delete $self->{data}->{__secret};
     $req->header( 'Content-Type' => 'application/json' );
     my $resp = $self->ua->request($req);
@@ -294,18 +320,10 @@ sub get_key_from_all_sessions() {
         if ($@) {
             die "Bad REST response: $@";
         }
-        if ( ref($data) eq 'CODE' ) {
-            my $r;
-            foreach my $k ( keys %$res ) {
-                my $tmp = &$data( $res->{$k}, $k );
-                $r->{$k} = $tmp if ( defined($tmp) );
-            }
-            $res = $r;
-        }
         return $res;
     }
     else {
-        print STDERR "REST server returns " . $resp->status_line;
+        print STDERR "REST server returns " . $resp->status_line . "\n";
         return;
     }
 }

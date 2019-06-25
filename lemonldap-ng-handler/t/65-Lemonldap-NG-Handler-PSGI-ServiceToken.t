@@ -60,7 +60,7 @@ ok( @values == 2, 'Found 2 service header values' )
 count(2);
 
 diag 'Waiting';
-sleep 2;
+sleep 1;
 
 ok(
     $res = $client->_get(
@@ -82,7 +82,7 @@ ok( @values == 2, 'Found 2 service header values' )
 count(2);
 
 diag 'Waiting';
-sleep 1;
+sleep 2;
 
 ok(
     $res = $client->_get(

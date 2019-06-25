@@ -160,7 +160,7 @@ sub authLogout {
 sub deleteSession {
     my ( $self, $req ) = @_;
     if ( my $id = $req->id || $req->userData->{_session_id} ) {
-        my $apacheSession = $self->getApacheSession( $req->id );
+        my $apacheSession = $self->getApacheSession( $id );
         unless ($apacheSession) {
             $self->logger->debug("Session $id already deleted");
             return PE_OK;
