@@ -102,6 +102,7 @@ lib/Lemonldap/NG/Portal/Plugins/BruteForceProtection.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckState.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckUser.pm
+lib/Lemonldap/NG/Portal/Plugins/ContextSwitching.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuthn.pm
 lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
 lib/Lemonldap/NG/Portal/Plugins/History.pm
@@ -258,6 +259,8 @@ site/htdocs/static/common/icons/key.png
 site/htdocs/static/common/icons/oidc.png
 site/htdocs/static/common/icons/ok.png
 site/htdocs/static/common/icons/sfa_manager.png
+site/htdocs/static/common/icons/switchcontext_OFF.png
+site/htdocs/static/common/icons/switchcontext_ON.png
 site/htdocs/static/common/icons/vcard_edit.png
 site/htdocs/static/common/icons/warning.png
 site/htdocs/static/common/it.png
@@ -332,6 +335,7 @@ site/templates/bootstrap/casBack2Url.tpl
 site/templates/bootstrap/checklogins.tpl
 site/templates/bootstrap/checkuser.tpl
 site/templates/bootstrap/confirm.tpl
+site/templates/bootstrap/contextSwitching.tpl
 site/templates/bootstrap/customfooter.tpl
 site/templates/bootstrap/customhead.tpl
 site/templates/bootstrap/customheader.tpl
@@ -543,7 +547,8 @@ t/68-Impersonation-with-TOTP.t
 t/68-Impersonation.t
 t/70-2F-TOTP-8.t
 t/70-2F-TOTP-with-History.t
-t/70-2F-TOTP-with-TTL-and-msg.t
+t/70-2F-TOTP-with-TTL-and-JSON.t
+t/70-2F-TOTP-with-TTL-and-XML.t
 t/70-2F-TOTP-with-TTL.t
 t/71-2F-U2F-with-History.t
 t/71-2F-U2F-with-TTL-and-msg.t
