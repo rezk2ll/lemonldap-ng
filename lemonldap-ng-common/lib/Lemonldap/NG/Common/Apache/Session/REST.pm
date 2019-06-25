@@ -227,9 +227,11 @@ sub save {
           Lemonldap::NG::Handler::Main->tsv->{cipher}->encrypt(time);
     };
     print STDERR "$@\n" if ($@);
-    $req->content( to_json( $self->{data} ) );
+    my $content = to_json( $self->{data} );
+    $req->content($content);
     delete $self->{data}->{__secret};
-    $req->header( 'Content-Type' => 'application/json' );
+    $req->header( 'Content-Type'   => 'application/json' );
+    $req->header( 'Content-Length' => length($content) );
     my $resp = $self->ua->request($req);
 
     if ( $resp->is_success ) {
@@ -305,7 +307,9 @@ sub _getAll {
           Lemonldap::NG::Handler::Main->tsv->{cipher}->encrypt(time);
     };
     print STDERR "$@\n" if ($@);
-    $req->content( to_json( $self->{data} ) );
+    my $content = to_json( $self->{data} );
+    $req->content($content);
+    $req->header( 'Content-Length' => length($content) );
     delete $self->{data}->{__secret};
     $req->header( 'Content-Type' => 'application/json' );
     my $resp = $self->ua->request($req);

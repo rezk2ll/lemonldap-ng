@@ -6,6 +6,8 @@
 #   * GET /sessions/<type>/<session-id>/<key>    : get a session key value
 #   * GET /sessions/<type>/<session-id>/[k1,k2]  : get some session key value
 #   * POST /sessions/<type>                      : create a session
+#   * POST /sessions/<type>?all=1                : get all sessions (needs a token)
+#   * POST /sessions/<type>?all=1&search=uid,dwho: search all sessions where uid=dwho (needs a token)
 #   * PUT /sessions/<type>/<session-id>          : update some keys
 #   * DELETE /sessions/<type>/<session-id>       : delete a session
 #
