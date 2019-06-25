@@ -25,11 +25,6 @@ has ott => (
 has rule   => ( is => 'rw', default => sub { 1 } );
 has idRule => ( is => 'rw', default => sub { 1 } );
 
-sub hAttr {
-    $_[0]->{conf}->{contextSwitchingHiddenAttributes} . ' '
-      . $_[0]->{conf}->{hiddenAttributes};
-}
-
 sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;

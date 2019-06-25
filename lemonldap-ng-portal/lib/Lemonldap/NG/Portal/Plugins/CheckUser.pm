@@ -55,7 +55,7 @@ sub init {
     }
     $self->idRule($rule);
     $self->sorted( $self->conf->{impersonationRule}
-          || $self->conf->{contextSwitchingIdRule} );
+          || $self->conf->{contextSwitchingRule} );
     return 1;
 }
 

@@ -467,12 +467,14 @@ sub attributes {
             type          => 'boolOrExpr',
             default       => 0,
             documentation => 'Impersonation activation rule',
+            flags         => 'p',
         },
         impersonationIdRule => {
             type          => 'text',
             test          => sub { return perlExpr(@_) },
             default       => 1,
             documentation => 'Impersonation identities rule',
+            flags         => 'p',
         },
         impersonationHiddenAttributes => {
             type          => 'text',
@@ -490,24 +492,21 @@ sub attributes {
             type          => 'boolOrExpr',
             default       => 0,
             documentation => 'Context switching activation rule',
+            flags         => 'p',
         },
         contextSwitchingIdRule => {
             type          => 'text',
             test          => sub { return perlExpr(@_) },
             default       => 1,
             documentation => 'Context switching identities rule',
+            flags         => 'p',
         },
         contextSwitchingStopWithLogout => {
             type          => 'bool',
             default       => 1,
             documentation => 'Stop context switching by logout',
+            flags         => 'p',
         },
-        # contextSwitchingHiddenAttributes => {
-        #     type          => 'text',
-        #     default       => '',
-        #     documentation => 'Attributes to skip',
-        #     flags         => 'p',
-        # },
         skipRenewConfirmation => {
             type    => 'bool',
             default => 0,
