@@ -206,10 +206,10 @@ sub _abortImpersonation {
     else {
         $self->logger->debug('STOP ContextSwitching');
         $self->userLogger->notice('STOP ContextSwitching');
+        $self->p->deleteSession($req);
     }
 
     # Restore real session
-    $self->p->deleteSession($req) unless $abort;
     $req->{$type} = {%$session};
     $req->{user} = $session->{_user};
     $req->urldc( $self->conf->{portal} );
@@ -219,27 +219,6 @@ sub _abortImpersonation {
 
     return $req;
 }
-
-# sub _abortImpersonation {
-#     my ( $self, $req ) = @_;
-#     my $realSessionId =
-#       $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"};
-#     my $session = $self->p->getApacheSession($realSessionId)->data;
-
-#     $self->logger->debug('ABORT ContextSwitching');
-#     $self->userLogger->notice('ABORT ContextSwitching');
-
-#     # Restore real session
-#     $self->p->deleteSession($req);
-#     $req->{sessionInfo} = {%$session};
-#     $req->{user}        = $session->{_user};
-#     $req->urldc( $self->conf->{portal} );
-#     $req->id($realSessionId);
-#     $self->p->buildCookie($req);
-#     $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"} = '';
-
-#     return $req;
-# }
 
 sub displaySwitchContext {
     my ( $self, $req ) = @_;
