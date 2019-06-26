@@ -17,7 +17,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 has parser => (
     is      => 'rw',
     builder => sub {
-        return XML::LibXML->new();
+        return XML::LibXML->new( load_ext_dtd => 0, expand_entities => 0 );
     }
 );
 
