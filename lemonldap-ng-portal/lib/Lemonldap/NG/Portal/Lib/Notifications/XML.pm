@@ -32,7 +32,7 @@ has stylesheet => (
           ( $self->conf->{notificationXSLTfile}
               and -e $self->conf->{notificationXSLTfile} )
           ? $self->conf->{notificationXSLTfile}
-          : $self->conf->{templatesDir} . '/common/notification.xsl';
+          : $self->conf->{templateDir} . '/common/notification.xsl';
         unless ( -e $styleFile ) {
             $self->{logger}->error("$styleFile not found, aborting");
             die "$styleFile not found";
