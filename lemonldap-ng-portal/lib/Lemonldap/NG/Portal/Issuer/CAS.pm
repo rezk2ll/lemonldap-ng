@@ -10,6 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_LOGOUT_OK
   PE_OK
+  PE_BADURL
   PE_SENDRESPONSE
 );
 
@@ -264,6 +265,19 @@ sub run {
         my $logout_service = $req->param('service');    # CAS 3.0
         $logout_service = ''
           if ( $self->p->checkXSSAttack( 'service', $logout_service ) );
+
+        # If we use access control, check that the service URL is trusted
+        if ( $self->conf->{casAccessControlPolicy} =~ /^(error|faketicket)$/i )
+        {
+            if ( $logout_service
+                and not $self->p->isTrustedUrl($logout_service) )
+            {
+                $self->userLogger->error(
+                        "Untrusted service URL $logout_service"
+                      . "specified for CAS Logout" );
+                return PE_BADURL;
+            }
+        }
 
         # Delete linked CAS sessions
         $self->deleteCasSecondarySessions($session_id);

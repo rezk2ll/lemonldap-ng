@@ -312,8 +312,22 @@ sub reloadConf {
                 }
             }
         }
+
+        # Add CAS Services, so we can check service= parameter on logout
+        foreach my $casSrv ( keys %{ $self->conf->{casAppMetaDataOptions} } ) {
+            if ( my $serviceUrl =
+                $self->conf->{casAppMetaDataOptions}->{$casSrv}
+                ->{casAppMetaDataOptionsService} )
+            {
+                $serviceUrl =~ s#https?://([^/]*).*$#$1#;
+                $self->logger->debug(
+                    "CAS Service $serviceUrl added in trusted domains");
+                $re->add( quotemeta($serviceUrl) );
+            }
+        }
         my $tmp = 'https?://' . $re->as_string . '(?::\d+)?(?:/|$)';
         $self->trustedDomainsRe(qr/$tmp/);
+
     }
 
     # Compile macros in _macros, groups in _groups

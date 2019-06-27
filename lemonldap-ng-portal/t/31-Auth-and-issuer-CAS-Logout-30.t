@@ -152,7 +152,7 @@ ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );
 count(3);
 
-# Logout initiated by CAS
+# Logout initiated by CAS, try with invalid service URL first
 switch ('issuer');
 ok(
     $res = $issuer->_get(
@@ -164,7 +164,22 @@ ok(
     'Query SP for logout'
 );
 count(1);
-expectRedirection( $res, 'http://url.test/' );
+ok( $res->[2]->[0] =~ m%<span trmsg="37"></span>%, ' PE37 found' );
+count(1);
+
+# Logout initiated by CAS, try with valid service URL
+ok(
+    $res = $issuer->_get(
+        '/cas/logout',
+        query  => 'service=http://auth.sp.com/',
+        cookie => "lemonldap=$idpId,llngcasserver=idp",
+        accept => 'text/html'
+    ),
+    'Query SP for logout'
+);
+count(1);
+
+expectRedirection( $res, 'http://auth.sp.com/' );
 
 # Verify that user has been disconnected
 ok( $res = $issuer->_get( '/', cookie => "lemonldap=$idpId" ), 'Query IdP' );
@@ -192,8 +207,13 @@ sub issuer {
                 issuerDBCASActivation  => 1,
                 casAttr                => 'uid',
                 casAttributes          => { cn => 'cn', uid => 'uid', },
-                casAccessControlPolicy => 'none',
+                casAccessControlPolicy => 'error',
                 multiValuesSeparator   => ';',
+                casAppMetaDataOptions  => {
+                    sp => {
+                        casAppMetaDataOptionsService => 'http://auth.sp.com',
+                    },
+                },
             }
         }
     );
