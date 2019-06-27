@@ -19,13 +19,13 @@ my $client = LLNG::Manager::Test->new( {
             requireToken                   => 0,
             checkUser                      => 1,
             impersonationPrefix            => 'testPrefix_',
-            securedCookie                  => 1,
+            securedCookie                  => 0,
             https                          => 0,
             checkUserDisplayPersistentInfo => 0,
             checkUserDisplayEmptyValues    => 0,
             contextSwitchingRule           => '$uid eq "dwho"',
             contextSwitchingIdRule         => '$uid ne "msmith"',
-            contextSwitchingStopWithLogout => 1,
+            contextSwitchingStopWithLogout => 0,
         }
     }
 );
@@ -57,12 +57,12 @@ ok(
 );
 count(1);
 expectOK($res);
-ok( $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> rtyler%,
-    'Connected as rtyler' )
-  or print STDERR Dumper( $res->[2]->[0] );
+ok(
+    $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> rtyler%,
+    'Connected as rtyler'
+) or print STDERR Dumper( $res->[2]->[0] );
 expectAuthenticatedAs( $res, 'rtyler' );
-ok( $res->[2]->[0] !~ m%contextSwitching_ON%,
-    'Connected as dwho' )
+ok( $res->[2]->[0] !~ m%contextSwitching_ON%, 'Connected as dwho' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
@@ -99,9 +99,11 @@ ok( $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> dwho%,
     'Connected as dwho' )
   or print STDERR Dumper( $res->[2]->[0] );
 expectAuthenticatedAs( $res, 'dwho' );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">contextSwitching_ON</span>%,
-    'Connected as dwho' )
-  or print STDERR Dumper( $res->[2]->[0] );
+ok(
+    $res->[2]->[0] =~
+      m%<span trspan="contextSwitching_ON">contextSwitching_ON</span>%,
+    'Connected as dwho'
+) or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
 # ContextSwitching form -> PE_MALFORMEDUSER
@@ -118,7 +120,8 @@ count(1);
 
 my ( $host, $url, $query ) =
   expectForm( $res, undef, '/switchcontext', 'spoofId' );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%, 'Found trspan="contextSwitching_ON"' )
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%,
+    'Found trspan="contextSwitching_ON"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_ON"' );
 count(1);
 $query =~ s/spoofId=/spoofId=msmith/;
@@ -148,9 +151,10 @@ ok(
 );
 count(1);
 
-my ( $host, $url, $query ) =
+( $host, $url, $query ) =
   expectForm( $res, undef, '/switchcontext', 'spoofId' );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%, 'Found trspan="contextSwitching_ON"' )
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%,
+    'Found trspan="contextSwitching_ON"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_ON"' );
 count(1);
 $query =~ s/spoofId=/spoofId=</;
@@ -180,9 +184,10 @@ ok(
 );
 count(1);
 
-my ( $host, $url, $query ) =
+( $host, $url, $query ) =
   expectForm( $res, undef, '/switchcontext', 'spoofId' );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%, 'Found trspan="contextSwitching_ON"' )
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%,
+    'Found trspan="contextSwitching_ON"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_ON"' );
 count(1);
 $query =~ s/spoofId=/spoofId=darkVador/;
@@ -212,9 +217,10 @@ ok(
 );
 count(1);
 
-my ( $host, $url, $query ) =
+( $host, $url, $query ) =
   expectForm( $res, undef, '/switchcontext', 'spoofId' );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%, 'Found trspan="contextSwitching_ON"' )
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%,
+    'Found trspan="contextSwitching_ON"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_ON"' );
 $query =~ s/spoofId=/spoofId=dwho/;
 ok(
@@ -235,7 +241,8 @@ ok(
     ),
     'Get Menu',
 );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%, 'Found trspan="contextSwitching_ON"' )
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%,
+    'Found trspan="contextSwitching_ON"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_ON"' );
 count(4);
 expectAuthenticatedAs( $res, 'dwho' );
@@ -252,9 +259,10 @@ ok(
 );
 count(1);
 
-my ( $host, $url, $query ) =
+( $host, $url, $query ) =
   expectForm( $res, undef, '/switchcontext', 'spoofId' );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%, 'Found trspan="contextSwitching_ON"' )
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%,
+    'Found trspan="contextSwitching_ON"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_ON"' );
 $query =~ s/spoofId=/spoofId=rtyler/;
 ok(
@@ -267,6 +275,9 @@ ok(
     ),
     'POST switchcontext'
 );
+
+# Read again cookie value
+$id = expectCookie($res);
 ok(
     $res = $client->_get(
         '/',
@@ -277,7 +288,8 @@ ok(
 );
 count(3);
 expectAuthenticatedAs( $res, 'rtyler' );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%, 'Found trspan="contextSwitching_ON"' )
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%,
+    'Found trspan="contextSwitching_ON"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_OFF"' );
 ok(
     $res = $client->_get(
@@ -287,6 +299,9 @@ ok(
     ),
     'Stop context switching',
 );
+
+# Read again cookie value
+$id = expectCookie($res);
 ok(
     $res = $client->_get(
         '/',
@@ -297,11 +312,32 @@ ok(
 );
 count(3);
 expectAuthenticatedAs( $res, 'dwho' );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%, 'Found trspan="contextSwitching_ON"' )
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%,
+    'Found trspan="contextSwitching_ON"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_ON"' );
 count(1);
 
-#$client->logout($id);
+# Log out request
+# ------------------------
+ok(
+    $res = $client->_get(
+        '/',
+        query  => 'logout=1',
+        cookie => "lemonldap=$id",
+        accept => 'text/html'
+    ),
+    'Get Menu',
+);
+count(1);
+expectOK($res);
+
+ok(
+    $res->[2]->[0] =~
+m%<div class="message message-positive alert"><span trmsg="47"></span></div>%,
+    'Dwho has been well disconnected'
+) or print STDERR Dumper( $res->[2]->[0] );
+count(1);
+
 clean_sessions();
 
 done_testing( count() );
