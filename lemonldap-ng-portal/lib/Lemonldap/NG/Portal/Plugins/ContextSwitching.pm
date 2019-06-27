@@ -73,7 +73,7 @@ sub display {
     }
 
     if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
-        $self->logger->debug('Stop context switching');
+        $self->logger->debug('Request to stop ContextSwitching');
         if ( $self->conf->{contextSwitchingStopWithLogout} ) {
             $self->logger->debug('Send logout request');
             return $self->p->do( $req,
