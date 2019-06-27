@@ -56,6 +56,18 @@ sub init {
         },
         ['GET']
     );
+
+    # Add CAS Services, so we can check service= parameter on logout
+    foreach my $casSrv ( keys %{ $self->conf->{casAppMetaDataOptions} } ) {
+        if ( my $serviceUrl =
+            $self->conf->{casAppMetaDataOptions}->{$casSrv}
+            ->{casAppMetaDataOptionsService} )
+        {
+            push @{ $self->p->{additionalTrustedDomains} }, $serviceUrl;
+            $self->logger->debug(
+                "CAS Service $serviceUrl added in trusted domains");
+        }
+    }
     return $res;
 }
 

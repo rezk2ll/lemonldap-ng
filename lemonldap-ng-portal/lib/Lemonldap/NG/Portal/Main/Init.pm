@@ -39,6 +39,7 @@ has _jsRedirect => ( is => 'rw' );
 
 # TrustedDomain regexp
 has trustedDomainsRe => ( is => 'rw' );
+has additionalTrustedDomains => ( is => 'rw', default => sub { [] } );
 
 # Lists to store plugins entry-points
 my @entryPoints;
@@ -269,67 +270,6 @@ sub reloadConf {
       unless $self->{_sfEngine} =
       $self->loadPlugin( $self->conf->{'sfEngine'} );
 
-    # Initialize trusted domain regexp
-    if (    $self->conf->{trustedDomains}
-        and $self->conf->{trustedDomains} =~ /^\s*\*\s*$/ )
-    {
-        $self->trustedDomainsRe(qr#^https?://#);
-    }
-    else {
-        my $re = Regexp::Assemble->new();
-        if ( my $td = $self->conf->{trustedDomains} ) {
-            $td =~ s/^\s*(.*?)\s*/$1/;
-            foreach ( split( /\s+/, $td ) ) {
-                next unless ($td);
-                s#^\.#([^/]+\.)?#;
-                $self->logger->debug("Domain $_ added in trusted domains");
-                s/\./\\./g;
-
-                # This regexp is valid for the followings hosts:
-                #  - $td
-                #  - $domainlabel.$td
-                # $domainlabel is build looking RFC2396
-                # (see Regexp::Common::URI::RFC2396)
-                $_ =~
-                  s/\*\\\./(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]\\.)*/g;
-                $re->add("$_");
-            }
-        }
-        my $p = $self->conf->{portal};
-        $p =~ s#https?://([^/]*).*$#$1#;
-        $re->add( quotemeta($p) );
-        foreach my $vhost ( keys %{ $self->conf->{locationRules} } ) {
-            $self->logger->debug("Vhost $vhost added in trusted domains");
-            $re->add( quotemeta($vhost) );
-            $self->conf->{vhostOptions} ||= {};
-            if ( my $tmp =
-                $self->conf->{vhostOptions}->{$vhost}->{vhostAliases} )
-            {
-                foreach my $alias ( split /\s+/, $tmp ) {
-                    $self->logger->debug(
-                        "Alias $alias added in trusted domains");
-                    $re->add( quotemeta($alias) );
-                }
-            }
-        }
-
-        # Add CAS Services, so we can check service= parameter on logout
-        foreach my $casSrv ( keys %{ $self->conf->{casAppMetaDataOptions} } ) {
-            if ( my $serviceUrl =
-                $self->conf->{casAppMetaDataOptions}->{$casSrv}
-                ->{casAppMetaDataOptionsService} )
-            {
-                $serviceUrl =~ s#https?://([^/]*).*$#$1#;
-                $self->logger->debug(
-                    "CAS Service $serviceUrl added in trusted domains");
-                $re->add( quotemeta($serviceUrl) );
-            }
-        }
-        my $tmp = 'https?://' . $re->as_string . '(?::\d+)?(?:/|$)';
-        $self->trustedDomainsRe(qr/$tmp/);
-
-    }
-
     # Compile macros in _macros, groups in _groups
     foreach my $type (qw(macros groups)) {
         $self->{"_$type"} = {};
@@ -356,6 +296,59 @@ sub reloadConf {
     # Load plugins
     foreach my $plugin ( $self->enabledPlugins ) {
         $self->loadPlugin($plugin) or return $self->fail;
+    }
+
+    # Initialize trusted domain regexp
+    if (    $self->conf->{trustedDomains}
+        and $self->conf->{trustedDomains} =~ /^\s*\*\s*$/ )
+    {
+        $self->trustedDomainsRe(qr#^https?://#);
+    }
+    else {
+        my $re = Regexp::Assemble->new();
+        if ( my $td = $self->conf->{trustedDomains} ) {
+            $td =~ s/^\s*(.*?)\s*/$1/;
+            foreach ( split( /\s+/, $td ) ) {
+                next unless ($td);
+                s#^\.#([^/]+\.)?#;
+                $self->logger->debug("Domain $_ added in trusted domains");
+                s/\./\\./g;
+
+                # This regexp is valid for the followings hosts:
+                #  - $td
+                #  - $domainlabel.$td
+                # $domainlabel is build looking RFC2396
+                # (see Regexp::Common::URI::RFC2396)
+                $_ =~
+                  s/\*\\\./(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]\\.)*/g;
+                $re->add("$_");
+            }
+        }
+        foreach ( @{ $self->{additionalTrustedDomains} },
+            $self->conf->{portal} )
+        {
+            my $p = $_;
+            $p =~ s#https?://([^/]*).*$#$1#;
+            $re->add( quotemeta($p) );
+        }
+        foreach my $vhost ( keys %{ $self->conf->{locationRules} } ) {
+            $self->logger->debug("Vhost $vhost added in trusted domains");
+            $re->add( quotemeta($vhost) );
+            $self->conf->{vhostOptions} ||= {};
+            if ( my $tmp =
+                $self->conf->{vhostOptions}->{$vhost}->{vhostAliases} )
+            {
+                foreach my $alias ( split /\s+/, $tmp ) {
+                    $self->logger->debug(
+                        "Alias $alias added in trusted domains");
+                    $re->add( quotemeta($alias) );
+                }
+            }
+        }
+
+        my $tmp = 'https?://' . $re->as_string . '(?::\d+)?(?:/|$)';
+        $self->trustedDomainsRe(qr/$tmp/);
+
     }
 
     # Clean $req->pdata after authentication
