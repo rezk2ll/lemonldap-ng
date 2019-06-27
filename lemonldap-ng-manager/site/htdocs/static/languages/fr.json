@@ -303,7 +303,7 @@
 "hideTree":"Masquer l'arbre",
 "httpOnly":"Protection contre javascript",
 "https":"HTTPS",
-"impersonation":"Usurpation d'identité",
+"impersonation":"Simulation d'identité",
 "impersonationRule":"Règle d'utilisation",
 "impersonationIdRule":"Règle d'utilisation des identités",
 "impersonationHiddenAttributes":"Attributs masqués",

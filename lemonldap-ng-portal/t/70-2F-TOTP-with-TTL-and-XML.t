@@ -23,7 +23,6 @@ SKIP: {
                 sfRemovedUseNotif          => 1,
                 portalMainLogo             => 'common/logos/logo_llng_old.png',
                 notification               => 1,
-                templatesDir               => 'site/templates/',
                 notificationStorage        => 'File',
                 notificationStorageOptions => { dirName => 't' },
                 oldNotifFormat             => 1,

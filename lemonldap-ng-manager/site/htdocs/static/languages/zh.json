@@ -734,7 +734,7 @@
 "sfaTitle":"Second Factors Authentication",
 "sfRequired":"Require 2FA",
 "sfRemovedNotification":"Display a message if an expired SF is removed",
-"sfRemovedMsgRule":"Activation",
+"sfRemovedMsgRule":"激活",
 "sfRemovedUseNotif":"Use Notifications plugin",
 "sfRemovedNotifMsg":"Notification message",
 "sfRemovedNotifRef":"Notification reference",

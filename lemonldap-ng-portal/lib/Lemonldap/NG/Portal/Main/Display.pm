@@ -36,7 +36,7 @@ sub displayInit {
 sub display {
     my ( $self, $req ) = @_;
 
-    my $skin_dir = $self->conf->{templatesDir};
+    my $skin_dir = $self->conf->{templateDir};
     my ( $skinfile, %templateParams );
 
     # 1. Authentication not complete
@@ -438,9 +438,9 @@ sub staticFile {
     require Plack::Util;
     require Cwd;
     require HTTP::Date;
-    open my $fh, '<:raw', $self->conf->{templatesDir} . "/$file"
+    open my $fh, '<:raw', $self->conf->{templateDir} . "/$file"
       or return $self->sendError( $req,
-        $self->conf->{templatesDir} . "/$file: $!", 403 );
+        $self->conf->{templateDir} . "/$file: $!", 403 );
     my @stat = stat $file;
     Plack::Util::set_io_path( $fh, Cwd::realpath($file) );
     return [
