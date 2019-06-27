@@ -380,7 +380,6 @@ EOF
 package Lemonldap::NG::Manager::Attributes;
 
 our \$VERSION = '$Lemonldap::NG::Manager::Build::Attributes::VERSION';
-use Lemonldap::NG::Handler::Main::Jail;
 
 $managerSub
 
