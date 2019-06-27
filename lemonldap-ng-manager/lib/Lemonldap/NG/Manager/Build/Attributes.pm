@@ -18,7 +18,7 @@ sub perlExpr {
         [ '&encrypt', '&token' ] );
     $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
-    $cpt->reval("BEGIN { warnings->unimport; } $val");
+    $cpt->reval("BEGIN { 'warnings'->unimport; } $val");
     my $err = join( '',
         grep { $_ =~ /Undefined subroutine/ ? () : $_ } split( /\n/, $@ ) );
     return $err ? ( 1, "__badExpression__: $err" ) : (1);
