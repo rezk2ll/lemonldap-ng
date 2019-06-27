@@ -2,7 +2,6 @@ package Lemonldap::NG::Portal::2F::Mail2F;
 
 use strict;
 use Mouse;
-use String::Random;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_ERROR
@@ -23,7 +22,7 @@ has prefix => ( is => 'ro', default => 'mail' );
 has random => (
     is      => 'rw',
     default => sub {
-        return String::Random->new;
+        return Lemonldap::NG::Common::Crypto::srandom();
     }
 );
 

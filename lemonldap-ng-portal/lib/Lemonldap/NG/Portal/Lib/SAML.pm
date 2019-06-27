@@ -8,7 +8,6 @@ use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::FormEncode;
 use XML::Simple;
 use MIME::Base64;
-use String::Random;
 use HTTP::Request;         # SOAP call
 use POSIX qw(strftime);    # Convert SAML2 date into timestamp
 use Time::Local;           # Convert SAML2 date into timestamp
