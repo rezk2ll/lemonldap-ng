@@ -2,6 +2,7 @@
 package Lemonldap::NG::Manager::Attributes;
 
 our $VERSION = '2.0.5';
+use Lemonldap::NG::Handler::Main::Jail;
 
 sub perlExpr {
     my ( $val, $conf ) = @_;
