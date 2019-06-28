@@ -556,6 +556,7 @@ sub run {
                         }
                         $req->info(
                             $self->loadTemplate(
+                                $req,
                                 'oidcGiveConsent',
                                 params => {
                                     displayName => $display_name,
@@ -947,7 +948,7 @@ sub run {
                   : PE_OK;
             }
 
-            $req->info( $self->loadTemplate('oidcLogout') );
+            $req->info( $self->loadTemplate( $req, 'oidcLogout' ) );
             $req->data->{activeTimer} = 0;
             return PE_CONFIRM;
         }

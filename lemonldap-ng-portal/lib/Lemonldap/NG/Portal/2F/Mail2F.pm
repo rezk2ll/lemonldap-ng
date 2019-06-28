@@ -86,6 +86,7 @@ sub run {
 
         # Use HTML template
         $body = $self->loadTemplate(
+            $req,
             'mail_2fcode',
             filter => $tr,
             params => \%tplPrms

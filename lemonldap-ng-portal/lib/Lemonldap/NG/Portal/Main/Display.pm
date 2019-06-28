@@ -527,12 +527,13 @@ sub getSkin {
 # @param $displaError To display "Error" column
 # @return HTML string
 sub mkSessionArray {
-    my ( $self, $sessions, $title, $displayUser, $displayError ) = @_;
+    my ( $self, $req, $sessions, $title, $displayUser, $displayError ) = @_;
 
     return "" unless ( ref $sessions eq "ARRAY" and @$sessions );
 
     my @fields = sort keys %{ $self->conf->{sessionDataToRemember} };
     return $self->loadTemplate(
+        $req,
         'sessionArray',
         params => {
             title        => $title,
@@ -560,7 +561,7 @@ sub mkSessionArray {
 }
 
 sub mkOidcConsent {
-    my ( $self, $session ) = @_;
+    my ( $self, $req, $session ) = @_;
 
     if ( defined( $self->conf->{oidcRPMetaDataOptions} )
         and ref( $self->conf->{oidcRPMetaDataOptions} ) )
@@ -603,6 +604,7 @@ sub mkOidcConsent {
 
     # Display existing oidcConsents
     return $self->loadTemplate(
+        $req,
         'oidcConsents',
         params => {
             partners => [

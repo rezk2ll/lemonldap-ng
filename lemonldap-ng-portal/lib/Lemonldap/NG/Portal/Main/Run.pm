@@ -176,6 +176,7 @@ sub refresh {
     if ($res) {
         $req->info(
             $self->loadTemplate(
+                $req,
                 'simpleInfo', params => { trspan => 'rightsReloadNeedsLogout' }
             )
         );
@@ -1023,12 +1024,12 @@ sub _sumUpSession {
 
 # Temlate loader
 sub loadTemplate {
-    my ( $self, $name, %prm ) = @_;
+    my ( $self, $req, $name, %prm ) = @_;
     $name .= '.tpl';
     my $tpl = HTML::Template->new(
         filename => $name,
         path     => [
-            $self->conf->{templateDir} . '/' . $self->conf->{portalSkin},
+            $self->conf->{templateDir} . '/' . $self->getSkin($req),
             $self->conf->{templateDir} . '/bootstrap/',
             $self->conf->{templateDir} . '/common/'
         ],

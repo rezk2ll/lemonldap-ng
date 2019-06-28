@@ -917,8 +917,10 @@ sub run {
                   . ' width="0" height="0" frameborder="0"></iframe>';
 
                 $req->info(
-                    $self->loadTemplate( 'simpleInfo',
-                        params => { trspan => 'updateCdc' } )
+                    $self->loadTemplate(
+                        $req, 'simpleInfo',
+                        params => { trspan => 'updateCdc' }
+                      )
                       . $cdc_iframe
                 );
             }

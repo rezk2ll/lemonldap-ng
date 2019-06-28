@@ -308,7 +308,8 @@ sub run {
 
                 $req->info(
                     $self->loadTemplate(
-                        'casBack2Url', params => { url => $logout_url }
+                        $req, 'casBack2Url',
+                        params => { url => $logout_url }
                     )
                 );
                 $req->data->{activeTimer} = 0;
