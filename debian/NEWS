@@ -1,7 +1,7 @@
 lemonldap-ng (2.0.5-1) unstable; urgency=medium
 
   This version adds some improvements in cryptographic functions. To take
-  advantage of them, you must change the master key of LemonLDAP::NG.
+  advantage of them, you must change the encryption key of LemonLDAP::NG.
 
  -- Xavier Guimard <yadd@debian.org>  Thu, 27 Jun 2019 23:19:09 +0200
 
