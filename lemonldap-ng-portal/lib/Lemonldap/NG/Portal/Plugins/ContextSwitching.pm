@@ -194,9 +194,11 @@ sub _abortImpersonation {
     my $realSessionId =
       $req->{$type}->{"$self->{conf}->{impersonationPrefix}_session_id"};
     my $session = $self->p->getApacheSession($realSessionId)->data;
+
     if ($abort) {
         $self->logger->debug('ABORT ContextSwitching');
         $self->userLogger->notice('ABORT ContextSwitching');
+        $self->p->updateSession( $req, { '_session_kind' => 'SPOOF' } );
     }
     else {
         $self->logger->debug('STOP ContextSwitching');
@@ -210,7 +212,7 @@ sub _abortImpersonation {
     $req->urldc( $self->conf->{portal} );
     $req->id($realSessionId);
     $self->p->buildCookie($req);
-    $req->{$type}->{"$self->{conf}->{impersonationPrefix}_session_id"} = '';
+    delete $req->{$type}->{"$self->{conf}->{impersonationPrefix}_session_id"};
 
     return $req;
 }
