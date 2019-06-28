@@ -51,7 +51,7 @@
 In modern applications, web application may need to request some other web applications on behalf of the authenticated users. There are three ways to do this:
 </p>
 <ul>
-<li class="level1"><div class="li"> the Ugly : provide to all applications the <abbr title="Single Sign On">SSO</abbr> cookie. Not secured because the <abbr title="Single Sign On">SSO</abbr> cookie can be caught and used everywhere, every time by everyone!!! <strong>NOT RECOMMENDED</strong>.  </div>
+<li class="level1"><div class="li"> the Ugly : provide to all applications <abbr title="Single Sign On">SSO</abbr> cookie. Not secured because <abbr title="Single Sign On">SSO</abbr> cookie can be caught and used everywhere, every time by everyone!!! <strong>NOT RECOMMENDED</strong>.  </div>
 </li>
 <li class="level1"><div class="li"> the Bad (<a href="securetoken.html" class="wikilink1" title="documentation:2.0:securetoken">Secure Token Handler</a>) : <strong>Deprecated</strong>. Can be used in specific cases  </div>
 </li>
@@ -60,11 +60,11 @@ In modern applications, web application may need to request some other web appli
 </ul>
 
 <p>
-The “Bad” method consists to give the token (cookie value) to webapp1 which uses it as cookie header in its request. Since 2.0 version, <abbr title="LemonLDAP::NG">LL::NG</abbr> gives a better way (the Good !) to do this by using limited scope tokens.
+The “Bad” method consists to give the token (cookie value) to WebApp1 which uses it as cookie header in its request. Since 2.0 version, <abbr title="LemonLDAP::NG">LL::NG</abbr> gives a better way (the Good !) to do this by using limited scope tokens.
 </p>
 
 <p>
-Tokens are time limited (30 seconds) and <abbr title="Uniform Resource Locator">URL</abbr> restricted (three max).
+Tokens are time limited (30 seconds by default) and <abbr title="Uniform Resource Locator">URL</abbr> restricted.
 </p>
 
 <p>
@@ -72,29 +72,37 @@ Tokens are time limited (30 seconds) and <abbr title="Uniform Resource Locator">
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Handling server webservice calls" [1-902] -->
+<!-- EDIT1 SECTION "Handling server webservice calls" [1-893] -->
 <h2 class="sectionedit2" id="webapp1_handler_configuration">Webapp1 handler configuration</h2>
 <div class="level2">
 
 <p>
-Insert a header filled with this value:
+Select <strong>Main</strong> handler type to protect WebApp1 and
+insert a header named <strong>X-Llng-Token</strong> filled with this value:
 </p>
-<pre class="code file perl">token<span class="br0">&#40;</span> <span class="re0">$_session_id</span><span class="sy0">,</span> <span class="st_h">'webapp2.example.com'</span><span class="sy0">,</span> <span class="st_h">'webapp3.example.com'</span> <span class="br0">&#41;</span></pre>
+<pre class="code file perl">token<span class="br0">&#40;</span> <span class="re0">$_session_id</span><span class="sy0">,</span> <span class="st_h">'webapp2.example.com'</span><span class="sy0">,</span> <span class="st_h">'webapp3.example.com'</span><span class="sy0">,</span> <span class="st_h">'serviceHeader1=webapp1.example.com'</span><span class="sy0">,</span> <span class="st_h">'testHeader=$uid'</span> <span class="br0">&#41;</span></pre>
 
 <p>
-Webapp1 can read this header and use it in its requests by setting the <code>X-Llng-Token</code> header. The token is built using the session ID and the authorized virtualhosts list. The token is only available during 30 seconds and for the specified virtualhosts.
+WebApp1 can read this header and use it in its requests by setting the <code>X-Llng-Token</code> header. The token is built by using the session ID and authorized virtualhosts list. By default, the Service Token is only available during 30 seconds and for specified virtualhosts. The token can be use to send service headers to webapp2 like origin host by example.
 </p>
 
+<p>
+You can set ServiceToken default timeout (30 seconds) by editing <code>lemonldap-ng.ini</code> in section [handler]:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>handler<span class="br0">&#93;</span></span>
+<span class="re1">handlerServiceTokenTTL</span> <span class="sy0">=</span><span class="re2"> 30</span></pre>
+<div class="noteclassic">Service token timeout can be set for each virtual hosts.
 </div>
-<!-- EDIT2 SECTION "Webapp1 handler configuration" [903-1331] -->
+</div>
+<!-- EDIT2 SECTION "Webapp1 handler configuration" [894-1790] -->
 <h2 class="sectionedit3" id="webapp2_handler_configuration">Webapp2 handler configuration</h2>
 <div class="level2">
 
 <p>
-Change handler type to “ServiceToken”. So it is able to manage both user and server connections. And that&#039;s all !
+Change handler type to <strong>ServiceToken</strong>. So it is able to manage both user and server connections. And that&#039;s all !
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Webapp2 handler configuration" [1332-] --></div>
+<!-- EDIT3 SECTION "Webapp2 handler configuration" [1791-] --></div>
 </body>
 </html>

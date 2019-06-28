@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:sqlsessionbackend</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,sqlsessionbackend"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="sqlsessionbackend.html"/>
@@ -115,7 +115,7 @@ Your database must have a specific table to host sessions. Here are some example
 <p>
 Create a database if necessary:
 </p>
-<pre class="code">mysqladmin create lemonldapng</pre>
+<pre class="code">mysqladmin create lemonldap-ng</pre>
 
 <p>
 Create sessions table:
@@ -160,7 +160,7 @@ lemonldap-ng=&gt; q</pre>
 <div class="noteimportant">Change <code>char(32)</code> by <code>varchar(64)</code> if you use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
 </div>
 </div>
-<!-- EDIT3 SECTION "Prepare the database" [468-2379] -->
+<!-- EDIT3 SECTION "Prepare the database" [468-2380] -->
 <h3 class="sectionedit4" id="manager">Manager</h3>
 <div class="level3">
 
@@ -180,7 +180,7 @@ Go in the Manager and set the session module (for example <a href="https://metac
 		<td class="col0 centeralign">  <strong>DataSource</strong>  </td><td class="col1"> The <a href="https://metacpan.org/pod/DBI" class="urlextern" title="https://metacpan.org/pod/DBI"  rel="nofollow">DBI</a> string </td><td class="col2"> dbi:Pg:dbname=sessions;host=10.2.3.1 </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 centeralign">  <strong>UserName</strong>  </td><td class="col1"> The database username </td><td class="col2"> lemonldapng </td>
+		<td class="col0 centeralign">  <strong>UserName</strong>  </td><td class="col1"> The database username </td><td class="col2"> lemonldap-ng </td>
 	</tr>
 	<tr class="row4 roweven">
 		<td class="col0 centeralign">  <strong>Password</strong>  </td><td class="col1"> The database password </td><td class="col2"> mysuperpassword </td>
@@ -192,7 +192,7 @@ Go in the Manager and set the session module (for example <a href="https://metac
 		<td class="col0 centeralign">  <strong>TableName</strong>  </td><td class="col1"> <em>(Optional)</em> Name of the table </td><td class="col2"> sessions </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [2702-3105] -->
+<!-- EDIT5 TABLE [2703-3107] -->
 <p>
 You must read the man page corresponding to your database (<a href="https://metacpan.org/pod/Apache::Session::MySQL" class="urlextern" title="https://metacpan.org/pod/Apache::Session::MySQL"  rel="nofollow">Apache::Session::MySQL</a>, ...) to learn more about parameters. You must also install the database connector (<a href="https://metacpan.org/pod/DBD::Oracle" class="urlextern" title="https://metacpan.org/pod/DBD::Oracle"  rel="nofollow">https://metacpan.org/pod/DBD::Oracle</a>, <a href="https://metacpan.org/pod/DBD::Pg" class="urlextern" title="https://metacpan.org/pod/DBD::Pg"  rel="nofollow">DBD::Pg</a>,...)
 </p>
@@ -235,9 +235,9 @@ If you may store some non-<abbr title="American Standard Code for Information In
 		<td class="col0 centeralign">  SQLite  </td><td class="col1 centeralign">  sqlite_unicode  </td><td class="col2 centeralign">  1  </td>
 	</tr>
 </table></div>
-<!-- EDIT6 TABLE [3895-4058] -->
+<!-- EDIT6 TABLE [3897-4060] -->
 </div>
-<!-- EDIT4 SECTION "Manager" [2380-4059] -->
+<!-- EDIT4 SECTION "Manager" [2381-4061] -->
 <h2 class="sectionedit7" id="security">Security</h2>
 <div class="level2">
 
@@ -250,6 +250,6 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Security" [4060-] --></div>
+<!-- EDIT7 SECTION "Security" [4062-] --></div>
 </body>
 </html>

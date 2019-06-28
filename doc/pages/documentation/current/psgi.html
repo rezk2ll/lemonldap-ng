@@ -59,6 +59,7 @@
 <li class="level2"><div class="li"><a href="#using_uwsgi">Using uWSGI</a></div>
 <ul class="toc">
 <li class="level3"><div class="li"><a href="#using_debian_lemonldap-ng-uwsgi-app_package">Using Debian lemonldap-ng-uwsgi-app package</a></div></li>
+<li class="level3"><div class="li"><a href="#configuration">Configuration</a></div></li>
 </ul>
 </li>
 </ul>
@@ -239,7 +240,31 @@ Then adapt your Nginx configuration to use this uWSGI app.
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Using uWSGI" [3425-4282] -->
+
+<h4 id="configuration">Configuration</h4>
+<div class="level4">
+
+<p>
+To serve large requests with uWsgi, you could have to modify in uWsgi and/or Nginx init files several options. Example:
+</p>
+<dl class="file">
+<dt><a href="_export/code/documentation/2.0/psgi/codeblock.4.code" title="Download Snippet" class="mediafile mf_ini">uWsgi.ini</a></dt>
+<dd><pre class="code file ini"><span class="re1">workers</span> <span class="sy0">=</span><span class="re2"> 4</span>
+<span class="re1">buffer-size</span> <span class="sy0">=</span><span class="re2"> 65535</span>
+<span class="re1">limit-post</span> <span class="sy0">=</span><span class="re2"> 0</span></pre>
+</dd></dl>
+<dl class="file">
+<dt><a href="_export/code/documentation/2.0/psgi/codeblock.5.code" title="Download Snippet" class="mediafile mf_conf">nginx.conf</a></dt>
+<dd><pre class="code file nginx">client_max_body_size 300M;
+proxy_send_timeout 600;
+proxy_read_timeout 600;
+proxy_connect_timeout 600;
+uwsgi_read_timeout 120;
+uwsgi_send_timeout 120;</pre>
+</dd></dl>
+
+</div>
+<!-- EDIT5 SECTION "Using uWSGI" [3425-4685] -->
 <h2 class="sectionedit6" id="protect_a_psgi_application">Protect a PSGI application</h2>
 <div class="level2">
 
@@ -247,7 +272,7 @@ Then adapt your Nginx configuration to use this uWSGI app.
 LLNG provides <code>Plack::Middleware::Auth::LemonldapNG</code> that can be used to protect any PSGI application: it acts exactly like a LLNG handler. Simple example:
 </p>
 <dl class="file">
-<dt><a href="_export/code/documentation/2.0/psgi/codeblock.4.code" title="Download Snippet" class="mediafile mf_psgi">app.psgi</a></dt>
+<dt><a href="_export/code/documentation/2.0/psgi/codeblock.6.code" title="Download Snippet" class="mediafile mf_psgi">app.psgi</a></dt>
 <dd><pre class="code file perl"><span class="kw2">use</span> Plack<span class="sy0">::</span><span class="me2">Builder</span><span class="sy0">;</span>
 &nbsp;
 <span class="kw1">my</span> <span class="re0">$app</span>   <span class="sy0">=</span> <span class="kw2">sub</span> <span class="br0">&#123;</span> <span class="sy0">...</span> <span class="br0">&#125;</span><span class="sy0">;</span>
@@ -261,7 +286,7 @@ builder <span class="br0">&#123;</span>
 More advanced example:
 </p>
 <dl class="file">
-<dt><a href="_export/code/documentation/2.0/psgi/codeblock.5.code" title="Download Snippet" class="mediafile mf_psgi">app.psgi</a></dt>
+<dt><a href="_export/code/documentation/2.0/psgi/codeblock.7.code" title="Download Snippet" class="mediafile mf_psgi">app.psgi</a></dt>
 <dd><pre class="code file perl"><span class="kw2">use</span> Plack<span class="sy0">::</span><span class="me2">Builder</span><span class="sy0">;</span>
 &nbsp;
 <span class="kw1">my</span> <span class="re0">$app</span>   <span class="sy0">=</span> <span class="kw2">sub</span> <span class="br0">&#123;</span> <span class="sy0">...</span> <span class="br0">&#125;</span><span class="sy0">;</span>
@@ -283,6 +308,6 @@ builder <span class="br0">&#123;</span>
 </dd></dl>
 
 </div>
-<!-- EDIT6 SECTION "Protect a PSGI application" [4283-] --></div>
+<!-- EDIT6 SECTION "Protect a PSGI application" [4686-] --></div>
 </body>
 </html>

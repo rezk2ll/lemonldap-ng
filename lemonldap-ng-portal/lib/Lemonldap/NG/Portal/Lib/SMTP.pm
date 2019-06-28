@@ -8,7 +8,6 @@ package Lemonldap::NG::Portal::Lib::SMTP;
 use strict;
 use Mouse;
 use JSON qw(from_json);
-use String::Random;
 use MIME::Entity;
 use Email::Sender::Simple qw(sendmail);
 use Email::Sender::Transport::SMTP qw();
@@ -24,7 +23,7 @@ our $transport;
 has random => (
     is      => 'rw',
     default => sub {
-        return String::Random->new;
+        return Lemonldap::NG::Common::Crypto::srandom();
     }
 );
 has charset => (

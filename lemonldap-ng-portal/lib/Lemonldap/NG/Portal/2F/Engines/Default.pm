@@ -288,7 +288,7 @@ sub run {
         '2fchoice',
         params => {
             MAIN_LOGO => $self->conf->{portalMainLogo},
-            SKIN      => $self->conf->{portalSkin},
+            SKIN      => $self->p->getSkin($req),
             TOKEN     => $token,
             MODULES => [ map { { CODE => $_->prefix, LOGO => $_->logo } } @am ],
             CHECKLOGINS => $checkLogins
@@ -443,7 +443,7 @@ sub _displayRegister {
         '2fregisters',
         params => {
             MAIN_LOGO    => $self->conf->{portalMainLogo},
-            SKIN         => $self->conf->{portalSkin},
+            SKIN         => $self->p->getSkin($req),
             MODULES      => \@am,
             SFDEVICES    => $_2fDevices,
             ACTION       => $action,

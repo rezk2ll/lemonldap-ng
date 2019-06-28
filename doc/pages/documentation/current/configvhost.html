@@ -397,9 +397,18 @@ A virtual host contains:
 <p>
 See <strong><a href="writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Writing rules and headers</a></strong> to learn how to configure access control and HTTP headers sent to application by <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </p>
+<div class="noteimportant">With <strong>Nginx</strong>-based ReverseProxy, headers directives can be appended by a LUA script.
+<p>
+To send more than <strong>TEN</strong> headers to protected applications, you have to edit and modify :
+</p>
+
+<p>
+<code>/etc/nginx/nginx-lua-headers.conf</code>
+</p>
 
 </div>
-<!-- EDIT10 SECTION "Access rules and HTTP headers" [8534-8726] -->
+</div>
+<!-- EDIT10 SECTION "Access rules and HTTP headers" [8534-8968] -->
 <h3 class="sectionedit11" id="post_data">POST data</h3>
 <div class="level3">
 
@@ -408,7 +417,7 @@ See <strong><a href="formreplay.html" class="wikilink1" title="documentation:2.0
 </p>
 
 </div>
-<!-- EDIT11 SECTION "POST data" [8727-8861] -->
+<!-- EDIT11 SECTION "POST data" [8969-9103] -->
 <h3 class="sectionedit12" id="options">Options</h3>
 <div class="level3">
 
@@ -428,13 +437,17 @@ Some options are available:
 </li>
 <li class="level1"><div class="li"> Authentication level required: this options avoid to reject user with a rule based on <code>$_authenticationLevel</code>. When user hasn&#039;t the required level, he is redirected to an upgrade page in the portal</div>
 </li>
+<li class="level1"><div class="li"> ServiceToken timeout: The Service Token is only available during 30 seconds by default. This TTL can be customized for each virtual host.</div>
+</li>
 </ul>
+<div class="noteimportant">A neagative or null ServiceToken timeout value will be overloaded by <code>handlerServiceTokenTTL</code> (30 seconds by default).
 
+</div>
 <p>
 “Port” and “HTTPS” options are used to build redirection <abbr title="Uniform Resource Locator">URL</abbr> <em>(when user is not logged, or for <abbr title="Cross Domain Authentication">CDA</abbr> requests)</em>. By default, default values are used. These options are only here to override default values.
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Options" [8862-] --></div>
+<!-- EDIT12 SECTION "Options" [9104-] --></div>
 </body>
 </html>

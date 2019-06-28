@@ -69,10 +69,12 @@ sub run {
             }
         }
     }
-    $req->info( $self->p->mkSessionArray( $deleted, 'sessionsDeleted', 1 ) )
+    $req->info(
+        $self->p->mkSessionArray( $req, $deleted, 'sessionsDeleted', 1 ) )
       if ( $self->conf->{notifyDeleted} and @$deleted );
-    $req->info( $self->p->mkSessionArray( $otherSessions, 'otherSessions', 1 )
-          . $self->_mkRemoveOtherLink() )
+    $req->info(
+            $self->p->mkSessionArray( $req, $otherSessions, 'otherSessions', 1 )
+          . $self->_mkRemoveOtherLink($req) )
       if ( $self->conf->{notifyOther} and @$otherSessions );
 
     PE_OK;
@@ -82,10 +84,11 @@ sub run {
 # Last part of URL is built trough javascript
 # @return removeOther link in HTML code
 sub _mkRemoveOtherLink {
-    my $self = shift;
+    my ( $self, $req ) = @_;
 
     # TODO: remove this
     return $self->loadTemplate(
+        $req,
         'removeOther',
         params => {
             link => $self->conf->{portal} . "?removeOther=1"

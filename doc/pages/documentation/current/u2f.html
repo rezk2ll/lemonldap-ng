@@ -91,17 +91,21 @@ This feature uses <a href="https://metacpan.org/pod/Crypt::U2F::Server::Simple" 
 In the manager (second factors), you just have to enable it:
 </p>
 <ul>
-<li class="level1"><div class="li"> U2F =&gt; Activation: set it to “on”</div>
+<li class="level1"><div class="li"> <strong>Activation</strong>: set it to “on”</div>
 </li>
-<li class="level1"><div class="li"> U2F =&gt; Self registration: set it to “on” if users are authorized to register their keys</div>
+<li class="level1"><div class="li"> <strong>Self registration</strong>: set it to “on” if users are authorized to register their keys</div>
 </li>
-<li class="level1"><div class="li"> U2F =&gt; Authentication level: you can overwrite here auth level for U2F registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only for enrolled users</strong></div>
+<li class="level1"><div class="li"> <strong>Authentication level</strong>: you can overwrite here auth level for U2F registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only for enrolled users</strong></div>
+</li>
+<li class="level1"><div class="li"> <strong>Allow users to remove U2F key</strong>: If enabled, users can unregister enrolled U2F device.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Lifetime</strong>: Unlimited by default. Set a Time To Live in seconds. TTL is checked at each login process if set. If TTL is expired, relative 2F device is removed.</div>
 </li>
 </ul>
-<div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule: <code>$_2fDevices =~ /“type”:\s*“U2F”/s</code>, else U2F will be required even if users are not registered. This is automatically done when “activation” is set to “on”.
+<div class="noteimportant">If you want to use a custom rule for “activation” and enable self-registration, you have to include this in your rule: <code>$_2fDevices =~ /“type”:\s*“U2F”/s</code>, else U2F will be required even if users are not registered. This is automatically done when “activation” is set to “on”.
 </div>
 </div>
-<!-- EDIT3 SECTION "Configuration" [892-1745] -->
+<!-- EDIT3 SECTION "Configuration" [892-1992] -->
 <h2 class="sectionedit4" id="browser_compatibility">Browser compatibility</h2>
 <div class="level2">
 <ul>
@@ -122,7 +126,7 @@ In the manager (second factors), you just have to enable it:
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Browser compatibility" [1746-2186] -->
+<!-- EDIT4 SECTION "Browser compatibility" [1993-2433] -->
 <h2 class="sectionedit5" id="enrollment">Enrollment</h2>
 <div class="level2">
 
@@ -131,7 +135,7 @@ If you have enabled self registration, users can register their U2F keys using <
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Enrollment" [2187-2317] -->
+<!-- EDIT5 SECTION "Enrollment" [2434-2564] -->
 <h2 class="sectionedit6" id="assistance">Assistance</h2>
 <div class="level2">
 
@@ -142,7 +146,7 @@ If a user loses its key, you can delete it from the manager Second Factor module
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
 
 </div>
-<!-- EDIT6 SECTION "Assistance" [2318-2625] -->
+<!-- EDIT6 SECTION "Assistance" [2565-2872] -->
 <h2 class="sectionedit7" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -157,6 +161,6 @@ Note that both “origin” and “appId” are fixed to portal <abbr title="Uni
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Developer corner" [2626-] --></div>
+<!-- EDIT7 SECTION "Developer corner" [2873-] --></div>
 </body>
 </html>

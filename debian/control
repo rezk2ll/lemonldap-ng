@@ -211,7 +211,8 @@ Recommends: libapache-session-browseable-perl,
             libdbi-perl,
             libhttp-parser-xs-perl,
             libjson-xs-perl,
-            liblwp-protocol-https-perl
+            liblwp-protocol-https-perl,
+            libstring-random-perl
 Suggests: libconvert-base32-perl,
           libnet-ldap-perl,
           libsoap-lite-perl,
@@ -277,7 +278,6 @@ Recommends: libcrypt-openssl-bignum-perl,
             libgd-securityimage-perl,
             libmime-tools-perl,
             libnet-ldap-perl,
-            libstring-random-perl,
             libunicode-string-perl
 Suggests: libcrypt-u2f-server-perl,
           libdbi-perl,

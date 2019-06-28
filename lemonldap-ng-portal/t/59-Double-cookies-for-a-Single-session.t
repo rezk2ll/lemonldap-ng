@@ -44,8 +44,8 @@ my $id1 = expectCookie($res);
 my $id2 = expectCookie( $res, 'lemonldaphttp' );
 
 # Check lemonldap Cookie
-ok( $id1 =~ /^\w{64}$/, " -> Get cookie : lemonldap=something" )
-  or explain( $res->[1], "Set-Cookie: lemonldap=$id1" );
+ok( $id1 =~ /^\w{64}$/, " -> https cookie is 64 char long" )
+  or explain( $id1, '64-char string' );
 ok( ${ $res->[1] }[3] =~ /HttpOnly=1/, " -> Cookie 'lemonldap' is HttpOnly" )
   or explain( $res->[1] );
 ok( ${ $res->[1] }[3] =~ /secure/, " -> Cookie 'lemonldap' is secure" )
@@ -53,8 +53,8 @@ ok( ${ $res->[1] }[3] =~ /secure/, " -> Cookie 'lemonldap' is secure" )
 count(3);
 
 # Check lemonldaphttp Cookie
-ok( $id2 =~ /^\w{64}$/, " -> Get cookie lemonldaphttp=something" )
-  or explain( $res->[1], "Set-Cookie: lemonldaphttp=$id2" );
+ok( length($id2) % 32 == 0, " -> http cookie is 96 byte long" )
+  or explain( $id2, '\w x 32 string' );
 ok(
     ${ $res->[1] }[5] =~ /HttpOnly=1/,
     " -> Cookie 'lemonldaphttp' is HttpOnly"

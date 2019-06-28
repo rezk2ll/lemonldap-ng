@@ -52,12 +52,7 @@
 <li class="level1"><div class="li"><a href="#presentation">Presentation</a></div></li>
 <li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
 <ul class="toc">
-<li class="level2"><div class="li"><a href="#virtual_host">Virtual host</a></div>
-<ul class="toc">
-<li class="level3"><div class="li"><a href="#apache">Apache</a></div></li>
-<li class="level3"><div class="li"><a href="#other_web_servers">Other web servers</a></div></li>
-</ul>
-</li>
+<li class="level2"><div class="li"><a href="#virtual_host">Virtual host</a></div></li>
 <li class="level2"><div class="li"><a href="#handler_parameters">Handler parameters</a></div></li>
 </ul></li>
 </ul>
@@ -86,38 +81,32 @@ This mechanism allows one to protect an application with an unsafe link between 
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
+<p>
+Install Cache::Memcached dependency.
+</p>
+
 </div>
-<!-- EDIT3 SECTION "Configuration" [515-541] -->
+<!-- EDIT3 SECTION "Configuration" [515-579] -->
 <h3 class="sectionedit4" id="virtual_host">Virtual host</h3>
 <div class="level3">
 
-</div>
-
-<h4 id="apache">Apache</h4>
-<div class="level4">
+<p>
+You just have to set “Type: SecureToken” in the VirtualHost options in the manager.
+</p>
 
 <p>
-VirtualHost has to be configured like other <a href="configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual hosts</a> but by using Secure Token Handler instead of default Handler.
+If you want to protect only a virtualHost part, keep type on “Main” and set type in your configuration file:
 </p>
-<pre class="code file apache">PerlModule Lemonldap::NG::Handler::Specific::SecureToken
-&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
-       <span class="kw1">ServerName</span> secure.example.com
-&nbsp;
-       <span class="co1"># Load SecureToken Handler</span>
-       PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::SecureToken
-&nbsp;
-       ...
-&nbsp;
-&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
-
-</div>
-
-<h4 id="other_web_servers">Other web servers</h4>
-<div class="level4">
+<ul>
+<li class="level1"><div class="li"> Apache: use simply a <code>PerlSetVar VHOSTTYPE AuthBasic</code></div>
+</li>
+<li class="level1"><div class="li"> Nginx: create another FastCGI with a <code>fastcgi_param VHOSTTYPE SecureToken;</code></div>
+</li>
+</ul>
 <div class="noteclassic">This handler uses Apache2Filter Module to hide token, prefer <a href="servertoserver.html" class="wikilink1" title="documentation:2.0:servertoserver">Handling server webservice calls</a> for other servers.
 </div>
 </div>
-<!-- EDIT4 SECTION "Virtual host" [542-1184] -->
+<!-- EDIT4 SECTION "Virtual host" [580-1086] -->
 <h3 class="sectionedit5" id="handler_parameters">Handler parameters</h3>
 <div class="level3">
 
@@ -149,6 +138,6 @@ SecureToken parameters are the following:
 
 </div>
 </div>
-<!-- EDIT5 SECTION "Handler parameters" [1185-] --></div>
+<!-- EDIT5 SECTION "Handler parameters" [1087-] --></div>
 </body>
 </html>

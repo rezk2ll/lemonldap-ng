@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:browseablesessionbackend</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,browseablesessionbackend"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="browseablesessionbackend.html"/>
@@ -151,10 +151,10 @@ You then just have to add the <code>Index</code> parameter  in <code>General par
 <!-- EDIT4 SECTION "Browseable NoSQL" [1754-2199] -->
 <h2 class="sectionedit6" id="browseable_sql">Browseable SQL</h2>
 <div class="level2">
-<div class="noteclassic">This documentation concerns PostgreSQL. Some adaptations are needed with other databases.
+<div class="noteclassic">This documentation concerns PostgreSQL. Some adaptations are needed with other databases. When using Apache::Session::Browseable::Postgres, it is strongly recommended to use version 1.3.1 at least. See <a href="https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1732" class="urlextern" title="https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1732"  rel="nofollow">bug 1732</a>.
 </div>
 </div>
-<!-- EDIT6 SECTION "Browseable SQL" [2200-2331] -->
+<!-- EDIT6 SECTION "Browseable SQL" [2200-2518] -->
 <h3 class="sectionedit7" id="prepare_database">Prepare database</h3>
 <div class="level3">
 
@@ -173,13 +173,14 @@ Database must be prepared exactly like in <a href="sqlsessionbackend.html#prepar
     _whatToTrace text,
     _session_kind text,
     _utime bigint,
-    user text,
+    _httpSessionType text,
     ipAddr text
 );
-CREATE INDEX uid1 ON sessions USING BTREE (_whatToTrace);
+CREATE INDEX uid1 ON sessions USING BTREE (_whatToTrace text_pattern_ops);
 CREATE INDEX s1   ON sessions (_session_kind);
 CREATE INDEX u1   ON sessions (_utime);
-CREATE INDEX ip1  ON sessions USING BTREE (ipAddr);</pre>
+CREATE INDEX ip1  ON sessions USING BTREE (ipAddr);
+CREATE INDEX h1   ON sessions (_httpSessionType);</pre>
 <div class="noteimportant">For Session Explorer and one-off sessions, it is recommended to use BTREE or any index method that indexes partial content.
 </div>
 <p>
@@ -188,7 +189,7 @@ CREATE INDEX ip1  ON sessions USING BTREE (ipAddr);</pre>
 <div class="notetip">With new Apache::Session::Browseable::<strong>PgHstore</strong> and <strong>PgJSON</strong>, you don&#039;t need to declare indexes in <code>CREATE TABLE</code> since “json” and “hstore” type are browseable. You should anyway add some indexes <em>(see manpage)</em>.
 </div>
 </div>
-<!-- EDIT7 SECTION "Prepare database" [2332-3966] -->
+<!-- EDIT7 SECTION "Prepare database" [2519-4234] -->
 <h3 class="sectionedit8" id="manager">Manager</h3>
 <div class="level3">
 
@@ -205,7 +206,7 @@ Go in the Manager and set the session module (<a href="https://metacpan.org/pod/
 	</tr>
 	</thead>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  <strong>DataSource</strong>  </td><td class="col1"> The <a href="https://metacpan.org/pod/DBI" class="urlextern" title="https://metacpan.org/pod/DBI"  rel="nofollow">DBI</a> string </td><td class="col2"> dbi:Pg:database=sessions </td>
+		<td class="col0 centeralign">  <strong>DataSource</strong>  </td><td class="col1"> The <a href="https://metacpan.org/pod/DBI" class="urlextern" title="https://metacpan.org/pod/DBI"  rel="nofollow">DBI</a> string </td><td class="col2"> dbi:Pg:database=lemonldap-ng </td>
 	</tr>
 	<tr class="row3 rowodd">
 		<td class="col0 centeralign">  <strong>UserName</strong>  </td><td class="col1"> The database username </td><td class="col2"> lemonldapng </td>
@@ -214,17 +215,20 @@ Go in the Manager and set the session module (<a href="https://metacpan.org/pod/
 		<td class="col0 centeralign">  <strong>Password</strong>  </td><td class="col1"> The database password </td><td class="col2"> mysuperpassword </td>
 	</tr>
 	<tr class="row5 rowodd">
-		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr _session_kind _utime </td>
+		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr _session_kind _utime _httpSessionType </td>
+	</tr>
+	<tr class="row6 roweven">
+		<td class="col0 centeralign">  <strong>TableName</strong>  </td><td class="col1"> Table name (optional) </td><td class="col2"> sessions </td>
 	</tr>
 </table></div>
-<!-- EDIT9 TABLE [4289-4634] --><div class="notetip">Apache::Session::Browseable::MySQL doesn&#039;t use locks so performances are keeped.
+<!-- EDIT9 TABLE [4557-4978] --><div class="notetip">Apache::Session::Browseable::MySQL doesn&#039;t use locks so performances are keeped.
 <p>
 For databases like PostgreSQL, don&#039;t forget to add “Commit” with a value of 1
 </p>
 
 </div>
 </div>
-<!-- EDIT8 SECTION "Manager" [3967-4813] -->
+<!-- EDIT8 SECTION "Manager" [4235-5157] -->
 <h2 class="sectionedit10" id="browseable_ldap">Browseable LDAP</h2>
 <div class="level2">
 
@@ -278,9 +282,9 @@ You need to add the <code>Index</code> field and can also configure the <code>ld
 		<td class="col0 centeralign">  <strong>ldapAttributeIndex</strong>  </td><td class="col1"> Attribute storing index </td><td class="col2"> ou </td>
 	</tr>
 </table></div>
-<!-- EDIT11 TABLE [5165-5899] -->
+<!-- EDIT11 TABLE [5509-6243] -->
 </div>
-<!-- EDIT10 SECTION "Browseable LDAP" [4814-5900] -->
+<!-- EDIT10 SECTION "Browseable LDAP" [5158-6244] -->
 <h2 class="sectionedit12" id="security">Security</h2>
 <div class="level2">
 
@@ -293,7 +297,7 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Security" [5901-6120] -->
+<!-- EDIT12 SECTION "Security" [6245-6464] -->
 <h2 class="sectionedit13" id="performances">Performances</h2>
 <div class="level2">
 
@@ -310,13 +314,14 @@ Here are some recommended configurations:
     _whatToTrace text,
     _session_kind text,
     _utime bigint,
-    user text,
-    ipAddr varchar(64)
+    _httpSessionType text,
+    ipAddr text
 );
 CREATE INDEX uid1 ON sessions USING BTREE (_whatToTrace text_pattern_ops);
-CREATE INDEX _s1 ON sessions (_session_kind);
-CREATE INDEX _u1 ON sessions (_utime);
-CREATE INDEX ip1 ON sessions USING BTREE (ipAddr)</pre>
+CREATE INDEX s1   ON sessions (_session_kind);
+CREATE INDEX u1   ON sessions (_utime);
+CREATE INDEX ip1  ON sessions USING BTREE (ipAddr);
+CREATE INDEX h1   ON sessions (_httpSessionType);</pre>
 
 <p>
 <strong>Browseable::MySQL</strong>:
@@ -335,6 +340,6 @@ CREATE INDEX _u1 ON sessions (_utime);
 CREATE INDEX ip1 ON sessions (ipAddr) USING BTREE;</pre>
 
 </div>
-<!-- EDIT13 SECTION "Performances" [6121-] --></div>
+<!-- EDIT13 SECTION "Performances" [6465-] --></div>
 </body>
 </html>

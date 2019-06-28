@@ -296,7 +296,7 @@ This configuration handles <code>*.dev.sso.my.domain</code> <abbr title="Uniform
   location = /lmauth {
     internal;
     include /etc/nginx/fastcgi_params;
-    fastcgi_pass unix:/home/xavier/dev/lemonldap/e2e-tests/conf/llng-fastcgi.sock;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
     # Force handler type:
     fastcgi_param VHOSTTYPE DevOps;
     # Drop post datas

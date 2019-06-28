@@ -69,7 +69,9 @@
 <li class="level2"><div class="li"><a href="#federation_protocols">Federation protocols</a></div></li>
 <li class="level2"><div class="li"><a href="#authapache_authentication">Auth::Apache authentication</a></div></li>
 <li class="level2"><div class="li"><a href="#ssl_authentication">SSL authentication</a></div></li>
-</ul></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#migrating_from_multi">Migrating from Multi</a></div></li>
 </ul>
 </div>
 </div>
@@ -375,6 +377,28 @@ To chain SSL, you have to set “SSLRequire optional” in Apache configuration,
 </p>
 
 </div>
-<!-- EDIT17 SECTION "SSL authentication" [6578-] --></div>
+<!-- EDIT17 SECTION "SSL authentication" [6578-6731] -->
+<h2 class="sectionedit18" id="migrating_from_multi">Migrating from Multi</h2>
+<div class="level2">
+
+<p>
+Old <a href="documentation/1.9/authmulti.html" class="wikilink1" title="documentation:1.9:authmulti">Multiple backends stack</a> implemented only `if` and `or` keywords. Examples:
+</p>
+<div class="table sectionedit19"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Multi expressions  </th><th class="col1 centeralign">  Combination  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  <code>LDAP;<abbr title="Database Interface">DBI</abbr></code>  </td><td class="col1 centeralign">  <code>[myLDAP] or [myDBI]</code>  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  <code><abbr title="Database Interface">DBI</abbr> $ENV{REMOTE_ADDR}=~/^192/;LDAP $ENV{REMOTE_ADDR}!~/^192/</code>  </td><td class="col1 centeralign">  <code>if $env-&gt;{REMOTE_ADDR} then [myDBI] else [myLDAP]</code>  </td>
+	</tr>
+</table></div>
+<!-- EDIT19 TABLE [6878-7093] -->
+</div>
+<!-- EDIT18 SECTION "Migrating from Multi" [6732-] --></div>
 </body>
 </html>

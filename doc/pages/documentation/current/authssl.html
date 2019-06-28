@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authssl</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,authssl"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authssl.html"/>
@@ -213,7 +213,8 @@ You must also export SSL_CLIENT_S_<abbr title="Distinguished Name">DN</abbr>_CN 
 <pre class="code file nginx"># map directive must be in http context
 map $ssl_client_s_dn  $ssl_client_s_dn_cn {
            default           &quot;&quot;;
-           ~/CN=(?&lt;CN&gt;[^/]+) $CN;
+           ~/CN=(?&lt;CN&gt;[^/]+) $CN; # prior Nginx 1.11.6
+           #~,CN=(?&lt;CN&gt;[^,]+) $CN; # Nginx &gt;= 1.11.6
       }
 fastcgi_param  SSL_CLIENT_S_DN_CN $ssl_client_s_dn_cn;</pre>
 
@@ -254,9 +255,13 @@ fastcgi_param  SSL_CLIENT_S_DN_CN $ssl_client_s_dn_cn;</pre>
     add_header Strict-Transport-Security &quot;max-age=15768000&quot;;
   }
 }</pre>
+<div class="noteimportant">Nginx 1.11.6 change: format of the $ssl_client_s_dn and $ssl_client_i_dn variables
+has been changed to follow <abbr title="Request for Comments">RFC</abbr> 2253 (<abbr title="Request for Comments">RFC</abbr> 4514); values in the old format are available
+in the $ssl_client_s_dn_legacy and $ssl_client_i_dn_legacy variables.
 
 </div>
-<!-- EDIT6 SECTION "With Nginx" [2685-4320] -->
+</div>
+<!-- EDIT6 SECTION "With Nginx" [2685-4659] -->
 <h3 class="sectionedit7" id="configuration_of_lemonldapng">Configuration of LemonLDAP::NG</h3>
 <div class="level3">
 
@@ -276,7 +281,7 @@ Then, go in <code>SSL parameters</code>:
 </ul>
 
 </div>
-<!-- EDIT7 SECTION "Configuration of LemonLDAP::NG" [4321-4746] -->
+<!-- EDIT7 SECTION "Configuration of LemonLDAP::NG" [4660-5085] -->
 <h3 class="sectionedit8" id="auto_reloading_ssl_certificates">Auto reloading SSL Certificates</h3>
 <div class="level3">
 
@@ -384,7 +389,7 @@ $('.enteteBouton').click( function (e) {
 <div class="notewarning">It is incompatible with authentication combination because of Apache parameter “SSLVerifyClient”, which must have the value “require”. To enable SSL with <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination</a>, use <a href="#ssl_by_ajax" title="documentation:2.0:authssl ↵" class="wikilink1">SSL by Ajax</a>
 </div>
 </div>
-<!-- EDIT8 SECTION "Auto reloading SSL Certificates" [4747-8010] -->
+<!-- EDIT8 SECTION "Auto reloading SSL Certificates" [5086-8349] -->
 <h2 class="sectionedit9" id="ssl_by_ajax">SSL by Ajax</h2>
 <div class="level2">
 
@@ -427,6 +432,6 @@ and set :
 
 </div>
 </div>
-<!-- EDIT9 SECTION "SSL by Ajax" [8011-] --></div>
+<!-- EDIT9 SECTION "SSL by Ajax" [8350-] --></div>
 </body>
 </html>
