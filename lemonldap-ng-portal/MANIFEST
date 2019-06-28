@@ -524,6 +524,7 @@ t/61-GrantSession.t
 t/61-Session-ActivityTimeout.t
 t/61-Session-Timeout.t
 t/62-SingleSession.t
+t/62-UpgradeSession.t
 t/63-History.t
 t/64-StayConnected.t
 t/65-AutoSignin.t
@@ -543,7 +544,8 @@ t/68-Impersonation-with-TOTP.t
 t/68-Impersonation.t
 t/70-2F-TOTP-8.t
 t/70-2F-TOTP-with-History.t
-t/70-2F-TOTP-with-TTL-and-msg.t
+t/70-2F-TOTP-with-TTL-and-JSON.t
+t/70-2F-TOTP-with-TTL-and-XML.t
 t/70-2F-TOTP-with-TTL.t
 t/71-2F-U2F-with-History.t
 t/71-2F-U2F-with-TTL-and-msg.t
@@ -562,6 +564,7 @@ t/76-2F-Ext-with-GrantSession.t
 t/76-2F-Ext-with-History.t
 t/77-2F-Mail-with-global-storage.t
 t/77-2F-Mail.t
+t/78-2F-Upgrade.t
 t/90-Translations.t
 t/99-pod.t
 t/gpghome/key.asc
