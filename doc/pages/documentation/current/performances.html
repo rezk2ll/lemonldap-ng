@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:performances</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,performances"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="performances.html"/>
@@ -49,9 +49,14 @@
 <div>
 
 <ul class="toc">
+<li class="level1"><div class="li"><a href="#built-in">Built-in</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#cache_system">Cache system</a></div></li>
+</ul>
+</li>
 <li class="level1"><div class="li"><a href="#global_performance">Global performance</a></div>
 <ul class="toc">
-<li class="level2"><div class="li"><a href="#cron_optimization">Cron optimization</a></div></li>
+<li class="level2"><div class="li"><a href="#cron_optimization_or_systemd_timers">Cron optimization (or systemd timers)</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#handler_performance">Handler performance</a></div>
@@ -87,12 +92,48 @@
 <div class="level1">
 
 <p>
-LemonLDAP::NG is designed to be very performant. Indeed, it uses Apache2 threads capabilities. So to increase performances, prefer using <a href="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime" class="urlextern" title="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime"  rel="nofollow">mpm-worker</a>.
+LemonLDAP::NG is designed for high performance, both in throughput and response time. Indeed, it can use Apache2 threads capabilities <strong>but</strong> since Apache version 2.4, mpm_worker seems to break mod_perl. So to increase performances, prefer using Nginx.
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Performances" [1-249] -->
-<h2 class="sectionedit2" id="global_performance">Global performance</h2>
+<!-- EDIT1 SECTION "Performances" [1-282] -->
+<h2 class="sectionedit2" id="built-in">Built-in</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT2 SECTION "Built-in" [283-303] -->
+<h3 class="sectionedit3" id="cache_system">Cache system</h3>
+<div class="level3">
+
+<p>
+LLNG uses different cache systems to avoid querying to many the databases:
+</p>
+<div class="table sectionedit4"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 leftalign">                 </th><th class="col1 centeralign" colspan="2">           Lifetime in memory             </th><th class="col3 centeralign" colspan="2">      Lifetime in Local-Cache (file)         </th><th class="col5 centeralign">  DB  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<th class="col0 leftalign">                 </th><th class="col1 centeralign">          Parameter         </th><th class="col2 centeralign">   Default    </th><th class="col3 centeralign">        Parameter            </th><th class="col4 centeralign">    Default     </th><th class="col5 leftalign">      </th>
+	</tr>
+	</thead>
+	<tr class="row2 roweven">
+		<th class="col0 centeralign">  Configuration  </th><td class="col1 centeralign">     <code>checkTime</code>          </td><td class="col2 centeralign">  10 minutes  </td><td class="col3 leftalign">                     </td><td class="col4 centeralign">  Until “reload” order  </td><td class="col5 centeralign">  ✔   </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<th class="col0 centeralign">     Session     </th><td class="col1 centeralign">  <code>handlerInternalCache</code>  </td><td class="col2 centeralign">  15 seconds  </td><td class="col3 centeralign">  <code>default_expires_in</code>(*)  </td><td class="col4 centeralign">   10 minutes   </td><td class="col5 centeralign">  ✔   </td>
+	</tr>
+</table></div>
+<!-- EDIT4 TABLE [404-879] -->
+<p>
+<em>(*): Manager &gt;&gt; General parameters &gt;&gt; Sessions &gt;&gt; Sessions storage &gt;&gt; Cache module options</em>
+</p>
+<div class="noteclassic">Configuration and sessions are first looked up in-memory, then in the cache file, and then in their backing store. This means that after a configuration reload <em>(using Manager)</em>, you have to wait for <code>checkTime</code> before you can see your changes.
+
+</div>
+</div>
+<!-- EDIT3 SECTION "Cache system" [304-1241] -->
+<h2 class="sectionedit5" id="global_performance">Global performance</h2>
 <div class="level2">
 
 <p>
@@ -105,28 +146,28 @@ To bypass this, you can:
 <ul>
 <li class="level1"><div class="li"> Use <abbr title="Internet Protocol">IP</abbr> in configuration to avoid <abbr title="Domain Name System">DNS</abbr> resolution</div>
 </li>
-<li class="level1"><div class="li"> Install a <abbr title="Domain Name System">DNS</abbr> cache  like nscd, netmask or bind</div>
+<li class="level1"><div class="li"> Install a <abbr title="Domain Name System">DNS</abbr> cache  like nscd, dnsmasq or unbound</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Global performance" [250-650] -->
-<h3 class="sectionedit3" id="cron_optimization">Cron optimization</h3>
+<!-- EDIT5 SECTION "Global performance" [1242-1645] -->
+<h3 class="sectionedit6" id="cron_optimization_or_systemd_timers">Cron optimization (or systemd timers)</h3>
 <div class="level3">
 
 <p>
 LLNG installs its cron files without knowing how many servers are installed. You should optimize this to launch:
 </p>
 <ul>
-<li class="level1"><div class="li"> purgeCentralCache: only 1 time every 10 minutes for the whole system</div>
+<li class="level1"><div class="li"> purgeCentralCache: only 1 time every 10 minutes for the whole system (or more)</div>
 </li>
 <li class="level1"><div class="li"> purgeLocalCache: ~ 1 time per hour on each server</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT3 SECTION "Cron optimization" [651-920] -->
-<h2 class="sectionedit4" id="handler_performance">Handler performance</h2>
+<!-- EDIT6 SECTION "Cron optimization (or systemd timers)" [1646-1945] -->
+<h2 class="sectionedit7" id="handler_performance">Handler performance</h2>
 <div class="level2">
 
 <p>
@@ -142,8 +183,8 @@ Handlers check rights and calculate headers for each HTTP hit. So to improve per
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Handler performance" [921-1350] -->
-<h3 class="sectionedit5" id="macros_and_groups">Macros and groups</h3>
+<!-- EDIT7 SECTION "Handler performance" [1946-2376] -->
+<h3 class="sectionedit8" id="macros_and_groups">Macros and groups</h3>
 <div class="level3">
 
 <p>
@@ -203,8 +244,8 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 </div><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
 </div>
 </div>
-<!-- EDIT5 SECTION "Macros and groups" [1351-3445] -->
-<h3 class="sectionedit6" id="local_macros">Local macros</h3>
+<!-- EDIT8 SECTION "Macros and groups" [2377-4471] -->
+<h3 class="sectionedit9" id="local_macros">Local macros</h3>
 <div class="level3">
 
 <p>
@@ -217,13 +258,13 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 <div class="notetip">Note that this feature is interesting only for the Lemonldap::NG systems protecting a high number of applications
 </div>
 </div>
-<!-- EDIT6 SECTION "Local macros" [3446-4107] -->
-<h2 class="sectionedit7" id="portal_performances">Portal performances</h2>
+<!-- EDIT9 SECTION "Local macros" [4472-5133] -->
+<h2 class="sectionedit10" id="portal_performances">Portal performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT7 SECTION "Portal performances" [4108-4140] -->
-<h3 class="sectionedit8" id="general_performances">General performances</h3>
+<!-- EDIT10 SECTION "Portal performances" [5134-5166] -->
+<h3 class="sectionedit11" id="general_performances">General performances</h3>
 <div class="level3">
 
 <p>
@@ -245,12 +286,12 @@ By default it uses local storage to store its tokens. If you have more than 1 po
 
 </div>
 </div>
-<!-- EDIT8 SECTION "General performances" [4141-5018] -->
-<h3 class="sectionedit9" id="apachesession_performances">Apache::Session performances</h3>
+<!-- EDIT11 SECTION "General performances" [5167-6044] -->
+<h3 class="sectionedit12" id="apachesession_performances">Apache::Session performances</h3>
 <div class="level3">
 
 <p>
-Lemonldap::NG handlers use a local cache to store sessions (for 10 minutes). So Apache::Session module is not a problem for handlers. It can be a brake for the portal:
+Lemonldap::NG handlers use a local cache to store sessions (for 10 minutes). So Apache::Session module is not a problem for handlers. But it can be a bottleneck for the portal:
 </p>
 <ol>
 <li class="level1"><div class="li"> When you use the multiple sessions restriction parameters, sessions are parsed for each authentication unless you use an <a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> module.</div>
@@ -308,7 +349,7 @@ Look at <a href="browseablesessionbackend.html" class="wikilink1" title="documen
 <p>
 This test isn&#039;t an “only-backend” test but embedded some LLNG methods, so real differences between engines are mitigate here.
 </p>
-<div class="table sectionedit10"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit13"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign" colspan="2">  Backend  </th><th class="col2 centeralign" colspan="3">  Portal and handlers  </th><th class="col5 centeralign" colspan="3">  Session explorer and one-off sessions  </th>
@@ -357,7 +398,7 @@ This test isn&#039;t an “only-backend” test but embedded some LLNG methods, 
 		<td class="col0 centeralign" colspan="8">  <em>The source of this test is available in sources: e2e-tests/sbperf.pl</em>  </td>
 	</tr>
 </table></div>
-<!-- EDIT10 TABLE [7910-9813] --><ul>
+<!-- EDIT13 TABLE [8945-10848] --><ul>
 <li class="level1"><div class="li"> <em><strong>(1) :</strong> “purge” test is done with Apache::Session::Browseable-1.2.5 and LLG-2.0. Earlier results are not so good.</em></div>
 </li>
 <li class="level1"><div class="li"> <em><strong>(2) :</strong> “purge” test is done with Apache::Session::Browseable-1.2.6 and LLG-2.0.</em></div>
@@ -381,8 +422,8 @@ Analysis:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "Apache::Session performances" [5019-10591] -->
-<h3 class="sectionedit11" id="ldap_performances">LDAP performances</h3>
+<!-- EDIT12 SECTION "Apache::Session performances" [6045-11626] -->
+<h3 class="sectionedit14" id="ldap_performances">LDAP performances</h3>
 <div class="level3">
 
 <p>
@@ -418,13 +459,13 @@ Now ldapgroups contains “admin su”
 
 </div>
 </div>
-<!-- EDIT11 SECTION "LDAP performances" [10592-11726] -->
-<h2 class="sectionedit12" id="manager_performances">Manager performances</h2>
+<!-- EDIT14 SECTION "LDAP performances" [11627-12761] -->
+<h2 class="sectionedit15" id="manager_performances">Manager performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT12 SECTION "Manager performances" [11727-11760] -->
-<h3 class="sectionedit13" id="disable_unused_modules">Disable unused modules</h3>
+<!-- EDIT15 SECTION "Manager performances" [12762-12795] -->
+<h3 class="sectionedit16" id="disable_unused_modules">Disable unused modules</h3>
 <div class="level3">
 
 <p>
@@ -434,8 +475,8 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
 </div>
-<!-- EDIT13 SECTION "Disable unused modules" [11761-12022] -->
-<h3 class="sectionedit14" id="use_static_html_files">Use static HTML files</h3>
+<!-- EDIT16 SECTION "Disable unused modules" [12796-13057] -->
+<h3 class="sectionedit17" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
 <p>
@@ -461,6 +502,6 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Use static HTML files" [12023-] --></div>
+<!-- EDIT17 SECTION "Use static HTML files" [13058-] --></div>
 </body>
 </html>

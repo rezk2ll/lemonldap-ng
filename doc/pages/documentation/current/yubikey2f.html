@@ -87,27 +87,31 @@ You have to retrieve a client ID and a secret key from Yubico. See <a href="http
 In the manager (second factors), you just have to enable it:
 </p>
 <ul>
-<li class="level1"><div class="li"> Activation: set it to “on”</div>
+<li class="level1"><div class="li"> <strong>Activation</strong>: set it to “on”</div>
 </li>
-<li class="level1"><div class="li"> Self registration: set it to “on” if users are authorized to register their keys</div>
+<li class="level1"><div class="li"> <strong>Self registration</strong>: set it to “on” if users are authorized to register their keys</div>
 </li>
-<li class="level1"><div class="li"> Authentication level: you can overwrite here auth level for Yubikey registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only to enrolled users</strong></div>
+<li class="level1"><div class="li"> <strong>Authentication level</strong>: you can overwrite here auth level for Yubikey registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only to enrolled users</strong></div>
 </li>
-<li class="level1"><div class="li"> Client ID: given by Yubico or another service</div>
+<li class="level1"><div class="li"> <strong>Client ID</strong>: given by Yubico or another service</div>
 </li>
-<li class="level1"><div class="li"> <abbr title="Application Programming Interface">API</abbr> secret key: given by Yubico or another service</div>
+<li class="level1"><div class="li"> <strong><abbr title="Application Programming Interface">API</abbr> secret key</strong>: given by Yubico or another service</div>
 </li>
-<li class="level1"><div class="li"> Nonce (optional): if any</div>
+<li class="level1"><div class="li"> <strong>Nonce (optional)</strong>: if any</div>
 </li>
-<li class="level1"><div class="li"> <abbr title="Uniform Resource Locator">URL</abbr>: Url of service (leave blank to use Yubico cloud services)</div>
+<li class="level1"><div class="li"> <strong><abbr title="Uniform Resource Locator">URL</abbr></strong>: Url of service (leave blank to use Yubico cloud services)</div>
 </li>
-<li class="level1"><div class="li"> OTP public ID part size: leave it to default (12) unless you know what you are doing</div>
+<li class="level1"><div class="li"> <strong>OTP public ID part size</strong>: leave it to default (12) unless you know what you are doing</div>
+</li>
+<li class="level1"><div class="li"> <strong>Allow users to remove Yubikey</strong>: If enabled, users can unregister Yubikey device.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Lifetime</strong>: Unlimited by default. Set a Time To Live in seconds. TTL is checked at each login process if set. If TTL is expired, relative Yubikey is removed.</div>
 </li>
 </ul>
 <div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule: <code>$_2fDevices =~ /“type”:\s*“UBK”/s</code>, else Yubikey will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
 </div>
 </div>
-<!-- EDIT3 SECTION "Configuration" [495-1631] -->
+<!-- EDIT3 SECTION "Configuration" [495-1915] -->
 <h2 class="sectionedit4" id="provisioning">Provisioning</h2>
 <div class="level2">
 
@@ -117,7 +121,7 @@ If you don&#039;t want to use self-registration, set public part of user&#039;s 
 <pre class="code file json">[{&quot;name&quot; : &quot;MyYubikey&quot; , &quot;type&quot; : &quot;UBK&quot; , &quot;_secret&quot; : &quot;########&quot; , &quot;epoch&quot;:&quot;1524078936&quot;}, ...]</pre>
 
 </div>
-<!-- EDIT4 SECTION "Provisioning" [1632-1999] -->
+<!-- EDIT4 SECTION "Provisioning" [1916-2283] -->
 <h2 class="sectionedit5" id="enrollment">Enrollment</h2>
 <div class="level2">
 
@@ -126,6 +130,6 @@ If you have enabled self registration, users can register their U2F keys using <
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Enrollment" [2000-] --></div>
+<!-- EDIT5 SECTION "Enrollment" [2284-] --></div>
 </body>
 </html>

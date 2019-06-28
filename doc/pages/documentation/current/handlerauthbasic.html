@@ -110,12 +110,12 @@ If you want to protect only a virtualHost part, keep type on “Main” and set 
 <ul>
 <li class="level1"><div class="li"> Apache: use simply a <code>PerlSetVar VHOSTTYPE AuthBasic</code></div>
 </li>
-<li class="level1"><div class="li"> Nginx: create another FastCGI with a <code>fastcgi_param VHOSTTYPE = AuthBasic;</code> <em>(and remove error_page 401)</em></div>
+<li class="level1"><div class="li"> Nginx: create another FastCGI with a <code>fastcgi_param VHOSTTYPE AuthBasic;</code> <em>(and remove error_page 401)</em></div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT5 SECTION "Virtual host" [727-1117] -->
+<!-- EDIT5 SECTION "Virtual host" [727-1115] -->
 <h3 class="sectionedit6" id="handler_parameters">Handler parameters</h3>
 <div class="level3">
 
@@ -129,6 +129,6 @@ requireToken =&gt; $env-&gt;{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
 
 </div>
 </div>
-<!-- EDIT6 SECTION "Handler parameters" [1118-] --></div>
+<!-- EDIT6 SECTION "Handler parameters" [1116-] --></div>
 </body>
 </html>

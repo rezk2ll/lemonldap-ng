@@ -581,7 +581,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 <div class="table sectionedit15"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
-		<th class="col0"> Handler type </th><th class="col1 centeralign">  Apache  </th><th class="col2 centeralign">  Nginx  </th><th class="col3 rightalign">  <a href="https://plackperl.org" class="urlextern" title="https://plackperl.org"  rel="nofollow">Plack* servers</a></th><th class="col4 centeralign">  Node.js  </th><th class="col5 centeralign">  <a href="selfmadeapplication.html#perl_auto-protected_cgi" class="wikilink1" title="documentation:2.0:selfmadeapplication">Self protected apps</a>  </th><th class="col6 centeralign">  Comment  </th>
+		<th class="col0"> Handler type </th><th class="col1 centeralign">  Apache  </th><th class="col2 centeralign">  LLNG FastCGI/uWSGI server <em>(Nginx, or <a href="ssoaas.html" class="wikilink1" title="documentation:2.0:ssoaas">SSOaaS</a>)</em>  </th><th class="col3 centeralign">  <a href="https://plackperl.org" class="urlextern" title="https://plackperl.org"  rel="nofollow">Plack* servers</a>  </th><th class="col4 centeralign">  Node.js <em>(<a href="http://expressjs.com/" class="urlextern" title="http://expressjs.com/"  rel="nofollow">express apps</a> or <a href="ssoaas.html" class="wikilink1" title="documentation:2.0:ssoaas">SSOaaS</a>)</em>  </th><th class="col5 centeralign">  <a href="selfmadeapplication.html#perl_auto-protected_cgi" class="wikilink1" title="documentation:2.0:selfmadeapplication">Self protected apps</a>  </th><th class="col6 centeralign">  Comment  </th>
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
@@ -612,7 +612,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 		<td class="col0"> <a href="applications/zimbra.html" class="wikilink1" title="documentation:2.0:applications:zimbra">Zimbra PreAuth</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 </table></div>
-<!-- EDIT15 TABLE [8652-10173] --><ul>
+<!-- EDIT15 TABLE [8651-10287] --><ul>
 <li class="level1"><div class="li"> <em>(1): <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Node.js handler</a> has not yet reached the same level of functionalities.</em></div>
 </li>
 <li class="level1"><div class="li"> <em>(2): <a href="oauth2handler.html" class="wikilink1" title="documentation:2.0:oauth2handler">OAuth2 Handler</a> is available with LLNG ≥ 2.0.4</em></div>
@@ -624,7 +624,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Handlers" [8378-10381] -->
+<!-- EDIT14 SECTION "Handlers" [8378-10495] -->
 <h3 class="sectionedit16" id="llng_databases">LLNG databases</h3>
 <div class="level3">
 
@@ -673,7 +673,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 		<td class="col0 centeralign">  <a href="localconfbackend.html" class="wikilink1" title="documentation:2.0:localconfbackend">Local</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a>  </td><td class="col1 leftalign">  </td><td class="col2 leftalign"> Use only lemonldap-ng.ini parameters.  </td>
 	</tr>
 </table></div>
-<!-- EDIT17 TABLE [10686-11798] --><div class="notetip">You can not start with an empty configuration, so read <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
+<!-- EDIT17 TABLE [10800-11912] --><div class="notetip">You can not start with an empty configuration, so read <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
 </div>
 <p>
 </div></div>
@@ -728,13 +728,13 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 <strong>Can be used to secure another backend</strong> for remote servers.  </td>
 	</tr>
 </table></div>
-<!-- EDIT18 TABLE [12663-14363] -->
+<!-- EDIT18 TABLE [12777-14477] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT16 SECTION "LLNG databases" [10382-14391] -->
+<!-- EDIT16 SECTION "LLNG databases" [10496-14505] -->
 <h2 class="sectionedit19" id="applications_protection">Applications protection</h2>
 <div class="level2">
 
@@ -763,7 +763,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Applications protection" [14392-14882] -->
+<!-- EDIT19 SECTION "Applications protection" [14506-14996] -->
 <h3 class="sectionedit20" id="well_known_compatible_applications">Well known compatible applications</h3>
 <div class="level3">
 <div class="noteclassic">Here is a list of well known applications that are compatible with <abbr title="LemonLDAP::NG">LL::NG</abbr>. A full list is available on <a href="applications.html" class="wikilink1" title="documentation:2.0:applications">vendor applications page</a>.
@@ -867,7 +867,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT20 SECTION "Well known compatible applications" [14883-17221] -->
+<!-- EDIT20 SECTION "Well known compatible applications" [14997-17335] -->
 <h2 class="sectionedit21" id="advanced_features">Advanced features</h2>
 <div class="level2">
 
@@ -926,7 +926,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT21 SECTION "Advanced features" [17222-18441] -->
+<!-- EDIT21 SECTION "Advanced features" [17336-18555] -->
 <h2 class="sectionedit22" id="mini_howtos">Mini howtos</h2>
 <div class="level2">
 
@@ -963,7 +963,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT22 SECTION "Mini howtos" [18442-19336] -->
+<!-- EDIT22 SECTION "Mini howtos" [18556-19450] -->
 <h2 class="sectionedit23" id="exploitation">Exploitation</h2>
 <div class="level2">
 
@@ -998,7 +998,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT23 SECTION "Exploitation" [19337-19854] -->
+<!-- EDIT23 SECTION "Exploitation" [19451-19968] -->
 <h2 class="sectionedit24" id="bug_report">Bug report</h2>
 <div class="level2">
 
@@ -1007,7 +1007,7 @@ See <a href="bugreport.html" class="wikilink1" title="bugreport">How to report a
 </p>
 
 </div>
-<!-- EDIT24 SECTION "Bug report" [19855-19919] -->
+<!-- EDIT24 SECTION "Bug report" [19969-20033] -->
 <h2 class="sectionedit25" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -1074,6 +1074,6 @@ If you don&#039;t want to publish your translation <em>(<code>XX</code> must be 
 </ul>
 
 </div>
-<!-- EDIT25 SECTION "Developer corner" [19920-] --></div>
+<!-- EDIT25 SECTION "Developer corner" [20034-] --></div>
 </body>
 </html>

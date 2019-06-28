@@ -152,9 +152,10 @@ Then, set <code>Lemonldap::NG::Common::Apache::Session::REST</code> in <code>Gen
 		<td class="col0 centeralign">  <strong>password</strong>  </td><td class="col1"> Password to use for auth basic mechanism </td><td class="col2 leftalign">   </td>
 	</tr>
 </table></div>
-<!-- EDIT4 TABLE [1790-2116] -->
+<!-- EDIT4 TABLE [1790-2116] --><div class="noteimportant">By default, user password and other secret keys are hidden by LLNG REST server. You can force REST server to export their real values by selecting “Export secret attributes in REST” in the manager. This less secure option is disabled by default.
 </div>
-<!-- EDIT3 SECTION "Manager" [1452-2117] -->
+</div>
+<!-- EDIT3 SECTION "Manager" [1452-2386] -->
 <h3 class="sectionedit5" id="apache">Apache</h3>
 <div class="level3">
 
@@ -167,7 +168,7 @@ Sessions REST end points access must be allowed in Apache portal configuration (
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT5 SECTION "Apache" [2118-2408] -->
+<!-- EDIT5 SECTION "Apache" [2387-2677] -->
 <h3 class="sectionedit6" id="real_session_backend">Real session backend</h3>
 <div class="level3">
 
@@ -198,6 +199,6 @@ To share only the listed attributes:
 <pre class="code">authenticationLevel groups ipAddr _startTime _utime _lastSeen _session_id uid cn mail</pre>
 
 </div>
-<!-- EDIT6 SECTION "Real session backend" [2409-] --></div>
+<!-- EDIT6 SECTION "Real session backend" [2678-] --></div>
 </body>
 </html>

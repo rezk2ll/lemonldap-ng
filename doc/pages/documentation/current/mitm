@@ -90,7 +90,7 @@
         <form action="/start" accept-charset="utf-8" class="search" id="dw__search" method="get" role="search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" /><input type="submit" value="Search" class="button" title="Search" /><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>
         
         <ul class="nav navbar-nav">
-                    <li><a href="/documentation/2.0/mitm?do=login&amp;sectok=f5d398c4fc6f21e5e626ce5d49ffe634"  class="action login" rel="nofollow" title="Login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>        </ul>
+                    <li><a href="/documentation/2.0/mitm?do=login&amp;sectok=b40f1783ce11c8ae3bcd7b7cd8aa632b"  class="action login" rel="nofollow" title="Login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>        </ul>
 
       </div>
 
@@ -218,8 +218,18 @@ You&#039;ve followed a link to a topic that doesn&#039;t exist yet. If permissio
 <div class="level3">
 
 <p>
-<a href="https://www.ow2con.org/view/2014/Awards_Results?year=2014&amp;event=OW2con14" class="media" title="https://www.ow2con.org/view/2014/Awards_Results?year=2014&amp;event=OW2con14"  rel="nofollow"><img src="/_media/logos/ow2.png?w=150&amp;tok=b7af43" class="mediacenter" alt="" width="150" /></a>
-<strong>OW2con&#039;14 Community Award</strong>
+<a href="/_detail/logos/ow2_awards.png?id=default_sidebar" class="media" title="logos:ow2_awards.png"><img src="/_media/logos/ow2_awards.png?w=150&amp;tok=b33854" class="mediacenter" alt="" width="150" /></a>
+</p>
+
+<p>
+<a href="https://www.ow2con.org/view/2014/Awards_Results?year=2014&amp;event=OW2con14" class="urlextern" title="https://www.ow2con.org/view/2014/Awards_Results?year=2014&amp;event=OW2con14"  rel="nofollow">OW2con&#039;14 Community Award</a>
+</p>
+
+<p>
+<a href="https://www.ow2con.org/view/2018/Awards_Results?year=2018&amp;event=OW2con18" class="urlextern" title="https://www.ow2con.org/view/2018/Awards_Results?year=2018&amp;event=OW2con18"  rel="nofollow">OW2con&#039;18 Community Award</a>
+</p>
+
+<p>
 </div>
 </p>
 <hr />
@@ -262,7 +272,7 @@ You&#039;ve followed a link to a topic that doesn&#039;t exist yet. If permissio
       
     </div><!-- /site -->
 
-    <div class="no"><img src="/lib/exe/indexer.php?id=documentation%3A2.0%3Amitm&amp;1557671508" width="2" height="1" alt="" /></div>
+    <div class="no"><img src="/lib/exe/indexer.php?id=documentation%3A2.0%3Amitm&amp;1561728353" width="2" height="1" alt="" /></div>
     <div id="screen__mode" class="no">
       <span class="visible-xs"></span>
       <span class="visible-sm"></span>

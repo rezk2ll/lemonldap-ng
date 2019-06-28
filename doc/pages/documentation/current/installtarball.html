@@ -238,7 +238,7 @@ See also <a href="installdeb.html" class="wikilink1" title="documentation:2.0:in
 <div class="level2">
 
 <p>
-<abbr title="LemonLDAP::NG">LL::NG</abbr> use cron jobs to:
+<abbr title="LemonLDAP::NG">LL::NG</abbr> use cron jobs (or systemd timers) to:
 </p>
 <ul>
 <li class="level1"><div class="li"> purge old sessions</div>
@@ -252,8 +252,12 @@ To install them on system:
 </p>
 <pre class="code">sudo ln -s /usr/local/lemonldap-ng/etc/cron.d/* /etc/cron.d/</pre>
 
+<p>
+or install .timers files in systemd directory (/lib/systemd/system)
+</p>
+
 </div>
-<!-- EDIT6 SECTION "Install cron jobs" [3645-3854] -->
+<!-- EDIT6 SECTION "Install cron jobs" [3645-3941] -->
 <h2 class="sectionedit7" id="dns">DNS</h2>
 <div class="level2">
 
@@ -274,6 +278,6 @@ Follow the <a href="start.html#configuration" class="wikilink1" title="documenta
 </p>
 
 </div>
-<!-- EDIT7 SECTION "DNS" [3855-] --></div>
+<!-- EDIT7 SECTION "DNS" [3942-] --></div>
 </body>
 </html>

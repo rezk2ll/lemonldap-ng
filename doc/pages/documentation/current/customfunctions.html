@@ -49,10 +49,11 @@
 <div>
 
 <ul class="toc">
+<li class="level1"><div class="li"><a href="#implementation">Implementation</a></div></li>
 <li class="level1"><div class="li"><a href="#write_custom_functions_library">Write custom functions library</a></div></li>
 <li class="level1"><div class="li"><a href="#import_custom_functions_in_lemonldapng">Import custom functions in LemonLDAP::NG</a></div>
 <ul class="toc">
-<li class="level2"><div class="li"><a href="#declare_module_in_handler_server">Declare module in handler server</a></div>
+<li class="level2"><div class="li"><a href="#load_relevant_code_in_handler_server">Load relevant code in handler server</a></div>
 <ul class="toc">
 <li class="level3"><div class="li"><a href="#new_method">New method</a></div></li>
 <li class="level3"><div class="li"><a href="#old_method">Old method</a></div></li>
@@ -71,18 +72,41 @@
 <div class="level1">
 
 <p>
-Custom functions allow one to extend <abbr title="LemonLDAP::NG">LL::NG</abbr>, they can be used in <a href="writingrulesand_headers.html#headers" class="wikilink1" title="documentation:2.0:writingrulesand_headers">headers</a>, <a href="writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">rules</a> or <a href="formreplay.html" class="wikilink1" title="documentation:2.0:formreplay">form replay data</a>.
+Custom functions allow one to extend <abbr title="LemonLDAP::NG">LL::NG</abbr>, they can be used in <a href="writingrulesand_headers.html#headers" class="wikilink1" title="documentation:2.0:writingrulesand_headers">headers</a>, <a href="writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">rules</a> or <a href="formreplay.html" class="wikilink1" title="documentation:2.0:formreplay">form replay data</a>. Two actions are needed:
+</p>
+<ul>
+<li class="level1"><div class="li"> declare them in LLNG configuration</div>
+</li>
+<li class="level1"><div class="li"> load the relevant code</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT1 SECTION "Custom functions" [1-309] -->
+<h2 class="sectionedit2" id="implementation">Implementation</h2>
+<div class="level2">
+
+<p>
+Your perl custom function must be declared on appropriate server when separating :
+</p>
+
+<p>
+portal type : declare custom function here when using it in rules, macros, menu
+</p>
+
+<p>
+reverse-proxy type : declare custom function here when using it in headers
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Custom functions" [1-219] -->
-<h2 class="sectionedit2" id="write_custom_functions_library">Write custom functions library</h2>
+<!-- EDIT2 SECTION "Implementation" [310-578] -->
+<h2 class="sectionedit3" id="write_custom_functions_library">Write custom functions library</h2>
 <div class="level2">
 
 <p>
 Create your Perl module with custom functions. You can name your module as you want, for example <code>SSOExtensions.pm</code>:
 </p>
-<pre class="code">vi /root/SSOExtensions.pm</pre>
+<pre class="code">vi /path/to/SSOExtensions.pm</pre>
 <pre class="code file perl"><a href="http://perldoc.perl.org/functions/package.html"><span class="kw3">package</span></a> SSOExtensions<span class="sy0">;</span>
 &nbsp;
 <span class="kw2">sub</span> function1 <span class="br0">&#123;</span>
@@ -92,16 +116,20 @@ Create your Perl module with custom functions. You can name your module as you w
   <a href="http://perldoc.perl.org/functions/return.html"><span class="kw3">return</span></a> <span class="re0">$result</span><span class="sy0">;</span>
 <span class="br0">&#125;</span>
 &nbsp;
+<span class="kw2">sub</span> function2 <span class="br0">&#123;</span>
+  <a href="http://perldoc.perl.org/functions/return.html"><span class="kw3">return</span></a> <span class="co5">$_</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
 <span class="nu0">1</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- EDIT2 SECTION "Write custom functions library" [220-554] -->
-<h2 class="sectionedit3" id="import_custom_functions_in_lemonldapng">Import custom functions in LemonLDAP::NG</h2>
+<!-- EDIT3 SECTION "Write custom functions library" [579-951] -->
+<h2 class="sectionedit4" id="import_custom_functions_in_lemonldapng">Import custom functions in LemonLDAP::NG</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Import custom functions in LemonLDAP::NG" [555-608] -->
-<h3 class="sectionedit4" id="declare_module_in_handler_server">Declare module in handler server</h3>
+<!-- EDIT4 SECTION "Import custom functions in LemonLDAP::NG" [952-1005] -->
+<h3 class="sectionedit5" id="load_relevant_code_in_handler_server">Load relevant code in handler server</h3>
 <div class="level3">
 
 </div>
@@ -113,9 +141,9 @@ Create your Perl module with custom functions. You can name your module as you w
 Just declare files or Perl module that must be loaded:
 </p>
 <pre class="code file :ini"><span class="re0"><span class="br0">&#91;</span>all<span class="br0">&#93;</span></span>
-<span class="re1">require</span> <span class="sy0">=</span><span class="re2"> /path/to/functions.pl, /path/to/func2.pm</span>
+<span class="re1">require</span> <span class="sy0">=</span><span class="re2"> /path/to/functions.pl, /path/to/SSOExtensions.pm</span>
 # OR
-<span class="re1">require</span> <span class="sy0">=</span><span class="re2"> My::Func1, My::Func2</span></pre>
+<span class="re1">require</span> <span class="sy0">=</span><span class="re2"> SSOExtensions::function1, SSOExtensions::function2</span></pre>
 
 </div>
 
@@ -133,7 +161,7 @@ Your module has to be loaded by Apache (for example after Handler load):
 </p>
 <pre class="code file apache"><span class="co1"># Perl environment</span>
 PerlRequire Lemonldap::NG::Handler
-PerlRequire /root/SSOExtensions.pm
+PerlRequire /path/to/SSOExtensions.pm
 PerlOptions +GlobalRequest</pre>
 
 </div>
@@ -158,22 +186,22 @@ USER=www-data
 GROUP=www-data
 &nbsp;
 # Custom functions file
-CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</pre>
+CUSTOM_FUNCTIONS_FILE=/path/to/SSOExtensions.pm</pre>
 
 </div>
-<!-- EDIT4 SECTION "Declare module in handler server" [609-1892] -->
-<h3 class="sectionedit5" id="declare_custom_functions">Declare custom functions</h3>
+<!-- EDIT5 SECTION "Load relevant code in handler server" [1006-2337] -->
+<h3 class="sectionedit6" id="declare_custom_functions">Declare custom functions</h3>
 <div class="level3">
 
 <p>
 Go in Manager, <code>General Parameters</code> » <code>Advanced Parameters</code> » <code>Custom functions</code> and set:
 </p>
-<pre class="code">SSOExtensions::function1</pre>
+<pre class="code">SSOExtensions::function1 SSOExtensions::function2</pre>
 <div class="noteimportant">If your function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail.
 </div>
 </div>
-<!-- EDIT5 SECTION "Declare custom functions" [1893-2189] -->
-<h2 class="sectionedit6" id="use_it">Use it</h2>
+<!-- EDIT6 SECTION "Declare custom functions" [2338-2659] -->
+<h2 class="sectionedit7" id="use_it">Use it</h2>
 <div class="level2">
 
 <p>
@@ -182,6 +210,6 @@ You can now use your function in a macro, an header or an access rule, for examp
 <pre class="code">Custom-Header =&gt; function1( $uid, $ENV{REMOTE_ADDR} )</pre>
 
 </div>
-<!-- EDIT6 SECTION "Use it" [2190-] --></div>
+<!-- EDIT7 SECTION "Use it" [2660-] --></div>
 </body>
 </html>
