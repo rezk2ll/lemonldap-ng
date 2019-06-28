@@ -23,8 +23,8 @@ my $client = LLNG::Manager::Test->new( {
             https                          => 0,
             checkUserDisplayPersistentInfo => 0,
             checkUserDisplayEmptyValues    => 0,
-            contextSwitchingRule           => '$uid eq "dwho"',
-            contextSwitchingIdRule         => '$uid ne "msmith"',
+            contextSwitchingRule           => 1,
+            contextSwitchingIdRule         => 1,
             contextSwitchingStopWithLogout => 1,
         }
     }
@@ -35,8 +35,8 @@ my $client = LLNG::Manager::Test->new( {
 ok(
     $res = $client->_post(
         '/',
-        IO::String->new('user=dwho&password=dwho'),
-        length => 23,
+        IO::String->new('user=rtyler&password=rtyler'),
+        length => 27,
         accept => 'text/html',
     ),
     'Auth query'
@@ -57,12 +57,12 @@ ok(
 );
 count(1);
 expectOK($res);
-ok( $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> dwho%,
-    'Connected as dwho' )
+ok( $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> rtyler%,
+    'Connected as rtyler' )
   or print STDERR Dumper( $res->[2]->[0] );
-expectAuthenticatedAs( $res, 'dwho' );
+expectAuthenticatedAs( $res, 'rtyler' );
 ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">contextSwitching_ON</span>%,
-    'Connected as dwho' )
+    'Connected as rtyler' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
@@ -82,7 +82,7 @@ my ( $host, $url, $query ) =
   expectForm( $res, undef, '/switchcontext', 'spoofId' );
 ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%, 'Found trspan="contextSwitching_ON"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_ON"' );
-$query =~ s/spoofId=/spoofId=rtyler/;
+$query =~ s/spoofId=/spoofId=dwho/;
 ok(
     $res = $client->_post(
         '/switchcontext',
@@ -93,6 +93,7 @@ ok(
     ),
     'POST switchcontext'
 );
+$id = expectCookie($res);
 ok(
     $res = $client->_get(
         '/',
@@ -102,9 +103,35 @@ ok(
     'Get Menu',
 );
 count(3);
-expectAuthenticatedAs( $res, 'rtyler' );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%, 'Found trspan="contextSwitching_ON"' )
+expectAuthenticatedAs( $res, 'dwho' );
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%, 'Found trspan="contextSwitching_OFF"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_OFF"' );
+ok(
+    $res = $client->_get(
+        '/checkuser',
+        cookie => "lemonldap=$id",
+        accept => 'text/html'
+    ),
+    'CheckUser form',
+);
+count(2);
+
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
+  or explain( $res->[2]->[0], 'trspan="checkUser"' );
+ok( $res->[2]->[0] =~ m%<td scope="row">_user</td>%, 'Found attribute _user' )
+  or explain( $res->[2]->[0], 'Attribute _user' );
+ok( $res->[2]->[0] =~ m%<td scope="row">dwho</td>%, 'Found value dwho' )
+  or explain( $res->[2]->[0], 'Value dwho' );
+ok( $res->[2]->[0] =~ m%<td scope="row">mail</td>%, 'Found attribute mail' )
+  or explain( $res->[2]->[0], 'Attribute mail' );
+ok( $res->[2]->[0] =~ m%<td scope="row">testPrefix__session_id</td>%, 'Found spoofed _id_session' )
+  or explain( $res->[2]->[0], 'Spoofed _id_session' );
+count(5);
+
+# Stop ContextSwitching
+# ------------------------
 ok(
     $res = $client->_get(
         '/switchcontext',
@@ -114,7 +141,7 @@ ok(
     'Stop context switching',
 );
 ok( $res->[2]->[0] =~ /trmsg="47"/, 'Found logout message' );
-count(3);
+count(2);
 
 clean_sessions();
 

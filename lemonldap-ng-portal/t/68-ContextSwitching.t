@@ -17,7 +17,7 @@ my $client = LLNG::Manager::Test->new( {
             brutForceProtection            => 0,
             portalMainLogo                 => 'common/logos/logo_llng_old.png',
             requireToken                   => 0,
-            checkUser                      => 1,
+            checkUser                      => 0,
             impersonationPrefix            => 'testPrefix_',
             securedCookie                  => 0,
             https                          => 0,
@@ -276,7 +276,7 @@ ok(
     'POST switchcontext'
 );
 
-# Read again cookie value
+# Refresh cookie value
 $id = expectCookie($res);
 ok(
     $res = $client->_get(
@@ -300,7 +300,7 @@ ok(
     'Stop context switching',
 );
 
-# Read again cookie value
+# Refresh cookie value
 $id = expectCookie($res);
 ok(
     $res = $client->_get(
