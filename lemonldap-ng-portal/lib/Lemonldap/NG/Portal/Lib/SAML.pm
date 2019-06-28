@@ -2547,6 +2547,7 @@ sub sendLogoutRequestToProvider {
 
         # Create iFrame
         $info .= $self->loadTemplate(
+            $req,
             'samlSpLogout',
             params => {
                 url  => $slo_url,
@@ -2582,6 +2583,7 @@ sub sendLogoutRequestToProvider {
 
         # Create iFrame
         $info .= $self->loadTemplate(
+            $req,
             'samlSpLogout',
             params => {
                 url  => $slo_url,
@@ -2620,6 +2622,7 @@ sub sendLogoutRequestToProvider {
 
             # Display information to the user
             $info .= $self->loadTemplate(
+                $req,
                 'samlSpSoapLogout',
                 params => {
                     imgUrl => $slo_url,
@@ -2718,7 +2721,7 @@ sub sendLogoutRequestToProviders {
     # Print some information to the user.
     $req->info(
         $self->loadTemplate(
-            'samlSpsLogout', params => { content => $content }
+            $req, 'samlSpsLogout', params => { content => $content }
         )
     ) if $providersCount;
 

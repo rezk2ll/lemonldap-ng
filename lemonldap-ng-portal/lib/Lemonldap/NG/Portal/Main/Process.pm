@@ -160,7 +160,7 @@ sub authLogout {
 sub deleteSession {
     my ( $self, $req ) = @_;
     if ( my $id = $req->id || $req->userData->{_session_id} ) {
-        my $apacheSession = $self->getApacheSession( $id );
+        my $apacheSession = $self->getApacheSession($id);
         unless ($apacheSession) {
             $self->logger->debug("Session $id already deleted");
             return PE_OK;
@@ -183,7 +183,8 @@ sub deleteSession {
 
         $req->info(
             $self->loadTemplate(
-                'simpleInfo', params => { trspan => 'logoutFromOtherApp' }
+                $req, 'simpleInfo',
+                params => { trspan => 'logoutFromOtherApp' }
             )
         );
 

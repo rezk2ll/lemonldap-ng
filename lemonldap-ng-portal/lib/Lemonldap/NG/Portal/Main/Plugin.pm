@@ -69,11 +69,7 @@ sub loadTemplate {
 sub displayTemplate {
     my ( $self, $req, $template, $params ) = @_;
     $self->logger->debug("Return $template template");
-    $req->info(
-        $self->loadTemplate(
-            $template, params => $params
-        )
-    );
+    $req->info( $self->loadTemplate( $req, $template, params => $params ) );
     return PE_INFO;
 }
 
@@ -95,8 +91,7 @@ sub createNotification {
     $content =~ s/_title_/$title/;
     $content =~ s/_msg_/$msg/;
 
-    if ( $notifEngine->module->notifObject->newNotification($content) )
-    {
+    if ( $notifEngine->module->notifObject->newNotification($content) ) {
         $self->logger->debug("Notification $ref successfully created");
         $self->userLogger->notice(
             "Notification $ref / $date successfully created for $uid");
