@@ -58,7 +58,7 @@ WriteMakefile(
     },
     PREREQ_PM => {
         'Clone'                  => 0,
-        'Lemonldap::NG::Handler' => '2.0.4',
+        'Lemonldap::NG::Handler' => '2.0.5',
         'Regexp::Assemble'       => 0,
     },
     (
