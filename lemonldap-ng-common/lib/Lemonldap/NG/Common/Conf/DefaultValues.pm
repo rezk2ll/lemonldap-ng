@@ -54,8 +54,9 @@ sub defaultValues {
             'mail' => 'mail',
             'uid'  => 'uid'
         },
-        'domain'       => 'example.com',
-        'exportedVars' => {
+        'domain'                  => 'example.com',
+        'enablePersistentStorage' => 1,
+        'exportedVars'            => {
             'UA' => 'HTTP_USER_AGENT'
         },
         'ext2fActivation'      => 0,

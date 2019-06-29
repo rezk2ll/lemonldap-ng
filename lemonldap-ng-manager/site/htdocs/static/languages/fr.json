@@ -251,6 +251,7 @@
 "emptyConf":"Configuration vide",
 "emptyValueNotAllowed":"Valeur nulle non accordé",
 "enabled":"Activé",
+"enablePersistentStorage":"Stockage",
 "enterPassword":"Entrer le mot de passe (optionnel)",
 "error":"Erreur",
 "errors":"ERREURS",

@@ -251,6 +251,7 @@
 "emptyConf":"Empty configuration",
 "emptyValueNotAllowed":"Empty value not allowed",
 "enabled":"开启",
+"enablePersistentStorage":"Storage",
 "enterPassword":"输入密码（可选）",
 "error":"错误",
 "errors":"ERRORS",

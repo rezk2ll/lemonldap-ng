@@ -1122,7 +1122,11 @@ sub attributes {
             keyMsgFail    => '__invalidSessionData__',
             documentation => 'Data to remember in login history',
         },
-
+        enablePersistentStorage => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Enabled persistent storage',
+        },
         # SAML issuer
         issuerDBSAMLActivation => {
             default       => 0,

@@ -404,7 +404,7 @@ sub getApacheSession {
 sub getPersistentSession {
     my ( $self, $uid, $info ) = @_;
 
-    return unless defined $uid;
+    return unless ( defined $uid and $self->conf->{enablePersistentStorage} );
 
     # Compute persistent identifier
     my $pid = $self->_md5hash($uid);
@@ -451,7 +451,8 @@ sub updatePersistentSession {
     my ( $self, $req, $infos, $uid, $id ) = @_;
 
     # Return if no infos to update
-    return () unless ( ref $infos eq 'HASH' and %$infos );
+    return () unless ( ref $infos eq 'HASH' and %$infos && $self->conf->{enablePersistentStorage} );
+
     $uid ||= $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
       || $req->userData->{ $self->conf->{whatToTrace} };
     $self->logger->debug("Found 'whatToTrace' -> $uid");
