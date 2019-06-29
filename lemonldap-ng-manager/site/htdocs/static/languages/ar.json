@@ -251,6 +251,7 @@
 "emptyConf":"إعدادات فارغة",
 "emptyValueNotAllowed":"القيمة الفارغة غير مسموح بها",
 "enabled":"مفعلة",
+"enablePersistentStorage":"Storage",
 "enterPassword":"أدخل كلمة المرور (اختياري)",
 "error":"خطأ",
 "errors":"ERRORS",
