@@ -1,3 +1,66 @@
+lemonldap-ng (2.0.5) stable; urgency=medium
+
+  * Bugs:
+    * #1521: The manager renames the id of applications created by lemonldap-ng-cli
+    * #1655: Can't delete notifications from the manager
+    * #1717: Warnings "Devel::StackTrace" when using unnative Perl functions
+    * #1746: Impersonation does not work with double cookies authentication
+    * #1749: Authentication with "Double Cookies for a single session" (securedCookie==3) does not work
+    * #1753: Logout with CASv2 is not working (Bad URL)
+    * #1754: Configuration caching issue when overriding globalStorage in lemonldap-ng.ini
+    * #1755: CheckUser plugin fails if OTT globalStrorage is enabled
+    * #1759: Server Error when OpenID Connect provider enabled without any RP
+    * #1762: CDA sessions are not removed when handler uses SOAP
+    * #1775: Authentication with double cookies fails when uniq session is enabled
+    * #1777: Server Error with SAML SLO and expired SSO session
+    * #1779: Go to portal message not translated in register confirmation mail
+    * #1795: [Security: low] CAS 3.0 Logout does not validate redirect URL
+    * #1800: Auth::Slave is unusable with Choice
+    * #1802: No error returned if no code provided on OpenID Connect token endpoint
+    * #1805: Auth::LDAP unusable in combination if UserDB::LDAP isn't called
+    * #1809: UserDB::DBI with Auth::LDAP seems to not work properly
+    * #1810: [Security: low] llng-fastcgi-server could fail to setgid
+    * #1811: Lua-headers file is missing
+    * #1813: searchOn* does not work when a portal uses REST session backend
+    * #1814: Local cache not fully purged
+    * #1818: [Security:low] XXE vulnerability in SOAP notification server
+    * #1819: Portal Notification server unusable with old XML format
+    * #1821: Pdata not cleared after session upgrade
+    * #1822: Session upgrade does not work with 2FA
+    * #1824: lmConfigEditor does not work anymore
+    * #1826: Race condition on SSL login form button
+
+  * New features:
+    * #1796: Display a message if an expired 2f device is removed
+
+  * Improvements:
+    * #1706: html not interpreted for translated messages
+    * #1723: Real authentication is masked when using proxy authentication module
+    * #1732: Sessions explorer and Browseable::Postgres
+    * #1734: RPM version uses JSON::PP instead of JSON::XS
+    * #1747: Logging out from portal cause an error with doubleCookie after refreshing rights
+    * #1750: Wrong version / author / IP / log in lemonldap-ng-cli
+    * #1758: Warnings in Viewer.pm when saving configuration
+    * #1763: Transmission of Authorization header should probably be on by default
+    * #1764: Set choosen language in user session
+    * #1765: Better CORS handling
+    * #1766: Warning in logs with SAML
+    * #1767: Append startTime overScheme to display sessions to avoid browser crash
+    * #1769: CSRF token is not automatically regenerated after a failed login with Auth::Choice
+    * #1770: Add save/restore commands in cli
+    * #1771: SSO sessions _updateTime value is not updated after a refresh request
+    * #1773: Append option to modify service Token handler TTL
+    * #1774: CheckUser plugin does not work with SAML
+    * #1782: Append an option to set 2FA TTL
+    * #1791: Append an option in Manager to merge only specified SSO groups with Impersonation
+    * #1797: Allow ServiceToken to send service headers
+    * #1799: StorePassword in session not working when using session REST server
+    * #1827: Using lemonldap-ng-cli info gives warning with default configuration
+    * #1828: 2F plugins and method loadTemplate are not using skin rules
+    * #1830: [Security:improvement] Improved use of cryptography
+
+ -- Clément <clem.oudot@gmail.com>  Sat, 29 Jun 2019 22:25:02 +0200
+
 lemonldap-ng (2.0.4) stable; urgency=high
 
   * Bugs:
