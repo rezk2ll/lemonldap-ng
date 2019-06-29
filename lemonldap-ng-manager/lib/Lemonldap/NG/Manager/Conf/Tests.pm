@@ -4,7 +4,7 @@ use utf8;
 use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Handler::Main;
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.6';
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
