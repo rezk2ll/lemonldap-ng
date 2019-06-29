@@ -643,12 +643,22 @@ sub tests {
             return 1;
         },
 
-        # Warn if Impersonation is enabled without prefix
-        impersonationPrefix => sub {
-            return 1 unless ( $conf->{impersonationRule} );
+        # Warn if persistent storage is disabled with 2FA, History, OIDCConsents and Notifications
+        persistentStorage => sub {
+            return 1 if ( $conf->{enablePersistentStorage} );
+            return ( 1, "2FA enabled WITHOUT persistent session storage" )
+              if ( $conf->{totp2fActivation}
+                || $conf->{yubikey2fActivation}
+                || $conf->{u2fActivation}
+                || $conf->{utotp2fActivation} );
+            return ( 1, "History enabled WITHOUT persistent session storage" )
+              if ( $conf->{loginHistoryEnabled} );
             return ( 1,
-                "Impersonation is enabled without real attributes prefix" )
-              unless ( $conf->{impersonationPrefix} );
+                "OIDC consents enabled WITHOUT persistent session storage" )
+              if ( $conf->{portalDisplayOidcConsents} );
+            return ( 1,
+                "Notifications enabled WITHOUT persistent session storage" )
+              if ( $conf->{notification} );
 
             # Return
             return 1;
