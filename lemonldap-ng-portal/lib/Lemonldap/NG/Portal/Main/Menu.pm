@@ -114,6 +114,16 @@ sub params {
       $self->p->_sfEngine->display2fRegisters( $req, $req->userData );
     $self->logger->debug("Display 2fRegisters link") if $res{sfaManager};
 
+    # Display ContextSwitching link only if allowed
+    my $cswPlugin = $self->p->loadedModules->{
+        'Lemonldap::NG::Portal::Plugins::ContextSwitching'};
+    $res{contextSwitching} =
+        $cswPlugin
+      ? $cswPlugin->displaySwitchContext( $req, $req->userData )
+      : '';
+    $self->logger->debug("Display SwitchContext link -> $res{contextSwitching}")
+      if $res{contextSwitching};
+
     return %res;
 }
 

@@ -659,10 +659,20 @@ sub tree {
                             nodes => [
                                 'impersonationRule',
                                 'impersonationIdRule',
-                                'impersonationPrefix',
                                 'impersonationHiddenAttributes',
                                 'impersonationSkipEmptyValues',
                                 'impersonationMergeSSOgroups',
+                            ]
+                        },
+                        {
+                            title => 'contextSwitching',
+                            help  => 'contextswitching.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'contextSwitchingRule',
+                                'contextSwitchingIdRule',
+                                'contextSwitchingStopWithLogout',
+                                #'contextSwitchingHiddenAttributes',
                             ]
                         },
                     ]

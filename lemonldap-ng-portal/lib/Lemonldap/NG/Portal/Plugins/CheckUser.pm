@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MALFORMEDUSER
 );
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.6';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -30,6 +30,7 @@ has ott => (
     }
 );
 has idRule => ( is => 'rw', default => sub { 1 } );
+has sorted => ( is => 'rw', default => sub { 0 } );
 
 sub hAttr {
     $_[0]->{conf}->{checkUserHiddenAttributes} . ' '
@@ -53,7 +54,8 @@ sub init {
         return 0;
     }
     $self->idRule($rule);
-
+    $self->sorted( $self->conf->{impersonationRule}
+          || $self->conf->{contextSwitchingRule} );
     return 1;
 }
 
@@ -432,7 +434,7 @@ sub _splitAttributes {
     }
 
     # Sort real and spoofed attributes if required
-    if ( $self->conf->{impersonationRule} ) {
+    if ( $self->sorted ) {
         $self->logger->debug('Dispatching real and spoofed attributes...');
         my ( $realAttrs, $spoofedAttrs ) = ( [], [] );
         my $prefix = "$self->{conf}->{impersonationPrefix}";

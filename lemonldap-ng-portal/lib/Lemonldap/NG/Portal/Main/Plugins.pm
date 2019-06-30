@@ -27,6 +27,7 @@ our @pList = (
     portalForceAuthn           => '::Plugins::ForceAuthn',
     checkUser                  => '::Plugins::CheckUser',
     impersonationRule          => '::Plugins::Impersonation',
+    contextSwitchingRule       => '::Plugins::ContextSwitching',
 );
 
 ##@method list enabledPlugins
