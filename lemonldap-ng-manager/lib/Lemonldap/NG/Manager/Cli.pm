@@ -6,7 +6,7 @@ use Mouse;
 use Data::Dumper;
 use Lemonldap::NG::Common::Conf::ReConstants;
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.6';
 $Data::Dumper::Useperl = 1;
 
 extends('Lemonldap::NG::Manager::Cli::Lib');
@@ -209,7 +209,7 @@ sub restore {
         $conf = join '', <STDIN>;
     }
     else {
-        open my $f, $file;
+        open( my $f, $file );
         $conf = join '', <$f>;
         close $f;
     }
