@@ -203,6 +203,9 @@ sub save {
 
 sub restore {
     my ( $self, $file ) = @_;
+    unless ($file) {
+        die "No file provided. Aborting";
+    }
     require IO::String;
     my $conf;
     if ( $file eq '-' ) {
