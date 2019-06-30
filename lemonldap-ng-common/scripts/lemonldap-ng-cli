@@ -47,6 +47,9 @@ Available actions:
  - set    <key> <value>          : set parameter(s) value(s)
  - addKey <key> <subkey> <value> : add or set a subkey in a parameter
  - delKey <key> <subkey>         : delete subkey of a parameter
+ - save                          : export configuration to STDOUT
+ - restore -                     : import configuration from STDIN
+ - restore <file>                : import configuration from file
 
 See Lemonldap::NG::Common::Cli(3) or Lemonldap::NG::Manager::CLi(3) for more
 };
