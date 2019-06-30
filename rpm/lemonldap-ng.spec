@@ -662,6 +662,9 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Sat Jun 29 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.5-1
+- Update to 2.0.5
+
 * Fri Jun 07 2019 Xavier Bachelot <xavier@bachelot.org> - 2.0.4-2
 - BR: gnupg to fix test 29-AuthGPG.t failure in manager.
 
