@@ -2,3 +2,4 @@
 /etc/lemonldap-ng/handler-nginx.conf /etc/nginx/sites-available/handler-nginx.conf
 /etc/lemonldap-ng/test-apache2.conf /etc/apache2/sites-available/test-apache2.conf
 /etc/lemonldap-ng/test-nginx.conf /etc/nginx/sites-available/test-nginx.conf
+/etc/lemonldap-ng/nginx* /etc/nginx/nginx*
