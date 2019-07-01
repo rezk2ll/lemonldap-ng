@@ -200,7 +200,7 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 LemonLdap::NG is a modular Web-SSO based on Apache::Session modules. It
 simplifies the build of a protected area with a few changes in the
 application. It manages both authentication and authorization and provides
-headers for accounting. 
+headers for accounting.
 So you can have a full AAA protection for your web space as described below.
 
 #==============================================================================
