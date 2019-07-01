@@ -50,7 +50,7 @@
 #==============================================================================
 Name:           lemonldap-ng
 Version:        2.0.5
-Release:        %{?pre_release:0.}2%{?pre_release:.%{pre_release}}%{?dist}
+Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
 URL:            http://lemonldap-ng.org
@@ -124,7 +124,7 @@ BuildRequires:  perl(IO::Select)
 BuildRequires:  perl(IO::Socket::INET)
 BuildRequires:  perl(IO::String)
 BuildRequires:  perl(JSON)
-%if 0%{?fedora} >= 29
+%if 0%{?fedora}
 BuildRequires:  perl(Lasso)
 BuildRequires:  perl(Glib)
 %endif
@@ -194,16 +194,13 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 
 %if 0%{?fedora}
 %{?perl_default_filter}
-%if 0%{?fedora} < 29
-%global __requires_exclude perl\\(Lasso
-%endif
 %endif
 
 %description
 LemonLdap::NG is a modular Web-SSO based on Apache::Session modules. It
 simplifies the build of a protected area with a few changes in the
 application. It manages both authentication and authorization and provides
-headers for accounting. 
+headers for accounting.
 So you can have a full AAA protection for your web space as described below.
 
 #==============================================================================
