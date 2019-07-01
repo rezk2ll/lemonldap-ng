@@ -1146,7 +1146,7 @@ sub createJWT {
     my ( $self, $payload, $alg, $rp ) = @_;
 
     # Payload encoding
-    my $jwt_payload = encode_base64( to_json($payload), "" );
+    my $jwt_payload = encode_base64url( to_json($payload), "" );
 
     # JWT header
     my $jwt_header_hash = { typ => "JWT", alg => $alg };
@@ -1154,7 +1154,7 @@ sub createJWT {
         $jwt_header_hash->{kid} = $self->conf->{oidcServiceKeyIdSig}
           if $self->conf->{oidcServiceKeyIdSig};
     }
-    my $jwt_header = encode_base64( to_json($jwt_header_hash), "" );
+    my $jwt_header = encode_base64url( to_json($jwt_header_hash), "" );
 
     if ( $alg eq "none" ) {
 
@@ -1193,6 +1193,7 @@ sub createJWT {
         # Convert + and / to get Base64 URL valid (RFC 4648)
         $digest =~ s/\+/-/g;
         $digest =~ s/\//_/g;
+        $digest =~ s/=+$//g;
 
         return $jwt_header . "." . $jwt_payload . "." . $digest;
     }
