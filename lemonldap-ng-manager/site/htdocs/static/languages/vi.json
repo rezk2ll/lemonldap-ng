@@ -256,7 +256,7 @@
 "emptyConf":"Cấu hình trống rỗng",
 "emptyValueNotAllowed":"Không cho phép giá trị trống",
 "enabled":"Đã bật",
-"enablePersistentStorage":"Storage",
+"disablePersistentStorage":"Disable storage",
 "enterPassword":"Nhập mật khẩu (tùy chọn)",
 "error":"Lỗi",
 "errors":"ERRORS",

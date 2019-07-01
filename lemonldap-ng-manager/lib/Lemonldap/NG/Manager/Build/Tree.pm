@@ -542,7 +542,7 @@ sub tree {
                         {
                             title => 'persistentSessions',
                             nodes => [
-                                'enablePersistentStorage',
+                                'disablePersistentStorage',
                                 'persistentStorage',
                                 'persistentStorageOptions'
                             ]

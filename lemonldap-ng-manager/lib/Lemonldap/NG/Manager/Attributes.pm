@@ -1095,16 +1095,16 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
         },
+        'disablePersistentStorage' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'domain' => {
             'default' => 'example.com',
             'msgFail' => '__badDomainName__',
             'test' =>
 qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
             'type' => 'text'
-        },
-        'enablePersistentStorage' => {
-            'default' => 1,
-            'type'    => 'bool'
         },
         'exportedAttr' => {
             'type' => 'text'

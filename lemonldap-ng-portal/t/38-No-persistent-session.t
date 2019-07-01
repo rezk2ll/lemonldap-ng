@@ -24,7 +24,7 @@ SKIP: {
                 totp2fDigits            => 8,
                 totp2fTTL               => -1,
                 loginHistoryEnabled     => 1,
-                enablePersistentStorage => 0,
+                disablePersistentStorage => 1,
             }
         }
     );

@@ -403,9 +403,8 @@ sub getApacheSession {
 # Try to recover the persistent session corresponding to uid and return session data.
 sub getPersistentSession {
     my ( $self, $uid, $info ) = @_;
-    my $enabledStorage = $self->conf->{enablePersistentStorage} // 1;
 
-    return unless ( defined $uid and $enabledStorage );
+    return unless ( defined $uid and !$self->conf->{disablePersistentStorage} );
 
     # Compute persistent identifier
     my $pid = $self->_md5hash($uid);
@@ -450,10 +449,9 @@ sub getPersistentSession {
 # @return nothing
 sub updatePersistentSession {
     my ( $self, $req, $infos, $uid, $id ) = @_;
-    my $enabledStorage = $self->conf->{enablePersistentStorage} // 1;
 
     # Return if no infos to update
-    return () unless ( ref $infos eq 'HASH' and %$infos and $enabledStorage );
+    return () unless ( ref $infos eq 'HASH' and %$infos and !$self->conf->{disablePersistentStorage} );
 
     $uid ||= $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
       || $req->userData->{ $self->conf->{whatToTrace} };

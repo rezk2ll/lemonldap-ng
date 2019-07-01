@@ -256,7 +256,7 @@
 "emptyConf":"Empty configuration",
 "emptyValueNotAllowed":"Empty value not allowed",
 "enabled":"Aktiviert",
-"enablePersistentStorage":"Storage",
+"disablePersistentStorage":"Disable storage",
 "enterPassword":"Enter password (optional)",
 "error":"Error",
 "errors":"ERRORS",

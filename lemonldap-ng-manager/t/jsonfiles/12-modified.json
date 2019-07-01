@@ -1348,11 +1348,11 @@
       "id": "persistentSessions",
       "title": "persistentSessions",
       "nodes": [{
-        "default": 1,
-        "id": "enablePersistentStorage",
-        "title": "enablePersistentStorage",
+        "default": 0,
+        "id": "disablePersistentStorage",
+        "title": "disablePersistentStorage",
         "type": "bool",
-        "data": 1
+        "data": 0
       }, {
         "id": "persistentStorage",
         "title": "persistentStorage",

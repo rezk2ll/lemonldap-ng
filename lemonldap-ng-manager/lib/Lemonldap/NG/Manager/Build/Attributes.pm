@@ -1143,8 +1143,8 @@ sub attributes {
             keyMsgFail    => '__invalidSessionData__',
             documentation => 'Data to remember in login history',
         },
-        enablePersistentStorage => {
-            default       => 1,
+        disablePersistentStorage => {
+            default       => 0,
             type          => 'bool',
             documentation => 'Enabled persistent storage',
         },

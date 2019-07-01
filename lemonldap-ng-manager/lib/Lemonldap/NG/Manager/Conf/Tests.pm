@@ -655,7 +655,7 @@ sub tests {
 
         # Warn if persistent storage is disabled with 2FA, History, OIDCConsents and Notifications
         persistentStorage => sub {
-            return 1 if ( $conf->{enablePersistentStorage} );
+            return 1 unless ( $conf->{disablePersistentStorage} );
             return ( 1, "2FA enabled WITHOUT persistent session storage" )
               if ( $conf->{totp2fActivation}
                 || $conf->{yubikey2fActivation}
