@@ -50,7 +50,7 @@
 #==============================================================================
 Name:           lemonldap-ng
 Version:        2.0.5
-Release:        %{?pre_release:0.}2%{?pre_release:.%{pre_release}}%{?dist}
+Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
 URL:            http://lemonldap-ng.org
