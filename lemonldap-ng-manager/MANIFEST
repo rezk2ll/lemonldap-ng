@@ -208,6 +208,7 @@ t/11-save-changed-conf-with-confirmation.t
 t/12-save-changed-conf.t
 t/14-bad-changes-in-conf.t
 t/15-combination.t
+t/16-cli.t
 t/20-test-coverage.t
 t/40-sessions.t
 t/50-notifications-DBI.t
