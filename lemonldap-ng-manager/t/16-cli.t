@@ -8,10 +8,7 @@ use strict;
 
 use_ok('Lemonldap::NG::Common::Cli');
 use_ok('Lemonldap::NG::Manager::Cli');
-
-foreach ( 2 .. $tests - 3 ) {
-    unlink "t/conf/lmConf-$_.json";
-}
+&cleanConfFiles;
 
 SKIP: {
     eval 'use Test::Output;';
@@ -32,5 +29,10 @@ SKIP: {
     Test::Output::combined_like( sub { $client->run(@cmd) },
         qr/"cfgNum"\s*:\s*"2"/s, 'New config: 2' );
 }
+&cleanConfFiles;
 
-unlink 't/conf/lmConf-2.json';
+sub cleanConfFiles {
+    foreach ( 2 .. $tests - 3 ) {
+        unlink "t/conf/lmConf-$_.json";
+    }
+}
