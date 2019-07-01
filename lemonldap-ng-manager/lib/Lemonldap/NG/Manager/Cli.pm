@@ -213,9 +213,10 @@ sub restore {
     }
     else {
         die "Unable to read $file" unless ( -r $file );
-        open( my $f, $file );
+        open( my $f, $file ) or die $!;
         $conf = join '', <$f>;
         close $f;
+        die "Empty or malformed file $file" unless ( $conf =~ /\w/s );
     }
     my $res = $self->_post( '/confs/raw', '', IO::String->new($conf),
         'application/json', length($conf) );
@@ -265,8 +266,7 @@ sub _setKey {
 sub _save {
     my ( $self, $new ) = @_;
     require Lemonldap::NG::Manager::Conf::Parser;
-    my $parser = Lemonldap::NG::Manager::Conf::Parser->new(
-        {
+    my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
             newConf => $new,
             refConf => $self->mgr->currentConf,
             req     => $self->req

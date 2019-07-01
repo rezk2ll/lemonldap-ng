@@ -9,7 +9,7 @@ use strict;
 use_ok('Lemonldap::NG::Common::Cli');
 use_ok('Lemonldap::NG::Manager::Cli');
 
-foreach (qw(2 3)) {
+foreach ( 2 .. $tests - 3 ) {
     unlink "t/conf/lmConf-$_.json";
 }
 
