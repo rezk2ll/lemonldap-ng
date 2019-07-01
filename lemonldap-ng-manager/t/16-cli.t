@@ -14,9 +14,9 @@ foreach (qw(2 3)) {
 }
 
 SKIP: {
-    eval 'use Test::Output;use IO::String;';
+    eval 'use Test::Output;';
     if ($@) {
-        skip 'Test::Output or IO::String is missing, skipping', $tests - 2;
+        skip 'Test::Output is missing, skipping', $tests - 2;
     }
     my @cmd;
     @cmd = ('save');
