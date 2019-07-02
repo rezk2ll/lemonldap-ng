@@ -93,6 +93,7 @@ sub display {
     my $params = {
         PORTAL    => $self->conf->{portal},
         MAIN_LOGO => $self->conf->{portalMainLogo},
+        SKIN      => $self->p->getSkin($req),
         LANGS     => $self->conf->{showLanguages},
         MSG       => 'contextSwitching_ON',
         ALERTE    => 'alert-danger',

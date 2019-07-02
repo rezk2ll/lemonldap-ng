@@ -84,6 +84,7 @@ sub check {
         my $params = {
             PORTAL    => $self->conf->{portal},
             MAIN_LOGO => $self->conf->{portalMainLogo},
+            SKIN      => $self->p->getSkin($req),
             LANGS     => $self->conf->{showLanguages},
             MSG       => "PE$msg",
             ALERTE    => 'alert-warning',
@@ -112,6 +113,7 @@ sub check {
             params => {
                 PORTAL    => $self->conf->{portal},
                 MAIN_LOGO => $self->conf->{portalMainLogo},
+                SKIN      => $self->p->getSkin($req),
                 LANGS     => $self->conf->{showLanguages},
                 MSG       => 'PE' . PE_MALFORMEDUSER,
                 ALERTE    => 'alert-warning',
@@ -234,6 +236,7 @@ sub check {
     my $params = {
         PORTAL    => $self->conf->{portal},
         MAIN_LOGO => $self->conf->{portalMainLogo},
+        SKIN      => $self->p->getSkin($req),
         LANGS     => $self->conf->{showLanguages},
         MSG       => $msg,
         ALERTE    => ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
@@ -295,6 +298,7 @@ sub display {
     my $params = {
         PORTAL    => $self->conf->{portal},
         MAIN_LOGO => $self->conf->{portalMainLogo},
+        SKIN      => $self->p->getSkin($req),
         LANGS     => $self->conf->{showLanguages},
         MSG       => (
             $self->{conf}->{impersonationMergeSSOgroups} ? 'checkUserMerged'
