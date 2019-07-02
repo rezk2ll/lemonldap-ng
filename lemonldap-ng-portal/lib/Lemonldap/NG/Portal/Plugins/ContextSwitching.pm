@@ -67,13 +67,14 @@ sub display {
     unless ( $self->rule->( $req, $req->userData )
         || $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} )
     {
-        $self->userLogger->error('Context switching service not authorized');
+        $self->userLogger->warn('Context switching service not authorized');
         return $self->p->do( $req,
             [ sub { PE_IMPERSONATION_SERVICE_NOT_ALLOWED } ] );
     }
 
     if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
         $self->logger->debug('Request to stop ContextSwitching');
+        $self->userLogger->notice('STOP ContextSwitching');
         if ( $self->conf->{contextSwitchingStopWithLogout} ) {
             $self->logger->debug('Send logout request');
             return $self->p->do( $req,
@@ -148,6 +149,7 @@ sub run {
 
     # Main session
     $self->p->updateSession( $req, $req->sessionInfo );
+    
     return $self->p->do( $req, [ sub { $statut } ] );
 }
 
@@ -184,6 +186,7 @@ sub _switchContext {
 
     $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"} =
       $realSessionId;
+    $self->userLogger->notice('START ContextSwitching') unless $raz;
 
     return $raz ? $self->_abortImpersonation( $req, 1 ) : $req;
 }
