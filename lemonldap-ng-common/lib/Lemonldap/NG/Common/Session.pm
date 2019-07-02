@@ -93,7 +93,7 @@ sub BUILD {
 
     # Register options for common Apache::Session module
     my $moduleOptions = $self->storageModuleOptions || {};
-    my %options = (
+    my %options       = (
         %$moduleOptions,
         backend             => $self->storageModule,
         localStorage        => $self->cacheModule,
@@ -156,7 +156,7 @@ sub BUILD {
 }
 
 sub _tie_session {
-    my $self = $_[0];
+    my $self    = $_[0];
     my $options = $_[1] || {};
 
     my %h;

@@ -208,7 +208,7 @@ sub getDone {
             $v = decodeLdapValue($v);
             $f->{$k} = $v;
         }
-        my @t = split( /\D+/, $f->{done} );
+        my @t    = split( /\D+/, $f->{done} );
         my $done = timelocal( $t[5], $t[4], $t[3], $t[2], $t[1], $t[0] );
         $result->{"$f->{date}#$f->{uid}#$f->{ref}"} =
           { notified => $done, uid => $f->{uid}, ref => $f->{ref}, };
@@ -252,7 +252,7 @@ sub _delete {
     my ( $self, $filter ) = @_;
 
     my @entries = _search( $self, "$filter" );
-    my $mesg = {};
+    my $mesg    = {};
     foreach my $entry (@entries) {
         $mesg = $self->{ldap}->delete( $entry->dn() );
         $mesg->code && return 0;

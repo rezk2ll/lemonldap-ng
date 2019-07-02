@@ -126,7 +126,7 @@ sub run {
     while ( my $opt = shift @ARGV ) {
         if ( $opt eq '--udp' ) {
             my $hp = shift @ARGV;
-            my $s = IO::Socket::INET->new( Proto => 'udp', LocalAddr => $hp );
+            my $s  = IO::Socket::INET->new( Proto => 'udp', LocalAddr => $hp );
             $sel->add($s);
         }
         else {
@@ -138,7 +138,7 @@ sub run {
             if ( $fh == \*STDIN and $fh->eof ) {
                 exit;
             }
-            $_ = $fh->getline or next;
+            $_  = $fh->getline or next;
             $mn = int( time / 60 ) - $start + 1;
 
             # Cleaning activity array

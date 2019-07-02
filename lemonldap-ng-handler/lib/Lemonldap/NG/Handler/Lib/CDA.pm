@@ -26,7 +26,7 @@ sub run {
                 return $class->FORBIDDEN;
             }
 
-            my $redirectUrl = $class->_buildUrl( $req, $uri );
+            my $redirectUrl   = $class->_buildUrl( $req, $uri );
             my $redirectHttps = ( $redirectUrl =~ m/^https/ );
             $class->set_header_out(
                 $req,

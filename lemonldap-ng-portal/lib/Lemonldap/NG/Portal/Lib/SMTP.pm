@@ -86,7 +86,7 @@ sub translate {
 
     # Get language using llnglanguage cookie
     my $lang_code = $req->cookies->{llnglanguage} || 'en';
-    my $json = $self->conf->{templateDir} . "/common/mail/$lang_code.json";
+    my $json      = $self->conf->{templateDir} . "/common/mail/$lang_code.json";
     $json = $self->conf->{templateDir} . '/common/mail/en.json'
       unless ( -f $json );
     open F, $json

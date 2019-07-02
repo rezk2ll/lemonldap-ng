@@ -672,6 +672,7 @@ sub tree {
                                 'contextSwitchingRule',
                                 'contextSwitchingIdRule',
                                 'contextSwitchingStopWithLogout',
+
                                 #'contextSwitchingHiddenAttributes',
                             ]
                         },
@@ -945,7 +946,8 @@ sub tree {
                     help  => 'samlservice.html#organization',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'samlOrganizationDisplayName', 'samlOrganizationName',
+                        'samlOrganizationDisplayName',
+                        'samlOrganizationName',
                         'samlOrganizationURL'
                     ]
                 },

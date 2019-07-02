@@ -38,7 +38,7 @@ has _groups     => ( is => 'rw' );
 has _jsRedirect => ( is => 'rw' );
 
 # TrustedDomain regexp
-has trustedDomainsRe => ( is => 'rw' );
+has trustedDomainsRe         => ( is => 'rw' );
 has additionalTrustedDomains => ( is => 'rw', default => sub { [] } );
 
 # Lists to store plugins entry-points
@@ -201,7 +201,7 @@ sub reloadConf {
         my $header = $_;
         my $prm    = $self->conf->{ 'cors' . $_ };
         $header =~ s/_/-/;
-        $prm =~ s/\s+//;
+        $prm    =~ s/\s+//;
         $cors .= "Access-Control-$header;$prm;";
     }
     $self->cors($cors);
@@ -434,7 +434,7 @@ sub findEP {
         }
         else {
             foreach my $ep ( keys %$h ) {
-                my $callback = $h->{$ep};
+                my $callback    = $h->{$ep};
                 my $previousSub = $self->aroundSub->{$ep} ||= sub {
                     $self->logger->debug(
                         "$ep launched inside ${plugin}::$callback");

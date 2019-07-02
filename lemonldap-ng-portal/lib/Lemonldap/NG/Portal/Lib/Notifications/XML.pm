@@ -255,7 +255,7 @@ sub getNotifBack {
 }
 
 has imported => ( is => 'rw', default => 0 );
-has server => ( is => 'rw' );
+has server   => ( is => 'rw' );
 
 sub notificationServer {
     my ( $self, $req ) = @_;

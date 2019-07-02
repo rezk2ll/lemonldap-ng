@@ -341,7 +341,7 @@ sub newRawConf {
             $self->userLogger->notice(
                 'Raw saving attempt rejected, asking for confirmation to '
                   . $self->userId($req) );
-            $res->{result} = 0;
+            $res->{result}      = 0;
             $res->{needConfirm} = 1 if ( $s == CONFIG_WAS_CHANGED );
             $res->{message} .= '__needConfirmation__';
         }

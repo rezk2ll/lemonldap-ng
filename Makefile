@@ -1115,7 +1115,10 @@ test-diff:
 	done
 
 tidy: clean
-	find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print -exec perltidy -se -b {} \;
+	@if perltidy -v|grep v20181120 >/dev/null; then \
+		find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print -exec perltidy -se -b {} \; ; \
+		else echo "Wrong perltidy version, please install Perl::Tidy@20181120" ; exit 1 ;\
+	fi
 	find lemon*/ -name '*.bak' -delete
 	$(MAKE) json
 

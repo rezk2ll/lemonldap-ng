@@ -31,7 +31,7 @@ my $client = LLNG::Manager::Test->new( {
 );
 
 ##
-## Try to authenticate 
+## Try to authenticate
 ok(
     $res = $client->_post(
         '/',
@@ -57,13 +57,16 @@ ok(
 );
 count(1);
 expectOK($res);
-ok( $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> rtyler%,
-    'Connected as rtyler' )
-  or print STDERR Dumper( $res->[2]->[0] );
+ok(
+    $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> rtyler%,
+    'Connected as rtyler'
+) or print STDERR Dumper( $res->[2]->[0] );
 expectAuthenticatedAs( $res, 'rtyler' );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">contextSwitching_ON</span>%,
-    'Connected as rtyler' )
-  or print STDERR Dumper( $res->[2]->[0] );
+ok(
+    $res->[2]->[0] =~
+      m%<span trspan="contextSwitching_ON">contextSwitching_ON</span>%,
+    'Connected as rtyler'
+) or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
 # ContextSwitching form -> PE_OK
@@ -80,7 +83,8 @@ count(1);
 
 my ( $host, $url, $query ) =
   expectForm( $res, undef, '/switchcontext', 'spoofId' );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%, 'Found trspan="contextSwitching_ON"' )
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%,
+    'Found trspan="contextSwitching_ON"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_ON"' );
 $query =~ s/spoofId=/spoofId=dwho/;
 ok(
@@ -104,7 +108,8 @@ ok(
 );
 count(3);
 expectAuthenticatedAs( $res, 'dwho' );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%, 'Found trspan="contextSwitching_OFF"' )
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%,
+    'Found trspan="contextSwitching_OFF"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_OFF"' );
 ok(
     $res = $client->_get(
@@ -126,7 +131,8 @@ ok( $res->[2]->[0] =~ m%<td scope="row">dwho</td>%, 'Found value dwho' )
   or explain( $res->[2]->[0], 'Value dwho' );
 ok( $res->[2]->[0] =~ m%<td scope="row">mail</td>%, 'Found attribute mail' )
   or explain( $res->[2]->[0], 'Attribute mail' );
-ok( $res->[2]->[0] =~ m%<td scope="row">testPrefix__session_id</td>%, 'Found spoofed _id_session' )
+ok( $res->[2]->[0] =~ m%<td scope="row">testPrefix__session_id</td>%,
+    'Found spoofed _id_session' )
   or explain( $res->[2]->[0], 'Spoofed _id_session' );
 count(5);
 

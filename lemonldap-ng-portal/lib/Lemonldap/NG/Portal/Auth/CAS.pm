@@ -19,7 +19,7 @@ extends 'Lemonldap::NG::Portal::Main::Auth', 'Lemonldap::NG::Portal::Lib::CAS';
 # PROPERTIES
 
 has srvNumber => ( is => 'rw', default => 0 );
-has srvList => ( is => 'rw', default => sub { [] } );
+has srvList   => ( is => 'rw', default => sub { [] } );
 use constant sessionKind => 'CAS';
 
 # INITIALIZATION
@@ -224,7 +224,7 @@ sub extractFormInfo {
         # Get a proxy ticket for each proxied service
         foreach ( keys %$proxied ) {
             my $service = $proxied->{$_};
-            my $pt = $self->retrievePT( $service, $pgtId, $srvConf );
+            my $pt      = $self->retrievePT( $service, $pgtId, $srvConf );
 
             unless ($pt) {
                 $self->logger->error(

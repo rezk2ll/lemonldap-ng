@@ -169,7 +169,7 @@ sub findB {
         }
         if ( $c eq $char ) {
             my $rest = join( '', @chars );
-            $res =~ s/^\s*(.*?)\s*/$1/;
+            $res  =~ s/^\s*(.*?)\s*/$1/;
             $rest =~ s/^\s*(.*?)\s*/$1/;
             return ( $res, $rest );
         }

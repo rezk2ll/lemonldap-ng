@@ -28,7 +28,7 @@ sub handler {
     $r ||= $class;
     my ( $uri, $args ) = ( $r->uri, $r->args );
     my $uri_full = $uri . ( $args ? "?$args" : '' );
-    my $env = {
+    my $env      = {
 
         #%ENV,
         HTTP_HOST   => $r->hostname,

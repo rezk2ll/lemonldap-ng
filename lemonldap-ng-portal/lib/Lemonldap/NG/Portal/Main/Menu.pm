@@ -60,7 +60,7 @@ sub params {
     $self->{conf}->{imgPath} ||= $self->{staticPrefix};
     my %res;
     my @defaultTabs = (qw/appslist password logout loginHistory oidcConsents/);
-    my @customTabs = split( /,\s*/, $self->{conf}->{customMenuTabs} || '' );
+    my @customTabs  = split( /,\s*/, $self->{conf}->{customMenuTabs} || '' );
 
     # Tab to display
     # Get the tab URL parameter
@@ -178,7 +178,7 @@ sub appslist {
     my $catlevel = 0;
 
     my $applicationList = clone( $self->conf->{applicationList} );
-    my $filteredList = $self->_filter( $req, $applicationList );
+    my $filteredList    = $self->_filter( $req, $applicationList );
     push @$appslist,
       $self->_buildCategoryHash( $req, "", $filteredList, $catlevel );
 

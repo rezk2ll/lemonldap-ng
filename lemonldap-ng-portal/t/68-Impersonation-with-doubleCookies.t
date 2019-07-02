@@ -138,7 +138,7 @@ ok(
 );
 count(1);
 
-my $id = expectCookie($res);
+my $id  = expectCookie($res);
 my $id2 = expectCookie( $res, 'lemonldaphttp' );
 expectRedirection( $res, 'http://auth.example.com/' );
 

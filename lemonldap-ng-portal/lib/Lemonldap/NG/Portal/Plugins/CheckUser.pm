@@ -416,7 +416,7 @@ sub _splitAttributes {
         if ( $element->{key} eq 'groups' ) {
             $self->logger->debug('Key "groups" found');
             my $separator = $self->{conf}->{multiValuesSeparator};
-            my @tmp = split /\Q$separator/, $element->{value};
+            my @tmp       = split /\Q$separator/, $element->{value};
             $grps = [ map { { value => $_ } } sort @tmp ];
             next;
         }

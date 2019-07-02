@@ -19,7 +19,7 @@ has adPwdMaxAge => (
     lazy    => 1,
     builder => sub {
         my $conf = $_[0]->{conf};
-        my $res = $conf->{ADPwdMaxAge} || 0;
+        my $res  = $conf->{ADPwdMaxAge} || 0;
         return $res * 10000000;   # padding with '0' to obtain 0.1 micro-seconds
     }
 );
@@ -29,7 +29,7 @@ has adPwdExpireWarning => (
     lazy    => 1,
     builder => sub {
         my $conf = $_[0]->{conf};
-        my $res = $conf->{ADPwdExpireWarning} || 0;
+        my $res  = $conf->{ADPwdExpireWarning} || 0;
         return $res * 10000000;   # padding with '0' to obtain 0.1 micro-seconds
     }
 );

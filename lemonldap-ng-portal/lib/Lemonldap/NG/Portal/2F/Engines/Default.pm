@@ -152,7 +152,7 @@ sub init {
 sub run {
     my ( $self, $req ) = @_;
     my $checkLogins = $req->param('checkLogins');
-    my $spoofId = $req->param('spoofId') || '';
+    my $spoofId     = $req->param('spoofId') || '';
     $self->logger->debug("2F checkLogins set") if ($checkLogins);
 
     # Skip 2F unless a module has been registered

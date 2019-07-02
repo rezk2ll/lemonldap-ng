@@ -116,7 +116,7 @@ sub decrypt {
     $data =~ s/%0A/\n/ig;
     $data = decode_base64($data);
     my $iv;
-    $iv = bytes::substr( $data, 0, IV_LENGTH );
+    $iv   = bytes::substr( $data, 0, IV_LENGTH );
     $data = bytes::substr( $data, IV_LENGTH );
     eval { $data = $self->_getCipher->set_iv($iv)->decrypt($data); };
 
@@ -191,7 +191,7 @@ sub _cryptHex {
     }
     $data = pack "H*", $data;
     if ( $sub eq 'decrypt' ) {
-        $iv = bytes::substr( $data, 0, IV_LENGTH );
+        $iv   = bytes::substr( $data, 0, IV_LENGTH );
         $data = bytes::substr( $data, IV_LENGTH );
     }
     eval { $data = $self->_getCipher($key)->set_iv($iv)->$sub($data); };
@@ -202,7 +202,7 @@ sub _cryptHex {
     if ( $sub eq 'encrypt' ) {
         $data = $iv . $data;
     }
-    $msg = "";
+    $msg  = "";
     $data = unpack "H*", $data;
     return $data;
 }

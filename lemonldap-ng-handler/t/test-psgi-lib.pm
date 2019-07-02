@@ -42,7 +42,7 @@ sub init {
     open F, ">$file"
       or die $!;
     my $now = time;
-    my $ts = strftime "%Y%m%d%H%M%S", localtime;
+    my $ts  = strftime "%Y%m%d%H%M%S", localtime;
 
     print F '{"_updateTime":"'
       . $ts

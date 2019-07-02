@@ -51,7 +51,7 @@ sub newNotification {
         }
 
         my $result = XML::LibXML::Document->new( $version, $encoding );
-        my $root = XML::LibXML::Element->new('root');
+        my $root   = XML::LibXML::Element->new('root');
         $root->appendChild($notif);
         $result->setDocumentElement($root);
         $result = $result->serialize;

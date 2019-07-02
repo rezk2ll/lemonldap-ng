@@ -34,7 +34,7 @@ sub onReload {
 sub checkConf {
     my ( $class, $force ) = @_;
     $class->logger->debug("Check configuration for $class");
-    my $prm = { local => !$force, localPrm => $class->localConfig };
+    my $prm  = { local => !$force, localPrm => $class->localConfig };
     my $conf = $class->confAcc->getConf($prm);
     chomp $Lemonldap::NG::Common::Conf::msg;
 
@@ -302,7 +302,7 @@ sub locationRulesInit {
 
         # Default policy set to 'accept'
         unless ( $class->tsv->{defaultCondition}->{$vhost} ) {
-            $class->tsv->{defaultCondition}->{$vhost} = sub { 1 };
+            $class->tsv->{defaultCondition}->{$vhost}  = sub { 1 };
             $class->tsv->{defaultProtection}->{$vhost} = 0;
         }
     }

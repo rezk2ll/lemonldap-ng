@@ -441,7 +441,7 @@ sub scanTree {
         die 'Not an array';
     }
     $prefix //= '';
-    my $ord = -1;
+    my $ord      = -1;
     my $nodeName = $path ? '_nodes' : 'data';
     foreach my $leaf (@$tree) {
         $ord++;
@@ -498,7 +498,7 @@ sub scanTree {
                     }
                 }
             }
-            $jleaf->{help} = $leaf->{help} if ( $leaf->{help} );
+            $jleaf->{help}          = $leaf->{help} if ( $leaf->{help} );
             $jleaf->{_nodes_filter} = $leaf->{nodes_filter}
               if ( $leaf->{nodes_filter} );
             push @$json, $jleaf;

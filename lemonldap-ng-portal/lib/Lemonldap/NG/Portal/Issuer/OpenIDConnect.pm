@@ -29,7 +29,7 @@ sub beforeAuth { 'exportRequestParameters' }
 
 use constant sessionKind => 'OIDCI';
 
-has rule => ( is => 'rw' );
+has rule          => ( is => 'rw' );
 has configStorage => (
     is      => 'ro',
     lazy    => 1,
@@ -710,7 +710,7 @@ sub run {
                 };
 
                 $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
-                $id_token_payload_hash->{'acr'} = $id_token_acr
+                $id_token_payload_hash->{'acr'}     = $id_token_acr
                   if $id_token_acr;
 
                 # Create ID Token
@@ -1117,7 +1117,7 @@ sub token {
     };
 
     my $nonce = $codeSession->data->{nonce};
-    $id_token_payload_hash->{nonce} = $nonce if defined $nonce;
+    $id_token_payload_hash->{nonce}     = $nonce   if defined $nonce;
     $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
 
     # Create ID Token

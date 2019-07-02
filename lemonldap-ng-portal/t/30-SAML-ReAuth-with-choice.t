@@ -133,7 +133,7 @@ SKIP: {
         'Re auth'
     );
     $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
-    $tmp = expectCookie($res);
+    $tmp   = expectCookie($res);
     ok( $tmp ne $idpId, 'Get a new session' );
     $idpId = $tmp;
     ( $url, $query ) = expectRedirection( $res,

@@ -447,7 +447,7 @@ sub checkMessage {
             $self->logger->debug("HTTP-REDIRECT: SAML Artifact $artifact");
 
             # Resolve Artifact
-            $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
+            $method  = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
             $message = $self->resolveArtifact( $profile, $artifact, $method );
 
             # Request or response ?
@@ -2351,7 +2351,7 @@ sub getAuthnContext {
 sub timestamp2samldate {
     my ( $self, $timestamp ) = @_;
 
-    my @t = gmtime($timestamp);
+    my @t        = gmtime($timestamp);
     my $samldate = strftime( "%Y-%m-%dT%TZ", @t );
 
     $self->logger->debug(
@@ -2872,7 +2872,7 @@ sub createAttribute {
 
     # Default values
     $friendly_name ||= $name;
-    $format ||= Lasso::Constants::SAML2_ATTRIBUTE_NAME_FORMAT_BASIC;
+    $format        ||= Lasso::Constants::SAML2_ATTRIBUTE_NAME_FORMAT_BASIC;
 
     # Set attribute properties
     $attribute->Name($name);

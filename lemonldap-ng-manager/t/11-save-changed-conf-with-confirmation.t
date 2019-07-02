@@ -6,7 +6,7 @@ use strict;
 use JSON;
 require 't/test-lib.pm';
 
-my $struct = 't/jsonfiles/11-modified-with-confirmation.json';
+my $struct    = 't/jsonfiles/11-modified-with-confirmation.json';
 my $confFiles = [ 't/conf/lmConf-1.json', 't/conf/lmConf-2.json' ];
 
 sub body {

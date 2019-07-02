@@ -225,7 +225,7 @@ sub _session {
 
     if ($skey) {
         if ( $skey =~ s/^\[(.*)\]$/$1/ ) {
-            my @sk = split /,/, $skey;
+            my @sk  = split /,/, $skey;
             my $res = {};
             $res->{$_} = $session{$_} foreach (@sk);
             return $self->sendJSONresponse( $req, $res );
