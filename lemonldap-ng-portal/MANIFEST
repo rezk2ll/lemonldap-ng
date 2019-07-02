@@ -464,6 +464,7 @@ t/31-Auth-and-issuer-CAS-XSS-on-logout.t
 t/32-Auth-and-issuer-OIDC-authorization_code-OP-logout.t
 t/32-Auth-and-issuer-OIDC-authorization_code-public_client.t
 t/32-Auth-and-issuer-OIDC-authorization_code-with-authchoice.t
+t/32-Auth-and-issuer-OIDC-authorization_code-with-none-alg.t
 t/32-Auth-and-issuer-OIDC-authorization_code.t
 t/32-Auth-and-issuer-OIDC-hybrid.t
 t/32-Auth-and-issuer-OIDC-implicit.t
