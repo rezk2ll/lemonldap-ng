@@ -74,9 +74,10 @@ sub display {
 
     if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
         $self->logger->debug('Request to stop ContextSwitching');
-        $self->userLogger->notice('STOP ContextSwitching');
         if ( $self->conf->{contextSwitchingStopWithLogout} ) {
+            $self->logger->debug('STOP ContextSwitching');
             $self->logger->debug('Send logout request');
+            $self->userLogger->notice('STOP ContextSwitching');
             return $self->p->do( $req,
                 [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ]
             );
@@ -149,7 +150,7 @@ sub run {
 
     # Main session
     $self->p->updateSession( $req, $req->sessionInfo );
-    
+
     return $self->p->do( $req, [ sub { $statut } ] );
 }
 
@@ -201,7 +202,8 @@ sub _abortImpersonation {
     if ($abort) {
         $self->logger->debug('ABORT ContextSwitching');
         $self->userLogger->notice('ABORT ContextSwitching');
-        $self->p->updateSession( $req, { '_session_kind' => 'SPOOF' } );
+        my $abortSession = $self->p->getApacheSession( $req->id );
+        $abortSession->remove;
     }
     else {
         $self->logger->debug('STOP ContextSwitching');
