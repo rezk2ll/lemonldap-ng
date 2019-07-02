@@ -136,7 +136,7 @@ ok(
 count(1);
 
 $pdata = expectCookie( $res, 'lemonldappdata' );
-$id = expectCookie($res);
+$id    = expectCookie($res);
 
 expectRedirection( $res, 'http://test1.example.com' );
 

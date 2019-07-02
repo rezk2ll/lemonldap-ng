@@ -108,7 +108,7 @@ sub display {
 
 sub run {
     my ( $self, $req ) = @_;
-    my $statut = PE_OK;
+    my $statut  = PE_OK;
     my $spoofId = $req->param('spoofId') || '';    # ContextSwitching required ?
 
     # Check activation rule

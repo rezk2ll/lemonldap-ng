@@ -451,7 +451,10 @@ sub updatePersistentSession {
     my ( $self, $req, $infos, $uid, $id ) = @_;
 
     # Return if no infos to update
-    return () unless ( ref $infos eq 'HASH' and %$infos and !$self->conf->{disablePersistentStorage} );
+    return ()
+      unless ( ref $infos eq 'HASH'
+        and %$infos
+        and !$self->conf->{disablePersistentStorage} );
 
     $uid ||= $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
       || $req->userData->{ $self->conf->{whatToTrace} };

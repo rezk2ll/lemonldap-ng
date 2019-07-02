@@ -57,7 +57,7 @@ BEGIN {
 # @return New Lemonldap::NG::Common::Conf object
 sub new {
     my $class = shift;
-    my $self = bless {}, $class;
+    my $self  = bless {}, $class;
     if ( ref( $_[0] ) ) {
         %$self = %{ $_[0] };
     }

@@ -341,7 +341,7 @@ sub _LDAPGKFAS {
     $args->{ldapAttributeContent} ||= 'description';
 
     my $ldap = Apache::Session::Store::LDAP::ldap( { args => $args } );
-    my $msg = $ldap->search(
+    my $msg  = $ldap->search(
         base   => $args->{ldapConfBase},
         filter => '(objectClass=' . $args->{ldapObjectClass} . ')',
         attrs  => [ $args->{ldapAttributeId}, $args->{ldapAttributeContent} ],

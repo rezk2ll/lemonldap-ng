@@ -68,7 +68,7 @@ SKIP: {
         # -------------------
         ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get menu' );
         my @form = ( $res->[2]->[0] =~ m#<form.*?</form>#sg );
-        ok( @form == 3, 'Display 3 choices' ) or explain(scalar(@form),3);
+        ok( @form == 3, 'Display 3 choices' ) or explain( scalar(@form), 3 );
         foreach (@form) {
             expectForm( [ $res->[0], $res->[1], [$_] ], undef, undef, 'test' );
         }

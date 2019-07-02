@@ -160,7 +160,7 @@ sub _scanNodes {
         hdebug("Looking to $name");
 
         # subnode
-        my $subNodes     = $leaf->{nodes} // $leaf->{_nodes};
+        my $subNodes     = $leaf->{nodes}      // $leaf->{_nodes};
         my $subNodesCond = $leaf->{nodes_cond} // $leaf->{_nodes_cond};
 
         ##################################
@@ -564,7 +564,7 @@ sub _scanNodes {
             hdebug('Application list subnode');
             use feature 'state';
             my @cats = split /\//, $1;
-            my $app = pop @cats;
+            my $app  = pop @cats;
             $self->newConf->{applicationList} //= {};
 
             # $cn is a pointer to the parent
@@ -872,7 +872,7 @@ sub _scanNodes {
                 }
                 else {
                     @oldHosts = grep { $_ ne $host } @oldHosts;
-                    @oldKeys = keys %{ $self->refConf->{$name}->{$host} };
+                    @oldKeys  = keys %{ $self->refConf->{$name}->{$host} };
                 }
                 foreach my $prm ( @{ $getHost->{h} } ) {
                     $self->newConf->{$name}->{$host}->{ $prm->{k} } =
@@ -1101,14 +1101,14 @@ sub _unitTest {
                 or $attr->{type} =~ /Container$/ )
             {
                 my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail};
-                my $msg    = $attr->{msgFail} // $type->{msgFail};
+                my $msg    = $attr->{msgFail}    // $type->{msgFail};
                 $res = 0
                   unless (
                     $self->_execTest( {
                             keyTest    => $attr->{keyTest} // $type->{keyTest},
                             keyMsgFail => $attr->{keyMsgFail}
                               // $type->{keyMsgFail},
-                            test    => $attr->{test} // $type->{test},
+                            test    => $attr->{test}    // $type->{test},
                             msgFail => $attr->{msgFail} // $type->{msgFail},
                         },
                         $conf->{$key},

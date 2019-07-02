@@ -112,7 +112,7 @@ sub userError {
 # Responses methods
 sub sendJSONresponse {
     my ( $self, $req, $j, %args ) = @_;
-    $args{code} ||= 200;
+    $args{code}    ||= 200;
     $args{headers} ||= $req->respHeaders || [];
     my $type = 'application/json; charset=utf-8';
     if ( ref $j ) {
@@ -201,7 +201,7 @@ sub _mustBeDefined {
     my $name = ( caller(1) )[3];
     $name =~ s/^.*:://;
     my $call = ( caller(1) )[0];
-    my $ref = ref( $_[0] ) || $call;
+    my $ref  = ref( $_[0] ) || $call;
     die "$name() method must be implemented (probably in $ref)";
 }
 
@@ -238,7 +238,7 @@ sub sendHtml {
     my $sc = $req->script_name;
     $sc = '.' unless ($sc);
     $sc =~ s#/*$#/#;
-    $args{code} ||= 200;
+    $args{code}    ||= 200;
     $args{headers} ||= $req->respHeaders || [];
     my $htpl;
     $template = ( $args{templateDir} // $self->templateDir ) . "/$template.tpl";

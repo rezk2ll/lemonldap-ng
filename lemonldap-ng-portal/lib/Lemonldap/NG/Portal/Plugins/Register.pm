@@ -455,7 +455,7 @@ sub display {
 
     # Display captcha if it's enabled
     if ( $req->captcha ) {
-        $templateParams{CAPTCHA_SRC} = $req->captcha;
+        $templateParams{CAPTCHA_SRC}  = $req->captcha;
         $templateParams{CAPTCHA_SIZE} = $self->conf->{captcha_size} || 6;
     }
     if ( $req->token ) {

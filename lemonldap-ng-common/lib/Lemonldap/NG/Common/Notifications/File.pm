@@ -38,7 +38,7 @@ has fileNameSeparator => ( is => 'rw', default => '_' );
 sub get {
     my ( $self, $uid, $ref ) = @_;
     return () unless ($uid);
-    my $fns = $self->{fileNameSeparator};
+    my $fns        = $self->{fileNameSeparator};
     my $identifier = &getIdentifier( $self, $uid, $ref );
 
     opendir D, $self->{dirName};

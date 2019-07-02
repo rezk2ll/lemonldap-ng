@@ -646,14 +646,16 @@ sub tests {
         # Warn if Impersonation and ContextSwitching are simultaneously enabled
         impersonation => sub {
             return ( 1,
-                "Impersonation and ContextSwitching are simultaneously enabled" )
-              if ( $conf->{impersonationRule} && $conf->{contextSwitchingRule} );
+                "Impersonation and ContextSwitching are simultaneously enabled"
+              )
+              if ( $conf->{impersonationRule}
+                && $conf->{contextSwitchingRule} );
 
             # Return
             return 1;
         },
 
-        # Warn if persistent storage is disabled with 2FA, History, OIDCConsents and Notifications
+# Warn if persistent storage is disabled with 2FA, History, OIDCConsents and Notifications
         persistentStorage => sub {
             return 1 unless ( $conf->{disablePersistentStorage} );
             return ( 1, "2FA enabled WITHOUT persistent session storage" )

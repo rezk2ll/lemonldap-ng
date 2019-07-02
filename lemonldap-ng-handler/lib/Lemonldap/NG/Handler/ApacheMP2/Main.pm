@@ -186,7 +186,7 @@ sub addToHtmlHead {
             #unless ($ctx) {
             #    $f->r->headers_out->unset('Content-Length');
             #}
-            my $done = 0;
+            my $done   = 0;
             my $buffer = $ctx->{data} ? $ctx->{data} : '';
             my ( $bdata, $seen_eos ) = flatten_bb($bb);
             unless ($done) {

@@ -1694,7 +1694,7 @@ sub sloServer {
 
         # Create SLO status session and get ID
         my $sloStatusSessionInfo = $self->getSamlSession( undef, $sloInfos );
-        my $relayID = $sloStatusSessionInfo->id;
+        my $relayID              = $sloStatusSessionInfo->id;
 
         $self->logger->debug("Create relay session $relayID");
 

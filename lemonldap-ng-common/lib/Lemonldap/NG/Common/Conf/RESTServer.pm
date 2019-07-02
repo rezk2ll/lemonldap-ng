@@ -662,7 +662,7 @@ sub _scanCatsAndApps {
         }
         else {
             $item->{title} = $apps->{$cat}->{options}->{name};
-            $item->{type} = $apps->{$cat}->{type} = 'menuApp';
+            $item->{type}  = $apps->{$cat}->{type} = 'menuApp';
             foreach my $o (
                 grep { not /^name$/ }
                 keys %{ $apps->{$cat}->{options} }

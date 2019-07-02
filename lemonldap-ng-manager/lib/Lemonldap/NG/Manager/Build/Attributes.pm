@@ -1148,6 +1148,7 @@ sub attributes {
             type          => 'bool',
             documentation => 'Enabled persistent storage',
         },
+
         # SAML issuer
         issuerDBSAMLActivation => {
             default       => 0,
