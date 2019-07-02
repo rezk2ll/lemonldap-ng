@@ -62,6 +62,8 @@ sub init {
 
 sub display {
     my ( $self, $req ) = @_;
+    my $realSessionId = $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
+    my $realSession = $self->p->getApacheSession($realSessionId)->data;
 
     # Check access rules
     unless ( $self->rule->( $req, $req->userData )
@@ -75,15 +77,15 @@ sub display {
     if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
         $self->logger->debug('Request to stop ContextSwitching');
         if ( $self->conf->{contextSwitchingStopWithLogout} ) {
-            $self->logger->debug('STOP ContextSwitching');
+            $self->logger->debug("STOP ContextSwitching for $req->{user}");
             $self->logger->debug('Send logout request');
-            $self->userLogger->notice('STOP ContextSwitching');
+            $self->userLogger->notice("STOP ContextSwitching for $req->{user}");
             return $self->p->do( $req,
                 [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ]
             );
         }
         else {
-            $req = $self->_abortImpersonation( $req, 0 );
+            $req = $self->_abortImpersonation( $req, $req->{user}, $realSession->{$self->conf->{whatToTrace}}, 0 );
             $self->p->updateSession( $req, $req->userData );
             return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
         }
@@ -112,6 +114,7 @@ sub display {
 sub run {
     my ( $self, $req ) = @_;
     my $statut  = PE_OK;
+    my $realId  = $req->{user};
     my $spoofId = $req->param('spoofId') || '';    # ContextSwitching required ?
 
     # Check activation rule
@@ -151,6 +154,9 @@ sub run {
 
     # Main session
     $self->p->updateSession( $req, $req->sessionInfo );
+    $self->logger->debug("Update $realId session with $spoofId session data");
+    $self->userLogger->notice(
+        "update $realId session with $spoofId session data");
 
     return $self->p->do( $req, [ sub { $statut } ] );
 }
@@ -158,6 +164,7 @@ sub run {
 sub _switchContext {
     my ( $self, $req, $spoofId ) = @_;
     my $realSessionId = $req->userData->{_session_id};
+    my $realId        = $req->{user};
     my $raz           = 0;
     $req->{user} = $spoofId;
 
@@ -188,27 +195,32 @@ sub _switchContext {
 
     $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"} =
       $realSessionId;
-    $self->userLogger->notice('START ContextSwitching') unless $raz;
+    $self->userLogger->notice(
+        "START ContextSwitching with uid: $spoofId for $realId")
+      unless $raz;
 
-    return $raz ? $self->_abortImpersonation( $req, 1 ) : $req;
+    return $raz
+      ? $self->_abortImpersonation( $req, $spoofId, $realId, 1 )
+      : $req;
 }
 
 sub _abortImpersonation {
-    my ( $self, $req, $abort ) = @_;
+    my ( $self, $req, $spoofId, $realId, $abort ) = @_;
     my $type = $abort ? 'sessionInfo' : 'userData';
     my $realSessionId =
       $req->{$type}->{"$self->{conf}->{impersonationPrefix}_session_id"};
     my $session = $self->p->getApacheSession($realSessionId)->data;
 
     if ($abort) {
-        $self->logger->debug('ABORT ContextSwitching');
-        $self->userLogger->notice('ABORT ContextSwitching');
+        $self->logger->debug("ABORT ContextSwitching $spoofId for $realId");
+        $self->userLogger->notice(
+            "ABORT ContextSwitching $spoofId for $realId");
         my $abortSession = $self->p->getApacheSession( $req->id );
         $abortSession->remove;
     }
     else {
-        $self->logger->debug('STOP ContextSwitching');
-        $self->userLogger->notice('STOP ContextSwitching');
+        $self->logger->debug("STOP ContextSwitching $spoofId for $realId");
+        $self->userLogger->notice("STOP ContextSwitching $spoofId for $realId");
         $self->p->deleteSession($req);
     }
 
