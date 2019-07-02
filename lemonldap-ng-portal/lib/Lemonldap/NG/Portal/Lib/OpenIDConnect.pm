@@ -19,7 +19,7 @@ use Mouse;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.6';
 
 # OpenID Connect standard claims
 use constant PROFILE => [
@@ -768,7 +768,9 @@ sub verifyJWTSignature {
                   . " is present but algorithm is 'none'" );
             return 0;
         }
-        return 1;
+        $self->logger->debug(
+            "JWT algorithm is 'none', signature cannot be verified");
+        return 0;
     }
 
     if ( $alg eq "HS256" or $alg eq "HS384" or $alg eq "HS512" ) {
