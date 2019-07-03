@@ -1341,7 +1341,7 @@ sub buildLogoutResponse {
 
 # Create session_state parameter
 # @param session_id Session ID
-# @param client_id CLient ID
+# @param client_id Client ID
 # return String Session state
 sub createSessionState {
     my ( $self, $session_id, $client_id ) = @_;
