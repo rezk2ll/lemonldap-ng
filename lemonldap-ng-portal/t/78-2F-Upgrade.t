@@ -8,6 +8,7 @@ require 't/smtp.pm';
 
 use_ok('Lemonldap::NG::Common::FormEncode');
 count(1);
+my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
@@ -34,7 +35,7 @@ my $client = LLNG::Manager::Test->new( {
 # Try to authenticate
 # -------------------
 ok(
-    my $res = $client->_post(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho&lmAuth=weak'),
         length => 35,
@@ -51,7 +52,7 @@ my $id = expectCookie($res);
 # --------------------------------------------
 
 ok(
-    my $res = $client->_get(
+    $res = $client->_get(
         '/upgradesession',
         query  => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29t',
         accept => 'text/html',
@@ -68,7 +69,7 @@ my ( $host, $url, $query ) =
 # ----------------------
 
 ok(
-    my $res = $client->_post(
+    $res = $client->_post(
         '/upgradesession',
         IO::String->new($query),
         length => length($query),
@@ -90,7 +91,7 @@ $query = $query . "&user=dwho&password=dwho&lmAuth=strong";
 # -------------------------------------------
 
 ok(
-    my $res = $client->_post(
+    $res = $client->_post(
         '/upgradesession',
         IO::String->new($query),
         length => length($query),
@@ -142,7 +143,7 @@ expectRedirection( $res, 'http://test1.example.com' );
 
 # Make pdata was cleared and we aren't being redirected
 ok(
-    my $res = $client->_get(
+    $res = $client->_get(
         '/',
         accept => 'text/html',
         cookie => "lemonldap=$id;lemonldappdata=$pdata",
