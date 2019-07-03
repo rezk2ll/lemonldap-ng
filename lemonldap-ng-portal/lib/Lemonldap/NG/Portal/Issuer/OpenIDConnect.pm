@@ -667,7 +667,7 @@ sub run {
                     my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
                       ->{oidcRPMetaDataOptionsIDTokenSignAlg};
                     my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
-                    $at_hash = $self->createHash( $access_token, $hash_level );
+                    $at_hash = $self->createHash( $access_token, $hash_level ) if $hash_level;
                 }
 
                 # ID token payload
@@ -768,7 +768,7 @@ sub run {
                 $self->logger->debug("Generated code: $code");
 
                 # Compute hash to store in c_hash
-                $c_hash = $self->createHash( $code, $hash_level );
+                $c_hash = $self->createHash( $code, $hash_level ) if $hash_level;
 
                 if ( $response_type =~ /\btoken\b/ ) {
 
@@ -1094,7 +1094,7 @@ sub token {
     my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
       ->{oidcRPMetaDataOptionsIDTokenSignAlg};
     my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
-    my $at_hash = $self->createHash( $access_token, $hash_level );
+    my $at_hash = $self->createHash( $access_token, $hash_level ) if $hash_level;
 
     # ID token payload
     my $id_token_exp = $self->conf->{oidcRPMetaDataOptions}->{$rp}
