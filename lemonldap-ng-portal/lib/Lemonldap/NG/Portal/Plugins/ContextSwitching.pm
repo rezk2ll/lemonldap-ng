@@ -75,8 +75,7 @@ sub display {
     unless ( $realSession = $self->p->getApacheSession($realSessionId) ) {
         $self->userLogger->warn(
             "ContextSwitching -> session $realSession expired");
-        return $self->p->do( $req,
-            [ sub { PE_SESSIONEXPIRED } ] );
+        return $self->p->do( $req, [ sub { PE_SESSIONEXPIRED } ] );
     }
 
     # Check access rules
@@ -91,9 +90,11 @@ sub display {
     if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
         $self->logger->debug('Request to stop ContextSwitching');
         if ( $self->conf->{contextSwitchingStopWithLogout} ) {
-            $self->logger->debug("** STOP ContextSwitching ** for $req->{user}");
+            $self->logger->debug(
+                "** STOP ContextSwitching ** for $req->{user}");
             $self->logger->debug('Send logout request');
-            $self->userLogger->notice("** STOP ContextSwitching ** for $req->{user}");
+            $self->userLogger->notice(
+                "** STOP ContextSwitching ** for $req->{user}");
             $self->logger->debug("Remove real session $realSession");
             $self->userLogger->notice("Remove real session $realSession");
             $realSession->remove;
@@ -173,9 +174,12 @@ sub run {
 
     # Main session
     $self->p->updateSession( $req, $req->sessionInfo );
-    $self->logger->debug("ContextSwitching -> Update $realId session with $spoofId session data");
+    $self->logger->debug(
+        "ContextSwitching -> Update $realId session with $spoofId session data"
+    );
     $self->userLogger->notice(
-        "ContextSwitching -> Update $realId session with $spoofId session data");
+        "ContextSwitching -> Update $realId session with $spoofId session data"
+    );
 
     return $self->p->do( $req, [ sub { $statut } ] );
 }
@@ -247,13 +251,15 @@ sub _abortImpersonation {
         }
     }
     else {
-        $self->logger->debug("** STOP ContextSwitching ** for $realId with uid: $spoofId");
-        $self->userLogger->notice("** STOP ContextSwitching ** for $realId with uid: $spoofId");
+        $self->logger->debug(
+            "** STOP ContextSwitching ** for $realId with uid: $spoofId");
+        $self->userLogger->notice(
+            "** STOP ContextSwitching ** for $realId with uid: $spoofId");
         $self->p->deleteSession($req);
     }
 
     # Restore real session
-    $req->{$type} = {%{$session->data}};
+    $req->{$type} = { %{ $session->data } };
     $req->{user} = $session->data->{_user};
     $req->urldc( $self->conf->{portal} );
     $req->id($realSessionId);
