@@ -192,7 +192,14 @@ sub _switchContext {
     $req->{user} = $spoofId;
 
     # Search user in database & create session
-    $req->steps( [ 'getUser', $self->p->sessionData, 'buildCookie' ] );
+    $req->steps( [
+            'getUser',        'setAuthSessionInfo',
+            'setSessionInfo', 'setMacros',
+            'setGroups',      'setPersistentSessionInfo',
+            'setLocalGroups', 'store',
+            'buildCookie'
+        ]
+    );
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_BADCREDENTIALS ) {
             $self->userLogger->warn(
