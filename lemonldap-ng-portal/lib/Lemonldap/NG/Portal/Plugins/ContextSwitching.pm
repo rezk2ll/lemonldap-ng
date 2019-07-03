@@ -2,8 +2,14 @@ package Lemonldap::NG::Portal::Plugins::ContextSwitching;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants
-  qw( PE_OK PE_REDIRECT PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED PE_MALFORMEDUSER );
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
+  PE_ERROR
+  PE_REDIRECT
+  PE_BADCREDENTIALS
+  PE_IMPERSONATION_SERVICE_NOT_ALLOWED
+  PE_MALFORMEDUSER
+);
 
 our $VERSION = '2.0.6';
 
@@ -62,8 +68,15 @@ sub init {
 
 sub display {
     my ( $self, $req ) = @_;
-    my $realSessionId = $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
-    my $realSession = $self->p->getApacheSession($realSessionId)->data;
+    my $realSessionId =
+      $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
+    my $realSession;
+    unless ( $realSession = $self->p->getApacheSession($realSessionId) ) {
+        $self->userLogger->warn(
+            "ContextSwitching session $realSession expired");
+        return PE_ERROR;
+    }
+    $realSession = $realSession->data;
 
     # Check access rules
     unless ( $self->rule->( $req, $req->userData )
@@ -85,7 +98,8 @@ sub display {
             );
         }
         else {
-            $req = $self->_abortImpersonation( $req, $req->{user}, $realSession->{$self->conf->{whatToTrace}}, 0 );
+            $req = $self->_abortImpersonation( $req, $req->{user},
+                $realSession->{ $self->conf->{whatToTrace} }, 0 );
             $self->p->updateSession( $req, $req->userData );
             return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
         }
@@ -209,14 +223,24 @@ sub _abortImpersonation {
     my $type = $abort ? 'sessionInfo' : 'userData';
     my $realSessionId =
       $req->{$type}->{"$self->{conf}->{impersonationPrefix}_session_id"};
-    my $session = $self->p->getApacheSession($realSessionId)->data;
+    my $session;
+    unless ( $session = $self->p->getApacheSession($realSessionId) ) {
+        $self->userLogger->warn("Session $session expired");
+        return $req;
+    }
+    $session = $session->data;
 
     if ($abort) {
         $self->logger->debug("ABORT ContextSwitching $spoofId for $realId");
         $self->userLogger->notice(
             "ABORT ContextSwitching $spoofId for $realId");
-        my $abortSession = $self->p->getApacheSession( $req->id );
-        $abortSession->remove;
+        if ( my $abortSession = $self->p->getApacheSession( $req->id ) ) {
+            $abortSession->remove;
+        }
+        else {
+            $self->userLogger->warn(
+                "ContextSwitching: session " . $req->id . "expired" );
+        }
     }
     else {
         $self->logger->debug("STOP ContextSwitching $spoofId for $realId");
