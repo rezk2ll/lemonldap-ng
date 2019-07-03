@@ -9,6 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_IMPERSONATION_SERVICE_NOT_ALLOWED
   PE_MALFORMEDUSER
+  PE_SESSIONEXPIRED
 );
 
 our $VERSION = '2.0.6';
@@ -73,16 +74,16 @@ sub display {
     my $realSession;
     unless ( $realSession = $self->p->getApacheSession($realSessionId) ) {
         $self->userLogger->warn(
-            "ContextSwitching session $realSession expired");
-        return PE_ERROR;
+            "ContextSwitching -> session $realSession expired");
+        return $self->p->do( $req,
+            [ sub { PE_SESSIONEXPIRED } ] );
     }
-    $realSession = $realSession->data;
 
     # Check access rules
     unless ( $self->rule->( $req, $req->userData )
         || $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} )
     {
-        $self->userLogger->warn('Context switching service not authorized');
+        $self->userLogger->warn('ContextSwitching service not authorized');
         return $self->p->do( $req,
             [ sub { PE_IMPERSONATION_SERVICE_NOT_ALLOWED } ] );
     }
@@ -90,16 +91,20 @@ sub display {
     if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
         $self->logger->debug('Request to stop ContextSwitching');
         if ( $self->conf->{contextSwitchingStopWithLogout} ) {
-            $self->logger->debug("STOP ContextSwitching for $req->{user}");
+            $self->logger->debug("** STOP ContextSwitching ** for $req->{user}");
             $self->logger->debug('Send logout request');
-            $self->userLogger->notice("STOP ContextSwitching for $req->{user}");
+            $self->userLogger->notice("** STOP ContextSwitching ** for $req->{user}");
+            $self->logger->debug("Remove real session $realSession");
+            $self->userLogger->notice("Remove real session $realSession");
+            $realSession->remove;
             return $self->p->do( $req,
                 [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ]
             );
+
         }
         else {
             $req = $self->_abortImpersonation( $req, $req->{user},
-                $realSession->{ $self->conf->{whatToTrace} }, 0 );
+                $realSession->data->{ $self->conf->{whatToTrace} }, 0 );
             $self->p->updateSession( $req, $req->userData );
             return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
         }
@@ -133,7 +138,7 @@ sub run {
 
     # Check activation rule
     unless ( $self->rule->( $req, $req->userData ) ) {
-        $self->userLogger->warn('Context switching service not authorized');
+        $self->userLogger->warn('ContextSwitching service NOT authorized');
         $spoofId = '';
         return $self->p->do( $req,
             [ sub { PE_IMPERSONATION_SERVICE_NOT_ALLOWED } ] );
@@ -145,12 +150,12 @@ sub run {
         unless ( $spoofId =~ /$self->{conf}->{userControl}/o ) {
             $self->userLogger->warn('Malformed spoofed Id');
             $self->logger->debug(
-                "Context switching tried with spoofed Id: $spoofId");
+                "ContextSwitching tried with spoofed Id: $spoofId");
             return $self->p->do( $req, [ sub { PE_MALFORMEDUSER } ] );
         }
     }
     else {
-        $self->logger->debug("No context switching required");
+        $self->logger->debug("contextSwitching NOT required");
         $req->urldc( $self->conf->{portal} );
         return $self->p->do( $req, [ sub { PE_OK } ] );
     }
@@ -168,9 +173,9 @@ sub run {
 
     # Main session
     $self->p->updateSession( $req, $req->sessionInfo );
-    $self->logger->debug("Update $realId session with $spoofId session data");
+    $self->logger->debug("ContextSwitching -> Update $realId session with $spoofId session data");
     $self->userLogger->notice(
-        "update $realId session with $spoofId session data");
+        "ContextSwitching -> Update $realId session with $spoofId session data");
 
     return $self->p->do( $req, [ sub { $statut } ] );
 }
@@ -203,14 +208,14 @@ sub _switchContext {
               . $req->{user}
               . ")" );
         $self->logger->debug('Identity NOT authorized');
-        $req->error(PE_MALFORMEDUSER);    # Hide error to preserve protected Id
+        $req->error(PE_MALFORMEDUSER);    # Catch error to preserve protected Id
         $raz = 1;
     }
 
     $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"} =
       $realSessionId;
     $self->userLogger->notice(
-        "START ContextSwitching with uid: $spoofId for $realId")
+        "** START ContextSwitching ** for $realId with uid: $spoofId ")
       unless $raz;
 
     return $raz
@@ -226,9 +231,8 @@ sub _abortImpersonation {
     my $session;
     unless ( $session = $self->p->getApacheSession($realSessionId) ) {
         $self->userLogger->warn("Session $session expired");
-        return $req;
+        return $req->error(PE_SESSIONEXPIRED);
     }
-    $session = $session->data;
 
     if ($abort) {
         $self->logger->debug("ABORT ContextSwitching $spoofId for $realId");
@@ -239,18 +243,18 @@ sub _abortImpersonation {
         }
         else {
             $self->userLogger->warn(
-                "ContextSwitching: session " . $req->id . "expired" );
+                "ContextSwitching: session " . $req->id . " expired" );
         }
     }
     else {
-        $self->logger->debug("STOP ContextSwitching $spoofId for $realId");
-        $self->userLogger->notice("STOP ContextSwitching $spoofId for $realId");
+        $self->logger->debug("** STOP ContextSwitching ** for $realId with uid: $spoofId");
+        $self->userLogger->notice("** STOP ContextSwitching ** for $realId with uid: $spoofId");
         $self->p->deleteSession($req);
     }
 
     # Restore real session
-    $req->{$type} = {%$session};
-    $req->{user} = $session->{_user};
+    $req->{$type} = {%{$session->data}};
+    $req->{user} = $session->data->{_user};
     $req->urldc( $self->conf->{portal} );
     $req->id($realSessionId);
     $self->p->buildCookie($req);
