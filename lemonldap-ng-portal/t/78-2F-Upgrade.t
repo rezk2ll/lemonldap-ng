@@ -82,7 +82,7 @@ count(1);
 
 my $pdata = expectCookie( $res, 'lemonldappdata' );
 
-my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'upgrading', 'url' );
+( $host, $url, $query ) = expectForm( $res, '#', undef, 'upgrading', 'url' );
 
 $query = $query . "&user=dwho&password=dwho&lmAuth=strong";
 
@@ -102,7 +102,7 @@ ok(
 );
 count(1);
 
-my $pdata = expectCookie( $res, 'lemonldappdata' );
+$pdata = expectCookie( $res, 'lemonldappdata' );
 
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/mail2fcheck', 'token', 'code' );
