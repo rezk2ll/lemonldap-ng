@@ -15,7 +15,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OIDC_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::OpenIDConnect',
@@ -667,7 +667,8 @@ sub run {
                     my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
                       ->{oidcRPMetaDataOptionsIDTokenSignAlg};
                     my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
-                    $at_hash = $self->createHash( $access_token, $hash_level ) if $hash_level;
+                    $at_hash = $self->createHash( $access_token, $hash_level )
+                      if $hash_level;
                 }
 
                 # ID token payload
@@ -768,7 +769,8 @@ sub run {
                 $self->logger->debug("Generated code: $code");
 
                 # Compute hash to store in c_hash
-                $c_hash = $self->createHash( $code, $hash_level ) if $hash_level;
+                $c_hash = $self->createHash( $code, $hash_level )
+                  if $hash_level;
 
                 if ( $response_type =~ /\btoken\b/ ) {
 
@@ -798,7 +800,8 @@ sub run {
                         "Generated access token: $access_token");
 
                     # Compute hash to store in at_hash
-                    $at_hash = $self->createHash( $access_token, $hash_level );
+                    $at_hash = $self->createHash( $access_token, $hash_level )
+                      if $hash_level;
                 }
 
                 if ( $response_type =~ /\bid_token\b/ ) {
@@ -1094,7 +1097,8 @@ sub token {
     my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
       ->{oidcRPMetaDataOptionsIDTokenSignAlg};
     my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
-    my $at_hash = $self->createHash( $access_token, $hash_level ) if $hash_level;
+    my $at_hash = $self->createHash( $access_token, $hash_level )
+      if $hash_level;
 
     # ID token payload
     my $id_token_exp = $self->conf->{oidcRPMetaDataOptions}->{$rp}
