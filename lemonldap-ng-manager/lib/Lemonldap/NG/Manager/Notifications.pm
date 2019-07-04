@@ -283,7 +283,7 @@ sub newNotification {
 
     # Check if posted date > today
     unless ( $json->{date} ge $dDate ) {
-        $self->logger->debug("Posted Date < today !!! ");
+        $self->logger->debug("Posted Date < today");
         $json->{date} = $dDate;
     }
     $self->logger->debug("Notification Date = $json->{date}");

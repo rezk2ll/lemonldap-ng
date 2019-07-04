@@ -127,19 +127,17 @@ sub check {
         );
     }
 
-    if ( $user eq $req->{user} or !$user ) {
-        $self->logger->debug("checkUser requested for myself");
-        $self->userLogger->notice("Return userData...");
-        $self->userLogger->warn("Using spoofed SSO groups if exist!!!")
+    if ( !$user or $user eq $req->{user} ) {
+        $self->userLogger->info("checkUser requested for himself");
+        $self->userLogger->info("Using spoofed SSO groups if exist")
           if ( $self->conf->{impersonationRule} );
         $attrs = $req->userData;
         $user  = $req->{user};
     }
     else {
-        $self->logger->debug("checkUser requested for $user");
+        $self->userLogger->info("checkUser requested for $user");
 
         # Try to retrieve session from sessions DB
-        $self->userLogger->notice('Try to retrieve session from DB...');
         $self->logger->debug('Try to retrieve session from DB...');
         my $moduleOptions = $self->conf->{globalStorageOptions} || {};
         $moduleOptions->{backend} = $self->conf->{globalStorage};
@@ -157,9 +155,7 @@ sub check {
         }
         unless ( defined $attrs->{_session_id} ) {
             $req->{user} = $user;
-            $self->userLogger->notice(
-                "NO session found in DB. Compute userData...");
-            $self->logger->debug("NO session found in DB. Compute userData...");
+            $self->userLogger->info("No session found in DB. Compute userData...");
             $attrs   = $self->_userData($req);
             $compute = 1;
         }
@@ -213,18 +209,16 @@ sub check {
         $auth = $self->_authorization( $req, $url, $attrs );
         if ( $auth >= 0 ) {
             $auth = $auth ? "allowed" : "forbidden";
-            $self->userLogger->notice(
-                    "checkUser -> $attrs->{ $self->{conf}->{whatToTrace} } is "
-                  . uc($auth)
-                  . " to access: $url" );
+            $self->logger->debug(
+                    "checkUser: $attrs->{ $self->{conf}->{whatToTrace} } is "
+                  . "$auth to access to $url" );
 
             # Return VirtualHost headers
             $array_hdrs = $self->_headers( $req, $url, $attrs );
         }
         else {
             $auth = 'VHnotFound';
-            $self->userLogger->notice(
-                "checkUser -> URL: $url has no configuration");
+            $self->userLogger->info("checkUser: $url has no configuration");
         }
     }
 
@@ -267,8 +261,7 @@ sub display {
     my ( $attrs, $array_attrs ) = ( {}, [] );
 
     $self->logger->debug("Display current session data...");
-    $self->userLogger->notice("Retrieve session from Sessions database");
-    $self->userLogger->warn("Using spoofed SSO groups if exist!!!")
+    $self->userLogger->info("Using spoofed SSO groups if exist")
       if ( $self->conf->{impersonationRule} );
     $attrs = $req->userData;
 

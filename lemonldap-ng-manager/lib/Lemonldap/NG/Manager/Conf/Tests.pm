@@ -634,7 +634,7 @@ sub tests {
         checkMailResetSecurity => sub {
             return 1 unless ( $conf->{portalDisplayResetPassword} );
             return ( -1,
-'"passwordMailReset" plugin is enabled without CSRF Token neither Captcha required !!!'
+'"passwordMailReset" plugin is enabled without CSRF Token neither Captcha required'
               )
               unless ( $conf->{requireToken}
                 or $conf->{captcha_mail_enabled} );

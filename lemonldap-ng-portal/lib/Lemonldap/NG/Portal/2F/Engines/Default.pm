@@ -195,7 +195,7 @@ sub run {
 "Found $removed EXPIRED 2F device(s) => Update persistent session"
             );
             $self->userLogger->notice(
-                " -> $removed EXPIRED 2F device(s) removed");
+                " -> $removed expired 2F device(s) removed");
             @$_2fDevices =
               map { $_->{type} =~ /\bEXPIRED\b/ ? () : $_ } @$_2fDevices;
             $self->p->updatePersistentSession( $req,

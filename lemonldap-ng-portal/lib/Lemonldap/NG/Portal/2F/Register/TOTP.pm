@@ -156,7 +156,7 @@ sub run {
         my $maxSize = $self->conf->{max2FDevices};
         $self->logger->debug("Nbr 2FDevices = $size / $maxSize");
         if ( $size >= $maxSize ) {
-            $self->userLogger->error("Max number of 2F devices is reached !!!");
+            $self->userLogger->warn("Max number of 2F devices is reached");
             return $self->p->sendError( $req, 'maxNumberof2FDevicesReached',
                 400 );
         }

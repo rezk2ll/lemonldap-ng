@@ -188,7 +188,7 @@ sub _buildAuthLoop {
           split( /[;\|]/, $self->conf->{authChoiceModules}->{$_} );
 
         unless ( $_choiceRules->{$_} ) {
-            $self->logger->error("$_ has no rule !!!");
+            $self->logger->error("$_ has no rule");
             $_choiceRules->{$_} = sub { 1 };
         }
         unless ( $_choiceRules->{$_}->( $req->env ) ) {
