@@ -19,8 +19,9 @@ sub AUTOLOAD {
     no strict;
     $AUTOLOAD =~ s/.*:://;
     $self->{logger}->$AUTOLOAD(@_);
-    $_[0] = "[$AUTOLOAD] $_[0]";
-    $self->{dup}->debug(@_);
+    my $msg = shift;
+    $msg = "[$AUTOLOAD] $msg";
+    $self->{dup}->debug( $msg, @_ );
 }
 
 1;
