@@ -55,7 +55,7 @@ my @notManagedAttributes = (
     'configStorage', 'status', 'localStorageOptions', 'localStorage',
     'max2FDevices',              'max2FDevicesNameLength', 'checkTime',
     'mySessionAuthorizedRWKeys', 'handlerInternalCache',
-    'handlerServiceTokenTTL',    'impersonationPrefix'
+    'handlerServiceTokenTTL',    'impersonationPrefix', 'pdataDomain',
 );
 
 # Words used either as attribute name and node title
