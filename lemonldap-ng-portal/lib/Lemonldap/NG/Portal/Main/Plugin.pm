@@ -264,6 +264,35 @@ plugins to use "aroundSub" in the same time.
 
 =back
 
+=head1 LOGGING
+
+Logging is provided by $self->logger and $self->userLogger. The following rules
+must be applied:
+
+=over
+
+=item logger->debug: technical debugging messages
+
+=item logger->info: simple technical information
+
+=item logger->notice: technical information that could interest administrators
+
+=item logger->warn: technical warning
+
+=item logger->error: error that must be reported to administrator
+
+=item userLogger->info: simple information about user's action
+
+=item userLogger->notice: information that may be registered (auth success,...)
+
+=item userLogger->warn: bad action of a user (auth failure). Auth/Combination
+transform it to "info" when another authentication scheme is available
+
+=item userLogger->error: bad action of a user that must be reported, (even if
+another backend is available with Combination)
+
+=back
+
 =head1 SEE ALSO
 
 L<http://lemonldap-ng.org>
