@@ -48,7 +48,15 @@ sub init {
             $logger = $ENV{LLNG_USERLOGGER} || $args->{userLogger} || $logger;
             eval "require $logger";
             die $@ if ($@);
-            $self->userLogger( $logger->new( $self, user => 1 ) );
+            require Lemonldap::NG::Common::Logger::_Duplicate;
+            $self->userLogger(
+                Lemonldap::NG::Common::Logger::_Duplicate->new(
+                    $self,
+                    user   => 1,
+                    logger => $logger,
+                    dup    => $self->logger
+                )
+            );
         }
     }
     return 1;
