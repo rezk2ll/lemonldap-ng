@@ -2216,6 +2216,13 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 3,
             'type'    => 'int'
         },
+        'pdataDomain' => {
+            'default' => '',
+            'msgFail' => '__badDomainName__',
+            'test' =>
+qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
+            'type' => 'text'
+        },
         'persistentStorage' => {
             'type' => 'PerlModule'
         },

@@ -61,7 +61,16 @@ sub handler {
             name => $self->conf->{cookieName} . 'pdata',
             (
                 %{ $req->pdata }
-                ? ( value => uri_escape( JSON::to_json( $req->pdata ) ) )
+                ? ( (
+                        $self->conf->{pdataDomain}
+                        ? (
+                            value => uri_escape( JSON::to_json( $req->pdata ) ),
+                            domain => $self->conf->{pdataDomain},
+                          )
+                        : ( value => uri_escape( JSON::to_json( $req->pdata ) ),
+                        )
+                    )
+                  )
                 : (
                     value   => '',
                     expires => 'Wed, 21 Oct 2015 00:00:00 GMT'

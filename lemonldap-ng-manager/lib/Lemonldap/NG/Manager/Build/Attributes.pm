@@ -968,6 +968,14 @@ sub attributes {
             documentation => 'DNS domain',
             flags         => 'hp',
         },
+        pdataDomain => {
+            type          => 'text',
+            test          => qr/^(?:$Regexp::Common::URI::RFC2396::hostname)?$/,
+            msgFail       => '__badDomainName__',
+            default       => '',
+            documentation => 'pdata cookie DNS domain',
+            flags         => 'hp',
+        },
         httpOnly => {
             default       => 1,
             type          => 'bool',
