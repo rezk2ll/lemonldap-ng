@@ -356,7 +356,7 @@ sub reloadConf {
         unless ( $_[0]->pdata->{keepPdata} ) {
             $self->logger->debug('Cleaning pdata');
             $_[0]->pdata( {} );
-            $self->userLogger->notice( $_[0]->user . ' connected' );
+            $self->userLogger->notice( $_[0]->user . ' connected' ) if $_[0]->user;
         }
         return PE_OK;
     };
