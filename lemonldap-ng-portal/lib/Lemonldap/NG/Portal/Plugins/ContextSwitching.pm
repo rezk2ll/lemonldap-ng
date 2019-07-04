@@ -6,10 +6,10 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
   PE_REDIRECT
-  PE_BADCREDENTIALS
-  PE_IMPERSONATION_SERVICE_NOT_ALLOWED
   PE_MALFORMEDUSER
+  PE_BADCREDENTIALS
   PE_SESSIONEXPIRED
+  PE_IMPERSONATION_SERVICE_NOT_ALLOWED
 );
 
 our $VERSION = '2.0.6';
@@ -74,7 +74,7 @@ sub display {
     my $realSession;
     unless ( $realSession = $self->p->getApacheSession($realSessionId) ) {
         $self->userLogger->info(
-            "ContextSwitching -> session $realSession expired");
+            "ContextSwitching: session $realSession expired");
         return $self->p->do( $req, [ sub { PE_SESSIONEXPIRED } ] );
     }
 
@@ -82,7 +82,7 @@ sub display {
     unless ( $self->rule->( $req, $req->userData )
         || $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} )
     {
-        $self->userLogger->warn('ContextSwitching service not authorized');
+        $self->userLogger->warn('ContextSwitching service NOT authorized');
         return $self->p->do( $req,
             [ sub { PE_IMPERSONATION_SERVICE_NOT_ALLOWED } ] );
     }
@@ -169,8 +169,6 @@ sub run {
 
     # Main session
     $self->p->updateSession( $req, $req->sessionInfo );
-    $self->logger->debug(
-        "ContextSwitching: Update $realId session with $spoofId session data");
     $self->userLogger->notice(
         "ContextSwitching: Update $realId session with $spoofId session data");
 
