@@ -655,7 +655,7 @@ sub tests {
             return 1;
         },
 
-# Warn if persistent storage is disabled with 2FA, History, OIDCConsents and Notifications
+# Warn if persistent storage is disabled with 2FA, History, OIDCConsents, Notifications or BruteForce protection
         persistentStorage => sub {
             return 1 unless ( $conf->{disablePersistentStorage} );
             return ( 1, "2FA enabled WITHOUT persistent session storage" )
@@ -671,6 +671,9 @@ sub tests {
             return ( 1,
                 "Notifications enabled WITHOUT persistent session storage" )
               if ( $conf->{notification} );
+            return ( 1,
+                "BruteForceProtection plugin enabled WITHOUT persistent session storage" )
+              if ( $conf->{bruteForceProtection} );
 
             # Return
             return 1;
