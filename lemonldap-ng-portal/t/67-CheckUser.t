@@ -24,6 +24,7 @@ my $client = LLNG::Manager::Test->new( {
             totp2fSelfRegistration         => 1,
             totp2fActivation               => 1,
             totp2fDigits                   => 6,
+            impersonationRule              => 1,
 
             #hiddenAttributes               => 'test',
         }
@@ -338,7 +339,8 @@ ok( $res->[2]->[0] =~ m%<td scope="row">_whatToTrace</td>%,
 count(11);
 
 my @c = ( $res->[2]->[0] =~ /<td scope="row">rtyler<\/td>/gs );
-ok( @c == 3, ' -> Three entries found' );
+ok( @c == 6, ' -> Six entries found' )
+  or explain( $res->[2]->[0] );
 count(1);
 
 # Request with short VH url & user
@@ -456,4 +458,53 @@ count(2);
 $client->logout($id);
 clean_sessions();
 
+## Try to authenticate
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new('user=dwho&password=dwho'),
+        length => 23,
+        accept => 'text/html',
+    ),
+    'Auth query'
+);
+count(1);
+
+$id = expectCookie($res);
+expectRedirection( $res, 'http://auth.example.com/' );
+
+# CheckUser form -> granted
+# ------------------------
+ok(
+    $res = $client->_get(
+        '/checkuser',
+        cookie => "lemonldap=$id",
+        accept => 'text/html'
+    ),
+    'CheckUser form',
+);
+
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkuser', 'user', 'url' );
+
+# Request a user without SSO session
+$query =~ s/user=dwho/user=rtyler/;
+ok(
+    $res = $client->_post(
+        '/checkuser',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'POST checkuser'
+);
+ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found uid' )
+  or explain( $res->[2]->[0], 'Attribute Value uid' );
+ok( $res->[2]->[0] =~ m%<td scope="row">real_uid</td>%, 'Found real_uid' )
+  or explain( $res->[2]->[0], 'Attribute Value real_uid' );
+count(4);
+
+$client->logout($id);
+clean_sessions();
 done_testing( count() );

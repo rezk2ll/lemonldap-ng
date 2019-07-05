@@ -64,7 +64,9 @@ sub init {
 sub check {
     my ( $self, $req ) = @_;
     my ( $attrs, $array_attrs, $array_hdrs ) = ( {}, [], [] );
-    my $msg = my $auth = my $compute = '';
+    my $msg       = my $auth = my $compute = '';
+    my $authLevel = $req->userData->{authenticationLevel};
+    my $authMode  = $req->userData->{_auth};
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
@@ -155,7 +157,8 @@ sub check {
         }
         unless ( defined $attrs->{_session_id} ) {
             $req->{user} = $user;
-            $self->userLogger->info("No session found in DB. Compute userData...");
+            $self->userLogger->info(
+                "No session found in DB. Compute userData...");
             $attrs   = $self->_userData($req);
             $compute = 1;
         }
@@ -171,7 +174,19 @@ sub check {
           $self->{conf}->{impersonationMergeSSOgroups} eq 1
           ? 'checkUserMerged'
           : 'checkUser';
-        $msg = 'checkUserComputeSession' if $compute;
+        if ($compute) {
+            $msg = 'checkUserComputeSession';
+            $attrs->{authenticationLevel} = $authLevel;
+            $attrs->{_auth}               = $authMode;
+            
+            if ( $self->conf->{impersonationRule} ) {
+                $self->logger->debug("Map real attributes...");
+                my %realAttrs = map {
+                    ( "$self->{conf}->{impersonationPrefix}$_" => $attrs->{$_} )
+                } keys %$attrs;
+                $attrs = { %$attrs, %realAttrs };
+            }
+        }
 
         # Create an array of hashes for template loop
         $self->logger->debug("Delete hidden or empty attributes");
