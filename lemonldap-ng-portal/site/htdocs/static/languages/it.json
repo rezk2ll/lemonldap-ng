@@ -108,7 +108,7 @@
 "changePwd":"Cambia la tua password",
 "checkLastLogins":"Controllare i miei ultimi accessi",
 "checkUser":"Controlla il profilo SSO dell'utente",
-"checkUserMerged":"Check user SSO profile. Real and Spoofed SSO groups are merged!!!",
+"checkUserMerged":"Check user SSO profile. Some Real and Spoofed SSO groups are merged!!!",
 "checkUserComputeSession":"Computed session data!!!",
 "choose2f":"Scegli il tuo secondo fattore",
 "chooseApp":"Scegli un'applicazione alla quale ti è consentito l'accesso",
