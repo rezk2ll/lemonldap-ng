@@ -119,8 +119,7 @@ sub run {
     $self->logger->debug("Populating spoof session...");
     foreach (qw (_auth _userDB)) {
         $self->logger->debug("Processing $_...");
-        my $spk = "$self->{conf}->{impersonationPrefix}$_";
-        $spoofSession->{$_} = $realSession->{$spk};
+        $spoofSession->{$_} = $realSession->{"$self->{conf}->{impersonationPrefix}$_"};
     }
 
     # Merging SSO Groups and hGroups & dedup
