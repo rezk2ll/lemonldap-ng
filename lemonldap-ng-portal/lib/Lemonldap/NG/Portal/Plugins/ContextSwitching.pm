@@ -74,7 +74,7 @@ sub display {
     my $realSession;
     unless ( $realSession = $self->p->getApacheSession($realSessionId) ) {
         $self->userLogger->info(
-            "ContextSwitching: session $realSession expired");
+            "ContextSwitching: real session expired");
         return $self->p->do( $req, [ sub { PE_SESSIONEXPIRED } ] );
     }
 

@@ -289,7 +289,7 @@ ok(
 count(3);
 expectAuthenticatedAs( $res, 'rtyler' );
 ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%,
-    'Found trspan="contextSwitching_ON"' )
+    'Found trspan="contextSwitching_OFF"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_OFF"' );
 ok(
     $res = $client->_get(
@@ -301,11 +301,11 @@ ok(
 );
 
 # Refresh cookie value
-$id = expectCookie($res);
+my $id1 = expectCookie($res);
 ok(
     $res = $client->_get(
         '/',
-        cookie => "lemonldap=$id",
+        cookie => "lemonldap=$id1",
         accept => 'text/html'
     ),
     'Get Menu',
@@ -317,18 +317,87 @@ ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%,
   or explain( $res->[2]->[0], 'trspan="contextSwitching_ON"' );
 count(1);
 
+# ContextSwitching form -> PE_OK
+# ------------------------
+ok(
+    $res = $client->_get(
+        '/switchcontext',
+        cookie => "lemonldap=$id1",
+        accept => 'text/html'
+    ),
+    'ContextSwitching form',
+);
+
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/switchcontext', 'spoofId' );
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%,
+    'Found trspan="contextSwitching_ON"' )
+  or explain( $res->[2]->[0], 'trspan="contextSwitching_ON"' );
+$query =~ s/spoofId=/spoofId=rtyler/;
+ok(
+    $res = $client->_post(
+        '/switchcontext',
+        IO::String->new($query),
+        cookie => "lemonldap=$id1",
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'POST switchcontext'
+);
+
+# Refresh cookie value
+my $id2 = expectCookie($res);
+$client->logout($id1);
+
+ok(
+    $res = $client->_get(
+        '/',
+        cookie => "lemonldap=$id2",
+        accept => 'text/html'
+    ),
+    'Get Menu',
+);
+
+expectAuthenticatedAs( $res, 'rtyler' );
+ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%,
+    'Found trspan="contextSwitching_OFF"' )
+  or explain( $res->[2]->[0], 'trspan="contextSwitching_OFF"' );
+
+ok(
+    $res = $client->_get(
+        '/switchcontext',
+        cookie => "lemonldap=$id2",
+        accept => 'text/html'
+    ),
+    'Stop context switching',
+);
+count(6);
+
+ok( $res->[2]->[0] =~ m%<span trmsg="1"></span>%,
+    'Found PE_SESSIONEXPIRED' )
+  or explain( $res->[2]->[0], 'Sessuion expired' );
+ok(
+    $res = $client->_get(
+        '/',
+        cookie => "lemonldap=$id2",
+        accept => 'text/html'
+    ),
+    'Get Menu',
+);
+expectAuthenticatedAs( $res, 'rtyler' );
+count(2);
+
 # Log out request
 # ------------------------
 ok(
     $res = $client->_get(
         '/',
         query  => 'logout=1',
-        cookie => "lemonldap=$id",
+        cookie => "lemonldap=$id2",
         accept => 'text/html'
     ),
     'Get Menu',
 );
-count(1);
 expectOK($res);
 
 ok(
@@ -336,7 +405,7 @@ ok(
 m%<div class="message message-positive alert"><span trmsg="47"></span></div>%,
     'Dwho has been well disconnected'
 ) or print STDERR Dumper( $res->[2]->[0] );
-count(1);
+count(2);
 
 clean_sessions();
 
