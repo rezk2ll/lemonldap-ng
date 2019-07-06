@@ -435,7 +435,7 @@ sub attributes {
         },
         checkUserHiddenAttributes => {
             type          => 'text',
-            default       => '_loginHistory hGroups',
+            default       => '_loginHistory hGroups _session_id',
             documentation => 'Attributes to hide in CheckUser plugin',
             flags         => 'p',
         },
