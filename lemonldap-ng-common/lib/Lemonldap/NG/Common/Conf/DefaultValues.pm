@@ -28,7 +28,7 @@ sub defaultValues {
         'casAccessControlPolicy'         => 'none',
         'casAuthnLevel'                  => 1,
         'checkTime'                      => 600,
-        'checkUserHiddenAttributes'      => '_loginHistory hGroups _session_id',
+        'checkUserHiddenAttributes'      => '_loginHistory _session_id hGroups',
         'checkUserIdRule'                => 1,
         'checkXSS'                       => 1,
         'confirmFormMethod'              => 'post',

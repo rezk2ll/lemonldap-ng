@@ -785,7 +785,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'checkUserHiddenAttributes' => {
-            'default' => '_loginHistory hGroups _session_id',
+            'default' => '_loginHistory _session_id hGroups',
             'type'    => 'text'
         },
         'checkUserIdRule' => {
