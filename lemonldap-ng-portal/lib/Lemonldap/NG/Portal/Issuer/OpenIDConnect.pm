@@ -1491,7 +1491,16 @@ sub metadata {
 
     my @acr = keys %{ $self->conf->{oidcServiceMetaDataAuthnContext} };
 
-    # Add a slash to path value if issuer has no trailing slash
+    # List response types depending on allowed flows
+    my $response_types = [];
+    push( @$response_types, "code" )
+      if $self->conf->{oidcServiceAllowAuthorizationCodeFlow};
+    push( @$response_types, "id_token", "id_token token" )
+      if $self->conf->{oidcServiceAllowImplicitFlow};
+    push( @$response_types,
+        "code id_token",
+        "code token", "code id_token token" )
+      if $self->conf->{oidcServiceAllowHybridFlow};
 
     # Create OpenID configuration hash;
     return $self->p->sendJSONresponse(
@@ -1520,14 +1529,7 @@ sub metadata {
 
             # Scopes
             scopes_supported => [qw/openid profile email address phone/],
-            response_types_supported => [
-                "code",
-                "id_token",
-                "id_token token",
-                "code id_token",
-                "code token",
-                "code id_token token"
-            ],
+            response_types_supported => $response_types,
             grant_types_supported   => [qw/authorization_code implicit hybrid/],
             acr_values_supported    => \@acr,
             subject_types_supported => ["public"],
