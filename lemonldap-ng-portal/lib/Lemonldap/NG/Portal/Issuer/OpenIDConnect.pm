@@ -714,6 +714,20 @@ sub run {
                 $id_token_payload_hash->{'acr'}     = $id_token_acr
                   if $id_token_acr;
 
+                if ( $response_type !~ /\btoken\b/ ) {
+
+                    # No access_token
+                    # Claims must be set in id_token
+                    my $claims =
+                      $self->buildUserInfoResponse( $oidc_request->{'scope'},
+                        $rp, $req->id );
+
+                    foreach ( keys %$claims ) {
+                        $id_token_payload_hash->{$_} = $claims->{$_}
+                          unless ( $_ eq "sub" );
+                    }
+                }
+
                 # Create ID Token
                 my $id_token =
                   $self->createIDToken( $id_token_payload_hash, $rp );
@@ -839,6 +853,20 @@ sub run {
 
                     $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
                     $id_token_payload_hash->{'c_hash'}  = $c_hash  if $c_hash;
+
+                    if ( $response_type !~ /\btoken\b/ ) {
+
+                        # No access_token
+                        # Claims must be set in id_token
+                        my $claims = $self->buildUserInfoResponse(
+                            $oidc_request->{'scope'},
+                            $rp, $req->id );
+
+                        foreach ( keys %$claims ) {
+                            $id_token_payload_hash->{$_} = $claims->{$_}
+                              unless ( $_ eq "sub" );
+                        }
+                    }
 
                     # Create ID Token
                     $id_token =
