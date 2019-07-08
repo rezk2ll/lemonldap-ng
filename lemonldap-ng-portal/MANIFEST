@@ -467,6 +467,7 @@ t/32-Auth-and-issuer-OIDC-authorization_code-with-authchoice.t
 t/32-Auth-and-issuer-OIDC-authorization_code-with-none-alg.t
 t/32-Auth-and-issuer-OIDC-authorization_code.t
 t/32-Auth-and-issuer-OIDC-hybrid.t
+t/32-Auth-and-issuer-OIDC-implicit-no-token.t
 t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-CAS-10.t
