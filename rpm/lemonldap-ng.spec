@@ -373,16 +373,16 @@ This package installs the authentication portal.
 # Building
 #==============================================================================
 %build
-%{__make} %{?_smp_mflags} configure \
+make %{?_smp_mflags} configure \
     STORAGECONFFILE=%{lm_storagefile} \
     PERLOPTIONS="INSTALLDIRS=vendor"
-%{__make} %{?_smp_mflags}
+make %{?_smp_mflags}
 
 #==============================================================================
 # Installation
 #============================================================================
 %install
-%{__make} %{?_smp_mflags} install \
+make %{?_smp_mflags} install \
     DESTDIR=%{buildroot} \
     PREFIX=%{lm_prefix} \
     BINDIR=%{lm_bindir} \
@@ -504,7 +504,7 @@ chmod 644 %{buildroot}/usr/share/lemonldap-ng/test/cas.php
 %check
 sed -i 's:^dirName.*:dirName = %{buildroot}%{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
-%{__make} %{?_smp_mflags} test \
+make %{?_smp_mflags} test \
     LLNG_DEFAULTCONFFILE=%{buildroot}%{lm_storagefile}
 sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
