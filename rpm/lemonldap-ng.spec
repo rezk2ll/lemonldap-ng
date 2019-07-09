@@ -19,27 +19,14 @@
 %global lm_sbindir %{_libexecdir}/%{name}/sbin
 
 # Apache configuration directory
-%if 0%{?rhel}%{?fedora}
 %global apache_confdir %{_sysconfdir}/httpd/conf.d
-%else
-%global apache_confdir %{_sysconfdir}/apache2/conf.d
-%endif
 
 # Apache User and Group
-%if 0%{?rhel}%{?fedora}
 %global lm_apacheuser apache
 %global lm_apachegroup apache
-%else
-%global lm_apacheuser wwwrun
-%global lm_apachegroup www
-%endif
 
 # Apache version
-%if 0%{?fedora} || 0%{?rhel} >= 7
 %global apache_version 2.4
-%else
-%global apache_version 2
-%endif
 
 %global lm_dnsdomain example.com
 
@@ -214,13 +201,8 @@ Requires:       perl(Apache::Session)
 Requires:       perl(IO::String)
 Requires:       perl(Lemonldap::NG::Common) = %{version}-%{release}
 Requires:       perl(mod_perl2)
-%if 0%{?rhel}%{?fedora}
 Requires(post): httpd
 Requires:       mod_fcgid
-%else
-Requires(post): apache2
-Requires:       apache2-mod_fcgid
-%endif
 
 %description conf
 This package contains the main storage configuration.
@@ -240,9 +222,7 @@ This package contains HTML documentation.
 #==============================================================================
 %package handler
 Summary:        LemonLDAP-NG handler
-%if 0%{?rhel}%{?fedora}
 Requires:       crontabs
-%endif
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Handler) = %{version}-%{release}
 
@@ -265,9 +245,7 @@ This package deploys the administration interface and sessions explorer.
 #==============================================================================
 %package portal
 Summary:        LemonLDAP-NG authentication portal
-%if 0%{?rhel}%{?fedora}
 Requires:       crontabs
-%endif
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
 
@@ -290,11 +268,7 @@ This package deploys small test applications.
 %package fastcgi-server
 Summary:        LemonLDAP-NG FastCGI Server
 Requires:       lemonldap-ng-conf = %{version}-%{release}
-%if 0%{?rhel}%{?fedora}
 Requires:       mod_fcgid
-%else
-Requires:       apache2-mod_fcgid
-%endif
 Requires:       perl(FCGI::ProcManager)
 
 %description fastcgi-server
