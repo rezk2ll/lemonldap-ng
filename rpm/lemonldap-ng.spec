@@ -653,9 +653,6 @@ fi
 * Sun May 12 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.4-1
 - Update to 2.0.4
 
-* Sun May 12 2019 Clement Oudot <clem.oudot@gmail.com> - 1.9.19-1
-- Update to 1.9.19
-
 * Thu Apr 11 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.3-1
 - Update to 2.0.3
 
@@ -674,38 +671,14 @@ fi
 * Fri Nov 30 2018 Clement Oudot <clem.oudot@gmail.com> - 2.0.0-1
 - Update to 2.0.0
 
-* Fri Oct 05 2018 Clement Oudot <clem.oudot@gmail.com> - 1.9.18-1
-- Update to 1.9.18
-
 * Fri Jul 20 2018 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~beta1-1
 - First beta version for 2.0.0
-
-* Sun Jun 17 2018 Clement Oudot <clem.oudot@gmail.com> - 1.9.17-1
-- Update to 1.9.17
-
-* Fri Mar 16 2018 Clement Oudot <clem.oudot@gmail.com> - 1.9.16-1
-- Update to 1.9.16
 
 * Fri Jan 26 2018 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha3-1
 - Third alpha version for 2.0.0
 
-* Tue Jan 23 2018 Clement Oudot <clem.oudot@gmail.com> - 1.9.15-1
-- Update to 1.9.15
-
-* Fri Nov 24 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.14-1
-- Update to 1.9.14
-
-* Fri Sep 29 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.13-1
-- Update to 1.9.13
-
 * Thu Sep 14 2017 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha2-1
 - Second alpha version for 2.0.0
-
-* Tue Sep 12 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.12-1
-- Update to 1.9.12
-
-* Fri Sep 01 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.11-1
-- Update to 1.9.11
 
 * Mon Jul 10 2017 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha1-1
 - First alpha version for 2.0.0
@@ -725,14 +698,8 @@ fi
 * Fri Oct 14 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.6-1
 - Update to 1.9.6
 
-* Mon Oct 10 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.11-1
-- Update to 1.4.11
-
 * Wed Jul 13 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.5-1
 - Update to 1.9.5
-
-* Wed Jul 13 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.10-1
-- Update to 1.4.10
 
 * Tue Jun 14 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.4-1
 - Update to 1.9.4
@@ -740,20 +707,11 @@ fi
 * Tue Jun 07 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.3-1
 - Update to 1.9.3
 
-* Fri Jun 03 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.9-1
-- Update to 1.4.9
-
 * Sun May 01 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.2-1
 - Update to 1.9.2
 
-* Wed Apr 27 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.8-1
-- Update to 1.4.8
-
 * Thu Mar 31 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.1-1
 - Update to 1.9.1
-
-* Thu Mar 17 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.7-1
-- Update to 1.4.7
 
 * Wed Mar 02 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.0-1
 - Update to 1.9.0
