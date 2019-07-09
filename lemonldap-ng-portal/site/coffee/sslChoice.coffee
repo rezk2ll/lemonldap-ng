@@ -1,8 +1,11 @@
 # Launch SSL request
 
 tryssl = () ->
-	console.log 'Call URL -> ', window.datas.sslHost
-	$.ajax window.datas.sslHost,
+	host = window.datas.sslHost
+	path = window.location.pathname
+	url  = "#{host}#{path}"
+	console.log 'Call URL -> ', url
+	$.ajax url,
 		dataType: 'jsonp'
 		# PE_BADCREDENTIALS
 		statusCode:
@@ -20,5 +23,6 @@ tryssl = () ->
 			$('#lformSSL').submit()
 			console.log 'Error'
 	false
+	
 $(document).ready ->
 	$('.sslclick').on 'click', tryssl
