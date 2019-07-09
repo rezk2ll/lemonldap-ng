@@ -125,6 +125,7 @@ BuildRequires:  perl(IO::Select)
 BuildRequires:  perl(IO::Socket::INET)
 BuildRequires:  perl(IO::String)
 BuildRequires:  perl(JSON)
+BuildRequires:  perl(JSON::XS)
 %if 0%{?fedora}
 BuildRequires:  perl(Lasso)
 BuildRequires:  perl(Glib)
