@@ -722,6 +722,7 @@ sub attributes {
             keyTest       => sub { return perlExpr(@_) },
             test          => sub { 1 },
             documentation => 'Rules to grant sessions',
+            default => {},
         },
         hiddenAttributes => {
             type          => 'text',

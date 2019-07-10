@@ -77,6 +77,7 @@ sub defaultValues {
         },
         'gpgAuthnLevel'                 => 5,
         'gpgDb'                         => '',
+        'grantSessionRules'             => {},
         'groups'                        => {},
         'handlerInternalCache'          => 15,
         'handlerServiceTokenTTL'        => 30,

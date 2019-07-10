@@ -1203,6 +1203,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type'    => 'text'
         },
         'grantSessionRules' => {
+            'default' => {},
             'keyTest' => sub {
                 return perlExpr(@_);
             },

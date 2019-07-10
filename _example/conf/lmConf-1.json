@@ -109,7 +109,6 @@
       "LockDirectory" : "__SESSIONDIR__/lock",
       "generateModule" : "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
    },
-   "grantSessionRules" : {},
    "groups" : {},
    "localSessionStorage" : "Cache::FileCache",
    "localSessionStorageOptions" : {
