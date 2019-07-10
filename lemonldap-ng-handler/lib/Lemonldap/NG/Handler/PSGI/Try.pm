@@ -72,7 +72,7 @@ sub _run {
             $self->routes( $self->authRoutes );
             $req->userData( $self->api->data );
         }
-        elsif ( $res->[0] != 403 ) {
+        elsif ( $res->[0] != 403 and not $req->data->{noTry} ) {
 
             # Unset headers (handler adds a Location header)
             $self->logger->debug(

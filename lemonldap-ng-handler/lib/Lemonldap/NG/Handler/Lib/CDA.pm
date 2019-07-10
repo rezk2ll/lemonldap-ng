@@ -44,6 +44,7 @@ sub run {
                     : ""
                   )
             );
+            $req->data->{'noTry'} = 1;
             return $class->REDIRECT;
         }
     }
