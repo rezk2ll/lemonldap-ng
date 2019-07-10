@@ -18,6 +18,7 @@ sub AUTOLOAD {
     my $self = shift;
     no strict;
     $AUTOLOAD =~ s/.*:://;
+    return if $AUTOLOAD eq 'DESTROY';
     $self->{logger}->$AUTOLOAD(@_);
     my $msg = shift;
     $msg = "[$AUTOLOAD] $msg";
