@@ -1592,6 +1592,37 @@ sub attributes {
             documentation => 'Custom logo for External 2F',
         },
 
+        # Radius second factor
+        radius2fActivation => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Radius second factor activation',
+        },
+        radius2fSecret             => { type => 'text', },
+        radius2fServer             => { type => 'text', },
+        radius2fUsernameSessionKey => {
+            type          => 'text',
+            documentation => 'Session key used as Radius login'
+        },
+        radius2fTimeout => {
+            type          => 'int',
+            default       => 20,
+            documentation => 'Radius 2f verification timeout',
+        },
+        radius2fAuthnLevel => {
+            type => 'int',
+            documentation =>
+'Authentication level for users authenticated by Radius second factor'
+        },
+        radius2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for Radius 2F',
+        },
+        radius2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for Radius 2F'
+        },
+
         #  REST External second factor
         rest2fActivation => {
             type          => 'boolOrExpr',
@@ -2709,7 +2740,7 @@ sub attributes {
         },
         available2F => {
             type          => 'text',
-            default       => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey',
+            default       => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey,Radius',
             documentation => 'Available second factor modules',
         },
         available2FSelfRegistration => {
@@ -3353,6 +3384,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'Mail2F', v => 'E-Mail' },
                 { k => 'REST',   v => 'REST' },
                 { k => 'Ext2F',  v => 'External' },
+                { k => 'Radius',  v => 'Radius' },
             ],
         },
 

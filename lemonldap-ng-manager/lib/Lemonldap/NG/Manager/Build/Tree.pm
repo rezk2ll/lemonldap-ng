@@ -759,6 +759,21 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'radius2f',
+                            help  => 'radius2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'radius2fActivation',
+                                'radius2fServer',
+                                'radius2fSecret',
+                                'radius2fUsernameSessionKey',
+                                'radius2fTimeout',
+                                'radius2fAuthnLevel',
+                                'radius2fLogo',
+                                'radius2fLabel',
+                            ]
+                        },
+                        {
                             title => 'rest2f',
                             help  => 'rest2f.html',
                             nodes => [

@@ -674,6 +674,15 @@
 "proxyUseSoap":"Utiliser SOAP au lieu de REST",
 "publicKey":"Clef publique",
 "purgeNotification":"Supprimer définitivement la notification",
+"radius2f":"Second facteur Radius",
+"radius2fActivation":"Activation",
+"radius2fServer":"Nom d'hôte du serveur",
+"radius2fSecret":"Secret partagé",
+"radius2fUsernameSessionKey":"Clé de session contenant le login",
+"radius2fTimeout":"Délai maximum d'authentification",
+"radius2fAuthnLevel":"Niveau d'authentification",
+"radius2fLogo":"Logo",
+"radius2fLabel":"Label",
 "radiusAuthnLevel":"Niveau d'authentification",
 "radiusParams":"Paramètres Radius",
 "radiusSecret":"Secret partagé",
@@ -1035,5 +1044,5 @@
 "samlCommonDomainCookieWriter":"URL d'écriture",
 "samlRelayStateTimeout":"Durée de vie d'une session RelayState",
 "samlUseQueryStringSpecific":"Utilisation d'une fonction spécifique pour query_string",
-"samlOverrideIDPEntityID": "Valeur de l'Entity ID en mode IDP"
+"samlOverrideIDPEntityID":"Valeur de l'Entity ID en mode IDP"
 }

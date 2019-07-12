@@ -12,6 +12,7 @@ lib/Lemonldap/NG/Portal/2F/Mail2F.pm
 lib/Lemonldap/NG/Portal/2F/Register/TOTP.pm
 lib/Lemonldap/NG/Portal/2F/Register/U2F.pm
 lib/Lemonldap/NG/Portal/2F/Register/Yubikey.pm
+lib/Lemonldap/NG/Portal/2F/Radius.pm
 lib/Lemonldap/NG/Portal/2F/REST.pm
 lib/Lemonldap/NG/Portal/2F/TOTP.pm
 lib/Lemonldap/NG/Portal/2F/U2F.pm

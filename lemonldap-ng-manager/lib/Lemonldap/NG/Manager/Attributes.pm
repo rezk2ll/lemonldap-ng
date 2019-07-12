@@ -598,7 +598,7 @@ sub attributes {
             'type' => 'keyTextContainer'
         },
         'available2F' => {
-            'default' => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey',
+            'default' => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey,Radius',
             'type'    => 'text'
         },
         'available2FSelfRegistration' => {
@@ -2419,6 +2419,32 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 0,
             'type'    => 'bool'
         },
+        'radius2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'radius2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'radius2fLabel' => {
+            'type' => 'text'
+        },
+        'radius2fLogo' => {
+            'type' => 'text'
+        },
+        'radius2fSecret' => {
+            'type' => 'text'
+        },
+        'radius2fServer' => {
+            'type' => 'text'
+        },
+        'radius2fTimeout' => {
+            'default' => 20,
+            'type'    => 'int'
+        },
+        'radius2fUsernameSessionKey' => {
+            'type' => 'text'
+        },
         'radiusAuthnLevel' => {
             'default' => 3,
             'type'    => 'int'
@@ -3250,6 +3276,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'Ext2F',
                     'v' => 'External'
+                },
+                {
+                    'k' => 'Radius',
+                    'v' => 'Radius'
                 }
             ],
             'test' => sub {
