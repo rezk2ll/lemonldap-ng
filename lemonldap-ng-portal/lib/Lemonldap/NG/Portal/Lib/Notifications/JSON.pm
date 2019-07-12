@@ -218,7 +218,7 @@ sub notificationServer {
     my ( $res, $err ) =
       eval { $self->notifObject->newNotification( $req->content ) };
     return $self->p->sendError( $req, $@, 500 ) if ($@);
-    return $self->p->sendError( $req, $err ? $err : 'Bad request', 400 )
+    return $self->p->sendError( $req, ( $err ? $err : 'Bad request' ), 400 )
       unless ($res);
     return $self->p->sendJSONresponse( $req, { result => $res } );
 }
