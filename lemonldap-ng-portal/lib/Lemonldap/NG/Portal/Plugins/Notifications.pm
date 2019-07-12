@@ -13,6 +13,7 @@ package Lemonldap::NG::Portal::Plugins::Notifications;
 
 use strict;
 use Mouse;
+use MIME::Base64;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_NOTIFICATION
@@ -121,6 +122,11 @@ sub checkNotifDuringAuth {
         # Cipher id
         $req->id( $self->p->HANDLER->tsv->{cipher}->encrypt( $req->id ) );
         $self->p->rebuildCookies($req);
+        if ( not $req->data->{_url} and $req->env->{PATH_INFO} ne '/' ) {
+            $req->data->{_url} =
+              encode_base64( $self->conf->{portal} . $req->env->{PATH_INFO},
+                '' );
+        }
 
         # Restore and cipher cookies
         return PE_NOTIFICATION;

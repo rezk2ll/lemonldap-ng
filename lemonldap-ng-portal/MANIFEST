@@ -447,6 +447,7 @@ t/30-Auth-SAML-with-choice.t
 t/30-CDC.t
 t/30-SAML-Head-to-Tail-POST.t
 t/30-SAML-POST-Logout-when-expired.t
+t/30-SAML-POST-with-Notification.t
 t/30-SAML-ReAuth-with-choice.t
 t/30-SAML-ReAuth.t
 t/30-SAML-SP-rule.t
@@ -536,6 +537,7 @@ t/63-History.t
 t/64-StayConnected.t
 t/65-AutoSignin.t
 t/66-CDA-already-auth.t
+t/66-CDA-PSGI-Try.t
 t/66-CDA-with-REST.t
 t/66-CDA-with-SOAP.t
 t/66-CDA.t
