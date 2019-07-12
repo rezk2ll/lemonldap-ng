@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 no warnings 'redefine';
 
@@ -211,11 +211,15 @@ sub toForm {
 
 sub notificationServer {
     my ( $self, $req ) = @_;
+    $self->p->logger->debug("REST request for notifications");
     return $self->p->sendError( $req, 'Only JSON requests here', 400 )
       unless ( $req->wantJSON );
-    my $res = eval { $self->notifObject->newNotification( $req->content ) };
+    $self->p->logger->debug( "JSON content: " . $req->content );
+    my ( $res, $err ) =
+      eval { $self->notifObject->newNotification( $req->content ) };
     return $self->p->sendError( $req, $@, 500 ) if ($@);
-    return $self->p->sendError( $req, 'Bad request', 400 ) unless ($res);
+    return $self->p->sendError( $req, $err ? $err : 'Bad request', 400 )
+      unless ($res);
     return $self->p->sendJSONresponse( $req, { result => $res } );
 }
 
