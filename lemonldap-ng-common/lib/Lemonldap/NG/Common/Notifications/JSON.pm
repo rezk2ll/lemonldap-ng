@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 sub newNotification {
     my ( $self, $jsonString ) = @_;
@@ -23,8 +23,15 @@ sub newNotification {
         foreach (qw(date uid reference)) {
             my $tmp;
             unless ( $tmp = $notif->{$_} ) {
-                $self->logger->error("Attribute $_ is missing");
-                return 0;
+                my $err = "Attribute $_ is missing";
+                $self->logger->error("$err");
+                return ( 0, "$err" );
+            }
+            if ( $self->get( $notif->{uid}, $notif->{reference} ) ) {
+                my $err = "A notification already exists with reference "
+                  . $notif->{reference};
+                $self->logger->error("$err");
+                return ( 0, "$err" );
             }
             push @data, $tmp;
         }
