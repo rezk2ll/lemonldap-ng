@@ -35,10 +35,10 @@ sub checkForNotifications {
 
     # Transform notifications
     my $i = 0;    #Files count
+    my @res;
     foreach my $file ( values %$notifs ) {
         my $json = from_json( $file, { allow_nonref => 1 } );
         my $j = 0;    #Notifications count
-        my @res;
         $json = [$json] unless ( ref $json eq 'ARRAY' );
       LOOP: foreach my $notif ( @{$json} ) {
 
@@ -62,8 +62,8 @@ sub checkForNotifications {
         # Go to next file if no notification found
         next unless $j;
         $i++;
-        $form .= $self->toForm( $req, @res );
     }
+    $form .= $self->toForm( $req, @res );
 
     # Stop here if nothing to display
     return 0 unless $i;
