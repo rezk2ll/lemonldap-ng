@@ -42,7 +42,7 @@ sub init {
     my ($self) = @_;
 
     # Declare new route
-    $self->addUnauthRoute( 'notifback' => 'getNotifBack', ['POST'] );
+    $self->addUnauthRoute( 'notifback' => 'getNotifBack', ['POST', 'GET'] );
     $self->addAuthRoute( 'notifback' => 'getNotifBack', ['POST'] );
 
     if ( $self->conf->{notificationServer} ) {

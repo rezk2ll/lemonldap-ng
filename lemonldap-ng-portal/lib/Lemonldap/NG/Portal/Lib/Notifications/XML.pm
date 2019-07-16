@@ -5,7 +5,7 @@ use Mouse;
 use XML::LibXML;
 use XML::LibXSLT;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 # Lemonldap::NG::Portal::Main::Plugin provides addAuthRoute() and
 # addUnauthRoute() methods in addition of Lemonldap::NG::Common::Module.
@@ -140,6 +140,24 @@ sub checkForNotifications {
 
 sub getNotifBack {
     my ( $self, $req, $name ) = @_;
+
+    if ( $req->param('cancel') ) {
+        unless ( $req->cookies->{ $self->{conf}->{cookieName} } ) {
+            return $self->p->sendError( $req, 'No cookie found', 401 );
+        }
+        $self->logger->debug('Cancel called -> remove cipher cookie');
+        $req->addCookie(
+            $self->p->cookie(
+                name    => $self->conf->{cookieName},
+                value   => 0,
+                domain  => $self->conf->{domain},
+                secure  => 0,
+                expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
+            )
+        );
+        $req->mustRedirect(1);
+        return $self->p->do( $req, [] );
+    }
 
     # Look if all notifications have been accepted. If not, redirects to
     # portal
