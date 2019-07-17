@@ -82,7 +82,7 @@ SKIP: {
     ok( $soap->call( 'newNotification', $xml )->result() == 1,
         ' SOAP call returns 1' );
 
-    # Try yo authenticate
+    # Try to authenticate
     # -------------------
     my $res;
     ok(

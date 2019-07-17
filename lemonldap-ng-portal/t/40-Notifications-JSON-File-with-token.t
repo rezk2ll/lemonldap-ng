@@ -36,7 +36,7 @@ my $client = LLNG::Manager::Test->new( {
     }
 );
 
-# Try yo authenticate
+# Try to authenticate
 # -------------------
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Unauth request' );
 count(1);

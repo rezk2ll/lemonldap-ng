@@ -47,7 +47,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
         }
     );
 
-    # Try yo authenticate
+    # Try to authenticate
     # -------------------
     ok(
         $res = $client->_post(
