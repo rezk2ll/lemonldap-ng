@@ -75,10 +75,13 @@ sub checkForNotifications {
 sub getNotifBack {
     my ( $self, $req, $name ) = @_;
 
+    # Search for Lemonldap::NG cookie (ciphered)
+    my $id;
+    unless ( $id = $req->cookies->{ $self->{conf}->{cookieName} } ) {
+        return $self->p->sendError( $req, 'No cookie found', 401 );
+    }
+
     if ( $req->param('cancel') ) {
-        unless ( $req->cookies->{ $self->{conf}->{cookieName} } ) {
-            return $self->p->sendError( $req, 'No cookie found', 401 );
-        }
         $self->logger->debug('Cancel called -> remove cipher cookie');
         $req->addCookie(
             $self->p->cookie(
@@ -96,11 +99,7 @@ sub getNotifBack {
     # Look if all notifications have been accepted. If not, redirects to
     # portal
 
-    # Search for Lemonldap::NG cookie (ciphered)
-    my $id;
-    unless ( $id = $req->cookies->{ $self->{conf}->{cookieName} } ) {
-        return $self->p->sendError( $req, 'No cookie found', 401 );
-    }
+    # Try to decrypt Lemonldap::NG ciphered cookie
     $id = $self->p->HANDLER->tsv->{cipher}->decrypt($id)
       or return $self->p->sendError( $req, 'Unable to decrypt', 400 );
 
