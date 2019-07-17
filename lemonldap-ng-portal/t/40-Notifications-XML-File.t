@@ -38,7 +38,54 @@ SKIP: {
         }
     );
 
-    # Try yo authenticate
+    # Try to authenticate
+    # -------------------
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new(
+'user=dwho&password=dwho&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw=='
+            ),
+            accept => 'text/html',
+            length => 64,
+        ),
+        'Auth query'
+    );
+    count(1);
+    expectOK($res);
+    my $id = expectCookie($res);
+    expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
+
+    # Verify that cookie is ciphered (session unvalid)
+    ok(
+        $res = $client->_get(
+            '/',
+            query  => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==',
+            cookie => "lemonldap=$id",
+        ),
+        'Test cookie received'
+    );
+    count(1);
+    expectReject($res);
+
+    # Try to cancel notification
+    ok(
+        $res = $client->_get(
+            '/notifback',
+            query  => "cancel=1",
+            cookie => "lemonldap=$id",
+            length => 64,
+            accept => 'text/html',
+        ),
+        "Cancel notification"
+    );
+
+    my $c = getCookies($res);
+    ok( not( %$c{'lemonldap'} ), 'No cookie' ) or print STDERR Dumper($c);
+    count(2);
+    expectRedirection( $res, 'http://auth.example.com/' );
+
+    # Try to authenticate
     # -------------------
     ok(
         $res = $client->_post(
