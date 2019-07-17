@@ -96,14 +96,14 @@ sub getNotifBack {
         return $self->p->do( $req, [] );
     }
 
-    # Look if all notifications have been accepted. If not, redirects to
+    # Look if all notifications have been accepted. If not, redirect to
     # portal
 
     # Try to decrypt Lemonldap::NG ciphered cookie
     $id = $self->p->HANDLER->tsv->{cipher}->decrypt($id)
       or return $self->p->sendError( $req, 'Unable to decrypt', 400 );
 
-    # Verify that session exists
+    # Check that session exists
     $req->userData( $self->p->HANDLER->retrieveSession( $req, $id ) )
       or return $self->p->sendError( $req, 'Unknown session', 401 );
 
