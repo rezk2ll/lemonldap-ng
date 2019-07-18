@@ -18,7 +18,7 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor',
 
 # INITIALIZATION
 
-has prefix => ( is => 'ro', default => 'mail' );
+has prefix => ( is => 'rw', default => 'mail' );
 has random => (
     is      => 'rw',
     default => sub {
@@ -47,6 +47,8 @@ sub init {
     }
     $self->logo( $self->conf->{mail2fLogo} )
       if ( $self->conf->{mail2fLogo} );
+    $self->prefix( $self->conf->{sfPrefix} )
+      if ( $self->conf->{sfPrefix} );
     return $self->SUPER::init();
 }
 

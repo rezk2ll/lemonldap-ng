@@ -698,6 +698,25 @@ sub combModules {
     return $self->sendJSONresponse( $req, $res );
 }
 
+sub sfExtra {
+    my ( $self, $req, $key ) = @_;
+    return $self->sendError( $req, 'Subkeys forbidden for sfExtra', 400 )
+      if ($key);
+    my $val = $self->getConfKey( $req, 'sfExtra' ) // {};
+    my $res = [];
+    foreach my $mod ( keys %$val ) {
+        my $tmp;
+        $tmp->{title} = $mod;
+        $tmp->{id}    = "sfExtra/$mod";
+        $tmp->{type}  = 'sfExtra';
+        $tmp->{data}->{$_} = $val->{$mod}->{$_} foreach (qw(type rule));
+        my $over = $val->{$mod}->{over} // {};
+        $tmp->{data}->{over} = [ map { [ $_, $over->{$_} ] } keys %$over ];
+        push @$res, $tmp;
+    }
+    return $self->sendJSONresponse( $req, $res );
+}
+
 # 33 - Root queries
 #      -----------
 

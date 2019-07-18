@@ -24,6 +24,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 our $VERSION = '2.0.5';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
+with 'Lemonldap::NG::Portal::Lib::OverConf';
 
 # INITIALIZATION
 
@@ -91,6 +92,37 @@ sub init {
                 $self->logger->debug(' -> not enabled');
             }
         }
+    }
+
+    # Extra 2F modules
+    $self->logger->debug('Processing Extra 2F modules');
+    foreach my $extraKey (sort keys %{ $self->conf->{sfExtra} } ) {
+
+        my $moduleType = $self->conf->{sfExtra}->{$extraKey}->{type};
+        next unless ($moduleType);
+
+        my %over = %{ $self->conf->{sfExtra}->{$extraKey}->{over} or {} };
+        $self->logger->debug(
+            "Loading extra 2F module $extraKey of type $moduleType");
+        my $m =
+          $self->loadPlugin( "::2F::$moduleType",
+            { sfPrefix => $extraKey, %over } )
+          or return 0;
+
+        # Rule and prefix may be modified by 2F module, reread them
+        my $rule   = $self->conf->{sfExtra}->{$extraKey}->{rule} || 1;
+        my $prefix = $m->prefix;
+
+        # Compile rule
+        $rule = $self->p->HANDLER->substitute($rule);
+        unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
+            $self->error( 'External 2F rule error: '
+                  . $self->p->HANDLER->tsv->{jail}->error );
+            return 0;
+        }
+
+        # Store module
+        push @{ $self->{'sfModules'} }, { p => $prefix, m => $m, r => $rule };
     }
 
     unless (

@@ -17,7 +17,7 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor',
 
 # INITIALIZATION
 
-has prefix => ( is => 'ro', default => 'rest' );
+has prefix => ( is => 'rw', default => 'rest' );
 
 has initAttrs => ( is => 'rw', default => sub { {} } );
 
@@ -29,6 +29,8 @@ sub init {
         $self->logger->error('Missing REST verification URL');
         return 0;
     }
+    $self->prefix( $self->conf->{sfPrefix} )
+    if ( $self->conf->{sfPrefix} );
     $self->logo( $self->conf->{rest2fLogo} ) if ( $self->conf->{rest2fLogo} );
     foreach my $k ( keys %{ $self->conf->{rest2fInitArgs} } ) {
         my $attr = $self->conf->{rest2fInitArgs}->{$k};
@@ -92,7 +94,7 @@ sub run {
             MAIN_LOGO   => $self->conf->{portalMainLogo},
             SKIN        => $self->p->getSkin($req),
             TOKEN       => $token,
-            TARGET      => '/rest2fcheck',
+            TARGET      => '/' . $self->prefix . '2fcheck',
             CHECKLOGINS => $checkLogins
         }
     );

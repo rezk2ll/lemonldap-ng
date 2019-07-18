@@ -775,6 +775,7 @@ sub tree {
                             ],
                         },
                         'sfRequired',
+                        'sfExtra',
                     ]
                 },
                 {
