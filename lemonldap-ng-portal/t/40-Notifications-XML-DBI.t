@@ -32,6 +32,15 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
 <check>Accept test</check>
 </notification></root>',null,null)}
     );
+    $dbh->do(
+qq{INSERT INTO notifications VALUES ('dwho','testref2','2016-05-30 00:00:00','<?xml version="1.0" encoding="UTF-8"?>
+<root><notification uid="dwho" date="2016-05-30" reference="testref2">
+<title>Test2 title</title>
+<subtitle>Test2 subtitle</subtitle>
+<text>This is a second test text</text>
+<check>Accept test</check>
+</notification></root>',null,null)}
+    );
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
@@ -90,9 +99,9 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
     );
     expectOK($res);
 
-    # Try to validate notification
+    # Try to validate notifications
     $str =
-'reference1x1=testref&check1x1x1=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
+'reference1x1=testref&check1x1x1=accepted&reference1x2=testref2&check1x2x1=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
     ok(
         $res = $client->_post(
             '/notifback',
@@ -101,7 +110,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
             accept => 'text/html',
             length => length($str),
         ),
-        "Accept notification"
+        "Accept notifications"
     );
     expectRedirection( $res, 'http://test1.example.com/' );
 
@@ -111,7 +120,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
     $sth->execute;
     my $i = 0;
     while ( $sth->fetchrow_hashref ) { $i++ }
-    ok( $i == 1, 'Notification was deleted' );
+    ok( $i == 2, 'Notification was deleted' );
 
     clean_sessions();
 
