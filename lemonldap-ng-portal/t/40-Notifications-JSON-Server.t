@@ -16,6 +16,14 @@ my $json = '{
 "text": "This is a test text"
 }';
 
+my $json2 = '{
+"date": "2016-05-31",
+"reference": "testref",
+"uid": "dwho",
+"title": "Test2 title",
+"text": "This is a second test text"
+}';
+
 my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel                   => 'error',
@@ -40,6 +48,21 @@ ok(
     'Create notification'
 );
 count(1);
+
+ok(
+    $res = $client->_post(
+        '/notifications', IO::String->new($json2),
+        type   => 'application/json',
+        length => length($json2)
+    ),
+    'Try to create the same notification twice'
+);
+ok(
+    $res->[2]->[0] =~
+      /"error"\s*:\s*"A notification already exists with reference testref"/,
+    'Append the same notification is refused'
+);
+count(2);
 
 # Try to authenticate
 # -------------------

@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use XML::LibXML;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 # XML parser
 has parser => (

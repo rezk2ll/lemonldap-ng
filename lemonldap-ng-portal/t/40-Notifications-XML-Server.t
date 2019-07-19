@@ -9,7 +9,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 3;
+my $maintests = 4;
 my $debug     = 'error';
 my $client;
 
@@ -52,6 +52,13 @@ my $xml = '<?xml version="1.0" encoding="UTF-8"?>
 <text>This is a test text</text>
 </notification></root>';
 
+my $xml2 = '<?xml version="1.0" encoding="UTF-8"?>
+<root><notification uid="dwho" date="2016-05-31" reference="testref">
+<title>Test title</title>
+<subtitle>Test subtitle</subtitle>
+<text>This is a test text</text>
+</notification></root>';
+
 SKIP: {
     eval "use SOAP::Lite; use  XML::LibXML; use XML::LibXSLT;";
     if ($@) {
@@ -79,8 +86,15 @@ SKIP: {
         'SOAP client'
     );
     $soap->default_ns('urn:Lemonldap/NG/Common/PSGI/SOAPService');
-    ok( $soap->call( 'newNotification', $xml )->result() == 1,
-        ' SOAP call returns 1' );
+    ok(
+        $soap->call( 'newNotification', $xml )->result() == 1,
+        ' Append a notification -> SOAP call returns 1'
+    );
+    $soap->default_ns('urn:Lemonldap/NG/Common/PSGI/SOAPService');
+    ok(
+        $soap->call( 'newNotification', $xml2 )->result() == 0,
+        ' Append the same notification twice -> SOAP call returns 0'
+    );
 
     # Try to authenticate
     # -------------------
