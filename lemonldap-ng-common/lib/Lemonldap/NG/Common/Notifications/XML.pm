@@ -38,6 +38,12 @@ sub newNotification {
                 $self->logger->error("Attribute $_ is missing");
                 return 0;
             }
+            if ( $self->get( $notif->{uid}, $notif->{reference} ) ) {
+                my $err = "A notification already exists with reference "
+                  . $notif->{reference};
+                $self->logger->error("$err");
+                return 0;
+            }
             push @data, $tmp;
         }
 
