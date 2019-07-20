@@ -37,7 +37,7 @@ sub AUTOLOAD {
         return $tmp;
     }
     elsif ( $AUTOLOAD ne 'DESTROY' ) {
-        die "$AUTOLOAD is not an authorizated function";
+        die "$AUTOLOAD is not an authorized function";
     }
     1;
 }
