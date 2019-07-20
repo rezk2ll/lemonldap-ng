@@ -82,7 +82,7 @@ sub getNotifBack {
     }
 
     if ( $req->param('cancel') ) {
-        $self->logger->debug('Cancel called -> remove cipher cookie');
+        $self->logger->debug('Cancel called -> remove ciphered cookie');
         $req->addCookie(
             $self->p->cookie(
                 name    => $self->conf->{cookieName},
