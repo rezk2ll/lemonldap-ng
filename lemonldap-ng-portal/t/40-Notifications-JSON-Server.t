@@ -76,15 +76,18 @@ count(2);
 
 ok(
     $res = $client->_get(
-        '/notifications', #IO::String->new($json2),
+        '/notifications',
         type   => 'application/json',
-        #length => length($json2)
     ),
     'List notifications'
 );
-ok( $res->[2]->[0] =~ /"result"\s*:\s*1/, 'Two notifications found' )
+ok( $res->[2]->[0] =~ /"result"\s*:\s*/, 'Result found' )
   or print STDERR Dumper( $res->[2]->[0] );
-count(2);
+ok( $res->[2]->[0] =~ /"reference":"testref"/, 'First notifications found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"reference":"testref2"/, 'Second notifications found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(4);
 
 ok(
     $res = $client->_put(

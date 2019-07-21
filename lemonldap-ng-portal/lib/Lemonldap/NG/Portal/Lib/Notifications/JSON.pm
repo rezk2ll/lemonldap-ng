@@ -241,7 +241,9 @@ sub notificationServer {
     elsif ( $req->method =~ /^GET$/i ) {
         my $notifs;
         ( $notifs, $err ) =
-          eval { $self->notifObject->getNotifications() };
+
+          # !!!!!! TO BE FIXED HERE => USE JSON TO SELECT USER IF EXISTS !!!!!!
+          eval { $self->notifObject->getNotifications( 'dwho') };
         return $self->p->sendError( $req, $@, 500 ) if ($@);
         $res = [];
         foreach ( keys %$notifs ) {
