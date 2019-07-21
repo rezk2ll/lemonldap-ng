@@ -57,7 +57,6 @@ sub deleteNotification {
             'REST service "delete notification" called without all parameters');
         return 0;
     }
-
     $self->logger->debug(
 "REST service deleteNotification called for uid $uid and reference $myref"
     );
