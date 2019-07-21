@@ -24,6 +24,8 @@ my $json2 = '{
 "text": "This is a second test text"
 }';
 
+my $deljson = '{"uid":"dwho","reference":"testref"}';
+
 my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel                   => 'error',
@@ -48,6 +50,42 @@ ok(
     'Create notification'
 );
 count(1);
+
+ok(
+    $res = $client->_put(
+        '/notifications', IO::String->new($deljson),
+        type   => 'application/json',
+        length => length($deljson)
+    ),
+    'Try to delete notification with bad method'
+);
+ok( $res->[2]->[0] =~ /"error"\s*:\s*"Bad request"/, 'Bad method is refused' );
+count(2);
+
+ok(
+    $res = $client->_delete(
+        '/notifications',
+        type   => 'application/json',
+        length => length($deljson),
+        body   => IO::String->new($deljson),
+    ),
+    'Delete notification'
+);
+ok( $res->[2]->[0] =~ /"result"\s*:\s*1/, 'Notification has been deleted' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(2);
+
+ok(
+    $res = $client->_post(
+        '/notifications', IO::String->new($json),
+        type   => 'application/json',
+        length => length($json)
+    ),
+    'Create notification'
+);
+ok( $res->[2]->[0] =~ /"result"\s*:\s*1/, 'Notification has been inserted' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(2);
 
 ok(
     $res = $client->_post(

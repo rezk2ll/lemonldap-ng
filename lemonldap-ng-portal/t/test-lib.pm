@@ -736,7 +736,7 @@ Call C<_get()> with method set to DELETE.
 sub _delete {
     my ( $self, $path, %args ) = @_;
     $args{method} = 'DELETE';
-    return $self->_get( $path, %args );
+    return $args{body} ? $self->_post( $path, $args{body}, %args ) : $self->_get( $path, %args );
 }
 
 =head4 _put( $path, $body, %args )
