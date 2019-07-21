@@ -16,7 +16,7 @@ my $json = '{
 "text": "This is a test text"
 }';
 
-my $json2 = '{
+my $jsonbis = '{
 "date": "2016-05-31",
 "reference": "testref",
 "uid": "dwho",
@@ -24,11 +24,19 @@ my $json2 = '{
 "text": "This is a second test text"
 }';
 
-my $deljson = '{"uid":"dwho","reference":"testref"}';
+my $json2 = '{
+"date": "2016-05-30",
+"reference": "testref2",
+"uid": "dwho",
+"title": "Test2 title",
+"text": "This is a second test text"
+}';
+
+my $deljson = '{"uid":"dwho","reference":"testref2"}';
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                   => 'error',
+            logLevel                   => 'debug',
             useSafeJail                => 1,
             notification               => 1,
             notificationServer         => 1,
@@ -41,6 +49,7 @@ my $client = LLNG::Manager::Test->new( {
 );
 
 my $res;
+
 ok(
     $res = $client->_post(
         '/notifications', IO::String->new($json),
@@ -49,7 +58,33 @@ ok(
     ),
     'Create notification'
 );
-count(1);
+ok( $res->[2]->[0] =~ /"result"\s*:\s*1/, 'Notification has been inserted' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(2);
+
+ok(
+    $res = $client->_post(
+        '/notifications', IO::String->new($json2),
+        type   => 'application/json',
+        length => length($json2)
+    ),
+    'Create second notification'
+);
+ok( $res->[2]->[0] =~ /"result"\s*:\s*1/, 'Second notification has been inserted' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(2);
+
+ok(
+    $res = $client->_get(
+        '/notifications', #IO::String->new($json2),
+        type   => 'application/json',
+        #length => length($json2)
+    ),
+    'List notifications'
+);
+ok( $res->[2]->[0] =~ /"result"\s*:\s*1/, 'Two notifications found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(2);
 
 ok(
     $res = $client->_put(
@@ -77,21 +112,9 @@ count(2);
 
 ok(
     $res = $client->_post(
-        '/notifications', IO::String->new($json),
+        '/notifications', IO::String->new($jsonbis),
         type   => 'application/json',
-        length => length($json)
-    ),
-    'Create notification'
-);
-ok( $res->[2]->[0] =~ /"result"\s*:\s*1/, 'Notification has been inserted' )
-  or print STDERR Dumper( $res->[2]->[0] );
-count(2);
-
-ok(
-    $res = $client->_post(
-        '/notifications', IO::String->new($json2),
-        type   => 'application/json',
-        length => length($json2)
+        length => length($jsonbis)
     ),
     'Try to create the same notification twice'
 );
