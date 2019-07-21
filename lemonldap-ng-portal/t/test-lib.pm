@@ -659,13 +659,27 @@ sub _get {
                 $args{remote_user} ? ( 'REMOTE_USER' => $args{remote_user} )
                 : ()
             ),
-            'REQUEST_METHOD' => $args{method} || 'GET',
-            'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
+            'REQUEST_METHOD' => $args{method}
+              || 'GET',
+            'REQUEST_URI' => $path . ( $args{query} ? "?$args{query}" : '' ),
             ( $args{query} ? ( QUERY_STRING => $args{query} ) : () ),
             'SCRIPT_NAME'     => '',
             'SERVER_NAME'     => 'auth.example.com',
             'SERVER_PORT'     => '80',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
+
+            (
+                $args{body}
+                ? (
+                    'psgi.input'           => $args{body},
+                    'psgix.input.buffered' => 0,
+                    'CONTENT_LENGTH'       => $args{length}
+                      // scalar( ( stat $args{body} )[7] ),
+                    'CONTENT_TYPE' => $args{type}
+                      || 'application/x-www-form-urlencoded',
+                  )
+                : ()
+            ),
             ( $args{custom} ? %{ $args{custom} } : () ),
         }
     );
@@ -736,7 +750,9 @@ Call C<_get()> with method set to DELETE.
 sub _delete {
     my ( $self, $path, %args ) = @_;
     $args{method} = 'DELETE';
-    return $args{body} ? $self->_post( $path, $args{body}, %args ) : $self->_get( $path, %args );
+    return $args{body}
+      ? $self->_post( $path, $args{body}, %args )
+      : $self->_get( $path, %args );
 }
 
 =head4 _put( $path, $body, %args )

@@ -33,10 +33,11 @@ my $json2 = '{
 }';
 
 my $deljson = '{"uid":"dwho","reference":"testref2"}';
+my $listjson = '{"uid":"dwho"}';
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                   => 'debug',
+            logLevel                   => 'error',
             useSafeJail                => 1,
             notification               => 1,
             notificationServer         => 1,
@@ -78,14 +79,16 @@ ok(
     $res = $client->_get(
         '/notifications',
         type   => 'application/json',
+        length => length($listjson),
+        body   => IO::String->new($listjson),
     ),
     'List notifications'
 );
 ok( $res->[2]->[0] =~ /"result"\s*:\s*/, 'Result found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ /"reference":"testref"/, 'First notifications found' )
+ok( $res->[2]->[0] =~ /"reference":"testref"/, 'First notification found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ /"reference":"testref2"/, 'Second notifications found' )
+ok( $res->[2]->[0] =~ /"reference":"testref2"/, 'Second notification found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
 

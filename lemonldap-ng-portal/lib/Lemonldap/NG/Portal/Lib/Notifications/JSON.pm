@@ -239,11 +239,16 @@ sub notificationServer {
         return $self->p->sendError( $req, $@, 500 ) if ($@);
     }
     elsif ( $req->method =~ /^GET$/i ) {
+        my $content = $req->content || '{}';
+        my $json;
+        eval { $json = from_json( $content, { allow_nonref => 1 } ) };
+        return $self->p->sendError( $req, "Unable to decode JSON file: $@",
+            400 )
+          if ($@);
         my $notifs;
+        my $user = $json->{uid} || '';
         ( $notifs, $err ) =
-
-          # !!!!!! TO BE FIXED HERE => USE JSON TO SELECT USER IF EXISTS !!!!!!
-          eval { $self->notifObject->getNotifications( 'dwho') };
+          eval { $self->notifObject->getNotifications( $user ) };
         return $self->p->sendError( $req, $@, 500 ) if ($@);
         $res = [];
         foreach ( keys %$notifs ) {
