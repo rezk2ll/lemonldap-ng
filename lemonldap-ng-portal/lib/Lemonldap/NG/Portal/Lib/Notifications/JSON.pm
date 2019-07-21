@@ -238,18 +238,38 @@ sub notificationServer {
           eval { $self->notifObject->newNotification( $req->content ) };
         return $self->p->sendError( $req, $@, 500 ) if ($@);
     }
+    elsif ( $req->method =~ /^GET$/i ) {
+        my $notifs;
+        ( $notifs, $err ) =
+          eval { $self->notifObject->getNotifications() };
+        return $self->p->sendError( $req, $@, 500 ) if ($@);
+        $res = [];
+        foreach ( keys %$notifs ) {
+            $self->p->logger->debug("Found notification $_");
+            my $json;
+            eval { $json = from_json( $notifs->{$_}, { allow_nonref => 1 } ) };
+            return $self->p->sendError( $req, "Unable to decode JSON file: $@",
+                400 )
+              if ($@);
+            push( @$res,
+                { "uid" => $json->{uid}, "reference" => $json->{reference} } );
+        }
+    }
     elsif ( $req->method =~ /^DELETE$/i ) {
         my $json;
         eval { $json = from_json( $req->content, { allow_nonref => 1 } ) };
         return $self->p->sendError( $req, "Unable to decode JSON file: $@",
             400 )
           if ($@);
-        ( $res, $err ) =
-          eval { $self->notifObject->deleteNotification( $json->{uid}, $json->{reference} ) };
+        ( $res, $err ) = eval {
+            $self->notifObject->deleteNotification( $json->{uid},
+                $json->{reference} );
+        };
         return $self->p->sendError( $req, $@, 500 ) if ($@);
     }
     else {
-        return $self->p->sendError( $req, "Unknown HTTP method: $req->method", 400 );
+        return $self->p->sendError( $req, "Unknown HTTP method: $req->method",
+            400 );
     }
     return $self->p->sendError( $req, ( $err ? $err : 'Bad request' ), 400 )
       unless ($res);
