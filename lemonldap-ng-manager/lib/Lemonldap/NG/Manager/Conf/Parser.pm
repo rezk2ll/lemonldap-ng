@@ -793,6 +793,25 @@ sub _scanNodes {
                     next;
                 }
 
+                # sfExtra: just to replace "over" key
+                if ( $name eq 'sfExtra' ) {
+                    hdebug('     sfExtra');
+                    $self->newConf->{$name} = {};
+                    foreach my $node ( @{ $leaf->{nodes} } ) {
+                        my $tmp;
+                        $tmp->{$_} = $node->{data}->{$_} foreach (qw(type rule));
+                        $tmp->{over} = {};
+                        foreach ( @{ $node->{data}->{over} } ) {
+                            $tmp->{over}->{ $_->[0] } = $_->[1];
+                        }
+                        $self->newConf->{$name}->{ $node->{title} } = $tmp;
+                    }
+
+                    # TODO: check changes
+                    $self->confChanged(1);
+                    next;
+                }
+
                 $subNodes //= [];
                 my $count = 0;
                 my @old   = (

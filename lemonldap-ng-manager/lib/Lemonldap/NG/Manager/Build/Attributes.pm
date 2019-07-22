@@ -3278,6 +3278,17 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'Custom',        v => 'customModule' },
             ],
         },
+        sfExtra => {
+            type          => 'sfExtraContainer',
+            keyTest       => qr/^\w+$/,
+            test          => sub { 1 },
+            documentation => 'Extra second factors',
+            select        => [
+                { k => 'Mail2F',  v => 'E-Mail' },
+                { k => 'REST',    v => 'REST' },
+                { k => 'Ext2F',   v => 'External' },
+            ],
+        },
 
         # Custom auth modules
         customAuth => {

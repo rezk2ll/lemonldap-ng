@@ -69,7 +69,7 @@ sub addRoutes {
                 qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
                   applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
                   casSrvMetaDataNodes casAppMetaDataNodes
-                  authChoiceModules grantSessionRules combModules
+                  authChoiceModules grantSessionRules combModules sfExtra
                   openIdIDPList)
             ]
         },

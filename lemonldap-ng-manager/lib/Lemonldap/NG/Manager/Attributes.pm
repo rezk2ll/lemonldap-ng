@@ -3212,6 +3212,26 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '::2F::Engines::Default',
             'type'    => 'text'
         },
+        'sfExtra' => {
+            'keyTest' => qr/^\w+$/,
+            'select'  => [ {
+                    'k' => 'Mail2F',
+                    'v' => 'E-Mail'
+                },
+                {
+                    'k' => 'REST',
+                    'v' => 'REST'
+                },
+                {
+                    'k' => 'Ext2F',
+                    'v' => 'External'
+                }
+            ],
+            'test' => sub {
+                1;
+            },
+            'type' => 'sfExtraContainer'
+        },
         'sfRemovedMsgRule' => {
             'default' => 0,
             'type'    => 'boolOrExpr'

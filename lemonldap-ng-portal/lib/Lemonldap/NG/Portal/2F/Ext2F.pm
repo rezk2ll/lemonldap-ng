@@ -16,7 +16,7 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 
 # INITIALIZATION
 
-has prefix => ( is => 'ro', default => 'ext' );
+has prefix => ( is => 'rw', default => 'ext' );
 has random => ( is => 'rw' );
 
 sub init {
@@ -28,6 +28,8 @@ sub init {
                 return 0;
             }
         }
+        $self->prefix( $self->conf->{sfPrefix} )
+            if ( $self->conf->{sfPrefix} );
         $self->logo( $self->conf->{ext2fLogo} )
           if ( $self->conf->{ext2fLogo} );
         return $self->SUPER::init();
@@ -38,6 +40,8 @@ sub init {
             return 0;
         }
         $self->random( Lemonldap::NG::Common::Crypto::srandom() );
+        $self->prefix( $self->conf->{sfPrefix} )
+            if ( $self->conf->{sfPrefix} );
         $self->logo( $self->conf->{ext2fLogo} )
           if ( $self->conf->{ext2fLogo} );
         return $self->SUPER::init();
@@ -82,6 +86,7 @@ sub run {
             MAIN_LOGO   => $self->conf->{portalMainLogo},
             SKIN        => $self->p->getSkin($req),
             TOKEN       => $token,
+            TARGET      => '/' . $self->prefix . '2fcheck',
             CHECKLOGINS => $checkLogins
         }
     );
