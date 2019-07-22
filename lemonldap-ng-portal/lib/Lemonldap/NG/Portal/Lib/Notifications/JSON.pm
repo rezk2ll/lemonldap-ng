@@ -227,7 +227,7 @@ sub toForm {
 }
 
 sub notificationServer {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, @args ) = @_;
     $self->p->logger->debug("REST request for notifications");
     return $self->p->sendError( $req, 'Only JSON requests here', 400 )
       unless ( $req->wantJSON );
@@ -239,16 +239,10 @@ sub notificationServer {
         return $self->p->sendError( $req, $@, 500 ) if ($@);
     }
     elsif ( $req->method =~ /^GET$/i ) {
-        my $content = $req->content || '{}';
-        my $json;
-        eval { $json = from_json( $content, { allow_nonref => 1 } ) };
-        return $self->p->sendError( $req, "Unable to decode JSON file: $@",
-            400 )
-          if ($@);
+        my ( $uid, $ref ) = @args;
         my $notifs;
-        my $user = $json->{uid} || '';
         ( $notifs, $err ) =
-          eval { $self->notifObject->getNotifications( $user ) };
+          eval { $self->notifObject->getNotifications($uid) };
         return $self->p->sendError( $req, $@, 500 ) if ($@);
         $res = [];
         foreach ( keys %$notifs ) {
@@ -258,20 +252,21 @@ sub notificationServer {
             return $self->p->sendError( $req, "Unable to decode JSON file: $@",
                 400 )
               if ($@);
-            push( @$res,
-                { "uid" => $json->{uid}, "reference" => $json->{reference} } );
+            push @$res,
+              { "uid" => $json->{uid}, "reference" => $json->{reference} };
+            if ($ref) {
+                @$res = grep { $_->{reference} =~ /^$ref$/ } @$res;
+            }
         }
     }
     elsif ( $req->method =~ /^DELETE$/i ) {
-        my $json;
-        eval { $json = from_json( $req->content, { allow_nonref => 1 } ) };
-        return $self->p->sendError( $req, "Unable to decode JSON file: $@",
-            400 )
-          if ($@);
-        ( $res, $err ) = eval {
-            $self->notifObject->deleteNotification( $json->{uid},
-                $json->{reference} );
-        };
+        my $uid = $req->params('uid');
+        my $ref = $req->params('reference');
+        return $self->p->sendError( $req,
+            "Missing parameters -> uid: $uid / ref: $ref", 400 )
+          unless ( $uid and $ref );
+        ( $res, $err ) =
+          eval { $self->notifObject->deleteNotification( $uid, $ref ); };
         return $self->p->sendError( $req, $@, 500 ) if ($@);
     }
     else {

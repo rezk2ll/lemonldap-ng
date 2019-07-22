@@ -48,8 +48,17 @@ sub init {
     if ( $self->conf->{notificationServer} ) {
         $self->logger->debug('Notification server enable');
         $self->addUnauthRoute(
-            'notifications' => 'notificationServer',
-            [ 'GET', 'POST', 'DELETE' ]
+            notifications => 'notificationServer',
+            ['POST']
+        );
+        $self->addUnauthRoute(
+            notifications => { '*' => 'notificationServer' },
+            ['GET']
+        );
+        $self->addUnauthRoute(
+            notifications =>
+              { ':uid' => { ':reference' => 'notificationServer' } },
+            ['DELETE']
         );
     }
 
@@ -142,8 +151,8 @@ sub getNotifBack {
 }
 
 sub notificationServer {
-    my ( $self, $req ) = @_;
-    return $self->module->notificationServer($req);
+    my ( $self, $req, @args ) = @_;
+    return $self->module->notificationServer($req, @args);
 }
 
 1;
