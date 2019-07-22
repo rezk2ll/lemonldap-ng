@@ -77,12 +77,10 @@ count(2);
 
 ok(
     $res = $client->_get(
-        '/notifications',
+        '/notifications/dwho',
         type   => 'application/json',
-        length => length($listjson),
-        body   => IO::String->new($listjson),
     ),
-    'List notifications'
+    'List notifications for "dwho"'
 );
 ok( $res->[2]->[0] =~ /"result"\s*:\s*/, 'Result found' )
   or print STDERR Dumper( $res->[2]->[0] );
@@ -91,6 +89,19 @@ ok( $res->[2]->[0] =~ /"reference":"testref"/, 'First notification found' )
 ok( $res->[2]->[0] =~ /"reference":"testref2"/, 'Second notification found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
+
+ok(
+    $res = $client->_get(
+        '/notifications/dwho/testref',
+        type   => 'application/json',
+    ),
+    'List notification with reference "testref"'
+);
+ok( $res->[2]->[0] =~ /"result"\s*:\s*/, 'Result found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"reference":"testref"/, 'Notification found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(3);
 
 ok(
     $res = $client->_put(
@@ -105,10 +116,8 @@ count(2);
 
 ok(
     $res = $client->_delete(
-        '/notifications',
+        '/notifications/dwho/testref2',
         type   => 'application/json',
-        length => length($deljson),
-        body   => IO::String->new($deljson),
     ),
     'Delete notification'
 );
