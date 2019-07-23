@@ -32,8 +32,15 @@ my $json2 = '{
 "text": "This is a second test text"
 }';
 
-my $deljson = '{"uid":"dwho","reference":"testref2"}';
-my $listjson = '{"uid":"dwho"}';
+my $jsonall = '{
+"date": "2016-05-30",
+"reference": "testrefall",
+"uid": "everyone",
+"title": "Testall title",
+"text": "This is a test text for all users"
+}';
+
+my $content = '{"uid":"dwho"}';
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
@@ -41,6 +48,7 @@ my $client = LLNG::Manager::Test->new( {
             useSafeJail                => 1,
             notification               => 1,
             notificationServer         => 1,
+            notificationWildcard       => 'everyone',
             notificationStorage        => 'File',
             notificationStorageOptions => {
                 dirName => 't'
@@ -50,35 +58,23 @@ my $client = LLNG::Manager::Test->new( {
 );
 
 my $res;
-
-ok(
-    $res = $client->_post(
-        '/notifications', IO::String->new($json),
-        type   => 'application/json',
-        length => length($json)
-    ),
-    'Create notification'
-);
-ok( $res->[2]->[0] =~ /"result"\s*:\s*1/, 'Notification has been inserted' )
-  or print STDERR Dumper( $res->[2]->[0] );
-count(2);
-
-ok(
-    $res = $client->_post(
-        '/notifications', IO::String->new($json2),
-        type   => 'application/json',
-        length => length($json2)
-    ),
-    'Create second notification'
-);
-ok( $res->[2]->[0] =~ /"result"\s*:\s*1/, 'Second notification has been inserted' )
-  or print STDERR Dumper( $res->[2]->[0] );
-count(2);
+foreach ( $json, $json2, $jsonall ) {
+    ok(
+        $res = $client->_post(
+            '/notifications', IO::String->new($_),
+            type   => 'application/json',
+            length => length($_)
+        ),
+        "POST notification $_"
+    );
+    ok( $res->[2]->[0] =~ /"result"\s*:\s*1/, 'Notification has been inserted' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    count(2);
+}
 
 ok(
     $res = $client->_get(
-        '/notifications/dwho',
-        type   => 'application/json',
+        '/notifications/dwho', type => 'application/json',
     ),
     'List notifications for "dwho"'
 );
@@ -88,42 +84,55 @@ ok( $res->[2]->[0] =~ /"reference":"testref"/, 'First notification found' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ /"reference":"testref2"/, 'Second notification found' )
   or print STDERR Dumper( $res->[2]->[0] );
-count(4);
+ok( $res->[2]->[0] =~ /"reference":"testrefall"/, 'Third notification found (all users)' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(5);
 
 ok(
     $res = $client->_get(
-        '/notifications/dwho/testref',
-        type   => 'application/json',
+        '/notifications/dwho/testref', type => 'application/json',
     ),
     'List notification with reference "testref"'
 );
 ok( $res->[2]->[0] =~ /"result"\s*:\s*/, 'Result found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ /"reference":"testref"/, 'Notification found' )
+ok( $res->[2]->[0] =~ /"reference"\s*:\s*"testref"/,
+    'Notification reference found' )
   or print STDERR Dumper( $res->[2]->[0] );
-count(3);
+ok( $res->[2]->[0] =~ /"title"\s*:\s*"Test title"/, 'Notification title found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"text"\s*:\s*"This is a test text"/,
+    'Notification text found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"date"\s*:\s*"2016-05-30"/, 'Notification date found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"uid"\s*:\s*"dwho"/, 'Notification uid found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(7);
 
 ok(
     $res = $client->_put(
-        '/notifications', IO::String->new($deljson),
+        '/notifications', IO::String->new($content),
         type   => 'application/json',
-        length => length($deljson)
+        length => length($content)
     ),
     'Try to delete notification with bad method'
 );
 ok( $res->[2]->[0] =~ /"error"\s*:\s*"Bad request"/, 'Bad method is refused' );
 count(2);
 
-ok(
-    $res = $client->_delete(
-        '/notifications/dwho/testref2',
-        type   => 'application/json',
-    ),
-    'Delete notification'
-);
-ok( $res->[2]->[0] =~ /"result"\s*:\s*1/, 'Notification has been deleted' )
-  or print STDERR Dumper( $res->[2]->[0] );
-count(2);
+foreach (qw(testrefall testref2)) {
+    my $user = $_ eq 'testrefall' ? 'everyone' : 'dwho';
+    ok(
+        $res = $client->_delete(
+            "/notifications/$user/$_", type => 'application/json',
+        ),
+        "Delete notification $_"
+    );
+    ok( $res->[2]->[0] =~ /"result"\s*:\s*1/, 'Notification has been deleted' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    count(2);
+}
 
 ok(
     $res = $client->_post(

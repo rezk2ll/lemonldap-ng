@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Lib::Notifications::JSON;
 use strict;
 use Mouse;
 use JSON qw(from_json);
+use Data::Dumper;
 
 our $VERSION = '2.0.6';
 
@@ -234,11 +235,13 @@ sub notificationServer {
     $self->p->logger->debug( "JSON content: " . $req->content );
     my ( $res, $err );
     if ( $req->method =~ /^POST$/i ) {
+        $self->p->logger->debug("POST request");
         ( $res, $err ) =
           eval { $self->notifObject->newNotification( $req->content ) };
         return $self->p->sendError( $req, $@, 500 ) if ($@);
     }
     elsif ( $req->method =~ /^GET$/i ) {
+        $self->p->logger->debug("GET request");
         my ( $uid, $ref ) = @args;
         my $notifs;
         ( $notifs, $err ) =
@@ -252,14 +255,29 @@ sub notificationServer {
             return $self->p->sendError( $req, "Unable to decode JSON file: $@",
                 400 )
               if ($@);
-            push @$res,
-              { "uid" => $json->{uid}, "reference" => $json->{reference} };
+            $self->p->logger->debug(
+                "Notification $_: " . Dumper($json) );
             if ($ref) {
-                @$res = grep { $_->{reference} =~ /^$ref$/ } @$res;
+                push(
+                    @$res,
+                    {
+                        "uid"       => $json->{uid},
+                        "reference" => $json->{reference},
+                        "date"      => $json->{date},
+                        "title"     => $json->{title},
+                        "text"      => $json->{text}
+
+                    }
+                ) if ( $json->{reference} =~ /^$ref$/ );
+            }
+            else {
+                push @$res,
+                  { "uid" => $json->{uid}, "reference" => $json->{reference} };
             }
         }
     }
     elsif ( $req->method =~ /^DELETE$/i ) {
+        $self->p->logger->debug("DELETE request");
         my $uid = $req->params('uid');
         my $ref = $req->params('reference');
         return $self->p->sendError( $req,
