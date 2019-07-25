@@ -80,7 +80,6 @@ sub init {
     $type->import( $self->conf->{oldNotifFormat} ? 'XML' : 'JSON' );
 
     # TODO: use conf database?
-
     my $prms = {
         %{ $self->conf->{notificationStorageOptions} },
         p    => $self->p,

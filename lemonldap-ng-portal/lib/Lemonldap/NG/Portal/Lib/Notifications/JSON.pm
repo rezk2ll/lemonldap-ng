@@ -64,6 +64,9 @@ sub checkForNotifications {
         next unless $j;
         $i++;
     }
+    @res =
+      sort { $a->{date} cmp $b->{date} or $a->{reference} cmp $b->{reference} }
+      @res;
     $form .= $self->toForm( $req, @res );
 
     # Stop here if nothing to display
