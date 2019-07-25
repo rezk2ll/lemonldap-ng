@@ -7,6 +7,7 @@ use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::FormEncode;
 use XML::Simple;
+use HTML::Entities qw(decode_entities);
 use MIME::Base64;
 use HTTP::Request;         # SOAP call
 use POSIX qw(strftime);    # Convert SAML2 date into timestamp
@@ -264,6 +265,10 @@ sub loadIDPs {
         # Store IDP entityID and Organization Name
         my ( $tmp, $entityID ) =
           ( $idp_metadata =~ /entityID=(['"])(.+?)\1/si );
+
+        # Decode HTML entities from entityID
+        decode_entities($entityID);
+
         my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
           || ucfirst($_);
         $self->idpList->{$entityID}->{confKey} = $_;
@@ -360,6 +365,10 @@ sub loadSPs {
 
         # Store SP entityID and Organization Name
         my ( $tmp, $entityID ) = ( $sp_metadata =~ /entityID=(['"])(.+?)\1/si );
+
+        # Decode HTML entities from entityID
+        decode_entities($entityID);
+
         my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
           || ucfirst($_);
         $self->spList->{$entityID}->{confKey} = $_;
