@@ -1493,14 +1493,21 @@ sub metadata {
 
     # List response types depending on allowed flows
     my $response_types = [];
-    push( @$response_types, "code" )
-      if $self->conf->{oidcServiceAllowAuthorizationCodeFlow};
-    push( @$response_types, "id_token", "id_token token" )
-      if $self->conf->{oidcServiceAllowImplicitFlow};
-    push( @$response_types,
-        "code id_token",
-        "code token", "code id_token token" )
-      if $self->conf->{oidcServiceAllowHybridFlow};
+    my $grant_types    = [];
+    if ( $self->conf->{oidcServiceAllowAuthorizationCodeFlow} ) {
+        push( @$response_types, "code" );
+        push( @$grant_types,    "authorization_code" );
+    }
+    if ( $self->conf->{oidcServiceAllowImplicitFlow} ) {
+        push( @$response_types, "id_token", "id_token token" );
+        push( @$grant_types, "implicit" );
+    }
+    if ( $self->conf->{oidcServiceAllowHybridFlow} ) {
+        push( @$response_types,
+            "code id_token",
+            "code token", "code id_token token" );
+        push( @$grant_types, "hybrid" );
+    }
 
     # Create OpenID configuration hash;
     return $self->p->sendJSONresponse(
@@ -1530,9 +1537,9 @@ sub metadata {
             # Scopes
             scopes_supported => [qw/openid profile email address phone/],
             response_types_supported => $response_types,
-            grant_types_supported   => [qw/authorization_code implicit hybrid/],
-            acr_values_supported    => \@acr,
-            subject_types_supported => ["public"],
+            grant_types_supported    => $grant_types,
+            acr_values_supported     => \@acr,
+            subject_types_supported  => ["public"],
             token_endpoint_auth_methods_supported =>
               [qw/client_secret_post client_secret_basic/],
             claims_supported                 => [qw/sub iss auth_time acr/],
