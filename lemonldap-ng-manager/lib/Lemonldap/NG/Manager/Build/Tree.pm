@@ -587,12 +587,29 @@ sub tree {
                             help  => 'notifications.html',
                             nodes => [
                                 'notification',
-                                'notificationServer',
                                 'oldNotifFormat',
                                 'notificationStorage',
                                 'notificationStorageOptions',
                                 'notificationWildcard',
-                                'notificationXSLTfile'
+                                'notificationXSLTfile',
+                                {
+                                    title => 'serverNotification',
+                                    help  => 'notifications.html#server',
+                                    nodes => [
+                                        'notificationServer',
+                                        'notificationServerSentAttributes',
+                                        {
+                                            title =>
+                                              'notificationServerMethods',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'notificationServerPOST',
+                                                'notificationServerGET',
+                                                'notificationServerDELETE',
+                                            ]
+                                        },
+                                    ]
+                                },
                             ]
                         },
                         {
@@ -672,8 +689,6 @@ sub tree {
                                 'contextSwitchingRule',
                                 'contextSwitchingIdRule',
                                 'contextSwitchingStopWithLogout',
-
-                                #'contextSwitchingHiddenAttributes',
                             ]
                         },
                     ]
@@ -947,8 +962,7 @@ sub tree {
                     help  => 'samlservice.html#organization',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'samlOrganizationDisplayName',
-                        'samlOrganizationName',
+                        'samlOrganizationDisplayName', 'samlOrganizationName',
                         'samlOrganizationURL'
                     ]
                 },

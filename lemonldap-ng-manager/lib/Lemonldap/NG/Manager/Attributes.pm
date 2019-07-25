@@ -1749,6 +1749,22 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 0,
             'type'    => 'bool'
         },
+        'notificationServerDELETE' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'notificationServerGET' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'notificationServerPOST' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'notificationServerSentAttributes' => {
+            'default' => 'uid reference date title subtitle text check',
+            'type'    => 'text'
+        },
         'notificationStorage' => {
             'default' => 'File',
             'type'    => 'PerlModule'

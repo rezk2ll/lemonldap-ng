@@ -722,7 +722,7 @@ sub attributes {
             keyTest       => sub { return perlExpr(@_) },
             test          => sub { 1 },
             documentation => 'Rules to grant sessions',
-            default => {},
+            default       => {},
         },
         hiddenAttributes => {
             type          => 'text',
@@ -1038,6 +1038,28 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Notification server activation',
+        },
+        notificationServerGET => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Notification server activation',
+        },
+        notificationServerPOST => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Notification server activation',
+        },
+        notificationServerDELETE => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Notification server activation',
+        },
+        notificationServerSentAttributes => {
+            type    => 'text',
+            default => 'uid reference date title subtitle text check',
+            documentation =>
+              'Prameters to send with notification server GET method',
+            flags => 'p',
         },
         notificationStorage => {
             type          => 'PerlModule',
@@ -3284,9 +3306,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             test          => sub { 1 },
             documentation => 'Extra second factors',
             select        => [
-                { k => 'Mail2F',  v => 'E-Mail' },
-                { k => 'REST',    v => 'REST' },
-                { k => 'Ext2F',   v => 'External' },
+                { k => 'Mail2F', v => 'E-Mail' },
+                { k => 'REST',   v => 'REST' },
+                { k => 'Ext2F',  v => 'External' },
             ],
         },
 
