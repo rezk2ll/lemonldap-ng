@@ -248,27 +248,22 @@ sub notificationServer {
           eval { $self->notifObject->getNotifications($uid) };
         return $self->p->sendError( $req, $@, 500 ) if ($@);
         $res = [];
-        foreach ( keys %$notifs ) {
-            $self->p->logger->debug("Found notification $_");
+        foreach my $notif ( keys %$notifs ) {
+            $self->p->logger->debug("Found notification $notif");
             my $json;
-            eval { $json = from_json( $notifs->{$_}, { allow_nonref => 1 } ) };
+            eval {
+                $json = from_json( $notifs->{$notif}, { allow_nonref => 1 } );
+            };
             return $self->p->sendError( $req, "Unable to decode JSON file: $@",
                 400 )
               if ($@);
-            $self->p->logger->debug(
-                "Notification $_: " . Dumper($json) );
+            $self->p->logger->debug( "Notification $notif: " . Dumper($json) );
             if ($ref) {
-                push(
-                    @$res,
-                    {
-                        "uid"       => $json->{uid},
-                        "reference" => $json->{reference},
-                        "date"      => $json->{date},
-                        "title"     => $json->{title},
-                        "text"      => $json->{text}
-
-                    }
-                ) if ( $json->{reference} =~ /^$ref$/ );
+                push( @$res,
+                    map { "$_" => $json->{$_} },
+                    split /\s+/,
+                    $self->conf->{notificationServerSentAttributes} )
+                  if ( $json->{reference} =~ /^$ref$/ );
             }
             else {
                 push @$res,
