@@ -24,13 +24,15 @@ my $jsonbis = '{
 "text": "This is a second test text"
 }';
 
-my $json2 = '{
+my $json2 = q%{
 "date": "2016-05-30",
 "reference": "testref2",
 "uid": "dwho",
 "title": "Test2 title",
-"text": "This is a second test text"
-}';
+"text": "This is a second test text",
+"subtitle": "Application 2",
+"check": ["I agree","Yes, I'm sure"]
+}%;
 
 my $jsonall = '{
 "date": "2016-05-30",
@@ -44,13 +46,16 @@ my $content = '{"uid":"dwho"}';
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                   => 'error',
-            useSafeJail                => 1,
-            notification               => 1,
-            notificationServer         => 1,
-            notificationWildcard       => 'everyone',
-            notificationStorage        => 'File',
-            notificationStorageOptions => {
+            logLevel              => 'error',
+            useSafeJail           => 1,
+            notification          => 1,
+            notificationServer    => 1,       # POST method enabled if undefined
+            notificationServerGET => 1,
+            notificationServerDELETE         => 1,
+            notificationServerSentAttributes => 'uid reference date title text subtitle check',
+            notificationWildcard             => 'everyone',
+            notificationStorage              => 'File',
+            notificationStorageOptions       => {
                 dirName => 't'
             },
         }
@@ -84,8 +89,10 @@ ok( $res->[2]->[0] =~ /"reference":"testref"/, 'First notification found' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ /"reference":"testref2"/, 'Second notification found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ /"reference":"testrefall"/, 'Third notification found (all users)' )
-  or print STDERR Dumper( $res->[2]->[0] );
+ok(
+    $res->[2]->[0] =~ /"reference":"testrefall"/,
+    'Third notification found (all users)'
+) or print STDERR Dumper( $res->[2]->[0] );
 count(5);
 
 ok(
@@ -109,6 +116,32 @@ ok( $res->[2]->[0] =~ /"date"\s*:\s*"2016-05-30"/, 'Notification date found' )
 ok( $res->[2]->[0] =~ /"uid"\s*:\s*"dwho"/, 'Notification uid found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(7);
+
+ok(
+    $res = $client->_get(
+        '/notifications/dwho/testref2', type => 'application/json',
+    ),
+    'List notification with reference "testref2"'
+);
+ok( $res->[2]->[0] =~ /"result"\s*:\s*/, 'Result found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"reference"\s*:\s*"testref2"/,
+    'Notification reference found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"title"\s*:\s*"Test2 title"/, 'Notification title found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"text"\s*:\s*"This is a second test text"/,
+    'Notification text found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"date"\s*:\s*"2016-05-30"/, 'Notification date found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"uid"\s*:\s*"dwho"/, 'Notification uid found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"subtitle"\s*:\s*"Application 2"/, 'Notification subtitle found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"check":\["I agree","Yes, I\'m sure"\]/, 'Notification check boxes found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(9);
 
 ok(
     $res = $client->_put(
