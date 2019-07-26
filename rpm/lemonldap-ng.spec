@@ -213,9 +213,11 @@ Requires:       perl(IO::String)
 Requires:       perl(Lemonldap::NG::Common) = %{version}-%{release}
 Requires:       perl(mod_perl2)
 %if 0%{?rhel}%{?fedora}
-Requires(post):  httpd
+Requires(post): httpd
+Requires:       mod_fcgid
 %else
-Requires(post):  apache2
+Requires(post): apache2
+Requires:       apache2-mod_fcgid
 %endif
 
 %description conf
