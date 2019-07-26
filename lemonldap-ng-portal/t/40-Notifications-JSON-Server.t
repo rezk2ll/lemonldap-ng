@@ -52,7 +52,7 @@ my $client = LLNG::Manager::Test->new( {
             notificationServer    => 1,       # POST method enabled if undefined
             notificationServerGET => 1,
             notificationServerDELETE         => 1,
-            notificationServerSentAttributes => 'uid reference date title text subtitle check',
+            notificationServerSentAttributes => 'uid reference  date title text subtitle check',
             notificationWildcard             => 'everyone',
             notificationStorage              => 'File',
             notificationStorageOptions       => {
@@ -76,6 +76,20 @@ foreach ( $json, $json2, $jsonall ) {
       or print STDERR Dumper( $res->[2]->[0] );
     count(2);
 }
+
+ok(
+    $res = $client->_get(
+        '/notifications', type => 'application/json',
+    ),
+    'List notifications for "allusers"'
+);
+ok( $res->[2]->[0] =~ /"result"\s*:\s*/, 'Result found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"reference":"testrefall"/, 'Notification for all users found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+  ok( $res->[2]->[0] =~ /"uid":"everyone"/, 'Wildcard found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(4);
 
 ok(
     $res = $client->_get(
