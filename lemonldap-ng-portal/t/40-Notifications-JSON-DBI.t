@@ -4,7 +4,7 @@ use IO::String;
 
 my $res;
 my $file      = 't/notifications.db';
-my $maintests = 6;
+my $maintests = 8;
 eval { unlink $file };
 require 't/test-lib.pm';
 
@@ -33,13 +33,13 @@ q{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00',?,nul
 }
 ]'
     );
-$dbh->prepare(
+    $dbh->prepare(
 q{INSERT INTO notifications VALUES ('dwho','testref2','2016-05-30 00:00:00',?,null,null)}
     )->execute(
         '[
 {
   "uid": "dwho",
-  "date": "2016-05-30",
+  "date": "2016-05-29",
   "reference": "testref2",
   "title": "Test2 title",
   "subtitle": "Test2 subtitle",
@@ -77,8 +77,15 @@ q{INSERT INTO notifications VALUES ('dwho','testref2','2016-05-30 00:00:00',?,nu
         'Auth query'
     );
     expectOK($res);
-    my $id = expectCookie($res);
-    ok( $res->[2]->[0] =~ /1x1x1/, ' Found ref' );
+    my $id   = expectCookie($res);
+    my @refs = ( $res->[2]->[0] =~
+          /<input type="hidden" name="reference[\dx]+" value="(\w+?)">/gs );
+    ok( @refs == 2, 'Two notification references found' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok( @refs[0] eq 'testref2', '1st reference found is "testref2"' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok( @refs[1] eq 'testref', '2nd reference found is "testref"' )
+      or print STDERR Dumper( $res->[2]->[0] );
     expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
 
     # Verify that cookie is ciphered (session unvalid)
