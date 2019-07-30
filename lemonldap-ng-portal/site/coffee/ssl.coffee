@@ -1,11 +1,10 @@
 # Launch SSL request
 
 tryssl = () ->
-	host = window.datas.sslHost
 	path = window.location.pathname
-	url  = "#{host}#{path}"
-	console.log 'Call URL -> ', url
-	$.ajax url,
+	console.log 'path -> ', path
+	console.log 'Call URL -> ', window.datas.sslHost
+	$.ajax window.datas.sslHost,
 		dataType: 'jsonp'
 		# PE_BADCREDENTIALS
 		statusCode:
@@ -15,14 +14,24 @@ tryssl = () ->
 		# If request succeed, cookie is set, posting form to get redirection
 		# or menu
 		success: (data) ->
-			$('#lform').submit()
+			sendUrl path
 			console.log 'Success -> ', data
 		# Case else, will display PE_BADCREDENTIALS or fallback to next auth
 		# backend
 		error: () ->
-			$('#lform').submit()
+			sendUrl path
 			console.log 'Error'
 	false
+
+sendUrl = (path) ->
+	form_url = $('#lform').attr('action')
+	if form_url.match /^#$/
+		form_url = path
+	else
+		form_url = form_url + path
+	console.log 'form action URL -> ', form_url
+	$('#lform').attr('action', form_url)
+	$('#lform').submit()
 
 $(document).ready ->
 	$('.sslclick').on 'click', tryssl
