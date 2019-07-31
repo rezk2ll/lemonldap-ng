@@ -29,7 +29,9 @@
 #                                                  n° <cfgNum>
 #   * GET /config/<latest|cfgNum>/<key>           : get conf key value
 #   * GET /config/<latest|cfgNum>?full            : get the full configuration
-#   where <type> is the session type ("global" for SSO session)
+#   where <type> is the session type ("global" for SSO session or "persistent")
+#   * GET /error/<lang>/<errNum>                  : get <errNum> message from <lang>.json
+#   Return all error messages if no <errNum> specified
 #
 # - Authorizations for connected users (always):
 #   * GET /mysession/?whoami                               : get "my" uid
@@ -50,7 +52,7 @@ use Mouse;
 use JSON qw(from_json to_json);
 use MIME::Base64;
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -124,11 +126,14 @@ sub init {
                 ]
             },
             ['GET'],
-        );
-        $self->addUnauthRoute(
+          )
+
+          ->addUnauthRoute(
             config => { ':cfgNum' => { '*' => 'getKey' } },
             ['GET']
-        );
+          )
+
+          ->addUnauthRoute( error => { '*' => 'getError' }, ['GET'] );
     }
     if ( $self->conf->{restSessionServer} ) {
         push @parents, 'Lemonldap::NG::Common::Session::REST';
@@ -144,44 +149,48 @@ sub init {
                 )
             },
             ['GET']
-        );
-        $self->addUnauthRoute(
+          )
+
+          ->addUnauthRoute(
             sessions => { ':sessionType' => 'newSession' },
             ['POST']
-        );
+          )
 
-        # Methods written below
-        $self->addUnauthRoute(
+          # Methods written below
+          ->addUnauthRoute(
             sessions => { ':sessionType' => 'updateSession' },
             ['PUT']
-        );
-        $self->addUnauthRoute(
+          )
+
+          ->addUnauthRoute(
             sessions => { ':sessionType' => 'delSession' },
             ['DELETE']
-        );
+          )
 
-        $self->addAuthRoute(
+          ->addAuthRoute(
             session => { my => { ':sessionType' => 'getMyKey' } },
             [ 'GET', 'POST' ]
-        );
+          );
     }
 
     # Methods always available
     $self->addAuthRoute(
         mysession => { '*' => 'mysession' },
         [ 'GET', 'POST' ]
-    );
-    $self->addAuthRoute(
+      )
+
+      ->addAuthRoute(
         mysession => {
             ':sessionType' =>
               { ':key' => 'delKeyInMySession', '*' => 'delMySession' }
         },
         ['DELETE']
-    );
-    $self->addAuthRoute(
+      )
+
+      ->addAuthRoute(
         mysession => { ':sessionType' => 'updateMySession' },
         ['PUT']
-    );
+      );
     extends @parents if ($add);
     $self->setTypes( $self->conf ) if ( $self->conf->{restSessionServer} );
     return 1;
@@ -521,6 +530,49 @@ sub delKeyInMySession {
     }
     return $self->p->sendJSONresponse( $req,
         { result => 1, count => $res, modifiedKeys => $dkey } );
+}
+
+sub getError {
+    my ( $self, $req, $lang, $errNum ) = @_;
+    my $json;
+    my $langsDir =
+        $self->conf->{templateDir}
+      . '/../htdocs'
+      . $self->conf->{staticPrefix}
+      . '/languages';
+    $lang ||= 'en';
+
+    $self->logger->debug("GET error: $errNum message from lang: $lang")
+      if ($errNum);
+    $self->logger->debug("GET ALL error messages from lang: $lang");
+
+    if ( open my $file, "<", $langsDir . "/$lang.json" ) {
+        local $/ = undef;
+        $json = from_json(<$file>);
+    }
+    else {
+        $self->logger->error("Unable to read $langsDir/$lang.json");
+        return $self->p->sendJSONresponse( $req,
+            { result => 0, error => "Unable to read $lang.json" } );
+    }
+
+    %$json = map { $_ =~ /^PE\d+$/ ? ( $_ => $json->{$_} ) : () }
+      keys %$json
+      unless ($errNum);
+
+    return $self->p->sendJSONresponse(
+        $req,
+        {
+            result   => 1,
+            lang     => $lang,
+            errorNum => $errNum ? $errNum : 'all',
+            errorMsg => (
+                  $errNum
+                ? $json->{"PE$errNum"}
+                : $json
+            )
+        }
+    );
 }
 
 1;
