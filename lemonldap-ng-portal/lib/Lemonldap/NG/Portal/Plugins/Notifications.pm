@@ -47,14 +47,17 @@ sub init {
 
     if ( $self->conf->{notificationServer} ) {
         $self->logger->debug('Notification server enable');
+
         $self->addUnauthRoute(
             notifications => 'notificationServer',
             ['POST']
         ) if ( $self->conf->{notificationServerPOST} // 1 );
+
         $self->addUnauthRoute(
             notifications => { '*' => 'notificationServer' },
             ['GET']
         ) if ( $self->conf->{notificationServerGET} );
+
         $self->addUnauthRoute(
             notifications =>
               { ':uid' => { ':reference' => 'notificationServer' } },
