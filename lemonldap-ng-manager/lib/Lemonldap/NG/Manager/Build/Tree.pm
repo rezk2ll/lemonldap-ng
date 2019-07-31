@@ -779,6 +779,7 @@ sub tree {
                                 'yubikey2fTTL',
                             ],
                         },
+                        'sfExtra',
                         {
                             title => 'sfRemovedNotification',
                             help  => 'secondfactor.html',
@@ -790,7 +791,6 @@ sub tree {
                             ],
                         },
                         'sfRequired',
-                        'sfExtra',
                     ]
                 },
                 {
