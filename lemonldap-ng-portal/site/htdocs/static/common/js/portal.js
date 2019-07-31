@@ -256,7 +256,9 @@ LemonLDAP::NG Portal jQuery scripts
     if (datas['login']) {
       $("input[type=password]:first").focus();
     } else {
-      $("input[type!=hidden]:first").focus();
+      if ($("input[autofocus]").length === 0) {
+        $("input[type!=hidden]:first").focus();
+      }
     }
     if (datas['newwindow']) {
       $('#appslist a').attr("target", "_blank");
