@@ -127,11 +127,30 @@ ok( $res->{_session_id} eq $spId, ' Good ID' )
   or explain( $res, "_session_id => $spId" );
 ok( $res->{uid} eq 'french', ' Uid is french' )
   or explain( $res, 'uid => french' );
-ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' );
+ok( $res->{cn} eq 'Frédéric Accents', ' UTF-8 values' );
 count(5);
 
 # Retrieve error messages
-ok( $res = $issuer->_get("/error/fr/9"), 'Retrieve error message: 9 from lang: fr' );
+ok(
+    $res = $issuer->_get("/error/zz/9"),
+    'Retrieve error message: 9 from lang: zz'
+);
+expectOK($res);
+ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+  or print STDERR $@;
+ok( $res->{result} eq '0', ' Error returned' )
+  or explain( $res, 'result => 0' );
+ok( $res->{lang} eq 'zz', ' Goog lang' )
+  or explain( $res, 'lang => zz' );
+ok( $res->{error} eq 'Unable to read language file',
+    ' Unable to read lang file' )
+  or explain( $res, 'Unable to read lang file' );
+count(5);
+
+ok(
+    $res = $issuer->_get("/error/fr/9"),
+    'Retrieve error message: 9 from lang: fr'
+);
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
@@ -145,7 +164,10 @@ ok( $res->{result} eq '1', ' Good result' )
   or explain( $res, 'result => 1' );
 count(6);
 
-ok( $res = $issuer->_get("/error/es"), 'Retrieve ALL error messages from lang: es' );
+ok(
+    $res = $issuer->_get("/error/es"),
+    'Retrieve ALL error messages from lang: es'
+);
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
@@ -155,13 +177,14 @@ ok( $res->{errorNum} eq 'all', ' Good all errorNum' )
   or explain( $res, 'errorNum => all' );
 ok( $res->{errorMsg}->{PE4} eq 'Usuario no reconocido', ' Good errorMsg' )
   or explain( $res, 'errorMsg PE4 => Usuario no reconocido' );
-ok( keys %{$res->{errorMsg}} eq 84, ' Good number of error messages found' )
+ok( keys %{ $res->{errorMsg} } eq 84, ' Good number of error messages found' )
   or explain( $res, 'Number of error messages' );
 ok( $res->{result} eq '1', ' Good result' )
   or explain( $res, 'result => 1' );
 count(7);
 
-ok( $res = $issuer->_get("/error"), 'Retrieve ALL error messages from lang: en (default)' );
+ok( $res = $issuer->_get("/error"),
+    'Retrieve ALL error messages from lang: en (default)' );
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
@@ -171,7 +194,7 @@ ok( $res->{errorNum} eq 'all', ' Good all errorNum' )
   or explain( $res, 'errorNum => all' );
 ok( $res->{errorMsg}->{PE4} eq 'User not found in directory', ' Good errorMsg' )
   or explain( $res, 'errorMsg PE4 => User not found in directory' );
-ok( keys %{$res->{errorMsg}} eq 84, ' Good number of error messages found' )
+ok( keys %{ $res->{errorMsg} } eq 84, ' Good number of error messages found' )
   or explain( $res, 'Number of error messages' );
 ok( $res->{result} eq '1', ' Good result' )
   or explain( $res, 'result => 1' );

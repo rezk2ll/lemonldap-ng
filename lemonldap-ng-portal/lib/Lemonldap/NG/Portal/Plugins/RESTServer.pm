@@ -553,7 +553,7 @@ sub getError {
     else {
         $self->logger->error("Unable to read $langsDir/$lang.json");
         return $self->p->sendJSONresponse( $req,
-            { result => 0, error => "Unable to read $lang.json" } );
+            { result => 0, lang => $lang, error => 'Unable to read language file' } );
     }
 
     %$json = map { $_ =~ /^PE\d+$/ ? ( $_ => $json->{$_} ) : () }
