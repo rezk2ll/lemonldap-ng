@@ -799,7 +799,8 @@ sub _scanNodes {
                     $self->newConf->{$name} = {};
                     foreach my $node ( @{ $leaf->{nodes} } ) {
                         my $tmp;
-                        $tmp->{$_} = $node->{data}->{$_} foreach (qw(type rule));
+                        $tmp->{$_} = $node->{data}->{$_}
+                          foreach (qw(type rule logo label));
                         $tmp->{over} = {};
                         foreach ( @{ $node->{data}->{over} } ) {
                             $tmp->{over}->{ $_->[0] } = $_->[1];

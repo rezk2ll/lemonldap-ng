@@ -45,8 +45,6 @@ sub init {
         $self->error("Missing 'mailSessionKey' parameter, aborting");
         return 0;
     }
-    $self->logo( $self->conf->{mail2fLogo} )
-      if ( $self->conf->{mail2fLogo} );
     $self->prefix( $self->conf->{sfPrefix} )
       if ( $self->conf->{sfPrefix} );
     return $self->SUPER::init();

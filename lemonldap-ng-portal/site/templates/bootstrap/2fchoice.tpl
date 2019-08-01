@@ -9,6 +9,13 @@
       <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
       <TMPL_LOOP NAME="MODULES">
         <button type="submit" name="sf" value="<TMPL_VAR NAME="CODE">" class="mx-3">
+        <div class="card-header p-0">
+         <TMPL_IF LABEL>
+            <h4 class="mb-0"><TMPL_VAR NAME="LABEL"></h4>
+            <TMPL_ELSE>
+            <h4 class="mb-0" trspan="<TMPL_VAR NAME="CODE">2f"></h4>
+            </TMPL_IF>
+        </div>
           <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2F" title="<TMPL_VAR NAME="CODE">2F" />
         </button>
       </TMPL_LOOP>

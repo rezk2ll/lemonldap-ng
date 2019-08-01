@@ -30,8 +30,7 @@ sub init {
         return 0;
     }
     $self->prefix( $self->conf->{sfPrefix} )
-    if ( $self->conf->{sfPrefix} );
-    $self->logo( $self->conf->{rest2fLogo} ) if ( $self->conf->{rest2fLogo} );
+      if ( $self->conf->{sfPrefix} );
     foreach my $k ( keys %{ $self->conf->{rest2fInitArgs} } ) {
         my $attr = $self->conf->{rest2fInitArgs}->{$k};
         $attr =~ s/^$//;

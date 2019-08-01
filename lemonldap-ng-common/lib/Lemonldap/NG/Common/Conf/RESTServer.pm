@@ -706,10 +706,11 @@ sub sfExtra {
     my $res = [];
     foreach my $mod ( keys %$val ) {
         my $tmp;
-        $tmp->{title} = $mod;
-        $tmp->{id}    = "sfExtra/$mod";
-        $tmp->{type}  = 'sfExtra';
-        $tmp->{data}->{$_} = $val->{$mod}->{$_} foreach (qw(type rule));
+        $tmp->{title}      = $mod;
+        $tmp->{id}         = "sfExtra/$mod";
+        $tmp->{type}       = 'sfExtra';
+        $tmp->{data}->{$_} = $val->{$mod}->{$_}
+          foreach (qw(type rule logo label));
         my $over = $val->{$mod}->{over} // {};
         $tmp->{data}->{over} = [ map { [ $_, $over->{$_} ] } keys %$over ];
         push @$res, $tmp;

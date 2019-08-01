@@ -96,7 +96,7 @@ sub init {
 
     # Extra 2F modules
     $self->logger->debug('Processing Extra 2F modules');
-    foreach my $extraKey (sort keys %{ $self->conf->{sfExtra} } ) {
+    foreach my $extraKey ( sort keys %{ $self->conf->{sfExtra} } ) {
 
         my $moduleType = $self->conf->{sfExtra}->{$extraKey}->{type};
         next unless ($moduleType);
@@ -112,6 +112,12 @@ sub init {
         # Rule and prefix may be modified by 2F module, reread them
         my $rule   = $self->conf->{sfExtra}->{$extraKey}->{rule} || 1;
         my $prefix = $m->prefix;
+
+        # Overwrite logo and label from user configuration
+        $m->logo( $self->conf->{sfExtra}->{$extraKey}->{logo} )
+          if $self->conf->{sfExtra}->{$extraKey}->{logo};
+        $m->label( $self->conf->{sfExtra}->{$extraKey}->{label} )
+          if $self->conf->{sfExtra}->{$extraKey}->{label};
 
         # Compile rule
         $rule = $self->p->HANDLER->substitute($rule);
@@ -322,7 +328,14 @@ sub run {
             MAIN_LOGO => $self->conf->{portalMainLogo},
             SKIN      => $self->p->getSkin($req),
             TOKEN     => $token,
-            MODULES => [ map { { CODE => $_->prefix, LOGO => $_->logo } } @am ],
+            MODULES   => [
+                map { {
+                        CODE  => $_->prefix,
+                        LOGO  => $_->logo,
+                        LABEL => $_->label
+                    }
+                } @am
+            ],
             CHECKLOGINS => $checkLogins
         }
     );

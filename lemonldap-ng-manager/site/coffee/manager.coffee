@@ -337,6 +337,8 @@ llapp.controller 'TreeCtrl', [
 				data:
 					type: ''
 					rule: ''
+					logo: ''
+					label: ''
 					over: []
 
 

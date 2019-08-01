@@ -700,17 +700,18 @@ sub tree {
                             title => 'utotp2f',
                             help  => 'utotp2f.html',
                             form  => 'simpleInputContainer',
-                            nodes =>
-                              [ 'utotp2fActivation', 'utotp2fAuthnLevel' ]
+                            nodes => [
+                                'utotp2fActivation', 'utotp2fAuthnLevel',
+                                'utotp2fLabel',      'utotp2fLogo'
+                            ]
                         },
                         {
-                            title => 'totp',
+                            title => 'totp2f',
                             help  => 'totp2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'totp2fActivation',
                                 'totp2fSelfRegistration',
-                                'totp2fAuthnLevel',
                                 'totp2fIssuer',
                                 'totp2fInterval',
                                 'totp2fRange',
@@ -719,6 +720,9 @@ sub tree {
                                 'totp2fUserCanChangeKey',
                                 'totp2fUserCanRemoveKey',
                                 'totp2fTTL',
+                                'totp2fAuthnLevel',
+                                'totp2fLabel',
+                                'totp2fLogo',
                             ]
                         },
                         {
@@ -726,9 +730,10 @@ sub tree {
                             help  => 'u2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'u2fActivation', 'u2fSelfRegistration',
-                                'u2fAuthnLevel', 'u2fUserCanRemoveKey',
-                                'u2fTTL',
+                                'u2fActivation',       'u2fSelfRegistration',
+                                'u2fUserCanRemoveKey', 'u2fTTL',
+                                'u2fAuthnLevel',       'u2fLabel',
+                                'u2fLogo',
                             ]
                         },
                         {
@@ -739,17 +744,18 @@ sub tree {
                                 'mail2fActivation', 'mail2fCodeRegex',
                                 'mail2fTimeout',    'mail2fSubject',
                                 'mail2fBody',       'mail2fAuthnLevel',
-                                'mail2fLogo',
+                                'mail2fLabel',      'mail2fLogo',
                             ]
                         },
                         {
-                            title => 'external2f',
+                            title => 'ext2f',
                             help  => 'external2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'ext2fActivation',  'ext2fCodeActivation',
                                 'ext2FSendCommand', 'ext2FValidateCommand',
-                                'ext2fAuthnLevel',  'ext2fLogo',
+                                'ext2fAuthnLevel',  'ext2fLabel',
+                                'ext2fLogo',
                             ]
                         },
                         {
@@ -759,7 +765,7 @@ sub tree {
                                 'rest2fActivation', 'rest2fInitUrl',
                                 'rest2fInitArgs',   'rest2fVerifyUrl',
                                 'rest2fVerifyArgs', 'rest2fAuthnLevel',
-                                'rest2fLogo',
+                                'rest2fLabel',      'rest2fLogo',
                             ]
                         },
                         {
@@ -769,7 +775,6 @@ sub tree {
                             nodes => [
                                 'yubikey2fActivation',
                                 'yubikey2fSelfRegistration',
-                                'yubikey2fAuthnLevel',
                                 'yubikey2fClientID',
                                 'yubikey2fSecretKey',
                                 'yubikey2fNonce',
@@ -777,6 +782,9 @@ sub tree {
                                 'yubikey2fPublicIDSize',
                                 'yubikey2fUserCanRemoveKey',
                                 'yubikey2fTTL',
+                                'yubikey2fAuthnLevel',
+                                'yubikey2fLabel',
+                                'yubikey2fLogo',
                             ],
                         },
                         'sfExtra',

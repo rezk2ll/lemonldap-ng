@@ -1420,6 +1420,14 @@ sub attributes {
             documentation =>
               'Authentication level for users authentified by password+U2F'
         },
+        u2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for U2F'
+        },
+        u2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for U2F',
+        },
         u2fUserCanRemoveKey => {
             type          => 'bool',
             default       => 1,
@@ -1445,6 +1453,14 @@ sub attributes {
             type => 'int',
             documentation =>
               'Authentication level for users authentified by password+TOTP'
+        },
+        totp2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for TOTP 2F'
+        },
+        totp2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for TOTP 2F',
         },
         totp2fIssuer => {
             type          => 'text',
@@ -1497,6 +1513,14 @@ sub attributes {
             documentation =>
 'Authentication level for users authentified by password+(U2F or TOTP)'
         },
+        utotp2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for U2F+TOTP'
+        },
+        utotp2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for U2F+TOTP',
+        },
 
         # Mail second factor
         mail2fActivation => {
@@ -1526,6 +1550,10 @@ sub attributes {
             documentation =>
 'Authentication level for users authenticated by Mail second factor'
         },
+        mail2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for Mail second factor'
+        },
         mail2fLogo => {
             type          => 'text',
             documentation => 'Custom logo for Mail 2F',
@@ -1554,6 +1582,10 @@ sub attributes {
             type => 'int',
             documentation =>
 'Authentication level for users authentified by External second factor'
+        },
+        ext2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for External second factor'
         },
         ext2fLogo => {
             type          => 'text',
@@ -1595,6 +1627,10 @@ sub attributes {
             documentation =>
 'Authentication level for users authentified by REST second factor'
         },
+        rest2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for REST second factor'
+        },
         rest2fLogo => {
             type          => 'text',
             documentation => 'Custom logo for REST 2F',
@@ -1615,6 +1651,14 @@ sub attributes {
             type => 'int',
             documentation =>
 'Authentication level for users authentified by Yubikey second factor'
+        },
+        yubikey2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for Yubikey second factor'
+        },
+        yubikey2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for Yubikey 2F',
         },
         yubikey2fClientID => {
             type          => 'text',

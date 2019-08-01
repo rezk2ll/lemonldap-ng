@@ -31,10 +31,21 @@ has prefix => ( is => 'rw' );
 
 has logo => ( is => 'rw', default => '2f.png' );
 
+has label => ( is => 'rw' );
+
 has noRoute => ( is => 'ro' );
 
 sub init {
     my ($self) = @_;
+
+    # Set logo if overriden
+    $self->logo( $self->conf->{ $self->prefix . "2fLogo" } )
+      if ( $self->conf->{ $self->prefix . "2fLogo" } );
+
+    # Set label if provided, translation files will be used otherwise
+    $self->label( $self->conf->{ $self->prefix . "2fLabel" } )
+      if ( $self->conf->{ $self->prefix . "2fLabel" } );
+
     unless ( $self->noRoute ) {
         $self->logger->debug( 'Adding ' . $self->prefix . '2fcheck routes' );
         $self->addAuthRoute(

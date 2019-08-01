@@ -5,9 +5,11 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th width="25%" trspan="name"></th>
-        <th width="25%" trspan="type"></th>
-        <th width="50%" trspan="rule"></th>
+        <th width="12%" trspan="name"></th>
+        <th width="11%" trspan="type"></th>
+        <th width="33%" trspan="label"></th>
+        <th width="11%" trspan="logo"></th>
+        <th width="33%" trspan="rule"></th>
         <th />
       </tr>
     </thead>
@@ -20,6 +22,12 @@
           <select class="form-control" ng-model="currentNode.data.type">
             <option ng-repeat="item in _findContainer().select" ng-selected="item.k===currentNode.data.type" value="{{item.k}}">{{item.v}}</option>
           </select>
+        </td>
+        <td>
+          <input class="form-control" ng-model="currentNode.data.label" />
+        </td>
+        <td>
+          <input class="form-control" ng-model="currentNode.data.logo" />
         </td>
         <td>
             <input class="form-control" ng-model="currentNode.data.rule" />

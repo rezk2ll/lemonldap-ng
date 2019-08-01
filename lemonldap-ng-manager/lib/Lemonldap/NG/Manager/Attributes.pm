@@ -1142,6 +1142,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => '\\d{6}',
             'type'    => 'pcre'
         },
+        'ext2fLabel' => {
+            'type' => 'text'
+        },
         'ext2fLogo' => {
             'type' => 'text'
         },
@@ -1646,6 +1649,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'mail2fCodeRegex' => {
             'default' => '\\d{6}',
             'type'    => 'pcre'
+        },
+        'mail2fLabel' => {
+            'type' => 'text'
         },
         'mail2fLogo' => {
             'type' => 'text'
@@ -2529,6 +2535,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'rest2fInitUrl' => {
             'type' => 'url'
+        },
+        'rest2fLabel' => {
+            'type' => 'text'
         },
         'rest2fLogo' => {
             'type' => 'text'
@@ -3453,6 +3462,12 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'totp2fIssuer' => {
             'type' => 'text'
         },
+        'totp2fLabel' => {
+            'type' => 'text'
+        },
+        'totp2fLogo' => {
+            'type' => 'text'
+        },
         'totp2fRange' => {
             'default' => 1,
             'type'    => 'int'
@@ -3498,6 +3513,12 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'u2fAuthnLevel' => {
             'type' => 'int'
+        },
+        'u2fLabel' => {
+            'type' => 'text'
+        },
+        'u2fLogo' => {
+            'type' => 'text'
         },
         'u2fSelfRegistration' => {
             'default' => 0,
@@ -3578,6 +3599,12 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'utotp2fAuthnLevel' => {
             'type' => 'int'
+        },
+        'utotp2fLabel' => {
+            'type' => 'text'
+        },
+        'utotp2fLogo' => {
+            'type' => 'text'
         },
         'vhostAliases' => {
             'type' => 'text'
@@ -3691,6 +3718,12 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type' => 'int'
         },
         'yubikey2fClientID' => {
+            'type' => 'text'
+        },
+        'yubikey2fLabel' => {
+            'type' => 'text'
+        },
+        'yubikey2fLogo' => {
             'type' => 'text'
         },
         'yubikey2fNonce' => {
