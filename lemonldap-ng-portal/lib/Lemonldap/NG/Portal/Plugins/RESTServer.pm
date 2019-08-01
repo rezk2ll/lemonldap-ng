@@ -541,10 +541,10 @@ sub getError {
       . $self->conf->{staticPrefix}
       . '/languages';
     $lang ||= 'en';
-
-    $self->logger->debug("GET error: $errNum message from lang: $lang")
-      if ($errNum);
-    $self->logger->debug("GET ALL error messages from lang: $lang");
+    
+    $errNum
+      ? $self->logger->debug("GET error: $errNum message from lang: $lang")
+      : $self->logger->debug("GET ALL error messages from lang: $lang");
 
     if ( open my $file, "<", $langsDir . "/$lang.json" ) {
         local $/ = undef;
