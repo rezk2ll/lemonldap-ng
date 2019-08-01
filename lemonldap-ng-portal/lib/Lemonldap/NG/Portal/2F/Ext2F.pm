@@ -29,9 +29,7 @@ sub init {
             }
         }
         $self->prefix( $self->conf->{sfPrefix} )
-            if ( $self->conf->{sfPrefix} );
-        $self->logo( $self->conf->{ext2fLogo} )
-          if ( $self->conf->{ext2fLogo} );
+          if ( $self->conf->{sfPrefix} );
         return $self->SUPER::init();
     }
     if ( $self->conf->{ext2fCodeActivation} ) {
@@ -41,9 +39,7 @@ sub init {
         }
         $self->random( Lemonldap::NG::Common::Crypto::srandom() );
         $self->prefix( $self->conf->{sfPrefix} )
-            if ( $self->conf->{sfPrefix} );
-        $self->logo( $self->conf->{ext2fLogo} )
-          if ( $self->conf->{ext2fLogo} );
+          if ( $self->conf->{sfPrefix} );
         return $self->SUPER::init();
     }
     return 0;

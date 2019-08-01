@@ -11,23 +11,23 @@ count(1);
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel         => 'error',
-            authentication   => 'Demo',
-            userDB           => 'Same',
-            'sfExtra' => {
+            logLevel       => 'error',
+            authentication => 'Demo',
+            userDB         => 'Same',
+            'sfExtra'      => {
                 'home' => {
                     'over' => {
-                        mail2fCodeRegex  => '\w{4}',
-                        mail2fLogo  => 'home.jpg',
+                        mail2fCodeRegex => '\w{4}',
                     },
+                    'logo' => 'home.jpg',
                     'rule' => '$uid eq "dwho" or $uid eq "msmith"',
                     'type' => 'Mail2F'
                 },
                 'work' => {
                     'over' => {
-                        mail2fLogo  => 'work.jpg',
-                        mail2fCodeRegex  => '\d{8}',
+                        mail2fCodeRegex => '\d{8}',
                     },
+                    'logo' => 'work.jpg',
                     'rule' => '$uid eq "dwho" or $uid eq "rtyler"',
                     'type' => 'Mail2F'
                 }
@@ -95,7 +95,6 @@ ok(
 );
 count(1);
 
-
 # Expect choice page
 my ( $host, $url, $query ) =
   expectForm( $res, undef, '/2fchoice', 'token', 'checkLogins' );
@@ -103,14 +102,14 @@ my ( $host, $url, $query ) =
 ok(
     $res->[2]->[0] =~
       qq%<img src="/static/bootstrap/work.jpg" alt="work2F" title="work2F" />%,
-    'Found work.png'
+    'Found work.jpg'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 ok(
     $res->[2]->[0] =~
       qq%<img src="/static/bootstrap/home.jpg" alt="home2F" title="home2F" />%,
-    'Found home.png'
+    'Found home.jpg'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 

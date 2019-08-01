@@ -392,6 +392,8 @@ This file contains:
           data: {
             type: '',
             rule: '',
+            logo: '',
+            label: '',
             over: []
           }
         });
