@@ -100,7 +100,7 @@ sub translate {
 
     if ($langOver) {
         for my $k ( keys %{ $langOver->{all} || {} } ) {
-            $lang->{$k} = $langOver->{$lang_code}->{$k};
+            $lang->{$k} = $langOver->{all}->{$k};
         }
         for my $k ( keys %{ $langOver->{$lang_code} || {} } ) {
             $lang->{$k} = $langOver->{$lang_code}->{$k};
