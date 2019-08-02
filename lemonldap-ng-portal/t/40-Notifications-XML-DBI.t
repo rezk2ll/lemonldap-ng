@@ -4,7 +4,9 @@ use IO::String;
 
 my $res;
 my $file      = 't/notifications.db';
-my $maintests = 6;
+my $maintests = 7;
+#my $maintests = 8;
+
 eval { unlink $file };
 require 't/test-lib.pm';
 
@@ -70,7 +72,18 @@ qq{INSERT INTO notifications VALUES ('dwho','testref2','2016-05-30 00:00:00','<?
         'Auth query'
     );
     expectOK($res);
-    my $id = expectCookie($res);
+    my $id   = expectCookie($res);
+    my @refs = ( $res->[2]->[0] =~
+          /<input type="hidden" name="reference[\dx]+" value="(\w+?)">/gs );
+    ok( @refs == 2, 'Two notification references found' )
+      or print STDERR Dumper( $res->[2]->[0] );
+
+    ### TO BE FIXED
+    # ok( @refs[0] eq 'testref2', '1st reference found is "testref2"' )
+    #   or print STDERR Dumper( $res->[2]->[0] );
+    # ok( @refs[1] eq 'testref', '2nd reference found is "testref"' )
+    #   or print STDERR Dumper( $res->[2]->[0] );
+
     ok( $res->[2]->[0] =~ /1x1x1/, ' Found ref' );
     expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
 
