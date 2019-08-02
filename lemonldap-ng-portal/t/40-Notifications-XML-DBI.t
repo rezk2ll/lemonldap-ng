@@ -79,9 +79,9 @@ qq{INSERT INTO notifications VALUES ('dwho','testref2','2016-05-30 00:00:00','<?
       or print STDERR Dumper( $res->[2]->[0] );
 
     ### TO BE FIXED
-    # ok( @refs[0] eq 'testref2', '1st reference found is "testref2"' )
+    # ok( $refs[0] eq 'testref2', '1st reference found is "testref2"' )
     #   or print STDERR Dumper( $res->[2]->[0] );
-    # ok( @refs[1] eq 'testref', '2nd reference found is "testref"' )
+    # ok( $refs[1] eq 'testref', '2nd reference found is "testref"' )
     #   or print STDERR Dumper( $res->[2]->[0] );
 
     ok( $res->[2]->[0] =~ /1x1x1/, ' Found ref' );
