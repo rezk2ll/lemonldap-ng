@@ -76,7 +76,7 @@ ok(
 );
 
 my $c = getCookies($res);
-ok( not( %$c{'lemonldap'} ), 'Cookie expired' ) or print STDERR Dumper($c);
+ok( not( $c->{'lemonldap'} ), 'Cookie expired' ) or print STDERR Dumper($c);
 count(2);
 expectRedirection( $res, 'http://auth.example.com/' );
 
