@@ -6,7 +6,7 @@ use Lemonldap::NG::Common::Combination::Parser;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_FIRSTACCESS);
 use Scalar::Util 'weaken';
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.6';
 
 # TODO: See Lib::Wrapper
 extends 'Lemonldap::NG::Portal::Main::Auth';
@@ -141,7 +141,7 @@ sub authLogout {
     $self->getStack( $req, 'extractFormInfo' ) or return PE_ERROR;
 
     # Avoid warning msg at first access
-    $req->userData->{_combinationTry} ||= '';
+    $req->userData->{_combinationTry} ||= 0;
     my ( $res, $name ) =
       $req->data->{combinationStack}->[ $req->userData->{_combinationTry} ]
       ->[0]->( 'authLogout', $req );
