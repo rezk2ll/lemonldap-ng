@@ -48,7 +48,7 @@ sub try {
     my $user = shift;
     my $res;
 
-    # Gat token
+    # Get token
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Unauth request' );
     count(1);
     my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
