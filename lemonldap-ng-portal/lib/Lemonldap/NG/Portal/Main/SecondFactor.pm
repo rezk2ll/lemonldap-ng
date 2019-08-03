@@ -10,9 +10,12 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.6';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin';
+extends qw(
+  Lemonldap::NG::Portal::Main::Plugin
+  Lemonldap::NG::Portal::Auth::_WebForm
+);
 
 # INITIALIZATION
 
@@ -27,12 +30,9 @@ has ott => (
     }
 );
 
-has prefix => ( is => 'rw' );
-
-has logo => ( is => 'rw', default => '2f.png' );
-
-has label => ( is => 'rw' );
-
+has prefix  => ( is => 'rw' );
+has logo    => ( is => 'rw', default => '2f.png' );
+has label   => ( is => 'rw' );
 has noRoute => ( is => 'ro' );
 
 sub init {
@@ -93,6 +93,7 @@ sub _verify {
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
         $self->userLogger->info('Token expired');
+        $self->setSecurity($req);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
     }
 

@@ -186,9 +186,7 @@ SKIP: {
         'Post code'
     );
     ( $host, $url, $query ) =
-    ##### TO BE FIXED
-      #expectForm( $res, '#', undef, 'user', 'password', 'token' );
-      expectForm( $res, '#', undef, 'user', 'password' );
+      expectForm( $res, '#', undef, 'user', 'password', 'token' );
 }
 count($maintests);
 
