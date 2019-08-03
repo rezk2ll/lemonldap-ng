@@ -460,7 +460,7 @@ sub _splitAttributes {
             }
             else {
                 push @$spoofedAttrs, $element;
-                $self->logger->debug(' -> Spoofed attribute');
+                #$self->logger->debug(' -> Spoofed attribute');
             }
         }
         @$others = ( @$spoofedAttrs, @$realAttrs );
