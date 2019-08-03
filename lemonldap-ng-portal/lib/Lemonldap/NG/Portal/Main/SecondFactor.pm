@@ -86,6 +86,7 @@ sub _verify {
     my $token;
     unless ( $token = $req->param('token') ) {
         $self->userLogger->error( $self->prefix . ' 2F access without token' );
+        $self->setSecurity($req);
         $req->mustRedirect(1);
         return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
     }

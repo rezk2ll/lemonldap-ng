@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 24;
+my $maintests = 27;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -187,6 +187,27 @@ SKIP: {
     );
     ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'user', 'password', 'token' );
+    ok( $res->[2]->[0] =~ /<span trmsg="82"><\/span>/, 'Protection enabled' )
+      or print STDERR Dumper( $res->[2]->[0] );
+
+    # Try to sign-in
+    ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
+    ( $host, $url, $query ) =
+      expectForm( $res, '#', undef, 'user', 'password', 'token' );
+
+    $query =~ s/user=/user=dwho/;
+    $query =~ s/password=/password=dwho/;
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, '/totp2fcheck', 'token' );
 }
 count($maintests);
 
