@@ -14,8 +14,11 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.6';
 
-extends
-  qw(Lemonldap::NG::Portal::Main::Plugin Lemonldap::NG::Portal::Lib::_tokenRule);
+extends qw(
+  Lemonldap::NG::Portal::Main::Plugin
+  Lemonldap::NG::Portal::Lib::_tokenRule
+  Lemonldap::NG::Portal::Lib::OtherSessions
+);
 
 # INITIALIZATION
 
