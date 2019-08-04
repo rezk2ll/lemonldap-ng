@@ -187,7 +187,7 @@ SKIP: {
     );
     ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'user', 'password', 'token' );
-    ok( $res->[2]->[0] =~ /<span trmsg="82"><\/span>/, 'Protection enabled' )
+    ok( $res->[2]->[0] =~ /<span trmsg="82"><\/span>/, 'Token expired' )
       or print STDERR Dumper( $res->[2]->[0] );
 
     # Try to sign-in
