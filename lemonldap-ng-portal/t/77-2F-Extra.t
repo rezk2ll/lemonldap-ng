@@ -20,6 +20,7 @@ my $client = LLNG::Manager::Test->new( {
                         mail2fCodeRegex => '\w{4}',
                     },
                     'logo' => 'home.jpg',
+                    'label' => "Home Label",
                     'rule' => '$uid eq "dwho" or $uid eq "msmith"',
                     'type' => 'Mail2F'
                 },
@@ -110,6 +111,16 @@ ok(
     $res->[2]->[0] =~
       qq%<img src="/static/bootstrap/home.jpg" alt="home2F" title="home2F" />%,
     'Found home.jpg'
+) or print STDERR Dumper( $res->[2]->[0] );
+count(1);
+
+ok(
+    $res->[2]->[0] =~ qq%<h4 class="mb-0" trspan="work2f"></h4>%, 'Found translation label'
+) or print STDERR Dumper( $res->[2]->[0] );
+count(1);
+
+ok(
+    $res->[2]->[0] =~ qq%<h4 class="mb-0">Home Label</h4>%, 'Found overriden label'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
