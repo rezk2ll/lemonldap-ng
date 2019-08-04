@@ -3,7 +3,8 @@ package Lemonldap::NG::Portal::Auth::Combination;
 use strict;
 use Mouse;
 use Lemonldap::NG::Common::Combination::Parser;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_FIRSTACCESS);
+use Lemonldap::NG::Portal::Main::Constants
+  qw(PE_OK PE_ERROR PE_FIRSTACCESS PE_TOKENEXPIRED PE_NOTOKEN);
 use Scalar::Util 'weaken';
 
 our $VERSION = '2.0.6';
@@ -128,6 +129,8 @@ sub getDisplayType {
     my ( $self, $req ) = @_;
     return $self->conf->{combinationForms}
       if ( $self->conf->{combinationForms} );
+    return 'standardform'
+      if ( $req->{error} == PE_TOKENEXPIRED or $req->{error} == PE_NOTOKEN );
     my ( $nb, $stack ) = (
         $req->data->{dataKeep}->{combinationTry},
         $req->data->{combinationStack}
