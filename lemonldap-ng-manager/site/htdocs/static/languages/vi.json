@@ -677,7 +677,7 @@
 "radius2f":"Radius second factor",
 "radius2fActivation":"Activation",
 "radius2fServer":"Server hostname",
-"radius2fSecret":"Shared secret",
+"radius2fSecret":"Chia sẻ bí mật",
 "radius2fUsernameSessionKey":"Session key containing login",
 "radius2fTimeout":"Authentication timeout",
 "radius2fAuthnLevel":"Authentication level",
