@@ -93,7 +93,9 @@ sub run {
             MAIN_LOGO   => $self->conf->{portalMainLogo},
             SKIN        => $self->p->getSkin($req),
             TOKEN       => $token,
+            PREFIX      => $self->prefix,
             TARGET      => '/' . $self->prefix . '2fcheck',
+            LEGEND      => 'enterRest2fCode',
             CHECKLOGINS => $checkLogins
         }
     );
