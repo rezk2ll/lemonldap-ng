@@ -129,8 +129,14 @@ sub getDisplayType {
     my ( $self, $req ) = @_;
     return $self->conf->{combinationForms}
       if ( $self->conf->{combinationForms} );
-    return 'standardform'
-      if ( $req->{error} == PE_TOKENEXPIRED or $req->{error} == PE_NOTOKEN );
+
+    if ( $req->{error} > PE_OK ) {
+        $self->logger->notice('Start over combination schema');
+        my $stack = $self->stackSub->( $req->env );
+        my ( $res, $name ) = $stack->[0]->[0]->( 'getDisplayType', $req );
+        return $res;
+    }
+
     my ( $nb, $stack ) = (
         $req->data->{dataKeep}->{combinationTry},
         $req->data->{combinationStack}

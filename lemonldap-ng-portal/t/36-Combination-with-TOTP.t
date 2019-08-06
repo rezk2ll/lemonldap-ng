@@ -149,7 +149,7 @@ SKIP: {
         'Code' );
     $query =~ s/code=/code=$code/;
 
-    # Expired token -->> TO BE FIXED
+    # Expired token
     diag 'Waiting';
     sleep 3;
 
