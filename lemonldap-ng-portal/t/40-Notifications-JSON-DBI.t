@@ -4,7 +4,7 @@ use IO::String;
 
 my $res;
 my $file      = 't/notifications.db';
-my $maintests = 8;
+my $maintests = 10;
 eval { unlink $file };
 require 't/test-lib.pm';
 
@@ -127,6 +127,15 @@ q{INSERT INTO notifications VALUES ('dwho','testref2','2016-05-30 00:00:00',?,nu
         "Accept notifications"
     );
     expectRedirection( $res, 'http://test1.example.com/' );
+
+    ok( expectCookie( $res, 'lemonldappdata' ) == '',
+        'lemonldappdata cookie is deleted' )
+      or explain( $res->[1], 'Set-Cookie => lemonldapidp=""' );
+    ok(
+        ${ $res->[1] }[5] =~
+          m%lemonldappdata=; path=/; expires=Wed, 21 Oct 2015 00:00:00 GMT%,
+        'lemonldappdata expired'
+    ) or explain( $res->[1], 'lemonldappdata => expires=Wed, 21 Oct 2015' );
 
     # Verify that notification was tagged as 'done'
     my $sth =
