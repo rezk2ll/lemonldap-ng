@@ -66,11 +66,11 @@ sub authenticate {
     my ( $self, $req ) = @_;
     my $res = $self->SUPER::authenticate($req);
 
-    my $pls = $self->ldap->getLdapValue( $req->data->{entry}, 'pwdLastSet' );
-    my $computed = $self->ldap->getLdapValue( $req->data->{entry},
+    my $pls = $self->ldap->getLdapValue( $req->data->{ldapentry}, 'pwdLastSet' );
+    my $computed = $self->ldap->getLdapValue( $req->data->{ldapentry},
         'msDS-User-Account-Control-Computed' );
     my $_adUac =
-      $self->ldap->getLdapValue( $req->data->{entry}, 'userAccountControl' )
+      $self->ldap->getLdapValue( $req->data->{ldapentry}, 'userAccountControl' )
       || 0;
 
     unless ( $res == PE_OK ) {

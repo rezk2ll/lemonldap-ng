@@ -40,7 +40,7 @@ sub setSessionInfo {
         %{ $self->conf->{ldapExportedVars} } );
     while ( my ( $k, $v ) = each %vars ) {
         $req->sessionInfo->{$k} =
-          $self->ldap->getLdapValue( $req->data->{entry}, $v ) || "";
+          $self->ldap->getLdapValue( $req->data->{ldapentry}, $v ) || "";
     }
 
     PE_OK;
@@ -56,7 +56,7 @@ sub setGroups {
     if ( $self->conf->{ldapGroupBase} ) {
 
         # Get value for group search
-        my $group_value = $self->ldap->getLdapValue( $req->data->{entry},
+        my $group_value = $self->ldap->getLdapValue( $req->data->{ldapentry},
             $self->conf->{ldapGroupAttributeNameUser} );
 
         if ( $self->conf->{ldapGroupDecodeSearchedValue} ) {
