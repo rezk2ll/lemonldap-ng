@@ -260,16 +260,7 @@ sub getNotifBack {
         # launch 'controlUrl' to restore "urldc" using do()
         $self->logger->debug('All pending notifications have been accepted');
         $self->p->rebuildCookies($req);
-
-        $req->addCookie(
-            $self->p->cookie(
-                name    => $self->conf->{cookieName} . 'pdata',
-                value   => '',
-                expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
-            )
-        ) unless ( $req->{pdata}->{keepPdata} );
-        
-        return $self->p->do( $req, ['controlUrl'] );
+        return $self->p->do( $req, ['controlUrl', @{ $self->p->endAuth }] );
     }
     else {
         # No notifications checked here, this entry point must not be called.
