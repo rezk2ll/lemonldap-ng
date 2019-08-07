@@ -156,6 +156,9 @@ sub extractFormInfo {
     );
     unless ($status) {
         $self->logger->error('Unable to accept security context');
+        foreach ( $status->generic_message(), $status->specific_message() ) {
+            $self->logger->error($_);
+        }
         return PE_ERROR;
     }
     my $client_name;
