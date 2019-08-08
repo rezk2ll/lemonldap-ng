@@ -17,7 +17,7 @@ use JSON;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Common::Conf::AccessLib',
   'Lemonldap::NG::Handler::PSGI::Router';
@@ -52,7 +52,7 @@ sub init {
         return 0;
     }
 
-    $self->{enabledModules} ||= "conf, sessions, notifications, 2ndFA";
+    $self->{enabledModules} ||= "conf, sessions, notifications, 2ndFA, viewer";
     my @links;
     my @enabledModules =
       map { push @links, $_; "Lemonldap::NG::Manager::" . ucfirst($_) }
@@ -87,7 +87,15 @@ sub init {
         "default-src 'self' $portal;frame-ancestors 'none';form-action 'self';"
     );
 
-    $self->defaultRoute( $working[0]->defaultRoute );
+    # Avoid restricted users to access configuration by default route
+    my $defaultMod       = $self->{defaultModule} || 'viewer';
+    my @availableModules = split /[,\s]+/, $self->{enabledModules};
+    $self->logger->debug("Default module -> $defaultMod");
+    my ($index) =
+      grep { $availableModules[$_] eq $defaultMod } ( 0 .. $#availableModules );
+    $index //= 0;
+    $self->logger->debug("Default index -> $index");
+    $self->defaultRoute( $working[$index]->defaultRoute );
 
 # Find out more glyphicones at https://www.w3schools.com/icons/bootstrap_icons_glyphicons.asp
     my $linksIcons = {
