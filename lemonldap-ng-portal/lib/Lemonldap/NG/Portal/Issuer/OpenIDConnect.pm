@@ -602,6 +602,7 @@ sub run {
                     {
                         redirect_uri    => $oidc_request->{'redirect_uri'},
                         scope           => $oidc_request->{'scope'},
+                        client_id       => $client_id,
                         user_session_id => $req->id,
                         _utime          => time,
                         nonce           => $oidc_request->{'nonce'},
@@ -770,6 +771,7 @@ sub run {
                     undef,
                     {
                         redirect_uri    => $oidc_request->{'redirect_uri'},
+                        client_id       => $client_id,
                         scope           => $oidc_request->{'scope'},
                         user_session_id => $req->id,
                         _utime          => time,
@@ -1069,6 +1071,14 @@ sub token {
         {
             return $self->p->sendError( $req, 'invalid_grant', 400 );
         }
+    }
+
+    # Check we have the same client_id value
+    unless ( $client_id eq $codeSession->data->{client_id} )
+    {
+        $self->userLogger->error( "Provided client_id does not match "
+              . $codeSession->data->{client_id} );
+        return $self->p->sendError( $req, 'invalid_grant', 400 );
     }
 
     # Check we have the same redirect_uri value
