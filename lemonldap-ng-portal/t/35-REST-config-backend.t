@@ -244,6 +244,8 @@ sub issuer {
                 userDB            => 'Same',
                 restSessionServer => 1,
                 restConfigServer  => 1,
+                templateDir       => 'templates',
+                staticPrefix      => '/static',
             }
         }
     );
