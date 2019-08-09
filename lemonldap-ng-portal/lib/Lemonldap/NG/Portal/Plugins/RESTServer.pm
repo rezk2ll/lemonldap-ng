@@ -535,7 +535,11 @@ sub delKeyInMySession {
 sub getError {
     my ( $self, $req, $lang, $errNum ) = @_;
     my $json;
-    my $langsDir = 'site/htdocs/static/languages';
+    my $langsDir =
+        $self->conf->{templateDir}
+      . '/../htdocs'
+      . $self->conf->{staticPrefix}
+      . '/languages';
     $lang ||= 'en';
     
     $errNum
