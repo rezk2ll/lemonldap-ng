@@ -263,10 +263,14 @@ SKIP: {
       or explain( $res->[2]->[0], 'Attribute uid' );
     ok( $res->[2]->[0] =~ m%<td scope="row">french</td>%, 'Found value french' )
       or explain( $res->[2]->[0], 'Value french' );
-    count(4);
+    ok( $res->[2]->[0] =~ m%<td scope="row">_lassoSessionDump</td>%, 'Found attribute _lassoSessionDump' )
+      or explain( $res->[2]->[0], 'Attribute _lassoSessionDump' );
+    ok( $res->[2]->[0] =~ m%ProviderID="http://auth.idp.com/saml/metadata" AssertionID=%, 'Found  ProviderID & AssertionID values' )
+      or explain( $res->[2]->[0], 'Provider & Assertion Ids' );
+    count(6);
 
     # CheckUser request with an unknown user
-    $query =~ s/user=french/user=rtyler/;
+    $query =~ s/user=fa%40badwolf.org%40idp/user=rtyler/;
     ok(
         $res = $sp->_post(
             '/checkuser',

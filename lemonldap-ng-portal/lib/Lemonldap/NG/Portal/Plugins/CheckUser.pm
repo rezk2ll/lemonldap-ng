@@ -316,7 +316,7 @@ sub display {
             $self->{conf}->{impersonationMergeSSOgroups} ? 'alert-warning'
             : 'alert-info'
         ),
-        LOGIN      => $req->{userData}->{uid},
+        LOGIN      => $req->{userData}->{ $self->conf->{whatToTrace} },
         ATTRIBUTES => $array_attrs->[2],
         MACROS     => $array_attrs->[1],
         GROUPS     => $array_attrs->[0],
