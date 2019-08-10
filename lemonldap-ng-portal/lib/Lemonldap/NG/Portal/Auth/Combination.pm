@@ -98,14 +98,12 @@ sub init {
 
 # Each first method must call getStack() to get the auth scheme available for
 # the current user
+
+## Auth steps
+#############
 sub extractFormInfo {
     my ( $self, $req ) = @_;
     return $self->try( 0, 'extractFormInfo', $req );
-}
-
-# Note that UserDB::Combination uses the same object.
-sub getUser {
-    return $_[0]->try( 1, 'getUser', $_[1] );
 }
 
 sub authenticate {
@@ -114,14 +112,6 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     return $_[0]->try( 0, 'setAuthSessionInfo', $_[1] );
-}
-
-sub setSessionInfo {
-    return $_[0]->try( 1, 'setSessionInfo', $_[1] );
-}
-
-sub setGroups {
-    return $_[0]->try( 1, 'setGroups', $_[1] );
 }
 
 sub getDisplayType {
@@ -155,6 +145,21 @@ sub authLogout {
       ->[0]->( 'authLogout', $req );
     $self->logger->debug(qq'User disconnected using scheme "$name"');
     return $res;
+}
+
+## UserDB steps
+###############
+# Note that UserDB::Combination uses the same object.
+sub getUser {
+    return $_[0]->try( 1, 'getUser', $_[1] );
+}
+
+sub setSessionInfo {
+    return $_[0]->try( 1, 'setSessionInfo', $_[1] );
+}
+
+sub setGroups {
+    return $_[0]->try( 1, 'setGroups', $_[1] );
 }
 
 sub getStack {
@@ -224,7 +229,6 @@ sub name {
 package Lemonldap::NG::Portal::Lib::Combination::UserLogger;
 
 # This logger rewrite "warn" to "notice"
-
 sub new {
     my ( $class, $realLogger ) = @_;
     return bless { logger => $realLogger }, $class;
