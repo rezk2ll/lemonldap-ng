@@ -138,6 +138,8 @@ site/htdocs/static/forms/samlService.html
 site/htdocs/static/forms/samlSPMetaDataNode.html
 site/htdocs/static/forms/samlSPMetaDataNodeContainer.html
 site/htdocs/static/forms/select.html
+site/htdocs/static/forms/sfExtra.html
+site/htdocs/static/forms/sfExtraContainer.html
 site/htdocs/static/forms/simpleInputContainer.html
 site/htdocs/static/forms/text.html
 site/htdocs/static/forms/trool.html
@@ -209,6 +211,7 @@ t/12-save-changed-conf.t
 t/14-bad-changes-in-conf.t
 t/15-combination.t
 t/16-cli.t
+t/17-extra2f.t
 t/20-test-coverage.t
 t/40-sessions.t
 t/50-notifications-DBI.t
@@ -227,6 +230,7 @@ t/jsonfiles/11-modified-with-confirmation.json
 t/jsonfiles/12-modified.json
 t/jsonfiles/14-bad.json
 t/jsonfiles/15-combination.json
+t/jsonfiles/17-extra2f.json
 t/jsonfiles/70-diff.json
 t/lemonldap-ng-dbi.ini
 t/lemonldap-ng-noDiff.ini
