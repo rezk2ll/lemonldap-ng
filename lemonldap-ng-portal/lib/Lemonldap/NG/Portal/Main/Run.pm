@@ -83,7 +83,10 @@ sub handler {
                 : ()
             ),
         );
-        push @{ $res->[1] }, 'Set-Cookie', $self->cookie(%v);
+        my %headers = @{ $res->[1] };
+        $headers{'Set-Cookie'} = $self->cookie(%v) . ',' . $headers{'Set-Cookie'};
+        $headers{'Set-Cookie'} =~ s/,$//r;
+        @{ $res->[1] } = %headers;
     }
     return $res;
 }
