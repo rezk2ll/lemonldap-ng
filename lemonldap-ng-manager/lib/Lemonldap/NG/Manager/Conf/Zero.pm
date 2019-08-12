@@ -162,10 +162,11 @@ sub zeroConf {
             },
             "manager.$domain" => {
                 'default' => '$uid eq "dwho" or $uid eq "rtyler"',
-                '(?#Configuration)^/(manager\.html|confs|$)' =>
-                  '$uid eq "dwho"',
-                '(?#Sessions)/sessions' => '$uid eq "dwho" or $uid eq "rtyler"',
-                '(?#Notifications)/notifications' =>
+'(?#Configuration)^/(.*?\.(fcgi|psgi)/)?(manager\.html|confs/|$)'
+                  => '$uid eq "dwho"',
+                '(?#Sessions)/(.*?\.(fcgi|psgi)/)?sessions' =>
+                  '$uid eq "dwho" or $uid eq "rtyler"',
+                '(?#Notifications)/(.*?\.(fcgi|psgi)/)?notifications' =>
                   '$uid eq "dwho" or $uid eq "rtyler"',
             }
         },

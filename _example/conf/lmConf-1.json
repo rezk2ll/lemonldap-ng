@@ -125,9 +125,9 @@
          "default" : "accept"
       },
       "manager.__DNSDOMAIN__" : {
-         "(?#Configuration)^/(manager\\.html|confs|$)" : "$uid eq \"dwho\"",
-         "(?#Notifications)/notifications" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
-         "(?#Sessions)/sessions" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
+         "(?#Configuration)^/(.*?\\.(fcgi|psgi)/)?(manager\\.html|confs/|$)" : "$uid eq \"dwho\"",
+         "(?#Notifications)/(.*?\\.(fcgi|psgi)/)?notifications" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
+         "(?#Sessions)/(.*?\\.(fcgi|psgi)/)?sessions" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
          "default" : "$uid eq \"dwho\" or $uid eq \"rtyler\""
       },
       "test1.__DNSDOMAIN__" : {
