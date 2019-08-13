@@ -3636,10 +3636,12 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type' => 'text'
         },
         'vhostAliases' => {
-            'type' => 'text'
+            'default' => '',
+            'type'    => 'text'
         },
         'vhostAuthnLevel' => {
-            'type' => 'int'
+            'default' => '',
+            'type'    => 'int'
         },
         'vhostHttps' => {
             'default' => -1,

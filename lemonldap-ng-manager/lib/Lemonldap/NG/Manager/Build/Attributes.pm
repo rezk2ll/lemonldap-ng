@@ -1884,7 +1884,7 @@ sub attributes {
             type    => 'int',
             default => -1,
         },
-        vhostAliases => { type => 'text', },
+        vhostAliases => { type => 'text', default => '' },
         vhostType    => {
             type   => 'select',
             select => [
@@ -1901,7 +1901,7 @@ sub attributes {
             default       => 'Main',
             documentation => 'Handler type',
         },
-        vhostAuthnLevel => { type => 'int', },
+        vhostAuthnLevel => { type => 'int', default => '' },
 
         # SecureToken parameters
         secureTokenAllowOnError => {
