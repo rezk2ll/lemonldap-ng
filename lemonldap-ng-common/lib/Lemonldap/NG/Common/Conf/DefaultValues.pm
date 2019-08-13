@@ -183,7 +183,6 @@ sub defaultValues {
         'oidcServiceMetaDataCheckSessionURI' => 'checksession.html',
         'oidcServiceMetaDataEndSessionURI'   => 'logout',
         'oidcServiceMetaDataFrontChannelURI' => 'flogout',
-        'oidcServiceMetaDataIssuer'          => 'http://auth.example.com',
         'oidcServiceMetaDataJWKSURI'         => 'jwks',
         'oidcServiceMetaDataRegistrationURI' => 'register',
         'oidcServiceMetaDataTokenURI'        => 'token',

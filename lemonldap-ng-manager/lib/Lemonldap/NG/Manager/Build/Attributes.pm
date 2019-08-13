@@ -3384,7 +3384,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'Mail2F', v => 'E-Mail' },
                 { k => 'REST',   v => 'REST' },
                 { k => 'Ext2F',  v => 'External' },
-                { k => 'Radius',  v => 'Radius' },
+                { k => 'Radius', v => 'Radius' },
             ],
         },
 
@@ -3430,7 +3430,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         # OpenID Connect service
         oidcServiceMetaDataIssuer => {
             type          => 'text',
-            default       => 'http://auth.example.com',
             documentation => 'OpenID Connect issuer',
         },
         oidcServiceMetaDataAuthorizeURI => {

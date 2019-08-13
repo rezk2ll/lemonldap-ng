@@ -39,6 +39,14 @@ has configStorage => (
 );
 has ssoMatchUrl => ( is => 'rw' );
 
+has iss => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        $_[0]->conf->{oidcServiceMetaDataIssuer} || $_[0]->conf->{portal};
+    }
+);
+
 # OIDC has 7 endpoints managed here as PSGI endpoints or in run() [Main/Issuer.pm
 # manage transparent authentication for run()]:
 #  - authorize   : in run()
@@ -698,8 +706,7 @@ sub run {
                 my $user_id = $req->{sessionInfo}->{$user_id_attribute};
 
                 my $id_token_payload_hash = {
-                    iss => $self->conf->{oidcServiceMetaDataIssuer}
-                    ,    # Issuer Identifier
+                    iss => $self->iss,       # Issuer Identifier
                     sub => $user_id,         # Subject Identifier
                     aud => [$client_id],     # Audience
                     exp => $id_token_exp,    # expiration
@@ -838,8 +845,7 @@ sub run {
                     my $user_id = $req->{sessionInfo}->{$user_id_attribute};
 
                     my $id_token_payload_hash = {
-                        iss => $self->conf->{oidcServiceMetaDataIssuer}
-                        ,    # Issuer Identifier
+                        iss => $self->iss,       # Issuer Identifier
                         sub => $user_id,         # Subject Identifier
                         aud => [$client_id],     # Audience
                         exp => $id_token_exp,    # expiration
@@ -1074,8 +1080,7 @@ sub token {
     }
 
     # Check we have the same client_id value
-    unless ( $client_id eq $codeSession->data->{client_id} )
-    {
+    unless ( $client_id eq $codeSession->data->{client_id} ) {
         $self->userLogger->error( "Provided client_id does not match "
               . $codeSession->data->{client_id} );
         return $self->p->sendError( $req, 'invalid_grant', 400 );
@@ -1146,11 +1151,11 @@ sub token {
     my $id_token_acr = "loa-" . $apacheSession->data->{authenticationLevel};
 
     my $id_token_payload_hash = {
-        iss => $self->conf->{oidcServiceMetaDataIssuer},    # Issuer Identifier
-        sub => $user_id,                                    # Subject Identifier
-        aud => [$client_id],                                # Audience
-        exp => $id_token_exp,                               # expiration
-        iat => time,                                        # Issued time
+        iss       => $self->iss,
+        sub       => $user_id,                              # Subject Identifier
+        aud       => [$client_id],                          # Audience
+        exp       => $id_token_exp,                         # expiration
+        iat       => time,                                  # Issued time
         auth_time => $apacheSession->data->{_lastAuthnUTime}
         ,    # Authentication time
         acr => $id_token_acr,    # Authentication Context Class Reference
@@ -1462,10 +1467,9 @@ sub logout {
                           ->{oidcRPMetaDataOptionsUserIDAttr}
                           || $self->conf->{whatToTrace};
                         my $user_id = $req->{sessionInfo}->{$user_id_attribute};
-                        my $iss     = $self->conf->{oidcServiceMetaDataIssuer};
                         $url .= ( $url =~ /\?/ ? '&' : '?' )
                           . build_urlencoded(
-                            iss => $iss,
+                            iss => $self->iss,
                             sid => $user_id
                           );
                     }
@@ -1495,7 +1499,7 @@ sub metadata {
     my $checksession_uri = $self->conf->{oidcServiceMetaDataCheckSessionURI};
 
     my $path   = $self->path . '/';
-    my $issuer = $self->conf->{oidcServiceMetaDataIssuer};
+    my $issuer = $self->iss;
     $path = "/" . $path unless ( $issuer =~ /\/$/ );
     my $baseUrl = $issuer . $path;
 

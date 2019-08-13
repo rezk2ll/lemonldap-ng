@@ -2095,8 +2095,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type'    => 'text'
         },
         'oidcServiceMetaDataIssuer' => {
-            'default' => 'http://auth.example.com',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'oidcServiceMetaDataJWKSURI' => {
             'default' => 'jwks',
