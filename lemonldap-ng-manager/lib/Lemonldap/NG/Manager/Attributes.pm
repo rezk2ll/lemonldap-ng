@@ -3640,8 +3640,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'text'
         },
         'vhostAuthnLevel' => {
-            'default' => '',
-            'type'    => 'int'
+            'type' => 'int'
         },
         'vhostHttps' => {
             'default' => -1,

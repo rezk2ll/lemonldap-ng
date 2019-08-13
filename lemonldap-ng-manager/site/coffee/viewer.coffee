@@ -351,7 +351,7 @@ llapp.controller 'TreeCtrl', [
 							node.data = node['default']
 						else
 							node.data = data.value
-						if node.data.toString().match /_Hidden_$/
+						if (node.data and node.data.toString().match /_Hidden_$/)
 							node.type = 'text'
 							node.data = '######'
 						# Cast int as int (remember that booleans are int for Perl)

@@ -1901,7 +1901,7 @@ sub attributes {
             default       => 'Main',
             documentation => 'Handler type',
         },
-        vhostAuthnLevel => { type => 'int', default => '' },
+        vhostAuthnLevel => { type => 'int' },
 
         # SecureToken parameters
         secureTokenAllowOnError => {

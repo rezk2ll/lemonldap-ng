@@ -442,7 +442,7 @@ This file contains:
               } else {
                 node.data = data.value;
               }
-              if (node.data.toString().match(/_Hidden_$/)) {
+              if (node.data && node.data.toString().match(/_Hidden_$/)) {
                 node.type = 'text';
                 node.data = '######';
               }

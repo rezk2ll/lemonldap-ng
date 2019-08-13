@@ -1200,7 +1200,6 @@ function templates(tpl,key) {
             "type" : "select"
          },
          {
-            "default" : "",
             "get" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
             "id" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
             "title" : "vhostAuthnLevel",
