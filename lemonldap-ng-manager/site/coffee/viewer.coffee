@@ -9,7 +9,7 @@ This file contains:
  - the AngularJS controller
 ###
 
-llapp = angular.module 'llngManager', ['ui.tree', 'ui.bootstrap', 'llApp', 'ngCookies']
+llapp = angular.module 'llngViewer', ['ui.tree', 'ui.bootstrap', 'llApp', 'ngCookies']
 
 ###
 Main AngularJS controller
@@ -321,6 +321,22 @@ llapp.controller 'TreeCtrl', [
 			$scope.showT = false
 			setHelp scope
 
+		$scope.keyWritable = (scope) ->
+			node = scope.$modelValue
+			# regexp-assemble of:
+			#  authChoice
+			#  cmbModule
+			#  keyText
+			#  menuApp
+			#  menuCat
+			#  rule
+			#  samlAttribute
+			#  samlIDPMetaDataNode
+			#  samlSPMetaDataNode
+			#  sfExtra
+			#  virtualHost
+			return if node.type and node.type.match /^(?:s(?:aml(?:(?:ID|S)PMetaDataNod|Attribut)e|fExtra)|(?:(?:cmbMod|r)ul|authChoic)e|(?:virtualHos|keyTex)t|menu(?:App|Cat))$/ then true else false
+
 		# method `getKey()`:
 		# - return a promise with the data:
 		# 	- from node when set
@@ -453,5 +469,4 @@ llapp.controller 'TreeCtrl', [
 		unless c
 			console.log "Redirecting to /view/latest"
 			$location.path '/view/latest'
-
 ]

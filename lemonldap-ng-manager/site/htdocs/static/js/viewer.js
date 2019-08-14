@@ -14,7 +14,7 @@ This file contains:
 (function() {
   var llapp;
 
-  llapp = angular.module('llngManager', ['ui.tree', 'ui.bootstrap', 'llApp', 'ngCookies']);
+  llapp = angular.module('llngViewer', ['ui.tree', 'ui.bootstrap', 'llApp', 'ngCookies']);
 
 
   /*
@@ -409,6 +409,15 @@ This file contains:
         }
         $scope.showT = false;
         return setHelp(scope);
+      };
+      $scope.keyWritable = function(scope) {
+        var node;
+        node = scope.$modelValue;
+        if (node.type && node.type.match(/^(?:s(?:aml(?:(?:ID|S)PMetaDataNod|Attribut)e|fExtra)|(?:(?:cmbMod|r)ul|authChoic)e|(?:virtualHos|keyTex)t|menu(?:App|Cat))$/)) {
+          return true;
+        } else {
+          return false;
+        }
       };
       $scope.getKey = function(node) {
         var d, i, l, len, n, ref, tmp;
