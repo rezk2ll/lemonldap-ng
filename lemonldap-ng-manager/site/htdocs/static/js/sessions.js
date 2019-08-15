@@ -7,7 +7,7 @@
 (function() {
   var categories, hiddenAttributes, llapp, max, menu, overScheme, schemes;
 
-  max = 2;
+  max = 25;
 
   schemes = {
     _whatToTrace: [
@@ -83,7 +83,7 @@
     },
     ipAddr: function(t, v, level, over) {
       console.log('overSchema => level', level, 'over', over);
-      if (level > 0 && level < 4) {
+      if (level > 0 && level < 4 && !v.match(/^\d+\.\d/) && over < 2) {
         return t + "=" + v + "*&groupBy=net(" + t + "," + (16 * level + 4 * (over + 1)) + "," + (1 + level + over) + ")";
       } else {
         return null;
