@@ -68,19 +68,22 @@ overScheme =
 	_whatToTrace: (t,v,level,over) ->
 		# "v.length > over" avoids a loop if one user opened more than "max"
 		# sessions
+		console.log 'overSchema => level', level, 'over', over
 		if level == 1 and v.length > over
 			"#{t}=#{v}*&groupBy=substr(#{t},#{(level+over+1)})"
 		else
 			null
 	# Note: IPv4 only
 	ipAddr: (t,v,level,over) ->
-		if level > 0 and level < 4
-			"#{t}=#{v}*&groupBy=net(#{t},#{16*level+4*(over+1)},2)"
+		console.log 'overSchema => level', level, 'over', over
+		if level > 0 and level < 4 and !v.match(/^\d+\.\d/) and over < 2
+			"#{t}=#{v}*&groupBy=net(#{t},#{16*level+4*(over+1)},#{1+level+over})"
 		else
 			null
 	_startTime: (t,v,level,over) ->
+		console.log 'overSchema => level', level, 'over', over
 		if level > 3
-			"#{t}=#{v}*&groupBy=substr(#{t},#{(9+level+over+1)})"
+			"#{t}=#{v}*&groupBy=substr(#{t},#{(10+level+over)})"
 		else
 			null
 
@@ -165,8 +168,6 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		, (resp) ->
 			$scope.waiting = false
 		$scope.showT = false
-
-
 
 	# Delete
 	$scope.deleteSession = ->
