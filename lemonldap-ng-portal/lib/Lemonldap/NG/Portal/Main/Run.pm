@@ -56,7 +56,8 @@ sub handler {
     my $res = $self->Lemonldap::NG::Common::PSGI::Router::handler($req);
 
     # Avoid permanent loop 'Portal <-> _url' if pdata cookie is not removed
-    my $url64 = encode_base64( $req->userData->{_url}, '' );
+    my $url64 = encode_base64( $req->userData->{_url}, '' )
+      if $req->userData->{_url};
     if (    $url64
         and !$req->pdata->{keepPdata}
         and $req->userData->{_session_id}
