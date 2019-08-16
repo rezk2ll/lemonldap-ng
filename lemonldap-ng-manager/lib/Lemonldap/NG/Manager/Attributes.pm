@@ -1180,6 +1180,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 5,
             'type'    => 'int'
         },
+        'forceGlobalStorageUpgradeOTT' => {
+            'type' => 'bool'
+        },
         'formTimeout' => {
             'default' => 120,
             'type'    => 'int'

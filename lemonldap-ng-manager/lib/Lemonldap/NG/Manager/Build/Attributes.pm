@@ -1391,6 +1391,11 @@ sub attributes {
             default       => 1,
             documentation => 'Upgrade session activation',
         },
+        forceGlobalStorageUpgradeOTT => {
+            type => 'bool',
+            documentation =>
+              'Force upgrade tokens be stored into Global Storage',
+        },
 
         # 2F
         max2FDevices => {
