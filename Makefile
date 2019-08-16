@@ -385,11 +385,13 @@ portal_test:	portal
 manager_test:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} test
 
-autopkgtest:    autopkg_common autopkg_handler autopkg_portal autopkg_manager
-	./debian/tests/runner runtime-deps
+autopkgtest: all autopkg_common autopkg_handler autopkg_portal autopkg_manager autopkg_runner
 
 autopkg_%:
 	./debian/tests/runner build-deps lemonldap-ng-$*
+
+autopkg_runner:
+	./debian/tests/runner runtime-deps
 
 # End-to-end tests
 # ----------------
