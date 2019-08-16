@@ -29,7 +29,7 @@ use constant AUTH_REQUIRED     => Apache2::Const::AUTH_REQUIRED;
 use constant MAINTENANCE       => Apache2::Const::HTTP_SERVICE_UNAVAILABLE;
 use constant BUFF_LEN          => 8192;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 # Set default logger
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Apache2';
@@ -79,6 +79,14 @@ sub setServerSignature {
 sub set_user {
     my ( $class, $request, $user ) = @_;
     $request->env->{'psgi.r'}->user($user);
+}
+
+## @method void set_custom(string custom)
+# sets remote_custom
+# @param custom string custom_header
+sub set_custom {
+    my ( $class, $request, $custom ) = @_;
+    $request->env->{'psgi.r'}->subprocess_env( REMOTE_CUSTOM => $custom );
 }
 
 ## @method void set_header_in(hash headers)

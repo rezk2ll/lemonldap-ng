@@ -1,7 +1,7 @@
 # Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.6';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -147,6 +147,7 @@ sub run {
 
         # ACCOUNTING (1. Inform web server)
         $class->set_user( $req, $session->{ $class->tsv->{whatToTrace} } );
+        $class->set_custom( $req, $session->{ $class->tsv->{customToTrace} } );
 
         # AUTHORIZATION
         return ( $class->forbidden( $req, $session ), $session )

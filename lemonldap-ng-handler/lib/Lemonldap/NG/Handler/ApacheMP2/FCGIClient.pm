@@ -21,7 +21,7 @@ use constant REDIRECT          => Apache2::Const::REDIRECT;
 use constant DECLINED          => Apache2::Const::DECLINED;
 use constant SERVER_ERROR      => Apache2::Const::SERVER_ERROR;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 sub handler {
     my ( $class, $r ) = @_;
@@ -92,6 +92,10 @@ sub handler {
     if ( $hdrs{'Lm-Remote-User'} ) {
         $r->user( $hdrs{'Lm-Remote-User'} );
     }
+    if ( $hdrs{'Lm-Remote-Custom'} ) {
+        $r->custom( $hdrs{'Lm-Remote-Custom'} );
+    }
+
     my $i = 1;
     while ( $hdrs{"Headername$i"} ) {
         $r->headers_in->set( $hdrs{"Headername$i"} => $hdrs{"Headervalue$i"} )

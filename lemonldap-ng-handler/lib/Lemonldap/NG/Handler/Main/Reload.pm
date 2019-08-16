@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::Reload;
 
-our $VERSION = '2.0.4';
+our $VERSION = '2.0.6';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -197,7 +197,7 @@ sub defaultValuesInit {
         securedCookie           timeout            timeoutActivity
         timeoutActivityInterval useRedirectOnError useRedirectOnForbidden
         useSafeJail             whatToTrace        handlerInternalCache
-        handlerServiceTokenTTL
+        handlerServiceTokenTTL  customToTrace
         )
     );
 

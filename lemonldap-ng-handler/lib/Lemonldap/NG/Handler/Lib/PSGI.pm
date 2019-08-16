@@ -5,7 +5,7 @@ use Mouse;
 
 #use Lemonldap::NG::Handler::Main qw(:jailSharedVars);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 has protection => ( is => 'rw', isa => 'Str' );
 has rule       => ( is => 'rw', isa => 'Str' );
@@ -175,6 +175,13 @@ sub user {
     return $req->userData
       || { $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}
           || _whatToTrace => 'anonymous' };
+}
+
+## @method hashRef custom()
+# @return hash of custom data
+sub custom {
+    my ( $self, $req ) = @_;
+    return { $Lemonldap::NG::Handler::Main::tsv->{customToTrace} };
 }
 
 ## @method string userId()

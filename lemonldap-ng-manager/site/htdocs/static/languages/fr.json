@@ -204,6 +204,7 @@
 "customPassword":"Module de mots-de-passe personnalisé",
 "customPortalSkin":"Style personnalisé du portail",
 "customRegister":"Module d'enregistrement personnalisé",
+"customToTrace":"REMOTE_CUSTOM",
 "customUserDB":"Module BD utilisateurs personnalisé",
 "date":"Date",
 "dbiAuthChain":"Chaîne",

@@ -6,7 +6,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Handler::Server::Main;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Handler::PSGI';
 
@@ -72,7 +72,7 @@ sub handler {
     my $i = 0;
     while ( my $k = shift @$hdrs ) {
         my $v = shift @$hdrs;
-        if ( $k =~ /^(?:Lm-Remote-User|Cookie)$/ ) {
+        if ( $k =~ /^(?:Lm-Remote-(?:User|Custom)|Cookie)$/ ) {
             push @convertedHdrs, $k, $v;
         }
         else {
