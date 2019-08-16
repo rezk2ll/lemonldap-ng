@@ -41,6 +41,14 @@ sub set_user {
     push @{ $req->{respHeaders} }, 'Lm-Remote-User' => $user;
 }
 
+## @method void set_custom(string custom)
+# sets remote_custom in response headers
+# @param custom string custom_value
+sub set_custom {
+    my ( $class, $req, $custom ) = @_;
+    push @{ $req->{respHeaders} }, 'Lm-Remote-Custom' => $custom;
+}
+
 ## @method void set_header_in(hash headers)
 # sets or modifies request headers
 # @param headers hash containing header names => header value

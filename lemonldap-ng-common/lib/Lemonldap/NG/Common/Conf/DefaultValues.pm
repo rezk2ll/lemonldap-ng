@@ -50,6 +50,7 @@ sub defaultValues {
         'cspImg'                         => '\'self\' data:',
         'cspScript'                      => '\'self\'',
         'cspStyle'                       => '\'self\'',
+        'customToTrace'                  => 'mail',
         'dbiAuthnLevel'                  => 2,
         'dbiExportedVars'                => {},
         'demoExportedVars'               => {

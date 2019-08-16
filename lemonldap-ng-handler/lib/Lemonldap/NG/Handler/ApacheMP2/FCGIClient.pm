@@ -92,6 +92,10 @@ sub handler {
     if ( $hdrs{'Lm-Remote-User'} ) {
         $r->user( $hdrs{'Lm-Remote-User'} );
     }
+    if ( $hdrs{'Lm-Remote-Custom'} ) {
+        $r->custom( $hdrs{'Lm-Remote-Custom'} );
+    }
+
     my $i = 1;
     while ( $hdrs{"Headername$i"} ) {
         $r->headers_in->set( $hdrs{"Headername$i"} => $hdrs{"Headervalue$i"} )

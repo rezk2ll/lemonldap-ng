@@ -204,6 +204,7 @@
 "customPassword":"Custom password module",
 "customPortalSkin":"Custom portal skin",
 "customRegister":"Custom register module",
+"customToTrace":"REMOTE_CUSTOM",
 "customUserDB":"Custom user DB module",
 "date":"Date",
 "dbiAuthChain":"Chain",

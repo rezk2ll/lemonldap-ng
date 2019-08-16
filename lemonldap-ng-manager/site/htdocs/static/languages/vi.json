@@ -204,6 +204,7 @@
 "customPassword":"Mô đun mật khẩu tùy chỉnh",
 "customPortalSkin":"Tùy chỉnh giao diện cổng thông tin",
 "customRegister":"Module đăng ký tùy chỉnh",
+"customToTrace":"REMOTE_CUSTOM",
 "customUserDB":"Mô đun DB người dùng tùy chỉnh",
 "date":"Ngày",
 "dbiAuthChain":"Chuỗi",

@@ -147,6 +147,7 @@ sub run {
 
         # ACCOUNTING (1. Inform web server)
         $class->set_user( $req, $session->{ $class->tsv->{whatToTrace} } );
+        $class->set_custom( $req, $session->{ $class->tsv->{customToTrace} } );
 
         # AUTHORIZATION
         return ( $class->forbidden( $req, $session ), $session )

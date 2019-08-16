@@ -1019,6 +1019,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'customRegister' => {
             'type' => 'text'
         },
+        'customToTrace' => {
+            'default' => 'mail',
+            'type'    => 'lmAttrOrMacro'
+        },
         'customUserDB' => {
             'type' => 'text'
         },
