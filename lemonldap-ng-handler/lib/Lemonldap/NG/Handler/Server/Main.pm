@@ -39,7 +39,6 @@ sub unset_header_in {
 *setServerSignature = *Lemonldap::NG::Handler::PSGI::Main::setServerSignature;
 *thread_share       = *Lemonldap::NG::Handler::PSGI::Main::thread_share;
 *set_user           = *Lemonldap::NG::Handler::PSGI::Main::set_user;
-*set_custom         = *Lemonldap::NG::Handler::PSGI::Main::set_custom;
 *set_header_out     = *Lemonldap::NG::Handler::PSGI::Main::set_header_out;
 *is_initial_req     = *Lemonldap::NG::Handler::PSGI::Main::is_initial_req;
 *print              = *Lemonldap::NG::Handler::PSGI::Main::print;
