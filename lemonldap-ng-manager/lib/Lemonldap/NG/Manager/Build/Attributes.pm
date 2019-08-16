@@ -879,12 +879,6 @@ sub attributes {
             documentation => 'Session parameter used to fill REMOTE_USER',
             flags         => 'hp',
         },
-        customToTrace => {
-            type          => 'lmAttrOrMacro',
-            default       => 'mail',
-            documentation => 'Session parameter used to fill REMOTE_CUSTOM',
-            flags         => 'hp',
-        },
         lwpOpts => {
             type          => 'keyTextContainer',
             documentation => 'Options given to LWP::UserAgent',

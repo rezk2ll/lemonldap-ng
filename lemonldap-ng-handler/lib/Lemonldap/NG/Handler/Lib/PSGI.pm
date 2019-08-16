@@ -177,14 +177,6 @@ sub user {
           || _whatToTrace => 'anonymous' };
 }
 
-## @method hashRef custom()
-# @return hash of custom data
-sub custom {
-    my ( $self, $req ) = @_;
-    return { $Lemonldap::NG::Handler::Main::tsv->{customToTrace}
-          || customToTrace => '-' };
-}
-
 ## @method string userId()
 # @return user identifier to log
 sub userId {

@@ -499,7 +499,7 @@ sub tree {
                     title => 'logParams',
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
-                    nodes => [ 'whatToTrace', 'customToTrace', 'hiddenAttributes' ]
+                    nodes => [ 'whatToTrace', 'hiddenAttributes' ]
                 },
                 {
                     title => 'cookieParams',

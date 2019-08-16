@@ -81,14 +81,6 @@ sub set_user {
     $request->env->{'psgi.r'}->user($user);
 }
 
-## @method void set_user(string user)
-# sets remote_user
-# @param user string username
-sub set_custom {
-    my ( $class, $request, $custom ) = @_;
-    $request->env->{'psgi.r'}->custom($custom);
-}
-
 ## @method void set_header_in(hash headers)
 # sets or modifies request headers
 # @param headers hash containing header names => header value

@@ -72,7 +72,7 @@ sub handler {
     my $i = 0;
     while ( my $k = shift @$hdrs ) {
         my $v = shift @$hdrs;
-        if ( $k =~ /^(?:Lm-Remote-(?:User|Custom)|Cookie)$/ ) {
+        if ( $k =~ /^(?:Lm-Remote-User|Cookie)$/ ) {
             push @convertedHdrs, $k, $v;
         }
         else {
