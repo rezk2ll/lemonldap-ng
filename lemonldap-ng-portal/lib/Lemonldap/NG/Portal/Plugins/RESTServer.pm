@@ -30,8 +30,8 @@
 #   * GET /config/<latest|cfgNum>/<key>           : get conf key value
 #   * GET /config/<latest|cfgNum>?full            : get the full configuration
 #   where <type> is the session type ("global" for SSO session or "persistent")
-#   * GET /error/<lang>/<errNum>                  : get <errNum> message from <lang>.json
-#   Return all error messages if no <errNum> specified
+#   * GET /error/<lang>/<errNum>                  : get <errNum> message reference and errors file <lang>.json
+#   Return 'en' error file if no <lang> specified
 #
 # - Authorizations for connected users (always):
 #   * GET /mysession/?whoami                               : get "my" uid
@@ -534,31 +534,10 @@ sub delKeyInMySession {
 
 sub getError {
     my ( $self, $req, $lang, $errNum ) = @_;
-    my $json;
-    my $langsDir =
-        $self->conf->{templateDir}
-      . '/../htdocs'
-      . $self->conf->{staticPrefix}
-      . '/languages';
     $lang ||= 'en';
-    
     $errNum
-      ? $self->logger->debug("GET error: $errNum message from lang: $lang")
-      : $self->logger->debug("GET ALL error messages from lang: $lang");
-
-    if ( open my $file, "<", $langsDir . "/$lang.json" ) {
-        local $/ = undef;
-        $json = from_json(<$file>);
-    }
-    else {
-        $self->logger->error("Unable to read $langsDir/$lang.json");
-        return $self->p->sendJSONresponse( $req,
-            { result => 0, lang => $lang, error => 'Unable to read language file' } );
-    }
-
-    %$json = map { $_ =~ /^PE\d+$/ ? ( $_ => $json->{$_} ) : () }
-      keys %$json
-      unless ($errNum);
+      ? $self->logger->debug("Send $lang error file path with error: $errNum")
+      : $self->logger->debug("Send $lang error file path");
 
     return $self->p->sendJSONresponse(
         $req,
@@ -566,11 +545,9 @@ sub getError {
             result   => 1,
             lang     => $lang,
             errorNum => $errNum ? $errNum : 'all',
-            errorMsg => (
-                  $errNum
-                ? $json->{"PE$errNum"}
-                : $json
-            )
+            errorsFileURL =>
+              "$self->{conf}->{staticPrefix}/languages/$lang.json",
+            ( $errNum ? ( errorMsgRef => "PE$errNum" ) : () ),
         }
     );
 }
