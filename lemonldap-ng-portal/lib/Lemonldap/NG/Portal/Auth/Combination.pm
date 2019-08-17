@@ -147,6 +147,14 @@ sub authLogout {
     return $res;
 }
 
+sub authFinish {
+    PE_OK;
+}
+
+sub authForce {
+    return 0;
+}
+
 ## UserDB steps
 ###############
 # Note that UserDB::Combination uses the same object.
