@@ -29,7 +29,7 @@ sub addRoutes {
     my @enabledKeys = ();
     my @keys        = qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
       applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
-      casSrvMetaDataNodes casAppMetaDataNodes
+      casSrvMetaDataNodes casAppMetaDataNodes sfExtra
       authChoiceModules grantSessionRules combModules
       openIdIDPList);
 
