@@ -276,11 +276,11 @@ sub getMod {
     my ( $self, $req ) = @_;
     my ( $s, $m );
     unless ( $s = $req->params('sessionType') ) {
-        $self->error('Session type is required');
+        $self->error($req->error('Session type is required'));
         return ();
     }
     unless ( $m = $self->sessionTypes->{$s} ) {
-        $self->error('Unknown (or unconfigured) session type');
+        $self->error($req->error('Unknown (or unconfigured) session type'));
         return ();
     }
     if ( my $kind = $req->params('kind') ) {

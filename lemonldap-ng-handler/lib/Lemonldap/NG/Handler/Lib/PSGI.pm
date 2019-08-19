@@ -196,7 +196,7 @@ sub group {
 }
 
 ## @method PSGI::Response sendError($req,$err,$code)
-# Add user di to $err before calling Lemonldap::NG::Common::PSGI::sendError()
+# Add user id to $err before calling Lemonldap::NG::Common::PSGI::sendError()
 # @param $req Lemonldap::NG::Common::PSGI::Request
 # @param $err String to push
 # @code int HTTP error code (default to 500)
