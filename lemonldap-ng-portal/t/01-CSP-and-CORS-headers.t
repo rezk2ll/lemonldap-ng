@@ -8,11 +8,12 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel            => 'error',
-            useSafeJail         => 1,
-            'corsAllow_Origin'  => '',
-            'corsAllow_Methods' => 'POST',
-            'cspFormAction'     => '*'
+            logLevel          => 'error',
+            useSafeJail       => 1,
+            corsAllow_Origin  => '',
+            corsAllow_Methods => 'POST',
+            cspFormAction     => '*',
+            customToTrace     => 'mail'
         }
     }
 );
@@ -104,8 +105,17 @@ ok(
 );
 count(1);
 
-# CORS
 %policy = @{ $res->[1] };
+
+# Lm-Remote headers
+ok( $policy{'Lm-Remote-User'} eq 'dwho', "Lm-Remote-User found" )
+  or print STDERR Dumper( $res->[1] );
+ok( $policy{'Lm-Remote-Custom'} eq 'dwho@badwolf.org',
+    "Lm-Remote-Custom found" )
+  or print STDERR Dumper( $res->[1] );
+count(2);
+
+# CORS
 ok( $policy{'Access-Control-Allow-Origin'} eq '', "CORS origin '' found" )
   or print STDERR Dumper( $res->[1] );
 ok( $policy{'Access-Control-Allow-Credentials'} eq 'true',
