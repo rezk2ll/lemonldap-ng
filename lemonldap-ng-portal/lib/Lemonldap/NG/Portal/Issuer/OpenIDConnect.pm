@@ -605,14 +605,13 @@ sub run {
             if ( $flow eq "authorizationcode" ) {
 
                 # Store data in session
-                my $codeSession = $self->getOpenIDConnectSession(
-                    undef,
+                my $codeSession = $self->newAuthorizationCode(
+                    $rp,
                     {
                         redirect_uri    => $oidc_request->{'redirect_uri'},
                         scope           => $oidc_request->{'scope'},
                         client_id       => $client_id,
                         user_session_id => $req->id,
-                        _utime          => time,
                         nonce           => $oidc_request->{'nonce'},
                         code_challenge  => $oidc_request->{'code_challenge'},
                         code_challenge_method =>
@@ -648,13 +647,12 @@ sub run {
 
                     # Store data in access token
                     # Generate access_token
-                    my $accessTokenSession = $self->getOpenIDConnectSession(
-                        undef,
+                    my $accessTokenSession = $self->newAccessToken(
+                        $rp,
                         {
                             scope           => $oidc_request->{'scope'},
                             rp              => $rp,
                             user_session_id => $req->id,
-                            _utime          => time,
                         }
                     );
 
@@ -774,14 +772,13 @@ sub run {
                 my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
 
                 # Store data in session
-                my $codeSession = $self->getOpenIDConnectSession(
-                    undef,
+                my $codeSession = $self->newAuthorizationCode(
+                    $rp,
                     {
                         redirect_uri    => $oidc_request->{'redirect_uri'},
                         client_id       => $client_id,
                         scope           => $oidc_request->{'scope'},
                         user_session_id => $req->id,
-                        _utime          => time,
                         nonce           => $oidc_request->{'nonce'},
                     }
                 );
@@ -798,13 +795,12 @@ sub run {
                 if ( $response_type =~ /\btoken\b/ ) {
 
                     # Generate access_token
-                    my $accessTokenSession = $self->getOpenIDConnectSession(
-                        undef,
+                    my $accessTokenSession = $self->newAccessToken(
+                        $rp,
                         {
                             scope           => $oidc_request->{'scope'},
                             rp              => $rp,
                             user_session_id => $req->id,
-                            _utime          => time,
                         }
                     );
 
@@ -1056,7 +1052,7 @@ sub token {
 
     $self->logger->debug("OpenID Connect Code: $code");
 
-    my $codeSession = $self->getOpenIDConnectSession($code);
+    my $codeSession = $self->getAuthorizationCode($code);
 
     unless ($codeSession) {
         $self->logger->error("Unable to find OIDC session $code");
@@ -1115,13 +1111,12 @@ sub token {
     $self->logger->debug("Found corresponding user: $user_id");
 
     # Generate access_token
-    my $accessTokenSession = $self->getOpenIDConnectSession(
-        undef,
+    my $accessTokenSession = $self->newAccessToken(
+        $rp,
         {
             scope           => $codeSession->data->{scope},
             rp              => $rp,
             user_session_id => $apacheSession->id,
-            _utime          => time,
         }
     );
 
@@ -1210,7 +1205,7 @@ sub userInfo {
 
     $self->logger->debug("Received Access Token $access_token");
 
-    my $accessTokenSession = $self->getOpenIDConnectSession($access_token);
+    my $accessTokenSession = $self->getAccessToken($access_token);
 
     unless ($accessTokenSession) {
         $self->userLogger->error(

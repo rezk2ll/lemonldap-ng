@@ -630,15 +630,65 @@ sub decodeJSON {
     return $json_hash;
 }
 
+# Create a new Authorization Code
+# @param info hashref of session info
+# @return new Lemonldap::NG::Common::Session object
+
+sub newAuthorizationCode {
+    my ( $self, $rp, $info ) = @_;
+
+    return $self->getOpenIDConnectSession( undef, "authorization_code", undef,
+        $info );
+}
+
+# Get existing Authorization Code
+# @param id
+# @return new Lemonldap::NG::Common::Session object
+
+sub getAuthorizationCode {
+    my ( $self, $id ) = @_;
+
+    return $self->getOpenIDConnectSession( $id, "authorization_code" );
+}
+
+# Create a new Access Token
+# @param info hashref of session info
+# @return new Lemonldap::NG::Common::Session object
+
+sub newAccessToken {
+    my ( $self, $rp, $info ) = @_;
+
+    return $self->getOpenIDConnectSession(
+        undef,
+        "access_token",
+        $self->conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsAccessTokenExpiration},
+        $info
+    );
+}
+
+# Get existing Access Token
+# @param id
+# @return new Lemonldap::NG::Common::Session object
+
+sub getAccessToken {
+    my ( $self, $id ) = @_;
+
+    return $self->getOpenIDConnectSession( $id, "access_token" );
+}
+
 # Try to recover the OpenID Connect session corresponding to id and return session
 # If id is set to undef, return a new session
 # @return Lemonldap::NG::Common::Session object
 sub getOpenIDConnectSession {
-    my ( $self, $id, $info ) = @_;
+    my ( $self, $id, $type, $ttl, $info ) = @_;
     my %storage = (
         storageModule        => $self->conf->{oidcStorage},
         storageModuleOptions => $self->conf->{oidcStorageOptions},
     );
+
+    $ttl ||= $self->conf->{timeout};
+
     unless ( $storage{storageModule} ) {
         %storage = (
             storageModule        => $self->conf->{globalStorage},
@@ -652,7 +702,17 @@ sub getOpenIDConnectSession {
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
             id                 => $id,
             kind               => $self->sessionKind,
-            ( $info ? ( info => $info ) : () ),
+            (
+                $info
+                ? (
+                    info => {
+                        _type  => $type,
+                        _utime => time + $ttl - $self->conf->{timeout},
+                        %{$info}
+                    }
+                  )
+                : ()
+            ),
         }
     );
 
@@ -665,6 +725,26 @@ sub getOpenIDConnectSession {
             $self->logger->error("Unable to create new OpenIDConnect session");
             $self->logger->error( $oidcSession->error );
         }
+        return undef;
+    }
+
+    if ($id) {
+        my $storedType = $oidcSession->{data}->{_type};
+
+        # Only check if a type is set in DB, for backward compatibility
+        if ( $storedType and $type ne $storedType ) {
+            $self->logger->error( "Wrong OpenID session type: "
+                  . $oidcSession->{data}->{_type}
+                  . ". Expected: "
+                  . $type );
+            return undef;
+        }
+    }
+
+    # Make sure the token is still valid, we already compensated for
+    # different TTLs when storing _utime
+    if ( time > ( $oidcSession->{data}->{_utime} + $self->conf->{timeout} ) ) {
+        $self->logger->error("Session $id has expired");
         return undef;
     }
 
@@ -980,8 +1060,8 @@ sub createHash {
 # @param fragment Set to true to return fragment component
 # @return void
 sub returnRedirectError {
-    my ( $self, $req, $redirect_url, $error, $error_description, $error_uri,
-        $state, $fragment )
+    my ( $self, $req, $redirect_url, $error, $error_description,
+        $error_uri, $state, $fragment )
       = @_;
 
     my $urldc =
@@ -1401,7 +1481,10 @@ sub addRouteFromConf {
             $self->logger->error("$_ parameter not defined");
             next;
         }
-        $self->$adder( $self->path => { $path => $sub }, [ 'GET', 'POST' ] );
+        $self->$adder(
+            $self->path => { $path => $sub },
+            [ 'GET', 'POST' ]
+        );
     }
 }
 
@@ -1523,6 +1606,22 @@ Get UserInfo response
 =head2 decodeJSON
 
 Convert JSON to HashRef
+
+=head2 newAuthorizationCode
+
+Generate new Authorization Code session
+
+=head2 newAccessToken
+
+Generate new Access Token session
+
+=head2 getAuthorizationCode
+
+Get existing Authorization Code session
+
+=head2 getAccessToken
+
+Get existing Access Token session
 
 =head2 getOpenIDConnectSession
 

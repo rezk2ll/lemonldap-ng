@@ -5,6 +5,7 @@ use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
 use MIME::Base64;
+use JSON;
 
 BEGIN {
     require 't/test-lib.pm';
@@ -54,7 +55,7 @@ my $op = LLNG::Manager::Test->new( {
                         oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
                         oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
+                        oidcRPMetaDataOptionsAccessTokenExpiration => 1,
                         oidcRPMetaDataOptionsBypassConsent => 1,
                     },
                     rp2 => {
@@ -64,7 +65,7 @@ my $op = LLNG::Manager::Test->new( {
                         oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
                         oidcRPMetaDataOptionsClientSecret      => "rp2secret",
                         oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
+                        oidcRPMetaDataOptionsAccessTokenExpiration => 1,
                         oidcRPMetaDataOptionsBypassConsent => 1,
                         oidcRPMetaDataOptionsRule => '$uid eq "dwho"',
                     }
@@ -171,6 +172,44 @@ count(1);
 
 # Expect an invalid request
 ok ($res->[0] = 400);
+count(1);
+
+# Play code on RP1
+$query="grant_type=authorization_code&code=$code&redirect_uri=http%3A%2F%2Frp2.com%2F";
+
+ok(
+    $res = $op->_post(
+        "/oauth2/token",
+        IO::String->new($query),
+        accept => 'text/html',
+        length => length($query),
+        custom => {
+            HTTP_AUTHORIZATION => "Basic ". encode_base64("rpid:rpsecret"),
+        },
+    ),
+    "Post token"
+);
+count(1);
+my $json = from_json($res->[2]->[0]);
+my $token = $json->{access_token};
+ok($token, 'Access token present');
+count(1);
+sleep(2);
+
+ok(
+    $res = $op->_post(
+        "/oauth2/userinfo",
+        IO::String->new(""),
+        accept => 'text/html',
+        length => 0,
+        custom => {
+            HTTP_AUTHORIZATION => "Bearer ". $token,
+        },
+    ),
+    "Post userinfo"
+);
+count(1);
+ok($res->[0] == 401, "Access denied with expired token");
 count(1);
 
 clean_sessions();
