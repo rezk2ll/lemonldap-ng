@@ -88,7 +88,7 @@ sub init {
     );
 
     # Avoid restricted users to access configuration by default route
-    my $defaultMod       = $self->{defaultModule} || 'viewer';
+    my $defaultMod       = $self->{defaultModule} || 'conf';
     $self->logger->debug("Default module -> $defaultMod");
     my ($index) =
       grep { $working[$_] =~ /::$defaultMod$/ } ( 0 .. $#working );
