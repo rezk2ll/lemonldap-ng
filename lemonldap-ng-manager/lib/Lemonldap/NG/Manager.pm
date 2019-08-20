@@ -91,7 +91,7 @@ sub init {
     my $defaultMod       = $self->{defaultModule} || 'conf';
     $self->logger->debug("Default module -> $defaultMod");
     my ($index) =
-      grep { $working[$_] =~ /::$defaultMod$/ } ( 0 .. $#working );
+      grep { $working[$_] =~ /::$defaultMod$/i } ( 0 .. $#working );
     $index //= $#working;
     $self->logger->debug("Default index -> $index");
     $self->defaultRoute( $working[$index]->defaultRoute );
