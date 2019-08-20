@@ -881,7 +881,6 @@ sub attributes {
         },
         customToTrace => {
             type          => 'lmAttrOrMacro',
-            default       => '',
             documentation => 'Session parameter used to fill REMOTE_CUSTOM',
             flags         => 'hp',
         },

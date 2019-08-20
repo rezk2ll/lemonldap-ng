@@ -93,7 +93,7 @@ sub handler {
         $r->user( $hdrs{'Lm-Remote-User'} );
     }
     if ( $hdrs{'Lm-Remote-Custom'} ) {
-        $r->custom( $hdrs{'Lm-Remote-Custom'} );
+        $r->subprocess_env( REMOTE_CUSTOM => $hdrs{'Lm-Remote-Custom'} );
     }
 
     my $i = 1;
