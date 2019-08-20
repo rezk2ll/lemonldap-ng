@@ -207,5 +207,6 @@
   "sessionDataToRemember": {},
   "timeout": 72000,
   "userDB": "Same",
-  "whatToTrace": "_whatToTrace"
+  "whatToTrace": "_whatToTrace",
+  "customToTrace": "mail"
 }
