@@ -46,6 +46,10 @@ sub setAuthSessionInfo {
     PE_OK;
 }
 
+sub getDisplayType {
+    return "logo";
+}
+
 sub authLogout {
     my ( $self, $req ) = @_;
     PE_OK;
