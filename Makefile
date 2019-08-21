@@ -34,6 +34,7 @@ UNCOMPRESS=tar xzf
 LISTCOMPRESSED=tar tzf
 COMPRESSSUFFIX=tar.gz
 NGINX=/usr/sbin/nginx
+UGLIFYJSVERSION:=$(shell uglifyjs --version|perl -pe 's/^[^\d]*(\d).*$$/$$1/')
 
 # Default directories install
 # ---------------------------
@@ -308,9 +309,17 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coff
 	@echo "Compressing $*.css"
 	@yui-compressor $*.css > $*.min.css
 
+xx:
+	echo $(UGLIFYJSVERSION)
+	echo $(UGLIFYJSVERSION)
+
 %.min.js: %.js
 	@echo "Compressing $*.js"
-	@uglifyjs $*.js --compress --mangle --comments='/Copyr/i' --source-map $*.min.js.map -o $*.min.js
+	if test "$(UGLIFYJSVERSION)" = 2; then \
+		uglifyjs $*.js --compress --mangle --comments='/Copyr/i' --source-map $*.min.js.map -o $*.min.js; \
+	else \
+		uglifyjs $*.js --compress --mangle --comments='/Copyr/i' --source-map -o $*.min.js; \
+	fi
 
 fastcgi-server/man/llng-fastcgi-server.1p: fastcgi-server/sbin/llng-fastcgi-server
 	@echo Update FastCGI server man page
