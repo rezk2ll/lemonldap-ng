@@ -119,7 +119,7 @@ sub getDisplayType {
     return $self->conf->{combinationForms}
       if ( $self->conf->{combinationForms} );
 
-    if ( $req->{error} > PE_OK ) {
+    if ( $req->{error} > PE_OK and $req->{error} != PE_FIRSTACCESS ) {
         $self->logger->notice('Start over combination schema');
         my $stack = $self->stackSub->( $req->env );
         my ( $res, $name ) = $stack->[0]->[0]->( 'getDisplayType', $req );
