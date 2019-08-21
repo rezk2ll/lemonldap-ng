@@ -309,10 +309,6 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coff
 	@echo "Compressing $*.css"
 	@yui-compressor $*.css > $*.min.css
 
-xx:
-	echo $(UGLIFYJSVERSION)
-	echo $(UGLIFYJSVERSION)
-
 %.min.js: %.js
 	@echo "Compressing $*.js"
 	if test "$(UGLIFYJSVERSION)" = 2; then \
