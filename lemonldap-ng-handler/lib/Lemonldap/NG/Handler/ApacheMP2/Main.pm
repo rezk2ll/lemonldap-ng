@@ -86,7 +86,8 @@ sub set_user {
 # @param custom string custom_header
 sub set_custom {
     my ( $class, $request, $custom ) = @_;
-    $request->env->{'psgi.r'}->subprocess_env( REMOTE_CUSTOM => $custom );
+    $request->env->{'psgi.r'}->subprocess_env( REMOTE_CUSTOM => $custom )
+      if defined $custom;
 }
 
 ## @method void set_header_in(hash headers)

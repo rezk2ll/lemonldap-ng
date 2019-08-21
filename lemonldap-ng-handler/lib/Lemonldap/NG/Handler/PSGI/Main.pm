@@ -46,7 +46,8 @@ sub set_user {
 # @param custom string custom_value
 sub set_custom {
     my ( $class, $req, $custom ) = @_;
-    push @{ $req->{respHeaders} }, 'Lm-Remote-Custom' => $custom;
+    push @{ $req->{respHeaders} }, 'Lm-Remote-Custom' => $custom
+      if defined $custom;
 }
 
 ## @method void set_header_in(hash headers)
