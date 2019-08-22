@@ -3156,7 +3156,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         linkedInUserField => { type => 'text', default => 'emailAddress' },
         linkedInScope =>
-          { type => 'text', default => 'r_basicprofile r_emailaddress' },
+          { type => 'text', default => 'r_liteprofile r_emailaddress' },
 
         # WebID
         webIDAuthnLevel => {

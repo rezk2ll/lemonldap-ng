@@ -128,7 +128,7 @@ sub defaultValues {
         'ldapVersion'                     => 3,
         'linkedInAuthnLevel'              => 1,
         'linkedInFields'             => 'id,first-name,last-name,email-address',
-        'linkedInScope'              => 'r_basicprofile r_emailaddress',
+        'linkedInScope'              => 'r_liteprofile r_emailaddress',
         'linkedInUserField'          => 'emailAddress',
         'localSessionStorage'        => 'Cache::FileCache',
         'localSessionStorageOptions' => {

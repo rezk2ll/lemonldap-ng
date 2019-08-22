@@ -1551,7 +1551,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'text'
         },
         'linkedInScope' => {
-            'default' => 'r_basicprofile r_emailaddress',
+            'default' => 'r_liteprofile r_emailaddress',
             'type'    => 'text'
         },
         'linkedInUserField' => {
