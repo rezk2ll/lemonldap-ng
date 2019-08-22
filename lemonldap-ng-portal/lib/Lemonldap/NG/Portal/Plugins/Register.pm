@@ -309,7 +309,7 @@ sub _register {
         my $html = 1;
 
         # Use HTML template
-        $body = $self->loadTemplate(
+        $body = $self->loadMailTemplate(
             $req,
             'mail_register_confirm',
             filter => $tr,
@@ -369,7 +369,7 @@ sub _register {
     my $html = 1;
 
     # Use HTML template
-    $body = $self->loadTemplate(
+    $body = $self->loadMailTemplate(
         $req,
         'mail_register_done',
         filter => $tr,

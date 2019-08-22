@@ -85,7 +85,7 @@ sub run {
     else {
 
         # Use HTML template
-        $body = $self->loadTemplate(
+        $body = $self->loadMailTemplate(
             $req,
             'mail_2fcode',
             filter => $tr,

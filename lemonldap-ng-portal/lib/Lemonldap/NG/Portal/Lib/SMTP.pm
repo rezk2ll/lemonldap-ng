@@ -81,6 +81,19 @@ has transport => (
     },
 );
 
+sub loadMailTemplate {
+    my ( $self, $req, $name, %prm ) = @_;
+
+    $prm{params}->{STATIC_PREFIX} = $self->p->staticPrefix;
+    my %extra =
+        $self->p->can('tplParams')
+      ? $self->p->tplParams($req)
+      : ();
+    $prm{params}->{$_} = $extra{$_} for keys %extra;
+
+    return $self->loadTemplate( $req, $name, %prm );
+}
+
 sub translate {
     my ( $self, $req ) = @_;
 

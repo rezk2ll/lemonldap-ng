@@ -334,7 +334,7 @@ sub _reset {
         else {
 
             # Use HTML template
-            $body = $self->loadTemplate(
+            $body = $self->loadMailTemplate(
                 $req,
                 'mail_confirm',
                 filter => $tr,
@@ -473,7 +473,7 @@ sub changePwd {
     else {
 
         # Use HTML template
-        $body = $self->loadTemplate(
+        $body = $self->loadMailTemplate(
             $req,
             'mail_password',
             filter => $tr,
