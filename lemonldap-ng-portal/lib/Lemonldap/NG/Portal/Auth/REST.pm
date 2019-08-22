@@ -38,6 +38,14 @@ sub authenticate {
         $self->setSecurity($req);
         return PE_ERROR;
     }
+    $self->logger->debug( "REST result:" . ( $res->{result} || 'undef' ) );
+    if ( $res->{info} ) {
+        eval {
+            $self->logger->debug(" $_ => $res->{info}->{$_}")
+              foreach ( keys %{ $res->{info} } );
+        };
+    }
+    $self->logger->error( 'No "info": ' . $@ ) if ($@);
     unless ( $res->{result} ) {
         $self->userLogger->warn(
             "Bad credentials for " . $req->user . ' (' . $req->address . ')' );

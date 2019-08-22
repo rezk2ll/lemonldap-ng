@@ -17,6 +17,13 @@ has ua => (
 
 sub restCall {
     my ( $self, $url, $content ) = @_;
+    $self->logger->debug("REST: trying to call $url with:");
+    eval {
+        foreach ( keys %$content ) {
+            $self->logger->debug(
+                " $_: " . ( /password/ ? '****' : $content->{$_} ) );
+        }
+    };
     my $hreq = HTTP::Request->new( POST => $url );
     $hreq->header( 'Content-Type' => 'application/json' );
     $hreq->content( to_json($content) );
