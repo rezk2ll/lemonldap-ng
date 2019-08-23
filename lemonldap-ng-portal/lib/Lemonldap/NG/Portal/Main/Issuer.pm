@@ -91,6 +91,7 @@ sub _redirect {
             'Add ' . $self->ipath . ', ' . $self->ipath . 'Path in keepPdata' );
         push @{ $req->pdata->{keepPdata} }, $self->ipath, $self->ipath . 'Path';
         $req->{urldc} = $self->conf->{portal} . '/' . $self->path;
+        $req->pdata->{_url} = encode_base64($req->urldc, '');
     }
     else {
         $self->logger->debug('Not seen as Issuer request, skipping');
