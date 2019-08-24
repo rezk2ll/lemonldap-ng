@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 19;
+my $maintests = 20;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -24,7 +24,7 @@ SKIP: {
                 loginHistoryEnabled    => 0,
                 authentication         => 'Combination',
                 userDB                 => 'Same',
-                combination            => '[Dm1] or [Dm2]',
+                combination            => '[ssl, Dm1] or [Dm2]',
                 combModules            => {
                     Dm1 => {
                         for  => 0,
@@ -34,6 +34,10 @@ SKIP: {
                         for  => 0,
                         type => 'Demo',
                     },
+                    ssl => {
+                        for  => 1,
+                        type => 'SSL',
+                    }
                 },
             }
         }
@@ -161,10 +165,11 @@ SKIP: {
         ),
         'Post code'
     );
-    ( $host, $url, $query ) =
-      expectForm( $res, '#', undef, 'user', 'password', 'token' );
     ok( $res->[2]->[0] =~ /<span trmsg="82"><\/span>/, 'Token expired' )
       or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
+    my ( $host, $url, $query ) =
+      expectForm( $res, '#', undef, 'user', 'password', 'token' );
 }
 count($maintests);
 

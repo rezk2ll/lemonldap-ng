@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.6';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -255,6 +255,13 @@ sub display {
         or (    not $req->data->{noerror}
             and $req->userData
             and %{ $req->userData } )
+
+        # Avoid issue 1867
+        or (    $self->conf->{authentication} eq 'Combination'
+            and $req->{error} > PE_OK
+            and $req->{error} != PE_FIRSTACCESS )
+
+       # and ( $req->{error} == PE_TOKENEXPIRED or $req->{error} == PE_NOTOKEN )
       )
     {
         $skinfile       = 'error';

@@ -119,13 +119,6 @@ sub getDisplayType {
     return $self->conf->{combinationForms}
       if ( $self->conf->{combinationForms} );
 
-    if ( $req->{error} > PE_OK and $req->{error} != PE_FIRSTACCESS ) {
-        $self->logger->notice('Start over combination schema');
-        my $stack = $self->stackSub->( $req->env );
-        my ( $res, $name ) = $stack->[0]->[0]->( 'getDisplayType', $req );
-        return $res;
-    }
-
     my ( $nb, $stack ) = (
         $req->data->{dataKeep}->{combinationTry},
         $req->data->{combinationStack}
@@ -198,6 +191,7 @@ sub try {
 
     # If more than 1 scheme is available
     my ( $res, $name );
+
     if ( $nb < @$stack - 1 ) {
 
         # TODO: change logLevel for userLog()
