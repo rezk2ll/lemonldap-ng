@@ -383,6 +383,7 @@ sub _scanNodes {
                     }
                     elsif ($h) {
                         hdebug('    opened');
+                        $self->confChanged(1);
                         $self->set( $target, $key, $leaf->{title},
                             $leaf->{data} );
                     }
@@ -451,6 +452,7 @@ sub _scanNodes {
                     }
                     elsif ($h) {
                         hdebug('    opened');
+                        $self->confChanged(1);
                         $self->set( $target, $key, $leaf->{title},
                             $leaf->{data} );
                     }
