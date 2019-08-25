@@ -250,7 +250,9 @@ sub cTrees {
                 ]
             },
         ],
-        casAppMetaDataNode => [ {
+        casAppMetaDataNode => [
+            'casAppMetaDataExportedVars',
+            {
                 title => 'casAppMetaDataOptions',
                 form  => 'simpleInputContainer',
                 nodes => [
@@ -259,7 +261,6 @@ sub cTrees {
                     'casAppMetaDataOptionsRule'
                 ]
             },
-            'casAppMetaDataExportedVars',
         ],
     };
 }

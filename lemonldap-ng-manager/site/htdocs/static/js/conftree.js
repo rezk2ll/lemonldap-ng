@@ -11,28 +11,6 @@ function templates(tpl,key) {
   case 'casAppMetaDataNode':
     return [
    {
-      "_nodes" : [
-         {
-            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsService",
-            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsService",
-            "title" : "casAppMetaDataOptionsService"
-         },
-         {
-            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsUserAttribute",
-            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsUserAttribute",
-            "title" : "casAppMetaDataOptionsUserAttribute"
-         },
-         {
-            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
-            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
-            "title" : "casAppMetaDataOptionsRule"
-         }
-      ],
-      "id" : "casAppMetaDataOptions",
-      "title" : "casAppMetaDataOptions",
-      "type" : "simpleInputContainer"
-   },
-   {
       "cnodes" : tpl+"s/"+key+"/"+"casAppMetaDataExportedVars",
       "default" : [
          {
@@ -57,6 +35,28 @@ function templates(tpl,key) {
       "id" : tpl+"s/"+key+"/"+"casAppMetaDataExportedVars",
       "title" : "casAppMetaDataExportedVars",
       "type" : "keyTextContainer"
+   },
+   {
+      "_nodes" : [
+         {
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsService",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsService",
+            "title" : "casAppMetaDataOptionsService"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsUserAttribute",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsUserAttribute",
+            "title" : "casAppMetaDataOptionsUserAttribute"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
+            "title" : "casAppMetaDataOptionsRule"
+         }
+      ],
+      "id" : "casAppMetaDataOptions",
+      "title" : "casAppMetaDataOptions",
+      "type" : "simpleInputContainer"
    }
 ]
 ;
