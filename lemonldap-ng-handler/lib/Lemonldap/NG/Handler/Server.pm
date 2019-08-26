@@ -26,8 +26,17 @@ sub _run {
     return sub {
         my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
         my $res = $self->_authAndTrace($req);
-        push @{ $res->[1] }, @{ $req->respHeaders },
-          Cookie => ( $req->{Cookie} // '' );
+
+        # Insert respHeaders in response only if not already set
+        my %hdr1 = @{ $res->[1] };
+        my %hdr2 = @{ $req->{respHeaders} };
+        foreach ( keys %hdr2 ) {
+            unless ( $hdr1{$_} and $hdr2{$_} eq $hdr1{$_} ) {
+                push @{ $res->[1] }, ( $_ => $hdr2{$_} );
+            }
+        }
+
+        push @{ $res->[1] }, Cookie => ( $req->{Cookie} // '' );
         return $res;
     };
 }
