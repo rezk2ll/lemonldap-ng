@@ -2,6 +2,7 @@ use Test::More;
 use JSON;
 use MIME::Base64;
 use LWP::UserAgent;
+use Data::Dumper;
 
 BEGIN {
     require 't/test-psgi-lib.pm';
@@ -11,7 +12,7 @@ init('Lemonldap::NG::Handler::Server');
 
 my $res;
 
-# Authorizated queries
+# Authorized queries
 ok(
     $res = $client->_get(
         '/',                 undef,
