@@ -1,5 +1,4 @@
 use Test::More;
-use Data::Dumper;
 
 BEGIN {
     require 't/test-psgi-lib.pm';
@@ -54,9 +53,9 @@ count(2);
 
 my @headers = grep { /service|^XFromVH$/ } @{ $res->[1] };
 my @values  = grep { /\.example\.com|^$sessionId$/ } @{ $res->[1] };
-ok( @headers == 2, 'Found 2 service headers' )
+ok( @headers == 4, 'Found 4 service headers' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
-ok( @values == 2, 'Found 2 service header values' )
+ok( @values == 4, 'Found 4 service header values' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(2);
 
@@ -76,9 +75,9 @@ count(2);
 
 @headers = grep { /service|^XFromVH$/ } @{ $res->[1] };
 @values  = grep { /\.example\.com|^$sessionId$/ } @{ $res->[1] };
-ok( @headers == 2, 'Found 2 service headers' )
+ok( @headers == 4, 'Found 4 service headers' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
-ok( @values == 2, 'Found 2 service header values' )
+ok( @values == 4, 'Found 4 service header values' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(2);
 
@@ -117,9 +116,9 @@ count(2);
 
 @headers = grep { /service|^XFromVH$/ } @{ $res->[1] };
 @values  = grep { /\.example\.com|^$sessionId$/ } @{ $res->[1] };
-ok( @headers == 2, 'Found 2 service headers' )
+ok( @headers == 4, 'Found 4 service headers' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
-ok( @values == 2, 'Found 2 service header values' )
+ok( @values == 4, 'Found 4 service header values' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(2);
 
