@@ -1111,6 +1111,56 @@ sub returnBearerError {
     ];
 }
 
+sub checkEndPointAuthenticationCredentials {
+    my ($self, $req, $allow_public) = @_;
+
+    # Check authentication
+    my ( $client_id, $client_secret ) =
+      $self->getEndPointAuthenticationCredentials($req);
+
+    unless ($client_id) {
+        $self->logger->error(
+"No authentication provided to get token, or authentication type not supported"
+        );
+        return undef;
+    }
+
+    # Verify that client_id is registered in configuration
+    my $rp = $self->getRP($client_id);
+
+    unless ($rp) {
+        $self->userLogger->error(
+            "No registered Relying Party found with client_id $client_id");
+        return undef;
+    }
+    else {
+        $self->logger->debug("Client id $client_id match Relying Party $rp");
+    }
+
+    # Check client_secret
+    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
+        ->{oidcRPMetaDataOptionsPublic} )
+    {
+        $self->logger->debug(
+            "Relying Party $rp is public, do not check client secret");
+    }
+    else {
+        unless ($client_secret) {
+            $self->logger->error(
+"Relying Party $rp is confidential but no client secret was provided to authenticate on token endpoint"
+            );
+            return undef;
+        }
+        unless ( $client_secret eq $self->conf->{oidcRPMetaDataOptions}->{$rp}
+            ->{oidcRPMetaDataOptionsClientSecret} )
+        {
+            $self->logger->error("Wrong credentials for $rp");
+            return undef;
+        }
+    }
+    return $rp;
+}
+
 # Get Client ID and Client Secret
 # @return array (client_id, client_secret)
 sub getEndPointAuthenticationCredentials {

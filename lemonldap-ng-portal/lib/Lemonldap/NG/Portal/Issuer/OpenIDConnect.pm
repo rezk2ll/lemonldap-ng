@@ -997,50 +997,13 @@ sub token {
     my ( $self, $req ) = @_;
     $self->logger->debug("URL detected as an OpenID Connect TOKEN URL");
 
-    # Check authentication
-    my ( $client_id, $client_secret ) =
-      $self->getEndPointAuthenticationCredentials($req);
+    my $rp = $self->checkEndPointAuthenticationCredentials($req);
 
-    unless ($client_id) {
-        $self->logger->error(
-"No authentication provided to get token, or authentication type not supported"
-        );
+    unless($rp) {
         return $self->p->sendError( $req, 'invalid_request', 400 );
     }
 
-    # Verify that client_id is registered in configuration
-    my $rp = $self->getRP($client_id);
-
-    unless ($rp) {
-        $self->userLogger->error(
-            "No registered Relying Party found with client_id $client_id");
-        return $self->p->sendError( $req, 'invalid_request', 400 );
-    }
-    else {
-        $self->logger->debug("Client id $client_id match Relying Party $rp");
-    }
-
-    # Check client_secret
-    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
-        ->{oidcRPMetaDataOptionsPublic} )
-    {
-        $self->logger->debug(
-            "Relying Party $rp is public, do not check client secret");
-    }
-    else {
-        unless ($client_secret) {
-            $self->logger->error(
-"Relying Party $rp is confidential but no client secret was provided to authenticate on token endpoint"
-            );
-            return $self->p->sendError( $req, 'invalid_request', 400 );
-        }
-        unless ( $client_secret eq $self->conf->{oidcRPMetaDataOptions}->{$rp}
-            ->{oidcRPMetaDataOptionsClientSecret} )
-        {
-            $self->logger->error("Wrong credentials for $rp");
-            return $self->p->sendError( $req, 'invalid_request', 400 );
-        }
-    }
+    my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     # Get code session
     my $code = $req->param('code');
