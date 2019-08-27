@@ -84,6 +84,8 @@ has transport => (
 sub loadMailTemplate {
     my ( $self, $req, $name, %prm ) = @_;
 
+    # HTML::Template cache interferes with email translation (#1897)
+    $prm{cache} = 0 unless defined $prm{cache};
     $prm{params}->{STATIC_PREFIX} = $self->p->staticPrefix;
     my %extra =
         $self->p->can('tplParams')

@@ -1058,7 +1058,7 @@ sub loadTemplate {
         search_path_on_include => 1,
         die_on_bad_params      => 0,
         die_on_missing_include => 1,
-        cache                  => 1,
+        cache                  => ( defined $prm{cache} ? $prm{cache} : 1 ),
         global_vars            => 0,
         ( $prm{filter} ? ( filter => $prm{filter} ) : () ),
     );
