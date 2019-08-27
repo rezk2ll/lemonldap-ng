@@ -107,7 +107,7 @@ sub run {
     eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
 
     if ( $INC{"Apache2/Filter.pm"} ) {
-        $r->add_output_filter(
+        $r->{env}->{'psgi.r'}->add_output_filter(
             sub {
                 my $f = shift;
                 while ( $f->read( my $buffer, 1024 ) ) {
