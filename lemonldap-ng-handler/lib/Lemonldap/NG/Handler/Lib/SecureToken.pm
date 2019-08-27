@@ -14,7 +14,7 @@ use strict;
 use Cache::Memcached;
 use Apache::Session::Generate::MD5;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 # Shared variables
 our $secureTokenMemcachedConnection;
@@ -33,7 +33,7 @@ BEGIN {
 sub run {
     my $class = shift;
     my $r     = $_[0];
-    my $ret   = $class->Lemonldap::NG::Handler::Main::run($r);
+    my ( $ret, $session ) = $class->Lemonldap::NG::Handler::Main::run($r);
 
     # Continue only if user is authorized
     return $ret unless ( $ret == $class->OK );
