@@ -147,7 +147,9 @@ sub run {
 
         # ACCOUNTING (1. Inform web server)
         $class->set_user( $req, $session->{ $class->tsv->{whatToTrace} } );
-        $class->set_custom( $req, $session->{ $class->tsv->{customToTrace} } );
+        $class->set_custom( $req, $session->{ $class->tsv->{customToTrace} } )
+          if $class->tsv->{customToTrace}
+          and $session->{ $class->tsv->{customToTrace} };
 
         # AUTHORIZATION
         return ( $class->forbidden( $req, $session ), $session )
@@ -409,7 +411,7 @@ sub fetchId {
     my $value =
       $lookForHttpCookie
       ? ( $t =~ /${cn}http=([^,; ]+)/o ? $1 : 0 )
-      : ( $t =~ /$cn=([^,; ]+)/o ? $1 : 0 );
+      : ( $t =~ /$cn=([^,; ]+)/o       ? $1 : 0 );
 
     if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
         $value = $class->tsv->{cipher}->decryptHex( $value, "http" );

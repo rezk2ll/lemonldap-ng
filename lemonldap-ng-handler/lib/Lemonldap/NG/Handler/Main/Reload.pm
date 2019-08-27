@@ -348,16 +348,18 @@ sub sessionStorageInit {
         if ( $conf->{status} ) {
             my $params = "";
             if ( $class->tsv->{sessionCacheModule} ) {
-                require Data::Dumper;
-                $params = ' '
-                  . $class->tsv->{sessionCacheModule} . ','
-                  . Data::Dumper->new( [ $class->tsv->{sessionCacheOptions} ] )
-                  ->Terse(1)->Indent(0)->Dump;    # To send params on one line
+                $params = ' ' . join(
+                    ',',
+                    $class->tsv->{sessionCacheModule} . map {
+                        "$_ => "
+                          . $class->tsv->{sessionCacheOptions}->{$_}
+                    } keys %{ $class->tsv->{sessionCacheOptions} // {} }
+                );
             }
             $class->tsv->{statusPipe}->print("RELOADCACHE $params\n");
         }
     }
-    return 1;
+return 1;
 }
 
 ## @imethod void headersInit(hashRef args)

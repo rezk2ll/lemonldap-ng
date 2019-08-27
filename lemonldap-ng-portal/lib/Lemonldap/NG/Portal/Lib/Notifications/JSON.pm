@@ -3,7 +3,6 @@ package Lemonldap::NG::Portal::Lib::Notifications::JSON;
 use strict;
 use Mouse;
 use JSON qw(from_json);
-use Data::Dumper;
 
 our $VERSION = '2.0.6';
 
@@ -260,7 +259,8 @@ sub notificationServer {
             return $self->p->sendError( $req, "Unable to decode JSON file: $@",
                 400 )
               if ($@);
-            $self->p->logger->debug( "Notification $notif: " . Dumper($json) );
+            $self->p->logger->debug(
+                "Notification $notif: " . $notifs->{$notif} );
             if ($ref) {
                 push( @$res,
                     map { "$_" => $json->{$_} },

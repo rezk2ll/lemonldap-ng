@@ -758,10 +758,12 @@ sub cookie {
 
 sub _dump {
     my ( $self, $variable ) = @_;
-    require Data::Dumper;
-    $Data::Dumper::Indent  = 0;
-    $Data::Dumper::Useperl = 1;
-    $self->logger->debug( "Dump: " . Data::Dumper::Dumper($variable) );
+    if ( $self->conf->{logLevel} eq 'debug' ) {
+        require Data::Dumper;
+        $Data::Dumper::Indent  = 0;
+        $Data::Dumper::Useperl = 1;
+        $self->logger->debug( "Dump: " . Data::Dumper::Dumper($variable) );
+    }
     return;
 }
 
@@ -813,11 +815,11 @@ sub sendHtml {
       'Pragma'        => 'no-cache',                               # HTTP 1.0
       'Expires'       => '0';                                      # Proxies
 
-    my @cors = split /;/, $self->cors;
     if ( $self->conf->{corsEnabled} ) {
+        my @cors = split /;/, $self->cors;
         push @{ $res->[1] }, @cors;
-        $self->logger->debug(
-            "Apply following CORS policy : " . Data::Dumper::Dumper( \@cors ) );
+        $self->logger->debug('Apply following CORS policy :');
+        $self->logger->debug(" $_") for @cors;
     }
 
     # Set authorized URL for POST
@@ -1002,7 +1004,7 @@ sub registerLogin {
     }
 
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
-    my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+    my $type    = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 

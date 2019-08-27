@@ -40,7 +40,7 @@ sub hAttr {
 sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;
-    $self->addAuthRoute( checkuser => 'check', ['POST'] );
+    $self->addAuthRoute( checkuser => 'check',               ['POST'] );
     $self->addAuthRouteWithRedirect( checkuser => 'display', ['GET'] );
 
     # Parse identity rule
@@ -175,10 +175,10 @@ sub check {
           ? 'checkUserMerged'
           : 'checkUser';
         if ($compute) {
-            $msg = 'checkUserComputeSession';
+            $msg                          = 'checkUserComputeSession';
             $attrs->{authenticationLevel} = $authLevel;
             $attrs->{_auth}               = $authMode;
-            
+
             if ( $self->conf->{impersonationRule} ) {
                 $self->logger->debug("Map real attributes...");
                 my %realAttrs = map {
@@ -272,7 +272,7 @@ sub check {
 }
 
 sub display {
-    my ( $self, $req ) = @_;
+    my ( $self,  $req )         = @_;
     my ( $attrs, $array_attrs ) = ( {}, [] );
 
     $self->logger->debug("Display current session data...");
@@ -422,8 +422,8 @@ sub _splitAttributes {
     $self->logger->debug("Dispatching attributes...");
     while (@$attrs) {
         my $element = shift @$attrs;
-        $self->logger->debug(
-            'Processing element: ' . Data::Dumper::Dumper($element) );
+        $self->logger->debug( "Processing element: $element->{key} => "
+              . ( $element->{value} // '' ) );
         my $ok = 0;
         if ( $element->{key} eq 'groups' ) {
             $self->logger->debug('Key "groups" found');
@@ -452,14 +452,15 @@ sub _splitAttributes {
         my $prefix = "$self->{conf}->{impersonationPrefix}";
         while (@$others) {
             my $element = shift @$others;
-            $self->logger->debug(
-                'Processing attribute: ' . Data::Dumper::Dumper($element) );
+            $self->logger->debug( "Processing attribute $element->{key} => "
+                  . ( $element->{value} // '' ) );
             if ( $element->{key} =~ /^$prefix.+$/ ) {
                 push @$realAttrs, $element;
                 $self->logger->debug(' -> Real attribute');
             }
             else {
                 push @$spoofedAttrs, $element;
+
                 #$self->logger->debug(' -> Spoofed attribute');
             }
         }

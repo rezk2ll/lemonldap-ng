@@ -197,7 +197,7 @@ ok(
 );
 count(3);
 
-my ( $host, $url, $query ) =
+( $host, $url, $query ) =
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
   or explain( $res->[2]->[0], 'trspan="checkUser"' );

@@ -8,7 +8,6 @@ package Lemonldap::NG::Portal::Main;
 use strict;
 use Mouse;
 use JSON;
-use Data::Dumper;
 
 has skinRules => ( is => 'rw' );
 
@@ -126,8 +125,9 @@ sub display {
     # 1.3 There is a message to display
     elsif ( my $info = $req->info ) {
         $self->logger->debug('Display: info detected');
-        $self->logger->debug(
-            'Hidden values -> ' . Dumper( $req->{portalHiddenFormValues} ) );
+        $self->logger->debug('Hidden values :');
+        $self->logger->debug( " $_: " . $req->{portalHiddenFormValues}->{$_} )
+          for keys %{ $req->{portalHiddenFormValues} // {} };
         $skinfile       = 'info';
         %templateParams = (
             MAIN_LOGO       => $self->conf->{portalMainLogo},
