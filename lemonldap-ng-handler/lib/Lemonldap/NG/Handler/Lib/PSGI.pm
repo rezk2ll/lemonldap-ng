@@ -147,6 +147,9 @@ sub _authAndTrace {
                     push @{ $res->[1] }, ( $_ => $hdr2{$_} );
                 }
             }
+
+            # Headers have been consumed -> remove them (#1863)
+            $req->{respHeaders} = [];
         }
         return $res;
     }
