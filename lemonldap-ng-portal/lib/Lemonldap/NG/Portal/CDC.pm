@@ -163,7 +163,7 @@ sub handler {
         );
 
         # Redirect
-        return [ 302, [ Location => $urldc, @{ $req->respHeaders } ], [] ];
+        return [ 302, [ Location => $urldc, $req->spliceHdrs ], [] ];
 
     }
 
@@ -180,7 +180,7 @@ sub handler {
         [
             'Content-Type'   => 'text/plain',
             'Content-Length' => 2,
-            @{ $req->respHeaders }
+            $req->spliceHdrs,
         ],
         ['OK']
     ];

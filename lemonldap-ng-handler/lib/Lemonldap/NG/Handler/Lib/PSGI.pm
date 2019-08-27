@@ -69,7 +69,7 @@ sub _run {
         return sub {
             my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
             my $res = $self->handler($req);
-            push @{ $res->[1] }, @{ $req->{respHeaders} };
+            push @{ $res->[1] }, $req->spliceHdrs;
             return $res;
         };
     }
@@ -89,7 +89,7 @@ sub status {
     return sub {
         my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
         $self->api->status($req);
-        return [ 200, [ @{ $req->{respHeaders} } ], [ $req->{respBody} ] ];
+        return [ 200, [ $req->spliceHdrs ], [ $req->{respBody} ] ];
     };
 }
 
@@ -107,7 +107,7 @@ sub reload {
     return sub {
         my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
         $self->api->reload($req);
-        return [ 200, [ @{ $req->{respHeaders} } ], [ $req->{respBody} ] ];
+        return [ 200, [ $req->spliceHdrs ], [ $req->{respBody} ] ];
     };
 }
 
@@ -133,31 +133,19 @@ sub _authAndTrace {
 
     if ( $res < 300 ) {
         if ($noCall) {
-            return [ $res, $req->{respHeaders}, [] ];
+            return [ $res, [ $req->spliceHdrs ], [] ];
         }
         else {
             $self->logger->debug('User authenticated, calling handler()');
             $res = $self->handler($req);
-
-            # Insert respHeaders in response only if not already set
-            my %hdr1 = @{ $res->[1] };
-            my %hdr2 = @{ $req->{respHeaders} };
-            foreach ( keys %hdr2 ) {
-                unless ( $hdr1{$_} and $hdr2{$_} eq $hdr1{$_} ) {
-                    push @{ $res->[1] }, ( $_ => $hdr2{$_} );
-                }
-            }
-
-            # Headers have been consumed -> remove them (#1863)
-            $req->{respHeaders} = [];
+            push @{ $res->[1] }, $req->spliceHdrs;
+            return $res;
         }
-        return $res;
     }
     elsif ( $res < 400 ) {
-        return [ $res, $req->{respHeaders}, [] ];
+        return [ $res, [ $req->spliceHdrs ], [] ];
     }
     else {
-        my %h = $req->{respHeaders} ? @{ $req->{respHeaders} } : ();
         my $s = $type->tsv->{portal}->() . "/lmerror/$res";
         $s =
             '<html><head><title>Redirection</title></head><body>'
@@ -165,9 +153,15 @@ sub _authAndTrace {
           . '<h1>Please wait</h1>'
           . qq{<p>An error occurs, you're going to be redirected to <a href="$s">$s</a>.</p>}
           . '</body></html>';
-        $h{'Content-Type'}   = 'text/html';
-        $h{'Content-Length'} = length $s;
-        return [ $res, [%h], [$s] ];
+        return [
+            $res,
+            [
+                $req->spliceHdrs,
+                'Content-Type'   => 'text/html',
+                'Content-Length' => length $s
+            ],
+            [$s]
+        ];
     }
 }
 

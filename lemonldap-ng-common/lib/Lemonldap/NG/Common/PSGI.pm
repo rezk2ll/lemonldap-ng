@@ -121,7 +121,7 @@ sub userError {
 sub sendJSONresponse {
     my ( $self, $req, $j, %args ) = @_;
     $args{code}    ||= 200;
-    $args{headers} ||= $req->respHeaders || [];
+    $args{headers} ||= [ $req->spliceHdrs ];
     my $type = 'application/json; charset=utf-8';
     if ( ref $j ) {
         eval { $j = $_json->encode($j); };
@@ -151,9 +151,9 @@ sub sendError {
         return [
             $code,
             [
-                'Content-Type' => 'application/xml; charset=utf-8',
-                @{ $req->respHeaders || [] },
-                'Content-Length' => length($s)
+                'Content-Type'   => 'application/xml; charset=utf-8',
+                'Content-Length' => length($s),
+                $req->spliceHdrs,
             ],
             [$s]
         ];
@@ -188,8 +188,9 @@ body{background:#000;color:#fff;padding:10px 50px;font-family:sans-serif;}a{text
         return [
             $code,
             [
-                'Content-Type' => 'text/html; charset=utf-8',
-                @{ $req->respHeaders || [] }, 'Content-Length' => length($s)
+                'Content-Type'   => 'text/html; charset=utf-8',
+                'Content-Length' => length($s),
+                $req->spliceHdrs,
             ],
             [$s]
         ];
@@ -247,7 +248,7 @@ sub sendHtml {
     $sc = '.' unless ($sc);
     $sc =~ s#/*$#/#;
     $args{code}    ||= 200;
-    $args{headers} ||= $req->respHeaders || [];
+    $args{headers} ||= [ $req->spliceHdrs ];
     my $htpl;
     $template = ( $args{templateDir} // $self->templateDir ) . "/$template.tpl";
     return $self->sendError( $req, "Unable to read $template", 500 )

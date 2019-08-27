@@ -65,13 +65,10 @@ sub _run {
 #@param $req Lemonldap::NG::Common::PSGI::Request
 sub handler {
     my ( $self, $req ) = @_;
-    my $hdrs = $req->{respHeaders};
-    $req->{respHeaders} = [];
     my @convertedHdrs =
       ( 'Content-Length' => 0, Cookie => ( $req->env->{HTTP_COOKIE} // '' ) );
     my $i = 0;
-    while ( my $k = shift @$hdrs ) {
-        my $v = shift @$hdrs;
+    while ( my ( $k, $v ) = splice( @{ $req->{respHeaders} }, 0, 2 ) ) {
         if ( $k =~ /^(?:Lm-Remote-(?:User|Custom)|Cookie)$/ ) {
             push @convertedHdrs, $k, $v;
         }

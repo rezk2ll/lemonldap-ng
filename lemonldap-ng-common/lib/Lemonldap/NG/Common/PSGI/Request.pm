@@ -55,6 +55,11 @@ sub respHeaders {
     return $self->{respHeaders};
 }
 
+sub spliceHdrs {
+    my ($self) = @_;
+    return splice @{ $self->{respHeaders} };
+}
+
 sub accept        { $_[0]->env->{HTTP_ACCEPT} }
 sub encodings     { $_[0]->env->{HTTP_ACCEPT_ENCODING} }
 sub languages     { $_[0]->env->{HTTP_ACCEPT_LANGUAGE} }
@@ -188,6 +193,10 @@ Example:
   $req->respHeaders( "Location" => "http://x.y.z/", Etag => "XYZ", );
   # Add header
   $req->respHeaders->{"X-Key"} = "Value";
+
+=head2 spliceHdrs
+
+Returns headers array and flush it.
 
 =head2 set_param( $key, $value )
 

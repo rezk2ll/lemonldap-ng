@@ -339,8 +339,7 @@ sub autoRedirect {
             $req->data->{redirectFormMethod} = "get";
         }
         else {
-            return [ 302,
-                [ Location => $req->{urldc}, @{ $req->respHeaders } ], [] ];
+            return [ 302, [ Location => $req->{urldc}, $req->spliceHdrs ], [] ];
         }
     }
     my ( $tpl, $prms ) = $self->display($req);
