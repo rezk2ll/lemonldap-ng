@@ -2100,6 +2100,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 'flogout',
             'type'    => 'text'
         },
+        'oidcServiceMetaDataIntrospectionURI' => {
+            'default' => 'introspect',
+            'type'    => 'text'
+        },
         'oidcServiceMetaDataIssuer' => {
             'type' => 'text'
         },

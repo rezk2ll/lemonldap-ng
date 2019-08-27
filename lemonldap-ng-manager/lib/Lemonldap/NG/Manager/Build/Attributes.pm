@@ -3467,6 +3467,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'register',
             documentation => 'OpenID Connect registration endpoint',
         },
+        oidcServiceMetaDataIntrospectionURI => {
+            type          => 'text',
+            default       => 'introspect',
+            documentation => 'OpenID Connect introspection endpoint',
+        },
         oidcServiceMetaDataEndSessionURI => {
             type          => 'text',
             default       => 'logout',

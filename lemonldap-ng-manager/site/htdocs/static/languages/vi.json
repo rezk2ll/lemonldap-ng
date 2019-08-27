@@ -566,6 +566,7 @@
 "oidcServiceMetaDataJWKSURI":"JWKS",
 "oidcServiceMetaDataKeys":"Khóa",
 "oidcServiceMetaDataRegistrationURI":"Đăng ký",
+"oidcServiceMetaDataIntrospectionURI":"Introspection",
 "oidcServiceMetaDataSecurity":"Bảo mật",
 "oidcServiceMetaDataEndSessionURI":"Kết thúc phiên",
 "oidcServiceMetaDataAuthnContext":"Ngữ cảnh xác thực",

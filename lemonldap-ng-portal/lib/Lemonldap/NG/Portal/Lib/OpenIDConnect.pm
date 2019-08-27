@@ -728,7 +728,7 @@ sub getOpenIDConnectSession {
         return undef;
     }
 
-    if ($id) {
+    if ( $id and $type ) {
         my $storedType = $oidcSession->{data}->{_type};
 
         # Only check if a type is set in DB, for backward compatibility
@@ -1112,7 +1112,7 @@ sub returnBearerError {
 }
 
 sub checkEndPointAuthenticationCredentials {
-    my ($self, $req, $allow_public) = @_;
+    my ( $self, $req ) = @_;
 
     # Check authentication
     my ( $client_id, $client_secret ) =

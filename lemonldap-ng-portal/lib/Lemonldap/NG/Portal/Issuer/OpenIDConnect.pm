@@ -57,6 +57,7 @@ has iss => (
 #  - userinfo    : => userInfo()       for unauth users (RP)
 #  - jwks        : => jwks()           for unauth users (RP)
 #  - register    : => registration()   for unauth users (RP)
+#  - introspect  : => introspection()  for unauth users (RP)
 #
 # Other paths will be handle by run() and return PE_ERROR
 #
@@ -86,22 +87,24 @@ sub init {
     # Manage RP requests
     $self->addRouteFromConf(
         'Unauth',
-        oidcServiceMetaDataEndSessionURI   => 'endSessionDone',
-        oidcServiceMetaDataCheckSessionURI => 'checkSession',
-        oidcServiceMetaDataTokenURI        => 'token',
-        oidcServiceMetaDataUserInfoURI     => 'userInfo',
-        oidcServiceMetaDataJWKSURI         => 'jwks',
-        oidcServiceMetaDataRegistrationURI => 'registration',
+        oidcServiceMetaDataEndSessionURI    => 'endSessionDone',
+        oidcServiceMetaDataCheckSessionURI  => 'checkSession',
+        oidcServiceMetaDataTokenURI         => 'token',
+        oidcServiceMetaDataUserInfoURI      => 'userInfo',
+        oidcServiceMetaDataJWKSURI          => 'jwks',
+        oidcServiceMetaDataRegistrationURI  => 'registration',
+        oidcServiceMetaDataIntrospectionURI => 'introspection',
     );
 
     # Manage user requests
     $self->addRouteFromConf(
         'Auth',
-        oidcServiceMetaDataCheckSessionURI => 'checkSession',
-        oidcServiceMetaDataTokenURI        => 'badAuthRequest',
-        oidcServiceMetaDataUserInfoURI     => 'badAuthRequest',
-        oidcServiceMetaDataJWKSURI         => 'badAuthRequest',
-        oidcServiceMetaDataRegistrationURI => 'badAuthRequest',
+        oidcServiceMetaDataCheckSessionURI  => 'checkSession',
+        oidcServiceMetaDataTokenURI         => 'badAuthRequest',
+        oidcServiceMetaDataUserInfoURI      => 'badAuthRequest',
+        oidcServiceMetaDataJWKSURI          => 'badAuthRequest',
+        oidcServiceMetaDataRegistrationURI  => 'badAuthRequest',
+        oidcServiceMetaDataIntrospectionURI => 'badAuthRequest',
     );
 
     # Metadata (.well-known/openid-configuration)
@@ -999,7 +1002,7 @@ sub token {
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
 
-    unless($rp) {
+    unless ($rp) {
         return $self->p->sendError( $req, 'invalid_request', 400 );
     }
 
@@ -1153,7 +1156,7 @@ sub token {
     return $self->p->sendJSONresponse( $req, $token_response );
 }
 
-# Handle uerinfo endpoint
+# Handle userinfo endpoint
 sub userInfo {
     my ( $self, $req ) = @_;
     $self->logger->debug("URL detected as an OpenID Connect USERINFO URL");
@@ -1208,6 +1211,66 @@ sub userInfo {
             [$userinfo_jwt]
         ];
     }
+}
+
+sub introspection {
+    my ( $self, $req ) = @_;
+    $self->logger->debug("URL detected as an OpenID Connect INTROSPECTION URL");
+
+    my $rp = $self->checkEndPointAuthenticationCredentials($req);
+
+    unless ($rp) {
+        return $self->p->sendError( $req, 'invalid_request', 400 );
+    }
+
+    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
+        ->{oidcRPMetaDataOptionsPublic} )
+    {
+        $self->logger->error(
+            "Public clients are not allowed to acces the introspection endpoint"
+        );
+        return $self->p->sendError( $req, 'unauthorized_client', 401 );
+    }
+
+    my $token = $req->param('token');
+    unless ($token) {
+        return $self->p->sendError( $req, 'invalid_request', 400 );
+    }
+
+    my $response    = { active => JSON::false };
+    my $oidcSession = $self->getOpenIDConnectSession($token);
+    if ($oidcSession) {
+        if ( my $user_session_id = $oidcSession->{data}->{user_session_id} ) {
+
+            # Get user identifier
+            my $apacheSession = $self->p->getApacheSession($user_session_id);
+            if ($apacheSession) {
+
+                $response->{active} = JSON::true;
+
+        # The ID attribute we choose is the one of the calling webservice,
+        # which might be different from the OIDC client the token was issued to.
+                my $user_id_attribute =
+                  $self->conf->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsUserIDAttr}
+                  || $self->conf->{whatToTrace};
+                $response->{sub}   = $apacheSession->data->{$user_id_attribute};
+                $response->{scope} = $oidcSession->{data}->{scope}
+                  if $oidcSession->{data}->{scope};
+                $response->{client_id} =
+                  $self->oidcRPList->{ $oidcSession->{data}->{rp} }
+                  ->{oidcRPMetaDataOptionsClientID}
+                  if $oidcSession->{data}->{rp};
+                $response->{exp} =
+                  $oidcSession->{data}->{_utime} + $self->conf->{timeout};
+            }
+        }
+        else {
+            $self->logger->error(
+                "Could not find user session ID in access token object");
+        }
+    }
+    return $self->p->sendJSONresponse( $req, $response );
 }
 
 # Handle jwks endpoint
@@ -1448,13 +1511,14 @@ sub logout {
 sub metadata {
     my ( $self, $req ) = @_;
     my $issuerDBOpenIDConnectPath = $self->conf->{issuerDBOpenIDConnectPath};
-    my $authorize_uri    = $self->conf->{oidcServiceMetaDataAuthorizeURI};
-    my $token_uri        = $self->conf->{oidcServiceMetaDataTokenURI};
-    my $userinfo_uri     = $self->conf->{oidcServiceMetaDataUserInfoURI};
-    my $jwks_uri         = $self->conf->{oidcServiceMetaDataJWKSURI};
-    my $registration_uri = $self->conf->{oidcServiceMetaDataRegistrationURI};
-    my $endsession_uri   = $self->conf->{oidcServiceMetaDataEndSessionURI};
-    my $checksession_uri = $self->conf->{oidcServiceMetaDataCheckSessionURI};
+    my $authorize_uri     = $self->conf->{oidcServiceMetaDataAuthorizeURI};
+    my $token_uri         = $self->conf->{oidcServiceMetaDataTokenURI};
+    my $userinfo_uri      = $self->conf->{oidcServiceMetaDataUserInfoURI};
+    my $jwks_uri          = $self->conf->{oidcServiceMetaDataJWKSURI};
+    my $registration_uri  = $self->conf->{oidcServiceMetaDataRegistrationURI};
+    my $endsession_uri    = $self->conf->{oidcServiceMetaDataEndSessionURI};
+    my $checksession_uri  = $self->conf->{oidcServiceMetaDataCheckSessionURI};
+    my $introspection_uri = $self->conf->{oidcServiceMetaDataIntrospectionURI};
 
     my $path   = $self->path . '/';
     my $issuer = $self->iss;
@@ -1494,6 +1558,7 @@ sub metadata {
             authorization_endpoint => $baseUrl . $authorize_uri,
             end_session_endpoint   => $baseUrl . $endsession_uri,
             check_session_iframe   => $baseUrl . $checksession_uri,
+            introspection_endpoint => $baseUrl . $introspection_uri,
 
             # Logout capabilities
             backchannel_logout_supported          => JSON::true,
@@ -1513,6 +1578,8 @@ sub metadata {
             acr_values_supported     => \@acr,
             subject_types_supported  => ["public"],
             token_endpoint_auth_methods_supported =>
+              [qw/client_secret_post client_secret_basic/],
+            introspection_endpoint_auth_methods_supported =>
               [qw/client_secret_post client_secret_basic/],
             claims_supported                 => [qw/sub iss auth_time acr/],
             request_parameter_supported      => JSON::true,

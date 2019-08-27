@@ -566,6 +566,7 @@
 "oidcServiceMetaDataJWKSURI":"JWKS",
 "oidcServiceMetaDataKeys":"المفاتيح",
 "oidcServiceMetaDataRegistrationURI":"التسجيل",
+"oidcServiceMetaDataIntrospectionURI":"Introspection",
 "oidcServiceMetaDataSecurity":"الحماية",
 "oidcServiceMetaDataEndSessionURI":"نهاية الجلسة",
 "oidcServiceMetaDataAuthnContext":"سياق إثبات الهوية",

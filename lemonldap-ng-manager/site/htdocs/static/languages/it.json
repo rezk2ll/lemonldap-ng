@@ -566,6 +566,7 @@
 "oidcServiceMetaDataJWKSURI":"JWKS",
 "oidcServiceMetaDataKeys":"Chiavi",
 "oidcServiceMetaDataRegistrationURI":"Registrazione",
+"oidcServiceMetaDataIntrospectionURI":"Introspection",
 "oidcServiceMetaDataSecurity":"Sicurezza",
 "oidcServiceMetaDataEndSessionURI":"Fine sessione",
 "oidcServiceMetaDataAuthnContext":"Contesto di autenticazione",
