@@ -46,4 +46,4 @@ ok( $p->init($ini),                        'Init' );
 ok( $app = $p->run,                        'App' );
 
 eval { Data::Dumper::Dumper( {} ) };
-ok( $@, "Portal doesn't depends on Data::Dumper" );
+ok( $@, "Portal doesn't depend on Data::Dumper" );
