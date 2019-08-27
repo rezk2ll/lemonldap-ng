@@ -201,15 +201,14 @@ sub _isAlive {
         my $total_c = $stats->{'total'}->{'connection_structures'};
         my $total_i = $stats->{'total'}->{'total_items'};
 
-        $class->(
-"Memcached connection is alive ($total_c connections / $total_i items)",
-            'debug'
+        $class->logger->debug->(
+"Memcached connection is alive ($total_c connections / $total_i items)"
         );
 
         return 1;
     }
 
-    $class->( "Memcached connection is not alive", 'error' );
+    $class->logger->error("Memcached connection is not alive");
 
     return 0;
 }
