@@ -108,16 +108,17 @@ sub extractFormInfo {
 
 sub authenticate {
     my $self = shift;
-    return $_[0]->try( 0, 'authenticate', @_ );
+    return $self->try( 0, 'authenticate', @_ );
 }
 
 sub setAuthSessionInfo {
     my $self = shift;
-    return $_[0]->try( 0, 'setAuthSessionInfo', @_ );
+    return $self->try( 0, 'setAuthSessionInfo', @_ );
 }
 
 sub getDisplayType {
-    my ( $self, $req ) = @_;
+    my $self = shift;
+    my ($req) = @_;
     return $self->conf->{combinationForms}
       if ( $self->conf->{combinationForms} );
 
@@ -125,19 +126,20 @@ sub getDisplayType {
         $req->data->{dataKeep}->{combinationTry},
         $req->data->{combinationStack}
     );
-    my ( $res, $name ) = $stack->[$nb]->[0]->( 'getDisplayType', $req );
+    my ( $res, $name ) = $stack->[$nb]->[0]->( 'getDisplayType', @_ );
     return $res;
 }
 
 sub authLogout {
-    my ( $self, $req ) = @_;
+    my $self = shift;
+    my ($req) = @_;
     $self->getStack( $req, 'extractFormInfo' ) or return PE_ERROR;
 
     # Avoid warning msg at first access
     $req->userData->{_combinationTry} ||= 0;
     my ( $res, $name ) =
       $req->data->{combinationStack}->[ $req->userData->{_combinationTry} ]
-      ->[0]->( 'authLogout', $req );
+      ->[0]->( 'authLogout', @_ );
     $self->logger->debug(qq'User disconnected using scheme "$name"');
     return $res;
 }
