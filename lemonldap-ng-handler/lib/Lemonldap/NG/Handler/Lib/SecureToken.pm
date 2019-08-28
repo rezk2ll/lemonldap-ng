@@ -158,7 +158,7 @@ sub _setToken {
         $secureTokenExpiration );
 
     unless ($res) {
-        $class->( "Unable to store secure token $key", 'error' );
+        $class->logger->error("Unable to store secure token $key");
         return;
     }
 
@@ -177,7 +177,7 @@ sub _deleteToken {
     my $res = $secureTokenMemcachedConnection->delete($key);
 
     unless ($res) {
-        $class->( "Unable to delete secure token $key", 'error' );
+        $class->logger->error("Unable to delete secure token $key");
     }
     else {
         $class->logger->info("Token $key deleted");
@@ -221,7 +221,7 @@ sub _returnError {
     my ( $class, $r, $secureTokenAllowOnError ) = @_;
 
     if ($secureTokenAllowOnError) {
-        $class->( "Allow request without secure token", 'debug' );
+        $class->logger->debug("Allow request without secure token");
         return $class->OK;
     }
 
