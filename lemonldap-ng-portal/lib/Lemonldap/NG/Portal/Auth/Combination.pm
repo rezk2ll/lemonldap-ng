@@ -102,16 +102,18 @@ sub init {
 ## Auth steps
 #############
 sub extractFormInfo {
-    my ( $self, $req ) = @_;
-    return $self->try( 0, 'extractFormInfo', $req );
+    my $self = shift;
+    return $self->try( 0, 'extractFormInfo', @_ );
 }
 
 sub authenticate {
-    return $_[0]->try( 0, 'authenticate', $_[1] );
+    my $self = shift;
+    return $_[0]->try( 0, 'authenticate', @_ );
 }
 
 sub setAuthSessionInfo {
-    return $_[0]->try( 0, 'setAuthSessionInfo', $_[1] );
+    my $self = shift;
+    return $_[0]->try( 0, 'setAuthSessionInfo', @_ );
 }
 
 sub getDisplayType {
@@ -152,16 +154,18 @@ sub authForce {
 ###############
 # Note that UserDB::Combination uses the same object.
 sub getUser {
-    my ( $self, $req, %args ) = @_;
-    return $self->try( 1, 'getUser', $req, %args );
+    my $self = shift;
+    return $self->try( 1, 'getUser', @_ );
 }
 
 sub setSessionInfo {
-    return $_[0]->try( 1, 'setSessionInfo', $_[1] );
+    my $self = shift;
+    return $self->try( 1, 'setSessionInfo', @_ );
 }
 
 sub setGroups {
-    return $_[0]->try( 1, 'setGroups', $_[1] );
+    my $self = shift;
+    return $self->try( 1, 'setGroups', @_ );
 }
 
 sub getStack {
@@ -179,7 +183,7 @@ sub getStack {
 
 # Main running method: launch the next scheme if the current fails
 sub try {
-    my ( $self, $type, $subname, $req, %args ) = @_;
+    my ( $self, $type, $subname, $req, @args ) = @_;
 
     # Get available authentication schemes for this user if not done
     unless ( defined $req->data->{combinationStack} ) {
@@ -196,7 +200,7 @@ sub try {
     if ( $nb < @$stack - 1 ) {
 
         # TODO: change logLevel for userLog()
-        ( $res, $name ) = $stack->[$nb]->[$type]->( $subname, $req, %args );
+        ( $res, $name ) = $stack->[$nb]->[$type]->( $subname, $req, @args );
 
         # On error, restart authentication with next scheme
         if ( $res > PE_OK ) {
@@ -208,7 +212,7 @@ sub try {
         }
     }
     else {
-        ( $res, $name ) = $stack->[$nb]->[$type]->( $subname, $req, %args );
+        ( $res, $name ) = $stack->[$nb]->[$type]->( $subname, $req, @args );
     }
     $req->sessionInfo->{ [ '_auth', '_userDB' ]->[$type] } = $name;
     $req->sessionInfo->{_combinationTry} =

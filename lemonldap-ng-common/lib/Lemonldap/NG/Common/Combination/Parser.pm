@@ -134,15 +134,15 @@ sub parseMod {
     if ( @mods == 1 ) {
         my ($m) = @mods;
         return sub {
-            my ( $sub, $req, %args ) = @_;
-            return ( $m->$sub( $req, %args ), $expr );
+            my $sub = shift;
+            return ( $m->$sub(@_), $expr );
         };
     }
     return sub {
-        my ( $sub, $req, %args ) = @_;
+        my $sub = shift;
         my %str;
         for ( my $i = 0 ; $i < @list ; $i++ ) {
-            my $res = $mods[$i]->$sub( $req, %args );
+            my $res = $mods[$i]->$sub(@_);
 
             # Case "string" (form type)
             if ( $res & ~$res ) {
