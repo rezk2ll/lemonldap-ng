@@ -14,7 +14,7 @@ use Email::Sender::Transport::SMTP qw();
 use MIME::Base64;
 use Encode;
 
-our $VERSION = '2.0.4';
+our $VERSION = '2.0.6';
 
 our $transport;
 
@@ -104,7 +104,7 @@ sub translate {
     my $json      = $self->conf->{templateDir} . "/common/mail/$lang_code.json";
     $json = $self->conf->{templateDir} . '/common/mail/en.json'
       unless ( -f $json );
-    open F, $json
+    open F, '<', $json
       or die 'Installation error: '
       . $!
       . " ($self->{conf}->{templateDir}/$lang_code.json or $self->{conf}->{templateDir}/common/mail/en.json)";

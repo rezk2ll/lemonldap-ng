@@ -9,7 +9,7 @@ use strict;
 use Mouse;
 use MIME::Base64;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Common::Notifications';
 
@@ -47,7 +47,7 @@ sub get {
 
     my $files;
     foreach my $file (@notif) {
-        unless ( open F, $self->{dirName} . "/$file" ) {
+        unless ( open F, '<', $self->{dirName} . "/$file" ) {
             $self->logger->error(
                 "Unable to read notification $self->{dirName}/$file");
             next;
@@ -116,7 +116,8 @@ sub newNotif {
     return ( 0, 'This notification still exists' ) if ( -e $filename );
     my $old = ( $filename =~ /(.*?)(?:\.$ext)$/ )[0] . '.done';
     return ( 0, 'This notification has been done' ) if ( -e $old );
-    open my $F, ">$filename" or return ( 0, "Unable to create $filename ($!)" );
+    open my $F, '>', $filename
+      or return ( 0, "Unable to create $filename ($!)" );
     binmode($F);
     print $F $content;
     return ( 0, "Unable to close $filename ($!)" ) unless ( close $F );

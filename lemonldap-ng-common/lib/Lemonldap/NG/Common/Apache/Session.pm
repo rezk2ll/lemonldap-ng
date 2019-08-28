@@ -15,7 +15,7 @@ use Lemonldap::NG::Common::Apache::Session::Serialize::JSON;
 use Lemonldap::NG::Common::Apache::Session::Store;
 use Lemonldap::NG::Common::Apache::Session::Lock;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 sub _load {
     my ( $backend, $func ) = @_;
@@ -248,7 +248,7 @@ sub _FileGKFAS {
     closedir DIR;
     my %res;
     for my $f (@t) {
-        open F, "$args->{Directory}/$f";
+        open F, '<', "$args->{Directory}/$f";
         my $row = join '', <F>;
         if ( ref($data) eq 'CODE' ) {
             eval { $res{$f} = &$data( $args->{unserialize}->($row), $f ); };
@@ -288,7 +288,7 @@ sub _PHPGKFAS {
     closedir DIR;
     my %res;
     for my $f (@t) {
-        open F, "$args->{SavePath}/$f";
+        open F, '<', "$args->{SavePath}/$f";
         my $row = join '', <F>;
         if ( ref($data) eq 'CODE' ) {
             $res{$f} =
