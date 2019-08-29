@@ -6,8 +6,6 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-eval { unlink 't/20160530_dwho_dGVzdHJlZg==.json' };
-
 my $json = '{
 "date": "2016-05-30",
 "reference": "testref",
@@ -56,7 +54,7 @@ my $client = LLNG::Manager::Test->new( {
             notificationWildcard             => 'everyone',
             notificationStorage              => 'File',
             notificationStorageOptions       => {
-                dirName => 't'
+                dirName => $main::tmpDir,
             },
         }
     }
@@ -212,8 +210,6 @@ count(1);
 expectOK($res);
 my $id = expectCookie($res);
 expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
-
-eval { unlink 't/20160530_dwho_dGVzdHJlZg==.json' };
 
 clean_sessions();
 done_testing( count() );

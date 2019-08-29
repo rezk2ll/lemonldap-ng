@@ -30,7 +30,7 @@ my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
 ok(
     $res->[2]->[0] =~
-m%<script type="application/init">\{"sslHost":"https://authssl.example.com:19876"\}</script>%,
+m%<script type="application/init">\s*\{"sslHost":"https://authssl.example.com:19876"\}\s*</script>%s,
     ' SSL AJAX URL found'
 ) or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/SSL.png"%,

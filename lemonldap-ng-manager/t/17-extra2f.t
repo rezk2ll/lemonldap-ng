@@ -26,9 +26,6 @@ ok( $res = &client->_get( '/confs/2/sfExtra', 'application/json' ),
     'Get combModules' );
 ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
 
-use Data::Dumper;
-print Dumper($resBody);
-
 count(6);
 
 done_testing( count() );

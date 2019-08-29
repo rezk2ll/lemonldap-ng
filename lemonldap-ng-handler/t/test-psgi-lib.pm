@@ -3,6 +3,7 @@
 use strict;
 use 5.10.0;
 use POSIX 'strftime';
+use Data::Dumper;
 use_ok('Lemonldap::NG::Common::PSGI::Cli::Lib');
 
 our $client;

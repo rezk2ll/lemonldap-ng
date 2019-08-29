@@ -15,6 +15,7 @@ DESTDIR=
 USEDEBIANLIBS=no
 PROD=$(USEDEBIANLIBS)
 USEEXTERNALLIBS=no
+PARA=$(shell perl -000 -e 'print ( "$(MAKEFLAGS)" =~ /-j(\d+)/ ? "j$1:c" : "")')
 
 # Perl options
 #PERLOPTIONS="INSTALLDIRS=vendor"
@@ -379,13 +380,13 @@ manager:	manager_conf handler
 test:		all common_test handler_test portal_test manager_test
 
 common_test:	common
-	@$(MAKE) -C ${SRCCOMMONDIR} test
+	@HARNESS_OPTIONS=$(PARA) $(MAKE) -C ${SRCCOMMONDIR} test
 
 handler_test:	handler
 	@$(MAKE) -C ${SRCHANDLERDIR} test
 
 portal_test:	portal
-	@$(MAKE) -C ${SRCPORTALDIR} test
+	@HARNESS_OPTIONS=$(PARA) $(MAKE) -C ${SRCPORTALDIR} test
 
 manager_test:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} test

@@ -10,7 +10,7 @@ BEGIN {
     require 't/test-lib.pm';
     require 't/saml-lib.pm';
 }
-eval { unlink 't/userdb.db' };
+my $userdb = tempdb();
 
 my $maintests = 13;
 my $debug     = 'error';
@@ -36,7 +36,7 @@ SKIP: {
     if ($@) {
         skip 'DBD::SQLite not found', $maintests;
     }
-    my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
+    my $dbh = DBI->connect("dbi:SQLite:dbname=$userdb");
     $dbh->do(
 'CREATE TABLE users (user text,password text,name text,uid text,cn text,mail text)'
     );
@@ -172,7 +172,6 @@ SKIP: {
 }
 
 count($maintests);
-eval { unlink 't/userdb.db' };
 done_testing( count() );
 
 sub switch {
@@ -196,7 +195,7 @@ sub issuer {
                     demo => 'Demo;Demo;Demo',
                     sql  => 'DBI;DBI;DBI',
                 },
-                dbiAuthChain           => 'dbi:SQLite:dbname=t/userdb.db',
+                dbiAuthChain           => "dbi:SQLite:dbname=$userdb",
                 dbiAuthUser            => '',
                 dbiAuthPassword        => '',
                 dbiAuthTable           => 'users',

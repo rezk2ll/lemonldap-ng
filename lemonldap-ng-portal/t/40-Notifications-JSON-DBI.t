@@ -3,10 +3,9 @@ use strict;
 use IO::String;
 
 my $res;
-my $file      = 't/notifications.db';
 my $maintests = 9;
-eval { unlink $file };
 require 't/test-lib.pm';
+my $file      = tempdb();
 
 SKIP: {
     eval { require DBI; require DBD::SQLite; };

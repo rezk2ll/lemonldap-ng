@@ -55,6 +55,7 @@ C<LLNG::Manager::Test::_post()> call I<(see below)>.
 
 use strict;
 use Data::Dumper;
+use File::Find;
 use LWP::UserAgent;
 use URI::Escape;
 use Lemonldap::NG::Common::FormEncode;
@@ -72,6 +73,13 @@ $Data::Dumper::Deparse  = 1;
 $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Useperl  = 1;
 my $ini;
+
+use File::Temp 'tempfile', 'tempdir';
+our $tmpDir = $LLNG::TMPDIR
+  || tempdir( 'tmpSessionXXXXX', DIR => 't/sessions', CLEANUP => 1 );
+mkdir "$tmpDir/lock";
+mkdir "$tmpDir/saml";
+mkdir "$tmpDir/saml/lock";
 
 =head4 count($inc)
 
@@ -107,10 +115,7 @@ Clean sessions created during tests
 =cut
 
 sub clean_sessions {
-    opendir D, 't/sessions' or die $!;
-    foreach ( grep { /^[^\.]/ } readdir(D) ) {
-        unlink "t/sessions/$_", "t/sessions/lock/Apache-Session-$_.lock";
-    }
+    find( sub { unlink if -f }, $tmpDir );
     foreach my $dir (qw(t/sessions/lock t/sessions/saml/lock t/sessions/saml)) {
         if ( -d $dir ) {
             opendir D, $dir or die $!;
@@ -119,13 +124,11 @@ sub clean_sessions {
             }
         }
     }
-    my $cache = getCache();
-    $cache->clear;
 }
 
 sub count_sessions {
     my $dir = shift;
-    $dir ||= 't/sessions';
+    $dir ||= $tmpDir;
     my $nbr = 0;
 
     opendir D, $dir or die $!;
@@ -139,7 +142,7 @@ sub getCache {
     require Cache::FileCache;
     return Cache::FileCache->new( {
             namespace   => 'lemonldap-ng-session',
-            cache_root  => 't/',
+            cache_root  => $tmpDir,
             cache_depth => 0,
         }
     );
@@ -465,6 +468,16 @@ sub getUser {
     return getHeader( $resp, 'Lm-Remote-User' );
 }
 
+=head4 tempdb
+
+Return a temporary file named XXXX.db
+
+=cut
+
+sub tempdb {
+    return "$tmpDir/userdb.db";
+}
+
 =head2 LLNG::Manager::Test Class
 
 =cut
@@ -484,16 +497,40 @@ our $defaultIni = {
     localSessionStorage        => 'Cache::FileCache',
     localSessionStorageOptions => {
         namespace   => 'lemonldap-ng-session',
-        cache_root  => 't/',
+        cache_root  => $tmpDir,
         cache_depth => 0,
     },
-    logLevel      => 'error',
-    cookieName    => 'lemonldap',
-    domain        => 'example.com',
-    templateDir   => 'site/templates',
-    staticPrefix  => '/static',
-    securedCookie => 0,
-    https         => 0,
+    logLevel             => 'error',
+    cookieName           => 'lemonldap',
+    domain               => 'example.com',
+    templateDir          => 'site/templates',
+    staticPrefix         => '/static',
+    securedCookie        => 0,
+    https                => 0,
+    globalStorageOptions => {
+        Directory     => $tmpDir,
+        LockDirectory => "$tmpDir/lock",
+        generateModule =>
+          'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
+    },
+    casStorageOptions => {
+        Directory     => "$tmpDir/saml",
+        LockDirectory => "$tmpDir/saml/lock",
+        generateModule =>
+          'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
+    },
+    samlStorageOptions => {
+        Directory     => "$tmpDir/saml",
+        LockDirectory => "$tmpDir/saml/lock",
+        generateModule =>
+          'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
+    },
+    oidcStorageOptions => {
+        Directory     => "$tmpDir/saml",
+        LockDirectory => "$tmpDir/saml/lock",
+        generateModule =>
+          'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
+    },
 };
 
 =head3 Accessors

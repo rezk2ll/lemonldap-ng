@@ -43,8 +43,6 @@ LWP::Protocol::PSGI->register(
     }
 );
 
-eval { unlink 't/20160530_dwho_dGVzdHJlZg==.xml' };
-
 my $xml = '<?xml version="1.0" encoding="UTF-8"?>
 <root><notification uid="dwho" date="2016-05-30" reference="testref">
 <title>Test title</title>
@@ -73,7 +71,7 @@ SKIP: {
                 notificationServer         => 1,
                 notificationStorage        => 'File',
                 notificationStorageOptions => {
-                    dirName => 't'
+                    dirName => $main::tmpDir
                 },
                 oldNotifFormat => 1,
             }
@@ -115,8 +113,6 @@ SKIP: {
     expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
 
 }
-
-eval { unlink 't/20160530_dwho_dGVzdHJlZg==.xml' };
 
 count($maintests);
 clean_sessions();

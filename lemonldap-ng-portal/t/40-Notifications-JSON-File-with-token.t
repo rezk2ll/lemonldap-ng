@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $file = 't/20160530_dwho_dGVzdHJlZg==.json';
+my $file = "$main::tmpDir/20160530_dwho_dGVzdHJlZg==.json";
 
 open F, "> $file" or die($!);
 print F '[
@@ -28,7 +28,7 @@ my $client = LLNG::Manager::Test->new( {
             notification               => 1,
             notificationStorage        => 'File',
             notificationStorageOptions => {
-                dirName => 't'
+                dirName => $main::tmpDir
             },
             oldNotifFormat => 0,
             requireToken   => 1,

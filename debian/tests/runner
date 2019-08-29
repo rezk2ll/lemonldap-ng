@@ -24,6 +24,9 @@ for LLLIB in $LIST; do
         fi
     done
     cd $LLSOURCEDIR/$LLLIB
+    cp .proverc .proverc.$$
+    echo '--state=slow' >> $LLSOURCEDIR/$LLLIB/.proverc
+    echo '--j 8' >> $LLSOURCEDIR/$LLLIB/.proverc
 
     SKIPLIST=debian/tests/pkg-perl/SKIP
     SKIPTMP=$(mktemp)
@@ -44,6 +47,9 @@ for LLLIB in $LIST; do
             if [ $EXITCODE = 0 ]; then EXITCODE=$RET; fi
         fi
     done
+    cd $LLSOURCEDIR/$LLLIB
+    pwd
+    mv -f .proverc.$$ .proverc
 
     cd $LLSOURCEDIR
     rm -rf $LLSOURCEDIR/$LLLIB/debian

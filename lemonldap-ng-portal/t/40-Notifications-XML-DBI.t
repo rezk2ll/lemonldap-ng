@@ -3,13 +3,12 @@ use strict;
 use IO::String;
 
 my $res;
-my $file      = 't/notifications.db';
 my $maintests = 8;
 
 #my $maintests = 9;
 
-eval { unlink $file };
 require 't/test-lib.pm';
+my $file = tempdb();
 
 SKIP: {
     eval {
@@ -142,9 +141,6 @@ qq{INSERT INTO notifications VALUES ('dwho','testref2','2016-05-30 00:00:00','<?
     ok( $i == 2, 'Notification was deleted' );
 
     clean_sessions();
-
-    eval { unlink $file };
-
 }
 
 count($maintests);

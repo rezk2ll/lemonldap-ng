@@ -9,7 +9,7 @@ use MIME::Base64;
 BEGIN {
     require 't/test-lib.pm';
 }
-eval { unlink 't/userdb.db' };
+my $userdb = tempdb();
 
 my $maintests = 23;
 my $debug     = 'error';
@@ -67,7 +67,7 @@ SKIP: {
     }
 
     # Build SQL DB
-    my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
+    my $dbh = DBI->connect("dbi:SQLite:dbname=$userdb");
     $dbh->do(
 'CREATE TABLE users (user text,password text,name text,uid text,cn text,mail text)'
     );
@@ -301,7 +301,6 @@ SKIP: {
 }
 
 count($maintests);
-eval { unlink 't/userdb.db' };
 done_testing( count() );
 
 sub switch {
@@ -325,7 +324,7 @@ sub issuer {
                     demo => 'Demo;Demo;Demo',
                     sql  => 'DBI;DBI;DBI',
                 },
-                dbiAuthChain             => 'dbi:SQLite:dbname=t/userdb.db',
+                dbiAuthChain             => "dbi:SQLite:dbname=$userdb",
                 dbiAuthUser              => '',
                 dbiAuthPassword          => '',
                 dbiAuthTable             => 'users',

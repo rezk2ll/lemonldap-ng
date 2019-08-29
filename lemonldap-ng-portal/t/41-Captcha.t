@@ -35,7 +35,8 @@ SKIP: {
     my $token;
     ok( $token = $1, ' Token value is defined' );
     ok( $res->[2]->[0] =~ m#<img src="data:image/png;base64#,
-        ' Captcha image inserted' );
+        ' Captcha image inserted' )
+      or explain( $res->[2]->[0], '<img src="data:image/png;base64' );
 
     # Try to get captcha value
 

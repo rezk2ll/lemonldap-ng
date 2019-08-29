@@ -222,6 +222,7 @@ SKIP: {
     );
     expectOK($res);
     expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn', 'SAMLRequest' );
+    unlink $file;
 }
 
 count($maintests);

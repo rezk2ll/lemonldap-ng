@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $file      = 't/20160530_dwho_dGVzdHJlZg==.xml';
+my $file      = "$main::tmpDir/20160530_dwho_dGVzdHJlZg==.xml";
 my $maintests = 15;
 
 SKIP: {
@@ -31,7 +31,7 @@ SKIP: {
                 useSafeJail                => 1,
                 notification               => 1,
                 notificationStorage        => 'File',
-                notificationStorageOptions => { dirName => 't' },
+                notificationStorageOptions => { dirName => $main::tmpDir },
                 oldNotifFormat             => 1,
                 portalMainLogo             => 'common/logos/logo_llng_old.png',
             }
