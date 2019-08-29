@@ -61,7 +61,8 @@ sub handler {
     if (    $url64
         and !$req->pdata->{keepPdata}
         and $req->userData->{_session_id}
-        and ( $req->{env}->{HTTP_COOKIE} =~ /$url64/ ) )
+        and $req->{env}->{HTTP_COOKIE}
+        and $req->{env}->{HTTP_COOKIE} =~ /$url64/ )
     {
         $self->logger->debug("Force cleaning pdata");
         $self->logger->warn("pdata cookie domain must be set")
