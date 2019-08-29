@@ -26,7 +26,7 @@ SKIP: {
 
     $client = iniCmb('[Dm] and [DB]');
     expectCookie( try('rtyler') );
-    expectReject( try('dwho'), 5 );
+    expectReject( try('dwho'), 401, 5 );
 
     $client = iniCmb('if($env->{HTTP_X} eq "dwho") then [Dm] else [DB]');
     expectCookie( try('dwho') );
@@ -37,7 +37,7 @@ SKIP: {
     );
     expectCookie( try('rtyler') );
     expectCookie( try('dvador') );
-    expectReject( try('dwho'), 5 );
+    expectReject( try('dwho'), 401, 5 );
 }
 count($maintests);
 clean_sessions();

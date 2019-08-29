@@ -344,14 +344,14 @@ Note that it works only for Ajax request (see below).
 =cut
 
 sub expectReject {
-    my ( $res, $code ) = @_;
-    ok( $res->[0] == 401, ' Response is 401' ) or explain( $res->[0], 401 );
+    my ( $res, $status, $code ) = @_;
+    $status ||= 401;
+    cmp_ok( $res->[0], '==', $status, " Response status is $status" );
     eval { $res = JSON::from_json( $res->[2]->[0] ) };
-    ok( not($@), 'Content is JSON' )
+    ok( not($@), ' Content is JSON' )
       or explain( $res->[2]->[0], 'JSON content' );
     if ( defined $code ) {
-        ok( $res->{error} == $code, "Error code is $code" )
-          or explain( $res->{error}, $code );
+        is( $res->{error}, $code, " Error code is $code" );
     }
     else {
         pass("Error code is $res->{error}");
@@ -696,9 +696,8 @@ sub _get {
                 $args{remote_user} ? ( 'REMOTE_USER' => $args{remote_user} )
                 : ()
             ),
-            'REQUEST_METHOD' => $args{method}
-              || 'GET',
-            'REQUEST_URI' => $path . ( $args{query} ? "?$args{query}" : '' ),
+            'REQUEST_METHOD' => $args{method} || 'GET',
+            'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
             ( $args{query} ? ( QUERY_STRING => $args{query} ) : () ),
             'SCRIPT_NAME'     => '',
             'SERVER_NAME'     => 'auth.example.com',
