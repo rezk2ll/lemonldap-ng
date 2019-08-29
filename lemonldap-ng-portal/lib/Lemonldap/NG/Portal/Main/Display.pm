@@ -180,6 +180,7 @@ sub display {
     elsif ( $req->{error} == PE_REDIRECT ) {
         $skinfile       = "redirect";
         %templateParams = (
+            MAIN_LOGO     => $self->conf->{portalMainLogo},
             URL           => $req->{urldc},
             HIDDEN_INPUTS => $self->buildHiddenForm($req),
             FORM_METHOD   => $req->data->{redirectFormMethod} || 'get',
