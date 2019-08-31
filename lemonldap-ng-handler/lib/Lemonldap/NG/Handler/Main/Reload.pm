@@ -380,7 +380,8 @@ sub headersInit {
         $class->tsv->{headerList}->{$vhost} = [ keys %headers ];
         my $sub = '';
         foreach ( keys %headers ) {
-            my $val = $class->substitute( $headers{$_} ) . " || ''";
+            $headers{$_} ||= "''";
+            my $val = $class->substitute( $headers{$_} ) . " // ''";
             $sub .= "('$_' => $val),";
         }
 
