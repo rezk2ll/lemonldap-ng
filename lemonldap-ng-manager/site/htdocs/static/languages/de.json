@@ -250,6 +250,7 @@
 "dateTitle":"Dates",
 "dn":"DN",
 "domain":"Domain",
+"dontCompactConf":"Don't compact configuration file",
 "download":"Download",
 "downloadIt":"Download it",
 "duplicate":"Duplicate",

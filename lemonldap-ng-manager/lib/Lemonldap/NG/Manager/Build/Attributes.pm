@@ -385,6 +385,11 @@ sub attributes {
             msgFail       => '__badUrl__',
             documentation => 'URL to call on reload',
         },
+        dontCompactConf => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Don t compact configuration',
+        },
         portalMainLogo => {
             type          => 'text',
             default       => 'common/logos/logo_llng_400px.png',

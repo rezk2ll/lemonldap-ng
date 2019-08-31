@@ -1108,6 +1108,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
 qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
             'type' => 'text'
         },
+        'dontCompactConf' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'exportedAttr' => {
             'type' => 'text'
         },
