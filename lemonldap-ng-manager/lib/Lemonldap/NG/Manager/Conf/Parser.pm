@@ -103,13 +103,30 @@ sub check {
         hdebug("  testNewConf() failed");
         return 0;
     }
+    my $separator = $self->newConf->{multiValuesSeparator} || '; ';
     hdebug("  tests succeed");
-    $self->compactConf( $self->newConf );
+    my %conf          = %{ $self->newConf() };
+    my %compactedConf = %{ $self->compactConf( $self->newConf ) };
+    my @removedKeys   = ();
     unless ( $self->confChanged ) {
         hdebug("  no change detected");
         $self->message('__confNotChanged__');
         return 0;
     }
+    unless ( $self->newConf->{dontCompactConf} ) {
+        foreach ( sort keys %conf ) {
+            push @removedKeys, $_ unless exists $compactedConf{$_};
+        }
+    }
+    push @{ $self->changes },
+      (
+        $self->{newConf}->{dontCompactConf}
+        ? { confCompacted => '0' }
+        : {
+            confCompacted => '1',
+            removedKeys   => join( $separator, @removedKeys )
+        }
+      );
     return 1;
 }
 
