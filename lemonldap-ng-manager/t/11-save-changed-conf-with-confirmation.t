@@ -54,8 +54,8 @@ ok(
 ) or print STDERR Dumper($resBody);
 
 ok(
-    @{ $resBody->{details}->{__changes__} } == 22,
-    'JSON response contains 24 changes'
+    @{ $resBody->{details}->{__changes__} } == 23,
+    'JSON response contains 23 changes'
 ) or print STDERR Dumper($resBody);
 
 #print STDERR Dumper($resBody);
@@ -113,11 +113,10 @@ ok( $res = &client->jsonResponse('/diff/1/2'), 'Diff called' );
 my ( @c1, @c2 );
 ok( ( @c1 = sort keys %{ $res->[0] } ), 'diff() detects changes in conf 1' );
 ok( ( @c2 = sort keys %{ $res->[1] } ), 'diff() detects changes in conf 2' );
-ok( @c1 == 12, '11 keys changed in conf 1' )
+ok( @c1 == 12, '12 keys changed in conf 1' )
   or print STDERR "Expect: 12 keys, get: " . join( ', ', @c1 ) . "\n";
-ok( @c2 == 16, '14 keys changed or created in conf 2' )
+ok( @c2 == 16, '16 keys changed or created in conf 2' )
   or print STDERR "Expect: 16 keys, get: " . join( ',', @c2 ) . "\n";
-
 count(5);
 
 unlink $confFiles->[1];
@@ -246,6 +245,10 @@ sub changes {
             'new' => 0,
             'key' => 'captcha_mail_enabled',
             'old' => '1'
+        },
+        {
+            'confCompacted' => '1',
+            'removedKeys' => 'some; keys'
         }
     ];
 }

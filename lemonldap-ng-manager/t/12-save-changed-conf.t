@@ -38,7 +38,7 @@ foreach my $i ( 0 .. 1 ) {
 }
 
 ok(
-    @{ $resBody->{details}->{__changes__} } == 22,
+    @{ $resBody->{details}->{__changes__} } == 23,
     'JSON response contains 22 changes'
 ) or print STDERR Dumper($resBody);
 
@@ -224,6 +224,10 @@ sub changes {
         {
             'key' => 'virtualHosts',
             'old' => 'test2.example.com'
+        },
+        {
+            'confCompacted' => '1',
+            'removedKeys' => 'some; keys'
         }
     ];
 }
