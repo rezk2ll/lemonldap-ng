@@ -60,6 +60,16 @@ schemes =
 		(t,v,q) ->
 			q.replace(/\&groupBy.*$/, '') + "&ipAddr=#{v}"
 	]
+	_session_uid: [
+		# First level: display 1 letter
+		(t,v) ->
+			"groupBy=substr(#{t},1)"
+		# Second level (if no overScheme), display usernames
+		(t,v) ->
+			"#{t}=#{v}*&groupBy=#{t}"
+		(t,v) ->
+			"#{t}=#{v}"
+	]
 
 # When number of children nodes exceeds "max" value and if "overScheme.<type>"
 # is available and does not return "null", a level is added. See
@@ -84,6 +94,12 @@ overScheme =
 		console.log 'overSchema => level', level, 'over', over
 		if level > 3
 			"#{t}=#{v}*&groupBy=substr(#{t},#{(10+level+over)})"
+		else
+			null
+	_session_uid: (t,v,level,over) ->
+		console.log 'overSchema => level', level, 'over', over
+		if level == 1 and v.length > over
+			"#{t}=#{v}*&groupBy=substr(#{t},#{(level+over+1)})"
 		else
 			null
 
