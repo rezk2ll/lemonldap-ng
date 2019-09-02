@@ -82,6 +82,8 @@ has 'error' => (
 
 has info => ( is => 'rw' );
 
+has timeout => ( is => 'rw', default => 5 );
+
 sub BUILD {
     my ($self) = @_;
 
@@ -93,7 +95,9 @@ sub BUILD {
 
     # Register options for common Apache::Session module
     my $moduleOptions = $self->storageModuleOptions || {};
-    my %options       = (
+    $self->timeout( delete $moduleOptions->{timeout} )
+      if $moduleOptions->{timeout};
+    my %options = (
         %$moduleOptions,
         backend             => $self->storageModule,
         localStorage        => $self->cacheModule,
@@ -158,10 +162,12 @@ sub BUILD {
 sub _tie_session {
     my $self    = $_[0];
     my $options = $_[1] || {};
-
     my %h;
 
     eval {
+        local $SIG{ALRM} = sub { die "TIMEOUT\n" };
+        alarm $self->timeout;
+
         # SOAP/REST session module must be directly tied
         if ( $self->storageModule =~ /^Lemonldap::NG::Common::Apache::Session/ )
         {
@@ -172,8 +178,9 @@ sub _tie_session {
             tie %h, 'Lemonldap::NG::Common::Apache::Session', $self->id,
               { %{ $self->options }, %$options };
         }
-    };
+        alarm 0;
 
+    };
     if ( $@ or not tied(%h) ) {
         my $msg = "Session cannot be tied";
         $msg .= ": $@" if $@;
