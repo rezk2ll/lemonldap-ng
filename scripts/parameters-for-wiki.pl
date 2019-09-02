@@ -64,6 +64,7 @@ print <<EOF;
 ===== Configuration backend parameters =====
 
 ^  Full name  ^  Key name  ^  Configuration backend  ^
+| Configuration load timeout | confTimeout | all backends (default: 10) |
 | Directory | dirName | [[fileconfbackend|File]] |
 | DBI connection string | dbiChain | [[sqlconfbackend|CDBI / RDBI]] |
 | DBI user | dbiUser | ::: |

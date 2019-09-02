@@ -435,6 +435,8 @@ t/01-AuthDemo.t
 t/01-CSP-and-CORS-headers.t
 t/01-pdata.t
 t/02-Password-Demo.t
+t/03-ConfTimeout.t
+t/03-SessionTimeout.t
 t/03-XSS-protection.t
 t/04-language-selection.t
 t/19-Auth-Null.t
@@ -615,6 +617,8 @@ t/gpghome/private-keys-v1.d/A076B0E7DB141A919271EE8B581CDFA8DA42F333.key
 t/gpghome/private-keys-v1.d/B7219440BCCD85200121CFB89F94C8D98C0397B3.key
 t/gpghome/pubring.kbx
 t/gpghome/trustdb.gpg
+t/lib/Apache/Session/Timeout.pm
+t/lib/Lemonldap/NG/Common/Conf/Backends/Timeout.pm
 t/lib/Lemonldap/NG/Handler/Test.pm
 t/lib/Lemonldap/NG/Portal/Auth/LDAPPolicy.pm
 t/lmConf-1.json

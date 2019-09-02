@@ -21,7 +21,7 @@ sub init {
         return 0;
     }
     unless ( $self->api->checkConf($self)
-        or $self->{protection} eq 'none' )
+        or ( $self->{protection} and $self->{protection} eq 'none' ) )
     {
         $self->error(
             "Unable to protect this server ($Lemonldap::NG::Common::Conf::msg)"
@@ -128,7 +128,8 @@ sub _authAndTrace {
     eval "require $type";
     die $@ if ($@);
     my ( $res, $session ) = $type->run( $req, $self->{rule} );
-    $self->portal( $type->tsv->{portal}->() );
+    eval { $self->portal( $type->tsv->{portal}->() ) };
+    $self->logger->warn($@)  if $@;
     $req->userData($session) if ($session);
 
     if ( $res < 300 ) {
@@ -146,7 +147,7 @@ sub _authAndTrace {
         return [ $res, [ $req->spliceHdrs ], [] ];
     }
     else {
-        my $s = $type->tsv->{portal}->() . "/lmerror/$res";
+        my $s = ( $self->portal ? $self->portal . "/lmerror/$res" : '' );
         $s =
             '<html><head><title>Redirection</title></head><body>'
           . qq{<script type="text/javascript">window.location='$s'</script>}

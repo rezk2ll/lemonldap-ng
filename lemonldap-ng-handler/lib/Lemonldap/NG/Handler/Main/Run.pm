@@ -83,8 +83,11 @@ sub checkType {
     my ( $class, $req ) = @_;
 
     if ( time() - $class->lastCheck > $class->checkTime ) {
-        die("$class: No configuration found")
-          unless ( $class->checkConf );
+        unless ( $class->checkConf ) {
+            $class->logger->error("$class: No configuration found");
+            $req->data->{noTry} = 1;
+            return 'Fail';
+        }
     }
     my $vhost = $class->resolveAlias($req);
     return ( defined $class->tsv->{type}->{$vhost} )
