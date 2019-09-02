@@ -497,6 +497,7 @@ t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-CAS-10.t
 t/32-OIDC-RP-rule.t
+t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t
 t/33-Auth-and-issuer-OpenID2.t
 t/34-Auth-Proxy-and-REST-Server.t
@@ -541,6 +542,7 @@ t/42-Register-Demo.t
 t/42-Register-LDAP.t
 t/42-Register-Security.t
 t/43-MailPasswordReset-Choice.t
+t/43-MailPasswordReset-Combination.t
 t/43-MailPasswordReset-DBI.t
 t/43-MailPasswordReset-LDAP.t
 t/43-MailPasswordReset-with-captcha.t
