@@ -10,13 +10,13 @@ my $res;
 my $client = LLNG::Manager::Test->new(
     {
         ini => {
-            logLevel      => 'error',
-            useSafeJail   => 1,
-            globalStorage => 'Apache::Session::Timeout',
+            logLevel             => 'error',
+            useSafeJail          => 1,
+            globalStorage        => 'Apache::Session::Timeout',
             globalStorageOptions => {
-                Directory => 't/sessions',
+                Directory     => 't/sessions',
                 LockDirectory => 't/sessions/lock',
-                timeout => 1,
+                timeout       => 1,
             },
         }
     }
@@ -34,7 +34,7 @@ ok(
     'Auth query'
 );
 count(1);
-expectReject($res,8);
+expectReject( $res, 401, 8 );
 
 clean_sessions();
 
