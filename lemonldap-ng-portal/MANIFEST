@@ -434,6 +434,7 @@ site/templates/common/script.tpl
 t/01-AuthDemo.t
 t/01-CSP-and-CORS-headers.t
 t/01-pdata.t
+t/02-Password-Demo-Local-Ppolicy.t
 t/02-Password-Demo.t
 t/03-ConfTimeout.t
 t/03-SessionTimeout.t
