@@ -594,13 +594,25 @@ sub tests {
             return 1;
         },
 
-        # Warn if XSRF token TTL is higher than 10s
+        # Warn if XSRF token TTL is higher than 30s
         formTimeout => sub {
             return 1 unless ( defined $conf->{formTimeout} );
             return ( 0, "XSRF form token TTL must be higher than 30s" )
               unless ( $conf->{formTimeout} > 30 );
             return ( 1, "XSRF form token TTL should not be higher than 2mn" )
               if ( $conf->{formTimeout} > 120 );
+
+            # Return
+            return 1;
+        },
+
+        # Warn if issuers token TTL is higher than 30s
+        issuersTimeout => sub {
+            return 1 unless ( defined $conf->{issuerTimeout} );
+            return ( 0, "Issuers token TTL must be higher than 30s" )
+              unless ( $conf->{issuerTimeout} > 30 );
+            return ( 1, "Issuers token TTL should not be higher than 2mn" )
+              if ( $conf->{issuerTimeout} > 120 );
 
             # Return
             return 1;
