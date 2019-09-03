@@ -664,6 +664,11 @@ sub attributes {
             type          => 'int',
             documentation => 'Token timeout for forms',
         },
+        issuersTimeout => {
+            default       => 120,
+            type          => 'int',
+            documentation => 'Token timeout for issuers',
+        },
         requireToken => {
             default       => 1,
             type          => 'boolOrExpr',

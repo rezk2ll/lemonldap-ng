@@ -493,6 +493,12 @@ sub tree {
                                 'issuerDBGetParameters'
                             ]
                         },
+                        {
+                            title => 'issuerOptions',
+                            help  => 'start.html#options',
+                            form  => 'simpleInputContainer',
+                            nodes => ['issuersTimeout']
+                        },
                     ]
                 },
                 {
@@ -553,7 +559,8 @@ sub tree {
                 {
                     title => 'reloadParams',
                     help  => 'configlocation.html#configuration_reload',
-                    nodes => [ 'reloadUrls', 'reloadTimeout', 'dontCompactConf' ]
+                    nodes =>
+                      [ 'reloadUrls', 'reloadTimeout', 'dontCompactConf' ]
                 },
                 {
                     title => 'plugins',

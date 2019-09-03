@@ -102,6 +102,7 @@ sub defaultValues {
         'issuerDBOpenIDRule'            => 1,
         'issuerDBSAMLPath'              => '^/saml/',
         'issuerDBSAMLRule'              => 1,
+        'issuersTimeout'                => 120,
         'jsRedirect'                    => 0,
         'krbAuthnLevel'                 => 3,
         'krbRemoveDomain'               => 1,

@@ -1378,6 +1378,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 1,
             'type'    => 'boolOrExpr'
         },
+        'issuersTimeout' => {
+            'default' => 120,
+            'type'    => 'int'
+        },
         'jsRedirect' => {
             'default' => 0,
             'type'    => 'boolOrExpr'
