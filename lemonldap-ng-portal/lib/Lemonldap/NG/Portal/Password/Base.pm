@@ -9,11 +9,12 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORD_OK
   PE_PASSWORD_MISMATCH
   PE_PP_MUST_SUPPLY_OLD_PASSWORD
+  PE_PP_PASSWORD_TOO_SHORT
 );
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 # INITIALIZATION
 
@@ -50,6 +51,15 @@ sub _modifyPassword {
         # Verify old password
         return PE_BADOLDPASSWORD
           unless ( $self->confirm( $req, $req->data->{oldpassword} ) );
+    }
+
+    # Min size
+    if ( $self->conf->{passwordPolicyMinSize}
+        and length( $req->data->{newpassword} ) <
+        $self->conf->{passwordPolicyMinSize} )
+    {
+        $self->logger->error("Password too short");
+        return PE_PP_PASSWORD_TOO_SHORT;
     }
 
     # Call password package
