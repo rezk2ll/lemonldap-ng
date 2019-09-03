@@ -73,6 +73,16 @@ sub _modifyPassword {
         }
     }
 
+    # Min upper
+    if ( $self->conf->{passwordPolicyMinUpper} ) {
+        my $upper = 0;
+        $upper++ while ( $req->data->{newpassword} =~ m/\p{uppercase}/g );
+        if ( $upper < $self->conf->{passwordPolicyMinUpper} ) {
+            $self->logger->error("Password has not enough upper characters");
+            return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
+        }
+    }
+
     # Call password package
     my $res = $self->modifyPassword( $req, $req->data->{newpassword} );
     if ( $res == PE_PASSWORD_OK ) {

@@ -16,6 +16,7 @@ my $client = LLNG::Manager::Test->new( {
             portalRequireOldPassword => 1,
             passwordPolicyMinSize    => 6,
             passwordPolicyMinLower   => 3,
+            passwordPolicyMinUpper   => 3,
         }
     }
 );
@@ -61,10 +62,10 @@ ok(
     $res = $client->_post(
         '/',
         IO::String->new(
-            'oldpassword=dwho&newpassword=testok&confirmpassword=testok'),
+            'oldpassword=dwho&newpassword=TESTisok&confirmpassword=TESTisok'),
         cookie => "lemonldap=$id",
         accept => 'application/json',
-        length => 58
+        length => 62
     ),
     'Password min size respected'
 );
@@ -104,6 +105,43 @@ ok(
         length => 64
     ),
     'Password min lower respected'
+);
+expectOK($res);
+count(1);
+
+# Test min upper
+# --------------
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new(
+            'oldpassword=dwho&newpassword=testUPper&confirmpassword=testUPper'),
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+        length => 64
+    ),
+    'Password min upper not respected'
+);
+expectBadRequest($res);
+my $json;
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok(
+    $json->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY,
+    'Response is PE_PP_INSUFFICIENT_PASSWORD_QUALITY'
+) or explain( $json, "error => 28" );
+count(3);
+
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new(
+            'oldpassword=dwho&newpassword=testUPPER&confirmpassword=testUPPER'),
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+        length => 64
+    ),
+    'Password min upper respected'
 );
 expectOK($res);
 count(1);
