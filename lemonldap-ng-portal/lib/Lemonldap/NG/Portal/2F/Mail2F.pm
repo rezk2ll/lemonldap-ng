@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MUSTHAVEMAIL
 );
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor',
   'Lemonldap::NG::Portal::Lib::SMTP';
@@ -109,11 +109,14 @@ sub run {
         $req,
         'ext2fcheck',
         params => {
-            MAIN_LOGO   => $self->conf->{portalMainLogo},
-            SKIN        => $self->p->getSkin($req),
-            TOKEN       => $token,
-            PREFIX      => $self->prefix,
-            TARGET      => '/' . $self->prefix . '2fcheck',
+            MAIN_LOGO => $self->conf->{portalMainLogo},
+            SKIN      => $self->p->getSkin($req),
+            TOKEN     => $token,
+            PREFIX    => $self->prefix,
+            TARGET    => '/'
+              . $self->prefix
+              . '2fcheck?skin='
+              . $self->p->getSkin($req),
             LEGEND      => 'enterMail2fCode',
             CHECKLOGINS => $checkLogins
         }

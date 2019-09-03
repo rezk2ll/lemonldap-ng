@@ -23,7 +23,7 @@
   </div>
 </div>
 <div class="buttons mt-3">
-  <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1" class="btn btn-primary" role="button">
+  <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1&skin=<TMPL_VAR NAME="SKIN">" class="btn btn-primary" role="button">
     <span class="fa fa-home"></span>
     <span trspan="cancel">Cancel</span>
   </a>

@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.4';
+our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 
@@ -79,11 +79,14 @@ sub run {
         $req,
         'ext2fcheck',
         params => {
-            MAIN_LOGO   => $self->conf->{portalMainLogo},
-            SKIN        => $self->p->getSkin($req),
-            TOKEN       => $token,
-            PREFIX      => $self->prefix,
-            TARGET      => '/' . $self->prefix . '2fcheck',
+            MAIN_LOGO => $self->conf->{portalMainLogo},
+            SKIN      => $self->p->getSkin($req),
+            TOKEN     => $token,
+            PREFIX    => $self->prefix,
+            TARGET    => '/'
+              . $self->prefix
+              . '2fcheck?skin='
+              . $self->p->getSkin($req),
             CHECKLOGINS => $checkLogins
         }
     );

@@ -105,7 +105,7 @@ count(1);
 $pdata = expectCookie( $res, 'lemonldappdata' );
 
 ( $host, $url, $query ) =
-  expectForm( $res, undef, '/mail2fcheck', 'token', 'code' );
+  expectForm( $res, undef, '/mail2fcheck?skin=bootstrap', 'token', 'code' );
 
 ok(
     $res->[2]->[0] =~

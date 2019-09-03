@@ -52,7 +52,7 @@ count(1);
 
 # Only "work" option is available
 my ( $host, $url, $query ) =
-  expectForm( $res, undef, '/work2fcheck', 'token', 'code' );
+  expectForm( $res, undef, '/work2fcheck?skin=bootstrap', 'token', 'code' );
 
 ok(
     $res->[2]->[0] =~
@@ -137,7 +137,7 @@ ok(
 count(1);
 
 my ( $host, $url, $query ) =
-  expectForm( $res, undef, '/home2fcheck', 'token', 'code' );
+  expectForm( $res, undef, '/home2fcheck?skin=bootstrap', 'token', 'code' );
 
 ok(
     $res->[2]->[0] =~
