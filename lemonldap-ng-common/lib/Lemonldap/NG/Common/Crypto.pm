@@ -14,7 +14,7 @@ use MIME::Base64;
 use Digest::SHA;
 use bytes;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 my ( $newIv, $randG, $hash );
 $hash = \&Digest::SHA::sha256;
 
@@ -78,19 +78,18 @@ sub _getCipher {
 sub encrypt {
     my ( $self, $data, $low ) = @_;
 
-    # pad $data so that its length be multiple of 16 bytes
-    my $l = bytes::length($data) % 16;
-    $data .= "\0" x ( 16 - $l ) unless ( $l == 0 );
-
     my $iv =
       $low
       ? bytes::substr( Digest::SHA::sha1( rand() . time . {} ), 0, IV_LENGTH )
       : $newIv->();
-    my $hmac = $hash->($data);
+    $data = $hash->($data) . $data;
+
+    # pad $data so that its length be multiple of 16 bytes
+    my $l = bytes::length($data) % 16;
+    $data .= "\0" x ( 16 - $l ) unless ( $l == 0 );
     eval {
         $data =
-          encode_base64(
-            $iv . $self->_getCipher->set_iv($iv)->encrypt( $hmac . $data ),
+          encode_base64( $iv . $self->_getCipher->set_iv($iv)->encrypt($data),
             '' );
     };
     if ($@) {
@@ -126,16 +125,16 @@ sub decrypt {
     }
     my $hmac = bytes::substr( $data, 0, HMAC_LENGTH );
     $data = bytes::substr( $data, HMAC_LENGTH );
+
+    # Obscure Perl re bug...
+    $data .= "\0";
+    $data =~ s/\0*$//;
     if ( $hash->($data) ne $hmac ) {
         $msg = "Bad MAC";
         return undef;
     }
     else {
         $msg = '';
-
-        # Obscure Perl re bug...
-        $data .= "\0";
-        $data =~ s/\0*$//;
         return $data;
     }
 }
