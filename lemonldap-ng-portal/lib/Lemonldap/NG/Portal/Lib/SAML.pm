@@ -255,6 +255,11 @@ sub loadIDPs {
         }
 
         # Add this IDP to Lasso::Server
+        # TODO: when Lasso issue #35061 is fixed in all distros,
+        # we could load the metadata into a new LassoProvider, extract the
+        # parsed-and-decoded entityID from this Provider, and then add the
+        # Provider into the server with $server->add_provider2, instead of
+        # decoding HTML entities ourselves below
         my $result = $self->addIDP( $self->lassoServer, $idp_metadata );
 
         unless ($result) {
@@ -267,6 +272,7 @@ sub loadIDPs {
           ( $idp_metadata =~ /entityID=(['"])(.+?)\1/si );
 
         # Decode HTML entities from entityID
+        # TODO: see Lasso comment above
         decode_entities($entityID);
 
         my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
@@ -356,6 +362,11 @@ sub loadSPs {
         }
 
         # Add this SP to Lasso::Server
+        # TODO: when Lasso issue #35061 is fixed in all distros,
+        # we could load the metadata into a new LassoProvider, extract the
+        # parsed-and-decoded entityID from this Provider, and then add the
+        # Provider into the server with $server->add_provider2, instead of
+        # decoding HTML entities ourselves below
         my $result = $self->addSP( $self->lassoServer, $sp_metadata );
 
         unless ($result) {
@@ -367,6 +378,7 @@ sub loadSPs {
         my ( $tmp, $entityID ) = ( $sp_metadata =~ /entityID=(['"])(.+?)\1/si );
 
         # Decode HTML entities from entityID
+        # TODO: see Lasso comment above
         decode_entities($entityID);
 
         my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
