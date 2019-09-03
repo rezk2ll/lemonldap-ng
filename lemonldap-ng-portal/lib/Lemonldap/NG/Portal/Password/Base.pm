@@ -10,6 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORD_MISMATCH
   PE_PP_MUST_SUPPLY_OLD_PASSWORD
   PE_PP_PASSWORD_TOO_SHORT
+  PE_PP_INSUFFICIENT_PASSWORD_QUALITY
 );
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
@@ -60,6 +61,16 @@ sub _modifyPassword {
     {
         $self->logger->error("Password too short");
         return PE_PP_PASSWORD_TOO_SHORT;
+    }
+
+    # Min lower
+    if ( $self->conf->{passwordPolicyMinLower} ) {
+        my $lower = 0;
+        $lower++ while ( $req->data->{newpassword} =~ m/\p{lowercase}/g );
+        if ( $lower < $self->conf->{passwordPolicyMinLower} ) {
+            $self->logger->error("Password has not enough lower characters");
+            return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
+        }
     }
 
     # Call password package

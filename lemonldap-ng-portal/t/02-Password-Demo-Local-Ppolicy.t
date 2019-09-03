@@ -2,19 +2,20 @@ use Test::More;
 use strict;
 use IO::String;
 use JSON;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_PP_PASSWORD_TOO_SHORT);
+use Lemonldap::NG::Portal::Main::Constants
+  qw(PE_PP_PASSWORD_TOO_SHORT PE_PP_INSUFFICIENT_PASSWORD_QUALITY);
 
 require 't/test-lib.pm';
 
 my $res;
 
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel                 => 'error',
             passwordDB               => 'Demo',
             portalRequireOldPassword => 1,
             passwordPolicyMinSize    => 6,
+            passwordPolicyMinLower   => 3,
         }
     }
 );
@@ -34,6 +35,7 @@ expectOK($res);
 my $id = expectCookie($res);
 
 # Test min size
+# -------------
 ok(
     $res = $client->_post(
         '/',
@@ -65,6 +67,43 @@ ok(
         length => 58
     ),
     'Password min size respected'
+);
+expectOK($res);
+count(1);
+
+# Test min lower
+# --------------
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new(
+            'oldpassword=dwho&newpassword=TESTLOWer&confirmpassword=TESTLOWer'),
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+        length => 64
+    ),
+    'Password min lower not respected'
+);
+expectBadRequest($res);
+my $json;
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok(
+    $json->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY,
+    'Response is PE_PP_INSUFFICIENT_PASSWORD_QUALITY'
+) or explain( $json, "error => 28" );
+count(3);
+
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new(
+            'oldpassword=dwho&newpassword=TESTlower&confirmpassword=TESTlower'),
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+        length => 64
+    ),
+    'Password min lower respected'
 );
 expectOK($res);
 count(1);
