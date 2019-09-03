@@ -83,6 +83,16 @@ sub _modifyPassword {
         }
     }
 
+    # Min digit
+    if ( $self->conf->{passwordPolicyMinDigit} ) {
+        my $digit = 0;
+        $digit++ while ( $req->data->{newpassword} =~ m/\d/g );
+        if ( $digit < $self->conf->{passwordPolicyMinDigit} ) {
+            $self->logger->error("Password has not enough digit characters");
+            return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
+        }
+    }
+
     # Call password package
     my $res = $self->modifyPassword( $req, $req->data->{newpassword} );
     if ( $res == PE_PASSWORD_OK ) {

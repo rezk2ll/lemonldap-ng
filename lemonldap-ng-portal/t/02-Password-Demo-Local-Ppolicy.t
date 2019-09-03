@@ -17,6 +17,7 @@ my $client = LLNG::Manager::Test->new( {
             passwordPolicyMinSize    => 6,
             passwordPolicyMinLower   => 3,
             passwordPolicyMinUpper   => 3,
+            passwordPolicyMinDigit   => 1,
         }
     }
 );
@@ -62,7 +63,7 @@ ok(
     $res = $client->_post(
         '/',
         IO::String->new(
-            'oldpassword=dwho&newpassword=TESTisok&confirmpassword=TESTisok'),
+            'oldpassword=dwho&newpassword=TESTis0k&confirmpassword=TESTis0k'),
         cookie => "lemonldap=$id",
         accept => 'application/json',
         length => 62
@@ -99,7 +100,7 @@ ok(
     $res = $client->_post(
         '/',
         IO::String->new(
-            'oldpassword=dwho&newpassword=TESTlower&confirmpassword=TESTlower'),
+            'oldpassword=dwho&newpassword=TESTl0wer&confirmpassword=TESTl0wer'),
         cookie => "lemonldap=$id",
         accept => 'application/json',
         length => 64
@@ -136,12 +137,49 @@ ok(
     $res = $client->_post(
         '/',
         IO::String->new(
-            'oldpassword=dwho&newpassword=testUPPER&confirmpassword=testUPPER'),
+            'oldpassword=dwho&newpassword=t3stUPPER&confirmpassword=t3stUPPER'),
         cookie => "lemonldap=$id",
         accept => 'application/json',
         length => 64
     ),
     'Password min upper respected'
+);
+expectOK($res);
+count(1);
+
+# Test min digit
+# --------------
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new(
+            'oldpassword=dwho&newpassword=testDIGIT&confirmpassword=testDIGIT'),
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+        length => 64
+    ),
+    'Password min digit not respected'
+);
+expectBadRequest($res);
+my $json;
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok(
+    $json->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY,
+    'Response is PE_PP_INSUFFICIENT_PASSWORD_QUALITY'
+) or explain( $json, "error => 28" );
+count(3);
+
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new(
+            'oldpassword=dwho&newpassword=t3stDIGIT&confirmpassword=t3stDIGIT'),
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+        length => 64
+    ),
+    'Password min digit respected'
 );
 expectOK($res);
 count(1);
