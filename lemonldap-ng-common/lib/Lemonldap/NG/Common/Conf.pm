@@ -403,9 +403,12 @@ sub _launch {
     my $res;
     eval {
         local $SIG{ALRM} = sub { die "TIMEOUT\n" };
-        alarm ($self->{confTimeout} || 10);
-        $res = &{ $self->{type} . "::$sub" }( $self, @_ );
+        eval {
+            alarm( $self->{confTimeout} || 10 );
+            $res = &{ $self->{type} . "::$sub" }( $self, @_ );
+        };
         alarm 0;
+        die $@ if $@;
     };
     $msg .= $@ if $@;
     return $res;

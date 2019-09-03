@@ -166,19 +166,23 @@ sub _tie_session {
 
     eval {
         local $SIG{ALRM} = sub { die "TIMEOUT\n" };
-        alarm $self->timeout;
+        eval {
+            alarm $self->timeout;
 
-        # SOAP/REST session module must be directly tied
-        if ( $self->storageModule =~ /^Lemonldap::NG::Common::Apache::Session/ )
-        {
-            tie %h, $self->storageModule, $self->id,
-              { %{ $self->options }, %$options, kind => $self->kind };
-        }
-        else {
-            tie %h, 'Lemonldap::NG::Common::Apache::Session', $self->id,
-              { %{ $self->options }, %$options };
-        }
+            # SOAP/REST session module must be directly tied
+            if ( $self->storageModule =~
+                /^Lemonldap::NG::Common::Apache::Session/ )
+            {
+                tie %h, $self->storageModule, $self->id,
+                  { %{ $self->options }, %$options, kind => $self->kind };
+            }
+            else {
+                tie %h, 'Lemonldap::NG::Common::Apache::Session', $self->id,
+                  { %{ $self->options }, %$options };
+            }
+        };
         alarm 0;
+        die $@ if $@;
 
     };
     if ( $@ or not tied(%h) ) {
