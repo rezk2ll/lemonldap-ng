@@ -64,7 +64,6 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libwww-perl <!nocheck>,
                      libxml-libxml-perl <!nocheck>,
                      libxml-libxslt-perl <!nocheck>,
-                     libxml-simple-perl <!nocheck>,
                      libtest-leaktrace-perl <!nocheck>,
                      python3-sphinx,
                      python3-sphinx-bootstrap-theme,
@@ -254,8 +253,7 @@ Recommends: libapache-session-browseable-perl,
 Suggests: libconvert-base32-perl,
           libnet-ldap-perl,
           libsoap-lite-perl,
-          libxml-libxml-perl,
-          libxml-simple-perl
+          libxml-libxml-perl
 Description: Lemonldap::NG common files
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -283,8 +281,7 @@ Depends: ${misc:Depends},
          lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | apache2 | httpd-cgi
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libxml-libxml-perl,
-            libxml-libxslt-perl,
-            libxml-simple-perl
+            libxml-libxslt-perl
 Suggests: libclone-perl,
           libregexp-assemble-perl
 Pre-Depends: debconf

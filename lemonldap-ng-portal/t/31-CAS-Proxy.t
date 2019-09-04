@@ -29,9 +29,6 @@ BEGIN {
 my $debug = 'error';
 my ( $issuer, $res );
 
-eval { require XML::Simple };
-plan skip_all => "Missing dependencies: $@" if ($@);
-
 ok( $issuer = issuer(), 'Issuer portal' );
 count(1);
 

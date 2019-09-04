@@ -65,7 +65,6 @@ WriteMakefile(
         'SOAP::Lite'          => 0,
         'Text::Unidecode'     => 0,
         'XML::LibXML'         => 0,
-        'XML::Simple'         => 0,
     },
     PREREQ_PM => {
         'Clone'                  => 0,

@@ -196,7 +196,6 @@ BuildRequires:  perl(warnings)
 %{!?el7:BuildRequires:  perl(WWW::Form::UrlEncoded)}
 BuildRequires:  perl(XML::LibXML)
 BuildRequires:  perl(XML::LibXSLT)
-BuildRequires:  perl(XML::Simple)
 BuildRequires:  perl(YAML)
 # Tests
 BuildRequires:  perl(Apache::Session::File)
