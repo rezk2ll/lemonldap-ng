@@ -1468,6 +1468,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 0,
             'type'    => 'bool'
         },
+        'ldapITDS' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'ldapPasswordResetAttribute' => {
             'default' => 'pwdReset',
             'type'    => 'text'

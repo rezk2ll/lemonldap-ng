@@ -2983,6 +2983,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             documentation => 'Allow a user to reset his expired password',
         },
+        ldapITDS => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Support for IBM Tivoli Directory Server',
+        },
 
         # SSL
         SSLAuthnLevel => {
