@@ -381,6 +381,7 @@
 "ldapGroupObjectClass":"Lớp đối tượng",
 "ldapGroupRecursive":"Đệ quy",
 "ldapGroups":"Nhóm",
+"ldapITDS":"IBM Tivoli DS support",
 "ldapParams":"Thông số LDAP",
 "ldapPassword":"Mật khẩu",
 "ldapPasswordResetAttribute":"Đặt lại thuộc tính",

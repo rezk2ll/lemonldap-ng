@@ -381,6 +381,7 @@
 "ldapGroupObjectClass":"Classe oggetto",
 "ldapGroupRecursive":"Ricorsivo",
 "ldapGroups":"Gruppi",
+"ldapITDS":"IBM Tivoli DS support",
 "ldapParams":"Parametri LDAP",
 "ldapPassword":"Password",
 "ldapPasswordResetAttribute":"Reset attributo",

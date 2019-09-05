@@ -381,6 +381,7 @@
 "ldapGroupObjectClass":"أوبجكت كلاس",
 "ldapGroupRecursive":"تكراري",
 "ldapGroups":"المجموعات",
+"ldapITDS":"IBM Tivoli DS support",
 "ldapParams":"معايير إل‌داب",
 "ldapPassword":"كلمة المرور",
 "ldapPasswordResetAttribute":"إعادة تعيين السمة",
