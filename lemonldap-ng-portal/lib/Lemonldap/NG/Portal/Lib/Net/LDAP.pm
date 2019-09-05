@@ -383,7 +383,7 @@ sub userModifyPassword {
           ->logger->debug( 'Modification return error: ' . $mesg->error );
 
         # Manage specific errors for IBM Tivoli DS
-        if ( $self->conf->{ldapITDS} ) {
+        if ( $self->{conf}->{ldapITDS} ) {
             my $itds_code = $self->getITDSError($mesg);
             return $itds_code unless ( $itds_code == PE_PASSWORD_OK );
         }
