@@ -81,6 +81,7 @@ sub tree {
                                         'passwordPolicyMinLower',
                                         'passwordPolicyMinUpper',
                                         'passwordPolicyMinDigit',
+                                        'portalDisplayPasswordPolicy',
                                     ]
                                 },
                                 {

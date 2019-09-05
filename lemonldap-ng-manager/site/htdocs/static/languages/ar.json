@@ -648,6 +648,7 @@
 "portalDisplayChangePassword":"تغيير كلمة المرور",
 "portalDisplayLoginHistory":"سجل تسجيل الدخول",
 "portalDisplayLogout":"تسجيل الخروج",
+"portalDisplayPasswordPolicy": "Display policy in password form",
 "portalDisplayOidcConsents":"OIDC Consents",
 "portalDisplayRegister":"تسجيل حساب جديد",
 "portalDisplayResetPassword":"إعادة تعيين كلمة المرور",

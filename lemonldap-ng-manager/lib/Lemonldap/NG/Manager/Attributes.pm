@@ -2324,6 +2324,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '$_oidcConnectedRP',
             'type'    => 'boolOrExpr'
         },
+        'portalDisplayPasswordPolicy' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'portalDisplayRegister' => {
             'default' => 1,
             'type'    => 'bool'

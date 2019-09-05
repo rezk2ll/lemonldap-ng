@@ -1305,6 +1305,11 @@ sub attributes {
             type          => 'int',
             documentation => 'Password policy: minimal digit characters',
         },
+        portalDisplayPasswordPolicy => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Display policy in password form',
+        },
 
         # SMTP server
         SMTPServer => {

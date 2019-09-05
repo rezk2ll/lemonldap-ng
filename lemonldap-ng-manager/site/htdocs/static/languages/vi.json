@@ -648,6 +648,7 @@
 "portalDisplayChangePassword":"Thay đổi mật khẩu",
 "portalDisplayLoginHistory":"Lịch sử đăng nhập",
 "portalDisplayLogout":"Đăng xuất",
+"portalDisplayPasswordPolicy": "Display policy in password form",
 "portalDisplayOidcConsents":"OIDC Consents",
 "portalDisplayRegister":"Đăng ký tài khoản mới",
 "portalDisplayResetPassword":"Đặt lại mật khẩu",
