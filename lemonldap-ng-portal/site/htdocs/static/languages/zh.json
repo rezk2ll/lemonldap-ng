@@ -83,6 +83,7 @@
 "PE91":"Access not granted on OID service",
 "PE92":"Access not granted on GET service",
 "PE93":"Access not granted on IMPERSONATION service",
+"PE94":"所需 attribute 不可用",
 "2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"Accept 方法",
 "accessDenied":"您无权访问此应用",

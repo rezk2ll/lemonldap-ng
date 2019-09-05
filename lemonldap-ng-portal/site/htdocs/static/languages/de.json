@@ -83,6 +83,7 @@
 "PE91":"Zugang zum OID-Service nicht genehmigt",
 "PE92":"Zugang zum GET-Service nicht genehmigt",
 "PE93":"Access not granted on IMPERSONATION service",
+"PE94":"Ein gefordertes Attribut ist nicht verfügbar",
 "2fRegRequired":"Dieser Dienst benötigt Zwei-Faktor-Authentifizierung. Bitte legen Sie ein Gerät an und gehen dann zum Portal zurück.",
 "accept":"Akzeptieren",
 "accessDenied":"Sie haben keine Zugriffsberechtigung für diese Anwendung",

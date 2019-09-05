@@ -11,6 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SIGNATURE_ERROR
   PE_SAML_SLO_ERROR
   PE_SAML_SSO_ERROR
+  PE_ISSUERMISSINGREQATTR
   PE_SAML_UNKNOWN_ENTITY
   PE_SAML_SERVICE_NOT_ALLOWED
   PE_UNAUTHORIZEDPARTNER
@@ -612,7 +613,7 @@ sub run {
                         $self->logger->error(
 "Session key $_ is required to set SAML $name attribute"
                         );
-                        return PE_SAML_SSO_ERROR;
+                        return PE_ISSUERMISSINGREQATTR;
                     }
                     else {
                         $self->logger->debug(

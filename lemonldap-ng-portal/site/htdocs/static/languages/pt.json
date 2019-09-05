@@ -83,6 +83,7 @@
 "PE91":"Acesso não autorizado ao serviço OID",
 "PE92":"Acesso não autorizado ao serviço GET",
 "PE93":"Access not granted on IMPERSONATION service",
+"PE94":"Um atributo exigido não está disponível",
 "2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"Accept",
 "accessDenied":"You have no access authorization for this application",
