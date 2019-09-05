@@ -1285,6 +1285,26 @@ sub attributes {
             type          => 'bool',
             documentation => 'Hide old password in portal',
         },
+        passwordPolicyMinSize => {
+            default       => 0,
+            type          => 'int',
+            documentation => 'Password policy: minimal size',
+        },
+        passwordPolicyMinLower => {
+            default       => 0,
+            type          => 'int',
+            documentation => 'Password policy: minimal lower characters',
+        },
+        passwordPolicyMinUpper => {
+            default       => 0,
+            type          => 'int',
+            documentation => 'Password policy: minimal upper characters',
+        },
+        passwordPolicyMinDigit => {
+            default       => 0,
+            type          => 'int',
+            documentation => 'Password policy: minimal digit characters',
+        },
 
         # SMTP server
         SMTPServer => {

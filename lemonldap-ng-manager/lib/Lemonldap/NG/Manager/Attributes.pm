@@ -2252,6 +2252,22 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             ],
             'type' => 'select'
         },
+        'passwordPolicyMinDigit' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'passwordPolicyMinLower' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'passwordPolicyMinSize' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'passwordPolicyMinUpper' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
         'passwordResetAllowedRetries' => {
             'default' => 3,
             'type'    => 'int'

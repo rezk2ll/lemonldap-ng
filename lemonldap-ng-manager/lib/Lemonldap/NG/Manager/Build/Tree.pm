@@ -76,7 +76,11 @@ sub tree {
                                     nodes => [
                                         'portalRequireOldPassword',
                                         'hideOldPassword',
-                                        'mailOnPasswordChange'
+                                        'mailOnPasswordChange',
+                                        'passwordPolicyMinSize',
+                                        'passwordPolicyMinLower',
+                                        'passwordPolicyMinUpper',
+                                        'passwordPolicyMinDigit',
                                     ]
                                 },
                                 {
