@@ -28,10 +28,11 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_USERNOTFOUND
 );
 
-our $VERSION = '2.0.4';
+our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
-  'Lemonldap::NG::Portal::Lib::SMTP', 'Lemonldap::NG::Portal::Lib::_tokenRule';
+  'Lemonldap::NG::Portal::Lib::SMTP', 'Lemonldap::NG::Portal::Lib::_tokenRule',
+  'Lemonldap::NG::Portal::Password::Base';
 
 # PROPERTIES
 
@@ -435,6 +436,10 @@ sub changePwd {
 
         }
     }
+
+    # Check password quality
+    my $cpq = $self->checkPasswordQuality( $req->data->{newpassword} );
+    return $cpq unless ( $cpq == PE_OK );
 
     # Modify the password TODO: change this
     # Populate $req->{user} for logging purpose
