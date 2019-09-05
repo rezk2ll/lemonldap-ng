@@ -15,72 +15,72 @@ my $debug = 'error';
 
 # Initialization
 my $op = LLNG::Manager::Test->new( {
-            ini => {
-                logLevel                        => $debug,
-                domain                          => 'idp.com',
-                portal                          => 'http://auth.op.com',
-                authentication                  => 'Demo',
-                userDB                          => 'Same',
-                issuerDBOpenIDConnectActivation => 1,
-                issuerDBOpenIDConnectRule       => '$uid eq "french"',
-                oidcRPMetaDataExportedVars      => {
-                    rp => {
-                        email       => "mail",
-                        family_name => "cn",
-                        name        => "cn"
-                    },
-                    rp2 => {
-                        email       => "mail",
-                        family_name => "cn",
-                        name        => "cn"
-                    }
+        ini => {
+            logLevel                        => $debug,
+            domain                          => 'idp.com',
+            portal                          => 'http://auth.op.com',
+            authentication                  => 'Demo',
+            userDB                          => 'Same',
+            issuerDBOpenIDConnectActivation => 1,
+            issuerDBOpenIDConnectRule       => '$uid eq "french"',
+            oidcRPMetaDataExportedVars      => {
+                rp => {
+                    email       => "mail",
+                    family_name => "cn",
+                    name        => "cn"
                 },
-                oidcServiceMetaDataIssuer             => "http://auth.op.com",
-                oidcServiceMetaDataAuthorizeURI       => "authorize",
-                oidcServiceMetaDataCheckSessionURI    => "checksession.html",
-                oidcServiceMetaDataJWKSURI            => "jwks",
-                oidcServiceMetaDataEndSessionURI      => "logout",
-                oidcServiceMetaDataRegistrationURI    => "register",
-                oidcServiceMetaDataTokenURI           => "token",
-                oidcServiceMetaDataUserInfoURI        => "userinfo",
-                oidcServiceAllowHybridFlow            => 1,
-                oidcServiceAllowImplicitFlow          => 1,
-                oidcServiceAllowDynamicRegistration   => 1,
-                oidcServiceAllowAuthorizationCodeFlow => 1,
-                oidcRPMetaDataOptions                 => {
-                    rp => {
-                        oidcRPMetaDataOptionsDisplayName       => "RP",
-                        oidcRPMetaDataOptionsIDTokenExpiration => 3600,
-                        oidcRPMetaDataOptionsClientID          => "rpid",
-                        oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
-                        oidcRPMetaDataOptionsClientSecret      => "rpsecret",
-                        oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsAccessTokenExpiration => 1,
-                        oidcRPMetaDataOptionsBypassConsent => 1,
-                    },
-                    rp2 => {
-                        oidcRPMetaDataOptionsDisplayName       => "RP2",
-                        oidcRPMetaDataOptionsIDTokenExpiration => 3600,
-                        oidcRPMetaDataOptionsClientID          => "rp2id",
-                        oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
-                        oidcRPMetaDataOptionsClientSecret      => "rp2secret",
-                        oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsAccessTokenExpiration => 1,
-                        oidcRPMetaDataOptionsBypassConsent => 1,
-                        oidcRPMetaDataOptionsRule => '$uid eq "dwho"',
-                    }
+                rp2 => {
+                    email       => "mail",
+                    family_name => "cn",
+                    name        => "cn"
+                }
+            },
+            oidcServiceMetaDataIssuer             => "http://auth.op.com",
+            oidcServiceMetaDataAuthorizeURI       => "authorize",
+            oidcServiceMetaDataCheckSessionURI    => "checksession.html",
+            oidcServiceMetaDataJWKSURI            => "jwks",
+            oidcServiceMetaDataEndSessionURI      => "logout",
+            oidcServiceMetaDataRegistrationURI    => "register",
+            oidcServiceMetaDataTokenURI           => "token",
+            oidcServiceMetaDataUserInfoURI        => "userinfo",
+            oidcServiceAllowHybridFlow            => 1,
+            oidcServiceAllowImplicitFlow          => 1,
+            oidcServiceAllowDynamicRegistration   => 1,
+            oidcServiceAllowAuthorizationCodeFlow => 1,
+            oidcRPMetaDataOptions                 => {
+                rp => {
+                    oidcRPMetaDataOptionsDisplayName           => "RP",
+                    oidcRPMetaDataOptionsIDTokenExpiration     => 3600,
+                    oidcRPMetaDataOptionsClientID              => "rpid",
+                    oidcRPMetaDataOptionsIDTokenSignAlg        => "HS512",
+                    oidcRPMetaDataOptionsClientSecret          => "rpsecret",
+                    oidcRPMetaDataOptionsUserIDAttr            => "",
+                    oidcRPMetaDataOptionsAccessTokenExpiration => 1,
+                    oidcRPMetaDataOptionsBypassConsent         => 1,
                 },
-                oidcOPMetaDataOptions           => {},
-                oidcOPMetaDataJSON              => {},
-                oidcOPMetaDataJWKS              => {},
-                oidcServiceMetaDataAuthnContext => {
-                    'loa-4' => 4,
-                    'loa-1' => 1,
-                    'loa-5' => 5,
-                    'loa-2' => 2,
-                    'loa-3' => 3
-                },
-                oidcServicePrivateKeySig => "-----BEGIN RSA PRIVATE KEY-----
+                rp2 => {
+                    oidcRPMetaDataOptionsDisplayName           => "RP2",
+                    oidcRPMetaDataOptionsIDTokenExpiration     => 3600,
+                    oidcRPMetaDataOptionsClientID              => "rp2id",
+                    oidcRPMetaDataOptionsIDTokenSignAlg        => "HS512",
+                    oidcRPMetaDataOptionsClientSecret          => "rp2secret",
+                    oidcRPMetaDataOptionsUserIDAttr            => "",
+                    oidcRPMetaDataOptionsAccessTokenExpiration => 1,
+                    oidcRPMetaDataOptionsBypassConsent         => 1,
+                    oidcRPMetaDataOptionsRule => '$uid eq "dwho"',
+                }
+            },
+            oidcOPMetaDataOptions           => {},
+            oidcOPMetaDataJSON              => {},
+            oidcOPMetaDataJWKS              => {},
+            oidcServiceMetaDataAuthnContext => {
+                'loa-4' => 4,
+                'loa-1' => 1,
+                'loa-5' => 5,
+                'loa-2' => 2,
+                'loa-3' => 3
+            },
+            oidcServicePrivateKeySig => "-----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEAs2jsmIoFuWzMkilJaA8//5/T30cnuzX9GImXUrFR2k9EKTMt
 GMHCdKlWOl3BV+BTAU9TLz7Jzd/iJ5GJ6B8TrH1PHFmHpy8/qE/S5OhinIpIi7eb
 ABqnoVcwDdCa8ugzq8k8SWxhRNXfVIlwz4NH1caJ8lmiERFj7IvNKqEhzAk0pyDr
@@ -108,7 +108,7 @@ EYqYAev/l82wi+OZ5O8U+qjFUpT1CVeUJdDs0o5u19v0UJjunU1cwh9jsxBZAWLy
 PAGd6SWf4S3uQCTw6dLeMna25YIlPh5qPA6I/pAahe8e3nSu2ckl
 -----END RSA PRIVATE KEY-----
 ",
-                oidcServicePublicKeySig => "-----BEGIN PUBLIC KEY-----
+            oidcServicePublicKeySig => "-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs2jsmIoFuWzMkilJaA8/
 /5/T30cnuzX9GImXUrFR2k9EKTMtGMHCdKlWOl3BV+BTAU9TLz7Jzd/iJ5GJ6B8T
 rH1PHFmHpy8/qE/S5OhinIpIi7ebABqnoVcwDdCa8ugzq8k8SWxhRNXfVIlwz4NH
@@ -118,13 +118,13 @@ kX5rx0h5SslG3jVWYhZ/SOb2aIzOr0RMjhQmsYRwbpt3anjlBZ98aOzg7GAkbO80
 GQIDAQAB
 -----END PUBLIC KEY-----
 ",
-            }
         }
-    );
+    }
+);
 my $res;
 
 # Authenticate to LLNG
-my $url = "/";
+my $url   = "/";
 my $query = "user=french&password=french";
 ok(
     $res = $op->_post(
@@ -139,11 +139,12 @@ count(1);
 my $idpId = expectCookie($res);
 
 # Get code for RP1
-my $query="response_type=code&scope=openid%20profile%20email&client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Frp2.com%2F";
+my $query =
+"response_type=code&scope=openid%20profile%20email&client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Frp2.com%2F";
 ok(
     $res = $op->_get(
         "/oauth2/authorize",
-        query => "$query",
+        query  => "$query",
         accept => 'text/html',
         cookie => "lemonldap=$idpId",
     ),
@@ -151,10 +152,11 @@ ok(
 );
 count(1);
 
-my ( $code ) = expectRedirection( $res, qr#http://rp2\.com/.*code=([^\&]*)#);
+my ($code) = expectRedirection( $res, qr#http://rp2\.com/.*code=([^\&]*)# );
 
 # Play code on RP2
-$query="grant_type=authorization_code&code=$code&redirect_uri=http%3A%2F%2Frp2.com%2F";
+$query =
+"grant_type=authorization_code&code=$code&redirect_uri=http%3A%2F%2Frp2.com%2F";
 
 ok(
     $res = $op->_post(
@@ -163,7 +165,7 @@ ok(
         accept => 'text/html',
         length => length($query),
         custom => {
-            HTTP_AUTHORIZATION => "Basic ". encode_base64("rp2id:rp2secret"),
+            HTTP_AUTHORIZATION => "Basic " . encode_base64("rp2id:rp2secret"),
         },
     ),
     "Post token"
@@ -171,11 +173,12 @@ ok(
 count(1);
 
 # Expect an invalid request
-ok ($res->[0] = 400);
+is( $res->[0], 400 );
 count(1);
 
 # Play code on RP1
-$query="grant_type=authorization_code&code=$code&redirect_uri=http%3A%2F%2Frp2.com%2F";
+$query =
+"grant_type=authorization_code&code=$code&redirect_uri=http%3A%2F%2Frp2.com%2F";
 
 ok(
     $res = $op->_post(
@@ -184,15 +187,15 @@ ok(
         accept => 'text/html',
         length => length($query),
         custom => {
-            HTTP_AUTHORIZATION => "Basic ". encode_base64("rpid:rpsecret"),
+            HTTP_AUTHORIZATION => "Basic " . encode_base64("rpid:rpsecret"),
         },
     ),
     "Post token"
 );
 count(1);
-my $json = from_json($res->[2]->[0]);
+my $json  = from_json( $res->[2]->[0] );
 my $token = $json->{access_token};
-ok($token, 'Access token present');
+ok( $token, 'Access token present' );
 count(1);
 sleep(2);
 
@@ -203,13 +206,13 @@ ok(
         accept => 'text/html',
         length => 0,
         custom => {
-            HTTP_AUTHORIZATION => "Bearer ". $token,
+            HTTP_AUTHORIZATION => "Bearer " . $token,
         },
     ),
     "Post userinfo"
 );
 count(1);
-ok($res->[0] == 401, "Access denied with expired token");
+is( $res->[0], 401, "Access denied with expired token" );
 count(1);
 
 clean_sessions();
