@@ -207,6 +207,11 @@ sub display {
             PING                => $self->conf->{portalPingInterval},
             REQUIRE_OLDPASSWORD => $self->conf->{portalRequireOldPassword},
             HIDE_OLDPASSWORD    => 0,
+            DISPLAY_PPOLICY     => $self->conf->{displayPasswordPolicy},
+            PPOLICY_MINSIZE     => $self->conf->{passwordPolicyMinSize},
+            PPOLICY_MINLOWER    => $self->conf->{passwordPolicyMinLower},
+            PPOLICY_MINUPPER    => $self->conf->{passwordPolicyMinUpper},
+            PPOLICY_MINDIGIT    => $self->conf->{passwordPolicyMinDigit},
             $self->menu->params($req),
             (
                 $req->data->{customScript}
@@ -352,6 +357,11 @@ sub display {
                 ? ""
                 : $req->data->{oldpassword},
                 HIDE_OLDPASSWORD => $self->conf->{hideOldPassword},
+                DISPLAY_PPOLICY  => $self->conf->{displayPasswordPolicy},
+                PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
+                PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
+                PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
+                PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
             );
         }
 

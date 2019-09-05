@@ -538,6 +538,11 @@ sub display {
         DISPLAY_CONFIRMMAILSENT => 0,
         DISPLAY_MAILSENT        => 0,
         DISPLAY_PASSWORD_FORM   => 0,
+        DISPLAY_PPOLICY         => $self->conf->{displayPasswordPolicy},
+        PPOLICY_MINSIZE         => $self->conf->{passwordPolicyMinSize},
+        PPOLICY_MINLOWER        => $self->conf->{passwordPolicyMinLower},
+        PPOLICY_MINUPPER        => $self->conf->{passwordPolicyMinUpper},
+        PPOLICY_MINDIGIT        => $self->conf->{passwordPolicyMinDigit},
     );
     if ( $req->data->{mailToken}
         and
