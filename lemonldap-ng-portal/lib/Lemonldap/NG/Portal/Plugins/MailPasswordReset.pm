@@ -31,8 +31,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
-  'Lemonldap::NG::Portal::Lib::SMTP', 'Lemonldap::NG::Portal::Lib::_tokenRule',
-  'Lemonldap::NG::Portal::Password::Base';
+  'Lemonldap::NG::Portal::Lib::SMTP', 'Lemonldap::NG::Portal::Lib::_tokenRule';
 
 # PROPERTIES
 
@@ -438,7 +437,10 @@ sub changePwd {
     }
 
     # Check password quality
-    my $cpq = $self->checkPasswordQuality( $req->data->{newpassword} );
+    require Lemonldap::NG::Portal::Password::Base;
+    my $cpq =
+      $self->Lemonldap::NG::Portal::Password::Base::checkPasswordQuality(
+        $req->data->{newpassword} );
     return $cpq unless ( $cpq == PE_OK );
 
     # Modify the password TODO: change this
