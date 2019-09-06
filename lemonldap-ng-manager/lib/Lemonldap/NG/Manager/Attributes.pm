@@ -2626,6 +2626,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'restAuthUrl' => {
             'type' => 'url'
         },
+        'restClockTolerance' => {
+            'default' => 15,
+            'type'    => 'int'
+        },
         'restConfigServer' => {
             'default' => 0,
             'type'    => 'bool'

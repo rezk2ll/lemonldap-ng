@@ -213,8 +213,8 @@ sub newSession {
         my $t;
         if ( $t =
                 $self->conf->{cipher}->decrypt($s)
-            and $t <= time
-            and $t > time - 15 )
+            and $t <= time + $self->conf->{restClockTolerance}
+            and $t > time - $self->conf->{restClockTolerance} )
         {
             $force = 1;
         }
@@ -308,8 +308,8 @@ sub updateSession {
         my $t;
         if ( $t =
                 $self->conf->{cipher}->decrypt($s)
-            and $t <= time
-            and $t > time - 30 )
+            and $t <= time + $self->conf->{restClockTolerance}
+            and $t > time - $self->conf->{restClockTolerance} )
         {
             $force = 1;
         }

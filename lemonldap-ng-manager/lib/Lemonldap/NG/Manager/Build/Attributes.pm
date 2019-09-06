@@ -1811,6 +1811,12 @@ sub attributes {
             documentation =>
               'Allow to export secret keys in REST session server',
         },
+        restClockTolerance => {
+            default => 15,
+            type    => 'int',
+            documentation =>
+              'How tolerant the REST session server will be to clock dift',
+        },
         restConfigServer => {
             default       => 0,
             type          => 'bool',

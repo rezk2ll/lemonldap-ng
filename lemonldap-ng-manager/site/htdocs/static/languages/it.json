@@ -740,6 +740,7 @@
 "restPwdConfirmUrl":"URL di conferma password",
 "restPwdModifyUrl":"URL di modifica password",
 "restSessionServer":"Server di sessione REST",
+"restClockTolerance":"REST server clock tolerance",
 "restUserDBUrl":"URL dei dati utente",
 "returnUrl":"URL di ritorno",
 "rp":"Parte facente affidamento",

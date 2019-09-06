@@ -581,9 +581,9 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'wsdlServer',           'restSessionServer',
-                                'restExportSecretKeys', 'restConfigServer',
-                                'soapSessionServer',    'soapConfigServer',
-                                'exportedAttr',
+                                'restExportSecretKeys', 'restClockTolerance',
+                                'restConfigServer',     'soapSessionServer',
+                                'soapConfigServer',     'exportedAttr',
                             ]
                         },
                         {

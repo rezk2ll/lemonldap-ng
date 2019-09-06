@@ -740,6 +740,7 @@
 "restPwdConfirmUrl":"URL xác nhận mật khẩu",
 "restPwdModifyUrl":"URL thay đổi mật khẩu",
 "restSessionServer":"Máy chủ phiên REST",
+"restClockTolerance":"REST server clock tolerance",
 "restUserDBUrl":"URL dữ liệu người dùng",
 "returnUrl":"Trả lại URL",
 "rp":"Relying Party",
