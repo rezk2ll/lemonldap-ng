@@ -568,6 +568,7 @@
 "oidcRPMetaDataOptionsIcon":"Logo",
 "oidcRPMetaDataOptionsIDTokenExpiration":"ID Token hết hạn",
 "oidcRPMetaDataOptionsIDTokenSignAlg":"Thuật toán chữ ký ID Token",
+"oidcRPMetaDataOptionsIDTokenForceClaims":"Force claims to be returned in ID Token",
 "oidcRPMetaDataOptionsOfflineSessionExpiration":"Refresh Token hết hạn",
 "oidcRPMetaDataOptionsRefreshToken":"Use refresh tokens",
 "oidcRPMetaDataOptionsUserIDAttr":"thuộc tính người dùng",

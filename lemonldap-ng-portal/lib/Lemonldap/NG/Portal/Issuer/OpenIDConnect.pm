@@ -774,7 +774,9 @@ sub run {
                 $id_token_payload_hash->{'acr'}     = $id_token_acr
                   if $id_token_acr;
 
-                if ( $response_type !~ /\btoken\b/ ) {
+                if (   $response_type !~ /\btoken\b/
+                    || $self->force_id_claims($rp) )
+                {
 
                     # No access_token
                     # Claims must be set in id_token
@@ -918,7 +920,9 @@ sub run {
                     $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
                     $id_token_payload_hash->{'c_hash'}  = $c_hash  if $c_hash;
 
-                    if ( $response_type !~ /\btoken\b/ ) {
+                    if (   $response_type !~ /\btoken\b/
+                        || $self->force_id_claims($rp) )
+                    {
 
                         # No access_token
                         # Claims must be set in id_token
@@ -1256,6 +1260,17 @@ sub token {
         $id_token_payload_hash->{nonce}     = $nonce   if defined $nonce;
         $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
 
+        if ( $self->force_id_claims($rp) ) {
+            my $claims =
+              $self->buildUserInfoResponseFromId( $codeSession->data->{'scope'},
+                $rp, $codeSession->data->{user_session_id} );
+
+            foreach ( keys %$claims ) {
+                $id_token_payload_hash->{$_} = $claims->{$_}
+                  unless ( $_ eq "sub" );
+            }
+        }
+
         # Create ID Token
         my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
 
@@ -1314,11 +1329,12 @@ sub token {
         my $access_token;
         my $user_id;
         my $auth_time;
+        my $session;
 
         # If this refresh token is tied to a SSO session
         if ( $refreshSession->data->{user_session_id} ) {
             my $user_session_id = $refreshSession->data->{user_session_id};
-            my $session         = $self->p->getApacheSession($user_session_id);
+            $session = $self->p->getApacheSession($user_session_id);
 
             unless ($session) {
                 $self->logger->error("Unable to find user session");
@@ -1388,6 +1404,10 @@ sub token {
 
             # Update refresh session
             $self->updateRefreshToken( $refreshSession->id, $req->sessionInfo );
+            $session = $refreshSession;
+            for ( keys %{ $req->sessionInfo } ) {
+                $refreshSession->data->{$_} = $req->sessionInfo->{$_};
+            }
 
             my $user_id_attribute =
               $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -1453,6 +1473,18 @@ sub token {
         my $nonce = $refreshSession->data->{nonce};
         $id_token_payload_hash->{nonce}     = $nonce   if defined $nonce;
         $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
+
+        # If we forced sending claims in ID token
+        if ( $self->force_id_claims($rp) ) {
+            my $claims =
+              $self->buildUserInfoResponse( $refreshSession->data->{scope},
+                $rp, $session );
+
+            foreach ( keys %$claims ) {
+                $id_token_payload_hash->{$_} = $claims->{$_}
+                  unless ( $_ eq "sub" );
+            }
+        }
 
         # Create ID Token
         my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );

@@ -568,6 +568,7 @@
 "oidcRPMetaDataOptionsIcon":"Logo",
 "oidcRPMetaDataOptionsIDTokenExpiration":"Expiration des jetons d'identité",
 "oidcRPMetaDataOptionsIDTokenSignAlg":"Algorithme de signature des jetons d'identité",
+"oidcRPMetaDataOptionsIDTokenForceClaims":"Forcer la publication des attributs dans l'ID Token",
 "oidcRPMetaDataOptionsOfflineSessionExpiration":"Expiration des sessions hors-ligne",
 "oidcRPMetaDataOptionsRefreshToken":"Utiliser les refresh tokens",
 "oidcRPMetaDataOptionsUserIDAttr":"Attribut de l'utilisateur",

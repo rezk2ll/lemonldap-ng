@@ -479,6 +479,12 @@ function templates(tpl,key) {
             "type" : "int"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenForceClaims",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenForceClaims",
+            "title" : "oidcRPMetaDataOptionsIDTokenForceClaims",
+            "type" : "bool"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenExpiration",
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenExpiration",
             "title" : "oidcRPMetaDataOptionsAccessTokenExpiration",

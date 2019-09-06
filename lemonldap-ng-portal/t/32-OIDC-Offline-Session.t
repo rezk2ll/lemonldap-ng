@@ -52,6 +52,7 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsUserIDAttr            => "",
                     oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
+                    oidcRPMetaDataOptionsIDTokenForceClaims         => 1,
                 }
             },
             oidcOPMetaDataOptions           => {},
@@ -151,6 +152,10 @@ ok( $refresh_token, "Got refresh token" );
 ok( $id_token,      "Got ID token" );
 count(3);
 
+my $id_token_payload = JSON::from_json(decode_base64([split /\./, $id_token]->[1]));
+is($id_token_payload->{name}, 'Frédéric Accents', 'Found claim in ID token');
+count(1);
+
 # Get userinfo
 $res = $op->_post(
     "/oauth2/userinfo",
@@ -197,6 +202,10 @@ ok( $access_token,           "Got refreshed Access token" );
 ok( $id_token,               "Got refreshed ID token" );
 ok( !defined $refresh_token, "Refresh token not present" );
 count(3);
+
+$id_token_payload = JSON::from_json(decode_base64([split /\./, $id_token]->[1]));
+is($id_token_payload->{name}, 'Frédéric Accents', 'Found claim in ID token');
+count(1);
 
 ## Get userinfo again
 ok(

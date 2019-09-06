@@ -691,17 +691,15 @@ sub getAccessToken {
 
 sub newRefreshToken {
     my ( $self, $rp, $info, $offline ) = @_;
-    my $ttl = $offline ? (
-        $self->conf->{oidcRPMetaDataOptions}->{$rp}
-        ->{oidcRPMetaDataOptionsOfflineSessionExpiration}
-        || $self->conf->{oidcServiceOfflineSessionExpiration}) : $self->conf->{timeout};
+    my $ttl =
+      $offline
+      ? ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsOfflineSessionExpiration}
+          || $self->conf->{oidcServiceOfflineSessionExpiration} )
+      : $self->conf->{timeout};
 
-    return $self->getOpenIDConnectSession(
-        undef,
-        "refresh_token",
-        $ttl,
-        $info
-    );
+    return $self->getOpenIDConnectSession( undef, "refresh_token", $ttl,
+        $info );
 }
 
 # Get existing Refresh Token
@@ -1667,6 +1665,12 @@ sub validatePKCEChallenge {
     }
 
     return 0;
+}
+
+sub force_id_claims {
+    my ( $self, $rp ) = @_;
+    return $self->conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsIDTokenForceClaims};
 }
 
 1;

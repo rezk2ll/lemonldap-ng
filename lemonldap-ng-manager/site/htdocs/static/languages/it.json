@@ -568,6 +568,7 @@
 "oidcRPMetaDataOptionsIcon":"Logo",
 "oidcRPMetaDataOptionsIDTokenExpiration":"Scadenza ID Token",
 "oidcRPMetaDataOptionsIDTokenSignAlg":"Algoritmo di firma di identificazione di Token",
+"oidcRPMetaDataOptionsIDTokenForceClaims":"Force claims to be returned in ID Token",
 "oidcRPMetaDataOptionsOfflineSessionExpiration":"Scadenza Refresh Token",
 "oidcRPMetaDataOptionsRefreshToken":"Use refresh tokens",
 "oidcRPMetaDataOptionsUserIDAttr":"Attributo utente",

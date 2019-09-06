@@ -568,6 +568,7 @@
 "oidcRPMetaDataOptionsIcon":"شعار",
 "oidcRPMetaDataOptionsIDTokenExpiration":" انتهاء صلاحية تعريف التوكن",
 "oidcRPMetaDataOptionsIDTokenSignAlg":"خوارزمية توقيع آي دي التوكن",
+"oidcRPMetaDataOptionsIDTokenForceClaims":"Force claims to be returned in ID Token",
 "oidcRPMetaDataOptionsOfflineSessionExpiration":"Offline session expiration",
 "oidcRPMetaDataOptionsRefreshToken":"Use refresh tokens",
 "oidcRPMetaDataOptionsUserIDAttr":"خاصّيّة المستخدم",

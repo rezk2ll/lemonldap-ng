@@ -2014,6 +2014,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcRPMetaDataOptionsIDTokenExpiration' => {
             'type' => 'int'
         },
+        'oidcRPMetaDataOptionsIDTokenForceClaims' => {
+            'type' => 'bool'
+        },
         'oidcRPMetaDataOptionsIDTokenSignAlg' => {
             'default' => 'HS512',
             'select'  => [ {

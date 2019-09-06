@@ -3740,9 +3740,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default => 'HS512',
         },
         oidcRPMetaDataOptionsIDTokenExpiration           => { type => 'int' },
+        oidcRPMetaDataOptionsIDTokenForceClaims          => { type => 'bool' },
         oidcRPMetaDataOptionsAccessTokenExpiration       => { type => 'int' },
         oidcRPMetaDataOptionsAuthorizationCodeExpiration => { type => 'int' },
-        oidcRPMetaDataOptionsOfflineSessionExpiration      => { type => 'int' },
+        oidcRPMetaDataOptionsOfflineSessionExpiration    => { type => 'int' },
         oidcRPMetaDataOptionsRedirectUris                => { type => 'text', },
         oidcRPMetaDataOptionsExtraClaims =>
           { type => 'keyTextContainer', default => {} },
