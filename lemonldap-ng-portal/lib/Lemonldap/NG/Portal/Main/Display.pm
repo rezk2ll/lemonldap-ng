@@ -296,6 +296,7 @@ sub display {
             AUTH_ERROR_TYPE       => $req->error_type,
             AUTH_URL              => $req->{data}->{_url},
             LOGIN                 => $login,
+            DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
             ASK_LOGINS            => $req->param('checkLogins') || 0,
             DISPLAY_RESETPASSWORD => $self->conf->{portalDisplayResetPassword},

@@ -605,6 +605,10 @@ sub attributes {
             'default' => 'TOTP,U2F,Yubikey',
             'type'    => 'text'
         },
+        'browsersDontStorePassword' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'bruteForceProtection' => {
             'default' => 0,
             'type'    => 'bool'

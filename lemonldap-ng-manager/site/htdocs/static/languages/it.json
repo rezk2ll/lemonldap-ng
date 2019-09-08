@@ -94,6 +94,7 @@
 "badVariableName":"Nome variabile errato",
 "blackList":"Black list",
 "browse":"Naviga",
+"browsersDontStorePassword":"Avoid browsers to store users password",
 "browserIdAuthnLevel":"Livello di autenticazione",
 "browserIdAutoLogin":"Login automatico",
 "browserIdBackgroundColor":"Colore di sfondo",

@@ -94,6 +94,7 @@
 "badVariableName":"无效的 variable 名称",
 "blackList":"黑名单",
 "browse":"浏览",
+"browsersDontStorePassword":"Avoid browsers to store users password",
 "browserIdAuthnLevel":"认证等级",
 "browserIdAutoLogin":"自动登录",
 "browserIdBackgroundColor":"背景颜色",

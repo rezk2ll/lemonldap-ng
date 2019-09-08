@@ -862,6 +862,7 @@ sub tree {
                             help => 'security.html#configure_security_settings',
                             nodes => [
                                 'userControl',
+                                'browsersDontStorePassword',
                                 'portalForceAuthn',
                                 'portalForceAuthnInterval',
                                 'key',

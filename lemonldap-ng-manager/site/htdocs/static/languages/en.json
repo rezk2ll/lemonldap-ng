@@ -94,6 +94,7 @@
 "badVariableName":"Bad variable name",
 "blackList":"Black list",
 "browse":"Browse",
+"browsersDontStorePassword":"Avoid browsers to store users password",
 "browserIdAuthnLevel":"Authentication level",
 "browserIdAutoLogin":"Automatic login",
 "browserIdBackgroundColor":"Background color",

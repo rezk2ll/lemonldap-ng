@@ -94,6 +94,7 @@
 "badVariableName":"اسم المتغيرة خاطئ",
 "blackList":"القائمة السوداء",
 "browse":"تصفح",
+"browsersDontStorePassword":"Avoid browsers to store users password",
 "browserIdAuthnLevel":"مستوى إثبات الهوية",
 "browserIdAutoLogin":"تسجيل الدخول التلقائي",
 "browserIdBackgroundColor":"لون الخلفية",

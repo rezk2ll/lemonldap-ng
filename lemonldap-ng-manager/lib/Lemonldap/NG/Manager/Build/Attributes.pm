@@ -865,6 +865,11 @@ sub attributes {
             default       => '^[\w\.\-@]+$',
             documentation => 'Regular expression to validate login',
         },
+        browsersDontStorePassword => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Avoid browsers to store users password',
+        },
         useRedirectOnError => {
             type          => 'bool',
             default       => 1,

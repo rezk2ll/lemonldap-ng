@@ -94,6 +94,7 @@
 "badVariableName":"Tên biến không hợp lệ",
 "blackList":"Danh sách đen",
 "browse":"Duyệt",
+"browsersDontStorePassword":"Avoid browsers to store users password",
 "browserIdAuthnLevel":"Mức xác thực",
 "browserIdAutoLogin":"Đăng nhập tự động",
 "browserIdBackgroundColor":"Màu nền",
