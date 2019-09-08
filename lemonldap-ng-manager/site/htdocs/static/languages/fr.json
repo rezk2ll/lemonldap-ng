@@ -690,7 +690,7 @@
 "radius2fActivation":"Activation",
 "radius2fServer":"Nom d'hôte du serveur",
 "radius2fSecret":"Secret partagé",
-"radius2fUsernameSessionKey":"Clé de session contenant le login",
+"radius2fUsernameSessionKey":"Clef de session contenant le login",
 "radius2fTimeout":"Délai maximum d'authentification",
 "radius2fAuthnLevel":"Niveau d'authentification",
 "radius2fLogo":"Logo",
