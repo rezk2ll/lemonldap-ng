@@ -273,7 +273,7 @@ sub newAuthSession {
     $req->data->{password} = $req->param('password');
     $req->steps( [
             @{ $self->p->beforeAuth },
-            qw(getUser authenticate setAuthSessionInfo),
+            qw(getUser extractFormInfo authenticate setAuthSessionInfo),
             @{ $self->p->betweenAuthAndData },
             $self->p->sessionData,
             @{ $self->p->afterData },

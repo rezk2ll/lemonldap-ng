@@ -94,6 +94,7 @@ sub createSession {
         build_urlencoded(
             user     => $user,
             password => $pwd,
+            lmAuth   => '', # TODO
             secret   => $class->tsv->{cipher}->encrypt(time)
         )
     );
