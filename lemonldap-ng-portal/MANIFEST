@@ -256,6 +256,7 @@ site/htdocs/static/common/en.png
 site/htdocs/static/common/es.png
 site/htdocs/static/common/favicon.ico
 site/htdocs/static/common/fi.png
+site/htdocs/static/common/fonts/password.ttf
 site/htdocs/static/common/fr.png
 site/htdocs/static/common/icons/application_cascade.png
 site/htdocs/static/common/icons/arrow_refresh.png
@@ -387,6 +388,7 @@ site/templates/bootstrap/openidform.tpl
 site/templates/bootstrap/openIdPol.tpl
 site/templates/bootstrap/openIdTrust.tpl
 site/templates/bootstrap/password.tpl
+site/templates/bootstrap/passwordpolicy.tpl
 site/templates/bootstrap/public/test.tpl
 site/templates/bootstrap/pwdWillExpire.tpl
 site/templates/bootstrap/redirect.tpl
@@ -545,6 +547,7 @@ t/42-Register-Demo.t
 t/42-Register-LDAP.t
 t/42-Register-Security.t
 t/43-MailPasswordReset-Choice.t
+t/43-MailPasswordReset-Combination-LDAP.t
 t/43-MailPasswordReset-DBI.t
 t/43-MailPasswordReset-LDAP.t
 t/43-MailPasswordReset-with-captcha.t
