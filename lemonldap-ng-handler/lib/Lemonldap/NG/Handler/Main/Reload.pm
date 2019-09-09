@@ -197,7 +197,7 @@ sub defaultValuesInit {
         securedCookie           timeout            timeoutActivity
         timeoutActivityInterval useRedirectOnError useRedirectOnForbidden
         useSafeJail             whatToTrace        handlerInternalCache
-        handlerServiceTokenTTL  customToTrace
+        handlerServiceTokenTTL  customToTrace      lwpOpts lwpSslOpts
         )
     );
 

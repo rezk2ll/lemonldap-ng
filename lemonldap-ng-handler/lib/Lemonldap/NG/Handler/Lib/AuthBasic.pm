@@ -162,8 +162,8 @@ sub ua {
     my ($class) = @_;
     return $_ua if ($_ua);
     $_ua = Lemonldap::NG::Common::UserAgent->new( {
-            lwpOpts    => $class->localConfig->{lwpOpts},
-            lwpSslOpts => $class->localConfig->{lwpSslOpts}
+            lwpOpts    => $class->tsv->{lwpOpts},
+            lwpSslOpts => $class->tsv->{lwpSslOpts}
         }
     );
 
