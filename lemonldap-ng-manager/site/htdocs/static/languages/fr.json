@@ -54,7 +54,7 @@
 "authAndUserdb":"Authent. et BD utilisateurs",
 "authChain":"Chaîne d'authentification",
 "authChoice":"Choix d'authentification",
-"authChoiceAuthBasic":"AuthBasic handler parameter",
+"authChoiceAuthBasic":"Paramètre du handler AuthBasic",
 "authChoiceModules":"Modules autorisés",
 "authChoiceParam":"Paramètre de l'URL",
 "authentication":"Module d'authentification",
