@@ -54,6 +54,7 @@
 "authAndUserdb":"Authz and user DB",
 "authChain":"Authentication chain",
 "authChoice":"Authentication choice",
+"authChoiceAuthBasic":"AuthBasic handler parameter",
 "authChoiceModules":"Allowed modules",
 "authChoiceParam":"URL parameter",
 "authentication":"Authentication module",

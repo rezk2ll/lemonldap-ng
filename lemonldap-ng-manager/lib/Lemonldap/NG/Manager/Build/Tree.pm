@@ -130,7 +130,7 @@ sub tree {
                         {
                             title => 'choiceParams',
                             help  => 'authchoice.html',
-                            nodes => [ 'authChoiceParam', 'authChoiceModules' ]
+                            nodes => [ 'authChoiceParam',  'authChoiceModules', 'authChoiceAuthBasic' ]
                         },
                         {
                             title => 'apacheParams',

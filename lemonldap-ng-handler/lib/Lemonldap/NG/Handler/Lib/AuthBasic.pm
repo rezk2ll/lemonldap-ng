@@ -11,7 +11,7 @@ use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Session;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 our @ISA     = ('Exporter');
 our @EXPORT  = qw(fetchId retrieveSession createSession hideCookie goToPortal);
 our @EXPORT_OK = @EXPORT;
@@ -94,8 +94,13 @@ sub createSession {
         build_urlencoded(
             user     => $user,
             password => $pwd,
-            lmAuth   => '', # TODO
-            secret   => $class->tsv->{cipher}->encrypt(time)
+            secret   => $class->tsv->{cipher}->encrypt(time),
+            (
+                $class->tsv->{authChoiceAuthBasic}
+                ? ( $class->tsv->{authChoiceParam} =>
+                      $class->tsv->{authChoiceAuthBasic} )
+                : ()
+            )
         )
     );
     my $resp = $class->ua->request($get);

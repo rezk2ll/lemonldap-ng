@@ -198,6 +198,7 @@ sub defaultValuesInit {
         timeoutActivityInterval useRedirectOnError useRedirectOnForbidden
         useSafeJail             whatToTrace        handlerInternalCache
         handlerServiceTokenTTL  customToTrace      lwpOpts lwpSslOpts
+        authChoiceParam         authChoiceAuthBasic
         )
     );
 

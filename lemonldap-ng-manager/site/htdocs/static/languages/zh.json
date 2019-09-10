@@ -54,6 +54,7 @@
 "authAndUserdb":"授权和用户数据库",
 "authChain":"认证chain",
 "authChoice":"认证方式选择",
+"authChoiceAuthBasic":"AuthBasic handler parameter",
 "authChoiceModules":"允许的模块",
 "authChoiceParam":"URL 参数",
 "authentication":"认证模块",

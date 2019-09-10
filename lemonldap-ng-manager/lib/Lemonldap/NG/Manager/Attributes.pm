@@ -278,6 +278,9 @@ sub attributes {
             'keyTest' => qr/\w/,
             'type'    => 'catAndAppList'
         },
+        'authChoiceAuthBasic' => {
+            'type' => 'text'
+        },
         'authChoiceModules' => {
             'keyMsgFail' => '__badChoiceKey__',
             'keyTest'    => qr/^(\d*)?[a-zA-Z0-9_]+$/,

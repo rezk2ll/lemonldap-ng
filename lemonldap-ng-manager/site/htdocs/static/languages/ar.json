@@ -54,6 +54,7 @@
 "authAndUserdb":"الترخيص وقاعدة بيانات المستخدم",
 "authChain":"سلسلة إثبات الهوية",
 "authChoice":"اختيار إثبات الهوية",
+"authChoiceAuthBasic":"AuthBasic handler parameter",
 "authChoiceModules":"الوحدات المسموح بها",
 "authChoiceParam":"معايير URL",
 "authentication":"وحدة إثبات الهوية",

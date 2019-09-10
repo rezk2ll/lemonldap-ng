@@ -3331,6 +3331,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'lmAuth',
             documentation => 'Applications list',
         },
+        authChoiceAuthBasic => {
+            type          => 'text',
+            documentation => 'Auth module used by AuthBasic handler',
+        },
         authChoiceModules => {
             type       => 'authChoiceContainer',
             keyTest    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
