@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler::Lib::AuthBasic;
 
 use strict;
 use Exporter;
-use Digest::MD5;
+use Digest::SHA;
 use MIME::Base64;
 use HTTP::Headers;
 
@@ -29,7 +29,7 @@ sub fetchId {
         $creds =~ s/^Basic\s+//;
         my @date = localtime;
         my $day  = $date[5] * 366 + $date[7];
-        return Digest::MD5::md5_hex( $creds . $day );
+        return Digest::SHA::sha256_hex( $creds . $day );
     }
     else {
         return 0;
