@@ -77,7 +77,7 @@ sub controlUrl {
                 $req->set_param( 'confirm', $c );
             }
             else {
-                $self->logger->notice('Confirmation to old, refused');
+                $self->logger->notice('Confirmation too old, refused');
                 $req->set_param( 'confirm', 0 );
             }
         }
@@ -93,7 +93,7 @@ sub controlUrl {
         else {
             if ( $url =~ m#[^A-Za-z0-9\+/=]# ) {
                 $self->userLogger->error(
-                    "Value must be in BASE64 (param: url | value: $url)");
+                    "Value must be BASE64 encoded (param: url | value: $url)");
                 return PE_BADURL;
             }
             $req->{urldc} = decode_base64($url);
