@@ -54,13 +54,14 @@ sub _run {
 #    auth_request_set $headervalue1 $upstream_http_headervalue1;
 #    #proxy_set_header $headername1 $headervalue1;
 #    # OR
-#    #fastcgi_param $fheadername1 $headervalue1;
+#    #fastcgi_param $headername1 $headervalue1;
 #
-# LLNG::Handler::Server::Main add also a header called Lm-Remote-User set to
-# whatToTrace value that can be used in Nginx virtualhost configuration to
-# insert user id in logs
+# LLNG::Handler::Server::Main add also headers called Lm-Remote-User set to
+# whatToTrace value and Lm-Remote-Custom that can be used in Nginx virtualhosts configuration to
+# insert user id and a custom value in logs
 #
-#    auth_request_set $llremoteuser $upstream_http_lm_remote_user
+#    auth_request_set $lmremote_user $upstream_http_lm_remote_user
+#    auth_request_set $lmremote_custom $upstream_http_lm_remote_custom
 #
 #@param $req Lemonldap::NG::Common::PSGI::Request
 sub handler {
