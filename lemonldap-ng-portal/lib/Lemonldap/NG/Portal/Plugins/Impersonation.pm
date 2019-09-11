@@ -132,6 +132,7 @@ sub run {
         my $separator = $self->{conf}->{multiValuesSeparator};
 
         ## GROUPS
+        $realSession->{$spg} ||= '';
         my @spoofGrps = split /\Q$separator/, $spoofSession->{groups};
         my @realGrps  = split /\Q$separator/, $realSession->{$spg};
 
