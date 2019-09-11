@@ -1,4 +1,4 @@
-lemonldap-ng (2.0.5-1) UNRELEASED; urgency=medium
+lemonldap-ng (2.0.6-1) unstable; urgency=medium
 
   FastCGI / uWsgi servers require llng-lmlog.conf and llng-lua-headers.conf.
   Those configuration files are now provided by lemonldap-ng-handler package
