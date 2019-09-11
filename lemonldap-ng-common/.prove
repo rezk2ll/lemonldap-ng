@@ -1,105 +1,116 @@
 ---
-generation: 2
-last_run_time: 1567071551.30841
+generation: 3
+last_run_time: 1568228253.60673
 tests:
   t/01-Common-Conf.t:
-    elapsed: 0.472490072250366
-    gen: 2
-    last_pass_time: 1567071550.71014
+    elapsed: 0.0860559940338135
+    gen: 3
+    last_pass_time: 1568228253.51096
     last_result: 0
-    last_run_time: 1567071550.71014
+    last_run_time: 1568228253.51096
     last_todo: 0
-    seq: 5
-    total_passes: 1
+    mtime: 1566161618
+    seq: 14
+    total_passes: 2
   t/02-Common-Conf-File.t:
-    elapsed: 0.0793302059173584
-    gen: 2
-    last_pass_time: 1567071550.68052
+    elapsed: 0.0139250755310059
+    gen: 3
+    last_pass_time: 1568228253.60618
     last_result: 0
-    last_run_time: 1567071550.68052
+    last_run_time: 1568228253.60618
     last_todo: 0
-    seq: 4
-    total_passes: 1
+    mtime: 1566161618
+    seq: 22
+    total_passes: 2
   t/03-Common-Conf-CDBI.t:
-    elapsed: 0.61043119430542
-    gen: 2
-    last_pass_time: 1567071550.95767
+    elapsed: 0.166121959686279
+    gen: 3
+    last_pass_time: 1568228253.58678
     last_result: 0
-    last_run_time: 1567071550.95767
+    last_run_time: 1568228253.58678
     last_todo: 0
-    seq: 6
-    total_passes: 1
+    mtime: 1567458069
+    seq: 19
+    total_passes: 2
   t/03-Common-Conf-RDBI.t:
-    elapsed: 0.66497802734375
-    gen: 2
-    last_pass_time: 1567071551.00435
+    elapsed: 0.187541961669922
+    gen: 3
+    last_pass_time: 1568228253.60138
     last_result: 0
-    last_run_time: 1567071551.00435
+    last_run_time: 1568228253.60138
     last_todo: 0
-    seq: 7
-    total_passes: 1
+    mtime: 1567458069
+    seq: 21
+    total_passes: 2
   t/05-Common-Conf-LDAP.t:
-    elapsed: 0.64878511428833
-    gen: 2
-    last_pass_time: 1567071551.07637
+    elapsed: 0.157251119613647
+    gen: 3
+    last_pass_time: 1568228253.57577
     last_result: 0
-    last_run_time: 1567071551.07637
+    last_run_time: 1568228253.57577
     last_todo: 0
-    seq: 8
-    total_passes: 1
+    mtime: 1566161616
+    seq: 16
+    total_passes: 2
   t/30-Common-Safelib.t:
-    elapsed: 0.0283739566802979
-    gen: 2
-    last_pass_time: 1567071550.40529
+    elapsed: 0.0150928497314453
+    gen: 3
+    last_pass_time: 1568228253.58625
     last_result: 0
-    last_run_time: 1567071550.40529
+    last_run_time: 1568228253.58625
     last_todo: 0
-    seq: 1
-    total_passes: 1
+    mtime: 1566161617
+    seq: 18
+    total_passes: 2
   t/35-Common-Crypto.t:
-    elapsed: 0.190783977508545
-    gen: 2
-    last_pass_time: 1567071550.63236
+    elapsed: 0.0329771041870117
+    gen: 3
+    last_pass_time: 1568228253.46102
     last_result: 0
-    last_run_time: 1567071550.63236
+    last_run_time: 1568228253.46102
     last_todo: 0
-    seq: 3
-    total_passes: 1
+    mtime: 1567541253
+    seq: 12
+    total_passes: 2
   t/36-Common-Regexp.t:
-    elapsed: 0.0631709098815918
-    gen: 2
-    last_pass_time: 1567071550.50944
+    elapsed: 0.00531005859375
+    gen: 3
+    last_pass_time: 1568228253.59092
     last_result: 0
-    last_run_time: 1567071550.50944
+    last_run_time: 1568228253.59092
     last_todo: 0
-    seq: 2
-    total_passes: 1
+    mtime: 1566161618
+    seq: 20
+    total_passes: 2
   t/40-Common-Session.t:
-    elapsed: 0.184284210205078
-    gen: 2
-    last_pass_time: 1567071551.11977
+    elapsed: 0.0833292007446289
+    gen: 3
+    last_pass_time: 1568228253.51475
     last_result: 0
-    last_run_time: 1567071551.11977
+    last_run_time: 1568228253.51475
     last_todo: 0
-    seq: 9
-    total_passes: 1
+    mtime: 1566161618
+    seq: 15
+    total_passes: 2
   t/50-Combination-Parser.t:
-    elapsed: 0.108580827713013
-    gen: 2
-    last_pass_time: 1567071551.1593
+    elapsed: 0.0678761005401611
+    gen: 3
+    last_pass_time: 1568228253.50556
     last_result: 0
-    last_run_time: 1567071551.1593
+    last_run_time: 1568228253.50556
     last_todo: 0
-    seq: 10
-    total_passes: 1
+    mtime: 1566161617
+    seq: 13
+    total_passes: 2
   t/99-pod.t:
-    elapsed: 0.128799915313721
-    gen: 2
-    last_pass_time: 1567071551.30716
+    elapsed: 0.100279092788696
+    gen: 3
+    last_pass_time: 1568228253.57739
     last_result: 0
-    last_run_time: 1567071551.30716
+    last_run_time: 1568228253.57739
     last_todo: 0
-    seq: 11
-    total_passes: 1
+    mtime: 1566161617
+    seq: 17
+    total_passes: 2
 version: 1
 ...
