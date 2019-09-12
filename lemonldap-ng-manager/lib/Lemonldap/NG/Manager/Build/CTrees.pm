@@ -14,7 +14,7 @@
 
 package Lemonldap::NG::Manager::Build::CTrees;
 
-our $VERSION = '2.0.4';
+our $VERSION = '2.0.6';
 
 sub cTrees {
     return {

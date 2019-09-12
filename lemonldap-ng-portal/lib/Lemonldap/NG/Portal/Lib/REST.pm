@@ -5,7 +5,7 @@ use Mouse;
 use Lemonldap::NG::Common::UserAgent;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 has ua => (
     is      => 'rw',

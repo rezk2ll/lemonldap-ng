@@ -7,7 +7,7 @@ use Safe;
 extends 'Lemonldap::NG::Portal::Lib::Wrapper';
 with 'Lemonldap::NG::Portal::Lib::OverConf';
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.6';
 
 has modules => ( is => 'rw', default => sub { {} } );
 

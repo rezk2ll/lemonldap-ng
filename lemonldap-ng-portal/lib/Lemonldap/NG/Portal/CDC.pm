@@ -10,7 +10,7 @@ use Mouse;
 use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Common::PSGI';
 

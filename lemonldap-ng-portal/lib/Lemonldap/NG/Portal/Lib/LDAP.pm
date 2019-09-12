@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants
 
 extends 'Lemonldap::NG::Common::Module';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 # PROPERTIES
 

@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_FORBIDDENIP PE_USERNOTFOUND);
 use Lemonldap::NG::Portal::Lib::Slave;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Portal::Main::Auth';
 

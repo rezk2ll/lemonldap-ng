@@ -6,7 +6,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADCREDENTIALS);
 
 extends 'Lemonldap::NG::Portal::Lib::DBI';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 # PROPERTIES
 

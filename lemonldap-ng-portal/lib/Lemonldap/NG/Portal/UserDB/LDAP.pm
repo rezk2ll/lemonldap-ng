@@ -7,7 +7,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
 extends 'Lemonldap::NG::Portal::Lib::LDAP';
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.6';
 
 has ldapGroupAttributeNameSearch => (
     is      => 'rw',

@@ -5,6 +5,6 @@ use strict;
 use base 'Lemonldap::NG::Handler::Lib::Fail',
   'Lemonldap::NG::Handler::Server::Main';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 1;

@@ -15,7 +15,7 @@ use feature 'state';
 
 extends 'Lemonldap::NG::Common::Conf::AccessLib';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.6';
 
 has notifAccess => ( is => 'rw' );
 
