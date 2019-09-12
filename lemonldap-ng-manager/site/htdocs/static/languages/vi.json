@@ -649,6 +649,7 @@
 "portalCustomization":"Tùy chỉnh",
 "portalDisplayAppslist":"Danh sách ứng dụng",
 "portalDisplayChangePassword":"Thay đổi mật khẩu",
+"portalDisplayGeneratePassword":"Display generate password box",
 "portalDisplayLoginHistory":"Lịch sử đăng nhập",
 "portalDisplayLogout":"Đăng xuất",
 "portalDisplayPasswordPolicy":"Display policy in password form",

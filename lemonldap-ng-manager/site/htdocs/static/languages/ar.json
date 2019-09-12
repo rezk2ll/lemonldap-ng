@@ -649,6 +649,7 @@
 "portalCustomization":"التخصيص",
 "portalDisplayAppslist":"قائمة التطبيقات",
 "portalDisplayChangePassword":"تغيير كلمة المرور",
+"portalDisplayGeneratePassword":"Display generate password box",
 "portalDisplayLoginHistory":"سجل تسجيل الدخول",
 "portalDisplayLogout":"تسجيل الخروج",
 "portalDisplayPasswordPolicy":"Display policy in password form",

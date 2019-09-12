@@ -2323,6 +2323,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '$_auth =~ /^(LDAP|DBI|Demo)$/',
             'type'    => 'boolOrExpr'
         },
+        'portalDisplayGeneratePassword' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'portalDisplayLoginHistory' => {
             'default' => 1,
             'type'    => 'boolOrExpr'

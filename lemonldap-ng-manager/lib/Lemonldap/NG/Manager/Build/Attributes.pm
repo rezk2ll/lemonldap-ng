@@ -966,6 +966,12 @@ sub attributes {
             default       => '$_oidcConnectedRP',
             documentation => 'Display OIDC consent tab in portal',
         },
+        portalDisplayGeneratePassword => {
+            default => 1,
+            type    => 'bool',
+            documentation =>
+              'Display password generate box in reset password form',
+        },
 
         # Cookies
         cookieExpiration => {

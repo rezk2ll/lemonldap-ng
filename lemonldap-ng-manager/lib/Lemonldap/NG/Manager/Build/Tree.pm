@@ -82,6 +82,7 @@ sub tree {
                                         'passwordPolicyMinUpper',
                                         'passwordPolicyMinDigit',
                                         'portalDisplayPasswordPolicy',
+                                        'portalDisplayGeneratePassword',
                                     ]
                                 },
                                 {
@@ -130,7 +131,10 @@ sub tree {
                         {
                             title => 'choiceParams',
                             help  => 'authchoice.html',
-                            nodes => [ 'authChoiceParam',  'authChoiceModules', 'authChoiceAuthBasic' ]
+                            nodes => [
+                                'authChoiceParam', 'authChoiceModules',
+                                'authChoiceAuthBasic'
+                            ]
                         },
                         {
                             title => 'apacheParams',
