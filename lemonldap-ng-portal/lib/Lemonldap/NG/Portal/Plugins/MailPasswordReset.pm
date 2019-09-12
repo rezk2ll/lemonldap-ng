@@ -24,6 +24,10 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORDFORMEMPTY
   PE_PASSWORD_MISMATCH
   PE_PASSWORD_OK
+  PE_PP_INSUFFICIENT_PASSWORD_QUALITY
+  PE_PP_PASSWORD_TOO_SHORT
+  PE_PP_PASSWORD_TOO_YOUNG
+  PE_PP_PASSWORD_IN_HISTORY
   PE_TOKENEXPIRED
   PE_USERNOTFOUND
 );
@@ -441,7 +445,10 @@ sub changePwd {
     my $cpq =
       $self->Lemonldap::NG::Portal::Password::Base::checkPasswordQuality(
         $req->data->{newpassword} );
-    return $cpq unless ( $cpq == PE_OK );
+    unless ( $cpq == PE_OK ) {
+        $self->ott->setToken( $req, $req->sessionInfo );
+        return $cpq;
+    }
 
     # Modify the password TODO: change this
     # Populate $req->{user} for logging purpose
@@ -455,7 +462,10 @@ sub changePwd {
     $self->conf->{portalRequireOldPassword} = $tmp;
 
     # Mail token can be used only one time, delete the session if all is ok
-    return $result unless ( $result == PE_PASSWORD_OK or $result == PE_OK );
+    unless ( $result == PE_PASSWORD_OK or $result == PE_OK ) {
+        $self->ott->setToken( $req, $req->sessionInfo );
+        return $result;
+    }
 
     # Send mail containing the new password
     $req->data->{mailAddress} ||=
@@ -605,9 +615,15 @@ sub display {
         $tplPrm{DISPLAY_PASSWORD_FORM} = 1;
     }
 
-    # Display password change form again if passwords mismatch
+    # Display password change form again
+    # - if passwords mismatch
+    # - if password quality check fail
     elsif ($req->error == PE_PASSWORDFORMEMPTY
-        || $req->error == PE_PASSWORD_MISMATCH )
+        || $req->error == PE_PASSWORD_MISMATCH
+        || $req->error == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
+        || $req->error == PE_PP_PASSWORD_TOO_SHORT
+        || $req->error == PE_PP_PASSWORD_TOO_YOUNG
+        || $req->error == PE_PP_PASSWORD_IN_HISTORY )
     {
         $self->logger->debug('Display password form');
         $tplPrm{DISPLAY_PASSWORD_FORM} = $req->sessionInfo->{pwdAllowed};
