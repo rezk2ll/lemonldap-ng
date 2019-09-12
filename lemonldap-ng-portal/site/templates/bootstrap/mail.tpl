@@ -145,6 +145,7 @@
           <input name="confirmpassword" type="password" class="form-control" trplaceholder="confirmPwd" />
         </div>
 
+        <TMPL_IF NAME="DISPLAY_GENERATE_PASSWORD">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <div class="input-group-text">
@@ -155,6 +156,7 @@
             <label for="reset" id="resetlabel" trspan="generatePwd">Generate the password automatically</label>
           </p>
         </div>
+        </TMPL_IF>
 
         <button type="submit" class="btn btn-success">
           <span class="fa fa-envelope-open"></span>

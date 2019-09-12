@@ -555,6 +555,8 @@ sub display {
         PPOLICY_MINLOWER        => $self->conf->{passwordPolicyMinLower},
         PPOLICY_MINUPPER        => $self->conf->{passwordPolicyMinUpper},
         PPOLICY_MINDIGIT        => $self->conf->{passwordPolicyMinDigit},
+        DISPLAY_GENERATE_PASSWORD =>
+          $self->conf->{portalDisplayGeneratePassword},
     );
     if ( $req->data->{mailToken}
         and
