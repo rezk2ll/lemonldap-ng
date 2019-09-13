@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.4';
+our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Portal::Main::Auth', 'Lemonldap::NG::Portal::Lib::CAS';
 
@@ -82,6 +82,9 @@ sub extractFormInfo {
 
     # Local URL
     my $local_url = $self->p->fullUrl($req);
+
+    # Remove cancel parameter
+    $local_url =~ s/cancel=1//;
 
     # Catch proxy callback
     if ( $req->param('casProxy') ) {
