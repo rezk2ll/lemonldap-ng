@@ -386,9 +386,9 @@ sub tree {
                             title => 'slaveParams',
                             help  => 'authslave.html',
                             nodes => [
-                                'slaveAuthnLevel', 'slaveExportedVars',
-                                'slaveUserHeader', 'slaveMasterIP',
-                                'slaveHeaderName', 'slaveHeaderContent'
+                                'slaveAuthnLevel',    'slaveUserHeader',
+                                'slaveMasterIP',      'slaveHeaderName',
+                                'slaveHeaderContent', 'slaveExportedVars',
                             ]
                         },
                         {
