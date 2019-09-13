@@ -15,7 +15,7 @@ sub perlExpr {
     my $cpt = new Safe;
     $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
     $cpt->share_from( 'Lemonldap::NG::Handler::Main::Jail',
-        [ '&encrypt', '&token' ] );
+        [ '&encrypt', '&token', @Lemonldap::NG::Handler::Main::Jail::builtCustomFunctions ] );
     $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
     $cpt->reval("BEGIN { 'warnings'->unimport; } $val");
