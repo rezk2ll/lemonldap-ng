@@ -52,7 +52,7 @@ sub setAuthSessionInfo {
 }
 
 sub getDisplayType {
-    return "logo";
+    return "_none_";
 }
 
 sub authLogout {
