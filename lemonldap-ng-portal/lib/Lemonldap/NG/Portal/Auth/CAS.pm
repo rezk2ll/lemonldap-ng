@@ -84,7 +84,7 @@ sub extractFormInfo {
     my $local_url = $self->p->fullUrl($req);
 
     # Remove cancel parameter
-    $local_url =~ s/cancel=1//;
+    $local_url =~ s/cancel=1&?//;
 
     # Catch proxy callback
     if ( $req->param('casProxy') ) {
