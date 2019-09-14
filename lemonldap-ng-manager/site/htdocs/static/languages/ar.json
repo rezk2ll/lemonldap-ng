@@ -788,6 +788,7 @@
 "singleSessionUserByIP":"جلسة واحدة بواسطة عنوان الآي بي",
 "skipRenewConfirmation":"Skip re-auth confirmation",
 "slaveAuthnLevel":"مستوى إثبات الهوية",
+"slaveDisplayLogo":"Display authentication logo",
 "slaveExportedVars":"المتغيرات المصدرة",
 "slaveMasterIP":"عنوان آي بي  الماستر",
 "slaveParams":"معاييرالتابع",

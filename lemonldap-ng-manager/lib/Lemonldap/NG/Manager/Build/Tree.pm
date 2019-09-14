@@ -388,7 +388,8 @@ sub tree {
                             nodes => [
                                 'slaveAuthnLevel',    'slaveUserHeader',
                                 'slaveMasterIP',      'slaveHeaderName',
-                                'slaveHeaderContent', 'slaveExportedVars',
+                                'slaveHeaderContent', 'slaveDisplayLogo',
+                                'slaveExportedVars',
                             ]
                         },
                         {

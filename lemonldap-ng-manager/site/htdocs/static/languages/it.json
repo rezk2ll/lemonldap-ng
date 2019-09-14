@@ -788,6 +788,7 @@
 "singleSessionUserByIP":"Una sessione per indirizzo IP",
 "skipRenewConfirmation":"Salta la conferma di re-auth",
 "slaveAuthnLevel":"Livello di autenticazione",
+"slaveDisplayLogo":"Display authentication logo",
 "slaveExportedVars":"Variabili esportate",
 "slaveMasterIP":"Indirizzo IP del master",
 "slaveParams":"Parametri di slave",

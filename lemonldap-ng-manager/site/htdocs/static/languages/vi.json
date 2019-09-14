@@ -788,6 +788,7 @@
 "singleSessionUserByIP":"Một phiên theo địa chỉ IP",
 "skipRenewConfirmation":"Skip re-auth confirmation",
 "slaveAuthnLevel":"Mức xác thực",
+"slaveDisplayLogo":"Display authentication logo",
 "slaveExportedVars":"Biến đã được xuất",
 "slaveMasterIP":"Địa chỉ IP của Master",
 "slaveParams":"Tham số Slave",

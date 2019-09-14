@@ -3401,6 +3401,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 2,
             'type'    => 'int'
         },
+        'slaveDisplayLogo' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'slaveExportedVars' => {
             'default'    => {},
             'keyMsgFail' => '__badVariableName__',

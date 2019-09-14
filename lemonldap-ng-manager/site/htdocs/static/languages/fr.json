@@ -788,6 +788,7 @@
 "singleSessionUserByIP":"Une seule session par IP",
 "skipRenewConfirmation":"Éviter la confirmation de ré-authentification",
 "slaveAuthnLevel":"Niveau d'authentification",
+"slaveDisplayLogo":"Afficher le logo d'authentification",
 "slaveExportedVars":"Variables exportées",
 "slaveMasterIP":"IP accréditées",
 "slaveParams":"Paramètres Slave",

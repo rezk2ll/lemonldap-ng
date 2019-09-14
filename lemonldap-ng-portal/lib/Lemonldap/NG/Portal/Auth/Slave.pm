@@ -23,10 +23,10 @@ sub extractFormInfo {
     return PE_FORBIDDENIP
       unless ( $self->checkIP($req) and $self->checkHeader($req) );
 
-    unless ( $self->conf->{slaveUserHeader} ){
+    unless ( $self->conf->{slaveUserHeader} ) {
         $self->logger->debug('slaveUserHeader is undefined');
         return PE_USERNOTFOUND;
-    };
+    }
 
     my $user_header = $self->conf->{slaveUserHeader};
     $user_header = 'HTTP_' . uc($user_header);
@@ -52,7 +52,8 @@ sub setAuthSessionInfo {
 }
 
 sub getDisplayType {
-    return "_none_";
+    my ($self) = @_;
+    return ( $self->{conf}->{slaveDisplayLogo} ? "logo" : "_none_" );
 }
 
 sub authLogout {
