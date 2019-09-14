@@ -263,7 +263,13 @@ sub do {
                 {
                     result => 1,
                     error  => $err,
-                    id     => $req->id
+                    id     => $req->id,
+                    id     => $req->id,
+                    (
+                        $req->sessionInfo->{_httpSession}
+                        ? ( id_http => $req->sessionInfo->{_httpSession} )
+                        : ()
+                    )
                 }
             );
         }
@@ -1004,7 +1010,7 @@ sub registerLogin {
     }
 
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
-    my $type    = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+    my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 
