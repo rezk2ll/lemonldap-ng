@@ -264,7 +264,6 @@ sub do {
                     result => 1,
                     error  => $err,
                     id     => $req->id,
-                    id     => $req->id,
                     (
                         $req->sessionInfo->{_httpSession}
                         ? ( id_http => $req->sessionInfo->{_httpSession} )
