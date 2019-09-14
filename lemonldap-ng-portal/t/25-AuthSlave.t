@@ -12,6 +12,7 @@ my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel           => 'error',
             useSafeJail        => 1,
+            securedCookie      => 3,
             authentication     => 'Slave',
             userDB             => 'Same',
             slaveUserHeader    => 'My-Test',
@@ -29,14 +30,13 @@ my $client = LLNG::Manager::Test->new( {
 ok(
     $res = $client->_get(
         '/',
-        {
-            ip     => '127.0.0.1',
-            custom => {
-                HTTP_MY_TEST     => 'dwho',
-                HTTP_NAME        => 'Dr Who',
-                HTTP_CHECK_SLAVE => 'Passwor',
-            }
+        ip     => '127.0.0.1',
+        custom => {
+            HTTP_MY_TEST     => 'dwho',
+            HTTP_NAME        => 'Dr Who',
+            HTTP_CHECK_SLAVE => 'Passwor',
         }
+
     ),
     'Auth query'
 );
@@ -51,7 +51,6 @@ count(4);
 ok(
     $res = $client->_get(
         '/',
-
         ip     => '127.0.0.2',
         custom => {
             HTTP_MY_TEST     => 'dwho',
@@ -73,7 +72,6 @@ count(4);
 ok(
     $res = $client->_get(
         '/',
-
         ip     => '127.0.0.1',
         custom => {
             HTTP_MY_TES      => 'dwho',
@@ -95,7 +93,6 @@ count(4);
 ok(
     $res = $client->_get(
         '/',
-
         ip     => '127.0.0.1',
         custom => {
             HTTP_MY_TEST     => 'dwho',
@@ -108,7 +105,17 @@ ok(
 );
 count(1);
 expectOK($res);
-my $id = expectCookie($res);
+
+my $id      = expectCookie($res);
+my $id_http = expectCookie( $res, 'lemonldaphttp' );
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok( $json->{id} eq "$id", 'Session id found' )
+  or explain( $json, "id => session_id" );
+ok( $json->{id_http} eq "$id_http", 'httpSession id found' )
+  or explain( $json, "id_http => http_session_id" );
+count(3);
+
 clean_sessions();
 
 done_testing( count() );
