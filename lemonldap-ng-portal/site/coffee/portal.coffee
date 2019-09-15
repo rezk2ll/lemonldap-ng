@@ -223,7 +223,8 @@ setCookie = (name, value, exdays) ->
 
 # Initialization
 datas = {}
-$(document).ready ->
+#$(document).ready ->
+$(window).on 'load', () ->
 	# Get application/init variables
 	datas = getValues()
 	# Export datas for other scripts
