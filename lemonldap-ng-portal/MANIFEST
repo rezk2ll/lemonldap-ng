@@ -453,7 +453,8 @@ t/22-Auth-and-password-AD.t
 t/23-Auth-and-password-REST.t
 t/24-AuthApache.t
 t/24-AuthKerberos.t
-t/25-AuthSlave.t
+t/25-AuthSlave-with-Choice.t
+t/25-AuthSlave-with-Credentials.t
 t/26-AuthRemote.t
 t/27-AuthProxy.t
 t/28-AuthChoice-and-password.t
