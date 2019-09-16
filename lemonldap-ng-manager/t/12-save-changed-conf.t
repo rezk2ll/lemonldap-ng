@@ -82,8 +82,6 @@ if ($bug) {
       . Dumper( \@cmsg );
 }
 
-#print STDERR Dumper(\@changes,\@cmsg);
-
 count(6);
 
 # TODO: check result of this
@@ -97,6 +95,11 @@ ok( @c2 == 14, '14 keys changed or created in conf 2' )
   or print STDERR "Expect: 14 keys, get: " . join( ',', @c2 ) . "\n";
 
 count(5);
+
+ok( $res = &client->jsonResponse('/confs/latest'),
+    'Get last config metatdata' );
+ok( $res->{prev} == 1, ' get previous configuration' );
+count(2);
 
 unlink $confFiles->[1];
 
