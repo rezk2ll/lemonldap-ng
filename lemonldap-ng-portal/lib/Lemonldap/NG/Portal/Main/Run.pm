@@ -1049,6 +1049,18 @@ sub _sumUpSession {
     return $res;
 }
 
+sub corsPreflight {
+    my ( $self, $req ) = @_;
+    my @headers;
+    if ( $self->conf->{corsEnabled} ) {
+        my @cors = split /;/, $self->cors;
+        push @headers, @cors;
+        $self->logger->debug('Apply following CORS policy :');
+        $self->logger->debug(" $_") for @cors;
+    }
+    return [ 204, \@headers, [] ];
+}
+
 # Temlate loader
 sub loadTemplate {
     my ( $self, $req, $name, %prm ) = @_;

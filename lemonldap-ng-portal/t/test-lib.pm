@@ -784,6 +784,18 @@ sub _delete {
     $self->_get( $path, %args );
 }
 
+=head4 _options( $path, %args )
+
+Call C<_get()> with method set to OPTIONS.
+
+=cut
+
+sub _options {
+    my ( $self, $path, %args ) = @_;
+    $args{method} = 'OPTIONS';
+    $self->_get( $path, %args );
+}
+
 =head4 _put( $path, $body, %args )
 
 Call C<_post()> with method set to PUT

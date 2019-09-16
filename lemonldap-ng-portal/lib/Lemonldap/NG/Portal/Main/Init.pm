@@ -157,6 +157,9 @@ sub init {
       # Refresh session
       ->addAuthRoute( refresh => 'refresh', ['GET'] )
 
+      ->addAuthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
+      ->addUnauthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
+
       # Logout
       ->addAuthRoute( logout => 'logout', ['GET'] );
 

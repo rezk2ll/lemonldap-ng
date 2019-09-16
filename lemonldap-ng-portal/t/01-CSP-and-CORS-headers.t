@@ -33,12 +33,35 @@ ok(
 count(1);
 expectReject($res);
 
+# Test CORS "Preflight"
+ok( $res = $client->_options( '/', accept => 'text/html' ), 'Get Menu' );
+my %policy = @{ $res->[1] };
+count(1);
+
+# CORS
+ok( $policy{'Access-Control-Allow-Origin'} eq '', "CORS origin '' found" )
+  or print STDERR Dumper( $res->[1] );
+ok( $policy{'Access-Control-Allow-Credentials'} eq 'true',
+    "CORS credentials 'true' found" )
+  or print STDERR Dumper( $res->[1] );
+ok( $policy{'Access-Control-Allow-Headers'} eq '*', "CORS headers '*' found" )
+  or print STDERR Dumper( $res->[1] );
+ok( $policy{'Access-Control-Allow-Methods'} eq 'POST',
+    "CORS methods 'POST' found" )
+  or print STDERR Dumper( $res->[1] );
+ok( $policy{'Access-Control-Expose-Headers'} eq '*',
+    "CORS expose-headers '*' found" )
+  or print STDERR Dumper( $res->[1] );
+ok( $policy{'Access-Control-Max-Age'} eq '86400', "CORS max-age '86400' found" )
+  or print STDERR Dumper( $res->[1] );
+count(6);
+
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu' );
 ok( $res->[2]->[0] =~ m%<span id="languages"></span>%, ' Language icons found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
-my %policy = @{ $res->[1] };
+%policy = @{ $res->[1] };
 
 # CORS
 ok( $policy{'Access-Control-Allow-Origin'} eq '', "CORS origin '' found" )
