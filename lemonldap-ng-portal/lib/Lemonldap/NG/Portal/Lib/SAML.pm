@@ -2215,7 +2215,8 @@ sub getNameIDFormat {
 # @return Lasso HTTP Method integer
 sub getHttpMethod {
     my ( $self, $method ) = @_;
-
+    
+    $method ||= '';
     return Lasso::Constants::HTTP_METHOD_POST
       if ( $method =~ /^(http)?[-_]?post$/i );
     return Lasso::Constants::HTTP_METHOD_REDIRECT
