@@ -400,18 +400,18 @@ sub getDBConf {
 sub _launch {
     my $self = shift;
     my $sub  = shift;
-    my $res;
+    my @res;
     eval {
         local $SIG{ALRM} = sub { die "TIMEOUT\n" };
         eval {
             alarm( $self->{confTimeout} || 10 );
-            $res = &{ $self->{type} . "::$sub" }( $self, @_ );
+            @res = &{ $self->{type} . "::$sub" }( $self, @_ );
         };
         alarm 0;
         die $@ if $@;
     };
     $msg .= $@ if $@;
-    return $res;
+    return wantarray ? (@res) : $res[0];
 }
 
 ## @method boolean prereq()
