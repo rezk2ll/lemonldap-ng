@@ -79,6 +79,7 @@ sub encrypt {
     my ( $self, $data, $low ) = @_;
 
     # pad $data so that its length be multiple of 16 bytes
+    $data //= '';
     my $l = bytes::length($data) % 16;
     $data .= "\0" x ( 16 - $l ) unless ( $l == 0 );
 
@@ -93,6 +94,7 @@ sub encrypt {
             $iv . $self->_getCipher->set_iv($iv)->encrypt( $hmac . $data ),
             '' );
     };
+
     if ($@) {
         $msg = "Crypt::Rijndael error : $@";
         return undef;
