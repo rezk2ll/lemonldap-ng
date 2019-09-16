@@ -73,7 +73,7 @@ sub deleteNotification {
     foreach my $ref ( keys %$user ) {
         my $json = from_json( $user->{$ref}, { allow_nonref => 1 } );
         $json = [$json] unless ( ref($json) eq 'ARRAY' );
-        
+
         # Browse notification in file
         foreach my $notif (@$json) {
 
