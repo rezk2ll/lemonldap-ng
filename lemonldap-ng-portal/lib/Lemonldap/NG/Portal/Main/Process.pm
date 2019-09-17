@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::Main;
 use strict;
 use MIME::Base64;
 use POSIX qw(strftime);
+use Lemonldap::NG::Portal::Main::Constants qw(portalConsts);
 
 # Main method
 # -----------
@@ -38,7 +39,9 @@ sub process {
             }
         }
     }
-    $self->logger->debug("Returned error: $err") if ($err);
+    $self->logger->debug(
+        "Returned error: $err (" . portalConsts->{$err} . ")" )
+      if ($err);
     return $err;
 }
 
