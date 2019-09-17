@@ -11,5 +11,7 @@ Lemonldap::NG::Manager::Build->run(
     confConstantsFile     => 'lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/Constants.pm',
     firstLmConfFile       => '_example/conf/lmConf-1.json',
     reverseTreeFile       => 'lemonldap-ng-manager/site/htdocs/static/reverseTree.json',
+    portalConstantsFile   => 'lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Main/Constants.pm',
+    handlerStatusConstantsFile   => 'lemonldap-ng-handler/lib/Lemonldap/NG/Handler/Lib/StatusConstants.pm',
 );
 
