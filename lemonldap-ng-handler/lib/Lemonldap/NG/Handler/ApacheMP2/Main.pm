@@ -96,6 +96,7 @@ sub set_custom {
 sub set_header_in {
     my ( $class, $request, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
+        utf8::downgrade($v);
         $request->env->{'psgi.r'}->headers_in->set( $h => $v );
     }
 }
