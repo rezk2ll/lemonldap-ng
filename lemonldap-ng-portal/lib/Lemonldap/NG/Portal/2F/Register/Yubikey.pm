@@ -181,12 +181,18 @@ sub run {
         }
 
         # Delete Yubikey device
+        my $UBKName;
+        foreach (@$_2fDevices) {
+            $UBKName = $_->{name} if $_->{epoch} eq $epoch;
+        }
         @$_2fDevices = grep { $_->{epoch} ne $epoch } @$_2fDevices;
         $self->logger->debug(
-            "Delete 2F Device : { type => 'UBK', epoch => $epoch }");
+"Delete 2F Device : { type => 'UBK', epoch => $epoch, name => $UBKName }"
+        );
         $self->p->updatePersistentSession( $req,
             { _2fDevices => to_json($_2fDevices) } );
-        $self->userLogger->notice('Yubikey deletion succeed');
+        $self->userLogger->notice(
+            "Yubikey $UBKName unregistration succeeds for $user");
         return [
             200,
             [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],

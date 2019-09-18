@@ -301,12 +301,18 @@ sub run {
         }
 
         # Delete TOTP 2F device
+        my $TOTPName;
+        foreach (@$_2fDevices) {
+            $TOTPName = $_->{name} if $_->{epoch} eq $epoch;
+        }
         @$_2fDevices = grep { $_->{epoch} ne $epoch } @$_2fDevices;
         $self->logger->debug(
-            "Delete 2F Device : { type => 'TOTP', epoch => $epoch }");
+"Delete 2F Device : { type => 'TOTP', epoch => $epoch, name => $TOTPName }"
+        );
         $self->p->updatePersistentSession( $req,
             { _2fDevices => to_json($_2fDevices) } );
-        $self->userLogger->notice('TOTP deletion succeed');
+        $self->userLogger->notice(
+            "TOTP $TOTPName unregistration succeeds for $user");
         return [
             200,
             [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],

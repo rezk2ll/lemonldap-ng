@@ -288,12 +288,18 @@ sub run {
         }
 
         # Delete U2F device
+        my $keyName;
+        foreach (@$_2fDevices) {
+            $keyName = $_->{name} if $_->{epoch} eq $epoch;
+        }
         @$_2fDevices = grep { $_->{epoch} ne $epoch } @$_2fDevices;
         $self->logger->debug(
-            "Delete 2F Device : { type => 'U2F', epoch => $epoch }");
+"Delete 2F Device : { type => 'U2F', epoch => $epoch, name => $keyName }"
+        );
         $self->p->updatePersistentSession( $req,
             { _2fDevices => to_json($_2fDevices) } );
-        $self->userLogger->notice('U2F key unregistration succeed');
+        $self->userLogger->notice(
+            "U2F key $keyName unregistration succeeds for $user");
         return [
             200,
             [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
