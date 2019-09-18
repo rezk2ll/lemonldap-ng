@@ -288,7 +288,12 @@ sub display {
     else {
         $skinfile = 'login';
         my $login = $self->userId($req);
-        $login          = '' if ( $login eq 'anonymous' );
+        if ( $login eq 'anonymous' ) {
+            $login = '';
+        }
+        elsif ( $req->user ) {
+            $login = $req->{user};
+        }
         %templateParams = (
             MAIN_LOGO             => $self->conf->{portalMainLogo},
             LANGS                 => $self->conf->{showLanguages},
