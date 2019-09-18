@@ -177,7 +177,7 @@ count(1);
 my $url = $1;
 $query = $2;
 ok( getHeader( $res, 'Content-Security-Policy' ) =~ /child-src auth.idp.com/,
-    'Frame is authorizated' )
+    'Frame is authorized' )
   or
   explain( $res->[1], 'Content-Security-Policy => ...child-src auth.idp.com' );
 count(1);

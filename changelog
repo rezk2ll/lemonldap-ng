@@ -1153,7 +1153,7 @@ lemonldap-ng (1.2.3) stable; urgency=low
       urn:/Lemonldap::NG::Common::CGI::SOAPService
     * [LEMONLDAP-546] - Form replay: POST request is not sent
     * [LEMONLDAP-541] - Handler SOAP errors : setAttributes is not an
-      authorizated function
+      authorized function
     * [LEMONLDAP-547] - Update Browseable documentation in case of SAML in use
     * [LEMONLDAP-565] - Update META.yml files
     * [LEMONLDAP-581] - Clean Perl dependencies

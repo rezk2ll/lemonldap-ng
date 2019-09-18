@@ -36,7 +36,7 @@
 # - Authorizations for connected users (always):
 #   * GET /mysession/?whoami                               : get "my" uid
 #   * GET /mysession/?authorizationfor=<base64-encoded-url>: ask if url is
-#                                                            authorizated
+#                                                            authorized
 #   * PUT /mysession/<type>                                : update some
 #                                                            persistent data
 #                                                            (restricted)

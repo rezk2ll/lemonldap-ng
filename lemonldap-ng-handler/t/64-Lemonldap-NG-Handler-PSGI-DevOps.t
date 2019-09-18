@@ -19,7 +19,7 @@ ok(
         'test3.example.com', "lemonldap=$sessionId",
         VHOSTTYPE => 'DevOps'
     ),
-    'Authorizated query'
+    'Authorized query'
 );
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
@@ -30,7 +30,7 @@ ok(
         'test3.example.com', "lemonldap=$sessionId",
         VHOSTTYPE => 'DevOps'
     ),
-    'Authorizated query'
+    'Authorized query'
 );
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
