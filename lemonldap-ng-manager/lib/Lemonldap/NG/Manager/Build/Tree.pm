@@ -82,7 +82,6 @@ sub tree {
                                         'passwordPolicyMinUpper',
                                         'passwordPolicyMinDigit',
                                         'portalDisplayPasswordPolicy',
-                                        'portalDisplayGeneratePassword',
                                     ]
                                 },
                                 {
@@ -648,7 +647,9 @@ sub tree {
                                     title => 'mailOther',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'mailUrl', 'mailTimeout',
+                                        'mailUrl',
+                                        'mailTimeout',
+                                        'portalDisplayGeneratePassword',
                                         'randomPasswordRegexp',
                                     ]
                                 }
