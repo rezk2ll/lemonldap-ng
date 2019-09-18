@@ -118,11 +118,11 @@ SKIP: {
     $file =~ s/json$/done/;
     ok( -e $file, 'Notification was deleted' );
     $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
-    expectRedirection( $res, 'http://auth.idp.com/saml/singleSignOn' );
+    expectRedirection( $res, 'http://auth.idp.com/saml' );
 
     ok(
         $res = $issuer->_get(
-            '/saml/singleSignOn',
+            '/saml',
             cookie => "lemonldap=$idpId; $pdata",
             accept => 'text/html',
         ),
