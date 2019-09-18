@@ -509,6 +509,9 @@ sub buildCookie {
             );
         }
     }
+    $self->userLogger->notice(
+"User $req->{user} successfully authenticated at level $req->{sessionInfo}->{authenticationLevel}"
+    );
     PE_OK;
 }
 
