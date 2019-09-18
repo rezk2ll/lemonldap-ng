@@ -142,7 +142,7 @@
    "loginHistoryEnabled" : 1,
    "macros" : {
       "UA" : "$ENV{HTTP_USER_AGENT}",
-      "_whatToTrace" : "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : $_auth eq 'OpenIDConnect' ? \"$_user\\@$_oidcConnectedRP\" : \"$_user\""
+      "_whatToTrace" : "$_auth eq 'SAML' ? lc($_user.'@'.$_idpConfKey) : $_auth eq 'OpenIDConnect' ? lc($_user.'@'.$_oidcConnectedRP) : lc($_user)"
    },
    "mailUrl" : "http://auth.__DNSDOMAIN__/resetpwd",
    "notification" : 1,

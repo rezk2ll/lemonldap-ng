@@ -108,7 +108,7 @@ sub zeroConf {
         },
         'macros' => {
             '_whatToTrace' =>
-'$_auth eq \'SAML\' ? "$_user\\@$_idpConfKey" : $_auth eq \'OpenIDConnect\' ? "$_user\\@$_oidcConnectedRP" : "$_user"',
+'$_auth eq \'SAML\' ? lc($_user.\'@\'.$_idpConfKey) : $_auth eq \'OpenIDConnect\' ? lc($_user.\'@\'.$_oidcConnectedRP) : lc($_user)',
             'UA' => '$ENV{HTTP_USER_AGENT}'
         },
         'notificationStorageOptions' => {
