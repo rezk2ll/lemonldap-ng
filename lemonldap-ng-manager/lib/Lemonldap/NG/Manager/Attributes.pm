@@ -807,6 +807,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             },
             'type' => 'text'
         },
+        'checkUserSearchAttributes' => {
+            'type' => 'text'
+        },
         'checkXSS' => {
             'default' => 1,
             'type'    => 'bool'

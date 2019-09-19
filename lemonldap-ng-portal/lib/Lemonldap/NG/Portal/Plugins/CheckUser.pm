@@ -40,7 +40,7 @@ sub hAttr {
 sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;
-    $self->addAuthRoute( checkuser => 'check',               ['POST'] );
+    $self->addAuthRoute( checkuser => 'check', ['POST'] );
     $self->addAuthRouteWithRedirect( checkuser => 'display', ['GET'] );
 
     # Parse identity rule
@@ -143,9 +143,17 @@ sub check {
         $self->logger->debug('Try to retrieve session from DB...');
         my $moduleOptions = $self->conf->{globalStorageOptions} || {};
         $moduleOptions->{backend} = $self->conf->{globalStorage};
-        my $sessions =
-          $self->module->searchOn( $moduleOptions, $self->conf->{whatToTrace},
-            $user );
+
+        my $sessions    = {};
+        my $searchAttrs = $self->conf->{checkUserSearchAttributes}
+          || $self->conf->{whatToTrace};
+
+        foreach ( split /\s+/, $searchAttrs ) {
+            $self->logger->debug("Searching with: $_ = $user");
+            $sessions = $self->module->searchOn( $moduleOptions, $_, $user );
+            last if (keys %$sessions);
+        }
+
         my $age = '1';
         foreach my $id ( keys %$sessions ) {
             my $session = $self->p->getApacheSession($id) or next;
@@ -272,7 +280,7 @@ sub check {
 }
 
 sub display {
-    my ( $self,  $req )         = @_;
+    my ( $self, $req ) = @_;
     my ( $attrs, $array_attrs ) = ( {}, [] );
 
     $self->logger->debug("Display current session data...");

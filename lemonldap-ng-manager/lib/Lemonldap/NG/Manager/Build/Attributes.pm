@@ -449,6 +449,11 @@ sub attributes {
             documentation => 'Attributes to hide in CheckUser plugin',
             flags         => 'p',
         },
+        checkUserSearchAttributes => {
+            type          => 'text',
+            documentation => 'Attributes used for retrieving sessions in user DataBase',
+            flags         => 'p',
+        },
         checkUserDisplayPersistentInfo => {
             default       => 0,
             type          => 'bool',

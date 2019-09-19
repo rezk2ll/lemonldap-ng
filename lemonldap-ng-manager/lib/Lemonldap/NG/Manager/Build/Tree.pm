@@ -685,6 +685,7 @@ sub tree {
                                 'checkUser',
                                 'checkUserIdRule',
                                 'checkUserHiddenAttributes',
+                                'checkUserSearchAttributes',
                                 'checkUserDisplayPersistentInfo',
                                 'checkUserDisplayEmptyValues',
                             ]
