@@ -393,6 +393,10 @@ sub run {
                 }
             }
 
+            $self->userLogger->notice( 'User '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  . " is authorized to access to $sp" );
+
             # Do we check signature?
             my $checkSSOMessageSignature =
               $self->conf->{samlSPMetaDataOptions}->{$spConfKey}

@@ -260,6 +260,10 @@ sub run {
                 }
             }
 
+            $self->userLogger->notice( 'User '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  . " is authorized to access to $rp" );
+
             # Check redirect_uri
             my $redirect_uri  = $oidc_request->{'redirect_uri'};
             my $redirect_uris = $self->conf->{oidcRPMetaDataOptions}->{$rp}

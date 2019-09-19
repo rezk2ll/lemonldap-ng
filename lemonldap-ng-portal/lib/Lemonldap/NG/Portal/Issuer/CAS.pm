@@ -208,6 +208,10 @@ sub run {
             }
         }
 
+        $self->userLogger->notice( 'User '
+              . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+              . " is authorized to access to $service" );
+
         unless ($casServiceTicket) {
 
             # Check last authentication time to decide if
