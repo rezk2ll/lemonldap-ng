@@ -255,7 +255,7 @@ sub run {
                 unless ( $rule->( $req, $req->sessionInfo ) ) {
                     $self->userLogger->warn( 'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                          . " was not authorized to access to $rp" );
+                          . " is not authorized to access to $rp" );
                     return PE_UNAUTHORIZEDPARTNER;
                 }
             }

@@ -388,7 +388,7 @@ sub run {
                 unless ( $rule->( $req, $req->sessionInfo ) ) {
                     $self->userLogger->warn( 'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                          . " was not authorized to access to $sp" );
+                          . " is not authorized to access to $sp" );
                     return PE_UNAUTHORIZEDPARTNER;
                 }
             }
