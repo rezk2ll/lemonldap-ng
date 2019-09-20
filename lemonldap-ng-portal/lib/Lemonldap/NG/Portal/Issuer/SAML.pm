@@ -1478,7 +1478,7 @@ sub sloRelayTerm {
     my $session = $logout->get_session();
 
     unless ($session) {
-        $self->lmLog( "Could not get session from logout", 'error' );
+        $self->logger->error( "Could not get session from logout" );
         return PE_SAML_SLO_ERROR;
     }
 

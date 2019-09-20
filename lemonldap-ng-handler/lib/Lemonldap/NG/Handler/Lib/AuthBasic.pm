@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler::Lib::AuthBasic;
 
 use strict;
 use Exporter;
-use Digest::SHA;
+use Digest::SHA qw(sha256_hex);
 use MIME::Base64;
 use HTTP::Headers;
 
