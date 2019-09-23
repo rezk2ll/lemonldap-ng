@@ -118,25 +118,35 @@ You have to include them in Nginx main configuration.
 <!-- EDIT5 SECTION "Files" [640-862] -->
 <h3 class="sectionedit6" id="debianubuntu1">Debian/Ubuntu</h3>
 <div class="level3">
-
-<p>
-Link files into <code>sites-available</code> directory (should already have been done if you used packages):
-</p>
+<ul>
+<li class="level1"><div class="li"> Install log format <em>(automatically loaded when linked in this place)</em></div>
+</li>
+</ul>
+<pre class="code">ln -s /etc/lemonldap-ng/nginx-lmlog.conf /etc/nginx/conf.d/llng-lmlog.conf</pre>
+<ul>
+<li class="level1"><div class="li"> Install snippet for vhost configuration files:</div>
+</li>
+</ul>
+<pre class="code">ln -s /etc/lemonldap-ng/nginx-lua-headers.conf /etc/nginx/snippets/llng-lua-headers.conf</pre>
+<ul>
+<li class="level1"><div class="li"> Link LLNG components configuration file into <code>sites-available</code> directory (should already have been done if you used packages):</div>
+</li>
+</ul>
 <pre class="code">ln -s /etc/lemonldap-ng/handler-nginx.conf /etc/nginx/sites-available/
 ln -s /etc/lemonldap-ng/manager-nginx.conf /etc/nginx/sites-available/
 ln -s /etc/lemonldap-ng/portal-nginx.conf /etc/nginx/sites-available/
 ln -s /etc/lemonldap-ng/test-nginx.conf /etc/nginx/sites-available/</pre>
-
-<p>
-Enable sites:
-</p>
+<ul>
+<li class="level1"><div class="li"> Enable sites:</div>
+</li>
+</ul>
 <pre class="code">ln -s /etc/nginx/sites-available/handler-nginx.conf /etc/nginx/sites-enabled/
 ln -s /etc/nginx/sites-available/manager-nginx.conf /etc/nginx/sites-enabled/
 ln -s /etc/nginx/sites-available/portal-nginx.conf /etc/nginx/sites-enabled/
 ln -s /etc/nginx/sites-available/test-nginx.conf /etc/nginx/sites-enabled/</pre>
 
 </div>
-<!-- EDIT6 SECTION "Debian/Ubuntu" [863-1621] -->
+<!-- EDIT6 SECTION "Debian/Ubuntu" [863-1978] -->
 <h3 class="sectionedit7" id="red_hatcentos1">Red Hat/CentOS</h3>
 <div class="level3">
 
@@ -149,6 +159,6 @@ ln -s /etc/lemonldap-ng/portal-nginx.conf /etc/nginx/conf.d/
 ln -s /etc/lemonldap-ng/test-nginx.conf /etc/nginx/conf.d/</pre>
 
 </div>
-<!-- EDIT7 SECTION "Red Hat/CentOS" [1622-] --></div>
+<!-- EDIT7 SECTION "Red Hat/CentOS" [1979-] --></div>
 </body>
 </html>

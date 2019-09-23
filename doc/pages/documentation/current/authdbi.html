@@ -306,9 +306,9 @@ List of columns to query to fill user session. See also <a href="exportedvars.ht
 </li>
 <li class="level1"><div class="li"> <strong>Supported non-salted schemes</strong>: List of whitespace separated hash schemes. Every hash scheme MUST match a non-salted hash function in the database. LemonLDAP::NG relies on this hashing function for computing user password hashes. These hashes MUST NOT be salted (no random data used in conjunction with the password).</div>
 </li>
-<li class="level1"><div class="li"> <strong>Supported salted schemes</strong>: List of whitespace separated salted hash schemes, of the form “<strong>s</strong>scheme”, where scheme MUST match a non-salted hash function in the database. LemonLDAP::NG relies on this hashing function for computing user password hashes. Salted and non-salted scheme lists are not necessarily equivalent. (for example: non-salted=“sha256” and salted=“ssha ssha512” is valid)</div>
+<li class="level1"><div class="li"> <strong>Supported salted schemes</strong>: List of whitespace separated salted hash schemes, of the form &quot;<strong>s</strong>scheme&quot;, where scheme MUST match a non-salted hash function in the database. LemonLDAP::NG relies on this hashing function for computing user password hashes. Salted and non-salted scheme lists are not necessarily equivalent. (for example: non-salted=&quot;sha256&quot; and salted=&quot;ssha ssha512&quot; is valid)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Dynamic hash scheme for new passwords</strong>: LemonLDAP::NG is able to store new passwords in the database (while modifying or reinitializing the password). You can choose a salted or non salted dynamic hashed password. The value must be an element of “Supported non-salted schemes” or “Supported salted schemes”.</div>
+<li class="level1"><div class="li"> <strong>Dynamic hash scheme for new passwords</strong>: LemonLDAP::NG is able to store new passwords in the database (while modifying or reinitializing the password). You can choose a salted or non salted dynamic hashed password. The value must be an element of &quot;Supported non-salted schemes&quot; or &quot;Supported salted schemes&quot;.</div>
 </li>
 </ul>
 <div class="noteimportant">The SQL function MUST have hexadecimal values as input AND output

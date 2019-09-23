@@ -62,6 +62,8 @@
 <li class="level2"><div class="li"><a href="#template_parameters">Template parameters</a></div></li>
 <li class="level1"><div class="li"><a href="#buttons">Buttons</a></div></li>
 <li class="level1"><div class="li"><a href="#password_management">Password management</a></div></li>
+<li class="level2"><div class="li"><a href="#general">General</a></div></li>
+<li class="level2"><div class="li"><a href="#password_policy">Password Policy</a></div></li>
 <li class="level1"><div class="li"><a href="#other_parameters">Other parameters</a></div></li>
 </ul>
 </div>
@@ -147,8 +149,19 @@ Go in <code>General Parameters</code> &gt; <code>Portal</code> &gt; <code>Custom
 <img src="documentation/manager-skin-background.png" class="mediacenter" alt="" />
 </p>
 
+<p>
+To set your own background, copy your file in <code>/usr/share/lemonldap-ng/portal/htdocs/skins/common/backgrounds/</code> and register it in <code>/etc/lemonldap-ng/lemonldap-ng.ini</code>:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">portalSkinBackground</span> <span class="sy0">=</span><span class="re2"> file.png</span></pre>
+
+<p>
+You can also use <code>lemonldap-ng-cli</code>:
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli set portalSkinBackground file.png</pre>
+
 </div>
-<!-- EDIT6 SECTION "Skin background" [1193-1494] -->
+<!-- EDIT6 SECTION "Skin background" [1193-1862] -->
 <h3 class="sectionedit7" id="skin_rules">Skin rules</h3>
 <div class="level3">
 
@@ -157,7 +170,7 @@ You might want to display different skin depending on the <abbr title="Uniform R
 </p>
 
 <p>
-To achieve this, you can create a rule in the Manager: select <code>General Parameters</code> &gt; <code>Portal</code> &gt; <code>Customization</code> &gt; <code>Skin display rules</code> on click on “New key”. Then fill the two fields;
+To achieve this, you can create a rule in the Manager: select <code>General Parameters</code> &gt; <code>Portal</code> &gt; <code>Customization</code> &gt; <code>Skin display rules</code> on click on &quot;New key&quot;. Then fill the two fields;
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Rule</strong>: a Perl expression (you can use %ENV hash to get environment variables, or $_url to get <abbr title="Uniform Resource Locator">URL</abbr> called before redirection, or $ipAddr to use user <abbr title="Internet Protocol">IP</abbr> address). If the rule evaluation is true,  the corresponding skin is applied.</div>
@@ -167,7 +180,7 @@ To achieve this, you can create a rule in the Manager: select <code>General Para
 </ul>
 
 </div>
-<!-- EDIT7 SECTION "Skin rules" [1495-2137] -->
+<!-- EDIT7 SECTION "Skin rules" [1863-2505] -->
 <h3 class="sectionedit8" id="skin_files">Skin files</h3>
 <div class="level3">
 
@@ -190,7 +203,7 @@ A skin will often refer to the <code>common</code> skin, which is not a real ski
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Skin files" [2138-2472] -->
+<!-- EDIT8 SECTION "Skin files" [2506-2840] -->
 <h3 class="sectionedit9" id="skin_customization">Skin customization</h3>
 <div class="level3">
 <div class="noteimportant">If you modify directly the skin files, your modifications will certainly be erased on the next upgrade. The best is to create your own skin, based on an existing skin.
@@ -263,7 +276,7 @@ To configure your new skin in Manager, select the custom skin, and enter your sk
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set portalSkin &#039;myskin&#039; portalSkinBackground &#039;&#039;</pre>
 
 </div>
-<!-- EDIT9 SECTION "Skin customization" [2473-4450] -->
+<!-- EDIT9 SECTION "Skin customization" [2841-4818] -->
 <h3 class="sectionedit10" id="messages">Messages</h3>
 <div class="level3">
 
@@ -314,7 +327,7 @@ You can also create a file called <code>all.json</code> to override messages in 
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Messages" [4451-5587] -->
+<!-- EDIT10 SECTION "Messages" [4819-5955] -->
 <h3 class="sectionedit11" id="menu_tabs">Menu tabs</h3>
 <div class="level3">
 
@@ -330,7 +343,7 @@ This will allow one to display the tab directly with this <abbr title="Uniform R
 </p>
 
 </div>
-<!-- EDIT11 SECTION "Menu tabs" [5588-5894] -->
+<!-- EDIT11 SECTION "Menu tabs" [5956-6262] -->
 <h3 class="sectionedit12" id="template_parameters">Template parameters</h3>
 <div class="level3">
 
@@ -358,7 +371,7 @@ You can also display environment variables, with the prefix <code>env_</code>:
 <pre class="code file html4strict">Your IP is <span class="sc2">&lt;TMPL_VAR <span class="kw3">NAME</span><span class="sy0">=</span><span class="st0">&quot;env_REMOTE_ADDR&quot;</span>&gt;</span></pre>
 
 </div>
-<!-- EDIT12 SECTION "Template parameters" [5895-6542] -->
+<!-- EDIT12 SECTION "Template parameters" [6263-6910] -->
 <h2 class="sectionedit13" id="buttons">Buttons</h2>
 <div class="level2">
 
@@ -375,9 +388,14 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT13 SECTION "Buttons" [6543-7059] -->
+<!-- EDIT13 SECTION "Buttons" [6911-7427] -->
 <h2 class="sectionedit14" id="password_management">Password management</h2>
 <div class="level2">
+
+</div>
+<!-- EDIT14 SECTION "Password management" [7428-7460] -->
+<h3 class="sectionedit15" id="general">General</h3>
+<div class="level3">
 <ul>
 <li class="level1"><div class="li"> <strong>Require old password</strong>: used only in the password changing module of the menu, will check the old password before updating it</div>
 </li>
@@ -388,8 +406,26 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT14 SECTION "Password management" [7060-7510] -->
-<h2 class="sectionedit15" id="other_parameters">Other parameters</h2>
+<!-- EDIT15 SECTION "General" [7461-7896] -->
+<h3 class="sectionedit16" id="password_policy">Password Policy</h3>
+<div class="level3">
+<div class="notetip">Available since version 2.0.6
+</div><ul>
+<li class="level1"><div class="li"> <strong>Minimal size</strong>: leave 0 to bypass the check</div>
+</li>
+<li class="level1"><div class="li"> <strong>Minimal lower characters</strong>: leave 0 to bypass the check</div>
+</li>
+<li class="level1"><div class="li"> <strong>Minimal upper characters</strong>: leave 0 to bypass the check</div>
+</li>
+<li class="level1"><div class="li"> <strong>Minimal digit characters</strong>: leave 0 to bypass the check</div>
+</li>
+<li class="level1"><div class="li"> <strong>Display policy in password form</strong>: enable this to display an information message about password policy constraints</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT16 SECTION "Password Policy" [7897-8329] -->
+<h2 class="sectionedit17" id="other_parameters">Other parameters</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>User attribute</strong>: which session attribute will be used to display <code>Connected as</code> in the menu</div>
@@ -400,13 +436,13 @@ This node allows one to enable/disable buttons on the login page:
 </li>
 <li class="level1"><div class="li"> <strong>Ping interval</strong>: Number of milliseconds between each ping (Ajax request) on the portal menu. Set to 0 to dismiss checks.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Show error on expired session</strong>: Display the error “Session expired”, which stops the authentication process. This is enabled by default but can be disabled to prevent transparent authentication (like SSL or Kerberos) to be stopped.</div>
+<li class="level1"><div class="li"> <strong>Show error on expired session</strong>: Display the error &quot;Session expired&quot;, which stops the authentication process. This is enabled by default but can be disabled to prevent transparent authentication (like SSL or Kerberos) to be stopped.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Show error on mail not found</strong>: Display error if provided mail is not found in password reset by mail process. Disabled by default to prevent mail enumeration from this page.</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT15 SECTION "Other parameters" [7511-] --></div>
+<!-- EDIT17 SECTION "Other parameters" [8330-] --></div>
 </body>
 </html>

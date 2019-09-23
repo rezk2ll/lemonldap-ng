@@ -96,11 +96,11 @@ similar, using whatever attribute makes sense to you.  For example:<pre class="c
 </li>
 <li class="level1"><div class="li"> Now go to *Variables -&gt; Macros*.  Here set up variables which will be computed based on the attributes you exported above.  You will need to emit strings in this format <code>arn:aws:iam::account-number:role/role-name1,arn:aws:iam::account-number:saml-provider/provider-name</code>. The parts you need to change are <code>account-number</code>, <code>role-name1</code> and <code>provier-name</code>. The last two will be the provider name and role names you just set up in AWS.</div>
 </li>
-<li class="level1"><div class="li"> Perl works in here, so something like this is valid:  <code>aws_eu_role</code> -&gt;  <code>$ou =~ sysadmin ? “arn:aws...” : “arn:...”</code></div>
+<li class="level1"><div class="li"> Perl works in here, so something like this is valid:  <code>aws_eu_role</code> -&gt;  <code>$ou =~ sysadmin ? &quot;arn:aws...&quot; : &quot;arn:...&quot;</code></div>
 </li>
 <li class="level1"><div class="li"> If it easier, split multiple roles into different macros.  Then tie all the variables you define together into one string concatenating them  with whatever is in General Parameters -&gt; Advanced Parameters -&gt; Separator. Actually click into this field and move around with the arrow keys to see if there is a space, since spaces can be part of the separator.</div>
 </li>
-<li class="level1"><div class="li"> Remember macros are defined alphanumerically, so you want one right at the end, like <code>z_aws_roles</code> -&gt; <code>join(“; ”, $role_name1, $role_name2, ...)</code></div>
+<li class="level1"><div class="li"> Remember macros are defined alphanumerically, so you want one right at the end, like <code>z_aws_roles</code> -&gt; <code>join(&quot;; &quot;, $role_name1, $role_name2, ...)</code></div>
 </li>
 <li class="level1"><div class="li"> On the left again, click <code><abbr title="Security Assertion Markup Language">SAML</abbr> service providers</code>, then <code>Add <abbr title="Security Assertion Markup Language">SAML</abbr> SP</code>.</div>
 </li>

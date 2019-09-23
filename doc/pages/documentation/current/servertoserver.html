@@ -60,7 +60,7 @@ In modern applications, web application may need to request some other web appli
 </ul>
 
 <p>
-The “Bad” method consists to give the token (cookie value) to WebApp1 which uses it as cookie header in its request. Since 2.0 version, <abbr title="LemonLDAP::NG">LL::NG</abbr> gives a better way (the Good !) to do this by using limited scope tokens.
+The &quot;Bad&quot; method consists to give the token (cookie value) to WebApp1 which uses it as cookie header in its request. Since 2.0 version, <abbr title="LemonLDAP::NG">LL::NG</abbr> gives a better way (the Good !) to do this by using limited scope tokens.
 </p>
 
 <p>
@@ -80,7 +80,7 @@ Tokens are time limited (30 seconds by default) and <abbr title="Uniform Resourc
 Select <strong>Main</strong> handler type to protect WebApp1 and
 insert a header named <strong>X-Llng-Token</strong> filled with this value:
 </p>
-<pre class="code file perl">token<span class="br0">&#40;</span> <span class="re0">$_session_id</span><span class="sy0">,</span> <span class="st_h">'webapp2.example.com'</span><span class="sy0">,</span> <span class="st_h">'webapp3.example.com'</span><span class="sy0">,</span> <span class="st_h">'serviceHeader1=webapp1.example.com'</span><span class="sy0">,</span> <span class="st_h">'testHeader=$uid'</span> <span class="br0">&#41;</span></pre>
+<pre class="code file perl">token<span class="br0">&#40;</span> <span class="re0">$_session_id</span><span class="sy0">,</span> <span class="st_h">'webapp2.example.com'</span><span class="sy0">,</span> <span class="st_h">'webapp3.example.com'</span><span class="sy0">,</span> <span class="st_h">'serviceHeader1=webapp1.example.com'</span><span class="sy0">,</span> <span class="st0">&quot;testHeader=$uid&quot;</span> <span class="br0">&#41;</span></pre>
 
 <p>
 WebApp1 can read this header and use it in its requests by setting the <code>X-Llng-Token</code> header. The token is built by using the session ID and authorized virtualhosts list. By default, the Service Token is only available during 30 seconds and for specified virtualhosts. The token can be use to send service headers to webapp2 like origin host by example.

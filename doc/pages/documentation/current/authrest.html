@@ -121,7 +121,15 @@ Then, go in <code>REST parameters</code> and you just have to set REST <abbr tit
 <div class="level2">
 
 <p>
-REST web services have just to respond with a “result” key in a JSON file. Auth/UserDB can add an “info” array that will be stored in session data (without reading “Exported variables”).
+LemonLDAP::NG will call the endpoints you declared at various steps during the login process.
+</p>
+
+<p>
+The request performed by LemonLDAP::NG is a POST on the <abbr title="Uniform Resource Locator">URL</abbr> you specified, the content of the POST is a JSON document (<code>Content-Type: application/json</code>).
+</p>
+
+<p>
+REST web services must respond with a success HTTP code (200), and the response must be a JSON document containing a <code>result</code> key.  Auth/UserDB endpoints can add an <code>info</code> array that will be stored in session data (without reading &quot;Exported variables&quot;).
 </p>
 <div class="table sectionedit7"><table class="inline table table-bordered table-striped">
 	<thead>
@@ -130,19 +138,19 @@ REST web services have just to respond with a “result” key in a JSON file. A
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  Authentication <abbr title="Uniform Resource Locator">URL</abbr>  </td><td class="col1"> JSON file: <code>{“user”:$user,“password”:$password}</code> </td><td class="col2"> JSON file: <code>{“result”:true/false,“info”:{...}}</code> </td>
+		<td class="col0 centeralign">  Authentication <abbr title="Uniform Resource Locator">URL</abbr>  </td><td class="col1"> <code>{&quot;user&quot;:$user,&quot;password&quot;:$password}</code> </td><td class="col2"> <code>{&quot;result&quot;:true/false,&quot;info&quot;:{...}}</code> </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  User data <abbr title="Uniform Resource Locator">URL</abbr>  </td><td class="col1"> JSON file: <code>{“user”:$user}</code> </td><td class="col2"> JSON file: <code>{“result”:true/false,“info”:{“uid”:“dwho”,...}}</code> </td>
+		<td class="col0 centeralign">  User data <abbr title="Uniform Resource Locator">URL</abbr>  </td><td class="col1"> <code>{&quot;user&quot;:$user}</code> </td><td class="col2"> <code>{&quot;result&quot;:true/false,&quot;info&quot;:{&quot;uid&quot;:&quot;dwho&quot;,...}}</code> </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 centeralign">  Password confirmation <abbr title="Uniform Resource Locator">URL</abbr>  </td><td class="col1"> JSON file: <code>{“user”:$user,“password”:$password}</code> </td><td class="col2"> JSON file: <code>{“result”:true/false}</code> </td>
+		<td class="col0 centeralign">  Password confirmation <abbr title="Uniform Resource Locator">URL</abbr>  </td><td class="col1"> <code>{&quot;user&quot;:$user,&quot;password&quot;:$password}</code> </td><td class="col2"> <code>{&quot;result&quot;:true/false}</code> </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0 centeralign">  Password change <abbr title="Uniform Resource Locator">URL</abbr>  </td><td class="col1"> JSON file: <code>{“user”:$user,“password”:$password}</code> </td><td class="col2"> JSON file: <code>{“result”:true/false}</code> </td>
+		<td class="col0 centeralign">  Password change <abbr title="Uniform Resource Locator">URL</abbr>  </td><td class="col1"> <code>{&quot;user&quot;:$user,&quot;password&quot;:$password}</code> </td><td class="col2"> <code>{&quot;result&quot;:true/false}</code> </td>
 	</tr>
 </table></div>
-<!-- EDIT7 TABLE [1025-1546] --><div class="notetip">To have just one call, you can only set REST authentication, set datas in “info” key response and set Null as User Database.
+<!-- EDIT7 TABLE [1348-1781] --><div class="notetip">To have only one REST call during the login process, you can set REST only as an Authentication backend, configure Null as your User Database, and make sure the REST authentication <abbr title="Uniform Resource Locator">URL</abbr> send all your user attributes in the <code>info</code> response key 
 </div>
 </div>
 <!-- EDIT6 SECTION "REST Dialog" [812-] --></div>

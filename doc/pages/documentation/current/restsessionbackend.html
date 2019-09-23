@@ -64,6 +64,10 @@
 <div class="level1">
 
 <p>
+Session &lt;type&gt; can be &#039;global&#039; for <abbr title="Single Sign On">SSO</abbr> sessions or &#039;persistent&#039; for persistent sessions.
+</p>
+
+<p>
 <abbr title="LemonLDAP::NG">LL::NG</abbr> portal provides REST end points for sessions management:
 </p>
 <ul>
@@ -97,7 +101,7 @@ Sessions for connected users <em>(used by <a href="authproxy.html" class="wikili
 Authorizations for connected users (always enabled):
 </p>
 <ul>
-<li class="level1"><div class="li"> GET /mysession/?authorizationfor=&lt;base64-encoded-url&gt;: ask if url is authorized</div>
+<li class="level1"><div class="li"> GET /mysession/?authorizationfor=&lt;base64-encoded-url&gt;: ask if url is authorizated</div>
 </li>
 </ul>
 
@@ -114,12 +118,12 @@ To configure it, REST session backend will be set trough Manager in global confi
 </p>
 
 </div>
-<!-- EDIT1 SECTION "REST session backend" [1-1432] -->
+<!-- EDIT1 SECTION "REST session backend" [1-1522] -->
 <h2 class="sectionedit2" id="setup">Setup</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT2 SECTION "Setup" [1433-1451] -->
+<!-- EDIT2 SECTION "Setup" [1523-1541] -->
 <h3 class="sectionedit3" id="manager">Manager</h3>
 <div class="level3">
 
@@ -152,10 +156,10 @@ Then, set <code>Lemonldap::NG::Common::Apache::Session::REST</code> in <code>Gen
 		<td class="col0 centeralign">  <strong>password</strong>  </td><td class="col1"> Password to use for auth basic mechanism </td><td class="col2 leftalign">   </td>
 	</tr>
 </table></div>
-<!-- EDIT4 TABLE [1790-2116] --><div class="noteimportant">By default, user password and other secret keys are hidden by LLNG REST server. You can force REST server to export their real values by selecting “Export secret attributes in REST” in the manager. This less secure option is disabled by default.
+<!-- EDIT4 TABLE [1880-2206] --><div class="noteimportant">By default, user password and other secret keys are hidden by LLNG REST server. You can force REST server to export their real values by selecting &quot;Export secret attributes in REST&quot; in the manager. This less secure option is disabled by default.
 </div>
 </div>
-<!-- EDIT3 SECTION "Manager" [1452-2386] -->
+<!-- EDIT3 SECTION "Manager" [1542-2476] -->
 <h3 class="sectionedit5" id="apache">Apache</h3>
 <div class="level3">
 
@@ -168,7 +172,7 @@ Sessions REST end points access must be allowed in Apache portal configuration (
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT5 SECTION "Apache" [2387-2677] -->
+<!-- EDIT5 SECTION "Apache" [2477-2767] -->
 <h3 class="sectionedit6" id="real_session_backend">Real session backend</h3>
 <div class="level3">
 
@@ -182,7 +186,7 @@ For example, if real sessions are stored in <a href="filesessionbackend.html" cl
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
 <span class="re1">globalStorage</span> <span class="sy0">=</span><span class="re2"> Apache::Session::File</span>
 <span class="re1">globalStorageOptions</span> <span class="sy0">=</span><span class="re2"> <span class="br0">&#123;</span> 'Directory' <span class="sy0">=</span>&gt; '/var/lib/lemonldap-ng/sessions/', 'LockDirectory' <span class="sy0">=</span>&gt; '/var/lib/lemonldap-ng/sessions/lock/', <span class="br0">&#125;</span></span></pre>
-<div class="notetip">Session explorer and “single session” features can&#039;t be used using this backend. Session explorer and portal must be launched with real backend.
+<div class="notetip">Session explorer and &quot;single session&quot; features can&#039;t be used using this backend. Session explorer and portal must be launched with real backend.
 </div>
 <p>
 By default, only few sessions keys are shared by REST (authenticationLevel, groups, ipAddr, _startTime, _utime, _lastSeen, _session_id), you need to define which other keys you want to share in <code>General parameters</code> » <code>Plugins</code> » <code>Portal servers</code> » <code>SOAP/REST exported attributes</code>.
@@ -199,6 +203,6 @@ To share only the listed attributes:
 <pre class="code">authenticationLevel groups ipAddr _startTime _utime _lastSeen _session_id uid cn mail</pre>
 
 </div>
-<!-- EDIT6 SECTION "Real session backend" [2678-] --></div>
+<!-- EDIT6 SECTION "Real session backend" [2768-] --></div>
 </body>
 </html>

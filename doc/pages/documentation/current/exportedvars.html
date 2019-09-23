@@ -106,7 +106,7 @@ Macros and groups are calculated during authentication process by the portal:
 </li>
 <li class="level1"><div class="li"> macros can also be used to import environment variables <em>(these variables are in CGI format)</em>. Example: <code>$ENV{HTTP_COOKIE}</code></div>
 </li>
-<li class="level1"><div class="li"> groups are stored as space-separated strings in the special attribute “groups”: it contains the names of groups whose rules were returned true for the current user</div>
+<li class="level1"><div class="li"> groups are stored as space-separated strings in the special attribute &quot;groups&quot;: it contains the names of groups whose rules were returned true for the current user</div>
 </li>
 <li class="level1"><div class="li"> You can also get groups in <code>$hGroups</code> which is a Hash Reference of this form:</div>
 </li>
@@ -152,7 +152,7 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 <span class="co1"># Or with hGroups</span>
 <span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <a href="http://perldoc.perl.org/functions/defined.html"><span class="kw3">defined</span></a> <span class="re0">$hGroups</span><span class="sy0">-&gt;</span><span class="br0">&#123;</span><span class="st_h">'admin'</span><span class="br0">&#125;</span></pre>
 <div class="noteclassic">Groups are computed after macros, so a group rule may involve a macro value.
-</div><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
+</div><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro &quot;macro1&quot; will be computed before macro &quot;macro2&quot;: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
 </div>
 </div>
 <!-- EDIT6 PLUGIN_INCLUDE_END "documentation:2.0:performances" [0-] --></div>

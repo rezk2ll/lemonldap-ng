@@ -70,7 +70,7 @@ This plugin can be used to append a second factor authentication device like SMS
 <div class="level3">
 
 <p>
-All parameters are set in “General Parameters » Portal Parameters » Second Factors » REST 2nd Factor”.
+All parameters are set in &quot;General Parameters » Portal Parameters » Second Factors » REST 2nd Factor&quot;.
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Activation</strong></div>
@@ -83,14 +83,16 @@ All parameters are set in “General Parameters » Portal Parameters » Second F
 </li>
 <li class="level1"><div class="li"> <strong>Verify arguments</strong>: list of arguments to send <em>(see below)</em></div>
 </li>
-<li class="level1"><div class="li"> <strong>Authentication Level</strong>: if you want to overwrite the value sent by your authentication module, you can define here a new authentication level. Example: 5</div>
+<li class="level1"><div class="li"> <strong>Authentication level</strong> (Optional): if you want to overwrite the value sent by your authentication module, you can define here the new authentication level. Example: 5</div>
 </li>
-<li class="level1"><div class="li"> <strong>Logo</strong> (optional): logo file <em>(in static/&lt;skin&gt; directory)</em></div>
+<li class="level1"><div class="li"> <strong>Logo</strong> (Optional): logo file <em>(in static/&lt;skin&gt; directory)</em></div>
+</li>
+<li class="level1"><div class="li"> <strong>Label</strong> (Optional): label that should be displayed to the user on the choice screen</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Configuration" [199-908] -->
+<!-- EDIT2 SECTION "Configuration" [199-1010] -->
 <h2 class="sectionedit3" id="arguments">Arguments</h2>
 <div class="level2">
 
@@ -100,12 +102,12 @@ Arguments are a list of key/value. Key is the name of JSON entry, value is attri
 <div class="noteimportant">For Verify <abbr title="Uniform Resource Locator">URL</abbr>, you should send $code at least
 </div>
 </div>
-<!-- EDIT3 SECTION "Arguments" [909-1103] -->
+<!-- EDIT3 SECTION "Arguments" [1011-1205] -->
 <h2 class="sectionedit4" id="rest_dialog">REST Dialog</h2>
 <div class="level2">
 
 <p>
-REST web services have just to reply with a “result” key in a JSON file. Auth/UserDB can add an “info” array. It will be stored in session data (without reading “Exported variables”).
+REST web services have just to reply with a &quot;result&quot; key in a JSON file. Auth/UserDB can add an &quot;info&quot; array. It will be stored in session data (without reading &quot;Exported variables&quot;).
 </p>
 <div class="table sectionedit5"><table class="inline table table-bordered table-striped">
 	<thead>
@@ -114,14 +116,14 @@ REST web services have just to reply with a “result” key in a JSON file. Aut
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  Init <abbr title="Uniform Resource Locator">URL</abbr>  </td><td class="col1"> JSON file: <code>{“user”:$user,...}</code> </td><td class="col2"> JSON file: <code>{“result”:true/false}</code> </td>
+		<td class="col0 centeralign">  Init <abbr title="Uniform Resource Locator">URL</abbr>  </td><td class="col1"> JSON file: <code>{&quot;user&quot;:$user,...}</code> </td><td class="col2"> JSON file: <code>{&quot;result&quot;:true/false}</code> </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  Verify <abbr title="Uniform Resource Locator">URL</abbr>  </td><td class="col1"> JSON file: <code>{“user”:$user,“code”:“$code”,...}</code> </td><td class="col2"> JSON file: <code>{“result”:true/false}</code> </td>
+		<td class="col0 centeralign">  Verify <abbr title="Uniform Resource Locator">URL</abbr>  </td><td class="col1"> JSON file: <code>{&quot;user&quot;:$user,&quot;code&quot;:&quot;$code&quot;,...}</code> </td><td class="col2"> JSON file: <code>{&quot;result&quot;:true/false}</code> </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [1314-1543] -->
+<!-- EDIT5 TABLE [1416-1645] -->
 </div>
-<!-- EDIT4 SECTION "REST Dialog" [1104-] --></div>
+<!-- EDIT4 SECTION "REST Dialog" [1206-] --></div>
 </body>
 </html>

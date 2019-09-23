@@ -132,11 +132,19 @@ After configuring <abbr title="Security Assertion Markup Language">SAML</abbr> S
 </p>
 
 <p>
-They are available at the EntityID <abbr title="Uniform Resource Locator">URL</abbr>, by default: <a href="http://auth.example.com/saml/metadata" class="urlextern" title="http://auth.example.com/saml/metadata"  rel="nofollow">http://auth.example.com/saml/metadata</a>. You can also use <a href="http://auth.example.com/saml/metadata/idp" class="urlextern" title="http://auth.example.com/saml/metadata/idp"  rel="nofollow">http://auth.example.com/saml/metadata/idp</a> to have only IDP related metadata.
+They are available at the Metadata <abbr title="Uniform Resource Locator">URL</abbr>, by default: <a href="http://auth.example.com/saml/metadata" class="urlextern" title="http://auth.example.com/saml/metadata"  rel="nofollow">http://auth.example.com/saml/metadata</a>. 
+</p>
+
+<p>
+You can also use <a href="http://auth.example.com/saml/metadata/idp" class="urlextern" title="http://auth.example.com/saml/metadata/idp"  rel="nofollow">http://auth.example.com/saml/metadata/idp</a> to have only IDP related metadata.
+</p>
+
+<p>
+In both cases, the entityID of the LemonLDAP::NG server is <a href="http://auth.example.com/saml/metadata" class="urlextern" title="http://auth.example.com/saml/metadata"  rel="nofollow">http://auth.example.com/saml/metadata</a>
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Register LemonLDAP::NG on partner Service Provider" [848-1186] -->
+<!-- EDIT6 SECTION "Register LemonLDAP::NG on partner Service Provider" [848-1286] -->
 <h3 class="sectionedit7" id="register_partner_service_provider_on_lemonldapng">Register partner Service Provider on LemonLDAP::NG</h3>
 <div class="level3">
 
@@ -185,7 +193,7 @@ For each attribute, you can set:
 </li>
 <li class="level1"><div class="li"> <strong>Friendly Name</strong>: optional, <abbr title="Security Assertion Markup Language">SAML</abbr> attribute friendly name.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Mandatory</strong>: if set to “On”, then this attribute is required to build the <abbr title="Security Assertion Markup Language">SAML</abbr> response, an error will displayed if there is no value for it. Optional attribute will be sent only if there is a value associated. Else it just will be sent trough an attribute response, if explicitly requested in an attribute request.</div>
+<li class="level1"><div class="li"> <strong>Mandatory</strong>: if set to &quot;On&quot;, then this attribute is required to build the <abbr title="Security Assertion Markup Language">SAML</abbr> response, an error will displayed if there is no value for it. Optional attribute will be sent only if there is a value associated. Else it just will be sent trough an attribute response, if explicitly requested in an attribute request.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Format</strong>: optional, <abbr title="Security Assertion Markup Language">SAML</abbr> attribute format.</div>
 </li>
@@ -276,7 +284,7 @@ For example: <a href="http://auth.example.com/saml/singleSignOn?IDPInitiated=1&a
 
 </div>
 </div>
-<!-- EDIT7 SECTION "Register partner Service Provider on LemonLDAP::NG" [1187-4922] -->
+<!-- EDIT7 SECTION "Register partner Service Provider on LemonLDAP::NG" [1287-5022] -->
 <h2 class="sectionedit8" id="known_issues">Known issues</h2>
 <div class="level2">
 
@@ -285,6 +293,6 @@ Using both Issuer::<abbr title="Security Assertion Markup Language">SAML</abbr> 
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Known issues" [4923-] --></div>
+<!-- EDIT8 SECTION "Known issues" [5023-] --></div>
 </body>
 </html>

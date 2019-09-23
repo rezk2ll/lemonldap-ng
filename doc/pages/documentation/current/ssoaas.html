@@ -96,7 +96,7 @@ Headers setting is an another <abbr title="LemonLDAP::NG">LL::NG</abbr> service.
 </p>
 
 <p>
-<code>*aaS</code> means that application can drive underlying layer (IaaS for infrastructure, PaaS for platform,…). So for us, <code>SSOaaS</code> must provide the ability for an app to <em class="u">manage authorizations</em> and choose <em class="u">user attributes</em> to set. Authentication can not be really “*aaS”: app must just use it, not manage it.
+<code>*aaS</code> means that application can drive underlying layer (IaaS for infrastructure, PaaS for platform,…). So for us, <code>SSOaaS</code> must provide the ability for an app to <em class="u">manage authorizations</em> and choose <em class="u">user attributes</em> to set. Authentication can not be really &quot;*aaS&quot;: app must just use it, not manage it.
 </p>
 
 <p>
@@ -114,16 +114,24 @@ There are two different architectures to do this:
 </ul>
 
 <p>
+Example of a global FastCGI architecture:
+</p>
+
+<p>
+<a href="documentation/devops.png_documentation_2.0_ssoaas.html" class="media" title="documentation:devops.png"><img src="documentation/devops.png" class="media" alt="" /></a>
+</p>
+
+<p>
 In both case, Handler type must be set to <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps</a>.
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Our concept of SSOaaS" [42-1764] -->
+<!-- EDIT2 SECTION "Our concept of SSOaaS" [42-1839] -->
 <h2 class="sectionedit3" id="examples_of_webserver_configuration_for_dockervm_images">Examples of webserver configuration for Docker/VM images</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Examples of webserver configuration for Docker/VM images" [1765-1834] -->
+<!-- EDIT3 SECTION "Examples of webserver configuration for Docker/VM images" [1840-1909] -->
 <h3 class="sectionedit4" id="using_a_global_fastcgi_or_uwsgi_server">Using a global FastCGI (or uWSGI) server</h3>
 <div class="level3">
 
@@ -184,14 +192,28 @@ In this example, web server templates (Nginx only) are configured to request aut
 <div class="level4">
 
 <p>
-There is an experimental FactCGI client in LLNG. You just have to install FCGI::Client and add this in your apache2.conf:
+There is an experimental FactCGI client in LLNG. You just have to install FCGI::Client and add this in the apache2.conf or your web applications or proxies.
+</p>
+
+<p>
+The following configuration example assumes that you are in a &quot;central FastCGI&quot; configuration.
 </p>
 <dl class="file">
 <dt><a href="_export/code/documentation/2.0/ssoaas/codeblock.1.code" title="Download Snippet" class="mediafile mf_conf">apache2.conf</a></dt>
 <dd><pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> ...&gt;
+    <span class="kw1">ServerName</span> app.tls
     PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2::FCGIClient
-    PerlSetVar LLNG_SERVER 127.0.0.1:<span class="nu0">9090</span>
+&nbsp;
+    <span class="co1"># This must point to the central FastCGI server</span>
+    PerlSetVar LLNG_SERVER 192.0.2.1:<span class="nu0">9090</span>
+&nbsp;
+    <span class="co1"># Declare this vhost as a DevOps vhost, so that we do not have</span>
+    <span class="co1"># to declare it in the LemonLDAP::NG Manager</span>
     PerlSetVar VHOSTTYPE DevOps
+&nbsp;
+    <span class="co1"># This URL will be fetched by the central FastCGI server and</span>
+    <span class="co1"># used to make the authentication decision about this virtualhost</span>
+    <span class="co1"># Make sure the central FastCGI server can reach it</span>
     PerlSetVar RULES_URL http://app.tld/rules.json
     ...
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
@@ -272,7 +294,7 @@ builder
 </dd></dl>
 
 </div>
-<!-- EDIT4 SECTION "Using a global FastCGI (or uWSGI) server" [1835-5202] -->
+<!-- EDIT4 SECTION "Using a global FastCGI (or uWSGI) server" [1910-5805] -->
 <h3 class="sectionedit5" id="using_front_reverse-proxies">Using front reverse-proxies</h3>
 <div class="level3">
 
@@ -324,6 +346,6 @@ This configuration handles <code>*.dev.sso.my.domain</code> <abbr title="Uniform
 </dd></dl>
 
 </div>
-<!-- EDIT5 SECTION "Using front reverse-proxies" [5203-] --></div>
+<!-- EDIT5 SECTION "Using front reverse-proxies" [5806-] --></div>
 </body>
 </html>

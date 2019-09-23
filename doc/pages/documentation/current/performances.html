@@ -76,6 +76,7 @@
 </ul>
 </li>
 <li class="level2"><div class="li"><a href="#ldap_performances">LDAP performances</a></div></li>
+<li class="level2"><div class="li"><a href="#nginx_performances">NGINX performances</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#manager_performances">Manager performances</a></div>
@@ -118,7 +119,7 @@ LLNG uses different cache systems to avoid querying to many the databases:
 	</tr>
 	</thead>
 	<tr class="row2 roweven">
-		<th class="col0 centeralign">  Configuration  </th><td class="col1 centeralign">     <code>checkTime</code>          </td><td class="col2 centeralign">  10 minutes  </td><td class="col3 leftalign">                     </td><td class="col4 centeralign">  Until “reload” order  </td><td class="col5 centeralign">  ✔   </td>
+		<th class="col0 centeralign">  Configuration  </th><td class="col1 centeralign">     <code>checkTime</code>          </td><td class="col2 centeralign">  10 minutes  </td><td class="col3 leftalign">                     </td><td class="col4 centeralign">  Until &quot;reload&quot; order  </td><td class="col5 centeralign">  ✔   </td>
 	</tr>
 	<tr class="row3 rowodd">
 		<th class="col0 centeralign">     Session     </th><td class="col1 centeralign">  <code>handlerInternalCache</code>  </td><td class="col2 centeralign">  15 seconds  </td><td class="col3 centeralign">  <code>default_expires_in</code>(*)  </td><td class="col4 centeralign">   10 minutes   </td><td class="col5 centeralign">  ✔   </td>
@@ -175,7 +176,7 @@ For Nginx, you can use another auth server instead of llng-fastcgi-server. See: 
 </p>
 
 <p>
-To increase handler performance, you can disable “Sessions activity timeout” to prevent it from writing to the session database.
+To increase handler performance, you can disable &quot;Sessions activity timeout&quot; to prevent it from writing to the session database.
 </p>
 
 <p>
@@ -195,7 +196,7 @@ Macros and groups are calculated during authentication process by the portal:
 </li>
 <li class="level1"><div class="li"> macros can also be used to import environment variables <em>(these variables are in CGI format)</em>. Example: <code>$ENV{HTTP_COOKIE}</code></div>
 </li>
-<li class="level1"><div class="li"> groups are stored as space-separated strings in the special attribute “groups”: it contains the names of groups whose rules were returned true for the current user</div>
+<li class="level1"><div class="li"> groups are stored as space-separated strings in the special attribute &quot;groups&quot;: it contains the names of groups whose rules were returned true for the current user</div>
 </li>
 <li class="level1"><div class="li"> You can also get groups in <code>$hGroups</code> which is a Hash Reference of this form:</div>
 </li>
@@ -241,7 +242,7 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 <span class="co1"># Or with hGroups</span>
 <span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <a href="http://perldoc.perl.org/functions/defined.html"><span class="kw3">defined</span></a> <span class="re0">$hGroups</span><span class="sy0">-&gt;</span><span class="br0">&#123;</span><span class="st_h">'admin'</span><span class="br0">&#125;</span></pre>
 <div class="noteclassic">Groups are computed after macros, so a group rule may involve a macro value.
-</div><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
+</div><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro &quot;macro1&quot; will be computed before macro &quot;macro2&quot;: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
 </div>
 </div>
 <!-- EDIT8 SECTION "Macros and groups" [2377-4471] -->
@@ -307,7 +308,7 @@ Lemonldap::NG handlers use a local cache to store sessions (for 10 minutes). So 
 <div class="level4">
 
 <p>
-In “Apache::Session module” field, set “<a href="https://metacpan.org/module/Apache::Session::Flex" class="urlextern" title="https://metacpan.org/module/Apache::Session::Flex"  rel="nofollow">Apache::Session::Flex</a>” and use the following parameters:
+In &quot;Apache::Session module&quot; field, set &quot;<a href="https://metacpan.org/module/Apache::Session::Flex" class="urlextern" title="https://metacpan.org/module/Apache::Session::Flex"  rel="nofollow">Apache::Session::Flex</a>&quot; and use the following parameters:
 </p>
 <pre class="code">Store      -&gt; MySQL
 Lock       -&gt; Null
@@ -324,7 +325,7 @@ Password   -&gt; ...</pre>
 <div class="level4">
 
 <p>
-<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> is a wrapper for other Apache::Session modules that add the capability to manage indexes. Prefer versions ≥ 1.2.5 for better performances in DB cleaning. To use it (with PostgreSQL for example), choose “Apache::Session::Browseable::Postgres” as “Apache::Session module” and use the following parameters:
+<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> is a wrapper for other Apache::Session modules that add the capability to manage indexes. Prefer versions ≥ 1.2.5 for better performances in DB cleaning. To use it (with PostgreSQL for example), choose &quot;Apache::Session::Browseable::Postgres&quot; as &quot;Apache::Session module&quot; and use the following parameters:
 </p>
 <pre class="code">DataSource -&gt; dbi:Pg:database=sessions;host=...
 UserName   -&gt; user
@@ -347,7 +348,7 @@ Look at <a href="browseablesessionbackend.html" class="wikilink1" title="documen
 <div class="notetip">A <a href="https://metacpan.org/module/Apache::Session::Browseable::Redis" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> has been created, it is the fastest (except for session explorer, defeated by Apache::Session::Browseable::<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">DBI</a>/<a href="https://metacpan.org/module/Apache::Session::Browseable::LDAP" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::LDAP"  rel="nofollow">LDAP</a>])
 </div>
 <p>
-This test isn&#039;t an “only-backend” test but embedded some LLNG methods, so real differences between engines are mitigate here.
+This test isn&#039;t an &quot;only-backend&quot; test but embedded some LLNG methods, so real differences between engines are mitigate here.
 </p>
 <div class="table sectionedit13"><table class="inline table table-bordered table-striped">
 	<thead>
@@ -399,9 +400,9 @@ This test isn&#039;t an “only-backend” test but embedded some LLNG methods, 
 	</tr>
 </table></div>
 <!-- EDIT13 TABLE [8945-10848] --><ul>
-<li class="level1"><div class="li"> <em><strong>(1) :</strong> “purge” test is done with Apache::Session::Browseable-1.2.5 and LLG-2.0. Earlier results are not so good.</em></div>
+<li class="level1"><div class="li"> <em><strong>(1) :</strong> &quot;purge&quot; test is done with Apache::Session::Browseable-1.2.5 and LLG-2.0. Earlier results are not so good.</em></div>
 </li>
-<li class="level1"><div class="li"> <em><strong>(2) :</strong> “purge” test is done with Apache::Session::Browseable-1.2.6 and LLG-2.0.</em></div>
+<li class="level1"><div class="li"> <em><strong>(2) :</strong> &quot;purge&quot; test is done with Apache::Session::Browseable-1.2.6 and LLG-2.0.</em></div>
 </li>
 </ul>
 
@@ -409,9 +410,9 @@ This test isn&#039;t an “only-backend” test but embedded some LLNG methods, 
 Analysis:
 </p>
 <ul>
-<li class="level1"><div class="li"> LDAP servers are “write-once-read-many”, so write performances are very bad. Don&#039;t use this on heavy load if “Session activity timeout” is enabled <em>(if set, handler “write” sessions)</em></div>
+<li class="level1"><div class="li"> LDAP servers are &quot;write-once-read-many&quot;, so write performances are very bad. Don&#039;t use this on heavy load if &quot;Session activity timeout&quot; is enabled <em>(if set, handler &quot;write&quot; sessions)</em></div>
 </li>
-<li class="level1"><div class="li"> MySQL/MariaDB is better to read than to write. Prefer PostgreSQL if you use “Session activity timeout”</div>
+<li class="level1"><div class="li"> MySQL/MariaDB is better to read than to write. Prefer PostgreSQL if you use &quot;Session activity timeout&quot;</div>
 </li>
 <li class="level1"><div class="li"> Logged tables decrease a lot insert performances with PostgreSQL, so use unlogged tables for sessions except for persistent sessions</div>
 </li>
@@ -427,7 +428,7 @@ Analysis:
 <div class="level3">
 
 <p>
-LDAP server can slow you down when you use LDAP groups retrieval. You can avoid this by setting “memberOf” fields in your LDAP scheme:
+LDAP server can slow you down when you use LDAP groups retrieval. You can avoid this by setting &quot;memberOf&quot; fields in your LDAP scheme:
 </p>
 <pre class="code ldif"><span class="re0">dn</span>:<span class="re1"> uid=foo,dmdName=people,dc=example,dc=com</span>
 ...
@@ -435,7 +436,7 @@ LDAP server can slow you down when you use LDAP groups retrieval. You can avoid 
 <span class="re0">memberOf</span>:<span class="re1"> cn=su,dmdName=groups,dc=example,dc=com</span></pre>
 
 <p>
-So instead of using LDAP groups retrieval, you just have to store “memberOf” field in your exported variables. With OpenLDAP, you can use the <a href="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance" class="urlextern" title="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance"  rel="nofollow">memberof overlay</a> to do it automatically.
+So instead of using LDAP groups retrieval, you just have to store &quot;memberOf&quot; field in your exported variables. With OpenLDAP, you can use the <a href="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance" class="urlextern" title="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance"  rel="nofollow">memberof overlay</a> to do it automatically.
 </p>
 <div class="noteimportant">Don&#039;t forget to create an index on the field used to find users (uid by default)
 </div><div class="notetip">To avoid having group dn stored in sessions datas, you can use a macro to rewrite memberOf:<ul>
@@ -445,7 +446,7 @@ So instead of using LDAP groups retrieval, you just have to store “memberOf”
 <pre class="code">ldapgroups -&gt; memberOf</pre>
 
 <p>
-For now, ldapgroups contains “cn=admin,dmdName=groups,dc=example,dc=com cn=su,dmdName=groups,dc=example,dc=com”
+For now, ldapgroups contains &quot;cn=admin,dmdName=groups,dc=example,dc=com cn=su,dmdName=groups,dc=example,dc=com&quot;
 </p>
 <ul>
 <li class="level1"><div class="li"> A little macro:</div>
@@ -454,18 +455,54 @@ For now, ldapgroups contains “cn=admin,dmdName=groups,dc=example,dc=com cn=su,
 <pre class="code perl">ldapgroups <span class="sy0">-&gt;</span> <a href="http://perldoc.perl.org/functions/join.html"><span class="kw3">join</span></a><span class="br0">&#40;</span><span class="st0">&quot; &quot;</span><span class="sy0">,</span><span class="br0">&#40;</span><span class="re0">$ldapgroups</span> <span class="sy0">=~</span> <span class="co2">/cn=(.*?),/g</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
 
 <p>
-Now ldapgroups contains “admin su”
+Now ldapgroups contains &quot;admin su&quot;
 </p>
 
 </div>
 </div>
 <!-- EDIT14 SECTION "LDAP performances" [11627-12761] -->
-<h2 class="sectionedit15" id="manager_performances">Manager performances</h2>
+<h3 class="sectionedit15" id="nginx_performances">NGINX performances</h3>
+<div class="level3">
+
+<p>
+To increase launch by web browser, for example to load js, css, or fonts, Gzip compression can be activated.
+</p>
+
+<p>
+Edit file /etc/nginx/mime.types
+Check those lines or add :
+</p>
+<pre class="code perl">application<span class="sy0">/</span>vnd<span class="sy0">.</span>ms<span class="sy0">-</span>fontobject    eot<span class="sy0">;</span>
+application<span class="sy0">/</span>x<span class="sy0">-</span>font<span class="sy0">-</span>ttf           ttf<span class="sy0">;</span>
+application<span class="sy0">/</span>font<span class="sy0">-</span>woff            woff<span class="sy0">;</span>
+font<span class="sy0">/</span>opentype                    ott<span class="sy0">;</span></pre>
+
+<p>
+Edit file /etc/nginx/nginx.conf
+</p>
+<pre class="code perl">gzip on<span class="sy0">;</span> <span class="co1"># active la compression Gzip</span>
+gzip_disable <span class="st0">&quot;msie6&quot;</span><span class="sy0">;</span> 
+&nbsp;
+gzip_vary on<span class="sy0">;</span>
+gzip_proxied any<span class="sy0">;</span>
+gzip_comp_level <span class="nu0">6</span><span class="sy0">;</span>
+gzip_buffers <span class="nu0">16</span> 8k<span class="sy0">;</span>
+gzip_http_version <span class="nu0">1.1</span><span class="sy0">;</span>
+gzip_min_length <span class="nu0">128</span><span class="sy0">;</span>
+gzip_types text<span class="sy0">/</span>plain text<span class="sy0">/</span>css application<span class="sy0">/</span>json application<span class="sy0">/</span>javascript application<span class="sy0">/</span>x<span class="sy0">-</span>javascript text<span class="sy0">/</span>xml application<span class="sy0">/</span>xml application<span class="sy0">/</span>rss<span class="sy0">+</span>xml text<span class="sy0">/</span>javascript application<span class="sy0">/</span>vnd<span class="sy0">.</span>ms<span class="sy0">-</span>fontobject application<span class="sy0">/</span>x<span class="sy0">-</span>font<span class="sy0">-</span>ttf font<span class="sy0">/</span>opentype image<span class="sy0">/</span>jpeg image<span class="sy0">/</span>png image<span class="sy0">/</span>svg<span class="sy0">+</span>xml image<span class="sy0">/</span>x<span class="sy0">-</span>icon<span class="sy0">;</span></pre>
+
+<p>
+Restart NGINX and watch web-browser console.
+</p>
+
+</div>
+<!-- EDIT15 SECTION "NGINX performances" [12762-13684] -->
+<h2 class="sectionedit16" id="manager_performances">Manager performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT15 SECTION "Manager performances" [12762-12795] -->
-<h3 class="sectionedit16" id="disable_unused_modules">Disable unused modules</h3>
+<!-- EDIT16 SECTION "Manager performances" [13685-13718] -->
+<h3 class="sectionedit17" id="disable_unused_modules">Disable unused modules</h3>
 <div class="level3">
 
 <p>
@@ -475,8 +512,8 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
 </div>
-<!-- EDIT16 SECTION "Disable unused modules" [12796-13057] -->
-<h3 class="sectionedit17" id="use_static_html_files">Use static HTML files</h3>
+<!-- EDIT17 SECTION "Disable unused modules" [13719-13980] -->
+<h3 class="sectionedit18" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
 <p>
@@ -502,6 +539,6 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 </p>
 
 </div>
-<!-- EDIT17 SECTION "Use static HTML files" [13058-] --></div>
+<!-- EDIT18 SECTION "Use static HTML files" [13981-] --></div>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:installdeb</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,installdeb"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="installdeb.html"/>
@@ -118,13 +118,14 @@ LemonLDAP::NG provides these packages:
 <div class="level3">
 
 <p>
-If you run Debian testing or unstable, the packages are directly installable:
+If you run Debian stable, testing or unstable, the packages are directly installable:
 </p>
-<pre class="code">apt-cache search lemonldap-ng</pre>
-<div class="noteimportant">Packages from <a href="http://packages.debian.org/search?keywords=lemonldap-ng" class="urlextern" title="http://packages.debian.org/search?keywords=lemonldap-ng"  rel="nofollow">Debian repository</a> may not be up to date. Prefer then the other solutions (see below).
+<pre class="code">apt-get install lemonldap-ng</pre>
+<div class="notetip">Packages from <a href="http://packages.debian.org/search?keywords=lemonldap-ng" class="urlextern" title="http://packages.debian.org/search?keywords=lemonldap-ng"  rel="nofollow">Debian repository</a> may not be up to date but are <strong>security-maintained</strong> by <a href="https://security-team.debian.org/" class="urlextern" title="https://security-team.debian.org/"  rel="nofollow">Debian Security Team</a> for &quot;stable&quot; release and <a href="https://www.debian.org/lts/" class="urlextern" title="https://www.debian.org/lts/"  rel="nofollow">LTS team</a> for &quot;oldstable&quot; release. Then if you don&#039;t need some new features or aren&#039;t concerned by a bug fixed earlier, <strong>this is a good choice</strong>. You can also use <a href="https://backports.debian.org/" class="urlextern" title="https://backports.debian.org/"  rel="nofollow">Debian backports</a> or &quot;testing&quot;/&quot;unstable&quot; packages, team maintained. <a href="documentation.html#packaged_versions" class="wikilink1" title="documentation">Here is the list of Debian versions</a>.
+</div><div class="notewarning">LLNG Ubuntu packages are not in the &quot;universe&quot; but in the &quot;multiverse&quot;. This means they are not security-maintained. If you use them, you should follow our security advisories on lemonldap-ng-users@ow2.org.
 </div>
 </div>
-<!-- EDIT4 SECTION "Official repository" [645-983] -->
+<!-- EDIT4 SECTION "Official repository" [645-1657] -->
 <h3 class="sectionedit5" id="llng_repository">LL::NG repository</h3>
 <div class="level3">
 
@@ -165,7 +166,7 @@ Finally update your APT cache:
 <pre class="code">apt update</pre>
 
 </div>
-<!-- EDIT5 SECTION "LL::NG repository" [984-1895] -->
+<!-- EDIT5 SECTION "LL::NG repository" [1658-2569] -->
 <h3 class="sectionedit6" id="manual_download">Manual download</h3>
 <div class="level3">
 
@@ -174,7 +175,7 @@ Packages are available on the <a href="download.html" class="wikilink1" title="d
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Manual download" [1896-1982] -->
+<!-- EDIT6 SECTION "Manual download" [2570-2656] -->
 <h2 class="sectionedit7" id="install_packages">Install packages</h2>
 <div class="level2">
 <div class="noteimportant">By default packages will require Nginx. If you want to use Apache2, install it first with mod_perl:
@@ -182,13 +183,13 @@ Packages are available on the <a href="download.html" class="wikilink1" title="d
 
 </div>
 </div>
-<!-- EDIT7 SECTION "Install packages" [1983-2191] -->
+<!-- EDIT7 SECTION "Install packages" [2657-2865] -->
 <h3 class="sectionedit8" id="with_apt">With apt</h3>
 <div class="level3">
 <pre class="code">apt install lemonldap-ng</pre>
 
 </div>
-<!-- EDIT8 SECTION "With apt" [2192-2252] -->
+<!-- EDIT8 SECTION "With apt" [2866-2926] -->
 <h3 class="sectionedit9" id="with_dpkg">With dpkg</h3>
 <div class="level3">
 
@@ -202,12 +203,12 @@ Then:
 <pre class="code">dpkg -i liblemonldap-ng-* lemonldap-ng*</pre>
 
 </div>
-<!-- EDIT9 SECTION "With dpkg" [2253-2401] -->
+<!-- EDIT9 SECTION "With dpkg" [2927-3075] -->
 <h2 class="sectionedit10" id="first_configuration_steps">First configuration steps</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT10 SECTION "First configuration steps" [2402-2440] -->
+<!-- EDIT10 SECTION "First configuration steps" [3076-3114] -->
 <h3 class="sectionedit11" id="change_default_dns_domain">Change default DNS domain</h3>
 <div class="level3">
 
@@ -217,7 +218,7 @@ By default, <abbr title="Domain Name System">DNS</abbr> domain is <code>example.
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1.json</pre>
 
 </div>
-<!-- EDIT11 SECTION "Change default DNS domain" [2441-2724] -->
+<!-- EDIT11 SECTION "Change default DNS domain" [3115-3398] -->
 <h3 class="sectionedit12" id="upgrade">Upgrade</h3>
 <div class="level3">
 
@@ -226,7 +227,7 @@ If you upgraded <abbr title="LemonLDAP::NG">LL::NG</abbr>, check all <a href="up
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Upgrade" [2725-2805] -->
+<!-- EDIT12 SECTION "Upgrade" [3399-3479] -->
 <h3 class="sectionedit13" id="dns">DNS</h3>
 <div class="level3">
 
@@ -247,7 +248,7 @@ Follow the <a href="start.html#configuration" class="wikilink1" title="documenta
 </p>
 
 </div>
-<!-- EDIT13 SECTION "DNS" [2806-3110] -->
+<!-- EDIT13 SECTION "DNS" [3480-3784] -->
 <h2 class="sectionedit14" id="file_location">File location</h2>
 <div class="level2">
 <ul>
@@ -268,7 +269,7 @@ Follow the <a href="start.html#configuration" class="wikilink1" title="documenta
 </ul>
 
 </div>
-<!-- EDIT14 SECTION "File location" [3111-3678] -->
+<!-- EDIT14 SECTION "File location" [3785-4352] -->
 <h2 class="sectionedit15" id="build_your_packages">Build your packages</h2>
 <div class="level2">
 
@@ -280,6 +281,6 @@ cd lemonldap-ng-*
 make debian-packages</pre>
 
 </div>
-<!-- EDIT15 SECTION "Build your packages" [3679-] --></div>
+<!-- EDIT15 SECTION "Build your packages" [4353-] --></div>
 </body>
 </html>

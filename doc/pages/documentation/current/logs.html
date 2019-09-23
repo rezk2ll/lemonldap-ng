@@ -74,6 +74,18 @@
 <div class="level1">
 
 <p>
+<strong>REMOTE_USER</strong> : session attribute used for logging user access.
+</p>
+
+<p>
+<strong>REMOTE_CUSTOM</strong> : can be used for logging a second user attribute (optionnal)
+</p>
+
+<p>
+<strong>Hidden attributes</strong> : session attributes never displayed or sent
+</p>
+
+<p>
 LemonLDAP::NG provides 5 levels of error and has two kind of logs:
 </p>
 <ul>
@@ -120,7 +132,7 @@ Therefore, LLNG provides a username that can be used by webservers in their acce
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Logs" [1-1571] -->
+<!-- EDIT1 SECTION "Logs" [1-1787] -->
 <h2 class="sectionedit2" id="default_loggers">Default loggers</h2>
 <div class="level2">
 <ul>
@@ -133,12 +145,12 @@ Therefore, LLNG provides a username that can be used by webservers in their acce
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Default loggers" [1572-1891] -->
+<!-- EDIT2 SECTION "Default loggers" [1788-2107] -->
 <h2 class="sectionedit3" id="log_levels">Log levels</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Log levels" [1892-1915] -->
+<!-- EDIT3 SECTION "Log levels" [2108-2131] -->
 <h3 class="sectionedit4" id="technical_log_levels">Technical log levels</h3>
 <div class="level3">
 <ul>
@@ -155,13 +167,13 @@ Therefore, LLNG provides a username that can be used by webservers in their acce
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Technical log levels" [1916-2325] -->
+<!-- EDIT4 SECTION "Technical log levels" [2132-2541] -->
 <h3 class="sectionedit5" id="log_levels_for_user_actions">Log levels for user actions</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> <strong>error</strong> is used to log bad user actions that looks malicious</div>
 </li>
-<li class="level1"><div class="li"> <strong>warn</strong> is used to log some errors like “bad password”</div>
+<li class="level1"><div class="li"> <strong>warn</strong> is used to log some errors like &quot;bad password&quot;</div>
 </li>
 <li class="level1"><div class="li"> <strong>notice</strong> is used for actions that must be kept in logs for accounting (connections, logout)</div>
 </li>
@@ -172,12 +184,12 @@ Therefore, LLNG provides a username that can be used by webservers in their acce
 </ul>
 
 </div>
-<!-- EDIT5 SECTION "Log levels for user actions" [2326-2719] -->
+<!-- EDIT5 SECTION "Log levels for user actions" [2542-2935] -->
 <h2 class="sectionedit6" id="logger_configuration">Logger configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT6 SECTION "Logger configuration" [2720-2753] -->
+<!-- EDIT6 SECTION "Logger configuration" [2936-2969] -->
 <h3 class="sectionedit7" id="std_logger">Std logger</h3>
 <div class="level3">
 
@@ -186,7 +198,7 @@ Nothing to configure except logLevel.
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Std logger" [2754-2814] -->
+<!-- EDIT7 SECTION "Std logger" [2970-3030] -->
 <h3 class="sectionedit8" id="apache2_logger">Apache2 logger</h3>
 <div class="level3">
 
@@ -199,7 +211,7 @@ See <a href="http://httpd.apache.org/docs/current/mod/core.html#loglevel" class=
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Apache2 logger" [2815-3050] -->
+<!-- EDIT8 SECTION "Apache2 logger" [3031-3266] -->
 <h3 class="sectionedit9" id="syslog">Syslog</h3>
 <div class="level3">
 
@@ -210,7 +222,7 @@ You can choose facility in lemonldap-ng.ini file. Default values:
 <span class="re1">userSyslogFacility</span> <span class="sy0">=</span><span class="re2"> auth</span></pre>
 
 </div>
-<!-- EDIT9 SECTION "Syslog" [3051-3209] -->
+<!-- EDIT9 SECTION "Syslog" [3267-3425] -->
 <h3 class="sectionedit10" id="log4perl">Log4perl</h3>
 <div class="level3">
 
@@ -222,7 +234,7 @@ You can indicate the Log4perl configuration file and the classes to use. Default
 <span class="re1">log4perlUserLogger</span> <span class="sy0">=</span><span class="re2"> LLNG.user</span></pre>
 
 </div>
-<!-- EDIT10 SECTION "Log4perl" [3210-3436] -->
+<!-- EDIT10 SECTION "Log4perl" [3426-3652] -->
 <h3 class="sectionedit11" id="sentry">Sentry</h3>
 <div class="level3">
 
@@ -233,7 +245,7 @@ You just have to give your DSN:
 <div class="noteimportant">This experimental logger requires <a href="https://metacpan.org/pod/Sentry::Raven" class="urlextern" title="https://metacpan.org/pod/Sentry::Raven"  rel="nofollow">Sentry::Raven</a> Perl module.
 </div>
 </div>
-<!-- EDIT11 SECTION "Sentry" [3437-3658] -->
+<!-- EDIT11 SECTION "Sentry" [3653-3874] -->
 <h3 class="sectionedit12" id="dispatch">Dispatch</h3>
 <div class="level3">
 
@@ -251,6 +263,6 @@ Use it to use more than one logger. Example:
 <div class="noteimportant">At least <code>logDispatchError</code> <em>(or <code>userLogDispatchError</code> for user logs)</em> must be defined. All sub level will be dispatched on it, until another lever is declared. In the above example, Sentry collects <code>error</code> and <code>warn</code> levels and all user actions, while syslog stores technical <code>notice</code>, <code>info</code> and <code>debug</code> logs.
 </div>
 </div>
-<!-- EDIT12 SECTION "Dispatch" [3659-] --></div>
+<!-- EDIT12 SECTION "Dispatch" [3875-] --></div>
 </body>
 </html>

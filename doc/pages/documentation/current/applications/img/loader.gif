@@ -23,10 +23,10 @@
 <link rel="alternate" type="application/rss+xml" title="Current namespace" href="/feed.php?mode=list&amp;ns=documentation:2.0:applications:img"/>
 <link rel="alternate" type="text/html" title="Plain HTML" href="/_export/xhtml/documentation/2.0/applications/img/loader.gif"/>
 <link rel="alternate" type="text/plain" title="Wiki Markup" href="/_export/raw/documentation/2.0/applications/img/loader.gif"/>
-<link rel="stylesheet" type="text/css" href="/lib/exe/css.php?t=bootstrap3&amp;tseed=666dbe073d7d2522373106d8d2d68438"/>
+<link rel="stylesheet" type="text/css" href="/lib/exe/css.php?t=bootstrap3&amp;tseed=a3a28b97aa1359a6551738d33203e559"/>
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0:applications:img';var JSINFO = {"id":"documentation:2.0:applications:img:loader.gif","namespace":"documentation:2.0:applications:img"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="/lib/exe/js.php?tseed=666dbe073d7d2522373106d8d2d68438&amp;template=bootstrap3"></script>
+<script type="text/javascript" charset="utf-8" src="/lib/exe/js.php?tseed=a3a28b97aa1359a6551738d33203e559&amp;template=bootstrap3"></script>
   <script type="text/javascript" src="/lib/tpl/bootstrap3/assets/bootstrap/js/bootstrap.min.js"></script>
   <style type="text/css">
     body { padding-top: 20px; }
@@ -90,7 +90,7 @@
         <form action="/start" accept-charset="utf-8" class="search" id="dw__search" method="get" role="search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" /><input type="submit" value="Search" class="button" title="Search" /><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>
         
         <ul class="nav navbar-nav">
-                    <li><a href="/documentation/2.0/applications/img/loader.gif?do=login&amp;sectok=bed3833398ac80a8fabe34952ef1721d"  class="action login" rel="nofollow" title="Login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>        </ul>
+                    <li><a href="/documentation/2.0/applications/img/loader.gif?do=login&amp;sectok=594f5b54f4cd53665bf9d5ac7a31ad7a"  class="action login" rel="nofollow" title="Login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>        </ul>
 
       </div>
 
@@ -133,7 +133,7 @@
 <div class="level1">
 
 <p>
-You&#039;ve followed a link to a topic that doesn&#039;t exist yet. If permissions allow, you may create it by clicking on “Create this page”.
+You&#039;ve followed a link to a topic that doesn&#039;t exist yet. If permissions allow, you may create it by clicking on &quot;Create this page&quot;.
 </p>
 
 </div>
@@ -272,7 +272,7 @@ You&#039;ve followed a link to a topic that doesn&#039;t exist yet. If permissio
       
     </div><!-- /site -->
 
-    <div class="no"><img src="/lib/exe/indexer.php?id=documentation%3A2.0%3Aapplications%3Aimg%3Aloader.gif&amp;1561840284" width="2" height="1" alt="" /></div>
+    <div class="no"><img src="/lib/exe/indexer.php?id=documentation%3A2.0%3Aapplications%3Aimg%3Aloader.gif&amp;1569271147" width="2" height="1" alt="" /></div>
     <div id="screen__mode" class="no">
       <span class="visible-xs"></span>
       <span class="visible-sm"></span>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:browseablesessionbackend</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,browseablesessionbackend"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="browseablesessionbackend.html"/>
@@ -184,9 +184,9 @@ CREATE INDEX h1   ON sessions (_httpSessionType);</pre>
 <div class="noteimportant">For Session Explorer and one-off sessions, it is recommended to use BTREE or any index method that indexes partial content.
 </div>
 <p>
-“id” fieds is set to <code>varchar(64)</code> (instead of char(32)) to use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details.
+&quot;id&quot; fieds is set to <code>varchar(64)</code> (instead of char(32)) to use the now recommended SHA256 hash algorithm. See <a href="documentation/latest/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details.
 </p>
-<div class="notetip">With new Apache::Session::Browseable::<strong>PgHstore</strong> and <strong>PgJSON</strong>, you don&#039;t need to declare indexes in <code>CREATE TABLE</code> since “json” and “hstore” type are browseable. You should anyway add some indexes <em>(see manpage)</em>.
+<div class="notetip">With new Apache::Session::Browseable::<strong>PgHstore</strong> and <strong>PgJSON</strong>, you don&#039;t need to declare indexes in <code>CREATE TABLE</code> since &quot;json&quot; and &quot;hstore&quot; type are browseable. You should anyway add some indexes <em>(see manpage)</em>.
 </div>
 </div>
 <!-- EDIT7 SECTION "Prepare database" [2519-4234] -->
@@ -223,7 +223,7 @@ Go in the Manager and set the session module (<a href="https://metacpan.org/pod/
 </table></div>
 <!-- EDIT9 TABLE [4557-4978] --><div class="notetip">Apache::Session::Browseable::MySQL doesn&#039;t use locks so performances are keeped.
 <p>
-For databases like PostgreSQL, don&#039;t forget to add “Commit” with a value of 1
+For databases like PostgreSQL, don&#039;t forget to add &quot;Commit&quot; with a value of 1
 </p>
 
 </div>

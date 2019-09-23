@@ -64,16 +64,20 @@ Difference between enabled both U2F and TOTP is that only one page is displayed 
 In the manager (second factors), you just have to enable it:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Activation</strong>: set it to “on”. Note that you should not enable <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> and <a href="totp2f.html" class="wikilink1" title="documentation:2.0:totp2f">TOTP</a> separately <em>(except for self-registration: see below)</em></div>
+<li class="level1"><div class="li"> <strong>Activation</strong>: set it to &quot;on&quot;. Note that you should not enable <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> and <a href="totp2f.html" class="wikilink1" title="documentation:2.0:totp2f">TOTP</a> separately <em>(except for self-registration: see below)</em></div>
 </li>
 <li class="level1"><div class="li"> <strong>Authentication level</strong>: you can overwrite here auth level for registered users. Leave it blank keeps auth level provided by first authentication module (By default: 2 for user/password based modules). It is recommended to set an higher value here if you want to give access to apps just for enrolled users.</div>
 </li>
+<li class="level1"><div class="li"> <strong>Logo</strong> (Optional): logo file <em>(in static/&lt;skin&gt; directory)</em></div>
+</li>
+<li class="level1"><div class="li"> <strong>Label</strong> (Optional): label that should be displayed to the user on the choice screen</div>
+</li>
 </ul>
 <div class="notetip">Every other parameters of <a href="u2f.html" class="wikilink1" title="documentation:2.0:u2f">U2F</a> and <a href="totp2f.html" class="wikilink1" title="documentation:2.0:totp2f">TOTP</a> can be set in the corresponding 2F modules except that you should not enable them.
-</div><div class="noteimportant">If you want to give a different level for U2F or TOTP, leave this parameter blank and set U2F and TOTP “authentication level” in corresponding modules.
+</div><div class="noteimportant">If you want to give a different level for U2F or TOTP, leave this parameter blank and set U2F and TOTP &quot;authentication level&quot; in corresponding modules.
 </div>
 </div>
-<!-- EDIT2 SECTION "Configuration" [351-1244] -->
+<!-- EDIT2 SECTION "Configuration" [351-1402] -->
 <h3 class="sectionedit3" id="self-registration">Self-registration</h3>
 <div class="level3">
 
@@ -83,7 +87,7 @@ This module has no self-registration. You have to use U2F and TOTP self registra
 <ul>
 <li class="level1"><div class="li"> TOTP self-registration =&gt; enabled</div>
 </li>
-<li class="level1"><div class="li"> U2F self-registration  =&gt; <code>$_2fDevices =~ /“type”:\s*“TOTP”/s</code></div>
+<li class="level1"><div class="li"> U2F self-registration  =&gt; <code>$_2fDevices =~ /&quot;type&quot;:\s*&quot;TOTP&quot;/s</code></div>
 </li>
 </ul>
 
@@ -92,6 +96,6 @@ Automatically, U2F registration will be hidden for unregistered TOTP users and d
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Self-registration" [1245-] --></div>
+<!-- EDIT3 SECTION "Self-registration" [1403-] --></div>
 </body>
 </html>

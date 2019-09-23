@@ -101,11 +101,11 @@ This feature can be useful to allow a third party application to access a virtua
 <div class="level3">
 
 <p>
-You just have to set “Type: AuthBasic” in the virtualHost options in the manager.
+You just have to set &quot;Type: AuthBasic&quot; in the virtualHost options in the manager.
 </p>
 
 <p>
-If you want to protect only a virtualHost part, keep type on “Main” and set type in your configuration file:
+If you want to protect only a virtualHost part, keep type on &quot;Main&quot; and set type in your configuration file:
 </p>
 <ul>
 <li class="level1"><div class="li"> Apache: use simply a <code>PerlSetVar VHOSTTYPE AuthBasic</code></div>
@@ -120,11 +120,36 @@ If you want to protect only a virtualHost part, keep type on “Main” and set 
 <div class="level3">
 
 <p>
-No parameters needed. But you have to allow REST sessions web services, see <a href="restsessionbackend.html" class="wikilink1" title="documentation:2.0:restsessionbackend">REST sessions backend</a> and to enable local cache (enabled by default in lemonldap-ng.ini).
+No parameters needed. But you have to allow REST sessions web services, see <a href="restsessionbackend.html" class="wikilink1" title="documentation:2.0:restsessionbackend">REST sessions backend</a>, enable local cache (enabled by default in lemonldap-ng.ini) and allow source <abbr title="Internet Protocol">IP</abbr> addresses to access required locations in Portal Virtual Host.
 </p>
-<div class="notewarning">With AuthBasic handler, you have to disable CSRF token by setting a special rule based on callers <abbr title="Internet Protocol">IP</abbr> address like this :
+<div class="notewarning">With AuthBasic handler, you have to disable CSRF token by setting a special rule based on source <abbr title="Internet Protocol">IP</abbr> addresses like this :
 <p>
 requireToken =&gt; $env-&gt;{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
+</p>
+
+<p>
+With AutChoice, you have to declare which authentication module is requested by handler to create global session.
+</p>
+
+<p>
+Go to: <code>General Parameters &gt; Authentication parameters &gt; Choice parameters</code>
+</p>
+
+<p>
+and set authentication module&#039;s name :
+</p>
+
+<p>
+<strong>AuthBasic handler parameter</strong> =&gt; 2_LDAP (by example)
+</p>
+
+</div><div class="noteimportant">With HTTPS, you may have to set <strong>LWP::UserAgent object</strong> with <code>verify_hostname =&gt; 0</code> and <code>SSL_verify_mode =&gt; 0</code>.
+<p>
+Go to:
+</p>
+
+<p>
+<code>General Parameters &gt; Advanced Parameters &gt; Security &gt; Choice parameters &gt; SSL options for server requests</code>
 </p>
 
 </div>

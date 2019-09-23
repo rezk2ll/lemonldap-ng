@@ -83,7 +83,7 @@ Commands receive arguments on command line and must return a 0 code if succeed, 
 <div class="level3">
 
 <p>
-All parameters are configured in “General Parameters » Portal Parameters » Extensions » External 2nd Factor”.
+All parameters are configured in &quot;General Parameters » Portal Parameters » Extensions » External 2nd Factor&quot;.
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Activation</strong></div>
@@ -94,12 +94,14 @@ All parameters are configured in “General Parameters » Portal Parameters » E
 </li>
 <li class="level1"><div class="li"> <strong>Validation command</strong>: Required ONLY if you delegate code Generation / Verification to an external provider. You must also use <em>$code</em> which is the value entered by user; Example: <code>/usr/local/bin/verify --uid $uid --code $code</code></div>
 </li>
-<li class="level1"><div class="li"> <strong>Authentication Level</strong>: if you want to overwrite the value sent by your authentication module, you can define here the new authentication level. Example: 5</div>
+<li class="level1"><div class="li"> <strong>Authentication level</strong> (Optional): if you want to overwrite the value sent by your authentication module, you can define here the new authentication level. Example: 5</div>
 </li>
 <li class="level1"><div class="li"> <strong>Logo</strong> (Optional): logo file <em>(in static/&lt;skin&gt; directory)</em></div>
 </li>
+<li class="level1"><div class="li"> <strong>Label</strong> (Optional): label that should be displayed to the user on the choice screen</div>
+</li>
 </ul>
-<div class="noteimportant">The command line is split in an array and launched with exec(). So you don&#039;t need to enclose arguments in “” and this feature protects your system against shell injection. However, you can not use any space except to separate arguments.
+<div class="noteimportant">The command line is split in an array and launched with exec(). So you don&#039;t need to enclose arguments in &quot;&quot; and this feature protects your system against shell injection. However, you can not use any space except to separate arguments.
 </div>
 </div>
 

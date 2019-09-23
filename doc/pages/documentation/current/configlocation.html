@@ -123,7 +123,7 @@ Most of configuration can be done trough LemonLDAP::NG Manager (by default <a hr
 </p>
 
 <p>
-By default, Manager is protected to allow only the demonstration user “dwho”.
+By default, Manager is protected to allow only the demonstration user &quot;dwho&quot;.
 </p>
 <div class="noteimportant">This user will not be available anymore if you configure a new authentication backend! Remember to change the access rule in Manager virtual host to allow new administrators.
 </div>
@@ -733,7 +733,8 @@ After configuration is saved by Manager, LemonLDAP::NG will try to reload config
 <p>
 You also have a parameter to adjust the timeout used to request reload URLs, it is be default set to 5 seconds.
 </p>
-
+<div class="noteimportant">Configuration file is compacted to limit file size. All useless parameters are removed. Typically, if SAMLv2 service is disabled, all relative parameters will be erased. To avoid unused parameters to be purged, you can enable &quot;Don &#039;t compact configuration file&quot; option.
+</div>
 <p>
 These parameters can be overwritten in LemonLDAP::NG ini file, in the section <code>apply</code>.
 </p>
@@ -743,7 +744,7 @@ These parameters can be overwritten in LemonLDAP::NG ini file, in the section <c
 The <code>reload</code> target is managed in Apache or Nginx configuration, inside a virtual host protected by LemonLDAP::NG Handler (see below examples in Apache-&gt;handler or Nginx-&gt;Handler).
 </p>
 <div class="noteimportant">You must allow access to declared URLs to your Manager <abbr title="Internet Protocol">IP</abbr>.
-</div><div class="noteimportant">If reload <abbr title="Uniform Resource Locator">URL</abbr> is served in HTTPS, to avoid “Error 500 (certificate verify failed)”, Go to : 
+</div><div class="noteimportant">If reload <abbr title="Uniform Resource Locator">URL</abbr> is served in HTTPS, to avoid &quot;Error 500 (certificate verify failed)&quot;, Go to : 
 <p>
 <code>General Parameters &gt; Advanced Parameters &gt; Security &gt; SSL options for server requests</code>
 </p>
@@ -779,7 +780,7 @@ You also need to adjust the protection of the reload vhost, for example:
     &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT14 SECTION "Configuration reload" [18212-20768] -->
+<!-- EDIT14 SECTION "Configuration reload" [18212-21062] -->
 <h2 class="sectionedit15" id="local_file">Local file</h2>
 <div class="level2">
 
@@ -813,6 +814,6 @@ For example, to override configured skin for portal:
 <div class="notetip">You need to know the technical name of configuration parameter to do this. You can refer to <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">parameter list</a> to find it.
 </div>
 </div>
-<!-- EDIT15 SECTION "Local file" [20769-] --></div>
+<!-- EDIT15 SECTION "Local file" [21063-] --></div>
 </body>
 </html>

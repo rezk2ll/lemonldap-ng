@@ -159,17 +159,17 @@ Add then extension configuration, for example:
 <span class="br0">&#125;</span>
 <span class="re0">$wgHooks</span><span class="br0">&#91;</span><span class="st_h">'PersonalUrls'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'StripLogin'</span><span class="sy0">;</span></pre>
 <div class="notewarning">In last version of Auth_remoteuser and Mediawiki, empty passwords are not authorized, so you may need to patch the extension code if you get the error:
-“Unexpected REMOTE_USER authentication failure. Login Error was:EmptyPass”.
+&quot;Unexpected REMOTE_USER authentication failure. Login Error was:EmptyPass&quot;.
 </div>
 <p>
 If necessary, use the code below to patch the extension:
 </p>
 <pre class="code">sed -i &quot;s/&#039;wpPassword&#039; =&gt; &#039;&#039;/&#039;wpPassword&#039; =&gt; &#039;none&#039;/&quot; extensions/Auth_remoteuser/Auth_remoteuser.body.php</pre>
 <div class="notewarning">In last version of Auth_remoteuser and Mediawiki, auto-provisioning requires REMOTE_USER to match the normalized mediawiki username (for example: john_doe -&gt; john doe), so you may need to patch the extension code if you get the error:
-“Unexpected REMOTE_USER authentication failure. Login Error was:WrongPluginPass”
+&quot;Unexpected REMOTE_USER authentication failure. Login Error was:WrongPluginPass&quot;
 </div>
 <p>
-You can use the code below for normalizing logins containing “_” in the extension:
+You can use the code below for normalizing logins containing &quot;_&quot; in the extension:
 </p>
 <pre class="code">sed -i &#039;/$usertest = $this-&gt;getRemoteUsername();/a\                $usertest = str_replace( &quot;_&quot;,&quot; &quot;, $usertest );&#039; extensions/Auth_remoteuser/Auth_remoteuser.body.php</pre>
 

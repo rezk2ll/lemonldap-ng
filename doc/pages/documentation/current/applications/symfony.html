@@ -74,7 +74,7 @@
 </p>
 
 <p>
-Symfony provides many methods conventions to authenticate users (basic, ldap,...) and to load external user sources (ldap, database). The method presented here relies on the “remote_user” method. (in security firewall)
+Symfony provides many methods conventions to authenticate users (basic, ldap,...) and to load external user sources (ldap, database). The method presented here relies on the &quot;remote_user&quot; method. (in security firewall)
 </p>
 
 </div>
@@ -83,7 +83,7 @@ Symfony provides many methods conventions to authenticate users (basic, ldap,...
 <div class="level2">
 
 <p>
-Follow these step to protect your application using the “REMOTE_USER” HTTP header.
+Follow these step to protect your application using the &quot;REMOTE_USER&quot; HTTP header.
 </p>
 
 <p>
@@ -113,7 +113,7 @@ Follow these step to protect your application using the “REMOTE_USER” HTTP h
 </li>
 <li class="level1"><div class="li"> providers : define the user providers (even virtual)</div>
 </li>
-<li class="level1"><div class="li"> remote_user : define the authentication method to “assume the user is already authenticated and get an http variable to know his username”</div>
+<li class="level1"><div class="li"> remote_user : define the authentication method to &quot;assume the user is already authenticated and get an http variable to know his username&quot;</div>
 </li>
 <li class="level1"><div class="li"> user : define the HTTP header containing the username</div>
 </li>
@@ -122,7 +122,7 @@ Follow these step to protect your application using the “REMOTE_USER” HTTP h
 </ul>
 
 <p>
- 2. Define a “header user” class
+ 2. Define a &quot;header user&quot; class
 </p>
 
 <p>
@@ -194,7 +194,7 @@ Create the file src/AppBundle/Security/User/HeaderUser.php :
 <span class="sy1">?&gt;</span></pre>
 
 <p>
- 3. Define a “header user provider” class relying on the previous class
+ 3. Define a &quot;header user provider&quot; class relying on the previous class
 </p>
 
 <p>

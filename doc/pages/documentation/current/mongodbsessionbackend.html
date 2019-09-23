@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:mongodbsessionbackend</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,mongodbsessionbackend"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="mongodbsessionbackend.html"/>
@@ -75,7 +75,7 @@ In the manager: set <a href="http://search.cpan.org/perldoc?Apache::Session::Mon
 	</tr>
 	</thead>
 	<tr class="row2 roweven">
-		<td class="col0 leftalign"> <strong>host</strong>                      </td><td class="col1"> MongoDB server (default: 127.0.0.1:27017) </td><td class="col2"> 127.0.0.1:27017 </td>
+		<td class="col0 leftalign"> <strong>host</strong>                      </td><td class="col1 leftalign"> <a href="https://metacpan.org/pod/MongoDB::MongoClient#CONNECTION-STRING-URI" class="urlextern" title="https://metacpan.org/pod/MongoDB::MongoClient#CONNECTION-STRING-URI"  rel="nofollow">MongoDB server URI</a>                        </td><td class="col2"> 127.0.0.1:27017 </td>
 	</tr>
 	<tr class="row3 rowodd">
 		<td class="col0 leftalign"> <strong>db_name</strong>                   </td><td class="col1 leftalign"> Session database (default: sessions)      </td><td class="col2 leftalign"> llconfdb        </td>
@@ -102,9 +102,13 @@ In the manager: set <a href="http://search.cpan.org/perldoc?Apache::Session::Mon
 		<td class="col0 leftalign"> <strong>password</strong>                  </td><td class="col1 leftalign"> Password                                  </td><td class="col2 leftalign"> llpassword      </td>
 	</tr>
 </table></div>
-<!-- EDIT3 TABLE [861-1912] -->
+<!-- EDIT3 TABLE [861-1984] -->
+<p>
+Advanced connection parameters (Replica Sets, timeouts...) may be specified in the <code>host</code> parameter. <a href="https://metacpan.org/pod/MongoDB::MongoClient#CONNECTION-STRING-URI" class="urlextern" title="https://metacpan.org/pod/MongoDB::MongoClient#CONNECTION-STRING-URI"  rel="nofollow">Refer to the perl MongoDB documentation for details</a>
+</p>
+
 </div>
-<!-- EDIT2 SECTION "Setup" [253-1913] -->
+<!-- EDIT2 SECTION "Setup" [253-2212] -->
 <h2 class="sectionedit4" id="security">Security</h2>
 <div class="level2">
 
@@ -113,6 +117,6 @@ Restrict network access to the MongoDB server. For remote servers, you can use <
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Security" [1914-] --></div>
+<!-- EDIT4 SECTION "Security" [2213-] --></div>
 </body>
 </html>

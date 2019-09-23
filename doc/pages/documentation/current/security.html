@@ -164,7 +164,7 @@ LLNG portal now embeds the following features:
 </li>
 <li class="level1"><div class="li"> <a href="https://en.wikipedia.org/wiki/Content_Security_Policy" class="urlextern" title="https://en.wikipedia.org/wiki/Content_Security_Policy"  rel="nofollow">Content-Security-Policy</a> header: portal builds dynamically this header. You can modify default values in the manager <em>(General parameters » Advanced parameters » Security » Content-Security-Policy)</em></div>
 </li>
-<li class="level1"><div class="li"> <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing" class="urlextern" title="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing"  rel="nofollow">Cross-Origin Resource Sharing</a> headers: CORS is a mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served. A web page may freely embed cross-origin images, stylesheets, scripts, iframes, and videos. Certain “cross-domain” requests, notably Ajax requests, are forbidden by default by the same-origin security policy. You can modify default values in the manager <em>(General parameters » Advanced parameters » Security » Cross-Origin Resource Sharing)</em></div>
+<li class="level1"><div class="li"> <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing" class="urlextern" title="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing"  rel="nofollow">Cross-Origin Resource Sharing</a> headers: CORS is a mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served. A web page may freely embed cross-origin images, stylesheets, scripts, iframes, and videos. Certain &quot;cross-domain&quot; requests, notably Ajax requests, are forbidden by default by the same-origin security policy. You can modify default values in the manager <em>(General parameters » Advanced parameters » Security » Cross-Origin Resource Sharing)</em></div>
 </li>
 </ul>
 <div class="noteimportant"><ul>
@@ -197,7 +197,7 @@ If you use <a href="soapsessionbackend.html" class="wikilink1" title="documentat
 <p>
 <a href="writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Rules</a> are applied in alphabetical order (comment and regular expression). The first matching rule is applied.
 </p>
-<div class="noteimportant">The “default” rule is only applied if no other rule matchs
+<div class="noteimportant">The &quot;default&quot; rule is only applied if no other rule matchs
 </div>
 <p>
 The Manager let you define comments in rules, to order them:
@@ -217,7 +217,7 @@ For example, if these rules are used without comments:
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0"> ^/pub/admin/ </td><td class="col1"> $uid eq “root” </td><td class="col2"> </td>
+		<td class="col0"> ^/pub/admin/ </td><td class="col1"> $uid eq &quot;root&quot; </td><td class="col2"> </td>
 	</tr>
 	<tr class="row2 roweven">
 		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> </td>
@@ -238,7 +238,7 @@ Use comment to correct this:
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0"> ^/pub/admin/ </td><td class="col1"> $uid eq “root” </td><td class="col2"> 1_admin </td>
+		<td class="col0"> ^/pub/admin/ </td><td class="col1"> $uid eq &quot;root&quot; </td><td class="col2"> 1_admin </td>
 	</tr>
 	<tr class="row2 roweven">
 		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> 2_pub </td>
@@ -365,7 +365,7 @@ It is recommended to secure the channel between reverse-proxies and application 
 <ul>
 <li class="level1"><div class="li"> firewalls (but be careful if more than 1 server is behind the firewall)</div>
 </li>
-<li class="level1"><div class="li"> server based restriction (like Apache “allow/deny” mechanism)</div>
+<li class="level1"><div class="li"> server based restriction (like Apache &quot;allow/deny&quot; mechanism)</div>
 </li>
 <li class="level1"><div class="li"> SSL client certificate for the reverse-proxy (see SSLProxy* parameters in <a href="http://httpd.apache.org/docs/2.2/mod/mod_ssl.html" class="urlextern" title="http://httpd.apache.org/docs/2.2/mod/mod_ssl.html"  rel="nofollow">mod_ssl documentation</a>)</div>
 </li>
@@ -382,9 +382,11 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 <ul>
 <li class="level1"><div class="li"> <strong>Username control</strong>: Regular expression used to check user login syntax.</div>
 </li>
+<li class="level1"><div class="li"> <strong>Avoid browsers to store users password</strong>: Enable this option to prevent browsers from prompting users to save passwords.</div>
+</li>
 <li class="level1"><div class="li"> <strong>Force authentication</strong>: set to &#039;On&#039; to force authentication when user connects to portal, even if he has a valid session.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Force authentication interval</strong>: time interval (in seconds) when a authentication renewal cannot be forced, used to prevent to loose the current authentication during the main process. If you experience slow network performances, you can increase this value.</div>
+<li class="level1"><div class="li"> <strong>Force authentication interval</strong>: time interval (in seconds) when an authentication renewal cannot be forced, used to prevent to loose the current authentication during the main process. If you experience slow network performances, you can increase this value.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Encryption key</strong>: key used to crypt some data, should not be known by other applications</div>
 </li>
@@ -408,7 +410,7 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 </li>
 <li class="level1"><div class="li"> <strong>Use global storage</strong>: Local cache is used by default for one time tokens. To use global storage, set it to &#039;On&#039;</div>
 </li>
-<li class="level1"><div class="li"> <strong>LWP::UserAgent and SSL options</strong>: insert here options to pass to LWP::UserAgent object (used by <abbr title="Security Assertion Markup Language">SAML</abbr> or OpenID-Connect to query partners). Example: <code>verify_hostname =&gt; 0</code>, <code>SSL_verify_mode =&gt; 0</code></div>
+<li class="level1"><div class="li"> <strong>LWP::UserAgent and SSL options</strong>: insert here options to pass to LWP::UserAgent object (used by <abbr title="Security Assertion Markup Language">SAML</abbr> or OpenID-Connect to query partners and AuthSSL or AuthBasic handler to request Portal <abbr title="Uniform Resource Locator">URL</abbr>). Example: <code>verify_hostname =&gt; 0</code>, <code>SSL_verify_mode =&gt; 0</code></div>
 </li>
 <li class="level1"><div class="li"> <strong>Content Security Policy</strong>:  Portal builds dynamically this header. You can modify default values. Browser implementations of formAction directive are inconsistent (e.g. Firefox doesn&#039;t block the redirects whereas Chrome does). Administrators may have to modify <code>formAction</code> value with wildcard likes *.</div>
 </li>
@@ -422,12 +424,12 @@ requireToken =&gt; $env-&gt;{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
 
 </div><div class="notewarning">Enable global storage for one time tokens will downgrade Portal performance!!!
 <p>
-Must be use ONLY with outdated or low performance Load Balancer.
+Must ONLY be use with outdated or low performance Load Balancer.
 </p>
 
 </div>
 </div>
-<!-- EDIT18 SECTION "Configure security settings" [8149-11184] -->
+<!-- EDIT18 SECTION "Configure security settings" [8149-11367] -->
 <h2 class="sectionedit19" id="fail2ban">Fail2ban</h2>
 <div class="level2">
 
@@ -479,7 +481,7 @@ Restart fail2ban
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Fail2ban" [11185-12239] -->
+<!-- EDIT19 SECTION "Fail2ban" [11368-12422] -->
 <h2 class="sectionedit20" id="sessions_identifier">Sessions identifier</h2>
 <div class="level2">
 
@@ -492,7 +494,7 @@ We recommend to use : <code>Lemonldap::NG::Common::Apache::Session::Generate::SH
 </p>
 
 </div>
-<!-- EDIT20 SECTION "Sessions identifier" [12240-12502] -->
+<!-- EDIT20 SECTION "Sessions identifier" [12423-12685] -->
 <h2 class="sectionedit21" id="saml">SAML</h2>
 <div class="level2">
 
@@ -501,6 +503,6 @@ See <a href="samlservice.html#security_parameters" class="wikilink1" title="docu
 </p>
 
 </div>
-<!-- EDIT21 SECTION "SAML" [12503-] --></div>
+<!-- EDIT21 SECTION "SAML" [12686-] --></div>
 </body>
 </html>

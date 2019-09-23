@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:checkuser</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,checkuser"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="checkuser.html"/>
@@ -64,7 +64,11 @@ Just enable it in the manager (section “plugins”).
 <ul>
 <li class="level2"><div class="li"> <strong>Activation</strong>: Enable / Disable this plugin</div>
 </li>
+<li class="level2"><div class="li"> <strong>Identities use rule</strong>: Rule to define which profiles can be displayed (by example: <code>!$anonymous</code>)</div>
+</li>
 <li class="level2"><div class="li"> <strong>Hidden attributes</strong>: Attributes not displayed</div>
+</li>
+<li class="level2"><div class="li"> <strong>Attributes used for searching sessions</strong>: User&#039;s attributes used for searching sessions in Data Base. Let it blank to search by <code>whatToTrace</code></div>
 </li>
 <li class="level2"><div class="li"> <strong>Display persistent session</strong>: Display persistent session attributes</div>
 </li>
@@ -101,7 +105,7 @@ By example: <code>$groups =~ /\bsu\b/</code>
 
 </div>
 </div>
-<!-- EDIT2 SECTION "Configuration" [265-1147] -->
+<!-- EDIT2 SECTION "Configuration" [265-1407] -->
 <h2 class="sectionedit3" id="usage">Usage</h2>
 <div class="level2">
 
@@ -110,6 +114,6 @@ When enabled, <code>/checkuser</code> <abbr title="Uniform Resource Locator">URL
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Usage" [1148-] --></div>
+<!-- EDIT3 SECTION "Usage" [1408-] --></div>
 </body>
 </html>

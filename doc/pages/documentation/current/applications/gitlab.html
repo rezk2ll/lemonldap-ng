@@ -55,6 +55,12 @@
 <li class="level2"><div class="li"><a href="#gitlab_configuration">Gitlab configuration</a></div></li>
 <li class="level2"><div class="li"><a href="#llng_configuration">LL::NG configuration</a></div></li>
 <li class="level2"><div class="li"><a href="#manage_groups">Manage groups</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#openid_connect">OpenID Connect</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#gitlab_configuration1">Gitlab configuration</a></div></li>
+<li class="level2"><div class="li"><a href="#llng_configuration1">LL::NG configuration</a></div></li>
 </ul></li>
 </ul>
 </div>
@@ -191,6 +197,70 @@ And in <abbr title="LemonLDAP::NG">LL::NG</abbr>, export the groups attribute:
 </ul>
 
 </div>
-<!-- EDIT6 SECTION "Manage groups" [2526-] --></div>
+<!-- EDIT6 SECTION "Manage groups" [2526-2818] -->
+<h2 class="sectionedit7" id="openid_connect">OpenID Connect</h2>
+<div class="level2">
+
+<p>
+<strong>Alternatively</strong> to <abbr title="Security Assertion Markup Language">SAML</abbr>, you can choose to configure Gitlab to use OpenID Connect.
+</p>
+
+</div>
+<!-- EDIT7 SECTION "OpenID Connect" [2819-2932] -->
+<h3 class="sectionedit8" id="gitlab_configuration1">Gitlab configuration</h3>
+<div class="level3">
+
+<p>
+In <code>/etc/gitlab/gitlab.rb</code>
+</p>
+<pre class="code file ruby">...
+<span class="me1">gitlab_rails</span><span class="br0">&#91;</span><span class="st0">'omniauth_allow_single_sign_on'</span><span class="br0">&#93;</span> = <span class="br0">&#91;</span><span class="st0">'openid_connect'</span><span class="br0">&#93;</span>
+gitlab_rails<span class="br0">&#91;</span><span class="st0">'omniauth_block_auto_created_users'</span><span class="br0">&#93;</span> = <span class="kw2">false</span>
+&nbsp;
+gitlab_rails<span class="br0">&#91;</span><span class="st0">'omniauth_providers'</span><span class="br0">&#93;</span> = <span class="br0">&#91;</span>
+  <span class="br0">&#123;</span> <span class="st0">'name'</span> <span class="sy0">=&gt;</span> <span class="st0">'openid_connect'</span>,
+    <span class="st0">'label'</span> <span class="sy0">=&gt;</span> <span class="st0">'LemonLDAP::NG'</span>,
+    <span class="st0">'args'</span> <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
+      <span class="st0">'name'</span> <span class="sy0">=&gt;</span> <span class="st0">'openid_connect'</span>,
+      <span class="st0">'issuer'</span> <span class="sy0">=&gt;</span> <span class="st0">'https://auth.example.com'</span>,
+      <span class="st0">'scope'</span> <span class="sy0">=&gt;</span> <span class="br0">&#91;</span><span class="st0">'openid'</span>, <span class="st0">'profile'</span>, <span class="st0">'email'</span><span class="br0">&#93;</span>,
+      <span class="st0">'response_type'</span> <span class="sy0">=&gt;</span> <span class="st0">'code'</span>,
+      <span class="st0">'client_auth_method'</span> <span class="sy0">=&gt;</span> <span class="st0">'client_secret_post'</span>,
+      <span class="st0">'discovery'</span> <span class="sy0">=&gt;</span> <span class="kw2">true</span>,
+      <span class="st0">'uid_field'</span> <span class="sy0">=&gt;</span> <span class="st0">'sub'</span>,
+      <span class="st0">'client_options'</span> <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
+        <span class="st0">'redirect_uri'</span> <span class="sy0">=&gt;</span> <span class="st0">'http://gitlab.example.com/users/auth/openid_connect/callback'</span>,
+        <span class="st0">'identifier'</span> <span class="sy0">=&gt;</span> <span class="st0">'LEMONLDAP_CLIENT_ID'</span>,
+        <span class="st0">'secret'</span> <span class="sy0">=&gt;</span> <span class="st0">'LEMONLDAP_CLIENT_SECRET'</span>,
+      <span class="br0">&#125;</span>
+    <span class="br0">&#125;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#93;</span>;
+&nbsp;
+...</pre>
+
+</div>
+<!-- EDIT8 SECTION "Gitlab configuration" [2933-3771] -->
+<h3 class="sectionedit9" id="llng_configuration1">LL::NG configuration</h3>
+<div class="level3">
+
+<p>
+Add an OpenID Connect RP to LemonLDAP::NG
+</p>
+<ul>
+<li class="level1"><div class="li"> Chose a client ID and a client secret, and write the same values in the <code>gitlab.rb</code> file above</div>
+</li>
+<li class="level1"><div class="li"> You need to chose an asymetrical signature algorithm for the ID Token (RS256 or above)</div>
+</li>
+<li class="level1"><div class="li"> You also need to set a key identifier on your LemonLDAP::NG server in <code>OpenID Connect service</code> » <code>Security</code> » <code>Signing key ID</code> (use something like <code>default</code> as the value). </div>
+</li>
+<li class="level1"><div class="li"> Make sure the attribute containing the user email in the LemonLDAP::NG session is mapped to the <code>email</code> claim.</div>
+</li>
+</ul>
+<div class="noteclassic">You need to set a key identifier, or you will get a <em>JSON::JWK::Set::KidNotFound</em> error on Gitlab
+
+</div>
+</div>
+<!-- EDIT9 SECTION "LL::NG configuration" [3772-] --></div>
 </body>
 </html>

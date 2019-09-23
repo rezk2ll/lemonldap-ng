@@ -110,10 +110,10 @@ LemonLDAP::NG implements partially the policy:
 </li>
 <li class="level1"><div class="li"> when computed virtual attribute &#039;msDS-User-Account-Control-Computed&#039; as 6th flag set to 8, the password is considered expired (support from Windows Server 2003). It is too late for the user to do anything. He must contact his administrator.</div>
 </li>
-<li class="level1"><div class="li"> a warning before password expiration is possible in AD, but only in GPO (Computer Configuration\Windows Settings\Local Policies\Security Options under Interactive Logon: Prompt user to change password before expiration). However it as no reality in LDAP referential. A “password warning time before password expiration” variable can be specified in LemonLDAP::NG to do so.</div>
+<li class="level1"><div class="li"> a warning before password expiration is possible in AD, but only in GPO (Computer Configuration\Windows Settings\Local Policies\Security Options under Interactive Logon: Prompt user to change password before expiration). However it as no reality in LDAP referential. A &quot;password warning time before password expiration&quot; variable can be specified in LemonLDAP::NG to do so.</div>
 </li>
 </ul>
-<div class="noteimportant">Note: since AD 2012, each user can have a specific password expiration policy. Then, the “maximum password age” can have different values. This is currently unsupported in LemonLDAP::NG because every policy must be computed with their precedence to know which maximum password age to apply.
+<div class="noteimportant">Note: since AD 2012, each user can have a specific password expiration policy. Then, the &quot;maximum password age&quot; can have different values. This is currently unsupported in LemonLDAP::NG because every policy must be computed with their precedence to know which maximum password age to apply.
 </div>
 <p>
 To configure warning before password expiration, you must set two variables in Active Directory parameters in Manager:

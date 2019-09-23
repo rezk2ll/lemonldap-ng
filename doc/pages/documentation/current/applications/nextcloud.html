@@ -104,7 +104,7 @@ Consider changing the configuration of NextCloud to force the domain, in <strong
 
 </div>
 <p>
-You also need to enable the “<abbr title="Security Assertion Markup Language">SAML</abbr> authentication” plugin in your NextCloud.
+You also need to enable the &quot;<abbr title="Security Assertion Markup Language">SAML</abbr> authentication&quot; plugin in your NextCloud.
 </p>
 <pre class="code"> + Apps -&gt; Not enabled -&gt; SAML authentication</pre>
 
@@ -159,7 +159,7 @@ You first need to create a pair of SSH Keys in LL:NG:
 <pre class="code">SAML 2 Service -&gt; Security Parameters -&gt; Signature</pre>
 
 <p>
-and click “New keys”
+and click &quot;New keys&quot;
 <img src="nextcloud_certificate_keys.png" class="mediacenter" alt="" />
 </p>
 
@@ -170,7 +170,7 @@ Take the private key in a private.key file, and run the following:
 openssl x509 -req -days 3650 -in cert.csr -signkey private.key -out cert.pem</pre>
 
 <p>
-Copy/Paste the content of your new cert.pem in the “Public X.509 certificate of the IdP” field of your NextCloud.
+Copy/Paste the content of your new cert.pem in the &quot;Public X.509 certificate of the IdP&quot; field of your NextCloud.
 </p>
 
 <p>
@@ -192,7 +192,7 @@ We now have to define a service provider (e.g our nextcloud) in LL:NG.
 </p>
 
 <p>
-Go to “<abbr title="Security Assertion Markup Language">SAML</abbr> service providers”, click on “Add <abbr title="Security Assertion Markup Language">SAML</abbr> SP” and name it as you want (example : &#039;NextCloud&#039;)
+Go to &quot;<abbr title="Security Assertion Markup Language">SAML</abbr> service providers&quot;, click on &quot;Add <abbr title="Security Assertion Markup Language">SAML</abbr> SP&quot; and name it as you want (example : &#039;NextCloud&#039;)
 </p>
 
 <p>
@@ -204,7 +204,7 @@ In the new subtree &#039;NextCloud&#039;, open &#039;Metadata&#039; and paste th
 </p>
 
 <p>
-Now go in “Exported attributes” and add, at least, the &#039;uid&#039;
+Now go in &quot;Exported attributes&quot; and add, at least, the &#039;uid&#039;
 </p>
 
 <p>

@@ -144,12 +144,12 @@ Examples:
 		<td class="col0 leftalign"> Makes authentication optional, but authenticated users are seen as such (that is, user data are sent to the app through HTTP headers)  </td><td class="col1 centeralign">  ^/forum/  </td><td class="col2 centeralign">  unprotect  </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0 leftalign"> Restrict access to the whole site to users that have the LDAP description field set to “LDAP administrator” (must be set in exported variables)  </td><td class="col1 centeralign">  default  </td><td class="col2 centeralign">  $description&nbsp;eq&nbsp;"LDAP&nbsp;administrator"  </td>
+		<td class="col0 leftalign"> Restrict access to the whole site to users that have the LDAP description field set to &quot;LDAP administrator&quot; (must be set in exported variables)  </td><td class="col1 centeralign">  default  </td><td class="col2 centeralign">  $description&nbsp;eq&nbsp;"LDAP&nbsp;administrator"  </td>
 	</tr>
 </table></div>
 <!-- EDIT4 TABLE [1461-2304] -->
 <p>
-The “<strong>default</strong>” access rule is used if no other access rule match the current <abbr title="Uniform Resource Locator">URL</abbr>.
+The &quot;<strong>default</strong>&quot; access rule is used if no other access rule match the current <abbr title="Uniform Resource Locator">URL</abbr>.
 </p>
 <div class="notetip"><ul>
 <li class="level1"><div class="li"> Comments can be used to order your rules: rules are applied in the alphabetical order of comment (or regexp in there is no comment). See <strong><a href="security.html#write_good_rules" class="wikilink1" title="documentation:2.0:security">security chapter</a></strong> to learn more about writing good rules.</div>
@@ -191,7 +191,7 @@ By default, user will be redirected on portal if no <abbr title="Uniform Resourc
 <div class="level3">
 
 <p>
-LLNG set an “authentication level” during authentication process. This level is the value of the authentication backend used for this user. Default values are:
+LLNG set an &quot;authentication level&quot; during authentication process. This level is the value of the authentication backend used for this user. Default values are:
 </p>
 <ul>
 <li class="level1"><div class="li"> 0 for <a href="authnull.html" class="wikilink1" title="documentation:2.0:authnull">Null</a></div>
@@ -217,10 +217,10 @@ There are two way to impose users to have a high authentication level:
 <li class="level1"><div class="li"> since 2.0, set a minimum level in virtual host options</div>
 </li>
 </ul>
-<div class="notetip">Instead of returning a 403 code, “minimum level” returns user to a form that explain that a higher level is required and propose to user to reauthenticate itself.
+<div class="notetip">Instead of returning a 403 code, &quot;minimum level&quot; returns user to a form that explain that a higher level is required and propose the user to reauthenticate himself.
 </div>
 </div>
-<!-- EDIT6 SECTION "Rules on authentication level" [3968-4853] -->
+<!-- EDIT6 SECTION "Rules on authentication level" [3968-4855] -->
 <h2 class="sectionedit7" id="headers">Headers</h2>
 <div class="level2">
 
@@ -241,25 +241,25 @@ Examples:
 		<td class="col0 leftalign"> Give the uid (for accounting)  </td><td class="col1 centeralign">  Auth-User  </td><td class="col2 centeralign">  $uid  </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0 leftalign"> Give a static value  </td><td class="col1 centeralign">  Some-Thing  </td><td class="col2 centeralign">  “static-value”  </td>
+		<td class="col0 leftalign"> Give a static value  </td><td class="col1 centeralign">  Some-Thing  </td><td class="col2 centeralign">  &quot;static-value&quot;  </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 leftalign"> Give display name  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  $givenName.“ ”.$surName  </td>
+		<td class="col0 leftalign"> Give display name  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  $givenName.&quot; &quot;.$surName  </td>
 	</tr>
 	<tr class="row4 roweven">
 		<td class="col0 leftalign"> Give a non ascii data  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  encode_base64($givenName."&nbsp;".$surName,"")  </td>
 	</tr>
 </table></div>
-<!-- EDIT8 TABLE [5037-5373] -->
+<!-- EDIT8 TABLE [5039-5375] -->
 <p>
 As described in <a href="performances.html#handler_performance" class="wikilink1" title="documentation:2.0:performances">performances chapter</a>, you can use macros, local macros,...
 </p>
 <div class="noteimportant"><ul>
 <li class="level1"><div class="li"> Since many HTTP servers refuse non ascii headers, it is recommended to use encode_base64() function to transmit those headers</div>
 </li>
-<li class="level1"><div class="li"> Don&#039;t forget to add an empty string as second argument to encode_base64 function to avoid a “newline” characters insertion in result</div>
+<li class="level1"><div class="li"> Don&#039;t forget to add an empty string as second argument to encode_base64 function to avoid a &quot;newline&quot; characters insertion in result</div>
 </li>
-<li class="level1"><div class="li"> Header names must contain only letters and “-” character</div>
+<li class="level1"><div class="li"> Header names must contain only letters and &quot;-&quot; character</div>
 </li>
 </ul>
 
@@ -268,7 +268,7 @@ As described in <a href="performances.html#handler_performance" class="wikilink1
 
 </div>
 </div>
-<!-- EDIT7 SECTION "Headers" [4854-6046] -->
+<!-- EDIT7 SECTION "Headers" [4856-6048] -->
 <h2 class="sectionedit9" id="available_functions">Available functions</h2>
 <div class="level2">
 
@@ -283,7 +283,7 @@ In addition to macros and name, you can use some functions in rules and headers:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "Available functions" [6047-6257] -->
+<!-- EDIT9 SECTION "Available functions" [6049-6259] -->
 <h2 class="sectionedit10" id="wildcards_in_hostnames">Wildcards in hostnames</h2>
 <div class="level2">
 
@@ -306,6 +306,6 @@ Even if a wildcard exists, if a virtualhost is explicitly declared, this rule is
 </ol>
 
 </div>
-<!-- EDIT10 SECTION "Wildcards in hostnames" [6258-] --></div>
+<!-- EDIT10 SECTION "Wildcards in hostnames" [6260-] --></div>
 </body>
 </html>

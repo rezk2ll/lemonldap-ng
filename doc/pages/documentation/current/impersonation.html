@@ -48,11 +48,12 @@
 <div class="level1">
 
 <p>
-This plugin allows certain users to assume the identity of another user. A privileged User first logs in with their real account and can then choose another profile to appear as. This feature can be especially useful for training/learning or development platforms. 
+This plugin allows certain users to assume the identity of another user. A privileged user first logs in with its real account and can then choose another profile to appear as. This feature can be especially useful for training/learning or development platforms.
 </p>
-
+<div class="noteimportant">This plugin should not be used on production instance, prefer <a href="contextswitching.html" class="wikilink1" title="documentation:2.0:contextswitching">ContextSwitching plugin</a>.
 </div>
-<!-- EDIT1 SECTION "Impersonation plugin" [1-303] -->
+</div>
+<!-- EDIT1 SECTION "Impersonation plugin" [1-432] -->
 <h2 class="sectionedit2" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -66,13 +67,11 @@ Just enable it in the Manager (section “plugins”) by setting a rule. Imperso
 </li>
 <li class="level2"><div class="li"> <strong>Identities use rule</strong>: Rule to define which identities can be assumed. Useful to prevent impersonation of certain sensitive identities like CEO, administrators or anonymous/protected users.</div>
 </li>
-<li class="level2"><div class="li"> <strong>Real attributes prefix</strong>: Prefix use to rename user real profile attributes.</div>
-</li>
 <li class="level2"><div class="li"> <strong>Hidden attributes</strong>: Attributes not displayed</div>
 </li>
 <li class="level2"><div class="li"> <strong>Skip empty values</strong>: Do not use empty profile attributes</div>
 </li>
-<li class="level2"><div class="li"> <strong>Merge spoofed and real <abbr title="Single Sign On">SSO</abbr> groups</strong>: Can be useful for administrators to keep higher privileges. “Special rule” field can be used to set <abbr title="Single Sign On">SSO</abbr> groups to merge if exist in real session. Multivalue <code>separator</code> is used. By example : <code>su; admins; anonymous</code></div>
+<li class="level2"><div class="li"> <strong>Merge spoofed and real <abbr title="Single Sign On">SSO</abbr> groups</strong>: Can be useful for administrators to keep higher privileges. &quot;Special rule&quot; field can be used to set <abbr title="Single Sign On">SSO</abbr> groups to merge if exist in real session. Multivalue <code>separator</code> is used. By example : <code>su; admins; anonymous</code></div>
 </li>
 </ul>
 </li>
@@ -105,7 +104,13 @@ Keep in mind that real session is computed first. Afterward, if access is grante
 </p>
 
 </div>
+<p>
+impersonationPrefix is used to rename user&#039;s real profile attributes. You can set real attributes prefix (&#039;real_&#039; by default) by editing <code>lemonldap-ng.ini</code> in section [portal]:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">impersonationPrefix</span> <span class="sy0">=</span><span class="re2"> real_</span></pre>
+
 </div>
-<!-- EDIT2 SECTION "Configuration" [304-] --></div>
+<!-- EDIT2 SECTION "Configuration" [433-] --></div>
 </body>
 </html>

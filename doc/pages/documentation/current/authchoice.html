@@ -143,7 +143,10 @@ Define here:
 <li class="level1"><div class="li"> <strong>Condition</strong>: optional, can be used to evaluate an expression to display the tab.</div>
 </li>
 </ul>
-<div class="notetip">You can prefix the key name with a digit to order them. The digit will not be shown on portal page. Underscore characters are also replaced by spaces.
+<div class="noteclassic">Authentication request to an another <abbr title="Uniform Resource Locator">URL</abbr> than Portal <abbr title="Uniform Resource Locator">URL</abbr> can lead to a persistent loop between Portal and a redirection <abbr title="Uniform Resource Locator">URL</abbr> (pdata is not removed because domains mismatch). To avoid this, you have to set pdata cookie domain by editing <code>lemonldap-ng.ini</code> in section [portal]:<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">pdataDomain</span> <span class="sy0">=</span><span class="re2"> example.com</span></pre>
+
+</div><div class="notetip">You can prefix the key name with a digit to order them. The digit will not be shown on portal page. Underscore characters are also replaced by spaces.
 </div><div class="notetip">You can also override some LLNG parameters for each chain. See <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">Parameter list</a> to have the key names to use
 </div>
 </div>

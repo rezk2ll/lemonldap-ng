@@ -64,11 +64,11 @@ And of course, if the user&#039;s email account is also protected by LemonLDAP::
 <div class="level3">
 
 <p>
-Before configuring this module, make sure the user&#039;s email address is correctly fetched from your UserDB plugin and appears in the session browser. If you want to store the user e-mail in a different session field than <code>mail</code>, go to “General Parameters » Advanced parameters » SMTP” and set the “Session key containing mail address” parameter.
+Before configuring this module, make sure the user&#039;s email address is correctly fetched from your UserDB plugin and appears in the session browser. If you want to store the user e-mail in a different session field than <code>mail</code>, go to &quot;General Parameters » Advanced parameters » SMTP&quot; and set the &quot;Session key containing mail address&quot; parameter.
 </p>
 
 <p>
-All parameters are configured in “General Parameters » Second factors » Mail second factor”.
+All parameters are configured in &quot;General Parameters » Second factors » Mail second factor&quot;.
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Activation</strong>: Set to <code>On</code> to activate this module. If a user does not have an email address, they will encounter an error on login. If you want to use this plugin only for users who have an email address, use <code>$mail</code> (or whatever your e-mail session key is) as the activation rule.</div>
@@ -81,9 +81,11 @@ All parameters are configured in “General Parameters » Second factors » Mail
 </li>
 <li class="level1"><div class="li"> <strong>Mail body</strong>: The plain text content of the email the user will receive. If you leave it blank, the <code>mail_2fcode</code> <abbr title="HyperText Markup Language">HTML</abbr> template will be used. The one-time code is stored in the <code>$code</code> variable</div>
 </li>
-<li class="level1"><div class="li"> <strong>Authentication level</strong>: if you want to overwrite the value sent by your authentication module, you can define here the new authentication level. Example: 5</div>
+<li class="level1"><div class="li"> <strong>Authentication level</strong> (Optional): if you want to overwrite the value sent by your authentication module, you can define here the new authentication level. Example: 5</div>
 </li>
 <li class="level1"><div class="li"> <strong>Logo</strong> (Optional): logo file <em>(in static/&lt;skin&gt; directory)</em></div>
+</li>
+<li class="level1"><div class="li"> <strong>Label</strong> (Optional): label that should be displayed to the user on the choice screen</div>
 </li>
 </ul>
 

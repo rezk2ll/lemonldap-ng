@@ -67,12 +67,12 @@
 </p>
 
 <p>
-LLNG can propose to users to register this kind of software to increase authentication level.
+LLNG can propose users to register this kind of software to increase authentication level.
 </p>
 <div class="notetip">Note that it&#039;s a second factor, not an authentication module. Users are authenticated both by login form and TOTP.
 </div>
 </div>
-<!-- EDIT1 SECTION "TOTP 2nd Factor Authentication" [1-626] -->
+<!-- EDIT1 SECTION "TOTP 2nd Factor Authentication" [1-623] -->
 <h2 class="sectionedit2" id="prerequisites_and_dependencies">Prerequisites and dependencies</h2>
 <div class="level2">
 
@@ -89,7 +89,7 @@ Or from CPAN repository :
 <pre class="code">cpanm Convert::Base32</pre>
 
 </div>
-<!-- EDIT2 SECTION "Prerequisites and dependencies" [627-943] -->
+<!-- EDIT2 SECTION "Prerequisites and dependencies" [624-940] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -97,9 +97,9 @@ Or from CPAN repository :
 In the manager (advanced parameters), you just have to enable it:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Activation</strong>: set it to “on”</div>
+<li class="level1"><div class="li"> <strong>Activation</strong>: set it to &quot;on&quot;</div>
 </li>
-<li class="level1"><div class="li"> <strong>Self registration</strong>: set it to “on” if users are authorized to generate themselves a TOTP secret</div>
+<li class="level1"><div class="li"> <strong>Self registration</strong>: set it to &quot;on&quot; if users are authorized to generate themselves a TOTP secret</div>
 </li>
 <li class="level1"><div class="li"> <strong>Authentication level</strong>: you can overwrite here auth level for TOTP registered users. Leave it blank keeps auth level provided by first authentication module <em>(default: 2 for user/password based modules)</em>. <strong>It is recommended to set an higher value here if you want to give access to some apps only to users enrolled</strong></div>
 </li>
@@ -119,11 +119,15 @@ In the manager (advanced parameters), you just have to enable it:
 </li>
 <li class="level1"><div class="li"> <strong>Lifetime</strong>: Unlimited by default. Set a Time To Live in seconds. TTL is checked at each login process if set. If TTL is expired, relative TOTP is removed.</div>
 </li>
+<li class="level1"><div class="li"> <strong>Logo</strong> (Optional): logo file <em>(in static/&lt;skin&gt; directory)</em></div>
+</li>
+<li class="level1"><div class="li"> <strong>Label</strong> (Optional): label that should be displayed to the user on the choice screen</div>
+</li>
 </ul>
-<div class="noteimportant">If you want to use a custom rule for “activation” and want to keep self-registration, you must include this in your rule that <code>$_2fDevices =~ /“type”:\s*“TOTP”/s</code> is set, else TOTP will be required even if users are not registered. This is automatically done when “activation” is simply set to “on”.
+<div class="noteimportant">If you want to use a custom rule for &quot;activation&quot; and want to keep self-registration, you must include this in your rule that <code>$_2fDevices =~ /&quot;type&quot;:\s*&quot;TOTP&quot;/s</code> is set, else TOTP will be required even if users are not registered. This is automatically done when &quot;activation&quot; is simply set to &quot;on&quot;.
 </div>
 </div>
-<!-- EDIT3 SECTION "Configuration" [944-2474] -->
+<!-- EDIT3 SECTION "Configuration" [941-2629] -->
 <h2 class="sectionedit4" id="enrollment">Enrollment</h2>
 <div class="level2">
 
@@ -132,7 +136,7 @@ If you&#039;ve enabled self registration, users can register their keys by using
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Enrollment" [2475-2602] -->
+<!-- EDIT4 SECTION "Enrollment" [2630-2757] -->
 <h2 class="sectionedit5" id="assistance">Assistance</h2>
 <div class="level2">
 
@@ -146,7 +150,7 @@ To enable manager Second Factor Administration Module, set <code>enabledModules<
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
 
 </div>
-<!-- EDIT5 SECTION "Assistance" [2603-2918] -->
+<!-- EDIT5 SECTION "Assistance" [2758-3073] -->
 <h2 class="sectionedit6" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -156,6 +160,6 @@ If you have another TOTP registration interface, you have to set these keys in S
 <pre class="code file json">[{&quot;name&quot; : &quot;MyTOTP&quot; , &quot;type&quot; : &quot;TOTP&quot; , &quot;_secret&quot; : &quot;########&quot; , &quot;epoch&quot;:&quot;1524078936&quot;}, ...]</pre>
 
 </div>
-<!-- EDIT6 SECTION "Developer corner" [2919-] --></div>
+<!-- EDIT6 SECTION "Developer corner" [3074-] --></div>
 </body>
 </html>

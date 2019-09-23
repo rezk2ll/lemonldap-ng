@@ -183,7 +183,7 @@ You must register IDP metadata here. You can do it either by uploading the file,
 For each attribute, you can set:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Key name</strong>: name of the key in LemonLDAP::NG session (for example “uid” will then be used as $uid in access rules)</div>
+<li class="level1"><div class="li"> <strong>Key name</strong>: name of the key in LemonLDAP::NG session (for example &quot;uid&quot; will then be used as $uid in access rules)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Mandatory</strong>: if set to On, then session will not open if this attribute is not given by IDP.</div>
 </li>
@@ -214,7 +214,7 @@ For each attribute, you can set:
 </ul>
 
 <p>
-For example, to preselect this IDP for users coming from 129.168.0.0/16 network and member of “admin” group:
+For example, to preselect this IDP for users coming from 129.168.0.0/16 network and member of &quot;admin&quot; group:
 </p>
 <pre class="code">$ENV{REMOTE_ADDR} =~ /^192\.168/ and $groups =~ /\badmin\b/</pre>
 
@@ -250,7 +250,7 @@ For example, to preselect this IDP for users coming from 129.168.0.0/16 network 
 </li>
 <li class="level1"><div class="li"> <strong>Store <abbr title="Security Assertion Markup Language">SAML</abbr> Token</strong>: allows one to keep <abbr title="Security Assertion Markup Language">SAML</abbr> token (assertion) inside user session. Don&#039;t enable it unless you need to replay this token on an application.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Attribute containing user identifier</strong>: set the value of <abbr title="Security Assertion Markup Language">SAML</abbr> attribute (“Name”) that should be used as user main identifier ($user). If empty, the NameID content is used.</div>
+<li class="level1"><div class="li"> <strong>Attribute containing user identifier</strong>: set the value of <abbr title="Security Assertion Markup Language">SAML</abbr> attribute (&quot;Name&quot;) that should be used as user main identifier ($user). If empty, the NameID content is used.</div>
 </li>
 </ul>
 
@@ -314,7 +314,7 @@ Used only if you have more than 1 <abbr title="Security Assertion Markup Languag
 <li class="level1"><div class="li"> <strong>Order</strong>: Number to sort IDP display</div>
 </li>
 </ul>
-<div class="notetip">The chosen logo must be in Portal icons directory (<code>portal/static/common/icons/</code>). You can set a custom icon by setting the icon file name directly in the field and copy the logo file in portal icons directory
+<div class="notetip">The chosen logo must be in Portal icons directory (<code>portal/static/common/</code>). You can set a custom icon by setting the icon file name directly in the field and copy the logo file in portal icons directory
 </div>
 </div>
 <!-- EDIT8 SECTION "Register partner Identity Provider on LemonLDAP::NG" [1807-] --></div>

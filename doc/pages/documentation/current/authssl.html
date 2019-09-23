@@ -108,7 +108,7 @@
 <div class="level2">
 
 <p>
-By default, SSL is required before the portal is displayed (handled by webserver). If you want to display a button to connect to LLNG <em>(compatible with <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination</a>)</em>, you can activate “SSL by Ajax request” in the manager. See <a href="#ssl_by_ajax" title="documentation:2.0:authssl ↵" class="wikilink1">SSL by Ajax</a> below.
+By default, SSL is required before the portal is displayed (handled by webserver). If you want to display a button to connect to LLNG <em>(compatible with <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination</a>)</em>, you can activate &quot;SSL by Ajax request&quot; in the manager. See <a href="#ssl_by_ajax" title="documentation:2.0:authssl ↵" class="wikilink1">SSL by Ajax</a> below.
 </p>
 
 </div>
@@ -386,7 +386,7 @@ $('.enteteBouton').click( function (e) {
 });
 <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/script.html"><span class="kw2">script</span></a>&gt;</span>
 <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/body.html"><span class="kw2">body</span></a>&gt;</span></pre>
-<div class="notewarning">It is incompatible with authentication combination because of Apache parameter “SSLVerifyClient”, which must have the value “require”. To enable SSL with <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination</a>, use <a href="#ssl_by_ajax" title="documentation:2.0:authssl ↵" class="wikilink1">SSL by Ajax</a>
+<div class="notewarning">It is incompatible with authentication combination because of Apache parameter &quot;SSLVerifyClient&quot;, which must have the value &quot;require&quot;. To enable SSL with <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination</a>, use <a href="#ssl_by_ajax" title="documentation:2.0:authssl ↵" class="wikilink1">SSL by Ajax</a>
 </div>
 </div>
 <!-- EDIT8 SECTION "Auto reloading SSL Certificates" [5086-8349] -->
@@ -408,6 +408,19 @@ then declare the second <abbr title="Uniform Resource Locator">URL</abbr> in SSL
 </p>
 <div class="noteclassic">With <a href="authchoice.html" class="wikilink1" title="documentation:2.0:authchoice">choice</a>, the second <abbr title="Uniform Resource Locator">URL</abbr> should be also declared in module <abbr title="Uniform Resource Locator">URL</abbr> parameter to redirect user to Portal menu.
 
+</div><div class="noteclassic">Ajax authentication request can be sent to an another <abbr title="Uniform Resource Locator">URL</abbr> than Portal <abbr title="Uniform Resource Locator">URL</abbr>.
+<p>
+To avoid a persistent loop between Portal and a redirection <abbr title="Uniform Resource Locator">URL</abbr> (pdata is not removed because domains mismatch), you have to set pdata cookie domain by editing <code>lemonldap-ng.ini</code> in section [portal]:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">pdataDomain</span> <span class="sy0">=</span><span class="re2"> example.com</span></pre>
+
+<p>
+To avoid a bad/expired token during session upgrading (Reauthentication) if URLs are served by different load balancers, you can force Upgrade tokens be stored into Global Storage by editing <code>lemonldap-ng.ini</code> in section [portal]:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">forceGlobalStorageUpgradeOTT</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
+
 </div><div class="noteimportant"><strong>Content Security Policy</strong> may prevent to submit Ajax Request.
 To avoid security warning,
 <p>
@@ -419,15 +432,19 @@ and set :
 </p>
 
 <p>
-<strong>Default value</strong>     =&gt; &#039;self&#039; “Ajax request <abbr title="Uniform Resource Locator">URL</abbr>”
+<strong>Default value</strong>     =&gt; &#039;self&#039; &quot;Ajax request <abbr title="Uniform Resource Locator">URL</abbr>&quot;
 </p>
 
 <p>
-<strong>Form destinations</strong> =&gt; &#039;self&#039; “Ajax request <abbr title="Uniform Resource Locator">URL</abbr>”
+<strong>Form destinations</strong> =&gt; &#039;self&#039; &quot;Ajax request <abbr title="Uniform Resource Locator">URL</abbr>&quot;
 </p>
 
 <p>
-<strong>Ajax destinations</strong> =&gt; &#039;self&#039; “Ajax request <abbr title="Uniform Resource Locator">URL</abbr>”
+<strong>Ajax destinations</strong> =&gt; &#039;self&#039; &quot;Ajax request <abbr title="Uniform Resource Locator">URL</abbr>&quot;
+</p>
+
+<p>
+<strong>Script source</strong> =&gt; &#039;self&#039; &quot;Ajax request <abbr title="Uniform Resource Locator">URL</abbr>&quot;
 </p>
 
 </div>
