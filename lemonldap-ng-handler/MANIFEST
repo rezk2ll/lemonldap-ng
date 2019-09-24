@@ -27,6 +27,7 @@ lib/Lemonldap/NG/Handler/Lib/PSGI.pm
 lib/Lemonldap/NG/Handler/Lib/SecureToken.pm
 lib/Lemonldap/NG/Handler/Lib/ServiceToken.pm
 lib/Lemonldap/NG/Handler/Lib/Status.pm
+lib/Lemonldap/NG/Handler/Lib/StatusConstants.pm
 lib/Lemonldap/NG/Handler/Lib/ZimbraPreAuth.pm
 lib/Lemonldap/NG/Handler/Main.pm
 lib/Lemonldap/NG/Handler/Main/Init.pm
