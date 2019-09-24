@@ -124,7 +124,7 @@ foreach ( sort keys %$headers ) {
 print "</tbody></table>\n";
 print "</div><p></p>\n";
 print
-"<div class=\"alert alert-warning\">Note that LemonLDAP::NG cookie is hidden. So that application developpers can not spoof sessions.</div>\n";
+"<div class=\"alert alert-warning\">Note that LemonLDAP::NG cookie is hidden. So that application developers can not spoof sessions.</div>\n";
 print
 "<div class=\"alert alert-info\">You can access to any information (IP address or LDAP attribute) by customizing exported headers with the <a href=\"$manager_url\">LemonLDAP::NG Management interface</a>.</div>\n";
 print "</div>\n";

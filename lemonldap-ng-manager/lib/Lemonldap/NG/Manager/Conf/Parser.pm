@@ -30,7 +30,7 @@ our $VERSION = '2.0.6';
 
 extends 'Lemonldap::NG::Common::Conf::Compact';
 
-# High debugging for developpers, set this to 1
+# High debugging for developers, set this to 1
 use constant HIGHDEBUG => 0;
 
 # Messages storage

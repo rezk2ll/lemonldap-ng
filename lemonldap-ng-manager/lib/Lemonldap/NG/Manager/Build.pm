@@ -848,7 +848,7 @@ must contain an array of { k => <keyName>, v => <display name> } hashref
 
 =item documentation (recommended):
 
-some words for other developpers
+some words for other developers
 
 =item test (optional):
 
