@@ -318,13 +318,13 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coff
 		uglifyjs $*.js --compress --mangle --comments='/Copyr/i' --source-map -o $*.min.js; \
 	fi
 
-fastcgi-server/man/llng-fastcgi-server.1p: fastcgi-server/sbin/llng-fastcgi-server
+fastcgi-server/man/llng-fastcgi-server.8p: fastcgi-server/sbin/llng-fastcgi-server
 	@echo Update FastCGI server man page
-	@pod2man -name llng-fastcgi-server fastcgi-server/sbin/llng-fastcgi-server >fastcgi-server/man/llng-fastcgi-server.1p
+	@pod2man -s 8 -name llng-fastcgi-server fastcgi-server/sbin/llng-fastcgi-server >fastcgi-server/man/llng-fastcgi-server.8p
 
 # Perl libraries configuration
 
-json:	$(MANAGERJSONDST) fastcgi-server/man/llng-fastcgi-server.1p debian/*cron*
+json:	$(MANAGERJSONDST) fastcgi-server/man/llng-fastcgi-server.8p debian/*cron*
 	@if which yui-compressor >/dev/null; then $(MAKE) minify; fi
 
 debian/liblemonldap-ng-handler-perl.cron.d: lemonldap-ng-handler/eg/scripts/purgeLocalCache.cron.d
