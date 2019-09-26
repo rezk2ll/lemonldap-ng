@@ -18,7 +18,7 @@
       <span class="input-group-text"><i class="fa fa-lock"></i> </span>
     </div>
     <TMPL_IF NAME="DONT_STORE_PASSWORD">
-      <input name="password" type="text" class="form-control key" trplaceholder="password" autocomplete="off" required aria-required="true" aria-hidden="true"/>
+      <input name="password" type="text" class="form-control key" autocomplete="off" required aria-required="true" aria-hidden="true"/>
     <TMPL_ELSE>
       <input name="password" type="password" class="form-control" trplaceholder="password" required aria-required="true"/>
     </TMPL_IF>
