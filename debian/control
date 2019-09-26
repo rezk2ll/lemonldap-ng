@@ -270,7 +270,8 @@ Depends: ${misc:Depends},
          libclone-perl,
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libtext-unidecode-perl,
-         libregexp-assemble-perl
+         libregexp-assemble-perl,
+         libemail-date-format-perl
 Recommends: libcrypt-openssl-bignum-perl,
             libconvert-base32-perl,
             libemail-sender-perl (>=1.300027) | libemail-sender-transport-smtps-perl,
