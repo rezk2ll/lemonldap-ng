@@ -38,8 +38,8 @@ sub modifyPassword {
     unless ($rule) {
         my $error = $self->p->HANDLER->tsv->{jail}->error || '???';
     }
-    if ( $req->userData->{_dn} ) {
-        $dn = $req->userData->{_dn};
+    if ( $req->data->{dn} ) {
+        $dn = $req->data->{dn};
         $requireOldPassword = $rule->( $req, $req->userData );
         $self->logger->debug("Get DN from request data: $dn");
     }

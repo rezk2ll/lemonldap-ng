@@ -28,7 +28,7 @@ sub confirm {
 
 sub modifyPassword {
     my ( $self, $req, $pwd ) = @_;
-    my $dn = $req->userData->{_dn} || $req->sessionInfo->{_dn};
+    my $dn = $req->data->{dn} || $req->sessionInfo->{_dn};
     unless ($dn) {
         $self->logger->error('"dn" is not set, aborting password modification');
         return PE_ERROR;
