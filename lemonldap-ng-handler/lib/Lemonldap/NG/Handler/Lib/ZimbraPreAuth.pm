@@ -57,9 +57,8 @@ sub run {
         $zimbraBy, $timeout );
 
     # Header location
-    Lemonldap::NG::Handler::API->set_header_out( 'Location' => $zimbra_url );
+    $class->set_header_out( $req, 'Location' => $zimbra_url );
 
-    # Return $class->REDIRECT
     return $class->REDIRECT;
 }
 
