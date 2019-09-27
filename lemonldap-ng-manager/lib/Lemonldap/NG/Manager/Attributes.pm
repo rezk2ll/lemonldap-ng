@@ -3211,6 +3211,23 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '',
             'type'    => 'longtext'
         },
+        'samlIDPMetaDataOptionsSignatureMethod' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => 'default'
+                },
+                {
+                    'k' => 'RSA_SHA1',
+                    'v' => 'RSA SHA1'
+                },
+                {
+                    'k' => 'RSA_SHA256',
+                    'v' => 'RSA SHA256'
+                }
+            ],
+            'type' => 'select'
+        },
         'samlIDPMetaDataOptionsSignSLOMessage' => {
             'default' => -1,
             'type'    => 'trool'
@@ -3546,6 +3563,23 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'samlSPMetaDataOptionsSessionNotOnOrAfterTimeout' => {
             'default' => 72000,
             'type'    => 'int'
+        },
+        'samlSPMetaDataOptionsSignatureMethod' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => 'default'
+                },
+                {
+                    'k' => 'RSA_SHA1',
+                    'v' => 'RSA SHA1'
+                },
+                {
+                    'k' => 'RSA_SHA256',
+                    'v' => 'RSA SHA256'
+                }
+            ],
+            'type' => 'select'
         },
         'samlSPMetaDataOptionsSignSLOMessage' => {
             'default' => -1,

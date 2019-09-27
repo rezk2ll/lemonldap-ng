@@ -709,6 +709,27 @@ function templates(tpl,key) {
    {
       "_nodes" : [
          {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSignatureMethod",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSignatureMethod",
+            "select" : [
+               {
+                  "k" : "",
+                  "v" : "default"
+               },
+               {
+                  "k" : "RSA_SHA1",
+                  "v" : "RSA SHA1"
+               },
+               {
+                  "k" : "RSA_SHA256",
+                  "v" : "RSA SHA256"
+               }
+            ],
+            "title" : "samlIDPMetaDataOptionsSignatureMethod",
+            "type" : "select"
+         },
+         {
             "default" : -1,
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSignSSOMessage",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSignSSOMessage",
@@ -1102,6 +1123,27 @@ function templates(tpl,key) {
          },
          {
             "_nodes" : [
+               {
+                  "default" : "",
+                  "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsSignatureMethod",
+                  "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsSignatureMethod",
+                  "select" : [
+                     {
+                        "k" : "",
+                        "v" : "default"
+                     },
+                     {
+                        "k" : "RSA_SHA1",
+                        "v" : "RSA SHA1"
+                     },
+                     {
+                        "k" : "RSA_SHA256",
+                        "v" : "RSA SHA256"
+                     }
+                  ],
+                  "title" : "samlSPMetaDataOptionsSignatureMethod",
+                  "type" : "select"
+               },
                {
                   "default" : -1,
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsSignSSOMessage",

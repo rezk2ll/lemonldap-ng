@@ -2769,6 +2769,15 @@ sub attributes {
             type    => 'trool',
             default => -1,
         },
+        samlIDPMetaDataOptionsSignatureMethod => {
+            type   => 'select',
+            select => [
+                { k => '',           v => 'default' },
+                { k => 'RSA_SHA1',   v => 'RSA SHA1' },
+                { k => 'RSA_SHA256', v => 'RSA SHA256' },
+            ],
+            default => '',
+        },
         samlIDPMetaDataOptionsCheckSLOMessageSignature => {
             type    => 'bool',
             default => 1,
@@ -2924,6 +2933,15 @@ sub attributes {
         samlSPMetaDataOptionsSignSSOMessage => {
             type    => 'trool',
             default => -1,
+        },
+        samlSPMetaDataOptionsSignatureMethod => {
+            type   => 'select',
+            select => [
+                { k => '',           v => 'default' },
+                { k => 'RSA_SHA1',   v => 'RSA SHA1' },
+                { k => 'RSA_SHA256', v => 'RSA SHA256' },
+            ],
+            default => '',
         },
         samlSPMetaDataOptionsCheckSSOMessageSignature => {
             type    => 'bool',
