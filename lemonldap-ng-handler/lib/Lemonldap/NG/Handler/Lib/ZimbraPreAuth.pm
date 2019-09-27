@@ -11,12 +11,12 @@ package Lemonldap::NG::Handler::Lib::ZimbraPreAuth;
 use strict;
 use Digest::HMAC_SHA1 qw(hmac_sha1_hex);
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 # Overload main run method
 sub run {
-    my ( $class, $req ) = @_;
-    my ($ret, $session) = $class->Lemonldap::NG::Handler::Main::run($req);
+    my ( $class, $req )     = @_;
+    my ( $ret,   $session ) = $class->Lemonldap::NG::Handler::Main::run($req);
 
     # Continue only if user is authorized
     return $ret unless ( $ret == $class->OK );
