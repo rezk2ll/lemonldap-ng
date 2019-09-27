@@ -1968,7 +1968,7 @@ sub attributes {
                 { k => 'OAuth2',       v => 'OAuth2' },
                 { k => 'SecureToken',  v => 'SecureToken' },
                 { k => 'ServiceToken', v => 'ServiceToken' },
-                { k => 'Zimbra',       v => 'ZimbraPreAuth' },
+                { k => 'ZimbraPreAuth',v => 'ZimbraPreAuth' },
             ],
             default       => 'Main',
             documentation => 'Handler type',

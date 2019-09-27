@@ -16,7 +16,7 @@ our $VERSION = '2.0.6';
 # Overload main run method
 sub run {
     my ( $class, $req ) = @_;
-    my $ret = $class->Lemonldap::NG::Handler::Main::run($req);
+    my ($ret, $session) = $class->Lemonldap::NG::Handler::Main::run($req);
 
     # Continue only if user is authorized
     return $ret unless ( $ret == $class->OK );

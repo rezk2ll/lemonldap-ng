@@ -3765,7 +3765,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
                     'v' => 'ServiceToken'
                 },
                 {
-                    'k' => 'Zimbra',
+                    'k' => 'ZimbraPreAuth',
                     'v' => 'ZimbraPreAuth'
                 }
             ],

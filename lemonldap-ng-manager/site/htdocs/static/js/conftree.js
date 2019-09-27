@@ -1192,7 +1192,7 @@ function templates(tpl,key) {
                   "v" : "ServiceToken"
                },
                {
-                  "k" : "Zimbra",
+                  "k" : "ZimbraPreAuth",
                   "v" : "ZimbraPreAuth"
                }
             ],
