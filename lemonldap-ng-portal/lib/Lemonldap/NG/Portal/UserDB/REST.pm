@@ -43,10 +43,12 @@ sub getUser {
     };
     if ($@) {
         $self->logger->error("UserDB REST error: $@");
+        eval { $self->p->_authentication->setSecurity($req) };
         return PE_ERROR;
     }
     unless ( $res->{result} ) {
         $self->userLogger->warn( 'User ' . $req->user . ' not found' );
+        eval { $self->p->_authentication->setSecurity($req) };
         return PE_BADCREDENTIALS;
     }
     $req->data->{restUserDBInfo} = $res->{info} || {};
