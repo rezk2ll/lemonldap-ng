@@ -300,6 +300,29 @@ sub loadIDPs {
         }
         $self->logger->debug("Set encryption mode $encryption_mode on IDP $_");
 
+        # Set signature method if overriden
+        my $signature_method = $self->conf->{samlIDPMetaDataOptions}->{$_}
+          ->{samlIDPMetaDataOptionsSignatureMethod};
+        if ($signature_method) {
+            my $lasso_signature_method =
+              $self->getSignatureMethod($signature_method);
+
+            unless (
+                $self->setProviderSignatureMethod(
+                    $self->lassoServer->get_provider($entityID),
+                    $lasso_signature_method
+                )
+              )
+            {
+                $self->logger->error(
+                    "Unable to set signature method $signature_method on IDP $_"
+                );
+                next;
+            }
+            $self->logger->debug(
+                "Set signature method $signature_method on IDP $_");
+        }
+
         # Set display options
         $self->idpList->{$entityID}->{displayName} =
           $self->conf->{samlIDPMetaDataOptions}->{$_}
@@ -405,6 +428,29 @@ sub loadSPs {
             next;
         }
         $self->logger->debug("Set encryption mode $encryption_mode on SP $_");
+
+        # Set signature method if overriden
+        my $signature_method = $self->conf->{samlSPMetaDataOptions}->{$_}
+          ->{samlSPMetaDataOptionsSignatureMethod};
+        if ($signature_method) {
+            my $lasso_signature_method =
+              $self->getSignatureMethod($signature_method);
+
+            unless (
+                $self->setProviderSignatureMethod(
+                    $self->lassoServer->get_provider($entityID),
+                    $lasso_signature_method
+                )
+              )
+            {
+                $self->logger->error(
+                    "Unable to set signature method $signature_method on SP $_"
+                );
+                next;
+            }
+            $self->logger->debug(
+                "Set signature method $signature_method on SP $_");
+        }
 
         my $rule = $self->conf->{samlSPMetaDataOptions}->{$_}
           ->{samlSPMetaDataOptionsRule};
@@ -3167,6 +3213,27 @@ sub getSignatureMethod {
     return $signature_method_none;
 }
 
+## @method boolean setProviderSignatureMethod(Lasso::Provider provider, int signature_method)
+# Set signature method on a provider
+# @param provider Lasso::Provider object
+# @param signature_method Lasso signature method
+# @return result
+sub setProviderSignatureMethod {
+    my ( $self, $provider, $signature_method ) = @_;
+
+    eval {
+        my $key = Lasso::Key::new_for_signature_from_file(
+            $self->conf->{samlServicePrivateKeySig},
+            $self->conf->{samlServicePrivateKeySigPwd} || '',
+            $signature_method,
+            $self->conf->{samlServicePublicKeySig}
+        );
+        $provider->set_server_signing_key($key);
+    };
+
+    return $self->checkLassoError($@);
+}
+
 1;
 
 __END__
@@ -3531,6 +3598,10 @@ Get query string with or without CGI query_string() method
 =head2 getSignatureMethod
 
 Return Lasso signature method
+
+=head2 setProviderSignatureMethod
+
+Set signature method on a provider
 
 =head1 SEE ALSO
 
