@@ -10,7 +10,7 @@
 "newPwdIs":"Kata laluan baru anda ialah",
 "pwdChanged":"Kata laluan anda telah ditukar",
 "pwdIs":"Kata laluan anda ialah",
-"registerConfirmSubject":"[LemonLDAP::NG]  Pengesahan pendaftaran akaun",
+"registerConfirmSubject":"[LemonLDAP::NG] Pengesahan pendaftaran akaun",
 "registerDoneSubject":"[LemonLDAP::NG] Akaun baru anda",
 "requestIssuedFromIP":"Permintaan itu dari alamat IP",
 "yourLoginCodeIs":"Kod login anda ialah",
