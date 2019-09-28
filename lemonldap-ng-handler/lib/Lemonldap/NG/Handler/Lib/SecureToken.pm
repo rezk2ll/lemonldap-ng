@@ -106,7 +106,7 @@ sub run {
     # Remove token
     eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
 
-    if ( $INC{"Apache2/Filter.pm"} ) {
+    if ( $INC{"Apache2/Filter.pm"} and defined $r->{env}->{'psgi.r'} ) {
         $r->{env}->{'psgi.r'}->add_output_filter(
             sub {
                 my $f = shift;
