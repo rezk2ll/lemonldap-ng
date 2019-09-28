@@ -16,6 +16,7 @@ SKIP: {
         {
             logLevel         => 'error',
             zimbraPreAuthKey => '1234567890',
+            zimbraSsoUrl     => 'testsso',
             vhostOptions     => {
                 'test1.example.com' => {
                     vhostHttps           => 0,
@@ -36,7 +37,7 @@ SKIP: {
       Digest::HMAC_SHA1::hmac_sha1_hex( "dwho|id|0|$timestamp", '1234567890' );
     ok(
         $res = $client->_get(
-            '/zimbrasso',        undef,
+            '/testsso',          undef,
             'test1.example.com', "lemonldap=$sessionId",
             VHOSTTYPE => 'ZimbraPreAuth',
         ),
