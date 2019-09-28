@@ -380,6 +380,31 @@ sub tests {
                 && $conf->{samlServicePublicKeySig} );
             return 1;
         },
+        samlSignatureOverrideNeedsCertificate => sub {
+
+            return 1 if $conf->{samlServicePublicKeySig} =~ /CERTIFICATE/;
+
+            my @offenders;
+            for my $idp ( keys %{ $conf->{samlIDPMetaDataOptions} } ) {
+                if ( $conf->{samlIDPMetaDataOptions}->{$idp}
+                    ->{samlIDPMetaDataOptionsSignatureMethod} )
+                {
+                    push @offenders, $idp;
+                }
+            }
+            for my $sp ( keys %{ $conf->{samlSPMetaDataOptions} } ) {
+                if ( $conf->{samlSPMetaDataOptions}->{$sp}
+                    ->{samlSPMetaDataOptionsSignatureMethod} )
+                {
+                    push @offenders, $sp;
+                }
+            }
+            return 1 unless @offenders;
+            return ( 0,
+                    "Cannot set non-default signature method on "
+                  . join( ", ", @offenders )
+                  . " unless SAML signature key is in certificate form" );
+        },
 
         # Try to parse combination with declared modules
         checkCombinations => sub {
