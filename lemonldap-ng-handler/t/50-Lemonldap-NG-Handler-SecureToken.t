@@ -15,7 +15,7 @@ my $dir = dirname( abs_path($0) );
 
 print $ini "[all]
 logger = Lemonldap::NG::Common::Logger::Std
-logLeval = error
+logLevel = error
 [configuration]
 type=File
 dirName=$dir
