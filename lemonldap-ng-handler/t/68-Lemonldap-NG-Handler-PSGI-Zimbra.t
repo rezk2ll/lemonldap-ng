@@ -50,7 +50,7 @@ SKIP: {
         $h{'Location'} =~
 m%^/service/preauth\?account=dwho&by=id&timestamp=$timestamp&expires=0&preauth=$value$%,
         'Header Location is set to Zimbra URL'
-    ) or explain( \%h, 'Location => "Zimbra URL' );
+    ) or explain( \%h, 'Location => "Zimbra URL"' );
     ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
       or explain( \%h, 'Auth-User => "dwho"' );
     count(4);
