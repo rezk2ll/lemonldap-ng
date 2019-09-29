@@ -52,8 +52,8 @@ SKIP: {
       or explain( \%h, 'Auth-Token => "md5 value"' );
     ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
       or explain( \%h, 'Auth-User => "dwho"' );
-    count(4);
 }
 
+count($maintests);
 done_testing( count() );
 clean();
