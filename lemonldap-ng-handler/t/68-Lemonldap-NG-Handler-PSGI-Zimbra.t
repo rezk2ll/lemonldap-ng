@@ -4,7 +4,7 @@ BEGIN {
     require 't/test-psgi-lib.pm';
 }
 
-my $maintests = 4;
+my $maintests = 8;
 
 SKIP: {
     eval { require Digest::HMAC_SHA1; };
@@ -16,7 +16,8 @@ SKIP: {
         {
             logLevel         => 'error',
             zimbraPreAuthKey => '1234567890',
-            zimbraSsoUrl     => 'testsso',
+            zimbraUrl        => '/service/preauthtest',
+            zimbraSsoUrl     => '^/testsso',
             vhostOptions     => {
                 'test1.example.com' => {
                     vhostHttps           => 0,
@@ -32,6 +33,26 @@ SKIP: {
             }
         }
     );
+
+    # Request a non-Zimbra URL
+    ok(
+        $res = $client->_get(
+            '/test',             undef,
+            'test1.example.com', "lemonldap=$sessionId",
+            VHOSTTYPE => 'ZimbraPreAuth',
+        ),
+        'Non-Zimbra URL Query'
+    );
+    ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
+
+    # Check headers
+    %h = @{ $res->[1] };
+    ok( !defined $h{'Location'}, 'Location is undefined' )
+      or explain( \%h, 'Location => "URL"' );
+    ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
+      or explain( \%h, 'Auth-User => "dwho"' );
+
+    # Request Zimbra URL
     my $timestamp = time() * 1000;
     my $value =
       Digest::HMAC_SHA1::hmac_sha1_hex( "dwho|id|0|$timestamp", '1234567890' );
@@ -41,7 +62,7 @@ SKIP: {
             'test1.example.com', "lemonldap=$sessionId",
             VHOSTTYPE => 'ZimbraPreAuth',
         ),
-        'Query'
+        'Zimbra URL Query'
     );
     ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 
@@ -49,13 +70,13 @@ SKIP: {
     %h = @{ $res->[1] };
     ok(
         $h{'Location'} =~
-m%^/service/preauth\?account=dwho&by=id&timestamp=$timestamp&expires=0&preauth=$value$%,
+m%^/service/preauthtest\?account=dwho&by=id&timestamp=$timestamp&expires=0&preauth=$value$%,
         'Header Location is set to Zimbra URL'
     ) or explain( \%h, 'Location => "Zimbra URL"' );
     ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
       or explain( \%h, 'Auth-User => "dwho"' );
-    count(4);
 }
 
+count($maintests);
 done_testing( count() );
 clean();

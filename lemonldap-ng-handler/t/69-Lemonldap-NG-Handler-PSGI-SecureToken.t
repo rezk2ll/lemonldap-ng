@@ -4,7 +4,7 @@ BEGIN {
     require 't/test-psgi-lib.pm';
 }
 
-my $maintests = 4;
+my $maintests = 12;
 
 SKIP: {
     eval { require Cache::Memcached; };
@@ -18,9 +18,10 @@ SKIP: {
     init(
         'Lemonldap::NG::Handler::Server',
         {
-            logLevel        => 'error',
-            secureTokenUrls => ['/secured'],
-            vhostOptions    => {
+            logLevel          => 'error',
+            secureTokenUrls   => [ '^/secured$', '/test$' ],
+            secureTokenHeader => 'AuthToken',
+            vhostOptions      => {
                 'test1.example.com' => {
                     vhostHttps           => 0,
                     vhostPort            => 80,
@@ -36,22 +37,61 @@ SKIP: {
         }
     );
 
+    ## Request secured URLs
+    # First URL
     ok(
         $res = $client->_get(
             '/secured',          undef,
             'test1.example.com', "lemonldap=$sessionId",
             VHOSTTYPE => 'SecureToken',
         ),
-        'Auth query'
+        'Auth secured URL query 1'
     );
     ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 
     # Check headers
     %h = @{ $res->[1] };
-    ok( $h{'Auth-Token'} =~ m%[0-9a-f]{32}%, 'Header "Auth-Token" found' )
-      or explain( \%h, 'Auth-Token => "md5 value"' );
+    ok( $h{'AuthToken'} =~ m%[0-9a-f]{32}%, 'Header "AuthToken" found' )
+      or explain( \%h, 'AuthToken => "md5 value"' );
     ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
       or explain( \%h, 'Auth-User => "dwho"' );
+
+    # Second URL
+    ok(
+        $res = $client->_get(
+            '/try/test',         undef,
+            'test1.example.com', "lemonldap=$sessionId",
+            VHOSTTYPE => 'SecureToken',
+        ),
+        'Auth secured URL query 2'
+    );
+    ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
+
+    # Check headers
+    %h = @{ $res->[1] };
+    ok( $h{'AuthToken'} =~ m%[0-9a-f]{32}%, 'Header "AuthToken" found' )
+      or explain( \%h, 'AuthToken => "md5 value"' );
+    ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
+      or explain( \%h, 'Auth-User => "dwho"' );
+
+    ## Request an unsecured URL
+    ok(
+        $res = $client->_get(
+            '/try',              undef,
+            'test1.example.com', "lemonldap=$sessionId",
+            VHOSTTYPE => 'SecureToken',
+        ),
+        'Auth unsecured URL query'
+    );
+    ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
+
+    # Check headers
+    %h = @{ $res->[1] };
+    ok( !defined $h{'AuthToken'}, 'Header "AuthToken" not found' )
+      or explain( \%h, 'AuthToken => "md5 value"' );
+    ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
+      or explain( \%h, 'Auth-User => "dwho"' );
+
 }
 
 count($maintests);
