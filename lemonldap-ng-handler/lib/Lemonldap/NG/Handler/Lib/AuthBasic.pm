@@ -15,6 +15,7 @@ our $VERSION = '2.0.6';
 our @ISA     = ('Exporter');
 our @EXPORT  = qw(fetchId retrieveSession createSession hideCookie goToPortal);
 our @EXPORT_OK = @EXPORT;
+our $_ua;
 
 ## @rmethod protected fetchId
 # Get user session id from Authorization header
@@ -162,8 +163,6 @@ sub goToPortal {
     }
 }
 
-our $_ua;
-
 sub ua {
     my ($class) = @_;
     return $_ua if ($_ua);
@@ -173,7 +172,6 @@ sub ua {
         }
     );
 
-    # TODO: auth basic
     return $_ua;
 }
 

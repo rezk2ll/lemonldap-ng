@@ -121,7 +121,6 @@ sub run {
         );
     }
 
-    # Return $class->OK
     return $class->OK;
 }
 
