@@ -49,8 +49,9 @@ sub modifyPassword {
         );
 
         unless ( $result->code == 0 ) {
-            $self->logger->error(
-                "LDAP modify pwdLastSet error: " . $result->code );
+            $self->logger->error( "LDAP modify pwdLastSet error "
+                  . $result->code . ": "
+                  . $result->error );
             return PE_LDAPERROR;
         }
 

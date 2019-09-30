@@ -126,7 +126,8 @@ sub getUser {
         attrs => $self->attrs,
     );
     if ( $mesg->code() != 0 ) {
-        $self->logger->error( 'LDAP Search error: ' . $mesg->error );
+        $self->logger->error(
+            'LDAP Search error ' . $mesg->code . ": " . $mesg->error );
         return PE_LDAPERROR;
     }
     if ( $mesg->count() > 1 ) {

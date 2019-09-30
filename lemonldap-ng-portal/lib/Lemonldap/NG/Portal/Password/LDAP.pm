@@ -62,8 +62,9 @@ sub modifyPassword {
         unless ( $result->code == 0 ) {
             $self->logger->error( "LDAP modify "
                   . $self->conf->{ldapPasswordResetAttribute}
-                  . " error: "
-                  . $result->code );
+                  . " error "
+                  . $result->code . ": "
+                  . $result->error );
             return PE_LDAPERROR;
         }
 
