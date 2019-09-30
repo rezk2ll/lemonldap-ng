@@ -85,7 +85,11 @@ sub storeEnvAndCheckGateway {
         $self->logger->debug(
             "Gateway mode requested, redirect without authentication");
         $req->response( [ 302, [ Location => $service ], [] ] );
-        $req->pdata( {} );
+        for my $s ( $self->ipath, $self->ipath . 'Path' ) {
+            $self->logger->debug("Removing $s from pdata")
+              if delete $req->pdata->{$s};
+        }
+
         return PE_SENDRESPONSE;
     }
 

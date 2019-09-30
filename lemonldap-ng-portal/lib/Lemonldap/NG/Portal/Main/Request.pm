@@ -57,7 +57,8 @@ has continue => ( is => 'rw' );
 has checkLogins => ( is => 'rw' );
 
 # Boolean to indicate that url isn't Base64 encoded
-has urlNotBase64 => ( is => 'rw' );
+has urlNotBase64   => ( is => 'rw' );
+has maybeNotBase64 => ( is => 'rw' );
 
 # Menu error
 has menuError => ( is => 'rw' );

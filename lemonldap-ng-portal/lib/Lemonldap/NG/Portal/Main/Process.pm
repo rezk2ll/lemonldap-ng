@@ -95,12 +95,18 @@ sub controlUrl {
         }
         else {
             if ( $url =~ m#[^A-Za-z0-9\+/=]# ) {
-                $self->userLogger->error(
-                    "Value must be BASE64 encoded (param: url | value: $url)");
-                return PE_BADURL;
+                unless ( $req->maybeNotBase64 ) {
+                    $self->userLogger->error(
+"Value must be BASE64 encoded (param: url | value: $url)"
+                    );
+                    return PE_BADURL;
+                }
+                $req->{urldc} = $url;
             }
-            $req->{urldc} = decode_base64($url);
-            $req->{urldc} =~ s/[\r\n]//sg;
+            else {
+                $req->{urldc} = decode_base64($url);
+                $req->{urldc} =~ s/[\r\n]//sg;
+            }
         }
 
         # For logout request, test if Referer comes from an authorized site
@@ -153,10 +159,12 @@ sub checkLogout {
 sub authLogout {
     my ( $self, $req ) = @_;
     my $res = $self->_authentication->authLogout($req);
-    unless ( $res or $req->pdata->{keepPdata} ) {
-        $self->logger->debug('Cleaning pdata');
-        $req->pdata( {} );
+    $self->logger->debug('Cleaning pdata');
+    my $tmp = $req->pdata->{keepPdata} //= [];
+    foreach my $k ( keys %{ $req->pdata } ) {
+        delete $req->pdata->{$k} unless ( grep { $_ eq $k } @$tmp );
     }
+    $req->pdata->{keepPdata} = $tmp if @$tmp;
     return $res;
 }
 
@@ -309,7 +317,7 @@ sub authenticate {
     $req->steps( [
             'setSessionInfo',           'setMacros',
             'setPersistentSessionInfo', 'storeHistory',
-            @{ $self->afterData }, sub { PE_BADCREDENTIALS }
+            @{ $self->afterData },      sub { PE_BADCREDENTIALS }
         ]
     );
 
