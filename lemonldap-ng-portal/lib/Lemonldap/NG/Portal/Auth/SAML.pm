@@ -1510,7 +1510,7 @@ sub getIDP {
                 if ( $idpName eq $idpConfKey ) {
                     $idp = $_;
                     $self->logger->debug(
-                        "IDP $idp found from idpName URL Parameter ($idpName)");
+                        "IDP $idp selected from idpName URL Parameter ($idpName)");
                     last;
                 }
             }
@@ -1518,7 +1518,7 @@ sub getIDP {
 
         # Case 3: Recover IDP from cookie
         if ( !$idp and $idp = $idp_cookie ) {
-            $self->logger->debug("IDP $idp found in IDP resolution cookie");
+            $self->logger->debug("IDP $idp selected from IDP resolution cookie");
         }
 
         # Case 4: check all IDP resolution rules
@@ -1529,16 +1529,16 @@ sub getIDP {
                 my $cond       = $self->idpRules->{$_} or next;
                 if ( $cond->( $req, $req->sessionInfo ) ) {
                     $self->logger->debug(
-                        "IDP $idpConfKey resolution rule match");
+                        "IDP $idpConfKey selected from resolution rule");
                     $idp = $_;
                     last;
                 }
             }
         }
-        $self->logger->debug('No IDP found') unless ($idp);
+        $self->logger->debug('No IDP selected') unless ($idp);
     }
     else {
-        $self->logger->debug("IDP $idp found from idp URL Parameter");
+        $self->logger->debug("IDP $idp selected from idp URL Parameter");
     }
 
     # Case 6: auto select IDP if only one IDP defined
