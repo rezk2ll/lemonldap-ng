@@ -4,7 +4,7 @@ package Lemonldap::NG::Portal::Main::Constants;
 use strict;
 use Exporter 'import';
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::Main';
 use constant {
@@ -98,6 +98,7 @@ use constant {
     PE_GET_SERVICE_NOT_ALLOWED           => 92,
     PE_IMPERSONATION_SERVICE_NOT_ALLOWED => 93,
     PE_ISSUERMISSINGREQATTR              => 94,
+    PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED  => 95,
 };
 
 sub portalConsts {
@@ -191,7 +192,8 @@ sub portalConsts {
         '91' => 'PE_OID_SERVICE_NOT_ALLOWED',
         '92' => 'PE_GET_SERVICE_NOT_ALLOWED',
         '93' => 'PE_IMPERSONATION_SERVICE_NOT_ALLOWED',
-        '94' => 'PE_ISSUERMISSINGREQATTR'
+        '94' => 'PE_ISSUERMISSINGREQATTR',
+        '95' => 'PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED'
     };
 
 }
@@ -289,7 +291,8 @@ our @EXPORT_OK = (
     'PE_OID_SERVICE_NOT_ALLOWED',
     'PE_GET_SERVICE_NOT_ALLOWED',
     'PE_IMPERSONATION_SERVICE_NOT_ALLOWED',
-    'PE_ISSUERMISSINGREQATTR'
+    'PE_ISSUERMISSINGREQATTR',
+    'PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED'
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT_OK, 'import' ], );
 

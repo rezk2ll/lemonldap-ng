@@ -104,6 +104,7 @@ lib/Lemonldap/NG/Portal/Plugins/CDA.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckState.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ContextSwitching.pm
+lib/Lemonldap/NG/Portal/Plugins/DecryptValue.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuthn.pm
 lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
 lib/Lemonldap/NG/Portal/Plugins/History.pm
@@ -366,6 +367,7 @@ site/templates/bootstrap/customhead.tpl
 site/templates/bootstrap/customheader.tpl
 site/templates/bootstrap/customLoginFooter.tpl
 site/templates/bootstrap/customLoginHeader.tpl
+site/templates/bootstrap/decryptvalue.tpl
 site/templates/bootstrap/error.tpl
 site/templates/bootstrap/ext2fcheck.tpl
 site/templates/bootstrap/footer.tpl

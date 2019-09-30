@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -520,6 +520,12 @@ sub attributes {
             type          => 'bool',
             default       => 1,
             documentation => 'Stop context switching by logout',
+            flags         => 'p',
+        },
+        decryptValueRule => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Decrypt value activation rule',
             flags         => 'p',
         },
         skipRenewConfirmation => {

@@ -230,6 +230,8 @@
 "dbiPasswordMailCol":"اسم حقل البريد",
 "dbiSchema":"مخطط",
 "dbiUserTable":"جدول المستخدم",
+"decryptValue":"Decrypt value",
+"decryptValueRule":"Use rule",
 "default":"الاعْتيادي",
 "defaultRule":"القاعدة الاعتيادية ",
 "demoModeOn":"هذا المدير يعمل في طريقة العرض",
