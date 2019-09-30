@@ -6,7 +6,7 @@ use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 extends 'Lemonldap::NG::Common::Conf::AccessLib';
 
@@ -800,8 +800,13 @@ sub getKey {
     unless ($key) {
         return $self->metadata($req);
     }
-    $self->userLogger->info(
-        'User ' . $self->userId($req) . " asks for key $key" );
+    if ( $self->can('userId') ) {
+        $self->userLogger->info(
+            'User ' . $self->userId($req) . " asks for key $key" );
+    }
+    else {
+        $self->logger->info("REST request to get configuration key $key");
+    }
     my $value = $self->getConfKey( $req, $key );
     return $self->sendError( $req, undef, 400 ) if ( $req->error );
 
