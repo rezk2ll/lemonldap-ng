@@ -230,6 +230,8 @@
 "dbiPasswordMailCol":"Tên trường thư",
 "dbiSchema":"Giản đồ",
 "dbiUserTable":"Bảng người dùng",
+"decryptValue":"Decrypt value",
+"decryptValueRule":"Use rule",
 "default":"Mặc định",
 "defaultRule":"Quy tắc mặc định",
 "demoModeOn":"Trình quản lý này chạy ở chế độ demo",

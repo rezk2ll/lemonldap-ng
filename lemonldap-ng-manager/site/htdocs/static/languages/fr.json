@@ -230,6 +230,8 @@
 "dbiPasswordMailCol":"Champ mail",
 "dbiSchema":"Schéma",
 "dbiUserTable":"Table des utilisateurs",
+"decryptValue":"Déchiffrement",
+"decryptValueRule":"Règle d'utilisation",
 "default":"Défaut",
 "defaultRule":"Règle par défaut",
 "demoModeOn":"Ce manager fonctionne en mode Demo",

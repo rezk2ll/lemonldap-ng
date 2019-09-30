@@ -230,6 +230,8 @@
 "dbiPasswordMailCol":"Mail field name",
 "dbiSchema":"Schema",
 "dbiUserTable":"用户表",
+"decryptValue":"Decrypt value",
+"decryptValueRule":"Use rule",
 "default":"默认",
 "defaultRule":"默认规则",
 "demoModeOn":"This manager runs in demo mode",

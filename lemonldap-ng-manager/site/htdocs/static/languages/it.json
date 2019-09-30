@@ -230,6 +230,8 @@
 "dbiPasswordMailCol":"Nome del campo di posta",
 "dbiSchema":"Schema",
 "dbiUserTable":"Tabella utente",
+"decryptValue":"Decrypt value",
+"decryptValueRule":"Use rule",
 "default":"Predefinito",
 "defaultRule":"Regola predefinita",
 "demoModeOn":"Questo gestore viene eseguito in modalità demo",
