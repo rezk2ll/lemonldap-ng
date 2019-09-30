@@ -95,7 +95,7 @@ sub check {
         };
         return $self->p->sendJSONresponse( $req, $params )
           if ( $req->wantJSON );
-        return $self->p->sendHtml( $req, 'checkuser', params => $params, )
+        return $self->p->sendHtml( $req, 'checkuser', params => $params )
           if $msg;
     }
 

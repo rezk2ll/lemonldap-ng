@@ -32,7 +32,7 @@ has ott => (
         return $ott;
     }
 );
-has rule   => ( is => 'rw', default => sub { 1 } );
+has rule   => ( is => 'rw', default => sub { 0 } );
 has idRule => ( is => 'rw', default => sub { 1 } );
 
 sub init {
