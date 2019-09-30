@@ -2,7 +2,7 @@
 # into "plugins" list in lemonldap-ng.ini, section "portal"
 package Lemonldap::NG::Portal::Main::Plugins;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.6';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -28,7 +28,6 @@ our @pList = (
     checkUser                  => '::Plugins::CheckUser',
     impersonationRule          => '::Plugins::Impersonation',
     contextSwitchingRule       => '::Plugins::ContextSwitching',
-    decryptValueRule           => '::Plugins::DecryptValue'
 );
 
 ##@method list enabledPlugins

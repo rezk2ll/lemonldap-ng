@@ -5,7 +5,7 @@
 
 package Lemonldap::NG::Manager::Build::PortalConstants;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.6';
 
 sub portalConstants {
     return {
@@ -102,7 +102,7 @@ sub portalConstants {
         PE_GET_SERVICE_NOT_ALLOWED           => 92,
         PE_IMPERSONATION_SERVICE_NOT_ALLOWED => 93,
         PE_ISSUERMISSINGREQATTR              => 94,
-        PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED  => 95
+
     };
 }
 

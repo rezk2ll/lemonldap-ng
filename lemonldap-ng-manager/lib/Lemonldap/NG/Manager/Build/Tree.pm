@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.6';
 
 # TODO: Missing:
 #  * activeTimer
@@ -710,14 +710,6 @@ sub tree {
                                 'contextSwitchingRule',
                                 'contextSwitchingIdRule',
                                 'contextSwitchingStopWithLogout',
-                            ]
-                        },
-                        {
-                            title => 'decryptValue',
-                            help  => 'decryptValueRule.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'decryptValueRule',
                             ]
                         },
                     ]

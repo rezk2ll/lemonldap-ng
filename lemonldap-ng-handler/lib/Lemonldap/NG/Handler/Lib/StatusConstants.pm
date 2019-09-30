@@ -4,7 +4,7 @@ package Lemonldap::NG::Handler::Lib::StatusConstants;
 use strict;
 use Exporter 'import';
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.6';
 
 sub portalConsts {
     return {
@@ -97,8 +97,7 @@ sub portalConsts {
         '91' => 'PE_OID_SERVICE_NOT_ALLOWED',
         '92' => 'PE_GET_SERVICE_NOT_ALLOWED',
         '93' => 'PE_IMPERSONATION_SERVICE_NOT_ALLOWED',
-        '94' => 'PE_ISSUERMISSINGREQATTR',
-        '95' => 'PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED'
+        '94' => 'PE_ISSUERMISSINGREQATTR'
     };
 
 }
