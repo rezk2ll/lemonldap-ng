@@ -462,6 +462,7 @@ t/26-AuthRemote.t
 t/27-AuthProxy.t
 t/28-AuthChoice-and-password.t
 t/28-AuthChoice-with-captcha.t
+t/28-AuthChoice-with-over.t
 t/28-AuthChoice-with-rules.t
 t/28-AuthChoice-with-token.t
 t/29-AuthGPG.t
