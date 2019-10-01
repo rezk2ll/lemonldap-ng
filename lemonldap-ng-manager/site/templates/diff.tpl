@@ -5,7 +5,7 @@
   <link rel="prefetch" href="<TMPL_VAR NAME="STATIC_PREFIX">struct.json" />
 </head>
 
-<body ng-app="llngConfDiff" ng-controller="DiffCtrl" ng-csp>
+<body ng-app="llngConfDiff" ng-strict-di ng-controller="DiffCtrl" ng-csp>
 
   <TMPL_INCLUDE NAME="menubar.tpl">
 

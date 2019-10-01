@@ -7,9 +7,11 @@ diff.html script
 (function() {
   var llapp;
 
-  llapp = angular.module('llngConfDiff', ['ui.tree', 'ui.bootstrap', 'llApp', 'ngCookies'], function($rootScopeProvider) {
-    return $rootScopeProvider.digestTtl(15);
-  });
+  llapp = angular.module('llngConfDiff', ['ui.tree', 'ui.bootstrap', 'llApp', 'ngCookies'], [
+    '$rootScopeProvider', function($rootScopeProvider) {
+      return $rootScopeProvider.digestTtl(15);
+    }
+  ]);
 
   llapp.controller('DiffCtrl', [
     '$scope', '$http', '$q', '$translator', '$location', function($scope, $http, $q, $translator, $location) {

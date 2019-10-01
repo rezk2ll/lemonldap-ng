@@ -2,7 +2,7 @@
 diff.html script
 ###
 
-llapp = angular.module 'llngConfDiff', ['ui.tree', 'ui.bootstrap', 'llApp', 'ngCookies'] , ($rootScopeProvider) -> $rootScopeProvider.digestTtl(15)
+llapp = angular.module 'llngConfDiff', ['ui.tree', 'ui.bootstrap', 'llApp', 'ngCookies'] , ['$rootScopeProvider', ($rootScopeProvider) -> $rootScopeProvider.digestTtl(15)]
 llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$location', ($scope, $http, $q, $translator, $location) ->
 	$scope.links = links
 	$scope.menulinks = menulinks
