@@ -1047,7 +1047,6 @@
 "samlServiceSignatureMethod":"Signature method",
 "samlServiceUseCertificateInResponse":"استخدم الشهادة الرقمية في الردود",
 "samlAdvanced":"المتقدمة",
-"samlIdPResolveCookie":"اسم ملف تعريف الارتباط IDP",
 "samlPartnerName":"اسم شريك SAML  ",
 "samlMetadataForceUTF8":"تحويل البيانات الوصفية UTF8",
 "samlStorage":"اسم وحدة الجلسات SAML",

@@ -2255,11 +2255,6 @@ sub attributes {
             documentation =>
               'Use certificate instead of public key in SAML responses',
         },
-        samlIdPResolveCookie => {
-            type          => 'text',
-            default       => 'lemonldapidp',
-            documentation => 'SAML IDP resolution cookie',
-        },
         samlMetadataForceUTF8 => {
             default       => 1,
             type          => 'bool',

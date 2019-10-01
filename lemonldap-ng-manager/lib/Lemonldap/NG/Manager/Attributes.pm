@@ -2988,10 +2988,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             },
             'type' => 'file'
         },
-        'samlIdPResolveCookie' => {
-            'default' => 'lemonldapidp',
-            'type'    => 'text'
-        },
         'samlIDPSSODescriptorArtifactResolutionServiceArtifact' => {
             'default' =>
 '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',

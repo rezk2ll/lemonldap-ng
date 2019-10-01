@@ -244,7 +244,6 @@ sub extractFormInfo {
             $portalPath =~ s#^https?://[^/]+/?#/#;
 
             $req->data->{list}            = $self->opList;
-            $req->data->{confirmRemember} = 0;
 
             $req->data->{login} = 1;
             return PE_IDPCHOICE;

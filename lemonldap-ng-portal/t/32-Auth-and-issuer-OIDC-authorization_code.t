@@ -261,8 +261,7 @@ ok(
     $res = $rp->_get(
         '/',
         accept => 'text/html',
-        cookie =>
-          "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
+        cookie => "lemonldap=$spId"
     ),
     'Test if user is reject on SP'
 );
