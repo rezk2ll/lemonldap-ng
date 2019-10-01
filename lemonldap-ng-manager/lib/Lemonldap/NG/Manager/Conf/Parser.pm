@@ -846,9 +846,11 @@ sub _scanNodes {
 
                         # authChoiceModules
                         if ( $name eq 'authChoiceModules' ) {
-                            hdebug('     combModules');
+                            hdebug('     authChoiceModules');
                             $n->{data}->[5] ||= {};
-                            $n->{data}->[5] = to_json( $n->{data}->[5] );
+                            $n->{data}->[5] =
+                              to_json( { map { @$_ } @{ $n->{data}->[5] } } )
+                              if ref( $n->{data}->[5] ) eq 'ARRAY';
                         }
 
                         $n->{data} = join ';', @{ $n->{data} };

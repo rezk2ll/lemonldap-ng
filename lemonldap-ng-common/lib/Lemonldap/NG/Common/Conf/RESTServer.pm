@@ -541,10 +541,15 @@ sub authChoiceModules {
         my @res;
         foreach my $k ( sort keys %$value ) {
             my $data = [ split /;/, $value->{$k} ];
-            eval { $data->[5] = from_json( $data->[5] ) if $data->[5] };
-            if ($@) {
-                $self->logger->error(
-                    "Bad value in choice over parameters, deleted ($@)");
+            if ( $data->[5] ) {
+                my $over;
+                eval { $over = from_json( $data->[5] ) };
+                if ($@) {
+                    $self->logger->error(
+                        "Bad value in choice over parameters, deleted ($@)");
+                } else {
+                    $data->[5] = [ map { [ $_, $over->{$_} ] } keys %{$over} ];
+                }
             }
             push @res,
               {
