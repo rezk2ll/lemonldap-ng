@@ -14,8 +14,9 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNAUTHORIZEDPARTNER
   PE_OIDC_SERVICE_NOT_ALLOWED
 );
+use String::Random qw/random_string/;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::OpenIDConnect',
