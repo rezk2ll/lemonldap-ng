@@ -16,7 +16,7 @@ diff.html script
   llapp.controller('DiffCtrl', [
     '$scope', '$http', '$q', '$translator', '$location', function($scope, $http, $q, $translator, $location) {
       var buildTree, getCfg, init, pathEvent, readDiff, reverseTree, toNodes;
-      $scope.links = links$rootScopeProvider;
+      $scope.links = links;
       $scope.menulinks = menulinks;
       $scope.staticPrefix = staticPrefix;
       $scope.scriptname = scriptname;
