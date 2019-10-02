@@ -473,17 +473,33 @@ function templates(tpl,key) {
             "type" : "select"
          },
          {
-            "default" : 3600,
             "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenExpiration",
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenExpiration",
             "title" : "oidcRPMetaDataOptionsIDTokenExpiration",
             "type" : "int"
          },
          {
-            "default" : 3600,
             "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenExpiration",
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenExpiration",
             "title" : "oidcRPMetaDataOptionsAccessTokenExpiration",
+            "type" : "int"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthorizationCodeExpiration",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthorizationCodeExpiration",
+            "title" : "oidcRPMetaDataOptionsAuthorizationCodeExpiration",
+            "type" : "int"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
+            "title" : "oidcRPMetaDataOptionsAllowOffline",
+            "type" : "bool"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshTokenExpiration",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshTokenExpiration",
+            "title" : "oidcRPMetaDataOptionsRefreshTokenExpiration",
             "type" : "int"
          },
          {

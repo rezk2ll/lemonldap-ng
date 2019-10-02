@@ -3619,6 +3619,31 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 0,
             documentation => 'OpenID Connect allow hybrid flow',
         },
+        oidcServiceAllowOffline => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'OpenID Connect allow offline access',
+        },
+        oidcServiceAuthorizationCodeExpiration => {
+            type          => 'int',
+            default       => 60,
+            documentation => 'OpenID Connect global code TTL',
+        },
+        oidcServiceAccessTokenExpiration => {
+            type          => 'int',
+            default       => 3600,
+            documentation => 'OpenID Connect global access token TTL',
+        },
+        oidcServiceIDTokenExpiration => {
+            type          => 'int',
+            default       => 3600,
+            documentation => 'OpenID Connect global ID token TTL',
+        },
+        oidcServiceRefreshTokenExpiration => {
+            type          => 'int',
+            default       => 2592000,
+            documentation => 'OpenID Connect global refresh token TTL',
+        },
         oidcStorage => {
             type          => 'PerlModule',
             documentation => 'Apache::Session module to store OIDC user data',
@@ -3719,11 +3744,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             default => 'HS512',
         },
-        oidcRPMetaDataOptionsIDTokenExpiration =>
-          { type => 'int', default => 3600 },
-        oidcRPMetaDataOptionsAccessTokenExpiration =>
-          { type => 'int', default => 3600 },
-        oidcRPMetaDataOptionsRedirectUris => { type => 'text', },
+        oidcRPMetaDataOptionsIDTokenExpiration           => { type => 'int' },
+        oidcRPMetaDataOptionsAccessTokenExpiration       => { type => 'int' },
+        oidcRPMetaDataOptionsAuthorizationCodeExpiration => { type => 'int' },
+        oidcRPMetaDataOptionsRefreshTokenExpiration      => { type => 'int' },
+        oidcRPMetaDataOptionsRedirectUris                => { type => 'text', },
         oidcRPMetaDataOptionsExtraClaims =>
           { type => 'keyTextContainer', default => {} },
         oidcRPMetaDataOptionsBypassConsent => {
@@ -3759,6 +3784,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             default       => 0,
             documentation => 'Require PKCE',
+        },
+        oidcRPMetaDataOptionsAllowOffline => {
+            type          => 'bool',
+            documentation => 'Allow offline access',
         },
         oidcRPMetaDataOptionsRule => {
             type          => 'text',

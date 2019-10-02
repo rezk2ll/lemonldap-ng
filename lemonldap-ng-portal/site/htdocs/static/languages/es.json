@@ -273,6 +273,7 @@
 "yourKeyIsUnregistered":"Su llave ha sido suprimida",
 "yourKeyIsVerified":"Su llave está verificada",
 "yourNewTotpKey":"Su nueva llave TOTP, por favor pruébela e ingrese el código",
+"yourOffline": "Access your account while you are offline",
 "yourPhone":"Su número telefónico",
 "yourProfile":"Su perfil",
 "yourTotpKey":"Su llave TOTP",

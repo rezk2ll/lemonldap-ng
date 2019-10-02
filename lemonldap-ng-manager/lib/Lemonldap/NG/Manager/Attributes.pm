@@ -1979,8 +1979,13 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type' => 'subContainer'
         },
         'oidcRPMetaDataOptionsAccessTokenExpiration' => {
-            'default' => 3600,
-            'type'    => 'int'
+            'type' => 'int'
+        },
+        'oidcRPMetaDataOptionsAllowOffline' => {
+            'type' => 'bool'
+        },
+        'oidcRPMetaDataOptionsAuthorizationCodeExpiration' => {
+            'type' => 'int'
         },
         'oidcRPMetaDataOptionsBypassConsent' => {
             'default' => 0,
@@ -2003,8 +2008,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type' => 'text'
         },
         'oidcRPMetaDataOptionsIDTokenExpiration' => {
-            'default' => 3600,
-            'type'    => 'int'
+            'type' => 'int'
         },
         'oidcRPMetaDataOptionsIDTokenSignAlg' => {
             'default' => 'HS512',
@@ -2069,6 +2073,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcRPMetaDataOptionsRedirectUris' => {
             'type' => 'text'
         },
+        'oidcRPMetaDataOptionsRefreshTokenExpiration' => {
+            'type' => 'int'
+        },
         'oidcRPMetaDataOptionsRequirePKCE' => {
             'default' => 0,
             'type'    => 'bool'
@@ -2086,6 +2093,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 600,
             'type'    => 'int'
         },
+        'oidcServiceAccessTokenExpiration' => {
+            'default' => 3600,
+            'type'    => 'int'
+        },
         'oidcServiceAllowAuthorizationCodeFlow' => {
             'default' => 1,
             'type'    => 'bool'
@@ -2101,6 +2112,18 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcServiceAllowImplicitFlow' => {
             'default' => 0,
             'type'    => 'bool'
+        },
+        'oidcServiceAllowOffline' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcServiceAuthorizationCodeExpiration' => {
+            'default' => 60,
+            'type'    => 'int'
+        },
+        'oidcServiceIDTokenExpiration' => {
+            'default' => 3600,
+            'type'    => 'int'
         },
         'oidcServiceKeyIdSig' => {
             'type' => 'text'
@@ -2164,6 +2187,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'oidcServicePublicKeySig' => {
             'type' => 'RSAPublicKey'
+        },
+        'oidcServiceRefreshTokenExpiration' => {
+            'default' => 2592000,
+            'type'    => 'int'
         },
         'oidcStorage' => {
             'type' => 'PerlModule'
