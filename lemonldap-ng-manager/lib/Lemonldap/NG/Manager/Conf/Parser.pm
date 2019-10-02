@@ -24,11 +24,15 @@ use Crypt::URandom;
 use Mouse;
 use JSON 'to_json';
 use Lemonldap::NG::Common::Conf::ReConstants;
+use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Manager::Attributes;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
-extends 'Lemonldap::NG::Common::Conf::Compact';
+extends qw(
+  Lemonldap::NG::Common::Conf::Compact
+  Lemonldap::NG::Common::Conf::AccessLib
+);
 
 # High debugging for developers, set this to 1
 use constant HIGHDEBUG => 0;
@@ -74,6 +78,13 @@ has refConf => ( is => 'ro', isa      => 'HashRef', required => 1 );
 has req     => ( is => 'ro', required => 1 );
 has newConf => ( is => 'rw', isa      => 'HashRef' );
 has tree    => ( is => 'rw', isa      => 'ArrayRef' );
+has localConf => (
+    is      => 'rw',
+    default => sub {
+        eval { $_[0]->confAcc->getLocalConf(MANAGERSECTION) };
+        return ( $@ ? {} : $_[0]->confAcc->getLocalConf(MANAGERSECTION) );
+    }
+);
 
 # High debug method
 sub hdebug {
@@ -1095,11 +1106,12 @@ sub _unitTest {
     my $types = &Lemonldap::NG::Manager::Attributes::types();
     my $attrs = &Lemonldap::NG::Manager::Attributes::attributes();
     my $res   = 1;
+
     foreach my $key ( keys %$conf ) {
-        if (    $self->{skippedUnitTests}
-            and $self->{skippedUnitTests} =~ /\b$key\b/ )
+        if (    $self->localConf->{skippedUnitTests}
+            and $self->localConf->{skippedUnitTests} =~ /\b$key\b/ )
         {
-            $self->logger->debug("Ignore test for $key");
+            print STDERR "-> Ignore test for $key\n";
             next;
         }
         hdebug("Testing $key");
@@ -1234,11 +1246,12 @@ sub _globalTest {
     hdebug('# _globalTest()');
     my $result = 1;
     my $tests  = &Lemonldap::NG::Manager::Conf::Tests::tests( $self->newConf );
+
     foreach my $name ( keys %$tests ) {
-        if (    $self->{skippedGlobalTests}
-            and $self->{skippedGlobalTests} =~ /\b$name\b/ )
+        if (    $self->localConf->{skippedGlobalTests}
+            and $self->localConf->{skippedGlobalTests} =~ /\b$name\b/ )
         {
-            $self->logger->debug("Ignore test for $name");
+            print STDERR "-> Ignore test for $name\n";
             next;
         }
         my $sub = $tests->{$name};
