@@ -276,7 +276,12 @@ sub locationRulesInit {
 
     foreach my $vhost ( keys %$orules ) {
         my $rules = $orules->{$vhost};
-        $class->tsv->{locationCount}->{$vhost} = 0;
+        $class->tsv->{locationCount}->{$vhost}         = 0;
+        $class->tsv->{locationCondition}->{$vhost}     = [];
+        $class->tsv->{locationProtection}->{$vhost}    = [];
+        $class->tsv->{locationRegexp}->{$vhost}        = [];
+        $class->tsv->{locationConditionText}->{$vhost} = [];
+
         foreach my $url ( sort keys %{$rules} ) {
             my ( $cond, $prot ) = $class->conditionSub( $rules->{$url} );
             unless ($cond) {
@@ -362,7 +367,7 @@ sub sessionStorageInit {
             $class->tsv->{statusPipe}->print("RELOADCACHE $params\n");
         }
     }
-return 1;
+    return 1;
 }
 
 ## @imethod void headersInit(hashRef args)
