@@ -24,15 +24,11 @@ use Crypt::URandom;
 use Mouse;
 use JSON 'to_json';
 use Lemonldap::NG::Common::Conf::ReConstants;
-use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Manager::Attributes;
 
 our $VERSION = '2.0.7';
 
-extends qw(
-  Lemonldap::NG::Common::Conf::Compact
-  Lemonldap::NG::Common::Conf::AccessLib
-);
+extends 'Lemonldap::NG::Common::Conf::Compact';
 
 # High debugging for developers, set this to 1
 use constant HIGHDEBUG => 0;
@@ -78,13 +74,6 @@ has refConf => ( is => 'ro', isa      => 'HashRef', required => 1 );
 has req     => ( is => 'ro', required => 1 );
 has newConf => ( is => 'rw', isa      => 'HashRef' );
 has tree    => ( is => 'rw', isa      => 'ArrayRef' );
-has localConf => (
-    is      => 'rw',
-    default => sub {
-        eval { $_[0]->confAcc->getLocalConf(MANAGERSECTION) };
-        return ( $@ ? {} : $_[0]->confAcc->getLocalConf(MANAGERSECTION) );
-    }
-);
 
 # High debug method
 sub hdebug {
@@ -106,11 +95,13 @@ sub hdebug {
 #@return result
 sub check {
     my $self = shift;
+    my $localConf = shift;
+
     hdebug("# check()");
     unless ( $self->newConf ) {
         return 0 unless ( $self->scanTree );
     }
-    unless ( $self->testNewConf ) {
+    unless ( $self->testNewConf($localConf) ) {
         hdebug("  testNewConf() failed");
         return 0;
     }
@@ -1092,8 +1083,10 @@ sub defaultValue {
 #@return true if tests succeed
 sub testNewConf {
     my $self = shift;
+    my $localConf = shift;
+
     hdebug('# testNewConf()');
-    return $self->_unitTest( $self->newConf(), '' ) && $self->_globalTest();
+    return $self->_unitTest( $self->newConf(), $localConf ) && $self->_globalTest($localConf);
 }
 
 ##@method private boolean _unitTest()
@@ -1101,24 +1094,24 @@ sub testNewConf {
 #
 #@return true if tests succeed
 sub _unitTest {
-    my ( $self, $conf ) = @_;
+    my ( $self, $conf, $localConf ) = @_;
     hdebug('# _unitTest()');
     my $types = &Lemonldap::NG::Manager::Attributes::types();
     my $attrs = &Lemonldap::NG::Manager::Attributes::attributes();
     my $res   = 1;
 
     foreach my $key ( keys %$conf ) {
-        if (    $self->localConf->{skippedUnitTests}
-            and $self->localConf->{skippedUnitTests} =~ /\b$key\b/ )
+        if (    $localConf->{skippedUnitTests}
+            and $localConf->{skippedUnitTests} =~ /\b$key\b/ )
         {
-            print STDERR "-> Ignore test for $key\n";
+            $localConf->logger->debug("-> Ignore test for $key\n");
             next;
         }
         hdebug("Testing $key");
         my $attr = $attrs->{$key};
         my $type = $types->{ $attr->{type} };
         unless ( $type or $attr->{test} ) {
-            print STDERR "Unknown attribute $key, deleting it\n";
+            $localConf->logger->debug("Unknown attribute $key, deleting it\n");
             delete $conf->{$key};
             next;
         }
@@ -1242,16 +1235,18 @@ sub _execTest {
 #@return true if tests succeed
 sub _globalTest {
     my $self = shift;
+    my $localConf = shift;
+
     require Lemonldap::NG::Manager::Conf::Tests;
     hdebug('# _globalTest()');
     my $result = 1;
     my $tests  = &Lemonldap::NG::Manager::Conf::Tests::tests( $self->newConf );
 
     foreach my $name ( keys %$tests ) {
-        if (    $self->localConf->{skippedGlobalTests}
-            and $self->localConf->{skippedGlobalTests} =~ /\b$name\b/ )
+        if (    $localConf->{skippedGlobalTests}
+            and $localConf->{skippedGlobalTests} =~ /\b$name\b/ )
         {
-            print STDERR "-> Ignore test for $name\n";
+            $localConf->logger->debug("-> Ignore test for $name\n");
             next;
         }
         my $sub = $tests->{$name};
@@ -1273,7 +1268,7 @@ sub _globalTest {
         };
         if ($@) {
             push @{ $self->warnings }, "Test $name failed: $@";
-            print STDERR "Test $name failed: $@\n";
+            $localConf->logger->debug("Test $name failed: $@\n");
         }
     }
     return $result;

@@ -252,7 +252,7 @@ sub newConf {
 
     if ( $cfgNum ne $req->params('cfgNum') ) { $parser->confChanged(1); }
 
-    my $res = { result => $parser->check };
+    my $res = { result => $parser->check($self) };
 
     # "message" fields: note that words enclosed by "__" (__word__) will be
     # translated
