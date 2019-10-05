@@ -1209,7 +1209,9 @@
       "data": 1
     }, {
       "id": "cookieExpiration",
-      "title": "cookieExpiration"
+      "title": "cookieExpiration",
+      "type": "int",
+      "data": "a"
     }]
   }, {
     "id": "sessionParams",
