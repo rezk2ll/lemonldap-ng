@@ -94,7 +94,7 @@ sub hdebug {
 # Main method
 #@return result
 sub check {
-    my $self = shift;
+    my $self      = shift;
     my $localConf = shift;
 
     hdebug("# check()");
@@ -1082,11 +1082,12 @@ sub defaultValue {
 #
 #@return true if tests succeed
 sub testNewConf {
-    my $self = shift;
+    my $self      = shift;
     my $localConf = shift;
 
     hdebug('# testNewConf()');
-    return $self->_unitTest( $self->newConf(), $localConf ) && $self->_globalTest($localConf);
+    return $self->_unitTest( $self->newConf(), $localConf )
+      && $self->_globalTest($localConf);
 }
 
 ##@method private boolean _unitTest()
@@ -1234,7 +1235,7 @@ sub _execTest {
 #
 #@return true if tests succeed
 sub _globalTest {
-    my $self = shift;
+    my $self      = shift;
     my $localConf = shift;
 
     require Lemonldap::NG::Manager::Conf::Tests;
