@@ -31,7 +31,7 @@ SKIP: {
     if ($@) {
         skip 'Lasso not found', $maintests;
     }
-    my $file = 't/20160530_dwho_dGVzdHJlZg==.json';
+    my $file = "$main::tmpDir/20160530_dwho_dGVzdHJlZg==.json";
 
     open F, "> $file" or die($!);
     print F '[
@@ -247,7 +247,7 @@ sub issuer {
                 issuerDBSAMLActivation     => 1,
                 notification               => 1,
                 notificationStorage        => 'File',
-                notificationStorageOptions => { dirName => 't' },
+                notificationStorageOptions => { dirName => "$main::tmpDir" },
                 oldNotifFormat             => 0,
                 samlSPMetaDataOptions      => {
                     'sp.com' => {

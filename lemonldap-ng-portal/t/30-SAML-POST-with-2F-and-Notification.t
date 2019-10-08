@@ -32,14 +32,14 @@ SKIP: {
     if ($@) {
         skip 'Lasso not found', $maintests;
     }
-    my $file = 't/20160530_dwho_dGVzdHJlZg==.json';
+    my $file = "$main::tmpDir/20170531_dwho_dGVzdHJlZjI=.json";
 
     open F, "> $file" or die($!);
     print F '[
     {
       "uid": "dwho",
-      "date": "2016-05-30",
-      "reference": "testref",
+      "date": "2017-05-31",
+      "reference": "testref2",
       "title": "Test title",
       "subtitle": "Test subtitle",
       "text": "This is a test text",
@@ -277,7 +277,7 @@ sub issuer {
                 mail2fCodeRegex            => '\d{4}',
                 notification               => 1,
                 notificationStorage        => 'File',
-                notificationStorageOptions => { dirName => 't' },
+                notificationStorageOptions => { dirName => "$main::tmpDir" },
                 oldNotifFormat             => 0,
                 samlSPMetaDataOptions      => {
                     'sp.com' => {
