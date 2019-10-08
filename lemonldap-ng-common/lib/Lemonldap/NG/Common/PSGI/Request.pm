@@ -46,7 +46,10 @@ sub uri { $_[0]->{uri} }
 sub userData {
     my ( $self, $v ) = @_;
     return $self->{userData} = $v if ($v);
-    return $self->{userData} || { _whatToTrace => $self->{user}, };
+    return $self->{userData}
+      || {
+        ( $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}
+              || '_whatToTrace' ) => $self->{user}, };
 }
 
 sub respHeaders {
