@@ -31,7 +31,7 @@ SKIP: {
     if ($@) {
         skip 'Lasso not found', $maintests;
     }
-    my $file = 't/20160530_dwho_dGVzdHJlZg==.json';
+    my $file = "$main::tmpDir/20160530_dwho_dGVzdHJlZg==.json";
 
     open F, "> $file" or die($!);
     print F '[
@@ -118,11 +118,11 @@ SKIP: {
     $file =~ s/json$/done/;
     ok( -e $file, 'Notification was deleted' );
     $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
-    expectRedirection( $res, 'http://auth.idp.com/saml/singleSignOn' );
+    expectRedirection( $res, 'http://auth.idp.com/saml' );
 
     ok(
         $res = $issuer->_get(
-            '/saml/singleSignOn',
+            '/saml',
             cookie => "lemonldap=$idpId; $pdata",
             accept => 'text/html',
         ),
@@ -247,7 +247,7 @@ sub issuer {
                 issuerDBSAMLActivation     => 1,
                 notification               => 1,
                 notificationStorage        => 'File',
-                notificationStorageOptions => { dirName => 't' },
+                notificationStorageOptions => { dirName => "$main::tmpDir" },
                 oldNotifFormat             => 0,
                 samlSPMetaDataOptions      => {
                     'sp.com' => {
