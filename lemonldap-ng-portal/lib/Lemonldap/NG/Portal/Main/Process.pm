@@ -160,7 +160,10 @@ sub authLogout {
     my ( $self, $req ) = @_;
     my $res = $self->_authentication->authLogout($req);
     $self->logger->debug('Cleaning pdata');
-    my $tmp = $req->pdata->{keepPdata} //= [];
+    my $tmp =
+      ( ref( $req->pdata->{keepPdata} ) eq 'ARRAY' )
+      ? $req->pdata->{keepPdata}
+      : [];
     foreach my $k ( keys %{ $req->pdata } ) {
         delete $req->pdata->{$k} unless ( grep { $_ eq $k } @$tmp );
     }

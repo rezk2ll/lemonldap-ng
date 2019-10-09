@@ -356,7 +356,11 @@ sub reloadConf {
 
     # Clean $req->pdata after authentication
     push @{ $self->endAuth }, sub {
-        my $tmp = $_[0]->pdata->{keepPdata} //= [];
+
+        my $tmp =
+          ( ref( $_[0]->pdata->{keepPdata} ) eq 'ARRAY' )
+          ? $_[0]->pdata->{keepPdata}
+          : [];
         foreach my $k ( keys %{ $_[0]->pdata } ) {
             unless ( grep { $_ eq $k } @$tmp ) {
                 $self->logger->debug("Removing $k from pdata");
