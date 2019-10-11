@@ -166,7 +166,7 @@ ok( @headers == 0, 'NONE service header found' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(1);
 
-$token = $crypt->encrypt( join ':', time, $sessionId, '' );
+$token = $crypt->encrypt( join ':', time, $sessionId );
 ok(
     $res = $client->_get(
         '/', undef, 'test2.example.com', undef,

@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::Reload;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -231,6 +231,8 @@ sub defaultValuesInit {
               $conf->{vhostOptions}->{$vhost}->{vhostType};
             $class->tsv->{authnLevel}->{$vhost} =
               $conf->{vhostOptions}->{$vhost}->{vhostAuthnLevel};
+            $class->tsv->{serviceTokenTTL}->{$vhost} =
+              $conf->{vhostOptions}->{$vhost}->{vhostServiceTokenTTL};
         }
     }
     return 1;
