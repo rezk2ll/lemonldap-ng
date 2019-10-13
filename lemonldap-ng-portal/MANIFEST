@@ -262,6 +262,7 @@ site/htdocs/static/common/fr.png
 site/htdocs/static/common/icons/application_cascade.png
 site/htdocs/static/common/icons/arrow_refresh.png
 site/htdocs/static/common/icons/calendar.png
+site/htdocs/static/common/icons/decryptValue.png
 site/htdocs/static/common/icons/door_out.png
 site/htdocs/static/common/icons/key.png
 site/htdocs/static/common/icons/oidc.png
@@ -481,6 +482,7 @@ t/30-Auth-SAML-with-choice.t
 t/30-CDC.t
 t/30-SAML-Head-to-Tail-POST.t
 t/30-SAML-POST-Logout-when-expired.t
+t/30-SAML-POST-with-2F-and-Notification.t
 t/30-SAML-POST-with-Notification.t
 t/30-SAML-ReAuth-with-choice.t
 t/30-SAML-ReAuth.t
@@ -559,6 +561,8 @@ t/43-MailPasswordReset-with-captcha.t
 t/43-MailPasswordReset-with-token.t
 t/43-MailPasswordReset.t
 t/50-IssuerGet.t
+t/58-DecryptValue-with-custom-function.t
+t/58-DecryptValue-with-internal-function.t
 t/59-Double-cookies-for-a-Single-session.t
 t/59-Double-cookies-for-Double-sessions.t
 t/59-Double-cookies-Refresh-and-Logout.t
@@ -629,6 +633,7 @@ t/lib/Apache/Session/Timeout.pm
 t/lib/Lemonldap/NG/Common/Conf/Backends/Timeout.pm
 t/lib/Lemonldap/NG/Handler/Test.pm
 t/lib/Lemonldap/NG/Portal/Auth/LDAPPolicy.pm
+t/lib/Lemonldap/NG/Portal/Custom.pm
 t/lmConf-1.json
 t/pdata.pm
 t/README.md
