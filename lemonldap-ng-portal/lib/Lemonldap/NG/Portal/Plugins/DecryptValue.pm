@@ -135,7 +135,7 @@ sub run {
                 eval "require Lemonldap::NG::Portal::$1";
                 $self->logger->debug("Unable to load decrypt module: $@")
                   if ($@);
-                $decryptedValue = eval "$_()" unless ($@);
+                $decryptedValue = eval "$_". '($cipheredValue)' unless ($@);
                 $self->logger->debug(
                     $@
                     ? "Unable to eval decrypt function: $@"
