@@ -55,7 +55,7 @@ ok( $res->[2]->[0] =~ m%<img src="/static/common/icons/decryptValue\.png"%,
   or explain( $res->[2]->[0], 'decryptValue.png' );
 count(3);
 
-# CheckUser form
+# DecryptValue form
 # ------------------------
 ok(
     $res = $client->_get(
@@ -72,7 +72,7 @@ ok( $res->[2]->[0] =~ m%<span trspan="decryptCipheredValue">%,
   or explain( $res->[2]->[0], 'trspan="decryptCipheredValue"' );
 count(2);
 
-# Valid ciphered value
+# Decrypt ciphered value
 $query =~
 s%cipheredValue=%cipheredValue=lowercase%;
 ok(

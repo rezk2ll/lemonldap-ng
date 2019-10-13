@@ -43,7 +43,7 @@ count(1);
 my $id = expectCookie($res);
 expectRedirection( $res, 'http://auth.example.com/' );
 
-# CheckUser form for a foridden user
+# DecryptValue form for a foridden user
 # ------------------------
 ok(
     $res = $client->_get(
@@ -92,7 +92,7 @@ ok( $res->[2]->[0] =~ m%<img src="/static/common/icons/decryptValue\.png"%,
   or explain( $res->[2]->[0], 'decryptValue.png' );
 count(3);
 
-# CheckUser form
+# DecryptValue form
 # ------------------------
 ok(
     $res = $client->_get(
