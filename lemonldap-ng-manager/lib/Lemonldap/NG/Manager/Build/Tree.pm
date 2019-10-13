@@ -714,7 +714,7 @@ sub tree {
                         },
                         {
                             title => 'decryptValue',
-                            help  => 'decryptValueRule.html',
+                            help  => 'decryptvalue.html',
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'decryptValueRule',
