@@ -1100,6 +1100,11 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'dbiUserUser' => {
             'type' => 'text'
         },
+        'decryptValueFunctions' => {
+            'msgFail' => '__badCustomFuncName__',
+            'test'    => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,
+            'type'    => 'text'
+        },
         'decryptValueRule' => {
             'default' => 0,
             'type'    => 'boolOrExpr'

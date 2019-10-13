@@ -231,6 +231,7 @@
 "dbiSchema":"Schema",
 "dbiUserTable":"用户表",
 "decryptValue":"Decrypt value",
+"decryptValueFunctions":"Decrypt functions",
 "decryptValueRule":"Use rule",
 "default":"默认",
 "defaultRule":"默认规则",

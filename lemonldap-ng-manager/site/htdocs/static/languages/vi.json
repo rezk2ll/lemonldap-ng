@@ -231,6 +231,7 @@
 "dbiSchema":"Giản đồ",
 "dbiUserTable":"Bảng người dùng",
 "decryptValue":"Decrypt value",
+"decryptValueFunctions":"Decrypt functions",
 "decryptValueRule":"Use rule",
 "default":"Mặc định",
 "defaultRule":"Quy tắc mặc định",

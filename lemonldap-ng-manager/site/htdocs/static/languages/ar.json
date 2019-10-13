@@ -231,6 +231,7 @@
 "dbiSchema":"مخطط",
 "dbiUserTable":"جدول المستخدم",
 "decryptValue":"Decrypt value",
+"decryptValueFunctions":"Decrypt functions",
 "decryptValueRule":"Use rule",
 "default":"الاعْتيادي",
 "defaultRule":"القاعدة الاعتيادية ",

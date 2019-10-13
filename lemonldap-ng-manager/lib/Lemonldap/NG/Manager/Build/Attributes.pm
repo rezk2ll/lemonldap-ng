@@ -528,6 +528,13 @@ sub attributes {
             documentation => 'Decrypt value activation rule',
             flags         => 'p',
         },
+        decryptValueFunctions => {
+            type          => 'text',
+            test          => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,
+            msgFail       => "__badCustomFuncName__",
+            documentation => 'Custom function used for decrypting values',
+            flags         => 'p',
+        },
         skipRenewConfirmation => {
             type    => 'bool',
             default => 0,

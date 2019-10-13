@@ -103,6 +103,12 @@ License: CC-3
 Comment: This work, "sfa_manager.png", is a derivative of
  "Noun project 1162.svg" by Christopher T. Howlett, under CC-BY-3.0.
 
+Files: lemonldap-ng-portal/site/htdocs/static/common/icons/decryptValue.png
+Copyright: Christophe Maudoux <chrmdx@gmail.com>
+License: CC-3
+Comment: This work, "decryptValue.png", is a derivative of
+ "secure.png" by Austin Condiff, under CC-BY-3.0.
+
 Files: lemonldap-ng-portal/site/htdocs/static/common/icons/switchcontext_OFF.png
 Copyright: Christophe Maudoux <chrmdx@gmail.com>
 License: CC-4

@@ -81,7 +81,7 @@ sub display {
 
 sub run {
     my ( $self, $req ) = @_;
-    my $msg = '';
+    my ( $msg, $decryptedValue ) = ( '', '' );
 
     # Check access rules
     unless ( $self->rule->( $req, $req->userData ) ) {
@@ -121,12 +121,43 @@ sub run {
     }
 
     my $cipheredValue = $req->param('cipheredValue') || '';
-    my $decryptedValue =
-      $self->p->HANDLER->tsv->{cipher}->decrypt($cipheredValue)
-      if $cipheredValue;
+    $self->logger->debug("decryptValue tried with value: $cipheredValue");
 
-    $self->logger->debug("decryptValue try with : $cipheredValue");
-    $self->logger->debug("Decrypted value = $decryptedValue") if $decryptedValue;
+    if ($cipheredValue) {
+        if (    $self->{conf}->{decryptValueFunctions}
+            and $self->{conf}->{decryptValueFunctions} =~
+            qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/ )
+        {
+            foreach ( split( /\s+/, $self->{conf}->{decryptValueFunctions} ) ) {
+                $self->userLogger->notice(
+                    "Try to decrypt value with function: $_");
+                /^([\w:{2}]*?)(?:::)?(?:\w+)$/;
+                eval "require Lemonldap::NG::Portal::$1";
+                $self->logger->debug("Unable to load decrypt module: $@")
+                  if ($@);
+                $decryptedValue = eval "$_()" unless ($@);
+                $self->logger->debug(
+                    $@
+                    ? "Unable to eval decrypt function: $@"
+                    : "Decrypted value = $decryptedValue"
+                );
+                last if $decryptedValue;
+            }
+        }
+        else {
+            $self->userLogger->notice("Malformed decrypt functions")
+              if $self->{conf}->{decryptValueFunctions};
+            $self->userLogger->notice(
+                "Try to decrypt value with internal LL::NG decrypt function");
+            $decryptedValue =
+              $self->p->HANDLER->tsv->{cipher}->decrypt($cipheredValue);
+            $self->logger->debug(
+                $@
+                ? "Unable to decrypt value: $@"
+                : "Decrypted value = $decryptedValue"
+            );
+        }
+    }
 
     # Display form
     my $params = {
@@ -153,6 +184,11 @@ sub run {
 
     # Display form
     return $self->p->sendHtml( $req, 'decryptvalue', params => $params );
+}
+
+sub displayLink {
+    my ( $self, $req ) = @_;
+    return $self->rule->( $req, $req->userData );
 }
 
 1;

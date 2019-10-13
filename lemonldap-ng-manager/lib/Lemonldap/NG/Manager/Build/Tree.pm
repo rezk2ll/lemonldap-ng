@@ -718,6 +718,7 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'decryptValueRule',
+                                'decryptValueFunctions',
                             ]
                         },
                     ]
