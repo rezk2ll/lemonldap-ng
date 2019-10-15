@@ -1,7 +1,7 @@
 # Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -97,10 +97,10 @@ sub checkType {
 
 ## @rmethod int run
 # Check configuration and launch Lemonldap::NG::Handler::Main::run().
-# Each $checkTime, the Apache child verify if its configuration is the same
+# Each $checkTime, server child verifies if its configuration is the same
 # as the configuration stored in the local storage.
 # @param $rule optional Perl expression to grant access
-# @return Apache constant
+# @return constant
 
 sub run {
     my ( $class, $req, $rule, $protection ) = @_;
@@ -121,11 +121,10 @@ sub run {
         }
     }
 
-    # Cross domain authentication
+    # Authentication process
     my $uri = $req->{env}->{REQUEST_URI};
-
-    $uri = $req->{env}->{REQUEST_URI};
     my ($cond);
+
     ( $cond, $protection ) = $class->conditionSub($rule) if ($rule);
     $protection = $class->isUnprotected( $req, $uri ) || 0
       unless ( defined $protection );
@@ -273,6 +272,12 @@ sub grant {
     $vhost ||= $class->resolveAlias($req);
     if ( my $level = $class->tsv->{authnLevel}->{$vhost} ) {
         if ( $session->{authenticationLevel} < $level ) {
+            $class->logger->debug(
+                "User authentication level = $session->{authenticationLevel}");
+            $class->logger->debug("Required authentication level = $level");
+            $class->logger->warn(
+"User rejected due to insufficient authentication level -> Session upgrade enabled"
+            );
             $session->{_upgrade} = 1;
             return 0;
         }
@@ -414,7 +419,7 @@ sub fetchId {
     my $value =
       $lookForHttpCookie
       ? ( $t =~ /${cn}http=([^,; ]+)/o ? $1 : 0 )
-      : ( $t =~ /$cn=([^,; ]+)/o       ? $1 : 0 );
+      : ( $t =~ /$cn=([^,; ]+)/o ? $1 : 0 );
 
     if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
         $value = $class->tsv->{cipher}->decryptHex( $value, "http" );

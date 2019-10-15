@@ -11,7 +11,7 @@ use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Session;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 our @ISA     = ('Exporter');
 our @EXPORT  = qw(fetchId retrieveSession createSession hideCookie goToPortal);
 our @EXPORT_OK = @EXPORT;
@@ -62,12 +62,12 @@ sub retrieveSession {
 }
 
 ## @rmethod protected boolean createSession(id)
-# Ask portal to create it through a SOAP request
+# Send a create session request to the Portal
 # @return true if the session is created, else false
 sub createSession {
     my ( $class, $req, $id ) = @_;
 
-    # Add client IP as X-Forwarded-For IP in SOAP request
+    # Add client IP as X-Forwarded-For IP in request
     my $xheader = $req->env->{'HTTP_X_FORWARDED_FOR'};
     $xheader .= ", " if ($xheader);
     $xheader .= $req->{env}->{REMOTE_ADDR};
@@ -149,7 +149,7 @@ sub hideCookie {
 # else redirect him to the portal to display some message defined by $arg
 # @param $url Url requested
 # @param $arg optionnal GET parameters
-# @return Apache2::Const::REDIRECT or Apache2::Const::AUTH_REQUIRED
+# @return AUTH_REDIRECT or AUTH_REQUIRED constant
 sub goToPortal {
     my ( $class, $req, $url, $arg ) = @_;
     if ($arg) {
@@ -171,7 +171,6 @@ sub ua {
             lwpSslOpts => $class->tsv->{lwpSslOpts}
         }
     );
-
     return $_ua;
 }
 
