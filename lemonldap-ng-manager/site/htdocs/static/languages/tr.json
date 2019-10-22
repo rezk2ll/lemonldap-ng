@@ -556,6 +556,7 @@
 "oidcRPMetaDataOptionsPublic":"Açık istemci",
 "oidcRPMetaDataOptionsRequirePKCE":"PKCE gerektir",
 "oidcRPMetaDataOptionsRule":"Erişim kuralı",
+"oidcRPMetaDataMacros":"Makrolar",
 "oidcOPMetaDataOptionsScope":"Kapsam",
 "oidcOPMetaDataOptionsStoreIDToken":"ID Jetonu Sakla",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"Jeton uç noktası doğrulama metodu",
