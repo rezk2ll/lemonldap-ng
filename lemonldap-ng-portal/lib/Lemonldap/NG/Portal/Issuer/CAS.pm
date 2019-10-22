@@ -801,9 +801,21 @@ sub _validate2 {
     }
 
     foreach my $casAttribute ( keys %$ev ) {
-        my $localSessionValue = $localSession->data->{ $ev->{$casAttribute} };
-        $attributes->{$casAttribute} = $localSessionValue
-          if defined $localSessionValue;
+        my $sessionAttr = $ev->{$casAttribute};
+        my $value;
+
+        # Lookup per-service macros first, and then local sessions
+        #
+        if ( $app and $self->spMacros->{$app}->{$sessionAttr} ) {
+            $value = $self->spMacros->{$app}->{$sessionAttr}
+              ->( $req, $localSession->data );
+        }
+        else {
+            $value = $localSession->data->{$sessionAttr};
+        }
+
+        $attributes->{$casAttribute} = $value
+          if defined $value;
     }
 
     # Return success message

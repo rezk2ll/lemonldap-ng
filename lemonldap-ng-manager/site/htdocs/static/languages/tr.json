@@ -118,6 +118,7 @@
 "casAppMetaDataOptions":"Seçenekler",
 "casAppMetaDataOptionsService":"Servis URL'si",
 "casAppMetaDataOptionsRule":"Kural",
+"casAppMetaDataMacros":"Makrolar",
 "casAppMetaDataOptionsUserAttribute":"Kullanıcı niteliği",
 "casAppName":"CAS Uygulama Adı",
 "casAttr":"CAS girişi",
