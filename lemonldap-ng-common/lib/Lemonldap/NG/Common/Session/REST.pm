@@ -24,6 +24,13 @@ sub setTypes {
               ( $type eq 'global' ? 'SSO' : ucfirst($type) );
         }
     }
+
+    my $offlinebackend = $self->{sessionTypes}->{oidc} ? 'oidc' : 'global';
+    $self->{sessionTypes}->{offline}->{module} =
+      $self->{sessionTypes}->{$offlinebackend}->{module};
+    $self->{sessionTypes}->{offline}->{options} =
+      $self->{sessionTypes}->{$offlinebackend}->{options};
+    $self->{sessionTypes}->{offline}->{kind} = "OIDCI";
 }
 
 sub separator {

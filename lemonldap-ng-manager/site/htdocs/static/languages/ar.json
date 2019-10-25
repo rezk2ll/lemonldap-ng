@@ -517,6 +517,7 @@
 "nullParams":"لا شيء في المعايير",
 "number":"رقم",
 "off":"إيقاف",
+"offlineSessions":"Offline sessions",
 "oldValue":"قيمة قديمة",
 "on":"تنشيط",
 "oidcAuthnLevel":"مستوى إثبات الهوية",

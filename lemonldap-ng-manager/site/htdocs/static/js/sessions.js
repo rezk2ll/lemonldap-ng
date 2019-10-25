@@ -511,7 +511,7 @@
         sessionType = 'global';
         if (n === null) {
           $scope.type = '_whatToTrace';
-        } else if (n[1].match(/^(persistent)$/)) {
+        } else if (n[1].match(/^(persistent|offline)$/)) {
           sessionType = RegExp.$1;
           $scope.type = '_session_uid';
         } else {

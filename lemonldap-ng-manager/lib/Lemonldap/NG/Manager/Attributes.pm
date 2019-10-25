@@ -1211,6 +1211,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 5,
             'type'    => 'int'
         },
+        'forceGlobalStorageIssuerOTT' => {
+            'type' => 'bool'
+        },
         'forceGlobalStorageUpgradeOTT' => {
             'type' => 'bool'
         },

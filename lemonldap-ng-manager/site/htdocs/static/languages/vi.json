@@ -517,6 +517,7 @@
 "nullParams":"Tham số Null",
 "number":"Số",
 "off":"Tắt",
+"offlineSessions":"Offline sessions",
 "oldValue":"Giá trị cũ",
 "on":"Vào",
 "oidcAuthnLevel":"Mức xác thực",

@@ -517,6 +517,7 @@
 "nullParams":"Parametri Null",
 "number":"Numero",
 "off":"Off",
+"offlineSessions":"Offline sessions",
 "oldValue":"Vecchio valore",
 "on":"On",
 "oidcAuthnLevel":"Livello di autenticazione",

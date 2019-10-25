@@ -26,6 +26,7 @@
               </ul>
             </li>
             <li><a id="a-persistent" href="#!/persistent" role="row"><i class="glyphicon glyphicon-lock"></i> {{translate('persistentSessions')}}</a></li>
+            <li><a id="a-offline" href="#!/offline" role="row"><i class="glyphicon glyphicon-time"></i> {{translate('offlineSessions')}}</a></li>
           </ul>
         </div>
       </div>
