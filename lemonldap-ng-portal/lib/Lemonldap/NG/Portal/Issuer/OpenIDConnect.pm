@@ -624,8 +624,8 @@ sub run {
                 unless ( $bypassConsent
                     or ( $prompt and $prompt =~ /\bconsent\b/ ) )
                 {
-                    $self->logger->warn(
-                        "Offline access ignored, prompt parameter must contain \"consent\"");
+                    $self->logger->warn( "Offline access ignored, "
+                          . "prompt parameter must contain \"consent\"" );
                     $offline = 0;
                 }
 
@@ -633,15 +633,14 @@ sub run {
                 # using a response_type value that would result in an
                 # Authorization Code being returned,
                 if ( $response_type !~ /\bcode\b/ ) {
-                    $self->logger->warn(
-                        "Offline access incompatible with response type $response_type");
+                    $self->logger->warn( "Offline access incompatible "
+                          . "with response type $response_type" );
                     $offline = 0;
                 }
 
                 # Ignore offline_access request if not authorized by the RP
                 unless ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
-                    ->{oidcRPMetaDataOptionsAllowOffline}
-                    || $self->conf->{oidcServiceAllowOffline} )
+                    ->{oidcRPMetaDataOptionsAllowOffline} )
                 {
                     $self->logger->warn(
                         "Offline access not authorized for RP $rp");
@@ -1162,16 +1161,55 @@ sub token {
 
         # Generate refresh_token
         my $refresh_token = undef;
+
+        # For offline access, the refresh token isn't tied to the session ID
         if ( $codeSession->{data}->{offline} ) {
+
+            # We need to remove _sessionType and _sessionid from the sessio data
+            # before storing session data in the refresh token
+            my %userInfo;
+            for
+              my $userKey ( grep !/^_session/, keys %{ $apacheSession->data } )
+            {
+                $userInfo{$userKey} = $apacheSession->data->{$userKey};
+            }
+            my $refreshTokenSession = $self->newRefreshToken(
+                $rp,
+                {
+                    %userInfo,
+                    redirect_uri => $codeSession->data->{redirect_uri},
+                    scope        => $codeSession->data->{scope},
+                    client_id    => $client_id,
+                    _session_uid => $apacheSession->data->{_user},
+                    auth_time    => $apacheSession->data->{_lastAuthnUTime},
+                },
+                1,
+            );
+
+            unless ($refreshTokenSession) {
+                $self->userLogger->error(
+                    "Unable to create OIDC session for refresh_token");
+                return $self->p->sendError( $req, 'invalid_request', 400 );
+            }
+
+            $refresh_token = $refreshTokenSession->id;
+
+            $self->logger->debug("Generated refresh token: $refresh_token");
+        }
+
+        # For online access, if configured
+        elsif ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
+            ->{oidcRPMetaDataOptionsRefreshToken} )
+        {
             my $refreshTokenSession = $self->newRefreshToken(
                 $rp,
                 {
                     redirect_uri    => $codeSession->data->{redirect_uri},
                     scope           => $codeSession->data->{scope},
                     client_id       => $client_id,
-                    user_session_id => $apacheSession->id,
-                    _session_uid    => $apacheSession->data->{_user},
-                }
+                    user_session_id => $codeSession->data->{user_session_id},
+                },
+                0,
             );
 
             unless ($refreshTokenSession) {
@@ -1273,58 +1311,114 @@ sub token {
             return $self->p->sendError( $req, 'invalid_grant', 400 );
         }
 
-        # Lookup attributes and macros for user
-        $req->user( $refreshSession->data->{_session_uid} );
-        $req->steps( [
-                'getUser',        @{ $self->p->betweenAuthAndData },
-                'setSessionInfo', 'setMacros',
-                'setGroups',      'setLocalGroups',
-            ]
-        );
-        $req->{error} = $self->p->process($req);
+        my $access_token;
+        my $user_id;
+        my $auth_time;
 
-        if ( $req->error > 0 ) {
-            # PE_BADCREDENTIAL is returned by UserDB modules when the user was
-            # explicitely not found. And not in case of temporary failures
-            if ($req->error == PE_BADCREDENTIALS) {
-                $self->logger->error( "User: " . $req->user . " no longer exists, removing offline session");
-                $refreshSession->remove;
-            } else {
-                $self->logger->error( "Could not resolve user: " . $req->user );
+        # If this refresh token is tied to a SSO session
+        if ( $refreshSession->data->{user_session_id} ) {
+            my $user_session_id = $refreshSession->data->{user_session_id};
+            my $session         = $self->p->getApacheSession($user_session_id);
+
+            unless ($session) {
+                $self->logger->error("Unable to find user session");
+                return $self->returnBearerError( 'invalid_request',
+                    'Invalid request', 401 );
             }
-            return $self->p->sendError( $req, 'invalid_grant', 400 );
+
+            my $user_id_attribute =
+              $self->conf->{oidcRPMetaDataOptions}->{$rp}
+              ->{oidcRPMetaDataOptionsUserIDAttr}
+              || $self->conf->{whatToTrace};
+            $user_id = $session->data->{$user_id_attribute};
+
+            $auth_time = $session->data->{_lastAuthnUTime};
+
+            # Generate access_token
+            my $accessTokenSession = $self->newAccessToken(
+                $rp,
+                {
+                    scope           => $refreshSession->data->{scope},
+                    rp              => $rp,
+                    user_session_id => $user_session_id,
+                }
+            );
+
+            unless ($accessTokenSession) {
+                $self->userLogger->error(
+                    "Unable to create OIDC session for access_token");
+                return $self->p->sendError( $req,
+                    'Unable to create Access Token', 500 );
+            }
+
+            $access_token = $accessTokenSession->id;
+
+            $self->logger->debug("Generated access token: $access_token");
         }
 
-        # Update refresh session
-        $self->updateRefreshToken( $refreshSession->id, $req->sessionInfo );
+        # Else, we are in an offline session
+        else {
 
-        my $user_id_attribute =
-          $self->conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsUserIDAttr}
-          || $self->conf->{whatToTrace};
-        my $user_id = $req->sessionInfo->{$user_id_attribute};
-        $self->logger->debug("Found corresponding user: $user_id");
+            # Lookup attributes and macros for user
+            $req->user( $refreshSession->data->{_session_uid} );
+            $req->steps( [
+                    'getUser',        @{ $self->p->betweenAuthAndData },
+                    'setSessionInfo', 'setMacros',
+                    'setGroups',      'setLocalGroups',
+                ]
+            );
+            $req->{error} = $self->p->process($req);
 
-        # Generate access_token
-        my $accessTokenSession = $self->newAccessToken(
-            $rp,
-            {
-                scope              => $refreshSession->data->{scope},
-                rp                 => $rp,
-                offline_session_id => $refreshSession->id,
+            if ( $req->error > 0 ) {
+
+              # PE_BADCREDENTIAL is returned by UserDB modules when the user was
+              # explicitely not found. And not in case of temporary failures
+                if ( $req->error == PE_BADCREDENTIALS ) {
+                    $self->logger->error( "User: "
+                          . $req->user
+                          . " no longer exists, removing offline session" );
+                    $refreshSession->remove;
+                }
+                else {
+                    $self->logger->error(
+                        "Could not resolve user: " . $req->user );
+                }
+                return $self->p->sendError( $req, 'invalid_grant', 400 );
             }
-        );
 
-        unless ($accessTokenSession) {
-            $self->userLogger->error(
-                "Unable to create OIDC session for access_token");
-            return $self->p->sendError( $req, 'Unable to create Access Token',
-                500 );
+            # Update refresh session
+            $self->updateRefreshToken( $refreshSession->id, $req->sessionInfo );
+
+            my $user_id_attribute =
+              $self->conf->{oidcRPMetaDataOptions}->{$rp}
+              ->{oidcRPMetaDataOptionsUserIDAttr}
+              || $self->conf->{whatToTrace};
+            $user_id = $req->sessionInfo->{$user_id_attribute};
+            $self->logger->debug("Found corresponding user: $user_id");
+
+            $auth_time = $refreshSession->data->{auth_time};
+
+            # Generate access_token
+            my $accessTokenSession = $self->newAccessToken(
+                $rp,
+                {
+                    scope              => $refreshSession->data->{scope},
+                    rp                 => $rp,
+                    offline_session_id => $refreshSession->id,
+                }
+            );
+
+            unless ($accessTokenSession) {
+                $self->userLogger->error(
+                    "Unable to create OIDC session for access_token");
+                return $self->p->sendError( $req,
+                    'Unable to create Access Token', 500 );
+            }
+
+            $access_token = $accessTokenSession->id;
+
+            $self->logger->debug("Generated access token: $access_token");
         }
-
-        my $access_token = $accessTokenSession->id;
-
-        $self->logger->debug("Generated access token: $access_token");
 
         # Compute hash to store in at_hash
         my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -1340,8 +1434,8 @@ sub token {
           || $self->conf->{oidcServiceIDTokenExpiration};
         $id_token_exp += time;
 
-        # TODO authentication level specific to refresh ?
-        my $id_token_acr = "loa-" . $req->sessionInfo->{authenticationLevel};
+        # Authentication level using refresh tokens should probably stay at 0
+        my $id_token_acr = "loa-0";
 
         my $id_token_payload_hash = {
             iss => $self->conf->{oidcServiceMetaDataIssuer}, # Issuer Identifier
@@ -1350,11 +1444,10 @@ sub token {
             exp => $id_token_exp,    # expiration
             iat => time,             # Issued time
                  # TODO: is this the right value when using refresh tokens??
-            auth_time => $req->sessionInfo->{_lastAuthnUTime}
-            ,    # Authentication time
-            acr => $id_token_acr,    # Authentication Context Class Reference
-            azp => $client_id,       # Authorized party
-                                     # TODO amr
+            auth_time => $auth_time,    # Authentication time
+            acr       => $id_token_acr, # Authentication Context Class Reference
+            azp       => $client_id,    # Authorized party
+                                        # TODO amr
         };
 
         my $nonce = $refreshSession->data->{nonce};

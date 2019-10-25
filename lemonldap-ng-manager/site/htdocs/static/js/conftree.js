@@ -491,15 +491,23 @@ function templates(tpl,key) {
             "type" : "int"
          },
          {
+            "default" : 0,
             "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
             "title" : "oidcRPMetaDataOptionsAllowOffline",
             "type" : "bool"
          },
          {
-            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshTokenExpiration",
-            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshTokenExpiration",
-            "title" : "oidcRPMetaDataOptionsRefreshTokenExpiration",
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshToken",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshToken",
+            "title" : "oidcRPMetaDataOptionsRefreshToken",
+            "type" : "bool"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsOfflineSessionExpiration",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsOfflineSessionExpiration",
+            "title" : "oidcRPMetaDataOptionsOfflineSessionExpiration",
             "type" : "int"
          },
          {

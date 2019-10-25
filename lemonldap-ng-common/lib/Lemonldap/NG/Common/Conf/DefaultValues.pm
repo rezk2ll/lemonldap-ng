@@ -193,7 +193,7 @@ sub defaultValues {
         'oidcServiceMetaDataRegistrationURI'  => 'register',
         'oidcServiceMetaDataTokenURI'         => 'token',
         'oidcServiceMetaDataUserInfoURI'      => 'userinfo',
-        'oidcServiceRefreshTokenExpiration'   => 2592000,
+        'oidcServiceOfflineSessionExpiration' => 2592000,
         'openIdAuthnLevel'                    => 1,
         'openIdExportedVars'                  => {},
         'openIdIDPList'                       => '0;',

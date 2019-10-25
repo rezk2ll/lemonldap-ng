@@ -3619,11 +3619,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 0,
             documentation => 'OpenID Connect allow hybrid flow',
         },
-        oidcServiceAllowOffline => {
-            type          => 'bool',
-            default       => 0,
-            documentation => 'OpenID Connect allow offline access',
-        },
         oidcServiceAuthorizationCodeExpiration => {
             type          => 'int',
             default       => 60,
@@ -3639,10 +3634,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 3600,
             documentation => 'OpenID Connect global ID token TTL',
         },
-        oidcServiceRefreshTokenExpiration => {
+        oidcServiceOfflineSessionExpiration => {
             type          => 'int',
             default       => 2592000,
-            documentation => 'OpenID Connect global refresh token TTL',
+            documentation => 'OpenID Connect global offline session TTL',
         },
         oidcStorage => {
             type          => 'PerlModule',
@@ -3747,7 +3742,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsIDTokenExpiration           => { type => 'int' },
         oidcRPMetaDataOptionsAccessTokenExpiration       => { type => 'int' },
         oidcRPMetaDataOptionsAuthorizationCodeExpiration => { type => 'int' },
-        oidcRPMetaDataOptionsRefreshTokenExpiration      => { type => 'int' },
+        oidcRPMetaDataOptionsOfflineSessionExpiration      => { type => 'int' },
         oidcRPMetaDataOptionsRedirectUris                => { type => 'text', },
         oidcRPMetaDataOptionsExtraClaims =>
           { type => 'keyTextContainer', default => {} },
@@ -3787,7 +3782,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         oidcRPMetaDataOptionsAllowOffline => {
             type          => 'bool',
+            default       => 0,
             documentation => 'Allow offline access',
+        },
+        oidcRPMetaDataOptionsRefreshToken => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Issue refresh tokens',
         },
         oidcRPMetaDataOptionsRule => {
             type          => 'text',

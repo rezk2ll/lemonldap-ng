@@ -1982,7 +1982,8 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type' => 'int'
         },
         'oidcRPMetaDataOptionsAllowOffline' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsAuthorizationCodeExpiration' => {
             'type' => 'int'
@@ -2063,6 +2064,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcRPMetaDataOptionsLogoutUrl' => {
             'type' => 'url'
         },
+        'oidcRPMetaDataOptionsOfflineSessionExpiration' => {
+            'type' => 'int'
+        },
         'oidcRPMetaDataOptionsPostLogoutRedirectUris' => {
             'type' => 'text'
         },
@@ -2073,8 +2077,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcRPMetaDataOptionsRedirectUris' => {
             'type' => 'text'
         },
-        'oidcRPMetaDataOptionsRefreshTokenExpiration' => {
-            'type' => 'int'
+        'oidcRPMetaDataOptionsRefreshToken' => {
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsRequirePKCE' => {
             'default' => 0,
@@ -2110,10 +2115,6 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type'    => 'bool'
         },
         'oidcServiceAllowImplicitFlow' => {
-            'default' => 0,
-            'type'    => 'bool'
-        },
-        'oidcServiceAllowOffline' => {
             'default' => 0,
             'type'    => 'bool'
         },
@@ -2182,15 +2183,15 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 'userinfo',
             'type'    => 'text'
         },
+        'oidcServiceOfflineSessionExpiration' => {
+            'default' => 2592000,
+            'type'    => 'int'
+        },
         'oidcServicePrivateKeySig' => {
             'type' => 'RSAPrivateKey'
         },
         'oidcServicePublicKeySig' => {
             'type' => 'RSAPublicKey'
-        },
-        'oidcServiceRefreshTokenExpiration' => {
-            'default' => 2592000,
-            'type'    => 'int'
         },
         'oidcStorage' => {
             'type' => 'PerlModule'

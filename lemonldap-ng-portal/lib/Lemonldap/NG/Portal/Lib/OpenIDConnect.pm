@@ -690,15 +690,16 @@ sub getAccessToken {
 # @return new Lemonldap::NG::Common::Session object
 
 sub newRefreshToken {
-    my ( $self, $rp, $info ) = @_;
+    my ( $self, $rp, $info, $offline ) = @_;
+    my $ttl = $offline ? (
+        $self->conf->{oidcRPMetaDataOptions}->{$rp}
+        ->{oidcRPMetaDataOptionsOfflineSessionExpiration}
+        || $self->conf->{oidcServiceOfflineSessionExpiration}) : $self->conf->{timeout};
 
     return $self->getOpenIDConnectSession(
         undef,
         "refresh_token",
-        $self->conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsRefreshTokenExpiration}
-          || $self->conf->{oidcServiceRefreshTokenExpiration},
-        ,
+        $ttl,
         $info
     );
 }

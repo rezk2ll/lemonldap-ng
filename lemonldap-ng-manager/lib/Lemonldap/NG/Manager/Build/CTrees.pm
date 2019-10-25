@@ -206,7 +206,8 @@ sub cTrees {
                     'oidcRPMetaDataOptionsAccessTokenExpiration',
                     'oidcRPMetaDataOptionsAuthorizationCodeExpiration',
                     'oidcRPMetaDataOptionsAllowOffline',
-                    'oidcRPMetaDataOptionsRefreshTokenExpiration',
+                    'oidcRPMetaDataOptionsRefreshToken',
+                    'oidcRPMetaDataOptionsOfflineSessionExpiration',
                     'oidcRPMetaDataOptionsRedirectUris',
                     'oidcRPMetaDataOptionsBypassConsent',
                     {
