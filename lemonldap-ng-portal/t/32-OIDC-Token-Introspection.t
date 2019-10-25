@@ -203,9 +203,8 @@ ok(
     "Post introspection"
 );
 
-expectOK($res);
-$json = from_json( $res->[2]->[0] );
-ok( !$json->{active}, "Token is no longer valid" );
+$res = expectJSON($res);
+ok( !$res->{active}, "Token is no longer valid" );
 
 clean_sessions();
 done_testing();

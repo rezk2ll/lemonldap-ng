@@ -152,12 +152,10 @@ count(1);
 # Verify UTF-8
 switch ('rp');
 ok( $res = $rp->_get("/sessions/global/$spId"), 'Get UTF-8' );
-expectOK($res);
-ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-  or print STDERR $@;
+$res = expectJSON($res);
 ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );
-count(3);
+count(2);
 
 # Logout initiated by OP
 switch ('op');

@@ -163,11 +163,10 @@ ok(
     ),
     'Get userinfo'
 );
-ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-  or print STDERR $@;
+$res = expectJSON($res);
 ok( $res->{name} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'name => Frédéric Accents' );
-count(3);
+count(2);
 
 ok( $res = $op->_get("/sessions/global/$spId"), 'Get UTF-8' );
 expectOK($res);
