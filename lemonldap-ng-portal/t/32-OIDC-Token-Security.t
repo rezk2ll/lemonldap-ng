@@ -193,8 +193,8 @@ ok(
     "Post token"
 );
 count(1);
-my $json  = from_json( $res->[2]->[0] );
-my $token = $json->{access_token};
+$res = expectJSON($res);
+my $token = $res->{access_token};
 ok( $token, 'Access token present' );
 count(1);
 sleep(2);

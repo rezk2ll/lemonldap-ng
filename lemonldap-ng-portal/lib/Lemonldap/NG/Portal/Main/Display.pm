@@ -265,7 +265,8 @@ sub display {
         # Avoid issue 1867
         or (    $self->conf->{authentication} eq 'Combination'
             and $req->{error} > PE_OK
-            and $req->{error} != PE_FIRSTACCESS )
+            and $req->{error} != PE_FIRSTACCESS
+            and $req->{error} != PE_PP_PASSWORD_EXPIRED )
 
        # and ( $req->{error} == PE_TOKENEXPIRED or $req->{error} == PE_NOTOKEN )
       )

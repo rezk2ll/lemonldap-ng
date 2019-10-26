@@ -324,6 +324,24 @@ sub expectOK {
     count(1);
 }
 
+=head4 expectJSON($res)
+
+Verify that the HTTP response contains valid JSON and returns the corresponding object
+
+=cut
+
+sub expectJSON {
+    my ($res) = @_;
+    is( $res->[0], 200, ' HTTP code is 200' ) or explain( $res, 200 );
+    my %hdr = @{$res->[1]};
+    like( $hdr{'Content-Type'}, qr,^application/json,i , ' Content-Type is JSON' ) or explain( $res );
+    my $json;
+    eval { $json = JSON::from_json($res->[2]->[0]) };
+    ok( not($@), 'Content is valid JSON' );
+    count(3);
+    return $json;
+}
+
 =head4 expectBadRequest($res)
 
 Verify that returned code is 400. Note that it works only for Ajax request
