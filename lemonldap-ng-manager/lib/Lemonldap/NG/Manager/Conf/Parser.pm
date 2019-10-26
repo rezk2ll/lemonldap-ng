@@ -266,6 +266,7 @@ sub _scanNodes {
                               $leaf->{comment}
                               ? "(?#$leaf->{comment})$leaf->{re}"
                               : $leaf->{re};
+                            $k .= "((?#$leaf->{level}))" if $leaf->{level};
                             $self->set( $target, $key, $k, $leaf->{data} );
                         }
                         else {

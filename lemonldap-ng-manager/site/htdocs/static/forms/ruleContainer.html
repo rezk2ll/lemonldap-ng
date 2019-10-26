@@ -7,7 +7,8 @@
       <tr>
         <th width="20%" trspan="comments"></th>
         <th width="30%" trspan="regexps"></th>
-        <th width="50%" trspan="rules"></th>
+        <th width="48%" trspan="rules"></th>
+        <th width="2%"  trspan="rulesAuthnLevel"></th>
         <th />
       </tr>
     </thead>
@@ -27,6 +28,9 @@
         </td>
         <td>
           <input class="form-control" ng-model="s.data"/>
+        </td>
+        <td ng-if="s.re!='default'">
+          <input type="number" class="form-control" ng-model="s.level"/>
         </td>
         <td>
           <span ng-if="s.re!='default'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="del(currentNode.nodes,$index)"/>
