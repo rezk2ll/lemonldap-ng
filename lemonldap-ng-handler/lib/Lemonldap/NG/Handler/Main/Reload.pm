@@ -280,6 +280,7 @@ sub locationRulesInit {
         $class->tsv->{locationCount}->{$vhost} = 0;
         foreach my $url ( sort keys %{$rules} ) {
             my ( $cond, $prot ) = $class->conditionSub( $rules->{$url} );
+            $class->logger->debug("+++ " . $cond);
             unless ($cond) {
                 $class->tsv->{maintenance}->{$vhost} = 1;
                 $class->logger->error(
@@ -296,14 +297,9 @@ sub locationRulesInit {
                 push @{ $class->tsv->{locationCondition}->{$vhost} },  $cond;
                 push @{ $class->tsv->{locationProtection}->{$vhost} }, $prot;
                 push @{ $class->tsv->{locationRegexp}->{$vhost} },     qr/$url/;
-#                 $class->logger->debug("**** -> " . Data::Dumper::Dumper($cond));
-#                 push @{ $class->tsv->{locationRequiredLevel}->{$vhost} },
-#                     $cond =~ /\(\(\?#(\d)\)\)$/ ? $1
-#                   : undef;
-# $cond =~ s/\(\(\?#\d+\)\)$//;
                 push @{ $class->tsv->{locationConditionText}->{$vhost} },
-                    $cond =~ /^\(\?#(.*?)\)/ ? $1
-                  : $cond =~ /^(.*?)##(.+)$/ ? $2
+                    $url =~ /^\(\?#(.*?)\)/ ? $1
+                  : $url =~ /^(.*?)##(.+)$/ ? $2
                   :                            $url;
                 $class->tsv->{locationCount}->{$vhost}++;
             }
@@ -453,6 +449,7 @@ sub postUrlInit {
 # @return array (ref(sub), int)
 sub conditionSub {
     my ( $class, $cond ) = @_;
+    $cond =~ s/\(\?#(\d+)\)$//;
     my ( $OK, $NOK ) = ( sub { 1 }, sub { 0 } );
 
     # Simple cases : accept and deny
