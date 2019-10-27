@@ -15,7 +15,6 @@ my $client = LLNG::Manager::Test->new( {
             upgradeSession               => 1,
             authentication               => 'Choice',
             apacheAuthnLevel             => 5,
-            demoAuthnLevel               => 1,
             forceGlobalStorageUpgradeOTT => 1,
             userDB                       => 'Same',
             'authChoiceModules'          => {
@@ -32,7 +31,6 @@ my $client = LLNG::Manager::Test->new( {
                     "default"                      => "accept",
                     '^/AuthBasic(?#AuthnLevel=2)'  => 'accept',
                     '^/AuthStrong(?#AuthnLevel=5)' => 'accept',
-                    '^/AuthWeak(?#AuthnLevel=1)'   => 'accept',
                 },
             },
         }
@@ -53,6 +51,28 @@ ok(
 count(1);
 
 my $id = expectCookie($res);
+
+ok(
+    my $res = $client->_get(
+        'http://test1.example.com/AuthBasic',
+        accept => 'text/html',
+        cookie => "lemonldap=$id",
+    ),
+    'GET http://test1.example.com/AuthBasic'
+);
+count(1);
+print STDERR Data::Dumper::Dumper $res;
+
+ok(
+    my $res = $client->_get(
+        'http://test1.example.com/AuthStrong',
+        accept => 'text/html',
+        cookie => "lemonldap=$id",
+    ),
+    'GET http://test1.example.com/AuthStrong'
+);
+count(1);
+print STDERR Data::Dumper::Dumper $res;
 
 # After attempting to access test1,
 # the handler sends up back to /upgradesession
