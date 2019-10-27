@@ -1,9 +1,6 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
 <div id="errorcontent" class="container">
-<!--
-  <div class="message message-positive alert"><span trspan="<TMPL_VAR NAME="MSG">"></span></div>
--->
   <div class="alert <TMPL_VAR NAME="ALERTE"> alert"><div class="text-center"><span trspan="<TMPL_VAR NAME="MSG">"></span></div></div>
   <form id="checkuser" action="/checkuser" method="post" class="password" role="form">
     <div class="buttons">
