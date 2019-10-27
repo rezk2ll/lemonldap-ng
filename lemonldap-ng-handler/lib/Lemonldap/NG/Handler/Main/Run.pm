@@ -283,7 +283,7 @@ sub grant {
             $class->logger->debug( 'Found AuthnLevel='
                   . $level
                   . ' for "'
-                  . "$vhost/$class->tsv->{locationConditionText}->{$vhost}->[$i]"
+                  . "$vhost/$uri"
                   . '"' );
             last;
         }
