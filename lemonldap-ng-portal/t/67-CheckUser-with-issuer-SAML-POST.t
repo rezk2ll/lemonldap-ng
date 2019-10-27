@@ -287,7 +287,7 @@ SKIP: {
     );
     ok(
         $res->[2]->[0] =~
-m%<div class="message message-positive alert"><span trspan="PE5"></span></div>%,
+m%<div class="alert alert-warning alert"><div class="text-center"><span trspan="PE5"></span></div></div>%,
         ' PE5 found'
     ) or explain( $res->[2]->[0], 'PE5 - Unknown identity' );
     count(2);
