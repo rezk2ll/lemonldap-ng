@@ -264,8 +264,9 @@ sub _scanNodes {
                             hdebug('    locationRules');
                             my $k =
                               $leaf->{comment}
-                              ? "(?#$leaf->{comment}&AuthnLevel=$leaf->{level})$leaf->{re}"
-                              : "(?#&AuthnLevel=$leaf->{level})$leaf->{re}";
+                              ? "(?#$leaf->{comment})$leaf->{re}"
+                              : $leaf->{re};
+                            $k .= "(?#AuthnLevel=$leaf->{level})" if $leaf->{level};
                             $self->set( $target, $key, $k, $leaf->{data} );
                         }
                         else {
