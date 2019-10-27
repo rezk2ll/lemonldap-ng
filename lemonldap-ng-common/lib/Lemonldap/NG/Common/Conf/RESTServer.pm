@@ -199,10 +199,10 @@ sub virtualHosts {
             if ( $query eq 'locationRules' ) {
                 $res->{comment} = '';
                 $res->{level} = '';
+                $res->{level} = $1 if ( $r =~ s/\(\?#AuthnLevel=(-?\d+)\)// );
                 if ( $r =~ s/\(\?#(.*?)\)// ) {
                     $res->{title} = $res->{comment} = $1;
                 }
-                $res->{level} = $1 if ( $r =~ s/\(\?#AuthnLevel=(-?\d+)\)// );
                 $res->{re}   = $r;
                 $res->{type} = 'rule';
             }
