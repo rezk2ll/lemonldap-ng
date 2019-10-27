@@ -11,10 +11,11 @@ count(1);
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                     => 'error',
+            logLevel                     => 'debug',
             upgradeSession               => 1,
             authentication               => 'Choice',
             apacheAuthnLevel             => 5,
+            demoAuthnLevel               => 1,
             forceGlobalStorageUpgradeOTT => 1,
             userDB                       => 'Same',
             'authChoiceModules'          => {
@@ -24,6 +25,14 @@ my $client = LLNG::Manager::Test->new( {
             'vhostOptions' => {
                 'test1.example.com' => {
                     'vhostAuthnLevel' => 3
+                },
+            },
+            "locationRules" => {
+                "test1.example.com" => {
+                    "default"                      => "accept",
+                    '^/AuthBasic(?#AuthnLevel=2)'  => 'accept',
+                    '^/AuthStrong(?#AuthnLevel=5)' => 'accept',
+                    '^/AuthWeak(?#AuthnLevel=1)'   => 'accept',
                 },
             },
         }
