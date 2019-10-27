@@ -10,7 +10,6 @@ use Lemonldap::NG::Common::Crypto;
 use Lemonldap::NG::Common::Safelib;            #link protected safe Safe object
 use Lemonldap::NG::Handler::Main::Jail;
 use Scalar::Util qw(weaken);
-use Data::Dumper;
 
 use constant UNPROTECT => 1;
 use constant SKIP      => 2;
@@ -282,10 +281,10 @@ sub locationRulesInit {
         $class->tsv->{locationProtection}->{$vhost}    = [];
         $class->tsv->{locationRegexp}->{$vhost}        = [];
         $class->tsv->{locationConditionText}->{$vhost} = [];
+        $class->tsv->{locationAuthnLevel}->{$vhost}    = [];
 
         foreach my $url ( sort keys %{$rules} ) {
             my ( $cond, $prot ) = $class->conditionSub( $rules->{$url} );
-            $class->logger->debug("+++ " . $cond);
             unless ($cond) {
                 $class->tsv->{maintenance}->{$vhost} = 1;
                 $class->logger->error(
@@ -302,15 +301,18 @@ sub locationRulesInit {
                 push @{ $class->tsv->{locationCondition}->{$vhost} },  $cond;
                 push @{ $class->tsv->{locationProtection}->{$vhost} }, $prot;
                 push @{ $class->tsv->{locationRegexp}->{$vhost} },     qr/$url/;
+                push @{ $class->tsv->{locationAuthnLevel}->{$vhost} },
+                  $url =~ /\(\?#AuthnLevel=(-?\d+)\)/
+                  ? $1
+                  : undef;
                 push @{ $class->tsv->{locationConditionText}->{$vhost} },
                     $url =~ /^\(\?#(.*?)\)/ ? $1
                   : $url =~ /^(.*?)##(.+)$/ ? $2
-                  :                            $url;
+                  :                           $url;
                 $class->tsv->{locationCount}->{$vhost}++;
             }
         }
-$class->logger->debug("**** " . Data::Dumper::Dumper($class->tsv));
-                    
+
         # Default policy set to 'accept'
         unless ( $class->tsv->{defaultCondition}->{$vhost} ) {
             $class->tsv->{defaultCondition}->{$vhost}  = sub { 1 };
