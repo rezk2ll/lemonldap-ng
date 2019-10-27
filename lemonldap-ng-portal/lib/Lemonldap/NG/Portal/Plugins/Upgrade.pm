@@ -52,6 +52,8 @@ sub ask {
         $req,
         'upgradesession',
         params => {
+            MAIN_LOGO  => $self->conf->{portalMainLogo},
+            LANGS      => $self->conf->{showLanguages},
             MSG        => 'askToUpgrade',
             CONFIRMKEY => $self->p->stamp,
             PORTAL     => $self->conf->{portal},
