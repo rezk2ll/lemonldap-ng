@@ -283,8 +283,8 @@ sub grant {
             $class->logger->debug( 'Found AuthnLevel='
                   . $level
                   . ' for "'
-                  . "$vhost/$uri"
-                  . '"' );
+                  . "$vhost$uri"
+                  . '"' ) if $level;
             last;
         }
     }
