@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_TOKENEXPIRED
 );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -28,7 +28,8 @@ has ott => (
 sub init {
     my ($self) = @_;
     if ( $self->conf->{forceGlobalStorageUpgradeOTT} ) {
-        $self->logger->debug("Upgrade token will be stored into global storage");
+        $self->logger->debug(
+            "Upgrade token will be stored into global storage");
         $self->ott->cache(undef);
     }
     $self->addAuthRoute( upgradesession => 'ask',     ['GET'] );
