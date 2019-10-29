@@ -140,8 +140,7 @@ sub count_sessions {
 
 sub getCache {
     require Cache::FileCache;
-    return Cache::FileCache->new(
-        {
+    return Cache::FileCache->new( {
             namespace   => 'lemonldap-ng-session',
             cache_root  => $tmpDir,
             cache_depth => 0,
@@ -333,10 +332,12 @@ Verify that the HTTP response contains valid JSON and returns the corresponding 
 sub expectJSON {
     my ($res) = @_;
     is( $res->[0], 200, ' HTTP code is 200' ) or explain( $res, 200 );
-    my %hdr = @{$res->[1]};
-    like( $hdr{'Content-Type'}, qr,^application/json,i , ' Content-Type is JSON' ) or explain( $res );
+    my %hdr = @{ $res->[1] };
+    like( $hdr{'Content-Type'}, qr,^application/json,i,
+        ' Content-Type is JSON' )
+      or explain($res);
     my $json;
-    eval { $json = JSON::from_json($res->[2]->[0]) };
+    eval { $json = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), 'Content is valid JSON' );
     count(3);
     return $json;
@@ -701,14 +702,13 @@ to test content I<(to launch a C<expectForm()> for example)>.
 
 sub _get {
     my ( $self, $path, %args ) = @_;
-    my $res = $self->app->(
-        {
+    my $res = $self->app->( {
             'HTTP_ACCEPT' => $args{accept}
               || 'application/json, text/plain, */*',
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
-            'HTTP_HOST' => 'auth.example.com',
+            'HTTP_HOST' => ( $args{host} ? $args{host} : 'auth.example.com' ),
             'HTTP_USER_AGENT' =>
               'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
             'PATH_INFO' => $path,
@@ -754,14 +754,13 @@ sub _post {
     my ( $self, $path, $body, %args ) = @_;
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
-    my $res = $self->app->(
-        {
+    my $res = $self->app->( {
             'HTTP_ACCEPT' => $args{accept}
               || 'application/json, text/plain, */*',
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
-            'HTTP_HOST' => 'auth.example.com',
+            'HTTP_HOST' => ( $args{host} ? $args{host} : 'auth.example.com' ),
             'HTTP_USER_AGENT' =>
               'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
             'PATH_INFO' => $path,
