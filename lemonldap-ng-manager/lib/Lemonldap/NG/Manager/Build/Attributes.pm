@@ -2138,6 +2138,18 @@ sub attributes {
             test          => sub { return perlExpr(@_) },
             documentation => 'CAS App rule',
         },
+        casAppMetaDataMacros => {
+            type => 'keyTextContainer',
+            help =>
+              'exportedvars.html#extend_variables_using_macros_and_groups',
+            test       => {
+                keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                keyMsgFail    => '__badMacroName__',
+                test       => sub { return perlExpr(@_) },
+            },
+            default       => {},
+            documentation => 'Macros',
+        },
 
         # Fake attribute: used by manager REST API to agglomerate all nodes
         # related to a CAS SP partner
@@ -2736,6 +2748,18 @@ sub attributes {
             type          => 'text',
             test          => sub { return perlExpr(@_) },
             documentation => 'Rule to grant access to this SP',
+        },
+        samlSPMetaDataMacros => {
+            type => 'keyTextContainer',
+            help =>
+              'exportedvars.html#extend_variables_using_macros_and_groups',
+            test       => {
+                keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                keyMsgFail    => '__badMacroName__',
+                test       => sub { return perlExpr(@_) },
+            },
+            default       => {},
+            documentation => 'Macros',
         },
 
         # AUTH, USERDB and PASSWORD MODULES
@@ -3827,6 +3851,18 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             test          => sub { return perlExpr(@_) },
             documentation => 'Rule to grant access to this RP',
+        },
+        oidcRPMetaDataMacros => {
+            type => 'keyTextContainer',
+            help =>
+              'exportedvars.html#extend_variables_using_macros_and_groups',
+            test       => {
+                keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                keyMsgFail    => '__badMacroName__',
+                test       => sub { return perlExpr(@_) },
+            },
+            default       => {},
+            documentation => 'Macros',
         },
     };
 }

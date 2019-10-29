@@ -269,7 +269,9 @@ sub _samlMetaDataNodes {
     my ( $id, $resp ) = ( 1, [] );
 
     # Return all exported attributes if asked
-    if ( $query =~ /^saml${type}MetaDataExportedAttributes$/ ) {
+    if ( $query =~
+        /^saml${type}MetaDataExportedAttributes|samlSPMetaDataMacros$/ )
+    {
         my $pk =
           eval { $self->getConfKey( $req, $query )->{$partner} } // {};
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
@@ -380,7 +382,7 @@ sub _oidcMetaDataNodes {
 
     # Return all exported attributes if asked
     if ( $query =~
-        /^(?:oidc${type}MetaDataExportedVars|oidcRPMetaDataOptionsExtraClaims)$/
+/^(?:oidc${type}MetaDataExportedVars|oidcRPMetaDataOptionsExtraClaims|oidcRPMetaDataMacros)$/
       )
     {
         my $pk = eval { $self->getConfKey( $req, $query )->{$partner} } // {};
@@ -478,7 +480,7 @@ sub _casMetaDataNodes {
 
     # Return all exported attributes if asked
     if ( $query =~
-/^(?:cas${type}MetaDataExportedVars|casSrvMetaDataOptionsProxiedServices)$/
+/^(?:cas${type}MetaDataExportedVars|casSrvMetaDataOptionsProxiedServices|casAppMetaDataMacros)$/
       )
     {
         my $pk = eval { $self->getConfKey( $req, $query )->{$partner} } // {};
@@ -549,7 +551,8 @@ sub authChoiceModules {
                 if ($@) {
                     $self->logger->error(
                         "Bad value in choice over parameters, deleted ($@)");
-                } else {
+                }
+                else {
                     $data->[5] = [ map { [ $_, $over->{$_} ] } keys %{$over} ];
                 }
             }
