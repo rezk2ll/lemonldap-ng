@@ -47,12 +47,12 @@ sub getUser {
     my ( $self, $req, %args ) = @_;
 
     if ( $args{useMail} ) {
-        return PE_OK
-          if (
-            ( $req->{user} ) =
-            grep { $demoAccounts{$_}->{mail} eq $req->{user} }
-            keys %demoAccounts
-          );
+        my ($user) = grep { $demoAccounts{$_}->{mail} eq $req->{user} }
+          keys %demoAccounts;
+        if ($user) {
+            $req->{user} = $user;
+            return PE_OK;
+        }
     }
     else {
         return PE_OK
