@@ -272,6 +272,8 @@ sub grant {
     return $cond->( $req, $session ) if ($cond);
 
     $vhost ||= $class->resolveAlias($req);
+
+    # Using URL authentification level if exists
     for (
         my $i = 0 ;
         $i < ( $class->tsv->{locationCount}->{$vhost} || 0 ) ;
@@ -280,15 +282,15 @@ sub grant {
     {
         if ( $uri =~ $class->tsv->{locationRegexp}->{$vhost}->[$i] ) {
             $level = $class->tsv->{locationAuthnLevel}->{$vhost}->[$i];
-            $class->logger->debug( 'Found AuthnLevel='
-                  . $level
-                  . ' for "'
-                  . "$vhost$uri"
-                  . '"' ) if $level;
             last;
         }
     }
+    $level
+      ? $class->logger->debug(
+        'Found AuthnLevel=' . $level . ' for "' . "$vhost$uri" . '"' )
+      : $class->logger->debug("No URL authentication level found...");
 
+    # Using VH authentification level if exists
     if ( $level ||= $class->tsv->{authnLevel}->{$vhost} ) {
         if ( $session->{authenticationLevel} < $level ) {
             $class->logger->debug(
