@@ -43,14 +43,14 @@ count(2);
 
 # Required AuthnLevel = 1
 ok( $res = $client->_get( '/AuthWeak', undef, undef, "lemonldap=$sessionId" ),
-    'Authentified query' );
+    'Weak Authentified query' );
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res, 200 );
 count(2);
 
 # Required AuthnLevel = 5
 ok(
     $res = $client->_get( '/AuthStrong', undef, undef, "lemonldap=$sessionId" ),
-    'Authentified query'
+    'Strong Authentified query'
 );
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res, 302 );
 %h = @{ $res->[1] };
@@ -87,7 +87,7 @@ ok(
     $res = $client->_get(
         '/AuthWeak', undef, 'test2.example.com', "lemonldap=$sessionId"
     ),
-    'Authentified query'
+    'Weak Authentified query'
 );
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res, 200 );
 count(2);
@@ -96,7 +96,7 @@ count(2);
 ok(
     $res =
       $client->_get( '/', undef, 'test2.example.com', "lemonldap=$sessionId" ),
-    'Authentified query'
+    'Default Authentified query'
 );
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res, 302 );
 %h = @{ $res->[1] };
