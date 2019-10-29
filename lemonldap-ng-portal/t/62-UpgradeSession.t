@@ -9,9 +9,10 @@ require 't/smtp.pm';
 use_ok('Lemonldap::NG::Common::FormEncode');
 count(1);
 
+my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                     => 'error',
+            logLevel                     => 'debug',
             upgradeSession               => 1,
             authentication               => 'Choice',
             apacheAuthnLevel             => 5,
@@ -28,9 +29,9 @@ my $client = LLNG::Manager::Test->new( {
             },
             "locationRules" => {
                 "test1.example.com" => {
-                    "default"                      => "accept",
-                    '^/AuthBasic(?#AuthnLevel=2)'  => 'accept',
-                    '^/AuthStrong(?#AuthnLevel=5)' => 'accept',
+                    'default'                      => 'accept',
+                    '^/AuthWeak(?#AuthnLevel=2)'   => 'deny',
+                    '^/AuthStrong(?#AuthnLevel=5)' => 'deny',
                 },
             },
         }
@@ -40,7 +41,7 @@ my $client = LLNG::Manager::Test->new( {
 # Try to authenticate
 # -------------------
 ok(
-    my $res = $client->_post(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho&lmAuth=weak'),
         length => 35,
@@ -49,37 +50,42 @@ ok(
     'Auth query'
 );
 count(1);
-
 my $id = expectCookie($res);
 
+
+# Portal IS NOT a handler
+#########################
 ok(
-    my $res = $client->_get(
-        'http://test1.example.com/AuthBasic',
+    $res = $client->_get(
+        '/AuthWeak',
         accept => 'text/html',
         cookie => "lemonldap=$id",
+        host   => 'test1.example.com',
     ),
-    'GET http://test1.example.com/AuthBasic'
+    'GET http://test1.example.com/AuthWeak'
 );
+expectOK($res);
 count(1);
-#print STDERR Data::Dumper::Dumper $res;
+print STDERR Data::Dumper::Dumper $res;
 
 ok(
-    my $res = $client->_get(
-        'http://test1.example.com/AuthStrong',
+    $res = $client->_get(
+        '/AuthStrong',
         accept => 'text/html',
         cookie => "lemonldap=$id",
+        host   => 'test1.example.com',
     ),
     'GET http://test1.example.com/AuthStrong'
 );
 count(1);
-#print STDERR Data::Dumper::Dumper $res;
+print STDERR Data::Dumper::Dumper $res;
 
 # After attempting to access test1,
 # the handler sends up back to /upgradesession
 # --------------------------------------------
 
 ok(
-    my $res = $client->_get(
+    $res = $client->_get(
         '/upgradesession',
         query  => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29t',
         accept => 'text/html',
@@ -96,7 +102,7 @@ my ( $host, $url, $query ) =
 # ----------------------
 
 ok(
-    my $res = $client->_post(
+    $res = $client->_post(
         '/upgradesession',
         IO::String->new($query),
         length => length($query),
@@ -108,8 +114,7 @@ ok(
 count(1);
 
 my $pdata = expectCookie( $res, 'lemonldappdata' );
-
-my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'upgrading', 'url' );
+( $host, $url, $query ) = expectForm( $res, '#', undef, 'upgrading', 'url' );
 
 $query = $query . "&lmAuth=strong";
 
@@ -118,7 +123,7 @@ $query = $query . "&lmAuth=strong";
 # -------------------------------------------
 
 ok(
-    my $res = $client->_post(
+    $res = $client->_post(
         '/upgradesession',
         IO::String->new($query),
         length => length($query),
@@ -139,7 +144,7 @@ expectRedirection( $res, 'http://test1.example.com' );
 
 # Make pdata was cleared and we aren't being redirected
 ok(
-    my $res = $client->_get(
+    $res = $client->_get(
         '/',
         accept => 'text/html',
         cookie => "lemonldap=$id;lemonldappdata=$pdata",
@@ -147,7 +152,6 @@ ok(
     'Post login'
 );
 count(1);
-
 expectOK($res);
 
 clean_sessions();
