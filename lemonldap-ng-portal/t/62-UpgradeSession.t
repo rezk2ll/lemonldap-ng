@@ -12,7 +12,7 @@ count(1);
 my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                     => 'debug',
+            logLevel                     => 'error',
             upgradeSession               => 1,
             authentication               => 'Choice',
             apacheAuthnLevel             => 5,
