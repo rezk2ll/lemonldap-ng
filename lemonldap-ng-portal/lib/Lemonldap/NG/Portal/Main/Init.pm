@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -140,24 +140,24 @@ sub init {
 
       # psgi.js
       ->addUnauthRoute( 'psgi.js' => 'sendJs', ['GET'] )
-      ->addAuthRoute( 'psgi.js' => 'sendJs',   ['GET'] )
+      ->addAuthRoute( 'psgi.js' => 'sendJs', ['GET'] )
 
       # portal.css
       ->addUnauthRoute( 'portal.css' => 'sendCss', ['GET'] )
-      ->addAuthRoute( 'portal.css' => 'sendCss',   ['GET'] )
+      ->addAuthRoute( 'portal.css' => 'sendCss', ['GET'] )
 
       # lmerror
       ->addUnauthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
-      ->addAuthRoute( lmerror => { ':code'   => 'lmError' }, ['GET'] )
+      ->addAuthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
 
       # Core REST API
-      ->addUnauthRoute( ping => 'pleaseAuth',  ['GET'] )
+      ->addUnauthRoute( ping => 'pleaseAuth', ['GET'] )
       ->addAuthRoute( ping => 'authenticated', ['GET'] )
 
       # Refresh session
       ->addAuthRoute( refresh => 'refresh', ['GET'] )
 
-      ->addAuthRoute( '*' => 'corsPreflight',   ['OPTIONS'] )
+      ->addAuthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
       ->addUnauthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
 
       # Logout
@@ -367,7 +367,8 @@ sub reloadConf {
                 delete $_[0]->pdata->{$k};
             }
         }
-        $self->userLogger->notice( $_[0]->user . ' connected' ) if $_[0]->user;
+        my $user_log = $_[0]->{sessionInfo}->{ $self->conf->{whatToTrace} };
+        $self->userLogger->notice( $user_log . ' connected' ) if $user_log;
         if (@$tmp) {
             $self->logger->debug(
                 'Add ' . join( ',', @$tmp ) . ' in keepPdata' );
