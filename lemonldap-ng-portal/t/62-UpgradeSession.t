@@ -66,7 +66,6 @@ ok(
 );
 expectOK($res);
 count(1);
-print STDERR Data::Dumper::Dumper $res;
 
 ok(
     $res = $client->_get(
@@ -78,7 +77,6 @@ ok(
     'GET http://test1.example.com/AuthStrong'
 );
 count(1);
-print STDERR Data::Dumper::Dumper $res;
 
 # After attempting to access test1,
 # the handler sends up back to /upgradesession
