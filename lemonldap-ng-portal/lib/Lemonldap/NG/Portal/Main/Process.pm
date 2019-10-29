@@ -1,6 +1,6 @@
 package Lemonldap::NG::Portal::Main::Process;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -320,7 +320,7 @@ sub authenticate {
     $req->steps( [
             'setSessionInfo',           'setMacros',
             'setPersistentSessionInfo', 'storeHistory',
-            @{ $self->afterData },      sub { PE_BADCREDENTIALS }
+            @{ $self->afterData }, sub { PE_BADCREDENTIALS }
         ]
     );
 
@@ -520,8 +520,9 @@ sub buildCookie {
             );
         }
     }
+    my $user_log = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
     $self->userLogger->notice(
-"User $req->{user} successfully authenticated at level $req->{sessionInfo}->{authenticationLevel}"
+"User $user_log successfully authenticated at level $req->{sessionInfo}->{authenticationLevel}"
     );
     PE_OK;
 }
