@@ -1165,7 +1165,7 @@ sub token {
         # For offline access, the refresh token isn't tied to the session ID
         if ( $codeSession->{data}->{offline} ) {
 
-            # We need to remove _sessionType and _sessionid from the sessio data
+            # We need to remove _sessionType and _sessionid from the session data
             # before storing session data in the refresh token
             my %userInfo;
             for
