@@ -739,6 +739,12 @@ This file contains:
                 a._nodes = templates(a.template, a.title);
               }
               node.nodes.push(a);
+              if (a.type.match(/^rule$/)) {
+                console.log("Parse rule AuthnLevel as integer");
+                if (a.level && typeof a.level === 'string') {
+                  a.level = parseInt(a.level, 10);
+                }
+              }
             }
             d.resolve('OK');
           }

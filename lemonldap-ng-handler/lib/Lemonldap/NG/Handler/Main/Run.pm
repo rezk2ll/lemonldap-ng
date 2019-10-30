@@ -267,10 +267,31 @@ sub checkMaintenanceMode {
 # @return True if the user is granted to access to the current URL
 sub grant {
     my ( $class, $req, $session, $uri, $cond, $vhost ) = @_;
+    my $level;
+
     return $cond->( $req, $session ) if ($cond);
 
     $vhost ||= $class->resolveAlias($req);
-    if ( my $level = $class->tsv->{authnLevel}->{$vhost} ) {
+
+    # Using URL authentification level if exists
+    for (
+        my $i = 0 ;
+        $i < ( $class->tsv->{locationCount}->{$vhost} || 0 ) ;
+        $i++
+      )
+    {
+        if ( $uri =~ $class->tsv->{locationRegexp}->{$vhost}->[$i] ) {
+            $level = $class->tsv->{locationAuthnLevel}->{$vhost}->[$i];
+            last;
+        }
+    }
+    $level
+      ? $class->logger->debug(
+        'Found AuthnLevel=' . $level . ' for "' . "$vhost$uri" . '"' )
+      : $class->logger->debug("No URL authentication level found...");
+
+    # Using VH authentification level if exists
+    if ( $level ||= $class->tsv->{authnLevel}->{$vhost} ) {
         if ( $session->{authenticationLevel} < $level ) {
             $class->logger->debug(
                 "User authentication level = $session->{authenticationLevel}");

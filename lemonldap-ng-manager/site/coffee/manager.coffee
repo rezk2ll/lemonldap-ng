@@ -592,6 +592,10 @@ llapp.controller 'TreeCtrl', [
 						if a.template
 							a._nodes = templates a.template, a.title
 						node.nodes.push a
+						if a.type.match /^rule$/
+							console.log "Parse rule AuthnLevel as integer"
+							if a.level and typeof a.level == 'string'
+								a.level = parseInt(a.level, 10)
 					d.resolve 'OK'
 				$scope.waiting = false
 			, (response) ->

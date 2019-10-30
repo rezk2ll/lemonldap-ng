@@ -281,6 +281,7 @@ sub locationRulesInit {
         $class->tsv->{locationProtection}->{$vhost}    = [];
         $class->tsv->{locationRegexp}->{$vhost}        = [];
         $class->tsv->{locationConditionText}->{$vhost} = [];
+        $class->tsv->{locationAuthnLevel}->{$vhost}    = [];
 
         foreach my $url ( sort keys %{$rules} ) {
             my ( $cond, $prot ) = $class->conditionSub( $rules->{$url} );
@@ -300,10 +301,14 @@ sub locationRulesInit {
                 push @{ $class->tsv->{locationCondition}->{$vhost} },  $cond;
                 push @{ $class->tsv->{locationProtection}->{$vhost} }, $prot;
                 push @{ $class->tsv->{locationRegexp}->{$vhost} },     qr/$url/;
+                push @{ $class->tsv->{locationAuthnLevel}->{$vhost} },
+                  $url =~ /\(\?#AuthnLevel=(-?\d+)\)/
+                  ? $1
+                  : undef;
                 push @{ $class->tsv->{locationConditionText}->{$vhost} },
                     $url =~ /^\(\?#(.*?)\)/ ? $1
                   : $url =~ /^(.*?)##(.+)$/ ? $2
-                  :                            $url;
+                  :                           $url;
                 $class->tsv->{locationCount}->{$vhost}++;
             }
         }
@@ -451,6 +456,7 @@ sub postUrlInit {
 # @return array (ref(sub), int)
 sub conditionSub {
     my ( $class, $cond ) = @_;
+    $cond =~ s/\(\?#(\d+)\)$//;
     my ( $OK, $NOK ) = ( sub { 1 }, sub { 0 } );
 
     # Simple cases : accept and deny
