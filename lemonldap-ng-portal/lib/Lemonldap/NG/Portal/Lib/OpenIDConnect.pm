@@ -1810,9 +1810,13 @@ Get Access Token
 
 Return list of attributes authorized for a claim
 
+=head2 buildUserInfoResponseFromId
+
+Return Hash of UserInfo data from session ID
+
 =head2 buildUserInfoResponse
 
-Return Hash of UserInfo data
+Return Hash of UserInfo data from session object
 
 =head2 createJWT
 
