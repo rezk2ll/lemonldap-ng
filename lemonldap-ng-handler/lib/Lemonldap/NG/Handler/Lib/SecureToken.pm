@@ -43,11 +43,11 @@ sub run {
 
     # Catch Secure Token parameters
     my $localConfig = $class->localConfig;
-    my $secureTokenMemcachedServers =
+    our $secureTokenMemcachedServers =
       $localConfig->{secureTokenMemcachedServers} || ['127.0.0.1:11211'];
     my $secureTokenExpiration = $localConfig->{secureTokenExpiration} || 60;
     my $secureTokenAttribute  = $localConfig->{secureTokenAttribute}  || 'uid';
-    my $secureTokenUrls       = $localConfig->{'secureTokenUrls'}     || ['.*'];
+    our $secureTokenUrls = $localConfig->{'secureTokenUrls'} || ['.*'];
     my $secureTokenHeader = $localConfig->{secureTokenHeader} || 'Auth-Token';
     my $secureTokenAllowOnError = $localConfig->{'secureTokenAllowOnError'}
       // 1;
