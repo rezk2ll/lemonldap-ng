@@ -115,8 +115,6 @@ SKIP: {
             $url,
             query  => $query,
             accept => 'text/html',
-
-            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata'
         ),
         "Push request to OP,         endpoint $url"
     );
@@ -169,7 +167,7 @@ SKIP: {
             $url, IO::String->new($query),
             length => length($query),
             accept => 'text/html',
-            cookie => "lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata"
+            cookie => "$spPdata"
         ),
         'POST SAML response'
     );
@@ -183,8 +181,7 @@ SKIP: {
             $url,
             query  => $query,
             accept => 'text/html',
-            cookie =>
-"lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata"
+            cookie => "lemonldap=$spId;$spPdata"
         ),
         'Follow internal redirection from SAML-SP to OIDC-OP'
     );
@@ -194,8 +191,7 @@ SKIP: {
             $url,
             query  => $query,
             accept => 'text/html',
-            cookie =>
-"lemonldap=$spId;lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata"
+            cookie => "lemonldap=$spId;$spPdata"
         ),
         'Confirm OIDC sharing'
     );

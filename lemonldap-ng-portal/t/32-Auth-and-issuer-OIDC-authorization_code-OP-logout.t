@@ -184,21 +184,6 @@ ok(
 count(1);
 expectReject($res);
 
-#switch ('rp');
-#ok(
-#    $res = $rp->_get(
-#        '/',
-#        accept => 'text/html',
-#        cookie =>
-#          "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
-#    ),
-#    'Test if user is reject on SP'
-#);
-#count(1);
-#expectRedirection( $res, qr#^http://auth.op.com/oauth2/authorize# );
-
-#print STDERR Dumper($res);
-
 clean_sessions();
 done_testing( count() );
 

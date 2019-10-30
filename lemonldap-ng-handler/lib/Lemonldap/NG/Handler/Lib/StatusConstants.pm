@@ -104,7 +104,7 @@ sub portalConsts {
 }
 
 # EXPORTER PARAMETERS
-our @EXPORT_OK   = ('portalConsts');
+our @EXPORT_OK = ('portalConsts');
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT_OK, 'import' ], );
 
 1;

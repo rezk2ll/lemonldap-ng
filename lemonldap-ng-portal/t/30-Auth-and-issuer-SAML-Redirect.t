@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 17;
+my $maintests = 16;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -52,15 +52,6 @@ SKIP: {
         'Unauth SP request'
     );
     my ( $host, $url, $query );
-    ok(
-        expectCookie( $res, 'lemonldapidp' ) eq
-          'http://auth.idp.com/saml/metadata',
-        'IDP cookie defined'
-      )
-      or explain(
-        $res->[1],
-'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
-      );
     ( $url, $query ) = expectRedirection( $res,
         qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
@@ -115,7 +106,6 @@ SKIP: {
             $url, IO::String->new($query),
             accept => 'text/html',
             length => length($query),
-            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
         'Post SAML response to SP'
     );
@@ -189,8 +179,7 @@ qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
         $res = $sp->_get(
             '/',
             accept => 'text/html',
-            cookie =>
-              "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
+            cookie => "lemonldap=$spId"
         ),
         'Test if user is reject on SP'
     );

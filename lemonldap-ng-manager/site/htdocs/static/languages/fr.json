@@ -1049,7 +1049,6 @@
 "samlServiceSignatureMethod":"Méthode pour la signature",
 "samlServiceUseCertificateInResponse":"Utilisation du certificat dans les réponses",
 "samlAdvanced":"Avancé",
-"samlIdPResolveCookie":"Nom du cookie de résolution IDP",
 "samlPartnerName":"Nom du partenaire SAML",
 "samlMetadataForceUTF8":"Conversion des métadonnées en UTF8",
 "samlStorage":"Nom du module des sessions SAML",

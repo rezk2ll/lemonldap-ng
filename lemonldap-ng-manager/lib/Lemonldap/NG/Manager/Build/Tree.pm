@@ -1097,7 +1097,6 @@ sub tree {
                     title => 'samlAdvanced',
                     help  => 'samlservice.html#advanced',
                     nodes => [
-                        'samlIdPResolveCookie',
                         'samlMetadataForceUTF8',
                         'samlStorage',
                         'samlStorageOptions',
