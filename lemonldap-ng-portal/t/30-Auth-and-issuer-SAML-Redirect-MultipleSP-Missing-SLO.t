@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 23;
+my $maintests = 21;
 my $debug     = 'error';
 my ( $issuer, $sp, $sp2, $res );
 my %handlerOR = ( issuer => [], sp => [], sp2 => [] );
@@ -55,15 +55,6 @@ SKIP: {
         'Unauth SP request'
     );
     my ( $host, $url, $query );
-    ok(
-        expectCookie( $res, 'lemonldapidp' ) eq
-          'http://auth.idp.com/saml/metadata',
-        'IDP cookie defined'
-      )
-      or explain(
-        $res->[1],
-'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
-      );
     ( $url, $query ) = expectRedirection( $res,
         qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
@@ -113,7 +104,6 @@ SKIP: {
             $url, IO::String->new($query),
             accept => 'text/html',
             length => length($query),
-            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
         'Post SAML response to SP'
     );
@@ -144,15 +134,6 @@ SKIP: {
         'Unauth SP2 request'
     );
 
-    ok(
-        expectCookie( $res, 'lemonldapidp' ) eq
-          'http://auth.idp.com/saml/metadata',
-        'IDP cookie defined'
-      )
-      or explain(
-        $res->[1],
-'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp2.com; path=/'
-      );
     ( $url, $query ) = expectRedirection( $res,
         qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
@@ -178,7 +159,6 @@ SKIP: {
             $url, IO::String->new($query),
             accept => 'text/html',
             length => length($query),
-            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
         'Post SAML response to SP2'
     );
@@ -235,8 +215,7 @@ SKIP: {
         $res = $sp->_get(
             '/',
             accept => 'text/html',
-            cookie =>
-              "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
+            cookie => "lemonldap=$spId"
         ),
         'Test if user is reject on SP'
     );
@@ -249,8 +228,7 @@ SKIP: {
         $res = $sp2->_get(
             '/',
             accept => 'text/html',
-            cookie =>
-              "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$sp2Id"
+            cookie => "lemonldap=$sp2Id"
         ),
         'User is unfortunately still logged into SP2'
     );

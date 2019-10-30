@@ -12,7 +12,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 24;
+my $maintests = 22;
 my $debug     = 'error';
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -60,9 +60,6 @@ SKIP: {
         ),
         'Post SAML choice'
     );
-    ok( expectCookie( $res, 'lemonldapidp' ) == 0, 'IDP cookie deleted' )
-      or explain( $res->[1],
-        'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
     ( $host, $url, $query ) = expectForm( $res, undef, undef, 'confirm', );
 
     # IDP must be sorted
@@ -92,16 +89,11 @@ m%<img src="http://auth.sp.com/static/common/icons/sfa_manager.png" class="mr-2"
             '/'    => IO::String->new($query),
             accept => 'text/html',
             length => length($query),
-            cookie => "lemonldapidp=0;$spPdata",
+            cookie => "$spPdata",
         ),
         'Post SAML choice'
     );
     $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
-    ok( expectCookie( $res, 'lemonldapidp' ), 'IDP cookie defined' )
-      or explain(
-        $res->[1],
-'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
-      );
     ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn',
         'SAMLRequest' );
@@ -144,7 +136,7 @@ m%<img src="http://auth.sp.com/static/common/icons/sfa_manager.png" class="mr-2"
             $url, IO::String->new($query),
             accept => 'text/html',
             length => length($query),
-            cookie => "lemonldapidp=http://auth.idp.com/saml/metadata;$spPdata",
+            cookie => "$spPdata",
         ),
         'Post SAML response to SP'
     );
@@ -194,7 +186,6 @@ m%<img src="http://auth.sp.com/static/common/icons/sfa_manager.png" class="mr-2"
             $url, IO::String->new($query),
             accept => 'text/html',
             length => length($query),
-            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
         'Post SAML response to SP'
     );
@@ -213,9 +204,7 @@ m%<img src="http://auth.sp.com/static/common/icons/sfa_manager.png" class="mr-2"
     switch ('sp');
     ok(
         $res = $sp->_get(
-            '/',
-            cookie =>
-              "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
+            '/', cookie => "lemonldap=$spId"
         ),
         'Test if user is reject on SP'
     );

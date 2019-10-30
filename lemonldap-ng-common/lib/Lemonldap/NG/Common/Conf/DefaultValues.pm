@@ -250,8 +250,7 @@ sub defaultValues {
         'samlAuthnContextMapPassword'                   => 2,
         'samlAuthnContextMapPasswordProtectedTransport' => 3,
         'samlAuthnContextMapTLSClient'                  => 5,
-        'samlEntityID'         => '#PORTAL#/saml/metadata',
-        'samlIdPResolveCookie' => 'lemonldapidp',
+        'samlEntityID' => '#PORTAL#/saml/metadata',
         'samlIDPSSODescriptorArtifactResolutionServiceArtifact' =>
 '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
         'samlIDPSSODescriptorSingleLogoutServiceHTTPPost' =>

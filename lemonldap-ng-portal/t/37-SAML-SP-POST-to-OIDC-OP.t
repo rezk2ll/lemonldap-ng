@@ -107,7 +107,6 @@ SKIP: {
         $res = $sp->_get(
             '/',
             accept => 'text/html',
-            cookie => 'lemonldapidp=http://auth.proxy.com/saml/metadata'
         ),
         'Try SAML SP'
     );
@@ -205,7 +204,6 @@ SKIP: {
             $url, IO::String->new($query),
             length => length($query),
             accept => 'text/html',
-            cookie => 'lemonldapidp=http://auth.proxy.com/saml/metadata',
         ),
         'Post SAML response to SP'
     );

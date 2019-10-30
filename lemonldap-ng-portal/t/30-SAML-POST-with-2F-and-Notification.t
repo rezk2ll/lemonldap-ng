@@ -12,7 +12,7 @@ BEGIN {
     require 't/smtp.pm';
 }
 
-my $maintests = 20;
+my $maintests = 19;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -65,11 +65,6 @@ SKIP: {
         'Unauth SP request'
     );
     expectOK($res);
-    ok( expectCookie( $res, 'lemonldapidp' ), 'IDP cookie defined' )
-      or explain(
-        $res->[1],
-'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
-      );
     my ( $host, $url, $s ) =
       expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn',
         'SAMLRequest' );
@@ -172,7 +167,6 @@ qr%<input name="code" value="" class="form-control" id="extcode" trplaceholder="
             $url, IO::String->new($s),
             accept => 'text/html',
             length => length($s),
-            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
         'Post SAML response to SP'
     );
@@ -222,7 +216,6 @@ qr%<input name="code" value="" class="form-control" id="extcode" trplaceholder="
             $url, IO::String->new($s),
             accept => 'text/html',
             length => length($s),
-            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
         'Post SAML response to SP'
     );
@@ -244,7 +237,7 @@ qr%<input name="code" value="" class="form-control" id="extcode" trplaceholder="
             '/',
             accept => 'text/html',
             cookie =>
-              "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
+              "lemonldap=$spId"
         ),
         'Test if user is reject on SP'
     );

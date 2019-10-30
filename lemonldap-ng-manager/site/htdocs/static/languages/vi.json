@@ -1047,7 +1047,6 @@
 "samlServiceSignatureMethod":"Signature method",
 "samlServiceUseCertificateInResponse":"Sử dụng chứng chỉ trong hồi đáp",
 "samlAdvanced":"Nâng cao",
-"samlIdPResolveCookie":"Tên cookie phân giải IDP",
 "samlPartnerName":"Tên của đối tác SAML",
 "samlMetadataForceUTF8":"chuyển đổi mô-tả dữ liệu UTF8",
 "samlStorage":"tên mô-đun phiên SAML",
