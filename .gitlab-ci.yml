@@ -8,6 +8,18 @@
     paths:
       - result/*
 
+
+.build_job_centos:
+  stage: build
+  script:
+     - yum -y install epel-release
+     - make rpm-dist
+     - ci-build-pkg
+  artifacts:
+     expire_in: 1 day
+     paths:
+       - result/*
+
 stages:
 - build
 - sign
@@ -36,6 +48,10 @@ build_bionic:
   image: buildpkg/ubuntu:bionic
   <<: *job_build
 
+build_centos_7:
+   image: buildpkg/centos:7
+   extends: .build_job_centos
+
 sign:
   image: buildpkg/debian:stretch
   stage: sign
@@ -50,6 +66,7 @@ sign:
     - build_buster
 #    - build_xenial
     - build_bionic
+    - build_centos_7
   artifacts:
     expire_in: 1 day
     paths:
