@@ -20,17 +20,14 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 # PROPERTIES
 
-has type => ( is => 'rw' );
-
-has path => ( is => 'rw' );
-
+has type  => ( is => 'rw' );
+has path  => ( is => 'rw' );
 has ipath => ( is => 'rw' );
-
-has _ott => (
+has _ott  => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -52,6 +49,12 @@ sub beforeLogout { 'logout' }
 
 sub init {
     my ($self) = @_;
+    if ( $self->conf->{forceGlobalStorageIssuerOTT} ) {
+        $self->logger->debug(
+            "-> Issuer tokens will be stored into global storage");
+        $self->_ott->cache(undef);
+    }
+
     my $type = ref( $_[0] );
     $type =~ s/.*:://;
     $self->type($type);
@@ -91,7 +94,7 @@ sub _redirect {
             'Add ' . $self->ipath . ', ' . $self->ipath . 'Path in keepPdata' );
         push @{ $req->pdata->{keepPdata} }, $self->ipath, $self->ipath . 'Path';
         $req->{urldc} = $self->conf->{portal} . '/' . $self->path;
-        $req->pdata->{_url} = encode_base64($req->urldc, '');
+        $req->pdata->{_url} = encode_base64( $req->urldc, '' );
     }
     else {
         $self->logger->debug('Not seen as Issuer request, skipping');

@@ -29,7 +29,7 @@ sub init {
     my ($self) = @_;
     if ( $self->conf->{forceGlobalStorageUpgradeOTT} ) {
         $self->logger->debug(
-            "Upgrade token will be stored into global storage");
+            "-> Upgrade tokens will be stored into global storage");
         $self->ott->cache(undef);
     }
     $self->addAuthRoute( upgradesession => 'ask',     ['GET'] );

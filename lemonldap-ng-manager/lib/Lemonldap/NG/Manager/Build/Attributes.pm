@@ -541,6 +541,11 @@ sub attributes {
             documentation =>
               'Avoid asking confirmation when an Issuer asks to renew auth',
         },
+        forceGlobalStorageIssuerOTT => {
+            type => 'bool',
+            documentation =>
+              'Force Issuer tokens be stored into Global Storage',
+        },
         handlerInternalCache => {
             type          => 'int',
             default       => 15,
@@ -1468,7 +1473,7 @@ sub attributes {
         forceGlobalStorageUpgradeOTT => {
             type => 'bool',
             documentation =>
-              'Force upgrade tokens be stored into Global Storage',
+              'Force Upgrade tokens be stored into Global Storage',
         },
 
         # 2F
