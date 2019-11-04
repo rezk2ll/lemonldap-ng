@@ -55,7 +55,7 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsIDTokenSignAlg        => "HS512",
                     oidcRPMetaDataOptionsClientSecret          => "rpsecret",
                     oidcRPMetaDataOptionsUserIDAttr            => "",
-                    oidcRPMetaDataOptionsAccessTokenExpiration => 1,
+                    oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                 },
                 rp2 => {
@@ -65,7 +65,7 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsIDTokenSignAlg        => "HS512",
                     oidcRPMetaDataOptionsClientSecret          => "rp2secret",
                     oidcRPMetaDataOptionsUserIDAttr            => "",
-                    oidcRPMetaDataOptionsAccessTokenExpiration => 1,
+                    oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                     oidcRPMetaDataOptionsRule => '$uid eq "dwho"',
                 }
@@ -213,7 +213,8 @@ $res = expectJSON($res);
 my $token = $res->{access_token};
 ok( $token, 'Access token present' );
 count(1);
-sleep(2);
+Time::Fake->offset("+2h");
+
 
 ok(
     $res = $op->_post(

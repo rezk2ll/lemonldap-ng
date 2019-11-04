@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 12;
+my $maintests = 11;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -52,8 +52,9 @@ SKIP: {
     );
     expectOK($res);
     my $idpId = expectCookie($res);
-    pass('Waiting timeout');
-    sleep 3;
+
+    # Skipping time
+    Time::Fake->offset("+30s");
 
     # Simple SP access
     my $res;
@@ -168,7 +169,7 @@ sub issuer {
                 portal                   => 'http://auth.idp.com',
                 authentication           => 'Demo',
                 userDB                   => 'Same',
-                portalForceAuthnInterval => 2,
+                portalForceAuthnInterval => 5,
                 issuerDBSAMLActivation   => 1,
                 samlSPMetaDataOptions    => {
                     'sp.com' => {

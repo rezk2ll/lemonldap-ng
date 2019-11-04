@@ -13,7 +13,7 @@ BEGIN {
 
 my $maintests = 16;
 my $debug     = 'error';
-my $timeout   = 6;
+my $timeout   = 72000;
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -164,8 +164,8 @@ SKIP: {
       expectAutoPost( $res, 'auth.idp.com', '/saml/singleLogout',
         'SAMLRequest' );
 
-    diag 'Waiting';
-    sleep $timeout + 1;
+    # Jump ahead in time
+    Time::Fake->offset("+".($timeout*1.5)."s");
 
     # Push SAML logout request to IdP
     switch ('issuer');

@@ -50,7 +50,7 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsIDTokenSignAlg        => "HS512",
                     oidcRPMetaDataOptionsClientSecret          => "rpsecret",
                     oidcRPMetaDataOptionsUserIDAttr            => "",
-                    oidcRPMetaDataOptionsAccessTokenExpiration => 1,
+                    oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                     oidcRPMetaDataOptionsRefreshToken          => 1,
                     oidcRPMetaDataOptionsIDTokenForceClaims         => 1,
@@ -170,7 +170,8 @@ $json = expectJSON($res);
 
 ok( $json->{'name'} eq "Frédéric Accents", 'Got User Info' );
 
-sleep(2);
+# Skip ahead in time
+Time::Fake->offset("+2h");
 
 # Access token should have expired
 $res = $op->_post(

@@ -76,8 +76,8 @@ count(1);
 ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/, 'Protection enabled' );
 count(1);
 
-diag 'Waiting';
-sleep 2;
+# Cool down
+Time::Fake->offset("+2s");
 
 # Try to authenticate
 # -------------------
@@ -117,8 +117,8 @@ count(1);
 ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/, 'Protection enabled' );
 count(1);
 
-diag 'Waiting';
-sleep 4;
+# Cool down
+Time::Fake->offset("+6s");
 
 # Try to authenticate again
 # -------------------------
