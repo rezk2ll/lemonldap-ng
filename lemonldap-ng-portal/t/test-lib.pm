@@ -65,6 +65,7 @@ use Lemonldap::NG::Common::FormEncode;
 no warnings 'redefine';
 
 BEGIN {
+    require 't/Time-Fake.pm';
     use_ok('Lemonldap::NG::Portal::Main');
 }
 

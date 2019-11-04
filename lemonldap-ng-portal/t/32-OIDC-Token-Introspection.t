@@ -55,7 +55,7 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsIDTokenSignAlg        => "HS512",
                     oidcRPMetaDataOptionsClientSecret          => "rpsecret",
                     oidcRPMetaDataOptionsUserIDAttr            => "",
-                    oidcRPMetaDataOptionsAccessTokenExpiration => 1,
+                    oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                 },
                 oauth => {
@@ -187,7 +187,7 @@ ok( $json->{active}, "Token is valid" );
 is( $json->{sub}, "french", "Response contains the correct sub" );
 
 # Check status after expiration
-sleep(2);
+Time::Fake->offset("+2h");
 
 $query = "token=$token";
 ok(

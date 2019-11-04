@@ -8,19 +8,19 @@ init(
     'Lemonldap::NG::Handler::Server',
     {
         logLevel               => 'error',
-        handlerServiceTokenTTL => 2,
+        handlerServiceTokenTTL => 120,
         vhostOptions           => {
             'test1.example.com' => {
                 vhostHttps           => 0,
                 vhostPort            => 80,
                 vhostMaintenance     => 0,
-                vhostServiceTokenTTL => 3,
+                vhostServiceTokenTTL => 180,
             },
             'test2.example.com' => {
                 vhostHttps           => 0,
                 vhostPort            => 80,
                 vhostMaintenance     => 0,
-                vhostServiceTokenTTL => 5,
+                vhostServiceTokenTTL => 300,
             }
         },
         exportedHeaders => {
@@ -48,7 +48,7 @@ ok(
         VHOSTTYPE           => 'ServiceToken',
         'HTTP_X_LLNG_TOKEN' => $token,
     ),
-    'Query with token'
+    'Query with token 1'
 );
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
@@ -61,8 +61,8 @@ ok( @values == 2, 'Found 2 service header values' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(2);
 
-diag 'Waiting';
-sleep 1;
+# Waiting
+Time::Fake->offset("+90s");
 
 ok(
     $res = $client->_get(
@@ -70,7 +70,7 @@ ok(
         VHOSTTYPE           => 'ServiceToken',
         'HTTP_X_LLNG_TOKEN' => $token,
     ),
-    'Query with token'
+    'Query with token 2'
 );
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
@@ -83,8 +83,8 @@ ok( @values == 2, 'Found 2 service header values' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(2);
 
-diag 'Waiting';
-sleep 2;
+# Waiting
+Time::Fake->offset("+210s");
 
 ok(
     $res = $client->_get(
@@ -92,7 +92,7 @@ ok(
         VHOSTTYPE           => 'ServiceToken',
         'HTTP_X_LLNG_TOKEN' => $token,
     ),
-    'Query with token'
+    'Query with token 3'
 );
 ok( $res->[0] == 302, 'Code is 200' ) or explain( $res->[0], 302 );
 count(2);
@@ -102,8 +102,8 @@ ok( @headers == 0, 'NONE service header found' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(1);
 
-diag 'Waiting';
-sleep 1;
+# Waiting
+Time::Fake->offset("+270s");
 
 ok(
     $res = $client->_get(
@@ -111,7 +111,7 @@ ok(
         VHOSTTYPE           => 'ServiceToken',
         'HTTP_X_LLNG_TOKEN' => $token,
     ),
-    'Query with token'
+    'Query with token 4'
 );
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
@@ -131,8 +131,8 @@ ok( @values == 2, 'Found 2 service header values' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(2);
 
-diag 'Waiting';
-sleep 1;
+# Waiting
+Time::Fake->offset("+330s");
 
 ok(
     $res = $client->_get(
@@ -140,7 +140,7 @@ ok(
         VHOSTTYPE           => 'ServiceToken',
         'HTTP_X_LLNG_TOKEN' => $token,
     ),
-    'Query with token'
+    'Query with token 5'
 );
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 count(2);
@@ -156,7 +156,7 @@ ok(
         VHOSTTYPE           => 'ServiceToken',
         'HTTP_X_LLNG_TOKEN' => $token,
     ),
-    'Query with token'
+    'Query with token 6'
 );
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 count(2);
@@ -173,7 +173,7 @@ ok(
         VHOSTTYPE           => 'ServiceToken',
         'HTTP_X_LLNG_TOKEN' => $token,
     ),
-    'Query with token'
+    'Query with token 7'
 );
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 count(2);

@@ -65,7 +65,7 @@ SKIP: {
     expectOK($res);
     my $idpId = expectCookie($res);
     pass('Waiting timeout');
-    sleep 3;
+    Time::Fake->offset("+30s");
 
     # Simple SP access
     my $res;
@@ -179,7 +179,7 @@ sub issuer {
                 portal                   => 'http://auth.idp.com',
                 authentication           => 'Choice',
                 userDB                   => 'Same',
-                portalForceAuthnInterval => 2,
+                portalForceAuthnInterval => 5,
                 authChoiceParam          => 'test',
                 authChoiceModules        => {
                     demo => 'Demo;Demo;Demo',
