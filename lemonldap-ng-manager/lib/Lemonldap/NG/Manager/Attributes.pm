@@ -1211,6 +1211,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 5,
             'type'    => 'int'
         },
+        'forceGlobalStorageIssuerOTT' => {
+            'type' => 'bool'
+        },
         'forceGlobalStorageUpgradeOTT' => {
             'type' => 'bool'
         },
@@ -1979,8 +1982,14 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type' => 'subContainer'
         },
         'oidcRPMetaDataOptionsAccessTokenExpiration' => {
-            'default' => 3600,
-            'type'    => 'int'
+            'type' => 'int'
+        },
+        'oidcRPMetaDataOptionsAllowOffline' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsAuthorizationCodeExpiration' => {
+            'type' => 'int'
         },
         'oidcRPMetaDataOptionsBypassConsent' => {
             'default' => 0,
@@ -2003,8 +2012,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type' => 'text'
         },
         'oidcRPMetaDataOptionsIDTokenExpiration' => {
-            'default' => 3600,
-            'type'    => 'int'
+            'type' => 'int'
         },
         'oidcRPMetaDataOptionsIDTokenSignAlg' => {
             'default' => 'HS512',
@@ -2059,6 +2067,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcRPMetaDataOptionsLogoutUrl' => {
             'type' => 'url'
         },
+        'oidcRPMetaDataOptionsOfflineSessionExpiration' => {
+            'type' => 'int'
+        },
         'oidcRPMetaDataOptionsPostLogoutRedirectUris' => {
             'type' => 'text'
         },
@@ -2068,6 +2079,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'oidcRPMetaDataOptionsRedirectUris' => {
             'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsRefreshToken' => {
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsRequirePKCE' => {
             'default' => 0,
@@ -2086,6 +2101,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 600,
             'type'    => 'int'
         },
+        'oidcServiceAccessTokenExpiration' => {
+            'default' => 3600,
+            'type'    => 'int'
+        },
         'oidcServiceAllowAuthorizationCodeFlow' => {
             'default' => 1,
             'type'    => 'bool'
@@ -2101,6 +2120,14 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcServiceAllowImplicitFlow' => {
             'default' => 0,
             'type'    => 'bool'
+        },
+        'oidcServiceAuthorizationCodeExpiration' => {
+            'default' => 60,
+            'type'    => 'int'
+        },
+        'oidcServiceIDTokenExpiration' => {
+            'default' => 3600,
+            'type'    => 'int'
         },
         'oidcServiceKeyIdSig' => {
             'type' => 'text'
@@ -2158,6 +2185,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcServiceMetaDataUserInfoURI' => {
             'default' => 'userinfo',
             'type'    => 'text'
+        },
+        'oidcServiceOfflineSessionExpiration' => {
+            'default' => 2592000,
+            'type'    => 'int'
         },
         'oidcServicePrivateKeySig' => {
             'type' => 'RSAPrivateKey'

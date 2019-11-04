@@ -166,14 +166,17 @@ sub defaultValues {
         'notificationStorageOptions' => {
             'dirName' => '/var/lib/lemonldap-ng/notifications'
         },
-        'notificationWildcard'                  => 'allusers',
-        'notifyDeleted'                         => 1,
-        'nullAuthnLevel'                        => 0,
-        'oidcAuthnLevel'                        => 1,
-        'oidcRPCallbackGetParam'                => 'openidconnectcallback',
-        'oidcRPStateTimeout'                    => 600,
-        'oidcServiceAllowAuthorizationCodeFlow' => 1,
-        'oidcServiceMetaDataAuthnContext'       => {
+        'notificationWildcard'                   => 'allusers',
+        'notifyDeleted'                          => 1,
+        'nullAuthnLevel'                         => 0,
+        'oidcAuthnLevel'                         => 1,
+        'oidcRPCallbackGetParam'                 => 'openidconnectcallback',
+        'oidcRPStateTimeout'                     => 600,
+        'oidcServiceAccessTokenExpiration'       => 3600,
+        'oidcServiceAllowAuthorizationCodeFlow'  => 1,
+        'oidcServiceAuthorizationCodeExpiration' => 60,
+        'oidcServiceIDTokenExpiration'           => 3600,
+        'oidcServiceMetaDataAuthnContext'        => {
             'loa-1' => 1,
             'loa-2' => 2,
             'loa-3' => 3,
@@ -190,6 +193,7 @@ sub defaultValues {
         'oidcServiceMetaDataRegistrationURI'  => 'register',
         'oidcServiceMetaDataTokenURI'         => 'token',
         'oidcServiceMetaDataUserInfoURI'      => 'userinfo',
+        'oidcServiceOfflineSessionExpiration' => 2592000,
         'openIdAuthnLevel'                    => 1,
         'openIdExportedVars'                  => {},
         'openIdIDPList'                       => '0;',

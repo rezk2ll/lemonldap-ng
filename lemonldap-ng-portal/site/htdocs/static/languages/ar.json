@@ -273,6 +273,7 @@
 "yourKeyIsUnregistered":"تمت إزالة المفتاح",
 "yourKeyIsVerified":"تم اختبار المفتاح الخاص بك بنجاح",
 "yourNewTotpKey":"Your new TOTP key, please test it and enter the code",
+"yourOffline": "and access your account while you are offline",
 "yourPhone":"رقم هاتفك",
 "yourProfile":"ملفك الشخصي",
 "yourTotpKey":"Your TOTP key",

@@ -273,6 +273,7 @@
 "yourKeyIsUnregistered":"Khóa của bạn đã bị xóa",
 "yourKeyIsVerified":"Chìa khóa của bạn đã được kiểm tra thành công",
 "yourNewTotpKey":"Your new TOTP key, please test it and enter the code",
+"yourOffline": "and access your account while you are offline",
 "yourPhone":"Số điện thoại của bạn",
 "yourProfile":"Profile của bạn",
 "yourTotpKey":"Your TOTP key",

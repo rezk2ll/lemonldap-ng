@@ -473,17 +473,41 @@ function templates(tpl,key) {
             "type" : "select"
          },
          {
-            "default" : 3600,
             "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenExpiration",
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenExpiration",
             "title" : "oidcRPMetaDataOptionsIDTokenExpiration",
             "type" : "int"
          },
          {
-            "default" : 3600,
             "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenExpiration",
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenExpiration",
             "title" : "oidcRPMetaDataOptionsAccessTokenExpiration",
+            "type" : "int"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthorizationCodeExpiration",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthorizationCodeExpiration",
+            "title" : "oidcRPMetaDataOptionsAuthorizationCodeExpiration",
+            "type" : "int"
+         },
+         {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
+            "title" : "oidcRPMetaDataOptionsAllowOffline",
+            "type" : "bool"
+         },
+         {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshToken",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshToken",
+            "title" : "oidcRPMetaDataOptionsRefreshToken",
+            "type" : "bool"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsOfflineSessionExpiration",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsOfflineSessionExpiration",
+            "title" : "oidcRPMetaDataOptionsOfflineSessionExpiration",
             "type" : "int"
          },
          {

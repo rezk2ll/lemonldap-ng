@@ -1166,6 +1166,10 @@ sub tree {
                         'oidcServiceAllowAuthorizationCodeFlow',
                         'oidcServiceAllowImplicitFlow',
                         'oidcServiceAllowHybridFlow',
+                        'oidcServiceAuthorizationCodeExpiration',
+                        'oidcServiceAccessTokenExpiration',
+                        'oidcServiceIDTokenExpiration',
+                        'oidcServiceOfflineSessionExpiration',
                     ],
                 },
                 {

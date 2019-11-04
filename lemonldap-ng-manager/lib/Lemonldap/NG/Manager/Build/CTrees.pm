@@ -204,6 +204,10 @@ sub cTrees {
                     'oidcRPMetaDataOptionsIDTokenSignAlg',
                     'oidcRPMetaDataOptionsIDTokenExpiration',
                     'oidcRPMetaDataOptionsAccessTokenExpiration',
+                    'oidcRPMetaDataOptionsAuthorizationCodeExpiration',
+                    'oidcRPMetaDataOptionsAllowOffline',
+                    'oidcRPMetaDataOptionsRefreshToken',
+                    'oidcRPMetaDataOptionsOfflineSessionExpiration',
                     'oidcRPMetaDataOptionsRedirectUris',
                     'oidcRPMetaDataOptionsBypassConsent',
                     {
