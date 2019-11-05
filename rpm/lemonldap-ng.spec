@@ -168,14 +168,9 @@ Requires: lemonldap-ng-portal = %{version}-%{release}
 Requires: lemonldap-ng-test = %{version}-%{release}
 
 # Setup requires filtering
-%if 0%{?rhel} >= 7
 %{?perl_default_filter}
-%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven
-%endif
+%{?el7:%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven}
 
-%if 0%{?fedora}
-%{?perl_default_filter}
-%endif
 
 %description
 LemonLdap::NG is a modular Web-SSO based on Apache::Session modules. It
