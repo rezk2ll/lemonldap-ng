@@ -43,6 +43,8 @@
     "test1.example.com": {
       "^/AuthStrong(?#AuthnLevel=5)": "accept",
       "^/AuthWeak(?#AuthnLevel=1)": "accept",
+      "^/test-uri1": "varIsInUri($ENV{REQUEST_URI}, '/test-uri1/', $uid, 1)",
+      "^/test-uri2": "varIsInUri($ENV{REQUEST_URI}, '/test-uri2/', $uid)",
       "^/logout": "logout_sso",
       "^/deny": "deny",
       "default": "accept"

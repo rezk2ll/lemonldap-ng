@@ -18,7 +18,7 @@ our $VERSION = '2.0.0';
 # Not that only functions, not methods, can be written here
 our $functions =
   [
-    qw(&checkLogonHours &date &checkDate &basic &unicode2iso &iso2unicode &groupMatch &isInNet6)
+    qw(&checkLogonHours &date &checkDate &basic &unicode2iso &iso2unicode &groupMatch &isInNet6 &varIsInUri)
   ];
 
 ## @function boolean checkLogonHours(string logon_hours, string syntax, string time_correction, boolean default_access)
@@ -185,6 +185,13 @@ sub isInNet6 {
     $net =~ s#/(\d+)##;
     my $bits = $1;
     return net6( $ip, $bits ) eq net6( $net, $bits ) ? 1 : 0;
+}
+
+sub varIsInUri {
+    my ( $uri, $wanteduri, $attribute, $restricted ) = @_;
+    return $restricted
+      ? $uri =~ /$wanteduri$attribute$/o
+      : $uri =~ /$wanteduri$attribute/o;
 }
 
 1;
