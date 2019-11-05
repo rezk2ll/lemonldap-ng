@@ -134,7 +134,7 @@ BuildRequires:  perl(Regexp::Assemble)
 BuildRequires:  perl(Regexp::Common)
 BuildRequires:  perl(Safe)
 BuildRequires:  perl(Scalar::Util)
-%if 0%{?fedora}
+%if 0%{?fedora}%{?el8}
 BuildRequires:  perl(Sentry::Raven)
 %endif
 BuildRequires:  perl(SOAP::Lite)
@@ -151,7 +151,7 @@ BuildRequires:  perl(URI::Escape)
 BuildRequires:  perl(URI::URL)
 BuildRequires:  perl(utf8)
 BuildRequires:  perl(warnings)
-%if 0%{?fedora}
+%if 0%{?fedora}%{?el8}
 BuildRequires:  perl(Web::ID)
 %endif
 BuildRequires:  perl(XML::LibXML)
@@ -170,7 +170,7 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 # Setup requires filtering
 %{?perl_default_filter}
 %{?el7:%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven}
-%{?el8:%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven}
+%{?el8:%global __requires_exclude perl\\(Lasso}
 
 
 %description
