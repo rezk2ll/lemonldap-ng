@@ -401,6 +401,7 @@ sub _authorization {
         if ( $vh eq $vhost ) {
             $exist = 1;
             $self->logger->debug("VirtualHost: $vh found in Conf");
+            $req->env->{REQUEST_URI} = $appuri;
             last;
         }
     }
