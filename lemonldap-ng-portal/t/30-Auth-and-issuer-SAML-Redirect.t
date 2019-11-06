@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 20;
+my $maintests = 21;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -210,6 +210,9 @@ SKIP: {
     ( $url, $query ) = expectRedirection( $res,
 qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
     );
+
+    my $removedCookie = expectCookie($res);
+    is($removedCookie, 0, "IDP Cookie removed");
 
     # Send SAML response to SP
     switch ('sp');

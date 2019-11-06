@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 21;
+my $maintests = 22;
 my $debug     = 'error';
 my ( $issuer, $sp, $sp2, $res );
 my %handlerOR = ( issuer => [], sp => [], sp2 => [] );
@@ -201,6 +201,9 @@ SKIP: {
     expectOK($res);
 
     ok( $res->[2]->[0] =~ /trmsg="47"/, 'Found logout message' );
+
+    my $logoutCookie = expectCookie($res);
+    is($logoutCookie, 0, "IDP cookie removed");
 
     ok(
         $res = $issuer->_get(

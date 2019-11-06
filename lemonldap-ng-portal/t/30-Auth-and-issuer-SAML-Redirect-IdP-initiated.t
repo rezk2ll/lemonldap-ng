@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 19;
+my $maintests = 20;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -129,6 +129,9 @@ m#iframe src="http://auth.sp.com(/saml/proxySingleLogout)\?(SAMLRequest=.*?)"#,
       )
       or explain( $res->[1],
         'Content-Security-Policy => ...child-src auth.idp.com' );
+
+    my $removedCookie = expectCookie($res);
+    is($removedCookie, 0, "SSO cookie removed");
 
     switch ('sp');
     ok( $res = $sp->_get( $url, query => $query, accept => 'text/html' ),

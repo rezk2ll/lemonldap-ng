@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 19;
+my $maintests = 20;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -186,11 +186,15 @@ SKIP: {
 
     ok( $res->[2]->[0] =~ /trmsg="47"/, 'Found logout message' );
 
+    my $logoutCookie = expectCookie($res);
+    is($logoutCookie, 0, "IDP cookie removed");
+
+    # Test if logout is done
     ok(
         $res = $issuer->_get(
             '/', cookie => "lemonldap=$idpId",
         ),
-        'Test if user is reject on IdP'
+        'Test if old cookie is denied by IdP'
     );
     expectReject($res);
 

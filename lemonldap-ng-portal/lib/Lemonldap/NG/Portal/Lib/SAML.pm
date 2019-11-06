@@ -17,6 +17,7 @@ use URI;                   # Get metadata URL path
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_REDIRECT
+  PE_LOGOUT_OK
   PE_SAML_SLO_ERROR
 );
 
@@ -2414,7 +2415,7 @@ sub sendLogoutResponseToServiceProvider {
         $self->logger->warn( "Could not build a logout response for provider "
               . $logout->remote_providerID
               . ", staying on portal" );
-        return $self->p->do( $req, [] );
+        return $self->p->do( $req, [ sub { PE_LOGOUT_OK } ] );
     }
 
     # Send response depending on request method

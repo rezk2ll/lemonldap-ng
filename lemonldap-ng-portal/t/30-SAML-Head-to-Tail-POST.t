@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 12;
+my $maintests = 13;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -140,6 +140,9 @@ SKIP: {
     ( $host, $url, $s ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleLogoutReturn',
         'SAMLResponse' );
+
+    my $removedCookie = expectCookie($res);
+    is($removedCookie, 0, "SSO cookie removed");
 
     # Post SAML response to SP
     switch ('sp');

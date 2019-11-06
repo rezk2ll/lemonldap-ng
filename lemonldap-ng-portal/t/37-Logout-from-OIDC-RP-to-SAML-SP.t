@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 25;
+my $maintests = 26;
 my $debug     = 'error';
 my ( $op, $rp, $sp, $res );
 my %handlerOR = ( op => [], rp => [], sp => [] );
@@ -242,6 +242,9 @@ SKIP: {
     );
     expectOK($res);
 
+    my $removedCookie = expectCookie($res);
+    is($removedCookie, 0, "SSO cookie removed");
+
     ok(
         $res->[2]->[0] =~
 m#iframe src="http://auth.op.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
@@ -253,7 +256,6 @@ m#iframe src="http://auth.op.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         $res = $op->_get(
             $url,
             query  => $query,
-            cookie => "lemonldap=$idpId",
             accept => 'text/html'
         ),
         'Get iframe'

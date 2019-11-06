@@ -12,7 +12,7 @@ BEGIN {
     require 't/smtp.pm';
 }
 
-my $maintests = 19;
+my $maintests = 20;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -208,6 +208,9 @@ qr%<input name="code" value="" class="form-control" id="extcode" trplaceholder="
     ( $host, $url, $s ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleLogoutReturn',
         'SAMLResponse' );
+
+    my $removedCookie = expectCookie($res);
+    is($removedCookie, 0, "SSO cookie removed");
 
     # Post SAML response to SP
     switch ('sp');

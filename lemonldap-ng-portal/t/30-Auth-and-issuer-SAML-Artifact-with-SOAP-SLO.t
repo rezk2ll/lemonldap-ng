@@ -10,7 +10,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 13;
+my $maintests = 14;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -152,6 +152,9 @@ SKIP: {
     ## Push logout artifact to IdP
 #switch('issuer');
 #ok($res=$issuer->_get($url,query=>$query,accept=>'text/html',cookie=>"lemonldap=$idpId"),'Follow redirection');
+
+    my $removedCookie = expectCookie($res);
+    is($removedCookie, 0, "SSO cookie removed");
 
     # Test if logout is done
     switch ('issuer');

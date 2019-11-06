@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 18;
+my $maintests = 19;
 my $debug     = 'error';
 my ( $idp, $sp, $rp, $res );
 my %handlerOR = ( idp => [], sp => [], rp => [] );
@@ -256,6 +256,9 @@ SKIP: {
     );
     ( $host, $url, $query ) =
       expectForm( $res, 'auth.sp.com', '/saml/proxySingleLogoutReturn' );
+
+    my $removedCookie = expectCookie($res);
+    is($removedCookie, 0, "SSO cookie removed");
 
     # Push logout to SAML SP
     switch ('sp');

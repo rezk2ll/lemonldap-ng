@@ -1717,7 +1717,8 @@ sub sloServer {
         $req->data->{samlSLOCalled} = 1;
 
         # Launch normal logout and ignore errors
-        $self->p->do( $req, [ @{ $self->p->beforeLogout }, 'deleteSession' ] );
+        $req->steps( [ @{ $self->p->beforeLogout }, 'deleteSession' ] );
+        $self->p->process($req);
 
         # Signature
         my $signSLOMessage = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}

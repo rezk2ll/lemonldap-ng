@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 25;
+my $maintests = 26;
 my $debug     = 'error';
 my ( $issuer, $sp, $sp2, $res );
 my %handlerOR = ( issuer => [], sp => [], sp2 => [] );
@@ -194,6 +194,9 @@ SKIP: {
         ),
         'Launch SAML logout request to IdP'
     );
+
+    my $removedCookie = expectCookie($res);
+    is($removedCookie, 0, "SSO cookie removed");
 
     my $relaypage = $res;
 
