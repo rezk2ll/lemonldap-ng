@@ -50,6 +50,7 @@ BuildRequires:  perl(Apache2::RequestUtil)
 BuildRequires:  perl(Apache2::ServerRec)
 BuildRequires:  perl(Apache2::ServerUtil)
 BuildRequires:  perl(Apache::Session)
+BuildRequires:  perl(Apache::Session::Browseable)
 BuildRequires:  perl(Apache::Session::Generate::MD5)
 BuildRequires:  perl(APR::Table)
 BuildRequires:  perl(AuthCAS)
@@ -121,9 +122,13 @@ BuildRequires:  perl(MIME::Base64)
 BuildRequires:  perl(MIME::Entity)
 BuildRequires:  perl(mod_perl2)
 BuildRequires:  perl(Mouse)
+# Not packaged
+# BuildRequires:  perl(Net::Facebook::Oauth2)
 BuildRequires:  perl(Net::LDAP)
 BuildRequires:  perl(Net::LDAP::Extension::SetPassword)
 BuildRequires:  perl(Net::LDAP::Util)
+BuildRequires:  perl(Net::OAuth)
+BuildRequires:  perl(Net::OpenID::Consumer)
 BuildRequires:  perl(Net::OpenID::Server)
 BuildRequires:  perl(Plack)
 BuildRequires:  perl(Plack::Handler::CGI)
@@ -192,6 +197,7 @@ So you can have a full AAA protection for your web space as described below.
 %package conf
 Summary:        LemonLDAP-NG configuration
 Requires:       perl(Apache::Session)
+Requires:       perl(Apache::Session::Browseable)
 Requires:       perl(IO::String)
 Requires:       perl(Lemonldap::NG::Common) = %{version}-%{release}
 Requires:       perl(mod_perl2)
@@ -242,6 +248,10 @@ Summary:        LemonLDAP-NG authentication portal
 Requires:       crontabs
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
+# Not packaged
+#Requires:       perl(Net::Facebook::Oauth2)
+Requires:       perl(Net::OAuth)
+Requires:       perl(Net::OpenID::Consumer)
 
 %description portal
 This package deploys the authentication portal.
