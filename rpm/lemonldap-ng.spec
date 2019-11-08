@@ -58,6 +58,7 @@ Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_relea
 BuildArch:      noarch
 
 BuildRequires:  gnupg
+BuildRequires:  which
 BuildRequires:  perl-generators
 BuildRequires:  perl-interpreter
 BuildRequires:  perl(Apache2::Connection)

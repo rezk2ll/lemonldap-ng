@@ -11,6 +11,11 @@ SKIP: {
     if ($@) {
         skip 'Cache::Memcached not found', $maintests;
     }
+    my $testmemd = new Cache::Memcached { 'servers' => ["127.0.0.1:11211"] };
+    unless ( $testmemd->stats->{hosts} ) {
+        skip 'Memcached not started', $maintests;
+    }
+
     eval { require Apache::Session::Generate::MD5; };
     if ($@) {
         skip 'Apache::Session::Generate::MD5 not found', $maintests;
