@@ -72,8 +72,7 @@ sub setSessionInfo {
     my %vars = ( %{ $self->conf->{exportedVars} },
         %{ $self->conf->{demoExportedVars} } );
     while ( my ( $k, $v ) = each %vars ) {
-        $req->{sessionInfo}->{$k} = $demoAccounts{ $req->{user} }->{$v}
-          || "";
+        $req->{sessionInfo}->{$k} = $demoAccounts{ $req->{user} }->{$v};
     }
 
     PE_OK;
