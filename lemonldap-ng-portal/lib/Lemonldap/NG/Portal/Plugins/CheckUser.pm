@@ -117,7 +117,7 @@ sub display {
     return $self->sendJSONresponse( $req, $params ) if ( $req->wantJSON );
 
     # Display form
-    return $self->p->sendHtml( $req, 'checkuser', params => $params, );
+    return $self->p->sendHtml( $req, 'checkuser', params => $params );
 }
 
 sub check {

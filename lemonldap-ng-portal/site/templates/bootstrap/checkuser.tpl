@@ -104,12 +104,6 @@
     </div>
 
     <div class="buttons">
-      <!--
-      <button type="submit" class="btn btn-success">
-        <span class="fa fa-sign-in"></span>
-        <span trspan="search">Search</span>
-      </button>
-      -->
       <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
         <span class="fa fa-home"></span>
         <span trspan="goToPortal">Go to portal</span>
