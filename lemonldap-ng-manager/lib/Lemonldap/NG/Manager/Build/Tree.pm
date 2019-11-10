@@ -672,6 +672,13 @@ sub tree {
                             nodes => ['autoSigninRules'],
                         },
                         {
+                            title => 'globalLogout',
+                            help  => 'globallogout.html',
+                            form  => 'simpleInputContainer',
+                            nodes =>
+                              [ 'globalLogoutRule', 'globalLogoutTimeout', ],
+                        },
+                        {
                             title => 'stateCheck',
                             help  => 'checkstate.html',
                             form  => 'simpleInputContainer',
@@ -716,10 +723,8 @@ sub tree {
                             title => 'decryptValue',
                             help  => 'decryptvalue.html',
                             form  => 'simpleInputContainer',
-                            nodes => [
-                                'decryptValueRule',
-                                'decryptValueFunctions',
-                            ]
+                            nodes =>
+                              [ 'decryptValueRule', 'decryptValueFunctions', ]
                         },
                     ]
                 },

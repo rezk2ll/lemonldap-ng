@@ -450,9 +450,10 @@ sub attributes {
             flags         => 'p',
         },
         checkUserSearchAttributes => {
-            type          => 'text',
-            documentation => 'Attributes used for retrieving sessions in user DataBase',
-            flags         => 'p',
+            type => 'text',
+            documentation =>
+              'Attributes used for retrieving sessions in user DataBase',
+            flags => 'p',
         },
         checkUserDisplayPersistentInfo => {
             default       => 0,
@@ -465,6 +466,17 @@ sub attributes {
             type          => 'bool',
             documentation => 'Display session empty values',
             flags         => 'p',
+        },
+        globalLogoutRule => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Global logout activation rule',
+            flags         => 'p',
+        },
+        globalLogoutTimeout => {
+            default       => 30,
+            type          => 'int',
+            documentation => 'Global logout timeout',
         },
         impersonationMergeSSOgroups => {
             default       => 0,
@@ -544,7 +556,7 @@ sub attributes {
         forceGlobalStorageIssuerOTT => {
             type => 'bool',
             documentation =>
-              'Force Issuer tokens be stored into Global Storage',
+              'Force Issuer tokens to be stored into Global Storage',
         },
         handlerInternalCache => {
             type          => 'int',
@@ -1978,15 +1990,15 @@ sub attributes {
         vhostType    => {
             type   => 'select',
             select => [
-                { k => 'AuthBasic',    v => 'AuthBasic' },
-                { k => 'CDA',          v => 'CDA' },
-                { k => 'DevOps',       v => 'DevOps' },
-                { k => 'DevOpsST',     v => 'DevOpsST' },
-                { k => 'Main',         v => 'Main' },
-                { k => 'OAuth2',       v => 'OAuth2' },
-                { k => 'SecureToken',  v => 'SecureToken' },
-                { k => 'ServiceToken', v => 'ServiceToken' },
-                { k => 'ZimbraPreAuth',v => 'ZimbraPreAuth' },
+                { k => 'AuthBasic',     v => 'AuthBasic' },
+                { k => 'CDA',           v => 'CDA' },
+                { k => 'DevOps',        v => 'DevOps' },
+                { k => 'DevOpsST',      v => 'DevOpsST' },
+                { k => 'Main',          v => 'Main' },
+                { k => 'OAuth2',        v => 'OAuth2' },
+                { k => 'SecureToken',   v => 'SecureToken' },
+                { k => 'ServiceToken',  v => 'ServiceToken' },
+                { k => 'ZimbraPreAuth', v => 'ZimbraPreAuth' },
             ],
             default       => 'Main',
             documentation => 'Handler type',

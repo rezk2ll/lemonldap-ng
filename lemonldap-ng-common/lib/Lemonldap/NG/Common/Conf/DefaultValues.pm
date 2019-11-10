@@ -69,6 +69,8 @@ sub defaultValues {
         'facebookUserField'    => 'id',
         'failedLoginNumber'    => 5,
         'formTimeout'          => 120,
+        'globalLogoutRule'     => 0,
+        'globalLogoutTimeout'  => 30,
         'globalStorage'        => 'Apache::Session::File',
         'globalStorageOptions' => {
             'Directory' => '/var/lib/lemonldap-ng/sessions/',
