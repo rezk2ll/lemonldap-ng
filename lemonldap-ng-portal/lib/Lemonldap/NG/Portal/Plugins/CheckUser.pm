@@ -131,13 +131,13 @@ sub check {
     if ( $self->ottRule->( $req, {} ) ) {
         my $token = $req->param('token');
         unless ($token) {
-            $self->userLogger->warn('checkUser try without token');
+            $self->userLogger->warn('CheckUser called without token');
             $msg   = PE_NOTOKEN;
             $token = $self->ott->createToken();
         }
 
         unless ( $self->ott->getToken($token) ) {
-            $self->userLogger->warn('checkUser try with expired/bad token');
+            $self->userLogger->warn('CheckUser called with an expired/bad token');
             $msg   = PE_TOKENEXPIRED;
             $token = $self->ott->createToken();
         }
