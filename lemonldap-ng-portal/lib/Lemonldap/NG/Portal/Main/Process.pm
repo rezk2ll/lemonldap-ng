@@ -520,9 +520,9 @@ sub buildCookie {
             );
         }
     }
-    my $user_log = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+    my $user_log = $req->{userData}->{ $self->conf->{whatToTrace} };
     $self->userLogger->notice(
-"User $user_log successfully authenticated at level $req->{sessionInfo}->{authenticationLevel}"
+"User $user_log successfully authenticated at level $req->{userData}->{authenticationLevel}"
     );
     PE_OK;
 }
