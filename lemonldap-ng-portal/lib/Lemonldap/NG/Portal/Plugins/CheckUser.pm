@@ -137,7 +137,8 @@ sub check {
         }
 
         unless ( $self->ott->getToken($token) ) {
-            $self->userLogger->warn('CheckUser called with an expired/bad token');
+            $self->userLogger->warn(
+                'CheckUser called with an expired/bad token');
             $msg   = PE_TOKENEXPIRED;
             $token = $self->ott->createToken();
         }
@@ -203,14 +204,17 @@ sub check {
         my $moduleOptions = $self->conf->{globalStorageOptions} || {};
         $moduleOptions->{backend} = $self->conf->{globalStorage};
 
-        my $sessions    = {};
-        my $searchAttrs = $self->conf->{checkUserSearchAttributes}
-          || $self->conf->{whatToTrace};
+        my $sessions = {};
+        my $searchAttrs =
+            $self->conf->{checkUserSearchAttributes}
+          ? $self->conf->{whatToTrace} . ' '
+          . $self->conf->{checkUserSearchAttributes}
+          : $self->conf->{whatToTrace};
 
         foreach ( split /\s+/, $searchAttrs ) {
             $self->logger->debug("Searching with: $_ = $user");
             $sessions = $self->module->searchOn( $moduleOptions, $_, $user );
-            last if (keys %$sessions);
+            last if ( keys %$sessions );
         }
 
         my $age = '1';
