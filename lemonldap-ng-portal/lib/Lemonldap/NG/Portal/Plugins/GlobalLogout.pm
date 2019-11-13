@@ -12,8 +12,6 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SESSIONEXPIRED
 );
 
-use Data::Dumper;
-
 our $VERSION = '2.0.8';
 
 extends qw(
@@ -69,16 +67,45 @@ sub init {
 # Look for user active SSO sessions and propose to close them
 sub run {
     my ( $self, $req ) = @_;
+    my $user = $req->{userData}->{ $self->conf->{whatToTrace} };
 
     # Check activation rules
-    return PE_OK unless ( $self->rule->( $req, $req->userData ) );
+    unless ( $self->rule->( $req, $req->userData ) ) {
+        $self->userLogger->info("Global logout not required for $user");
+        return PE_OK;
+    }
 
-    # Looking for active sessions and store them into OTT
+    # Looking for active sessions
     my $sessions = $self->_activeSessions($req);
-    return PE_OK unless ( scalar @{$sessions} > 1 );
+    my $nbr      = @{$sessions};
+    $self->logger->debug("GlobalLogout: $nbr session(s) found");
+    return PE_OK unless ( $nbr > 1 );
 
+    # Force GlobalLogout if timeout <= 0
+    unless ($self->conf->{globalLogoutTimeout}
+        and $self->conf->{globalLogoutTimeout} > 0 )
+    {
+        $self->logger->debug(
+            "GlobalLogout: timeout = $self->{conf}->{globalLogoutTimeout}");
+        $self->userLogger->info("GlobalLogout: force global logout for $user");
+        my $as;
+        foreach (@$sessions) {
+            unless ( $as = $self->p->getApacheSession( $_->{id} ) ) {
+                $self->userLogger->info(
+                    "GlobalLogout: session $_->{id} expired");
+                next;
+            }
+            unless ( $req->{userData}->{_session_id} eq $_->{id} ) {
+                $self->userLogger->info("Remove \"$user\" session: $_->{id}");
+                $as->remove;
+            }
+        }
+        return PE_OK;
+    }
+
+    # Prepare token
     my $token = $self->ott->createToken( {
-            user     => $req->{userData}->{ $self->conf->{whatToTrace} },
+            user     => $user,
             sessions => to_json($sessions)
         }
     );
@@ -93,13 +120,12 @@ sub run {
             MAIN_LOGO => $self->conf->{portalMainLogo},
             SKIN      => $self->p->getSkin($req),
             LANGS     => $self->conf->{showLanguages},
-            LOGIN     => $req->{userData}->{ $self->conf->{whatToTrace} },
             SESSIONS  => $sessions,
-            TOKEN     => $token
+            TOKEN     => $token,
+            LOGIN     => $user,
         }
     );
     $req->response($tmp);
-
     return PE_SENDRESPONSE;
 }
 
@@ -120,7 +146,7 @@ sub globalLogout {
                 foreach (@$sessions) {
                     unless ( $as = $self->p->getApacheSession( $_->{id} ) ) {
                         $self->userLogger->info(
-                            "GolbalLogout: session $_->{id} expired");
+                            "GlobalLogout: session $_->{id} expired");
                         next;
                     }
                     my $user = $token->{user};
@@ -135,7 +161,7 @@ sub globalLogout {
                     }
                     else {
                         $self->userLogger->warn(
-                            "GolbalLogout called with an unvalid token");
+                            "GlobalLogout called with an unvalid token");
                         return PE_TOKENEXPIRED;
                     }
                 }
@@ -183,9 +209,6 @@ sub _activeSessions {
             updateTime => $sessions->{$_}->{'_updateTime'},
         };
     } keys %$sessions;
-
-    $self->logger->debug(
-        "**************" . Data::Dumper::Dumper $activeSessions );
 
     return $activeSessions;
 }
