@@ -76,7 +76,7 @@ sub run {
     }
 
     # Looking for active sessions
-    my $sessions = $self->_activeSessions($req);
+    my $sessions = $self->_activeSessions($req, $user);
     my $nbr      = @{$sessions};
     $self->logger->debug("GlobalLogout: $nbr session(s) found");
     return PE_OK unless ( $nbr > 1 );
@@ -182,7 +182,7 @@ sub globalLogout {
 }
 
 sub _activeSessions {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $user ) = @_;
     my $activeSessions = [];
     my $sessions       = {};
 
@@ -190,14 +190,10 @@ sub _activeSessions {
     $self->logger->debug('Try to retrieve session from DB');
     my $moduleOptions = $self->conf->{globalStorageOptions} || {};
     $moduleOptions->{backend} = $self->conf->{globalStorage};
-    $self->logger->debug( 'Looking for "'
-          . $req->userData->{ $self->conf->{whatToTrace} }
-          . '" sessions...' );
-    $sessions = $self->module->searchOn(
-        $moduleOptions,
-        $self->conf->{whatToTrace},
-        $req->userData->{ $self->conf->{whatToTrace} }
-    );
+    $self->logger->debug("Looking for \"$user\" sessions...");
+    $sessions =
+      $self->module->searchOn( $moduleOptions, $self->conf->{whatToTrace},
+        $user );
 
     $self->logger->debug("Building array ref for template loop...");
     @$activeSessions = map { {
