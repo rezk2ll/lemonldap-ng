@@ -9,7 +9,6 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NOTOKEN
   PE_TOKENEXPIRED
   PE_SENDRESPONSE
-  PE_SESSIONEXPIRED
 );
 
 our $VERSION = '2.0.8';
@@ -72,7 +71,7 @@ sub run {
     $self->logger->debug("GlobalLogout: $nbr session(s) found");
     return PE_OK unless ( $nbr > 1 );
 
-    # Force GlobalLogout if no timeout
+    # Force GlobalLogout if timer is disabled
     unless ( $self->conf->{globalLogoutTimer} ) {
         $self->logger->debug("GlobalLogout: timer disabled");
         $self->userLogger->info("GlobalLogout: force global logout for $user");
