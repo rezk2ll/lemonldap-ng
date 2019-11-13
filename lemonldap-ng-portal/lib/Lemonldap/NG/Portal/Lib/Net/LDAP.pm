@@ -249,6 +249,9 @@ sub userBind {
         if ( $mesg->code == 0 ) {
             return PE_OK;
         }
+        else {
+            $req->data->{ldapError} = $mesg->error;
+        }
     }
     $self->{portal}->userLogger->warn("Bad password for $req->{user}");
     return PE_BADCREDENTIALS;
