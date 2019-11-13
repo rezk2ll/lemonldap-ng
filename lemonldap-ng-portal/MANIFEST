@@ -508,6 +508,8 @@ t/32-Auth-and-issuer-OIDC-implicit-no-token.t
 t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-CAS-10.t
+t/32-OIDC-Offline-Session.t
+t/32-OIDC-Refresh-Token.t
 t/32-OIDC-RP-rule.t
 t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t
@@ -652,4 +654,5 @@ t/test-psgi.pm
 t/testslapd/confs-sessions.ldif
 t/testslapd/slapd.ldif
 t/testslapd/users.ldif
+t/Time-Fake.pm
 t/vrfyOTP.pl
