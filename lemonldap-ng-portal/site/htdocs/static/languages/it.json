@@ -103,6 +103,7 @@
 "authPortal":"Portale di autenticazione",
 "authRemaining":"Rimangono ancora %s autenticazioni, modifica la password!",
 "autoAccept":"Accetta automaticamente in 30 secondi",
+"autoGlobalLogout":"Automatically global logout in 30 seconds",
 "back2CasUrl":"L'applicazione dalla quale ti sei appena sconnesso ha fornito un link che dovresti seguire",
 "back2Portal":"Torna al portale",
 "badCode":"Codice errato",

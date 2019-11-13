@@ -103,6 +103,7 @@
 "authPortal":"Authentifizierungsportal",
 "authRemaining":"%sverbleibende Authentifizierungen, bitte Passwort ändern!",
 "autoAccept":"Automatisch in 30 Sekunden annehmen",
+"autoGlobalLogout":"Automatically global logout in 30 seconds",
 "back2CasUrl":"Die Anwendung, von der Sie sich gerade abgemeldet haben, hat einen Link bereitgestellt, dem Sie folgen sollten",
 "back2Portal":"Zurück zum Portal",
 "badCode":"Falscher Code",

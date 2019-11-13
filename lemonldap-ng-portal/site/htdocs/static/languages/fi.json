@@ -103,6 +103,7 @@
 "authPortal":"Todennus portaali",
 "authRemaining":"%s authentications remaining, change your password!",
 "autoAccept":"Automatically accept in 30 seconds",
+"autoGlobalLogout":"Automatically global logout in 30 seconds",
 "back2CasUrl":"The application you just logged out of has provided a link it would like you to follow",
 "back2Portal":"Palaa takaisin portaaliin",
 "badCode":"Bad code",

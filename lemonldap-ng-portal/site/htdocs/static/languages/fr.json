@@ -103,6 +103,7 @@
 "authPortal":"Portail d'authentification",
 "authRemaining":"%s authentifications restantes, changez votre mot de passe !",
 "autoAccept":"Acceptation automatique dans 30 secondes",
+"autoGlobalLogout":"Déconnexion globale automatique dans 30 secondes",
 "back2CasUrl":"Le service duquel vous arrivez a fourni un lien que vous êtes invité à suivre",
 "back2Portal":"Retourner au portail",
 "badCode":"Mauvais code",

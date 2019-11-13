@@ -103,6 +103,7 @@
 "authPortal":"Authentication portal",
 "authRemaining":"%s authentications remaining, change your password!",
 "autoAccept":"30秒后自动接受",
+"autoGlobalLogout":"Automatically global logout in 30 seconds",
 "back2CasUrl":"The application you just logged out of has provided a link it would like you to follow",
 "back2Portal":"回到首页",
 "badCode":"Bad code",

@@ -103,6 +103,7 @@
 "authPortal":"Cổng thông tin xác thực",
 "authRemaining":"%s xác thực vẫn còn, thay đổi mật khẩu của bạn!",
 "autoAccept":"Tự động chấp nhận trong 30 giây",
+"autoGlobalLogout":"Automatically global logout in 30 seconds",
 "back2CasUrl":"Ứng dụng bạn vừa đăng xuất đã cung cấp một liên kết mà bạn muốn theo dõi",
 "back2Portal":"Quay lại cổng thông tin",
 "badCode":"Bad code",

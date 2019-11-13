@@ -103,6 +103,7 @@
 "authPortal":"بوابة إثبات الهوية",
 "authRemaining":"٪ s المصادقة المتبقية، غيير كلمة المرور الخاصة بك!",
 "autoAccept":"تقبل تلقائيا في 30 ثانية",
+"autoGlobalLogout":"Automatically global logout in 30 seconds",
 "back2CasUrl":"التطبيق الذي قمت بتسجيل الخروج منه للتو قد وفرت وصلة قد ترغب في أن تتبعها",
 "back2Portal":"العودة إلى البوابة",
 "badCode":"Bad code",

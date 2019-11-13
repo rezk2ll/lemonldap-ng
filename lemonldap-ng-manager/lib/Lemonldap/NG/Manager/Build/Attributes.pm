@@ -473,10 +473,11 @@ sub attributes {
             documentation => 'Global logout activation rule',
             flags         => 'p',
         },
-        globalLogoutTimeout => {
-            default       => 30,
-            type          => 'int',
+        globalLogoutTimer => {
+            default       => 1,
+            type          => 'bool',
             documentation => 'Global logout timeout',
+            flags         => 'p',
         },
         impersonationMergeSSOgroups => {
             default       => 0,

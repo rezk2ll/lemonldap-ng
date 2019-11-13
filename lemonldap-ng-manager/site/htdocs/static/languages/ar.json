@@ -298,7 +298,7 @@
 "generalParameters":"المعاييرالعامة",
 "globalLogout":"Global logout",
 "globalLogoutRule":"Activation",
-"globalLogoutTimeout":"Logout timeout",
+"globalLogoutTimer":"Logout timeout",
 "globalStorage":"أباتشي :: وحدة الجلسة",
 "globalStorageOptions":"أباتشي :: معايير وحدة الجلسة",
 "gpgAuthnLevel":"مستوى إثبات الهوية",

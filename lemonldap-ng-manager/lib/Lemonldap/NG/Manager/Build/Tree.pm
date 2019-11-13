@@ -676,7 +676,7 @@ sub tree {
                             help  => 'globallogout.html',
                             form  => 'simpleInputContainer',
                             nodes =>
-                              [ 'globalLogoutRule', 'globalLogoutTimeout', ],
+                              [ 'globalLogoutRule', 'globalLogoutTimer', ],
                         },
                         {
                             title => 'stateCheck',

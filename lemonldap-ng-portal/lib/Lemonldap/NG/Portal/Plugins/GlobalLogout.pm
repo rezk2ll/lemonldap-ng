@@ -35,15 +35,6 @@ has ott  => (
     }
 );
 
-# Default timeout: 30 seconds
-has timeout => (
-    is      => 'rw',
-    lazy    => 1,
-    default => sub {
-        $_[0]->{conf}->{globalLogoutTimeout} // 30;
-    }
-);
-
 sub init {
     my ($self) = @_;
     $self->addAuthRoute( globallogout => 'globalLogout', [ 'POST', 'GET' ] );
@@ -76,17 +67,14 @@ sub run {
     }
 
     # Looking for active sessions
-    my $sessions = $self->_activeSessions($req, $user);
+    my $sessions = $self->_activeSessions( $req, $user );
     my $nbr      = @{$sessions};
     $self->logger->debug("GlobalLogout: $nbr session(s) found");
     return PE_OK unless ( $nbr > 1 );
 
-    # Force GlobalLogout if timeout <= 0
-    unless ($self->conf->{globalLogoutTimeout}
-        and $self->conf->{globalLogoutTimeout} > 0 )
-    {
-        $self->logger->debug(
-            "GlobalLogout: timeout = $self->{conf}->{globalLogoutTimeout}");
+    # Force GlobalLogout if no timeout
+    unless ( $self->conf->{globalLogoutTimer} ) {
+        $self->logger->debug("GlobalLogout: timer disabled");
         $self->userLogger->info("GlobalLogout: force global logout for $user");
         my $as;
         foreach (@$sessions) {
@@ -116,13 +104,13 @@ sub run {
         $req,
         'globallogout',
         params => {
-            PORTAL    => $self->conf->{portal},
-            MAIN_LOGO => $self->conf->{portalMainLogo},
-            SKIN      => $self->p->getSkin($req),
-            LANGS     => $self->conf->{showLanguages},
-            SESSIONS  => $sessions,
-            TOKEN     => $token,
-            LOGIN     => $user,
+            PORTAL       => $self->conf->{portal},
+            MAIN_LOGO    => $self->conf->{portalMainLogo},
+            SKIN         => $self->p->getSkin($req),
+            LANGS        => $self->conf->{showLanguages},
+            SESSIONS     => $sessions,
+            TOKEN        => $token,
+            LOGIN        => $user,
         }
     );
     $req->response($tmp);

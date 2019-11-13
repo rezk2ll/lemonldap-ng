@@ -1225,9 +1225,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 0,
             'type'    => 'boolOrExpr'
         },
-        'globalLogoutTimeout' => {
-            'default' => 30,
-            'type'    => 'int'
+        'globalLogoutTimer' => {
+            'default' => 1,
+            'type'    => 'bool'
         },
         'globalStorage' => {
             'default' => 'Apache::Session::File',
