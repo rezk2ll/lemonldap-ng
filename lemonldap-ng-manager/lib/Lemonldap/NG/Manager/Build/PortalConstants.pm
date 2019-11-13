@@ -102,7 +102,8 @@ sub portalConstants {
         PE_GET_SERVICE_NOT_ALLOWED           => 92,
         PE_IMPERSONATION_SERVICE_NOT_ALLOWED => 93,
         PE_ISSUERMISSINGREQATTR              => 94,
-        PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED  => 95
+        PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED  => 95,
+        PE_BADOTP                            => 96
     };
 }
 

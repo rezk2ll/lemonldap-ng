@@ -237,7 +237,7 @@ sub do {
     }
 
     # Remove userData if authentication fails
-    if ( $err == PE_BADCREDENTIALS ) {
+    if ( $err == PE_BADCREDENTIALS or $err == PE_BADOTP) {
         $req->userData( {} );
     }
 

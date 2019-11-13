@@ -98,7 +98,8 @@ sub portalConsts {
         '92' => 'PE_GET_SERVICE_NOT_ALLOWED',
         '93' => 'PE_IMPERSONATION_SERVICE_NOT_ALLOWED',
         '94' => 'PE_ISSUERMISSINGREQATTR',
-        '95' => 'PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED'
+        '95' => 'PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED',
+        '96' => 'PE_BADOTP'
     };
 
 }
