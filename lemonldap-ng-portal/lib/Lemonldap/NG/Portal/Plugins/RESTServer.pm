@@ -15,6 +15,7 @@
 #   * GET /session/my/<type>                     : get session data
 #   * GET /session/my/<type>/key                 : get session key
 #   * DELETE /session/my                         : ask for logout
+#   * DELETE /sessions/my                        : ask for global logout
 #
 # - Authentication
 #   * POST /sessions/<type>/<session-id>?auth    : authenticate with a fixed
@@ -52,7 +53,7 @@ use Mouse;
 use JSON qw(from_json to_json);
 use MIME::Base64;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -170,6 +171,11 @@ sub init {
           ->addAuthRoute(
             session => { my => { ':sessionType' => 'getMyKey' } },
             [ 'GET', 'POST' ]
+          )
+
+          ->addAuthRoute(
+            sessions => { my => { ':sessionType' => 'removeSessions' } },
+            ['DELETE']
           );
     }
 
@@ -548,6 +554,22 @@ sub getError {
             errorsFileURL =>
               "$self->{conf}->{staticPrefix}/languages/$lang.json",
             ( $errNum ? ( errorMsgRef => "PE$errNum" ) : () ),
+        }
+    );
+}
+
+sub removeSessions {
+    my ( $self, $req ) = @_;
+    my $glPlugin =
+      $self->p->loadedModules->{'Lemonldap::NG::Portal::Plugins::GlobalLogout'};
+    my $sessions = $glPlugin->activeSessions($req);
+    my $nbr = $glPlugin->removeOtherActiveSessions( $req, $sessions );
+
+    return $self->p->sendJSONresponse(
+        $req,
+        {
+            result   => 1,
+            removedSessions => $nbr
         }
     );
 }

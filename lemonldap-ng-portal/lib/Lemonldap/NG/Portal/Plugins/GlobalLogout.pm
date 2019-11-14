@@ -66,27 +66,18 @@ sub run {
     }
 
     # Looking for active sessions
-    my $sessions = $self->_activeSessions( $req, $user );
+    my $sessions = $self->activeSessions($req);
     my $nbr      = @{$sessions};
-    $self->logger->debug("GlobalLogout: $nbr session(s) found");
+    $self->logger->debug("GlobalLogout: $nbr session(s) found") if $nbr;
     return PE_OK unless ( $nbr > 1 );
 
     # Force GlobalLogout if timer is disabled
     unless ( $self->conf->{globalLogoutTimer} ) {
         $self->logger->debug("GlobalLogout: timer disabled");
         $self->userLogger->info("GlobalLogout: force global logout for $user");
-        my $as;
-        foreach (@$sessions) {
-            unless ( $as = $self->p->getApacheSession( $_->{id} ) ) {
-                $self->userLogger->info(
-                    "GlobalLogout: session $_->{id} expired");
-                next;
-            }
-            unless ( $req->{userData}->{_session_id} eq $_->{id} ) {
-                $self->userLogger->info("Remove \"$user\" session: $_->{id}");
-                $as->remove;
-            }
-        }
+        $nbr = $self->removeOtherActiveSessions( $req, $sessions );
+        $self->userLogger->info("$nbr remaining session(s) removed");
+
         return PE_OK;
     }
 
@@ -103,21 +94,23 @@ sub run {
         $req,
         'globallogout',
         params => {
-            PORTAL       => $self->conf->{portal},
-            MAIN_LOGO    => $self->conf->{portalMainLogo},
-            SKIN         => $self->p->getSkin($req),
-            LANGS        => $self->conf->{showLanguages},
-            SESSIONS     => $sessions,
-            TOKEN        => $token,
-            LOGIN        => $user,
+            PORTAL    => $self->conf->{portal},
+            MAIN_LOGO => $self->conf->{portalMainLogo},
+            SKIN      => $self->p->getSkin($req),
+            LANGS     => $self->conf->{showLanguages},
+            SESSIONS  => $sessions,
+            TOKEN     => $token,
+            LOGIN     => $user,
         }
     );
     $req->response($tmp);
+
     return PE_SENDRESPONSE;
 }
 
 sub globalLogout {
     my ( $self, $req ) = @_;
+    my $count = 0;
 
     if ( $req->param('all') ) {
         if ( my $token = $req->param('token') ) {
@@ -144,6 +137,7 @@ sub globalLogout {
                             $self->userLogger->info(
                                 "Remove \"$user\" session: $_->{id}");
                             $as->remove;
+                            $count++;
                         }
                     }
                     else {
@@ -164,14 +158,16 @@ sub globalLogout {
             return PE_NOTOKEN;
         }
     }
+    $self->userLogger->info("$count remaining session(s) removed");
 
     return $self->p->do( $req, [ 'authLogout', 'deleteSession' ] );
 }
 
-sub _activeSessions {
-    my ( $self, $req, $user ) = @_;
+sub activeSessions {
+    my ( $self, $req ) = @_;
     my $activeSessions = [];
     my $sessions       = {};
+    my $user           = $req->{userData}->{ $self->conf->{whatToTrace} };
 
     # Try to retrieve session from sessions DB
     $self->logger->debug('Try to retrieve session from DB');
@@ -182,7 +178,7 @@ sub _activeSessions {
       $self->module->searchOn( $moduleOptions, $self->conf->{whatToTrace},
         $user );
 
-    $self->logger->debug("Building array ref for template loop...");
+    $self->logger->debug("Building array ref with sessions info...");
     @$activeSessions = map { {
             id         => $_,
             UA         => $sessions->{$_}->{'UA'},
@@ -194,6 +190,28 @@ sub _activeSessions {
     } keys %$sessions;
 
     return $activeSessions;
+}
+
+sub removeOtherActiveSessions {
+    my ( $self, $req, $sessions ) = @_;
+    my $count = 0;
+    my $as;
+
+    foreach (@$sessions) {
+        unless ( $as = $self->p->getApacheSession( $_->{id} ) ) {
+            $self->userLogger->info("GlobalLogout: session $_->{id} expired");
+            next;
+        }
+        unless ( $req->{userData}->{_session_id} eq $_->{id} ) {
+            $self->userLogger->info(
+"Remove \"$req->{userData}->{ $self->conf->{whatToTrace} }\" session: $_->{id}"
+            );
+            $as->remove;
+            $count++;
+        }
+    }
+
+    return $count;
 }
 
 1;
