@@ -563,12 +563,12 @@ sub removeSessions {
     my $glPlugin =
       $self->p->loadedModules->{'Lemonldap::NG::Portal::Plugins::GlobalLogout'};
     my $sessions = $glPlugin->activeSessions($req);
-    my $nbr = $glPlugin->removeOtherActiveSessions( $req, $sessions );
+    my $nbr      = $glPlugin->removeOtherActiveSessions( $req, $sessions );
 
     return $self->p->sendJSONresponse(
         $req,
         {
-            result   => 1,
+            result          => 1,
             removedSessions => $nbr
         }
     );
