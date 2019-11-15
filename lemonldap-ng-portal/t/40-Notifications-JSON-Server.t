@@ -270,7 +270,12 @@ ok(
 m%<input type="checkbox" name="check1x2x1" id="1x2x1" value="accepted">I agree</label>%,
     'Checkbox is displayed'
 ) or print STDERR Dumper( $res->[2]->[0] );
-count(3);
+my @c = ( $res->[2]->[0] =~ m%<input type="checkbox"%gs );
+
+## Three entries found
+ok( @c == 1, ' -> One checkbox found' )
+  or explain( $res->[2]->[0], "Number of checkbox(es) found = " . scalar @c );
+count(4);
 
 # Try to validate notification
 my $str = 'reference1x1=testref&check1x2x1=accepted';
@@ -312,7 +317,12 @@ ok(
 m%<input type="checkbox" name="check1x1x2" id="1x1x2" value="accepted">I am sure</label>%,
     'Checkbox is displayed'
 ) or print STDERR Dumper( $res->[2]->[0] );
-count(4);
+@c = ( $res->[2]->[0] =~ m%<input type="checkbox"%gs );
+
+## Three entries found
+ok( @c == 2, ' -> Two checkboxes found' )
+  or explain( $res->[2]->[0], "Number of checkbox(es) found = " . scalar @c );
+count(5);
 
 # Try to validate notification
 $str = 'reference1x1=testref&check1x1x1=accepted&check1x1x2=accepted';
