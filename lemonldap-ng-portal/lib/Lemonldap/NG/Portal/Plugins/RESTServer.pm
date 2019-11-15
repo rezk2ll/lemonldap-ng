@@ -565,13 +565,7 @@ sub removeSessions {
     my $sessions = $glPlugin->activeSessions($req);
     my $nbr      = $glPlugin->removeOtherActiveSessions( $req, $sessions );
 
-    return $self->p->sendJSONresponse(
-        $req,
-        {
-            result          => 1,
-            removedSessions => $nbr
-        }
-    );
+    return $self->p->sendJSONresponse( $req, { result => $nbr } );
 }
 
 1;

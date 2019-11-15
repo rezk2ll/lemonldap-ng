@@ -215,14 +215,13 @@ ok(
 );
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
-ok( $res->{removedSessions} == 2, 'Two sessions removed' )
-  or explain( $res, "removedSessions == $res->{removedSessions}" );
-ok( $res->{result} == 1, 'Found "Result == 1"' )
+ok( $res->{result} == 2, 'Two sessions removed' )
   or explain( $res, "result == $res->{result}" );
 $nbr = count_sessions();
 ok( $nbr == 1, "One remaining session found" )
   or explain("Number of session(s) found = $nbr");
-count(5);
+count(4);
+$client->logout($idd);
 
 clean_sessions();
 
