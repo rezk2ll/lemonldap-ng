@@ -149,6 +149,7 @@ sub getNotifBack {
 
                     # Verity that checkboxes have been checked
                     if ( $notif->{check} ) {
+                        $notif->{check} = [$notif->{check}] unless ( ref($notif->{check}) eq 'ARRAY' );
                         if ( my $toCheckCount = @{ $notif->{check} } ) {
                             unless ($checks->{$refId}
                                 and $toCheckCount == @{ $checks->{$refId} } )
@@ -217,6 +218,7 @@ sub toForm {
     @notifs = map {
         $i++;
         if ( $_->{check} ) {
+            $_->{check} = [$_->{check}] unless ( ref($_->{check}) eq 'ARRAY' );
             my $j = 0;
             $_->{check} =
               [ map { $j++; { id => '1x' . $i . 'x' . $j, value => $_ } }
