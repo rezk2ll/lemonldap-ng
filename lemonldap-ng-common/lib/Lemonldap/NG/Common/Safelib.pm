@@ -72,6 +72,36 @@ sub checkLogonHours {
     return substr( $base2_logon_hours, $hourpos, 1 );
 }
 
+## @function integer listMatch
+# Test if a value is found in a collection
+# @param $list Can be a hash, array or string including the separator
+# @param $value string The value to search for
+# @param $ignorecase boolean Be case insensitive
+# @return 1 if the value was found, 0 else
+# NOTE: this function is not exported directly in this module because we don't
+# want the usr to have to worry about separator. Is is wrapped in a closure in
+# Jail.pm
+sub listMatch {
+    my ( $sep, $list, $value, $ignorecase ) = @_;
+    my $flags = $ignorecase ? 'i' : '';
+    my @a;
+    if ( ref($list) eq "ARRAY" ) {
+        @a = @{$list};
+    }
+    elsif ( ref($list) eq "HASH" ) {
+        @a = keys %{$list};
+    }
+    else {
+        @a = split $sep, $list;
+    }
+    if ( grep /(?$flags)^\Q$value\E$/, @a ) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
 ## @function integer date
 # Get current local date
 # @param $gmt optional boolean To return GMT date (default is local date)

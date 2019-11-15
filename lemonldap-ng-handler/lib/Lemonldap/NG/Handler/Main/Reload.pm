@@ -179,8 +179,9 @@ sub jailInit {
     my ( $class, $conf ) = @_;
 
     $class->tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new( {
-            useSafeJail     => $conf->{useSafeJail},
-            customFunctions => $conf->{customFunctions},
+            useSafeJail          => $conf->{useSafeJail},
+            customFunctions      => $conf->{customFunctions},
+            multiValuesSeparator => $conf->{multiValuesSeparator},
         }
     );
     $class->tsv->{jail}->build_jail( $class, $conf->{require} );
