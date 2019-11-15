@@ -42,7 +42,7 @@ sub ask {
     my ( $self, $req ) = @_;
 
     # Check if auth is already running
-    if ( $req->param('upgrading') ) {
+    if ( $req->param('upgrading') or $req->param('kerberos') ) {
 
         # verify token
         return $self->confirm($req);
@@ -69,12 +69,18 @@ sub confirm {
     # Disabled due to #1821
     #$req->pdata->{keepPdata} = 1;
     my $upg;
-    if ( my $t = $req->param('upgrading') ) {
-        if ( $self->ott->getToken($t) ) {
-            $upg = 1;
-        }
-        else {
-            return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+
+    if ( $req->param('kerberos') ) {
+        $upg = 1;
+    }
+    else {
+        if ( my $t = $req->param('upgrading') ) {
+            if ( $self->ott->getToken($t) ) {
+                $upg = 1;
+            }
+            else {
+                return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+            }
         }
     }
     $req->steps( ['controlUrl'] );
