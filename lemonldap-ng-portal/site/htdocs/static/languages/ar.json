@@ -85,6 +85,7 @@
 "PE93":"Access not granted on IMPERSONATION service",
 "PE94":"A required attribute is not available",
 "PE95":"Access not granted on DECRYPT service",
+"PE96":"بيانات الإعتماد خاطئة",
 "2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"قبول",
 "accessDenied":"ليس لديك إذن بالدخول لهذا التطبيق",

@@ -40,6 +40,25 @@ my $jsonall = '{
 "text": "This is a test text for all users"
 }';
 
+my $notifs = q%[{
+ "uid": "dwho",
+ "date": "2019-11-15",
+ "reference": "ABC1",
+ "title": "You have new authorizations",
+ "subtitle": "Application 1",
+ "text": "You have been granted to access to appli-1",
+ "check": "I agree"
+ },
+ {
+ "uid": "rtyler",
+ "date": "2019-11-15",
+ "reference": "ABC2",
+ "title": "You have new authorizations",
+ "subtitle": "Application 1",
+ "text": "You have been granted to access to appli-1",
+ "check": ["I agree", "I am sure"]
+ }]%;
+
 my $content = '{"uid":"dwho"}';
 
 my $client = LLNG::Manager::Test->new( {
@@ -49,11 +68,12 @@ my $client = LLNG::Manager::Test->new( {
             notification          => 1,
             notificationServer    => 1,       # POST method enabled if undefined
             notificationServerGET => 1,
-            notificationServerDELETE         => 1,
-            notificationServerSentAttributes => 'uid reference  date title text subtitle check',
-            notificationWildcard             => 'everyone',
-            notificationStorage              => 'File',
-            notificationStorageOptions       => {
+            notificationServerDELETE => 1,
+            notificationServerSentAttributes =>
+              'uid reference  date title text subtitle check',
+            notificationWildcard       => 'everyone',
+            notificationStorage        => 'File',
+            notificationStorageOptions => {
                 dirName => $main::tmpDir,
             },
         }
@@ -83,9 +103,11 @@ ok(
 );
 ok( $res->[2]->[0] =~ /"result"\s*:\s*/, 'Result found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ /"reference":"testrefall"/, 'Notification for all users found' )
-  or print STDERR Dumper( $res->[2]->[0] );
-  ok( $res->[2]->[0] =~ /"uid":"everyone"/, 'Wildcard found' )
+ok(
+    $res->[2]->[0] =~ /"reference":"testrefall"/,
+    'Notification for all users found'
+) or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /"uid":"everyone"/, 'Wildcard found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
 
@@ -131,7 +153,8 @@ count(7);
 
 ok(
     $res = $client->_get(
-        '/notifications/dwho/testref2', type => 'application/json',
+        '/notifications/dwho/testref2',
+        type => 'application/json',
     ),
     'List notification with reference "testref2"'
 );
@@ -140,7 +163,8 @@ ok( $res->[2]->[0] =~ /"result"\s*:\s*/, 'Result found' )
 ok( $res->[2]->[0] =~ /"reference"\s*:\s*"testref2"/,
     'Notification reference found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ /"title"\s*:\s*"Test2 title"/, 'Notification title found' )
+ok( $res->[2]->[0] =~ /"title"\s*:\s*"Test2 title"/,
+    'Notification title found' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ /"text"\s*:\s*"This is a second test text"/,
     'Notification text found' )
@@ -149,9 +173,11 @@ ok( $res->[2]->[0] =~ /"date"\s*:\s*"2016-05-30"/, 'Notification date found' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ /"uid"\s*:\s*"dwho"/, 'Notification uid found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ /"subtitle"\s*:\s*"Application 2"/, 'Notification subtitle found' )
+ok( $res->[2]->[0] =~ /"subtitle"\s*:\s*"Application 2"/,
+    'Notification subtitle found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ /"check":\["I agree","Yes, I\'m sure"\]/, 'Notification check boxes found' )
+ok( $res->[2]->[0] =~ /"check":\["I agree","Yes, I\'m sure"\]/,
+    'Notification check boxes found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(9);
 
@@ -210,6 +236,98 @@ count(1);
 expectOK($res);
 my $id = expectCookie($res);
 expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
+
+# Insert combined notifications
+ok(
+    $res = $client->_post(
+        '/notifications', IO::String->new($notifs),
+        type   => 'application/json',
+        length => length($notifs)
+    ),
+    "POST combined notifications $notifs"
+);
+ok( $res->[2]->[0] =~ /"result"\s*:\s*2/, 'Notifications have been inserted' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(2);
+
+# Try to authenticate with "dwho"
+# -------------------------------
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new(
+            'user=dwho&password=dwho'),
+        accept => 'text/html',
+        length => 23,
+    ),
+    'Auth query'
+);
+expectOK($res);
+$id = expectCookie($res);
+expectForm( $res, undef, '/notifback', 'reference1x1' );
+ok(
+    $res->[2]->[0] =~
+m%<input type="checkbox" name="check1x2x1" id="1x2x1" value="accepted">I agree</label>%,
+    'Checkbox is displayed'
+) or print STDERR Dumper( $res->[2]->[0] );
+count(3);
+
+# Try to validate notification
+my $str = 'reference1x1=testref&check1x2x1=accepted';
+ok(
+    $res = $client->_post(
+        '/notifback',
+        IO::String->new($str),
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+        length => length($str),
+    ),
+    "Accept notification"
+);
+expectOK($res);
+$client->logout($id);
+
+# Try to authenticate with "rtyler"
+# -------------------------------
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new(
+            'user=rtyler&password=rtyler'),
+        accept => 'text/html',
+        length => 27,
+    ),
+    'Auth query'
+);
+expectOK($res);
+$id = expectCookie($res);
+expectForm( $res, undef, '/notifback', 'reference1x1' );
+ok(
+    $res->[2]->[0] =~
+m%<input type="checkbox" name="check1x1x1" id="1x1x1" value="accepted">I agree</label>%,
+    'Checkbox is displayed'
+) or print STDERR Dumper( $res->[2]->[0] );
+ok(
+    $res->[2]->[0] =~
+m%<input type="checkbox" name="check1x1x2" id="1x1x2" value="accepted">I am sure</label>%,
+    'Checkbox is displayed'
+) or print STDERR Dumper( $res->[2]->[0] );
+count(4);
+
+# Try to validate notification
+$str = 'reference1x1=testref&check1x1x1=accepted&check1x1x2=accepted';
+ok(
+    $res = $client->_post(
+        '/notifback',
+        IO::String->new($str),
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+        length => length($str),
+    ),
+    "Accept notification"
+);
+expectOK($res);
+$client->logout($id);
 
 clean_sessions();
 done_testing( count() );

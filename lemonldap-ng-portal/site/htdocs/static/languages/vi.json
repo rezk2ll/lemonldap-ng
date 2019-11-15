@@ -85,6 +85,7 @@
 "PE93":"Access not granted on IMPERSONATION service",
 "PE94":"Một thuộc tính bắt buộc không có sẵn",
 "PE95":"Access not granted on DECRYPT service",
+"PE96":"Thông tin xác thực sai",
 "2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"Chấp nhận",
 "accessDenied":"Bạn không có quyền truy cập vào ứng dụng này",

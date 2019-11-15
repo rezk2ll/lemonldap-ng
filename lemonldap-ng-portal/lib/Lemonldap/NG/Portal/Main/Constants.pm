@@ -99,6 +99,7 @@ use constant {
     PE_IMPERSONATION_SERVICE_NOT_ALLOWED => 93,
     PE_ISSUERMISSINGREQATTR              => 94,
     PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED  => 95,
+    PE_BADOTP                            => 96,
 };
 
 sub portalConsts {
@@ -193,7 +194,8 @@ sub portalConsts {
         '92' => 'PE_GET_SERVICE_NOT_ALLOWED',
         '93' => 'PE_IMPERSONATION_SERVICE_NOT_ALLOWED',
         '94' => 'PE_ISSUERMISSINGREQATTR',
-        '95' => 'PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED'
+        '95' => 'PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED',
+        '96' => 'PE_BADOTP'
     };
 
 }
@@ -292,7 +294,8 @@ our @EXPORT_OK = (
     'PE_GET_SERVICE_NOT_ALLOWED',
     'PE_IMPERSONATION_SERVICE_NOT_ALLOWED',
     'PE_ISSUERMISSINGREQATTR',
-    'PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED'
+    'PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED',
+    'PE_BADOTP'
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT_OK, 'import' ], );
 
