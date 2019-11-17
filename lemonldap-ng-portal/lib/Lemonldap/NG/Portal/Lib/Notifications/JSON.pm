@@ -56,7 +56,6 @@ sub checkForNotifications {
                           . $self->p->HANDLER->tsv->{jail}->error );
                     next LOOP;
                 }
-
                 unless ( $condition->( $req, $req->sessionInfo ) ) {
                     $self->logger->debug(
                         'Notification condition not authorized');

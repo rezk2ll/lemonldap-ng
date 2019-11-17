@@ -453,7 +453,6 @@ sub tests {
 
         # Warn if 2F dependencies seem missing
         sfaDependencies => sub {
-
             my $ok = 0;
             foreach (qw(u totp utotp yubikey)) {
                 $ok ||= $conf->{ $_ . '2fActivation' };
@@ -684,8 +683,24 @@ sub tests {
                 "Notifications enabled WITHOUT persistent session storage" )
               if ( $conf->{notification} );
             return ( 1,
-                "BruteForceProtection plugin enabled WITHOUT persistent session storage" )
-              if ( $conf->{bruteForceProtection} );
+"BruteForceProtection plugin enabled WITHOUT persistent session storage"
+            ) if ( $conf->{bruteForceProtection} );
+
+            # Return
+            return 1;
+        },
+
+        # Warn if XML dependencies seem missing
+        xmlDependencies => sub {
+            return 1 unless ( $conf->{oldNotifFormat} );
+            eval "use XML::LibXML";
+            return ( 1,
+"XML::LibXML module is required to enable old format notifications"
+            ) if ($@);
+            eval "use XML::LibXSLT";
+            return ( 1,
+"XML::LibXSLT module is required to enable old format notifications"
+            ) if ($@);
 
             # Return
             return 1;

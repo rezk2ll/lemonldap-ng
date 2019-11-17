@@ -99,7 +99,6 @@ sub checkForNotifications {
                     $notif->unbindNode();
                     next LOOP;
                 }
-
                 unless ( $condition->( $req, $req->sessionInfo ) ) {
                     $self->logger->debug(
                         'Notification condition not authorized');
