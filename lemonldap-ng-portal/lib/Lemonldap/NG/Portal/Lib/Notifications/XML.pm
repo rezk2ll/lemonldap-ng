@@ -5,7 +5,7 @@ use Mouse;
 use XML::LibXML;
 use XML::LibXSLT;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 # Lemonldap::NG::Portal::Main::Plugin provides addAuthRoute() and
 # addUnauthRoute() methods in addition of Lemonldap::NG::Common::Module.
@@ -74,7 +74,6 @@ sub checkForNotifications {
 
             # Get the reference
             my $reference = $notif->getAttribute('reference');
-
             $self->logger->debug("Get reference $reference");
 
             # Check it in session
@@ -90,10 +89,7 @@ sub checkForNotifications {
             }
 
             # Check condition if any
-            my $condition = $notif->getAttribute('condition');
-
-            if ($condition) {
-
+            if ( my $condition = $notif->getAttribute('condition') ) {
                 $self->logger->debug("Get condition $condition");
                 $condition = $self->p->HANDLER->substitute($condition);
                 unless ( $condition = $self->p->HANDLER->buildSub($condition) )
@@ -113,7 +109,6 @@ sub checkForNotifications {
                     next LOOP;
                 }
             }
-
             $j++;
         }
 
@@ -260,7 +255,7 @@ sub getNotifBack {
         # launch 'controlUrl' to restore "urldc" using do()
         $self->logger->debug('All pending notifications have been accepted');
         $self->p->rebuildCookies($req);
-        return $self->p->do( $req, ['controlUrl', @{ $self->p->endAuth }] );
+        return $self->p->do( $req, [ 'controlUrl', @{ $self->p->endAuth } ] );
     }
     else {
         # No notifications checked here, this entry point must not be called.
