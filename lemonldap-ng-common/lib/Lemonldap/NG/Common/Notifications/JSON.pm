@@ -4,11 +4,12 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 sub newNotification {
-    my ( $self, $jsonString ) = @_;
+    my ( $self, $jsonString, $defaultCond ) = @_;
     my $json;
+    $defaultCond ||= '';
     eval { $json = from_json( $jsonString, { allow_nonref => 1 } ) };
     if ( my $err = $@ ) {
         eval { $self->logger->error("Unable to decode JSON file: $err") };
@@ -35,7 +36,8 @@ sub newNotification {
             }
             push @data, $tmp;
         }
-        push @data, ( $notif->{condition} // '' );
+        $notif->{condition} //= $defaultCond;
+        push @data, ( $notif->{condition} );
         my $body = to_json($notif);
         push @notifs, [ @data, $body ];
     }

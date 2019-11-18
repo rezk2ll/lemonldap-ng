@@ -1106,6 +1106,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Notification server activation',
         },
+        notificationDefaultCond => {
+            type          => 'text',
+            default       => '',
+            documentation => 'Notification default condition',
+        },
         notificationServerGET => {
             default       => 0,
             type          => 'bool',

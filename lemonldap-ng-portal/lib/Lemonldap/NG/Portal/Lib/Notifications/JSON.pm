@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json);
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 no warnings 'redefine';
 
@@ -44,8 +44,24 @@ sub checkForNotifications {
 
             # Get the reference
             my $reference = $notif->{reference};
-
             $self->logger->debug("Get reference $reference");
+
+            # Check condition if any
+            if ( my $condition = $notif->{condition} ) {
+                $self->logger->debug("Get condition $condition");
+                $condition = $self->p->HANDLER->substitute($condition);
+                unless ( $condition = $self->p->HANDLER->buildSub($condition) )
+                {
+                    $self->logger->error( 'Notification condition error: '
+                          . $self->p->HANDLER->tsv->{jail}->error );
+                    next LOOP;
+                }
+                unless ( $condition->( $req, $req->sessionInfo ) ) {
+                    $self->logger->debug(
+                        'Notification condition not authorized');
+                    next LOOP;
+                }
+            }
 
             # Check it in session
             if ( exists $req->{sessionInfo}->{"notification_$reference"} ) {
@@ -149,7 +165,8 @@ sub getNotifBack {
 
                     # Verity that checkboxes have been checked
                     if ( $notif->{check} ) {
-                        $notif->{check} = [$notif->{check}] unless ( ref($notif->{check}) eq 'ARRAY' );
+                        $notif->{check} = [ $notif->{check} ]
+                          unless ( ref( $notif->{check} ) eq 'ARRAY' );
                         if ( my $toCheckCount = @{ $notif->{check} } ) {
                             unless ($checks->{$refId}
                                 and $toCheckCount == @{ $checks->{$refId} } )
@@ -218,7 +235,8 @@ sub toForm {
     @notifs = map {
         $i++;
         if ( $_->{check} ) {
-            $_->{check} = [$_->{check}] unless ( ref($_->{check}) eq 'ARRAY' );
+            $_->{check} = [ $_->{check} ]
+              unless ( ref( $_->{check} ) eq 'ARRAY' );
             my $j = 0;
             $_->{check} =
               [ map { $j++; { id => '1x' . $i . 'x' . $j, value => $_ } }
@@ -240,8 +258,10 @@ sub notificationServer {
     my ( $res, $err );
     if ( $req->method =~ /^POST$/i ) {
         $self->p->logger->debug("POST request");
-        ( $res, $err ) =
-          eval { $self->notifObject->newNotification( $req->content ) };
+        ( $res, $err ) = eval {
+            $self->notifObject->newNotification( $req->content,
+                $self->conf->{notificationDefaultCond} );
+        };
         return $self->p->sendError( $req, $@, 500 ) if ($@);
     }
     elsif ( $req->method =~ /^GET$/i ) {

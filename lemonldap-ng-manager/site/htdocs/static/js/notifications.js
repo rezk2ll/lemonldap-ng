@@ -5,7 +5,9 @@
  */
 
 (function() {
-  var llapp, menu, scheme;
+  var llapp, max, menu, overScheme, scheme;
+
+  max = 25;
 
   scheme = [
     function(v) {
@@ -16,6 +18,15 @@
       return "uid=" + v;
     }
   ];
+
+  overScheme = function(v, level, over) {
+    console.log('overSchema => level', level, 'over', over);
+    if (level === 1 && v.length > over) {
+      return "uid=" + v + "*&groupBy=substr(uid," + (level + over + 1) + ")";
+    } else {
+      return null;
+    }
+  };
 
   menu = {
     actives: [
@@ -131,7 +142,7 @@
         var node;
         node = scope.$modelValue;
         if (node.nodes.length === 0) {
-          $scope.updateTree(node.value, node.nodes, node.level, node.query);
+          $scope.updateTree(node.value, node.nodes, node.level, node.over, node.query, node.count);
           return scope.toggle();
         }
       };
@@ -164,10 +175,21 @@
         }
       });
       autoId = 0;
-      $scope.updateTree = function(value, node, level, currentQuery) {
-        var query;
+      $scope.updateTree = function(value, node, level, over, currentQuery, count) {
+        var query, tmp;
         $scope.waiting = true;
         query = scheme[level](value, currentQuery);
+        if (count > max) {
+          if (tmp = overScheme(value, level, over)) {
+            over++;
+            query = tmp;
+            level = level - 1;
+          } else {
+            over = 0;
+          }
+        } else {
+          over = 0;
+        }
         return $http.get(scriptname + "notifications/" + $scope.type + "?" + query).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;
@@ -181,6 +203,7 @@
                 n.nodes = [];
                 n.level = level + 1;
                 n.query = query;
+                n.over = over;
               }
               node.push(n);
             }
@@ -301,7 +324,7 @@
         $scope.data = [];
         $scope.currentScope = null;
         $scope.currentNotification = null;
-        $q.all([$translator.init($scope.lang), $scope.updateTree('', $scope.data, 0)]).then(function() {
+        $q.all([$translator.init($scope.lang), $scope.updateTree('', $scope.data, 0, 0)]).then(function() {
           return $scope.waiting = false;
         }, function(resp) {
           return $scope.waiting = false;
