@@ -21,7 +21,7 @@ overScheme =
 	(v,level,over) ->
 		# "v.length > over" avoids a loop if one user opened more than "max"
 		# notifications
-		console.log 'overSchema => level', level, 'over', over
+		console.log 'overScheme => level', level, 'over', over
 		if level == 1 and v.length > over
 			"uid=#{v}*&groupBy=substr(uid,#{(level+over+1)})"
 		else
