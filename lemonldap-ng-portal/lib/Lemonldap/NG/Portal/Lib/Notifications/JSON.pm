@@ -258,8 +258,10 @@ sub notificationServer {
     my ( $res, $err );
     if ( $req->method =~ /^POST$/i ) {
         $self->p->logger->debug("POST request");
-        ( $res, $err ) =
-          eval { $self->notifObject->newNotification( $req->content, 1 ) };
+        ( $res, $err ) = eval {
+            $self->notifObject->newNotification( $req->content,
+                $self->conf->{notificationDefaultCond} );
+        };
         return $self->p->sendError( $req, $@, 500 ) if ($@);
     }
     elsif ( $req->method =~ /^GET$/i ) {

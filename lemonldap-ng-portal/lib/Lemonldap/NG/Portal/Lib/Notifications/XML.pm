@@ -293,7 +293,8 @@ sub notificationServer {
 
 sub newNotification {
     my ( $self, $req, $xml ) = @_;
-    return $self->notifObject->newNotification($xml);
+    return $self->notifObject->newNotification( $xml,
+        $self->conf->{notificationDefaultCond} );
 }
 
 1;

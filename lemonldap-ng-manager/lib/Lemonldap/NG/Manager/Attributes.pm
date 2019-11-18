@@ -1796,6 +1796,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 0,
             'type'    => 'bool'
         },
+        'notificationDefaultCond' => {
+            'default' => '',
+            'type'    => 'text'
+        },
         'notificationServer' => {
             'default' => 0,
             'type'    => 'bool'

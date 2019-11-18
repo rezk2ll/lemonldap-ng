@@ -450,9 +450,10 @@ sub attributes {
             flags         => 'p',
         },
         checkUserSearchAttributes => {
-            type          => 'text',
-            documentation => 'Attributes used for retrieving sessions in user DataBase',
-            flags         => 'p',
+            type => 'text',
+            documentation =>
+              'Attributes used for retrieving sessions in user DataBase',
+            flags => 'p',
         },
         checkUserDisplayPersistentInfo => {
             default       => 0,
@@ -1092,6 +1093,11 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Notification server activation',
+        },
+        notificationDefaultCond => {
+            type          => 'text',
+            default       => '',
+            documentation => 'Notification default condition',
         },
         notificationServerGET => {
             default       => 0,
@@ -1978,15 +1984,15 @@ sub attributes {
         vhostType    => {
             type   => 'select',
             select => [
-                { k => 'AuthBasic',    v => 'AuthBasic' },
-                { k => 'CDA',          v => 'CDA' },
-                { k => 'DevOps',       v => 'DevOps' },
-                { k => 'DevOpsST',     v => 'DevOpsST' },
-                { k => 'Main',         v => 'Main' },
-                { k => 'OAuth2',       v => 'OAuth2' },
-                { k => 'SecureToken',  v => 'SecureToken' },
-                { k => 'ServiceToken', v => 'ServiceToken' },
-                { k => 'ZimbraPreAuth',v => 'ZimbraPreAuth' },
+                { k => 'AuthBasic',     v => 'AuthBasic' },
+                { k => 'CDA',           v => 'CDA' },
+                { k => 'DevOps',        v => 'DevOps' },
+                { k => 'DevOpsST',      v => 'DevOpsST' },
+                { k => 'Main',          v => 'Main' },
+                { k => 'OAuth2',        v => 'OAuth2' },
+                { k => 'SecureToken',   v => 'SecureToken' },
+                { k => 'ServiceToken',  v => 'ServiceToken' },
+                { k => 'ZimbraPreAuth', v => 'ZimbraPreAuth' },
             ],
             default       => 'Main',
             documentation => 'Handler type',

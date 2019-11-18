@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use XML::LibXML;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 # XML parser
 has parser => (
@@ -18,7 +18,8 @@ has parser => (
 # @param $xml XML string containing notification
 # @return number of notifications done
 sub newNotification {
-    my ( $self, $xml ) = @_;
+    my ( $self, $xml, $defaultCond ) = @_;
+    $defaultCond ||= '';
     eval { $xml = $self->parser->parse_string($xml) };
     if ( my $err = $@ ) {
         eval { $self->logger->error("Unable to read XML file : $err") };
@@ -53,7 +54,9 @@ sub newNotification {
             if ( $tmp = $notif->getAttribute($_) ) {
                 push @data, $tmp;
             }
-            else { push @data, ""; }
+            else {
+                push @data, $defaultCond;
+            }
         }
 
         my $result = XML::LibXML::Document->new( $version, $encoding );

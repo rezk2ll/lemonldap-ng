@@ -615,6 +615,7 @@ sub tree {
                                     help  => 'notifications.html#server',
                                     nodes => [
                                         'notificationServer',
+                                        'notificationDefaultCond',
                                         'notificationServerSentAttributes',
                                         {
                                             title =>
