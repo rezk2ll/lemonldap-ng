@@ -491,6 +491,7 @@
 "notAValidPerlExpression":"Không phải là một biểu thức Perl hợp lệ",
 "notification":"Kích hoạt",
 "notifications":"Thông báo",
+"notification_s":"notification(s)",
 "notificationDefaultCond":"Default condition",
 "notificationServer":"Máy chủ Thông báo",
 "notificationServerDELETE":"DELETE method",

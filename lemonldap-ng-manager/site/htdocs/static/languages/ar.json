@@ -491,6 +491,7 @@
 "notAValidPerlExpression":"عبارة بيرل ليست صحيحة",
 "notification":"تفعيل",
 "notifications":"إشعار",
+"notification_s":"notification(s)",
 "notificationDefaultCond":"Default condition",
 "notificationServer":"إشعارالخادم",
 "notificationServerDELETE":"DELETE method",

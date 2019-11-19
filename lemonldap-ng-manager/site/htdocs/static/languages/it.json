@@ -491,6 +491,7 @@
 "notAValidPerlExpression":"Non una valida espressione Perl",
 "notification":"Attivazione",
 "notifications":"Notifiche",
+"notification_s":"notification(s)",
 "notificationDefaultCond":"Default condition",
 "notificationServer":"Server di notifica",
 "notificationServerDELETE":"DELETE method",
