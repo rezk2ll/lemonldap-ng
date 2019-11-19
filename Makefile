@@ -623,6 +623,7 @@ install_bin:	install_conf_dir
 		${SRCPORTALDIR}/site/cron/purgeCentralCache \
 		${SRCPORTALDIR}/scripts/llngDeleteSession \
 		${SRCCOMMONDIR}/scripts/convertConfig \
+		${SRCCOMMONDIR}/scripts/convertSessions \
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
 		${SRCCOMMONDIR}/scripts/rotateOidcKeys \
 		${SRCMANAGERDIR}/scripts/lmConfigEditor \
