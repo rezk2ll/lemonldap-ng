@@ -1756,7 +1756,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'managerDn' => {
             'default' => '',
             'msgFail' => '__badValue__',
-            'test'    => qr/^(?:\w+=.*)?$/,
+            'test'    => qr/^.*$/,
             'type'    => 'text'
         },
         'managerPassword' => {
