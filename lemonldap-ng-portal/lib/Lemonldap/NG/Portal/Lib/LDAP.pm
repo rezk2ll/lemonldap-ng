@@ -114,7 +114,14 @@ sub init {
 sub getUser {
     my ( $self, $req, %args ) = @_;
 
-    return PE_LDAPCONNECTFAILED unless $self->ldap and $self->bind();
+    $self->validateLdap;
+
+    unless ( $self->ldap ) {
+        return PE_LDAPCONNECTFAILED;
+    }
+
+    $self->bind();
+
     my $mesg = $self->ldap->search(
         base   => $self->conf->{ldapBase},
         scope  => 'sub',
