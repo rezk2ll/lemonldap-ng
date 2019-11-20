@@ -592,7 +592,7 @@
 "oidcServicePrivateKeySig":"Signing private key",
 "oidcServicePublicKeySig":"Signing public key",
 "oidcServiceKeyIdSig":"Signing key ID",
-"oidcServiceAuthorizationCodeExpiration":"Authorization code expiration",
+"oidcServiceAuthorizationCodeExpiration":"Authorization Code expiration",
 "oidcServiceAccessTokenExpiration":"Access Token expiration",
 "oidcServiceIDTokenExpiration":"ID Token expiration",
 "oidcServiceOfflineSessionExpiration":"Offline session expiration",
