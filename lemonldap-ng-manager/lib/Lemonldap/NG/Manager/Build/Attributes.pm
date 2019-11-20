@@ -2879,7 +2879,7 @@ sub attributes {
         # LDAP
         managerDn => {
             type          => 'text',
-            test          => qr/^(?:\w+=.*)?$/,
+            test          => qr/^.*$/,
             msgFail       => '__badValue__',
             default       => '',
             documentation => 'LDAP manager DN',

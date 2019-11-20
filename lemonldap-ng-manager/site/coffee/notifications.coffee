@@ -125,11 +125,12 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 			$scope.waiting = false
 			$scope.init()
 
+	# Open node
 	$scope.stoggle = (scope) ->
 		node = scope.$modelValue
 		if node.nodes.length == 0
 			$scope.updateTree node.value, node.nodes, node.level, node.over, node.query, node.count
-			scope.toggle()
+		scope.toggle()
 
 	$scope.notifDate = (s) ->
 		if s?
@@ -182,8 +183,8 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 						n.level = level + 1
 						n.query = query
 						n.over  = over
-
 					node.push n
+				$scope.total = data.total if value == ''	
 			$scope.waiting = false
 		, (resp) ->
 			$scope.waiting = false

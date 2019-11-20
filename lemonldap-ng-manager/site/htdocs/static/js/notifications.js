@@ -20,7 +20,7 @@
   ];
 
   overScheme = function(v, level, over) {
-    console.log('overSchema => level', level, 'over', over);
+    console.log('overScheme => level', level, 'over', over);
     if (level === 1 && v.length > over) {
       return "uid=" + v + "*&groupBy=substr(uid," + (level + over + 1) + ")";
     } else {
@@ -143,8 +143,8 @@
         node = scope.$modelValue;
         if (node.nodes.length === 0) {
           $scope.updateTree(node.value, node.nodes, node.level, node.over, node.query, node.count);
-          return scope.toggle();
         }
+        return scope.toggle();
       };
       $scope.notifDate = function(s) {
         var d;
@@ -206,6 +206,9 @@
                 n.over = over;
               }
               node.push(n);
+            }
+            if (value === '') {
+              $scope.total = data.total;
             }
           }
           return $scope.waiting = false;

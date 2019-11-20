@@ -152,6 +152,17 @@ sub authForce {
     return 0;
 }
 
+#sub setSecurity {
+#    my $self = shift;
+#    my ($req) = @_;
+#    $self->getStack( $req, 'extractFormInfo' ) or return PE_ERROR;
+#    $req->userData->{_combinationTry} ||= 0;
+#    eval {
+#        $req->data->{combinationStack}->[ $req->userData->{_combinationTry} ]
+#          ->[0]->( 'setSecurity', @_ );
+#    };
+#}
+
 ## UserDB steps
 ###############
 # Note that UserDB::Combination uses the same object.
