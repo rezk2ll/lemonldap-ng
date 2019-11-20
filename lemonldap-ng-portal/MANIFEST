@@ -113,6 +113,7 @@ lib/Lemonldap/NG/Portal/Plugins/Impersonation.pm
 lib/Lemonldap/NG/Portal/Plugins/MailPasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
+lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
 lib/Lemonldap/NG/Portal/Plugins/RESTServer.pm
 lib/Lemonldap/NG/Portal/Plugins/SingleSession.pm

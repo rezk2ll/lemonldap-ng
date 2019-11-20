@@ -30,7 +30,8 @@ our @pList = (
     impersonationRule          => '::Plugins::Impersonation',
     contextSwitchingRule       => '::Plugins::ContextSwitching',
     decryptValueRule           => '::Plugins::DecryptValue',
-    globalLogoutRule           => '::Plugins::GlobalLogout'
+    globalLogoutRule           => '::Plugins::GlobalLogout',
+    refreshSessions            => '::Plugins::Refresh',
 );
 
 ##@method list enabledPlugins
