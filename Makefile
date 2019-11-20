@@ -129,8 +129,8 @@ E2E_TESTS='portal/*.js'
 
 # LDAP backend test
 LLNGTESTLDAP_SLAPD_BIN=/usr/sbin/slapd
-LLNGTESTLDAP_SLAPADD_BIN=/usr/sbin/slapdadd
-LLNGTESTLDAP_SCHEMA_DIR=/etc/slapd/schema
+LLNGTESTLDAP_SLAPADD_BIN=/usr/sbin/slapadd
+LLNGTESTLDAP_SCHEMA_DIR=/etc/ldap/schema
 
 # Other
 SRCCOMMONDIR=lemonldap-ng-common
