@@ -414,7 +414,7 @@
 "loadFromUrl":"Nạp từ URL",
 "localSessionStorage":"Mô-đun bộ nhớ cache",
 "localSessionStorageOptions":"Tùy chọn mô-đun bộ nhớ cache",
-"locationRules":"Quy tắc truy cập",
+"locationRules":"Access rules",
 "loginHistory":"Lịch sử đăng nhập",
 "loginHistoryEnabled":"Kích hoạt",
 "logo":"Logo",

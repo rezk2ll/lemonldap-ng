@@ -414,7 +414,7 @@
 "loadFromUrl":"تحميل من أل يو أر ل",
 "localSessionStorage":"وحدة ذاكرة التخزين المؤقت",
 "localSessionStorageOptions":"خيارات وحدة التخزين المؤقت",
-"locationRules":"قاعدة الدخول",
+"locationRules":"Access rules",
 "loginHistory":"سجل تسجيل الدخول",
 "loginHistoryEnabled":"تفعيل",
 "logo":"شعار",
