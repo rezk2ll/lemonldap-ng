@@ -1221,6 +1221,14 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 120,
             'type'    => 'int'
         },
+        'globalLogoutRule' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'globalLogoutTimer' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'globalStorage' => {
             'default' => 'Apache::Session::File',
             'type'    => 'PerlModule'

@@ -12,6 +12,7 @@ use Mouse;
 # Plugins enabled by a simple boolean value (ordered list)
 #
 # Developers: 2FA must be loaded before Notifications
+# Developers: GlobalLogout must be the last loaded plugin
 our @pList = (
     portalDisplayResetPassword => '::Plugins::MailPasswordReset',
     portalStatus               => '::Plugins::Status',
@@ -28,7 +29,8 @@ our @pList = (
     checkUser                  => '::Plugins::CheckUser',
     impersonationRule          => '::Plugins::Impersonation',
     contextSwitchingRule       => '::Plugins::ContextSwitching',
-    decryptValueRule           => '::Plugins::DecryptValue'
+    decryptValueRule           => '::Plugins::DecryptValue',
+    globalLogoutRule           => '::Plugins::GlobalLogout'
 );
 
 ##@method list enabledPlugins

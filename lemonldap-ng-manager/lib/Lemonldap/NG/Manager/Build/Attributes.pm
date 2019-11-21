@@ -467,6 +467,18 @@ sub attributes {
             documentation => 'Display session empty values',
             flags         => 'p',
         },
+        globalLogoutRule => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Global logout activation rule',
+            flags         => 'p',
+        },
+        globalLogoutTimer => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Global logout timeout',
+            flags         => 'p',
+        },
         impersonationMergeSSOgroups => {
             default       => 0,
             type          => 'boolOrExpr',
@@ -545,7 +557,7 @@ sub attributes {
         forceGlobalStorageIssuerOTT => {
             type => 'bool',
             documentation =>
-              'Force Issuer tokens be stored into Global Storage',
+              'Force Issuer tokens to be stored into Global Storage',
         },
         handlerInternalCache => {
             type          => 'int',
