@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Lib::Notifications::JSON;
 use strict;
 use Mouse;
 use JSON qw(from_json);
+use POSIX qw(strftime);
 
 our $VERSION = '2.0.7';
 
@@ -34,17 +35,40 @@ sub checkForNotifications {
     return 0 unless ($notifs);
 
     # Transform notifications
-    my $i = 0;    #Files count
+    my $i = 0;    # Files count
     my @res;
+    my $now = strftime "%Y-%m-%d", localtime;
+
     foreach my $file ( values %$notifs ) {
         my $json = from_json( $file, { allow_nonref => 1 } );
-        my $j = 0;    #Notifications count
+        my $j = 0;    # Notifications count
         $json = [$json] unless ( ref $json eq 'ARRAY' );
       LOOP: foreach my $notif ( @{$json} ) {
 
             # Get the reference
             my $reference = $notif->{reference};
-            $self->logger->debug("Get reference $reference");
+            $self->logger->debug("Get reference: $reference");
+
+            # Check it in session
+            if ( exists $req->{sessionInfo}->{"notification_$reference"} ) {
+
+                # The notification was already accepted
+                $self->logger->debug(
+                    "Notification $reference was already accepted");
+                next LOOP;
+            }
+
+            # Check date
+            my $date = $notif->{date};
+            $self->logger->debug("Get date: $date");
+            unless ( $date and $date =~ /\b\d{4}-\d{2}-\d{2}\b/ ) {
+                $self->logger->error('Malformed date');
+                next LOOP;
+            }
+            unless ( $date le $now ) {
+                $self->logger->debug('Notification date not reached');
+                next LOOP;
+            }
 
             # Check condition if any
             if ( my $condition = $notif->{condition} ) {
@@ -61,15 +85,6 @@ sub checkForNotifications {
                         'Notification condition not authorized');
                     next LOOP;
                 }
-            }
-
-            # Check it in session
-            if ( exists $req->{sessionInfo}->{"notification_$reference"} ) {
-
-                # The notification was already accepted
-                $self->logger->debug(
-                    "Notification $reference was already accepted");
-                next LOOP;
             }
             push @res, $notif;
             $j++;

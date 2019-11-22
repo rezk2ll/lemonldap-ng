@@ -4,6 +4,7 @@ use strict;
 use Mouse;
 use XML::LibXML;
 use XML::LibXSLT;
+use POSIX qw(strftime);
 
 our $VERSION = '2.0.7';
 
@@ -44,6 +45,10 @@ has stylesheet => (
 # Underlying notifications storage object (File, DBI, LDAP,...)
 has notifObject => ( is => 'rw' );
 
+# Notification server accessors
+has imported => ( is => 'rw', default => 0 );
+has server   => ( is => 'rw' );
+
 # INITIALIZATION
 
 sub init {
@@ -61,10 +66,12 @@ sub checkForNotifications {
     return 0 unless ($notifs);
 
     # Transform notifications
-    my $i = 0;    #Files count
+    my $i   = 0;                                # Files count
+    my $now = strftime "%Y-%m-%d", localtime;
+
     foreach my $file ( values %$notifs ) {
         my $xml = $self->parser->parse_string($file);
-        my $j   = 0;                                    #Notifications count
+        my $j   = 0;                                    # Notifications count
       LOOP: foreach my $notif (
             eval {
                 $xml->documentElement->getElementsByTagName('notification');
@@ -88,6 +95,22 @@ sub checkForNotifications {
                 next LOOP;
             }
 
+            # Check date
+            my $date = $notif->getAttribute('date');
+            $self->logger->debug("Get date: $date");
+            unless ( $date and $date =~ /\b\d{4}-\d{2}-\d{2}\b/ ) {
+                $self->logger->error('Malformed date');
+                $notif->unbindNode();
+                next LOOP;
+            }
+            unless ( $date le $now ) {
+                $self->logger->debug('Notification date not reached');
+
+                # Remove it from XML
+                $notif->unbindNode();
+                next LOOP;
+            }
+
             # Check condition if any
             if ( my $condition = $notif->getAttribute('condition') ) {
                 $self->logger->debug("Get condition $condition");
@@ -96,6 +119,8 @@ sub checkForNotifications {
                 {
                     $self->logger->error( 'Notification condition error: '
                           . $self->p->HANDLER->tsv->{jail}->error );
+
+                    # Remove it from XML
                     $notif->unbindNode();
                     next LOOP;
                 }
@@ -264,9 +289,6 @@ sub getNotifBack {
         return $self->p->do( $req, [] );
     }
 }
-
-has imported => ( is => 'rw', default => 0 );
-has server   => ( is => 'rw' );
 
 sub notificationServer {
     my ( $self, $req ) = @_;
