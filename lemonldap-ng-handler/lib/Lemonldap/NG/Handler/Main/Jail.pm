@@ -90,10 +90,13 @@ sub build_jail {
         $Lemonldap::NG::Common::Safelib::functions );
 
     # Closure for listMatch
-    *listMatch = sub {
-        return Lemonldap::NG::Common::Safelib::listMatch(
-            $self->multiValuesSeparator, @_ );
-    };
+    {
+        no warnings 'redefine';
+        *listMatch = sub {
+            return Lemonldap::NG::Common::Safelib::listMatch(
+                $self->multiValuesSeparator, @_ );
+        };
+    }
 
     $self->jail->share_from( __PACKAGE__,
         [ @builtCustomFunctions, '&encrypt', '&token', '&listMatch' ] );
