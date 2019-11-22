@@ -298,7 +298,7 @@
 "generalParameters":"Thông số chung",
 "globalLogout":"Global logout",
 "globalLogoutRule":"Activation",
-"globalLogoutTimer":"Logout timeout",
+"globalLogoutTimer":"Tự động chấp nhận thời gian",
 "globalStorage":"Mô đun Apache :: Session",
 "globalStorageOptions":"Tham số mô đun Apache :: Session ",
 "gpgAuthnLevel":"Mức xác thực",

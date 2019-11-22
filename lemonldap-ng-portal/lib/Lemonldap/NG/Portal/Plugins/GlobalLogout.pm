@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin

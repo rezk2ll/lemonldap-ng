@@ -476,7 +476,7 @@ sub attributes {
         globalLogoutTimer => {
             default       => 1,
             type          => 'bool',
-            documentation => 'Global logout timeout',
+            documentation => 'Global logout auto accept time',
             flags         => 'p',
         },
         impersonationMergeSSOgroups => {

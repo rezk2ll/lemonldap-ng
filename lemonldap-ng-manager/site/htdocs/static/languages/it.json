@@ -298,7 +298,7 @@
 "generalParameters":"Parametri generali",
 "globalLogout":"Global logout",
 "globalLogoutRule":"Activation",
-"globalLogoutTimer":"Logout timeout",
+"globalLogoutTimer":"Auto accettazione tempo",
 "globalStorage":"Modulo Apache::Session",
 "globalStorageOptions":"Parametri di modulo Apache::Session",
 "gpgAuthnLevel":"Livello di autenticazione",
