@@ -58,7 +58,7 @@ sub fetchId {
 
     # Send service headers to protected application if exist
     if (%serviceHeaders) {
-        $class->userLogger->info("Append service header(s)...");
+        $class->logger->info("Append service header(s)...");
         $class->set_header_in( $req, %serviceHeaders );
     }
 
