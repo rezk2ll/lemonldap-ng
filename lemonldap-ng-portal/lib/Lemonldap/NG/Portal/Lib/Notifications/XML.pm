@@ -152,6 +152,7 @@ sub checkForNotifications {
 
     # Stop here if nothing to display
     return 0 unless $i;
+    $self->userLogger->info("$i pending notification(s) found for $uid");
 
     # Returns HTML fragment
     return $form;
@@ -196,7 +197,11 @@ sub getNotifBack {
     $self->p->importHandlerData($req);
     my $uid = $req->sessionInfo->{ $self->notifObject->notifField };
 
-    my ( $notifs, $forUser ) = $self->notifObject->getNotifications($uid);
+    # ALL notifications are returned here => Need to check active ones only
+    my ( $notifs, $forUser );
+    eval { ( $notifs, $forUser ) = $self->notifObject->getNotifications($uid) };
+    return $self->p->sendError( $req, $@, 500 ) if ($@);
+
     if ($notifs) {
 
         # Get accepted notifications
@@ -213,16 +218,49 @@ sub getNotifBack {
         }
 
         my $result = 1;
+        my $now    = strftime "%Y-%m-%d", localtime;
         foreach my $fileName ( keys %$notifs ) {
             my $file       = $notifs->{$fileName};
             my $fileResult = 1;
             my $xml        = $self->parser->parse_string($file);
 
             # Get pending notifications and verify that they have been accepted
-            foreach my $notif (
+            LOOP: foreach my $notif (
                 $xml->documentElement->getElementsByTagName('notification') )
             {
                 my $reference = $notif->getAttribute('reference');
+
+                # Check date
+                my $date = $notif->getAttribute('date');
+                $self->logger->debug("Get date: $date");
+                unless ( $date and $date =~ /\b\d{4}-\d{2}-\d{2}\b/ ) {
+                    $self->logger->error('Malformed date');
+                    next LOOP;
+                }
+                unless ( $date le $now ) {
+                    $self->logger->debug('Notification date not reached');
+                    $fileResult = 0; # Do not delete notification
+                    next LOOP;
+                }
+
+                # Check condition if any
+                if ( my $condition = $notif->getAttribute('condition') ) {
+                    $self->logger->debug("Get condition $condition");
+                    $condition = $self->p->HANDLER->substitute($condition);
+                    unless ( $condition =
+                        $self->p->HANDLER->buildSub($condition) )
+                    {
+                        $self->logger->error( 'Notification condition error: '
+                              . $self->p->HANDLER->tsv->{jail}->error );
+                        next LOOP;
+                    }
+                    unless ( $condition->( $req, $req->sessionInfo ) ) {
+                        $self->logger->debug(
+                            'Notification condition not authorized');
+                        $fileResult = 0; # Do not delete notification
+                        next LOOP;
+                    }
+                }
 
                 # Check if this pending notification has been seen
                 if ( my $refId = $refs->{$reference} ) {
