@@ -56,10 +56,10 @@ sub fetchId {
         return 0;
     }
 
-    # Send service headers if exist
+    # Send service headers to protected application if exist
     if (%serviceHeaders) {
-        $class->logger->debug("Append service header(s)...");
-        $class->set_header_out( $req, %serviceHeaders );
+        $class->userLogger->info("Append service header(s)...");
+        $class->set_header_in( $req, %serviceHeaders );
     }
 
     return $_session_id;

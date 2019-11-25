@@ -38,7 +38,7 @@ my $crypt = Lemonldap::NG::Common::Crypto->new('qwertyui');
 my $token = $crypt->encrypt(
     join ':',                        time,
     $sessionId,                      'test1.example.com',
-    'XFromVH=app1-auth.example.com', "serviceHeader1=$sessionId",
+    'XFromVH=app1-auth.example.com', "serviceHeader1=$sessionId","serviceHeader2=$sessionId",
     'test2.example.com',             '*.example.com'
 );
 
@@ -53,11 +53,11 @@ ok(
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
 
-my @headers = grep { /service|^XFromVH$/ } @{ $res->[1] };
+my @headers = grep { /^serviceHeader\d$|^XFromVH$/ } @{ $res->[1] };
 my @values  = grep { /\.example\.com|^$sessionId$/ } @{ $res->[1] };
-ok( @headers == 2, 'Found 2 service headers' )
+ok( @headers == 3, 'Found 3 service headers' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
-ok( @values == 2, 'Found 2 service header values' )
+ok( @values == 3, 'Found 3 service header values' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(2);
 
@@ -75,11 +75,11 @@ ok(
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
 
-@headers = grep { /service|^XFromVH$/ } @{ $res->[1] };
+@headers = grep { /^serviceHeader\d$|^XFromVH$/ } @{ $res->[1] };
 @values  = grep { /\.example\.com|^$sessionId$/ } @{ $res->[1] };
-ok( @headers == 2, 'Found 2 service headers' )
+ok( @headers == 3, 'Found 3 service headers' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
-ok( @values == 2, 'Found 2 service header values' )
+ok( @values == 3, 'Found 3 service header values' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(2);
 
@@ -94,10 +94,10 @@ ok(
     ),
     'Query with token 3'
 );
-ok( $res->[0] == 302, 'Code is 200' ) or explain( $res->[0], 302 );
+ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 count(2);
 
-@headers = grep { /service|^XFromVH$/ } @{ $res->[1] };
+@headers = grep { /^serviceHeader\d$|^XFromVH$/ } @{ $res->[1] };
 ok( @headers == 0, 'NONE service header found' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(1);
@@ -123,11 +123,11 @@ ok( $headers{'empty'} eq '', 'Found "empty" header without value' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(2);
 
-@headers = grep { /service|^XFromVH$/ } @{ $res->[1] };
+@headers = grep { /^serviceHeader\d$|^XFromVH$/ } @{ $res->[1] };
 @values  = grep { /\.example\.com|^$sessionId$/ } @{ $res->[1] };
-ok( @headers == 2, 'Found 2 service headers' )
+ok( @headers == 3, 'Found 3 service headers' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
-ok( @values == 2, 'Found 2 service header values' )
+ok( @values == 3, 'Found 3 service header values' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(2);
 
@@ -145,7 +145,7 @@ ok(
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 count(2);
 
-@headers = grep { /service|^XFromVH$/ } @{ $res->[1] };
+@headers = grep { /^serviceHeader\d$|^XFromVH$/ } @{ $res->[1] };
 ok( @headers == 0, 'NONE service header found' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(1);
@@ -161,7 +161,7 @@ ok(
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 count(2);
 
-@headers = grep { /service|^XFromVH$/ } @{ $res->[1] };
+@headers = grep { /^serviceHeader\d$|^XFromVH$/ } @{ $res->[1] };
 ok( @headers == 0, 'NONE service header found' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(1);
@@ -178,7 +178,7 @@ ok(
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 count(2);
 
-@headers = grep { /service|^XFromVH$/ } @{ $res->[1] };
+@headers = grep { /^serviceHeader\d$|^XFromVH$/ } @{ $res->[1] };
 ok( @headers == 0, 'NONE service header found' )
   or print STDERR Data::Dumper::Dumper( $res->[1] );
 count(1);
