@@ -198,8 +198,8 @@ sub getNotifBack {
     my $uid = $req->sessionInfo->{ $self->notifObject->notifField };
 
     # ALL notifications are returned here => Need to check active ones only
-    my ( $notifs, $forUser );
-    eval { ( $notifs, $forUser ) = $self->notifObject->getNotifications($uid) };
+    my ( $notifs, $forUser ) =
+      eval { $self->notifObject->getNotifications($uid) };
     return $self->p->sendError( $req, $@, 500 ) if ($@);
 
     if ($notifs) {
@@ -225,7 +225,8 @@ sub getNotifBack {
             my $xml        = $self->parser->parse_string($file);
 
             # Get pending notifications and verify that they have been accepted
-            LOOP: foreach my $notif (
+          LOOP:
+            foreach my $notif (
                 $xml->documentElement->getElementsByTagName('notification') )
             {
                 my $reference = $notif->getAttribute('reference');
@@ -239,7 +240,7 @@ sub getNotifBack {
                 }
                 unless ( $date le $now ) {
                     $self->logger->debug('Notification date not reached');
-                    $fileResult = 0; # Do not delete notification
+                    $fileResult = 0;    # Do not delete notification
                     next LOOP;
                 }
 
@@ -257,7 +258,7 @@ sub getNotifBack {
                     unless ( $condition->( $req, $req->sessionInfo ) ) {
                         $self->logger->debug(
                             'Notification condition not authorized');
-                        $fileResult = 0; # Do not delete notification
+                        $fileResult = 0;    # Do not delete notification
                         next LOOP;
                     }
                 }

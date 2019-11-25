@@ -150,8 +150,8 @@ sub getNotifBack {
     my $uid = $req->sessionInfo->{ $self->notifObject->notifField };
 
     # ALL notifications are returned here => Need to check active ones only
-    my ( $notifs, $forUser );
-    eval { ( $notifs, $forUser ) = $self->notifObject->getNotifications($uid) };
+    my ( $notifs, $forUser ) =
+      eval { $self->notifObject->getNotifications($uid) };
     return $self->p->sendError( $req, $@, 500 ) if ($@);
 
     if ($notifs) {
@@ -327,10 +327,8 @@ sub notificationServer {
         $res = [];
         foreach my $notif ( keys %$notifs ) {
             $self->p->logger->debug("Found notification $notif");
-            my $json;
-            eval {
-                $json = from_json( $notifs->{$notif}, { allow_nonref => 1 } );
-            };
+            my $json =
+              eval { from_json( $notifs->{$notif}, { allow_nonref => 1 } ) };
             return $self->p->sendError( $req, "Unable to decode JSON file: $@",
                 400 )
               if ($@);
