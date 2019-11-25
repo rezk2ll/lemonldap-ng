@@ -57,17 +57,38 @@ my $notifs = q%[{
  "subtitle": "Application 1",
  "text": "You have been granted to access to appli-1",
  "check": ["I agree", "I am sure"]
- }]%;
+ },
+ {
+ "uid": "rtyler",
+ "date": "2019-11-15",
+ "reference": "ABC3",
+ "condition": "$env->{REMOTE_ADDR} =~ /127.1.1.1/",
+ "title": "You have new authorizations",
+ "subtitle": "Application 1",
+ "text": "You have been granted to access to appli-1",
+ "check": ["I agree", "I am sure"]
+ },
+ {
+ "uid": "rtyler",
+ "date": "2050-11-15",
+ "reference": "ABC4",
+ "title": "You have new authorizations",
+ "subtitle": "Application 1",
+ "text": "You have been granted to access to appli-1",
+ "check": ["I agree", "I am sure"]
+ }
+ ]%;
 
 my $content = '{"uid":"dwho"}';
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel              => 'error',
-            useSafeJail           => 1,
-            notification          => 1,
-            notificationServer    => 1,       # POST method enabled if undefined
-            notificationServerGET => 1,
+            logLevel           => 'error',
+            useSafeJail        => 1,
+            notification       => 1,
+            notificationServer => 1,         # POST method enabled if undefined
+            notificationDefaultCond  => '$env->{REMOTE_ADDR} =~ /127.0.0.1/',
+            notificationServerGET    => 1,
             notificationServerDELETE => 1,
             notificationServerSentAttributes =>
               'uid reference  date title text subtitle check',
@@ -246,7 +267,7 @@ ok(
     ),
     "POST combined notifications $notifs"
 );
-ok( $res->[2]->[0] =~ /"result"\s*:\s*2/, 'Notifications have been inserted' )
+ok( $res->[2]->[0] =~ /"result"\s*:\s*4/, 'Notifications have been inserted' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
@@ -264,7 +285,17 @@ ok(
 );
 expectOK($res);
 $id = expectCookie($res);
-expectForm( $res, undef, '/notifback', 'reference1x1' );
+expectForm( $res, undef, '/notifback', 'reference1x1', 'reference1x2' );
+
+ok(
+    $res->[2]->[0] =~
+      m%<input type="hidden" name="reference1x1" value="testref">%,
+    'Checkbox is displayed'
+) or print STDERR Dumper( $res->[2]->[0] );
+ok(
+    $res->[2]->[0] =~ m%<input type="hidden" name="reference1x2" value="ABC1">%,
+    'Checkbox is displayed'
+) or print STDERR Dumper( $res->[2]->[0] );
 ok(
     $res->[2]->[0] =~
 m%<input type="checkbox" name="check1x2x1" id="1x2x1" value="accepted">I agree</label>%,
@@ -272,13 +303,13 @@ m%<input type="checkbox" name="check1x2x1" id="1x2x1" value="accepted">I agree</
 ) or print STDERR Dumper( $res->[2]->[0] );
 my @c = ( $res->[2]->[0] =~ m%<input type="checkbox"%gs );
 
-## Three entries found
+## One entry found
 ok( @c == 1, ' -> One checkbox found' )
   or explain( $res->[2]->[0], "Number of checkbox(es) found = " . scalar @c );
-count(4);
+count(6);
 
 # Try to validate notification
-my $str = 'reference1x1=testref&check1x2x1=accepted';
+my $str = 'reference1x2=ABC1&check1x2x1=accepted';
 ok(
     $res = $client->_post(
         '/notifback',
@@ -307,6 +338,7 @@ ok(
 expectOK($res);
 $id = expectCookie($res);
 expectForm( $res, undef, '/notifback', 'reference1x1' );
+
 ok(
     $res->[2]->[0] =~
 m%<input type="checkbox" name="check1x1x1" id="1x1x1" value="accepted">I agree</label>%,
@@ -319,13 +351,13 @@ m%<input type="checkbox" name="check1x1x2" id="1x1x2" value="accepted">I am sure
 ) or print STDERR Dumper( $res->[2]->[0] );
 @c = ( $res->[2]->[0] =~ m%<input type="checkbox"%gs );
 
-## Three entries found
+## Two entries found
 ok( @c == 2, ' -> Two checkboxes found' )
   or explain( $res->[2]->[0], "Number of checkbox(es) found = " . scalar @c );
 count(5);
 
 # Try to validate notification
-$str = 'reference1x1=testref&check1x1x1=accepted&check1x1x2=accepted';
+$str = 'reference1x1=ABC2&check1x1x1=accepted&check1x1x2=accepted';
 ok(
     $res = $client->_post(
         '/notifback',

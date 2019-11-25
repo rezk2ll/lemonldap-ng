@@ -36,7 +36,13 @@ sub newNotification {
             }
             push @data, $tmp;
         }
-        $notif->{condition} //= $defaultCond;
+
+        unless ( exists $notif->{condition} ) {
+            $self->userLogger->info(
+                "Set defaultCondition ($defaultCond) for notification $notif->{reference}");
+            $notif->{condition} = $defaultCond;
+        }
+        
         push @data, ( $notif->{condition} );
         my $body = to_json($notif);
         push @notifs, [ @data, $body ];
