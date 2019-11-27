@@ -1169,11 +1169,11 @@ sub token {
         # For offline access, the refresh token isn't tied to the session ID
         if ( $codeSession->{data}->{offline} ) {
 
-            # We need to remove _sessionType and _sessionid from the session data
-            # before storing session data in the refresh token
+            # We need to remove _sessionType, _sessionid and _utime from the
+            # session data before storing session data in the refresh token
             my %userInfo;
-            for
-              my $userKey ( grep !/^_session/, keys %{ $apacheSession->data } )
+            for my $userKey ( grep !/^(_session|_utime$)/,
+                keys %{ $apacheSession->data } )
             {
                 $userInfo{$userKey} = $apacheSession->data->{$userKey};
             }
@@ -1401,6 +1401,10 @@ sub token {
                 }
                 return $self->p->sendError( $req, 'invalid_grant', 400 );
             }
+
+            # Cleanup sessionInfo
+            delete $req->sessionInfo->{_utime};
+            delete $req->sessionInfo->{_startTime};
 
             # Update refresh session
             $self->updateRefreshToken( $refreshSession->id, $req->sessionInfo );

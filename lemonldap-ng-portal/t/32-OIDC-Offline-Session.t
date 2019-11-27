@@ -174,7 +174,7 @@ count(1);
 
 $op->logout($idpId);
 
-# Refresh access token
+# Refresh access token after logging out
 
 $query = "grant_type=refresh_token&refresh_token=$refresh_token";
 
@@ -189,18 +189,73 @@ ok(
             HTTP_AUTHORIZATION => "Basic " . encode_base64("rpid:rpsecret"),
         },
     ),
-    "Refresh access token"
+    "Refresh access token (after logout)"
 );
 count(1);
 expectOK($res);
 
 $json          = expectJSON($res);
 $access_token  = $json->{access_token};
-$refresh_token = $json->{refresh_token};
+my $refresh_token2 = $json->{refresh_token};
 $id_token      = $json->{id_token};
 ok( $access_token,           "Got refreshed Access token" );
 ok( $id_token,               "Got refreshed ID token" );
-ok( !defined $refresh_token, "Refresh token not present" );
+ok( !defined $refresh_token2, "Refresh token not present" );
+count(3);
+
+$id_token_payload = JSON::from_json(decode_base64([split /\./, $id_token]->[1]));
+is($id_token_payload->{name}, 'Frédéric Accents', 'Found claim in ID token');
+count(1);
+
+## Get userinfo again
+ok(
+    $res = $op->_post(
+        "/oauth2/userinfo",
+        IO::String->new(''),
+        accept => 'text/html',
+        length => 0,
+        custom => {
+            HTTP_AUTHORIZATION => "Bearer " . $access_token,
+        },
+    ),
+    "Post new access token"
+);
+expectOK($res);
+count(1);
+$json = expectJSON($res);
+
+ok( $json->{name} eq "Frédéric Accents", "Correct user info" );
+count(1);
+
+# Make sure offline session is still valid long after natural session expiration time
+
+Time::Fake->offset("+10d");
+
+$query = "grant_type=refresh_token&refresh_token=$refresh_token";
+
+
+ok(
+    $res = $op->_post(
+        "/oauth2/token",
+        IO::String->new($query),
+        accept => 'text/html',
+        length => length($query),
+        custom => {
+            HTTP_AUTHORIZATION => "Basic " . encode_base64("rpid:rpsecret"),
+        },
+    ),
+    "Refresh access token (in the future)"
+);
+count(1);
+expectOK($res);
+
+$json          = expectJSON($res);
+$access_token  = $json->{access_token};
+$refresh_token2 = $json->{refresh_token};
+$id_token      = $json->{id_token};
+ok( $access_token,           "Got refreshed Access token" );
+ok( $id_token,               "Got refreshed ID token" );
+ok( !defined $refresh_token2, "Refresh token not present" );
 count(3);
 
 $id_token_payload = JSON::from_json(decode_base64([split /\./, $id_token]->[1]));
