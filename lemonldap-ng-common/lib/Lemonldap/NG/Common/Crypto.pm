@@ -21,6 +21,7 @@ $hash = \&Digest::SHA::sha256;
 use constant HMAC_LENGTH => 32;
 use constant IV_LENGTH   => 16;
 
+# Build initialization vector subroutine
 BEGIN {
     eval { require Crypt::URandom; Crypt::URandom::urandom(IV_LENGTH) };
     if ($@) {
