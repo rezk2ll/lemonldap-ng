@@ -152,6 +152,7 @@ README
 scripts/llngDeleteSession
 site/coffee/2fregistration.coffee
 site/coffee/autoRenew.coffee
+site/coffee/captcha.coffee
 site/coffee/confirm.coffee
 site/coffee/globalLogout.coffee
 site/coffee/idpchoice.coffee
@@ -281,6 +282,9 @@ site/htdocs/static/common/js/2fregistration.min.js.map
 site/htdocs/static/common/js/autoRenew.js
 site/htdocs/static/common/js/autoRenew.min.js
 site/htdocs/static/common/js/autoRenew.min.js.map
+site/htdocs/static/common/js/captcha.js
+site/htdocs/static/common/js/captcha.min.js
+site/htdocs/static/common/js/captcha.min.js.map
 site/htdocs/static/common/js/confirm.js
 site/htdocs/static/common/js/confirm.min.js
 site/htdocs/static/common/js/confirm.min.js.map

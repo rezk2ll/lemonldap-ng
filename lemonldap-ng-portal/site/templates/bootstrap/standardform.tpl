@@ -1,5 +1,5 @@
 <TMPL_IF NAME="TOKEN">
-<input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
+<input id="token" type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
 </TMPL_IF>
 
 <TMPL_IF NAME="WAITING_MESSAGE">
@@ -24,9 +24,16 @@
     </TMPL_IF>
   </div>
 
+  <!-- //if:jsminified
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/captcha.min.js"></script>
+  //else -->
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/captcha.js"></script>
+  <!-- //endif -->
+
   <TMPL_IF NAME=CAPTCHA_SRC>
   <div class="form-group">
-    <img src="<TMPL_VAR NAME=CAPTCHA_SRC>" class="img-thumbnail" />
+    <img class="renewcaptchaclick" src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/arrow_refresh.png" alt="RENEW CAPTCHA" class="img-thumbnail mb-3" />
+    <img id="captcha" src="<TMPL_VAR NAME=CAPTCHA_SRC>" class="img-thumbnail" />
   </div>
   <div class="input-group mb-3">
     <div class="input-group-prepend">
