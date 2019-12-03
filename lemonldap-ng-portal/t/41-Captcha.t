@@ -6,7 +6,7 @@ require 't/test-lib.pm';
 
 my $res;
 
-my $maintests = 17;
+my $maintests = 18;
 SKIP: {
     eval 'use GD::SecurityImage;use Image::Magick;';
     if ($@) {
@@ -43,7 +43,8 @@ m%<input name="password" type="text" class="form-control key" autocomplete="off"
     ok( $token = $1, ' Token value is defined' );
     ok( $res->[2]->[0] =~ m#<img id="captcha" src="data:image/png;base64#,
         ' Captcha image inserted' )
-      or explain( $res->[2]->[0], '<img id="captcha" src="data:image/png;base64' );
+      or
+      explain( $res->[2]->[0], '<img id="captcha" src="data:image/png;base64' );
 
     # Try to get captcha value
 
@@ -106,6 +107,10 @@ m%<input name="password" type="text" class="form-control key" autocomplete="off"
         ),
         'Verify that there is a new captcha image'
     );
+    ( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
+    $query =~ s/.*\b(token=[^&]+).*/$1/;
+    my $newtoken = $1;
+    ok( $newtoken ne $token, ' Token is refreshed' );
     ok( $res->[2]->[0] =~ m#<img id="captcha" src="data:image/png;base64#,
         ' New captcha image inserted' );
 }

@@ -24,23 +24,8 @@
     </TMPL_IF>
   </div>
 
-  <!-- //if:jsminified
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/captcha.min.js"></script>
-  //else -->
-    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/captcha.js"></script>
-  <!-- //endif -->
-
   <TMPL_IF NAME=CAPTCHA_SRC>
-  <div class="form-group">
-    <img class="renewcaptchaclick" src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/arrow_refresh.png" alt="RENEW CAPTCHA" class="img-thumbnail mb-3" />
-    <img id="captcha" src="<TMPL_VAR NAME=CAPTCHA_SRC>" class="img-thumbnail" />
-  </div>
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text"><i class="fa fa-eye"></i> </span>
-    </div>
-    <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required aria-required="true" autocomplete="off" />
-  </div>
+    <TMPL_INCLUDE NAME="captcha.tpl">
   </TMPL_IF>
 
   <TMPL_INCLUDE NAME="impersonation.tpl">
