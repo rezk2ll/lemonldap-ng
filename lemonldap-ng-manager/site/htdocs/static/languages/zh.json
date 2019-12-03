@@ -770,7 +770,7 @@
 "rule":"Rule",
 "ruleAuthnLevel":"Required authentication level",
 "rules":"Rules",
-"rulesAuthnLevel":"Required authentication levels",
+"rulesAuthnLevel":"Required auth levels",
 "Same":"Same",
 "save":"Save",
 "saveReport":"Save report",
