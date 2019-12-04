@@ -66,7 +66,7 @@ describe('00 Lemonldap::NG', function() {
       browser.driver.findElement(by.xpath("//input[@name='password']")).sendKeys('ohwd');
       browser.driver.findElement(by.xpath("//input[@name='checkLogins']")).click();
       browser.driver.findElement(by.xpath("//button[@type='submit']")).click();
-      expect(browser.driver.findElement(by.css('[trmsg="5"]')).getText()).toEqual('Mot de passe ou identifiant incorrect');
+      expect(browser.driver.findElement(by.css('[trmsg="5"]')).getText()).toEqual('Identifiant ou mot de passe incorrect');
       browser.driver.findElement(by.css('[trspan="goToPortal"]')).click();
 
       // Login attempt
