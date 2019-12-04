@@ -7,6 +7,9 @@ eg/manager.psgi
 KINEMATIC.md
 lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/2ndFA.pm
+lib/Lemonldap/NG/Manager/Api.pm
+lib/Lemonldap/NG/Manager/Api/2F.pm
+lib/Lemonldap/NG/Manager/Api/Providers.pm
 lib/Lemonldap/NG/Manager/Attributes.pm
 lib/Lemonldap/NG/Manager/Build.pm
 lib/Lemonldap/NG/Manager/Build/Attributes.pm
@@ -40,6 +43,7 @@ site/coffee/notifications.coffee
 site/coffee/sessions.coffee
 site/coffee/viewDiff.coffee
 site/coffee/viewer.coffee
+site/htdocs/api.fcgi
 site/htdocs/manager.fcgi
 site/htdocs/manager.psgi
 site/htdocs/static/bwr/angular-animate/angular-animate.js
@@ -213,6 +217,7 @@ site/templates/viewDiff.tpl
 site/templates/viewer.tpl
 t/02-HTML-template.t
 t/03-HTML-forms.t
+t/04-hello-api.t
 t/05-rest-api.t
 t/06-rest-api.t
 t/07-utf8.t
