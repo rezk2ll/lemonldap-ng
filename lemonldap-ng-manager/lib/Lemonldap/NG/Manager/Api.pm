@@ -25,13 +25,22 @@ sub addRoutes {
     $self->addRoute( 'api.html', undef, ['GET'] )
 
       ->addRoute(
-          api => {
-              v1 => {
-                  hello => "helloworld",
-              },
-          },
-          ['GET']
+        api => {
+            v1 => {
+                hello => "helloworld",
+            },
+        },
+        ['GET']
+      )
+
+      ->addRoute(
+        providers => {
+            oidc => {
+                rp => { ':confKey' => 'getOidcRpByConfKey' },
+            },
+        },
+        ['GET']
       );
-  }
+}
 
 1;
