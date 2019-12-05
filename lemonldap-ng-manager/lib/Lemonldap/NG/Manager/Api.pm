@@ -39,6 +39,9 @@ sub addRoutes {
                 oidc => {
                     rp => { ':confKey' => 'getOidcRpByConfKey' },
                 },
+                saml => {
+                    sp => { ':confKey' => 'getSamlSpByConfKey' },
+                },
             },
         },
         ['GET']
