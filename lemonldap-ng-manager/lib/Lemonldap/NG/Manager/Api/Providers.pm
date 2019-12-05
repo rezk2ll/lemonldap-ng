@@ -32,12 +32,20 @@ sub getOidcRpByConfKey {
     # Get exported vars
     my $exportedVars = $conf->{oidcRPMetaDataExportedVars}->{$confKey};
 
+    # Get extra claim
+    my $extraClaim = $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey};
+
+    # Get options
+    my $options = $conf->{oidcRPMetaDataOptions}->{$confKey};
+
     return $self->sendJSONresponse(
         $req,
         {
             confKey      => $confKey,
             clientId     => $clientId,
-            exportedVars => $exportedVars
+            exportedVars => $exportedVars,
+            extraClaim  => $extraClaim,
+            options => $options
         }
     );
 }

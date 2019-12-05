@@ -34,9 +34,11 @@ sub addRoutes {
       )
 
       ->addRoute(
-        providers => {
-            oidc => {
-                rp => { ':confKey' => 'getOidcRpByConfKey' },
+        v1 => {
+            providers => {
+                oidc => {
+                    rp => { ':confKey' => 'getOidcRpByConfKey' },
+                },
             },
         },
         ['GET']
