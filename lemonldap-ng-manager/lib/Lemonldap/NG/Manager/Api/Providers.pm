@@ -234,8 +234,17 @@ sub _getSamlSp {
     my $metadata = $conf->{samlSPMetaDataXML}->{$confKey}
       ->{samlSPMetaDataXML};
 
+    # Get options
+    my $options = $conf->{samlSPMetaDataOptions}->{$confKey};
+
+    my $samlSp = {
+        confKey      => $confKey,
+        metadata     => $metadata,
+        exportedAttributes => {},
+        options => $options
+    };
+
     # Get exported attributes
-    my %exportedAttributes;
     foreach (
         keys %{
             $conf->{samlSPMetaDataExportedAttributes}
@@ -251,29 +260,22 @@ sub _getSamlSp {
 
         $mandatory = !!$mandatory ? 'true' : 'false';
 
-        $exportedAttributes->{$_} = {
+        $samlSp->{exportedAttributes}->{$_} = {
             name => $name,
             mandatory => $mandatory
         };
 
         if (defined $friendly_name && $friendly_name ne '') {
-            $exportedAttributes->{$_}->{friendlyName} = $friendly_name;
+            $samlSp->{exportedAttributes}->{$_}->{friendlyName} = $friendly_name;
         }
 
         if (defined $format && $format ne '') {
-            $exportedAttributes->{$_}->{format} = $format;
+            $samlSp->{exportedAttributes}->{$_}->{format} = $format;
         }
     }
 
-    # Get options
-    my $options = $conf->{samlSPMetaDataOptions}->{$confKey};
 
-    return {
-        confKey      => $confKey,
-        metadata     => $metadata,
-        exportedAttributes => $exportedAttributes,
-        options => $options
-    };
+    return $samlSp;
 }
 
 1;
