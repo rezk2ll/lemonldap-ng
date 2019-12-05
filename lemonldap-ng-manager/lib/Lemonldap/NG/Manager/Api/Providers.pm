@@ -67,6 +67,39 @@ sub findOidcRpByConfKey {
     );
 }
 
+sub findOidcRpByClientId {
+    my ( $self, $req ) = @_;
+
+    my $clientId = (
+      defined $req->params('uClientId') ?
+        $req->params('uClientId') :
+          ( defined $req->params('clientId') ? $req->params('clientId') : undef )
+    );
+
+    unless (defined $clientId) {
+      return $self->sendError( $req, 'clientId is missing', 400 );
+    }
+
+    $self->logger->debug("[API] Find OIDC RPs by clientId $clientId requested");
+
+    # Get latest configuration
+    my $conf = $self->_confAcc->getConf;
+
+    foreach (
+        keys %{
+            $conf->{oidcRPMetaDataOptions}
+        }
+      )
+    {
+        if ($conf->{oidcRPMetaDataOptions}->{$_}->{oidcRPMetaDataOptionsClientID} eq $clientId) {
+            return $self->sendJSONresponse(
+                $req, $self->_getOidcRp($conf, $_)
+            );
+        }
+    }
+    return $self->sendJSONresponse($req, {});
+}
+
 sub _getOidcRp {
     my ( $self, $conf, $confKey ) = @_;
 
@@ -154,6 +187,39 @@ sub findSamlSpByConfKey {
     return $self->sendJSONresponse(
         $req, [ @samlSps ]
     );
+}
+
+sub findSamlSpByEntityId {
+    my ( $self, $req ) = @_;
+
+    my $entityId = (
+      defined $req->params('uEntityId') ?
+        $req->params('uEntityId') :
+          ( defined $req->params('entityId') ? $req->params('entityId') : undef )
+    );
+
+    unless (defined $entityId) {
+      return $self->sendError( $req, 'entityId is missing', 400 );
+    }
+
+    $self->logger->debug("[API] Find SAML SPs by entityId $entityId requested");
+
+    # Get latest configuration
+    my $conf = $self->_confAcc->getConf;
+
+    foreach (
+        keys %{
+            $conf->{samlSPMetaDataXML}
+        }
+      )
+    {
+        if ($conf->{samlSPMetaDataXML}->{$_}->{samlSPMetaDataXML} =~ /entityID=['"](.+?)['"]/ && $1 eq $entityId) {
+            return $self->sendJSONresponse(
+                $req, $self->_getSamlSp($conf, $_)
+            );
+        }
+    }
+    return $self->sendJSONresponse($req, {});
 }
 
 sub _getSamlSp {

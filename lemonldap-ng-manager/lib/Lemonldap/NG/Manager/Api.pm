@@ -41,6 +41,9 @@ sub addRoutes {
                         findByConfKey => {
                             ':uPattern' => 'findOidcRpByConfKey'
                         },
+                        findByClientId => {
+                            ':uClientId' => 'findOidcRpByClientId'
+                        },
                         ':confKey' => 'getOidcRpByConfKey'
                     },
                 },
@@ -48,6 +51,9 @@ sub addRoutes {
                     sp => {
                         findByConfKey => {
                             ':uPattern' => 'findSamlSpByConfKey'
+                        },
+                        findByEntityId => {
+                            ':uEntityId' => 'findSamlSpByEntityId'
                         },
                         ':confKey' => 'getSamlSpByConfKey'
                     },
