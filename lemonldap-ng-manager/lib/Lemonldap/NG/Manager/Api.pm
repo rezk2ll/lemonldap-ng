@@ -37,10 +37,20 @@ sub addRoutes {
         v1 => {
             providers => {
                 oidc => {
-                    rp => { ':confKey' => 'getOidcRpByConfKey' },
+                    rp => {
+                        findByConfKey => {
+                            ':uPattern' => 'findOidcRpByConfKey'
+                        },
+                        ':confKey' => 'getOidcRpByConfKey'
+                    },
                 },
                 saml => {
-                    sp => { ':confKey' => 'getSamlSpByConfKey' },
+                    sp => {
+                        findByConfKey => {
+                            ':uPattern' => 'findSamlSpByConfKey'
+                        },
+                        ':confKey' => 'getSamlSpByConfKey'
+                    },
                 },
             },
         },
