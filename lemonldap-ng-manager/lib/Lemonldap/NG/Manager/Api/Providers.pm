@@ -122,16 +122,31 @@ sub addOidcRp {
       return $self->sendError( $req, "Invalid input: An OIDC RP with clientId $oidcRp->{clientId} already exists", 405 );
     }
 
-    my $options;
-    if (defined $oidcRp->{options}) {
-        $options = $oidcRp->{options};
+    unless (defined $oidcRp->{options}) {
+        $oidcRp->{options} = {};
     }
-    $options->{oidcRPMetaDataOptionsClientID} = $oidcRp->{clientId};
-    my $res = $self->_hasAllowedAttributes($options, 'oidcRPMetaDataNode', 'oidcRPMetaDataOptions');
+    $oidcRp->{options}->{oidcRPMetaDataOptionsClientID} = $oidcRp->{clientId};
+    my $res = $self->_hasAllowedAttributes($oidcRp->{options}, 'oidcRPMetaDataNode', ['oidcRPMetaDataOptions', 'oidcRPMetaDataOptionsDisplay']);
     unless ($res->{res} eq 'ok') {
         return $self->sendError( $req, $res->{message}, 405);
     }
-    $conf->{oidcRPMetaDataOptions}->{$oidcRp->{confKey}} = $options;
+    my $displayOptions = $self->_filterAttributes($oidcRp->{options}, 'oidcRPMetaDataNode', ['oidcRPMetaDataOptionsDisplay']);
+
+    $self->logger->debug("displayOptions");
+    use Data::Dumper; print STDERR Dumper($displayOptions);
+
+    if ($displayOptions) {
+        $conf->{oidcRPMetaDataOptionsDisplay}->{$oidcRp->{confKey}} = $displayOptions;
+    }
+
+    my $options = $self->_filterAttributes($oidcRp->{options}, 'oidcRPMetaDataNode', ['oidcRPMetaDataOptions']);
+
+    $self->logger->debug("options");
+    use Data::Dumper; print STDERR Dumper($options);
+
+    if ($options) {
+        $conf->{oidcRPMetaDataOptions}->{$oidcRp->{confKey}} = $options;
+    }
 
     if (defined $oidcRp->{exportedVars}) {
         if ($self->_isSimpleKeyValueHash($oidcRp->{exportedVars})) {
@@ -150,7 +165,7 @@ sub addOidcRp {
     }
 
     # Save configuration
-    $self->_confAcc->saveConf($conf);
+    #$self->_confAcc->saveConf($conf);
 
     return $self->sendJSONresponse($req, "Successful operation");
 }
@@ -175,6 +190,10 @@ sub _getOidcRpByConfKey {
 
     # Get options
     my $options = $conf->{oidcRPMetaDataOptions}->{$confKey};
+
+    # Merge display with options
+    my $dispOptions = $conf->{oidcRPMetaDataOptionsDisplay}->{$confKey};
+    @options{keys %{$dispOptions}} = values %{$dispOptions};
 
     return {
         confKey      => $confKey,
@@ -324,10 +343,11 @@ sub addSamlSp {
     if (defined $samlSp->{options}) {
         $options = $samlSp->{options};
     }
-    my $res = $self->_hasAllowedAttributes($options, 'samlSPMetaDataNode', 'samlSPMetaDataOptions');
+    my $res = $self->_hasAllowedAttributes($options, 'samlSPMetaDataNode', ['samlSPMetaDataOptions']);
     unless ($res->{res} eq 'ok') {
         return $self->sendError( $req, $res->{message}, 405);
     }
+
     $conf->{samlSPMetaDataOptions}->{$samlSp->{confKey}} = $options;
 
     if (defined $samlSp->{exportedAttributes}) {
@@ -426,12 +446,14 @@ sub _readSamlSpEntityId {
 sub _readSamlSpExportedAttributes {
     my ( $self, $attrs ) = @_;
     my $exportedAttributes;
+
     my @allowedFormats = [
       "urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified",
       "urn:oasis:names:tc:SAML:2.0:attrname-format:uri",
       "urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
     ];
     foreach (keys %{$attrs}) {
+
         unless (defined $attrs->{$_}->{name}) {
             return { res => "ko", message => "Exported attribute $_ has no name"};
         }
@@ -443,7 +465,7 @@ sub _readSamlSpExportedAttributes {
         }
         my $format = '';
         if (defined $attrs->{$_}->{format}) {
-            unless (grep {/^$attrs->{$_}->{format}/} @allowedFormats) {
+            unless (length(grep {/^$attrs->{$_}->{format}$/} @allowedFormats)) {
                 return { res => "ko", message => "Exported attribute $_ format does not exist."};
             }
             $format = $attrs->{$_}->{format};
@@ -470,16 +492,12 @@ sub _isSimpleKeyValueHash {
     return 1;
 }
 sub _hasAllowedAttributes {
-    my ( $self, $attributes, $node, $title) = @_;
+    my ( $self, $attributes, $rootNode, @titles) = @_;
 
-    my $mainTree = Lemonldap::NG::Manager::Build::CTrees::cTrees();
-
-    my @allowedAttributes = $self->_listAttributes(
-        grep { $_->{title} eq $title } (grep { ref($_) eq "HASH" } @{$mainTree->{$node}})
-    );
+    my @allowedAttributes = $self->_listAttributes($rootNode, @titles);
 
     foreach $attribute (keys %{$attributes}) {
-        unless (grep {/^$attribute/} @allowedAttributes) {
+        unless (grep {/^$attribute$/} @allowedAttributes) {
             return {
                 res => "ko",
                 message => "Invalid input: Attribute $attribute does not exist."
@@ -490,14 +508,45 @@ sub _hasAllowedAttributes {
     return { res => "ok" };
 }
 
+sub _filterAttributes {
+    my ( $self, $attributes, $rootNode, $titles) = @_;
+
+    my @keepAttributes = $self->_listAttributes($rootNode, $titles);
+
+    my $filteredAttributes = {};
+
+    foreach $attribute (keys %{$attributes}) {
+        if (grep {/^$attribute$/} @keepAttributes) {
+            $filteredAttributes->{$attribute} = $attributes->{$attribute};
+        }
+    }
+
+    return $filteredAttributes;
+}
+
 sub _listAttributes {
+    my ( $self, $rootNode, $titles) = @_;
+
+    my $mainTree = Lemonldap::NG::Manager::Build::CTrees::cTrees();
+
+    my $rootNodes = [ grep { ref($_) eq "HASH" } @{$mainTree->{$rootNode}} ];
+
+    my @attributes;
+    foreach $node (@{$rootNodes}) {
+        if (grep {/^$node->{title}$/} @{$titles}) {
+            push @attributes, $self->_listNodeAttributes($node);
+        }
+    }
+    return @attributes;
+}
+
+sub _listNodeAttributes {
     my ( $self, $node) = @_;
 
     my @attributes;
-
     foreach $child (@{$node->{nodes}}) {
         if (ref($child) eq "HASH"){
-            push (@attributes, $self->_listAttributes($child));
+            push (@attributes, $self->_listNodeAttributes($child));
         } else {
            push (@attributes, $child);
         }
