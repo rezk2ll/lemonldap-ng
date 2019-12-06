@@ -100,7 +100,6 @@ sub addOidcRp {
     my ( $self, $req) = @_;
 
     my $oidcRp = $req->jsonBodyToObj;
-    use Data::Dumper; print STDERR Dumper($oidcRp);
 
     unless (defined $oidcRp->{confKey}) {
       return $self->sendError( $req, 'Invalid input: confKey is missing', 405 );
@@ -133,9 +132,6 @@ sub addOidcRp {
         return $self->sendError( $req, $res->{message}, 405);
     }
     $conf->{oidcRPMetaDataOptions}->{$oidcRp->{confKey}} = $options;
-
-    $self->logger->debug("options");
-    use Data::Dumper; print STDERR Dumper($options);
 
     if (defined $oidcRp->{exportedVars}) {
         if ($self->_isSimpleKeyValueHash($oidcRp->{exportedVars})) {
@@ -294,7 +290,6 @@ sub addSamlSp {
     my ( $self, $req) = @_;
 
     my $samlSp = $req->jsonBodyToObj;
-    use Data::Dumper; print STDERR Dumper($samlSp);
 
     unless (defined $samlSp->{confKey}) {
       return $self->sendError( $req, 'Invalid input: confKey is missing', 405 );
@@ -335,16 +330,11 @@ sub addSamlSp {
     }
     $conf->{samlSPMetaDataOptions}->{$samlSp->{confKey}} = $options;
 
-    $self->logger->debug("options");
-    use Data::Dumper; print STDERR Dumper($options);
-
     if (defined $samlSp->{exportedAttributes}) {
         my $res = $self->_readSamlSpExportedAttributes($samlSp->{exportedAttributes});
         unless ($res->{res} eq 'ok') {
             return $self->sendError( $req, $res->{message}, 405);
         }
-        $self->logger->debug("exportedAttributes");
-        use Data::Dumper; print STDERR Dumper($res->{exportedAttributes});
         $conf->{samlSPMetaDataExportedAttributes}->{$samlSp->{confKey}} = $res->{exportedAttributes};
     }
 
@@ -441,11 +431,7 @@ sub _readSamlSpExportedAttributes {
       "urn:oasis:names:tc:SAML:2.0:attrname-format:uri",
       "urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
     ];
-    $self->logger->debug("attributes ");
-    use Data::Dumper; print STDERR Dumper($attrs);
     foreach (keys %{$attrs}) {
-        $self->logger->debug("parse attribute: $_");
-
         unless (defined $attrs->{$_}->{name}) {
             return { res => "ko", message => "Exported attribute $_ has no name"};
         }
@@ -468,9 +454,6 @@ sub _readSamlSpExportedAttributes {
         }
         $exportedAttributes->{$_} = "$mandatory;$attrs->{$_}->{name};$format;$friendlyName";
     }
-    $self->logger->debug("exportedAttributes ");
-    use Data::Dumper; print STDERR Dumper($exportedAttributes);
-
     return { res => "ok", exportedAttributes => $exportedAttributes };
 }
 
