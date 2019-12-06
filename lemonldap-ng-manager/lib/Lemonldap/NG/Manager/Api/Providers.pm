@@ -3,6 +3,9 @@ our $VERSION = '2.0.7';
 
 package Lemonldap::NG::Manager::Api;
 
+use Lemonldap::NG::Manager::Build::CTrees;
+use Scalar::Util 'weaken';
+
 sub getOidcRpByConfKey {
     my ( $self, $req ) = @_;
 
@@ -14,7 +17,7 @@ sub getOidcRpByConfKey {
     # Get latest configuration
     my $conf = $self->_confAcc->getConf;
 
-    my $oidcRp = $self->_getOidcRp($conf, $confKey);
+    my $oidcRp = $self->_getOidcRpByConfKey($conf, $confKey);
     # To save configuration
     #$self->_confAcc->saveConf( $conf ) ;
 
@@ -58,7 +61,7 @@ sub findOidcRpByConfKey {
       )
     {
         if ($_ =~ $pattern) {
-            push @oidcRps, $self->_getOidcRp($conf, $_);
+            push @oidcRps, $self->_getOidcRpByConfKey($conf, $_);
         }
     }
 
@@ -85,22 +88,78 @@ sub findOidcRpByClientId {
     # Get latest configuration
     my $conf = $self->_confAcc->getConf;
 
-    foreach (
-        keys %{
-            $conf->{oidcRPMetaDataOptions}
-        }
-      )
-    {
-        if ($conf->{oidcRPMetaDataOptions}->{$_}->{oidcRPMetaDataOptionsClientID} eq $clientId) {
-            return $self->sendJSONresponse(
-                $req, $self->_getOidcRp($conf, $_)
-            );
-        }
+    my $oidcRp = $self->_getOidcRpByClientId($conf, $clientId);
+
+    if (defined $oidcRp) {
+        return $self->sendJSONresponse($req, $oidcRp);
     }
     return $self->sendJSONresponse($req, {});
 }
 
-sub _getOidcRp {
+sub addOidcRp {
+    my ( $self, $req) = @_;
+
+    my $oidcRp = $req->jsonBodyToObj;
+    use Data::Dumper; print STDERR Dumper($oidcRp);
+
+    unless (defined $oidcRp->{confKey}) {
+      return $self->sendError( $req, 'Invalid input: confKey is missing', 405 );
+    }
+
+    unless (defined $oidcRp->{clientId}) {
+      return $self->sendError( $req, 'Invalid input: clientId is missing', 405 );
+    }
+
+    $self->logger->debug("[API] Add OIDC RP with confKey $oidcRp->{confKey} and clientId $oidcRp->{clientId} requested");
+
+    # Get latest configuration
+    my $conf = $self->_confAcc->getConf;
+
+    if (defined $self->_getOidcRpByConfKey($conf, $oidcRp->{confKey})) {
+      return $self->sendError( $req, "Invalid input: An OIDC RP with confKey $oidcRp->{confKey} already exists", 405 );
+    }
+
+    if (defined $self->_getOidcRpByClientId($conf, $oidcRp->{clientId})) {
+      return $self->sendError( $req, "Invalid input: An OIDC RP with clientId $oidcRp->{clientId} already exists", 405 );
+    }
+
+    my $options;
+    if (defined $oidcRp->{options}) {
+        $options = $oidcRp->{options};
+    }
+    $options->{oidcRPMetaDataOptionsClientID} = $oidcRp->{clientId};
+    my $res = $self->_hasAllowedAttributes($options, 'oidcRPMetaDataNode', 'oidcRPMetaDataOptions');
+    unless ($res->{res} eq 'ok') {
+        return $self->sendError( $req, $res->{message}, 405);
+    }
+    $conf->{oidcRPMetaDataOptions}->{$oidcRp->{confKey}} = $options;
+
+    $self->logger->debug("options");
+    use Data::Dumper; print STDERR Dumper($options);
+
+    if (defined $oidcRp->{exportedVars}) {
+        if ($self->_isSimpleKeyValueHash($oidcRp->{exportedVars})) {
+            $conf->{oidcRPMetaDataExportedVars}->{$oidcRp->{confKey}} = $oidcRp->{exportedVars};
+        } else {
+            return $self->sendError( $req, "Invalid input: exportedVars is not a hash object with \"key\":\"value\" attributes", 405 );
+        }
+    }
+
+    if (defined $oidcRp->{extraClaim}) {
+        if ($self->_isSimpleKeyValueHash($oidcRp->{extraClaim})) {
+            $conf->{oidcRPMetaDataOptionsExtraClaims}->{$oidcRp->{confKey}} = $oidcRp->{extraClaim};
+        } else {
+            return $self->sendError( $req, "Invalid input: extraClaim is not a hash object with \"key\":\"value\" attributes", 405 );
+        }
+    }
+
+    # Save configuration
+    $self->_confAcc->saveConf($conf);
+
+    return $self->sendJSONresponse($req, "Successful operation");
+}
+
+sub _getOidcRpByConfKey {
     my ( $self, $conf, $confKey ) = @_;
 
     # Check if confKey is defined
@@ -130,6 +189,22 @@ sub _getOidcRp {
     };
 }
 
+sub _getOidcRpByClientId {
+    my ( $self, $conf, $clientId ) = @_;
+
+    foreach (
+        keys %{
+            $conf->{oidcRPMetaDataOptions}
+        }
+      )
+    {
+        if ($conf->{oidcRPMetaDataOptions}->{$_}->{oidcRPMetaDataOptionsClientID} eq $clientId) {
+            return $self->_getOidcRpByConfKey($conf, $_)
+        }
+    }
+    return undef;
+}
+
 sub getSamlSpByConfKey {
     my ( $self, $req ) = @_;
 
@@ -141,7 +216,7 @@ sub getSamlSpByConfKey {
     # Get latest configuration
     my $conf = $self->_confAcc->getConf;
 
-    $samlSp = $self->_getSamlSp($conf, $confKey);
+    $samlSp = $self->_getSamlSpByConfKey($conf, $confKey);
 
     # Check if confKey is defined
     unless (defined $samlSp) {
@@ -180,7 +255,7 @@ sub findSamlSpByConfKey {
       )
     {
         if ($_ =~ $pattern) {
-            push @samlSps, $self->_getSamlSp($conf, $_);
+            push @samlSps, $self->_getSamlSpByConfKey($conf, $_);
         }
     }
 
@@ -207,22 +282,79 @@ sub findSamlSpByEntityId {
     # Get latest configuration
     my $conf = $self->_confAcc->getConf;
 
-    foreach (
-        keys %{
-            $conf->{samlSPMetaDataXML}
-        }
-      )
-    {
-        if ($conf->{samlSPMetaDataXML}->{$_}->{samlSPMetaDataXML} =~ /entityID=['"](.+?)['"]/ && $1 eq $entityId) {
-            return $self->sendJSONresponse(
-                $req, $self->_getSamlSp($conf, $_)
-            );
-        }
+    my $samlSp = $self->_getSamlSpByEntityId($conf, $entityId);
+
+    if (defined $samlSp) {
+        return $self->sendJSONresponse($req, $samlSp);
     }
     return $self->sendJSONresponse($req, {});
 }
 
-sub _getSamlSp {
+sub addSamlSp {
+    my ( $self, $req) = @_;
+
+    my $samlSp = $req->jsonBodyToObj;
+    use Data::Dumper; print STDERR Dumper($samlSp);
+
+    unless (defined $samlSp->{confKey}) {
+      return $self->sendError( $req, 'Invalid input: confKey is missing', 405 );
+    }
+
+    unless (defined $samlSp->{metadata}) {
+      return $self->sendError( $req, 'Invalid input: metadata is missing', 405 );
+    }
+
+    my $entityId = $self->_readSamlSpEntityId($samlSp->{metadata});
+
+    unless (defined $entityId) {
+      return $self->sendError( $req, 'Invalid input: entityID is missing in metadata', 405 );
+    }
+
+    $self->logger->debug("[API] Add SAML SP with confKey $samlSp->{confKey} and entityID $entityId requested");
+
+    # Get latest configuration
+    my $conf = $self->_confAcc->getConf;
+
+    if (defined $self->_getSamlSpByConfKey($conf, $samlSp->{confKey})) {
+      return $self->sendError( $req, "Invalid input: A SAML SP with confKey $samlSp->{confKey} already exists", 405 );
+    }
+
+    if (defined $self->_getSamlSpByEntityId($conf, $entityId)) {
+      return $self->sendError( $req, "Invalid input: A SAML SP with entityID $entityId already exists", 405 );
+    }
+
+    $conf->{samlSPMetaDataXML}->{$samlSp->{confKey}}->{samlSPMetaDataXML} = $samlSp->{metadata};
+
+    my $options;
+    if (defined $samlSp->{options}) {
+        $options = $samlSp->{options};
+    }
+    my $res = $self->_hasAllowedAttributes($options, 'samlSPMetaDataNode', 'samlSPMetaDataOptions');
+    unless ($res->{res} eq 'ok') {
+        return $self->sendError( $req, $res->{message}, 405);
+    }
+    $conf->{samlSPMetaDataOptions}->{$samlSp->{confKey}} = $options;
+
+    $self->logger->debug("options");
+    use Data::Dumper; print STDERR Dumper($options);
+
+    if (defined $samlSp->{exportedAttributes}) {
+        my $res = $self->_readSamlSpExportedAttributes($samlSp->{exportedAttributes});
+        unless ($res->{res} eq 'ok') {
+            return $self->sendError( $req, $res->{message}, 405);
+        }
+        $self->logger->debug("exportedAttributes");
+        use Data::Dumper; print STDERR Dumper($res->{exportedAttributes});
+        $conf->{samlSPMetaDataExportedAttributes}->{$samlSp->{confKey}} = $res->{exportedAttributes};
+    }
+
+    # Save configuration
+    $self->_confAcc->saveConf($conf);
+
+    return $self->sendJSONresponse($req, "Successful operation");
+}
+
+sub _getSamlSpByConfKey {
     my ( $self, $conf, $confKey ) = @_;
 
     # Check if confKey is defined
@@ -276,6 +408,119 @@ sub _getSamlSp {
 
 
     return $samlSp;
+}
+
+sub _getSamlSpByEntityId {
+    my ( $self, $conf, $entityId ) = @_;
+
+    foreach (
+        keys %{
+            $conf->{samlSPMetaDataXML}
+        }
+      )
+    {
+        if ($self->_readSamlSpEntityId($conf->{samlSPMetaDataXML}->{$_}->{samlSPMetaDataXML}) eq $entityId) {
+            return $self->_getSamlSpByConfKey($conf, $_);
+        }
+    }
+    return undef;
+}
+
+sub _readSamlSpEntityId {
+    my ( $self, $metadata ) = @_;
+    if ($metadata =~ /entityID=['"](.+?)['"]/) {
+        return $1;
+    }
+    return undef;
+}
+sub _readSamlSpExportedAttributes {
+    my ( $self, $attrs ) = @_;
+    my $exportedAttributes;
+    my @allowedFormats = [
+      "urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified",
+      "urn:oasis:names:tc:SAML:2.0:attrname-format:uri",
+      "urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
+    ];
+    $self->logger->debug("attributes ");
+    use Data::Dumper; print STDERR Dumper($attrs);
+    foreach (keys %{$attrs}) {
+        $self->logger->debug("parse attribute: $_");
+
+        unless (defined $attrs->{$_}->{name}) {
+            return { res => "ko", message => "Exported attribute $_ has no name"};
+        }
+        my $mandatory = 0;
+        if (defined $attrs->{$_}->{mandatory}) {
+            if ( $attrs->{$_}->{mandatory} eq '1' or $attrs->{$_}->{mandatory} eq 'true' ) {
+                $mandatory = 1;
+            }
+        }
+        my $format = '';
+        if (defined $attrs->{$_}->{format}) {
+            unless (grep {/^$attrs->{$_}->{format}/} @allowedFormats) {
+                return { res => "ko", message => "Exported attribute $_ format does not exist."};
+            }
+            $format = $attrs->{$_}->{format};
+        }
+        my $friendlyName = '';
+        if (defined $attrs->{$_}->{friendlyName}) {
+            $friendlyName = $attrs->{$_}->{friendlyName};
+        }
+        $exportedAttributes->{$_} = "$mandatory;$attrs->{$_}->{name};$format;$friendlyName";
+    }
+    $self->logger->debug("exportedAttributes ");
+    use Data::Dumper; print STDERR Dumper($exportedAttributes);
+
+    return { res => "ok", exportedAttributes => $exportedAttributes };
+}
+
+sub _isSimpleKeyValueHash {
+    my ( $self, $hash) = @_;
+    if (ref($hash) ne "HASH") {
+        return 0;
+    }
+    foreach (keys %{$hash}) {
+        if (ref($hash->{$_}) ne '' || ref($_) ne '') {
+            return 0;
+        }
+    }
+    return 1;
+}
+sub _hasAllowedAttributes {
+    my ( $self, $attributes, $node, $title) = @_;
+
+    my $mainTree = Lemonldap::NG::Manager::Build::CTrees::cTrees();
+
+    my @allowedAttributes = $self->_listAttributes(
+        grep { $_->{title} eq $title } (grep { ref($_) eq "HASH" } @{$mainTree->{$node}})
+    );
+
+    foreach $attribute (keys %{$attributes}) {
+        unless (grep {/^$attribute/} @allowedAttributes) {
+            return {
+                res => "ko",
+                message => "Invalid input: Attribute $attribute does not exist."
+            };
+        }
+    }
+
+    return { res => "ok" };
+}
+
+sub _listAttributes {
+    my ( $self, $node) = @_;
+
+    my @attributes;
+
+    foreach $child (@{$node->{nodes}}) {
+        if (ref($child) eq "HASH"){
+            push (@attributes, $self->_listAttributes($child));
+        } else {
+           push (@attributes, $child);
+        }
+    }
+
+    return @attributes;
 }
 
 1;

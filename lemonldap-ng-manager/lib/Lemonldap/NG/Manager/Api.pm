@@ -61,6 +61,20 @@ sub addRoutes {
             },
         },
         ['GET']
+      )
+
+      ->addRoute(
+        v1 => {
+            providers => {
+                oidc => {
+                    rp => 'addOidcRp'
+                },
+                saml => {
+                    sp => 'addSamlSp'
+                },
+            },
+        },
+        ['POST']
       );
 }
 
