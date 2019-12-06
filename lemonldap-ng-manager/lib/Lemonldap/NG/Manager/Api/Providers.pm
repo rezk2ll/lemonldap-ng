@@ -132,17 +132,11 @@ sub addOidcRp {
     }
     my $displayOptions = $self->_filterAttributes($oidcRp->{options}, 'oidcRPMetaDataNode', ['oidcRPMetaDataOptionsDisplay']);
 
-    $self->logger->debug("displayOptions");
-    use Data::Dumper; print STDERR Dumper($displayOptions);
-
     if ($displayOptions) {
         $conf->{oidcRPMetaDataOptionsDisplay}->{$oidcRp->{confKey}} = $displayOptions;
     }
 
     my $options = $self->_filterAttributes($oidcRp->{options}, 'oidcRPMetaDataNode', ['oidcRPMetaDataOptions']);
-
-    $self->logger->debug("options");
-    use Data::Dumper; print STDERR Dumper($options);
 
     if ($options) {
         $conf->{oidcRPMetaDataOptions}->{$oidcRp->{confKey}} = $options;
