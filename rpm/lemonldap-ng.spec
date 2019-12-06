@@ -29,7 +29,7 @@
 #==============================================================================
 Name:           lemonldap-ng
 Version:        2.0.6
-Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
+Release:        %{?pre_release:0.}2%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
 URL:            http://lemonldap-ng.org
@@ -645,6 +645,11 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Fri Dec 06 2019 Xavier Bachelot <xavier@bachelot.org> - 2.0.6-2
+- Tweak for EL8.
+- Enhance BuildRequires and Requires.
+- Spec clean up.
+
 * Tue Sep 24 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.6-1
 - Update to 2.0.6
 
