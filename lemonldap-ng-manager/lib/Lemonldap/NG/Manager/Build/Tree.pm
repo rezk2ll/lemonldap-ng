@@ -727,6 +727,11 @@ sub tree {
                             nodes =>
                               [ 'decryptValueRule', 'decryptValueFunctions', ]
                         },
+                        {
+                            title => 'customPluginsNode',
+                            help  => 'plugincustom.html',
+                            nodes => [ 'customPlugins', 'customPluginsParams' ]
+                        },
                     ]
                 },
                 {

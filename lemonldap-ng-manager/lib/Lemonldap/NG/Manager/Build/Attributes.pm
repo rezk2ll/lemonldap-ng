@@ -3527,6 +3527,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Custom additional parameters',
         },
 
+        # Custom plugins
+        customPlugins => {
+            type          => 'text',
+            documentation => 'Custom plugins',
+        },
+        customPluginsParams => {
+            type          => 'keyTextContainer',
+            documentation => 'Custom plugins parameters',
+        },
+
         # OpenID Connect auth params
         oidcAuthnLevel => {
             type          => 'int',
