@@ -554,6 +554,10 @@ sub attributes {
             documentation =>
               'Avoid asking confirmation when an Issuer asks to renew auth',
         },
+        refreshSessions => {
+            type          => 'bool',
+            documentation => 'Refresh sessions plugin',
+        },
         forceGlobalStorageIssuerOTT => {
             type => 'bool',
             documentation =>

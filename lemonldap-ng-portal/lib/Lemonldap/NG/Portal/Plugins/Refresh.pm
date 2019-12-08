@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Plugins::Refresh;
 use strict;
 use Mouse;
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.7';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::OtherSessions';
@@ -14,26 +14,31 @@ sub init {
 }
 
 sub run {
-    my ( $self, $req );
-    return $self->p->sendError( $req, 'Bad request', 400 )
+    my ( $self, $req ) = @_;
+    return $self->p->sendError( $req, 'Not a JSON request', 400 )
       unless $req->wantJSON;
     my $info = $req->jsonBodyToObj;
-    return $self->p->sendError( $req, 'Bad request', 400 ) unless $info->{uid};
+    return $self->p->sendError( $req, 'Bad content', 400 ) unless $info->{uid};
     my $sessions =
       $self->module->searchOn( $self->moduleOpts, $self->conf->{whatToTrace},
-        $uid );
-    my $c = 0;
+        $info->{uid} );
+    my $c  = 0;
+    my $nb = scalar( keys %$sessions );
+
     foreach my $id ( keys %$sessions ) {
-        $c++;
         $req->userData(
-            { _session_id => $id, $self->conf->{whatToTrace} => $uid } );
+            { _session_id => $id, $self->conf->{whatToTrace} => $info->{uid} }
+        );
         $req->id($id);
-        $req->user($uid);
-        $self->p->refresh($req);
+        $req->user( $info->{uid} );
+        eval { $self->p->refresh($req); };
+        $self->logger->debug("Refresh: $@") if $@;
+        $c++;
     }
+    $req->userData( {} );
     $req->$_(undef) foreach (qw(user id));
-    $self->userData(                      {} );
-    return $self->sendJSONresponse( $req, { updated => $c } );
+    return $self->sendJSONresponse( $req,
+        { updated => $c, errors => ( $nb - $c ) } );
 }
 
 1;

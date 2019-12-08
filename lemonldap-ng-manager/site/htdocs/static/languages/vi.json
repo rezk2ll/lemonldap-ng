@@ -729,6 +729,7 @@
 "redirectFormMethod":"Phương pháp chuyển hướng mẫu",
 "redirection":"chuyển hướng trình điều khiển",
 "reference":"Tham khảo",
+"refreshSessions":"Refresh sessions API",
 "regexp":"Biểu thức chính quy",
 "regexps":"Biểu thức thông thường",
 "register":"Đăng ký tài khoản mới",

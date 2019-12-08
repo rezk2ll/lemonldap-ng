@@ -729,6 +729,7 @@
 "redirectFormMethod":"Méthode du formulaire de redirection",
 "redirection":"Redirections du Handler",
 "reference":"Référence",
+"refreshSessions":"API de rafraîchissement des sessions",
 "regexp":"Expression régulière",
 "regexps":"Expressions régulières",
 "register":"Créer un nouveau compte",

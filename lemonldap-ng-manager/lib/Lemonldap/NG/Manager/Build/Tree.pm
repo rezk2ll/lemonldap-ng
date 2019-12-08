@@ -732,6 +732,7 @@ sub tree {
                             help  => 'plugincustom.html',
                             nodes => [ 'customPlugins', 'customPluginsParams' ]
                         },
+                        'refreshSessions',
                     ]
                 },
                 {

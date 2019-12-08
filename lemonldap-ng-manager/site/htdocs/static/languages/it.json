@@ -729,6 +729,7 @@
 "redirectFormMethod":"Metodo per il modulo di reindirizzamento",
 "redirection":"Redirezioni del gestore",
 "reference":"Riferimento",
+"refreshSessions":"Refresh sessions API",
 "regexp":"Espressione regolare",
 "regexps":"Espressioni regolari",
 "register":"Registra nuovo account",

@@ -2593,6 +2593,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             ],
             'type' => 'select'
         },
+        'refreshSessions' => {
+            'type' => 'bool'
+        },
         'registerConfirmSubject' => {
             'type' => 'text'
         },

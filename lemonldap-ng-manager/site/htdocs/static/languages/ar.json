@@ -729,6 +729,7 @@
 "redirectFormMethod":"طريقة إعادة توجيه الإستمارة",
 "redirection":"معالج إعادة التوجيه",
 "reference":"مرجع",
+"refreshSessions":"Refresh sessions API",
 "regexp":"التعبير النمطي",
 "regexps":"التعبير النمطي",
 "register":"تسجيل حساب جديد",

@@ -729,6 +729,7 @@
 "redirectFormMethod":"Method for redirect form",
 "redirection":"Handler redirections",
 "reference":"Reference",
+"refreshSessions":"Refresh sessions API",
 "regexp":"Regular expression",
 "regexps":"Regular expressions",
 "register":"Register new account",

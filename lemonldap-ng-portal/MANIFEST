@@ -589,6 +589,7 @@ t/61-ForceAuthn.t
 t/61-GrantSession.t
 t/61-Session-ActivityTimeout.t
 t/61-Session-Timeout.t
+t/62-Refresh-plugin.t
 t/62-SingleSession.t
 t/62-UpgradeSession.t
 t/63-History.t
