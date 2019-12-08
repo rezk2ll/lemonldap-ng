@@ -1031,6 +1031,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'customPassword' => {
             'type' => 'text'
         },
+        'customPlugins' => {
+            'type' => 'text'
+        },
+        'customPluginsParams' => {
+            'type' => 'keyTextContainer'
+        },
         'customRegister' => {
             'type' => 'text'
         },
@@ -2586,6 +2592,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
                 }
             ],
             'type' => 'select'
+        },
+        'refreshSessions' => {
+            'type' => 'bool'
         },
         'registerConfirmSubject' => {
             'type' => 'text'

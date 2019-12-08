@@ -554,6 +554,10 @@ sub attributes {
             documentation =>
               'Avoid asking confirmation when an Issuer asks to renew auth',
         },
+        refreshSessions => {
+            type          => 'bool',
+            documentation => 'Refresh sessions plugin',
+        },
         forceGlobalStorageIssuerOTT => {
             type => 'bool',
             documentation =>
@@ -3525,6 +3529,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         customAddParams => {
             type          => 'keyTextContainer',
             documentation => 'Custom additional parameters',
+        },
+
+        # Custom plugins
+        customPlugins => {
+            type          => 'text',
+            documentation => 'Custom plugins',
+        },
+        customPluginsParams => {
+            type          => 'keyTextContainer',
+            documentation => 'Custom plugins parameters',
         },
 
         # OpenID Connect auth params
