@@ -103,6 +103,20 @@ sub addRoutes {
             },
         },
         ['PATCH']
+      )
+
+      ->addRoute(
+        v1 => {
+            providers => {
+                oidc => {
+                    rp => {':confKey' => 'deleteOidcRp'}
+                },
+                saml => {
+                    sp => {':confKey' => 'deleteSamlSp'}
+                },
+            },
+        },
+        ['DELETE']
       );
 }
 

@@ -105,7 +105,7 @@ sub addOidcRp {
     my $add = $req->jsonBodyToObj;
 
     unless ($add) {
-        return $self->sendError( $req, "Invalid input: Request content could not be parse to json", 404 );
+        return $self->sendError( $req, "Invalid input: " . $req->error, 405 );
     }
 
     unless (defined $add->{confKey}) {
@@ -139,7 +139,7 @@ sub addOidcRp {
         return $self->sendError( $req, $res->{msg}, 405 );
     }
 
-    return $self->sendJSONresponse($req, "Successful operation");
+    return $self->sendJSONresponse($req, { message => "Successful operation" });
 }
 
 sub updateOidcRp {
@@ -151,7 +151,7 @@ sub updateOidcRp {
     my $update = $req->jsonBodyToObj;
 
     unless ($update) {
-      return $self->sendError( $req, "Invalid input: Request content could not be parse to json", 405 );
+      return $self->sendError( $req, "Invalid input: " . $req->error, 405 );
     }
 
     $self->logger->debug("[API] OIDC RP $confKey configuration update requested");
@@ -177,7 +177,7 @@ sub updateOidcRp {
         return $self->sendError( $req, $res->{msg}, 405 );
     }
 
-    return $self->sendJSONresponse($req, "Successful operation");
+    return $self->sendJSONresponse($req, { message => "Successful operation" });
 }
 
 sub replaceOidcRp {
@@ -190,7 +190,7 @@ sub replaceOidcRp {
     my $replace = $req->jsonBodyToObj;
 
     unless ($replace) {
-        return $self->sendError( $req, "Invalid input: Request content could not be parse to json", 405 );
+        return $self->sendError( $req, "Invalid input: " . $req->error, 405 );
     }
 
     unless (defined $replace->{clientId}) {
@@ -218,20 +218,33 @@ sub replaceOidcRp {
         return $self->sendError( $req, $res->{msg}, 405 );
     }
 
-    return $self->sendJSONresponse($req, "Successful operation");
+    return $self->sendJSONresponse($req, { message => "Successful operation" });
 }
 
-sub _isNewOidcRpClientIdUnique {
-    my ( $self, $conf, $confKey, $oidcRp) = @_;
+sub deleteOidcRp {
+    my ( $self, $req ) = @_;
 
-    my $curClientId = $self->_getOidcRpByConfKey($conf, $confKey)->{clientId};
-    my $newClientId = $oidcRp->{clientId} || $oidcRp->{options}->{oidcRPMetaDataOptionsClientID} || "";
-    if ($newClientId ne '' && $newClientId ne $curClientId) {
-        if ( defined $self->_getOidcRpByClientId($conf, $newClientId) ) {
-            return { res => 'ko' , msg => "An OIDC relying party with clientId '$newClientId' already exists" };
-        }
+    my $confKey = $req->params('confKey')
+      or return $self->sendError( $req, 'confKey is missing', 400 );
+
+    # Get latest configuration
+    my $conf = $self->_confAcc->getConf;
+
+    my $delete = $self->_getOidcRpByConfKey($conf, $confKey);
+
+    # Return 404 if not found
+    unless (defined  $delete) {
+        return $self->sendError( $req, "OIDC relying party '$confKey' not found", 404 );
     }
-    return { res => 'ok' };
+
+    delete $conf->{oidcRPMetaDataOptions}->{$confKey};
+    delete $conf->{oidcRPMetaDataExportedVars}->{$confKey};
+    delete $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey};
+
+    # Save configuration
+    $self->_confAcc->saveConf($conf);
+
+    return $self->sendJSONresponse($req, { message => "Successful operation" });
 }
 
 sub _getOidcRpByConfKey {
@@ -280,13 +293,25 @@ sub _getOidcRpByClientId {
     return undef;
 }
 
+sub _isNewOidcRpClientIdUnique {
+    my ( $self, $conf, $confKey, $oidcRp) = @_;
+
+    my $curClientId = $self->_getOidcRpByConfKey($conf, $confKey)->{clientId};
+    my $newClientId = $oidcRp->{clientId} || $oidcRp->{options}->{oidcRPMetaDataOptionsClientID} || "";
+    if ($newClientId ne '' && $newClientId ne $curClientId) {
+        if ( defined $self->_getOidcRpByClientId($conf, $newClientId) ) {
+            return { res => 'ko' , msg => "An OIDC relying party with clientId '$newClientId' already exists" };
+        }
+    }
+    return { res => 'ok' };
+}
+
 sub _pushOidcRp {
     my ( $self, $conf, $confKey, $push, $replace) = @_;
 
     if ($replace) {
         $conf->{oidcRPMetaDataOptions}->{$confKey} = {};
         $conf->{oidcRPMetaDataExportedVars}->{$confKey} = {};
-        $conf->{samlSPMetaDataExportedAttributes}->{$confKey} = {};
         $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey} = {};
     }
 
@@ -418,7 +443,7 @@ sub addSamlSp {
     my $add = $req->jsonBodyToObj;
 
     unless ($add) {
-        return $self->sendError( $req, "Invalid input: Request content could not be parse to json", 404 );
+        return $self->sendError( $req, "Invalid input: " . $req->error, 405 );
     }
 
     unless (defined $add->{confKey}) {
@@ -453,7 +478,7 @@ sub addSamlSp {
         return $self->sendError( $req, $res->{msg}, 405 );
     }
 
-    return $self->sendJSONresponse($req, "Successful operation");
+    return $self->sendJSONresponse($req, { message => "Successful operation" });
 }
 
 sub replaceSamlSp {
@@ -465,7 +490,7 @@ sub replaceSamlSp {
     my $replace = $req->jsonBodyToObj;
 
     unless ($replace) {
-        return $self->sendError( $req, "Invalid input: Request content could not be parse to json", 405 );
+        return $self->sendError( $req, "Invalid input: " . $req->error, 405 );
     }
 
     unless (defined $replace->{metadata}) {
@@ -493,7 +518,7 @@ sub replaceSamlSp {
         return $self->sendError( $req, $res->{msg}, 405 );
     }
 
-    return $self->sendJSONresponse($req, "Successful operation");
+    return $self->sendJSONresponse($req, { message => "Successful operation" });
 }
 
 sub updateSamlSp {
@@ -505,7 +530,7 @@ sub updateSamlSp {
     my $update = $req->jsonBodyToObj;
 
     unless ($update) {
-      return $self->sendError( $req, "Invalid input: Request content could not be parse to json", 405 );
+      return $self->sendError( $req, "Invalid input: " . $req->error, 405 );
     }
 
     $self->logger->debug("[API] SAML SP $confKey configuration update requested");
@@ -533,8 +558,34 @@ sub updateSamlSp {
         return $self->sendError( $req, $res->{msg}, 405 );
     }
 
-    return $self->sendJSONresponse($req, "Successful operation");
+    return $self->sendJSONresponse($req, { message => "Successful operation" });
 
+}
+
+sub deleteSamlSp {
+    my ( $self, $req ) = @_;
+
+    my $confKey = $req->params('confKey')
+      or return $self->sendError( $req, 'confKey is missing', 400 );
+
+    # Get latest configuration
+    my $conf = $self->_confAcc->getConf;
+
+    my $delete = $self->_getSamlSpByConfKey($conf, $confKey);
+
+    # Return 404 if not found
+    unless (defined  $delete) {
+        return $self->sendError( $req, "SAML service provider '$confKey' not found", 404 );
+    }
+
+    delete $conf->{samlSPMetaDataXML}->{$confKey};
+    delete $conf->{samlSPMetaDataOptions}->{$confKey};
+    delete $conf->{samlSPMetaDataExportedAttributes}->{$confKey};
+
+    # Save configuration
+    $self->_confAcc->saveConf($conf);
+
+    return $self->sendJSONresponse($req, { message => "Successful operation" });
 }
 
 sub _getSamlSpByConfKey {
