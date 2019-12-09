@@ -3,6 +3,7 @@ our $VERSION = '2.0.7';
 
 package Lemonldap::NG::Manager::Api;
 
+use Lemonldap::NG::Manager::Build::Attributes;
 use Lemonldap::NG::Manager::Build::CTrees;
 use Scalar::Util 'weaken';
 
@@ -46,7 +47,7 @@ sub findOidcRpByConfKey {
     );
 
     unless (defined $pattern) {
-      return $self->sendError( $req, 'pattern is missing', 405 );
+      return $self->sendError( $req, 'Invalid input: pattern is missing', 405 );
     }
 
     $self->logger->debug("[API] Find OIDC RPs by confKey regexp $pattern requested");
@@ -82,7 +83,7 @@ sub findOidcRpByClientId {
     );
 
     unless (defined $clientId) {
-      return $self->sendError( $req, 'clientId is missing', 405 );
+      return $self->sendError( $req, 'Invalid input: clientId is missing', 405 );
     }
 
     $self->logger->debug("[API] Find OIDC RPs by clientId $clientId requested");
@@ -133,7 +134,7 @@ sub addOidcRp {
     }
     $add->{options}->{oidcRPMetaDataOptionsClientID} = $add->{clientId};
 
-    $res = $self->_pushOidcRp($conf, $add->{confKey}, $add, 0);
+    $res = $self->_pushOidcRp($conf, $add->{confKey}, $add, 1);
     unless ($res->{res} eq 'ok') {
         return $self->sendError( $req, $res->{msg}, 405 );
     }
@@ -289,10 +290,13 @@ sub _pushOidcRp {
         $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey} = {};
     }
 
-    if (defined $push->{options}) {
+    if (defined $push->{options} || $replace) {
         $res = $self->_hasAllowedAttributes($push->{options}, 'oidcRPMetaDataNode');
         unless ($res->{res} eq 'ok') {
             return $res;
+        }
+        if ($replace) {
+            $push->{options} = $self->_setDefaultValues($push->{options}, 'oidcRPMetaDataNode');
         }
         $conf->{oidcRPMetaDataOptions}->{$confKey} = $push->{options};
     }
@@ -356,7 +360,7 @@ sub findSamlSpByConfKey {
     );
 
     unless (defined $pattern) {
-      return $self->sendError( $req, 'pattern is missing', 405 );
+      return $self->sendError( $req, 'Invalid input: pattern is missing', 405 );
     }
 
     $self->logger->debug("[API] Find SAML SPs by confKey regexp $pattern requested");
@@ -444,7 +448,7 @@ sub addSamlSp {
       return $self->sendError( $req, "Invalid input: A SAML SP with entityID $entityId already exists", 405 );
     }
 
-    $res = $self->_pushSamlSp($conf, $add->{confKey}, $add, 0);
+    $res = $self->_pushSamlSp($conf, $add->{confKey}, $add, 1);
     unless ($res->{res} eq 'ok') {
         return $self->sendError( $req, $res->{msg}, 405 );
     }
@@ -666,6 +670,9 @@ sub _pushSamlSp {
         }
         $conf->{samlSPMetaDataOptions}->{$confKey} = $push->{options};
     }
+    if ($replace) {
+        $push->{options} = $self->_setDefaultValues($push->{options}, 'samlSPMetaDataNode');
+    }
 
     if (defined $push->{exportedAttributes}) {
         my $res = $self->_readSamlSpExportedAttributes($push->{exportedAttributes});
@@ -705,6 +712,23 @@ sub _isSimpleKeyValueHash {
     }
     return 1;
 }
+
+sub _setDefaultValues {
+    my ( $self, $attrs, $rootNode) = @_;
+    my @allAttrs = $self->_listAttributes($rootNode);
+    my $defaultAttrs = Lemonldap::NG::Manager::Build::Attributes::attributes();
+
+    foreach $attr (@allAttrs) {
+        unless (defined $attrs->{$attr}) {
+            if (defined $defaultAttrs->{$attr} && defined $defaultAttrs->{$attr}->{default}) {
+                $attrs->{$attr} = $defaultAttrs->{$attr}->{default};
+            }
+        }
+    }
+
+    return $attrs;
+}
+
 sub _hasAllowedAttributes {
     my ( $self, $attributes, $rootNode) = @_;
 
