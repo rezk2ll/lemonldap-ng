@@ -75,6 +75,34 @@ sub addRoutes {
             },
         },
         ['POST']
+      )
+
+      ->addRoute(
+        v1 => {
+            providers => {
+                oidc => {
+                    rp => {':confKey' => 'replaceOidcRp'}
+                },
+                saml => {
+                    sp => {':confKey' => 'replaceSamlSp'}
+                },
+            },
+        },
+        ['PUT']
+      )
+
+      ->addRoute(
+        v1 => {
+            providers => {
+                oidc => {
+                    rp => {':confKey' => 'updateOidcRp'}
+                },
+                saml => {
+                    sp => {':confKey' => 'updateSamlSp'}
+                },
+            },
+        },
+        ['PATCH']
       );
 }
 
