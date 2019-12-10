@@ -8,6 +8,7 @@ require 't/test-psgi-lib.pm';
 init('Lemonldap::NG::Handler::PSGI');
 
 my $res;
+my $SKIPUSER = 0;
 
 # Unauthentified query
 # --------------------
@@ -36,27 +37,42 @@ ok( $res->[0] == 200, 'Code is 200' ) or explain( $res, 200 );
 count(2);
 
 # Request an URI protected by custom function -> allowed
-ok( $res = $client->_get( '/test-uri1/dwho', undef, undef, "lemonldap=$sessionId" ),
-    'Authentified query' );
+ok(
+    $res =
+      $client->_get( '/test-uri1/dwho', undef, undef, "lemonldap=$sessionId" ),
+    'Authentified query'
+);
 ok( $res->[0] == 200, '/test-uri1 -> Code is 200' ) or explain( $res, 200 );
 count(2);
 
 # Request an URI protected by custom function -> allowed
-ok( $res = $client->_get( '/test-uri2/dwho/dummy', undef, undef, "lemonldap=$sessionId" ),
-    'Authentified query' );
+ok(
+    $res = $client->_get(
+        '/test-uri2/dwho/dummy', undef, undef, "lemonldap=$sessionId"
+    ),
+    'Authentified query'
+);
 ok( $res->[0] == 200, '/test-uri2 -> Code is 200' ) or explain( $res, 200 );
 count(2);
 
 # Request an URI protected by custom function -> denied
-ok( $res = $client->_get( '/test-uri1/dwho/', undef, undef, "lemonldap=$sessionId" ),
-    'Denied query' );
-ok( $res->[0] == 403, '/test-uri1 -> Code is 403' ) or explain( $res->[0], 403 );
+ok(
+    $res =
+      $client->_get( '/test-uri1/dwho/', undef, undef, "lemonldap=$sessionId" ),
+    'Denied query'
+);
+ok( $res->[0] == 403, '/test-uri1 -> Code is 403' )
+  or explain( $res->[0], 403 );
 count(2);
 
 # Request an URI protected by custom function -> denied
-ok( $res = $client->_get( '/test-uri1/dwh', undef, undef, "lemonldap=$sessionId" ),
-    'Denied query' );
-ok( $res->[0] == 403, '/test-uri1 -> Code is 403' ) or explain( $res->[0], 403 );
+ok(
+    $res =
+      $client->_get( '/test-uri1/dwh', undef, undef, "lemonldap=$sessionId" ),
+    'Denied query'
+);
+ok( $res->[0] == 403, '/test-uri1 -> Code is 403' )
+  or explain( $res->[0], 403 );
 count(2);
 
 # Denied query
@@ -136,14 +152,25 @@ ok(
   );
 count(3);
 
+ok( $res = $client->_get( '/skipif/za', undef, 'test1.example.com' ),
+    'Test skip() rule 1' );
+ok( $res->[0] == 302, 'Code is 302' ) or explain( $res, 302 );
+$SKIPUSER = 1;
+ok( $res = $client->_get( '/skipif/zz', undef, 'test1.example.com' ),
+    'Test skip() rule 2' );
+ok( $res->[0] == 200, 'Code is 200' ) or explain( $res, 200 );
+count(4);
+
 done_testing( count() );
 
 clean();
 
 sub Lemonldap::NG::Handler::PSGI::handler {
     my ( $self, $req ) = @_;
-    ok( $req->env->{HTTP_AUTH_USER} eq 'dwho', 'Header is given to app' )
-      or explain( $req->env->{HTTP_AUTH_USER}, 'dwho' );
-    count(1);
+    unless ($SKIPUSER) {
+        ok( $req->env->{HTTP_AUTH_USER} eq 'dwho', 'Header is given to app' )
+          or explain( $req->env->{HTTP_AUTH_USER}, 'dwho' );
+        count(1);
+    }
     return [ 200, [ 'Content-Type', 'text/plain' ], ['Hello'] ];
 }
