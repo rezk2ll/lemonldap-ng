@@ -192,6 +192,11 @@ sub run {
         $class->cleanHeaders($req);
         return $class->OK;
     }
+    elsif ( $protection == $class->MAYSKIP
+        and $class->grant( $req, $session, $uri, $cond ) eq '999_SKIP' )
+    {
+        return $class->OK;
+    }
 
     else {
 
@@ -440,7 +445,7 @@ sub fetchId {
     my $value =
       $lookForHttpCookie
       ? ( $t =~ /${cn}http=([^,; ]+)/o ? $1 : 0 )
-      : ( $t =~ /$cn=([^,; ]+)/o ? $1 : 0 );
+      : ( $t =~ /$cn=([^,; ]+)/o       ? $1 : 0 );
 
     if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
         $value = $class->tsv->{cipher}->decryptHex( $value, "http" );
