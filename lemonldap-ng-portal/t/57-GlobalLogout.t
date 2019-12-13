@@ -201,7 +201,7 @@ ok(
 );
 expectRedirection( $res, 'http://auth.example.com/' );
 
-my $nbr = count_sessions();
+$nbr = count_sessions();
 ok( $nbr == 3, "Three sessions found" )
   or explain("Number of session(s) found = $nbr");
 count(4);
