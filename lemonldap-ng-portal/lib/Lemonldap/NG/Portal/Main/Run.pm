@@ -174,8 +174,8 @@ sub refresh {
     $self->logger->debug(
         "Set session $req->{id} _updateTime with $data{_updateTime}");
     $req->steps( [
-            'getUser',
-            @{ $self->betweenAuthAndData },
+            #'getUser',                      Fix #2005
+            #@{ $self->betweenAuthAndData },
             'setAuthSessionInfo',
             'setSessionInfo',
             'setMacros',
