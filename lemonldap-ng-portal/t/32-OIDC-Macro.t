@@ -51,7 +51,7 @@ ok(
     "Post authentication,        endpoint $url"
 );
 my $idpId = expectCookie($res);
-my ($code) = expectRedirection( $res, qr#http://rp.com/\?code=([^&]+)# );
+my ($code) = expectRedirection( $res, qr#http://rp.com/\?.*code=([^&]+)# );
 
 # Get access token
 $query =
