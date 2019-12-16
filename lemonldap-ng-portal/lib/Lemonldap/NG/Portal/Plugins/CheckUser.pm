@@ -354,7 +354,7 @@ sub _userData {
     my ( $self, $req ) = @_;
 
     # Compute session
-    my $steps = [ 'getUser', 'setSessionInfo', 'setMacros', 'setGroups' ];
+    my $steps = [ 'getUser', 'setSessionInfo', $self->p->groupsAndMacros, ];
     $self->conf->{checkUserDisplayPersistentInfo}
       ? push @$steps, 'setPersistentSessionInfo', 'setLocalGroups'
       : push @$steps, 'setLocalGroups';

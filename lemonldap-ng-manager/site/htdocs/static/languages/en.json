@@ -323,6 +323,7 @@
 "gpgParams":"GPG parameters",
 "grantSessionRules":"Opening conditions",
 "groups":"Groups",
+"groupsBeforeMacros":"Compute groups before macros",
 "hashkey":"Key",
 "headers":"HTTP Headers",
 "hGroups":"Groups (HashRef)",

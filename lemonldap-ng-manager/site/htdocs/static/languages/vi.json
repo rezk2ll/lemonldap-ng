@@ -323,6 +323,7 @@
 "gpgParams":"Tham số GPG",
 "grantSessionRules":"Điều kiện mở",
 "groups":"Nhóm",
+"groupsBeforeMacros":"Compute groups before macros",
 "hashkey":"Khóa",
 "headers":"Tiêu đề HTTP",
 "hGroups":"Nhóm (HashRef)",

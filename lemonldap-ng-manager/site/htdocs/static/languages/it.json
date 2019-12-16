@@ -323,6 +323,7 @@
 "gpgParams":"Parametri GPG",
 "grantSessionRules":"Condizioni di apertura",
 "groups":"Gruppi",
+"groupsBeforeMacros":"Compute groups before macros",
 "hashkey":"Chiave",
 "headers":"Intestazioni HTTP",
 "hGroups":"Gruppi  (HashRef)",

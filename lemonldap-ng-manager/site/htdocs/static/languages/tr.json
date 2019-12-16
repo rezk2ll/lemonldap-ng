@@ -323,6 +323,7 @@
 "gpgParams":"GPG parametreleri",
 "grantSessionRules":"Açılış koşulları",
 "groups":"Gruplar",
+"groupsBeforeMacros":"Compute groups before macros",
 "hashkey":"Anahtar",
 "headers":"HTTP Başlıkları",
 "hGroups":"Gruplar (HashRef)",

@@ -1381,8 +1381,8 @@ sub token {
             $req->user( $refreshSession->data->{_session_uid} );
             $req->steps( [
                     'getUser',        @{ $self->p->betweenAuthAndData },
-                    'setSessionInfo', 'setMacros',
-                    'setGroups',      'setLocalGroups',
+                    'setSessionInfo', $self->p->groupsAndMacros,
+                    'setLocalGroups',
                 ]
             );
             $req->{error} = $self->p->process($req);
