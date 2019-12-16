@@ -3328,7 +3328,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         restAuthUrl   => { type => 'url' },
         restUserDBUrl => { type => 'url' },
 
-        # TODO: add restMailDBUrl
         restPwdConfirmUrl => { type => 'url' },
         restPwdModifyUrl  => { type => 'url' },
 

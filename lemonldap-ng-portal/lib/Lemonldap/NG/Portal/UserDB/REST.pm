@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::UserDB::REST;
 
 use strict;
 use Mouse;
+use JSON;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_OK
@@ -31,12 +32,13 @@ sub getUser {
     my ( $self, $req, %args ) = @_;
     my $res;
     $res = eval {
-        $self->restCall( (
-                  $args{useMail}
-                ? $self->conf->{restMailDBUrl} || $self->conf->{restUserDBUrl}
-                : $self->conf->{restUserDBUrl}
-            ),
-            { user => $req->user }
+        $self->restCall(
+            $self->conf->{restUserDBUrl},
+            {
+                ( $args{useMail} ? 'mail' : 'user' ) => $req->user,
+                'useMail' => ( $args{useMail} ? JSON::true : JSON::false ),
+
+            }
         );
     };
     if ($@) {
