@@ -273,4 +273,7 @@ checkDeleteNotFound($test, '/oidc/rp', 'newOidcRp');
 
 # TODO samlSP
 
+# Clean up generated conf files, except for "lmConf-1.json"
+unlink grep { $_ ne "t/conf/lmConf-1.json" } glob "t/conf/lmConf-*.json";
+
 done_testing( );
