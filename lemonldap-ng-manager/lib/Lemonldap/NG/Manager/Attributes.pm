@@ -674,6 +674,17 @@ sub attributes {
             },
             'type' => 'keyTextContainer'
         },
+        'casAppMetaDataMacros' => {
+            'default' => {},
+            'test'    => {
+                'keyMsgFail' => '__badMacroName__',
+                'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                'test'       => sub {
+                    return perlExpr(@_);
+                }
+            },
+            'type' => 'keyTextContainer'
+        },
         'casAppMetaDataNodes' => {
             'type' => 'casAppMetaDataNodeContainer'
         },
@@ -1030,6 +1041,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'customPassword' => {
             'type' => 'text'
+        },
+        'customPlugins' => {
+            'type' => 'text'
+        },
+        'customPluginsParams' => {
+            'type' => 'keyTextContainer'
         },
         'customRegister' => {
             'type' => 'text'
@@ -1987,6 +2004,17 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             },
             'type' => 'keyTextContainer'
         },
+        'oidcRPMetaDataMacros' => {
+            'default' => {},
+            'test'    => {
+                'keyMsgFail' => '__badMacroName__',
+                'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                'test'       => sub {
+                    return perlExpr(@_);
+                }
+            },
+            'type' => 'keyTextContainer'
+        },
         'oidcRPMetaDataNodes' => {
             'type' => 'oidcRPMetaDataNodeContainer'
         },
@@ -2587,6 +2615,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             ],
             'type' => 'select'
         },
+        'refreshSessions' => {
+            'type' => 'bool'
+        },
         'registerConfirmSubject' => {
             'type' => 'text'
         },
@@ -3160,6 +3191,17 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'msgFail'    => '__badValue__',
             'test'       => qr/\w/,
             'type'       => 'samlAttributeContainer'
+        },
+        'samlSPMetaDataMacros' => {
+            'default' => {},
+            'test'    => {
+                'keyMsgFail' => '__badMacroName__',
+                'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                'test'       => sub {
+                    return perlExpr(@_);
+                }
+            },
+            'type' => 'keyTextContainer'
         },
         'samlSPMetaDataNodes' => {
             'type' => 'samlSPMetaDataNodeContainer'

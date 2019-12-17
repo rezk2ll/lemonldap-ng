@@ -627,6 +627,19 @@ sub tests {
             return 1;
         },
 
+        # Warn if ldapPpolicyControl is used with AD (#2007)
+
+        ppolicyAd => sub {
+            if (    $conf->{ldapPpolicyControl}
+                and $conf->{authentication} eq "AD" )
+            {
+                return ( 1,
+"LDAP password policy control should be disabled when using AD authentication"
+                );
+            }
+            return 1;
+        },
+
         # Warn if bruteForceProtection enabled without History
         bruteForceProtection => sub {
             return 1 unless ( $conf->{bruteForceProtection} );

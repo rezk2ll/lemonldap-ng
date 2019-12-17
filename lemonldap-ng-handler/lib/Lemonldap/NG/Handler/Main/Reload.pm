@@ -13,6 +13,7 @@ use Scalar::Util qw(weaken);
 
 use constant UNPROTECT => 1;
 use constant SKIP      => 2;
+use constant MAYSKIP   => 3;
 
 our @_onReload;
 
@@ -546,6 +547,9 @@ sub conditionSub {
         );
     }
 
+    my $mayskip = 0;
+    $mayskip = MAYSKIP if $cond =~ /\bskip\b/;
+
     # Replace some strings in condition
     $cond = $class->substitute($cond);
     my $sub;
@@ -555,7 +559,7 @@ sub conditionSub {
     }
 
     # Return sub and protected flag
-    return ( $sub, 0 );
+    return ( $sub, $mayskip );
 }
 
 ## @method arrayref aliasInit
@@ -589,6 +593,7 @@ sub substitute {
     $expr =~ s/\$(?!(?:ENV|env)\b)(_\w+|[a-zA-Z]\w*)/\$s->{$1}/sg;
     $expr =~ s/\$ENV\{/\$r->{env}->\{/g;
     $expr =~ s/\$env->\{/\$r->{env}->\{/g;
+    $expr =~ s/\bskip\b/q\{999_SKIP\}/g;
 
     return $expr;
 }

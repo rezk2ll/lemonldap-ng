@@ -37,6 +37,7 @@ has oidcOPList   => ( is => 'rw', default => sub { {} }, );
 has oidcRPList   => ( is => 'rw', default => sub { {} }, );
 has rpAttributes => ( is => 'rw', default => sub { {} }, );
 has spRules      => ( is => 'rw', default => sub { {} } );
+has spMacros     => ( is => 'rw', default => sub { {} } );
 
 # return LWP::UserAgent object
 has ua => (
@@ -131,6 +132,22 @@ sub loadRPs {
                 return 0;
             }
             $self->spRules->{$rp} = $rule;
+        }
+
+        # Load per-RP macros
+        my $macros = $self->conf->{oidcRPMetaDataMacros}->{$rp};
+        for my $macroAttr ( keys %{$macros} ) {
+            my $macroRule = $macros->{$macroAttr};
+            if ( length $macroRule ) {
+                $macroRule = $self->p->HANDLER->substitute($macroRule);
+                unless ( $macroRule = $self->p->HANDLER->buildSub($macroRule) )
+                {
+                    $self->error( 'OIDC RP macro error: '
+                          . $self->p->HANDLER->tsv->{jail}->error );
+                    return 0;
+                }
+                $self->spMacros->{$rp}->{$macroAttr} = $macroRule;
+            }
         }
     }
     return 1;
@@ -1299,11 +1316,11 @@ sub getAttributesListFromClaim {
 # @param user_session_id User session identifier
 # @return hashref UserInfo data
 sub buildUserInfoResponseFromId {
-    my ( $self, $scope, $rp, $user_session_id ) = @_;
+    my ( $self, $req, $scope, $rp, $user_session_id ) = @_;
     my $session = $self->p->getApacheSession($user_session_id);
 
     return undef unless ($session);
-    return buildUserInfoResponse( $self, $scope, $rp, $session );
+    return buildUserInfoResponse( $self, $req, $scope, $rp, $session );
 }
 
 # Return Hash of UserInfo data
@@ -1312,7 +1329,7 @@ sub buildUserInfoResponseFromId {
 # @param session SSO or offline session
 # @return hashref UserInfo data
 sub buildUserInfoResponse {
-    my ( $self, $scope, $rp, $session ) = @_;
+    my ( $self, $req, $scope, $rp, $session ) = @_;
     my $userinfo_response = {};
 
     my $user_id_attribute =
@@ -1335,7 +1352,19 @@ sub buildUserInfoResponse {
             my $session_key =
               $self->conf->{oidcRPMetaDataExportedVars}->{$rp}->{$attribute};
             if ($session_key) {
-                my $session_value = $session->data->{$session_key};
+
+                my $session_value;
+
+                # Lookup attribute in macros first
+                if ( $self->spMacros->{$rp}->{$session_key} ) {
+                    $session_value = $self->spMacros->{$rp}->{$session_key}
+                      ->( $req, $session->data );
+
+                    # If not found, search in session
+                }
+                else {
+                    $session_value = $session->data->{$session_key};
+                }
 
                 # Address is a JSON object
                 if ( $claim eq "address" ) {
