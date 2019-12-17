@@ -8,7 +8,8 @@ use Mouse;
 extends 'Lemonldap::NG::Common::Conf::RESTServer';
 
 use Lemonldap::NG::Manager::Api::2F;
-use Lemonldap::NG::Manager::Api::Providers;
+use Lemonldap::NG::Manager::Api::Providers::OidcRp;
+use Lemonldap::NG::Manager::Api::Providers::SamlSp;
 
 our $VERSION = '2.0.7';
 
