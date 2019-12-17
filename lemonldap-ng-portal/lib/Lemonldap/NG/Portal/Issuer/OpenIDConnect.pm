@@ -1245,7 +1245,7 @@ sub token {
         my $id_token_acr = "loa-" . $apacheSession->data->{authenticationLevel};
 
         my $id_token_payload_hash = {
-            iss => $self->conf->{oidcServiceMetaDataIssuer}, # Issuer Identifier
+            iss => $self->iss,       # Issuer Identifier
             sub => $user_id,         # Subject Identifier
             aud => [$client_id],     # Audience
             exp => $id_token_exp,    # expiration
@@ -1464,7 +1464,7 @@ sub token {
         my $id_token_acr = "loa-0";
 
         my $id_token_payload_hash = {
-            iss => $self->conf->{oidcServiceMetaDataIssuer}, # Issuer Identifier
+            iss => $self->iss,       # Issuer Identifier
             sub => $user_id,         # Subject Identifier
             aud => [$client_id],     # Audience
             exp => $id_token_exp,    # expiration
