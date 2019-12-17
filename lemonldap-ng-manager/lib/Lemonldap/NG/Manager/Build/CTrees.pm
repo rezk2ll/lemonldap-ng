@@ -138,7 +138,8 @@ sub cTrees {
                         ]
                     }
                 ]
-            }
+            },
+            "samlSPMetaDataMacros",
         ],
         oidcOPMetaDataNode => [
             'oidcOPMetaDataJSON',
@@ -224,6 +225,7 @@ sub cTrees {
                     'oidcRPMetaDataOptionsRule',
                 ]
             },
+            'oidcRPMetaDataMacros',
             {
                 title => 'oidcRPMetaDataOptionsDisplay',
                 form  => 'simpleInputContainer',
@@ -266,6 +268,7 @@ sub cTrees {
                     'casAppMetaDataOptionsRule'
                 ]
             },
+            'casAppMetaDataMacros',
         ],
     };
 }

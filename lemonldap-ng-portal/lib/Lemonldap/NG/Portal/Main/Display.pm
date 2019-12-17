@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -264,6 +264,7 @@ sub display {
         or (    $self->conf->{authentication} eq 'Combination'
             and $req->{error} > PE_OK
             and $req->{error} != PE_FIRSTACCESS
+            and $req->{error} != PE_BADCREDENTIALS
             and $req->{error} != PE_PP_PASSWORD_EXPIRED )
 
        # and ( $req->{error} == PE_TOKENEXPIRED or $req->{error} == PE_NOTOKEN )

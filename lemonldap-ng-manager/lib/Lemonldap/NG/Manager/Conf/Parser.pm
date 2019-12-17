@@ -334,7 +334,7 @@ sub _scanNodes {
                     hdebug("  SAML data is an array, serializing");
                     $leaf->{data} = join ';', @{ $leaf->{data} };
                 }
-                if ( $target =~ /^saml(?:S|ID)PMetaDataExportedAttributes$/ ) {
+                if ( $target =~ /^saml(?:S|ID)PMetaData(?:ExportedAttributes|Macros)$/ ) {
                     if ( $leaf->{cnodes} ) {
                         hdebug("  $target: unopened node");
                         $self->newConf->{$target}->{$key} =
@@ -394,7 +394,7 @@ sub _scanNodes {
                     hdebug("  $target");
                     $self->set( $target, $key, $leaf->{data} );
                 }
-                elsif ( $target =~ /^oidc(?:O|R)PMetaDataExportedVars$/ ) {
+                elsif ( $target =~ /^oidc(?:O|R)PMetaData(?:ExportedVars|Macros)$/ ) {
                     hdebug("  $target");
                     if ( $leaf->{cnodes} ) {
                         hdebug('    unopened');
@@ -463,7 +463,7 @@ sub _scanNodes {
                     $self->_scanNodes($subNodes);
                     $self->set( $target, $key, $leaf->{title}, $leaf->{data} );
                 }
-                elsif ( $target =~ /^cas(?:App|Srv)MetaDataExportedVars$/ ) {
+                elsif ( $target =~ /^cas(?:App|Srv)MetaData(?:ExportedVars|Macros)$/ ) {
                     hdebug("  $target");
                     if ( $leaf->{cnodes} ) {
                         hdebug('    unopened');

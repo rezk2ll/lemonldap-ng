@@ -781,7 +781,7 @@ sub run {
                     # No access_token
                     # Claims must be set in id_token
                     my $claims =
-                      $self->buildUserInfoResponseFromId(
+                      $self->buildUserInfoResponseFromId( $req,
                         $oidc_request->{'scope'},
                         $rp, $req->id );
 
@@ -926,7 +926,8 @@ sub run {
 
                         # No access_token
                         # Claims must be set in id_token
-                        my $claims = $self->buildUserInfoResponseFromId(
+                        my $claims =
+                          $self->buildUserInfoResponseFromId( $req,
                             $oidc_request->{'scope'},
                             $rp, $req->id );
 
@@ -1261,9 +1262,10 @@ sub token {
         $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
 
         if ( $self->force_id_claims($rp) ) {
-            my $claims =
-              $self->buildUserInfoResponseFromId( $codeSession->data->{'scope'},
-                $rp, $codeSession->data->{user_session_id} );
+            my $claims = $self->buildUserInfoResponseFromId(
+                $req, $codeSession->data->{'scope'},
+                $rp,  $codeSession->data->{user_session_id}
+            );
 
             foreach ( keys %$claims ) {
                 $id_token_payload_hash->{$_} = $claims->{$_}
@@ -1481,7 +1483,8 @@ sub token {
         # If we forced sending claims in ID token
         if ( $self->force_id_claims($rp) ) {
             my $claims =
-              $self->buildUserInfoResponse( $refreshSession->data->{scope},
+              $self->buildUserInfoResponse( $req,
+                $refreshSession->data->{scope},
                 $rp, $session );
 
             foreach ( keys %$claims ) {
@@ -1594,7 +1597,7 @@ sub userInfo {
     }
 
     my $userinfo_response =
-      $self->buildUserInfoResponse( $scope, $rp, $session );
+      $self->buildUserInfoResponse( $req, $scope, $rp, $session );
     unless ($userinfo_response) {
         return $self->returnBearerError( 'invalid_request', 'Invalid request',
             401 );

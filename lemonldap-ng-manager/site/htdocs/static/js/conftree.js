@@ -57,6 +57,14 @@ function templates(tpl,key) {
       "id" : "casAppMetaDataOptions",
       "title" : "casAppMetaDataOptions",
       "type" : "simpleInputContainer"
+   },
+   {
+      "cnodes" : tpl+"s/"+key+"/"+"casAppMetaDataMacros",
+      "default" : [],
+      "help" : "exportedvars.html#extend_variables_using_macros_and_groups",
+      "id" : tpl+"s/"+key+"/"+"casAppMetaDataMacros",
+      "title" : "casAppMetaDataMacros",
+      "type" : "keyTextContainer"
    }
 ]
 ;
@@ -578,6 +586,14 @@ function templates(tpl,key) {
       ],
       "id" : "oidcRPMetaDataOptions",
       "title" : "oidcRPMetaDataOptions"
+   },
+   {
+      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
+      "default" : [],
+      "help" : "exportedvars.html#extend_variables_using_macros_and_groups",
+      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
+      "title" : "oidcRPMetaDataMacros",
+      "type" : "keyTextContainer"
    },
    {
       "_nodes" : [
@@ -1120,6 +1136,14 @@ function templates(tpl,key) {
       "help" : "idpsaml.html#options",
       "id" : "samlSPMetaDataOptions",
       "title" : "samlSPMetaDataOptions"
+   },
+   {
+      "cnodes" : tpl+"s/"+key+"/"+"samlSPMetaDataMacros",
+      "default" : [],
+      "help" : "exportedvars.html#extend_variables_using_macros_and_groups",
+      "id" : tpl+"s/"+key+"/"+"samlSPMetaDataMacros",
+      "title" : "samlSPMetaDataMacros",
+      "type" : "keyTextContainer"
    }
 ]
 ;

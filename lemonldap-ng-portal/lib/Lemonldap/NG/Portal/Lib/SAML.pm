@@ -30,6 +30,7 @@ has spList      => ( is => 'rw', default => sub { {} } );
 has idpList     => ( is => 'rw', default => sub { {} } );
 has idpRules    => ( is => 'rw', default => sub { {} } );
 has spRules     => ( is => 'rw', default => sub { {} } );
+has spMacros    => ( is => 'rw', default => sub { {} } );
 
 # return LWP::UserAgent object
 has ua => (
@@ -415,6 +416,22 @@ sub loadSPs {
                 next;
             }
             $self->spRules->{$entityID} = $rule;
+        }
+
+        # Load per-SP macros
+        my $macros = $self->conf->{samlSPMetaDataMacros}->{$_};
+        for my $macroAttr ( keys %{$macros} ) {
+            my $macroRule = $macros->{$macroAttr};
+            if ( length $macroRule ) {
+                $macroRule = $self->p->HANDLER->substitute($macroRule);
+                unless ( $macroRule = $self->p->HANDLER->buildSub($macroRule) )
+                {
+                    $self->error( 'SAML SP macro error: '
+                          . $self->p->HANDLER->tsv->{jail}->error );
+                    return 0;
+                }
+                $self->spMacros->{$entityID}->{$macroAttr} = $macroRule;
+            }
         }
 
         $self->logger->debug("SP $_ added");
