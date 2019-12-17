@@ -22,6 +22,9 @@ sub getOidcRpByConfKey {
 
     my $oidcRp = $self->_getOidcRpByConfKey($conf, $confKey);
 
+    # $self->logger->debug("$oidcRp :: ");
+    # use Data::Dumper; print STDERR Dumper($oidcRp);
+
     # Return 404 if not found
     unless (defined $oidcRp) {
         return $self->sendError( $req, "OIDC relying party '$confKey' not found", 404 );
@@ -307,17 +310,17 @@ sub _pushOidcRp {
         $conf->{oidcRPMetaDataOptions}->{$confKey} = {};
         $conf->{oidcRPMetaDataExportedVars}->{$confKey} = {};
         $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey} = {};
+        $push->{options} = $self->_setDefaultValues($push->{options}, 'oidcRPMetaDataNode');
     }
 
-    if (defined $push->{options} || $replace) {
+    if (defined $push->{options}) {
         my $res = $self->_hasAllowedAttributes($push->{options}, 'oidcRPMetaDataNode');
         unless ($res->{res} eq 'ok') {
             return $res;
         }
-        if ($replace) {
-            $push->{options} = $self->_setDefaultValues($push->{options}, 'oidcRPMetaDataNode');
+        foreach (keys %{$push->{options}}) {
+            $conf->{oidcRPMetaDataOptions}->{$confKey}->{$_} = $push->{options}->{$_};
         }
-        $conf->{oidcRPMetaDataOptions}->{$confKey} = $push->{options};
     }
 
     if (defined $push->{clientId}) {
@@ -326,7 +329,9 @@ sub _pushOidcRp {
 
     if (defined $push->{exportedVars}) {
         if ($self->_isSimpleKeyValueHash($push->{exportedVars})) {
-            $conf->{oidcRPMetaDataExportedVars}->{$confKey} = $push->{exportedVars};
+            foreach (keys %{$push->{exportedVars}}) {
+                $conf->{oidcRPMetaDataExportedVars}->{$confKey}->{$_} = $push->{exportedVars}->{$_};
+            }
         } else {
             return { res => 'ko', msg => "Invalid input: exportedVars is not a hash object with \"key\":\"value\" attributes" };
         }
@@ -334,7 +339,9 @@ sub _pushOidcRp {
 
     if (defined $push->{extraClaim}) {
         if ($self->_isSimpleKeyValueHash($push->{extraClaim})) {
-            $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey} = $push->{extraClaim};
+            foreach (keys %{$push->{extraClaim}}) {
+                $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey}->{$_} = $push->{extraClaim}->{$_};
+            }
         } else {
             return { res => 'ko', msg => "Invalid input: extraClaim is not a hash object with \"key\":\"value\" attributes" };
         }

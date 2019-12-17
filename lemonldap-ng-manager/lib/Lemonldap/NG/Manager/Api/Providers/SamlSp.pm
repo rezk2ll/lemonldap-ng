@@ -22,6 +22,9 @@ sub getSamlSpByConfKey {
 
     my $samlSp = $self->_getSamlSpByConfKey($conf, $confKey);
 
+    # $self->logger->debug("$oidcRp :: ");
+    # use Data::Dumper; print STDERR Dumper($oidcRp);
+
     # Check if confKey is defined
     unless (defined $samlSp) {
         return $self->sendError( $req, "SAML service Provider '$confKey' not found", 404 );
@@ -284,7 +287,7 @@ sub _getSamlSpByConfKey {
 
         $mandatory = !!$mandatory ? 'true' : 'false';
 
-        my $samlSp->{exportedAttributes}->{$_} = {
+        $samlSp->{exportedAttributes}->{$_} = {
             name => $name,
             mandatory => $mandatory
         };
@@ -297,7 +300,6 @@ sub _getSamlSpByConfKey {
             $samlSp->{exportedAttributes}->{$_}->{format} = $format;
         }
     }
-
 
     return $samlSp;
 }
@@ -326,38 +328,42 @@ sub _readSamlSpEntityId {
     return undef;
 }
 sub _readSamlSpExportedAttributes {
-    my ( $self, $attrs ) = @_;
+    my ( $self, $attrs, $mergeWith ) = @_;
     my $allowedFormats = [
       "urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified",
       "urn:oasis:names:tc:SAML:2.0:attrname-format:uri",
       "urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
     ];
-    my $exportedAttributes;
     foreach (keys %{$attrs}) {
-
         unless (defined $attrs->{$_}->{name}) {
             return { res => "ko", msg => "Exported attribute $_ has no name"};
         }
         my $mandatory = 0;
+        my $name = $attrs->{$_}->{name};
+        my $format = '';
+        my $friendlyName = '';
+        if (defined $mergeWith->{$_}) {
+            ( $mandatory, $name, $format, $friendlyName ) = split( /;/, $mergeWith->{$_} );
+        }
         if (defined $attrs->{$_}->{mandatory}) {
             if ( $attrs->{$_}->{mandatory} eq '1' or $attrs->{$_}->{mandatory} eq 'true' ) {
                 $mandatory = 1;
+            } else {
+                $mandatory = 0;
             }
         }
-        my $format = '';
         if (defined $attrs->{$_}->{format}) {
             $format = $attrs->{$_}->{format};
             unless (length(grep {/^$format$/} @{$allowedFormats})) {
                 return { res => "ko", msg => "Exported attribute $_ format does not exist."};
             }
         }
-        my $friendlyName = '';
         if (defined $attrs->{$_}->{friendlyName}) {
             $friendlyName = $attrs->{$_}->{friendlyName};
         }
-        $exportedAttributes->{$_} = "$mandatory;$attrs->{$_}->{name};$format;$friendlyName";
+        $mergeWith->{$_} = "$mandatory;$name;$format;$friendlyName";
     }
-    return { res => "ok", exportedAttributes => $exportedAttributes };
+    return { res => "ok", exportedAttributes => $mergeWith };
 }
 
 sub _pushSamlSp {
@@ -367,6 +373,7 @@ sub _pushSamlSp {
         $conf->{samlSPMetaDataXML}->{$confKey} = {};
         $conf->{samlSPMetaDataOptions}->{$confKey} = {};
         $conf->{samlSPMetaDataExportedAttributes}->{$confKey} = {};
+        $push->{options} = $self->_setDefaultValues($push->{options}, 'samlSPMetaDataNode');
     }
 
     $conf->{samlSPMetaDataXML}->{$confKey}->{samlSPMetaDataXML} = $push->{metadata};
@@ -376,14 +383,13 @@ sub _pushSamlSp {
         unless ($res->{res} eq 'ok') {
             return $res;
         }
-        $conf->{samlSPMetaDataOptions}->{$confKey} = $push->{options};
-    }
-    if ($replace) {
-        $push->{options} = $self->_setDefaultValues($push->{options}, 'samlSPMetaDataNode');
+        foreach (keys %{$push->{options}}) {
+            $conf->{samlSPMetaDataOptions}->{$confKey}->{$_} = $push->{options}->{$_};
+        }
     }
 
     if (defined $push->{exportedAttributes}) {
-        my $res = $self->_readSamlSpExportedAttributes($push->{exportedAttributes});
+        my $res = $self->_readSamlSpExportedAttributes($push->{exportedAttributes}, $conf->{samlSPMetaDataExportedAttributes}->{$confKey});
         unless ($res->{res} eq 'ok') {
             return $res;
         }
