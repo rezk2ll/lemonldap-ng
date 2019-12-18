@@ -86,10 +86,11 @@ sub findSamlSpByEntityId {
 
     my $samlSp = $self->_getSamlSpByEntityId( $conf, $entityId );
 
-    if ( defined $samlSp ) {
-        return $self->sendJSONresponse( $req, $samlSp );
+    unless ( defined $samlSp ) {
+        return $self->sendError( $req, "SAML service Provider with entityID '$entityId' not found", 404 );
     }
-    return $self->sendJSONresponse( $req, {} );
+
+    return $self->sendJSONresponse( $req, $samlSp );
 }
 
 sub addSamlSp {

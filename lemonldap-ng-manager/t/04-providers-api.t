@@ -232,14 +232,7 @@ sub checkFindByProviderId {
 
 sub checkFindByProviderIdNotFound {
     my ( $test, $type, $providerIdName, $providerId) = splice @_;
-    my $res = findByProviderId($test, $type, $providerIdName, $providerId);
-    check200($test, $res);
-    my $result = from_json($res->[2]->[0]);
-    ok(
-        !defined $result->{$providerIdName},
-        "$test: Check object is empty"
-    );
-    count(1);
+    check404($test, findByProviderId($test, $type, $providerIdName, $providerId));
 }
 
 sub deleteProvider {

@@ -87,10 +87,11 @@ sub findOidcRpByClientId {
 
     my $oidcRp = $self->_getOidcRpByClientId( $conf, $clientId );
 
-    if ( defined $oidcRp ) {
-        return $self->sendJSONresponse( $req, $oidcRp );
+    unless ( defined $oidcRp ) {
+        return $self->sendError( $req, "OIDC relying party with clientId '$clientId' not found", 404 );
     }
-    return $self->sendJSONresponse( $req, {} );
+
+    return $self->sendJSONresponse( $req, $oidcRp );
 }
 
 sub addOidcRp {
