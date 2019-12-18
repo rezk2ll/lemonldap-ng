@@ -43,7 +43,7 @@ LWP::Protocol::PSGI->register(
 );
 
 my $xml = '<?xml version="1.0" encoding="UTF-8"?>
-<root><notification uid="dwho" date="2016-05-30" reference="testref">
+<root><notification uid="dwho" date="2016-05-30 15:35:10" reference="testref">
 <title>Test title</title>
 <subtitle>Test subtitle</subtitle>
 <text>This is a test text</text>
@@ -57,7 +57,7 @@ my $xmlbis = '<?xml version="1.0" encoding="UTF-8"?>
 </notification></root>';
 
 my $combined = '<?xml version="1.0" encoding="UTF-8"?>
-<root><notification uid="dwho" date="2016-05-31" reference="ABC1">
+<root><notification uid="dwho" date="2016-05-31 15:35:10" reference="ABC1">
 <title>Test title</title>
 <subtitle>Test subtitle</subtitle>
 <text>This is a test text</text>

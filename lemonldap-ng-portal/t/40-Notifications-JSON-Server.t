@@ -7,7 +7,7 @@ BEGIN {
 }
 
 my $json = '{
-"date": "2016-05-30",
+"date": "2016-05-30 15:35:10",
 "reference": "testref",
 "uid": "dwho",
 "title": "Test title",
@@ -42,7 +42,7 @@ my $jsonall = '{
 
 my $notifs = q%[{
  "uid": "dwho",
- "date": "2019-11-15",
+ "date": "2019-11-15 15:35:10",
  "reference": "ABC1",
  "title": "You have new authorizations",
  "subtitle": "Application 1",
