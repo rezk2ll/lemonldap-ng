@@ -35,28 +35,30 @@ sub addRoutes {
       )
 
       ->addRoute(
-        v1 => {
-            providers => {
-                oidc => {
-                    rp => {
-                        findByConfKey => {
-                            ':uPattern' => 'findOidcRpByConfKey'
+        api => {
+            v1 => {
+                providers => {
+                    oidc => {
+                        rp => {
+                            findByConfKey => {
+                                ':uPattern' => 'findOidcRpByConfKey'
+                            },
+                            findByClientId => {
+                                ':uClientId' => 'findOidcRpByClientId'
+                            },
+                            ':confKey' => 'getOidcRpByConfKey'
                         },
-                        findByClientId => {
-                            ':uClientId' => 'findOidcRpByClientId'
-                        },
-                        ':confKey' => 'getOidcRpByConfKey'
                     },
-                },
-                saml => {
-                    sp => {
-                        findByConfKey => {
-                            ':uPattern' => 'findSamlSpByConfKey'
+                    saml => {
+                        sp => {
+                            findByConfKey => {
+                                ':uPattern' => 'findSamlSpByConfKey'
+                            },
+                            findByEntityId => {
+                                ':uEntityId' => 'findSamlSpByEntityId'
+                            },
+                            ':confKey' => 'getSamlSpByConfKey'
                         },
-                        findByEntityId => {
-                            ':uEntityId' => 'findSamlSpByEntityId'
-                        },
-                        ':confKey' => 'getSamlSpByConfKey'
                     },
                 },
             },
@@ -65,13 +67,15 @@ sub addRoutes {
       )
 
       ->addRoute(
-        v1 => {
-            providers => {
-                oidc => {
-                    rp => 'addOidcRp'
-                },
-                saml => {
-                    sp => 'addSamlSp'
+        api => {
+            v1 => {
+                providers => {
+                    oidc => {
+                        rp => 'addOidcRp'
+                    },
+                    saml => {
+                        sp => 'addSamlSp'
+                    },
                 },
             },
         },
@@ -79,13 +83,15 @@ sub addRoutes {
       )
 
       ->addRoute(
-        v1 => {
-            providers => {
-                oidc => {
-                    rp => { ':confKey' => 'replaceOidcRp' }
-                },
-                saml => {
-                    sp => { ':confKey' => 'replaceSamlSp' }
+        api => {
+            v1 => {
+                providers => {
+                    oidc => {
+                        rp => {':confKey' => 'replaceOidcRp'}
+                    },
+                    saml => {
+                        sp => {':confKey' => 'replaceSamlSp'}
+                    },
                 },
             },
         },
@@ -93,13 +99,15 @@ sub addRoutes {
       )
 
       ->addRoute(
-        v1 => {
-            providers => {
-                oidc => {
-                    rp => { ':confKey' => 'updateOidcRp' }
-                },
-                saml => {
-                    sp => { ':confKey' => 'updateSamlSp' }
+        api => {
+            v1 => {
+                providers => {
+                    oidc => {
+                        rp => {':confKey' => 'updateOidcRp'}
+                    },
+                    saml => {
+                        sp => {':confKey' => 'updateSamlSp'}
+                    },
                 },
             },
         },
@@ -107,13 +115,15 @@ sub addRoutes {
       )
 
       ->addRoute(
-        v1 => {
-            providers => {
-                oidc => {
-                    rp => { ':confKey' => 'deleteOidcRp' }
-                },
-                saml => {
-                    sp => { ':confKey' => 'deleteSamlSp' }
+        api => {
+            v1 => {
+                providers => {
+                    oidc => {
+                        rp => {':confKey' => 'deleteOidcRp'}
+                    },
+                    saml => {
+                        sp => {':confKey' => 'deleteSamlSp'}
+                    },
                 },
             },
         },
