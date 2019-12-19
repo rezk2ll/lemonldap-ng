@@ -661,7 +661,7 @@ sub tree {
                             title => 'certificateResetByMailManagement',
                              form  => 'simpleInputContainer',
                              nodes => [ {
-                                     title => 'certifcateMailContent',
+                                     title => 'certificateMailContent',
                                      form  => 'simpleInputContainer',
                                      nodes => [ 
                                          'certificateResetByMailSender',

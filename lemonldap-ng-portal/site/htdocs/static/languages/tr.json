@@ -86,6 +86,9 @@
 "PE94":"Gerekli bir nitelik mevcut değil",
 "PE95":"DECRYPT servisine erişime izin verilmedi",
 "PE96":"Geçersiz doğrulama kodu",
+"PE97":"Please select your new certificate",
+"PE98":"Please select your new certificate",
+"PE99":"Your certificate is invalid or expires soon",
 "2fRegRequired":"Bu servis iki adımlı kimlik doğrulama gerektiriyor. Şimdi bir cihaz ekleyin ve ardından portala geri dönün",
 "accept":"Kabul Et",
 "accessDenied":"Bu uygulamaya erişim yetkiniz yok",
@@ -287,5 +290,8 @@
 "yourPhone":"Telefon numaranı bil",
 "yourProfile":"Profilini bil",
 "yourTotpKey":"TOTP anahtarınız",
-"yubikey2f":"Yubikey"
+"yubikey2f":"Yubikey",
+"resetCertificateOK":"Your certificate was reset sucessfully",
+"linkValidUntilCertif":"This message contains a link to reset your certificate, this link is valid until ",
+"certificateReset":"Reset my certificate"
 }
