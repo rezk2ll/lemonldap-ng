@@ -5,7 +5,8 @@ use 5.10.0;
 use utf8;
 use Mouse;
 
-extends 'Lemonldap::NG::Common::Conf::RESTServer';
+extends 'Lemonldap::NG::Common::Conf::RESTServer',
+  'Lemonldap::NG::Common::Session::REST';
 
 use Lemonldap::NG::Manager::Api::2F;
 use Lemonldap::NG::Manager::Api::Providers::OidcRp;
@@ -24,15 +25,6 @@ sub addRoutes {
 
     # HTML template
     $self->addRoute( 'api.html', undef, ['GET'] )
-
-      ->addRoute(
-        api => {
-            v1 => {
-                hello => "helloworld",
-            },
-        },
-        ['GET']
-      )
 
       ->addRoute(
         api => {
@@ -59,6 +51,17 @@ sub addRoutes {
                             },
                             ':confKey' => 'getSamlSpByConfKey'
                         },
+                    },
+                },
+                secondFactor => {
+                    ':uid' => {
+                        id => {
+                            ':id' => 'getSecondFactorsById'
+                        },
+                        type => {
+                            ':type' => 'getSecondFactorsByType'
+                        },
+                        '*' => 'getSecondFactors'
                     },
                 },
             },
@@ -125,10 +128,26 @@ sub addRoutes {
                         sp => {':confKey' => 'deleteSamlSp'}
                     },
                 },
+                secondFactor => {
+                    ':uid' => {
+                        id => {
+                            ':id' => 'deleteSecondFactorsById'
+                        },
+                        type => {
+                            ':type' => 'deleteSecondFactorsByType'
+                        },
+                        '*' => 'deleteSecondFactors'
+                    },
+                },
             },
         },
         ['DELETE']
       );
+
+      $self->setTypes($conf);
+      $self->{multiValuesSeparator} ||= '; ';
+      $self->{hiddenAttributes} //= "_password";
+      $self->{TOTPCheck} = $self->{U2FCheck} = $self->{UBKCheck} = '1';
 }
 
 1;

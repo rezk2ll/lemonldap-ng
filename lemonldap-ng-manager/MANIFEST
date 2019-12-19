@@ -1,5 +1,4 @@
 .bowerrc
-_d
 bower.json
 Changes
 eg/manager.cgi
@@ -203,6 +202,7 @@ site/htdocs/static/logos/fr.png
 site/htdocs/static/logos/it.png
 site/htdocs/static/logos/llng-icon-32.png
 site/htdocs/static/logos/llng-logo-32.png
+site/htdocs/static/logos/tr.png
 site/htdocs/static/logos/vi.png
 site/htdocs/static/logos/zh.png
 site/htdocs/static/reverseTree.json
@@ -221,7 +221,7 @@ site/templates/viewDiff.tpl
 site/templates/viewer.tpl
 t/02-HTML-template.t
 t/03-HTML-forms.t
-t/04-hello-api.t
+t/04-2F-api.t
 t/04-providers-api.t
 t/05-rest-api.t
 t/06-rest-api.t
