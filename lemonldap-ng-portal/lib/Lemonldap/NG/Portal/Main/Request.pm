@@ -92,6 +92,7 @@ sub error_type {
                 PE_MAILOK,          PE_LOGOUT_OK,
                 PE_MAILFIRSTACCESS, PE_PASSWORDFIRSTACCESS,
                 PE_MAILCONFIRMOK,   PE_REGISTERFIRSTACCESS,
+                PE_RESETCERTIFICATE_FIRSTACCESS,
             )
         )
       );
@@ -108,7 +109,7 @@ sub error_type {
                 PE_CONFIRM,                       PE_MAILFORMEMPTY,
                 PE_MAILCONFIRMATION_ALREADY_SENT, PE_PASSWORDFORMEMPTY,
                 PE_CAPTCHAEMPTY,                  PE_REGISTERFORMEMPTY,
-                PE_PP_CHANGE_AFTER_RESET
+                PE_PP_CHANGE_AFTER_RESET,         PE_RESETCERTIFICATE_FOREMPTY,
             )
         )
       );

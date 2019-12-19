@@ -86,6 +86,9 @@
 "PE94":"Un attribut exigé n'est pas disponible",
 "PE95":"Accès non autorisé au service de déchiffrement",
 "PE96":"Code de sécurité invalide",
+"PE97":"Your certificate is invalid or expires soon",
+"PE98":"Please select your new certificate",
+"PE99":"Please select your new certificate",
 "2fRegRequired":"Ce service requiert une authentification à deux facteurs. Enregistrez un équipement ici et retournez au portail.",
 "accept":"Accepter",
 "accessDenied":"Vous n'avez pas les droits d'accès à cette application",
@@ -287,5 +290,8 @@
 "yourPhone":"Connaître votre numéro de téléphone",
 "yourProfile":"Connaître vos informations personnelles",
 "yourTotpKey":"Votre clef TOTP",
-"yubikey2f":"Yubikey"
+"yubikey2f":"Yubikey",
+"resetCertificateOK":"Your certificate was reset sucessfully",
+"linkValidUntilCertif":"This message contains a link to reset your certificate, this link is valid until ",
+"certificateReset":"Reset my certificate"
 }
