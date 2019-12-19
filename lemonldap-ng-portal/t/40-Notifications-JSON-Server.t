@@ -1,6 +1,7 @@
 use Test::More;
 use strict;
 use IO::String;
+use JSON qw(from_json);
 
 BEGIN {
     require 't/test-lib.pm';
@@ -131,6 +132,36 @@ ok(
 ok( $res->[2]->[0] =~ /"uid":"everyone"/, 'Wildcard found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
+
+ok(
+    $res = $client->_get(
+        '/notifications/bad_uid', type => 'application/json',
+    ),
+    'List notifications for bad uid'
+);
+ok(
+    $res->[2]->[0] =~ /"reference":"testrefall"/,
+    'Notification for all users found'
+) or print STDERR Dumper( $res->[2]->[0] );
+count(2);
+
+ok(
+    $res = $client->_get(
+        '/notifications/_all_', type => 'application/json',
+    ),
+    'List ALL notifications'
+);
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' );
+ok( scalar @{ $json->{result} } == 3, 'Three notifications found' )
+  or print STDERR Dumper($json);
+
+foreach ( @{$json->{result}} ) {
+    ok( $_->{reference} =~ /^testref/, "Reference \'$_->{reference}\' found" )
+      or print STDERR Dumper($json);
+    ok( $_->{uid} =~ /^(dwho|everyone)$/, "UID \'$_->{uid}\' found" )
+      or print STDERR Dumper($json);
+}
+count(9);
 
 ok(
     $res = $client->_get(
