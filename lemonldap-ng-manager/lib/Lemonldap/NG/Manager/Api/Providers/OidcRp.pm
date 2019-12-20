@@ -72,7 +72,8 @@ sub findOidcRpByClientId {
         defined $req->params('uClientId') ? $req->params('uClientId')
         : (
             defined $req->params('clientId') ? $req->params('clientId')
-            : undef )
+            : undef
+        )
     );
 
     unless ( defined $clientId ) {
@@ -88,7 +89,8 @@ sub findOidcRpByClientId {
     my $oidcRp = $self->_getOidcRpByClientId( $conf, $clientId );
 
     unless ( defined $oidcRp ) {
-        return $self->sendError( $req, "OIDC relying party with clientId '$clientId' not found", 404 );
+        return $self->sendError( $req,
+            "OIDC relying party with clientId '$clientId' not found", 404 );
     }
 
     return $self->sendJSONresponse( $req, $oidcRp );

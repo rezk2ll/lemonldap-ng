@@ -72,7 +72,8 @@ sub findSamlSpByEntityId {
         defined $req->params('uEntityId') ? $req->params('uEntityId')
         : (
             defined $req->params('entityId') ? $req->params('entityId')
-            : undef )
+            : undef
+        )
     );
 
     unless ( defined $entityId ) {
@@ -87,7 +88,8 @@ sub findSamlSpByEntityId {
     my $samlSp = $self->_getSamlSpByEntityId( $conf, $entityId );
 
     unless ( defined $samlSp ) {
-        return $self->sendError( $req, "SAML service Provider with entityID '$entityId' not found", 404 );
+        return $self->sendError( $req,
+            "SAML service Provider with entityID '$entityId' not found", 404 );
     }
 
     return $self->sendJSONresponse( $req, $samlSp );

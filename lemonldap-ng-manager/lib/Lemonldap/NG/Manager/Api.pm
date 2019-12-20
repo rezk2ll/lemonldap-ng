@@ -90,10 +90,10 @@ sub addRoutes {
             v1 => {
                 providers => {
                     oidc => {
-                        rp => {':confKey' => 'replaceOidcRp'}
+                        rp => { ':confKey' => 'replaceOidcRp' }
                     },
                     saml => {
-                        sp => {':confKey' => 'replaceSamlSp'}
+                        sp => { ':confKey' => 'replaceSamlSp' }
                     },
                 },
             },
@@ -106,10 +106,10 @@ sub addRoutes {
             v1 => {
                 providers => {
                     oidc => {
-                        rp => {':confKey' => 'updateOidcRp'}
+                        rp => { ':confKey' => 'updateOidcRp' }
                     },
                     saml => {
-                        sp => {':confKey' => 'updateSamlSp'}
+                        sp => { ':confKey' => 'updateSamlSp' }
                     },
                 },
             },
@@ -122,10 +122,10 @@ sub addRoutes {
             v1 => {
                 providers => {
                     oidc => {
-                        rp => {':confKey' => 'deleteOidcRp'}
+                        rp => { ':confKey' => 'deleteOidcRp' }
                     },
                     saml => {
-                        sp => {':confKey' => 'deleteSamlSp'}
+                        sp => { ':confKey' => 'deleteSamlSp' }
                     },
                 },
                 secondFactor => {
@@ -144,10 +144,10 @@ sub addRoutes {
         ['DELETE']
       );
 
-      $self->setTypes($conf);
-      $self->{multiValuesSeparator} ||= '; ';
-      $self->{hiddenAttributes} //= "_password";
-      $self->{TOTPCheck} = $self->{U2FCheck} = $self->{UBKCheck} = '1';
+    $self->setTypes($conf);
+    $self->{multiValuesSeparator} ||= '; ';
+    $self->{hiddenAttributes} //= "_password";
+    $self->{TOTPCheck} = $self->{U2FCheck} = $self->{UBKCheck} = '1';
 }
 
 1;

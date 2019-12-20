@@ -13,7 +13,7 @@ use Lemonldap::NG::Common::Session;
 
 sub getSecondFactors {
     my ( $self, $req ) = @_;
-    my ( $uid, $res);
+    my ( $uid, $res );
 
     $uid = $req->params('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
@@ -23,14 +23,14 @@ sub getSecondFactors {
     $res = $self->_get2F($uid);
 
     return $self->sendError( $req, $res->{msg}, $res->{code} )
-        unless ( $res->{res} eq 'ok' );
+      unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req, $res->{secondFactors} );
 }
 
 sub getSecondFactorsByType {
     my ( $self, $req ) = @_;
-    my ( $uid, $type, $res);
+    my ( $uid, $type, $res );
 
     $uid = $req->params('uid')
       or return $self->sendError( $req, 'Uid is missing', 400 );
@@ -40,17 +40,17 @@ sub getSecondFactorsByType {
 
     $self->logger->debug("[API] 2F for $uid with type $type requested");
 
-    $res = $self->_get2F($uid, uc $type);
+    $res = $self->_get2F( $uid, uc $type );
 
     return $self->sendError( $req, $res->{msg}, $res->{code} )
-        unless ( $res->{res} eq 'ok' );
+      unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req, $res->{secondFactors} );
 }
 
 sub getSecondFactorsById {
     my ( $self, $req ) = @_;
-    my ( $uid, $id, $res);
+    my ( $uid, $id, $res );
 
     $uid = $req->params('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
@@ -60,20 +60,21 @@ sub getSecondFactorsById {
 
     $self->logger->debug("[API] 2F for $uid with id $id requested");
 
-    $res = $self->_get2F($uid, undef,  $id);
+    $res = $self->_get2F( $uid, undef, $id );
 
     return $self->sendError( $req, $res->{msg}, $res->{code} )
-        unless ( $res->{res} eq 'ok' );
+      unless ( $res->{res} eq 'ok' );
 
-    return $self->sendError( $req, "2F id '$id' not found for user '$uid'", 404 )
-        unless ( scalar @{$res->{secondFactors}} > 0 );
+    return $self->sendError( $req, "2F id '$id' not found for user '$uid'",
+        404 )
+      unless ( scalar @{ $res->{secondFactors} } > 0 );
 
-    return $self->sendJSONresponse( $req, @{$res->{secondFactors}}[0]);
+    return $self->sendJSONresponse( $req, @{ $res->{secondFactors} }[0] );
 }
 
 sub deleteSecondFactors {
     my ( $self, $req ) = @_;
-    my ( $uid, $res);
+    my ( $uid, $res );
 
     $uid = $req->params('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
@@ -83,14 +84,14 @@ sub deleteSecondFactors {
     $res = $self->_delete2F($uid);
 
     return $self->sendError( $req, $res->{msg}, $res->{code} )
-        unless ( $res->{res} eq 'ok' );
+      unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req, { message => $res->{msg} } );
 }
 
 sub deleteSecondFactorsById {
     my ( $self, $req ) = @_;
-    my ( $uid, $id, $res);
+    my ( $uid, $id, $res );
 
     $uid = $req->params('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
@@ -100,20 +101,21 @@ sub deleteSecondFactorsById {
 
     $self->logger->debug("[API] Delete 2F for $uid with id $id requested");
 
-    $res = $self->_delete2F($uid, undef, $id);
+    $res = $self->_delete2F( $uid, undef, $id );
 
     return $self->sendError( $req, $res->{msg}, $res->{code} )
-        unless ( $res->{res} eq 'ok' );
+      unless ( $res->{res} eq 'ok' );
 
-    return $self->sendError( $req, "2F id '$id' not found for user '$uid'", 404 )
-        unless ( $res->{removed} > 0 );
+    return $self->sendError( $req, "2F id '$id' not found for user '$uid'",
+        404 )
+      unless ( $res->{removed} > 0 );
 
     return $self->sendJSONresponse( $req, { message => $res->{msg} } );
 }
 
 sub deleteSecondFactorsByType {
     my ( $self, $req ) = @_;
-    my ( $uid, $type, $res);
+    my ( $uid, $type, $res );
 
     $uid = $req->params('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
@@ -121,62 +123,76 @@ sub deleteSecondFactorsByType {
     $type = $req->params('type')
       or return $self->sendError( $req, 'type is missing', 400 );
 
-    $self->logger->debug("[API] Delete all 2F for $uid with type $type requested");
+    $self->logger->debug(
+        "[API] Delete all 2F for $uid with type $type requested");
 
-    $res = $self->_delete2F($uid, uc $type);
+    $res = $self->_delete2F( $uid, uc $type );
 
     return $self->sendError( $req, $res->{msg}, $res->{code} )
-        unless ( $res->{res} eq 'ok' );
+      unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req, { message => $res->{msg} } );
 }
 
 sub _get2F {
     my ( $self, $uid, $type, $id ) = @_;
-    my ($res, $psessions, @secondFactors);
+    my ( $res, $psessions, @secondFactors );
 
-    if (defined $type) {
+    if ( defined $type ) {
         $res = $self->_checkType($type);
-        return $res if ($res->{res} ne 'ok');
+        return $res if ( $res->{res} ne 'ok' );
     }
 
     $psessions = $self->_getPSessions2F($uid);
 
-    foreach ( keys %{ $psessions } ) {
-        my $devices = from_json( $psessions->{$_}->{_2fDevices}, { allow_nonref => 1 } );
+    foreach ( keys %{$psessions} ) {
+        my $devices =
+          from_json( $psessions->{$_}->{_2fDevices}, { allow_nonref => 1 } );
         foreach my $device ( @{$devices} ) {
-            $self->logger->debug("Check device [epoch=$device->{epoch}, type=$device->{type}, name=$device->{name}]");
-            push @secondFactors, { id => $self->_genId2F($device), type => $device->{type}, name => $device->{name} }
-                unless (
-                  ( defined $type and $type ne $device->{type} )
-                  or ( defined $id and $id ne $self->_genId2F($device) )
-                );
+            $self->logger->debug(
+"Check device [epoch=$device->{epoch}, type=$device->{type}, name=$device->{name}]"
+            );
+            push @secondFactors,
+              {
+                id   => $self->_genId2F($device),
+                type => $device->{type},
+                name => $device->{name}
+              }
+              unless ( ( defined $type and $type ne $device->{type} )
+                or ( defined $id and $id ne $self->_genId2F($device) ) );
         }
     }
-    $self->logger->debug("Found " . scalar @secondFactors  . " 2F devices for uid $uid.");
-    return { res => 'ok', secondFactors => [ @secondFactors ]};
+    $self->logger->debug(
+        "Found " . scalar @secondFactors . " 2F devices for uid $uid." );
+    return { res => 'ok', secondFactors => [@secondFactors] };
 }
 
 sub _genId2F {
-    my ( $self, $device) = @_;
-    return encode_base64("$device->{epoch}::$device->{type}::$device->{name}", "");
+    my ( $self, $device ) = @_;
+    return encode_base64( "$device->{epoch}::$device->{type}::$device->{name}",
+        "" );
 }
 
 sub _getMod2F {
-    my ( $self ) = @_;
+    my ($self) = @_;
     my $mod = $self->sessionTypes->{persistent};
     $mod->{options}->{backend} = $mod->{module};
     return $mod;
 }
+
 sub _getPSessions2F {
     my ( $self, $uid ) = @_;
     $self->logger->debug("Looking for psessions for uid $uid ...");
-    my $psessions = Lemonldap::NG::Common::Apache::Session->searchOn($self->_getMod2F->{options},
-            '_session_uid', $uid, ('_session_kind' , '_session_uid', '_session_id', '_2fDevices'));
-    foreach ( keys %{ $psessions } ) {
-        delete $psessions->{$_} unless ($psessions->{$_}->{_session_kind} eq 'Persistent');
+    my $psessions = Lemonldap::NG::Common::Apache::Session->searchOn(
+        $self->_getMod2F->{options},
+        '_session_uid', $uid,
+        ( '_session_kind', '_session_uid', '_session_id', '_2fDevices' ) );
+    foreach ( keys %{$psessions} ) {
+        delete $psessions->{$_}
+          unless ( $psessions->{$_}->{_session_kind} eq 'Persistent' );
     }
-    $self->logger->debug("Found " . scalar (keys %{ $psessions })  . " psessions for uid $uid.");
+    $self->logger->debug(
+        "Found " . scalar( keys %{$psessions} ) . " psessions for uid $uid." );
     return $psessions;
 }
 
@@ -184,79 +200,110 @@ sub getSession2F {
     my ( $self, $sessionId ) = @_;
     $self->logger->debug("Looking for session with sessionId $sessionId ...");
     my $session = $self->getApacheSession( $self->_getMod2F, $sessionId );
-    $self->logger->debug(defined $session ? "Session $sessionId found." : " No session found for sessionId $sessionId");
+    $self->logger->debug(
+        defined $session
+        ? "Session $sessionId found."
+        : " No session found for sessionId $sessionId" );
     return $session;
 }
 
 sub _delete2F {
     my ( $self, $uid, $type, $id ) = @_;
-    my ($res, $psessions, $sessionId, $session, $devices, @keep, $total, $removed, $lremoved, $localStorage);
+    my (
+        $res,  $psessions, $sessionId, $session,  $devices,
+        @keep, $total,     $removed,   $lremoved, $localStorage
+    );
 
     $localStorage = Lemonldap::NG::Handler::PSGI::Main->tsv->{refLocalStorage};
 
-    if (defined $type) {
+    if ( defined $type ) {
         $res = $self->_checkType($type);
-        return $res if ($res->{res} ne 'ok');
+        return $res if ( $res->{res} ne 'ok' );
     }
 
     $psessions = $self->_getPSessions2F($uid);
 
-    foreach ( keys %{ $psessions } ) {
+    foreach ( keys %{$psessions} ) {
 
         $sessionId = $psessions->{$_}->{_session_id};
-        $session = $self->getSession2F( $sessionId )
-           or return { res => 'ko', code => 500, msg => $@ };
+        $session   = $self->getSession2F($sessionId)
+          or return { res => 'ko', code => 500, msg => $@ };
 
-        $self->logger->debug("Looking for 2F Device(s) attached to session $sessionId...");
+        $self->logger->debug(
+            "Looking for 2F Device(s) attached to session $sessionId...");
 
         if ( $session->data->{_2fDevices} ) {
 
-            $devices = from_json( $session->data->{_2fDevices}, { allow_nonref => 1 } );
+            $devices =
+              from_json( $session->data->{_2fDevices}, { allow_nonref => 1 } );
             $total = scalar @$devices;
-            $self->logger->debug("Found $total 2F devices attached to session $sessionId.");
+            $self->logger->debug(
+                "Found $total 2F devices attached to session $sessionId.");
             @keep = ();
             while (@$devices) {
                 my $element = shift @$devices;
-                push @keep, $element
-                  if (( defined $type or defined $id ) and
-                    (( defined $type and $type ne $element->{type} ) or
-                      ( defined $id and $id ne $self->_genId2F($element) )));
+                push @keep,
+                  $element
+                  if (
+                    ( defined $type or defined $id )
+                    and (  ( defined $type and $type ne $element->{type} )
+                        or
+                        ( defined $id and $id ne $self->_genId2F($element) ) )
+                  );
             }
             $lremoved = $total - scalar @keep;
-            if ($lremoved > 0) {
+            if ( $lremoved > 0 ) {
+
                 # Update session
-                $self->logger->debug("Removing $lremoved 2F device(s) attached to session $sessionId ...");
+                $self->logger->debug(
+"Removing $lremoved 2F device(s) attached to session $sessionId ..."
+                );
                 $session->data->{_2fDevices} = to_json( \@keep );
                 $session->update( \%{ $session->data } );
 
                 # Delete local cache
                 if ( $localStorage and $localStorage->get($sessionId) ) {
-                    $self->logger->debug("Delete local cache for $sessionId ...");
+                    $self->logger->debug(
+                        "Delete local cache for $sessionId ...");
                     $localStorage->remove($sessionId);
-                } else {
-                    $self->logger->debug("Local cache will not be cleared for $sessionId");
                 }
-            } else {
-                $self->logger->debug("No matching 2F devices attached to session $sessionId were selected for removal.");
+                else {
+                    $self->logger->debug(
+                        "Local cache will not be cleared for $sessionId");
+                }
             }
-        } else {
-            $self->logger->debug("No 2F devices attached to session $sessionId were found.");
+            else {
+                $self->logger->debug(
+"No matching 2F devices attached to session $sessionId were selected for removal."
+                );
+            }
+        }
+        else {
+            $self->logger->debug(
+                "No 2F devices attached to session $sessionId were found.");
         }
 
         $removed += $lremoved;
     }
     return {
-        res => 'ok',
+        res     => 'ok',
         removed => $removed,
-        msg => $removed > 0 ? "Successful operation: " . $removed . " 2F were removed" : "No operation performed"
+        msg     => $removed > 0
+        ? "Successful operation: " . $removed . " 2F were removed"
+        : "No operation performed"
     };
 }
 
 sub _checkType {
     my ( $self, $type ) = @_;
 
-    return {res => "ko", code=> 405, msg => "Invalid input: Type \"$type\" does not exist. Allowed values for type are: \"U2F\", \"TOTP\" or \"UBK\"" }
-        unless ( $type =~ /\b(?:U2F|TOTP|UBK)\b/ );
+    return {
+        res  => "ko",
+        code => 405,
+        msg =>
+"Invalid input: Type \"$type\" does not exist. Allowed values for type are: \"U2F\", \"TOTP\" or \"UBK\""
+      }
+      unless ( $type =~ /\b(?:U2F|TOTP|UBK)\b/ );
 
     return { res => "ok" };
 }
