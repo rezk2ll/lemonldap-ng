@@ -34,11 +34,11 @@ has notifField => (
 sub getNotifications {
     my ( $self, $uid ) = @_;
     my $forAll = $self->get( $self->conf->{notificationWildcard} );
-    if ( $uid and $uid eq '_all_' ) {
-        $self->logger->info("Retrieve ALL pending notifications");
-        my $all = $self->getAll();
+    if ( $uid and $uid =~ /^_all(Pending|Existing)_$/ ) {
+        $self->logger->info("Retrieve all $1 notifications");
+        my $all = ( $1 eq 'Pending' ? $self->getAll() : $self->getExisting() );
         $all = { map { $_ => to_json( $all->{$_} ) } keys %$all };
-        return { %$all, %$forAll };
+        return ( $forAll ? { %$all, %$forAll } : $all );
     }
     my $forUser = $self->get($uid);
     if ( $forUser and $forAll ) {

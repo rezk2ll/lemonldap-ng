@@ -147,9 +147,9 @@ count(2);
 
 ok(
     $res = $client->_get(
-        '/notifications/_all_', type => 'application/json',
+        '/notifications/_allPending_', type => 'application/json',
     ),
-    'List ALL notifications'
+    'List all pending notifications'
 );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' );
 ok( scalar @{ $json->{result} } == 3, 'Three notifications found' )
@@ -302,6 +302,17 @@ ok( $res->[2]->[0] =~ /"result"\s*:\s*4/, 'Notifications have been inserted' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
+ok(
+    $res = $client->_get(
+        '/notifications/_allExisting_', type => 'application/json',
+    ),
+    'List all existing notifications'
+);
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' );
+ok( scalar @{ $json->{result} } == 5, 'Five notifications found' )
+  or print STDERR Dumper($json);
+count(3);
+
 # Try to authenticate with "dwho"
 # -------------------------------
 ok(
@@ -352,6 +363,7 @@ ok(
     "Accept notification"
 );
 expectOK($res);
+$id = expectCookie($res);
 $client->logout($id);
 
 # Try to authenticate with "rtyler"
@@ -400,7 +412,19 @@ ok(
     "Accept notification"
 );
 expectOK($res);
+$id = expectCookie($res);
 $client->logout($id);
+
+ok(
+    $res = $client->_get(
+        '/notifications/_allPending_', type => 'application/json',
+    ),
+    'List all pending notifications'
+);
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' );
+ok( scalar @{ $json->{result} } == 3, 'Three notifications found' )
+  or print STDERR Dumper($json);
+count(3);
 
 clean_sessions();
 done_testing( count() );
