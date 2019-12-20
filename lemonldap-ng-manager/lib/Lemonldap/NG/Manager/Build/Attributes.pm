@@ -835,7 +835,7 @@ sub attributes {
         },
         cspFormAction => {
             type    => 'text',
-            default => "'self'",
+            default => "*",
             documentation =>
               'Form action destination for Content-Security-Policy',
         },
