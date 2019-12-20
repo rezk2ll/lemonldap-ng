@@ -28,7 +28,7 @@
 # Main package
 #==============================================================================
 Name:           lemonldap-ng
-Version:        2.0.6
+Version:        2.0.7
 Release:        %{?pre_release:0.}2%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
