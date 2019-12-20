@@ -7,6 +7,7 @@ use 5.10.0;
 use utf8;
 use Mouse;
 use JSON;
+use MIME::Base64;
 
 use Lemonldap::NG::Common::Session;
 
@@ -20,9 +21,9 @@ sub getSecondFactors {
     $self->logger->debug("[API] 2F for $uid requested");
 
     $res = $self->_get2F($uid);
-    unless ( $res->{res} eq 'ok' ) {
-        return $self->sendError( $req, $res->{msg}, $res->{code} );
-    }
+
+    return $self->sendError( $req, $res->{msg}, $res->{code} )
+        unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req, $res->{secondFactors} );
 }
@@ -40,9 +41,9 @@ sub getSecondFactorsByType {
     $self->logger->debug("[API] 2F for $uid with type $type requested");
 
     $res = $self->_get2F($uid, uc $type);
-    unless ( $res->{res} eq 'ok' ) {
-        return $self->sendError( $req, $res->{msg}, $res->{code} );
-    }
+
+    return $self->sendError( $req, $res->{msg}, $res->{code} )
+        unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req, $res->{secondFactors} );
 }
@@ -60,11 +61,14 @@ sub getSecondFactorsById {
     $self->logger->debug("[API] 2F for $uid with id $id requested");
 
     $res = $self->_get2F($uid, undef,  $id);
-    unless ( $res->{res} eq 'ok' ) {
-        return $self->sendError( $req, $res->{msg}, $res->{code} );
-    }
 
-    return $self->sendJSONresponse( $req, $res->{secondFactors} );
+    return $self->sendError( $req, $res->{msg}, $res->{code} )
+        unless ( $res->{res} eq 'ok' );
+
+    return $self->sendError( $req, "2F id '$id' not found for user '$uid'", 404 )
+        unless ( scalar @{$res->{secondFactors}} > 0 );
+
+    return $self->sendJSONresponse( $req, @{$res->{secondFactors}}[0]);
 }
 
 sub deleteSecondFactors {
@@ -77,9 +81,9 @@ sub deleteSecondFactors {
     $self->logger->debug("[API] Delete all 2F for $uid requested");
 
     $res = $self->_delete2F($uid);
-    unless ( $res->{res} eq 'ok' ) {
-        return $self->sendError( $req, $res->{msg}, $res->{code} );
-    }
+
+    return $self->sendError( $req, $res->{msg}, $res->{code} )
+        unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req, { message => $res->{msg} } );
 }
@@ -97,9 +101,12 @@ sub deleteSecondFactorsById {
     $self->logger->debug("[API] Delete 2F for $uid with id $id requested");
 
     $res = $self->_delete2F($uid, undef, $id);
-    unless ( $res->{res} eq 'ok' ) {
-        return $self->sendError( $req, $res->{msg}, $res->{code} );
-    }
+
+    return $self->sendError( $req, $res->{msg}, $res->{code} )
+        unless ( $res->{res} eq 'ok' );
+
+    return $self->sendError( $req, "2F id '$id' not found for user '$uid'", 404 )
+        unless ( $res->{removed} > 0 );
 
     return $self->sendJSONresponse( $req, { message => $res->{msg} } );
 }
@@ -117,9 +124,9 @@ sub deleteSecondFactorsByType {
     $self->logger->debug("[API] Delete all 2F for $uid with type $type requested");
 
     $res = $self->_delete2F($uid, uc $type);
-    unless ( $res->{res} eq 'ok' ) {
-        return $self->sendError( $req, $res->{msg}, $res->{code} );
-    }
+
+    return $self->sendError( $req, $res->{msg}, $res->{code} )
+        unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req, { message => $res->{msg} } );
 }
@@ -133,19 +140,26 @@ sub _get2F {
         return $res if ($res->{res} ne 'ok');
     }
 
-    $psessions = $self->_getPSessions2F($uid, ('_session_uid', '_2fDevices'));
+    $psessions = $self->_getPSessions2F($uid);
 
     foreach ( keys %{ $psessions } ) {
         my $devices = from_json( $psessions->{$_}->{_2fDevices}, { allow_nonref => 1 } );
         foreach my $device ( @{$devices} ) {
-            push @secondFactors, { id => $device->{epoch}, type => $device->{type}, name => $device->{name} }
+            $self->logger->debug("Check device [epoch=$device->{epoch}, type=$device->{type}, name=$device->{name}]");
+            push @secondFactors, { id => $self->_genId2F($device), type => $device->{type}, name => $device->{name} }
                 unless (
                   ( defined $type and $type ne $device->{type} )
-                  or ( defined $id and $id ne $device->{epoch} )
+                  or ( defined $id and $id ne $self->_genId2F($device) )
                 );
         }
     }
-    return { res => 'ok', secondFactors => scalar @secondFactors ? @secondFactors : [] };
+    $self->logger->debug("Found " . scalar @secondFactors  . " 2F devices for uid $uid.");
+    return { res => 'ok', secondFactors => [ @secondFactors ]};
+}
+
+sub _genId2F {
+    my ( $self, $device) = @_;
+    return encode_base64("$device->{epoch}::$device->{type}::$device->{name}", "");
 }
 
 sub _getMod2F {
@@ -155,10 +169,13 @@ sub _getMod2F {
     return $mod;
 }
 sub _getPSessions2F {
-    my ( $self, $uid, @fields ) = @_;
+    my ( $self, $uid ) = @_;
     $self->logger->debug("Looking for psessions for uid $uid ...");
     my $psessions = Lemonldap::NG::Common::Apache::Session->searchOn($self->_getMod2F->{options},
-            '_session_uid', $uid, @fields );
+            '_session_uid', $uid, ('_session_kind' , '_session_uid', '_session_id', '_2fDevices'));
+    foreach ( keys %{ $psessions } ) {
+        delete $psessions->{$_} unless ($psessions->{$_}->{_session_kind} eq 'Persistent');
+    }
     $self->logger->debug("Found " . scalar (keys %{ $psessions })  . " psessions for uid $uid.");
     return $psessions;
 }
@@ -182,7 +199,7 @@ sub _delete2F {
         return $res if ($res->{res} ne 'ok');
     }
 
-    $psessions = $self->_getPSessions2F($uid, ('_session_uid', '_session_id', '_2fDevices'));
+    $psessions = $self->_getPSessions2F($uid);
 
     foreach ( keys %{ $psessions } ) {
 
@@ -203,7 +220,7 @@ sub _delete2F {
                 push @keep, $element
                   if (( defined $type or defined $id ) and
                     (( defined $type and $type ne $element->{type} ) or
-                     ( defined $id and $id ne $element->{epoch} )));
+                      ( defined $id and $id ne $self->_genId2F($element) )));
             }
             $lremoved = $total - scalar @keep;
             if ($lremoved > 0) {
@@ -230,6 +247,7 @@ sub _delete2F {
     }
     return {
         res => 'ok',
+        removed => $removed,
         msg => $removed > 0 ? "Successful operation: " . $removed . " 2F were removed" : "No operation performed"
     };
 }
