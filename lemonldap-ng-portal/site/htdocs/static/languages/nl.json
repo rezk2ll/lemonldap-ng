@@ -86,6 +86,9 @@
 "PE94":"A required attribute is not available",
 "PE95":"Access not granted on DECRYPT service",
 "PE96":"Invalid verification code",
+"PE97":"Your certificate is invalid or expires soon",
+"PE98":"Please select your new certificate",
+"PE99":"Please select your new certificate",
 "2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"Accept",
 "accessDenied":"You have no access authorization for this application",
@@ -287,5 +290,8 @@
 "yourPhone":"Know your phone number",
 "yourProfile":"Know your profile",
 "yourTotpKey":"Your TOTP key",
-"yubikey2f":"Yubikey"
+"yubikey2f":"Yubikey",
+"resetCertificateOK":"Your certificate was reset sucessfully",
+"linkValidUntilCertif":"This message contains a link to reset your certificate, this link is valid until ",
+"certificateReset":"Reset my certificate"
 }

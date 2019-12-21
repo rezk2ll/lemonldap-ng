@@ -179,17 +179,17 @@ Packages are available on the <a href="download.html" class="wikilink1" title="d
 <h2 class="sectionedit7" id="install_packages">Install packages</h2>
 <div class="level2">
 <div class="noteimportant">By default packages will require Nginx. If you want to use Apache2, install it first with mod_perl:
-<pre class="code">apt install apache2 libapache2-mod-perl</pre>
+<pre class="code">apt install apache2 libapache2-mod-perl2 libapache2-mod-fcgid</pre>
 
 </div>
 </div>
-<!-- EDIT7 SECTION "Install packages" [2657-2865] -->
+<!-- EDIT7 SECTION "Install packages" [2657-2887] -->
 <h3 class="sectionedit8" id="with_apt">With apt</h3>
 <div class="level3">
 <pre class="code">apt install lemonldap-ng</pre>
 
 </div>
-<!-- EDIT8 SECTION "With apt" [2866-2926] -->
+<!-- EDIT8 SECTION "With apt" [2888-2948] -->
 <h3 class="sectionedit9" id="with_dpkg">With dpkg</h3>
 <div class="level3">
 
@@ -203,12 +203,12 @@ Then:
 <pre class="code">dpkg -i liblemonldap-ng-* lemonldap-ng*</pre>
 
 </div>
-<!-- EDIT9 SECTION "With dpkg" [2927-3075] -->
+<!-- EDIT9 SECTION "With dpkg" [2949-3097] -->
 <h2 class="sectionedit10" id="first_configuration_steps">First configuration steps</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT10 SECTION "First configuration steps" [3076-3114] -->
+<!-- EDIT10 SECTION "First configuration steps" [3098-3136] -->
 <h3 class="sectionedit11" id="change_default_dns_domain">Change default DNS domain</h3>
 <div class="level3">
 
@@ -218,7 +218,7 @@ By default, <abbr title="Domain Name System">DNS</abbr> domain is <code>example.
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1.json</pre>
 
 </div>
-<!-- EDIT11 SECTION "Change default DNS domain" [3115-3398] -->
+<!-- EDIT11 SECTION "Change default DNS domain" [3137-3420] -->
 <h3 class="sectionedit12" id="upgrade">Upgrade</h3>
 <div class="level3">
 
@@ -227,7 +227,7 @@ If you upgraded <abbr title="LemonLDAP::NG">LL::NG</abbr>, check all <a href="up
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Upgrade" [3399-3479] -->
+<!-- EDIT12 SECTION "Upgrade" [3421-3501] -->
 <h3 class="sectionedit13" id="dns">DNS</h3>
 <div class="level3">
 
@@ -248,7 +248,7 @@ Follow the <a href="start.html#configuration" class="wikilink1" title="documenta
 </p>
 
 </div>
-<!-- EDIT13 SECTION "DNS" [3480-3784] -->
+<!-- EDIT13 SECTION "DNS" [3502-3806] -->
 <h2 class="sectionedit14" id="file_location">File location</h2>
 <div class="level2">
 <ul>
@@ -269,7 +269,7 @@ Follow the <a href="start.html#configuration" class="wikilink1" title="documenta
 </ul>
 
 </div>
-<!-- EDIT14 SECTION "File location" [3785-4352] -->
+<!-- EDIT14 SECTION "File location" [3807-4374] -->
 <h2 class="sectionedit15" id="build_your_packages">Build your packages</h2>
 <div class="level2">
 
@@ -281,6 +281,6 @@ cd lemonldap-ng-*
 make debian-packages</pre>
 
 </div>
-<!-- EDIT15 SECTION "Build your packages" [4353-] --></div>
+<!-- EDIT15 SECTION "Build your packages" [4375-] --></div>
 </body>
 </html>

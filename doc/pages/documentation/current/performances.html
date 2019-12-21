@@ -119,7 +119,7 @@ LLNG uses different cache systems to avoid querying to many the databases:
 	</tr>
 	</thead>
 	<tr class="row2 roweven">
-		<th class="col0 centeralign">  Configuration  </th><td class="col1 centeralign">     <code>checkTime</code>          </td><td class="col2 centeralign">  10 minutes  </td><td class="col3 leftalign">                     </td><td class="col4 centeralign">  Until &quot;reload&quot; order  </td><td class="col5 centeralign">  ✔   </td>
+		<th class="col0 centeralign">  Configuration  </th><td class="col1 centeralign">     <code>checkTime</code>          </td><td class="col2 centeralign">  1 second    </td><td class="col3 leftalign">                     </td><td class="col4 centeralign">  Until &quot;reload&quot; order  </td><td class="col5 centeralign">  ✔   </td>
 	</tr>
 	<tr class="row3 rowodd">
 		<th class="col0 centeralign">     Session     </th><td class="col1 centeralign">  <code>handlerInternalCache</code>  </td><td class="col2 centeralign">  15 seconds  </td><td class="col3 centeralign">  <code>default_expires_in</code>(*)  </td><td class="col4 centeralign">   10 minutes   </td><td class="col5 centeralign">  ✔   </td>
@@ -129,11 +129,11 @@ LLNG uses different cache systems to avoid querying to many the databases:
 <p>
 <em>(*): Manager &gt;&gt; General parameters &gt;&gt; Sessions &gt;&gt; Sessions storage &gt;&gt; Cache module options</em>
 </p>
-<div class="noteclassic">Configuration and sessions are first looked up in-memory, then in the cache file, and then in their backing store. This means that after a configuration reload <em>(using Manager)</em>, you have to wait for <code>checkTime</code> before you can see your changes.
+<div class="noteclassic">Configuration and sessions are first looked up in-memory, then in the cache file, and then in their backing store. This means that after a configuration reload <em>(using Manager)</em>, you have to wait for <code>checkTime</code> before you can see your changes, or wait for configuration cache expiration in <code>checkTime</code> is disabled.
 
 </div>
 </div>
-<!-- EDIT3 SECTION "Cache system" [304-1241] -->
+<!-- EDIT3 SECTION "Cache system" [304-1314] -->
 <h2 class="sectionedit5" id="global_performance">Global performance</h2>
 <div class="level2">
 
@@ -152,7 +152,7 @@ To bypass this, you can:
 </ul>
 
 </div>
-<!-- EDIT5 SECTION "Global performance" [1242-1645] -->
+<!-- EDIT5 SECTION "Global performance" [1315-1718] -->
 <h3 class="sectionedit6" id="cron_optimization_or_systemd_timers">Cron optimization (or systemd timers)</h3>
 <div class="level3">
 
@@ -167,7 +167,7 @@ LLNG installs its cron files without knowing how many servers are installed. You
 </ul>
 
 </div>
-<!-- EDIT6 SECTION "Cron optimization (or systemd timers)" [1646-1945] -->
+<!-- EDIT6 SECTION "Cron optimization (or systemd timers)" [1719-2018] -->
 <h2 class="sectionedit7" id="handler_performance">Handler performance</h2>
 <div class="level2">
 
@@ -184,7 +184,7 @@ Handlers check rights and calculate headers for each HTTP hit. So to improve per
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Handler performance" [1946-2376] -->
+<!-- EDIT7 SECTION "Handler performance" [2019-2449] -->
 <h3 class="sectionedit8" id="macros_and_groups">Macros and groups</h3>
 <div class="level3">
 
@@ -245,7 +245,7 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 </div><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro &quot;macro1&quot; will be computed before macro &quot;macro2&quot;: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
 </div>
 </div>
-<!-- EDIT8 SECTION "Macros and groups" [2377-4471] -->
+<!-- EDIT8 SECTION "Macros and groups" [2450-4544] -->
 <h3 class="sectionedit9" id="local_macros">Local macros</h3>
 <div class="level3">
 
@@ -259,12 +259,12 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 <div class="notetip">Note that this feature is interesting only for the Lemonldap::NG systems protecting a high number of applications
 </div>
 </div>
-<!-- EDIT9 SECTION "Local macros" [4472-5133] -->
+<!-- EDIT9 SECTION "Local macros" [4545-5206] -->
 <h2 class="sectionedit10" id="portal_performances">Portal performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT10 SECTION "Portal performances" [5134-5166] -->
+<!-- EDIT10 SECTION "Portal performances" [5207-5239] -->
 <h3 class="sectionedit11" id="general_performances">General performances</h3>
 <div class="level3">
 
@@ -287,7 +287,7 @@ By default it uses local storage to store its tokens. If you have more than 1 po
 
 </div>
 </div>
-<!-- EDIT11 SECTION "General performances" [5167-6044] -->
+<!-- EDIT11 SECTION "General performances" [5240-6117] -->
 <h3 class="sectionedit12" id="apachesession_performances">Apache::Session performances</h3>
 <div class="level3">
 
@@ -399,7 +399,7 @@ This test isn&#039;t an &quot;only-backend&quot; test but embedded some LLNG met
 		<td class="col0 centeralign" colspan="8">  <em>The source of this test is available in sources: e2e-tests/sbperf.pl</em>  </td>
 	</tr>
 </table></div>
-<!-- EDIT13 TABLE [8945-10848] --><ul>
+<!-- EDIT13 TABLE [9018-10921] --><ul>
 <li class="level1"><div class="li"> <em><strong>(1) :</strong> &quot;purge&quot; test is done with Apache::Session::Browseable-1.2.5 and LLG-2.0. Earlier results are not so good.</em></div>
 </li>
 <li class="level1"><div class="li"> <em><strong>(2) :</strong> &quot;purge&quot; test is done with Apache::Session::Browseable-1.2.6 and LLG-2.0.</em></div>
@@ -423,7 +423,7 @@ Analysis:
 </ul>
 
 </div>
-<!-- EDIT12 SECTION "Apache::Session performances" [6045-11626] -->
+<!-- EDIT12 SECTION "Apache::Session performances" [6118-11699] -->
 <h3 class="sectionedit14" id="ldap_performances">LDAP performances</h3>
 <div class="level3">
 
@@ -460,7 +460,7 @@ Now ldapgroups contains &quot;admin su&quot;
 
 </div>
 </div>
-<!-- EDIT14 SECTION "LDAP performances" [11627-12761] -->
+<!-- EDIT14 SECTION "LDAP performances" [11700-12834] -->
 <h3 class="sectionedit15" id="nginx_performances">NGINX performances</h3>
 <div class="level3">
 
@@ -496,12 +496,12 @@ Restart NGINX and watch web-browser console.
 </p>
 
 </div>
-<!-- EDIT15 SECTION "NGINX performances" [12762-13684] -->
+<!-- EDIT15 SECTION "NGINX performances" [12835-13757] -->
 <h2 class="sectionedit16" id="manager_performances">Manager performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT16 SECTION "Manager performances" [13685-13718] -->
+<!-- EDIT16 SECTION "Manager performances" [13758-13791] -->
 <h3 class="sectionedit17" id="disable_unused_modules">Disable unused modules</h3>
 <div class="level3">
 
@@ -512,7 +512,7 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
 </div>
-<!-- EDIT17 SECTION "Disable unused modules" [13719-13980] -->
+<!-- EDIT17 SECTION "Disable unused modules" [13792-14053] -->
 <h3 class="sectionedit18" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
@@ -539,6 +539,6 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 </p>
 
 </div>
-<!-- EDIT18 SECTION "Use static HTML files" [13981-] --></div>
+<!-- EDIT18 SECTION "Use static HTML files" [14054-] --></div>
 </body>
 </html>

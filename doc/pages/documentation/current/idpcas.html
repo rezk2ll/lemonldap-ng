@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:idpcas</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,idpcas"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="idpcas.html"/>
@@ -56,8 +56,9 @@
 <li class="level2"><div class="li"><a href="#configuring_the_cas_service">Configuring the CAS Service</a></div></li>
 <li class="level2"><div class="li"><a href="#configuring_cas_applications">Configuring CAS Applications</a></div>
 <ul class="toc">
-<li class="level3"><div class="li"><a href="#options">Options</a></div></li>
 <li class="level3"><div class="li"><a href="#exported_attributes">Exported Attributes</a></div></li>
+<li class="level3"><div class="li"><a href="#options">Options</a></div></li>
+<li class="level3"><div class="li"><a href="#macros">Macros</a></div></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -159,6 +160,19 @@ You can then access the configuration of this application.
 
 </div>
 
+<h4 id="exported_attributes">Exported Attributes</h4>
+<div class="level4">
+
+<p>
+You may add a list of attributes that will be transmitted in the validate response. Keys are the name of attribute in the <abbr title="Central Authentication Service">CAS</abbr> response, values are the name of session key.
+</p>
+
+<p>
+The attributes defined here will completely replace any attributes you may have declared in the global <code><abbr title="Central Authentication Service">CAS</abbr> Service</code> configuration. In order to re-use the global configuration, simply set this section to an empty list.
+</p>
+
+</div>
+
 <h4 id="options">Options</h4>
 <div class="level4">
 <ul>
@@ -173,15 +187,11 @@ You can then access the configuration of this application.
 </div>
 </div>
 
-<h4 id="exported_attributes">Exported Attributes</h4>
+<h4 id="macros">Macros</h4>
 <div class="level4">
 
 <p>
-You may add a list of attributes that will be transmitted in the validate response. Keys are the name of attribute in the <abbr title="Central Authentication Service">CAS</abbr> response, values are the name of session key.
-</p>
-
-<p>
-The attributes defined here will completely replace any attributes you may have declared in the global <code><abbr title="Central Authentication Service">CAS</abbr> Service</code> configuration. In order to re-use the global configuration, simply set this section to an empty list.
+You can define here macros that will be only evaluated for this service, and not registered in the session of the user.
 </p>
 
 </div>

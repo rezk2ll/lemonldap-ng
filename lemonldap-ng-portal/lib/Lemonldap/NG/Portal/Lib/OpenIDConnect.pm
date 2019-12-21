@@ -19,7 +19,7 @@ use Mouse;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 # OpenID Connect standard claims
 use constant PROFILE => [
@@ -1631,6 +1631,16 @@ sub decode_base64url {
     $s =~ tr[-_][+/];
     $s .= '=' while length($s) % 4;
     return decode_base64($s);
+}
+
+sub encodeBase64url {
+    my ( $self, $value ) = @_;
+    return encode_base64url($value);
+}
+
+sub decodeBase64url {
+    my ( $self, $value ) = @_;
+    return decode_base64url($value);
 }
 
 sub addRouteFromConf {

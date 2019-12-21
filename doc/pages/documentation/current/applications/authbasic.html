@@ -93,7 +93,7 @@ The Basic Authentication relies on a specific HTTP header, as described above. S
 <p>
 For example, to forward login (<code>$uid</code>) and password (<code>$_password</code> if <a href="../passwordstore.html" class="wikilink1" title="documentation:2.0:passwordstore">password is stored in session</a>):
 </p>
-<pre class="code">Authorization =&gt; &quot;Basic &quot;.encode_base64(&quot;$uid:$_password&quot;)</pre>
+<pre class="code">Authorization =&gt; &quot;Basic &quot;.encode_base64(&quot;$uid:$_password&quot;, &quot;&quot;)</pre>
 
 <p>
 <abbr title="LemonLDAP::NG">LL::NG</abbr> provides a special function named <a href="../extendedfunctions.html#basic" class="wikilink1" title="documentation:2.0:extendedfunctions">basic</a> to build this header.

@@ -77,6 +77,8 @@ sub enabledPlugins {
     # Check if register is enabled
     push @res, '::Plugins::Register'
       if ( $conf->{registerDB} and $conf->{registerDB} ne 'Null' );
+    push @res, '::Plugins::CertificateResetByMail'
+      if ( $conf->{portalDisplayCertificateResetByMail});
 
     # Check if custom plugins are required
     # TODO: change this name

@@ -291,7 +291,6 @@ sub op {
                         email => 'email',
                     },
                 },
-                oidcServiceMetaDataIssuer             => "http://auth.op.com",
                 oidcServiceMetaDataAuthorizeURI       => "authorize",
                 oidcServiceMetaDataCheckSessionURI    => "checksession.html",
                 oidcServiceMetaDataJWKSURI            => "jwks",

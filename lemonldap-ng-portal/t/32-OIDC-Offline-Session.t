@@ -29,7 +29,6 @@ my $op = LLNG::Manager::Test->new( {
                     name        => "cn"
                 }
             },
-            oidcServiceMetaDataIssuer             => "http://auth.op.com",
             oidcServiceMetaDataAuthorizeURI       => "authorize",
             oidcServiceMetaDataCheckSessionURI    => "checksession.html",
             oidcServiceMetaDataJWKSURI            => "jwks",

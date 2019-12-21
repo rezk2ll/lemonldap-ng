@@ -65,7 +65,8 @@ sub tree {
                                         'portalCheckLogins',
                                         'portalDisplayResetPassword',
                                         'passwordResetAllowedRetries',
-                                        'portalDisplayRegister'
+                                        'portalDisplayRegister',
+                                        'portalDisplayCertificateResetByMail'
                                     ]
                                 },
                                 {
@@ -655,6 +656,34 @@ sub tree {
                                     ]
                                 }
                             ]
+                         },
+                          {
+                            title => 'certificateResetByMailManagement',
+                             form  => 'simpleInputContainer',
+                             nodes => [ {
+                                     title => 'certificateMailContent',
+                                     form  => 'simpleInputContainer',
+                                     nodes => [ 
+                                         'certificateResetByMailSender',
+                                         'certificateResetByMailReplyTo',
+                                         'certificateResetByMailStep1Subject',
+                                         'certificateResetByMailStep1Body',
+                                         'certificateResetByMailStep2Subject',
+                                         'certificateResetByMailStep2Body'
+                                      ]
+                                  },
+  
+                                  {
+                                      title => 'mailOther',
+                                      form  => 'simpleInputContainer',
+                                      nodes => [
+                                          'certificateResetByMailURL',
+                                          'certificateResetByMailCeaAttribute',
+                                          'certificateResetByMailCertificateAttribute',
+                                          'certificateResetByMailValidityDelay'
+                                    ]
+                                 } 
+                             ]
                         },
                         {
                             title => 'register',
@@ -1188,6 +1217,8 @@ sub tree {
                     title => "oidcServiceMetaDataSessions",
                     nodes => [ 'oidcStorage', 'oidcStorageOptions', ],
                 },
+		'oidcServiceDynamicRegistrationExportedVars',
+		'oidcServiceDynamicRegistrationExtraClaims',
             ]
         },
         'oidcOPMetaDataNodes',

@@ -200,7 +200,7 @@ sub notifications {
                 result => 1,
                 count  => $count,
                 values => $res,
-                total => $total
+                total  => $total
             }
         );
     }
@@ -220,8 +220,15 @@ sub notifications {
                 @r = sort { $a->{$f} cmp $b->{$f} } @r;
             }
         }
-        return $self->sendJSONresponse( $req,
-            { result => 1, count => scalar(@r), values => \@r, total => $total } );
+        return $self->sendJSONresponse(
+            $req,
+            {
+                result => 1,
+                count  => scalar(@r),
+                values => \@r,
+                total  => $total
+            }
+        );
     }
 }
 

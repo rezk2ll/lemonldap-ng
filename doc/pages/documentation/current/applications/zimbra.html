@@ -56,6 +56,7 @@
 <li class="level2"><div class="li"><a href="#zimbra_application_in_menu">Zimbra application in menu</a></div></li>
 <li class="level2"><div class="li"><a href="#zimbra_virtual_host">Zimbra virtual host</a></div></li>
 <li class="level2"><div class="li"><a href="#zimbra_handler_parameters">Zimbra Handler parameters</a></div></li>
+<li class="level2"><div class="li"><a href="#multi-domain_issues">Multi-domain issues</a></div></li>
 </ul></li>
 </ul>
 </div>
@@ -163,6 +164,66 @@ Zimbra parameters are the following:
 
 </div>
 </div>
-<!-- EDIT7 SECTION "Zimbra Handler parameters" [1862-] --></div>
+<!-- EDIT7 SECTION "Zimbra Handler parameters" [1862-2771] -->
+<h3 class="sectionedit8" id="multi-domain_issues">Multi-domain issues</h3>
+<div class="level3">
+
+<p>
+Some organizations have multiple zimbra domains:
+</p>
+<ol>
+<li class="level1"><div class="li"> foo@domain1.com</div>
+</li>
+<li class="level1"><div class="li"> bar@domain2.com</div>
+</li>
+</ol>
+
+<p>
+However, the zimbra preauth key is:
+</p>
+<ul>
+<li class="level1"><div class="li"> generated for one zimbra domain only</div>
+</li>
+<li class="level1"><div class="li"> declared globally for every LemonLDAP::NG virtual hosts.</div>
+</li>
+</ul>
+
+<p>
+Thus, if domain1 has been registered on LemonLDAP::NG, user bar won&#039;t be able to connect to zimbra because preauth key is different. If you accept to have the same preauth key for all zimbra domains, you can set the same preauth key using this procedure:
+</p>
+
+<p>
+We are going to use the first key (the domain1 one) for every domain.
+On Zimbra machine, generate the keys:
+</p>
+<pre class="code"> zmprov generateDomainPreAuthKey domain1.com
+ preAuthKey: 4e2816f16c44fab20ecdee39fb850c3b0bb54d03f1d8e073aaea376a4f407f0c
+
+ zmprov generateDomainPreAuthKey domain2.com
+ preAuthKey: 6b7ead4bd425836e8cf0079cd6c1a05acc127acd07c8ee4b61023e19250e929c</pre>
+
+<p>
+Then, connect to your zimbra LDAP server with your favourite tool (Apache Directory Studio can do the job).
+Take care to connect with the super admin and password account.
+</p>
+<ul>
+<li class="level1"><div class="li"> Expand the branch &quot;dc=com&quot;, then click the &quot;dc=domain1&quot; branch</div>
+</li>
+<li class="level1"><div class="li"> Get the value of zimbraPreAuthKey</div>
+</li>
+<li class="level1"><div class="li"> Expand the branch &quot;dc=com&quot;, then click the &quot;dc=domain2&quot; branch</div>
+</li>
+<li class="level1"><div class="li"> Replace the value of zimbraPreAuthKey you have previously copied</div>
+</li>
+<li class="level1"><div class="li"> Wait for all Zimbra servers to update, or restart the zcs server</div>
+</li>
+</ul>
+
+<p>
+That&#039;s it, all zimbra servers will be able to decipher the hmac because they share the same key!
+</p>
+
+</div>
+<!-- EDIT8 SECTION "Multi-domain issues" [2772-] --></div>
 </body>
 </html>

@@ -13,7 +13,7 @@ use MIME::Base64;
 use Net::LDAP;
 use utf8;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.7';
 
 extends 'Lemonldap::NG::Common::Notifications';
 
@@ -78,15 +78,13 @@ sub get {
 }
 
 ## @method hashref getAll()
-# Return all messages not notified.
+# Return all pending notifications.
 # @return hashref where keys are internal reference and values are hashref with
-# keys date, uid and ref.
+# keys date, uid, ref and condition.
 sub getAll {
-    my $self = shift;
-
+    my $self    = shift;
     my @entries = $self->_search(
         '(&(objectClass=applicationProcess)(!(description={done}*)))');
-
     my $result = {};
     foreach my $entry (@entries) {
         my @notifValues = $entry->get_value('description');
@@ -102,10 +100,34 @@ sub getAll {
             ref  => $f->{ref},
             cond => $f->{condition},
         };
-
     }
     return $result;
+}
 
+## @method hashref getExisting()
+# Return all notifications.
+# @return hashref where keys are internal reference and values are hashref with
+# keys date, uid, ref and condition.
+sub getExisting {
+    my $self    = shift;
+    my @entries = $self->_search('objectClass=applicationProcess');
+    my $result  = {};
+    foreach my $entry (@entries) {
+        my @notifValues = $entry->get_value('description');
+        my $f           = {};
+        foreach (@notifValues) {
+            my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/smg );
+            $v = decodeLdapValue($v);
+            $f->{$k} = $v;
+        }
+        $result->{"$f->{date}#$f->{uid}#$f->{ref}"} = {
+            date => $f->{date},
+            uid  => $f->{uid},
+            ref  => $f->{ref},
+            cond => $f->{condition},
+        };
+    }
+    return $result;
 }
 
 ## @method boolean delete(string myref)

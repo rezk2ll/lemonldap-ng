@@ -765,6 +765,42 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'certificateResetByMailCeaAttribute' => {
+            'default' => 'description',
+            'type'    => 'text'
+        },
+        'certificateResetByMailCertificateAttribute' => {
+            'default' => 'userCertificate;binary',
+            'type'    => 'text'
+        },
+        'certificateResetByMailReplyTo' => {
+            'default' => 'noreply@example.com',
+            'type'    => 'text'
+        },
+        'certificateResetByMailSender' => {
+            'default' => 'noreply@example.com',
+            'type'    => 'text'
+        },
+        'certificateResetByMailStep1Body' => {
+            'type' => 'longtext'
+        },
+        'certificateResetByMailStep1Subject' => {
+            'type' => 'text'
+        },
+        'certificateResetByMailStep2Body' => {
+            'type' => 'longtext'
+        },
+        'certificateResetByMailStep2Subject' => {
+            'type' => 'text'
+        },
+        'certificateResetByMailURL' => {
+            'default' => 'http://auth.example.com/certificateReset',
+            'type'    => 'url'
+        },
+        'certificateResetByMailValidityDelay' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
         'cfgAuthor' => {
             'type' => 'text'
         },
@@ -1013,7 +1049,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'text'
         },
         'cspFormAction' => {
-            'default' => '\'self\'',
+            'default' => '*',
             'type'    => 'text'
         },
         'cspImg' => {
@@ -2168,6 +2204,12 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 60,
             'type'    => 'int'
         },
+        'oidcServiceDynamicRegistrationExportedVars' => {
+            'type' => 'keyTextContainer'
+        },
+        'oidcServiceDynamicRegistrationExtraClaims' => {
+            'type' => 'keyTextContainer'
+        },
         'oidcServiceIDTokenExpiration' => {
             'default' => 3600,
             'type'    => 'int'
@@ -2408,6 +2450,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'portalDisplayAppslist' => {
             'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'portalDisplayCertificateResetByMail' => {
+            'default' => 0,
             'type'    => 'boolOrExpr'
         },
         'portalDisplayChangePassword' => {

@@ -217,13 +217,11 @@ site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff2
 site/htdocs/static/bwr/font-awesome/fonts/FontAwesome.otf
 site/htdocs/static/bwr/jquery-ui/jquery-ui.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js
-site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js.map
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.js
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.min.js
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.min.js.map
 site/htdocs/static/bwr/jquery/dist/jquery.js
 site/htdocs/static/bwr/jquery/dist/jquery.min.js
-site/htdocs/static/bwr/jquery/dist/jquery.min.js.map
 site/htdocs/static/bwr/jquery/dist/jquery.min.map
 site/htdocs/static/bwr/qrious/dist/qrious.js
 site/htdocs/static/bwr/qrious/dist/qrious.js.map
@@ -352,6 +350,7 @@ site/htdocs/static/common/modules/WebID.png
 site/htdocs/static/common/nl.png
 site/htdocs/static/common/pt.png
 site/htdocs/static/common/ro.png
+site/htdocs/static/common/tr.png
 site/htdocs/static/common/vi.png
 site/htdocs/static/common/zh.png
 site/htdocs/static/languages/ar.json
@@ -495,6 +494,7 @@ t/30-Auth-and-issuer-SAML-Redirect.t
 t/30-Auth-SAML-with-choice.t
 t/30-CDC.t
 t/30-SAML-Head-to-Tail-POST.t
+t/30-SAML-Macros.t
 t/30-SAML-POST-Logout-when-expired.t
 t/30-SAML-POST-with-2F-and-Notification.t
 t/30-SAML-POST-with-Notification.t
@@ -522,8 +522,11 @@ t/32-Auth-and-issuer-OIDC-implicit-no-token.t
 t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-CAS-10.t
+t/32-CAS-Macros.t
+t/32-OIDC-Macro.t
 t/32-OIDC-Offline-Session.t
 t/32-OIDC-Refresh-Token.t
+t/32-OIDC-Register.t
 t/32-OIDC-RP-rule.t
 t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t

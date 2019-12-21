@@ -86,6 +86,9 @@
 "PE94":"Un atributo obligatorio no está presente",
 "PE95":"Access not granted on DECRYPT service",
 "PE96":"Invalid verification code",
+"PE97":"Your certificate is invalid or expires soon",
+"PE98":"Please select your new certificate",
+"PE99":"Please select your new certificate",
 "2fRegRequired":"Este servicio necesita la autenticación de dos factores. Registre un dispositivo ahora, luego reingrese al portal.",
 "accept":"Aceptar",
 "accessDenied":"No está autorizado a acceder a esta aplicación",
@@ -287,5 +290,8 @@
 "yourPhone":"Know your phone number",
 "yourProfile":"Know your profile",
 "yourTotpKey":"Su llave TOTP",
-"yubikey2f":"Yubikey"
+"yubikey2f":"Yubikey",
+"resetCertificateOK":"Your certificate was reset sucessfully",
+"linkValidUntilCertif":"This message contains a link to reset your certificate, this link is valid until ",
+"certificateReset":"Reset my certificate"
 }

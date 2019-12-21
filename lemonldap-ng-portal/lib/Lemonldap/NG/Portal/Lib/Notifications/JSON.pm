@@ -343,7 +343,10 @@ sub notificationServer {
             }
             else {
                 push @$res,
-                  { "uid" => $json->{uid}, "reference" => $json->{reference} };
+                  {
+                    "uid"       => $json->{uid},
+                    "reference" => ( $json->{reference} || $json->{ref} )
+                  };
             }
         }
     }
