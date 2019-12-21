@@ -2142,9 +2142,9 @@ sub attributes {
             type => 'keyTextContainer',
             help =>
               'exportedvars.html#extend_variables_using_macros_and_groups',
-            test       => {
-                keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-                keyMsgFail    => '__badMacroName__',
+            test => {
+                keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                keyMsgFail => '__badMacroName__',
                 test       => sub { return perlExpr(@_) },
             },
             default       => {},
@@ -2753,9 +2753,9 @@ sub attributes {
             type => 'keyTextContainer',
             help =>
               'exportedvars.html#extend_variables_using_macros_and_groups',
-            test       => {
-                keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-                keyMsgFail    => '__badMacroName__',
+            test => {
+                keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                keyMsgFail => '__badMacroName__',
                 test       => sub { return perlExpr(@_) },
             },
             default       => {},
@@ -3685,14 +3685,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 3600,
             documentation => 'OpenID Connect global access token TTL',
         },
-	oidcServiceDynamicRegistrationExportedVars => {
-            type          => 'keyTextContainer',
-            documentation => 'OpenID Connect exported variables for dynamic registration',
-	},
-	oidcServiceDynamicRegistrationExtraClaims => {
-            type          => 'keyTextContainer',
-            documentation => 'OpenID Connect extra claims for dynamic registration',
-	},
+        oidcServiceDynamicRegistrationExportedVars => {
+            type => 'keyTextContainer',
+            documentation =>
+              'OpenID Connect exported variables for dynamic registration',
+        },
+        oidcServiceDynamicRegistrationExtraClaims => {
+            type => 'keyTextContainer',
+            documentation =>
+              'OpenID Connect extra claims for dynamic registration',
+        },
         oidcServiceIDTokenExpiration => {
             type          => 'int',
             default       => 3600,
@@ -3864,9 +3866,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type => 'keyTextContainer',
             help =>
               'exportedvars.html#extend_variables_using_macros_and_groups',
-            test       => {
-                keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-                keyMsgFail    => '__badMacroName__',
+            test => {
+                keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                keyMsgFail => '__badMacroName__',
                 test       => sub { return perlExpr(@_) },
             },
             default       => {},
