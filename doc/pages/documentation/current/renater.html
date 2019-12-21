@@ -116,16 +116,14 @@ Configure <a href="samlservice.html#discovery_protocol" class="wikilink1" title=
 <div class="level3">
 
 <p>
-You now need to import IDP metadata in <abbr title="LemonLDAP::NG">LL::NG</abbr> configuration. Use the <code>importMetadata</code> script that should be installed in /usr/share/lemonldap-ng/bin. You need to select the correct metadata bundle proposed by Renater: <a href="https://services.renater.fr/federation/technique/metadata" class="urlextern" title="https://services.renater.fr/federation/technique/metadata"  rel="nofollow">https://services.renater.fr/federation/technique/metadata</a>, for example:
+You now need to import IDP metadata in <abbr title="LemonLDAP::NG">LL::NG</abbr> configuration. Use the <code>importMetadata</code> script that should be installed in /usr/share/lemonldap-ng/bin. You need to select the correct metadata bundle proposed by Renater: <a href="https://services.renater.fr/federation/technique/metadata" class="urlextern" title="https://services.renater.fr/federation/technique/metadata"  rel="nofollow">https://services.renater.fr/federation/technique/metadata</a>.
 </p>
-<pre class="code">/usr/share/lemonldap-ng/bin/importMetadata -m https://metadata.federation.renater.fr/renater/main/main-idps-renater-metadata.xml -r -i &quot;idp-renater&quot; -s &quot;sp-renater&quot;</pre>
-<div class="noteimportant">You need to add this in cron to refresh metadata into <abbr title="LemonLDAP::NG">LL::NG</abbr> configuration.
-</div>
+
 <p>
-If you need too customize some settings of the script, copy it and edit configuration:
+For Renater, you need to customize some settings of the script, copy it and edit configuration:
 </p>
-<pre class="code">cp /usr/share/lemonldap-ng/bin/importMetadata /usr/share/lemonldap-ng/bin/importMetadataCustom
-vi /usr/share/lemonldap-ng/bin/importMetadataCustom</pre>
+<pre class="code">cp /usr/share/lemonldap-ng/bin/importMetadata /usr/share/lemonldap-ng/bin/importMetadataRenater
+vi /usr/share/lemonldap-ng/bin/importMetadataRenater</pre>
 
 <p>
 Set attributes (use the <abbr title="Security Assertion Markup Language">SAML</abbr> Name, not FriendlyName) that are provided by IDPs, for example:
@@ -165,8 +163,14 @@ Adapt IDP options, for example:
     <span class="st_h">'samlIDPMetaDataOptionsUserAttribute'</span> <span class="sy0">=&gt;</span> <span class="st_h">'urn:oid:1.3.6.1.4.1.5923.1.1.1.6'</span><span class="sy0">,</span>
 <span class="br0">&#125;</span><span class="sy0">;</span></pre>
 
+<p>
+Then run the script:
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/importMetadataRenater -m https://metadata.federation.renater.fr/renater/main/main-idps-renater-metadata.xml -r -i &quot;idp-renater-&quot; -s &quot;sp-renater-&quot;</pre>
+<div class="noteimportant">You need to add this in cron to refresh metadata into <abbr title="LemonLDAP::NG">LL::NG</abbr> configuration.
 </div>
-<!-- EDIT5 SECTION "Metadata import" [779-3520] -->
+</div>
+<!-- EDIT5 SECTION "Metadata import" [779-3549] -->
 <h3 class="sectionedit6" id="add_your_sp_into_the_federation">Add your SP into the federation</h3>
 <div class="level3">
 
@@ -176,12 +180,12 @@ Go to <a href="https://federation.renater.fr/registry" class="urlextern" title="
 <div class="noteimportant">Be sure to check all attributes as mandatory to be able to get them in <abbr title="Security Assertion Markup Language">SAML</abbr> assertions.
 </div>
 </div>
-<!-- EDIT6 SECTION "Add your SP into the federation" [3521-3747] -->
+<!-- EDIT6 SECTION "Add your SP into the federation" [3550-3776] -->
 <h2 class="sectionedit7" id="register_as_identity_provider">Register as Identity Provider</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT7 SECTION "Register as Identity Provider" [3748-3790] -->
+<!-- EDIT7 SECTION "Register as Identity Provider" [3777-3819] -->
 <h3 class="sectionedit8" id="llng_configuration1">LL::NG configuration</h3>
 <div class="level3">
 
@@ -191,21 +195,19 @@ Configure <abbr title="LemonLDAP::NG">LL::NG</abbr> as <abbr title="Security Ass
 <div class="noteimportant">If your <abbr title="LemonLDAP::NG">LL::NG</abbr> server will act as SP and IDP inside Renater federation, you need to set the advanced parameter &quot;Override Entity ID for IDP&quot;. Indeed, Renater do not allow to register a SP and an IDP with the same entityID.
 </div>
 </div>
-<!-- EDIT8 SECTION "LL::NG configuration" [3791-4198] -->
+<!-- EDIT8 SECTION "LL::NG configuration" [3820-4227] -->
 <h3 class="sectionedit9" id="metadata_import1">Metadata import</h3>
 <div class="level3">
 
 <p>
-You now need to import SP metadata in <abbr title="LemonLDAP::NG">LL::NG</abbr> configuration. Use the <code>importMetadata</code> script that should be installed in /usr/share/lemonldap-ng/bin. You need to select the correct metadata bundle proposed by Renater: <a href="https://services.renater.fr/federation/technique/metadata" class="urlextern" title="https://services.renater.fr/federation/technique/metadata"  rel="nofollow">https://services.renater.fr/federation/technique/metadata</a>, for example:
+You now need to import SP metadata in <abbr title="LemonLDAP::NG">LL::NG</abbr> configuration. Use the <code>importMetadata</code> script that should be installed in /usr/share/lemonldap-ng/bin. You need to select the correct metadata bundle proposed by Renater: <a href="https://services.renater.fr/federation/technique/metadata" class="urlextern" title="https://services.renater.fr/federation/technique/metadata"  rel="nofollow">https://services.renater.fr/federation/technique/metadata</a>.
 </p>
-<pre class="code">/usr/share/lemonldap-ng/bin/importMetadata -m https://metadata.federation.renater.fr/renater/main/main-sps-renater-metadata.xml -r -i &quot;idp-renater&quot; -s &quot;sp-renater&quot;</pre>
-<div class="noteimportant">You need to add this in cron to refresh metadata into <abbr title="LemonLDAP::NG">LL::NG</abbr> configuration.
-</div>
+
 <p>
-If you need too customize some settings of the script, copy it and edit configuration:
+For Renater, you may need to customize some settings of the script, copy it and edit configuration:
 </p>
-<pre class="code">cp /usr/share/lemonldap-ng/bin/importMetadata /usr/share/lemonldap-ng/bin/importMetadataCustom
-vi /usr/share/lemonldap-ng/bin/importMetadataCustom</pre>
+<pre class="code">cp /usr/share/lemonldap-ng/bin/importMetadata /usr/share/lemonldap-ng/bin/importMetadataRenater
+vi /usr/share/lemonldap-ng/bin/importMetadataRenater</pre>
 
 <p>
 Adapt IDP options, for example:
@@ -224,8 +226,14 @@ Adapt IDP options, for example:
     <span class="st_h">'samlSPMetaDataOptionsSignSSOMessage'</span>             <span class="sy0">=&gt;</span> <span class="nu0">1</span>
 <span class="br0">&#125;</span><span class="sy0">;</span></pre>
 
+<p>
+Then run the script:
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/importMetadataRenater -m https://metadata.federation.renater.fr/renater/main/main-sps-renater-metadata.xml -r -i &quot;idp-renater&quot; -s &quot;sp-renater&quot;</pre>
+<div class="noteimportant">You need to add this in cron to refresh metadata into <abbr title="LemonLDAP::NG">LL::NG</abbr> configuration.
 </div>
-<!-- EDIT9 SECTION "Metadata import" [4199-5798] -->
+</div>
+<!-- EDIT9 SECTION "Metadata import" [4228-5857] -->
 <h3 class="sectionedit10" id="add_your_idp_into_the_federation">Add your IDP into the federation</h3>
 <div class="level3">
 
@@ -234,6 +242,6 @@ Go to <a href="https://federation.renater.fr/registry" class="urlextern" title="
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Add your IDP into the federation" [5799-] --></div>
+<!-- EDIT10 SECTION "Add your IDP into the federation" [5858-] --></div>
 </body>
 </html>

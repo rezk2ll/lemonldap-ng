@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:notifications</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,notifications"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="notifications.html"/>
@@ -72,8 +72,8 @@
 <li class="level2"><div class="li"><a href="#create_new_notifications_with_notifications_explorer">Create new notifications with notifications explorer</a></div></li>
 <li class="level2"><div class="li"><a href="#notification_server">Notification server</a></div>
 <ul class="toc">
-<li class="level3"><div class="li"><a href="#xml_notifications_trough_soap">XML notifications trough SOAP</a></div></li>
-<li class="level3"><div class="li"><a href="#json_notifications_trough_rest">JSON notifications trough REST</a></div></li>
+<li class="level3"><div class="li"><a href="#xml_notifications_through_soap">XML notifications through SOAP</a></div></li>
+<li class="level3"><div class="li"><a href="#json_notifications_through_rest">JSON notifications through REST</a></div></li>
 </ul>
 </li>
 <li class="level2"><div class="li"><a href="#test_notification">Test notification</a></div></li>
@@ -87,20 +87,20 @@
 <div class="level1">
 
 <p>
-Since version 0.9.4, LemonLDAP::NG can be used to notify some messages to users: if a user has got messages, they will be displayed when he access to the portal. If a message contains some check boxes, the user has to check all of them else he can not access to the portal and retrieves his session cookie.
+LemonLDAP::NG can be used to notify some messages to users. If a user has got some messages, they will be displayed when he access to the portal. If a message contains some check boxes, the user has to check all of them else he can not access to the portal and retrieves his session cookie.
 </p>
 
 <p>
-Since 1.1.0, a notification explorer is available in Manager, and notifications can be set for all users, with possibility to use display conditions. When the user accept the notification, notification reference is stored in his persistent session.
+A notification explorer is available in Manager, and notifications can be set for all users, with possibility to use display conditions. When the user accept the notification, notification reference is stored in his persistent session.
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Notifications system" [1-594] -->
+<!-- EDIT1 SECTION "Notifications system" [1-565] -->
 <h2 class="sectionedit2" id="installation">Installation</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT2 SECTION "Installation" [595-620] -->
+<!-- EDIT2 SECTION "Installation" [566-591] -->
 <h3 class="sectionedit3" id="activation">Activation</h3>
 <div class="level3">
 
@@ -111,7 +111,7 @@ You just have to activate Notifications in the Manager (General Parameters &gt; 
 <span class="re1">notification</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
 
 </div>
-<!-- EDIT3 SECTION "Activation" [621-860] -->
+<!-- EDIT3 SECTION "Activation" [592-831] -->
 <h3 class="sectionedit4" id="storage">Storage</h3>
 <div class="level3">
 
@@ -121,9 +121,9 @@ By default, notifications will be stored in the same database as configuration:
 <ul>
 <li class="level1"><div class="li"> if you use &quot;File&quot; system and your &quot;dirName&quot; is set to /usr/local/lemonldap-ng/conf/, the notifications will be stored in /usr/local/lemonldap-ng/notifications/</div>
 </li>
-<li class="level1"><div class="li"> if you use &quot;CDBI&quot; or &quot;RDBI&quot; system, the notifications will be stored in the same database as configuration and in a table called &quot;notifications&quot;.</div>
+<li class="level1"><div class="li"> if you use &quot;CDBI&quot; or &quot;RDBI&quot; system, the notifications will be stored in the same database as configuration and in a table named &quot;notifications&quot;.</div>
 </li>
-<li class="level1"><div class="li">  if you use &quot;LDAP&quot; system, the notifications will be stored in the same directory as configuration and in a branch called &quot;notifications&quot;.</div>
+<li class="level1"><div class="li"> if you use &quot;LDAP&quot; system, the notifications will be stored in the same directory as configuration and in a branch named &quot;notifications&quot;.</div>
 </li>
 </ul>
 
@@ -214,7 +214,7 @@ To summary available options:
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Storage" [861-3358] -->
+<!-- EDIT4 SECTION "Storage" [832-3326] -->
 <h3 class="sectionedit5" id="wildcard">Wildcard</h3>
 <div class="level3">
 
@@ -231,13 +231,13 @@ Then creating a notification for <code>alluserscustom</code> will display the no
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Wildcard" [3359-3829] -->
+<!-- EDIT5 SECTION "Wildcard" [3327-3797] -->
 <h2 class="sectionedit6" id="using_notification_system">Using notification system</h2>
 <div class="level2">
 <div class="noteimportant">Since version 2.0, notifications are now stored in JSON format. If you want to keep old format, select &quot;use old format&quot; in the Manager. Note that notification server depends on chosen format: REST for JSON and SOAP for XML.
 </div>
 </div>
-<!-- EDIT6 SECTION "Using notification system" [3830-4116] -->
+<!-- EDIT6 SECTION "Using notification system" [3798-4084] -->
 <h3 class="sectionedit7" id="notification_format">Notification format</h3>
 <div class="level3">
 
@@ -249,7 +249,7 @@ Notifications are JSON (default) or XML files containing:
 <ul>
 <li class="level2"><div class="li"> Required attributes:</div>
 <ul>
-<li class="level3"><div class="li"> date: creation date (format YYYY-MM-DD)</div>
+<li class="level3"><div class="li"> date: creation date (format YYYY-MM-DD WITHOUT time!)</div>
 </li>
 <li class="level3"><div class="li"> ref: a reference that can be used later to know what has been notified and when</div>
 </li>
@@ -280,6 +280,10 @@ Notifications are JSON (default) or XML files containing:
 </ul>
 <div class="noteimportant">All other elements will be removed including <abbr title="HyperText Markup Language">HTML</abbr> elements like &lt;b&gt;.
 </div><div class="notetip">One notification XML document can contain several notifications messages.
+<p>
+Several notifications can be inserted with a single request by using an array of JSON (Tested with an array of 10,000 elements)
+</p>
+
 </div>
 </div>
 
@@ -290,19 +294,30 @@ Notifications are JSON (default) or XML files containing:
 
 <h5 id="json">JSON</h5>
 <div class="level5">
-<pre class="code file javascript"><span class="br0">&#123;</span>
-<span class="st0">&quot;uid&quot;</span><span class="sy0">:</span> <span class="st0">&quot;foo.bar&quot;</span><span class="sy0">,</span>
+<pre class="code file javascript"><span class="br0">&#91;</span><span class="br0">&#123;</span>
+<span class="st0">&quot;uid&quot;</span><span class="sy0">:</span> <span class="st0">&quot;foo&quot;</span><span class="sy0">,</span>
 <span class="st0">&quot;date&quot;</span><span class="sy0">:</span> <span class="st0">&quot;2009-01-27&quot;</span><span class="sy0">,</span>
 <span class="st0">&quot;reference&quot;</span><span class="sy0">:</span> <span class="st0">&quot;ABC&quot;</span><span class="sy0">,</span>
 <span class="st0">&quot;title&quot;</span><span class="sy0">:</span> <span class="st0">&quot;You have new authorizations&quot;</span><span class="sy0">,</span>
 <span class="st0">&quot;subtitle&quot;</span><span class="sy0">:</span> <span class="st0">&quot;Application 1&quot;</span><span class="sy0">,</span>
 <span class="st0">&quot;text&quot;</span><span class="sy0">:</span> <span class="st0">&quot;You have been granted to access to appli-1&quot;</span><span class="sy0">,</span>
+# An array is required to <span class="kw1">set</span> multi checkboxes
 <span class="st0">&quot;check&quot;</span><span class="sy0">:</span> <span class="br0">&#91;</span>
   <span class="st0">&quot;I agree&quot;</span><span class="sy0">,</span>
   <span class="st0">&quot;Yes, I'm sure&quot;</span>
 <span class="br0">&#93;</span>
-<span class="br0">&#125;</span></pre>
-
+<span class="br0">&#125;</span><span class="sy0">,</span>
+<span class="br0">&#123;</span>
+<span class="st0">&quot;uid&quot;</span><span class="sy0">:</span> <span class="st0">&quot;bar&quot;</span><span class="sy0">,</span>
+<span class="st0">&quot;date&quot;</span><span class="sy0">:</span> <span class="st0">&quot;2009-01-27&quot;</span><span class="sy0">,</span>
+<span class="st0">&quot;reference&quot;</span><span class="sy0">:</span> <span class="st0">&quot;ABC&quot;</span><span class="sy0">,</span>
+<span class="st0">&quot;title&quot;</span><span class="sy0">:</span> <span class="st0">&quot;You have new authorizations&quot;</span><span class="sy0">,</span>
+<span class="st0">&quot;subtitle&quot;</span><span class="sy0">:</span> <span class="st0">&quot;Application 1&quot;</span><span class="sy0">,</span>
+<span class="st0">&quot;text&quot;</span><span class="sy0">:</span> <span class="st0">&quot;You have been granted to access to appli-1&quot;</span><span class="sy0">,</span>
+<span class="st0">&quot;check&quot;</span><span class="sy0">:</span> <span class="st0">&quot;I agree&quot;</span>
+<span class="br0">&#125;</span><span class="br0">&#93;</span> # No comma at the end</pre>
+<div class="notetip">JSON format notifications are displayed sorted by date and reference
+</div>
 </div>
 
 <h5 id="xml">XML</h5>
@@ -325,10 +340,9 @@ Notifications are JSON (default) or XML files containing:
 <span class="sc3"><span class="re1">&lt;check<span class="re2">&gt;</span></span></span>Of course I am not evil!<span class="sc3"><span class="re1">&lt;/check<span class="re2">&gt;</span></span></span>
 <span class="sc3"><span class="re1">&lt;/notification<span class="re2">&gt;</span></span></span>
 <span class="sc3"><span class="re1">&lt;/root<span class="re2">&gt;</span></span></span></pre>
-<div class="notetip">JSON format notifications are displayed sorted by date and reference
+
 </div>
-</div>
-<!-- EDIT7 SECTION "Notification format" [4117-6608] -->
+<!-- EDIT7 SECTION "Notification format" [4085-6991] -->
 <h3 class="sectionedit8" id="create_new_notifications_with_notifications_explorer">Create new notifications with notifications explorer</h3>
 <div class="level3">
 
@@ -349,7 +363,7 @@ When all is ok, click on <code>Save</code>.
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Create new notifications with notifications explorer" [6609-6927] -->
+<!-- EDIT8 SECTION "Create new notifications with notifications explorer" [6992-7310] -->
 <h3 class="sectionedit9" id="notification_server">Notification server</h3>
 <div class="level3">
 
@@ -360,7 +374,25 @@ LemonLDAP::NG provides two notification servers : SOAP and REST depending on for
 <p>
 If enabled, the server <abbr title="Uniform Resource Locator">URL</abbr> is <a href="https://auth.your.domain/notifications" class="urlextern" title="https://auth.your.domain/notifications"  rel="nofollow">https://auth.your.domain/notifications</a>.
 </p>
-<div class="noteimportant">If notification server is enabled, you have to protect this <abbr title="Uniform Resource Locator">URL</abbr> using the webserver because there is no authentication required to use it.
+
+<p>
+Notification server provides three <abbr title="Application Programming Interface">API</abbr> to insert (POST), delete (DELETE) or list (GET) notification(s).
+</p>
+
+<p>
+Available options:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Server</strong>: Enable/Disable notification server</div>
+</li>
+<li class="level1"><div class="li"> <strong>Default condition</strong>: Condition appended to ALL notifications inserted by notification server (JSON format only)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Notification parameters to send</strong>: Notifications parameters returned by <code>GET</code> method</div>
+</li>
+<li class="level1"><div class="li"> <strong>HTTP methods</strong>: Enable/Disable HTTP methods</div>
+</li>
+</ul>
+<div class="noteimportant">If notification server is enabled, you have to protect this <abbr title="Uniform Resource Locator">URL</abbr> by using the web server because there is no authentication required to use it.
 </div>
 <p>
 Example:
@@ -379,7 +411,7 @@ Example:
 
 </div>
 
-<h4 id="xml_notifications_trough_soap">XML notifications trough SOAP</h4>
+<h4 id="xml_notifications_through_soap">XML notifications through SOAP</h4>
 <div class="level4">
 
 <p>
@@ -446,17 +478,8 @@ If you use old XML format, new notifications can be inserted or deleted by using
 
 </div>
 
-<h4 id="json_notifications_trough_rest">JSON notifications trough REST</h4>
+<h4 id="json_notifications_through_rest">JSON notifications through REST</h4>
 <div class="level4">
-
-<p>
-REST server provides three <abbr title="Application Programming Interface">API</abbr> to insert (POST), delete (DELETE) or list (GET) notification(s).
-HTTP methods can enabled/disabled in Manager, <code>General Parameters</code> » <code>Plugins</code> » <code>Notifications</code> » <code>Server</code> » <code>HTTP methods</code>.
-</p>
-
-<p>
-Notifications parameters returned by <code>GET</code> method can be specfied in Manager, <code>General Parameters</code> » <code>Plugins</code> » <code>Notifications</code> » <code>Server</code> » <code>Notifications parameters to send</code>. By default: &#039;uid reference date title subtitle text check&#039;
-</p>
 
 </div>
 
@@ -498,14 +521,23 @@ GET <abbr title="Application Programming Interface">API</abbr> is available with
 <p>
 For example with curl:
 </p>
-<pre class="code">curl -X GET -H &quot;Content-Type: application/json&quot; -H &quot;Accept: application/json&quot; http://auth.example.com/notifications
+<pre class="code"># Retrieve &#039;wildcard&#039; notifications
+curl -X GET -H &quot;Content-Type: application/json&quot; -H &quot;Accept: application/json&quot; http://auth.example.com/notifications
 
+# Retrieve all pending notifications
+curl -X GET -H &quot;Content-Type: application/json&quot; -H &quot;Accept: application/json&quot; http://auth.example.com/notifications/_allPending_
+
+# Retrieve all existing notifications
+curl -X GET -H &quot;Content-Type: application/json&quot; -H &quot;Accept: application/json&quot; http://auth.example.com/notifications/_allExisting_
+
+# Retrieve all &lt;uid&gt;&#039;s notifications 
 curl -X GET -H &quot;Content-Type: application/json&quot; -H &quot;Accept: application/json&quot; http://auth.example.com/notifications/&lt;uid&gt;
 
+# Retrieve &lt;uid&gt;/&lt;reference&gt; notification parameters
 curl -X GET -H &quot;Content-Type: application/json&quot; -H &quot;Accept: application/json&quot; http://auth.example.com/notifications/&lt;uid&gt;/&lt;reference&gt;</pre>
 
 </div>
-<!-- EDIT9 SECTION "Notification server" [6928-10646] -->
+<!-- EDIT9 SECTION "Notification server" [7311-11444] -->
 <h3 class="sectionedit10" id="test_notification">Test notification</h3>
 <div class="level3">
 
@@ -522,6 +554,6 @@ Try also to create a global notification (to the uid &quot;allusers&quot;), and 
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Test notification" [10647-] --></div>
+<!-- EDIT10 SECTION "Test notification" [11445-] --></div>
 </body>
 </html>

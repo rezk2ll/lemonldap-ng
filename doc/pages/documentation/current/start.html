@@ -106,19 +106,17 @@
 </li>
 <li class="level1"><div class="li"> <a href="documentation/quickstart.html" class="wikilink1" title="documentation:quickstart">Quick start tutorial</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="https://github.com/LemonLDAPNG/pts2019-llng-workshop" class="urlextern" title="https://github.com/LemonLDAPNG/pts2019-llng-workshop"  rel="nofollow">Workshop: connect LL::NG to OpenLDAP and use 2FA</a></div>
-</li>
 <li class="level1"><div class="li"> <a href="platformsoverview.html" class="wikilink1" title="documentation:2.0:platformsoverview">Choose a platform</a></div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Presentation" [52-379] -->
+<!-- EDIT2 SECTION "Presentation" [52-269] -->
 <h2 class="sectionedit3" id="installation">Installation</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Installation" [380-405] -->
+<!-- EDIT3 SECTION "Installation" [270-295] -->
 <h3 class="sectionedit4" id="before_installation">Before installation</h3>
 <div class="level3">
 
@@ -139,7 +137,7 @@
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Before installation" [406-670] -->
+<!-- EDIT4 SECTION "Before installation" [296-560] -->
 <h3 class="sectionedit5" id="installation1">Installation</h3>
 <div class="level3">
 
@@ -168,7 +166,7 @@
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Installation" [671-1216] -->
+<!-- EDIT5 SECTION "Installation" [561-1106] -->
 <h3 class="sectionedit6" id="after_installation">After installation</h3>
 <div class="level3">
 
@@ -191,12 +189,12 @@
 </p>
 
 </div>
-<!-- EDIT6 SECTION "After installation" [1217-1653] -->
+<!-- EDIT6 SECTION "After installation" [1107-1543] -->
 <h2 class="sectionedit7" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT7 SECTION "Configuration" [1654-1680] -->
+<!-- EDIT7 SECTION "Configuration" [1544-1570] -->
 <h3 class="sectionedit8" id="first_steps">First steps</h3>
 <div class="level3">
 
@@ -225,7 +223,7 @@
 </p>
 
 </div>
-<!-- EDIT8 SECTION "First steps" [1681-2140] -->
+<!-- EDIT8 SECTION "First steps" [1571-2030] -->
 <h3 class="sectionedit9" id="portal">Portal</h3>
 <div class="level3">
 
@@ -396,7 +394,7 @@
 		<td class="col0"> <a href="autosignin.html" class="wikilink1" title="documentation:2.0:autosignin">Auto Signin</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">  ✔  </td><td class="col2"></td><td class="col3"></td>
 	</tr>
 </table></div>
-<!-- EDIT10 TABLE [2677-5552] -->
+<!-- EDIT10 TABLE [2567-5442] -->
 <p>
 </div></div>
 </p>
@@ -440,11 +438,16 @@
 		<td class="col0"> <a href="issuerdbget.html" class="wikilink1" title="documentation:2.0:issuerdbget">Get parameters provider</a> <em>(for poor applications)</em> </td><td class="col1 leftalign">   </td><td class="col2 centeralign">  ✔  </td>
 	</tr>
 </table></div>
-<!-- EDIT11 TABLE [5898-6259] -->
+<!-- EDIT11 TABLE [5788-6149] -->
 <p>
 </div></div>
 </p>
-<div class="notetip">Issuers timeout : Delay for issuers to submit their authentication requests
+<div class="notetip">* Issuers timeout : Delay for issuers to submit their authentication requests
+<p>
+* To avoid a bad/expired token and lose redirection to the SP protected application after authentication if IdP URLs are served by different load balancers, you can force Issuer tokens to be stored into Global Storage by editing <code>lemonldap-ng.ini</code> in section [portal]:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">forceGlobalStorageIssuerOTT</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
 
 </div>
 </div>
@@ -493,7 +496,7 @@
 		<td class="col0"> <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">XSS</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign">    </td>
 	</tr>
 </table></div>
-<!-- EDIT12 TABLE [6641-7155] -->
+<!-- EDIT12 TABLE [6866-7380] -->
 <p>
 </div></div>
 </p>
@@ -527,61 +530,70 @@
 		<td class="col0"> <a href="checkstate.html" class="wikilink1" title="documentation:2.0:checkstate">Check state</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Check state plugin (test page) </td>
 	</tr>
 	<tr class="row5 rowodd">
-		<td class="col0"> <a href="checkuser.html" class="wikilink1" title="documentation:2.0:checkuser">Check user </a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Check access rights, transmitted headers and session attibutes for a specific user and <abbr title="Uniform Resource Locator">URL</abbr> </td>
+		<td class="col0"> <a href="checkuser.html" class="wikilink1" title="documentation:2.0:checkuser">Check user </a> <sup><a href="#fn__4" id="fnt__4" class="fn_top">4)</a></sup> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Check access rights, transmitted headers and session attibutes for a specific user and <abbr title="Uniform Resource Locator">URL</abbr> </td>
 	</tr>
 	<tr class="row6 roweven">
 		<td class="col0"> <a href="viewer.html" class="wikilink1" title="documentation:2.0:viewer">Configuration viewer</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Edit WebSSO configuration in Read Only mode </td>
 	</tr>
 	<tr class="row7 rowodd">
-		<td class="col0"> <a href="contextswitching.html" class="wikilink1" title="documentation:2.0:contextswitching">Context switching</a> <sup><a href="#fn__4" id="fnt__4" class="fn_top">4)</a></sup><a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Switch context other users </td>
+		<td class="col0"> <a href="contextswitching.html" class="wikilink1" title="documentation:2.0:contextswitching">Context switching</a> <sup><a href="#fn__5" id="fnt__5" class="fn_top">5)</a></sup><a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Switch context other users </td>
 	</tr>
 	<tr class="row8 roweven">
 		<td class="col0"> <a href="plugincustom.html" class="wikilink1" title="documentation:2.0:plugincustom">Custom</a> </td><td class="col1"> Write a custom plugin </td>
 	</tr>
 	<tr class="row9 rowodd">
-		<td class="col0"> <a href="loginhistory.html" class="wikilink1" title="documentation:2.0:loginhistory">Display login history</a> </td><td class="col1"></td>
+		<td class="col0"> <a href="decryptvalue.html" class="wikilink1" title="documentation:2.0:decryptvalue">Decrypt value</a> <sup><a href="#fn__6" id="fnt__6" class="fn_top">6)</a></sup><a href="documentation/beta.png" class="media" title="documentation:beta.png"><img src="documentation/beta.2707b90c7f00808e80f984a3026445b0.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Decrypt ciphered values </td>
 	</tr>
 	<tr class="row10 roweven">
-		<td class="col0"> <a href="forcereauthn.html" class="wikilink1" title="documentation:2.0:forcereauthn">Force Authentication</a> </td><td class="col1"> Force authentication to access to Portal </td>
+		<td class="col0"> <a href="loginhistory.html" class="wikilink1" title="documentation:2.0:loginhistory">Display login history</a> </td><td class="col1"></td>
 	</tr>
 	<tr class="row11 rowodd">
-		<td class="col0"> <a href="grantsession.html" class="wikilink1" title="documentation:2.0:grantsession">Grant Sessions</a> </td><td class="col1"> Rules to apply before allowing a user to open a session </td>
+		<td class="col0"> <a href="forcereauthn.html" class="wikilink1" title="documentation:2.0:forcereauthn">Force Authentication</a> </td><td class="col1"> Force authentication to access to Portal </td>
 	</tr>
 	<tr class="row12 roweven">
-		<td class="col0"> <a href="impersonation.html" class="wikilink1" title="documentation:2.0:impersonation">Impersonation </a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Allow users to use another identity </td>
+		<td class="col0"> <a href="globallogout.html" class="wikilink1" title="documentation:2.0:globallogout">Global Logout</a> <sup><a href="#fn__7" id="fnt__7" class="fn_top">7)</a></sup><a href="documentation/beta.png" class="media" title="documentation:beta.png"><img src="documentation/beta.2707b90c7f00808e80f984a3026445b0.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Suggest to close all opened sessions at logout </td>
 	</tr>
 	<tr class="row13 rowodd">
-		<td class="col0"> <a href="notifications.html" class="wikilink1" title="documentation:2.0:notifications">Notifications system</a> </td><td class="col1"></td>
+		<td class="col0"> <a href="grantsession.html" class="wikilink1" title="documentation:2.0:grantsession">Grant Sessions</a> </td><td class="col1"> Rules to apply before allowing a user to open a session </td>
 	</tr>
 	<tr class="row14 roweven">
-		<td class="col0"> <a href="status.html" class="wikilink1" title="documentation:2.0:status">Portal Status</a> </td><td class="col1"> Experimental portal status page </td>
+		<td class="col0"> <a href="impersonation.html" class="wikilink1" title="documentation:2.0:impersonation">Impersonation </a> <sup><a href="#fn__8" id="fnt__8" class="fn_top">8)</a></sup><a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Allow users to use another identity </td>
 	</tr>
 	<tr class="row15 rowodd">
-		<td class="col0"> <a href="public_pages.html" class="wikilink1" title="documentation:2.0:public_pages">Public pages</a> </td><td class="col1"> Enable public pages system </td>
+		<td class="col0"> <a href="notifications.html" class="wikilink1" title="documentation:2.0:notifications">Notifications system</a> </td><td class="col1"></td>
 	</tr>
 	<tr class="row16 roweven">
-		<td class="col0"> <a href="resetpassword.html" class="wikilink1" title="documentation:2.0:resetpassword">Reset password by mail</a> </td><td class="col1"></td>
+		<td class="col0"> <a href="refreshsessionapi.html" class="wikilink1" title="documentation:2.0:refreshsessionapi">Refresh session API</a> <sup><a href="#fn__9" id="fnt__9" class="fn_top">9)</a></sup></td><td class="col1"> Plugin that provides an <abbr title="Application Programming Interface">API</abbr> to refresh a user session </td>
 	</tr>
 	<tr class="row17 rowodd">
-		<td class="col0"> <a href="restservices.html" class="wikilink1" title="documentation:2.0:restservices">REST services</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> REST server for <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">Proxy</a> </td>
+		<td class="col0"> <a href="status.html" class="wikilink1" title="documentation:2.0:status">Portal Status</a> </td><td class="col1"> Experimental portal status page </td>
 	</tr>
 	<tr class="row18 roweven">
-		<td class="col0"> <a href="soapservices.html" class="wikilink1" title="documentation:2.0:soapservices">SOAP services</a> <em>(deprecated)</em> </td><td class="col1"> SOAP server for <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">Proxy</a> </td>
+		<td class="col0"> <a href="public_pages.html" class="wikilink1" title="documentation:2.0:public_pages">Public pages</a> </td><td class="col1"> Enable public pages system </td>
 	</tr>
 	<tr class="row19 rowodd">
-		<td class="col0"> <a href="stayconnected" class="wikilink2" title="documentation:2.0:stayconnected" rel="nofollow">Stay connected</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Enable persistent connection on same browser </td>
+		<td class="col0"> <a href="resetpassword.html" class="wikilink1" title="documentation:2.0:resetpassword">Reset password by mail</a> </td><td class="col1"></td>
 	</tr>
 	<tr class="row20 roweven">
+		<td class="col0"> <a href="restservices.html" class="wikilink1" title="documentation:2.0:restservices">REST services</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> REST server for <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">Proxy</a> </td>
+	</tr>
+	<tr class="row21 rowodd">
+		<td class="col0"> <a href="soapservices.html" class="wikilink1" title="documentation:2.0:soapservices">SOAP services</a> <em>(deprecated)</em> </td><td class="col1"> SOAP server for <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">Proxy</a> </td>
+	</tr>
+	<tr class="row22 roweven">
+		<td class="col0"> <a href="stayconnected" class="wikilink2" title="documentation:2.0:stayconnected" rel="nofollow">Stay connected</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Enable persistent connection on same browser </td>
+	</tr>
+	<tr class="row23 rowodd">
 		<td class="col0"> Upgrade session <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1"> Plugin that explain to user that a more secure authentication is needed instead of rejected it </td>
 	</tr>
 </table></div>
-<!-- EDIT13 TABLE [7323-9158] -->
+<!-- EDIT13 TABLE [7548-10050] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT9 SECTION "Portal" [2141-9186] -->
+<!-- EDIT9 SECTION "Portal" [2031-10078] -->
 <h3 class="sectionedit14" id="handlers">Handlers</h3>
 <div class="level3">
 
@@ -601,7 +613,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0"> Main <em>(default handler)</em> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Partial</a> <strong><sup><a href="#fn__5" id="fnt__5" class="fn_top">5)</a></sup></strong>  </td><td class="col5 centeralign">  ✔  </td><td class="col6 leftalign">  </td>
+		<td class="col0"> Main <em>(default handler)</em> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  <a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Partial</a> <strong><sup><a href="#fn__10" id="fnt__10" class="fn_top">10)</a></sup></strong>  </td><td class="col5 centeralign">  ✔  </td><td class="col6 leftalign">  </td>
 	</tr>
 	<tr class="row2 roweven">
 		<td class="col0"> <a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 centeralign">  ✔  </td><td class="col6"> Designed for some server-to-server applications </td>
@@ -616,7 +628,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 		<td class="col0"> <a href="devopssthandler.html" class="wikilink1" title="documentation:2.0:devopssthandler">DevOpsST</a> <em>(<a href="ssoaas.html" class="wikilink1" title="documentation:2.0:ssoaas">SSOaaS</a>)</em> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 leftalign">  </td><td class="col6"> Enables both <a href="devopshandler.html" class="wikilink1" title="documentation:2.0:devopshandler">DevOps</a> and <a href="servertoserver.html" class="wikilink1" title="documentation:2.0:servertoserver">Service Token</a> </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0"> <a href="oauth2handler.html" class="wikilink1" title="documentation:2.0:oauth2handler">OAuth2</a> <sup><a href="#fn__6" id="fnt__6" class="fn_top">6)</a></sup><a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 centeralign">  ✔  </td><td class="col6"> Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services </td>
+		<td class="col0"> <a href="oauth2handler.html" class="wikilink1" title="documentation:2.0:oauth2handler">OAuth2</a> <sup><a href="#fn__11" id="fnt__11" class="fn_top">11)</a></sup><a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 centeralign">  ✔  </td><td class="col6"> Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services </td>
 	</tr>
 	<tr class="row7 rowodd">
 		<td class="col0"> <a href="securetoken.html" class="wikilink1" title="documentation:2.0:securetoken">Secure Token</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td><td class="col6"> Designed to secure exchanges between a LLNG reverse-proxy and a remote app </td>
@@ -628,13 +640,13 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 		<td class="col0"> <a href="applications/zimbra.html" class="wikilink1" title="documentation:2.0:applications:zimbra">Zimbra PreAuth</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 leftalign">  </td><td class="col5 leftalign">  </td>
 	</tr>
 </table></div>
-<!-- EDIT15 TABLE [9460-11243] -->
+<!-- EDIT15 TABLE [10352-12135] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Handlers" [9187-11271] -->
+<!-- EDIT14 SECTION "Handlers" [10079-12163] -->
 <h3 class="sectionedit16" id="llng_databases">LLNG databases</h3>
 <div class="level3">
 
@@ -683,7 +695,7 @@ Handlers are software control agents to be installed on your web servers <em>(Ng
 		<td class="col0 centeralign">  <a href="localconfbackend.html" class="wikilink1" title="documentation:2.0:localconfbackend">Local</a> <a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a>  </td><td class="col1 leftalign">  </td><td class="col2 leftalign"> Use only lemonldap-ng.ini parameters.  </td>
 	</tr>
 </table></div>
-<!-- EDIT17 TABLE [11576-12688] --><div class="notetip">You can not start with an empty configuration, so read <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
+<!-- EDIT17 TABLE [12468-13580] --><div class="notetip">You can not start with an empty configuration, so read <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
 </div>
 <p>
 </div></div>
@@ -738,13 +750,14 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 <strong>Can be used to secure another backend</strong> for remote servers.  </td>
 	</tr>
 </table></div>
-<!-- EDIT18 TABLE [13553-15253] -->
+<!-- EDIT18 TABLE [14445-16145] -->
 <p>
 </div></div>
 </p>
-
+<div class="notetip">You can migrate from one session backend to another using the <a href="changesessionbackend.html" class="wikilink1" title="documentation:2.0:changesessionbackend">session conversion script</a>. (<a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> <em>since 2.0.7</em>) 
 </div>
-<!-- EDIT16 SECTION "LLNG databases" [11272-15281] -->
+</div>
+<!-- EDIT16 SECTION "LLNG databases" [12164-16351] -->
 <h2 class="sectionedit19" id="applications_protection">Applications protection</h2>
 <div class="level2">
 
@@ -766,6 +779,8 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </li>
 <li class="level1"><div class="li"> <a href="customhandlers.html" class="wikilink1" title="documentation:2.0:customhandlers">Custom Handlers</a></div>
 </li>
+<li class="level1"><div class="li"> <a href="webserviceprotection.html" class="wikilink1" title="documentation:2.0:webserviceprotection">WebServices / API</a></div>
+</li>
 </ul>
 
 <p>
@@ -773,7 +788,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT19 SECTION "Applications protection" [15282-15772] -->
+<!-- EDIT19 SECTION "Applications protection" [16352-16889] -->
 <h3 class="sectionedit20" id="well_known_compatible_applications">Well known compatible applications</h3>
 <div class="level3">
 <div class="noteclassic">Here is a list of well known applications that are compatible with <abbr title="LemonLDAP::NG">LL::NG</abbr>. A full list is available on <a href="applications.html" class="wikilink1" title="documentation:2.0:applications">vendor applications page</a>.
@@ -877,7 +892,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT20 SECTION "Well known compatible applications" [15773-18111] -->
+<!-- EDIT20 SECTION "Well known compatible applications" [16890-19228] -->
 <h2 class="sectionedit21" id="advanced_features">Advanced features</h2>
 <div class="level2">
 
@@ -936,7 +951,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT21 SECTION "Advanced features" [18112-19331] -->
+<!-- EDIT21 SECTION "Advanced features" [19229-20448] -->
 <h2 class="sectionedit22" id="mini_howtos">Mini howtos</h2>
 <div class="level2">
 
@@ -966,6 +981,8 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </li>
 <li class="level1"><div class="li"> <a href="behindproxyminihowto.html" class="wikilink1" title="documentation:2.0:behindproxyminihowto">Run LemonLDAP::NG components behind a reverse proxy</a></div>
 </li>
+<li class="level1"><div class="li"> <a href="useoutgoingproxy.html" class="wikilink1" title="documentation:2.0:useoutgoingproxy">Configure LL::NG to use an outgoing proxy</a></div>
+</li>
 </ul>
 
 <p>
@@ -973,7 +990,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT22 SECTION "Mini howtos" [19332-20226] -->
+<!-- EDIT22 SECTION "Mini howtos" [20449-21410] -->
 <h2 class="sectionedit23" id="exploitation">Exploitation</h2>
 <div class="level2">
 
@@ -1008,7 +1025,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT23 SECTION "Exploitation" [20227-20744] -->
+<!-- EDIT23 SECTION "Exploitation" [21411-21928] -->
 <h2 class="sectionedit24" id="bug_report">Bug report</h2>
 <div class="level2">
 
@@ -1017,7 +1034,7 @@ See <a href="bugreport.html" class="wikilink1" title="bugreport">How to report a
 </p>
 
 </div>
-<!-- EDIT24 SECTION "Bug report" [20745-20809] -->
+<!-- EDIT24 SECTION "Bug report" [21929-21993] -->
 <h2 class="sectionedit25" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -1084,7 +1101,7 @@ If you don&#039;t want to publish your translation <em>(<code>XX</code> must be 
 </ul>
 
 </div>
-<!-- EDIT25 SECTION "Developer corner" [20810-] --><div class="footnotes">
+<!-- EDIT25 SECTION "Developer corner" [21994-] --><div class="footnotes">
 <div class="fn"><sup><a href="#fnt__1" id="fn__1" class="fn_bot">1)</a></sup> 
 <a href="authgpg.html" class="wikilink1" title="documentation:2.0:authgpg">GPG</a> is available with LLNG ≥ 2.0.2</div>
 <div class="fn"><sup><a href="#fnt__2" id="fn__2" class="fn_bot">2)</a></sup> 
@@ -1092,10 +1109,19 @@ If you don&#039;t want to publish your translation <em>(<code>XX</code> must be 
 <div class="fn"><sup><a href="#fnt__3" id="fn__3" class="fn_bot">3)</a></sup> 
 <a href="sfextra.html" class="wikilink1" title="documentation:2.0:sfextra">Additional second factors</a> is available with LLNG ≥ 2.0.6</div>
 <div class="fn"><sup><a href="#fnt__4" id="fn__4" class="fn_bot">4)</a></sup> 
-<a href="contextswitching.html" class="wikilink1" title="documentation:2.0:contextswitching">Context switching</a> is available with LLNG ≥ 2.0.6</div>
+, <sup><a href="#fnt__8" id="fn__8" class="fn_bot">8)</a></sup> 
+<a href="contextswitching.html" class="wikilink1" title="documentation:2.0:contextswitching">Context switching</a> is available with LLNG ≥ 2.0.3</div>
 <div class="fn"><sup><a href="#fnt__5" id="fn__5" class="fn_bot">5)</a></sup> 
-<a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Node.js handler</a> has not yet reached the same level of functionalities</div>
+<a href="contextswitching.html" class="wikilink1" title="documentation:2.0:contextswitching">Context switching</a> is available with LLNG ≥ 2.0.6</div>
 <div class="fn"><sup><a href="#fnt__6" id="fn__6" class="fn_bot">6)</a></sup> 
+<a href="decryptvalue.html" class="wikilink1" title="documentation:2.0:decryptvalue">Decrypt value</a> is available with LLNG ≥ 2.0.7</div>
+<div class="fn"><sup><a href="#fnt__7" id="fn__7" class="fn_bot">7)</a></sup> 
+<a href="globallogout.html" class="wikilink1" title="documentation:2.0:globallogout">Global Logout</a> is available with LLNG ≥ 2.0.7</div>
+<div class="fn"><sup><a href="#fnt__9" id="fn__9" class="fn_bot">9)</a></sup> 
+<a href="refreshsessionapi.html" class="wikilink1" title="documentation:2.0:refreshsessionapi">Refresh session plugin</a> is available with LLNG ≥ 2.0.7</div>
+<div class="fn"><sup><a href="#fnt__10" id="fn__10" class="fn_bot">10)</a></sup> 
+<a href="nodehandler.html" class="wikilink1" title="documentation:2.0:nodehandler">Node.js handler</a> has not yet reached the same level of functionalities</div>
+<div class="fn"><sup><a href="#fnt__11" id="fn__11" class="fn_bot">11)</a></sup> 
 <a href="oauth2handler.html" class="wikilink1" title="documentation:2.0:oauth2handler">OAuth2 Handler</a> is available with LLNG ≥ 2.0.4</div>
 </div>
 </div>
