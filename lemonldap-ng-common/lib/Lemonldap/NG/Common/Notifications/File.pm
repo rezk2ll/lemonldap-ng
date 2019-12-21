@@ -60,7 +60,7 @@ sub get {
 ## @method hashref getAll()
 # Return all pending notifications.
 # @return hashref where keys are internal reference and values are hashref with
-# keys date, uid, ref ans condition.
+# keys date, uid, ref and condition.
 sub getAll {
     my $self = shift;
     opendir D, $self->{dirName};
