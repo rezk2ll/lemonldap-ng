@@ -8,6 +8,7 @@ lemonldap-ng (2.0.7) stable; urgency=medium
     * #1948: Tranlation menu does not work with Diff.html
     * #1949: Don't Store Password shows password in cleartext
     * #1952: "Attributes and macros" session keys should not be translated
+    * #1953: Outgoing emails are missing a Date: field
     * #1954: zimbra preauth not working
     * #1955: Redirection lost after notification validation
     * #1960: REST config service not working
@@ -18,6 +19,7 @@ lemonldap-ng (2.0.7) stable; urgency=medium
     * #1968: skippedUnitTests/skippedGlobalTests have no effect
     * #1969: Force password reset with LDAP password policy does not work if macro _whatToTrace is not defined
     * #1974: ServiceToken handler TTL value always set to default
+    * #1984: Reset expired password doesn't trigger when using Combination
     * #2005: Error in portal "refresh my rights" feature when whatToTrace value is not equal to login
     * #2009: Display authentication error on login form with Combination Kerberos + LDAP
     * #2010: Kerberos not working with session upgrade
@@ -28,6 +30,7 @@ lemonldap-ng (2.0.7) stable; urgency=medium
     * #2045: Authenticating with external OpenID Connect Provider fails because of special chars in user name
 
   * New features:
+    * #813: Provide refresh tokens in OpenID Connect
     * #1605: certificate reset by mail
     * #1956: DecryptValue plugin
     * #1999: Possibility to view/close other sessions opened for the same user
@@ -48,6 +51,7 @@ lemonldap-ng (2.0.7) stable; urgency=medium
     * #1995: Add an option to force claims in ID token
     * #1996: REQUEST_URI env variable is not set by CheckUser plugin
     * #1997: Enable checkTime option by default
+    * #1998: Misleading token ID format
     * #2003: Possibility to set attributes and extra claims in OIDC registration endpoints
     * #2007: Password change prompt displayed even if initial auth fails
     * #2008: Specific message and error code for 2F failure
@@ -58,7 +62,7 @@ lemonldap-ng (2.0.7) stable; urgency=medium
     * #2024: Change default value for cspFormAction
     * #2042: Add per-service macros
 
- -- Clément <clem.oudot@gmail.com>  Sat, 21 Dec 2019 16:30:08 +0100
+ -- Clément <clem.oudot@gmail.com>  Sat, 21 Dec 2019 16:59:22 +0100
 
 lemonldap-ng (2.0.6) stable; urgency=medium
 
