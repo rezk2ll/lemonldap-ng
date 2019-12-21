@@ -52,7 +52,6 @@ my $confFile = "t/lmConf-2.json";
 my $conf     = JSON::from_json(`cat $confFile`);
 
 # Check saved data
-
 my $rpId = ( keys %{ $conf->{oidcRPMetaDataOptions} } )[0];
 
 ok(
@@ -61,12 +60,22 @@ ok(
     "Client ID saved in configuration"
 );
 
+# Check extra claims and extra attributes
+ok(
+    $conf->{oidcRPMetaDataOptionsExtraClaims}->{$rpId}->{"extra_claim"} eq
+      "extra_var",
+    "Extra claim defined"
+);
+ok( $conf->{oidcRPMetaDataExportedVars}->{$rpId}->{"extra_var"} eq "mail",
+    "Extra variable defined" );
+
 unlink $confFile;
 clean_sessions();
 done_testing();
 
 sub op {
-    return LLNG::Manager::Test->new( {
+    return LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
@@ -82,6 +91,10 @@ sub op {
                         name        => "cn"
                     }
                 },
+                oidcServiceDynamicRegistrationExportedVars =>
+                  { "extra_var" => "mail" },
+                oidcServiceDynamicRegistrationExtraClaims =>
+                  { "extra_claim" => "extra_var" },
                 oidcServiceMetaDataAuthorizeURI       => "authorize",
                 oidcServiceMetaDataCheckSessionURI    => "checksession.html",
                 oidcServiceMetaDataJWKSURI            => "jwks",
