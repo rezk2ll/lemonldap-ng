@@ -649,6 +649,9 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Sat Dec 21 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.7-1
+- Update to 2.0.7
+
 * Fri Dec 06 2019 Xavier Bachelot <xavier@bachelot.org> - 2.0.6-2
 - Tweak for EL8.
 - Enhance BuildRequires and Requires.
