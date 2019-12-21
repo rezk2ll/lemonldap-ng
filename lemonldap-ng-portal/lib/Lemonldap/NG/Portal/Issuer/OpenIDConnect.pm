@@ -1781,6 +1781,24 @@ sub registration {
       ->{oidcRPMetaDataOptionsUserInfoSignAlg} = $userinfo_signed_response_alg
       if defined $userinfo_signed_response_alg;
 
+    # Exported Vars
+    if (
+        ref( $self->conf->{oidcServiceDynamicRegistrationExportedVars} ) eq
+        'HASH' )
+    {
+        $conf->{oidcRPMetaDataExportedVars}->{$rp} =
+          $self->conf->{oidcServiceDynamicRegistrationExportedVars};
+    }
+
+    # Extra claims
+    if (
+        ref( $self->conf->{oidcServiceDynamicRegistrationExtraClaims} ) eq
+        'HASH' )
+    {
+        $conf->{oidcRPMetaDataOptionsExtraClaims}->{$rp} =
+          $self->conf->{oidcServiceDynamicRegistrationExtraClaims};
+    }
+
     if ( $self->confAcc->saveConf($conf) ) {
 
         # Reload RP list

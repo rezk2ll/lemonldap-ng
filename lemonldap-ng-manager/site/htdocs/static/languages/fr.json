@@ -615,6 +615,8 @@
 "oidcServiceKeyIdSig":"Identifiant de clef de signature",
 "oidcServiceAuthorizationCodeExpiration":"Expiration des codes d'autorisation",
 "oidcServiceAccessTokenExpiration":"Expiration des jetons d'accès",
+"oidcServiceDynamicRegistrationExportedVars":"Variables exportées pour l'enregistrement dynamique",
+"oidcServiceDynamicRegistrationExtraClaims":"Claims supplémentaires pour l'enregistrement dynamique",
 "oidcServiceIDTokenExpiration":"Expiration des jetons d'identité",
 "oidcServiceOfflineSessionExpiration":"Expiration des sessions hors-ligne",
 "oidcStorage":"Nom du module des sessions",

@@ -1049,7 +1049,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'text'
         },
         'cspFormAction' => {
-            'default' => '\'self\'',
+            'default' => '*',
             'type'    => 'text'
         },
         'cspImg' => {
@@ -2203,6 +2203,12 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcServiceAuthorizationCodeExpiration' => {
             'default' => 60,
             'type'    => 'int'
+        },
+        'oidcServiceDynamicRegistrationExportedVars' => {
+            'type' => 'keyTextContainer'
+        },
+        'oidcServiceDynamicRegistrationExtraClaims' => {
+            'type' => 'keyTextContainer'
         },
         'oidcServiceIDTokenExpiration' => {
             'default' => 3600,

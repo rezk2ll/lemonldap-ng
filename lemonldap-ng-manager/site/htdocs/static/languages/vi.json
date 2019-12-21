@@ -615,6 +615,8 @@
 "oidcServiceKeyIdSig":"Khóa ID chính",
 "oidcServiceAuthorizationCodeExpiration":"Authorization Code expiration",
 "oidcServiceAccessTokenExpiration":"Access Token expiration",
+"oidcServiceDynamicRegistrationExportedVars":"Exported vars for dynamic registration",
+"oidcServiceDynamicRegistrationExtraClaims":"Extra claims for dynamic registration",
 "oidcServiceIDTokenExpiration":"ID Token expiration",
 "oidcServiceOfflineSessionExpiration":"Offline session expiration",
 "oidcStorage":"Tên mô-đun phiên",

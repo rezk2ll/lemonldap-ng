@@ -1217,6 +1217,8 @@ sub tree {
                     title => "oidcServiceMetaDataSessions",
                     nodes => [ 'oidcStorage', 'oidcStorageOptions', ],
                 },
+		'oidcServiceDynamicRegistrationExportedVars',
+		'oidcServiceDynamicRegistrationExtraClaims',
             ]
         },
         'oidcOPMetaDataNodes',
