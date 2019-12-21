@@ -602,6 +602,8 @@
 "oidcServiceKeyIdSig":"ID del codice di accesso",
 "oidcServiceAuthorizationCodeExpiration":"Authorization Code expiration",
 "oidcServiceAccessTokenExpiration":"Scadenza accesso token",
+"oidcServiceDynamicRegistrationExportedVars":"Exported vars for dynamic registration",
+"oidcServiceDynamicRegistrationExtraClaims":"ExtraClaims for dynamic registration",
 "oidcServiceIDTokenExpiration":"Scadenza ID Token",
 "oidcServiceOfflineSessionExpiration":"Offline session expiration",
 "oidcStorage":"Nome del modulo Sessioni",

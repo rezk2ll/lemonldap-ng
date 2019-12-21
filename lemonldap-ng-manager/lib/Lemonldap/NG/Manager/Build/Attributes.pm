@@ -3685,6 +3685,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 3600,
             documentation => 'OpenID Connect global access token TTL',
         },
+	oidcServiceDynamicRegistrationExportedVars => {
+            type          => 'keyTextContainer',
+            documentation => 'OpenID Connect exported variables for dynamic registration',
+	},
+	oidcServiceDynamicRegistrationExtraClaims => {
+            type          => 'keyTextContainer',
+            documentation => 'OpenID Connect extra claims for dynamic registration',
+	},
         oidcServiceIDTokenExpiration => {
             type          => 'int',
             default       => 3600,
