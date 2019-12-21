@@ -603,7 +603,7 @@
 "oidcServiceAuthorizationCodeExpiration":"Authorization Code expiration",
 "oidcServiceAccessTokenExpiration":"انتهاء صلاحية التوكن",
 "oidcServiceDynamicRegistrationExportedVars":"Exported vars for dynamic registration",
-"oidcServiceDynamicRegistrationExtraClaims":"ExtraClaims for dynamic registration",
+"oidcServiceDynamicRegistrationExtraClaims":"Extra claims for dynamic registration",
 "oidcServiceIDTokenExpiration":" انتهاء صلاحية تعريف التوكن",
 "oidcServiceOfflineSessionExpiration":"Offline session expiration",
 "oidcStorage":"اسم وحدة الجلسات",

@@ -603,7 +603,7 @@
 "oidcServiceAuthorizationCodeExpiration":"Yetkilendirme Kodu sona erme",
 "oidcServiceAccessTokenExpiration":"Erişim Jetonu sona erme",
 "oidcServiceDynamicRegistrationExportedVars":"Exported vars for dynamic registration",
-"oidcServiceDynamicRegistrationExtraClaims":"ExtraClaims for dynamic registration",
+"oidcServiceDynamicRegistrationExtraClaims":"Extra claims for dynamic registration",
 "oidcServiceIDTokenExpiration":"ID Jetonu sona erme",
 "oidcServiceOfflineSessionExpiration":"Çevrimdışı oturum sona erme",
 "oidcStorage":"Oturumlar modülü adı",
