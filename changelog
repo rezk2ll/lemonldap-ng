@@ -1,3 +1,65 @@
+lemonldap-ng (2.0.7) stable; urgency=medium
+
+  * Bugs:
+    * #1893: Issuer urldc is lost after error in 2F flow
+    * #1909: Reset password by email issue
+    * #1943: [Security: medium, CVE-2019-19791] Apache access rules and SOAP/REST endpoints
+    * #1945: passwordpolicy.tpl contains wrong tag
+    * #1948: Tranlation menu does not work with Diff.html
+    * #1949: Don't Store Password shows password in cleartext
+    * #1952: "Attributes and macros" session keys should not be translated
+    * #1954: zimbra preauth not working
+    * #1955: Redirection lost after notification validation
+    * #1960: REST config service not working
+    * #1961: IDP selection rule regression in 2.0.0
+    * #1963: Server Error with OpenID Connect register endpoint
+    * #1964: Diff.html does not work with minified JS
+    * #1966: Configuration reload does not apply changes to location rules
+    * #1968: skippedUnitTests/skippedGlobalTests have no effect
+    * #1969: Force password reset with LDAP password policy does not work if macro _whatToTrace is not defined
+    * #1974: ServiceToken handler TTL value always set to default
+    * #2005: Error in portal "refresh my rights" feature when whatToTrace value is not equal to login
+    * #2009: Display authentication error on login form with Combination Kerberos + LDAP
+    * #2010: Kerberos not working with session upgrade
+    * #2012: Several issues with notification system
+    * #2013: Handler, yum install
+    * #2018: After temporary ldap failure, ldap connections stop working forever
+    * #2038: Missing type attribute in 2FA HTML inputs
+    * #2045: Authenticating with external OpenID Connect Provider fails because of special chars in user name
+
+  * New features:
+    * #1605: certificate reset by mail
+    * #1956: DecryptValue plugin
+    * #1999: Possibility to view/close other sessions opened for the same user
+    * #2006: Create a web service for "refresh my rights"
+
+  * Improvements:
+    * #1590: Possibility to configure new plugins in Manager
+    * #1905: Append overScheme for persistent sessions
+    * #1941: After logged out from SP we are always redirected to IdP - Unable to go back to SP Portal
+    * #1947: Highlight active module with Diff.html
+    * #1967: allow differents type of managerDN
+    * #1983: The script purgeCentralCache should be more fault tolerant
+    * #1988: Append a requiredAuthenticationLevel option for each uri
+    * #1989: Main logo and lang icons are missing with upgradesession template
+    * #1991: Some user logs not using whatToTrace for username
+    * #1993: Same issue like (#1884) occures with Issuer redirection
+    * #1994: Append varInUri extended function
+    * #1995: Add an option to force claims in ID token
+    * #1996: REQUEST_URI env variable is not set by CheckUser plugin
+    * #1997: Enable checkTime option by default
+    * #2003: Possibility to set attributes and extra claims in OIDC registration endpoints
+    * #2007: Password change prompt displayed even if initial auth fails
+    * #2008: Specific message and error code for 2F failure
+    * #2011: Create a function to test if a value belongs to a list
+    * #2012: Several issues with notification system
+    * #2014: New script to convert sessions between backends
+    * #2019: Renew Captcha button
+    * #2024: Change default value for cspFormAction
+    * #2042: Add per-service macros
+
+ -- Clément <clem.oudot@gmail.com>  Sat, 21 Dec 2019 16:30:08 +0100
+
 lemonldap-ng (2.0.6) stable; urgency=medium
 
   * Bugs:
