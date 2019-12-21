@@ -102,7 +102,7 @@ use constant {
     PE_BADOTP                            => 96,
     PE_RESETCERTIFICATE_INVALIDE         => 97,
     PE_RESETCERTIFICATE_FOREMPTY         => 98,
-    PE_RESETCERTIFICATE_FIRSTACCESS      => 99
+    PE_RESETCERTIFICATE_FIRSTACCESS      => 99,
 };
 
 sub portalConsts {
@@ -199,8 +199,8 @@ sub portalConsts {
         '94' => 'PE_ISSUERMISSINGREQATTR',
         '95' => 'PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED',
         '96' => 'PE_BADOTP',
-        '97' => 'PE_RESETCERTIFICATE_INVALIDE', 
-        '98' => 'PE_RESETCERTIFICATE_FOREMPTY', 
+        '97' => 'PE_RESETCERTIFICATE_INVALIDE',
+        '98' => 'PE_RESETCERTIFICATE_FOREMPTY',
         '99' => 'PE_RESETCERTIFICATE_FIRSTACCESS'
     };
 

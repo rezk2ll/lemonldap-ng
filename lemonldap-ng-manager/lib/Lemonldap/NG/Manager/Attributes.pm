@@ -246,42 +246,6 @@ m[^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\
             'msgFail' => '__authorizedValues__: -1, 0, 1',
             'test'    => qr/^(?:-1|0|1)$/
         },
-         'certificateResetByMailCeaAttribute' => {
-             'default' => 'description',
-             'type'    => 'text'
-         },
-         'certificateResetByMailCertificateAttribute' => {
-             'default' => 'userCertificate;binary',
-             'type'    => 'text'
-         },
-         'certificateResetByMailReplyTo' => {
-             'default' => 'noreply@example.com',
-             'type'    => 'text'
-         },
-         'certificateResetByMailSender' => {
-             'default' => 'noreply@example.com',
-             'type'    => 'text'
-         },
-         'certificateResetByMailStep1Body' => {
-             'type' => 'longtext'
-         },
-         'certificateResetByMailStep1Subject' => {
-             'type' => 'text'
-         },
-         'certificateResetByMailStep2Body' => {
-             'type' => 'longtext'
-         },
-         'certificateResetByMailStep2Subject' => {
-             'type' => 'text'
-         },
-         'certificateResetByMailURL' => {
-             'default' => 'http://auth.example.com/certificateReset',
-             'type'    => 'url'
-         },
-         'certificateResetByMailValidityDelay' => {
-             'default' => 0,
-             'type'    => 'int'
-         },
         'url' => {
             'form'    => 'text',
             'msgFail' => '__badUrl__',
@@ -800,6 +764,42 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'cda' => {
             'default' => 0,
             'type'    => 'bool'
+        },
+        'certificateResetByMailCeaAttribute' => {
+            'default' => 'description',
+            'type'    => 'text'
+        },
+        'certificateResetByMailCertificateAttribute' => {
+            'default' => 'userCertificate;binary',
+            'type'    => 'text'
+        },
+        'certificateResetByMailReplyTo' => {
+            'default' => 'noreply@example.com',
+            'type'    => 'text'
+        },
+        'certificateResetByMailSender' => {
+            'default' => 'noreply@example.com',
+            'type'    => 'text'
+        },
+        'certificateResetByMailStep1Body' => {
+            'type' => 'longtext'
+        },
+        'certificateResetByMailStep1Subject' => {
+            'type' => 'text'
+        },
+        'certificateResetByMailStep2Body' => {
+            'type' => 'longtext'
+        },
+        'certificateResetByMailStep2Subject' => {
+            'type' => 'text'
+        },
+        'certificateResetByMailURL' => {
+            'default' => 'http://auth.example.com/certificateReset',
+            'type'    => 'url'
+        },
+        'certificateResetByMailValidityDelay' => {
+            'default' => 0,
+            'type'    => 'int'
         },
         'cfgAuthor' => {
             'type' => 'text'
