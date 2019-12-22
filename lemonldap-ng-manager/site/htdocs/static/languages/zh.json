@@ -273,7 +273,7 @@
 "dateTitle":"日期",
 "dn":"LDAP 唯一名称",
 "domain":"域",
-"dontCompactConf":"Don't compact configuration file",
+"compactConf":"Compact configuration file",
 "download":"下载",
 "downloadIt":"下载它",
 "duplicate":"Duplicate",

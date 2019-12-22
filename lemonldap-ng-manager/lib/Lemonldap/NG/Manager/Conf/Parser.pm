@@ -26,7 +26,7 @@ use JSON 'to_json';
 use Lemonldap::NG::Common::Conf::ReConstants;
 use Lemonldap::NG::Manager::Attributes;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Common::Conf::Compact';
 
@@ -115,19 +115,19 @@ sub check {
         $self->message('__confNotChanged__');
         return 0;
     }
-    unless ( $self->newConf->{dontCompactConf} ) {
+    if ( $self->newConf->{compactConf} ) {
         foreach ( sort keys %conf ) {
             push @removedKeys, $_ unless exists $compactedConf{$_};
         }
     }
     push @{ $self->changes },
       (
-        $self->{newConf}->{dontCompactConf}
-        ? { confCompacted => '0' }
-        : {
+        $self->{newConf}->{compactConf}
+        ? {
             confCompacted => '1',
             removedKeys   => join( $separator, @removedKeys )
-        }
+          }
+        : { confCompacted => '0' }
       );
     return 1;
 }
@@ -266,7 +266,8 @@ sub _scanNodes {
                               $leaf->{comment}
                               ? "(?#$leaf->{comment})$leaf->{re}"
                               : $leaf->{re};
-                            $k .= "(?#AuthnLevel=$leaf->{level})" if $leaf->{level};
+                            $k .= "(?#AuthnLevel=$leaf->{level})"
+                              if $leaf->{level};
                             $self->set( $target, $key, $k, $leaf->{data} );
                         }
                         else {
@@ -334,7 +335,9 @@ sub _scanNodes {
                     hdebug("  SAML data is an array, serializing");
                     $leaf->{data} = join ';', @{ $leaf->{data} };
                 }
-                if ( $target =~ /^saml(?:S|ID)PMetaData(?:ExportedAttributes|Macros)$/ ) {
+                if ( $target =~
+                    /^saml(?:S|ID)PMetaData(?:ExportedAttributes|Macros)$/ )
+                {
                     if ( $leaf->{cnodes} ) {
                         hdebug("  $target: unopened node");
                         $self->newConf->{$target}->{$key} =
@@ -394,7 +397,9 @@ sub _scanNodes {
                     hdebug("  $target");
                     $self->set( $target, $key, $leaf->{data} );
                 }
-                elsif ( $target =~ /^oidc(?:O|R)PMetaData(?:ExportedVars|Macros)$/ ) {
+                elsif (
+                    $target =~ /^oidc(?:O|R)PMetaData(?:ExportedVars|Macros)$/ )
+                {
                     hdebug("  $target");
                     if ( $leaf->{cnodes} ) {
                         hdebug('    unopened');
@@ -463,7 +468,9 @@ sub _scanNodes {
                     $self->_scanNodes($subNodes);
                     $self->set( $target, $key, $leaf->{title}, $leaf->{data} );
                 }
-                elsif ( $target =~ /^cas(?:App|Srv)MetaData(?:ExportedVars|Macros)$/ ) {
+                elsif ( $target =~
+                    /^cas(?:App|Srv)MetaData(?:ExportedVars|Macros)$/ )
+                {
                     hdebug("  $target");
                     if ( $leaf->{cnodes} ) {
                         hdebug('    unopened');

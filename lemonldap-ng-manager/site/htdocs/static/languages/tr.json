@@ -273,7 +273,7 @@
 "dateTitle":"Tarihler",
 "dn":"DN",
 "domain":"Etki alanı",
-"dontCompactConf":"Yapılandırma dosyasını sıkıştırma",
+"compactConf":"Compact configuration file",
 "download":"İndir",
 "downloadIt":"İndir",
 "duplicate":"Mükerrer",

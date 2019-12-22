@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -390,7 +390,7 @@ sub attributes {
             msgFail       => '__badUrl__',
             documentation => 'URL to call on reload',
         },
-        dontCompactConf => {
+        compactConf => {
             type          => 'bool',
             default       => 0,
             documentation => 'Don t compact configuration',

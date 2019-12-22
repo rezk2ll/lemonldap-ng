@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 # TODO: Missing:
 #  * activeTimer
@@ -571,7 +571,7 @@ sub tree {
                     title => 'reloadParams',
                     help  => 'configlocation.html#configuration_reload',
                     nodes =>
-                      [ 'reloadUrls', 'reloadTimeout', 'dontCompactConf' ]
+                      [ 'reloadUrls', 'reloadTimeout', 'compactConf' ]
                 },
                 {
                     title => 'plugins',

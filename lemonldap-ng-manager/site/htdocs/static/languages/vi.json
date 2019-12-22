@@ -273,7 +273,7 @@
 "dateTitle":"Ngày",
 "dn":"DN",
 "domain":"Tên miền",
-"dontCompactConf":"Don't compact configuration file",
+"compactConf":"Compact configuration file",
 "download":"Tải xuống",
 "downloadIt":"Tải xuống",
 "duplicate":"Sao y",

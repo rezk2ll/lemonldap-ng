@@ -1381,6 +1381,12 @@
     "title": "reloadUrls",
     "type": "keyTextContainer"
   }, {
+    "default": 0,
+    "id": "compactConf",
+    "title": "compactConf",
+    "type": "bool",
+    "data": 1
+  }, {
     "id": "advancedParams",
     "title": "advancedParams",
     "nodes": [{

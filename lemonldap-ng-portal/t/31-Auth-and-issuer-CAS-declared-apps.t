@@ -150,6 +150,7 @@ sub sp {
                 portal                => 'http://auth.sp.com',
                 authentication        => 'CAS',
                 userDB                => 'CAS',
+                compactConf           => 1,
                 restSessionServer     => 1,
                 issuerDBCASActivation => 0,
                 multiValuesSeparator  => ';',

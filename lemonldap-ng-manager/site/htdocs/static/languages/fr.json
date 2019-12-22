@@ -273,7 +273,7 @@
 "dateTitle":"Dates",
 "dn":"DN",
 "domain":"Domaine",
-"dontCompactConf":"Ne pas compacter le fichier de configuration",
+"compactConf":"Compacter le fichier de configuration",
 "download":"Télécharger",
 "downloadIt":"Télécharger",
 "duplicate":"Dupliquer",
