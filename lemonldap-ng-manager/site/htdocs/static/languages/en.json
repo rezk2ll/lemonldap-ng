@@ -176,7 +176,7 @@
 "corsAllow_Origin":"Access-Control-Allow-Origin",
 "corsExpose_Headers":"Access-Control-Expose-Headers",
 "corsMax_Age":"Access-Control-Max-Age",
-"cfgLog":"Resume",
+"cfgLog":"Summary",
 "cfgVersion":"Configuration version",
 "checkXSS":"Check XSS attacks",
 "clickHereToForce":"Click here to force",
