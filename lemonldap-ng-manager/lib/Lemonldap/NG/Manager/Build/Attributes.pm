@@ -393,7 +393,7 @@ sub attributes {
         compactConf => {
             type          => 'bool',
             default       => 0,
-            documentation => 'Don t compact configuration',
+            documentation => 'Compact configuration',
         },
         portalMainLogo => {
             type          => 'text',
