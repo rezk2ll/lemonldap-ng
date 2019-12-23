@@ -580,6 +580,7 @@ sub tree {
                         'stayConnected',
                         'portalStatus',
                         'upgradeSession',
+                        'refreshSessions',
                         {
                             title => 'portalServers',
                             help  => 'portalservers.html',
@@ -761,7 +762,6 @@ sub tree {
                             help  => 'plugincustom.html',
                             nodes => [ 'customPlugins', 'customPluginsParams' ]
                         },
-                        'refreshSessions',
                     ]
                 },
                 {
