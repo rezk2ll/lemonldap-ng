@@ -11,7 +11,7 @@ use Time::Local;
 use DBI;
 use Encode;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Common::Notifications';
 
@@ -220,6 +220,7 @@ sub getDone {
     my $result;
     while ( my $h = $self->sth->fetchrow_hashref() ) {
         my @t = split( /\D+/, $h->{date} );
+        $t[1]--;
         my $done =
           timelocal( $t[5] || 0, $t[4] || 0, $t[3] || 0, $t[2], $t[1], $t[0] );
         $result->{"$h->{date}#$h->{uid}#$h->{ref}"} =
