@@ -21,6 +21,7 @@ my $client = LLNG::Manager::Test->new( {
             formTimeout                    => 120,
             checkUserDisplayPersistentInfo => 1,
             checkUserDisplayEmptyValues    => 1,
+            impersonationMergeSSOgroups    => 1,
         }
     }
 );
