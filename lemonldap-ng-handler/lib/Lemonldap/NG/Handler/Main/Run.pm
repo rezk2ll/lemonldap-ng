@@ -437,15 +437,16 @@ sub goToError {
 # @return Value of the cookie if found, 0 else
 sub fetchId {
     my ( $class, $req ) = @_;
-    my $t                 = $req->{env}->{HTTP_COOKIE} or return 0;
-    my $vhost             = $class->resolveAlias($req);
+    my $t     = $req->{env}->{HTTP_COOKIE} or return 0;
+    my $vhost = $class->resolveAlias($req);
+    $class->logger->debug("VH $vhost is HTTPS") if $class->_isHttps( $req, $vhost );
     my $lookForHttpCookie = ( $class->tsv->{securedCookie} =~ /^(2|3)$/
           and not $class->_isHttps( $req, $vhost ) );
     my $cn = $class->tsv->{cookieName};
     my $value =
       $lookForHttpCookie
       ? ( $t =~ /${cn}http=([^,; ]+)/o ? $1 : 0 )
-      : ( $t =~ /$cn=([^,; ]+)/o       ? $1 : 0 );
+      : ( $t =~ /$cn=([^,; ]+)/o ? $1 : 0 );
 
     if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
         $value = $class->tsv->{cipher}->decryptHex( $value, "http" );
@@ -573,11 +574,8 @@ sub retrieveSession {
 # Returns the port on which this vhost is accessed
 # @param $s VHost name
 # @return PORT
-
 sub _getPort {
-
     my ( $class, $req, $vhost ) = @_;
-
     if ( defined $class->tsv->{port}->{$vhost}
         and ( $class->tsv->{port}->{$vhost} > 0 ) )
     {
@@ -594,15 +592,14 @@ sub _getPort {
         }
     }
 }
-## @cmethod private boot _isHttps(string s)
-# Returns whether this VHost should he accessed
+
+## @cmethod private bool _isHttps(string s)
+# Returns whether this VHost should be accessed
 # via HTTPS
 # @param $s VHost name
-# @return RUE if the vhost should be accessed over HTTPS
+# @return TRUE if the vhost should be accessed over HTTPS
 sub _isHttps {
-
     my ( $class, $req, $vhost ) = @_;
-
     if ( defined $class->tsv->{https}->{$vhost}
         and ( $class->tsv->{https}->{$vhost} > -1 ) )
     {
