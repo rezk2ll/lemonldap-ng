@@ -284,10 +284,6 @@ m%<div class="alert alert-success"><div class="text-center"><b><span trspan="all
 ok( $res->[2]->[0] =~ m%<span trspan="headers">%, 'Found trspan="headers"' )
   or explain( $res->[2]->[0], 'trspan="headers"' );
 
-ok( $res->[2]->[0] !~ m%<span trspan="groups_sso">%,
-    'trspan="groups_sso" NOT found' )
-  or explain( $res->[2]->[0], 'trspan="groups_sso"' );
-
 ok( $res->[2]->[0] =~ m%<span trspan="macros">%, 'Found trspan="macros"' )
   or explain( $res->[2]->[0], 'trspan="macros"' );
 ok( $res->[2]->[0] =~ m%<span trspan="attributes">%,
@@ -306,7 +302,7 @@ ok( $res->[2]->[0] =~ m%<td scope="row">_whatToTrace</td>%,
 ok( $res->[2]->[0] =~ m%<td scope="row">testPrefix_groups</td>%,
     'Found testPrefix_groups' )
   or explain( $res->[2]->[0], 'testPrefix_groups' );
-ok( $res->[2]->[0] =~ m%<td scope="row">su; su_test; test_su</td>%,
+ok( $res->[2]->[0] =~ m%<td scope="row">[^<]*su; su_test; test_su</td>%,
     'Found "su; su_test; test_su"' )
   or explain( $res->[2]->[0], 'su' );
 ok( $res->[2]->[0] =~ m%<td scope="row">testPrefix_uid</td>%,
@@ -321,9 +317,10 @@ ok( $res->[2]->[0] =~ m%<td scope="row">rtyler/dwho</td>%, 'Found rtyler/dwo' )
   or explain( $res->[2]->[0], 'Found rtyler/dwo' );
 ok( $res->[2]->[0] =~ m%<td scope="row">_session_id</td>%, 'Found _session_id' )
   or explain( $res->[2]->[0], 'Found _session_id' );
-ok( $res->[2]->[0] =~ m%<td scope="row">_session_kind</td>%, 'Found _session_id' )
+ok( $res->[2]->[0] =~ m%<td scope="row">_session_kind</td>%,
+    'Found _session_id' )
   or explain( $res->[2]->[0], 'Found _session_kind' );
-count(18);
+count(17);
 
 my %attributes = map /<td scope="row">(.+)?<\/td>/g, $res->[2]->[0];
 ok( keys %attributes == 35, 'Found 35 attributes' )
