@@ -376,7 +376,8 @@ sub _certificateReset {
         else {
 
             # Use HTML template
-            $body = $self->loadTemplate(
+            $body = $self->loadMailTemplate(
+                $req,
                 'mail_confirm',
                 filter => $tr,
                 params => \%tplPrms
@@ -562,7 +563,8 @@ sub modifyCertificate {
     else {
 
         # Use HTML template
-        $body = $self->loadTemplate(
+        $body = $self->loadMailTemplate(
+            $req,
             'mail_certificatReset',
             filter => $tr,
             params => \%tplPrms
