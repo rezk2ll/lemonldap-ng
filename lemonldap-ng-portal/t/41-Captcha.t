@@ -6,7 +6,7 @@ require 't/test-lib.pm';
 
 my $res;
 
-my $maintests = 25;
+my $maintests = 26;
 SKIP: {
     eval 'use GD::SecurityImage;use Image::Magick;';
     if ($@) {
@@ -114,9 +114,10 @@ m%<input name="password" type="text" class="form-control key" autocomplete="off"
         ' New captcha image inserted' );
     ok(
         $res->[2]->[0] =~
-m#<img class="renewcaptchaclic" src="/static/common/icons/arrow_refresh.png" alt="Renew Captcha" title="Renew Captcha" class="img-thumbnail mb-3" />#,
+m#<img class="renewcaptchaclick" src="/static/common/icons/arrow_refresh.png" alt="Renew Captcha" title="Renew Captcha" class="img-thumbnail mb-3" />#,
         ' Renew Captcha button found'
     ) or explain( $res->[2]->[0], 'Renew captcha button not found' );
+    ok( $res->[2]->[0] =~ /captcha\.(?:min\.)?js/, 'Get captcha javascript' );
 
     # Try to renew captcha
     ok( $res = $client->_get( '/renewcaptcha', accept => 'text/html' ),
