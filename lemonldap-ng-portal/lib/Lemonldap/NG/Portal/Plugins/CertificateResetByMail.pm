@@ -10,6 +10,7 @@ use MIME::Base64;
 use POSIX qw(strftime);
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
   PE_BADCREDENTIALS
   PE_BADMAILTOKEN
   PE_CAPTCHAEMPTY
@@ -23,10 +24,6 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MAILOK
   PE_MALFORMEDUSER
   PE_NOTOKEN
-  PE_OK
-  PE_PASSWORDFIRSTACCESS
-  PE_PASSWORDFORMEMPTY
-  PE_PASSWORD_OK
   PE_TOKENEXPIRED
   PE_USERNOTFOUND
   PE_RESETCERTIFICATE_INVALID
@@ -34,10 +31,13 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_RESETCERTIFICATE_FIRSTACCESS
 );
 
-our $VERSION = '2.1.0';
+our $VERSION = '2.0.7';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin',
-  'Lemonldap::NG::Portal::Lib::SMTP', 'Lemonldap::NG::Portal::Lib::_tokenRule';
+extends qw(
+  Lemonldap::NG::Portal::Main::Plugin
+  Lemonldap::NG::Portal::Lib::SMTP
+  Lemonldap::NG::Portal::Lib::_tokenRule
+);
 
 # PROPERTIES
 
@@ -107,6 +107,7 @@ sub init {
             '::CertificateResetByMail::' . $self->conf->{registerDB}
         )
     ) or return 0;
+
     return 1;
 }
 
@@ -536,7 +537,6 @@ sub modifyCertificate {
     $self->{user} = undef;
 
     # Mail token can be used only one time, delete the session if all is ok
-    #
     return $result unless ( $result == PE_OK );
 
     # Send mail to notify the certificate reset sucessfully
@@ -690,13 +690,12 @@ sub display {
     return 'certificateReset', \%tplPrm;
 }
 
-#tring getCertifResetSession (string mail)
+#string getCertifResetSession (string mail)
 # Check if a certificate reset session exists
 # @param mail the value of the mail key in session
 # @return the first session id found or nothing if no session
 sub getCertificateSession {
     my ( $self, $user ) = @_;
-
     my $moduleOptions = $self->conf->{globalStorageOptions} || {};
     $moduleOptions->{backend} = $self->conf->{globalStorage};
     my $module = "Lemonldap::NG::Common::Apache::Session";
@@ -721,7 +720,6 @@ sub getCertificateSession {
 # Use Certificate Update parameter to send mail
 
 sub sendmail {
-
     my ( $self, $mail, $subject, $body, $html ) = @_;
 
     $self->{mailFrom}    = $self->conf->{certificateResetByMailSender};
@@ -731,13 +729,10 @@ sub sendmail {
 }
 
 sub checkCertificateValidity {
-
     my ( $self, $notAfter, $delay ) = @_;
     my $dtNow;    # now in format DateTime
     my $days;     # difference between NotAfter and now
-
-    my $f = DateTime::Format::RFC3339->new();
-
+    my $f          = DateTime::Format::RFC3339->new();
     my $dtNotAfter = $f->parse_datetime($notAfter);
     $self->userLogger->debug("Not After Date: $dtNotAfter");
 
@@ -761,7 +756,6 @@ sub checkCertificateValidity {
 }
 
 sub certificateHash {
-
     my ( $self, $file ) = @_;
     my $cert;
 

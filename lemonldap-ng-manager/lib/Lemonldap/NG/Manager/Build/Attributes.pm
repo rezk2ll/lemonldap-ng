@@ -1458,14 +1458,15 @@ sub attributes {
             default       => 'http://auth.example.com/resetpwd',
             documentation => 'URL of password reset page',
         },
-                   # Certificate reset by mail
+
+        # Certificate reset by mail
         certificateResetByMailCeaAttribute => {
-            type          => 'text',
-            default       => 'description'
+            type    => 'text',
+            default => 'description'
         },
         certificateResetByMailCertificateAttribute => {
-            type          => 'text',
-            default       => 'userCertificate;binary',
+            type    => 'text',
+            default => 'userCertificate;binary',
         },
         certificateResetByMailStep1Body => {
             type          => 'longtext',
@@ -1501,8 +1502,8 @@ sub attributes {
             documentation => 'URL of certificate reset page',
         },
         certificateResetByMailValidityDelay => {
-            type          => 'int',
-            default       => 0
+            type    => 'int',
+            default => 0
         },
 
         # Registration

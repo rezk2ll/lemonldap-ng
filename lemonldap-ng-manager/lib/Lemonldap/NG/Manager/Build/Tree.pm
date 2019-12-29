@@ -570,8 +570,7 @@ sub tree {
                 {
                     title => 'reloadParams',
                     help  => 'configlocation.html#configuration_reload',
-                    nodes =>
-                      [ 'reloadUrls', 'reloadTimeout', 'compactConf' ]
+                    nodes => [ 'reloadUrls', 'reloadTimeout', 'compactConf' ]
                 },
                 {
                     title => 'plugins',
@@ -657,34 +656,34 @@ sub tree {
                                     ]
                                 }
                             ]
-                         },
-                          {
+                        },
+                        {
                             title => 'certificateResetByMailManagement',
-                             form  => 'simpleInputContainer',
-                             nodes => [ {
-                                     title => 'certificateMailContent',
-                                     form  => 'simpleInputContainer',
-                                     nodes => [ 
-                                         'certificateResetByMailSender',
-                                         'certificateResetByMailReplyTo',
-                                         'certificateResetByMailStep1Subject',
-                                         'certificateResetByMailStep1Body',
-                                         'certificateResetByMailStep2Subject',
-                                         'certificateResetByMailStep2Body'
-                                      ]
-                                  },
-  
-                                  {
-                                      title => 'mailOther',
-                                      form  => 'simpleInputContainer',
-                                      nodes => [
-                                          'certificateResetByMailURL',
-                                          'certificateResetByMailCeaAttribute',
-                                          'certificateResetByMailCertificateAttribute',
-                                          'certificateResetByMailValidityDelay'
+                            help  => 'resetcertificate.html',
+                            nodes => [ {
+                                    title => 'certificateMailContent',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'certificateResetByMailSender',
+                                        'certificateResetByMailReplyTo',
+                                        'certificateResetByMailStep1Subject',
+                                        'certificateResetByMailStep1Body',
+                                        'certificateResetByMailStep2Subject',
+                                        'certificateResetByMailStep2Body'
                                     ]
-                                 } 
-                             ]
+                                },
+
+                                {
+                                    title => 'mailOther',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'certificateResetByMailURL',
+                                        'certificateResetByMailCeaAttribute',
+'certificateResetByMailCertificateAttribute',
+                                        'certificateResetByMailValidityDelay'
+                                    ]
+                                }
+                            ]
                         },
                         {
                             title => 'register',
@@ -1057,7 +1056,8 @@ sub tree {
                     help  => 'samlservice.html#organization',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'samlOrganizationDisplayName', 'samlOrganizationName',
+                        'samlOrganizationDisplayName',
+                        'samlOrganizationName',
                         'samlOrganizationURL'
                     ]
                 },
@@ -1217,8 +1217,8 @@ sub tree {
                     title => "oidcServiceMetaDataSessions",
                     nodes => [ 'oidcStorage', 'oidcStorageOptions', ],
                 },
-		'oidcServiceDynamicRegistrationExportedVars',
-		'oidcServiceDynamicRegistrationExtraClaims',
+                'oidcServiceDynamicRegistrationExportedVars',
+                'oidcServiceDynamicRegistrationExtraClaims',
             ]
         },
         'oidcOPMetaDataNodes',

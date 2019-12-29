@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Lib::LDAP';
 
-our $VERSION = '2.1.0';
+our $VERSION = '2.0.7';
 
 # RUNNING METHODS
 
