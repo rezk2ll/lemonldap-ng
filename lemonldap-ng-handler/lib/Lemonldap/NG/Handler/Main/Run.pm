@@ -481,6 +481,9 @@ sub retrieveSession {
         $class->logger->debug("Get session $id from Handler internal cache");
         return $class->data;
     }
+    else {
+        $class->data( {} );
+    }
 
     # 2. Get the session from cache or backend
     my $session = $req->data->{session} = (
@@ -763,15 +766,11 @@ sub abort {
 sub localUnlog {
     my ( $class, $req, $id ) = @_;
     $class->logger->debug('Local handler logout');
-    if ( $id //= $class->fetchId($req) ) {
 
-        # Delete thread data
-        if (    $class->data->{_session_id}
-            and $id eq $class->data->{_session_id} )
-        {
-            $class->data( {} );
-        }
-        delete $req->data->{session};
+    # Delete thread data
+    delete $req->data->{session};
+    $class->data( {} );
+    if ( $id //= $class->fetchId($req) ) {
 
         # Delete local cache
         if (    $class->tsv->{refLocalStorage}
