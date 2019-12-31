@@ -211,7 +211,7 @@ sub run {
     }
 
     # Session ID
-    my $session_id = $req->{sessionInfo}->{_session_id} || $req->{id};
+    my $session_id = $req->{sessionInfo}->{_session_id} || $req->id;
 
     # Session creation timestamp
     my $time = $req->{sessionInfo}->{_utime} || time();
@@ -1268,7 +1268,7 @@ sub logout {
     return PE_OK if ( $req->data->{samlSLOCalled} );
 
     # Session ID
-    my $session_id = $req->{sessionInfo}->{_session_id} || $req->{id};
+    my $session_id = $req->{sessionInfo}->{_session_id} || $req->id;
 
     # Close SAML sessions
     unless ( $self->deleteSAMLSecondarySessions($session_id) ) {

@@ -129,7 +129,7 @@ sub run {
     my $url = $req->uri();
 
     # Session ID
-    my $session_id = $req->{sessionInfo}->{_session_id} || $req->{id};
+    my $session_id = $req->{sessionInfo}->{_session_id} || $req->id;
 
     # Session creation timestamp
     my $time = $req->{sessionInfo}->{_utime} || time();
@@ -400,7 +400,7 @@ sub logout {
     my ( $self, $req ) = @_;
 
     # Session ID
-    my $session_id = $req->{sessionInfo}->{_session_id} || $req->{id};
+    my $session_id = $req->{sessionInfo}->{_session_id} || $req->id;
 
     # Delete linked CAS sessions
     $self->deleteCasSecondarySessions($session_id) if ($session_id);
