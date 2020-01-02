@@ -1,4 +1,4 @@
-# Test RSA key generation
+# Test 2F API
 
 use Test::More;
 use strict;

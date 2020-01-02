@@ -1,4 +1,4 @@
-# Test RSA key generation
+# Test Providers API
 
 use Test::More;
 use strict;
