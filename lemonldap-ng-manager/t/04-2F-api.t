@@ -31,17 +31,19 @@ sub newSession {
         'Sessions module'
     );
     count(1);
-    $tmp->update( {
-            ipAddr        => $ip,
-            _whatToTrace  => $uid,
-            uid           => $uid,
-            _session_uid  => $uid,
-            _utime        => time,
-            _session_kind => $kind,
-            _2fDevices    => to_json($sfaDevices),
-        }
+    ok(
+        $tmp->update( {
+                ipAddr        => $ip,
+                _whatToTrace  => $uid,
+                uid           => $uid,
+                _session_uid  => $uid,
+                _utime        => time,
+                _session_kind => $kind,
+                _2fDevices    => to_json($sfaDevices),
+            }
+        ), "New $kind session for $uid"
     );
-    return $tmp->{id};
+    #return $tmp->{id};
 }
 
 sub check200 {
@@ -211,16 +213,40 @@ sub checkDeleteBadType {
     check405( $test, $res );
 }
 
-my @ids;
+#my @ids;
 my $sfaDevices = [];
 my $ret;
 
 ## Sessions creation
-# SSO session
-$ids[0] = newSession( 'dwho', '127.10.0.1', 'SSO', $sfaDevices );
+# msmith
+newSession( 'msmith', '127.10.0.1', 'SSO', $sfaDevices );
+newSession( 'msmith', '127.10.0.1', 'Persistent', $sfaDevices );
 
-# Peristent sesssions
-$ids[1] = newSession( 'msmith', '127.10.0.1', 'Persistent', $sfaDevices );
+# dwho
+$sfaDevices = [ {
+        "name"       => "MyU2FKey",
+        "type"       => "U2F",
+        "_userKey"   => "123456",
+        "_keyHandle" => "654321",
+        "epoch"      => time
+    },
+    {
+        "name"    => "MyTOTP",
+        "type"    => "TOTP",
+        "_secret" => "123456",
+        "epoch"   => time
+    },
+    {
+        "name"    => "MyYubikey",
+        "type"    => "UBK",
+        "_secret" => "123456",
+        "epoch"   => time
+    }
+];
+newSession( 'dwho', '127.10.0.1', 'SSO', $sfaDevices );
+newSession( 'dwho', '127.10.0.1', 'Persistent', $sfaDevices );
+
+# rtyler
 $sfaDevices = [ {
         "name"       => "MyU2FKey",
         "type"       => "U2F",
@@ -241,28 +267,10 @@ $sfaDevices = [ {
         "epoch"   => time
     }
 ];
-$ids[2] = newSession( 'rtyler', '127.10.0.1', 'Persistent', $sfaDevices );
-$sfaDevices = [ {
-        "name"       => "MyU2FKey",
-        "type"       => "U2F",
-        "_userKey"   => "123456",
-        "_keyHandle" => "654321",
-        "epoch"      => time
-    },
-    {
-        "name"    => "MyTOTP",
-        "type"    => "TOTP",
-        "_secret" => "123456",
-        "epoch"   => time
-    },
-    {
-        "name"    => "MyYubikey",
-        "type"    => "UBK",
-        "_secret" => "123456",
-        "epoch"   => time
-    }
-];
-$ids[3] = newSession( 'dwho', '127.10.0.1', 'Persistent', $sfaDevices );
+newSession( 'rtyler', '127.10.0.1', 'SSO', $sfaDevices );
+newSession( 'rtyler', '127.10.0.1', 'Persistent', $sfaDevices );
+
+# davros
 $sfaDevices = [ {
         "name"       => "MyU2FKey",
         "type"       => "U2F",
@@ -277,7 +285,10 @@ $sfaDevices = [ {
         "epoch"   => time
     }
 ];
-$ids[4] = newSession( 'davros', '127.10.0.1', 'Persistent', $sfaDevices );
+newSession( 'davros', '127.10.0.1', 'SSO', $sfaDevices );
+newSession( 'davros', '127.10.0.1', 'Persistent', $sfaDevices );
+
+# tof
 $sfaDevices = [ {
         "name"       => "MyU2FKey",
         "type"       => "U2F",
@@ -286,7 +297,8 @@ $sfaDevices = [ {
         "epoch"      => time
     }
 ];
-$ids[5] = newSession( 'tof', '127.10.0.1', 'Persistent', $sfaDevices );
+newSession( 'tof', '127.10.0.1', 'SSO', $sfaDevices );
+newSession( 'tof', '127.10.0.1', 'Persistent', $sfaDevices );
 
 # dwho
 checkGetList( 1, 'dwho', 'U2F' );

@@ -143,7 +143,7 @@ sub _get2F {
         return $res if ( $res->{res} ne 'ok' );
     }
 
-    $psessions = $self->_getPSessions2F($uid);
+    $psessions = $self->_getSessions2F($self->_getPersistentMod, 'Persistent', '_session_uid', $uid);
 
     foreach ( keys %{$psessions} ) {
         my $devices =
@@ -173,64 +173,62 @@ sub _genId2F {
         "" );
 }
 
-sub _getMod2F {
+sub _getPersistentMod {
     my ($self) = @_;
     my $mod = $self->sessionTypes->{persistent};
     $mod->{options}->{backend} = $mod->{module};
     return $mod;
 }
 
-sub _getPSessions2F {
-    my ( $self, $uid ) = @_;
-    $self->logger->debug("Looking for psessions for uid $uid ...");
-    my $psessions = Lemonldap::NG::Common::Apache::Session->searchOn(
-        $self->_getMod2F->{options},
-        '_session_uid', $uid,
-        ( '_session_kind', '_session_uid', '_session_id', '_2fDevices' ) );
-    foreach ( keys %{$psessions} ) {
-        delete $psessions->{$_}
-          unless ( $psessions->{$_}->{_session_kind} eq 'Persistent' );
-    }
-    $self->logger->debug(
-        "Found " . scalar( keys %{$psessions} ) . " psessions for uid $uid." );
-    return $psessions;
+sub _getSSOMod {
+    my ($self) = @_;
+    my $mod = $self->sessionTypes->{global};
+    $mod->{options}->{backend} = $mod->{module};
+    return $mod;
 }
 
-sub getSession2F {
-    my ( $self, $sessionId ) = @_;
+sub _getSessions2F {
+    my ( $self, $mod, $kind, $key, $uid ) = @_;
+    $self->logger->debug("Looking for sessions for uid $uid ...");
+    my $sessions = Lemonldap::NG::Common::Apache::Session->searchOn(
+        $mod->{options}, $key, $uid,
+        ( '_session_kind', '_session_uid', '_session_id', '_2fDevices' ) );
+    foreach ( keys %{$sessions} ) {
+        delete $sessions->{$_}
+          unless ( $sessions->{$_}->{_session_kind} eq $kind );
+    }
+    $self->logger->debug(
+        "Found " . scalar( keys %{$sessions} ) . " $kind sessions for uid $uid." );
+
+    return $sessions;
+}
+
+sub _getSession2F {
+    my ( $self, $sessionId, $mod ) = @_;
     $self->logger->debug("Looking for session with sessionId $sessionId ...");
-    my $session = $self->getApacheSession( $self->_getMod2F, $sessionId );
+    my $session = $self->getApacheSession( $mod, $sessionId );
     $self->logger->debug(
         defined $session
         ? "Session $sessionId found."
         : " No session found for sessionId $sessionId" );
+
     return $session;
 }
 
-sub _delete2F {
-    my ( $self, $uid, $type, $id ) = @_;
+sub _delete2FFromSessions {
+    my ( $self, $uid, $type, $id, $mod, $kind, $key ) = @_;
     my (
-        $res,  $psessions, $sessionId, $session,  $devices,
-        @keep, $total,     $removed,   $lremoved, $localStorage
+        $sessions, $session,  $devices, @keep, $removed,
+        $total, $module, $localStorage
     );
+    $sessions = $self->_getSessions2F($mod, $kind, $key, $uid);
+    foreach ( keys %{$sessions} ) {
 
-    $localStorage = Lemonldap::NG::Handler::PSGI::Main->tsv->{refLocalStorage};
-
-    if ( defined $type ) {
-        $res = $self->_checkType($type);
-        return $res if ( $res->{res} ne 'ok' );
-    }
-
-    $psessions = $self->_getPSessions2F($uid);
-
-    foreach ( keys %{$psessions} ) {
-
-        $sessionId = $psessions->{$_}->{_session_id};
-        $session   = $self->getSession2F($sessionId)
+        $session   = $self->_getSession2F($_, $mod)
           or return { res => 'ko', code => 500, msg => $@ };
 
         $self->logger->debug(
-            "Looking for 2F Device(s) attached to session $sessionId...");
+            "Looking for 2F Device(s) attached to sessionId $_");
 
         if ( $session->data->{_2fDevices} ) {
 
@@ -238,58 +236,81 @@ sub _delete2F {
               from_json( $session->data->{_2fDevices}, { allow_nonref => 1 } );
             $total = scalar @$devices;
             $self->logger->debug(
-                "Found $total 2F devices attached to session $sessionId.");
+                "Found $total 2F devices attached to sessionId $_");
             @keep = ();
             while (@$devices) {
                 my $element = shift @$devices;
-                push @keep,
-                  $element
-                  if (
-                    ( defined $type or defined $id )
-                    and (  ( defined $type and $type ne $element->{type} )
+                if (( defined $type or defined $id ) and (
+                        ( defined $type and $type ne $element->{type})
                         or
-                        ( defined $id and $id ne $self->_genId2F($element) ) )
-                  );
+                        ( defined $id and $id ne $self->_genId2F($element) )
+                    )
+                ) {
+                    push @keep, $element;
+                } else {
+                    $removed->{$self->_genId2F($element)} = "removed";
+                }
             }
-            $lremoved = $total - scalar @keep;
-            if ( $lremoved > 0 ) {
+            if ( ($total - scalar @keep) > 0 ) {
 
                 # Update session
                 $self->logger->debug(
-"Removing $lremoved 2F device(s) attached to session $sessionId ..."
+"Removing " . ($total - scalar @keep) . " 2F device(s) attached to sessionId $_ ..."
                 );
                 $session->data->{_2fDevices} = to_json( \@keep );
                 $session->update( \%{ $session->data } );
 
-                # Delete local cache
-                if ( $localStorage and $localStorage->get($sessionId) ) {
-                    $self->logger->debug(
-                        "Delete local cache for $sessionId ...");
-                    $localStorage->remove($sessionId);
-                }
-                else {
-                    $self->logger->debug(
-                        "Local cache will not be cleared for $sessionId");
+                # Delete from local cache
+                if ($session->{options}->{localStorage}) {
+                    $module = $session->{options}->{localStorage};
+                    eval "use $module;";
+                    $localStorage = $module->new( $session->{options}->{localStorageOptions} );
+                    if ($localStorage->get($_) ) {
+                        $self->logger->debug("Delete local cache for session $_");
+                        $localStorage->remove($_);
+                    }
                 }
             }
             else {
                 $self->logger->debug(
-"No matching 2F devices attached to session $sessionId were selected for removal."
+"No matching 2F devices attached to sessionId $_ were selected for removal."
                 );
             }
         }
         else {
             $self->logger->debug(
-                "No 2F devices attached to session $sessionId were found.");
+                "No 2F devices attached to sessionId $_ were found.");
         }
 
-        $removed += $lremoved;
     }
+
+    return {  res => 'ok', removed => $removed };
+}
+
+sub _delete2F {
+    my ( $self, $uid, $type, $id ) = @_;
+    my ( $res, $removed, $count);
+    if ( defined $type ) {
+        $res = $self->_checkType($type);
+        return $res if ( $res->{res} ne 'ok' );
+    }
+
+    $res = $self->_delete2FFromSessions($uid, $type, $id, $self->_getPersistentMod, 'Persistent', '_session_uid');
+    return $res if ( $res->{res} ne 'ok' );
+
+    $removed = $res->{removed};
+
+    $res = $self->_delete2FFromSessions($uid, $type, $id, $self->_getSSOMod, 'SSO', 'uid');
+    return $res if ( $res->{res} ne 'ok' );
+
+    $removed = ($removed, $res->{removed});
+    $count = scalar (keys %{$removed});
+
     return {
         res     => 'ok',
-        removed => $removed,
-        msg     => $removed > 0
-        ? "Successful operation: " . $removed . " 2F were removed"
+        removed => $count,
+        msg     => $count > 0
+        ? "Successful operation: " . $count . " 2F were removed"
         : "No operation performed"
     };
 }
