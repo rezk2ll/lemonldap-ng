@@ -143,7 +143,8 @@ sub _get2F {
         return $res if ( $res->{res} ne 'ok' );
     }
 
-    $psessions = $self->_getSessions2F($self->_getPersistentMod, 'Persistent', '_session_uid', $uid);
+    $psessions = $self->_getSessions2F( $self->_getPersistentMod, 'Persistent',
+        '_session_uid', $uid );
 
     foreach ( keys %{$psessions} ) {
         my $devices =
@@ -190,15 +191,17 @@ sub _getSSOMod {
 sub _getSessions2F {
     my ( $self, $mod, $kind, $key, $uid ) = @_;
     $self->logger->debug("Looking for sessions for uid $uid ...");
-    my $sessions = Lemonldap::NG::Common::Apache::Session->searchOn(
-        $mod->{options}, $key, $uid,
+    my $sessions =
+      Lemonldap::NG::Common::Apache::Session->searchOn( $mod->{options}, $key,
+        $uid,
         ( '_session_kind', '_session_uid', '_session_id', '_2fDevices' ) );
     foreach ( keys %{$sessions} ) {
         delete $sessions->{$_}
           unless ( $sessions->{$_}->{_session_kind} eq $kind );
     }
-    $self->logger->debug(
-        "Found " . scalar( keys %{$sessions} ) . " $kind sessions for uid $uid." );
+    $self->logger->debug( "Found "
+          . scalar( keys %{$sessions} )
+          . " $kind sessions for uid $uid." );
 
     return $sessions;
 }
@@ -210,63 +213,68 @@ sub _getSession2F {
     $self->logger->debug(
         defined $session
         ? "Session $sessionId found."
-        : " No session found for sessionId $sessionId" );
+        : " No session found for sessionId $sessionId"
+    );
 
     return $session;
 }
 
 sub _delete2FFromSessions {
     my ( $self, $uid, $type, $id, $mod, $kind, $key ) = @_;
-    my (
-        $sessions, $session,  $devices, @keep, $removed,
-        $total, $module, $localStorage
-    );
-    $sessions = $self->_getSessions2F($mod, $kind, $key, $uid);
+    my ( $sessions, $session, $devices, @keep, $removed,
+        $total, $module, $localStorage );
+    $sessions = $self->_getSessions2F( $mod, $kind, $key, $uid );
     foreach ( keys %{$sessions} ) {
 
-        $session   = $self->_getSession2F($_, $mod)
+        $session = $self->_getSession2F( $_, $mod )
           or return { res => 'ko', code => 500, msg => $@ };
 
         $self->logger->debug(
             "Looking for 2F Device(s) attached to sessionId $_");
 
         if ( $session->data->{_2fDevices} ) {
-
             $devices =
               from_json( $session->data->{_2fDevices}, { allow_nonref => 1 } );
             $total = scalar @$devices;
+
             $self->logger->debug(
                 "Found $total 2F devices attached to sessionId $_");
+
             @keep = ();
             while (@$devices) {
                 my $element = shift @$devices;
-                if (( defined $type or defined $id ) and (
-                        ( defined $type and $type ne $element->{type})
+                if (
+                    ( defined $type or defined $id )
+                    and (  ( defined $type and $type ne $element->{type} )
                         or
-                        ( defined $id and $id ne $self->_genId2F($element) )
-                    )
-                ) {
+                        ( defined $id and $id ne $self->_genId2F($element) ) )
+                  )
+                {
                     push @keep, $element;
-                } else {
-                    $removed->{$self->_genId2F($element)} = "removed";
+                }
+                else {
+                    $removed->{ $self->_genId2F($element) } = "removed";
                 }
             }
-            if ( ($total - scalar @keep) > 0 ) {
+            if ( ( $total - scalar @keep ) > 0 ) {
 
                 # Update session
-                $self->logger->debug(
-"Removing " . ($total - scalar @keep) . " 2F device(s) attached to sessionId $_ ..."
-                );
+                $self->logger->debug( "Removing "
+                      . ( $total - scalar @keep )
+                      . " 2F device(s) attached to sessionId $_ ..." );
                 $session->data->{_2fDevices} = to_json( \@keep );
                 $session->update( \%{ $session->data } );
 
                 # Delete from local cache
-                if ($session->{options}->{localStorage}) {
+                if ( $session->{options}->{localStorage} ) {
                     $module = $session->{options}->{localStorage};
                     eval "use $module;";
-                    $localStorage = $module->new( $session->{options}->{localStorageOptions} );
-                    if ($localStorage->get($_) ) {
-                        $self->logger->debug("Delete local cache for session $_");
+                    $localStorage =
+                      $module->new(
+                        $session->{options}->{localStorageOptions} );
+                    if ( $localStorage->get($_) ) {
+                        $self->logger->debug(
+                            "Delete local cache for session $_");
                         $localStorage->remove($_);
                     }
                 }
@@ -284,27 +292,32 @@ sub _delete2FFromSessions {
 
     }
 
-    return {  res => 'ok', removed => $removed };
+    return { res => 'ok', removed => $removed };
 }
 
 sub _delete2F {
     my ( $self, $uid, $type, $id ) = @_;
-    my ( $res, $removed, $count);
+    my ( $res, $removed, $count );
     if ( defined $type ) {
         $res = $self->_checkType($type);
         return $res if ( $res->{res} ne 'ok' );
     }
 
-    $res = $self->_delete2FFromSessions($uid, $type, $id, $self->_getPersistentMod, 'Persistent', '_session_uid');
+    $res =
+      $self->_delete2FFromSessions( $uid, $type, $id, $self->_getPersistentMod,
+        'Persistent', '_session_uid' );
     return $res if ( $res->{res} ne 'ok' );
 
     $removed = $res->{removed};
 
-    $res = $self->_delete2FFromSessions($uid, $type, $id, $self->_getSSOMod, 'SSO', 'uid');
+    $res =
+      $self->_delete2FFromSessions( $uid, $type, $id, $self->_getSSOMod, 'SSO',
+        'uid' );
     return $res if ( $res->{res} ne 'ok' );
 
-    $removed = ($removed, $res->{removed});
-    $count = scalar (keys %{$removed});
+    # merge results
+    $removed = ( $removed, $res->{removed} );
+    $count = scalar( keys %{$removed} );
 
     return {
         res     => 'ok',

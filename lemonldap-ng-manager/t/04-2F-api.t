@@ -43,7 +43,7 @@ sub newSession {
             }
         ), "New $kind session for $uid"
     );
-    #return $tmp->{id};
+    count(1);
 }
 
 sub check200 {
@@ -213,7 +213,6 @@ sub checkDeleteBadType {
     check405( $test, $res );
 }
 
-#my @ids;
 my $sfaDevices = [];
 my $ret;
 
