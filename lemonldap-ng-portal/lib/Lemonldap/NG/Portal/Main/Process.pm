@@ -484,6 +484,7 @@ sub store {
     # Update current request
     $req->id( $session->id );
     $req->{sessionInfo}->{_session_id} = $session->{id};
+    $req->{sessionInfo}->{_session_kind} = $session->{kind};
 
     # Compute unsecured cookie value if needed
     if ( $self->conf->{securedCookie} == 3 and !$req->refresh ) {
