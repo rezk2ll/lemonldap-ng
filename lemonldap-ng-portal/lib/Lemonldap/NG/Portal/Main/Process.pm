@@ -1,6 +1,6 @@
 package Lemonldap::NG::Portal::Main::Process;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -483,8 +483,11 @@ sub store {
 
     # Update current request
     $req->id( $session->id );
-    $req->{sessionInfo}->{_session_id} = $session->{id};
-    $req->{sessionInfo}->{_session_kind} = $session->{kind};
+    unless ( $self->_sfEngine->searchForAuthorized2Fmodules($req) ) {
+        $self->logger->debug("No 2F module authorized -> Update current request");
+        $req->{sessionInfo}->{_session_id}   = $session->{id};
+        $req->{sessionInfo}->{_session_kind} = $session->{kind};
+    }
 
     # Compute unsecured cookie value if needed
     if ( $self->conf->{securedCookie} == 3 and !$req->refresh ) {

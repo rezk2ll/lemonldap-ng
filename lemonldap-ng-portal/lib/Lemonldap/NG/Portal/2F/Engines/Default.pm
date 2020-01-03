@@ -21,7 +21,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_TOKENEXPIRED
 );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 with 'Lemonldap::NG::Portal::Lib::OverConf';
@@ -266,15 +266,7 @@ sub run {
     }
 
     # Search for authorized modules for this user
-    my @am;
-    foreach my $m ( @{ $self->sfModules } ) {
-        $self->logger->debug(
-            'Looking if ' . $m->{m}->prefix . '2F is available' );
-        if ( $m->{r}->( $req, $req->sessionInfo ) ) {
-            $self->logger->debug(' -> OK');
-            push @am, $m->{m};
-        }
-    }
+    my @am = $self->searchForAuthorized2Fmodules($req);
 
     # If no 2F module is authorized, skipping 2F
     # Note that a rule may forbid access after (GrantSession plugin)
@@ -544,6 +536,20 @@ sub restoreSession {
     return $req->method eq 'POST'
       ? $self->register( $req, @path )
       : $self->_displayRegister( $req, @path );
+}
+
+sub searchForAuthorized2Fmodules {
+    my ( $self, $req ) = @_;
+    my @am;
+    foreach my $m ( @{ $self->sfModules } ) {
+        $self->logger->debug(
+            'Looking if ' . $m->{m}->prefix . '2F is available' );
+        if ( $m->{r}->( $req, $req->sessionInfo ) ) {
+            $self->logger->debug(' -> OK');
+            push @am, $m->{m};
+        }
+    }
+    return @am;
 }
 
 1;
