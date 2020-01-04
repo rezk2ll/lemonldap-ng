@@ -299,8 +299,10 @@ sub run {
     $req->sessionInfo->{_2fRealSession} = $req->id;
     $req->sessionInfo->{_2fUrldc}       = $req->urldc;
     $req->sessionInfo->{_2fUtime}       = $req->{sessionInfo}->{_utime};
-    $req->sessionInfo->{_impSpoofId}    = $spoofId;
-    $req->sessionInfo->{_impUser}       = $req->user;
+    if ( $self->conf->{impersonationRule} ) {
+        $req->sessionInfo->{_impSpoofId} = $spoofId;
+        $req->sessionInfo->{_impUser}    = $req->user;
+    }
     my $token = $self->ott->createToken( $req->sessionInfo );
     delete $req->{authResult};
 
