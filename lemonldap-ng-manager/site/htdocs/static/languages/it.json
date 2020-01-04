@@ -143,7 +143,7 @@
 "categoryName":"Nome della categoria",
 "cda":"Domini multipli",
 "certificateMailContent":"Certificate mail content",
-"certificateResetByMailManagement":"Certificate reset management",
+"certificateResetByMailManagement":"Certificate management",
 "certificateResetByMailURL":"Reset page URL",
 "certificateResetByMailCeaAttribute":"Certificat CEA attribut",
 "certificateResetByMailCertificateAttribute":"Certificate attribute name",
