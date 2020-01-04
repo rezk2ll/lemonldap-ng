@@ -773,14 +773,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 'userCertificate;binary',
             'type'    => 'text'
         },
-        'certificateResetByMailReplyTo' => {
-            'default' => 'noreply@example.com',
-            'type'    => 'text'
-        },
-        'certificateResetByMailSender' => {
-            'default' => 'noreply@example.com',
-            'type'    => 'text'
-        },
         'certificateResetByMailStep1Body' => {
             'type' => 'longtext'
         },

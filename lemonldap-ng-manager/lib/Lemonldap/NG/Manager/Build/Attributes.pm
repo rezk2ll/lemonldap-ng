@@ -1468,38 +1468,26 @@ sub attributes {
             type    => 'text',
             default => 'userCertificate;binary',
         },
-        certificateResetByMailStep1Body => {
-            type          => 'longtext',
-            documentation => 'Custom Certificate reset mail body',
-        },
         certificateResetByMailStep1Subject => {
             type          => 'text',
             documentation => 'Mail subject for certificate reset email',
         },
-
-        certificateResetByMailStep2Body => {
+        certificateResetByMailStep1Body => {
             type          => 'longtext',
-            documentation => 'Custom confirm Certificate reset mail body',
+            documentation => 'Custom Certificate reset mail body',
         },
         certificateResetByMailStep2Subject => {
             type          => 'text',
             documentation => 'Mail subject for reset confirmation',
         },
-
+        certificateResetByMailStep2Body => {
+            type          => 'longtext',
+            documentation => 'Custom confirm Certificate reset mail body',
+        },
         certificateResetByMailURL => {
             type          => 'url',
             default       => 'http://auth.example.com/certificateReset',
             documentation => 'URL of certificate reset page',
-        },
-        certificateResetByMailSender => {
-            type          => 'text',
-            default       => 'noreply@example.com',
-            documentation => 'Sender address for certificate reset email',
-        },
-        certificateResetByMailReplyTo => {
-            type          => 'text',
-            default       => 'noreply@example.com',
-            documentation => 'Reply-To address for certificate reset email',
         },
         certificateResetByMailValidityDelay => {
             type    => 'int',

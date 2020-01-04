@@ -30,8 +30,6 @@ sub defaultValues {
         'certificateResetByMailCeaAttribute' => 'description',
         'certificateResetByMailCertificateAttribute' =>
           'userCertificate;binary',
-        'certificateResetByMailReplyTo' => 'noreply@example.com',
-        'certificateResetByMailSender'  => 'noreply@example.com',
         'certificateResetByMailURL' =>
           'http://auth.example.com/certificateReset',
         'certificateResetByMailValidityDelay' => 0,

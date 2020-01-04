@@ -664,8 +664,6 @@ sub tree {
                                     title => 'certificateMailContent',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'certificateResetByMailSender',
-                                        'certificateResetByMailReplyTo',
                                         'certificateResetByMailStep1Subject',
                                         'certificateResetByMailStep1Body',
                                         'certificateResetByMailStep2Subject',

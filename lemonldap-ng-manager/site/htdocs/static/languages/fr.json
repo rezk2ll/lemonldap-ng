@@ -147,8 +147,6 @@
 "certificateResetByMailURL":"URL de la page de réinitialisation",
 "certificateResetByMailCeaAttribute":"Attribut CEA du certificat",
 "certificateResetByMailCertificateAttribute":"Nom de l'attribut du certificat",
-"certificateResetByMailSender":"Expéditeur",
-"certificateResetByMailReplyTo":"Adresse pour la réponse",
 "certificateResetByMailStep1Subject":"Sujet du mail de réinitialisation",
 "certificateResetByMailStep1Body":"Contenu du mail de réinitialisation",
 "certificateResetByMailStep2Subject":"Sujet du mail de confirmation",

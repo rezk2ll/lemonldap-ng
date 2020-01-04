@@ -393,7 +393,7 @@ sub _certificateReset {
 
         # Send mail
         unless (
-            $self->sendmail(
+            $self->send_mail(
                 $req->data->{mailAddress}, $subject, $body, $html
             )
           )
@@ -569,7 +569,7 @@ sub modifyCertificate {
 
     # Send mail
     return PE_MAILERROR
-      unless $self->sendmail( $req->data->{mailAddress}, $subject, $body,
+      unless $self->send_mail( $req->data->{mailAddress}, $subject, $body,
         $html );
 
     return PE_MAILOK;
@@ -709,16 +709,6 @@ sub getCertificateSession {
 
     # No modifyaccount session found, return empty string
     return "";
-}
-
-# Use Certificate Update parameter to send mail
-sub sendmail {
-    my ( $self, $mail, $subject, $body, $html ) = @_;
-
-    $self->{mailFrom}    = $self->conf->{certificateResetByMailSender};
-    $self->{mailReplyTo} = $self->conf->{certificateResetByMailReplyTo};
-
-    return $self->send_mail( $mail, $subject, $body, $html );
 }
 
 sub checkCertificateValidity {

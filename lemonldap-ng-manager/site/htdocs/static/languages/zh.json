@@ -147,8 +147,6 @@
 "certificateResetByMailURL":"Reset page URL",
 "certificateResetByMailCeaAttribute":"Certificate CEA attibute",
 "certificateResetByMailCertificateAttribute":"Certificate attribute name",
-"certificateResetByMailSender":"Mail sender",
-"certificateResetByMailReplyTo":"Reply address",
 "certificateResetByMailStep1Subject":"Reset mail subject",
 "certificateResetByMailStep1Body":"Reset mail content",
 "certificateResetByMailStep2Subject":"Confirmation mail subject",
