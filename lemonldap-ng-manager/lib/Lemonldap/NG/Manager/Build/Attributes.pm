@@ -1472,6 +1472,10 @@ sub attributes {
             type          => 'longtext',
             documentation => 'Custom Certificate reset mail body',
         },
+        certificateResetByMailStep1Subject => {
+            type          => 'text',
+            documentation => 'Mail subject for certificate reset email',
+        },
 
         certificateResetByMailStep2Body => {
             type          => 'longtext',
@@ -1480,10 +1484,6 @@ sub attributes {
         certificateResetByMailStep2Subject => {
             type          => 'text',
             documentation => 'Mail subject for reset confirmation',
-        },
-        certificateResetByMailStep1Subject => {
-            type          => 'text',
-            documentation => 'Mail subject for certificate reset email',
         },
 
         certificateResetByMailURL => {
@@ -1494,12 +1494,12 @@ sub attributes {
         certificateResetByMailSender => {
             type          => 'text',
             default       => 'noreply@example.com',
-            documentation => 'URL of certificate reset page',
+            documentation => 'Sender address for certificate reset email',
         },
         certificateResetByMailReplyTo => {
             type          => 'text',
             default       => 'noreply@example.com',
-            documentation => 'URL of certificate reset page',
+            documentation => 'Reply-To address for certificate reset email',
         },
         certificateResetByMailValidityDelay => {
             type    => 'int',
