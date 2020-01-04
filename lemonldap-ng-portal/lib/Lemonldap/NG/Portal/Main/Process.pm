@@ -318,7 +318,7 @@ sub authenticate {
     $req->steps( [
             'setSessionInfo',           'setMacros',
             'setPersistentSessionInfo', 'storeHistory',
-            @{ $self->afterData }, sub { PE_BADCREDENTIALS }
+            @{ $self->afterData },      sub { PE_BADCREDENTIALS }
         ]
     );
 
@@ -484,7 +484,8 @@ sub store {
     # Update current request
     $req->id( $session->id );
     unless ( $self->_sfEngine->searchForAuthorized2Fmodules($req) ) {
-        $self->logger->debug("No 2F module authorized -> Update current request");
+        $self->logger->debug(
+            "No 2F module authorized -> Update current request");
         $req->{sessionInfo}->{_session_id}   = $session->{id};
         $req->{sessionInfo}->{_session_kind} = $session->{kind};
     }
@@ -522,9 +523,14 @@ sub buildCookie {
             );
         }
     }
-    my $user_log = $req->{userData}->{ $self->conf->{whatToTrace} };
-    $self->userLogger->notice(
-"User $user_log successfully authenticated at level $req->{userData}->{authenticationLevel}"
+    my $ref = (
+        %{ $req->{sessionInfo} }
+        ? $req->{sessionInfo}
+        : $req->{userData}
+    );
+    $self->userLogger->notice( 'User '
+          . $ref->{ $self->conf->{whatToTrace} }
+          . " successfully authenticated at level $ref->{authenticationLevel}"
     );
     PE_OK;
 }
