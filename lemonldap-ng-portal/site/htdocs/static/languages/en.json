@@ -114,6 +114,7 @@
 "badName":"Bad name",
 "cancel":"Cancel",
 "captcha":"Captcha",
+"certificateReset":"Reset my certificate",
 "changeKey": "Generate new key",
 "changePwd":"Change your password",
 "checkLastLogins":"Check my last logins",
@@ -171,6 +172,7 @@
 "lastLogins":"Last logins",
 "lastName":"Last name",
 "linkValidUntil":"This message contains a link to reset your password, this link is valid until ",
+"linkValidUntilCertif":"This message contains a link to reset your certificate, this link is valid until ",
 "loginHistory":"Login history",
 "login":"Login",
 "logout":"Logout",
@@ -231,6 +233,7 @@
 "removeOtherSessions":"Remove other sessions",
 "resendConfirmMail":"Resend confirmation mail?",
 "resentConfirm":"Do you want the confirmation mail to be resent?",
+"resetCertificateOK":"Your certificate has been successfully reset",
 "resetPwd":"Reset my password",
 "rest2f":"Verification code",
 "rightsReloadNeedsLogout": "Rights reloads need to logout and login again",
@@ -290,8 +293,5 @@
 "yourPhone":"Know your phone number",
 "yourProfile":"Know your profile",
 "yourTotpKey":"Your TOTP key",
-"yubikey2f":"Yubikey",
-"resetCertificateOK":"Your certificate was reset sucessfully",
-"linkValidUntilCertif":"This message contains a link to reset your certificate, this link is valid until ",
-"certificateReset":"Reset my certificate"
+"yubikey2f":"Yubikey"
 }

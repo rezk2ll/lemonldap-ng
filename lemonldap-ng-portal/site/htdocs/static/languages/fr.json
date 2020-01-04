@@ -114,6 +114,7 @@
 "badName":"Mauvais nom",
 "cancel":"Annuler",
 "captcha":"Captcha",
+"certificateReset":"Réinitialiser mon certificat",
 "changeKey": "Générer une nouvelle clef",
 "changePwd":"Changez votre mot de passe",
 "checkLastLogins":"Voir mes dernières connexions",
@@ -171,6 +172,7 @@
 "lastLogins":"Dernières connexions",
 "lastName":"Nom",
 "linkValidUntil":"Ce message contient un lien pour réinitialiser votre mot de passe, ce lien est valide jusqu'au ",
+"linkValidUntilCertif":"Ce message contient un lien pour réinitialiser votre certificat, ce lien est valide jusqu'à ",
 "loginHistory":"Historique des connexions",
 "login":"Identifiant",
 "logout":"Déconnexion",
@@ -231,6 +233,7 @@
 "removeOtherSessions":"Fermer les autres sessions",
 "resendConfirmMail":"Renvoyer le mail de confirmation ?",
 "resentConfirm":"Voulez-vous que le message de confirmation soit renvoyé ?",
+"resetCertificateOK":"Votre certificat a bien été réinitialisé",
 "resetPwd":"Réinitialiser mon mot de passe",
 "rest2f":"Code de vérification",
 "rightsReloadNeedsLogout": "Le rechargement des droits nécessite une déconnexion",
@@ -290,8 +293,5 @@
 "yourPhone":"Connaître votre numéro de téléphone",
 "yourProfile":"Connaître vos informations personnelles",
 "yourTotpKey":"Votre clef TOTP",
-"yubikey2f":"Yubikey",
-"resetCertificateOK":"Your certificate was reset sucessfully",
-"linkValidUntilCertif":"This message contains a link to reset your certificate, this link is valid until ",
-"certificateReset":"Reset my certificate"
+"yubikey2f":"Yubikey"
 }

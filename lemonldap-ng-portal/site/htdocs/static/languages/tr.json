@@ -114,6 +114,7 @@
 "badName":"Hatalı isim",
 "cancel":"İptal Et",
 "captcha":"Captcha",
+"certificateReset":"Reset my certificate",
 "changeKey":"Yeni anahtar üret",
 "changePwd":"Parolanı değiştir",
 "checkLastLogins":"Son girişlerimi kontrol et",
@@ -171,6 +172,7 @@
 "lastLogins":"Son girişler",
 "lastName":"Soyad",
 "linkValidUntil":"Bu mesaj parolanızı sıfırlamak için bir bağlantı içerir, bu bağlantı şu zamana kadar geçerlidir",
+"linkValidUntilCertif":"This message contains a link to reset your certificate, this link is valid until ",
 "loginHistory":"Giriş geçmişi",
 "login":"Giriş Yap",
 "logout":"Çıkış Yap",
@@ -231,6 +233,7 @@
 "removeOtherSessions":"Diğer oturumları sil",
 "resendConfirmMail":"Doğrulama e-postasını tekrar gönder?",
 "resentConfirm":"Onay e-postasının tekrar gönderilmesini ister misiniz?",
+"resetCertificateOK":"Your certificate has been successfully reset",
 "resetPwd":"Parolamı sıfırla",
 "rest2f":"Doğrulama kodu",
 "rightsReloadNeedsLogout":"Yetkiler yeniden yüklendiğinde çıkış yapıp tekrar giriş yapmanız gerekir",
@@ -290,8 +293,5 @@
 "yourPhone":"Telefon numaranı bil",
 "yourProfile":"Profilini bil",
 "yourTotpKey":"TOTP anahtarınız",
-"yubikey2f":"Yubikey",
-"resetCertificateOK":"Your certificate was reset sucessfully",
-"linkValidUntilCertif":"This message contains a link to reset your certificate, this link is valid until ",
-"certificateReset":"Reset my certificate"
+"yubikey2f":"Yubikey"
 }

@@ -114,6 +114,7 @@
 "badName":"Bad name",
 "cancel":"Hủy",
 "captcha":"Mã kiểm tra",
+"certificateReset":"Reset my certificate",
 "changeKey":"Generate new key",
 "changePwd":"Thay đổi mật khẩu của bạn",
 "checkLastLogins":"Kiểm tra lần đăng nhập cuối cùng của bạn",
@@ -171,6 +172,7 @@
 "lastLogins":"Đăng nhập lần cuối",
 "lastName":"Họ",
 "linkValidUntil":"Thông báo này có chứa liên kết để đặt lại mật khẩu của bạn, liên kết này hợp lệ cho đến khi",
+"linkValidUntilCertif":"This message contains a link to reset your certificate, this link is valid until ",
 "loginHistory":"Lịch sử đăng nhập",
 "login":"Đăng nhập",
 "logout":"Đăng xuất",
@@ -231,6 +233,7 @@
 "removeOtherSessions":"Xóa các phiên khác",
 "resendConfirmMail":"Gửi lại thư xác nhận?",
 "resentConfirm":"Bạn có muốn gửi lại thư xác nhận không?",
+"resetCertificateOK":"Your certificate has been successfully reset",
 "resetPwd":"Đặt lại mật khẩu của tôi",
 "rest2f":"Verification code",
 "rightsReloadNeedsLogout":"Tải lại quyền cần đăng xuất và đăng nhập lại",
@@ -290,8 +293,5 @@
 "yourPhone":"Know your phone number",
 "yourProfile":"Know your profile",
 "yourTotpKey":"Your TOTP key",
-"yubikey2f":"Yubikey",
-"resetCertificateOK":"Your certificate was reset sucessfully",
-"linkValidUntilCertif":"This message contains a link to reset your certificate, this link is valid until ",
-"certificateReset":"Reset my certificate"
+"yubikey2f":"Yubikey"
 }
