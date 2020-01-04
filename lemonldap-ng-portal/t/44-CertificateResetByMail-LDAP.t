@@ -22,7 +22,8 @@ my $maintests = 12;
 
 SKIP: {
     eval
-      'require Email::Sender::Simple; use GD::SecurityImage;use Image::Magick;';
+'require Email::Sender::Simple; use GD::SecurityImage; use Image::Magick; use Net::SSLeay;
+use DateTime::Format::RFC3339;';
     if ($@) {
         skip 'Missing dependencies ' . $@, $maintests;
 
@@ -215,9 +216,8 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
         }
     );
 
-    ok( mail() =~ /Certificate successfully reset/, 'Certificate has been reset' );
-
-
+    ok( mail() =~ /Certificate successfully reset/,
+        'Certificate has been reset' );
 
     # Test invalid certificate
 
@@ -357,13 +357,12 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
         }
     );
 
-    my $trmsg = $res->[2]->[0]; # get html response
-    my @trmsg = split(/\n/, $trmsg); # split into lines
-    @trmsg = grep(/trmsg="/, @trmsg); # only get line corresponding to message
-    $trmsg = $trmsg[0]; # get the first one only
-    $trmsg =~ s/.*trmsg="([0-9]+)".*/$1/g; # get error code number
-    ok ( $trmsg == PE_RESETCERTIFICATE_INVALID, 'Invalid certificate' );
-
+    my $trmsg = $res->[2]->[0];           # get html response
+    my @trmsg = split( /\n/, $trmsg );    # split into lines
+    @trmsg = grep( /trmsg="/, @trmsg ); # only get line corresponding to message
+    $trmsg = $trmsg[0];                 # get the first one only
+    $trmsg =~ s/.*trmsg="([0-9]+)".*/$1/g;    # get error code number
+    ok( $trmsg == PE_RESETCERTIFICATE_INVALID, 'Invalid certificate' );
 
 }
 count($maintests);
