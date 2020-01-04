@@ -262,8 +262,7 @@ sub _certificateReset {
     my $mailSession = $self->getCertificateSession( $req->{user} );
     unless ( $mailSession or $mailToken ) {
 
-        # Create a new session
-
+        ## Create a new session
         my $infos = {};
 
         # Set _utime for session autoremove
@@ -425,7 +424,7 @@ sub modifyCertificate {
     my $x509;
     my $notAfter;
 
-    $self->logger->debug('Change your Certificate form response');
+    $self->logger->debug('Change your certificate form response');
 
     if ( my $token = $req->param('token') ) {
         $req->sessionInfo( $self->ott->getToken($token) );
@@ -453,10 +452,9 @@ sub modifyCertificate {
 
     #Updload certificate
     my $upload = $req->uploads->{certif};
-    unless ( $upload->size > 0 ) { return PE_RESETCERTIFICATE_FORMEMPTY; }
+    return PE_RESETCERTIFICATE_FORMEMPTY unless ( $upload->size > 0 );
 
-    # Get Certificate
-
+    # Get certificate
     my $file = $upload->path;
     $self->userLogger->debug( "Temporaly file " . $file );
 
@@ -474,11 +472,9 @@ sub modifyCertificate {
     unless ($x509) {
         $self->userLogger->debug( "Unable to decode certificate for user  "
               . Net::SSLeay::ERR_error_string( Net::SSLeay::ERR_get_error() ) );
-
-        #return PE_CERTIFICATE_INVALID;
         return PE_RESETCERTIFICATE_INVALID;
     }
-    $self->userLogger->debug("Certificate decoded successfully");
+    $self->userLogger->debug("Certificate successfully decoded");
     $notAfter = Net::SSLeay::P_ASN1_TIME_get_isotime(
         Net::SSLeay::X509_get_notAfter($x509) );
 
@@ -489,25 +485,22 @@ sub modifyCertificate {
         Net::SSLeay::X509_get_serialNumber($x509) );
 
     $self->userLogger->debug(
-"Certificate will expire after $notAfter, Issuer  $x509issuer and serialNumber $x509serial"
+"Certificate will expire after $notAfter, Issuer $x509issuer and serialNumber $x509serial"
     );
 
-    # Check Certificate Validity before store
+    # Check certificate validity before store
     if (
         $self->checkCertificateValidity( $notAfter,
             $self->conf->{certificateResetByMailValidityDelay} ) == 0
       )
     {
         $self->userLogger->debug(
-"Your cettificate is no longer valid in $self->conf->{certificateValidityDelay}"
+"Your certificate is no longer valid in $self->conf->{certificateValidityDelay}"
         );
         return PE_RESETCERTIFICATE_INVALID;
-
-        #return PE_PASSWORD_MISMATCH;
     }
 
     # Build serial number hex: example f3:08:52:63:28:29:fa:e2
-
     my @numberstring = split //, lc($x509serial);
     my $serial       = "";
     for ( my $i = 0 ; $i <= $#numberstring ; $i += 2 ) {
@@ -516,7 +509,6 @@ sub modifyCertificate {
     }
 
 # format issuer in the good format example "CN=CA,OU=CISIRH,O=MINEFI,L=Paris,ST=France,C=FR"
-
     my @issuertab = split /\//, $x509issuer;
     shift(@issuertab);
     my $issuer = join( ",", reverse(@issuertab) );
@@ -530,7 +522,7 @@ sub modifyCertificate {
     # Get attribut userCertificate;binary  value
     my $cert = $self->certificateHash($file);
 
-    # modif the ldap certificate attribute
+    # Modify ldap certificate attribute
     $req->user( $req->{sessionInfo}->{_user} );
     my $result =
       $self->registerModule->modifCertificate( $certificatExactAssertion,
@@ -540,7 +532,7 @@ sub modifyCertificate {
     # Mail token can be used only one time, delete the session if all is ok
     return $result unless ( $result == PE_OK );
 
-    # Send mail to notify the certificate reset sucessfully
+    # Send mail to notify the certificate has been successfully reset
     $req->data->{mailAddress} ||=
       $self->p->getFirstValue(
         $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
@@ -565,7 +557,7 @@ sub modifyCertificate {
         # Use HTML template
         $body = $self->loadMailTemplate(
             $req,
-            'mail_certificatReset',
+            'mail_certificateReset',
             filter => $tr,
             params => \%tplPrms
         );
@@ -629,7 +621,7 @@ sub display {
         $tplPrm{MAIL_TOKEN} = $req->data->{mailToken};
     }
 
-    # Display captcha if it's enabled
+    # Display captcha if enabled
     if ( $req->captcha ) {
         $tplPrm{CAPTCHA_SRC}  = $req->captcha;
         $tplPrm{CAPTCHA_SIZE} = $self->conf->{captcha_size};
@@ -671,7 +663,7 @@ sub display {
         $tplPrm{DISPLAY_MAILSENT} = 1;
     }
 
-    # Display Certificate Reset form
+    # Display certificate reset form
     elsif ( $req->data->{mailToken}
         and $req->error != PE_MAILERROR
         and $req->error != PE_BADMAILTOKEN
@@ -681,7 +673,7 @@ sub display {
         $tplPrm{DISPLAY_CERTIF_FORM} = 1;
     }
 
-    # Display Certificate Reset form again if certificate invalid
+    # Display certificate reset form again if certificate invalid
     elsif ($req->error == PE_RESETCERTIFICATE_FORMEMPTY
         || $req->error == PE_RESETCERTIFICATE_INVALID )
     {
@@ -720,7 +712,6 @@ sub getCertificateSession {
 }
 
 # Use Certificate Update parameter to send mail
-
 sub sendmail {
     my ( $self, $mail, $subject, $body, $html ) = @_;
 

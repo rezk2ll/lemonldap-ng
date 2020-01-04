@@ -52,7 +52,7 @@ SKIP: {
                 certificateResetByMailStep1Body =>
 'Click here <a href="$url">  to confirm your mail. It will expire $expMailDate',
                 certificateResetByMailStep2Body =>
-                  'Certificate Reset sucessfully!',
+                  'Certificate successfully reset!',
                 certificateValidityDelay => 30
 
             }
@@ -215,7 +215,7 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
         }
     );
 
-    ok( mail() =~ /Certificate Reset sucessfully/, 'Certificate was changed' );
+    ok( mail() =~ /Certificate successfully reset/, 'Certificate has been reset' );
 
 
 
