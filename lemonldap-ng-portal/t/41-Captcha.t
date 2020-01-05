@@ -8,7 +8,7 @@ require 't/test-lib.pm';
 
 my $res;
 
-my $maintests = 30;
+my $maintests = 29;
 SKIP: {
     eval 'use GD::SecurityImage; use Image::Magick;';
     if ($@) {
@@ -37,8 +37,7 @@ SKIP: {
         ),
         'Auth query'
     );
-    ok( $res->[0] == 401, 'Response code is 401' )
-      or print "Expect 401, got $res->[0]\n";
+    expectReject($res);
 
     my $json;
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
