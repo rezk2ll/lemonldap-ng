@@ -503,7 +503,7 @@
 "next":"التالى",
 "nginxCustomHandlers":"معالجات إنجن إكس المخصصة",
 "noAjaxHook":"الحفاظ على إعادة توجيه ل أجاكس",
-"noDatas":"لا توجد بيانات لعرضها",
+"noData":"لا توجد بيانات لعرضها",
 "notABoolean":"ليس بولياني",
 "notAnInteger":"ليس عددا صحيحا",
 "notAValidPerlExpression":"عبارة بيرل ليست صحيحة",

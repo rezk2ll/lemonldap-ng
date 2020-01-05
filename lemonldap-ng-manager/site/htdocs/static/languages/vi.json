@@ -503,7 +503,7 @@
 "next":"Tiếp theo",
 "nginxCustomHandlers":"Tùy chỉnh trình xử lý Nginx ",
 "noAjaxHook":"Giữ lại các chuyển hướng cho Ajax",
-"noDatas":"Không có dữ liệu để hiển thị",
+"noData":"Không có dữ liệu để hiển thị",
 "notABoolean":"Không phải là một biến boolean",
 "notAnInteger":"Không phải là một số nguyên",
 "notAValidPerlExpression":"Không phải là một biểu thức Perl hợp lệ",

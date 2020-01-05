@@ -503,7 +503,7 @@
 "next":"Sonraki",
 "nginxCustomHandlers":"Özel Nginx işleyicileri",
 "noAjaxHook":"Ajax için yönlendirmeleri tut",
-"noDatas":"Görüntülenecek veri yok",
+"noData":"Görüntülenecek veri yok",
 "notABoolean":"Mantıksal değil",
 "notAnInteger":"Bir rakam değil",
 "notAValidPerlExpression":"Geçerli bir Perl ifadesi değil",

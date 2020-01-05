@@ -503,7 +503,7 @@
 "next":"Next",
 "nginxCustomHandlers":"Custom Nginx handlers",
 "noAjaxHook":"Keep redirections for Ajax",
-"noDatas":"No datas to display",
+"noData":"No data to display",
 "notABoolean":"Not a boolean",
 "notAnInteger":"Not an integer",
 "notAValidPerlExpression":"Not a valid Perl expression",
