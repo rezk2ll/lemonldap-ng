@@ -1,14 +1,16 @@
 use Test::More;
 use strict;
 use IO::String;
+use JSON;
+use Lemonldap::NG::Portal::Main::Constants 'PE_CAPTCHAEMPTY';
 
 require 't/test-lib.pm';
 
 my $res;
 
-my $maintests = 26;
+my $maintests = 30;
 SKIP: {
-    eval 'use GD::SecurityImage;use Image::Magick;';
+    eval 'use GD::SecurityImage; use Image::Magick;';
     if ($@) {
         skip 'Image::Magick not found', $maintests;
     }
@@ -24,6 +26,25 @@ SKIP: {
             }
         }
     );
+
+    # Try to authenticate without captcha
+    # -----------------------------------
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+        ),
+        'Auth query'
+    );
+    ok( $res->[0] == 401, 'Response code is 401' )
+      or print "Expect 401, got $res->[0]\n";
+
+    my $json;
+    ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+      or print STDERR "$@\n" . Dumper($res);
+    ok( $json->{error} == PE_CAPTCHAEMPTY, 'Response is PE_CAPTCHAEMPTY' )
+      or explain( $json, "error => 77" );
 
     # Test normal first access
     # ------------------------
