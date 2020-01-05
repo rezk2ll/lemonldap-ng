@@ -378,7 +378,7 @@ sub _certificateReset {
             # Use HTML template
             $body = $self->loadMailTemplate(
                 $req,
-                'mail_confirm',
+                'mail_certificateConfirm',
                 filter => $tr,
                 params => \%tplPrms
             );

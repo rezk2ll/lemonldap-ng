@@ -442,6 +442,7 @@ site/templates/common/mail/tr.json
 site/templates/common/mail/vi.json
 site/templates/common/mail/zh_CN.json
 site/templates/common/mail_2fcode.tpl
+site/templates/common/mail_certificateConfirm.tpl
 site/templates/common/mail_certificateReset.tpl
 site/templates/common/mail_confirm.tpl
 site/templates/common/mail_footer.tpl
