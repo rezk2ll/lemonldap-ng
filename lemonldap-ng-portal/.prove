@@ -1,1811 +1,1948 @@
 ---
-generation: 5
-last_run_time: 1568228183.2634
+generation: 6
+last_run_time: 1578123065.09077
 tests:
   t/01-AuthDemo.t:
-    elapsed: 0.201483964920044
-    gen: 5
-    last_pass_time: 1568228173.42789
+    elapsed: 0.271634101867676
+    gen: 6
+    last_pass_time: 1578122994.50867
     last_result: 0
-    last_run_time: 1568228173.42789
+    last_run_time: 1578122994.50867
     last_todo: 0
-    mtime: 1566945189
-    seq: 834
-    total_passes: 5
+    mtime: 1569964806
+    seq: 886
+    total_passes: 6
   t/01-CSP-and-CORS-headers.t:
-    elapsed: 0.14281702041626
-    gen: 5
-    last_pass_time: 1568228174.48656
+    elapsed: 0.262470006942749
+    gen: 6
+    last_pass_time: 1578122994.77351
     last_result: 0
-    last_run_time: 1568228174.48656
+    last_run_time: 1578122994.77351
     last_todo: 0
-    mtime: 1566882553
-    seq: 850
-    total_passes: 5
+    mtime: 1569964806
+    seq: 887
+    total_passes: 6
   t/01-pdata.t:
-    elapsed: 0.0861058235168457
-    gen: 5
-    last_pass_time: 1568228166.74587
+    elapsed: 0.215835094451904
+    gen: 6
+    last_pass_time: 1578122994.99172
     last_result: 0
-    last_run_time: 1568228166.74587
+    last_run_time: 1578122994.99172
     last_todo: 0
-    mtime: 1566161705
-    seq: 752
-    total_passes: 5
+    mtime: 1569964806
+    seq: 888
+    total_passes: 6
   t/02-Password-Demo-Local-Ppolicy.t:
-    elapsed: 7.13115000724792
-    gen: 5
-    last_pass_time: 1568228183.26112
+    elapsed: 0.239126920700073
+    gen: 6
+    last_pass_time: 1578122995.23335
     last_result: 0
-    last_run_time: 1568228183.26112
+    last_run_time: 1578122995.23335
     last_todo: 0
-    seq: 883
-    total_passes: 1
+    mtime: 1569964806
+    seq: 889
+    total_passes: 2
   t/02-Password-Demo.t:
-    elapsed: 0.154594898223877
-    gen: 5
-    last_pass_time: 1568228174.12381
+    elapsed: 0.250504970550537
+    gen: 6
+    last_pass_time: 1578122995.48645
     last_result: 0
-    last_run_time: 1568228174.12381
+    last_run_time: 1578122995.48645
     last_todo: 0
-    mtime: 1566161694
-    seq: 844
-    total_passes: 5
+    mtime: 1569964806
+    seq: 890
+    total_passes: 6
   t/03-ConfTimeout.t:
-    elapsed: 7.06811094284058
-    gen: 5
-    last_pass_time: 1568228183.2567
+    elapsed: 2.17188096046448
+    gen: 6
+    last_pass_time: 1578122997.66078
     last_result: 0
-    last_run_time: 1568228183.2567
+    last_run_time: 1578122997.66078
     last_todo: 0
-    seq: 881
-    total_passes: 1
+    mtime: 1576734087
+    seq: 891
+    total_passes: 2
   t/03-SessionTimeout.t:
-    elapsed: 6.05857610702515
-    gen: 5
-    last_pass_time: 1568228183.26182
+    elapsed: 7.2115159034729
+    gen: 6
+    last_pass_time: 1578123004.87466
     last_result: 0
-    last_run_time: 1568228183.26182
+    last_run_time: 1578123004.87466
     last_todo: 0
-    seq: 884
-    total_passes: 1
+    mtime: 1569964806
+    seq: 892
+    total_passes: 2
   t/03-XSS-protection.t:
-    elapsed: 0.176295042037964
-    gen: 5
-    last_pass_time: 1568228173.67167
+    elapsed: 0.287785053253174
+    gen: 6
+    last_pass_time: 1578123005.16541
     last_result: 0
-    last_run_time: 1568228173.67167
+    last_run_time: 1578123005.16541
     last_todo: 0
-    mtime: 1566326760
-    seq: 837
-    total_passes: 5
+    mtime: 1569964806
+    seq: 893
+    total_passes: 6
   t/04-language-selection.t:
-    elapsed: 0.156617164611816
-    gen: 5
-    last_pass_time: 1568228175.08393
+    elapsed: 0.252213954925537
+    gen: 6
+    last_pass_time: 1578123005.42016
     last_result: 0
-    last_run_time: 1568228175.08393
+    last_run_time: 1578123005.42016
     last_todo: 0
-    mtime: 1566161676
-    seq: 860
-    total_passes: 5
+    mtime: 1569964806
+    seq: 894
+    total_passes: 6
   t/19-Auth-Null.t:
-    elapsed: 1.07969284057617
-    gen: 5
-    last_pass_time: 1568228177.20487
+    elapsed: 0.225163221359253
+    gen: 6
+    last_pass_time: 1578123005.64773
     last_result: 0
-    last_run_time: 1568228177.20487
+    last_run_time: 1578123005.64773
     last_todo: 0
-    mtime: 1566161699
-    seq: 879
-    total_passes: 5
+    mtime: 1569964806
+    seq: 895
+    total_passes: 6
   t/20-Auth-DBI-utf8.t:
-    elapsed: 0.128947973251343
-    gen: 5
-    last_pass_time: 1568228174.92249
+    elapsed: 0.252760887145996
+    gen: 6
+    last_pass_time: 1578123006.54723
     last_result: 0
-    last_run_time: 1568228174.92249
+    last_run_time: 1578123006.54723
     last_todo: 0
-    mtime: 1567458069
-    seq: 858
-    total_passes: 5
+    mtime: 1574978407
+    seq: 898
+    total_passes: 6
   t/20-Auth-and-password-DBI-dynamic-hash.t:
-    elapsed: 0.251380920410156
-    gen: 5
-    last_pass_time: 1568228172.91653
+    elapsed: 0.343638896942139
+    gen: 6
+    last_pass_time: 1578123005.99386
     last_result: 0
-    last_run_time: 1568228172.91653
+    last_run_time: 1578123005.99386
     last_todo: 0
-    mtime: 1567458069
-    seq: 827
-    total_passes: 5
+    mtime: 1569964806
+    seq: 896
+    total_passes: 6
   t/20-Auth-and-password-DBI.t:
-    elapsed: 0.194665908813477
-    gen: 5
-    last_pass_time: 1568228173.80602
+    elapsed: 0.29577112197876
+    gen: 6
+    last_pass_time: 1578123006.29205
     last_result: 0
-    last_run_time: 1568228173.80602
+    last_run_time: 1578123006.29205
     last_todo: 0
-    mtime: 1567458069
-    seq: 840
-    total_passes: 5
+    mtime: 1569964806
+    seq: 897
+    total_passes: 6
   t/21-Auth-LDAP-Policy.t:
-    elapsed: 0.0210421085357666
-    gen: 5
-    last_pass_time: 1568228175.70071
+    elapsed: 0.164458990097046
+    gen: 6
+    last_pass_time: 1578123006.8797
     last_result: 0
-    last_run_time: 1568228175.70071
+    last_run_time: 1578123006.8797
     last_todo: 0
-    mtime: 1566161698
-    seq: 870
-    total_passes: 5
+    mtime: 1569964806
+    seq: 900
+    total_passes: 6
   t/21-Auth-LDAP-utf8.t:
-    elapsed: 0.0184540748596191
-    gen: 5
-    last_pass_time: 1568228175.81121
+    elapsed: 0.162216901779175
+    gen: 6
+    last_pass_time: 1578123007.04413
     last_result: 0
-    last_run_time: 1568228175.81121
+    last_run_time: 1578123007.04413
     last_todo: 0
-    mtime: 1566161697
-    seq: 873
-    total_passes: 5
+    mtime: 1569964806
+    seq: 901
+    total_passes: 6
   t/21-Auth-and-password-LDAP.t:
-    elapsed: 0.016232967376709
-    gen: 5
-    last_pass_time: 1568228175.88832
+    elapsed: 0.163347005844116
+    gen: 6
+    last_pass_time: 1578123006.71305
     last_result: 0
-    last_run_time: 1568228175.88832
+    last_run_time: 1578123006.71305
     last_todo: 0
-    mtime: 1566161703
-    seq: 875
-    total_passes: 5
+    mtime: 1576045451
+    seq: 899
+    total_passes: 6
   t/22-Auth-and-password-AD.t:
-    elapsed: 0.0121150016784668
-    gen: 5
-    last_pass_time: 1568228175.76885
+    elapsed: 0.161330938339233
+    gen: 6
+    last_pass_time: 1578123007.20767
     last_result: 0
-    last_run_time: 1568228175.76885
+    last_run_time: 1578123007.20767
     last_todo: 0
-    mtime: 1566161686
-    seq: 871
-    total_passes: 5
+    mtime: 1569964806
+    seq: 902
+    total_passes: 6
   t/23-Auth-and-password-REST.t:
-    elapsed: 0.145652055740356
-    gen: 5
-    last_pass_time: 1568228173.27053
+    elapsed: 0.267560005187988
+    gen: 6
+    last_pass_time: 1578123007.47744
     last_result: 0
-    last_run_time: 1568228173.27053
+    last_run_time: 1578123007.47744
     last_todo: 0
-    mtime: 1566161697
-    seq: 831
-    total_passes: 5
+    mtime: 1569964806
+    seq: 903
+    total_passes: 6
   t/24-AuthApache.t:
-    elapsed: 0.0806031227111816
-    gen: 5
-    last_pass_time: 1568228175.45563
+    elapsed: 0.213379144668579
+    gen: 6
+    last_pass_time: 1578123007.69324
     last_result: 0
-    last_run_time: 1568228175.45563
+    last_run_time: 1578123007.69324
     last_todo: 0
-    mtime: 1566161679
-    seq: 867
-    total_passes: 5
+    mtime: 1569964806
+    seq: 904
+    total_passes: 6
   t/24-AuthKerberos.t:
-    elapsed: 0.138118028640747
-    gen: 5
-    last_pass_time: 1568228155.91663
+    elapsed: 0.245916843414307
+    gen: 6
+    last_pass_time: 1578123007.94172
     last_result: 0
-    last_run_time: 1568228155.91663
+    last_run_time: 1578123007.94172
     last_todo: 0
-    mtime: 1566161710
-    seq: 724
-    total_passes: 5
-  t/25-AuthSlave.t:
-    elapsed: 0.0728468894958496
-    gen: 5
-    last_pass_time: 1568228167.12953
+    mtime: 1569964806
+    seq: 905
+    total_passes: 6
+  t/25-AuthSlave-with-Choice.t:
+    elapsed: 0.221746921539307
+    gen: 6
+    last_pass_time: 1578123008.16588
     last_result: 0
-    last_run_time: 1568228167.12953
+    last_run_time: 1578123008.16588
     last_todo: 0
-    mtime: 1566161682
-    seq: 758
-    total_passes: 5
+    seq: 906
+    total_passes: 1
+  t/25-AuthSlave-with-Credentials.t:
+    elapsed: 0.213104963302612
+    gen: 6
+    last_pass_time: 1578123008.38148
+    last_result: 0
+    last_run_time: 1578123008.38148
+    last_todo: 0
+    seq: 907
+    total_passes: 1
   t/26-AuthRemote.t:
-    elapsed: 0.0801920890808105
-    gen: 5
-    last_pass_time: 1568228167.17573
+    elapsed: 0.221351861953735
+    gen: 6
+    last_pass_time: 1578123008.60534
     last_result: 0
-    last_run_time: 1568228167.17573
+    last_run_time: 1578123008.60534
     last_todo: 0
-    mtime: 1566161695
-    seq: 759
-    total_passes: 5
+    mtime: 1569964806
+    seq: 908
+    total_passes: 6
   t/27-AuthProxy.t:
-    elapsed: 0.0125830173492432
-    gen: 5
-    last_pass_time: 1568228176.0389
+    elapsed: 0.166851997375488
+    gen: 6
+    last_pass_time: 1578123008.77554
     last_result: 0
-    last_run_time: 1568228176.0389
+    last_run_time: 1578123008.77554
     last_todo: 0
-    mtime: 1566161694
-    seq: 876
-    total_passes: 5
+    mtime: 1569964806
+    seq: 909
+    total_passes: 6
   t/28-AuthChoice-and-password.t:
-    elapsed: 0.0377869606018066
-    gen: 5
-    last_pass_time: 1568228176.12092
+    elapsed: 0.172008991241455
+    gen: 6
+    last_pass_time: 1578123008.94975
     last_result: 0
-    last_run_time: 1568228176.12092
+    last_run_time: 1578123008.94975
     last_todo: 0
-    mtime: 1567545352
-    seq: 877
-    total_passes: 5
+    mtime: 1576734087
+    seq: 910
+    total_passes: 6
   t/28-AuthChoice-with-captcha.t:
-    elapsed: 0.528061866760254
-    gen: 5
-    last_pass_time: 1568228170.4657
+    elapsed: 0.419918060302734
+    gen: 6
+    last_pass_time: 1578123009.37433
     last_result: 0
-    last_run_time: 1568228170.4657
+    last_run_time: 1578123009.37433
     last_todo: 0
-    mtime: 1567545352
-    seq: 795
-    total_passes: 5
+    mtime: 1577635709
+    seq: 911
+    total_passes: 6
+  t/28-AuthChoice-with-over.t:
+    elapsed: 0.258544921875
+    gen: 6
+    last_pass_time: 1578123009.63529
+    last_result: 0
+    last_run_time: 1578123009.63529
+    last_todo: 0
+    seq: 912
+    total_passes: 1
   t/28-AuthChoice-with-rules.t:
-    elapsed: 0.222440958023071
-    gen: 5
-    last_pass_time: 1568228173.31791
+    elapsed: 0.290940999984741
+    gen: 6
+    last_pass_time: 1578123009.92869
     last_result: 0
-    last_run_time: 1568228173.31791
+    last_run_time: 1578123009.92869
     last_todo: 0
-    mtime: 1567458069
-    seq: 833
-    total_passes: 5
+    mtime: 1577275903
+    seq: 913
+    total_passes: 6
   t/28-AuthChoice-with-token.t:
-    elapsed: 0.166407108306885
-    gen: 5
-    last_pass_time: 1568228173.9086
+    elapsed: 0.262848138809204
+    gen: 6
+    last_pass_time: 1578123010.19406
     last_result: 0
-    last_run_time: 1568228173.9086
+    last_run_time: 1578123010.19406
     last_todo: 0
-    mtime: 1567545352
-    seq: 841
-    total_passes: 5
+    mtime: 1576734087
+    seq: 914
+    total_passes: 6
   t/29-AuthGPG.t:
-    elapsed: 0.204419136047363
-    gen: 5
-    last_pass_time: 1568228173.29355
+    elapsed: 0.286309957504272
+    gen: 6
+    last_pass_time: 1578123010.48277
     last_result: 0
-    last_run_time: 1568228173.29355
+    last_run_time: 1578123010.48277
     last_todo: 0
-    mtime: 1566161680
-    seq: 832
-    total_passes: 5
+    mtime: 1569964806
+    seq: 915
+    total_passes: 6
   t/29-AuthSSL.t:
-    elapsed: 0.123324871063232
-    gen: 5
-    last_pass_time: 1568228155.94014
+    elapsed: 0.231581926345825
+    gen: 6
+    last_pass_time: 1578123010.71687
     last_result: 0
-    last_run_time: 1568228155.94014
+    last_run_time: 1578123010.71687
     last_todo: 0
-    mtime: 1567458069
-    seq: 725
-    total_passes: 5
+    mtime: 1569964806
+    seq: 916
+    total_passes: 6
   t/30-Auth-SAML-with-choice.t:
-    elapsed: 0.27305793762207
-    gen: 5
-    last_pass_time: 1568228169.23296
+    elapsed: 0.357311010360718
+    gen: 6
+    last_pass_time: 1578123014.86296
     last_result: 0
-    last_run_time: 1568228169.23296
+    last_run_time: 1578123014.86296
     last_todo: 0
-    mtime: 1566161688
-    seq: 781
-    total_passes: 5
+    mtime: 1576045451
+    seq: 927
+    total_passes: 6
   t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t:
-    elapsed: 0.360746145248413
-    gen: 5
-    last_pass_time: 1568228169.79075
+    elapsed: 0.379491806030273
+    gen: 6
+    last_pass_time: 1578123011.09889
     last_result: 0
-    last_run_time: 1568228169.79075
+    last_run_time: 1578123011.09889
     last_todo: 0
-    mtime: 1566161699
-    seq: 786
-    total_passes: 5
+    mtime: 1576045451
+    seq: 917
+    total_passes: 6
   t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t:
-    elapsed: 3.39385390281677
-    gen: 5
-    last_pass_time: 1568228159.19119
+    elapsed: 0.383852005004883
+    gen: 6
+    last_pass_time: 1578123011.48539
     last_result: 0
-    last_run_time: 1568228159.19119
+    last_run_time: 1578123011.48539
     last_todo: 0
-    mtime: 1566161705
-    seq: 727
-    total_passes: 5
+    mtime: 1576045451
+    seq: 918
+    total_passes: 6
   t/30-Auth-and-issuer-SAML-Metadata.t:
-    elapsed: 0.135477066040039
-    gen: 5
-    last_pass_time: 1568228172.83023
+    elapsed: 0.255299091339111
+    gen: 6
+    last_pass_time: 1578123011.74322
     last_result: 0
-    last_run_time: 1568228172.83023
+    last_run_time: 1578123011.74322
     last_todo: 0
-    mtime: 1566326739
-    seq: 826
-    total_passes: 5
+    mtime: 1569964806
+    seq: 919
+    total_passes: 6
   t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t:
-    elapsed: 0.360734939575195
-    gen: 5
-    last_pass_time: 1568228169.19232
+    elapsed: 0.368577003479004
+    gen: 6
+    last_pass_time: 1578123012.11422
     last_result: 0
-    last_run_time: 1568228169.19232
+    last_run_time: 1578123012.11422
     last_todo: 0
-    mtime: 1566161687
-    seq: 780
-    total_passes: 5
+    mtime: 1576045451
+    seq: 920
+    total_passes: 6
   t/30-Auth-and-issuer-SAML-POST-Missing-SLO.t:
-    elapsed: 0.482270002365112
-    gen: 5
-    last_pass_time: 1568228168.42655
+    elapsed: 0.39254903793335
+    gen: 6
+    last_pass_time: 1578123012.50929
     last_result: 0
-    last_run_time: 1568228168.42655
+    last_run_time: 1578123012.50929
     last_todo: 0
-    mtime: 1567545352
-    seq: 770
-    total_passes: 5
+    mtime: 1576734087
+    seq: 921
+    total_passes: 6
   t/30-Auth-and-issuer-SAML-POST.t:
-    elapsed: 0.471312046051025
-    gen: 5
-    last_pass_time: 1568228167.95509
+    elapsed: 0.387660980224609
+    gen: 6
+    last_pass_time: 1578123012.89949
     last_result: 0
-    last_run_time: 1568228167.95509
+    last_run_time: 1578123012.89949
     last_todo: 0
-    mtime: 1566161677
-    seq: 767
-    total_passes: 5
+    mtime: 1576045451
+    seq: 922
+    total_passes: 6
   t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t:
-    elapsed: 0.336291074752808
-    gen: 5
-    last_pass_time: 1568228169.82952
+    elapsed: 0.350157022476196
+    gen: 6
+    last_pass_time: 1578123013.25211
     last_result: 0
-    last_run_time: 1568228169.82952
+    last_run_time: 1578123013.25211
     last_todo: 0
-    mtime: 1566161687
-    seq: 787
-    total_passes: 5
+    mtime: 1576045451
+    seq: 923
+    total_passes: 6
   t/30-Auth-and-issuer-SAML-Redirect-MultipleSP-Missing-SLO.t:
-    elapsed: 0.518467903137207
-    gen: 5
-    last_pass_time: 1568228167.62165
+    elapsed: 0.414432048797607
+    gen: 6
+    last_pass_time: 1578123013.6691
     last_result: 0
-    last_run_time: 1568228167.62165
+    last_run_time: 1578123013.6691
     last_todo: 0
-    mtime: 1567545352
-    seq: 762
-    total_passes: 5
+    mtime: 1576734087
+    seq: 924
+    total_passes: 6
   t/30-Auth-and-issuer-SAML-Redirect-MultipleSP.t:
-    elapsed: 0.300488948822021
-    gen: 5
-    last_pass_time: 1568228166.32106
+    elapsed: 0.436593055725098
+    gen: 6
+    last_pass_time: 1578123014.10825
     last_result: 0
-    last_run_time: 1568228166.32106
+    last_run_time: 1578123014.10825
     last_todo: 0
-    mtime: 1566161708
-    seq: 749
-    total_passes: 5
+    mtime: 1576045451
+    seq: 925
+    total_passes: 6
   t/30-Auth-and-issuer-SAML-Redirect.t:
-    elapsed: 0.445698976516724
-    gen: 5
-    last_pass_time: 1568228168.8275
+    elapsed: 0.392395973205566
+    gen: 6
+    last_pass_time: 1578123014.50316
     last_result: 0
-    last_run_time: 1568228168.8275
+    last_run_time: 1578123014.50316
     last_todo: 0
-    mtime: 1566161676
-    seq: 776
-    total_passes: 5
+    mtime: 1576045451
+    seq: 926
+    total_passes: 6
   t/30-CDC.t:
-    elapsed: 0.41904091835022
-    gen: 5
-    last_pass_time: 1568228168.68878
+    elapsed: 0.379366159439087
+    gen: 6
+    last_pass_time: 1578123015.24485
     last_result: 0
-    last_run_time: 1568228168.68878
+    last_run_time: 1578123015.24485
     last_todo: 0
-    mtime: 1566161684
-    seq: 775
-    total_passes: 5
+    mtime: 1574978407
+    seq: 928
+    total_passes: 6
   t/30-SAML-Head-to-Tail-POST.t:
-    elapsed: 0.462500810623169
-    gen: 5
-    last_pass_time: 1568228168.47812
+    elapsed: 0.393574953079224
+    gen: 6
+    last_pass_time: 1578123015.64095
     last_result: 0
-    last_run_time: 1568228168.47812
+    last_run_time: 1578123015.64095
     last_todo: 0
-    mtime: 1566161715
-    seq: 772
-    total_passes: 5
+    mtime: 1576045451
+    seq: 929
+    total_passes: 6
+  t/30-SAML-Macros.t:
+    elapsed: 0.295362949371338
+    gen: 6
+    last_pass_time: 1578123015.93885
+    last_result: 0
+    last_run_time: 1578123015.93885
+    last_todo: 0
+    seq: 930
+    total_passes: 1
   t/30-SAML-POST-Logout-when-expired.t:
-    elapsed: 8.17513680458069
-    gen: 5
-    last_pass_time: 1568228155.51217
+    elapsed: 0.399522066116333
+    gen: 6
+    last_pass_time: 1578123016.34091
     last_result: 0
-    last_run_time: 1568228155.51217
+    last_run_time: 1578123016.34091
     last_todo: 0
-    mtime: 1566161690
-    seq: 720
-    total_passes: 5
+    mtime: 1576045451
+    seq: 931
+    total_passes: 6
+  t/30-SAML-POST-with-2F-and-Notification.t:
+    elapsed: 0.4684898853302
+    gen: 6
+    last_pass_time: 1578123016.81194
+    last_result: 0
+    last_run_time: 1578123016.81194
+    last_todo: 0
+    seq: 932
+    total_passes: 1
   t/30-SAML-POST-with-Notification.t:
-    elapsed: 0.455055952072144
-    gen: 5
-    last_pass_time: 1568228167.89022
+    elapsed: 0.397378921508789
+    gen: 6
+    last_pass_time: 1578123017.21189
     last_result: 0
-    last_run_time: 1568228167.89022
+    last_run_time: 1578123017.21189
     last_todo: 0
-    mtime: 1567458069
-    seq: 766
-    total_passes: 5
+    mtime: 1576045451
+    seq: 933
+    total_passes: 6
   t/30-SAML-ReAuth-with-choice.t:
-    elapsed: 3.44073390960693
-    gen: 5
-    last_pass_time: 1568228175.22471
+    elapsed: 0.40729022026062
+    gen: 6
+    last_pass_time: 1578123017.98179
     last_result: 0
-    last_run_time: 1568228175.22471
+    last_run_time: 1578123017.98179
     last_todo: 0
-    mtime: 1567458069
-    seq: 863
-    total_passes: 5
+    mtime: 1576045451
+    seq: 935
+    total_passes: 6
   t/30-SAML-ReAuth.t:
-    elapsed: 0.362184047698975
-    gen: 5
-    last_pass_time: 1568228159.55012
+    elapsed: 0.357448816299438
+    gen: 6
+    last_pass_time: 1578123017.5719
     last_result: 0
-    last_run_time: 1568228159.55012
+    last_run_time: 1578123017.5719
     last_todo: 0
-    mtime: 1566161708
-    seq: 734
-    total_passes: 5
+    mtime: 1576045451
+    seq: 934
+    total_passes: 6
   t/30-SAML-SP-rule.t:
-    elapsed: 11.1243231296539
-    gen: 5
-    last_pass_time: 1568228147.03872
+    elapsed: 0.335637092590332
+    gen: 6
+    last_pass_time: 1578123018.31998
     last_result: 0
-    last_run_time: 1568228147.03872
+    last_run_time: 1578123018.31998
     last_todo: 0
-    mtime: 1566161696
-    seq: 707
-    total_passes: 5
+    mtime: 1574978407
+    seq: 936
+    total_passes: 6
   t/31-Auth-and-issuer-CAS-Logout-20.t:
-    elapsed: 8.13948917388916
-    gen: 5
-    last_pass_time: 1568228155.49557
+    elapsed: 0.32501482963562
+    gen: 6
+    last_pass_time: 1578123020.20119
     last_result: 0
-    last_run_time: 1568228155.49557
+    last_run_time: 1578123020.20119
     last_todo: 0
-    mtime: 1566161678
-    seq: 717
-    total_passes: 5
+    mtime: 1569964806
+    seq: 942
+    total_passes: 6
   t/31-Auth-and-issuer-CAS-Logout-30.t:
-    elapsed: 0.302481889724731
-    gen: 5
-    last_pass_time: 1568228171.70109
+    elapsed: 0.325326919555664
+    gen: 6
+    last_pass_time: 1578123020.52903
     last_result: 0
-    last_run_time: 1568228171.70109
+    last_run_time: 1578123020.52903
     last_todo: 0
-    mtime: 1566161702
-    seq: 810
-    total_passes: 5
+    mtime: 1569964806
+    seq: 943
+    total_passes: 6
   t/31-Auth-and-issuer-CAS-XSS-on-logout.t:
-    elapsed: 0.288188934326172
-    gen: 5
-    last_pass_time: 1568228166.87455
+    elapsed: 0.325803995132446
+    gen: 6
+    last_pass_time: 1578123021.92729
     last_result: 0
-    last_run_time: 1568228166.87455
+    last_run_time: 1578123021.92729
     last_todo: 0
-    mtime: 1566161684
-    seq: 756
-    total_passes: 5
+    mtime: 1569964806
+    seq: 947
+    total_passes: 6
   t/31-Auth-and-issuer-CAS-declared-app-userattr.t:
-    elapsed: 0.367727041244507
-    gen: 5
-    last_pass_time: 1568228171.34585
+    elapsed: 0.339231967926025
+    gen: 6
+    last_pass_time: 1578123019.27911
     last_result: 0
-    last_run_time: 1568228171.34585
+    last_run_time: 1578123019.27911
     last_todo: 0
-    mtime: 1566161683
-    seq: 804
-    total_passes: 5
+    mtime: 1569964806
+    seq: 939
+    total_passes: 6
   t/31-Auth-and-issuer-CAS-declared-app.t:
-    elapsed: 0.366064071655273
-    gen: 5
-    last_pass_time: 1568228171.07004
+    elapsed: 0.336956024169922
+    gen: 6
+    last_pass_time: 1578123018.93739
     last_result: 0
-    last_run_time: 1568228171.07004
+    last_run_time: 1578123018.93739
     last_todo: 0
-    mtime: 1566161684
-    seq: 802
-    total_passes: 5
+    mtime: 1569964806
+    seq: 938
+    total_passes: 6
   t/31-Auth-and-issuer-CAS-declared-apps.t:
-    elapsed: 11.1181359291077
-    gen: 5
-    last_pass_time: 1568228147.03145
+    elapsed: 0.275471210479736
+    gen: 6
+    last_pass_time: 1578123018.59794
     last_result: 0
-    last_run_time: 1568228147.03145
+    last_run_time: 1578123018.59794
     last_todo: 0
-    mtime: 1566161713
-    seq: 705
-    total_passes: 5
+    mtime: 1577275903
+    seq: 937
+    total_passes: 6
   t/31-Auth-and-issuer-CAS-default.t:
-    elapsed: 0.311614036560059
-    gen: 5
-    last_pass_time: 1568228171.79113
+    elapsed: 0.326534032821655
+    gen: 6
+    last_pass_time: 1578123019.60815
     last_result: 0
-    last_run_time: 1568228171.79113
+    last_run_time: 1578123019.60815
     last_todo: 0
-    mtime: 1566161711
-    seq: 811
-    total_passes: 5
+    mtime: 1569964806
+    seq: 940
+    total_passes: 6
   t/31-Auth-and-issuer-CAS-gateway.t:
-    elapsed: 0.175447940826416
-    gen: 5
-    last_pass_time: 1568228173.79617
+    elapsed: 0.263005018234253
+    gen: 6
+    last_pass_time: 1578123019.87368
     last_result: 0
-    last_run_time: 1568228173.79617
+    last_run_time: 1578123019.87368
     last_todo: 0
-    mtime: 1566161679
-    seq: 839
-    total_passes: 5
+    mtime: 1569964806
+    seq: 941
+    total_passes: 6
   t/31-Auth-and-issuer-CAS-proxied.t:
-    elapsed: 0.319927930831909
-    gen: 5
-    last_pass_time: 1568228171.46193
+    elapsed: 0.355028867721558
+    gen: 6
+    last_pass_time: 1578123020.88657
     last_result: 0
-    last_run_time: 1568228171.46193
+    last_run_time: 1578123020.88657
     last_todo: 0
-    mtime: 1566161676
-    seq: 805
-    total_passes: 5
+    mtime: 1569964806
+    seq: 944
+    total_passes: 6
   t/31-Auth-and-issuer-CAS-with-choice-and-cancel.t:
-    elapsed: 0.264619827270508
-    gen: 5
-    last_pass_time: 1568228172.26761
+    elapsed: 0.311284065246582
+    gen: 6
+    last_pass_time: 1578123021.20036
     last_result: 0
-    last_run_time: 1568228172.26761
+    last_run_time: 1578123021.20036
     last_todo: 0
-    mtime: 1567458069
-    seq: 817
-    total_passes: 5
+    mtime: 1569964806
+    seq: 945
+    total_passes: 6
   t/31-Auth-and-issuer-CAS-with-choice.t:
-    elapsed: 0.380188941955566
-    gen: 5
-    last_pass_time: 1568228169.61647
+    elapsed: 0.396142959594727
+    gen: 6
+    last_pass_time: 1578123021.59896
     last_result: 0
-    last_run_time: 1568228169.61647
+    last_run_time: 1578123021.59896
     last_todo: 0
-    mtime: 1567458069
-    seq: 783
-    total_passes: 5
+    mtime: 1569964806
+    seq: 946
+    total_passes: 6
   t/32-Auth-and-issuer-OIDC-authorization_code-OP-logout.t:
-    elapsed: 0.305024862289429
-    gen: 5
-    last_pass_time: 1568228167.33387
+    elapsed: 0.318739891052246
+    gen: 6
+    last_pass_time: 1578123022.24855
     last_result: 0
-    last_run_time: 1568228167.33387
+    last_run_time: 1578123022.24855
     last_todo: 0
-    mtime: 1566161685
-    seq: 761
-    total_passes: 5
+    mtime: 1576734098
+    seq: 948
+    total_passes: 6
   t/32-Auth-and-issuer-OIDC-authorization_code-public_client.t:
-    elapsed: 0.320050001144409
-    gen: 5
-    last_pass_time: 1568228170.804
+    elapsed: 0.347721099853516
+    gen: 6
+    last_pass_time: 1578123022.59883
     last_result: 0
-    last_run_time: 1568228170.804
+    last_run_time: 1578123022.59883
     last_todo: 0
-    mtime: 1566161690
-    seq: 798
-    total_passes: 5
+    mtime: 1576734098
+    seq: 949
+    total_passes: 6
   t/32-Auth-and-issuer-OIDC-authorization_code-with-authchoice.t:
-    elapsed: 0.331650972366333
-    gen: 5
-    last_pass_time: 1568228170.79031
+    elapsed: 0.364073038101196
+    gen: 6
+    last_pass_time: 1578123023.30737
     last_result: 0
-    last_run_time: 1568228170.79031
+    last_run_time: 1578123023.30737
     last_todo: 0
-    mtime: 1567458069
-    seq: 797
-    total_passes: 5
+    mtime: 1576734098
+    seq: 951
+    total_passes: 6
   t/32-Auth-and-issuer-OIDC-authorization_code-with-none-alg.t:
-    elapsed: 0.398397207260132
-    gen: 5
-    last_pass_time: 1568228171.16525
+    elapsed: 0.339215040206909
+    gen: 6
+    last_pass_time: 1578123023.64914
     last_result: 0
-    last_run_time: 1568228171.16525
+    last_run_time: 1578123023.64914
     last_todo: 0
-    mtime: 1566161710
-    seq: 803
-    total_passes: 5
+    mtime: 1576734098
+    seq: 952
+    total_passes: 6
   t/32-Auth-and-issuer-OIDC-authorization_code.t:
-    elapsed: 0.334026098251343
-    gen: 5
-    last_pass_time: 1568228170.9456
+    elapsed: 0.339339971542358
+    gen: 6
+    last_pass_time: 1578123022.94074
     last_result: 0
-    last_run_time: 1568228170.9456
+    last_run_time: 1578123022.94074
     last_todo: 0
-    mtime: 1566161712
-    seq: 800
-    total_passes: 5
+    mtime: 1576734098
+    seq: 950
+    total_passes: 6
   t/32-Auth-and-issuer-OIDC-hybrid.t:
-    elapsed: 0.306451797485352
-    gen: 5
-    last_pass_time: 1568228175.80321
+    elapsed: 0.325355052947998
+    gen: 6
+    last_pass_time: 1578123023.97703
     last_result: 0
-    last_run_time: 1568228175.80321
+    last_run_time: 1578123023.97703
     last_todo: 0
-    mtime: 1566326739
-    seq: 872
-    total_passes: 5
+    mtime: 1576734098
+    seq: 953
+    total_passes: 6
   t/32-Auth-and-issuer-OIDC-implicit-no-token.t:
-    elapsed: 0.321050882339478
-    gen: 5
-    last_pass_time: 1568228171.61383
+    elapsed: 0.33293604850769
+    gen: 6
+    last_pass_time: 1578123024.3125
     last_result: 0
-    last_run_time: 1568228171.61383
+    last_run_time: 1578123024.3125
     last_todo: 0
-    mtime: 1566326739
-    seq: 807
-    total_passes: 5
+    mtime: 1576734098
+    seq: 954
+    total_passes: 6
   t/32-Auth-and-issuer-OIDC-implicit.t:
-    elapsed: 0.329270124435425
-    gen: 5
-    last_pass_time: 1568228171.68525
+    elapsed: 0.334964990615845
+    gen: 6
+    last_pass_time: 1578123024.64994
     last_result: 0
-    last_run_time: 1568228171.68525
+    last_run_time: 1578123024.64994
     last_todo: 0
-    mtime: 1566326739
-    seq: 809
-    total_passes: 5
+    mtime: 1576734098
+    seq: 955
+    total_passes: 6
   t/32-Auth-and-issuer-OIDC-sorted.t:
-    elapsed: 0.177098989486694
-    gen: 5
-    last_pass_time: 1568228174.17296
+    elapsed: 0.267220020294189
+    gen: 6
+    last_pass_time: 1578123024.91963
     last_result: 0
-    last_run_time: 1568228174.17296
+    last_run_time: 1578123024.91963
     last_todo: 0
-    mtime: 1566161679
-    seq: 845
-    total_passes: 5
+    mtime: 1576734098
+    seq: 956
+    total_passes: 6
   t/32-CAS-10.t:
-    elapsed: 0.131625175476074
-    gen: 5
-    last_pass_time: 1568228173.5524
+    elapsed: 0.252785921096802
+    gen: 6
+    last_pass_time: 1578123025.17495
     last_result: 0
-    last_run_time: 1568228173.5524
+    last_run_time: 1578123025.17495
     last_todo: 0
-    mtime: 1566161691
-    seq: 835
-    total_passes: 5
+    mtime: 1569964806
+    seq: 957
+    total_passes: 6
+  t/32-CAS-Macros.t:
+    elapsed: 0.241799116134644
+    gen: 6
+    last_pass_time: 1578123025.41927
+    last_result: 0
+    last_run_time: 1578123025.41927
+    last_todo: 0
+    seq: 958
+    total_passes: 1
+  t/32-OIDC-Macro.t:
+    elapsed: 0.257303953170776
+    gen: 6
+    last_pass_time: 1578123025.67909
+    last_result: 0
+    last_run_time: 1578123025.67909
+    last_todo: 0
+    seq: 959
+    total_passes: 1
+  t/32-OIDC-Offline-Session.t:
+    elapsed: 0.266321182250977
+    gen: 6
+    last_pass_time: 1578123025.94789
+    last_result: 0
+    last_run_time: 1578123025.94789
+    last_todo: 0
+    seq: 960
+    total_passes: 1
   t/32-OIDC-RP-rule.t:
-    elapsed: 0.210129022598267
-    gen: 5
-    last_pass_time: 1568228172.76508
+    elapsed: 0.282886028289795
+    gen: 6
+    last_pass_time: 1578123026.73694
     last_result: 0
-    last_run_time: 1568228172.76508
+    last_run_time: 1578123026.73694
     last_todo: 0
-    mtime: 1566161711
-    seq: 822
-    total_passes: 5
+    mtime: 1576734098
+    seq: 963
+    total_passes: 6
+  t/32-OIDC-Refresh-Token.t:
+    elapsed: 0.268184900283813
+    gen: 6
+    last_pass_time: 1578123026.21863
+    last_result: 0
+    last_run_time: 1578123026.21863
+    last_todo: 0
+    seq: 961
+    total_passes: 1
+  t/32-OIDC-Register.t:
+    elapsed: 0.230379104614258
+    gen: 6
+    last_pass_time: 1578123026.4515
+    last_result: 0
+    last_run_time: 1578123026.4515
+    last_todo: 0
+    seq: 962
+    total_passes: 1
   t/32-OIDC-Token-Introspection.t:
-    elapsed: 6.0573251247406
-    gen: 5
-    last_pass_time: 1568228183.25993
+    elapsed: 0.242898941040039
+    gen: 6
+    last_pass_time: 1578123026.98231
     last_result: 0
-    last_run_time: 1568228183.25993
+    last_run_time: 1578123026.98231
     last_todo: 0
-    seq: 882
-    total_passes: 1
+    mtime: 1576734098
+    seq: 964
+    total_passes: 2
   t/32-OIDC-Token-Security.t:
-    elapsed: 2.13347506523132
-    gen: 5
-    last_pass_time: 1568228170.91085
+    elapsed: 0.244245052337646
+    gen: 6
+    last_pass_time: 1578123027.22906
     last_result: 0
-    last_run_time: 1568228170.91085
+    last_run_time: 1578123027.22906
     last_todo: 0
-    mtime: 1567710312
-    seq: 799
-    total_passes: 2
+    mtime: 1576734098
+    seq: 965
+    total_passes: 3
   t/33-Auth-and-issuer-OpenID2.t:
-    elapsed: 0.443145990371704
-    gen: 5
-    last_pass_time: 1568228168.4624
+    elapsed: 0.397281885147095
+    gen: 6
+    last_pass_time: 1578123027.62887
     last_result: 0
-    last_run_time: 1568228168.4624
+    last_run_time: 1578123027.62887
     last_todo: 0
-    mtime: 1566161681
-    seq: 771
-    total_passes: 5
+    mtime: 1569964806
+    seq: 966
+    total_passes: 6
   t/34-Auth-Proxy-and-REST-Server.t:
-    elapsed: 0.309317111968994
-    gen: 5
-    last_pass_time: 1568228171.62654
+    elapsed: 0.313448190689087
+    gen: 6
+    last_pass_time: 1578123027.94485
     last_result: 0
-    last_run_time: 1568228171.62654
+    last_run_time: 1578123027.94485
     last_todo: 0
-    mtime: 1566326739
-    seq: 808
-    total_passes: 5
+    mtime: 1569964806
+    seq: 967
+    total_passes: 6
   t/34-Auth-Proxy-and-SOAP-Server.t:
-    elapsed: 0.329507827758789
-    gen: 5
-    last_pass_time: 1568228166.92085
+    elapsed: 0.341868877410889
+    gen: 6
+    last_pass_time: 1578123028.28919
     last_result: 0
-    last_run_time: 1568228166.92085
+    last_run_time: 1578123028.28919
     last_todo: 0
-    mtime: 1566161702
-    seq: 757
-    total_passes: 5
+    mtime: 1569964806
+    seq: 968
+    total_passes: 6
   t/35-My-session.t:
-    elapsed: 0.113296031951904
-    gen: 5
-    last_pass_time: 1568228171.9974
+    elapsed: 0.231766939163208
+    gen: 6
+    last_pass_time: 1578123028.52346
     last_result: 0
-    last_run_time: 1568228171.9974
+    last_run_time: 1578123028.52346
     last_todo: 0
-    mtime: 1566161715
-    seq: 813
-    total_passes: 5
+    mtime: 1569964806
+    seq: 969
+    total_passes: 6
   t/35-REST-config-backend.t:
-    elapsed: 0.242370128631592
-    gen: 5
-    last_pass_time: 1568228172.24809
+    elapsed: 0.302253007888794
+    gen: 6
+    last_pass_time: 1578123028.82823
     last_result: 0
-    last_run_time: 1568228172.24809
+    last_run_time: 1578123028.82823
     last_todo: 0
-    mtime: 1566330470
-    seq: 816
-    total_passes: 5
+    mtime: 1569964806
+    seq: 970
+    total_passes: 6
   t/35-REST-export-password.t:
-    elapsed: 0.206042051315308
-    gen: 5
-    last_pass_time: 1568228172.7688
+    elapsed: 0.290185928344727
+    gen: 6
+    last_pass_time: 1578123029.1209
     last_result: 0
-    last_run_time: 1568228172.7688
+    last_run_time: 1578123029.1209
     last_todo: 0
-    mtime: 1566161714
-    seq: 823
-    total_passes: 5
+    mtime: 1569964806
+    seq: 971
+    total_passes: 6
   t/35-REST-sessions-with-AuthBasic-handler.t:
-    elapsed: 0.14748215675354
-    gen: 5
-    last_pass_time: 1568228175.18237
+    elapsed: 0.255604982376099
+    gen: 6
+    last_pass_time: 1578123029.37904
     last_result: 0
-    last_run_time: 1568228175.18237
+    last_run_time: 1578123029.37904
     last_todo: 0
-    mtime: 1567458069
-    seq: 862
-    total_passes: 5
+    mtime: 1569964806
+    seq: 972
+    total_passes: 6
   t/35-REST-sessions-with-REST-server.t:
-    elapsed: 0.250331878662109
-    gen: 5
-    last_pass_time: 1568228172.35272
+    elapsed: 0.30440878868103
+    gen: 6
+    last_pass_time: 1578123029.68601
     last_result: 0
-    last_run_time: 1568228172.35272
+    last_run_time: 1578123029.68601
     last_todo: 0
-    mtime: 1566161714
-    seq: 818
-    total_passes: 5
+    mtime: 1569964806
+    seq: 973
+    total_passes: 6
   t/35-SOAP-config-backend.t:
-    elapsed: 0.343286991119385
-    gen: 5
-    last_pass_time: 1568228170.32268
+    elapsed: 0.368796110153198
+    gen: 6
+    last_pass_time: 1578123030.05729
     last_result: 0
-    last_run_time: 1568228170.32268
+    last_run_time: 1578123030.05729
     last_todo: 0
-    mtime: 1566326739
-    seq: 792
-    total_passes: 5
+    mtime: 1569964806
+    seq: 974
+    total_passes: 6
   t/35-SOAP-sessions-with-SOAP-server.t:
-    elapsed: 3.21282911300659
-    gen: 5
-    last_pass_time: 1568228162.73156
+    elapsed: 0.346342086791992
+    gen: 6
+    last_pass_time: 1578123030.40627
     last_result: 0
-    last_run_time: 1568228162.73156
+    last_run_time: 1578123030.40627
     last_todo: 0
-    mtime: 1566161692
-    seq: 738
-    total_passes: 5
+    mtime: 1569964806
+    seq: 975
+    total_passes: 6
   t/36-Combination-Kerberos-or-Demo.t:
-    elapsed: 0.0910859107971191
-    gen: 5
-    last_pass_time: 1568228175.54146
+    elapsed: 0.217070817947388
+    gen: 6
+    last_pass_time: 1578123030.62587
     last_result: 0
-    last_run_time: 1568228175.54146
+    last_run_time: 1578123030.62587
     last_todo: 0
-    mtime: 1567545352
-    seq: 868
-    total_passes: 5
+    mtime: 1576734087
+    seq: 976
+    total_passes: 6
   t/36-Combination-with-Choice.t:
-    elapsed: 0.372189998626709
-    gen: 5
-    last_pass_time: 1568228171.54513
+    elapsed: 0.365689992904663
+    gen: 6
+    last_pass_time: 1578123031.33623
     last_result: 0
-    last_run_time: 1568228171.54513
+    last_run_time: 1578123031.33623
     last_todo: 0
-    mtime: 1567458069
-    seq: 806
-    total_passes: 5
+    mtime: 1569964806
+    seq: 978
+    total_passes: 6
   t/36-Combination-with-TOTP.t:
-    elapsed: 3.24833297729492
-    gen: 5
-    last_pass_time: 1568228162.72114
+    elapsed: 0.293755054473877
+    gen: 6
+    last_pass_time: 1578123032.33233
     last_result: 0
-    last_run_time: 1568228162.72114
+    last_run_time: 1578123032.33233
     last_todo: 0
-    mtime: 1566882553
-    seq: 736
-    total_passes: 5
+    mtime: 1576045451
+    seq: 981
+    total_passes: 6
   t/36-Combination-with-over.t:
-    elapsed: 0.134244918823242
-    gen: 5
-    last_pass_time: 1568228174.85634
+    elapsed: 0.270731925964355
+    gen: 6
+    last_pass_time: 1578123031.60943
     last_result: 0
-    last_run_time: 1568228174.85634
+    last_run_time: 1578123031.60943
     last_todo: 0
-    mtime: 1567458069
-    seq: 856
-    total_passes: 5
+    mtime: 1569964806
+    seq: 979
+    total_passes: 6
   t/36-Combination-with-token.t:
-    elapsed: 0.296674966812134
-    gen: 5
-    last_pass_time: 1568228166.31759
+    elapsed: 0.42386794090271
+    gen: 6
+    last_pass_time: 1578123032.03581
     last_result: 0
-    last_run_time: 1568228166.31759
+    last_run_time: 1578123032.03581
     last_todo: 0
-    mtime: 1567458069
-    seq: 748
-    total_passes: 5
+    mtime: 1569964806
+    seq: 980
+    total_passes: 6
   t/36-Combination.t:
-    elapsed: 0.194222927093506
-    gen: 5
-    last_pass_time: 1568228172.46914
+    elapsed: 0.33951997756958
+    gen: 6
+    last_pass_time: 1578123030.968
     last_result: 0
-    last_run_time: 1568228172.46914
+    last_run_time: 1578123030.968
     last_todo: 0
-    mtime: 1567458069
-    seq: 820
-    total_passes: 5
+    mtime: 1569964806
+    seq: 977
+    total_passes: 6
   t/37-CAS-App-to-SAML-IdP-POST-with-WAYF.t:
-    elapsed: 0.389986991882324
-    gen: 5
-    last_pass_time: 1568228169.17448
+    elapsed: 0.386538028717041
+    gen: 6
+    last_pass_time: 1578123033.10328
     last_result: 0
-    last_run_time: 1568228169.17448
+    last_run_time: 1578123033.10328
     last_todo: 0
-    mtime: 1566161693
-    seq: 779
-    total_passes: 5
+    mtime: 1574978407
+    seq: 983
+    total_passes: 6
   t/37-CAS-App-to-SAML-IdP-POST.t:
-    elapsed: 0.388776063919067
-    gen: 5
-    last_pass_time: 1568228169.13402
+    elapsed: 0.379412889480591
+    gen: 6
+    last_pass_time: 1578123032.71416
     last_result: 0
-    last_run_time: 1568228169.13402
+    last_run_time: 1578123032.71416
     last_todo: 0
-    mtime: 1566161713
-    seq: 778
-    total_passes: 5
+    mtime: 1574978407
+    seq: 982
+    total_passes: 6
   t/37-Logout-from-OIDC-RP-to-SAML-SP.t:
-    elapsed: 0.549050092697144
-    gen: 5
-    last_pass_time: 1568228167.78179
+    elapsed: 0.432024002075195
+    gen: 6
+    last_pass_time: 1578123033.53802
     last_result: 0
-    last_run_time: 1568228167.78179
+    last_run_time: 1578123033.53802
     last_todo: 0
-    mtime: 1566161678
-    seq: 765
-    total_passes: 5
+    mtime: 1576734098
+    seq: 984
+    total_passes: 6
   t/37-OIDC-RP-to-SAML-IdP-GET-with-WAYF.t:
-    elapsed: 1.54474711418152
-    gen: 5
-    last_pass_time: 1568228177.19983
+    elapsed: 0.422128915786743
+    gen: 6
+    last_pass_time: 1578123034.38572
     last_result: 0
-    last_run_time: 1568228177.19983
+    last_run_time: 1578123034.38572
     last_todo: 0
-    mtime: 1566161681
-    seq: 878
-    total_passes: 5
+    mtime: 1576734098
+    seq: 986
+    total_passes: 6
   t/37-OIDC-RP-to-SAML-IdP-GET.t:
-    elapsed: 0.289746046066284
-    gen: 5
-    last_pass_time: 1568228166.30985
+    elapsed: 0.420414924621582
+    gen: 6
+    last_pass_time: 1578123033.96101
     last_result: 0
-    last_run_time: 1568228166.30985
+    last_run_time: 1578123033.96101
     last_todo: 0
-    mtime: 1566161702
-    seq: 747
-    total_passes: 5
+    mtime: 1576734098
+    seq: 985
+    total_passes: 6
   t/37-OIDC-RP-to-SAML-IdP-POST.t:
-    elapsed: 0.500457048416138
-    gen: 5
-    last_pass_time: 1568228167.70532
+    elapsed: 0.418213844299316
+    gen: 6
+    last_pass_time: 1578123034.8065
     last_result: 0
-    last_run_time: 1568228167.70532
+    last_run_time: 1578123034.8065
     last_todo: 0
-    mtime: 1566161715
-    seq: 764
-    total_passes: 5
+    mtime: 1576734098
+    seq: 987
+    total_passes: 6
   t/37-SAML-SP-GET-to-OIDC-OP.t:
-    elapsed: 0.512121915817261
-    gen: 5
-    last_pass_time: 1568228168.0658
+    elapsed: 0.427850008010864
+    gen: 6
+    last_pass_time: 1578123035.23688
     last_result: 0
-    last_run_time: 1568228168.0658
+    last_run_time: 1578123035.23688
     last_todo: 0
-    mtime: 1566161678
-    seq: 768
-    total_passes: 5
+    mtime: 1576734098
+    seq: 988
+    total_passes: 6
   t/37-SAML-SP-POST-to-CAS-server-with-Choice.t:
-    elapsed: 0.423893928527832
-    gen: 5
-    last_pass_time: 1568228168.51999
+    elapsed: 0.387664794921875
+    gen: 6
+    last_pass_time: 1578123036.00968
     last_result: 0
-    last_run_time: 1568228168.51999
+    last_run_time: 1578123036.00968
     last_todo: 0
-    mtime: 1566161698
-    seq: 773
-    total_passes: 5
+    mtime: 1574978407
+    seq: 990
+    total_passes: 6
   t/37-SAML-SP-POST-to-CAS-server.t:
-    elapsed: 0.357296943664551
-    gen: 5
-    last_pass_time: 1568228169.48683
+    elapsed: 0.380016088485718
+    gen: 6
+    last_pass_time: 1578123035.61942
     last_result: 0
-    last_run_time: 1568228169.48683
+    last_run_time: 1578123035.61942
     last_todo: 0
-    mtime: 1566161694
-    seq: 782
-    total_passes: 5
+    mtime: 1574978407
+    seq: 989
+    total_passes: 6
   t/37-SAML-SP-POST-to-OIDC-OP.t:
-    elapsed: 0.513651132583618
-    gen: 5
-    last_pass_time: 1568228168.16452
+    elapsed: 0.415299892425537
+    gen: 6
+    last_pass_time: 1578123036.42759
     last_result: 0
-    last_run_time: 1568228168.16452
+    last_run_time: 1578123036.42759
     last_todo: 0
-    mtime: 1566161709
-    seq: 769
-    total_passes: 5
+    mtime: 1576734098
+    seq: 991
+    total_passes: 6
   t/38-No-persistent-session.t:
-    elapsed: 7.27217411994934
-    gen: 5
-    last_pass_time: 1568228183.26285
+    elapsed: 0.323966026306152
+    gen: 6
+    last_pass_time: 1578123036.75417
     last_result: 0
-    last_run_time: 1568228183.26285
+    last_run_time: 1578123036.75417
     last_todo: 0
-    mtime: 1566161696
-    seq: 885
-    total_passes: 5
+    mtime: 1569964806
+    seq: 992
+    total_passes: 6
   t/40-Notifications-JSON-DBI.t:
-    elapsed: 0.155227899551392
-    gen: 5
-    last_pass_time: 1568228174.63418
+    elapsed: 0.350934982299805
+    gen: 6
+    last_pass_time: 1578123037.10756
     last_result: 0
-    last_run_time: 1568228174.63418
+    last_run_time: 1578123037.10756
     last_todo: 0
-    mtime: 1567458069
-    seq: 853
-    total_passes: 5
+    mtime: 1576045451
+    seq: 993
+    total_passes: 6
   t/40-Notifications-JSON-File-with-token.t:
-    elapsed: 0.135103940963745
-    gen: 5
-    last_pass_time: 1568228174.91861
+    elapsed: 0.245291948318481
+    gen: 6
+    last_pass_time: 1578123037.60954
     last_result: 0
-    last_run_time: 1568228174.91861
+    last_run_time: 1578123037.60954
     last_todo: 0
-    mtime: 1567458069
-    seq: 857
-    total_passes: 5
+    mtime: 1569964806
+    seq: 995
+    total_passes: 6
   t/40-Notifications-JSON-File.t:
-    elapsed: 0.139895915985107
-    gen: 5
-    last_pass_time: 1568228174.6303
+    elapsed: 0.251673936843872
+    gen: 6
+    last_pass_time: 1578123037.36178
     last_result: 0
-    last_run_time: 1568228174.6303
+    last_run_time: 1578123037.36178
     last_todo: 0
-    mtime: 1567458069
-    seq: 852
-    total_passes: 5
+    mtime: 1569964806
+    seq: 994
+    total_passes: 6
   t/40-Notifications-JSON-Server.t:
-    elapsed: 0.110454082489014
-    gen: 5
-    last_pass_time: 1568228175.33951
+    elapsed: 0.281574010848999
+    gen: 6
+    last_pass_time: 1578123037.89362
     last_result: 0
-    last_run_time: 1568228175.33951
+    last_run_time: 1578123037.89362
     last_todo: 0
-    mtime: 1567458069
-    seq: 864
-    total_passes: 5
+    mtime: 1577275903
+    seq: 996
+    total_passes: 6
   t/40-Notifications-XML-DBI.t:
-    elapsed: 0.151570796966553
-    gen: 5
-    last_pass_time: 1568228174.01993
+    elapsed: 0.365219116210938
+    gen: 6
+    last_pass_time: 1578123038.26129
     last_result: 0
-    last_run_time: 1568228174.01993
+    last_run_time: 1578123038.26129
     last_todo: 0
-    mtime: 1567458069
-    seq: 842
-    total_passes: 5
+    mtime: 1576045451
+    seq: 997
+    total_passes: 6
   t/40-Notifications-XML-File.t:
-    elapsed: 0.12536096572876
-    gen: 5
-    last_pass_time: 1568228173.62481
+    elapsed: 0.270434856414795
+    gen: 6
+    last_pass_time: 1578123038.5342
     last_result: 0
-    last_run_time: 1568228173.62481
+    last_run_time: 1578123038.5342
     last_todo: 0
-    mtime: 1567458069
-    seq: 836
-    total_passes: 5
+    mtime: 1569964806
+    seq: 998
+    total_passes: 6
   t/40-Notifications-XML-Server.t:
-    elapsed: 0.25491189956665
-    gen: 5
-    last_pass_time: 1568228172.18736
+    elapsed: 0.350883960723877
+    gen: 6
+    last_pass_time: 1578123038.88762
     last_result: 0
-    last_run_time: 1568228172.18736
+    last_run_time: 1578123038.88762
     last_todo: 0
-    mtime: 1567458069
-    seq: 814
-    total_passes: 5
+    mtime: 1576734098
+    seq: 999
+    total_passes: 6
   t/41-Captcha.t:
-    elapsed: 0.669528007507324
-    gen: 5
-    last_pass_time: 1568228169.67036
+    elapsed: 0.557894945144653
+    gen: 6
+    last_pass_time: 1578123039.44805
     last_result: 0
-    last_run_time: 1568228169.67036
+    last_run_time: 1578123039.44805
     last_todo: 0
-    mtime: 1568178612
-    seq: 784
-    total_passes: 5
-  t/41-Token-Global-Storage.t:
-    elapsed: 0.14008092880249
-    gen: 5
-    last_pass_time: 1568228174.72858
+    mtime: 1577635709
+    seq: 1000
+    total_passes: 6
+  t/41-Token-with-global-storage.t:
+    elapsed: 0.243690967559814
+    gen: 6
+    last_pass_time: 1578123039.93547
     last_result: 0
-    last_run_time: 1568228174.72858
+    last_run_time: 1578123039.93547
     last_todo: 0
-    mtime: 1566161683
-    seq: 855
-    total_passes: 5
-  t/41-Token.t:
-    elapsed: 0.152389049530029
-    gen: 5
-    last_pass_time: 1568228175.34245
-    last_result: 0
-    last_run_time: 1568228175.34245
-    last_todo: 0
-    mtime: 1568178612
-    seq: 865
-    total_passes: 5
-  t/42-Register-Demo-with-captcha.t:
-    elapsed: 0.246177196502686
-    gen: 5
-    last_pass_time: 1568228166.26737
-    last_result: 0
-    last_run_time: 1568228166.26737
-    last_todo: 0
-    mtime: 1566161713
-    seq: 743
-    total_passes: 5
-  t/42-Register-Demo-with-token.t:
-    elapsed: 0.352511882781982
-    gen: 5
-    last_pass_time: 1568228169.83261
-    last_result: 0
-    last_run_time: 1568228169.83261
-    last_todo: 0
-    mtime: 1566161702
-    seq: 788
-    total_passes: 5
-  t/42-Register-Demo.t:
-    elapsed: 0.325651884078979
-    gen: 5
-    last_pass_time: 1568228171.02567
-    last_result: 0
-    last_run_time: 1568228171.02567
-    last_todo: 0
-    mtime: 1566161680
-    seq: 801
-    total_passes: 5
-  t/42-Register-LDAP.t:
-    elapsed: 0.197420120239258
-    gen: 5
-    last_pass_time: 1568228172.69101
-    last_result: 0
-    last_run_time: 1568228172.69101
-    last_todo: 0
-    mtime: 1566161675
-    seq: 821
-    total_passes: 5
-  t/42-Register-Security.t:
-    elapsed: 0.288436889648438
-    gen: 5
-    last_pass_time: 1568228170.41053
-    last_result: 0
-    last_run_time: 1568228170.41053
-    last_todo: 0
-    mtime: 1566161675
-    seq: 794
-    total_passes: 5
-  t/43-MailPasswordReset-Choice.t:
-    elapsed: 0.596246004104614
-    gen: 5
-    last_pass_time: 1568228167.68902
-    last_result: 0
-    last_run_time: 1568228167.68902
-    last_todo: 0
-    mtime: 1567458069
-    seq: 763
-    total_passes: 5
-  t/43-MailPasswordReset-Combination-LDAP.t:
-    elapsed: 6.05373096466064
-    gen: 5
-    last_pass_time: 1568228183.25289
-    last_result: 0
-    last_run_time: 1568228183.25289
-    last_todo: 0
-    seq: 880
+    seq: 1002
     total_passes: 1
+  t/41-Token.t:
+    elapsed: 0.238693237304688
+    gen: 6
+    last_pass_time: 1578123039.68927
+    last_result: 0
+    last_run_time: 1578123039.68927
+    last_todo: 0
+    mtime: 1569964806
+    seq: 1001
+    total_passes: 6
+  t/42-Register-Demo-with-captcha.t:
+    elapsed: 0.49410605430603
+    gen: 6
+    last_pass_time: 1578123040.76351
+    last_result: 0
+    last_run_time: 1578123040.76351
+    last_todo: 0
+    mtime: 1577635709
+    seq: 1004
+    total_passes: 6
+  t/42-Register-Demo-with-token.t:
+    elapsed: 0.367373943328857
+    gen: 6
+    last_pass_time: 1578123041.13344
+    last_result: 0
+    last_run_time: 1578123041.13344
+    last_todo: 0
+    mtime: 1569964806
+    seq: 1005
+    total_passes: 6
+  t/42-Register-Demo.t:
+    elapsed: 0.328927993774414
+    gen: 6
+    last_pass_time: 1578123040.26687
+    last_result: 0
+    last_run_time: 1578123040.26687
+    last_todo: 0
+    mtime: 1569964806
+    seq: 1003
+    total_passes: 6
+  t/42-Register-LDAP.t:
+    elapsed: 0.268527030944824
+    gen: 6
+    last_pass_time: 1578123041.40453
+    last_result: 0
+    last_run_time: 1578123041.40453
+    last_todo: 0
+    mtime: 1569964806
+    seq: 1006
+    total_passes: 6
+  t/42-Register-Security.t:
+    elapsed: 0.319261074066162
+    gen: 6
+    last_pass_time: 1578123041.72628
+    last_result: 0
+    last_run_time: 1578123041.72628
+    last_todo: 0
+    mtime: 1569964806
+    seq: 1007
+    total_passes: 6
+  t/43-MailPasswordReset-Choice.t:
+    elapsed: 0.491440057754517
+    gen: 6
+    last_pass_time: 1578123042.22028
+    last_result: 0
+    last_run_time: 1578123042.22028
+    last_todo: 0
+    mtime: 1569964806
+    seq: 1008
+    total_passes: 6
+  t/43-MailPasswordReset-Combination-LDAP.t:
+    elapsed: 0.279649972915649
+    gen: 6
+    last_pass_time: 1578123042.50256
+    last_result: 0
+    last_run_time: 1578123042.50256
+    last_todo: 0
+    mtime: 1569964806
+    seq: 1009
+    total_passes: 2
   t/43-MailPasswordReset-DBI.t:
-    elapsed: 0.464865922927856
-    gen: 5
-    last_pass_time: 1568228168.67705
+    elapsed: 0.412544965744019
+    gen: 6
+    last_pass_time: 1578123042.91761
     last_result: 0
-    last_run_time: 1568228168.67705
+    last_run_time: 1578123042.91761
     last_todo: 0
-    mtime: 1567458069
-    seq: 774
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1010
+    total_passes: 6
   t/43-MailPasswordReset-LDAP.t:
-    elapsed: 0.230448007583618
-    gen: 5
-    last_pass_time: 1568228172.38666
+    elapsed: 0.282418966293335
+    gen: 6
+    last_pass_time: 1578123043.20259
     last_result: 0
-    last_run_time: 1568228172.38666
+    last_run_time: 1578123043.20259
     last_todo: 0
-    mtime: 1566161714
-    seq: 819
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1011
+    total_passes: 6
   t/43-MailPasswordReset-with-captcha.t:
-    elapsed: 3.36256098747253
-    gen: 5
-    last_pass_time: 1568228159.1967
+    elapsed: 0.456592082977295
+    gen: 6
+    last_pass_time: 1578123044.01458
     last_result: 0
-    last_run_time: 1568228159.1967
+    last_run_time: 1578123044.01458
     last_todo: 0
-    mtime: 1566161700
-    seq: 728
-    total_passes: 5
+    mtime: 1577635709
+    seq: 1013
+    total_passes: 6
   t/43-MailPasswordReset-with-token.t:
-    elapsed: 3.1455659866333
-    gen: 5
-    last_pass_time: 1568228162.68178
+    elapsed: 0.353721141815186
+    gen: 6
+    last_pass_time: 1578123044.37085
     last_result: 0
-    last_run_time: 1568228162.68178
+    last_run_time: 1578123044.37085
     last_todo: 0
-    mtime: 1566161695
-    seq: 735
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1014
+    total_passes: 6
   t/43-MailPasswordReset.t:
-    elapsed: 0.365800142288208
-    gen: 5
-    last_pass_time: 1568228170.15199
+    elapsed: 0.350366115570068
+    gen: 6
+    last_pass_time: 1578123043.55546
     last_result: 0
-    last_run_time: 1568228170.15199
+    last_run_time: 1578123043.55546
     last_todo: 0
-    mtime: 1566941543
-    seq: 789
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1012
+    total_passes: 6
+  t/44-CertificateResetByMail-LDAP.t:
+    elapsed: 0.28028392791748
+    gen: 6
+    last_pass_time: 1578123044.65369
+    last_result: 0
+    last_run_time: 1578123044.65369
+    last_todo: 0
+    seq: 1015
+    total_passes: 1
   t/50-IssuerGet.t:
-    elapsed: 0.102422952651978
-    gen: 5
-    last_pass_time: 1568228174.32877
+    elapsed: 0.238299131393433
+    gen: 6
+    last_pass_time: 1578123044.89447
     last_result: 0
-    last_run_time: 1568228174.32877
+    last_run_time: 1578123044.89447
     last_todo: 0
-    mtime: 1566161715
-    seq: 848
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1016
+    total_passes: 6
+  t/57-GlobalLogout-without-Timer.t:
+    elapsed: 0.263209104537964
+    gen: 6
+    last_pass_time: 1578123045.45904
+    last_result: 0
+    last_run_time: 1578123045.45904
+    last_todo: 0
+    seq: 1018
+    total_passes: 1
+  t/57-GlobalLogout.t:
+    elapsed: 0.296432018280029
+    gen: 6
+    last_pass_time: 1578123045.19343
+    last_result: 0
+    last_run_time: 1578123045.19343
+    last_todo: 0
+    seq: 1017
+    total_passes: 1
+  t/58-DecryptValue-with-custom-function.t:
+    elapsed: 0.250503063201904
+    gen: 6
+    last_pass_time: 1578123045.71201
+    last_result: 0
+    last_run_time: 1578123045.71201
+    last_todo: 0
+    seq: 1019
+    total_passes: 1
+  t/58-DecryptValue-with-internal-function.t:
+    elapsed: 0.289312124252319
+    gen: 6
+    last_pass_time: 1578123046.0038
+    last_result: 0
+    last_run_time: 1578123046.0038
+    last_todo: 0
+    seq: 1020
+    total_passes: 1
   t/59-Double-cookies-Refresh-and-Logout.t:
-    elapsed: 3.35325980186462
-    gen: 5
-    last_pass_time: 1568228166.29784
+    elapsed: 0.2725670337677
+    gen: 6
+    last_pass_time: 1578123046.76534
     last_result: 0
-    last_run_time: 1568228166.29784
+    last_run_time: 1578123046.76534
     last_todo: 0
-    mtime: 1567545352
-    seq: 745
-    total_passes: 5
+    mtime: 1576734087
+    seq: 1023
+    total_passes: 6
   t/59-Double-cookies-for-Double-sessions.t:
-    elapsed: 0.0803351402282715
-    gen: 5
-    last_pass_time: 1568228173.1125
+    elapsed: 0.244628190994263
+    gen: 6
+    last_pass_time: 1578123046.49026
     last_result: 0
-    last_run_time: 1568228173.1125
+    last_run_time: 1578123046.49026
     last_todo: 0
-    mtime: 1566161696
-    seq: 828
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1022
+    total_passes: 6
   t/59-Double-cookies-for-a-Single-session.t:
-    elapsed: 0.128086805343628
-    gen: 5
-    last_pass_time: 1568228174.40957
+    elapsed: 0.23691201210022
+    gen: 6
+    last_pass_time: 1578123046.24316
     last_result: 0
-    last_run_time: 1568228174.40957
+    last_run_time: 1578123046.24316
     last_todo: 0
-    mtime: 1566161704
-    seq: 849
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1021
+    total_passes: 6
   t/59-Secured-cookie-Refresh-and-Logout.t:
-    elapsed: 0.161150932312012
-    gen: 5
-    last_pass_time: 1568228166.78555
+    elapsed: 0.247748136520386
+    gen: 6
+    last_pass_time: 1578123047.0155
     last_result: 0
-    last_run_time: 1568228166.78555
+    last_run_time: 1578123047.0155
     last_todo: 0
-    mtime: 1567545352
-    seq: 753
-    total_passes: 5
+    mtime: 1576734098
+    seq: 1024
+    total_passes: 6
   t/60-Status.t:
-    elapsed: 0.101425170898438
-    gen: 5
-    last_pass_time: 1568228166.71434
+    elapsed: 0.238331079483032
+    gen: 6
+    last_pass_time: 1578123047.25629
     last_result: 0
-    last_run_time: 1568228166.71434
+    last_run_time: 1578123047.25629
     last_todo: 0
-    mtime: 1566161694
-    seq: 751
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1025
+    total_passes: 6
   t/61-BruteForceProtection.t:
-    elapsed: 7.08599305152893
-    gen: 5
-    last_pass_time: 1568228155.51687
+    elapsed: 0.333351135253906
+    gen: 6
+    last_pass_time: 1578123047.59242
     last_result: 0
-    last_run_time: 1568228155.51687
+    last_run_time: 1578123047.59242
     last_todo: 0
-    mtime: 1566161697
-    seq: 721
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1026
+    total_passes: 6
   t/61-ForceAuthn.t:
-    elapsed: 11.1099808216095
-    gen: 5
-    last_pass_time: 1568228147.03549
+    elapsed: 0.237651109695435
+    gen: 6
+    last_pass_time: 1578123047.83249
     last_result: 0
-    last_run_time: 1568228147.03549
+    last_run_time: 1578123047.83249
     last_todo: 0
-    mtime: 1566161700
-    seq: 706
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1027
+    total_passes: 6
   t/61-GrantSession.t:
-    elapsed: 11.1296651363373
-    gen: 5
-    last_pass_time: 1568228147.04255
+    elapsed: 0.274355888366699
+    gen: 6
+    last_pass_time: 1578123048.10939
     last_result: 0
-    last_run_time: 1568228147.04255
+    last_run_time: 1578123048.10939
     last_todo: 0
-    mtime: 1566161695
-    seq: 708
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1028
+    total_passes: 6
   t/61-Session-ActivityTimeout.t:
-    elapsed: 8.1432101726532
-    gen: 5
-    last_pass_time: 1568228155.50076
+    elapsed: 0.254975080490112
+    gen: 6
+    last_pass_time: 1578123048.36683
     last_result: 0
-    last_run_time: 1568228155.50076
+    last_run_time: 1578123048.36683
     last_todo: 0
-    mtime: 1566161690
-    seq: 718
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1029
+    total_passes: 6
   t/61-Session-Timeout.t:
-    elapsed: 11.147509098053
-    gen: 5
-    last_pass_time: 1568228147.05214
+    elapsed: 0.243348121643066
+    gen: 6
+    last_pass_time: 1578123048.61272
     last_result: 0
-    last_run_time: 1568228147.05214
+    last_run_time: 1578123048.61272
     last_todo: 0
-    mtime: 1566161686
-    seq: 710
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1030
+    total_passes: 6
+  t/62-Refresh-plugin.t:
+    elapsed: 0.246065855026245
+    gen: 6
+    last_pass_time: 1578123048.86128
+    last_result: 0
+    last_run_time: 1578123048.86128
+    last_todo: 0
+    seq: 1031
+    total_passes: 1
   t/62-SingleSession.t:
-    elapsed: 8.1383650302887
-    gen: 5
-    last_pass_time: 1568228155.4791
+    elapsed: 0.221413135528564
+    gen: 6
+    last_pass_time: 1578123049.08519
     last_result: 0
-    last_run_time: 1568228155.4791
+    last_run_time: 1578123049.08519
     last_todo: 0
-    mtime: 1566161709
-    seq: 714
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1032
+    total_passes: 6
   t/62-UpgradeSession.t:
-    elapsed: 8.15283107757568
-    gen: 5
-    last_pass_time: 1568228155.48593
+    elapsed: 0.348144054412842
+    gen: 6
+    last_pass_time: 1578123049.43585
     last_result: 0
-    last_run_time: 1568228155.48593
+    last_run_time: 1578123049.43585
     last_todo: 0
-    mtime: 1566326760
-    seq: 715
-    total_passes: 5
+    mtime: 1574978407
+    seq: 1033
+    total_passes: 6
   t/63-History.t:
-    elapsed: 0.192178010940552
-    gen: 5
-    last_pass_time: 1568228173.1862
+    elapsed: 0.267871141433716
+    gen: 6
+    last_pass_time: 1578123049.70623
     last_result: 0
-    last_run_time: 1568228173.1862
+    last_run_time: 1578123049.70623
     last_todo: 0
-    mtime: 1566161677
-    seq: 829
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1034
+    total_passes: 6
   t/64-StayConnected.t:
-    elapsed: 0.12476921081543
-    gen: 5
-    last_pass_time: 1568228174.25574
+    elapsed: 0.268374919891357
+    gen: 6
+    last_pass_time: 1578123049.97701
     last_result: 0
-    last_run_time: 1568228174.25574
+    last_run_time: 1578123049.97701
     last_todo: 0
-    mtime: 1566161711
-    seq: 846
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1035
+    total_passes: 6
   t/65-AutoSignin.t:
-    elapsed: 0.0881481170654297
-    gen: 5
-    last_pass_time: 1568228175.64631
+    elapsed: 0.214384078979492
+    gen: 6
+    last_pass_time: 1578123050.19374
     last_result: 0
-    last_run_time: 1568228175.64631
+    last_run_time: 1578123050.19374
     last_todo: 0
-    mtime: 1566161678
-    seq: 869
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1036
+    total_passes: 6
   t/66-CDA-PSGI-Try.t:
-    elapsed: 0.119501113891602
-    gen: 5
-    last_pass_time: 1568228155.90546
+    elapsed: 0.234914779663086
+    gen: 6
+    last_pass_time: 1578123050.66055
     last_result: 0
-    last_run_time: 1568228155.90546
+    last_run_time: 1578123050.66055
     last_todo: 0
-    mtime: 1566326739
-    seq: 723
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1038
+    total_passes: 6
   t/66-CDA-already-auth.t:
-    elapsed: 0.105471134185791
-    gen: 5
-    last_pass_time: 1568228175.12849
+    elapsed: 0.226717948913574
+    gen: 6
+    last_pass_time: 1578123050.42304
     last_result: 0
-    last_run_time: 1568228175.12849
+    last_run_time: 1578123050.42304
     last_todo: 0
-    mtime: 1566161687
-    seq: 861
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1037
+    total_passes: 6
   t/66-CDA-with-REST.t:
-    elapsed: 0.196497917175293
-    gen: 5
-    last_pass_time: 1568228172.78429
+    elapsed: 0.284666061401367
+    gen: 6
+    last_pass_time: 1578123051.18564
     last_result: 0
-    last_run_time: 1568228172.78429
+    last_run_time: 1578123051.18564
     last_todo: 0
-    mtime: 1566161696
-    seq: 824
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1040
+    total_passes: 6
   t/66-CDA-with-SOAP.t:
-    elapsed: 0.289077043533325
-    gen: 5
-    last_pass_time: 1568228156.0859
+    elapsed: 0.318894147872925
+    gen: 6
+    last_pass_time: 1578123051.50709
     last_result: 0
-    last_run_time: 1568228156.0859
+    last_run_time: 1578123051.50709
     last_todo: 0
-    mtime: 1566161710
-    seq: 726
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1041
+    total_passes: 6
   t/66-CDA.t:
-    elapsed: 0.119533061981201
-    gen: 5
-    last_pass_time: 1568228155.89724
+    elapsed: 0.235138893127441
+    gen: 6
+    last_pass_time: 1578123050.89826
     last_result: 0
-    last_run_time: 1568228155.89724
+    last_run_time: 1578123050.89826
     last_todo: 0
-    mtime: 1566161685
-    seq: 722
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1039
+    total_passes: 6
   t/67-CheckUser-with-Global-token.t:
-    elapsed: 3.35982704162598
-    gen: 5
-    last_pass_time: 1568228166.30407
+    elapsed: 0.267443895339966
+    gen: 6
+    last_pass_time: 1578123052.14349
     last_result: 0
-    last_run_time: 1568228166.30407
+    last_run_time: 1578123052.14349
     last_todo: 0
-    mtime: 1566326760
-    seq: 746
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1043
+    total_passes: 6
   t/67-CheckUser-with-Impersonation-and-whatToTrace.t:
-    elapsed: 0.205716133117676
-    gen: 5
-    last_pass_time: 1568228175.44591
+    elapsed: 0.266218900680542
+    gen: 6
+    last_pass_time: 1578123052.41224
     last_result: 0
-    last_run_time: 1568228175.44591
+    last_run_time: 1578123052.41224
     last_todo: 0
-    mtime: 1566941543
-    seq: 866
-    total_passes: 2
+    mtime: 1576045451
+    seq: 1044
+    total_passes: 3
   t/67-CheckUser-with-issuer-SAML-POST.t:
-    elapsed: 0.616914033889771
-    gen: 5
-    last_pass_time: 1568228167.24291
+    elapsed: 0.445279836654663
+    gen: 6
+    last_pass_time: 1578123052.85996
     last_result: 0
-    last_run_time: 1568228167.24291
+    last_run_time: 1578123052.85996
     last_todo: 0
-    mtime: 1566941543
-    seq: 760
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1045
+    total_passes: 6
   t/67-CheckUser-with-token.t:
-    elapsed: 0.33227801322937
-    gen: 5
-    last_pass_time: 1568228166.35377
+    elapsed: 0.264358997344971
+    gen: 6
+    last_pass_time: 1578123053.12692
     last_result: 0
-    last_run_time: 1568228166.35377
+    last_run_time: 1578123053.12692
     last_todo: 0
-    mtime: 1566326760
-    seq: 750
-    total_passes: 5
+    mtime: 1577635709
+    seq: 1046
+    total_passes: 6
   t/67-CheckUser.t:
-    elapsed: 3.42336797714233
-    gen: 5
-    last_pass_time: 1568228162.95249
+    elapsed: 0.363959074020386
+    gen: 6
+    last_pass_time: 1578123051.87361
     last_result: 0
-    last_run_time: 1568228162.95249
+    last_run_time: 1578123051.87361
     last_todo: 0
-    mtime: 1566941543
-    seq: 741
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1042
+    total_passes: 6
   t/68-ContextSwitching-with-Logout.t:
-    elapsed: 0.14247989654541
-    gen: 5
-    last_pass_time: 1568228173.70928
+    elapsed: 0.274541854858398
+    gen: 6
+    last_pass_time: 1578123053.74404
     last_result: 0
-    last_run_time: 1568228173.70928
+    last_run_time: 1578123053.74404
     last_todo: 0
-    mtime: 1567545352
-    seq: 838
-    total_passes: 5
+    mtime: 1576734087
+    seq: 1048
+    total_passes: 6
   t/68-ContextSwitching.t:
-    elapsed: 0.04007887840271
-    gen: 5
-    last_pass_time: 1568228159.22825
+    elapsed: 0.337692022323608
+    gen: 6
+    last_pass_time: 1578123053.46715
     last_result: 0
-    last_run_time: 1568228159.22825
+    last_run_time: 1578123053.46715
     last_todo: 0
-    mtime: 1567545352
-    seq: 733
-    total_passes: 5
+    mtime: 1576734087
+    seq: 1047
+    total_passes: 6
   t/68-Impersonation-with-History.t:
-    elapsed: 8.16546607017517
-    gen: 5
-    last_pass_time: 1568228155.50485
+    elapsed: 0.295783996582031
+    gen: 6
+    last_pass_time: 1578123055.12427
     last_result: 0
-    last_run_time: 1568228155.50485
+    last_run_time: 1578123055.12427
     last_todo: 0
-    mtime: 1566161705
-    seq: 719
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1052
+    total_passes: 6
   t/68-Impersonation-with-TOTP.t:
-    elapsed: 0.267183065414429
-    gen: 5
-    last_pass_time: 1568228172.24446
+    elapsed: 0.305692195892334
+    gen: 6
+    last_pass_time: 1578123055.70623
     last_result: 0
-    last_run_time: 1568228172.24446
+    last_run_time: 1578123055.70623
     last_todo: 0
-    mtime: 1566161689
-    seq: 815
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1054
+    total_passes: 6
   t/68-Impersonation-with-doubleCookies.t:
-    elapsed: 0.482410907745361
-    gen: 5
-    last_pass_time: 1568228175.8846
+    elapsed: 0.404490947723389
+    gen: 6
+    last_pass_time: 1578123054.54409
     last_result: 0
-    last_run_time: 1568228175.8846
+    last_run_time: 1578123054.54409
     last_todo: 0
-    mtime: 1566161699
-    seq: 874
-    total_passes: 5
+    mtime: 1578121398
+    seq: 1050
+    total_passes: 6
   t/68-Impersonation-with-filtered-merge.t:
-    elapsed: 0.189421892166138
-    gen: 5
-    last_pass_time: 1568228166.78971
+    elapsed: 0.279520034790039
+    gen: 6
+    last_pass_time: 1578123054.82601
     last_result: 0
-    last_run_time: 1568228166.78971
+    last_run_time: 1578123054.82601
     last_todo: 0
-    mtime: 1566161712
-    seq: 754
-    total_passes: 5
+    mtime: 1577635709
+    seq: 1051
+    total_passes: 6
   t/68-Impersonation-with-merge.t:
-    elapsed: 0.189289093017578
-    gen: 5
-    last_pass_time: 1568228166.79529
+    elapsed: 0.271297931671143
+    gen: 6
+    last_pass_time: 1578123055.39808
     last_result: 0
-    last_run_time: 1568228166.79529
+    last_run_time: 1578123055.39808
     last_todo: 0
-    mtime: 1566161684
-    seq: 755
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1053
+    total_passes: 6
   t/68-Impersonation.t:
-    elapsed: 0.454932928085327
-    gen: 5
-    last_pass_time: 1568228168.92488
+    elapsed: 0.390563011169434
+    gen: 6
+    last_pass_time: 1578123054.13706
     last_result: 0
-    last_run_time: 1568228168.92488
+    last_run_time: 1578123054.13706
     last_todo: 0
-    mtime: 1566161703
-    seq: 777
-    total_passes: 5
-  t/70-2F-TOTP-8.t:
-    elapsed: 3.40962195396423
-    gen: 5
-    last_pass_time: 1568228159.2241
+    mtime: 1578121398
+    seq: 1049
+    total_passes: 6
+  t/70-2F-TOTP-8-with-global-storage.t:
+    elapsed: 0.379889965057373
+    gen: 6
+    last_pass_time: 1578123056.08856
     last_result: 0
-    last_run_time: 1568228159.2241
+    last_run_time: 1578123056.08856
     last_todo: 0
-    mtime: 1566326760
-    seq: 732
-    total_passes: 5
+    seq: 1055
+    total_passes: 1
   t/70-2F-TOTP-with-History.t:
-    elapsed: 0.179828882217407
-    gen: 5
-    last_pass_time: 1568228174.28599
+    elapsed: 0.265434980392456
+    gen: 6
+    last_pass_time: 1578123056.35658
     last_result: 0
-    last_run_time: 1568228174.28599
+    last_run_time: 1578123056.35658
     last_todo: 0
-    mtime: 1566161680
-    seq: 847
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1056
+    total_passes: 6
   t/70-2F-TOTP-with-TTL-and-JSON.t:
-    elapsed: 0.313700914382935
-    gen: 5
-    last_pass_time: 1568228162.98872
+    elapsed: 0.286616086959839
+    gen: 6
+    last_pass_time: 1578123056.64576
     last_result: 0
-    last_run_time: 1568228162.98872
+    last_run_time: 1578123056.64576
     last_todo: 0
-    mtime: 1566161696
-    seq: 742
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1057
+    total_passes: 6
   t/70-2F-TOTP-with-TTL-and-XML.t:
-    elapsed: 3.44065690040588
-    gen: 5
-    last_pass_time: 1568228162.94595
+    elapsed: 0.301239013671875
+    gen: 6
+    last_pass_time: 1578123056.94954
     last_result: 0
-    last_run_time: 1568228162.94595
+    last_run_time: 1578123056.94954
     last_todo: 0
-    mtime: 1566161692
-    seq: 740
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1058
+    total_passes: 6
   t/70-2F-TOTP-with-TTL.t:
-    elapsed: 3.33930015563965
-    gen: 5
-    last_pass_time: 1568228166.28432
+    elapsed: 0.269069194793701
+    gen: 6
+    last_pass_time: 1578123057.22123
     last_result: 0
-    last_run_time: 1568228166.28432
+    last_run_time: 1578123057.22123
     last_todo: 0
-    mtime: 1566161691
-    seq: 744
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1059
+    total_passes: 6
   t/71-2F-U2F-with-History.t:
-    elapsed: 3.240238904953
-    gen: 5
-    last_pass_time: 1568228162.72559
+    elapsed: 0.504844903945923
+    gen: 6
+    last_pass_time: 1578123058.21575
     last_result: 0
-    last_run_time: 1568228162.72559
+    last_run_time: 1578123058.21575
     last_todo: 0
-    mtime: 1566161686
-    seq: 737
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1061
+    total_passes: 6
   t/71-2F-U2F-with-TTL-and-msg.t:
-    elapsed: 11.170264005661
-    gen: 5
-    last_pass_time: 1568228147.05669
+    elapsed: 0.519258975982666
+    gen: 6
+    last_pass_time: 1578123058.73767
     last_result: 0
-    last_run_time: 1568228147.05669
+    last_run_time: 1578123058.73767
     last_todo: 0
-    mtime: 1566161701
-    seq: 711
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1062
+    total_passes: 6
   t/71-2F-U2F-with-TTL.t:
-    elapsed: 11.174901008606
-    gen: 5
-    last_pass_time: 1568228147.06065
+    elapsed: 0.521687030792236
+    gen: 6
+    last_pass_time: 1578123059.26201
     last_result: 0
-    last_run_time: 1568228147.06065
+    last_run_time: 1578123059.26201
     last_todo: 0
-    mtime: 1566161679
-    seq: 712
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1063
+    total_passes: 6
   t/71-2F-U2F.t:
-    elapsed: 0.0157241821289062
-    gen: 5
-    last_pass_time: 1568228159.20331
+    elapsed: 0.484652996063232
+    gen: 6
+    last_pass_time: 1578123057.70831
     last_result: 0
-    last_run_time: 1568228159.20331
+    last_run_time: 1578123057.70831
     last_todo: 0
-    mtime: 1566161693
-    seq: 729
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1060
+    total_passes: 6
   t/72-2F-REST-with-History.t:
-    elapsed: 0.175204992294312
-    gen: 5
-    last_pass_time: 1568228173.25927
+    elapsed: 0.280995845794678
+    gen: 6
+    last_pass_time: 1578123059.54557
     last_result: 0
-    last_run_time: 1568228173.25927
+    last_run_time: 1578123059.54557
     last_todo: 0
-    mtime: 1567545080
-    seq: 830
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1064
+    total_passes: 6
   t/73-2F-UTOTP-TOTP-and-U2F-with-History.t:
-    elapsed: 0.0330901145935059
-    gen: 5
-    last_pass_time: 1568228159.22043
+    elapsed: 0.54288387298584
+    gen: 6
+    last_pass_time: 1578123060.65588
     last_result: 0
-    last_run_time: 1568228159.22043
+    last_run_time: 1578123060.65588
     last_todo: 0
-    mtime: 1566161708
-    seq: 731
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1066
+    total_passes: 6
   t/73-2F-UTOTP-TOTP-and-U2F.t:
-    elapsed: 3.33038902282715
-    gen: 5
-    last_pass_time: 1568228162.73898
+    elapsed: 0.562212944030762
+    gen: 6
+    last_pass_time: 1578123060.11034
     last_result: 0
-    last_run_time: 1568228162.73898
+    last_run_time: 1578123060.11034
     last_todo: 0
-    mtime: 1566161686
-    seq: 739
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1065
+    total_passes: 6
   t/73-2F-UTOTP-TOTP-only-with-History.t:
-    elapsed: 8.11429405212402
-    gen: 5
-    last_pass_time: 1568228155.49131
+    elapsed: 0.280945777893066
+    gen: 6
+    last_pass_time: 1578123061.21599
     last_result: 0
-    last_run_time: 1568228155.49131
+    last_run_time: 1578123061.21599
     last_todo: 0
-    mtime: 1566161705
-    seq: 716
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1068
+    total_passes: 6
   t/73-2F-UTOTP-TOTP-only.t:
-    elapsed: 0.172497034072876
-    gen: 5
-    last_pass_time: 1568228174.0308
+    elapsed: 0.273998975753784
+    gen: 6
+    last_pass_time: 1578123060.93252
     last_result: 0
-    last_run_time: 1568228174.0308
+    last_run_time: 1578123060.93252
     last_todo: 0
-    mtime: 1566161692
-    seq: 843
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1067
+    total_passes: 6
   t/74-2F-Required.t:
-    elapsed: 0.128525972366333
-    gen: 5
-    last_pass_time: 1568228172.80738
+    elapsed: 0.249631881713867
+    gen: 6
+    last_pass_time: 1578123061.46811
     last_result: 0
-    last_run_time: 1568228172.80738
+    last_run_time: 1578123061.46811
     last_todo: 0
-    mtime: 1566161698
-    seq: 825
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1069
+    total_passes: 6
   t/75-2F-Registers.t:
-    elapsed: 0.0269069671630859
-    gen: 5
-    last_pass_time: 1568228159.21378
+    elapsed: 0.498811006546021
+    gen: 6
+    last_pass_time: 1578123061.9694
     last_result: 0
-    last_run_time: 1568228159.21378
+    last_run_time: 1578123061.9694
     last_todo: 0
-    mtime: 1566161688
-    seq: 730
-    total_passes: 5
+    mtime: 1576045451
+    seq: 1070
+    total_passes: 6
   t/76-2F-Ext-with-BruteForce.t:
-    elapsed: 11.1470317840576
-    gen: 5
-    last_pass_time: 1568228147.04722
+    elapsed: 0.308319807052612
+    gen: 6
+    last_pass_time: 1578123062.28033
     last_result: 0
-    last_run_time: 1568228147.04722
+    last_run_time: 1578123062.28033
     last_todo: 0
-    mtime: 1567545080
-    seq: 709
-    total_passes: 5
+    mtime: 1576257051
+    seq: 1071
+    total_passes: 6
   t/76-2F-Ext-with-CodeActivation.t:
-    elapsed: 0.118151903152466
-    gen: 5
-    last_pass_time: 1568228174.71704
+    elapsed: 0.294604063034058
+    gen: 6
+    last_pass_time: 1578123062.57781
     last_result: 0
-    last_run_time: 1568228174.71704
+    last_run_time: 1578123062.57781
     last_todo: 0
-    mtime: 1567545080
-    seq: 854
-    total_passes: 5
+    mtime: 1576257051
+    seq: 1072
+    total_passes: 6
   t/76-2F-Ext-with-GrantSession.t:
-    elapsed: 0.119552135467529
-    gen: 5
-    last_pass_time: 1568228175.0556
+    elapsed: 0.239151954650879
+    gen: 6
+    last_pass_time: 1578123062.81947
     last_result: 0
-    last_run_time: 1568228175.0556
+    last_run_time: 1578123062.81947
     last_todo: 0
-    mtime: 1567545080
-    seq: 859
-    total_passes: 5
+    mtime: 1576257051
+    seq: 1073
+    total_passes: 6
   t/76-2F-Ext-with-History.t:
-    elapsed: 0.15120792388916
-    gen: 5
-    last_pass_time: 1568228174.58343
+    elapsed: 0.275405883789062
+    gen: 6
+    last_pass_time: 1578123063.09766
     last_result: 0
-    last_run_time: 1568228174.58343
+    last_run_time: 1578123063.09766
     last_todo: 0
-    mtime: 1567545080
-    seq: 851
-    total_passes: 5
+    mtime: 1576257051
+    seq: 1074
+    total_passes: 6
   t/77-2F-Extra.t:
-    elapsed: 0.24836802482605
-    gen: 5
-    last_pass_time: 1568228169.68073
+    elapsed: 0.35393500328064
+    gen: 6
+    last_pass_time: 1578123063.45418
     last_result: 0
-    last_run_time: 1568228169.68073
+    last_run_time: 1578123063.45418
     last_todo: 0
-    mtime: 1567545080
-    seq: 785
-    total_passes: 5
+    mtime: 1576257051
+    seq: 1075
+    total_passes: 6
   t/77-2F-Mail-with-global-storage.t:
-    elapsed: 0.315623998641968
-    gen: 5
-    last_pass_time: 1568228170.40461
+    elapsed: 0.350372076034546
+    gen: 6
+    last_pass_time: 1578123064.13957
     last_result: 0
-    last_run_time: 1568228170.40461
+    last_run_time: 1578123064.13957
     last_todo: 0
-    mtime: 1567545080
-    seq: 793
-    total_passes: 5
+    mtime: 1578122054
+    seq: 1077
+    total_passes: 6
   t/77-2F-Mail.t:
-    elapsed: 0.209239959716797
-    gen: 5
-    last_pass_time: 1568228170.69004
+    elapsed: 0.329925060272217
+    gen: 6
+    last_pass_time: 1578123063.78665
     last_result: 0
-    last_run_time: 1568228170.69004
+    last_run_time: 1578123063.78665
     last_todo: 0
-    mtime: 1567545080
-    seq: 796
-    total_passes: 5
+    mtime: 1576257051
+    seq: 1076
+    total_passes: 6
   t/78-2F-Upgrade.t:
-    elapsed: 0.343040943145752
-    gen: 5
-    last_pass_time: 1568228170.26303
+    elapsed: 0.342027187347412
+    gen: 6
+    last_pass_time: 1578123064.48415
     last_result: 0
-    last_run_time: 1568228170.26303
+    last_run_time: 1578123064.48415
     last_todo: 0
-    mtime: 1567545080
-    seq: 791
-    total_passes: 5
+    mtime: 1578121398
+    seq: 1078
+    total_passes: 6
   t/90-Translations.t:
-    elapsed: 0.0319240093231201
-    gen: 5
-    last_pass_time: 1568228147.17856
+    elapsed: 0.0712189674377441
+    gen: 6
+    last_pass_time: 1578123064.55798
     last_result: 0
-    last_run_time: 1568228147.17856
+    last_run_time: 1578123064.55798
     last_todo: 0
-    mtime: 1566161682
-    seq: 713
-    total_passes: 5
+    mtime: 1569964806
+    seq: 1079
+    total_passes: 6
   t/99-Dont-load-Dumper.t:
-    elapsed: 0.323445081710815
-    gen: 5
-    last_pass_time: 1568228170.20878
+    elapsed: 0.293112993240356
+    gen: 6
+    last_pass_time: 1578123064.85352
     last_result: 0
-    last_run_time: 1568228170.20878
+    last_run_time: 1578123064.85352
     last_todo: 0
-    mtime: 1567545352
-    seq: 790
-    total_passes: 2
+    mtime: 1576734087
+    seq: 1080
+    total_passes: 3
   t/99-pod.t:
-    elapsed: 0.374809980392456
-    gen: 5
-    last_pass_time: 1568228171.84529
+    elapsed: 0.23412299156189
+    gen: 6
+    last_pass_time: 1578123065.0902
     last_result: 0
-    last_run_time: 1568228171.84529
+    last_run_time: 1578123065.0902
     last_todo: 0
     mtime: 1566161693
-    seq: 812
-    total_passes: 5
+    seq: 1081
+    total_passes: 6
 version: 1
 ...

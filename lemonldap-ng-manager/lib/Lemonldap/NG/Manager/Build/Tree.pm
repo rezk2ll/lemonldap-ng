@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 # TODO: Missing:
 #  * activeTimer
@@ -570,8 +570,7 @@ sub tree {
                 {
                     title => 'reloadParams',
                     help  => 'configlocation.html#configuration_reload',
-                    nodes =>
-                      [ 'reloadUrls', 'reloadTimeout', 'dontCompactConf' ]
+                    nodes => [ 'reloadUrls', 'reloadTimeout', 'compactConf' ]
                 },
                 {
                     title => 'plugins',
@@ -580,6 +579,7 @@ sub tree {
                         'stayConnected',
                         'portalStatus',
                         'upgradeSession',
+                        'refreshSessions',
                         {
                             title => 'portalServers',
                             help  => 'portalservers.html',
@@ -656,34 +656,32 @@ sub tree {
                                     ]
                                 }
                             ]
-                         },
-                          {
+                        },
+                        {
                             title => 'certificateResetByMailManagement',
-                             form  => 'simpleInputContainer',
-                             nodes => [ {
-                                     title => 'certificateMailContent',
-                                     form  => 'simpleInputContainer',
-                                     nodes => [ 
-                                         'certificateResetByMailSender',
-                                         'certificateResetByMailReplyTo',
-                                         'certificateResetByMailStep1Subject',
-                                         'certificateResetByMailStep1Body',
-                                         'certificateResetByMailStep2Subject',
-                                         'certificateResetByMailStep2Body'
-                                      ]
-                                  },
-  
-                                  {
-                                      title => 'mailOther',
-                                      form  => 'simpleInputContainer',
-                                      nodes => [
-                                          'certificateResetByMailURL',
-                                          'certificateResetByMailCeaAttribute',
-                                          'certificateResetByMailCertificateAttribute',
-                                          'certificateResetByMailValidityDelay'
+                            help  => 'resetcertificate.html',
+                            nodes => [ {
+                                    title => 'certificateMailContent',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'certificateResetByMailStep1Subject',
+                                        'certificateResetByMailStep1Body',
+                                        'certificateResetByMailStep2Subject',
+                                        'certificateResetByMailStep2Body'
                                     ]
-                                 } 
-                             ]
+                                },
+
+                                {
+                                    title => 'mailOther',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'certificateResetByMailURL',
+                                        'certificateResetByMailCeaAttribute',
+'certificateResetByMailCertificateAttribute',
+                                        'certificateResetByMailValidityDelay'
+                                    ]
+                                }
+                            ]
                         },
                         {
                             title => 'register',
@@ -761,7 +759,6 @@ sub tree {
                             help  => 'plugincustom.html',
                             nodes => [ 'customPlugins', 'customPluginsParams' ]
                         },
-                        'refreshSessions',
                     ]
                 },
                 {
@@ -1057,7 +1054,8 @@ sub tree {
                     help  => 'samlservice.html#organization',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'samlOrganizationDisplayName', 'samlOrganizationName',
+                        'samlOrganizationDisplayName',
+                        'samlOrganizationName',
                         'samlOrganizationURL'
                     ]
                 },
@@ -1217,8 +1215,8 @@ sub tree {
                     title => "oidcServiceMetaDataSessions",
                     nodes => [ 'oidcStorage', 'oidcStorageOptions', ],
                 },
-		'oidcServiceDynamicRegistrationExportedVars',
-		'oidcServiceDynamicRegistrationExtraClaims',
+                'oidcServiceDynamicRegistrationExportedVars',
+                'oidcServiceDynamicRegistrationExtraClaims',
             ]
         },
         'oidcOPMetaDataNodes',

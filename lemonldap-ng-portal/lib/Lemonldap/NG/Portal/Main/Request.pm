@@ -109,7 +109,7 @@ sub error_type {
                 PE_CONFIRM,                       PE_MAILFORMEMPTY,
                 PE_MAILCONFIRMATION_ALREADY_SENT, PE_PASSWORDFORMEMPTY,
                 PE_CAPTCHAEMPTY,                  PE_REGISTERFORMEMPTY,
-                PE_PP_CHANGE_AFTER_RESET,         PE_RESETCERTIFICATE_FOREMPTY,
+                PE_PP_CHANGE_AFTER_RESET,         PE_RESETCERTIFICATE_FORMEMPTY,
             )
         )
       );

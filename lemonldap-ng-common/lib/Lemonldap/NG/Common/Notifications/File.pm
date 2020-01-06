@@ -7,9 +7,10 @@ package Lemonldap::NG::Common::Notifications::File;
 
 use strict;
 use Mouse;
+use Time::Local;
 use MIME::Base64;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Common::Notifications';
 
@@ -129,6 +130,13 @@ sub purge {
 sub newNotif {
     my ( $self, $date, $uid, $ref, $condition, $content ) = @_;
     my $fns = $self->{fileNameSeparator};
+    $fns ||= '_';
+    my @t = split( /\D+/, $date );
+    $t[1]--;
+    eval {
+        timelocal( $t[5] || 0, $t[4] || 0, $t[3] || 0, $t[2], $t[1], $t[0] );
+    };
+    return ( 0, "Bad date" ) if ($@);
     $date =~ s/-//g;
     return ( 0, "Bad date" ) unless ( $date =~ /^\d{8}/ );
     my $filename =

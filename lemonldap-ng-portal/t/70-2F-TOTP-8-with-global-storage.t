@@ -25,6 +25,7 @@ SKIP: {
                 totp2fTTL              => -1,
                 formTimeout            => 120,
                 requireToken           => 1,
+                tokenUseGlobalStorage  => 1,
             }
         }
     );

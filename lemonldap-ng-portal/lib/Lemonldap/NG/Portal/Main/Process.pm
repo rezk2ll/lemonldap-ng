@@ -1,6 +1,6 @@
 package Lemonldap::NG::Portal::Main::Process;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -52,7 +52,7 @@ sub process {
 sub restoreArgs {
     my ( $self, $req ) = @_;
     $req->mustRedirect(1);
-    return PE_OK;
+    PE_OK;
 }
 
 sub importHandlerData {
@@ -143,7 +143,6 @@ sub controlUrl {
         $req->data->{_url}  = $url;
         $req->pdata->{_url} = $url;
     }
-
     PE_OK;
 }
 
@@ -266,7 +265,6 @@ sub checkXSSAttack {
             "XSS attack detected (param: $name | value: $value)");
         return $self->conf->{checkXSS};
     }
-
     return 0;
 }
 
@@ -320,14 +318,13 @@ sub authenticate {
     $req->steps( [
             'setSessionInfo',           'setMacros',
             'setPersistentSessionInfo', 'storeHistory',
-            @{ $self->afterData }, sub { PE_BADCREDENTIALS }
+            @{ $self->afterData },      sub { PE_BADCREDENTIALS }
         ]
     );
 
     # Ignore result, process will end at least with PE_BADCREDENTIALS
     my $tmp = $self->process($req);
     $ret = $tmp if ( $tmp == PE_WAIT );
-
     return $ret;
 }
 
@@ -349,7 +346,7 @@ sub setSessionInfo {
     my ( $self, $req ) = @_;
 
     # Set _user
-    $req->{sessionInfo}->{_user} //= $req->{user};
+    $req->{sessionInfo}->{_user} //= $req->user;
 
     # Get the current user module
     $req->{sessionInfo}->{_auth}   = $self->getModule( $req, "auth" );
@@ -382,7 +379,6 @@ sub setSessionInfo {
 
     # Call UserDB setSessionInfo
     return $self->_userDB->setSessionInfo($req);
-
     PE_OK;
 }
 
@@ -404,7 +400,7 @@ sub setPersistentSessionInfo {
     my ( $self, $req ) = @_;
 
     # Do not restore infos if session already opened
-    unless ( $req->{id} ) {
+    unless ( $req->id ) {
         my $key = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
 
         return PE_OK unless ( $key and length($key) );
@@ -450,7 +446,7 @@ sub store {
     $req->userData( $req->sessionInfo );
 
     # Create second session for unsecure cookie
-    if ( $self->conf->{securedCookie} == 2 and !$req->refresh() ) {
+    if ( $self->conf->{securedCookie} == 2 and !$req->refresh ) {
         my %infos = %{ $req->{sessionInfo} };
         $infos{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
         $self->logger->debug("Set _updateTime with $infos{_updateTime}");
@@ -479,22 +475,29 @@ sub store {
 
     # Main session
     my $session = $self->getApacheSession(
-        $req->{id},
+        $req->id,
         force => $req->{force},
         info  => $infos
     );
     return PE_APACHESESSIONERROR unless ($session);
-    $req->id( $session->{id} );
+
+    # Update current request
+    $req->id( $session->id );
+    unless ( $self->_sfEngine->searchForAuthorized2Fmodules($req) ) {
+        $self->logger->debug(
+            "No 2F module authorized -> Update current request");
+        $req->{sessionInfo}->{_session_id}   = $session->{id};
+        $req->{sessionInfo}->{_session_kind} = $session->{kind};
+    }
 
     # Compute unsecured cookie value if needed
-    if ( $self->conf->{securedCookie} == 3 and !$req->refresh() ) {
+    if ( $self->conf->{securedCookie} == 3 and !$req->refresh ) {
         $req->{sessionInfo}->{_httpSession} =
-          $self->conf->{cipher}->encryptHex( $req->{id}, "http" );
+          $self->conf->{cipher}->encryptHex( $req->id, "http" );
         $self->logger->debug( " -> Compute unsecured cookie value : "
               . $req->{sessionInfo}->{_httpSession} );
     }
     $req->refresh(0);
-
     PE_OK;
 }
 
@@ -504,7 +507,7 @@ sub buildCookie {
         $req->addCookie(
             $self->cookie(
                 name   => $self->conf->{cookieName},
-                value  => $req->{id},
+                value  => $req->id,
                 domain => $self->conf->{domain},
                 secure => $self->conf->{securedCookie},
             )
@@ -520,9 +523,14 @@ sub buildCookie {
             );
         }
     }
-    my $user_log = $req->{userData}->{ $self->conf->{whatToTrace} };
-    $self->userLogger->notice(
-"User $user_log successfully authenticated at level $req->{userData}->{authenticationLevel}"
+    my $ref = (
+        %{ $req->{sessionInfo} }
+        ? $req->{sessionInfo}
+        : $req->{userData}
+    );
+    $self->userLogger->notice( 'User '
+          . $ref->{ $self->conf->{whatToTrace} }
+          . " successfully authenticated at level $ref->{authenticationLevel}"
     );
     PE_OK;
 }

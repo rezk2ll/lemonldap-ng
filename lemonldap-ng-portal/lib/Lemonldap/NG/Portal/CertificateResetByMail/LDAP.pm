@@ -11,17 +11,11 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Lib::LDAP';
 
-our $VERSION = '2.1.0';
+our $VERSION = '2.0.8';
 
-# RUNNING METHODS
-
-# PRIVATE METHODS
+# PRIVATE METHOD
 sub modifCertificate {
-
-    my $self         = shift;
-    my $newcertif    = shift;
-    my $usercertif   = shift;
-    my $req          = shift;
+    my ( $self, $newcertif, $usercertif, $req ) = @_;
     my $ceaAttribute = $self->conf->{certificateResetByMailCeaAttribute}
       || "description";
     my $certificateAttribute =
@@ -29,8 +23,6 @@ sub modifCertificate {
       || "userCertificate;binary";
 
     # Set the dn unless done before
-    #
-    #
     my $dn;
     if ( $req->userData->{_dn} ) {
         $dn = $req->userData->{_dn};
@@ -41,7 +33,7 @@ sub modifCertificate {
         $self->logger->debug("Get DN from session data: $dn");
     }
     unless ($dn) {
-        $self->logger->error('"dn" is not set, aborting password modification');
+        $self->logger->error('"dn" is not set, aborting certificate reset');
         return PE_ERROR;
     }
 

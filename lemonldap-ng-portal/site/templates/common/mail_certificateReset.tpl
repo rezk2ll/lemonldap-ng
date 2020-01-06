@@ -3,7 +3,7 @@
 <p>
 <span trspan="hello">Hello</span> $cn,<br />
 <br />
-<span trspan="certificatReset">Your certificate was reset sucessfully.</span> 
+<span trspan="resetCertificateOK">Your certificate has been successfully reset!</span> 
 </p>
 
 <TMPL_INCLUDE NAME="mail_footer.tpl">

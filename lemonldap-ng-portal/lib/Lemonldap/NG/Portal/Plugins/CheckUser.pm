@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MALFORMEDUSER
 );
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -31,6 +31,7 @@ has ott => (
 );
 has idRule => ( is => 'rw', default => sub { 1 } );
 has sorted => ( is => 'rw', default => sub { 0 } );
+has merged => ( is => 'rw', default => '' );
 
 sub hAttr {
     $_[0]->{conf}->{checkUserHiddenAttributes} . ' '
@@ -56,6 +57,8 @@ sub init {
     $self->idRule($rule);
     $self->sorted( $self->conf->{impersonationRule}
           || $self->conf->{contextSwitchingRule} );
+    $self->merged( $self->conf->{impersonationMergeSSOgroups}
+          && $self->conf->{impersonationRule} ? 'Merged' : '' );
     return 1;
 }
 
@@ -93,24 +96,19 @@ sub display {
 
     # Display form
     my $params = {
-        PORTAL    => $self->conf->{portal},
-        MAIN_LOGO => $self->conf->{portalMainLogo},
-        SKIN      => $self->p->getSkin($req),
-        LANGS     => $self->conf->{showLanguages},
-        MSG       => (
-            $self->{conf}->{impersonationMergeSSOgroups} ? 'checkUserMerged'
-            : 'checkUser'
-        ),
-        ALERTE => (
-            $self->{conf}->{impersonationMergeSSOgroups} ? 'alert-warning'
-            : 'alert-info'
-        ),
+        PORTAL     => $self->conf->{portal},
+        MAIN_LOGO  => $self->conf->{portalMainLogo},
+        SKIN       => $self->p->getSkin($req),
+        LANGS      => $self->conf->{showLanguages},
+        MSG        => 'checkUser' . $self->merged,
+        ALERTE     => ( $self->merged ? 'alert-warning' : 'alert-info' ),
         LOGIN      => $req->{userData}->{ $self->conf->{whatToTrace} },
         ATTRIBUTES => $array_attrs->[2],
         MACROS     => $array_attrs->[1],
         GROUPS     => $array_attrs->[0],
         TOKEN      => (
-            $self->ottRule->( $req, {} ) ? $self->ott->createToken()
+              $self->ottRule->( $req, {} )
+            ? $self->ott->createToken()
             : ''
         )
     };
@@ -123,7 +121,7 @@ sub display {
 sub check {
     my ( $self, $req ) = @_;
     my ( $attrs, $array_attrs, $array_hdrs ) = ( {}, [], [] );
-    my $msg       = my $auth = my $compute = '';
+    my $msg = my $auth = my $compute = '';
     my $authLevel = $req->userData->{authenticationLevel};
     my $authMode  = $req->userData->{_auth};
 
@@ -241,10 +239,7 @@ sub check {
         $attrs       = {};
     }
     else {
-        $msg =
-          $self->{conf}->{impersonationMergeSSOgroups} eq 1
-          ? 'checkUserMerged'
-          : 'checkUser';
+        $msg = 'checkUser' . $self->merged;
         if ($compute) {
             $msg                          = 'checkUserComputeSession';
             $attrs->{authenticationLevel} = $authLevel;
@@ -442,7 +437,7 @@ sub _splitAttributes {
         if ( $element->{key} eq 'groups' ) {
             $self->logger->debug('Key "groups" found');
             my $separator = $self->{conf}->{multiValuesSeparator};
-            my @tmp       = split /\Q$separator/, $element->{value};
+            my @tmp = split /\Q$separator/, $element->{value};
             $grps = [ map { { value => $_ } } sort @tmp ];
             next;
         }

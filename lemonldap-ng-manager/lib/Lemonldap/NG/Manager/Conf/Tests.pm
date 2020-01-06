@@ -719,6 +719,21 @@ sub tests {
             return 1;
         },
 
+        # Warn if CertificateResetByMail dependencies seem missing
+        certResetByMailDependencies => sub {
+            return 1 unless ( $conf->{portalDisplayCertificateResetByMail} );
+            return ( 0,
+"LDAP RegisterDB is required to enable CertificateResetByMail plugin"
+            ) unless ( $conf->{registerDB} eq 'LDAP' );
+            eval "use DateTime::Format::RFC3339";
+            return ( 1,
+"DateTime::Format::RFC3339 module is required to enable CertificateResetByMail plugin"
+            ) if ($@);
+
+            # Return
+            return 1;
+        },
+
         # OIDC redirect URI must not be empty
         oidcRPRedirectURINotEmpty => sub {
             return 1

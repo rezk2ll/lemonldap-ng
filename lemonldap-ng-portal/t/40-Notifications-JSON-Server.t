@@ -15,6 +15,22 @@ my $json = '{
 "text": "This is a test text"
 }';
 
+my $bad_json = '{
+"date": "2016-13-30 15:35:10",
+"reference": "testref",
+"uid": "dwho",
+"title": "Test title",
+"text": "This is a test text"
+}';
+
+my $bad_json2 = '{
+"date": "2016-13_30 15:35:10",
+"reference": "testref",
+"uid": "dwho",
+"title": "Test title",
+"text": "This is a test text"
+}';
+
 my $jsonbis = '{
 "date": "2016-05-31",
 "reference": "testref",
@@ -103,6 +119,21 @@ my $client = LLNG::Manager::Test->new( {
 );
 
 my $res;
+foreach ( $bad_json, $bad_json2 ) {
+    ok(
+        $res = $client->_post(
+            '/notifications', IO::String->new($_),
+            type   => 'application/json',
+            length => length($_)
+        ),
+        "POST notification $_"
+    );
+    ok( $res->[2]->[0] =~ /"error"\s*:\s*"Bad date/,
+        'Notification not inserted' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    count(2);
+}
+
 foreach ( $json, $json2, $jsonall ) {
     ok(
         $res = $client->_post(
@@ -155,7 +186,7 @@ ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' );
 ok( scalar @{ $json->{result} } == 3, 'Three notifications found' )
   or print STDERR Dumper($json);
 
-foreach ( @{$json->{result}} ) {
+foreach ( @{ $json->{result} } ) {
     ok( $_->{reference} =~ /^testref/, "Reference \'$_->{reference}\' found" )
       or print STDERR Dumper($json);
     ok( $_->{uid} =~ /^(dwho|everyone)$/, "UID \'$_->{uid}\' found" )
@@ -304,7 +335,8 @@ count(2);
 
 ok(
     $res = $client->_get(
-        '/notifications/_allExisting_', type => 'application/json',
+        '/notifications/_allExisting_',
+        type => 'application/json',
     ),
     'List all existing notifications'
 );
