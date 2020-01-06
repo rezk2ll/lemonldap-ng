@@ -72,7 +72,7 @@ You can share your configuration over the network using REST proxy system:
 </li>
 <li class="level1"><div class="li"> GET /config/&lt;latest|cfgNum&gt;/&lt;key&gt;: get conf key value</div>
 </li>
-<li class="level1"><div class="li"> GET /config/&lt;latest|cfgNum&gt;?full: get the full configuration</div>
+<li class="level1"><div class="li"> GET /config/&lt;latest|cfgNum&gt;?full=1: get the full configuration</div>
 </li>
 </ul>
 
@@ -90,12 +90,12 @@ If no &lt;lang&gt; provided, &#039;en&#039; errors file is returned.
 <div class="notetip">Note that REST is not a real configuration backend, but just a proxy system to access to your configuration over the network
 </div>
 </div>
-<!-- EDIT1 SECTION "REST configuration backend" [1-694] -->
+<!-- EDIT1 SECTION "REST configuration backend" [1-696] -->
 <h2 class="sectionedit2" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT2 SECTION "Configuration" [695-721] -->
+<!-- EDIT2 SECTION "Configuration" [697-723] -->
 <h3 class="sectionedit3" id="first_configure_your_real_backend">First, configure your real backend</h3>
 <div class="level3">
 <ul>
@@ -124,7 +124,7 @@ location /index.psgi/config {
 }</pre>
 
 </div>
-<!-- EDIT3 SECTION "First, configure your real backend" [722-1502] -->
+<!-- EDIT3 SECTION "First, configure your real backend" [724-1504] -->
 <h3 class="sectionedit4" id="next_configure_rest_for_your_remote_servers">Next, configure REST for your remote servers</h3>
 <div class="level3">
 
@@ -146,6 +146,6 @@ You can also add some other parameters
 <span class="re1">proxyOptions</span> <span class="sy0">=</span><span class="re2"> <span class="br0">&#123;</span> timeout <span class="sy0">=</span>&gt; 5 <span class="br0">&#125;</span></span></pre>
 
 </div>
-<!-- EDIT4 SECTION "Next, configure REST for your remote servers" [1503-] --></div>
+<!-- EDIT4 SECTION "Next, configure REST for your remote servers" [1505-] --></div>
 </body>
 </html>

@@ -269,9 +269,7 @@ sub _samlMetaDataNodes {
     my ( $id, $resp ) = ( 1, [] );
 
     # Return all exported attributes if asked
-    if ( $query =~
-        /^saml${type}MetaDataExportedAttributes|samlSPMetaDataMacros$/ )
-    {
+    if ( $query =~ /^saml${type}MetaDataExportedAttributes$/ ) {
         my $pk =
           eval { $self->getConfKey( $req, $query )->{$partner} } // {};
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
@@ -282,6 +280,21 @@ sub _samlMetaDataNodes {
                 title => $h,
                 data  => [ split /;/, $pk->{$h} ],
                 type  => 'samlAttribute',
+              };
+        }
+        return $self->sendJSONresponse( $req, $resp );
+    }
+    elsif ( $query eq "samlSPMetaDataMacros" ) {
+        my $pk =
+          eval { $self->getConfKey( $req, $query )->{$partner} } // {};
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+        foreach my $h ( sort keys %$pk ) {
+            push @$resp,
+              {
+                id    => "saml${type}MetaDataNodes/$partner/$query/" . $id++,
+                title => $h,
+                data  => $pk->{$h},
+                type  => 'keyText',
               };
         }
         return $self->sendJSONresponse( $req, $resp );

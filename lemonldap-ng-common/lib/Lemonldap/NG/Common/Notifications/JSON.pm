@@ -34,6 +34,9 @@ sub newNotification {
                 $self->logger->error("$err");
                 return ( 0, "$err" );
             }
+
+            # Prevent to store time. Keep date only
+            $tmp =~ s/^(\d{4}-\d{2}-\d{2}).*$/$1/;
             push @data, $tmp;
         }
 
@@ -44,6 +47,7 @@ sub newNotification {
         }
         
         push @data, ( $notif->{condition} );
+        $notif->{date} =~ s/^(\d{4}-\d{2}-\d{2}).*$/$1/;
         my $body = to_json($notif);
         push @notifs, [ @data, $body ];
     }

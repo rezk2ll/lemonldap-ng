@@ -4,7 +4,7 @@ package Lemonldap::NG::Portal::Main::Constants;
 use strict;
 use Exporter 'import';
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::Main';
 use constant {
@@ -100,6 +100,9 @@ use constant {
     PE_ISSUERMISSINGREQATTR              => 94,
     PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED  => 95,
     PE_BADOTP                            => 96,
+    PE_RESETCERTIFICATE_INVALID          => 97,
+    PE_RESETCERTIFICATE_FORMEMPTY        => 98,
+    PE_RESETCERTIFICATE_FIRSTACCESS      => 99,
 };
 
 sub portalConsts {
@@ -195,7 +198,10 @@ sub portalConsts {
         '93' => 'PE_IMPERSONATION_SERVICE_NOT_ALLOWED',
         '94' => 'PE_ISSUERMISSINGREQATTR',
         '95' => 'PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED',
-        '96' => 'PE_BADOTP'
+        '96' => 'PE_BADOTP',
+        '97' => 'PE_RESETCERTIFICATE_INVALID',
+        '98' => 'PE_RESETCERTIFICATE_FORMEMPTY',
+        '99' => 'PE_RESETCERTIFICATE_FIRSTACCESS'
     };
 
 }
@@ -295,7 +301,10 @@ our @EXPORT_OK = (
     'PE_IMPERSONATION_SERVICE_NOT_ALLOWED',
     'PE_ISSUERMISSINGREQATTR',
     'PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED',
-    'PE_BADOTP'
+    'PE_BADOTP',
+    'PE_RESETCERTIFICATE_INVALID',
+    'PE_RESETCERTIFICATE_FORMEMPTY',
+    'PE_RESETCERTIFICATE_FIRSTACCESS'
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT_OK, 'import' ], );
 

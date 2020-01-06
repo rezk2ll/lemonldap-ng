@@ -59,9 +59,11 @@
 <li class="level2"><div class="li"><a href="#unicode2iso">unicode2iso</a></div></li>
 <li class="level2"><div class="li"><a href="#iso2unicode">iso2unicode</a></div></li>
 <li class="level2"><div class="li"><a href="#groupmatch">groupMatch</a></div></li>
+<li class="level2"><div class="li"><a href="#listmatch">listMatch</a></div></li>
 <li class="level2"><div class="li"><a href="#encrypt">encrypt</a></div></li>
 <li class="level2"><div class="li"><a href="#token">token</a></div></li>
 <li class="level2"><div class="li"><a href="#isinnet6">isInNet6</a></div></li>
+<li class="level2"><div class="li"><a href="#varisinuri">varIsInUri</a></div></li>
 </ul></li>
 </ul>
 </div>
@@ -126,11 +128,15 @@ Inside this jail, you can access to:
 </li>
 <li class="level2"><div class="li"> <a href="#groupmatch" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">groupMatch</a></div>
 </li>
+<li class="level2"><div class="li"> <a href="#listmatch" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">listMatch</a> (<a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> <em> since 2.0.7)</em></div>
+</li>
 <li class="level2"><div class="li"> <a href="#encrypt" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">encrypt</a></div>
 </li>
 <li class="level2"><div class="li"> <a href="#token" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">token</a></div>
 </li>
 <li class="level2"><div class="li"> <a href="#isinnet6" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">isInNet6</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#varisinuri" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">varIsInUri</a></div>
 </li>
 </ul>
 </li>
@@ -138,12 +144,12 @@ Inside this jail, you can access to:
 <div class="notetip">To know more about the jail, check <a href="http://perldoc.perl.org/Safe.html" class="urlextern" title="http://perldoc.perl.org/Safe.html"  rel="nofollow">Safe module documentation</a>.
 </div>
 </div>
-<!-- EDIT2 SECTION "Presentation" [35-1215] -->
+<!-- EDIT2 SECTION "Presentation" [35-1324] -->
 <h2 class="sectionedit3" id="extended_functions_list">Extended Functions List</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Extended Functions List" [1216-1252] -->
+<!-- EDIT3 SECTION "Extended Functions List" [1325-1361] -->
 <h3 class="sectionedit4" id="date">date</h3>
 <div class="level3">
 
@@ -153,7 +159,7 @@ Returns the date, in format YYYYMMDDHHMMSS, local time by default, GMT by callin
 <pre class="code">date(1)</pre>
 
 </div>
-<!-- EDIT4 SECTION "date" [1253-1372] -->
+<!-- EDIT4 SECTION "date" [1362-1481] -->
 <h3 class="sectionedit5" id="checklogonhours">checkLogonHours</h3>
 <div class="level3">
 
@@ -210,7 +216,7 @@ You can modify the default behavior for people without value in ssoLogonHours. I
 <pre class="code">checkLogonHours($ssoLogonHours, &#039;&#039;, &#039;&#039;, &#039;1&#039;)</pre>
 
 </div>
-<!-- EDIT5 SECTION "checkLogonHours" [1373-3310] -->
+<!-- EDIT5 SECTION "checkLogonHours" [1482-3419] -->
 <h3 class="sectionedit6" id="checkdate">checkDate</h3>
 <div class="level3">
 
@@ -242,7 +248,7 @@ Simple usage example:
 <pre class="code">checkDate($ssoStartDate, $ssoEndDate)</pre>
 
 </div>
-<!-- EDIT6 SECTION "checkDate" [3311-3938] -->
+<!-- EDIT6 SECTION "checkDate" [3420-4047] -->
 <h3 class="sectionedit7" id="basic">basic</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -267,7 +273,7 @@ Simple usage example:
 <pre class="code">basic($uid,$_password)</pre>
 
 </div>
-<!-- EDIT7 SECTION "basic" [3939-4401] -->
+<!-- EDIT7 SECTION "basic" [4048-4510] -->
 <h3 class="sectionedit8" id="unicode2iso">unicode2iso</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -290,7 +296,7 @@ Simple usage example:
 <pre class="code">unicode2iso($name)</pre>
 
 </div>
-<!-- EDIT8 SECTION "unicode2iso" [4402-4706] -->
+<!-- EDIT8 SECTION "unicode2iso" [4511-4815] -->
 <h3 class="sectionedit9" id="iso2unicode">iso2unicode</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -313,7 +319,7 @@ Simple usage example:
 <pre class="code">iso2unicode($name)</pre>
 
 </div>
-<!-- EDIT9 SECTION "iso2unicode" [4707-5011] -->
+<!-- EDIT9 SECTION "iso2unicode" [4816-5120] -->
 <h3 class="sectionedit10" id="groupmatch">groupMatch</h3>
 <div class="level3">
 
@@ -339,29 +345,67 @@ Simple usage example:
 <pre class="code">groupMatch($hGroups, &#039;description&#039;, &#039;Service 1&#039;)</pre>
 
 </div>
-<!-- EDIT10 SECTION "groupMatch" [5012-5370] -->
-<h3 class="sectionedit11" id="encrypt">encrypt</h3>
+<!-- EDIT10 SECTION "groupMatch" [5121-5479] -->
+<h3 class="sectionedit11" id="listmatch">listMatch</h3>
+<div class="level3">
+
+<p>
+(<a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> <em> since 2.0.7)</em>
+</p>
+
+<p>
+This function lets you test if a particular value can be found with a multi-valued session attribute.
+</p>
+
+<p>
+Function parameter:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>list</strong>: Variable containing several values (plain string with separator, array or hash) </div>
+</li>
+<li class="level1"><div class="li"> <strong>value</strong>: Value to search in the list</div>
+</li>
+<li class="level1"><div class="li"> <strong>ignorecase</strong>: Ignore case, by default the search is case-sensitive</div>
+</li>
+</ul>
+
+<p>
+Simple usage example:
+</p>
+<pre class="code"># Case sensitive match
+listMatch($roles, &#039;role-app1&#039;)
+
+# Case insensitive match
+listMatch($roles, &#039;RoLe-aPp1&#039;, 1)</pre>
+
+<p>
+The function returns 1 if the value was found, and 0 if it was not found.
+</p>
+
+</div>
+<!-- EDIT11 SECTION "listMatch" [5480-6107] -->
+<h3 class="sectionedit12" id="encrypt">encrypt</h3>
 <div class="level3">
 <div class="notetip">Since version 2.0, this function is now compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>.
 </div>
 <p>
-This function uses the secret key of LLNG configuration to crypt a data. This can be used to anonymize identifier given to the protected application.
+This function uses the secret key of LLNG configuration to crypt a data. This can be used for anonymizing identifier given to the protected application.
 </p>
 <pre class="code">encrypt($_whatToTrace)</pre>
 
 </div>
-<!-- EDIT11 SECTION "encrypt" [5371-5676] -->
-<h3 class="sectionedit12" id="token">token</h3>
+<!-- EDIT12 SECTION "encrypt" [6108-6416] -->
+<h3 class="sectionedit13" id="token">token</h3>
 <div class="level3">
 
 <p>
-This function generates token used to <a href="servertoserver.html" class="wikilink1" title="documentation:2.0:servertoserver">handle server webservice calls</a>.
+This function generates token used for <a href="servertoserver.html" class="wikilink1" title="documentation:2.0:servertoserver">handling server webservice calls</a>.
 </p>
 <pre class="code">token($_session_id,&#039;webapp1.example.com&#039;,&#039;webapp2.example.com&#039;)</pre>
 
 </div>
-<!-- EDIT12 SECTION "token" [5677-5881] -->
-<h3 class="sectionedit13" id="isinnet6">isInNet6</h3>
+<!-- EDIT13 SECTION "token" [6417-6624] -->
+<h3 class="sectionedit14" id="isinnet6">isInNet6</h3>
 <div class="level3">
 
 <p>
@@ -370,6 +414,33 @@ Function to check if an IPv6 address is in a subnet. Example <em>check if <abbr 
 <pre class="code perl">isInNet6<span class="br0">&#40;</span><span class="re0">$ipAddr</span><span class="sy0">,</span> <span class="st_h">'fe80::/10'</span><span class="br0">&#41;</span></pre>
 
 </div>
-<!-- EDIT13 SECTION "isInNet6" [5882-] --></div>
+<!-- EDIT14 SECTION "isInNet6" [6625-6792] -->
+<h3 class="sectionedit15" id="varisinuri">varIsInUri</h3>
+<div class="level3">
+
+<p>
+Function to check if a variable is in requested <abbr title="Uniform Resource Identifier">URI</abbr> (Require <abbr title="LemonLDAP::NG">LL::NG</abbr> &gt;= 2.0.7).
+</p>
+
+<p>
+Example <em>check if $uid is in /check-auth/ <abbr title="Uniform Resource Identifier">URI</abbr></em>:
+</p>
+<pre class="code perl">varIsInUri<span class="br0">&#40;</span><span class="re0">$ENV</span><span class="br0">&#123;</span>REQUEST_URI<span class="br0">&#125;</span><span class="sy0">,</span> <span class="st_h">'/check-auth/'</span><span class="sy0">,</span> <span class="re0">$uid</span><span class="br0">&#41;</span>
+&nbsp;
+https<span class="sy0">://</span>test1<span class="sy0">.</span>example<span class="sy0">.</span>com<span class="sy0">/</span>check<span class="sy0">-</span>auth<span class="sy0">/</span>dwho     <span class="sy0">-&gt;</span> <span class="me1">true</span>
+https<span class="sy0">://</span>test1<span class="sy0">.</span>example<span class="sy0">.</span>com<span class="sy0">/</span>check<span class="sy0">-</span>auth<span class="sy0">/</span>dwho<span class="sy0">/</span>api <span class="sy0">-&gt;</span> <span class="me1">true</span>
+https<span class="sy0">://</span>test1<span class="sy0">.</span>example<span class="sy0">.</span>com<span class="sy0">/</span>check<span class="sy0">-</span>auth<span class="sy0">/</span>dwh      <span class="sy0">-&gt;</span> <span class="me1">false</span></pre>
+
+<p>
+* You can set &quot;restricted&quot; flag to match exact <abbr title="Uniform Resource Identifier">URI</abbr>:
+</p>
+<pre class="code perl">varIsInUri<span class="br0">&#40;</span><span class="re0">$ENV</span><span class="br0">&#123;</span>REQUEST_URI<span class="br0">&#125;</span><span class="sy0">,</span> <span class="st_h">'/check-auth/'</span><span class="sy0">,</span> <span class="st0">&quot;$uid/&quot;</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+&nbsp;
+https<span class="sy0">://</span>test1<span class="sy0">.</span>example<span class="sy0">.</span>com<span class="sy0">/</span>check<span class="sy0">-</span>auth<span class="sy0">/</span>rtyler<span class="sy0">/</span>     <span class="sy0">-&gt;</span> <span class="me1">true</span>
+https<span class="sy0">://</span>test1<span class="sy0">.</span>example<span class="sy0">.</span>com<span class="sy0">/</span>check<span class="sy0">-</span>auth<span class="sy0">/</span>rtyler<span class="sy0">/</span>api  <span class="sy0">-&gt;</span> <span class="me1">false</span>
+https<span class="sy0">://</span>test1<span class="sy0">.</span>example<span class="sy0">.</span>com<span class="sy0">/</span>check<span class="sy0">-</span>auth<span class="sy0">/</span>rtyler      <span class="sy0">-&gt;</span> <span class="me1">false</span></pre>
+
+</div>
+<!-- EDIT15 SECTION "varIsInUri" [6793-] --></div>
 </body>
 </html>

@@ -1,12 +1,4 @@
 #==============================================================================
-# Specification file for LemonLDAP::NG
-#
-# Install LemonLDAP::NG modules, htdocs and scripts
-# Authority: dries
-# Upstream: Xavier Guimard <x,guimard$free,fr>
-#==============================================================================
-
-#==============================================================================
 # Variables
 #==============================================================================
 %global lm_prefix %{_prefix}
@@ -19,27 +11,14 @@
 %global lm_sbindir %{_libexecdir}/%{name}/sbin
 
 # Apache configuration directory
-%if 0%{?rhel}%{?fedora}
 %global apache_confdir %{_sysconfdir}/httpd/conf.d
-%else
-%global apache_confdir %{_sysconfdir}/apache2/conf.d
-%endif
 
 # Apache User and Group
-%if 0%{?rhel}%{?fedora}
 %global lm_apacheuser apache
 %global lm_apachegroup apache
-%else
-%global lm_apacheuser wwwrun
-%global lm_apachegroup www
-%endif
 
 # Apache version
-%if 0%{?fedora} || 0%{?rhel} >= 7
 %global apache_version 2.4
-%else
-%global apache_version 2
-%endif
 
 %global lm_dnsdomain example.com
 
@@ -49,7 +28,7 @@
 # Main package
 #==============================================================================
 Name:           lemonldap-ng
-Version:        2.0.6
+Version:        2.0.7
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
@@ -71,6 +50,7 @@ BuildRequires:  perl(Apache2::RequestUtil)
 BuildRequires:  perl(Apache2::ServerRec)
 BuildRequires:  perl(Apache2::ServerUtil)
 BuildRequires:  perl(Apache::Session)
+BuildRequires:  perl(Apache::Session::Browseable)
 BuildRequires:  perl(Apache::Session::Generate::MD5)
 BuildRequires:  perl(APR::Table)
 BuildRequires:  perl(AuthCAS)
@@ -95,6 +75,7 @@ BuildRequires:  perl(Crypt::OpenSSL::RSA)
 BuildRequires:  perl(Crypt::OpenSSL::X509)
 BuildRequires:  perl(Crypt::Rijndael)
 BuildRequires:  perl(Crypt::URandom)
+BuildRequires:  perl(Cwd)
 BuildRequires:  perl(Data::Dumper)
 BuildRequires:  perl(DBI)
 BuildRequires:  perl(Digest::HMAC_SHA1)
@@ -120,11 +101,16 @@ BuildRequires:  perl(Getopt::Std)
 BuildRequires:  perl(GSSAPI)
 BuildRequires:  perl(HTML::Template)
 BuildRequires:  perl(HTTP::Headers)
+BuildRequires:  perl(HTTP::Message)
 BuildRequires:  perl(HTTP::Request)
+BuildRequires:  perl(Image::Magick)
+BuildRequires:  perl(IO::Pipe)
 BuildRequires:  perl(IO::Select)
 BuildRequires:  perl(IO::Socket::INET)
 BuildRequires:  perl(IO::String)
+BuildRequires:  perl(IPC::Run)
 BuildRequires:  perl(JSON)
+BuildRequires:  perl(JSON::XS)
 %if 0%{?fedora}
 BuildRequires:  perl(Lasso)
 BuildRequires:  perl(Glib)
@@ -136,9 +122,13 @@ BuildRequires:  perl(MIME::Base64)
 BuildRequires:  perl(MIME::Entity)
 BuildRequires:  perl(mod_perl2)
 BuildRequires:  perl(Mouse)
+# Not packaged
+# BuildRequires:  perl(Net::Facebook::Oauth2)
 BuildRequires:  perl(Net::LDAP)
 BuildRequires:  perl(Net::LDAP::Extension::SetPassword)
 BuildRequires:  perl(Net::LDAP::Util)
+BuildRequires:  perl(Net::OAuth)
+BuildRequires:  perl(Net::OpenID::Consumer)
 BuildRequires:  perl(Net::OpenID::Server)
 BuildRequires:  perl(Plack)
 BuildRequires:  perl(Plack::Handler::CGI)
@@ -154,7 +144,7 @@ BuildRequires:  perl(Regexp::Assemble)
 BuildRequires:  perl(Regexp::Common)
 BuildRequires:  perl(Safe)
 BuildRequires:  perl(Scalar::Util)
-%if 0%{?fedora}
+%if 0%{?fedora}%{?el8}
 BuildRequires:  perl(Sentry::Raven)
 %endif
 BuildRequires:  perl(SOAP::Lite)
@@ -164,6 +154,7 @@ BuildRequires:  perl(String::Random)
 BuildRequires:  perl(Sys::Syslog)
 BuildRequires:  perl(Test::MockObject)
 BuildRequires:  perl(Test::Pod) >= 1.00
+BuildRequires:  perl(Text::Unidecode)
 BuildRequires:  perl(Time::Local)
 BuildRequires:  perl(Unicode::String)
 BuildRequires:  perl(URI)
@@ -171,7 +162,7 @@ BuildRequires:  perl(URI::Escape)
 BuildRequires:  perl(URI::URL)
 BuildRequires:  perl(utf8)
 BuildRequires:  perl(warnings)
-%if 0%{?fedora}
+%if 0%{?fedora}%{?el8}
 BuildRequires:  perl(Web::ID)
 %endif
 BuildRequires:  perl(XML::LibXML)
@@ -188,14 +179,10 @@ Requires: lemonldap-ng-portal = %{version}-%{release}
 Requires: lemonldap-ng-test = %{version}-%{release}
 
 # Setup requires filtering
-%if 0%{?rhel} >= 7
 %{?perl_default_filter}
-%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven
-%endif
+%{?el7:%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven}
+%{?el8:%global __requires_exclude perl\\(Lasso}
 
-%if 0%{?fedora}
-%{?perl_default_filter}
-%endif
 
 %description
 LemonLdap::NG is a modular Web-SSO based on Apache::Session modules. It
@@ -210,16 +197,12 @@ So you can have a full AAA protection for your web space as described below.
 %package conf
 Summary:        LemonLDAP-NG configuration
 Requires:       perl(Apache::Session)
+Requires:       perl(Apache::Session::Browseable)
 Requires:       perl(IO::String)
 Requires:       perl(Lemonldap::NG::Common) = %{version}-%{release}
 Requires:       perl(mod_perl2)
-%if 0%{?rhel}%{?fedora}
 Requires(post): httpd
 Requires:       mod_fcgid
-%else
-Requires(post): apache2
-Requires:       apache2-mod_fcgid
-%endif
 
 %description conf
 This package contains the main storage configuration.
@@ -239,9 +222,7 @@ This package contains HTML documentation.
 #==============================================================================
 %package handler
 Summary:        LemonLDAP-NG handler
-%if 0%{?rhel}%{?fedora}
 Requires:       crontabs
-%endif
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Handler) = %{version}-%{release}
 
@@ -264,11 +245,13 @@ This package deploys the administration interface and sessions explorer.
 #==============================================================================
 %package portal
 Summary:        LemonLDAP-NG authentication portal
-%if 0%{?rhel}%{?fedora}
 Requires:       crontabs
-%endif
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
+# Not packaged
+#Requires:       perl(Net::Facebook::Oauth2)
+Requires:       perl(Net::OAuth)
+Requires:       perl(Net::OpenID::Consumer)
 
 %description portal
 This package deploys the authentication portal.
@@ -289,11 +272,7 @@ This package deploys small test applications.
 %package fastcgi-server
 Summary:        LemonLDAP-NG FastCGI Server
 Requires:       lemonldap-ng-conf = %{version}-%{release}
-%if 0%{?rhel}%{?fedora}
 Requires:       mod_fcgid
-%else
-Requires:       apache2-mod_fcgid
-%endif
 Requires:       perl(FCGI::ProcManager)
 
 %description fastcgi-server
@@ -372,16 +351,16 @@ This package installs the authentication portal.
 # Building
 #==============================================================================
 %build
-%{__make} %{?_smp_mflags} configure \
+make %{?_smp_mflags} configure \
     STORAGECONFFILE=%{lm_storagefile} \
     PERLOPTIONS="INSTALLDIRS=vendor"
-%{__make} %{?_smp_mflags}
+make %{?_smp_mflags}
 
 #==============================================================================
 # Installation
 #============================================================================
 %install
-%{__make} %{?_smp_mflags} install \
+make %{?_smp_mflags} install \
     DESTDIR=%{buildroot} \
     PREFIX=%{lm_prefix} \
     BINDIR=%{lm_bindir} \
@@ -503,7 +482,7 @@ chmod 644 %{buildroot}/usr/share/lemonldap-ng/test/cas.php
 %check
 sed -i 's:^dirName.*:dirName = %{buildroot}%{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
-%{__make} %{?_smp_mflags} test \
+make %{?_smp_mflags} test \
     LLNG_DEFAULTCONFFILE=%{buildroot}%{lm_storagefile}
 sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
@@ -666,6 +645,14 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Sat Dec 21 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.7-1
+- Update to 2.0.7
+
+* Fri Dec 06 2019 Xavier Bachelot <xavier@bachelot.org> - 2.0.6-2
+- Tweak for EL8.
+- Enhance BuildRequires and Requires.
+- Spec clean up.
+
 * Tue Sep 24 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.6-1
 - Update to 2.0.6
 
@@ -677,9 +664,6 @@ fi
 
 * Sun May 12 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.4-1
 - Update to 2.0.4
-
-* Sun May 12 2019 Clement Oudot <clem.oudot@gmail.com> - 1.9.19-1
-- Update to 1.9.19
 
 * Thu Apr 11 2019 Clement Oudot <clem.oudot@gmail.com> - 2.0.3-1
 - Update to 2.0.3
@@ -699,38 +683,14 @@ fi
 * Fri Nov 30 2018 Clement Oudot <clem.oudot@gmail.com> - 2.0.0-1
 - Update to 2.0.0
 
-* Fri Oct 05 2018 Clement Oudot <clem.oudot@gmail.com> - 1.9.18-1
-- Update to 1.9.18
-
 * Fri Jul 20 2018 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~beta1-1
 - First beta version for 2.0.0
-
-* Sun Jun 17 2018 Clement Oudot <clem.oudot@gmail.com> - 1.9.17-1
-- Update to 1.9.17
-
-* Fri Mar 16 2018 Clement Oudot <clem.oudot@gmail.com> - 1.9.16-1
-- Update to 1.9.16
 
 * Fri Jan 26 2018 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha3-1
 - Third alpha version for 2.0.0
 
-* Tue Jan 23 2018 Clement Oudot <clem.oudot@gmail.com> - 1.9.15-1
-- Update to 1.9.15
-
-* Fri Nov 24 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.14-1
-- Update to 1.9.14
-
-* Fri Sep 29 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.13-1
-- Update to 1.9.13
-
 * Thu Sep 14 2017 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha2-1
 - Second alpha version for 2.0.0
-
-* Tue Sep 12 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.12-1
-- Update to 1.9.12
-
-* Fri Sep 01 2017 Clement Oudot <clem.oudot@gmail.com> - 1.9.11-1
-- Update to 1.9.11
 
 * Mon Jul 10 2017 Clement Oudot <clem.oudot@gmail.com> - 2.0.0~alpha1-1
 - First alpha version for 2.0.0
@@ -750,14 +710,8 @@ fi
 * Fri Oct 14 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.6-1
 - Update to 1.9.6
 
-* Mon Oct 10 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.11-1
-- Update to 1.4.11
-
 * Wed Jul 13 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.5-1
 - Update to 1.9.5
-
-* Wed Jul 13 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.10-1
-- Update to 1.4.10
 
 * Tue Jun 14 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.4-1
 - Update to 1.9.4
@@ -765,20 +719,11 @@ fi
 * Tue Jun 07 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.3-1
 - Update to 1.9.3
 
-* Fri Jun 03 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.9-1
-- Update to 1.4.9
-
 * Sun May 01 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.2-1
 - Update to 1.9.2
 
-* Wed Apr 27 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.8-1
-- Update to 1.4.8
-
 * Thu Mar 31 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.1-1
 - Update to 1.9.1
-
-* Thu Mar 17 2016 Clement Oudot <clem.oudot@gmail.com> - 1.4.7-1
-- Update to 1.4.7
 
 * Wed Mar 02 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.0-1
 - Update to 1.9.0

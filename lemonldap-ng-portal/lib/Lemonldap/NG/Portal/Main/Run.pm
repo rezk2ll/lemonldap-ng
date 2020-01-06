@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.7';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -164,9 +164,10 @@ sub refresh {
     my ( $self, $req ) = @_;
     $req->mustRedirect(1);
     my %data = %{ $req->userData };
+    $self->userLogger->notice(
+        'Refresh request for ' . $data{ $self->conf->{whatToTrace} } );
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
     $req->id( $data{_session_id} );
-    $self->userLogger->notice( 'Refresh request for ' . $req->user );
     foreach ( keys %data ) {
         delete $data{$_} unless ( /^_/ or /^(?:startTime)$/ );
     }
@@ -513,7 +514,7 @@ sub updateSession {
     return () unless ( ref $infos eq 'HASH' and %$infos );
 
     # Recover session ID unless given
-    $id ||= $req->{id} || $req->userData->{_session_id};
+    $id ||= $req->id || $req->userData->{_session_id};
 
     if ($id) {
 

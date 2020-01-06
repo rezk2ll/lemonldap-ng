@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:openidconnectservice</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,openidconnectservice"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="openidconnectservice.html"/>
@@ -56,6 +56,7 @@
 <li class="level2"><div class="li"><a href="#authentication_context">Authentication context</a></div></li>
 <li class="level2"><div class="li"><a href="#security">Security</a></div></li>
 <li class="level2"><div class="li"><a href="#sessions">Sessions</a></div></li>
+<li class="level2"><div class="li"><a href="#dynamic_registration">Dynamic Registration</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#key_rotation_script">Key rotation script</a></div></li>
@@ -155,7 +156,22 @@ It is recommended to use a separate sessions storage for OpenID Connect sessions
 
 </div>
 <!-- EDIT7 SECTION "Sessions" [1389-1543] -->
-<h2 class="sectionedit8" id="key_rotation_script">Key rotation script</h2>
+<h3 class="sectionedit8" id="dynamic_registration">Dynamic Registration</h3>
+<div class="level3">
+
+<p>
+If dynamic registration is enabled, you can configure the following options to define attributes and extra claims when a new relying party is registered trough the <code>/oauth2/register</code> endpoint:
+</p>
+<ul>
+<li class="level1"><div class="li"> Exported vars for dynamic registration</div>
+</li>
+<li class="level1"><div class="li"> Extra claims for dynamic registration</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT8 SECTION "Dynamic Registration" [1544-1855] -->
+<h2 class="sectionedit9" id="key_rotation_script">Key rotation script</h2>
 <div class="level2">
 
 <p>
@@ -169,8 +185,8 @@ The script is <code>/usr/share/lemonldap-ng/bin/rotateOidcKeys</code>. It can be
 <div class="notetip">Set the correct Apache user, else generated configuration will not be readable by <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </div>
 </div>
-<!-- EDIT8 SECTION "Key rotation script" [1544-2017] -->
-<h2 class="sectionedit9" id="session_management">Session management</h2>
+<!-- EDIT9 SECTION "Key rotation script" [1856-2329] -->
+<h2 class="sectionedit10" id="session_management">Session management</h2>
 <div class="level2">
 
 <p>
@@ -183,6 +199,6 @@ A <code>changed</code> state will be sent if the user is disconnected from <abbr
 <div class="notetip">To work, the <abbr title="LemonLDAP::NG">LL::NG</abbr> cookie must not be protected against javascript (<code>httpOnly</code> option should be set to <code>0</code>).
 </div>
 </div>
-<!-- EDIT9 SECTION "Session management" [2018-] --></div>
+<!-- EDIT10 SECTION "Session management" [2330-] --></div>
 </body>
 </html>

@@ -87,14 +87,18 @@ WebApp1 can read this header and use it in its requests by setting the <code>X-L
 </p>
 
 <p>
-You can set ServiceToken default timeout (30 seconds) by editing <code>lemonldap-ng.ini</code> in section [handler]:
+You can set ServiceToken TTL in the virtualHost options in Manager for each required virtualHost.
+</p>
+
+<p>
+You can also set ServiceToken default timeout (30 seconds) by editing <code>lemonldap-ng.ini</code> in section [handler]:
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>handler<span class="br0">&#93;</span></span>
 <span class="re1">handlerServiceTokenTTL</span> <span class="sy0">=</span><span class="re2"> 30</span></pre>
 <div class="noteclassic">Service token timeout can be set for each virtual hosts.
 </div>
 </div>
-<!-- EDIT2 SECTION "Webapp1 handler configuration" [894-1790] -->
+<!-- EDIT2 SECTION "Webapp1 handler configuration" [894-1894] -->
 <h2 class="sectionedit3" id="webapp2_handler_configuration">Webapp2 handler configuration</h2>
 <div class="level2">
 
@@ -103,6 +107,6 @@ Change handler type to <strong>ServiceToken</strong>. So it is able to manage bo
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Webapp2 handler configuration" [1791-] --></div>
+<!-- EDIT3 SECTION "Webapp2 handler configuration" [1895-] --></div>
 </body>
 </html>

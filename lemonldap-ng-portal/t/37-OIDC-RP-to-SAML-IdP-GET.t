@@ -424,7 +424,6 @@ sub sp {
                         email => 'email',
                     },
                 },
-                oidcServiceMetaDataIssuer             => "http://auth.sp.com",
                 oidcServiceMetaDataCheckSessionURI    => "checksession.html",
                 oidcServiceMetaDataJWKSURI            => "jwks",
                 oidcServiceMetaDataEndSessionURI      => "logout",

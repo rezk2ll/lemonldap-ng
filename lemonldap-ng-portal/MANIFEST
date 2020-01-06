@@ -47,6 +47,7 @@ lib/Lemonldap/NG/Portal/Auth/SSL.pm
 lib/Lemonldap/NG/Portal/Auth/Twitter.pm
 lib/Lemonldap/NG/Portal/Auth/WebID.pm
 lib/Lemonldap/NG/Portal/CDC.pm
+lib/Lemonldap/NG/Portal/CertificateResetByMail/LDAP.pm
 lib/Lemonldap/NG/Portal/Issuer/CAS.pm
 lib/Lemonldap/NG/Portal/Issuer/Get.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenID.pm
@@ -101,6 +102,7 @@ lib/Lemonldap/NG/Portal/Password/REST.pm
 lib/Lemonldap/NG/Portal/Plugins/AutoSignin.pm
 lib/Lemonldap/NG/Portal/Plugins/BruteForceProtection.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
+lib/Lemonldap/NG/Portal/Plugins/CertificateResetByMail.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckState.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ContextSwitching.pm
@@ -217,13 +219,11 @@ site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff2
 site/htdocs/static/bwr/font-awesome/fonts/FontAwesome.otf
 site/htdocs/static/bwr/jquery-ui/jquery-ui.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js
-site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js.map
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.js
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.min.js
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.min.js.map
 site/htdocs/static/bwr/jquery/dist/jquery.js
 site/htdocs/static/bwr/jquery/dist/jquery.min.js
-site/htdocs/static/bwr/jquery/dist/jquery.min.js.map
 site/htdocs/static/bwr/jquery/dist/jquery.min.map
 site/htdocs/static/bwr/qrious/dist/qrious.js
 site/htdocs/static/bwr/qrious/dist/qrious.js.map
@@ -352,6 +352,7 @@ site/htdocs/static/common/modules/WebID.png
 site/htdocs/static/common/nl.png
 site/htdocs/static/common/pt.png
 site/htdocs/static/common/ro.png
+site/htdocs/static/common/tr.png
 site/htdocs/static/common/vi.png
 site/htdocs/static/common/zh.png
 site/htdocs/static/languages/ar.json
@@ -371,6 +372,7 @@ site/templates/bootstrap/2fchoice.tpl
 site/templates/bootstrap/2fregisters.tpl
 site/templates/bootstrap/captcha.tpl
 site/templates/bootstrap/casBack2Url.tpl
+site/templates/bootstrap/certificateReset.tpl
 site/templates/bootstrap/checklogins.tpl
 site/templates/bootstrap/checkuser.tpl
 site/templates/bootstrap/confirm.tpl
@@ -440,6 +442,8 @@ site/templates/common/mail/tr.json
 site/templates/common/mail/vi.json
 site/templates/common/mail/zh_CN.json
 site/templates/common/mail_2fcode.tpl
+site/templates/common/mail_certificateConfirm.tpl
+site/templates/common/mail_certificateReset.tpl
 site/templates/common/mail_confirm.tpl
 site/templates/common/mail_footer.tpl
 site/templates/common/mail_header.tpl
@@ -495,6 +499,7 @@ t/30-Auth-and-issuer-SAML-Redirect.t
 t/30-Auth-SAML-with-choice.t
 t/30-CDC.t
 t/30-SAML-Head-to-Tail-POST.t
+t/30-SAML-Macros.t
 t/30-SAML-POST-Logout-when-expired.t
 t/30-SAML-POST-with-2F-and-Notification.t
 t/30-SAML-POST-with-Notification.t
@@ -522,8 +527,11 @@ t/32-Auth-and-issuer-OIDC-implicit-no-token.t
 t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-CAS-10.t
+t/32-CAS-Macros.t
+t/32-OIDC-Macro.t
 t/32-OIDC-Offline-Session.t
 t/32-OIDC-Refresh-Token.t
+t/32-OIDC-Register.t
 t/32-OIDC-RP-rule.t
 t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t
@@ -562,7 +570,7 @@ t/40-Notifications-XML-DBI.t
 t/40-Notifications-XML-File.t
 t/40-Notifications-XML-Server.t
 t/41-Captcha.t
-t/41-Token-Global-Storage.t
+t/41-Token-with-global-storage.t
 t/41-Token.t
 t/42-Register-Demo-with-captcha.t
 t/42-Register-Demo-with-token.t
@@ -576,6 +584,7 @@ t/43-MailPasswordReset-LDAP.t
 t/43-MailPasswordReset-with-captcha.t
 t/43-MailPasswordReset-with-token.t
 t/43-MailPasswordReset.t
+t/44-CertificateResetByMail-LDAP.t
 t/50-IssuerGet.t
 t/57-GlobalLogout-without-Timer.t
 t/57-GlobalLogout.t
@@ -615,7 +624,7 @@ t/68-Impersonation-with-History.t
 t/68-Impersonation-with-merge.t
 t/68-Impersonation-with-TOTP.t
 t/68-Impersonation.t
-t/70-2F-TOTP-8.t
+t/70-2F-TOTP-8-with-global-storage.t
 t/70-2F-TOTP-with-History.t
 t/70-2F-TOTP-with-TTL-and-JSON.t
 t/70-2F-TOTP-with-TTL-and-XML.t

@@ -1,13 +1,30 @@
 use Test::More;
 use strict;
 use IO::String;
+use JSON qw(from_json);
 
 BEGIN {
     require 't/test-lib.pm';
 }
 
 my $json = '{
-"date": "2016-05-30",
+"date": "2016-05-30 15:35:10",
+"reference": "testref",
+"uid": "dwho",
+"title": "Test title",
+"text": "This is a test text"
+}';
+
+my $bad_json = '{
+"date": "2016-13-30 15:35:10",
+"reference": "testref",
+"uid": "dwho",
+"title": "Test title",
+"text": "This is a test text"
+}';
+
+my $bad_json2 = '{
+"date": "2016-13_30 15:35:10",
 "reference": "testref",
 "uid": "dwho",
 "title": "Test title",
@@ -42,7 +59,7 @@ my $jsonall = '{
 
 my $notifs = q%[{
  "uid": "dwho",
- "date": "2019-11-15",
+ "date": "2019-11-15 15:35:10",
  "reference": "ABC1",
  "title": "You have new authorizations",
  "subtitle": "Application 1",
@@ -102,6 +119,21 @@ my $client = LLNG::Manager::Test->new( {
 );
 
 my $res;
+foreach ( $bad_json, $bad_json2 ) {
+    ok(
+        $res = $client->_post(
+            '/notifications', IO::String->new($_),
+            type   => 'application/json',
+            length => length($_)
+        ),
+        "POST notification $_"
+    );
+    ok( $res->[2]->[0] =~ /"error"\s*:\s*"Bad date/,
+        'Notification not inserted' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    count(2);
+}
+
 foreach ( $json, $json2, $jsonall ) {
     ok(
         $res = $client->_post(
@@ -131,6 +163,36 @@ ok(
 ok( $res->[2]->[0] =~ /"uid":"everyone"/, 'Wildcard found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
+
+ok(
+    $res = $client->_get(
+        '/notifications/bad_uid', type => 'application/json',
+    ),
+    'List notifications for bad uid'
+);
+ok(
+    $res->[2]->[0] =~ /"reference":"testrefall"/,
+    'Notification for all users found'
+) or print STDERR Dumper( $res->[2]->[0] );
+count(2);
+
+ok(
+    $res = $client->_get(
+        '/notifications/_allPending_', type => 'application/json',
+    ),
+    'List all pending notifications'
+);
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' );
+ok( scalar @{ $json->{result} } == 3, 'Three notifications found' )
+  or print STDERR Dumper($json);
+
+foreach ( @{ $json->{result} } ) {
+    ok( $_->{reference} =~ /^testref/, "Reference \'$_->{reference}\' found" )
+      or print STDERR Dumper($json);
+    ok( $_->{uid} =~ /^(dwho|everyone)$/, "UID \'$_->{uid}\' found" )
+      or print STDERR Dumper($json);
+}
+count(9);
 
 ok(
     $res = $client->_get(
@@ -271,6 +333,18 @@ ok( $res->[2]->[0] =~ /"result"\s*:\s*4/, 'Notifications have been inserted' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
+ok(
+    $res = $client->_get(
+        '/notifications/_allExisting_',
+        type => 'application/json',
+    ),
+    'List all existing notifications'
+);
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' );
+ok( scalar @{ $json->{result} } == 5, 'Five notifications found' )
+  or print STDERR Dumper($json);
+count(3);
+
 # Try to authenticate with "dwho"
 # -------------------------------
 ok(
@@ -321,6 +395,7 @@ ok(
     "Accept notification"
 );
 expectOK($res);
+$id = expectCookie($res);
 $client->logout($id);
 
 # Try to authenticate with "rtyler"
@@ -369,7 +444,19 @@ ok(
     "Accept notification"
 );
 expectOK($res);
+$id = expectCookie($res);
 $client->logout($id);
+
+ok(
+    $res = $client->_get(
+        '/notifications/_allPending_', type => 'application/json',
+    ),
+    'List all pending notifications'
+);
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' );
+ok( scalar @{ $json->{result} } == 3, 'Three notifications found' )
+  or print STDERR Dumper($json);
+count(3);
 
 clean_sessions();
 done_testing( count() );

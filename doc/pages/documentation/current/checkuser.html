@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:checkuser</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,checkuser"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="checkuser.html"/>
@@ -68,7 +68,7 @@ Just enable it in the manager (section “plugins”).
 </li>
 <li class="level2"><div class="li"> <strong>Hidden attributes</strong>: Attributes not displayed</div>
 </li>
-<li class="level2"><div class="li"> <strong>Attributes used for searching sessions</strong>: User&#039;s attributes used for searching sessions in Data Base. Let it blank to search by <code>whatToTrace</code></div>
+<li class="level2"><div class="li"> <strong>Attributes used for searching sessions</strong>: User&#039;s attributes used for searching sessions in Data Base if <code>whatToTrace</code> fails. Useful to look for sessions by mail or givenName. Let it blank to search by <code>whatToTrace</code> only.</div>
 </li>
 <li class="level2"><div class="li"> <strong>Display persistent session</strong>: Display persistent session attributes</div>
 </li>
@@ -77,7 +77,16 @@ Just enable it in the manager (section “plugins”).
 </ul>
 </li>
 </ul>
-<div class="noteimportant">Be careful to not display secret attributes.
+<div class="noteclassic">By example :
+<p>
+Search attributes =&gt; <code>mail uid givenName</code>
+</p>
+
+<p>
+If <code>whatToTrace</code> fails, sessions are searched by <code>mail</code>, next <code>uid</code> if no sessions are found and so on...
+</p>
+
+</div><div class="noteimportant">Be careful to not display secret attributes.
 <p>
 checkUser plugin hidden attributes are concatenation of
 </p>
@@ -105,7 +114,7 @@ By example: <code>$groups =~ /\bsu\b/</code>
 
 </div>
 </div>
-<!-- EDIT2 SECTION "Configuration" [265-1407] -->
+<!-- EDIT2 SECTION "Configuration" [265-1680] -->
 <h2 class="sectionedit3" id="usage">Usage</h2>
 <div class="level2">
 
@@ -114,6 +123,6 @@ When enabled, <code>/checkuser</code> <abbr title="Uniform Resource Locator">URL
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Usage" [1408-] --></div>
+<!-- EDIT3 SECTION "Usage" [1681-] --></div>
 </body>
 </html>

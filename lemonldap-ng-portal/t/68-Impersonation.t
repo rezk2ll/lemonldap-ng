@@ -319,10 +319,14 @@ ok( $res->[2]->[0] =~ m%<td scope="row">test_impersonation</td>%,
   or explain( $res->[2]->[0], 'test_impersonation' );
 ok( $res->[2]->[0] =~ m%<td scope="row">rtyler/dwho</td>%, 'Found rtyler/dwo' )
   or explain( $res->[2]->[0], 'Found rtyler/dwo' );
-count(16);
+ok( $res->[2]->[0] =~ m%<td scope="row">_session_id</td>%, 'Found _session_id' )
+  or explain( $res->[2]->[0], 'Found _session_id' );
+ok( $res->[2]->[0] =~ m%<td scope="row">_session_kind</td>%, 'Found _session_id' )
+  or explain( $res->[2]->[0], 'Found _session_kind' );
+count(18);
 
 my %attributes = map /<td scope="row">(.+)?<\/td>/g, $res->[2]->[0];
-ok( keys %attributes == 33, 'Found 33 attributes' )
+ok( keys %attributes == 35, 'Found 35 attributes' )
   or print STDERR "Missing attributes -> " . scalar %attributes;
 ok( $attributes{'_auth'} eq 'Demo', '_auth' )
   or print STDERR Dumper( \%attributes );

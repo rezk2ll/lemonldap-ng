@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -101,23 +101,23 @@ sub _verify {
     # Launch second factor verification
     my $res = $self->verify( $req, $session );
 
+    # Update sessionInfo
+    delete $session->{$_}
+      foreach (qw(tokenSessionStartTimestamp tokenTimeoutTimestamp _type));
+    $req->sessionInfo($session);
+    $req->id( delete $req->sessionInfo->{_2fRealSession} );
+    $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
+    $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
+
     # Case error
     if ($res) {
         $req->noLoginDisplay(1);
-        $req->sessionInfo($session);
-        $req->id( delete $req->sessionInfo->{_2fRealSession} );
-        $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
-        $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
         $req->authResult(PE_BADCREDENTIALS);
         return $self->p->do( $req,
             [ sub { $self->p->storeHistory(@_) }, sub { $res } ] );
     }
 
     # Else restore session
-    $req->sessionInfo($session);
-    $req->id( delete $req->sessionInfo->{_2fRealSession} );
-    $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
-    $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
     $req->mustRedirect(1);
     $self->userLogger->notice( $self->prefix
           . '2F verification for '

@@ -7,9 +7,10 @@ package Lemonldap::NG::Common::Notifications::File;
 
 use strict;
 use Mouse;
+use Time::Local;
 use MIME::Base64;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Common::Notifications';
 
@@ -58,9 +59,9 @@ sub get {
 }
 
 ## @method hashref getAll()
-# Return all messages not notified.
+# Return all pending notifications.
 # @return hashref where keys are internal reference and values are hashref with
-# keys date, uid and ref.
+# keys date, uid, ref and condition.
 sub getAll {
     my $self = shift;
     opendir D, $self->{dirName};
@@ -69,6 +70,31 @@ sub getAll {
     @notif = grep /^\S*\.$ext$/, readdir(D);
     my %h = map {
 /^(\d{8})${fns}([^\s${fns}]+)${fns}([^\s${fns}]+)(?:${fns}([^\s${fns}]+))?\.$ext$/
+          ? (
+            $_ => {
+                date      => $1,
+                uid       => $2,
+                ref       => decode_base64($3),
+                condition => decode_base64( $4 // '' )
+            }
+          )
+          : ()
+    } @notif;
+    return \%h;
+}
+
+## @method hashref getExisting()
+# Return all notifications.
+# @return hashref where keys are internal reference and values are hashref with
+# keys date, uid, ref and condition.
+sub getExisting {
+    my $self = shift;
+    opendir D, $self->{dirName};
+    my @notif;
+    my $fns = $self->{fileNameSeparator};
+    @notif = grep /^\S*\.$ext$/, readdir(D);
+    my %h = map {
+/^(\d{8})${fns}([^\s${fns}]+)${fns}([^\s${fns}]+)(?:${fns}([^\s${fns}]+))?\.(?:$ext|done)$/
           ? (
             $_ => {
                 date      => $1,
@@ -104,6 +130,13 @@ sub purge {
 sub newNotif {
     my ( $self, $date, $uid, $ref, $condition, $content ) = @_;
     my $fns = $self->{fileNameSeparator};
+    $fns ||= '_';
+    my @t = split( /\D+/, $date );
+    $t[1]--;
+    eval {
+        timelocal( $t[5] || 0, $t[4] || 0, $t[3] || 0, $t[2], $t[1], $t[0] );
+    };
+    return ( 0, "Bad date" ) if ($@);
     $date =~ s/-//g;
     return ( 0, "Bad date" ) unless ( $date =~ /^\d{8}/ );
     my $filename =

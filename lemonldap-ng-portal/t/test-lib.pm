@@ -141,7 +141,8 @@ sub count_sessions {
 
 sub getCache {
     require Cache::FileCache;
-    return Cache::FileCache->new( {
+    return Cache::FileCache->new(
+        {
             namespace   => 'lemonldap-ng-session',
             cache_root  => $tmpDir,
             cache_depth => 0,
@@ -416,7 +417,8 @@ sub exceptCspFormOK {
     }
     if (   $csp =~ /\s\*(?:\s.*)?\s*$/
         or ( $host eq '#' and $csp =~ /'self'/ )
-        or $csp =~ m#\bhttps?://$host\b# )
+        or $csp =~ m#\bhttps?://$host\b#
+        or $csp =~ m#\*# )
     {
         pass(" CSP header authorize POST request to $host");
     }
@@ -598,7 +600,7 @@ has ini => (
         main::ok( $self->{p} = $self->class->new(), 'Portal object' );
         main::count(1);
         unless ( $self->confFailure ) {
-            main::ok( $self->{p}->init($ini),           'Init' );
+            main::ok( $self->{p}->init($ini), 'Init' );
             main::ok( $self->{app} = $self->{p}->run(), 'Portal app' );
             main::count(2);
             no warnings 'redefine';
@@ -703,7 +705,8 @@ to test content I<(to launch a C<expectForm()> for example)>.
 
 sub _get {
     my ( $self, $path, %args ) = @_;
-    my $res = $self->app->( {
+    my $res = $self->app->(
+        {
             'HTTP_ACCEPT' => $args{accept}
               || 'application/json, text/plain, */*',
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
@@ -755,7 +758,8 @@ sub _post {
     my ( $self, $path, $body, %args ) = @_;
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
-    my $res = $self->app->( {
+    my $res = $self->app->(
+        {
             'HTTP_ACCEPT' => $args{accept}
               || 'application/json, text/plain, */*',
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',

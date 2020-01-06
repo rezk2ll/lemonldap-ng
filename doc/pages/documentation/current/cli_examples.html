@@ -341,18 +341,19 @@ You can then generate a private key and a self-signed certificate with these com
 <pre class="code">openssl req -new -newkey rsa:4096 -keyout saml.key -nodes  -out saml.pem -x509 -days 3650</pre>
 
 <p>
-Import them in configuration:
+Fix the certificate key format (you can skip this step if you are running &gt;= 2.0.6)
+</p>
+<pre class="code">sed -e &quot;s/END PRIVATE/END RSA PRIVATE/&quot; \
+    -e &quot;s/BEGIN PRIVATE/BEGIN RSA PRIVATE/&quot; \
+    -i saml.key</pre>
+
+<p>
+Import them in configuration and activate the <abbr title="Security Assertion Markup Language">SAML</abbr> issuer
 </p>
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
     set \
         samlServicePrivateKeySig &quot;`cat saml.key`&quot; \
-        samlServicePublicKeySig &quot;`cat saml.pem`&quot;</pre>
-
-<p>
-Activate the <abbr title="Security Assertion Markup Language">SAML</abbr> Issuer:
-</p>
-<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
-    set \
+        samlServicePublicKeySig &quot;`cat saml.pem`&quot; \
         issuerDBSAMLActivation 1</pre>
 
 <p>
@@ -365,7 +366,7 @@ You can also define organization name and <abbr title="Uniform Resource Locator"
         samlOrganizationURL &#039;http://www.acme.com&#039;</pre>
 
 </div>
-<!-- EDIT7 SECTION "Configure SAML Identity Provider" [6779-7657] -->
+<!-- EDIT7 SECTION "Configure SAML Identity Provider" [6779-7785] -->
 <h2 class="sectionedit8" id="register_an_saml_service_provider">Register an SAML Service Provider</h2>
 <div class="level2">
 
@@ -386,7 +387,7 @@ In this example we have:
         samlSPMetaDataExportedAttributes/testsp mail &#039;1;EmailAddress&#039;</pre>
 
 </div>
-<!-- EDIT8 SECTION "Register an SAML Service Provider" [7658-8110] -->
+<!-- EDIT8 SECTION "Register an SAML Service Provider" [7786-8238] -->
 <h2 class="sectionedit9" id="configure_openid_connect_identity_provider">Configure OpenID Connect Identity Provider</h2>
 <div class="level2">
 
@@ -422,7 +423,7 @@ If needed you can allow implicit and hybrid flows:
         oidcServiceAllowHybridFlow 1</pre>
 
 </div>
-<!-- EDIT9 SECTION "Configure OpenID Connect Identity Provider" [8111-8994] -->
+<!-- EDIT9 SECTION "Configure OpenID Connect Identity Provider" [8239-9122] -->
 <h2 class="sectionedit10" id="register_an_openid_connect_relying_party">Register an OpenID Connect Relying Party</h2>
 <div class="level2">
 
@@ -491,7 +492,7 @@ In this example we have:
         oidcRPMetaDataOptions/testrp oidcRPMetaDataOptionsAccessTokenExpiration 3600</pre>
 
 </div>
-<!-- EDIT10 SECTION "Register an OpenID Connect Relying Party" [8995-10626] -->
+<!-- EDIT10 SECTION "Register an OpenID Connect Relying Party" [9123-10754] -->
 <h2 class="sectionedit11" id="categories_and_applications_in_menu">Categories and applications in menu</h2>
 <div class="level2">
 
@@ -516,7 +517,7 @@ Create the application &quot;sample&quot; inside category &quot;applications&quo
         applicationList/applications/sample/options uri &quot;https://sample.example.com/&quot;</pre>
 
 </div>
-<!-- EDIT11 SECTION "Categories and applications in menu" [10627-11508] -->
+<!-- EDIT11 SECTION "Categories and applications in menu" [10755-11636] -->
 <h2 class="sectionedit12" id="encryption_key">Encryption key</h2>
 <div class="level2">
 
@@ -528,6 +529,6 @@ To update the master encryption key:
         key &#039;xxxxxxxxxxxxxxx&#039;</pre>
 
 </div>
-<!-- EDIT12 SECTION "Encryption key" [11509-] --></div>
+<!-- EDIT12 SECTION "Encryption key" [11637-] --></div>
 </body>
 </html>

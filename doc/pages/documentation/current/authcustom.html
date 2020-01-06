@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authcustom</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authcustom"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authcustom.html"/>
@@ -84,13 +84,13 @@ Then, you just have to define class names of your custom modules in &quot;Custom
 <p>
 You can define your own customAuth module icon. Icon must be in site/htdocs/static/common/modules/icon.png
 </p>
-<div class="notetip">::Auth::My::Dev.pm means Lemonldap::NG::Portal::Auth::My::Dev.pm
+<div class="notetip">::Auth::My::Dev.pm means Lemonldap::NG::Portal::Auth::My::Dev
 
 </div><div class="noteimportant">Be careful. Don&#039; t use an already attributed name in configuration.
 
 </div>
 <p>
-These parameters are available in your plugins using <code>$self-&gt;conf-&gt;{<em>customName</em>}</code>.
+These parameters are available in your plugins using <code>$self-&gt;conf-&gt;{customAddParams}-&gt;{<em>customName</em>}</code>.
 </p>
 
 <p>

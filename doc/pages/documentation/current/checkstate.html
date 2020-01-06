@@ -43,6 +43,21 @@
 </head>
 <body>
 <div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div></li>
+<li class="level1"><div class="li"><a href="#usage">Usage</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#example">Example</a></div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
 
 <h1 class="sectionedit1" id="check_state_plugin">Check state plugin</h1>
 <div class="level1">
@@ -57,11 +72,11 @@ This plugin can be used to check if portal instance is ready. This can be a heal
 <div class="level2">
 
 <p>
-Just enable it in the manager (section &quot;plugins&quot;). You <em class="u">must</em> also set a shared secret.
+Just enable it in the manager (*<em>General Parameters</em> » <em>Plugins</em> » <em>State Check</em>). You <em class="u">must</em> also set a shared secret.
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Configuration" [196-313] -->
+<!-- EDIT2 SECTION "Configuration" [196-353] -->
 <h2 class="sectionedit3" id="usage">Usage</h2>
 <div class="level2">
 
@@ -84,12 +99,19 @@ When enabled, <code>/checkstate</code> <abbr title="Uniform Resource Locator">UR
 		<td class="col0 centeralign">  <code>password</code>  </td><td class="col1 centeralign">  optional  </td>
 	</tr>
 </table></div>
-<!-- EDIT4 TABLE [416-670] -->
-<p>
-Example: <code><a href="https://auth.example.com/checkstate?secret=qwerty&amp;user=dwho&amp;password=dwho" class="urlextern" title="https://auth.example.com/checkstate?secret=qwerty&amp;user=dwho&amp;password=dwho"  rel="nofollow">https://auth.example.com/checkstate?secret=qwerty&amp;user=dwho&amp;password=dwho</a></code>
-</p>
+<!-- EDIT4 TABLE [456-710] -->
+</div>
+<!-- EDIT3 SECTION "Usage" [354-711] -->
+<h3 class="sectionedit5" id="example">Example</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Basic availability check: <code><a href="https://auth.example.com/checkstate?secret=qwerty" class="urlextern" title="https://auth.example.com/checkstate?secret=qwerty"  rel="nofollow">https://auth.example.com/checkstate?secret=qwerty</a></code></div>
+</li>
+<li class="level1"><div class="li"> Try to log a user in: <code><a href="https://auth.example.com/checkstate?secret=qwerty&amp;user=dwho&amp;password=dwho" class="urlextern" title="https://auth.example.com/checkstate?secret=qwerty&amp;user=dwho&amp;password=dwho"  rel="nofollow">https://auth.example.com/checkstate?secret=qwerty&amp;user=dwho&amp;password=dwho</a></code></div>
+</li>
+</ul>
 
 </div>
-<!-- EDIT3 SECTION "Usage" [314-] --></div>
+<!-- EDIT5 SECTION "Example" [712-] --></div>
 </body>
 </html>

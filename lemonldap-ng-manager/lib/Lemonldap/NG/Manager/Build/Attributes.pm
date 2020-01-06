@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -390,10 +390,10 @@ sub attributes {
             msgFail       => '__badUrl__',
             documentation => 'URL to call on reload',
         },
-        dontCompactConf => {
+        compactConf => {
             type          => 'bool',
             default       => 0,
-            documentation => 'Don t compact configuration',
+            documentation => 'Compact configuration',
         },
         portalMainLogo => {
             type          => 'text',
@@ -835,7 +835,7 @@ sub attributes {
         },
         cspFormAction => {
             type    => 'text',
-            default => "'self'",
+            default => "*",
             documentation =>
               'Form action destination for Content-Security-Policy',
         },
@@ -990,6 +990,11 @@ sub attributes {
             default       => 1,
             type          => 'boolOrExpr',
             documentation => 'Display logout tab in portal',
+        },
+        portalDisplayCertificateResetByMail => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Display Certificate Reset by mail tab in portal',
         },
         portalDisplayRegister => {
             default       => 1,
@@ -1452,6 +1457,41 @@ sub attributes {
             type          => 'url',
             default       => 'http://auth.example.com/resetpwd',
             documentation => 'URL of password reset page',
+        },
+
+        # Certificate reset by mail
+        certificateResetByMailCeaAttribute => {
+            type    => 'text',
+            default => 'description'
+        },
+        certificateResetByMailCertificateAttribute => {
+            type    => 'text',
+            default => 'userCertificate;binary',
+        },
+        certificateResetByMailStep1Subject => {
+            type          => 'text',
+            documentation => 'Mail subject for certificate reset email',
+        },
+        certificateResetByMailStep1Body => {
+            type          => 'longtext',
+            documentation => 'Custom Certificate reset mail body',
+        },
+        certificateResetByMailStep2Subject => {
+            type          => 'text',
+            documentation => 'Mail subject for reset confirmation',
+        },
+        certificateResetByMailStep2Body => {
+            type          => 'longtext',
+            documentation => 'Custom confirm Certificate reset mail body',
+        },
+        certificateResetByMailURL => {
+            type          => 'url',
+            default       => 'http://auth.example.com/certificateReset',
+            documentation => 'URL of certificate reset page',
+        },
+        certificateResetByMailValidityDelay => {
+            type    => 'int',
+            default => 0
         },
 
         # Registration
@@ -2142,9 +2182,9 @@ sub attributes {
             type => 'keyTextContainer',
             help =>
               'exportedvars.html#extend_variables_using_macros_and_groups',
-            test       => {
-                keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-                keyMsgFail    => '__badMacroName__',
+            test => {
+                keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                keyMsgFail => '__badMacroName__',
                 test       => sub { return perlExpr(@_) },
             },
             default       => {},
@@ -2753,9 +2793,9 @@ sub attributes {
             type => 'keyTextContainer',
             help =>
               'exportedvars.html#extend_variables_using_macros_and_groups',
-            test       => {
-                keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-                keyMsgFail    => '__badMacroName__',
+            test => {
+                keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                keyMsgFail => '__badMacroName__',
                 test       => sub { return perlExpr(@_) },
             },
             default       => {},
@@ -3685,6 +3725,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 3600,
             documentation => 'OpenID Connect global access token TTL',
         },
+        oidcServiceDynamicRegistrationExportedVars => {
+            type => 'keyTextContainer',
+            documentation =>
+              'OpenID Connect exported variables for dynamic registration',
+        },
+        oidcServiceDynamicRegistrationExtraClaims => {
+            type => 'keyTextContainer',
+            documentation =>
+              'OpenID Connect extra claims for dynamic registration',
+        },
         oidcServiceIDTokenExpiration => {
             type          => 'int',
             default       => 3600,
@@ -3856,9 +3906,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type => 'keyTextContainer',
             help =>
               'exportedvars.html#extend_variables_using_macros_and_groups',
-            test       => {
-                keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-                keyMsgFail    => '__badMacroName__',
+            test => {
+                keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                keyMsgFail => '__badMacroName__',
                 test       => sub { return perlExpr(@_) },
             },
             default       => {},

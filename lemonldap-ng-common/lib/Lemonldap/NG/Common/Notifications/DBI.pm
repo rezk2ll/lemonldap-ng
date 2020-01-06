@@ -11,7 +11,7 @@ use Time::Local;
 use DBI;
 use Encode;
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Common::Notifications';
 
@@ -93,14 +93,34 @@ sub get {
 }
 
 ## @method hashref getAll()
-# Return all messages not notified.
+# Return all pending notifications.
 # @return hashref where keys are internal reference and values are hashref with
-# keys date, uid and ref.
+# keys date, uid, ref and condition.
 sub getAll {
     my $self = shift;
     $self->_execute( 'SELECT * FROM '
           . $self->dbiTable
           . ' WHERE done IS NULL ORDER BY date' );
+    my $result;
+    while ( my $h = $self->sth->fetchrow_hashref() ) {
+        $result->{"$h->{date}#$h->{uid}#$h->{ref}"} = {
+            date      => $h->{date},
+            uid       => $h->{uid},
+            ref       => $h->{ref},
+            condition => $h->{condition}
+        };
+    }
+    $self->logger->warn( $self->sth->err() ) if ( $self->sth->err() );
+    return $result;
+}
+
+## @method hashref getExisting()
+# Return all notifications.
+# @return hashref where keys are internal reference and values are hashref with
+# keys date, uid, ref and condition.
+sub getExisting {
+    my $self = shift;
+    $self->_execute( 'SELECT * FROM ' . $self->dbiTable . ' ORDER BY date' );
     my $result;
     while ( my $h = $self->sth->fetchrow_hashref() ) {
         $result->{"$h->{date}#$h->{uid}#$h->{ref}"} = {
@@ -172,7 +192,12 @@ sub purge {
 # @return true if succeed
 sub newNotif {
     my ( $self, $date, $uid, $ref, $condition, $xml ) = @_;
-
+    my @t = split( /\D+/, $date );
+    $t[1]--;
+    eval {
+        timelocal( $t[5] || 0, $t[4] || 0, $t[3] || 0, $t[2], $t[1], $t[0] );
+    };
+    return ( 0, "Bad date" ) if ($@);
     my $res =
       $condition =~ /.+/
       ? $self->_execute( 'INSERT INTO '
@@ -198,8 +223,15 @@ sub getDone {
     my $result;
     while ( my $h = $self->sth->fetchrow_hashref() ) {
         my @t = split( /\D+/, $h->{date} );
-        my $done =
-          timelocal( $t[5] || 0, $t[4] || 0, $t[3] || 0, $t[2], $t[1], $t[0] );
+        $t[1]--;
+        my $done = eval {
+            timelocal( $t[5] || 0, $t[4] || 0, $t[3] || 0, $t[2], $t[1],
+                $t[0] );
+        };
+        if ($@) {
+            $self->logger->warn("Bad date: $h->{date}");
+            return {};
+        }
         $result->{"$h->{date}#$h->{uid}#$h->{ref}"} =
           { notified => $done, uid => $h->{uid}, ref => $h->{ref}, };
     }

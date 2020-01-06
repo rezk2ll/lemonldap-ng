@@ -101,7 +101,7 @@ sub extractFormInfo {
     # Security: check for captcha or token
     if ( $self->captcha or $self->ottRule->( $req, {} ) ) {
         my $token;
-        unless ( $token = $req->param('token') ) {
+        unless ( $token = $req->param('token') or $self->captcha ) {
             $self->userLogger->error('Authentication tried without token');
             $self->ott->setToken($req);
             return PE_NOTOKEN;
