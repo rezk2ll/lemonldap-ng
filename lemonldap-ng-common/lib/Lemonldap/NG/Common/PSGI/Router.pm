@@ -12,7 +12,7 @@ extends 'Lemonldap::NG::Common::PSGI';
 has 'routes' => (
     is      => 'rw',
     isa     => 'HashRef',
-    default => sub { { GET => {}, POST => {}, PUT => {}, DELETE => {} } }
+    default => sub { { GET => {}, POST => {}, PUT => {}, PATCH => {}, DELETE => {} } }
 );
 has 'defaultRoute' => ( is => 'rw', default => 'index.html' );
 
@@ -20,7 +20,7 @@ has 'defaultRoute' => ( is => 'rw', default => 'index.html' );
 
 sub addRoute {
     my ( $self, $word, $dest, $methods, $transform ) = (@_);
-    $methods ||= [qw(GET POST PUT DELETE)];
+    $methods ||= [qw(GET POST PUT PATCH DELETE)];
     foreach my $method (@$methods) {
         $self->logger->debug("Add $method route:");
         $self->genRoute( $self->routes->{$method}, $word, $dest, $transform );

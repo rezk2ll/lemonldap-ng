@@ -126,18 +126,18 @@ PSGIs
 =head1 SYNOPSIS
 
   package My::PSGI;
-  
+
   use base Lemonldap::NG::Common::PSGI;
-  
+
   # See Lemonldap::NG::Common::PSGI
   ...
-  
+
   sub handler {
     my ( $self, $req ) = @_;
     # Do something and return a PSGI response
     # NB: $req is a Lemonldap::NG::Common::PSGI::Request object
     if ( $req->accept eq 'text/plain' ) { ... }
-    
+
     return [ 200, [ 'Content-Type' => 'text/plain' ], [ 'Body lines' ] ];
   }
 

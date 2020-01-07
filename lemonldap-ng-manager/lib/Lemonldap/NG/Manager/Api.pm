@@ -5,10 +5,12 @@ use 5.10.0;
 use utf8;
 use Mouse;
 
-extends 'Lemonldap::NG::Common::Conf::RESTServer';
+extends 'Lemonldap::NG::Common::Conf::RESTServer',
+  'Lemonldap::NG::Common::Session::REST';
 
 use Lemonldap::NG::Manager::Api::2F;
-use Lemonldap::NG::Manager::Api::Providers;
+use Lemonldap::NG::Manager::Api::Providers::OidcRp;
+use Lemonldap::NG::Manager::Api::Providers::SamlSp;
 
 our $VERSION = '2.0.7';
 
@@ -27,20 +29,125 @@ sub addRoutes {
       ->addRoute(
         api => {
             v1 => {
-                hello => "helloworld",
+                providers => {
+                    oidc => {
+                        rp => {
+                            findByConfKey => {
+                                ':uPattern' => 'findOidcRpByConfKey'
+                            },
+                            findByClientId => {
+                                ':uClientId' => 'findOidcRpByClientId'
+                            },
+                            ':confKey' => 'getOidcRpByConfKey'
+                        },
+                    },
+                    saml => {
+                        sp => {
+                            findByConfKey => {
+                                ':uPattern' => 'findSamlSpByConfKey'
+                            },
+                            findByEntityId => {
+                                ':uEntityId' => 'findSamlSpByEntityId'
+                            },
+                            ':confKey' => 'getSamlSpByConfKey'
+                        },
+                    },
+                },
+                secondFactor => {
+                    ':uid' => {
+                        id => {
+                            ':id' => 'getSecondFactorsById'
+                        },
+                        type => {
+                            ':type' => 'getSecondFactorsByType'
+                        },
+                        '*' => 'getSecondFactors'
+                    },
+                },
             },
         },
         ['GET']
       )
 
       ->addRoute(
-        providers => {
-            oidc => {
-                rp => { ':confKey' => 'getOidcRpByConfKey' },
+        api => {
+            v1 => {
+                providers => {
+                    oidc => {
+                        rp => 'addOidcRp'
+                    },
+                    saml => {
+                        sp => 'addSamlSp'
+                    },
+                },
             },
         },
-        ['GET']
+        ['POST']
+      )
+
+      ->addRoute(
+        api => {
+            v1 => {
+                providers => {
+                    oidc => {
+                        rp => { ':confKey' => 'replaceOidcRp' }
+                    },
+                    saml => {
+                        sp => { ':confKey' => 'replaceSamlSp' }
+                    },
+                },
+            },
+        },
+        ['PUT']
+      )
+
+      ->addRoute(
+        api => {
+            v1 => {
+                providers => {
+                    oidc => {
+                        rp => { ':confKey' => 'updateOidcRp' }
+                    },
+                    saml => {
+                        sp => { ':confKey' => 'updateSamlSp' }
+                    },
+                },
+            },
+        },
+        ['PATCH']
+      )
+
+      ->addRoute(
+        api => {
+            v1 => {
+                providers => {
+                    oidc => {
+                        rp => { ':confKey' => 'deleteOidcRp' }
+                    },
+                    saml => {
+                        sp => { ':confKey' => 'deleteSamlSp' }
+                    },
+                },
+                secondFactor => {
+                    ':uid' => {
+                        id => {
+                            ':id' => 'deleteSecondFactorsById'
+                        },
+                        type => {
+                            ':type' => 'deleteSecondFactorsByType'
+                        },
+                        '*' => 'deleteSecondFactors'
+                    },
+                },
+            },
+        },
+        ['DELETE']
       );
+
+    $self->setTypes($conf);
+    $self->{multiValuesSeparator} ||= '; ';
+    $self->{hiddenAttributes} //= "_password";
+    $self->{TOTPCheck} = $self->{U2FCheck} = $self->{UBKCheck} = '1';
 }
 
 1;
