@@ -326,7 +326,7 @@ sub locationRulesInit {
 
 ## @imethod protected void sessionStorageInit(hashRef args)
 # Initialize the Apache::Session::* module choosed to share user's variables
-# and the Cache::Cache module choosed to cache sessions
+# and the Cache::Cache module chosen to cache sessions
 # @param $args reference to the configuration hash
 sub sessionStorageInit {
     my ( $class, $conf ) = @_;

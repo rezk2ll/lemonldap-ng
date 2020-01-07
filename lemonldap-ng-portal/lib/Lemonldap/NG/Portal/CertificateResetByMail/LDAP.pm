@@ -15,7 +15,7 @@ our $VERSION = '2.0.8';
 
 # PRIVATE METHOD
 sub modifCertificate {
-    my ( $self, $newcertif, $usercertif, $req ) = @_;
+    my ( $self, $req, $newcertif, $usercertif ) = @_;
     my $ceaAttribute = $self->conf->{certificateResetByMailCeaAttribute}
       || "description";
     my $certificateAttribute =
@@ -58,7 +58,6 @@ sub modifCertificate {
     $self->logger->debug("$ceaAttribute set to $newcertif");
 
     return PE_OK;
-
 }
 
 1;
