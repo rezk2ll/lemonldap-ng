@@ -155,6 +155,7 @@ BuildRequires:  perl(Sys::Syslog)
 BuildRequires:  perl(Test::MockObject)
 BuildRequires:  perl(Test::Pod) >= 1.00
 BuildRequires:  perl(Text::Unidecode)
+BuildRequires:  perl(Time::Fake)
 BuildRequires:  perl(Time::Local)
 BuildRequires:  perl(Unicode::String)
 BuildRequires:  perl(URI)
