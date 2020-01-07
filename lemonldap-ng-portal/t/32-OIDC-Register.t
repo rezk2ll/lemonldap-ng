@@ -48,7 +48,7 @@ ok( defined $register_answer->{client_id},
     "Client ID found in answer: " . $register_answer->{client_id} );
 
 # New configuration registered
-my $confFile = "t/lmConf-2.json";
+my $confFile = "$main::tmpDir/lmConf-2.json";
 my $conf     = JSON::from_json(`cat $confFile`);
 
 # Check saved data
@@ -74,8 +74,7 @@ clean_sessions();
 done_testing();
 
 sub op {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
