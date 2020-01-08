@@ -6,7 +6,7 @@ use Mouse;
 use Data::Dumper;
 use Lemonldap::NG::Common::Conf::ReConstants;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 $Data::Dumper::Useperl = 1;
 
 extends('Lemonldap::NG::Manager::Cli::Lib');
@@ -21,17 +21,15 @@ has cfgNum => (
     }
 );
 
-has sep => ( is => 'rw', isa => 'Str', default => '/' );
-
-has req => ( is => 'ro' );
-
+has log    => ( is => 'rw' );
+has req    => ( is => 'ro' );
+has sep    => ( is => 'rw', isa => 'Str', default => '/' );
 has format => ( is => 'rw', isa => 'Str', default => "%-25s | %-25s | %-25s" );
-
-has yes => ( is => 'rw', isa => 'Bool', default => 0 );
-
-has force => ( is => 'rw', isa => 'Bool', default => 0 );
-
-has log => ( is => 'rw' );
+has yes    => ( is => 'rw', isa => 'Bool', default => 0 );
+has force  => ( is => 'rw', isa => 'Bool', default => 0 );
+has logger => ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->logger } );
+has userLogger =>
+  ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->userLogger } );
 
 sub get {
     my ( $self, @keys ) = @_;
