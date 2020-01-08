@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::Reload;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -214,7 +214,7 @@ sub defaultValuesInit {
         # Override with vhost options
         if ( $conf->{vhostOptions} ) {
             my $name = 'vhost' . ucfirst($opt);
-            foreach my $vhost ( keys %{ $conf->{vhostOptions} } ) {
+            foreach my $vhost ( sort keys %{ $conf->{vhostOptions} } ) {
                 $conf->{vhostOptions}->{$vhost} ||= {};
                 my $val = $conf->{vhostOptions}->{$vhost}->{$name};
 
@@ -228,7 +228,7 @@ sub defaultValuesInit {
         }
     }
     if ( $conf->{vhostOptions} ) {
-        foreach my $vhost ( keys %{ $conf->{vhostOptions} } ) {
+        foreach my $vhost ( sort keys %{ $conf->{vhostOptions} } ) {
             $class->tsv->{type}->{$vhost} =
               $conf->{vhostOptions}->{$vhost}->{vhostType};
             $class->tsv->{authnLevel}->{$vhost} =
