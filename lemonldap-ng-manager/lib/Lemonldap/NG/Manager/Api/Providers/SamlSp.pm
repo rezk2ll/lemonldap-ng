@@ -22,9 +22,6 @@ sub getSamlSpByConfKey {
 
     my $samlSp = $self->_getSamlSpByConfKey( $conf, $confKey );
 
-    # $self->logger->debug("$oidcRp :: ");
-    # use Data::Dumper; print STDERR Dumper($oidcRp);
-
     # Check if confKey is defined
     unless ( defined $samlSp ) {
         return $self->sendError( $req,
@@ -126,7 +123,7 @@ sub addSamlSp {
     );
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf({ noCache => 1 });
 
     if ( defined $self->_getSamlSpByConfKey( $conf, $add->{confKey} ) ) {
         return $self->sendError(
@@ -172,7 +169,7 @@ sub replaceSamlSp {
         "[API] SAML SP $confKey configuration replace requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf({ noCache => 1 });
 
     # Return 404 if not found
     unless ( defined $self->_getSamlSpByConfKey( $conf, $confKey ) ) {
@@ -211,7 +208,7 @@ sub updateSamlSp {
         "[API] SAML SP $confKey configuration update requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf({ noCache => 1 });
 
     my $current = $self->_getSamlSpByConfKey( $conf, $confKey );
 
@@ -248,7 +245,7 @@ sub deleteSamlSp {
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf({ noCache => 1 });
 
     my $delete = $self->_getSamlSpByConfKey( $conf, $confKey );
 

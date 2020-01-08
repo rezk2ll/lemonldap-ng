@@ -22,9 +22,6 @@ sub getOidcRpByConfKey {
 
     my $oidcRp = $self->_getOidcRpByConfKey( $conf, $confKey );
 
-    # $self->logger->debug("$oidcRp :: ");
-    # use Data::Dumper; print STDERR Dumper($oidcRp);
-
     # Return 404 if not found
     unless ( defined $oidcRp ) {
         return $self->sendError( $req,
@@ -120,7 +117,7 @@ sub addOidcRp {
     );
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf({ noCache => 1 });
 
     if ( defined $self->_getOidcRpByConfKey( $conf, $add->{confKey} ) ) {
         return $self->sendError(
@@ -168,7 +165,7 @@ sub updateOidcRp {
         "[API] OIDC RP $confKey configuration update requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf({ noCache => 1 });
 
     my $current = $self->_getOidcRpByConfKey( $conf, $confKey );
 
@@ -215,7 +212,7 @@ sub replaceOidcRp {
         "[API] OIDC RP $confKey configuration replace requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf({ noCache => 1 });
 
     # Return 404 if not found
     unless ( defined $self->_getOidcRpByConfKey( $conf, $confKey ) ) {
@@ -245,7 +242,7 @@ sub deleteOidcRp {
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf;
+    my $conf = $self->_confAcc->getConf({ noCache => 1 });
 
     my $delete = $self->_getOidcRpByConfKey( $conf, $confKey );
 
