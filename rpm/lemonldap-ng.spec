@@ -171,7 +171,11 @@ BuildRequires:  perl(XML::LibXML)
 BuildRequires:  perl(XML::LibXSLT)
 BuildRequires:  perl(XML::Simple)
 BuildRequires:  perl(YAML)
+%if 0%{?fedora}
+BuildRequires:  systemd-rpm-macros
+%else
 BuildRequires:  systemd
+%endif
 
 Requires: lemonldap-ng-conf = %{version}-%{release}
 Requires: lemonldap-ng-doc = %{version}-%{release}
