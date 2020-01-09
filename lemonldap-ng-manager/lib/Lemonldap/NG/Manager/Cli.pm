@@ -58,6 +58,7 @@ sub set {
             die "$key seems to be a hash, modification refused";
         }
         $oldValue //= '';
+        $self->logger->info("CLI: Set key $key with $pairs{$key}");
         push @list, [ $key, $oldValue, $pairs{$key} ];
     }
     unless ( $self->yes ) {
@@ -94,6 +95,7 @@ sub addKey {
         unless ( $root =~ /$simpleHashKeys$/o or $root =~ /$sep/o ) {
             die "$root is not a simple hash. Aborting";
         }
+        $self->logger->info("CLI: Append key $root/$newKey $value");
         push @list, [ $root, $newKey, $value ];
     }
     require Clone;
@@ -134,6 +136,7 @@ sub delKey {
         unless ( $root =~ /$simpleHashKeys$/o or $root =~ /$sep/o ) {
             die "$root is not a simple hash. Aborting";
         }
+        $self->logger->info("CLI: Remove key $root/$key");
         push @list, [ $root, $key ];
     }
     require Clone;
@@ -189,6 +192,7 @@ sub delKey {
 
 sub lastCfg {
     my ($self) = @_;
+    $self->logger->info("CLI: Retrieve last conf.");
     return $self->jsonResponse('/confs/latest')->{cfgNum};
 }
 
@@ -216,6 +220,7 @@ sub restore {
         close $f;
         die "Empty or malformed file $file" unless ( $conf =~ /\w/s );
     }
+    $self->logger->info("CLI: Restore conf.");
     my $res = $self->_post( '/confs/raw', '', IO::String->new($conf),
         'application/json', length($conf) );
     use Data::Dumper;
@@ -271,29 +276,34 @@ sub _save {
         }
     );
     unless ( $parser->testNewConf() ) {
+        $self->logger->error("CLI: Configuration rejected with message: $parser->{message}");
         printf STDERR "Modifications rejected: %s:\n", $parser->{message};
     }
     my $saveParams = { force => $self->force };
     if ( $self->force and $self->cfgNum ) {
+        $self->logger->debug("CLI: cfgNum forced with $self->cfgNum()");
         $saveParams->{cfgNum}      = $self->cfgNum;
         $saveParams->{cfgNumFixed} = 1;
     }
-    $new->{cfgAuthor} = scalar( getpwuid $< ) . '(command-line)';
+    $new->{cfgAuthor} = scalar( getpwuid $< ) . '(command-line-interface)';
     chomp $new->{cfgAuthor};
     $new->{cfgAuthorIP} = '127.0.0.1';
     $new->{cfgDate}     = time;
     $new->{cfgVersion}  = $Lemonldap::NG::Manager::VERSION;
-    $new->{cfgLog}      = $self->log // 'Modified using LLNG cli';
+    $new->{cfgLog}      = $self->log // 'Modified with LL::NG CLI';
     $new->{key} ||= join( '',
         map { chr( int( ord( Crypt::URandom::urandom(1) ) * 94 / 256 ) + 33 ) }
           ( 1 .. 16 ) );
 
     my $s = $self->mgr->confAcc->saveConf( $new, %$saveParams );
     if ( $s > 0 ) {
+        $self->logger->debug("CLI: Configuration $s has been saved by $new->{cfgAuthor}");
+        $self->logger->info("CLI: Configuration $s saved");
         print STDERR "Saved under number $s\n";
         $parser->{status} = [ $self->mgr->applyConf($new) ];
     }
     else {
+        $self->logger->error("CLI: Configuration not saved!");
         printf STDERR "Modifications rejected: %s:\n", $parser->{message};
         print STDERR Dumper($parser);
     }
@@ -334,8 +344,9 @@ sub run {
     my $action = shift;
     unless ( $action =~ /^(?:get|set|addKey|delKey|save|restore)$/ ) {
         die
-"unknown action $action. Only get, set, addKey or delKey are accepted";
+"Unknown action $action. Only get, set, addKey or delKey allowed";
     }
+
     $self->$action(@_);
 }
 
@@ -344,7 +355,6 @@ package Lemonldap::NG::Manager::Cli::Request;
 use Mouse;
 
 has cfgNum => ( is => 'rw' );
-
 has error => ( is => 'rw' );
 
 sub params {
