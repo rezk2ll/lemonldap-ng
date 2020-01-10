@@ -307,17 +307,17 @@ sub _delete2F {
       $self->_delete2FFromSessions( $uid, $type, $id, $self->_getPersistentMod,
         'Persistent', '_session_uid' );
     return $res if ( $res->{res} ne 'ok' );
-
-    $removed = $res->{removed};
+    $removed = $res->{removed} || {};
 
     $res =
       $self->_delete2FFromSessions( $uid, $type, $id, $self->_getSSOMod, 'SSO',
         'uid' );
     return $res if ( $res->{res} ne 'ok' );
+    $res->{removed} ||= {};
 
     # merge results
-    $removed = ( $removed, $res->{removed} );
-    $count = scalar( keys %{$removed} );
+    $removed = { %$removed, %{ $res->{removed} } };
+    $count   = scalar( keys %{$removed} );
 
     return {
         res     => 'ok',
