@@ -5,7 +5,6 @@ require 't/test-lib.pm';
 
 my $tests = 9;
 
-
 use_ok('Lemonldap::NG::Common::Cli');
 use_ok('Lemonldap::NG::Manager::Cli');
 &cleanConfFiles;
@@ -32,13 +31,19 @@ SKIP: {
 
     # Test 'addKey' command
     @cmd = qw(-yes 1 addKey locationRules/test1.example.com ^/reject deny);
-    Test::Output::combined_like( sub { $client->run(@cmd) },
-        qr#'\^/reject' => 'deny'#s, '"addKey" OK' );
+    Test::Output::combined_like(
+        sub { $client->run(@cmd) },
+        qr#'\^/reject' => 'deny'#s,
+        '"addKey" OK'
+    );
 
     # Test 'delKey' command
     @cmd = qw(-yes 1 delKey locationRules/test1.example.com ^/reject);
-    Test::Output::combined_unlike( sub { $client->run(@cmd) },
-        qr#'\^/reject' => 'deny'#s, '"delKey" OK' );
+    Test::Output::combined_unlike(
+        sub { $client->run(@cmd) },
+        qr#'\^/reject' => 'deny'#s,
+        '"delKey" OK'
+    );
 
     # Test 'get' command
     @cmd = qw(get locationRules/test1.example.com);
@@ -59,12 +64,10 @@ SKIP: {
     @cmd = ( 'restore', '-' );
     Test::Output::combined_like( sub { $client->run(@cmd) },
         qr/"cfgNum"\s*:\s*"3"/s, 'New config: 3' );
-
-    count($tests);
-
-    done_testing( count() );
 }
 
+count($tests);
+done_testing( count() );
 &cleanConfFiles;
 
 sub cleanConfFiles {
