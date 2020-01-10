@@ -32,4 +32,5 @@ sub applyLoginRule {
     # For now, get first letter of firstname and lastname
     return substr( $firstname, 0, 1 ) . $lastname;
 }
+
 1;

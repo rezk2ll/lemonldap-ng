@@ -76,11 +76,13 @@ $Data::Dumper::Useperl  = 1;
 my $ini;
 
 use File::Temp 'tempfile', 'tempdir';
+use File::Copy 'copy';
 our $tmpDir = $LLNG::TMPDIR
   || tempdir( 'tmpSessionXXXXX', DIR => 't/sessions', CLEANUP => 1 );
 mkdir "$tmpDir/lock";
 mkdir "$tmpDir/saml";
 mkdir "$tmpDir/saml/lock";
+copy( "t/lmConf-1.json", "$tmpDir/lmConf-1.json" );
 
 =head4 count($inc)
 
@@ -141,8 +143,7 @@ sub count_sessions {
 
 sub getCache {
     require Cache::FileCache;
-    return Cache::FileCache->new(
-        {
+    return Cache::FileCache->new( {
             namespace   => 'lemonldap-ng-session',
             cache_root  => $tmpDir,
             cache_depth => 0,
@@ -515,7 +516,7 @@ extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
 our $defaultIni = {
     configStorage => {
         type    => 'File',
-        dirName => 't',
+        dirName => "$tmpDir",
     },
     localSessionStorage        => 'Cache::FileCache',
     localSessionStorageOptions => {
@@ -705,8 +706,7 @@ to test content I<(to launch a C<expectForm()> for example)>.
 
 sub _get {
     my ( $self, $path, %args ) = @_;
-    my $res = $self->app->(
-        {
+    my $res = $self->app->( {
             'HTTP_ACCEPT' => $args{accept}
               || 'application/json, text/plain, */*',
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
@@ -758,8 +758,7 @@ sub _post {
     my ( $self, $path, $body, %args ) = @_;
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
-    my $res = $self->app->(
-        {
+    my $res = $self->app->( {
             'HTTP_ACCEPT' => $args{accept}
               || 'application/json, text/plain, */*',
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
