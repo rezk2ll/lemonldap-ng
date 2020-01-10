@@ -1,5 +1,6 @@
 package Lemonldap::NG::Manager::Api::2F;
-our $VERSION = '2.0.7';
+
+our $VERSION = '2.0.8';
 
 package Lemonldap::NG::Manager::Api;
 
@@ -146,7 +147,7 @@ sub _get2F {
     $psessions = $self->_getSessions2F( $self->_getPersistentMod, 'Persistent',
         '_session_uid', $uid );
 
-    foreach ( keys %{$psessions} ) {
+    foreach ( keys %$psessions ) {
         my $devices =
           from_json( $psessions->{$_}->{_2fDevices}, { allow_nonref => 1 } );
         foreach my $device ( @{$devices} ) {
@@ -195,12 +196,12 @@ sub _getSessions2F {
       Lemonldap::NG::Common::Apache::Session->searchOn( $mod->{options}, $key,
         $uid,
         ( '_session_kind', '_session_uid', '_session_id', '_2fDevices' ) );
-    foreach ( keys %{$sessions} ) {
+    foreach ( keys %$sessions ) {
         delete $sessions->{$_}
           unless ( $sessions->{$_}->{_session_kind} eq $kind );
     }
     $self->logger->debug( "Found "
-          . scalar( keys %{$sessions} )
+          . scalar( keys %$sessions )
           . " $kind sessions for uid $uid." );
 
     return $sessions;
@@ -224,7 +225,7 @@ sub _delete2FFromSessions {
     my ( $sessions, $session, $devices, @keep, $removed,
         $total, $module, $localStorage );
     $sessions = $self->_getSessions2F( $mod, $kind, $key, $uid );
-    foreach ( keys %{$sessions} ) {
+    foreach ( keys %$sessions ) {
 
         $session = $self->_getSession2F( $_, $mod )
           or return { res => 'ko', code => 500, msg => $@ };
@@ -263,8 +264,8 @@ sub _delete2FFromSessions {
                       . ( $total - scalar @keep )
                       . " 2F device(s) attached to sessionId $_ ..." );
                 $session->data->{_2fDevices} = to_json( \@keep );
-                $session->update( \%{ $session->data } );
-
+                $session->update( $session->data );
+                
                 # Delete from local cache
                 if ( $session->{options}->{localStorage} ) {
                     $module = $session->{options}->{localStorage};
@@ -289,7 +290,6 @@ sub _delete2FFromSessions {
             $self->logger->debug(
                 "No 2F devices attached to sessionId $_ were found.");
         }
-
     }
 
     return { res => 'ok', removed => $removed };
@@ -317,7 +317,7 @@ sub _delete2F {
 
     # merge results
     $removed = { %$removed, %{ $res->{removed} } };
-    $count   = scalar( keys %{$removed} );
+    $count   = scalar( keys %$removed );
 
     return {
         res     => 'ok',

@@ -1,5 +1,6 @@
 package Lemonldap::NG::Manager::Api::Providers::OidcRp;
-our $VERSION = '2.0.7';
+
+our $VERSION = '2.0.8';
 
 package Lemonldap::NG::Manager::Api;
 
@@ -23,10 +24,9 @@ sub getOidcRpByConfKey {
     my $oidcRp = $self->_getOidcRpByConfKey( $conf, $confKey );
 
     # Return 404 if not found
-    unless ( defined $oidcRp ) {
-        return $self->sendError( $req,
-            "OIDC relying party '$confKey' not found", 404 );
-    }
+    return $self->sendError( $req,
+        "OIDC relying party '$confKey' not found", 404 )
+      unless ( defined $oidcRp );
 
     return $self->sendJSONresponse( $req, $oidcRp );
 }
@@ -40,10 +40,8 @@ sub findOidcRpByConfKey {
         : ( defined $req->params('pattern') ? $req->params('pattern') : undef )
     );
 
-    unless ( defined $pattern ) {
-        return $self->sendError( $req, 'Invalid input: pattern is missing',
-            405 );
-    }
+    return $self->sendError( $req, 'Invalid input: pattern is missing', 405 )
+      unless ( defined $pattern );
 
     $self->logger->debug(
         "[API] Find OIDC RPs by confKey regexp $pattern requested");
@@ -51,13 +49,9 @@ sub findOidcRpByConfKey {
     # Get latest configuration
     my $conf = $self->_confAcc->getConf;
 
-    my @oidcRps;
-
-    foreach ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
-        if ( $_ =~ $pattern ) {
-            push @oidcRps, $self->_getOidcRpByConfKey( $conf, $_ );
-        }
-    }
+    my @oidcRps =
+      map { $_ =~ $pattern ? $self->_getOidcRpByConfKey( $conf, $_ ) : () }
+      keys %{ $conf->{oidcRPMetaDataOptions} };
 
     return $self->sendJSONresponse( $req, [@oidcRps] );
 }
@@ -73,10 +67,8 @@ sub findOidcRpByClientId {
         )
     );
 
-    unless ( defined $clientId ) {
-        return $self->sendError( $req, 'Invalid input: clientId is missing',
-            405 );
-    }
+    return $self->sendError( $req, 'Invalid input: clientId is missing', 405 )
+      unless ( defined $clientId );
 
     $self->logger->debug("[API] Find OIDC RPs by clientId $clientId requested");
 
@@ -84,66 +76,52 @@ sub findOidcRpByClientId {
     my $conf = $self->_confAcc->getConf;
 
     my $oidcRp = $self->_getOidcRpByClientId( $conf, $clientId );
-
-    unless ( defined $oidcRp ) {
-        return $self->sendError( $req,
-            "OIDC relying party with clientId '$clientId' not found", 404 );
-    }
+    return $self->sendError( $req,
+        "OIDC relying party with clientId '$clientId' not found", 404 )
+      unless ( defined $oidcRp );
 
     return $self->sendJSONresponse( $req, $oidcRp );
 }
 
 sub addOidcRp {
     my ( $self, $req ) = @_;
-
     my $add = $req->jsonBodyToObj;
 
-    unless ($add) {
-        return $self->sendError( $req, "Invalid input: " . $req->error, 405 );
-    }
+    return $self->sendError( $req, "Invalid input: " . $req->error, 405 )
+      unless ($add);
 
-    unless ( defined $add->{confKey} ) {
-        return $self->sendError( $req, 'Invalid input: confKey is missing',
-            405 );
-    }
+    return $self->sendError( $req, 'Invalid input: confKey is missing', 405 )
+      unless ( defined $add->{confKey} );
 
-    unless ( defined $add->{clientId} ) {
-        return $self->sendError( $req, 'Invalid input: clientId is missing',
-            405 );
-    }
+    return $self->sendError( $req, 'Invalid input: clientId is missing', 405 )
+      unless ( defined $add->{clientId} );
 
     $self->logger->debug(
 "[API] Add OIDC RP with confKey $add->{confKey} and clientId $add->{clientId} requested"
     );
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf({ noCache => 1 });
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
-    if ( defined $self->_getOidcRpByConfKey( $conf, $add->{confKey} ) ) {
-        return $self->sendError(
-            $req,
-"Invalid input: An OIDC RP with confKey $add->{confKey} already exists",
-            405
-        );
-    }
+    return $self->sendError(
+        $req,
+        "Invalid input: An OIDC RP with confKey $add->{confKey} already exists",
+        405
+    ) if ( defined $self->_getOidcRpByConfKey( $conf, $add->{confKey} ) );
 
-    if ( defined $self->_getOidcRpByClientId( $conf, $add->{clientId} ) ) {
-        return $self->sendError(
-            $req,
+    return $self->sendError(
+        $req,
 "Invalid input: An OIDC RP with clientId $add->{clientId} already exists",
-            405
-        );
-    }
+        405
+    ) if ( defined $self->_getOidcRpByClientId( $conf, $add->{clientId} ) );
 
-    unless ( defined $add->{options} ) {
-        $add->{options} = {};
-    }
+    $add->{options} = {} unless ( defined $add->{options} );
     $add->{options}->{oidcRPMetaDataOptionsClientID} = $add->{clientId};
 
     my $res = $self->_pushOidcRp( $conf, $add->{confKey}, $add, 1 );
-    unless ( $res->{res} eq 'ok' ) {
-        return $self->sendError( $req, $res->{msg}, 405 );
-    }
+
+    return $self->sendError( $req, $res->{msg}, 405 )
+      unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req,
         { message => "Successful operation" } );
@@ -151,85 +129,75 @@ sub addOidcRp {
 
 sub updateOidcRp {
     my ( $self, $req ) = @_;
-
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     my $update = $req->jsonBodyToObj;
 
-    unless ($update) {
-        return $self->sendError( $req, "Invalid input: " . $req->error, 405 );
-    }
+    return $self->sendError( $req, "Invalid input: " . $req->error, 405 )
+      unless ($update);
 
     $self->logger->debug(
         "[API] OIDC RP $confKey configuration update requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf({ noCache => 1 });
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my $current = $self->_getOidcRpByConfKey( $conf, $confKey );
 
     # Return 404 if not found
-    unless ( defined $current ) {
-        return $self->sendError( $req,
-            "OIDC relying party '$confKey' not found", 404 );
-    }
+
+    return $self->sendError( $req,
+        "OIDC relying party '$confKey' not found", 404 )
+      unless ( defined $current );
 
     # check if new clientID exists already
     my $res = $self->_isNewOidcRpClientIdUnique( $conf, $confKey, $update );
-    unless ( $res->{res} eq 'ok' ) {
-        return $self->sendError( $req, $res->{msg}, 405 );
-    }
+
+    return $self->sendError( $req, $res->{msg}, 405 )
+      unless ( $res->{res} eq 'ok' );
 
     $res = $self->_pushOidcRp( $conf, $confKey, $update, 0 );
-    unless ( $res->{res} eq 'ok' ) {
-        return $self->sendError( $req, $res->{msg}, 405 );
-    }
+
+    return $self->sendError( $req, $res->{msg}, 405 )
+      unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req,
         { message => "Successful operation" } );
 }
 
 sub replaceOidcRp {
-
     my ( $self, $req ) = @_;
-
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     my $replace = $req->jsonBodyToObj;
 
-    unless ($replace) {
-        return $self->sendError( $req, "Invalid input: " . $req->error, 405 );
-    }
-
-    unless ( defined $replace->{clientId} ) {
-        return $self->sendError( $req, 'Invalid input: clientId is missing',
-            405 );
-    }
+    return $self->sendError( $req, "Invalid input: " . $req->error, 405 )
+      unless ($replace);
+    return $self->sendError( $req, 'Invalid input: clientId is missing', 405 )
+      unless ( defined $replace->{clientId} );
 
     $self->logger->debug(
         "[API] OIDC RP $confKey configuration replace requested");
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf({ noCache => 1 });
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     # Return 404 if not found
-    unless ( defined $self->_getOidcRpByConfKey( $conf, $confKey ) ) {
-        return $self->sendError( $req,
-            "OIDC relying party '$confKey' not found", 404 );
-    }
+
+    return $self->sendError( $req,
+        "OIDC relying party '$confKey' not found", 404 )
+      unless ( defined $self->_getOidcRpByConfKey( $conf, $confKey ) );
 
     # check if new clientID exists already
     my $res = $self->_isNewOidcRpClientIdUnique( $conf, $confKey, $replace );
-    unless ( $res->{res} eq 'ok' ) {
-        return $self->sendError( $req, $res->{msg}, 405 );
-    }
+    return $self->sendError( $req, $res->{msg}, 405 )
+      unless ( $res->{res} eq 'ok' );
 
     $res = $self->_pushOidcRp( $conf, $confKey, $replace, 1 );
-    unless ( $res->{res} eq 'ok' ) {
-        return $self->sendError( $req, $res->{msg}, 405 );
-    }
+    return $self->sendError( $req, $res->{msg}, 405 )
+      unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req,
         { message => "Successful operation" } );
@@ -237,20 +205,19 @@ sub replaceOidcRp {
 
 sub deleteOidcRp {
     my ( $self, $req ) = @_;
-
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
     # Get latest configuration
-    my $conf = $self->_confAcc->getConf({ noCache => 1 });
+    my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
     my $delete = $self->_getOidcRpByConfKey( $conf, $confKey );
 
     # Return 404 if not found
-    unless ( defined $delete ) {
-        return $self->sendError( $req,
-            "OIDC relying party '$confKey' not found", 404 );
-    }
+
+    return $self->sendError( $req,
+        "OIDC relying party '$confKey' not found", 404 )
+      unless ( defined $delete );
 
     delete $conf->{oidcRPMetaDataOptions}->{$confKey};
     delete $conf->{oidcRPMetaDataExportedVars}->{$confKey};
@@ -267,9 +234,7 @@ sub _getOidcRpByConfKey {
     my ( $self, $conf, $confKey ) = @_;
 
     # Check if confKey is defined
-    unless ( defined $conf->{oidcRPMetaDataOptions}->{$confKey} ) {
-        return undef;
-    }
+    return undef unless ( defined $conf->{oidcRPMetaDataOptions}->{$confKey} );
 
     # Get Client ID
     my $clientId = $conf->{oidcRPMetaDataOptions}->{$confKey}
@@ -297,12 +262,11 @@ sub _getOidcRpByClientId {
     my ( $self, $conf, $clientId ) = @_;
 
     foreach ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
-        if ( $conf->{oidcRPMetaDataOptions}->{$_}
-            ->{oidcRPMetaDataOptionsClientID} eq $clientId )
-        {
-            return $self->_getOidcRpByConfKey( $conf, $_ );
-        }
+        return $self->_getOidcRpByConfKey( $conf, $_ )
+          if ( $conf->{oidcRPMetaDataOptions}->{$_}
+            ->{oidcRPMetaDataOptionsClientID} eq $clientId );
     }
+
     return undef;
 }
 
@@ -314,14 +278,14 @@ sub _isNewOidcRpClientIdUnique {
       || $oidcRp->{options}->{oidcRPMetaDataOptionsClientID}
       || "";
     if ( $newClientId ne '' && $newClientId ne $curClientId ) {
-        if ( defined $self->_getOidcRpByClientId( $conf, $newClientId ) ) {
-            return {
-                res => 'ko',
-                msg =>
+        return {
+            res => 'ko',
+            msg =>
 "An OIDC relying party with clientId '$newClientId' already exists"
-            };
-        }
+          }
+          if ( defined $self->_getOidcRpByClientId( $conf, $newClientId ) );
     }
+
     return { res => 'ok' };
 }
 
@@ -339,19 +303,17 @@ sub _pushOidcRp {
     if ( defined $push->{options} ) {
         my $res = $self->_hasAllowedAttributes( $push->{options},
             'oidcRPMetaDataNode' );
-        unless ( $res->{res} eq 'ok' ) {
-            return $res;
-        }
+        return $res unless ( $res->{res} eq 'ok' );
+
         foreach ( keys %{ $push->{options} } ) {
             $conf->{oidcRPMetaDataOptions}->{$confKey}->{$_} =
               $push->{options}->{$_};
         }
     }
 
-    if ( defined $push->{clientId} ) {
-        $conf->{oidcRPMetaDataOptions}->{$confKey}
-          ->{oidcRPMetaDataOptionsClientID} = $push->{clientId};
-    }
+    $conf->{oidcRPMetaDataOptions}->{$confKey}->{oidcRPMetaDataOptionsClientID}
+      = $push->{clientId}
+      if ( defined $push->{clientId} );
 
     if ( defined $push->{exportedVars} ) {
         if ( $self->_isSimpleKeyValueHash( $push->{exportedVars} ) ) {

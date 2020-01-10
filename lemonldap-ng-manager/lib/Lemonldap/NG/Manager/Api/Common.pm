@@ -1,5 +1,6 @@
 package Lemonldap::NG::Manager::Api::Common;
-our $VERSION = '2.0.7';
+
+our $VERSION = '2.0.8';
 
 package Lemonldap::NG::Manager::Api;
 
@@ -10,14 +11,12 @@ use Lemonldap::NG::Manager::Build::CTrees;
 
 sub _isSimpleKeyValueHash {
     my ( $self, $hash ) = @_;
-    if ( ref($hash) ne "HASH" ) {
-        return 0;
+    return 0 if ( ref($hash) ne "HASH" );
+
+    foreach ( keys %$hash ) {
+        return 0 if ( ref( $hash->{$_} ) ne '' || ref($_) ne '' );
     }
-    foreach ( keys %{$hash} ) {
-        if ( ref( $hash->{$_} ) ne '' || ref($_) ne '' ) {
-            return 0;
-        }
-    }
+
     return 1;
 }
 
@@ -28,11 +27,9 @@ sub _setDefaultValues {
 
     foreach $attr (@allAttrs) {
         unless ( defined $attrs->{$attr} ) {
-            if (   defined $defaultAttrs->{$attr}
-                && defined $defaultAttrs->{$attr}->{default} )
-            {
-                $attrs->{$attr} = $defaultAttrs->{$attr}->{default};
-            }
+            $attrs->{$attr} = $defaultAttrs->{$attr}->{default}
+              if ( defined $defaultAttrs->{$attr}
+                && defined $defaultAttrs->{$attr}->{default} );
         }
     }
 
@@ -41,7 +38,6 @@ sub _setDefaultValues {
 
 sub _hasAllowedAttributes {
     my ( $self, $attributes, $rootNode ) = @_;
-
     my @allowedAttributes = $self->_listAttributes($rootNode);
 
     foreach $attribute ( keys %{$attributes} ) {
@@ -64,30 +60,18 @@ sub _hasAllowedAttributes {
 
 sub _listAttributes {
     my ( $self, $rootNode ) = @_;
-
-    my $mainTree = Lemonldap::NG::Manager::Build::CTrees::cTrees();
-
+    my $mainTree  = Lemonldap::NG::Manager::Build::CTrees::cTrees();
     my $rootNodes = [ grep { ref($_) eq "HASH" } @{ $mainTree->{$rootNode} } ];
+    my @attributes = map { $self->_listNodeAttributes($_) } @$rootNodes;
 
-    my @attributes;
-    foreach $node ( @{$rootNodes} ) {
-        push @attributes, $self->_listNodeAttributes($node);
-    }
     return @attributes;
 }
 
 sub _listNodeAttributes {
     my ( $self, $node ) = @_;
-
-    my @attributes;
-    foreach $child ( @{ $node->{nodes} } ) {
-        if ( ref($child) eq "HASH" ) {
-            push( @attributes, $self->_listNodeAttributes($child) );
-        }
-        else {
-            push( @attributes, $child );
-        }
-    }
+    my @attributes =
+      map { ref($_) eq "HASH" ? $self->_listNodeAttributes($_) : $_ }
+      @{ $node->{nodes} };
 
     return @attributes;
 }
