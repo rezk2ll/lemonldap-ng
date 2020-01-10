@@ -15,7 +15,7 @@ our $VERSION = '2.0.8';
 
 # PRIVATE METHOD
 sub modifCertificate {
-    my ( $self, $req, $newcertif, $usercertif ) = @_;
+    my ( $self, $req, $newCertif, $userCertif ) = @_;
     my $ceaAttribute = $self->conf->{certificateResetByMailCeaAttribute}
       || "description";
     my $certificateAttribute =
@@ -42,8 +42,8 @@ sub modifCertificate {
     my $result = $self->ldap->modify(
         $dn,
         replace => [
-            $ceaAttribute           => $newcertif,
-            "$certificateAttribute" => [$usercertif]
+            $ceaAttribute           => $newCertif,
+            "$certificateAttribute" => [$userCertif]
         ]
     );
 
@@ -55,7 +55,7 @@ sub modifCertificate {
         return PE_LDAPERROR;
     }
 
-    $self->logger->debug("$ceaAttribute set to $newcertif");
+    $self->logger->debug("$ceaAttribute set to $newCertif");
 
     return PE_OK;
 }
