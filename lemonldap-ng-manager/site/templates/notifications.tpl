@@ -1,6 +1,6 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-  <title>LemonLDAP::NG notifications explorer</title>
+  <title>LemonLDAP::NG Notifications explorer</title>
 </head>
 
 <body ng-app="llngNotificationsExplorer" ng-controller="NotificationsExplorerCtrl" ng-csp>
