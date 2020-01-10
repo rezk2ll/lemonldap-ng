@@ -3590,6 +3590,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'Custom register module',
         },
+        customResetCertByMail => {
+            type          => 'text',
+            documentation => 'Custom certificateResetByMail module',
+        },
         customAddParams => {
             type          => 'keyTextContainer',
             documentation => 'Custom additional parameters',

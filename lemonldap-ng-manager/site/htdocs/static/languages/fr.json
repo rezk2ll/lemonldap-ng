@@ -222,6 +222,7 @@
 "customPluginsParams":"Paramètres supplémentaires",
 "customPortalSkin":"Style personnalisé du portail",
 "customRegister":"Module d'enregistrement personnalisé",
+"customResetCertByMail":"Module de réinitialisation des certificats personalisé",
 "customToTrace":"REMOTE_CUSTOM",
 "customUserDB":"Module BD utilisateurs personnalisé",
 "date":"Date",

@@ -423,9 +423,9 @@ sub tree {
                             title => 'customParams',
                             help  => 'authcustom.html',
                             nodes => [
-                                'customAuth',     'customUserDB',
-                                'customPassword', 'customRegister',
-                                'customAddParams',
+                                'customAuth',            'customUserDB',
+                                'customPassword',        'customRegister',
+                                'customResetCertByMail', 'customAddParams',
                             ]
                         },
                     ],

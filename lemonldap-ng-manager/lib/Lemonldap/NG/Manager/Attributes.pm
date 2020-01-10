@@ -1083,6 +1083,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'customRegister' => {
             'type' => 'text'
         },
+        'customResetCertByMail' => {
+            'type' => 'text'
+        },
         'customToTrace' => {
             'type' => 'lmAttrOrMacro'
         },

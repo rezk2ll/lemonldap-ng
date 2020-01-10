@@ -222,6 +222,7 @@
 "customPluginsParams":"Additional parameters",
 "customPortalSkin":"Custom portal skin",
 "customRegister":"Custom register module",
+"customResetCertByMail":"Custom certificateResetByMail module",
 "customToTrace":"REMOTE_CUSTOM",
 "customUserDB":"Custom user DB module",
 "date":"日期",

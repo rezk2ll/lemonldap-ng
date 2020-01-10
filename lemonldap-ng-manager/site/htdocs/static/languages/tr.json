@@ -222,6 +222,7 @@
 "customPluginsParams":"Ek parametreler",
 "customPortalSkin":"Özel portal dış görünümü",
 "customRegister":"Özelleştirilmiş kayıt modülü",
+"customResetCertByMail":"Custom certificateResetByMail module",
 "customToTrace":"REMOTE_CUSTOM",
 "customUserDB":"Özelleştirilmiş kullanıcı veri tabanı modülü",
 "date":"Tarih",
