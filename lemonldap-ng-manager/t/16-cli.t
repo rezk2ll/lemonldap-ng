@@ -3,7 +3,7 @@ use JSON;
 use strict;
 require 't/test-lib.pm';
 
-my $tests = 9;
+my $tests = 10;
 
 use_ok('Lemonldap::NG::Common::Cli');
 use_ok('Lemonldap::NG::Manager::Cli');
@@ -16,6 +16,8 @@ SKIP: {
     }
     my $client =
       Lemonldap::NG::Manager::Cli->new( iniFile => 't/lemonldap-ng.ini' );
+    # my $client2 =
+    #   Lemonldap::NG::Common::Cli->new( iniFile => 't/lemonldap-ng.ini' );
     my @cmd;
     my $res;
 
@@ -64,6 +66,22 @@ SKIP: {
     @cmd = ( 'restore', '-' );
     Test::Output::combined_like( sub { $client->run(@cmd) },
         qr/"cfgNum"\s*:\s*"3"/s, 'New config: 3' );
+
+    # Test 'set' command with force
+    @cmd = qw(-yes 1 -force 1 -cfgNum 2 set useSafeJail 0);
+    Test::Output::combined_like(
+        sub { $client->run(@cmd) },
+        qr#cfgNum forced with 2#s,
+        '"Force cfgNum" OK'
+    );
+
+    # # Test 'set' command with force
+    # @cmd = qw(update-cache);
+    # Test::Output::combined_like(
+    #     sub { $client2->run(@cmd) },
+    #     qr#Cache updated to configuration 1#s,
+    #     '"update-cache" OK'
+    # );
 }
 
 count($tests);

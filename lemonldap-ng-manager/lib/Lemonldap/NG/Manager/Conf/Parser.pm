@@ -94,8 +94,7 @@ sub hdebug {
 # Main method
 #@return result
 sub check {
-    my $self      = shift;
-    my $localConf = shift;
+    my ( $self, $localConf ) = @_;
 
     hdebug("# check()");
     unless ( $self->newConf ) {
@@ -107,7 +106,7 @@ sub check {
     }
     my $separator = $self->newConf->{multiValuesSeparator} || '; ';
     hdebug("  tests succeed");
-    my %conf          = %{ $self->newConf() };
+    my %conf          = %{ $self->newConf };
     my %compactedConf = %{ $self->compactConf( $self->newConf ) };
     my @removedKeys   = ();
     unless ( $self->confChanged ) {
@@ -115,11 +114,10 @@ sub check {
         $self->message('__confNotChanged__');
         return 0;
     }
-    if ( $self->newConf->{compactConf} ) {
-        foreach ( sort keys %conf ) {
-            push @removedKeys, $_ unless exists $compactedConf{$_};
-        }
-    }
+
+    # Return removed keys if conf compacted
+    @removedKeys = map { exists $compactedConf{$_} ? () : $_ } sort keys %conf
+      if ( $self->newConf->{compactConf} );
     push @{ $self->changes },
       (
         $self->{newConf}->{compactConf}
@@ -129,6 +127,7 @@ sub check {
           }
         : { confCompacted => '0' }
       );
+
     return 1;
 }
 
@@ -1093,8 +1092,7 @@ sub defaultValue {
 #
 #@return true if tests succeed
 sub testNewConf {
-    my $self      = shift;
-    my $localConf = shift;
+    my ( $self, $localConf ) = @_;
 
     hdebug('# testNewConf()');
     return $self->_unitTest( $self->newConf(), $localConf )
@@ -1121,7 +1119,7 @@ sub _unitTest {
         }
         hdebug("Testing $key");
         my $attr = $attrs->{$key};
-        my $type = $types->{ $attr->{type} };
+        my $type = $types->{ $attr->{type} } if $attr;
         unless ( $type or $attr->{test} ) {
             $localConf->logger->debug("Unknown attribute $key, deleting it\n");
             delete $conf->{$key};

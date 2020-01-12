@@ -30,6 +30,7 @@ has force  => ( is => 'rw', isa => 'Bool', default => 0 );
 has logger => ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->logger } );
 has userLogger =>
   ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->userLogger } );
+has localConf => ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr } );
 
 sub get {
     my ( $self, @keys ) = @_;
@@ -275,13 +276,15 @@ sub _save {
             req     => $self->req
         }
     );
-    unless ( $parser->testNewConf() ) {
-        $self->logger->error("CLI: Configuration rejected with message: $parser->{message}");
+    unless ( $parser->testNewConf( $self->localConf ) ) {
+        $self->logger->error(
+            "CLI: Configuration rejected with message: $parser->{message}");
         printf STDERR "Modifications rejected: %s:\n", $parser->{message};
     }
     my $saveParams = { force => $self->force };
     if ( $self->force and $self->cfgNum ) {
-        $self->logger->debug("CLI: cfgNum forced with $self->cfgNum()");
+        $self->logger->debug( "CLI: cfgNum forced with " . $self->cfgNum );
+        print STDERR "cfgNum forced with ", $self->cfgNum;
         $saveParams->{cfgNum}      = $self->cfgNum;
         $saveParams->{cfgNumFixed} = 1;
     }
@@ -297,7 +300,8 @@ sub _save {
 
     my $s = $self->mgr->confAcc->saveConf( $new, %$saveParams );
     if ( $s > 0 ) {
-        $self->logger->debug("CLI: Configuration $s has been saved by $new->{cfgAuthor}");
+        $self->logger->debug(
+            "CLI: Configuration $s has been saved by $new->{cfgAuthor}");
         $self->logger->info("CLI: Configuration $s saved");
         print STDERR "Saved under number $s\n";
         $parser->{status} = [ $self->mgr->applyConf($new) ];
@@ -343,8 +347,7 @@ sub run {
     $self->cfgNum( $self->lastCfg ) unless ( $self->cfgNum );
     my $action = shift;
     unless ( $action =~ /^(?:get|set|addKey|delKey|save|restore)$/ ) {
-        die
-"Unknown action $action. Only get, set, addKey or delKey allowed";
+        die "Unknown action $action. Only get, set, addKey or delKey allowed";
     }
 
     $self->$action(@_);
@@ -355,7 +358,7 @@ package Lemonldap::NG::Manager::Cli::Request;
 use Mouse;
 
 has cfgNum => ( is => 'rw' );
-has error => ( is => 'rw' );
+has error  => ( is => 'rw' );
 
 sub params {
     my ( $self, $key ) = @_;

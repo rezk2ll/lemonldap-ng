@@ -41,11 +41,20 @@ ok(
     @{ $resBody->{details}->{__changes__} } == 24,
     'JSON response contains 24 changes'
 ) or print STDERR Dumper($resBody);
+ok(
+    $resBody->{details}->{__changes__}->[23]->{confCompacted} == 1,
+    'Conf. has been compacted'
+) or print STDERR Dumper($resBody);
+
+my @removedKeys = split /; /, $resBody->{details}->{__changes__}->[23]->{removedKeys};
+ok(
+    @removedKeys == 60, 'All removed keys found'
+) or print STDERR Dumper(\@removedKeys);
 
 #print STDERR Dumper($resBody);
-
 ok( -f $confFiles->[1], 'File is created' );
-count(4);
+count(6);
+
 my @changes = @{&changes};
 my @cmsg    = @{ $resBody->{details}->{__changes__} };
 my $bug;
