@@ -95,7 +95,7 @@ if (`diff $refFile $editFile`) {
             print STDERR "Configuration has changed\n";
         }
         elsif ( $res == DATABASE_LOCKED ) {
-            print STDERR "Configuration database is or can nor be locked\n";
+            print STDERR "Configuration database is or can not be locked\n";
         }
         elsif ( $res == UPLOAD_DENIED ) {
             print STDERR "You're not authorized to save this configuration\n";
