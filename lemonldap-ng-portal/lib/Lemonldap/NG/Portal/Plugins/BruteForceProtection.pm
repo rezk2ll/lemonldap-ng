@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_WAIT);
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -17,6 +17,16 @@ sub init {
     unless ( $self->conf->{loginHistoryEnabled} ) {
         $self->logger->error(
             '"History" plugin is required for "BruteForceProtection" plugin');
+        return 0;
+    }
+    unless ( $self->conf->{failedLoginNumber} >
+        $self->conf->{bruteForceProtectionMaxFailed} )
+    {
+        $self->logger->error( 'failedLoginNumber('
+              . $self->conf->{failedLoginNumber}
+              . ') must be higher than bruteForceProtectionMaxFailed('
+              . $self->conf->{bruteForceProtectionMaxFailed}
+              . ')' );
         return 0;
     }
     return 1;
