@@ -4,7 +4,7 @@ use utf8;
 use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Handler::Main;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
@@ -687,7 +687,8 @@ sub tests {
                 || $conf->{yubikey2fActivation}
                 || $conf->{u2fActivation}
                 || $conf->{utotp2fActivation} );
-            return ( 1, "History enabled WITHOUT persistent session storage" )
+            return ( 1,
+                "History plugin enabled WITHOUT persistent session storage" )
               if ( $conf->{loginHistoryEnabled} );
             return ( 1,
                 "OIDC consents enabled WITHOUT persistent session storage" )

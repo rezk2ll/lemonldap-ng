@@ -14,9 +14,15 @@ use constant afterData => 'run';
 
 sub init {
     my ($self) = @_;
+    if ( $self->conf->{disablePersistentStorage} ) {
+        $self->logger->error(
+'"BruteForceProtection" plugin enabled WITHOUT persistent session storage"'
+        );
+        return 0;
+    }
     unless ( $self->conf->{loginHistoryEnabled} ) {
         $self->logger->error(
-            '"History" plugin is required for "BruteForceProtection" plugin');
+            '"BruteForceProtection" plugin enabled WITHOUT "History" plugin');
         return 0;
     }
     unless ( $self->conf->{failedLoginNumber} >
