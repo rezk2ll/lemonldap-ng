@@ -3,7 +3,7 @@ use JSON;
 use strict;
 require 't/test-lib.pm';
 
-my $tests = 10;
+my $tests = 14;
 
 use_ok('Lemonldap::NG::Common::Cli');
 use_ok('Lemonldap::NG::Manager::Cli');
@@ -16,14 +16,14 @@ SKIP: {
     }
     my $client =
       Lemonldap::NG::Manager::Cli->new( iniFile => 't/lemonldap-ng.ini' );
-    # my $client2 =
-    #   Lemonldap::NG::Common::Cli->new( iniFile => 't/lemonldap-ng.ini' );
+    my $commonClient =
+      Lemonldap::NG::Common::Cli->new( iniFile => 't/lemonldap-ng.ini' );
     my @cmd;
     my $res;
 
     # Test 'set' command
     @cmd = qw(-yes 1 set notification 1);
-    $res = Capture::Tiny::capture_stdout( sub { $client->run(@cmd) } );
+    Capture::Tiny::capture_stdout( sub { $client->run(@cmd) } );
 
     # Test 'get' command
     @cmd = qw(get notification);
@@ -47,11 +47,16 @@ SKIP: {
         '"delKey" OK'
     );
 
-    # Test 'get' command
+    # Test 'get' command with key/subkey
     @cmd = qw(get locationRules/test1.example.com);
     $res = Capture::Tiny::capture_stdout( sub { $client->run(@cmd) } );
     ok( $res =~ m#(?:/logout|default)#, '"get key/subkey" OK' )
       or diag "$res";
+
+    # Test 'set' command with key/subkey
+    @cmd = qw(-yes 1 set locationRules/test1.example.com/default deny);
+    Capture::Tiny::capture_stdout( sub { $client->run(@cmd) } );
+
 
     # Test 'save' command
     @cmd = ('save');
@@ -75,13 +80,31 @@ SKIP: {
         '"Force cfgNum" OK'
     );
 
-    # # Test 'set' command with force
-    # @cmd = qw(update-cache);
-    # Test::Output::combined_like(
-    #     sub { $client2->run(@cmd) },
-    #     qr#Cache updated to configuration 1#s,
-    #     '"update-cache" OK'
-    # );
+    # Test 'update-cache' command with force
+    @cmd = qw(update-cache);
+    Test::Output::combined_like(
+        sub { $commonClient->run(@cmd) },
+        qr#Cache updated to configuration 3#s,
+        '"update-cache" OK'
+    );
+
+    # Test 'info' command with force
+    @cmd = qw(info);
+    Test::Output::combined_like(
+        $res = sub { $commonClient->run(@cmd) },
+        qr#\bAuthor IP\b#s,
+        '"Author IP" OK'
+    );
+    Test::Output::combined_like(
+        $res = sub { $commonClient->run(@cmd) },
+        qr#\bLog\b#s,
+        '"Log" OK'
+    );
+    Test::Output::combined_like(
+        $res = sub { $commonClient->run(@cmd) },
+        qr#\bVersion\b#s,
+        '"Version" OK'
+    ); 
 }
 
 count($tests);
