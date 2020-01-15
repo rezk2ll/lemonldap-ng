@@ -865,6 +865,11 @@ sub attributes {
             default       => "'self'",
             documentation => 'Font source for Content-Security-Policy',
         },
+        cspFrameAncestors => {
+            type          => 'text',
+            default       => '',
+            documentation => 'Frame-Ancestors for Content-Security-Policy',
+        },
         portalAntiFrame => {
             default       => 1,
             type          => 'bool',

@@ -53,6 +53,7 @@ sub defaultValues {
         'cspDefault'                     => '\'self\'',
         'cspFont'                        => '\'self\'',
         'cspFormAction'                  => '*',
+        'cspFrameAncestors'              => '',
         'cspImg'                         => '\'self\' data:',
         'cspScript'                      => '\'self\'',
         'cspStyle'                       => '\'self\'',

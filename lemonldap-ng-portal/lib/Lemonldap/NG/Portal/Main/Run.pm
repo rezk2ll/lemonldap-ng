@@ -863,9 +863,17 @@ sub sendHtml {
     $csp .= ';';
 
     # Deny using portal in frame except if it is required
-    unless ( $req->frame or $self->conf->{portalAntiFrame} == 0 ) {
+    unless ( $req->frame
+        or $self->conf->{portalAntiFrame} == 0
+        or $self->conf->{cspFrameAncestors} )
+    {
         push @{ $res->[1] }, 'X-Frame-Options' => 'DENY';
         $csp .= "frame-ancestors 'none';";
+    }
+    if ( $self->conf->{cspFrameAncestors} ) {
+        push @{ $res->[1] }, 'X-Frame-Options' => 'ALLOW-FROM '
+          . "$self->{conf}->{cspFrameAncestors};";
+        $csp .= "frame-ancestors $self->{conf}->{cspFrameAncestors};";
     }
 
     # Check if frames need to be embedded

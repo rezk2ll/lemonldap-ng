@@ -937,7 +937,7 @@ sub tree {
                                         'cspDefault', 'cspImg',
                                         'cspScript',  'cspStyle',
                                         'cspFont',    'cspFormAction',
-                                        'cspConnect',
+                                        'cspConnect', 'cspFrameAncestors'
                                     ]
                                 },
                                 {
