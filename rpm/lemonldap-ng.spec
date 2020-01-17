@@ -123,8 +123,7 @@ BuildRequires:  perl(MIME::Base64)
 BuildRequires:  perl(MIME::Entity)
 BuildRequires:  perl(mod_perl2)
 BuildRequires:  perl(Mouse)
-# Not packaged
-# BuildRequires:  perl(Net::Facebook::Oauth2)
+BuildRequires:  perl(Net::Facebook::Oauth2)
 BuildRequires:  perl(Net::LDAP)
 BuildRequires:  perl(Net::LDAP::Extension::SetPassword)
 BuildRequires:  perl(Net::LDAP::Util)
@@ -254,8 +253,7 @@ Summary:        LemonLDAP-NG authentication portal
 Requires:       crontabs
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
-# Not packaged
-#Requires:       perl(Net::Facebook::Oauth2)
+Requires:       perl(Net::Facebook::Oauth2)
 Requires:       perl(Net::OAuth)
 Requires:       perl(Net::OpenID::Consumer)
 
