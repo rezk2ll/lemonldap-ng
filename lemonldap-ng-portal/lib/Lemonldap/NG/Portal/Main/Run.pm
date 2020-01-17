@@ -347,7 +347,10 @@ sub autoRedirect {
         }
         else {
             my $url64 = encode_base64( $req->{urldc}, '' );
-            $req->pdata( {} ) if ( $req->{pdata}->{_url} =~ /$url64/ );
+            if ( $req->{pdata}->{_url} =~ /$url64/ ) {
+                $self->logger->info("Force cleaning pdata");
+                $req->pdata( {} );
+            }
             return [ 302, [ Location => $req->{urldc}, $req->spliceHdrs ], [] ];
         }
     }
