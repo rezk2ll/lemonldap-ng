@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.7';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -346,8 +346,6 @@ sub autoRedirect {
             $req->data->{redirectFormMethod} = "get";
         }
         else {
-            my $url64 = encode_base64( $req->{urldc}, '' );
-            $req->pdata( {} ) if ( $req->{pdata}->{_url} =~ /$url64/ );
             return [ 302, [ Location => $req->{urldc}, $req->spliceHdrs ], [] ];
         }
     }
