@@ -138,10 +138,10 @@ sub controlUrl {
             return PE_BADURL;
         }
 
-        $req->env->{urldc}  = $req->{urldc};
-        $req->env->{_url}   = $req->{_url};
-        $req->data->{_url}  = encode_base64($req->{urldc},''); # Avoid \n or \n
-        $req->pdata->{_url} = encode_base64($req->{urldc},''); # Same here
+        $req->env->{urldc} = $req->{urldc};
+        $req->env->{_url}  = $req->{_url};
+        $req->data->{_url} = $req->pdata->{_url} =
+          encode_base64( $req->{urldc}, '' );    # Avoid \n or \n
     }
     PE_OK;
 }
