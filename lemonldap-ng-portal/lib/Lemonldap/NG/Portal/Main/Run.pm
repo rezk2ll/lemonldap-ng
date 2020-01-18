@@ -56,13 +56,12 @@ sub handler {
     my $res = $self->Lemonldap::NG::Common::PSGI::Router::handler($req);
 
     # Avoid permanent loop 'Portal <-> _url' if pdata cookie is not removed
-    my $url64 = encode_base64( $req->userData->{_url}, '' )
-      if $req->userData->{_url};
-    if (    $url64
+    if (    $req->userData->{_url}
         and !$req->pdata->{keepPdata}
         and $req->userData->{_session_id}
         and $req->{env}->{HTTP_COOKIE}
-        and $req->{env}->{HTTP_COOKIE} =~ /$url64/ )
+        and $req->{env}->{HTTP_COOKIE} eq
+        encode_base64( $req->userData->{_url}, '' ) )
     {
         $self->logger->info("Force cleaning pdata");
         $self->logger->warn("pdata cookie domain must be set")
