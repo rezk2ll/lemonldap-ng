@@ -345,8 +345,7 @@ sub autoRedirect {
             $req->data->{redirectFormMethod} = "get";
         }
         else {
-            my $url64 = encode_base64( $req->{urldc}, '' );
-            if ( $req->{pdata}->{_url} =~ /$url64/ ) {
+            if ( $req->{pdata}->{_url} eq encode_base64( $req->{urldc}, '' ) ) {
                 $self->logger->info("Force cleaning pdata");
                 $req->pdata( {} );
             }
