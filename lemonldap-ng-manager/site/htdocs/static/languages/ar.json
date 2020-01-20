@@ -793,6 +793,7 @@
 "rules":"القواعد",
 "rulesAuthnLevel":"Required auth levels",
 "Same":"نفسه",
+"sameSite":"Cookie SameSite value",
 "save":"حفظ",
 "saveReport":"احفظ التقرير",
 "savingConfirmation":"حفظ التأكيد",

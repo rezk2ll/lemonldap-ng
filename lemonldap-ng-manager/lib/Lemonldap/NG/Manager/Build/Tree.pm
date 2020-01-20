@@ -526,7 +526,8 @@ sub tree {
                     nodes => [
                         'cookieName', '*domain',
                         'cda',        'securedCookie',
-                        'httpOnly',   'cookieExpiration'
+                        'httpOnly',   'cookieExpiration',
+                        'sameSite',
                     ]
                 },
                 {

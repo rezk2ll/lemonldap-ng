@@ -2801,6 +2801,23 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'restUserDBUrl' => {
             'type' => 'url'
         },
+        'sameSite' => {
+            'default' => 'Lax',
+            'select'  => [ {
+                    'k' => 'Strict',
+                    'v' => 'Strict'
+                },
+                {
+                    'k' => 'Lax',
+                    'v' => 'Lax'
+                },
+                {
+                    'k' => 'None',
+                    'v' => 'None'
+                }
+            ],
+            'type' => 'select'
+        },
         'samlAttributeAuthorityDescriptorAttributeServiceSOAP' => {
             'default' =>
 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',

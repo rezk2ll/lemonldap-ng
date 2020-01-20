@@ -756,7 +756,8 @@ sub cookie {
     $h{HttpOnly} //= $self->conf->{httpOnly};
     $h{max_age}  //= $self->conf->{cookieExpiration}
       if ( $self->conf->{cookieExpiration} );
-    foreach (qw(domain path expires max_age HttpOnly)) {
+    $h{SameSite} ||= $self->conf->{sameSite};
+    foreach (qw(domain path expires max_age HttpOnly SameSite)) {
         my $f = $_;
         $f =~ s/_/-/g;
         push @res, "$f=$h{$_}" if ( $h{$_} );

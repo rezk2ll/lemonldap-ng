@@ -793,6 +793,7 @@
 "rules":"Kurallar",
 "rulesAuthnLevel":"Gereken doğrulama seviyeleri",
 "Same":"Aynı",
+"sameSite":"Cookie SameSite value",
 "save":"Kaydet",
 "saveReport":"Raporu kaydet",
 "savingConfirmation":"Doğrulama kaydediliyor",

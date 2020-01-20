@@ -793,6 +793,7 @@
 "rules":"Rules",
 "rulesAuthnLevel":"Required auth levels",
 "Same":"Same",
+"sameSite":"Cookie SameSite value",
 "save":"Save",
 "saveReport":"Save report",
 "savingConfirmation":"Saving confirmation",

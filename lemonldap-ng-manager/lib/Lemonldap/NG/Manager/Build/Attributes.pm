@@ -1076,6 +1076,17 @@ sub attributes {
             documentation => 'Cookie securisation method',
             flags         => 'hp',
         },
+        sameSite => {
+            type   => 'select',
+            select => [
+                { k => 'Strict', v => 'Strict' },
+                { k => 'Lax',    v => 'Lax' },
+                { k => 'None',   v => 'None' },
+            ],
+            default       => 'Lax',
+            documentation => 'Cookie SameSite value',
+            flags         => 'hp',
+        },
 
         # Viewer
         viewerHiddenKeys => {

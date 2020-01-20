@@ -793,6 +793,7 @@
 "rules":"Quy tắc",
 "rulesAuthnLevel":"Required auth levels",
 "Same":"Tương tự",
+"sameSite":"Cookie SameSite value",
 "save":"Lưu",
 "saveReport":"Lưu báo cáo",
 "savingConfirmation":"Lưu xác nhận",
