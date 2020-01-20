@@ -259,7 +259,7 @@ sub defaultValues {
         'rest2fActivation'   => 0,
         'restAuthnLevel'     => 2,
         'restClockTolerance' => 15,
-        'sameSite'           => 'Lax',
+        'sameSite'           => 'None',
         'samlAttributeAuthorityDescriptorAttributeServiceSOAP' =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
         'samlAuthnContextMapKerberos'                   => 4,

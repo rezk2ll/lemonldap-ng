@@ -1083,7 +1083,7 @@ sub attributes {
                 { k => 'Lax',    v => 'Lax' },
                 { k => 'None',   v => 'None' },
             ],
-            default       => 'Lax',
+            default       => 'None',
             documentation => 'Cookie SameSite value',
             flags         => 'hp',
         },

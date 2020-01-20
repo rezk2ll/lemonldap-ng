@@ -2802,7 +2802,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'url'
         },
         'sameSite' => {
-            'default' => 'Lax',
+            'default' => 'None',
             'select'  => [ {
                     'k' => 'Strict',
                     'v' => 'Strict'
