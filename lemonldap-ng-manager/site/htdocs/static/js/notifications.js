@@ -159,7 +159,11 @@
       };
       $scope.getLanguage = function(lang) {
         $scope.lang = lang;
-        $scope.form = 'white';
+        if ($scope.form.date) {
+          $scope.form.date = new Date();
+        } else {
+          $scope.form = 'white';
+        }
         $scope.init();
         return $scope.showM = false;
       };
@@ -190,31 +194,33 @@
         } else {
           over = 0;
         }
-        return $http.get(scriptname + "notifications/" + $scope.type + "?" + query).then(function(response) {
-          var data, i, len, n, ref;
-          data = response.data;
-          if (data.result) {
-            ref = data.values;
-            for (i = 0, len = ref.length; i < len; i++) {
-              n = ref[i];
-              autoId++;
-              n.id = "node" + autoId;
-              if (level < scheme.length - 1) {
-                n.nodes = [];
-                n.level = level + 1;
-                n.query = query;
-                n.over = over;
+        if ($scope.type === 'done' || $scope.type === 'actives') {
+          return $http.get(scriptname + "notifications/" + $scope.type + "?" + query).then(function(response) {
+            var data, i, len, n, ref;
+            data = response.data;
+            if (data.result) {
+              ref = data.values;
+              for (i = 0, len = ref.length; i < len; i++) {
+                n = ref[i];
+                autoId++;
+                n.id = "node" + autoId;
+                if (level < scheme.length - 1) {
+                  n.nodes = [];
+                  n.level = level + 1;
+                  n.query = query;
+                  n.over = over;
+                }
+                node.push(n);
               }
-              node.push(n);
+              if (value === '') {
+                $scope.total = data.total;
+              }
             }
-            if (value === '') {
-              $scope.total = data.total;
-            }
-          }
-          return $scope.waiting = false;
-        }, function(resp) {
-          return $scope.waiting = false;
-        });
+            return $scope.waiting = false;
+          }, function(resp) {
+            return $scope.waiting = false;
+          });
+        }
       };
       $scope.displayNotification = function(scope) {
         var node, notificationId;
@@ -226,12 +232,17 @@
           notificationId = node.uid + "_" + node.reference;
         }
         $http.get(scriptname + "notifications/" + $scope.type + "/" + notificationId).then(function(response) {
+          var notif;
           $scope.currentNotification = {
             uid: node.uid,
             reference: node.reference,
             condition: node.condition
           };
           if ($scope.type === 'actives') {
+            notif = JSON.parse(response.data.notifications);
+            $scope.currentNotification.text = notif.text;
+            $scope.currentNotification.title = notif.title;
+            $scope.currentNotification.subtitle = notif.subtitle;
             $scope.currentNotification.notifications = response.data.notifications;
           } else {
             $scope.currentNotification.done = response.data.done;

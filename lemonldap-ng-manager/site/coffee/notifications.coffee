@@ -142,7 +142,10 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 
 	$scope.getLanguage = (lang) ->
 		$scope.lang = lang
-		$scope.form = 'white'
+		if $scope.form.date
+			$scope.form.date = new Date()
+		else
+			$scope.form = 'white'
 		$scope.init()
 		$scope.showM = false
 
@@ -172,22 +175,23 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 			over = 0
 
 		# Launch HTTP query
-		$http.get("#{scriptname}notifications/#{$scope.type}?#{query}").then (response) ->
-			data = response.data
-			if data.result
-				for n in data.values
-					autoId++
-					n.id = "node#{autoId}"
-					if level < scheme.length - 1
-						n.nodes = []
-						n.level = level + 1
-						n.query = query
-						n.over  = over
-					node.push n
-				$scope.total = data.total if value == ''	
-			$scope.waiting = false
-		, (resp) ->
-			$scope.waiting = false
+		if $scope.type == 'done' || $scope.type == 'actives'
+			$http.get("#{scriptname}notifications/#{$scope.type}?#{query}").then (response) ->
+				data = response.data
+				if data.result
+					for n in data.values
+						autoId++
+						n.id = "node#{autoId}"
+						if level < scheme.length - 1
+							n.nodes = []
+							n.level = level + 1
+							n.query = query
+							n.over  = over
+						node.push n
+					$scope.total = data.total if value == ''	
+				$scope.waiting = false
+			, (resp) ->
+				$scope.waiting = false
 
 	$scope.displayNotification = (scope) ->
 		$scope.waiting = true
@@ -202,7 +206,11 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 				reference: node.reference
 				condition: node.condition
 			if $scope.type == 'actives'
-				$scope.currentNotification.notifications = response.data.notifications
+				notif = JSON.parse response.data.notifications
+				$scope.currentNotification.text = notif.text
+				$scope.currentNotification.title = notif.title
+				$scope.currentNotification.subtitle = notif.subtitle
+				$scope.currentNotification.notifications = response.data.notifications				
 			else
 				$scope.currentNotification.done = response.data.done
 			$scope.waiting = false
