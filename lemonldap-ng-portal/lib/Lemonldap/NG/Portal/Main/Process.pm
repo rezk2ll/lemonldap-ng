@@ -39,8 +39,11 @@ sub process {
             }
         }
     }
-    $self->logger->debug(
-        "Returned error: $err (" . portalConsts->{$err} . ")" )
+    $self->logger->debug( "Returned "
+          . ( $err > 0 ? "error" : "status" )
+          . ": $err ("
+          . portalConsts->{$err}
+          . ")" )
       if ($err);
     return $err;
 }
