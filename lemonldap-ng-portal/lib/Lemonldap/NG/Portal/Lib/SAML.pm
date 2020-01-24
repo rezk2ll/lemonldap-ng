@@ -21,7 +21,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SLO_ERROR
 );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 # PROPERTIES
 
@@ -415,7 +415,7 @@ sub loadSPs {
                       . $self->p->HANDLER->tsv->{jail}->error );
                 next;
             }
-            $self->spRules->{$entityID} = $rule;
+            $self->spRules->{$_} = $rule;
         }
 
         # Load per-SP macros

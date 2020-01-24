@@ -17,7 +17,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNAUTHORIZEDPARTNER
 );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
@@ -384,7 +384,7 @@ sub run {
             $self->logger->debug("$sp match $spConfKey SP in configuration");
             $req->env->{llng_saml_spconfkey} = $spConfKey;
 
-            if ( my $rule = $self->spRules->{$sp} ) {
+            if ( my $rule = $self->spRules->{$spConfKey} ) {
                 unless ( $rule->( $req, $req->sessionInfo ) ) {
                     $self->userLogger->warn( 'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
