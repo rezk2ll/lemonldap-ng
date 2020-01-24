@@ -239,6 +239,7 @@ Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
          libconvert-pem-perl,
+         libregexp-common-perl,
          libcrypt-openssl-rsa-perl,
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | apache2 | httpd-cgi
