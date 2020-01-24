@@ -265,7 +265,7 @@ sub _delete2FFromSessions {
                       . " 2F device(s) attached to sessionId $_ ..." );
                 $session->data->{_2fDevices} = to_json( \@keep );
                 $session->update( $session->data );
-                
+
                 # Delete from local cache
                 if ( $session->{options}->{localStorage} ) {
                     $module = $session->{options}->{localStorage};
@@ -309,9 +309,10 @@ sub _delete2F {
     return $res if ( $res->{res} ne 'ok' );
     $removed = $res->{removed} || {};
 
+    my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
     $res =
       $self->_delete2FFromSessions( $uid, $type, $id, $self->_getSSOMod, 'SSO',
-        'uid' );
+        $whatToTrace );
     return $res if ( $res->{res} ne 'ok' );
     $res->{removed} ||= {};
 
