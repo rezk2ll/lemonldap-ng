@@ -50,7 +50,7 @@
         <section id="block-superfish-1" class="block block-superfish clearfix">
           <div ui-tree data-drag-enabled="false" id="tree-root">
             <div ng-show="data.length==0" class="center">
-              <span class="label label-warning" trspan="noData"></span>
+              <span class="label label-warning">{{translate('noData')}}</span>
             </div>
             <ol ui-tree-nodes="" ng-model="data">
               <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'" collapsed="true"></li>
