@@ -11,6 +11,9 @@ use feature 'state';
 
 extends 'Lemonldap::NG::Manager::Conf';
 
+has diffRule => ( is => 'rw', default => sub { 0 } );
+has brwRule => ( is => 'rw', default => sub { 0 } );
+
 our $VERSION = '2.0.6';
 
 #############################
@@ -21,11 +24,36 @@ use constant defaultRoute => 'viewer.html';
 
 has ua => ( is => 'rw' );
 
-sub addRoutes {
+sub init {
     my ( $self, $conf ) = @_;
     $self->ua( Lemonldap::NG::Common::UserAgent->new($conf) );
+    my $hd = "Lemonldap::NG::Handler::PSGI::Main";
 
-    my $hiddenKeys  = $self->{viewerHiddenKeys} || '';
+    # Parse Diff activation rule
+    $conf->{viewerAllowDiff} //= 0;
+    $self->logger->debug(
+        "Diff activation rule -> " . ( $conf->{viewerAllowDiff} ) );
+    my $rule = $hd->buildSub( $hd->substitute( $conf->{viewerAllowDiff} ) );
+    unless ($rule) {
+        $self->logger->error(
+            "Bad Diff activation rule -> " . $hd->tsv->{jail}->error );
+        return 0;
+    }
+    $self->diffRule($rule);
+
+    # Parse Browser activation rule
+    $conf->{viewerAllowBrowser} //= 0;
+    $self->logger->debug(
+        "Browser activation rule -> " . ( $conf->{viewerAllowBrowser} ) );
+    $rule = $hd->buildSub( $hd->substitute( $conf->{viewerAllowBrowser} ) );
+    unless ($rule) {
+        $self->logger->error(
+            "Bad Browser activation rule -> " . $hd->tsv->{jail}->error );
+        return 0;
+    }
+    $self->brwRule($rule);
+
+    my $hiddenKeys  = $conf->{viewerHiddenKeys} || '';
     my @enabledKeys = ();
     my @keys        = qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
       applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
@@ -67,6 +95,7 @@ sub addRoutes {
 
       # Other keys
       ->addRoute( view => { ':cfgNum' => { '*' => 'viewKey' } }, ['GET'] );
+    return 1;
 }
 
 sub getConfByNum {

@@ -5,7 +5,8 @@ use 5.10.0;
 use utf8;
 use Mouse;
 
-extends 'Lemonldap::NG::Common::Conf::RESTServer',
+extends 'Lemonldap::NG::Manager::Plugin',
+  'Lemonldap::NG::Common::Conf::RESTServer',
   'Lemonldap::NG::Common::Session::REST';
 
 use Lemonldap::NG::Manager::Api::2F;
@@ -20,7 +21,7 @@ our $VERSION = '2.0.7';
 
 use constant defaultRoute => 'api.html';
 
-sub addRoutes {
+sub init {
     my ( $self, $conf ) = @_;
 
     # HTML template
@@ -148,6 +149,7 @@ sub addRoutes {
     $self->{multiValuesSeparator} ||= '; ';
     $self->{hiddenAttributes} //= "_password";
     $self->{TOTPCheck} = $self->{U2FCheck} = $self->{UBKCheck} = '1';
+    return 1;
 }
 
 1;

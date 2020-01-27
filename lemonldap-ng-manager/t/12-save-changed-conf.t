@@ -25,7 +25,7 @@ ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
 ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
   or print STDERR Dumper($resBody);
 ok(
-    @{ $resBody->{details}->{__warnings__} } == 2,
+    $resBody->{details}->{__warnings__} and @{ $resBody->{details}->{__warnings__} } == 2,
     'JSON response contains 2 warnings'
 ) or print STDERR Dumper($resBody);
 
@@ -38,7 +38,7 @@ foreach my $i ( 0 .. 1 ) {
 }
 
 ok(
-    @{ $resBody->{details}->{__changes__} } == 24,
+    $resBody->{details}->{__changes__} and @{ $resBody->{details}->{__changes__} } == 24,
     'JSON response contains 24 changes'
 ) or print STDERR Dumper($resBody);
 ok(

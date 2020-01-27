@@ -1156,8 +1156,6 @@ sub _unitTest {
             if (   $key =~ /^(?:$simpleHashKeys|$doubleHashKeys)$/o
                 or $attr->{type} =~ /Container$/ )
             {
-                my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail};
-                my $msg    = $attr->{msgFail}    // $type->{msgFail};
                 $res = 0
                   unless (
                     $self->_execTest( {

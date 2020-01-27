@@ -13,7 +13,8 @@ require Lemonldap::NG::Common::Notifications;
 
 use feature 'state';
 
-extends 'Lemonldap::NG::Common::Conf::AccessLib';
+extends 'Lemonldap::NG::Manager::Plugin',
+  'Lemonldap::NG::Common::Conf::AccessLib';
 
 our $VERSION = '2.0.7';
 
@@ -26,7 +27,7 @@ has notifFormat => ( is => 'rw' );
 
 use constant defaultRoute => 'notifications.html';
 
-sub addRoutes {
+sub init {
     my ( $self, $conf ) = @_;
 
     if ( $conf->{oldNotifFormat} ) {
@@ -74,6 +75,7 @@ sub addRoutes {
           { done => { ':notificationId' => 'deleteDoneNotification' } },
         ['DELETE']
       );
+    return 1;
 }
 
 sub setNotifAccess {
