@@ -686,6 +686,7 @@
 "portalButtons":"Buttons on login page",
 "portalCaptcha":"Captcha",
 "portalCheckLogins":"Check last logins",
+"portalCustomCss":"Custom CSS file",
 "portalCustomization":"Customization",
 "portalDisplayAppslist":"Applications list",
 "portalDisplayChangePassword":"Password change",

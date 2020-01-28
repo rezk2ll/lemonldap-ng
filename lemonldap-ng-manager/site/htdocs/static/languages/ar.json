@@ -686,6 +686,7 @@
 "portalButtons":"أزرار على صفحة تسجيل الدخول",
 "portalCaptcha":"كلمة التحقق أو الكابتشا ",
 "portalCheckLogins":"تحقق من آخر تسجيلات دخول",
+"portalCustomCss":"Custom CSS file",
 "portalCustomization":"التخصيص",
 "portalDisplayAppslist":"قائمة التطبيقات",
 "portalDisplayChangePassword":"تغيير كلمة المرور",

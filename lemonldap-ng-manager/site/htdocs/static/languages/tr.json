@@ -686,6 +686,7 @@
 "portalButtons":"Giriş sayfasındaki butonlar",
 "portalCaptcha":"Captcha",
 "portalCheckLogins":"Son girişleri kontrol et",
+"portalCustomCss":"Custom CSS file",
 "portalCustomization":"Özelleştirme",
 "portalDisplayAppslist":"Uygulamalar listesi",
 "portalDisplayChangePassword":"Parola değişimi",

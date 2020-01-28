@@ -357,6 +357,10 @@ sub attributes {
             test          => $url,
             msgFail       => '__badUrl__',
         },
+        portalCustomCss => {
+            type    => 'text',
+            documentation => 'Path to custom CSS file',
+        },
         portalStatus => {
             type          => 'bool',
             default       => 0,

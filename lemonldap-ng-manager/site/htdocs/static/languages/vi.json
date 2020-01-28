@@ -686,6 +686,7 @@
 "portalButtons":"Nút trên trang đăng nhập",
 "portalCaptcha":"Captcha",
 "portalCheckLogins":"Kiểm tra đăng nhập lần cuối",
+"portalCustomCss":"Custom CSS file",
 "portalCustomization":"Tùy chỉnh",
 "portalDisplayAppslist":"Danh sách ứng dụng",
 "portalDisplayChangePassword":"Thay đổi mật khẩu",

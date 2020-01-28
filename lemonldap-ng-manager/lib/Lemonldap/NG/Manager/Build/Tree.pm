@@ -54,6 +54,7 @@ sub tree {
                             nodes => [
                                 'portalMainLogo',
                                 'showLanguages',
+                                'portalCustomCss',
                                 'portalSkin',
                                 'portalSkinBackground',
                                 'portalSkinRules',
