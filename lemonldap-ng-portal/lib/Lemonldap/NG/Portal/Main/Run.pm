@@ -757,6 +757,7 @@ sub cookie {
     $h{max_age}  //= $self->conf->{cookieExpiration}
       if ( $self->conf->{cookieExpiration} );
     $h{SameSite} ||= $self->conf->{sameSite};
+
     foreach (qw(domain path expires max_age HttpOnly SameSite)) {
         my $f = $_;
         $f =~ s/_/-/g;
@@ -981,6 +982,7 @@ sub tplParams {
         PORTAL_URL => $self->conf->{portal},
         SKIN_PATH  => $portalPath . "skins",
         SKIN_BG    => $self->conf->{portalSkinBackground},
+        CUSTOM_CSS => $self->conf->{portalCustomCss},
         ( $self->customParameters ? ( %{ $self->customParameters } ) : () ),
         %templateParams
     );
