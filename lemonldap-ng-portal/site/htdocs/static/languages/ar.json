@@ -199,7 +199,7 @@
 "notFound":"لم يتم العثور: محاولة الدخول إلى صفحة غير متوفرة",
 "noTOTPFound":"No TOTP found",
 "noU2FKeyFound":"No U2F key found",
-"oidcConsent":"The application %s would like to:",
+"oidcConsent":"التطبيق ٪s هل ترغب في معرفة:",
 "oidcConsents":"OIDC consents",
 "oidcConsentsFull":"OpenID Connect consents",
 "oneExpired2Fremoved":"An expired 2F device has been removed!",

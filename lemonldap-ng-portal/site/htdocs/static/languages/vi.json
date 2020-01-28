@@ -199,7 +199,7 @@
 "notFound":"Không tìm thấy: bạn cố gắng truy cập vào một trang không có sẵn",
 "noTOTPFound":"Đăng xuất khỏi các ứng dụng khác",
 "noU2FKeyFound":"No U2F key found",
-"oidcConsent":"The application %s would like to:",
+"oidcConsent":"Ứng dụng %s muốn biết:",
 "oidcConsents":"OIDC consents",
 "oidcConsentsFull":"OpenID Connect consents",
 "oneExpired2Fremoved":"An expired 2F device has been removed!",
