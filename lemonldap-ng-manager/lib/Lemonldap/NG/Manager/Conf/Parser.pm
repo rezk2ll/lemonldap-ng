@@ -51,7 +51,10 @@ has changes => ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
 has message => (
     is      => 'rw',
     isa     => 'Str',
-    default => '',
+    lazy    => 1,
+    default => sub {
+        return join( ', ', map { $_->{message} } @{ $_[0]->errors } );
+    },
     trigger => sub {
         hdebug( "Message becomes " . $_[0]->{message} );
     }
