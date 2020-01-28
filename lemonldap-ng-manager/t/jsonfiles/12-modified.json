@@ -1211,7 +1211,7 @@
       "id": "cookieExpiration",
       "title": "cookieExpiration",
       "type": "int",
-      "data": "a"
+      "data": 0
     }]
   }, {
     "id": "sessionParams",
