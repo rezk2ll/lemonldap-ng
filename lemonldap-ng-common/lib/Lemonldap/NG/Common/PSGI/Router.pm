@@ -10,9 +10,10 @@ extends 'Lemonldap::NG::Common::PSGI';
 
 # Properties
 has 'routes' => (
-    is      => 'rw',
-    isa     => 'HashRef',
-    default => sub { { GET => {}, POST => {}, PUT => {}, PATCH => {}, DELETE => {} } }
+    is  => 'rw',
+    isa => 'HashRef',
+    default =>
+      sub { { GET => {}, POST => {}, PUT => {}, PATCH => {}, DELETE => {} } }
 );
 has 'defaultRoute' => ( is => 'rw', default => 'index.html' );
 
@@ -75,7 +76,7 @@ sub genRoute {
             elsif ( $t eq 'ARRAY' ) {
                 $routes->{$word} ||= {};
                 foreach my $w ( @{$dest} ) {
-                    $self->genRoute( $routes->{$word}, $w, $transform );
+                    $self->genRoute( $routes->{$word}, $w, $w, $transform );
                 }
                 return;
             }
