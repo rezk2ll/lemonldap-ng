@@ -51,6 +51,13 @@ Available actions:
  - restore -                     : import configuration from STDIN
  - restore <file>                : import configuration from file
 
+Options:
+ - yes <0|1>                     : accept confirmation prompt automatically
+ - log <msg>                     : set configuration log message
+ - safe <0|1>                    : fail in case the requested configuration is invalid
+ - force <0|1>                   : allow overwrite of existing config number
+ - cfgNum <num>                  : set new configuration number (requires -force 1)
+
 See Lemonldap::NG::Manager::Cli(3) for more
 };
 }
@@ -92,6 +99,12 @@ Set some values
   # add or set a key
   $ lemonldap-ng-cli addKey macro fullname '$givenName." ".$lastName'
 
+  # without changing the version number
+  $ lemonldap-ng-cli -force 1 -cfgNum 1 set portal http://auth.e.com/ domain e.com
+
+  # without asking for confirmation
+  $ lemonldap-ng-cli -yes 1 set portal http://auth.e.com/ domain e.com
+
 =head1 DESCRIPTION
 
 lemonldap-ng-cli is a command line interface to interact with Lemonldap::NG
@@ -117,6 +130,32 @@ and L<Lemonldap::NG::Common::Cli>
 =item addKey
 
 =item delKey
+
+=back
+
+=head2 Available options
+
+=over
+
+=item -yes
+
+Confirm modification automatically (default: 0)
+
+=item -log
+
+Allows you to set the log message that will be displayed in the manager
+
+=item -safe
+
+The configuration change will be aborted if it contains errors (default: 0)
+
+=item -cfgNum
+
+Choose a particular configuration number (default: latest)
+
+=item -force
+
+Allows you to force overwriting an existing configuration (default: 0)
 
 =back
 
