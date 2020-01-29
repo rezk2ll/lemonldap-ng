@@ -26,6 +26,7 @@ has req    => ( is => 'ro' );
 has sep    => ( is => 'rw', isa => 'Str', default => '/' );
 has format => ( is => 'rw', isa => 'Str', default => "%-25s | %-25s | %-25s" );
 has yes    => ( is => 'rw', isa => 'Bool', default => 0 );
+has safe   => ( is => 'rw', isa => 'Bool', default => 0 );
 has force  => ( is => 'rw', isa => 'Bool', default => 0 );
 has logger => ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->logger } );
 has userLogger =>
@@ -277,9 +278,14 @@ sub _save {
         }
     );
     unless ( $parser->testNewConf( $self->localConf ) ) {
-        $self->logger->error(
-            "CLI: Configuration rejected with message: $parser->{message}");
-        printf STDERR "Modifications rejected: %s:\n", $parser->{message};
+        my $msg = "Configuration rejected with message: " . $parser->message;
+        $self->logger->error("CLI: $msg");
+        if ( $self->safe ) {
+            die "$msg";
+        }
+        else {
+            print STDERR "$msg\n";
+        }
     }
     my $saveParams = { force => $self->force };
     if ( $self->force and $self->cfgNum ) {
