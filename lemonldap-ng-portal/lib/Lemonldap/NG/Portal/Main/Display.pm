@@ -136,9 +136,10 @@ sub display {
             URL             => $req->{urldc},
             HIDDEN_INPUTS   => $self->buildHiddenForm($req),
             ACTIVE_TIMER    => $req->data->{activeTimer},
-            FORM_METHOD     => $self->conf->{infoFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->data->{_authChoice},
+            FORM_METHOD     => $req->data->{infoFormMethod}
+              || $self->conf->{infoFormMethod},
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )

@@ -644,7 +644,7 @@ sub autoPost {
 
     # Display info before redirecting
     if ( $req->info() ) {
-        $req->{infoFormMethod} = $req->param('method') || "post";
+        $req->data->{infoFormMethod} = $req->param('method') || "post";
         return PE_INFO;
     }
 
