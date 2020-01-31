@@ -34,7 +34,7 @@ sub extractFormInfo {
     my $field = $self->conf->{SSLVar};
     if ( $req->env->{SSL_CLIENT_I_DN} ) {
         $self->logger->debug(
-            'Received SSL issuer  ' . $req->env->{SSL_CLIENT_I_DN} );
+            'Received SSL issuer ' . $req->env->{SSL_CLIENT_I_DN} );
 
         if ( my $tmp =
             $self->conf->{SSLVarIf}->{ $req->env->{SSL_CLIENT_I_DN} } )
