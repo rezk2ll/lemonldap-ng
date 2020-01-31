@@ -358,7 +358,7 @@ sub attributes {
             msgFail       => '__badUrl__',
         },
         portalCustomCss => {
-            type    => 'text',
+            type          => 'text',
             documentation => 'Path to custom CSS file',
         },
         portalStatus => {
@@ -3147,6 +3147,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         SSLVarIf => {
             type    => 'keyTextContainer',
+            keyTest => sub { 1 },
             default => {}
         },
         sslByAjax => {

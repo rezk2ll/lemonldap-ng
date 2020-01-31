@@ -32,12 +32,17 @@ sub init {
 sub extractFormInfo {
     my ( $self, $req ) = @_;
     my $field = $self->conf->{SSLVar};
-    if ( $req->env->{SSL_CLIENT_I_DN}
-        and my $tmp =
-        $self->conf->{SSLVarIf}->{ $req->env->{SSL_CLIENT_I_DN} } )
-    {
-        $field = $tmp;
+    if ( $req->env->{SSL_CLIENT_I_DN} ) {
+        $self->logger->debug(
+            'Received SSL issuer  ' . $req->env->{SSL_CLIENT_I_DN} );
+
+        if ( my $tmp =
+            $self->conf->{SSLVarIf}->{ $req->env->{SSL_CLIENT_I_DN} } )
+        {
+            $field = $tmp;
+        }
     }
+    $self->logger->debug("Using SSL environment variable $field");
     if ( $req->user( $req->env->{$field} ) ) {
         $self->userLogger->notice( "GoodSSL authentication for " . $req->user );
         return PE_OK;

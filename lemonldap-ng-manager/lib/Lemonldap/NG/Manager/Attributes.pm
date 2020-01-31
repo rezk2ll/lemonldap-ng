@@ -3648,7 +3648,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'SSLVarIf' => {
             'default' => {},
-            'type'    => 'keyTextContainer'
+            'keyTest' => sub {
+                1;
+            },
+            'type' => 'keyTextContainer'
         },
         'staticPrefix' => {
             'type' => 'text'
