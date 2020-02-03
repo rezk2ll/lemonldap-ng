@@ -1020,11 +1020,11 @@ sub buildAuthnRequestMsg {
 # @param request SAML request
 # @return result
 sub processAuthnRequestMsg {
-    my ( $self, $login, $request ) = @_;
+    my ( $self, $login, $request, $level ) = @_;
 
     eval { Lasso::Login::process_authn_request_msg( $login, $request ); };
 
-    return $self->checkLassoError($@);
+    return $self->checkLassoError( $@, $level );
 }
 
 ## @method boolean validateRequestMsg(Lasso::Login login, boolean auth, boolean consent)

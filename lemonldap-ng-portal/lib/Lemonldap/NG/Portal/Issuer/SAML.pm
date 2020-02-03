@@ -170,12 +170,15 @@ sub storeEnv {
     my ( $self, $req ) = @_;
     return PE_OK
       if ( $req->uri !~ $self->ssoUrlRe or $req->uri =~ $self->ssoUrlArtifact );
+
+# This doesn't always work, especially when coming from a HTTP-Redirect flow and
+# POST-ing the login form
     my ( $request, $response, $method, $relaystate, $artifact ) =
       $self->checkMessage( $req, $req->uri, $req->method, $req->content_type );
     return PE_OK if ( $artifact or !$request );
     my $login = $self->createLogin( $self->lassoServer );
     $self->disableSignatureVerification($login);
-    $self->processAuthnRequestMsg( $login, $request );
+    $self->processAuthnRequestMsg( $login, $request, 'debug' );
     if ( my $sp = $login->remote_providerID() ) {
         $req->env->{llng_saml_sp} = $sp;
         if ( my $spConfKey = $self->spList->{$sp}->{confKey} ) {
