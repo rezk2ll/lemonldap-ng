@@ -57,6 +57,7 @@ use strict;
 use Data::Dumper;
 use File::Find;
 use LWP::UserAgent;
+use Time::Fake;
 use URI::Escape;
 use Lemonldap::NG::Common::FormEncode;
 
@@ -65,7 +66,6 @@ use Lemonldap::NG::Common::FormEncode;
 no warnings 'redefine';
 
 BEGIN {
-    require 't/Time-Fake.pm';
     use_ok('Lemonldap::NG::Portal::Main');
 }
 
