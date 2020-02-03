@@ -574,7 +574,7 @@ sub checkMessage {
 # @return 1 if no error
 sub checkLassoError {
     my ( $self, $error, $level ) = @_;
-    $level ||= 'debug';
+    $level ||= 'error';
 
     # If $error is not a Lasso::Error object, display error string
     unless ( ref($error) and $error->isa("Lasso::Error") ) {
