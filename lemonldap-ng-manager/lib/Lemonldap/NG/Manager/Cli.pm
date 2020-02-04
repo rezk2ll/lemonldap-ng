@@ -76,7 +76,7 @@ sub set {
         }
     }
     require Clone;
-    my $new = Clone::clone( $self->mgr->currentConf );
+    my $new = Clone::clone( $self->mgr->hLoadedPlugins->{conf}->currentConf );
     foreach my $key ( keys %pairs ) {
         $self->_setKey( $new, $key, $pairs{$key} );
     }
@@ -101,7 +101,7 @@ sub addKey {
         push @list, [ $root, $newKey, $value ];
     }
     require Clone;
-    my $new = Clone::clone( $self->mgr->currentConf );
+    my $new = Clone::clone( $self->mgr->hLoadedPlugins->{conf}->currentConf );
     foreach my $el (@list) {
         my @path = split $sep, $el->[0];
         if ( $#path == 0 ) {
@@ -142,7 +142,7 @@ sub delKey {
         push @list, [ $root, $key ];
     }
     require Clone;
-    my $new = Clone::clone( $self->mgr->currentConf );
+    my $new = Clone::clone( $self->mgr->hLoadedPlugins->{conf}->currentConf );
     foreach my $el (@list) {
         my @path = split $sep, $el->[0];
         if ( $#path == 0 ) {
@@ -237,7 +237,7 @@ sub _getKey {
         warn "Malformed key $base";
         return ();
     }
-    my $value = $self->mgr->getConfKey( $self->req, $base, noCache => 1 );
+    my $value = $self->mgr->hLoadedPlugins->{conf}->getConfKey( $self->req, $base, noCache => 1 );
     if ( $self->req->error ) {
         die $self->req->error;
     }
@@ -273,7 +273,7 @@ sub _save {
     require Lemonldap::NG::Manager::Conf::Parser;
     my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
             newConf => $new,
-            refConf => $self->mgr->currentConf,
+            refConf => $self->mgr->hLoadedPlugins->{conf}->currentConf,
             req     => $self->req
         }
     );
@@ -310,7 +310,7 @@ sub _save {
             "CLI: Configuration $s has been saved by $new->{cfgAuthor}");
         $self->logger->info("CLI: Configuration $s saved");
         print STDERR "Saved under number $s\n";
-        $parser->{status} = [ $self->mgr->applyConf($new) ];
+        $parser->{status} = [ $self->mgr->hLoadedPlugins->{conf}->applyConf($new) ];
     }
     else {
         $self->logger->error("CLI: Configuration not saved!");
