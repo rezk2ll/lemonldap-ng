@@ -363,8 +363,8 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
     $trmsg = $trmsg[0];                 # get the first one only
     $trmsg =~ s/.*trmsg="([0-9]+)".*/$1/g;    # get error code number
     ok( $trmsg == PE_RESETCERTIFICATE_INVALID, 'Invalid certificate' );
+    stopLdapServer() if $ENV{LLNGTESTLDAP};
 }
 
 count($maintests);
-stopLdapServer() if $ENV{LLNGTESTLDAP};
 done_testing( count() );
