@@ -9,7 +9,7 @@ package Lemonldap::NG::Common::Notifications::LDAP;
 use strict;
 use Mouse;
 use Time::Local;
-use MIME::Base64;
+use MIME::Base64 qw/encode_base64url/;
 use Net::LDAP;
 use utf8;
 
@@ -67,7 +67,7 @@ sub get {
       . ( $ref ? '(description={ref}' . $ref . ')' : '' ) . ')';
     my @entries = _search( $self, $filter );
 
-    my $result = {};
+    my $result;
     foreach my $entry (@entries) {
         my @notifValues = $entry->get_value('description');
         my $f           = {};
@@ -205,9 +205,8 @@ sub newNotif {
     return ( 0, "Bad date" ) if ($@);
     $date =~ s/-//g;
     return ( 0, "Bad date" ) unless ( $date =~ /^\d{8}/ );
-    my $cn = "${date}${fns}${uid}${fns}" . encode_base64( $ref, '' );
-    $cn .= "${fns}" . encode_base64( $condition, '' ) if $condition;
-    $xml = $xml->serialize();
+    my $cn = "${date}${fns}${uid}${fns}" . encode_base64url( $ref, '' );
+    $cn .= "${fns}" . encode_base64url( $condition, '' ) if $condition;
 
     my $fields =
       $condition =~ /.+/
@@ -357,7 +356,7 @@ sub _store {
     );
 
     if ( $add->code ) {
-        $self->logError($add);
+        $self->logger->error( $add->error );
         return 0;
     }
 
