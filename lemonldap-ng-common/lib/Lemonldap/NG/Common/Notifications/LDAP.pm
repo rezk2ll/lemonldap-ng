@@ -45,6 +45,16 @@ has ldapBindDN => (
     }
 );
 
+has ldapBindPassword => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        $_[0]
+          ->p->logger->warn('Warning: "ldapBindPassword" parameter is not set');
+        return '';
+    }
+);
+
 # Returns notifications corresponding to the user $uid.
 # If $ref is set, returns only notification corresponding to this reference.
 sub get {
