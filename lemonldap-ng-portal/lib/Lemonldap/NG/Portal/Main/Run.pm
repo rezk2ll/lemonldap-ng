@@ -19,12 +19,23 @@ use JSON;
 
 has trOverCache => ( is => 'rw', default => sub { {} } );
 
+# The execution order between groups and macros can be
+# modified in config (#1877)
+sub groupsAndMacros {
+    return (
+        $_[0]->conf->{groupsBeforeMacros}
+        ? qw(setGroups setMacros)
+        : qw(setMacros setGroups)
+    );
+}
+
 # List constants
 sub authProcess { qw(extractFormInfo getUser authenticate) }
 
 sub sessionData {
-    qw(setAuthSessionInfo setSessionInfo setMacros setGroups setPersistentSessionInfo
-      setLocalGroups store secondFactor);
+    return
+      qw(setAuthSessionInfo setSessionInfo), $_[0]->groupsAndMacros,
+      qw(setPersistentSessionInfo setLocalGroups store secondFactor);
 }
 
 sub validSession {
@@ -178,8 +189,7 @@ sub refresh {
             @{ $self->betweenAuthAndData },
             'setAuthSessionInfo',
             'setSessionInfo',
-            'setMacros',
-            'setGroups',
+            $self->groupsAndMacros,
             'setLocalGroups',
             sub {
                 $req->sessionInfo->{$_} = $data{$_} foreach ( keys %data );

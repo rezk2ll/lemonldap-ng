@@ -145,7 +145,8 @@ sub run {
             return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
         }
         unless ( $self->ott->getToken($token) ) {
-            $self->userLogger->warn('ContextSwitching called with an expired/bad token');
+            $self->userLogger->warn(
+                'ContextSwitching called with an expired/bad token');
             return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
         }
     }
@@ -202,11 +203,10 @@ sub _switchContext {
 
     # Search user in database & create session
     $req->steps( [
-            'getUser',        'setAuthSessionInfo',
-            'setSessionInfo', 'setMacros',
-            'setGroups',      'setPersistentSessionInfo',
-            'setLocalGroups', 'store',
-            'buildCookie'
+            'getUser',                  'setAuthSessionInfo',
+            'setSessionInfo',           $self->p->groupsAndMacros,
+            'setPersistentSessionInfo', 'setLocalGroups',
+            'store',                    'buildCookie'
         ]
     );
     if ( my $error = $self->p->process($req) ) {

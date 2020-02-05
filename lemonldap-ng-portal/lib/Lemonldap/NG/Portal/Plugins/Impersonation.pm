@@ -119,7 +119,8 @@ sub run {
     $self->logger->debug("Populating spoof session...");
     foreach (qw (_auth _userDB authenticationLevel)) {
         $self->logger->debug("Processing $_...");
-        $spoofSession->{$_} = $realSession->{"$self->{conf}->{impersonationPrefix}$_"};
+        $spoofSession->{$_} =
+          $realSession->{"$self->{conf}->{impersonationPrefix}$_"};
     }
 
     # Merging SSO Groups and hGroups & dedup
@@ -192,9 +193,8 @@ sub _userData {
 
     # Search user in database
     $req->steps( [
-            'getUser',   'setSessionInfo',
-            'setMacros', 'setGroups',
-            'setLocalGroups'
+            'getUser',                 'setSessionInfo',
+            $self->p->groupsAndMacros, 'setLocalGroups'
         ]
     );
     if ( my $error = $self->p->process($req) ) {
@@ -227,9 +227,8 @@ sub _userData {
         $req->{sessionInfo} = {%$realSession};
         $req->{user}        = $realId;
         $req->steps( [
-                'getUser',   'setSessionInfo',
-                'setMacros', 'setGroups',
-                'setLocalGroups'
+                'getUser',                 'setSessionInfo',
+                $self->p->groupsAndMacros, 'setLocalGroups'
             ]
         );
         $self->logger->debug('Spoof session equal real session');

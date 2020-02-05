@@ -48,12 +48,9 @@ sub check {
         #  - "extractFormInfo" due to "token"
         #  - "buildCookie" useless here
         $req->steps( [
-                'getUser',
-                'authenticate',
-                @{ $self->p->betweenAuthAndData },
-                qw( setAuthSessionInfo setSessionInfo setMacros setGroups
-                  setPersistentSessionInfo setLocalGroups store secondFactor),
-                @{ $self->p->afterData }, 'storeHistory',
+                'getUser',                         'authenticate',
+                @{ $self->p->betweenAuthAndData }, $self->sessionData,
+                @{ $self->p->afterData },          'storeHistory',
                 @{ $self->p->endAuth }
             ]
         );

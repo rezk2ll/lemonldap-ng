@@ -1319,6 +1319,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             },
             'type' => 'keyTextContainer'
         },
+        'groupsBeforeMacros' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'handlerInternalCache' => {
             'default' => 15,
             'type'    => 'int'

@@ -323,6 +323,7 @@
 "gpgParams":"GPG parameters",
 "grantSessionRules":"ظروف الافتتاح",
 "groups":"المجموعات",
+"groupsBeforeMacros":"Compute groups before macros",
 "hashkey":"المفتاح",
 "headers":"هيدر إتش تي تي بي ",
 "hGroups":"المجموعات (هاش ريف)",
