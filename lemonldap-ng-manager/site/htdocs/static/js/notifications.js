@@ -232,17 +232,23 @@
           notificationId = node.uid + "_" + node.reference;
         }
         $http.get(scriptname + "notifications/" + $scope.type + "/" + notificationId).then(function(response) {
-          var notif;
+          var e, notif;
           $scope.currentNotification = {
             uid: node.uid,
             reference: node.reference,
             condition: node.condition
           };
           if ($scope.type === 'actives') {
-            notif = JSON.parse(response.data.notifications);
-            $scope.currentNotification.text = notif.text;
-            $scope.currentNotification.title = notif.title;
-            $scope.currentNotification.subtitle = notif.subtitle;
+            try {
+              console.log("Try to parse a JSON formated notification...");
+              notif = JSON.parse(response.data.notifications);
+              $scope.currentNotification.text = notif.text;
+              $scope.currentNotification.title = notif.title;
+              $scope.currentNotification.subtitle = notif.subtitle;
+            } catch (error) {
+              e = error;
+              console.log("Unable to parse JSON");
+            }
             $scope.currentNotification.notifications = response.data.notifications;
           } else {
             $scope.currentNotification.done = response.data.done;

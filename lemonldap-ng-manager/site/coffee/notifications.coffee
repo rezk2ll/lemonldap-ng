@@ -206,11 +206,15 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 				reference: node.reference
 				condition: node.condition
 			if $scope.type == 'actives'
-				notif = JSON.parse response.data.notifications
-				$scope.currentNotification.text = notif.text
-				$scope.currentNotification.title = notif.title
-				$scope.currentNotification.subtitle = notif.subtitle
-				$scope.currentNotification.notifications = response.data.notifications				
+				try 
+					console.log "Try to parse a JSON formated notification..."
+					notif = JSON.parse response.data.notifications
+					$scope.currentNotification.text = notif.text
+					$scope.currentNotification.title = notif.title
+					$scope.currentNotification.subtitle = notif.subtitle
+				catch e
+					console.log "Unable to parse JSON"
+				$scope.currentNotification.notifications = response.data.notifications
 			else
 				$scope.currentNotification.done = response.data.done
 			$scope.waiting = false
