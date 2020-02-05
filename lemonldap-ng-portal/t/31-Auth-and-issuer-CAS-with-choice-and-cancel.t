@@ -11,10 +11,9 @@ BEGIN {
 }
 my $userdb = tempdb();
 
-my $maintests = 14;
+my $maintests = 12;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
-my %handlerOR = ( issuer => [], sp => [] );
 
 eval { require XML::Simple };
 plan skip_all => "Missing dependencies: $@" if ($@);
@@ -76,14 +75,9 @@ SKIP: {
     );
 
     # Build CAS server
-    ok( $issuer = issuer(), 'Issuer portal' );
-    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
-    switch ('sp');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-
-    # Build CAS app
-    ok( $sp = sp(), 'SP portal' );
-    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $issuer = register('issuer', \&issuer);
+    # Build CAS App
+    $sp = register('sp', \&sp);
 
     # Simple SP access
     # Connect to CAS app
@@ -147,13 +141,6 @@ qr%<img src="http://auth.sp.com/static/common/icons/sfa_manager.png" class="mr-2
 clean_sessions();
 count($maintests);
 done_testing( count() );
-
-sub switch {
-    my $type = shift;
-    @Lemonldap::NG::Handler::Main::_onReload = @{
-        $handlerOR{$type};
-    };
-}
 
 sub issuer {
     return LLNG::Manager::Test->new( {

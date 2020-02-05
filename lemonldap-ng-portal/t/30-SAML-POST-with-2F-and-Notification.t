@@ -12,10 +12,9 @@ BEGIN {
     require 't/smtp.pm';
 }
 
-my $maintests = 20;
+my $maintests = 18;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
-my %handlerOR = ( issuer => [], sp => [] );
 
 # Redefine LWP methods for tests
 LWP::Protocol::PSGI->register(
@@ -49,13 +48,8 @@ SKIP: {
     close F;
 
     # Initialization
-    ok( $issuer = issuer(), 'Issuer portal' );
-    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
-    switch ('sp');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-
-    ok( $sp = sp(), 'SP portal' );
-    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $issuer = register('issuer', \&issuer);
+    $sp = register('sp', \&sp);
 
     # Simple SP access
     ok(
@@ -252,13 +246,6 @@ qr%<input name="code" value="" type="text" class="form-control" id="extcode" trp
 count($maintests);
 clean_sessions();
 done_testing( count() );
-
-sub switch {
-    my $type = shift;
-    @Lemonldap::NG::Handler::Main::_onReload = @{
-        $handlerOR{$type};
-    };
-}
 
 sub issuer {
     return LLNG::Manager::Test->new( {

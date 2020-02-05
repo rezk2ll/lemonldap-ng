@@ -13,7 +13,6 @@ BEGIN {
 my $debug     = 'error';
 my $maintests = 18;
 my ( $op, $rp, $res );
-my %handlerOR = ( op => [], rp => [] );
 my $userdb = tempdb();
 
 LWP::Protocol::PSGI->register(
@@ -241,15 +240,6 @@ SKIP: {
 
 count($maintests);
 done_testing( count() );
-
-sub switch {
-    my $type = shift;
-    pass( '==> Switching to ' . uc($type) . ' <==' );
-    count(1);
-    @Lemonldap::NG::Handler::Main::_onReload = @{
-        $handlerOR{$type};
-    };
-}
 
 sub op {
     return LLNG::Manager::Test->new( {

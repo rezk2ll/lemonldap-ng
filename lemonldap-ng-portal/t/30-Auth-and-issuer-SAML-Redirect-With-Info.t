@@ -11,10 +11,9 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 10;
+my $maintests = 8;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
-my %handlerOR = ( issuer => [], sp => [] );
 
 # Redefine LWP methods for tests
 LWP::Protocol::PSGI->register(
@@ -33,8 +32,7 @@ SKIP: {
     }
 
     # Initialization
-    ok( $issuer = issuer(), 'Issuer portal' );
-    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $issuer = register('issuer', \&issuer);
 
     # Do a user login to have an existing session
 
@@ -53,10 +51,8 @@ SKIP: {
     expectCookie($res);
 
     switch ('sp');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 
-    ok( $sp = sp(), 'SP portal' );
-    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $sp = register('sp', \&sp);
 
     # Simple SP access
     ok(
@@ -145,13 +141,6 @@ SKIP: {
 count($maintests);
 clean_sessions();
 done_testing( count() );
-
-sub switch {
-    my $type = shift;
-    @Lemonldap::NG::Handler::Main::_onReload = @{
-        $handlerOR{$type};
-    };
-}
 
 sub issuer {
     return LLNG::Manager::Test->new( {

@@ -502,6 +502,41 @@ sub tempdb {
     return "$tmpDir/userdb.db";
 }
 
+
+my %handlerOR;
+
+=head4 register
+
+Registers a new LLNG instance
+
+=cut
+
+sub register {
+    my ($type, $constructor) = @_;
+    my $obj;
+    @Lemonldap::NG::Handler::Main::_onReload = ();
+    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
+    ok($obj = $constructor->(), 'Register $type');
+    count(1);
+    $handlerOR{$type} = \@Lemonldap::NG::Handler::Main::_onReload;
+    return  $obj;
+}
+
+=head4 register
+
+Switch to a registered instance
+
+=cut
+
+sub switch {
+    my $type = shift;
+    return [] unless $handlerOR{$type};
+    note( '==> Switching to ' . uc($type) . ' <==' );
+    @Lemonldap::NG::Handler::Main::_onReload = @{
+        $handlerOR{$type};
+    };
+}
+
 =head2 LLNG::Manager::Test Class
 
 =cut
@@ -828,5 +863,6 @@ sub _put {
     $args{method} = 'PUT';
     return $self->_post( $path, $body, %args );
 }
+
 
 1;

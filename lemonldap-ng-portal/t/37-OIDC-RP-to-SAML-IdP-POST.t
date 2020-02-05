@@ -11,10 +11,9 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 19;
+my $maintests = 16;
 my $debug     = 'error';
 my ( $idp, $sp, $rp, $res );
-my %handlerOR = ( idp => [], sp => [], rp => [] );
 
 LWP::Protocol::PSGI->register(
     sub {
@@ -74,14 +73,9 @@ SKIP: {
     }
 
     # Initialization
-    switch ('idp');
-    ok( $idp = idp(), 'IdP portal' );
-    $handlerOR{idp} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $idp = register('idp', \&idp);
 
-    switch ('sp');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-    ok( $sp = sp(), 'Proxy portal' );
-    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $sp = register('sp', \&sp);
 
     ok(
         $res = $sp->_get('/oauth2/jwks'),
@@ -97,10 +91,7 @@ SKIP: {
     expectOK($res);
     my $metadata = $res->[2]->[0];
 
-    switch ('rp');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-    ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
-    $handlerOR{rp} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $rp = register('rp', sub { rp($jwks, $metadata) } );
 
     # Query RP for auth
     ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
@@ -278,15 +269,6 @@ SKIP: {
 count($maintests);
 clean_sessions();
 done_testing( count() );
-
-sub switch {
-    my $type = shift;
-    pass( '==> Switching to ' . uc($type) . ' <==' );
-    count(1);
-    @Lemonldap::NG::Handler::Main::_onReload = @{
-        $handlerOR{$type};
-    };
-}
 
 sub idp {
     return LLNG::Manager::Test->new( {

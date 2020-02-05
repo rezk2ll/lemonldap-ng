@@ -11,10 +11,9 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 12;
+my $maintests = 9;
 my $debug     = 'error';
 my ( $idp, $proxy, $app, $res );
-my %handlerOR = ( idp => [], proxy => [], app => [] );
 
 # Redefine LWP methods for tests
 LWP::Protocol::PSGI->register(
@@ -64,19 +63,9 @@ SKIP: {
     }
 
     # Initialization
-    switch ('idp');
-    ok( $idp = idp(), 'IdP portal' );
-    $handlerOR{idp} = \@Lemonldap::NG::Handler::Main::_onReload;
-
-    switch ('proxy');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-    ok( $proxy = proxy(), 'Proxy portal' );
-    $handlerOR{proxy} = \@Lemonldap::NG::Handler::Main::_onReload;
-
-    switch ('app');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-    ok( $app = app(), 'CAS app portal' );
-    $handlerOR{app} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $idp = register('idp', \&idp);
+    $proxy = register('proxy', \&proxy);
+    $app = register('app', \&app);
 
     # Query RP for auth
     ok( $res = $app->_get( '/', accept => 'text/html' ),
@@ -180,15 +169,6 @@ SKIP: {
 count($maintests);
 clean_sessions();
 done_testing( count() );
-
-sub switch {
-    my $type = shift;
-    pass( '==> Switching to ' . uc($type) . ' <==' );
-    count(1);
-    @Lemonldap::NG::Handler::Main::_onReload = @{
-        $handlerOR{$type};
-    };
-}
 
 sub idp {
     return LLNG::Manager::Test->new( {

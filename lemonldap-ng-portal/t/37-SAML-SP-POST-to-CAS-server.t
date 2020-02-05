@@ -11,10 +11,9 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 14;
+my $maintests = 11;
 my $debug     = 'error';
 my ( $issuer, $proxy, $sp, $res );
-my %handlerOR = ( issuer => [], proxy => [], sp => [] );
 
 # Redefine LWP methods for tests
 LWP::Protocol::PSGI->register(
@@ -65,21 +64,13 @@ SKIP: {
 
     # Initialization
     # Build CAS server
-    ok( $issuer = issuer(), 'Issuer portal' );
-    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $issuer = register('issuer', \&issuer);
 
     # Build proxy
-    switch ('proxy');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-    ok( $proxy = proxy(), 'Issuer portal' );
-    $handlerOR{proxy} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $proxy = register('proxy', \&proxy);
 
     # Buils SAML SP
-    switch ('sp');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-
-    ok( $sp = sp(), 'SP portal' );
-    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $sp = register('sp', \&sp);
 
     # Simple SP access
     my $res;
@@ -194,13 +185,6 @@ qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
 count($maintests);
 clean_sessions();
 done_testing( count() );
-
-sub switch {
-    my $type = shift;
-    @Lemonldap::NG::Handler::Main::_onReload = @{
-        $handlerOR{$type};
-    };
-}
 
 sub issuer {
     return LLNG::Manager::Test->new( {

@@ -11,10 +11,9 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 13;
+my $maintests = 10;
 my $debug     = 'error';
 my ( $op, $proxy, $sp, $res );
-my %handlerOR = ( op => [], proxy => [], sp => [] );
 
 LWP::Protocol::PSGI->register(
     sub {
@@ -74,8 +73,7 @@ SKIP: {
     }
 
     # Initialization
-    ok( $op = op(), 'OP portal' );
-    $handlerOR{op} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $op = register('op', \&op);
 
     ok(
         $res = $op->_get('/oauth2/jwks'),
@@ -91,15 +89,8 @@ SKIP: {
     expectOK($res);
     my $metadata = $res->[2]->[0];
 
-    switch ('sp');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-    ok( $sp = sp(), 'SP portal' );
-    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
-
-    switch ('proxy');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-    ok( $proxy = proxy( $jwks, $metadata ), 'Proxy portal' );
-    $handlerOR{proxy} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $sp = register('sp', \&sp);
+    $proxy = register('proxy', sub { proxy($jwks, $metadata) } );
 
     # SAML
     switch ('sp');
@@ -262,15 +253,6 @@ qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
 count($maintests);
 clean_sessions();
 done_testing( count() );
-
-sub switch {
-    my $type = shift;
-    pass( '==> Switching to ' . uc($type) . ' <==' );
-    count(1);
-    @Lemonldap::NG::Handler::Main::_onReload = @{
-        $handlerOR{$type};
-    };
-}
 
 sub op {
     return LLNG::Manager::Test->new( {

@@ -11,10 +11,9 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 26;
+my $maintests = 23;
 my $debug     = 'error';
 my ( $issuer, $sp, $sp2, $res );
-my %handlerOR = ( issuer => [], sp => [], sp2 => [] );
 
 # Redefine LWP methods for tests
 LWP::Protocol::PSGI->register(
@@ -33,16 +32,11 @@ SKIP: {
     }
 
     # Initialization
-    ok( $issuer = issuer(), 'Issuer portal' );
-    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
-    switch ('sp');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
+    $issuer = register('issuer', \&issuer);
 
-    ok( $sp = sp(), 'SP portal' );
-    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $sp = register('sp', \&sp);
 
-    ok( $sp2 = sp2(), 'SP2 portal' );
-    $handlerOR{sp2} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $sp2 = register('sp2', \&sp2);
 
     # Simple SP access
     my $res;
@@ -299,13 +293,6 @@ qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
 count($maintests);
 clean_sessions();
 done_testing( count() );
-
-sub switch {
-    my $type = shift;
-    @Lemonldap::NG::Handler::Main::_onReload = @{
-        $handlerOR{$type};
-    };
-}
 
 sub issuer {
     return LLNG::Manager::Test->new( {

@@ -7,10 +7,9 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 10;
+my $maintests = 9;
 my $debug     = 'error';
 my ( $issuer, $res );
-my %handlerOR = ( issuer => [], sp => [] );
 
 SKIP: {
     eval "use Lasso";
@@ -19,8 +18,7 @@ SKIP: {
     }
 
     # Initialization
-    ok( $issuer = issuer(), 'Issuer portal' );
-    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $issuer = register('issuer', \&issuer);
 
     ok( $res = $issuer->_get('/saml/metadata'), 'Get metadata' );
     ok( $res->[2]->[0] =~ m#^<\?xml version="1.0"\?>#s, 'Metadata is XML' );

@@ -12,9 +12,8 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 23;
+my $maintests = 21;
 my $debug     = 'error';
-my %handlerOR = ( issuer => [], sp => [] );
 
 SKIP: {
     eval "use Lasso";
@@ -24,12 +23,8 @@ SKIP: {
 
     # Initialization
     my ( $issuer, $sp );
-    ok( $issuer = issuer(), 'Issuer 1' );
-    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
-    switch ('sp');
-    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-    ok( $sp = sp(), 'SP' );
-    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $issuer = register('issuer', \&issuer);
+    $sp = register('sp', \&sp);
 
     # Simple SP access
     my $res;
@@ -218,13 +213,6 @@ m%<img src="http://auth.sp.com/static/common/icons/sfa_manager.png" class="mr-2"
 count($maintests);
 clean_sessions();
 done_testing( count() );
-
-sub switch {
-    my $type = shift;
-    @Lemonldap::NG::Handler::Main::_onReload = @{
-        $handlerOR{$type};
-    };
-}
 
 sub sp {
     return LLNG::Manager::Test->new( {

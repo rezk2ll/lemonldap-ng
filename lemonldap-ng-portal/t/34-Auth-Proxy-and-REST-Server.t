@@ -11,7 +11,6 @@ BEGIN {
 
 my $debug = 'error';
 my ( $issuer, $sp, $res, $spId, $idpId );
-my %handlerOR = ( issuer => [], sp => [] );
 
 LWP::Protocol::PSGI->register(
     sub {
@@ -63,14 +62,8 @@ LWP::Protocol::PSGI->register(
     }
 );
 
-ok( $issuer = issuer(), 'Issuer portal' );
-$handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
-switch ('sp');
-&Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-
-ok( $sp = sp(), 'SP portal' );
-$handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
-count(2);
+$issuer = register('issuer', \&issuer);
+$sp = register('sp', \&sp);
 
 # Simple SP access
 ok(
@@ -304,13 +297,6 @@ clean_sessions();
 done_testing( count() );
 
 # Redefine LWP methods for tests
-sub switch {
-    my $type = shift;
-    @Lemonldap::NG::Handler::Main::_onReload = @{
-        $handlerOR{$type};
-    };
-}
-
 sub issuer {
     return LLNG::Manager::Test->new( {
             ini => {
