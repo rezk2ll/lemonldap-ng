@@ -458,16 +458,7 @@ sub sp2 {
                 samlServicePublicKeySig     => saml_key_sp_public_sig,
                 samlServicePrivateKeyEnc => saml_key_sp_private_enc,
                 samlServicePrivateKeySig => saml_key_sp_private_sig,
-                samlServicePublicKeyEnc => "-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsRaod2RZ8hMFBl+Vhsnh
-yPM8l/Fj1obnBxfQIaWuHFIFfXiGe/CYHuZ5QJQLnZxHMJX6LL3Sh+Usog3p0jpi
-jpcg0QgfBSEkfopKTgReYN8DiDIll0rV1XdTni7E85Nd1YyNy3ui/ZD+UShWwqu6
-jLVLR+QUm+/1LIKYb3OCBTvOlY7xHoP6NSU1+Mr+YzGBUacdO2vnNxe/PQhxIeP1
-zO0njuqGHkwEpy8rUWRZbbDn31TmKjqlhgtsz5HPhbRaYEExhyepKgBiNz+RyxtY
-XVhuG8OrWQDoS5gYHSjdw1CTJyixeJwyoqA9RGYguG5nh9zndi3LWAh7Z0lx+tIz
-+wIDAQAB
------END PUBLIC KEY-----
-",
+                samlServicePublicKeyEnc => saml_key_sp_public_enc,
                 samlSPSSODescriptorAuthnRequestsSigned => 1,
             },
         }
