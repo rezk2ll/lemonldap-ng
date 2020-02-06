@@ -96,10 +96,12 @@
    "domain" : "__DNSDOMAIN__",
    "exportedHeaders" : {
       "test1.__DNSDOMAIN__" : {
-         "Auth-User" : "$uid"
+         "Auth-User" : "$uid",
+         "Auth-Groups" : "$groups"
       },
       "test2.__DNSDOMAIN__" : {
-         "Auth-User" : "$uid"
+         "Auth-User" : "$uid",
+         "Auth-Groups" : "$groups"
       }
    },
    "exportedVars" : {},
