@@ -595,6 +595,9 @@ sub substitute {
     $expr =~ s/\$env->\{/\$r->{env}->\{/g;
     $expr =~ s/\bskip\b/q\{999_SKIP\}/g;
 
+    # handle inGroup
+    $expr =~ s/\binGroup\(([^)]*)\)/listMatch(\$s->{'hGroups'},\1,1),/g;
+
     return $expr;
 }
 
