@@ -34,11 +34,14 @@ ok(
     $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho'),
-        length => 23
+        length => 23,
+        accept => 'text/html',
     ),
     'Auth query'
 );
-count(1);
+ok( $res->[2]->[0] !~ m%<input type="hidden" name="skin" value="bootstrap" />%, '"skin=bootstrap" input not found' )
+  or explain( $res->[2]->[0], '"skin=bootstrap" found' );
+count(2);
 expectOK($res);
 my $id2 = expectCookie($res);
 

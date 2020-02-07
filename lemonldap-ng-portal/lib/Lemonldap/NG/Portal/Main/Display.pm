@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -122,6 +122,7 @@ sub display {
 
     # 1.3 There is a message to display
     elsif ( my $info = $req->info ) {
+        my $method = $req->data->{infoFormMethod} || $self->conf->{infoFormMethod};
         $self->logger->debug('Display: info detected');
         $self->logger->debug('Hidden values :');
         $self->logger->debug( " $_: " . $req->{portalHiddenFormValues}->{$_} )
@@ -138,8 +139,11 @@ sub display {
             ACTIVE_TIMER    => $req->data->{activeTimer},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->data->{_authChoice},
-            FORM_METHOD     => $req->data->{infoFormMethod}
-              || $self->conf->{infoFormMethod},
+            FORM_METHOD     => $method,
+            (
+                $method ne 'get' ? ( SEND_PARAMS => 1 )
+                : ()
+            ),
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -507,7 +511,6 @@ sub buildHiddenForm {
 # TODO: create property for skinRule
 sub getSkin {
     my ( $self, $req ) = @_;
-
     my $skin = $self->conf->{portalSkin};
 
     # Fill sessionInfo to eval rule if empty (unauthenticated user)
