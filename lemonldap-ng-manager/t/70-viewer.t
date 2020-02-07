@@ -58,9 +58,11 @@ count(2);
 # Try to compare confs 1 & 2
 $res = &client->jsonResponse('/view/diff/1/2');
 
-# ok( $res->[1]->{captcha_login_enabled} eq '1', 'Key found' );
+ok( $res->[1]->{captcha_login_enabled} eq '1', 'Key found' );
 ok( $res->[1]->{captcha_mail_enabled} eq '0', 'Key found' );
-count(1);
+ok( 7 == keys %{ $res->[1] },                 'Right number of keys found' )
+  or print STDERR Dumper($res);
+count(3);
 
 # Try to display previous conf
 $res = &client->jsonResponse('/view/1');
