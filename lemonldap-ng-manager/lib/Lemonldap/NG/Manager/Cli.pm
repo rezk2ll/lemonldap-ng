@@ -237,7 +237,8 @@ sub _getKey {
         warn "Malformed key $base";
         return ();
     }
-    my $value = $self->mgr->hLoadedPlugins->{conf}->getConfKey( $self->req, $base, noCache => 1 );
+    my $value = $self->mgr->hLoadedPlugins->{conf}
+      ->getConfKey( $self->req, $base, noCache => 1 );
     if ( $self->req->error ) {
         die $self->req->error;
     }
@@ -310,11 +311,13 @@ sub _save {
             "CLI: Configuration $s has been saved by $new->{cfgAuthor}");
         $self->logger->info("CLI: Configuration $s saved");
         print STDERR "Saved under number $s\n";
-        $parser->{status} = [ $self->mgr->hLoadedPlugins->{conf}->applyConf($new) ];
+        $parser->{status} =
+          [ $self->mgr->hLoadedPlugins->{conf}->applyConf($new) ];
     }
     else {
         $self->logger->error("CLI: Configuration not saved!");
-        printf STDERR "Modifications rejected: %s:\n", $parser->{message};
+        printf STDERR "Modifications rejected: %s:\n", $parser->{message}
+          if $parser->{message};
         print STDERR Dumper($parser);
     }
     foreach (qw(errors warnings status)) {
