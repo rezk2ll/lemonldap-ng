@@ -1140,6 +1140,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Notifications explorer activation',
         },
+        notificationsMaxRetrieve => {
+            default       => 3,
+            type          => 'int',
+            documentation => 'Max number of displayed notifications',
+        },
         notificationServer => {
             default       => 0,
             type          => 'bool',

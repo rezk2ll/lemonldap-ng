@@ -80,7 +80,7 @@
               </a></li>
             </TMPL_IF>
             <TMPL_IF NAME="notifsExplorer">
-              <li class="dropdown-item"><a href="/mynotifs" class="nav-link">
+              <li class="dropdown-item"><a href="/mynotifications" class="nav-link">
                 <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/notifsExplorer.png" width="20" height="20" alt="notificationsExplorer" />
                 <span trspan="notificationsExplorer">notificationsExplorer</span>
               </a></li>

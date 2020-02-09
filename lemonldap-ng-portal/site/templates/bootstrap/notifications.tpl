@@ -10,8 +10,8 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th><span trspan="reference">Reference</span></th>
           <th><span trspan="date">Date</span></th>
+          <th><span trspan="reference">Reference</span></th>
           <th>
             <TMPL_IF NAME="ACTION">
               <span trspan="action">Action</span>
@@ -22,8 +22,8 @@
       <tbody>
         <TMPL_LOOP NAME="NOTIFICATIONS">
           <tr id='delete-<TMPL_VAR NAME="epoch">'>
-            <td class="align-middle"><TMPL_VAR NAME="reference"></td>
             <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
+            <td class="align-middle"><TMPL_VAR NAME="reference"></td>
             <td>
               <TMPL_IF NAME="DISPLAY">
                 <span notif='<TMPL_VAR NAME="reference">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-success" role="button">
@@ -41,7 +41,7 @@
 
     <div class="card mb-3 border-info" id='myNotification' hidden>
       <div class="card-header text-white bg-info">
-        <h3 class="card-title"><span trspan="reference">Reference</span>: <span id="notifRef"></span> / <span trspan="validationDate">Validation date</span>: <span id="notifEpoch"></span></h3>
+        <h3 class="card-title"><span trspan="validationDate">Validation date</span>: <span id="notifEpoch"></span> - <span trspan="reference">Reference</span>: <span id="notifRef"></span></h3>
       </div>
       <div class="card-body">
         <div class="form">

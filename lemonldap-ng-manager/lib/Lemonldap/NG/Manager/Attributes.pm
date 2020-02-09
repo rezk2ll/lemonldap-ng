@@ -1888,6 +1888,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 0,
             'type'    => 'bool'
         },
+        'notificationsMaxRetrieve' => {
+            'default' => 3,
+            'type'    => 'int'
+        },
         'notificationStorage' => {
             'default' => 'File',
             'type'    => 'PerlModule'

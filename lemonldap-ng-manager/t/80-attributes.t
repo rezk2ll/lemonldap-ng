@@ -53,10 +53,11 @@ my @notManagedAttributes = (
 
     # Other ini-only prms
     'configStorage', 'status', 'localStorageOptions', 'localStorage',
-    'max2FDevices',              'max2FDevicesNameLength', 'checkTime',
-    'mySessionAuthorizedRWKeys', 'handlerInternalCache',
-    'handlerServiceTokenTTL',    'impersonationPrefix', 'pdataDomain',
-    'forceGlobalStorageUpgradeOTT', 'forceGlobalStorageIssuerOTT'
+    'max2FDevices',                 'max2FDevicesNameLength', 'checkTime',
+    'mySessionAuthorizedRWKeys',    'handlerInternalCache',
+    'handlerServiceTokenTTL',       'impersonationPrefix',    'pdataDomain',
+    'forceGlobalStorageUpgradeOTT', 'forceGlobalStorageIssuerOTT',
+    'notificationsMaxRetrieve'
 );
 
 # Words used either as attribute name and node title

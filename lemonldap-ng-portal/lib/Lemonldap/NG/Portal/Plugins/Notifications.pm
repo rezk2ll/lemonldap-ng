@@ -39,10 +39,13 @@ has module => ( is => 'rw' );
 sub init {
     my ($self) = @_;
 
-    # Declare new route
+    # Declare new routes
     $self->addUnauthRoute( notifback => 'getNotifBack', [ 'POST', 'GET' ] );
-    $self->addAuthRoute( notifback => 'getNotifBack', ['POST'] )
-      ->addAuthRoute( mynotifs => { '*' => 'myNotifs' }, ['GET'] );
+    $self->addAuthRoute( notifback => 'getNotifBack', ['POST'] );
+    $self->addAuthRouteWithRedirect(
+        mynotifications => { '*' => 'myNotifs' },
+        ['GET']
+    ) if $self->conf->{notificationsExplorer};
 
     if ( $self->conf->{notificationServer} ) {
         $self->logger->debug('Notification server enable');
@@ -205,9 +208,10 @@ sub retrieveNotifs {
     ];
 
     @$_notifications = sort {
-             $a->{reference} cmp $b->{reference}
-          or $a->{epoch} <=> $b->{epoch}
+             $b->{epoch} <=> $a->{epoch}
+          or $a->{reference} cmp $b->{reference}
     } @$_notifications;
+    splice @$_notifications, $self->conf->{notificationsMaxRetrieve};
 
     $self->logger->debug(
         scalar @$_notifications . " accepted notifications found" );

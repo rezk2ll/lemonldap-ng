@@ -5,7 +5,7 @@ LemonLDAP::NG Notifications script
  */
 
 (function() {
-  var displayError, setMsg, viewNotif;
+  var displayError, setMsg, toggle, viewNotif;
 
   setMsg = function(msg, level) {
     $('#msg').html(window.translate(msg));
@@ -27,23 +27,40 @@ LemonLDAP::NG Notifications script
     }
   };
 
-  viewNotif = function(notif, epoch) {
+  toggle = function(button, verif) {
+    if (verif) {
+      $("#myNotification").attr('hidden', 'true');
+      button.removeClass('btn-danger');
+      return button.addClass('btn-success');
+    } else {
+      $("#myNotification").removeAttr('hidden');
+      $(".btn-danger").each(function() {
+        $(this).removeClass('btn-danger');
+        return $(this).addClass('btn-success');
+      });
+      button.removeClass('btn-success');
+      return button.addClass('btn-danger');
+    }
+  };
+
+  viewNotif = function(notif, epoch, button) {
     console.log('Ref:', notif, 'epoch:', epoch);
     if (notif && epoch) {
       console.log('Send AJAX request');
       return $.ajax({
         type: "GET",
-        url: portal + "mynotifs/" + notif,
+        url: portal + "mynotifications/" + notif,
         data: {
           epoch: epoch
         },
         dataType: 'json',
+        error: displayError,
         success: function(resp) {
           var myDate;
           if (resp.result) {
             console.log('Notification:', resp.notification);
+            toggle(button, 0);
             $('#displayNotif').html(resp.notification);
-            $("#myNotification").removeAttr('hidden');
             $('#notifRef').text(notif);
             myDate = new Date(epoch * 1000);
             return $('#notifEpoch').text(myDate.toLocaleString());
@@ -58,14 +75,17 @@ LemonLDAP::NG Notifications script
   };
 
   $(document).ready(function() {
-    $('body').on('click', '.btn-success', function() {
-      return viewNotif($(this).attr('notif'), $(this).attr('epoch'));
-    });
-    $('#goback').attr('href', portal);
-    return $(".data-epoch").each(function() {
+    $(".data-epoch").each(function() {
       var myDate;
       myDate = new Date($(this).text() * 1000);
       return $(this).text(myDate.toLocaleString());
+    });
+    $('#goback').attr('href', portal);
+    $('body').on('click', '.btn-success', function() {
+      return viewNotif($(this).attr('notif'), $(this).attr('epoch'), $(this));
+    });
+    return $('body').on('click', '.btn-danger', function() {
+      return toggle($(this), 1);
     });
   });
 

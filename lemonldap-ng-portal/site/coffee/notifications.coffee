@@ -16,35 +16,48 @@ displayError = (j, status, err) ->
 		console.log 'Returned error', res
 		setMsg res, 'warning'
 
-# Delete function (launched by "view" button)
-viewNotif = (notif, epoch) ->
+toggle = (button, verif) ->
+		if verif
+			$("#myNotification").attr('hidden', 'true')
+			button.removeClass 'btn-danger'
+			button.addClass 'btn-success'
+		else
+			$("#myNotification").removeAttr('hidden')
+			$(".btn-danger").each ->
+				$(this).removeClass 'btn-danger'
+				$(this).addClass 'btn-success'
+			button.removeClass 'btn-success'
+			button.addClass 'btn-danger'
+
+# viewNotif function (launched by "verify" button)
+viewNotif = (notif, epoch, button) ->
 		console.log 'Ref:', notif, 'epoch:', epoch
 		if notif and epoch
 			console.log 'Send AJAX request'
 			$.ajax
 				type: "GET"
-				url: "#{portal}mynotifs/#{notif}"
+				url: "#{portal}mynotifications/#{notif}"
 				data:
 					epoch: epoch
 				dataType: 'json'
-				#error: displayError
+				error: displayError
 				success: (resp) ->
 					if resp.result
 						console.log 'Notification:', resp.notification
+						toggle button, 0
 						$('#displayNotif').html resp.notification
-						$("#myNotification").removeAttr('hidden')
 						$('#notifRef').text(notif)
 						myDate = new Date(epoch * 1000)
 						$('#notifEpoch').text(myDate.toLocaleString())
 					else setMsg 'notificationNotFound', 'warning'
-				#error: displayError
 		else setMsg 'notificationRetreiveFailed', 'warning'
 
 # Register "click" events
 $(document).ready ->
-	#$("#myNotification").hide()
-	$('body').on 'click', '.btn-success', () -> viewNotif ( $(this).attr 'notif' ), ( $(this).attr 'epoch' )
-	$('#goback').attr 'href', portal
 	$(".data-epoch").each ->
 		myDate = new Date($(this).text() * 1000)
 		$(this).text(myDate.toLocaleString())
+	$('#goback').attr 'href', portal
+	$('body').on 'click', '.btn-success', () -> viewNotif ( $(this).attr 'notif' ), ( $(this).attr 'epoch' ), $(this)
+	$('body').on 'click', '.btn-danger', () -> toggle $(this), 1
+
