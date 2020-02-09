@@ -49,4 +49,16 @@ sub getNotifications {
     }
 }
 
+sub getAcceptedNotifs {
+    my ( $self, $uid, $ref ) = @_;
+    my $forAll = $self->getAccepted( $self->conf->{notificationWildcard}, $ref );
+    my $forUser = $self->getAccepted($uid, $ref);
+    if ( $forUser and $forAll ) {
+        return { %$forUser, %$forAll };
+    }
+    else {
+        return ( ( $forUser ? $forUser : $forAll ), $forUser );
+    }
+}
+
 1;

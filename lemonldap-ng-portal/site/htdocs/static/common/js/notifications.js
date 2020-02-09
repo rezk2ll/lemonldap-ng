@@ -48,12 +48,12 @@ LemonLDAP::NG Notifications script
             myDate = new Date(epoch * 1000);
             return $('#notifEpoch').text(myDate.toLocaleString());
           } else {
-            return setMsg('notifNotFound', 'warning');
+            return setMsg('notificationNotFound', 'warning');
           }
         }
       });
     } else {
-      return setMsg('retreiveNotifFailed', 'warning');
+      return setMsg('notificationRetreiveFailed', 'warning');
     }
   };
 

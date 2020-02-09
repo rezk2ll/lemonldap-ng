@@ -36,9 +36,9 @@ viewNotif = (notif, epoch) ->
 						$('#notifRef').text(notif)
 						myDate = new Date(epoch * 1000)
 						$('#notifEpoch').text(myDate.toLocaleString())
-					else setMsg 'notifNotFound', 'warning'
+					else setMsg 'notificationNotFound', 'warning'
 				#error: displayError
-		else setMsg 'retreiveNotifFailed', 'warning'
+		else setMsg 'notificationRetreiveFailed', 'warning'
 
 # Register "click" events
 $(document).ready ->

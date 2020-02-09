@@ -28,7 +28,7 @@
               <TMPL_IF NAME="DISPLAY">
                 <span notif='<TMPL_VAR NAME="reference">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-success" role="button">
                   <span class="fa fa-eye"></span>
-                  <span trspan="view">View</span>
+                  <span trspan="verify">Verify</span>
   	            </span>
               </TMPL_IF>
 	          </td>

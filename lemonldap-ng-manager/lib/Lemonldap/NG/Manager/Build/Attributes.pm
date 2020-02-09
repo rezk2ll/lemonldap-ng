@@ -1136,7 +1136,7 @@ sub attributes {
             documentation => 'Notification activation',
         },
         notificationsExplorer => {
-            default       => 1,
+            default       => 0,
             type          => 'bool',
             documentation => 'Notifications explorer activation',
         },

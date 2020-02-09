@@ -1885,7 +1885,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type'    => 'text'
         },
         'notificationsExplorer' => {
-            'default' => 1,
+            'default' => 0,
             'type'    => 'bool'
         },
         'notificationStorage' => {

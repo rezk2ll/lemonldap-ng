@@ -178,10 +178,14 @@ sub myNotifs {
         MAIN_LOGO     => $self->conf->{portalMainLogo},
         SKIN          => $self->p->getSkin($req),
         LANGS         => $self->conf->{showLanguages},
-        MSG           => 'myNofifications',
         DISPLAY       => 1,
         ACTION        => 1,
-        NOTIFICATIONS => $_notifications
+        NOTIFICATIONS => $_notifications,
+        MSG           => (
+            scalar @$_notifications > 1
+            ? 'myNofifications'
+            : 'myNofification'
+        )
     };
 
     return $self->p->sendHtml( $req, 'notifications', params => $params );
