@@ -15,12 +15,12 @@ use strict;
 use Mouse;
 use MIME::Base64;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_ERROR
   PE_NOTIFICATION
+  PE_ERROR
   PE_OK
 );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -33,17 +33,16 @@ use constant endAuth => 'checkNotifDuringAuth';
 #sub forAuthUser { 'checkNotifForAuthUser' }
 
 # PROPERTIES
-
 has module => ( is => 'rw' );
 
 # INITIALIZATION
-
 sub init {
     my ($self) = @_;
 
     # Declare new route
-    $self->addUnauthRoute( 'notifback' => 'getNotifBack', [ 'POST', 'GET' ] );
-    $self->addAuthRoute( 'notifback' => 'getNotifBack', ['POST'] );
+    $self->addUnauthRoute( notifback => 'getNotifBack', [ 'POST', 'GET' ] );
+    $self->addAuthRoute( notifback => 'getNotifBack', ['POST'] )
+      ->addAuthRoute( mynotifs => { '*' => 'myNotifs' }, ['GET'] );
 
     if ( $self->conf->{notificationServer} ) {
         $self->logger->debug('Notification server enable');
@@ -158,6 +157,78 @@ sub getNotifBack {
 sub notificationServer {
     my ( $self, $req, @args ) = @_;
     return $self->module->notificationServer( $req, @args );
+}
+
+sub myNotifs {
+    my ( $self, $req, $ref ) = @_;
+
+    if ($ref) {
+        return $self->sendJSONresponse( $req, { error => 'Missing parameter' } )
+          unless $req->param('epoch');
+        my $notif = $self->_viewNotif( $req, $ref, $req->param('epoch') );
+        return $self->sendJSONresponse( $req,
+            { notification => $notif, result => ( $notif ? 1 : 0 ) } );
+    }
+
+    my $_notifications = $self->retrieveNotifs($req);
+
+    # Display form
+    my $params = {
+        PORTAL        => $self->conf->{portal},
+        MAIN_LOGO     => $self->conf->{portalMainLogo},
+        SKIN          => $self->p->getSkin($req),
+        LANGS         => $self->conf->{showLanguages},
+        MSG           => 'myNofifications',
+        DISPLAY       => 1,
+        ACTION        => 1,
+        NOTIFICATIONS => $_notifications
+    };
+
+    return $self->p->sendHtml( $req, 'notifications', params => $params );
+}
+
+sub retrieveNotifs {
+    my ( $self, $req ) = @_;
+
+    # Retrieve user's accepted notifications
+    my $_notifications = [
+        map {
+            /^notification_(.+)$/
+              ? { reference => $1, epoch => $req->{userData}->{$_} }
+              : ()
+          }
+          keys %{ $req->{userData} }
+    ];
+
+    @$_notifications = sort {
+             $a->{reference} cmp $b->{reference}
+          or $a->{epoch} <=> $b->{epoch}
+    } @$_notifications;
+
+    $self->logger->debug(
+        scalar @$_notifications . " accepted notifications found" );
+
+    return $_notifications;
+}
+
+sub _viewNotif {
+    my ( $self, $req, $ref, $epoch ) = @_;
+    eval {
+        $req->{data}->{notification} =
+          $self->module->viewNotification( $req, $ref, $epoch );
+    };
+    if ($@) {
+        $self->logger->error($@);
+        return '';
+    }
+    return $req->{data}->{notification};
+}
+
+sub displayLink {
+    my ( $self, $req ) = @_;
+    my $_notifications = $self->retrieveNotifs($req);
+
+    return ( $self->conf->{notificationsExplorer} && scalar @$_notifications );
 }
 
 1;

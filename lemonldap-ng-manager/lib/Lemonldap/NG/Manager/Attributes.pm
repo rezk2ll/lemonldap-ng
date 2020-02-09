@@ -1884,6 +1884,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 'uid reference date title subtitle text check',
             'type'    => 'text'
         },
+        'notificationsExplorer' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'notificationStorage' => {
             'default' => 'File',
             'type'    => 'PerlModule'

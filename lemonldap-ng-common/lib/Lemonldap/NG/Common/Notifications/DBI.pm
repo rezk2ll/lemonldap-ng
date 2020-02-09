@@ -92,6 +92,38 @@ sub get {
     return $result;
 }
 
+# Returns accepted notifications corresponding to the user $uid.
+# If $ref is set, returns only notification corresponding to this reference.
+sub getAccepted {
+    my ( $self, $uid, $ref ) = @_;
+    return () unless ($uid);
+    $self->_execute(
+        "SELECT * FROM "
+          . $self->dbiTable
+          . " WHERE done IS NOT NULL AND uid=?"
+          . ( $ref ? " AND ref=?" : '' )
+          . " ORDER BY date",
+        $uid,
+        ( $ref ? $ref : () )
+    ) or return ();
+    my $result;
+    while ( my $h = $self->sth->fetchrow_hashref() ) {
+
+        # Get XML message
+        my $xml = $h->{xml};
+
+        # Decode it to get the correct uncoded string
+        Encode::from_to( $xml, "utf8", "iso-8859-1", Encode::FB_CROAK );
+
+        # Store message in result
+        my $identifier =
+          &getIdentifier( $self, $h->{uid}, $h->{ref}, $h->{date} );
+        $result->{$identifier} = $xml;
+    }
+    $self->logger->warn( $self->sth->err() ) if ( $self->sth->err() );
+    return $result;
+}
+
 ## @method hashref getAll()
 # Return all pending notifications.
 # @return hashref where keys are internal reference and values are hashref with

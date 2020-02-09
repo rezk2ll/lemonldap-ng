@@ -133,6 +133,15 @@ sub params {
       : '';
     $self->logger->debug("Display DecryptValue link") if $res{decryptValue};
 
+    # Display NotifsExplorer link if allowed
+    my $notifsPlugin =
+      $self->p->loadedModules->{'Lemonldap::NG::Portal::Plugins::Notifications'};
+    $res{notifsExplorer} =
+        $notifsPlugin
+      ? $notifsPlugin->displayLink( $req, $req->userData )
+      : '';
+    $self->logger->debug("Display NotifsExplorer link") if $res{notifsExplorer};
+
     return %res;
 }
 

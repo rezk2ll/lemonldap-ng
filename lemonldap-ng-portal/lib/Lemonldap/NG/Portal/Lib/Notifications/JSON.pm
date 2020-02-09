@@ -110,6 +110,63 @@ sub checkForNotifications {
     return $form;
 }
 
+# Search for accepted notification and if any, returns HTML fragment.
+sub viewNotification {
+    my ( $self, $req, $ref, $epoch ) = @_;
+
+    # Look for accepted notifications in database
+    my $uid = $req->userData->{ $self->notifObject->notifField };
+    my ( $notifs, $forUser ) =
+      $self->notifObject->getAcceptedNotifs( $uid, $ref );
+    my $form;
+    return 0 unless ($notifs);
+
+    # Transform notifications
+    my $i = 0;    # Files count
+    my @res;
+
+    foreach my $file ( values %$notifs ) {
+        my $json = eval { from_json( $file, { allow_nonref => 1 } ) };
+        $self->userLogger->warn(
+            "Bad JSON file: a notification for $uid was not done ($@)")
+          if ($@);
+        my $j = 0;    # Notifications count
+        $json = [$json] unless ( ref $json eq 'ARRAY' );
+      LOOP: foreach my $notif ( @{$json} ) {
+
+            # Get the reference
+            my $reference = $notif->{reference};
+            $self->logger->debug("Get reference: $reference");
+
+            # Check it in session
+            unless (exists $req->{userData}->{"notification_$reference"}
+                and $req->{userData}->{"notification_$reference"} eq $epoch
+                and $reference eq $ref )
+            {
+
+                # The notification is not already accepted
+                $self->logger->debug(
+                    "Notification $reference is not already accepted");
+                next LOOP;
+            }
+            push @res, $notif;
+            $j++;
+        }
+
+        # Go to next file if no notification found
+        next unless $j;
+        $i++;
+    }
+    $form .= $self->toForm( $req, @res );
+
+    # Stop here if nothing to display
+    return 0 unless $i;
+    $self->userLogger->info("$i accepted notification(s) found for $uid");
+
+    # Returns HTML fragment
+    return $form;
+}
+
 sub getNotifBack {
     my ( $self, $req, $name ) = @_;
 

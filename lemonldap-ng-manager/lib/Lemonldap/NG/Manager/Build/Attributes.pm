@@ -1135,6 +1135,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Notification activation',
         },
+        notificationsExplorer => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Notifications explorer activation',
+        },
         notificationServer => {
             default       => 0,
             type          => 'bool',

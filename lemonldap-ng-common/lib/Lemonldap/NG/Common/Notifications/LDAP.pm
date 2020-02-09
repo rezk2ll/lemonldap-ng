@@ -87,6 +87,38 @@ sub get {
     return $result;
 }
 
+# Returns accepted notifications corresponding to the user $uid.
+# If $ref is set, returns only notification corresponding to this reference.
+sub getAccepted {
+    my ( $self, $uid, $ref ) = @_;
+    return () unless ($uid);
+
+    my $filter =
+        '(&(objectClass=applicationProcess)(description={done}*)'
+      . "(description={uid}$uid)"
+      . ( $ref ? '(description={ref}' . $ref . ')' : '' ) . ')';
+    my @entries = _search( $self, $filter );
+
+    my $result;
+    foreach my $entry (@entries) {
+        my @notifValues = $entry->get_value('description');
+        my $f           = {};
+        foreach (@notifValues) {
+            my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/smg );
+            $v = decodeLdapValue($v);
+            $f->{$k} = $v;
+        }
+        my $xml = $f->{xml};
+        utf8::encode($xml);
+        my $identifier =
+          &getIdentifier( $self, $f->{uid}, $f->{ref}, $f->{date} );
+        $result->{$identifier} = "$xml";
+        $self->logger->info("notification $identifier found");
+
+    }
+    return $result;
+}
+
 ## @method hashref getAll()
 # Return all pending notifications.
 # @return hashref where keys are internal reference and values are hashref with
