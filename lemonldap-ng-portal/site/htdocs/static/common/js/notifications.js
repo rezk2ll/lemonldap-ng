@@ -5,7 +5,9 @@ LemonLDAP::NG Notifications script
  */
 
 (function() {
-  var displayError, setMsg, toggle, viewNotif;
+  var displayError, msg, setMsg, toggle, viewNotif;
+
+  msg = $('#msg').attr('trspan');
 
   setMsg = function(msg, level) {
     $('#msg').html(window.translate(msg));
@@ -28,6 +30,7 @@ LemonLDAP::NG Notifications script
   };
 
   toggle = function(button, verif) {
+    setMsg(msg, 'positive');
     if (verif) {
       $("#myNotification").attr('hidden', 'true');
       button.removeClass('btn-danger');

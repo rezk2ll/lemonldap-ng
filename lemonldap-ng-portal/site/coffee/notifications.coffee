@@ -2,6 +2,8 @@
 LemonLDAP::NG Notifications script
 ###
 
+msg = $('#msg').attr 'trspan'
+
 setMsg = (msg, level) ->
 	$('#msg').html window.translate msg
 	$('#color').removeClass 'message-positive message-warning alert-success alert-warning'
@@ -17,6 +19,7 @@ displayError = (j, status, err) ->
 		setMsg res, 'warning'
 
 toggle = (button, verif) ->
+		setMsg msg, 'positive'
 		if verif
 			$("#myNotification").attr('hidden', 'true')
 			button.removeClass 'btn-danger'

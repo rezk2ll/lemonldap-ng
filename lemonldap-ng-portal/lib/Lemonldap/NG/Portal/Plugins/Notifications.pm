@@ -181,8 +181,6 @@ sub myNotifs {
         MAIN_LOGO     => $self->conf->{portalMainLogo},
         SKIN          => $self->p->getSkin($req),
         LANGS         => $self->conf->{showLanguages},
-        DISPLAY       => 1,
-        ACTION        => 1,
         NOTIFICATIONS => $_notifications,
         MSG           => (
             scalar @$_notifications > 1

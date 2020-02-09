@@ -12,11 +12,7 @@
         <tr>
           <th><span trspan="date">Date</span></th>
           <th><span trspan="reference">Reference</span></th>
-          <th>
-            <TMPL_IF NAME="ACTION">
-              <span trspan="action">Action</span>
-            </TMPL_IF>
-          </th>
+          <th><span trspan="action">Action</span></th>
         </tr>
       </thead>
       <tbody>
@@ -25,12 +21,10 @@
             <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
             <td class="align-middle"><TMPL_VAR NAME="reference"></td>
             <td>
-              <TMPL_IF NAME="DISPLAY">
                 <span notif='<TMPL_VAR NAME="reference">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-success" role="button">
                   <span class="fa fa-eye"></span>
                   <span trspan="verify">Verify</span>
   	            </span>
-              </TMPL_IF>
 	          </td>
           </tr>
         </TMPL_LOOP>
