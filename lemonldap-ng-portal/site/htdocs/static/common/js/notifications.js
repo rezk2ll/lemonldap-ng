@@ -20,13 +20,7 @@ LemonLDAP::NG Notifications script
   };
 
   displayError = function(j, status, err) {
-    var res;
-    console.log('Error', err);
-    res = JSON.parse(j.responseText);
-    if (res && res.error) {
-      console.log('Returned error', res);
-      return setMsg(res, 'warning');
-    }
+    return setMsg('notificationRetreiveFailed', 'warning');
   };
 
   toggle = function(button, verif) {
