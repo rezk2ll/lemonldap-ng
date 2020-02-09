@@ -321,6 +321,7 @@ sub run {
         params => {
             MAIN_LOGO => $self->conf->{portalMainLogo},
             SKIN      => $self->p->getSkin($req),
+            LANGS     => $self->conf->{showLanguages},
             TOKEN     => $token,
             MODULES   => [
                 map { {
@@ -415,8 +416,14 @@ sub _displayRegister {
             return $self->p->sendError( $req,
                 'Registration not authorized', 403 );
         }
-        return $self->p->sendHtml( $req, $m->{m}->template,
-            params => { MAIN_LOGO => $self->conf->{portalMainLogo} } );
+        return $self->p->sendHtml(
+            $req,
+            $m->{m}->template,
+            params => {
+                MAIN_LOGO => $self->conf->{portalMainLogo},
+                LANGS     => $self->conf->{showLanguages},
+            }
+        );
     }
 
     # If only one 2F is available, redirect to it
@@ -483,6 +490,7 @@ sub _displayRegister {
         params => {
             MAIN_LOGO    => $self->conf->{portalMainLogo},
             SKIN         => $self->p->getSkin($req),
+            LANGS        => $self->conf->{showLanguages},
             MODULES      => \@am,
             SFDEVICES    => $_2fDevices,
             ACTION       => $action,
