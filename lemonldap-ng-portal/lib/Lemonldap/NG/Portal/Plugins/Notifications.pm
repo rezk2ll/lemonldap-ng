@@ -169,8 +169,10 @@ sub myNotifs {
         return $self->sendJSONresponse( $req, { error => 'Missing parameter' } )
           unless $req->param('epoch');
         my $notif = $self->_viewNotif( $req, $ref, $req->param('epoch') );
+        $notif =~ s/"checkbox"/"checkbox" checked disabled/g;
+        
         return $self->sendJSONresponse( $req,
-            { notification => $notif, result => ( $notif ? 1 : 0 ) } );
+            { notification => $notif, result => $notif } );
     }
 
     my $_notifications = $self->retrieveNotifs($req);
