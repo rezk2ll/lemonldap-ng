@@ -174,6 +174,8 @@ sub myNotifs {
     }
 
     my $_notifications = $self->retrieveNotifs($req);
+    my $msg = scalar @$_notifications ? 'myNotification' : 'noNotification';
+    $msg .= 's' if ( @$_notifications > 1 );
 
     # Display form
     my $params = {
@@ -182,11 +184,7 @@ sub myNotifs {
         SKIN          => $self->p->getSkin($req),
         LANGS         => $self->conf->{showLanguages},
         NOTIFICATIONS => $_notifications,
-        MSG           => (
-            scalar @$_notifications > 1
-            ? 'myNofifications'
-            : 'myNofification'
-        )
+        MSG           => $msg
     };
 
     return $self->p->sendHtml( $req, 'notifications', params => $params );
