@@ -103,6 +103,7 @@ sub init {
         $self->error($@);
         return 0;
     }
+
     1;
 }
 
@@ -219,15 +220,13 @@ sub retrieveNotifs {
 
 sub _viewNotif {
     my ( $self, $req, $ref, $epoch ) = @_;
-    eval {
-        $req->{data}->{notification} =
-          $self->module->viewNotification( $req, $ref, $epoch );
-    };
+    my $notif = eval { $self->module->viewNotification( $req, $ref, $epoch ); };
     if ($@) {
         $self->logger->error($@);
         return '';
     }
-    return $req->{data}->{notification};
+    
+    return $notif;
 }
 
 sub displayLink {
