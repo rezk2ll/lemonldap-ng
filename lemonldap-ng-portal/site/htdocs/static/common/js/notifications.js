@@ -23,20 +23,30 @@ LemonLDAP::NG Notifications script
     return setMsg('notificationRetreiveFailed', 'warning');
   };
 
-  toggle = function(button, verif) {
+  toggle = function(button, notif, epoch) {
     setMsg(msg, 'positive');
-    if (verif) {
-      $("#myNotification").attr('hidden', 'true');
-      button.removeClass('btn-danger');
-      return button.addClass('btn-success');
-    } else {
-      $("#myNotification").removeAttr('hidden');
-      $(".btn-danger").each(function() {
-        $(this).removeClass('btn-danger');
-        return $(this).addClass('btn-success');
-      });
+    $(".btn-danger").each(function() {
+      $(this).removeClass('btn-danger');
+      return $(this).addClass('btn-success');
+    });
+    $(".fa-eye-slash").each(function() {
+      $(this).removeClass('fa-eye-slash');
+      return $(this).addClass('fa-eye');
+    });
+    $(".verify").each(function() {
+      $(this).text(window.translate('verify'));
+      return $(this).attr('trspan', 'verify');
+    });
+    if (notif && epoch) {
+      $("#icon-" + notif + "-" + epoch).removeClass('fa-eye');
+      $("#icon-" + notif + "-" + epoch).addClass('fa-eye-slash');
+      $("#text-" + notif + "-" + epoch).text(window.translate('hide'));
+      $("#text-" + notif + "-" + epoch).attr('trspan', 'hide');
       button.removeClass('btn-success');
-      return button.addClass('btn-danger');
+      button.addClass('btn-danger');
+      return $("#myNotification").removeAttr('hidden');
+    } else {
+      return $("#myNotification").attr('hidden', 'true');
     }
   };
 
@@ -56,7 +66,7 @@ LemonLDAP::NG Notifications script
           var myDate;
           if (resp.result) {
             console.log('Notification:', resp.notification);
-            toggle(button, 0);
+            toggle(button, notif, epoch);
             $('#displayNotif').html(resp.notification);
             $('#notifRef').text(notif);
             myDate = new Date(epoch * 1000);
@@ -82,7 +92,7 @@ LemonLDAP::NG Notifications script
       return viewNotif($(this).attr('notif'), $(this).attr('epoch'), $(this));
     });
     return $('body').on('click', '.btn-danger', function() {
-      return toggle($(this), 1);
+      return toggle($(this));
     });
   });
 

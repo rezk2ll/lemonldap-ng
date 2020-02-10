@@ -14,19 +14,26 @@ setMsg = (msg, level) ->
 displayError = (j, status, err) ->
 	setMsg 'notificationRetreiveFailed', 'warning'
 
-toggle = (button, verif) ->
+toggle = (button, notif, epoch) ->
 		setMsg msg, 'positive'
-		if verif
-			$("#myNotification").attr('hidden', 'true')
-			button.removeClass 'btn-danger'
-			button.addClass 'btn-success'
-		else
-			$("#myNotification").removeAttr('hidden')
-			$(".btn-danger").each ->
-				$(this).removeClass 'btn-danger'
-				$(this).addClass 'btn-success'
+		$(".btn-danger").each ->
+			$(this).removeClass 'btn-danger'
+			$(this).addClass 'btn-success'
+		$(".fa-eye-slash").each ->
+			$(this).removeClass 'fa-eye-slash'
+			$(this).addClass 'fa-eye'
+		$(".verify").each ->
+			$(this).text window.translate 'verify'
+			$(this).attr('trspan', 'verify')
+		if notif and epoch
+			$("#icon-#{notif}-#{epoch}").removeClass 'fa-eye'
+			$("#icon-#{notif}-#{epoch}").addClass 'fa-eye-slash'
+			$("#text-#{notif}-#{epoch}").text window.translate 'hide'
+			$("#text-#{notif}-#{epoch}").attr('trspan', 'hide')
 			button.removeClass 'btn-success'
 			button.addClass 'btn-danger'
+			$("#myNotification").removeAttr('hidden')
+		else $("#myNotification").attr('hidden', 'true')
 
 # viewNotif function (launched by "verify" button)
 viewNotif = (notif, epoch, button) ->
@@ -43,7 +50,7 @@ viewNotif = (notif, epoch, button) ->
 				success: (resp) ->
 					if resp.result
 						console.log 'Notification:', resp.notification
-						toggle button, 0
+						toggle button, notif, epoch
 						$('#displayNotif').html resp.notification
 						$('#notifRef').text(notif)
 						myDate = new Date(epoch * 1000)
@@ -58,5 +65,5 @@ $(document).ready ->
 		$(this).text(myDate.toLocaleString())
 	$('#goback').attr 'href', portal
 	$('body').on 'click', '.btn-success', () -> viewNotif ( $(this).attr 'notif' ), ( $(this).attr 'epoch' ), $(this)
-	$('body').on 'click', '.btn-danger', () -> toggle $(this), 1
+	$('body').on 'click', '.btn-danger', () -> toggle $(this)
 

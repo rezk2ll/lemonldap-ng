@@ -170,9 +170,9 @@ sub myNotifs {
           unless $req->param('epoch');
         my $notif = $self->_viewNotif( $req, $ref, $req->param('epoch') );
         $notif =~ s/"checkbox"/"checkbox" checked disabled/g;
-        
+
         return $self->sendJSONresponse( $req,
-            { notification => $notif, result => $notif } );
+            { notification => $notif, result => ( $notif ? 1 : 0 ) } );
     }
 
     my $_notifications = $self->retrieveNotifs($req);

@@ -17,14 +17,14 @@
       </thead>
       <tbody>
         <TMPL_LOOP NAME="NOTIFICATIONS">
-          <tr id='delete-<TMPL_VAR NAME="epoch">'>
+          <tr>
             <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
             <td class="align-middle"><TMPL_VAR NAME="reference"></td>
             <td>
-                <span notif='<TMPL_VAR NAME="reference">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-success" role="button">
-                  <span class="fa fa-eye"></span>
-                  <span trspan="verify">Verify</span>
-  	            </span>
+              <span notif='<TMPL_VAR NAME="reference">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-success" role="button">
+                <span id='icon-<TMPL_VAR NAME="reference">-<TMPL_VAR NAME="epoch">' class="fa fa-eye"></span>
+                <span id='text-<TMPL_VAR NAME="reference">-<TMPL_VAR NAME="epoch">' class="verify" trspan="verify">Verify</span>
+	            </span>
 	          </td>
           </tr>
         </TMPL_LOOP>
