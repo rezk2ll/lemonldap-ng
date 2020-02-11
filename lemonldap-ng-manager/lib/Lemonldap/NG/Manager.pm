@@ -171,7 +171,7 @@ sub javascript {
     my ( $self, $req ) = @_;
     my $res       = eval { $self->hLoadedPlugins->{viewer}->diffRule->( $req, $req->{userData} )} || 0;
     print STDERR $@ if $@;
-    my $impPrefix = $self->{impersonationPrefix};
+    my $impPrefix = $self->{impersonationPrefix} || 'real_';
     my $ttl       = $self->{timeout} || 72000;
 
     return
