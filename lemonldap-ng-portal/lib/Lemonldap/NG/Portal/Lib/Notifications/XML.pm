@@ -163,7 +163,7 @@ sub viewNotification {
     my ( $self, $req, $ref, $epoch ) = @_;
 
     # Look for pending notifications in database
-    my $uid = $req->sessionInfo->{ $self->notifObject->notifField };
+    my $uid = $req->userData->{ $self->notifObject->notifField };
     my ( $notifs, $forUser ) =
       $self->notifObject->getAcceptedNotifs( $uid, $ref );
     my $form;
@@ -187,7 +187,7 @@ sub viewNotification {
             $self->logger->debug("Get reference $reference");
 
             # Check it in session
-            unless (exists $req->{sessionInfo}->{"notification_$reference"}
+            unless (exists $req->{userData}->{"notification_$reference"}
                 and $req->{userData}->{"notification_$reference"} eq $epoch
                 and $reference eq $ref )
             {

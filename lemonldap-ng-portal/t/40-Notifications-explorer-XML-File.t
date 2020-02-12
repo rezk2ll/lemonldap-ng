@@ -107,9 +107,6 @@ SKIP: {
         "Accept notification"
     );
     $file =~ s/xml$/done/;
-
-sleep 60;
-
     ok( -e $file, 'Notification was deleted' );
 
     $id = expectCookie($res);
