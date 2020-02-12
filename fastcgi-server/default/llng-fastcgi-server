@@ -21,3 +21,14 @@ GROUP=__GROUP__
 #ENGINE=FCGI::EV
 #ENGINE=FCGI::Engine
 #ENGINE=FCGI::Engine::ProcManager
+
+# Process recycling
+# When running with Perl 5.16, you might encounter memory
+# leaks when running the FastCGI server
+# By default, we restart each worker after 500 requests to mitigate
+# the leak. You can finetune these settings here.
+# See also FCGI::ProcManager::Constrained(3)
+
+PM_MAX_REQUESTS=500
+#PM_SIZECHECK_NUM_REQUESTS=10
+#PM_MAX_SIZE=100000
