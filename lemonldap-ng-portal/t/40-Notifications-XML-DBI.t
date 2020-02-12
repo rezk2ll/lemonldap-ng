@@ -150,6 +150,7 @@ qq{INSERT INTO notifications VALUES ('rtyler','testref2','2050-05-30 00:00:00','
         !defined( $cookies->{lemonldappdata} ),
         " Make sure no pdata is returned"
     );
+    $id = expectCookie($res);
     $client->logout($id);
 
     # Verify that notification was tagged as 'done'

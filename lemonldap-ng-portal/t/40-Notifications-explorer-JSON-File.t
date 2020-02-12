@@ -29,9 +29,10 @@ my $client = LLNG::Manager::Test->new( {
             notification               => 1,
             notificationStorage        => 'File',
             notificationStorageOptions => { dirName => $main::tmpDir },
+            portalMainLogo             => 'common/logos/logo_llng_old.png',
             oldNotifFormat             => 0,
             notificationsExplorer      => 1,
-            portalMainLogo             => 'common/logos/logo_llng_old.png',       }
+        }
     }
 );
 
@@ -82,8 +83,7 @@ expectForm( $res, undef, '/notifback', 'reference1x1' );
 # Verify that cookie is ciphered (session unvalid)
 ok(
     $res = $client->_get(
-        '/',
-        cookie => "lemonldap=$id",
+        '/', cookie => "lemonldap=$id",
     ),
     'Test cookie received'
 );

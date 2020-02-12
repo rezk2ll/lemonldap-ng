@@ -7,7 +7,7 @@ require 't/test-lib.pm';
 
 my $res;
 my $file      = "$main::tmpDir/20160530_dwho_dGVzdHJlZg==.xml";
-my $maintests = 34;
+my $maintests = 36;
 
 SKIP: {
     eval { require XML::LibXML; require XML::LibXSLT; };
@@ -23,6 +23,12 @@ SKIP: {
 <text>This is a test text</text>
 <check>Accept test</check>
 <check>Accept test2</check>
+</notification><notification uid="dwho" date="2016-05-30" reference="testref2">
+<title>Test title</title>
+<subtitle>Test subtitle</subtitle>
+<text>This is a test text</text>
+<check>Accept test</check>
+<check>Accept test2</check>
 </notification></root>';
     close F;
 
@@ -33,9 +39,9 @@ SKIP: {
                 notification               => 1,
                 notificationStorage        => 'File',
                 notificationStorageOptions => { dirName => $main::tmpDir },
+                portalMainLogo             => 'common/logos/logo_llng_old.png',
                 oldNotifFormat             => 1,
                 notificationsExplorer      => 1,
-                portalMainLogo             => 'common/logos/logo_llng_old.png',
             }
         }
     );
@@ -81,13 +87,12 @@ SKIP: {
     count(1);
     expectOK($res);
     $id = expectCookie($res);
-    expectForm( $res, undef, '/notifback', 'reference1x1' );
+    expectForm( $res, undef, '/notifback', 'reference1x1', 'reference1x2' );
 
     # Verify that cookie is ciphered (session unvalid)
     ok(
         $res = $client->_get(
-            '/',
-            cookie => "lemonldap=$id",
+            '/', cookie => "lemonldap=$id",
         ),
         'Test cookie received'
     );
@@ -95,7 +100,8 @@ SKIP: {
     expectReject($res);
 
     # Try to validate notification with accepting all checkboxes
-    my $str = 'reference1x1=testref&check1x1x1=accepted&check1x1x2=accepted';
+    my $str =
+'reference1x1=testref&check1x1x1=accepted&check1x1x2=accepted&reference1x2=testref2&check1x2x1=accepted&check1x2x2=accepted';
     ok(
         $res = $client->_post(
             '/notifback',
@@ -140,9 +146,10 @@ SKIP: {
     ok( $res->[2]->[0] =~ m%<span id="languages"></span>%,
         ' Language icons found' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] =~ m%<span id="msg" trspan=\'myNotification\'></span>%,
-        ' trspan="myNotification" found' )
-      or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~ m%<span id="msg" trspan=\'myNotifications\'></span>%,
+        ' trspan="myNotifications" found'
+    ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%<th><span trspan="date">Date</span></th>%,
         ' trspan="date" found' )
       or print STDERR Dumper( $res->[2]->[0] );
@@ -159,8 +166,16 @@ SKIP: {
     ok( $res->[2]->[0] =~ m%<td class="align-middle">testref</td>%,
         ' testref found' )
       or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ m%<td class="align-middle">testref2</td>%,
+        ' testref2 found' )
+      or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%class="fa fa-eye"></span>%, ' fa-eye found' )
       or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~
+          m%<span id=\'icon-testref2-\d{10}\' class="fa fa-eye"></span>%,
+        ' fa-eye 2 found'
+    ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ m%<span id=\'displayNotif\'></span>%,
         ' Notififcation container found' )
       or print STDERR Dumper( $res->[2]->[0] );
