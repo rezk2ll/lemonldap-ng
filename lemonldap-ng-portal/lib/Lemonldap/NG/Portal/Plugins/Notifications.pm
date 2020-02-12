@@ -169,18 +169,24 @@ sub myNotifs {
     if ($ref) {
         return $self->sendJSONresponse( $req, { error => 'Missing parameter' } )
           unless $req->param('epoch');
+
+        # Retrieve notification reference=$ref with epoch
         my $notif = $self->_viewNotif( $req, $ref, $req->param('epoch') );
         $notif =~ s/"checkbox"/"checkbox" checked disabled/g;
 
+        # Return HTML fragment
         return $self->sendJSONresponse( $req,
             { notification => $notif, result => ( $notif ? 1 : 0 ) } );
     }
 
     my $_notifications = $self->retrieveNotifs($req);
-    my $msg = scalar @$_notifications ? 'myNotification' : 'noNotification';
-    $msg .= 's' if ( @$_notifications > 1 );
+    my $nbr            = @$_notifications;
+    my $msg            = $nbr ? 'myNotification' : 'noNotification';
+    $msg .= 's' if ( $nbr > 1 );
 
-    # Display form
+    $self->logger->debug("$nbr accepted notification(s) found");
+
+    # Build template
     my $params = {
         PORTAL        => $self->conf->{portal},
         MAIN_LOGO     => $self->conf->{portalMainLogo},
@@ -189,7 +195,10 @@ sub myNotifs {
         NOTIFICATIONS => $_notifications,
         MSG           => $msg
     };
+    return $self->sendJSONresponse( $req, { %$params, result => $nbr } )
+      if ( $req->wantJSON );
 
+    # Display template
     return $self->p->sendHtml( $req, 'notifications', params => $params );
 }
 
@@ -197,25 +206,20 @@ sub retrieveNotifs {
     my ( $self, $req ) = @_;
 
     # Retrieve user's accepted notifications
-    my $_notifications = [
+    my @_notifications = sort {
+             $b->{epoch} <=> $a->{epoch}
+          or $a->{reference} cmp $b->{reference}
+    } (
         map {
             /^notification_(.+)$/
               ? { reference => $1, epoch => $req->{userData}->{$_} }
               : ()
           }
           keys %{ $req->{userData} }
-    ];
+    );
+    splice @_notifications, $self->conf->{notificationsMaxRetrieve};
 
-    @$_notifications = sort {
-             $b->{epoch} <=> $a->{epoch}
-          or $a->{reference} cmp $b->{reference}
-    } @$_notifications;
-    splice @$_notifications, $self->conf->{notificationsMaxRetrieve};
-
-    $self->logger->debug(
-        scalar @$_notifications . " accepted notifications found" );
-
-    return $_notifications;
+    return \@_notifications;
 }
 
 sub _viewNotif {
@@ -225,7 +229,7 @@ sub _viewNotif {
         $self->logger->error($@);
         return '';
     }
-    
+
     return $notif;
 }
 
