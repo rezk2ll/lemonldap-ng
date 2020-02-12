@@ -4,7 +4,7 @@ use IO::String;
 use Data::Dumper;
 
 require 't/test-lib.pm';
-my $maintests = 52;
+my $maintests = 54;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -64,10 +64,13 @@ SKIP: {
     );
     ok( $res->[2]->[0] =~ /totpregistration\.(?:min\.)?js/, 'Found TOTP js' );
     ok(
-        $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
+        $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old\.png"%,
         'Found custom Main Logo'
     ) or print STDERR Dumper( $res->[2]->[0] );
-    count(1);
+    ok(
+        $res->[2]->[0] =~ qr%<span id="languages"></span>%,
+        'Language icons found'
+    ) or print STDERR Dumper( $res->[2]->[0] );
 
     # Register TOTP
     # JS query
