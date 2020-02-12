@@ -270,16 +270,19 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 						message: data.error
 				$scope.showModal "alert.html"
 				$scope.waiting = false
+				$scope.form.date = new Date()
 			, (response) ->
 				$scope.message =
 					title: 'notificationNotCreated'
 					message: response.statusText
 				$scope.showModal "alert.html"
 				$scope.waiting = false
+				$scope.form.date = new Date()
 		else
 			$scope.message =
 				title: 'incompleteForm'
 			$scope.showModal "alert.html"
+		$scope.form.date = new Date()
 
 	$scope.init = ->
 		$scope.waiting = true

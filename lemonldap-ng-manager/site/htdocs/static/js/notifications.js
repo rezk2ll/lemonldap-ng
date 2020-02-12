@@ -306,7 +306,7 @@
           $scope.formPost.reference = $scope.form.reference;
           $scope.formPost.condition = $scope.form.condition;
           $scope.formPost.xml = $scope.form.xml;
-          return $http.post('notifications/actives', $scope.formPost).then(function(response) {
+          $http.post('notifications/actives', $scope.formPost).then(function(response) {
             var data;
             data = response.data;
             $scope.form = {};
@@ -321,21 +321,24 @@
               };
             }
             $scope.showModal("alert.html");
-            return $scope.waiting = false;
+            $scope.waiting = false;
+            return $scope.form.date = new Date();
           }, function(response) {
             $scope.message = {
               title: 'notificationNotCreated',
               message: response.statusText
             };
             $scope.showModal("alert.html");
-            return $scope.waiting = false;
+            $scope.waiting = false;
+            return $scope.form.date = new Date();
           });
         } else {
           $scope.message = {
             title: 'incompleteForm'
           };
-          return $scope.showModal("alert.html");
+          $scope.showModal("alert.html");
         }
+        return $scope.form.date = new Date();
       };
       $scope.init = function() {
         $scope.waiting = true;

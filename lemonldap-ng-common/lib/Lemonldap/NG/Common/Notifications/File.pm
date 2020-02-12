@@ -14,11 +14,8 @@ our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Common::Notifications';
 
-our $ext = 'json';
-
 sub import {
     shift;
-    $ext = 'xml' if ( $_[0] eq 'XML' );
     return Lemonldap::NG::Common::Notifications->import(@_);
 }
 
@@ -38,6 +35,7 @@ has fileNameSeparator => ( is => 'rw', default => '_' );
 # If $ref is set, returns only notification corresponding to this reference.
 sub get {
     my ( $self, $uid, $ref ) = @_;
+    my $ext = $self->extension;
     return () unless ($uid);
     my $fns        = $self->{fileNameSeparator};
     my $identifier = &getIdentifier( $self, $uid, $ref );
@@ -88,6 +86,7 @@ sub getAccepted {
 # keys date, uid, ref and condition.
 sub getAll {
     my $self = shift;
+    my $ext = $self->extension;
     opendir D, $self->{dirName};
     my @notif;
     my $fns = $self->{fileNameSeparator};
@@ -113,6 +112,7 @@ sub getAll {
 # keys date, uid, ref and condition.
 sub getExisting {
     my $self = shift;
+    my $ext = $self->extension;
     opendir D, $self->{dirName};
     my @notif;
     my $fns = $self->{fileNameSeparator};
@@ -137,6 +137,7 @@ sub getExisting {
 # @param $myref identifier returned by get() or getAll()
 sub delete {
     my ( $self, $myref ) = @_;
+    my $ext = $self->extension;
     my $new = ( $myref =~ /(.*?)(?:\.$ext)$/ )[0] . '.done';
     return rename( $self->{dirName} . "/$myref", $self->{dirName} . "/$new" );
 }
@@ -153,6 +154,7 @@ sub purge {
 # Insert a new notification
 sub newNotif {
     my ( $self, $date, $uid, $ref, $condition, $content ) = @_;
+    my $ext = $self->extension;
     my $fns = $self->{fileNameSeparator};
     $fns ||= '_';
     my @t = split( /\D+/, $date );

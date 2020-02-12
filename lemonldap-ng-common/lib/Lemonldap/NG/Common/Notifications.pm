@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use JSON qw(to_json);
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -19,6 +19,11 @@ sub import {
     }
 }
 
+has extension => (
+    is => 'rw',
+    default => 'json'
+);
+
 has notifField => (
     is      => 'rw',
     builder => sub {
@@ -30,6 +35,12 @@ has notifField => (
         return $uid;
     }
 );
+
+sub BUILD {
+    my $self = shift;
+    $self->extension('xml') if $self->p->conf->{oldNotifFormat};
+    $self->logger->debug('Use extension "' . $self->extension . '" to store notification files');
+}
 
 sub getNotifications {
     my ( $self, $uid ) = @_;
