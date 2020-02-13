@@ -86,7 +86,7 @@
   </div>
   <div class="modal-body">
     <div class="row text-center">
-      <div class="col-md-2" ng-repeat="i in ['attach.png', 'bell.png', 'bookmark.png', 'configure.png', 'database.png', 'demo.png', 'docs.png', 'folder.png', 'gear.png', 'help.png', 'llng.png', 'mailappt.png', 'money.png', 'network.png', 'terminal.png', 'thumbnail.png','tools.png', 'tux.png', 'web.png', 'wheels.png']">
+      <div class="col-md-2" ng-repeat="i in ['attach.png', 'bell.png', 'bookmark.png', 'configure.png', 'database.png', 'demo.png', 'folder.png', 'gear.png', 'help.png', 'llng.png', 'mailappt.png', 'money.png', 'terminal.png', 'thumbnail.png', 'tux.png', 'web.png']">
         <button class="btn llcontainer" ng-class="{'btn-default':currentNode.data.logo!=i,'btn-info':currentNode.data.logo==i}" ng-click="ok(currentNode.data.logo=i)">
           <img ng-src="{{elem('portal').data}}static/common/apps/{{i}}" title="{{i}}" alt="{{i}}" />
         </button>
