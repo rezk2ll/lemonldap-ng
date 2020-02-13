@@ -101,10 +101,12 @@ LemonLDAP::NG Notifications script
     return $('body').on('click', '.btn-info', function() {
       if ($('#explorer').is(':visible')) {
         $('#explorer').hide();
+        $('#color').hide();
         $("#icon-explorer-button").removeClass('fa-eye-slash');
         return $("#icon-explorer-button").addClass('fa-eye');
       } else {
         $('#explorer').show();
+        $('#color').show();
         $("#icon-explorer-button").removeClass('fa-eye');
         return $("#icon-explorer-button").addClass('fa-eye-slash');
       }

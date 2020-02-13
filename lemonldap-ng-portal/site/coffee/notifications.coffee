@@ -74,9 +74,11 @@ $(document).ready ->
 	$('body').on 'click', '.btn-info', () ->
 		if $('#explorer').is(':visible')
 			$('#explorer').hide()
+			$('#color').hide()
 			$("#icon-explorer-button").removeClass 'fa-eye-slash'
 			$("#icon-explorer-button").addClass 'fa-eye'
 		else
 			$('#explorer').show()
+			$('#color').show()
 			$("#icon-explorer-button").removeClass 'fa-eye'
 			$("#icon-explorer-button").addClass 'fa-eye-slash'

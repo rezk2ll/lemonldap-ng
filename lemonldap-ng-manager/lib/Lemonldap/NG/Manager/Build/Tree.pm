@@ -609,11 +609,11 @@ sub tree {
                             nodes => [
                                 'notification',
                                 'notificationsExplorer',
+                                'notificationWildcard',
                                 'oldNotifFormat',
+                                'notificationXSLTfile',
                                 'notificationStorage',
                                 'notificationStorageOptions',
-                                'notificationWildcard',
-                                'notificationXSLTfile',
                                 {
                                     title => 'serverNotification',
                                     help  => 'notifications.html#server',
