@@ -153,6 +153,7 @@
 "enterYubikey":"Vui lòng sử dụng Yubikey của bạn",
 "errorMsg":"Thông báo lỗi",
 "expired2Fremoved":"%s expired 2F devices have been removed!",
+"explorer":"Explorer",
 "ext2f":"Verification code",
 "fillTheForm":"Fill the form",
 "firstName":"Tên",

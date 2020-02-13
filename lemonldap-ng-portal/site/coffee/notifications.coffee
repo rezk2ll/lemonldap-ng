@@ -33,7 +33,11 @@ toggle = (button, notif, epoch) ->
 			button.removeClass 'btn-success'
 			button.addClass 'btn-danger'
 			$("#myNotification").removeAttr('hidden')
-		else $("#myNotification").attr('hidden', 'true')
+		else
+			$("#icon-explorer-button").removeClass 'fa-eye'
+			$("#icon-explorer-button").addClass 'fa-eye-slash'
+			$("#myNotification").attr('hidden', 'true')
+			$("#explorer-button").attr('hidden', 'true')
 
 # viewNotif function (launched by "verify" button)
 viewNotif = (notif, epoch, button) ->
@@ -55,6 +59,7 @@ viewNotif = (notif, epoch, button) ->
 						$('#notifRef').text(notif)
 						myDate = new Date(epoch * 1000)
 						$('#notifEpoch').text(myDate.toLocaleString())
+						$("#explorer-button").removeAttr('hidden')
 					else setMsg 'notificationNotFound', 'warning'
 		else setMsg 'notificationRetreiveFailed', 'warning'
 
@@ -66,4 +71,12 @@ $(document).ready ->
 	$('#goback').attr 'href', portal
 	$('body').on 'click', '.btn-success', () -> viewNotif ( $(this).attr 'notif' ), ( $(this).attr 'epoch' ), $(this)
 	$('body').on 'click', '.btn-danger', () -> toggle $(this)
-
+	$('body').on 'click', '.btn-info', () ->
+		if $('#explorer').is(':visible')
+			$('#explorer').hide()
+			$("#icon-explorer-button").removeClass 'fa-eye-slash'
+			$("#icon-explorer-button").addClass 'fa-eye'
+		else
+			$('#explorer').show()
+			$("#icon-explorer-button").removeClass 'fa-eye'
+			$("#icon-explorer-button").addClass 'fa-eye-slash'

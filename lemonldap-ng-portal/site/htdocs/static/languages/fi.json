@@ -153,6 +153,7 @@
 "enterYubikey":"Please use your Yubikey",
 "errorMsg":"Virhe viesti",
 "expired2Fremoved":"%s expired 2F devices have been removed!",
+"explorer":"Explorer",
 "ext2f":"Verification code",
 "fillTheForm":"Fill the form",
 "firstName":"Etunimi",

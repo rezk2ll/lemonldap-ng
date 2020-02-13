@@ -5,7 +5,7 @@
     <span id="msg" trspan='<TMPL_VAR NAME="MSG">'></span>
   </div>
   <TMPL_IF NAME="NOTIFICATIONS">
-    <div class="card mb-3 border-secondary">
+    <div id="explorer" class="card mb-3 border-secondary">
     <div class="card-body table-responsive">
     <table class="table table-hover">
       <thead>
@@ -52,7 +52,13 @@
     <span class="fa fa-home"></span>
     <span trspan="goToPortal">Go to portal</span>
   </a>
+  <span id="explorer-button" class="btn btn-info" role="button" hidden>
+    <span id='icon-explorer-button' class="fa fa-eye"></span>
+    <span id='text-explorer-button' class="explorer" trspan="explorer">Explorer</span>
+  </span>
 </div>
+
+
 
 <!-- //if:jsminified
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/notifications.min.js"></script>

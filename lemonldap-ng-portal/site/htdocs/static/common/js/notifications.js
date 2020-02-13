@@ -46,7 +46,10 @@ LemonLDAP::NG Notifications script
       button.addClass('btn-danger');
       return $("#myNotification").removeAttr('hidden');
     } else {
-      return $("#myNotification").attr('hidden', 'true');
+      $("#icon-explorer-button").removeClass('fa-eye');
+      $("#icon-explorer-button").addClass('fa-eye-slash');
+      $("#myNotification").attr('hidden', 'true');
+      return $("#explorer-button").attr('hidden', 'true');
     }
   };
 
@@ -70,7 +73,8 @@ LemonLDAP::NG Notifications script
             $('#displayNotif').html(resp.notification);
             $('#notifRef').text(notif);
             myDate = new Date(epoch * 1000);
-            return $('#notifEpoch').text(myDate.toLocaleString());
+            $('#notifEpoch').text(myDate.toLocaleString());
+            return $("#explorer-button").removeAttr('hidden');
           } else {
             return setMsg('notificationNotFound', 'warning');
           }
@@ -91,8 +95,19 @@ LemonLDAP::NG Notifications script
     $('body').on('click', '.btn-success', function() {
       return viewNotif($(this).attr('notif'), $(this).attr('epoch'), $(this));
     });
-    return $('body').on('click', '.btn-danger', function() {
+    $('body').on('click', '.btn-danger', function() {
       return toggle($(this));
+    });
+    return $('body').on('click', '.btn-info', function() {
+      if ($('#explorer').is(':visible')) {
+        $('#explorer').hide();
+        $("#icon-explorer-button").removeClass('fa-eye-slash');
+        return $("#icon-explorer-button").addClass('fa-eye');
+      } else {
+        $('#explorer').show();
+        $("#icon-explorer-button").removeClass('fa-eye');
+        return $("#icon-explorer-button").addClass('fa-eye-slash');
+      }
     });
   });
 
