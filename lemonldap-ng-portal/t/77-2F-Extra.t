@@ -115,12 +115,12 @@ ok(
 count(1);
 
 ok(
-    $res->[2]->[0] =~ qq%<h4 class="mb-0" trspan="work2f"></h4>%, 'Found translation label'
+    $res->[2]->[0] =~ qq%<h4 trspan="work2f"></h4>%, 'Found translation label'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 ok(
-    $res->[2]->[0] =~ qq%<h4 class="mb-0">Home Label</h4>%, 'Found overriden label'
+    $res->[2]->[0] =~ qq%<h4>Home Label</h4>%, 'Found overriden label'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
