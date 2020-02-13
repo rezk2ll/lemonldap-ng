@@ -114,33 +114,20 @@ sub params {
       $self->p->_sfEngine->display2fRegisters( $req, $req->userData );
     $self->logger->debug("Display 2fRegisters link") if $res{sfaManager};
 
-    # Display ContextSwitching link only if allowed
-    my $cswPlugin = $self->p->loadedModules->{
-        'Lemonldap::NG::Portal::Plugins::ContextSwitching'};
-    $res{contextSwitching} =
-        $cswPlugin
-      ? $cswPlugin->displaySwitchContext( $req, $req->userData )
-      : '';
-    $self->logger->debug("Display SwitchContext link -> $res{contextSwitching}")
-      if $res{contextSwitching};
-
-    # Display DecryptValue link if allowed
-    my $dvPlugin =
-      $self->p->loadedModules->{'Lemonldap::NG::Portal::Plugins::DecryptValue'};
-    $res{decryptValue} =
-        $dvPlugin
-      ? $dvPlugin->displayLink( $req, $req->userData )
-      : '';
-    $self->logger->debug("Display DecryptValue link") if $res{decryptValue};
-
-    # Display NotifsExplorer link if allowed
-    my $notifsPlugin =
-      $self->p->loadedModules->{'Lemonldap::NG::Portal::Plugins::Notifications'};
-    $res{notifsExplorer} =
-        $notifsPlugin
-      ? $notifsPlugin->displayLink( $req, $req->userData )
-      : '';
-    $self->logger->debug("Display NotifsExplorer link") if $res{notifsExplorer};
+    # Display menu links only if required
+    foreach (qw(ContextSwitching DecryptValue Notifications)) {
+        my $plugin =
+          $self->p->loadedModules->{"Lemonldap::NG::Portal::Plugins::$_"};
+        $res{$_} =
+            $plugin
+          ? $plugin->displayLink( $req, $req->userData )
+          : '';
+        my $msg = "Display $_ link";
+        $msg .= " -> $res{ContextSwitching}"
+          if ( $_ eq 'ContextSwitching' && $res{$_} );
+        $self->logger->debug($msg) if $res{$_};
+        $plugin = undef;
+    }
 
     return %res;
 }

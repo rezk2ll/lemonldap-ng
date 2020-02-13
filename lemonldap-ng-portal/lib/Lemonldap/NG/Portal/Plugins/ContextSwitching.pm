@@ -282,7 +282,7 @@ sub _abortImpersonation {
     return $req;
 }
 
-sub displaySwitchContext {
+sub displayLink {
     my ( $self, $req ) = @_;
     return 'OFF'
       if $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
