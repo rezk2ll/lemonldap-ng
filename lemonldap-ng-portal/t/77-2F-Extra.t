@@ -11,18 +11,20 @@ count(1);
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel       => 'error',
-            authentication => 'Demo',
-            userDB         => 'Same',
-            'sfExtra'      => {
+            logLevel              => 'error',
+            localSessionStorage   => "Cache::NullCache",
+            tokenUseGlobalStorage => 1,
+            authentication        => 'Demo',
+            userDB                => 'Same',
+            'sfExtra'             => {
                 'home' => {
                     'over' => {
                         mail2fCodeRegex => '\w{4}',
                     },
-                    'logo' => 'home.jpg',
+                    'logo'  => 'home.jpg',
                     'label' => "Home Label",
-                    'rule' => '$uid eq "dwho" or $uid eq "msmith"',
-                    'type' => 'Mail2F'
+                    'rule'  => '$uid eq "dwho" or $uid eq "msmith"',
+                    'type'  => 'Mail2F'
                 },
                 'work' => {
                     'over' => {
@@ -114,14 +116,12 @@ ok(
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
-ok(
-    $res->[2]->[0] =~ qq%<h4 trspan="work2f"></h4>%, 'Found translation label'
-) or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ qq%<h4 trspan="work2f"></h4>%, 'Found translation label' )
+  or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
-ok(
-    $res->[2]->[0] =~ qq%<h4>Home Label</h4>%, 'Found overriden label'
-) or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ qq%<h4>Home Label</h4>%, 'Found overriden label' )
+  or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
 $query .= '&sf=home';
