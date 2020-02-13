@@ -85,4 +85,3 @@ t/lmConf-1.json
 t/sessions/lock/Apache-Session-f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545.lock
 t/test-psgi-lib.pm
 t/test.pm
-t/Time-Fake.pm

@@ -56,6 +56,30 @@ sub get {
     return $files;
 }
 
+# Returns accepted notification corresponding to the user $uid.
+# If $ref is set, returns only notification corresponding to this reference.
+sub getAccepted {
+    my ( $self, $uid, $ref ) = @_;
+    return () unless ($uid);
+    my $fns        = $self->{fileNameSeparator};
+    my $identifier = &getIdentifier( $self, $uid, $ref );
+
+    opendir D, $self->{dirName};
+    my @notif = grep /^\d{8}${fns}${identifier}\S*\.done$/, readdir(D);
+    closedir D;
+
+    my $files;
+    foreach my $file (@notif) {
+        unless ( open F, '<', $self->{dirName} . "/$file" ) {
+            $self->logger->error(
+                "Unable to read notification $self->{dirName}/$file");
+            next;
+        }
+        $files->{$file} = join( '', <F> );
+    }
+    return $files;
+}
+
 ## @method hashref getAll()
 # Return all pending notifications.
 # @return hashref where keys are internal reference and values are hashref with

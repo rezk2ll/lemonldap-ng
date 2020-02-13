@@ -79,6 +79,12 @@
                 <span trspan="decryptCipheredValue">decryptCipheredValue</span>
               </a></li>
             </TMPL_IF>
+            <TMPL_IF NAME="notifsExplorer">
+              <li class="dropdown-item"><a href="/mynotifications" class="nav-link">
+                <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/notifsExplorer.png" width="20" height="20" alt="notificationsExplorer" />
+                <span trspan="notificationsExplorer">notificationsExplorer</span>
+              </a></li>
+            </TMPL_IF>
             <li class="dropdown-item"><a href="/refresh" class="nav-link">
               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/arrow_refresh.png" width="16" height="16" alt="refresh" />
               <span trspan="refreshrights">Refresh</span>

@@ -6,7 +6,7 @@ use XML::LibXML;
 use XML::LibXSLT;
 use POSIX qw(strftime);
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 # Lemonldap::NG::Portal::Main::Plugin provides addAuthRoute() and
 # addUnauthRoute() methods in addition of Lemonldap::NG::Common::Module.
@@ -153,6 +153,73 @@ sub checkForNotifications {
     # Stop here if nothing to display
     return 0 unless $i;
     $self->userLogger->info("$i pending notification(s) found for $uid");
+
+    # Returns HTML fragment
+    return $form;
+}
+
+# Search for accepted notification and if any, returns HTML fragment.
+sub viewNotification {
+    my ( $self, $req, $ref, $epoch ) = @_;
+
+    # Look for pending notifications in database
+    my $uid = $req->userData->{ $self->notifObject->notifField };
+    my ( $notifs, $forUser ) =
+      $self->notifObject->getAcceptedNotifs( $uid, $ref );
+    my $form;
+    return 0 unless ($notifs);
+
+    # Transform notifications
+    my $i = 0;    # Files count
+
+    foreach my $file ( values %$notifs ) {
+        my $xml = $self->parser->parse_string($file);
+        my $j   = 0;                                    # Notifications count
+      LOOP: foreach my $notif (
+            eval {
+                $xml->documentElement->getElementsByTagName('notification');
+            }
+          )
+        {
+
+            # Get the reference
+            my $reference = $notif->getAttribute('reference');
+            $self->logger->debug("Get reference $reference");
+
+            # Check it in session
+            unless (exists $req->{userData}->{"notification_$reference"}
+                and $req->{userData}->{"notification_$reference"} eq $epoch
+                and $reference eq $ref )
+            {
+
+                # The notification is not already accepted
+                $self->logger->debug(
+                    "Notification $reference was already accepted");
+
+                # Remove it from XML
+                $notif->unbindNode();
+                next LOOP;
+            }
+            $j++;
+        }
+
+        # Go to next file if no notification found
+        next unless $j;
+        $i++;
+
+        # Transform XML into HTML
+        my $results = $self->stylesheet->transform( $xml, start => $i );
+        $form .= $self->stylesheet->output_string($results);
+    }
+    if ($@) {
+        $self->userLogger->warn(
+            "Bad XML file: a notification for $uid was not done ($@)");
+        return 0;
+    }
+
+    # Stop here if nothing to display
+    return 0 unless $i;
+    $self->userLogger->info("$i accepted notification(s) found for $uid");
 
     # Returns HTML fragment
     return $form;

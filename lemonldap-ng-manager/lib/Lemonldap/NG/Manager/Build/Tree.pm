@@ -608,6 +608,7 @@ sub tree {
                             help  => 'notifications.html',
                             nodes => [
                                 'notification',
+                                'notificationsExplorer',
                                 'oldNotifFormat',
                                 'notificationStorage',
                                 'notificationStorageOptions',

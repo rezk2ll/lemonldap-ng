@@ -164,6 +164,7 @@ site/coffee/idpchoice.coffee
 site/coffee/info.coffee
 site/coffee/kerberos.coffee
 site/coffee/kerberosChoice.coffee
+site/coffee/notifications.coffee
 site/coffee/oidcchecksession.coffee
 site/coffee/portal.coffee
 site/coffee/redirect.coffee
@@ -272,6 +273,7 @@ site/htdocs/static/common/icons/calendar.png
 site/htdocs/static/common/icons/decryptValue.png
 site/htdocs/static/common/icons/door_out.png
 site/htdocs/static/common/icons/key.png
+site/htdocs/static/common/icons/notifsExplorer.png
 site/htdocs/static/common/icons/oidc.png
 site/htdocs/static/common/icons/ok.png
 site/htdocs/static/common/icons/sfa_manager.png
@@ -307,6 +309,9 @@ site/htdocs/static/common/js/kerberos.min.js.map
 site/htdocs/static/common/js/kerberosChoice.js
 site/htdocs/static/common/js/kerberosChoice.min.js
 site/htdocs/static/common/js/kerberosChoice.min.js.map
+site/htdocs/static/common/js/notifications.js
+site/htdocs/static/common/js/notifications.min.js
+site/htdocs/static/common/js/notifications.min.js.map
 site/htdocs/static/common/js/oidcchecksession.js
 site/htdocs/static/common/js/oidcchecksession.min.js
 site/htdocs/static/common/js/oidcchecksession.min.js.map
@@ -401,6 +406,7 @@ site/templates/bootstrap/mail.tpl
 site/templates/bootstrap/menu.tpl
 site/templates/bootstrap/noHistory.tpl
 site/templates/bootstrap/notification.tpl
+site/templates/bootstrap/notifications.tpl
 site/templates/bootstrap/oidcConsents.tpl
 site/templates/bootstrap/oidcGiveConsent.tpl
 site/templates/bootstrap/oidcLogout.tpl
@@ -498,6 +504,7 @@ t/30-Auth-and-issuer-SAML-POST.t
 t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Redirect-MultipleSP-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-Redirect-MultipleSP.t
+t/30-Auth-and-issuer-SAML-Redirect-With-Info.t
 t/30-Auth-and-issuer-SAML-Redirect.t
 t/30-Auth-SAML-with-choice.t
 t/30-CDC.t
@@ -565,9 +572,12 @@ t/37-SAML-SP-POST-to-CAS-server-with-Choice.t
 t/37-SAML-SP-POST-to-CAS-server.t
 t/37-SAML-SP-POST-to-OIDC-OP.t
 t/38-No-persistent-session.t
+t/40-Notifications-Explorer-JSON-File.t
+t/40-Notifications-Explorer-XML-File.t
 t/40-Notifications-JSON-DBI.t
 t/40-Notifications-JSON-File-with-token.t
 t/40-Notifications-JSON-File.t
+t/40-Notifications-JSON-LDAP.t
 t/40-Notifications-JSON-Server.t
 t/40-Notifications-XML-DBI.t
 t/40-Notifications-XML-File.t
@@ -667,6 +677,7 @@ t/lib/Lemonldap/NG/Handler/Test.pm
 t/lib/Lemonldap/NG/Portal/Auth/LDAPPolicy.pm
 t/lib/Lemonldap/NG/Portal/Custom.pm
 t/lmConf-1.json
+t/oidc-lib.pm
 t/pdata.pm
 t/README.md
 t/saml-lib.pm
@@ -684,5 +695,4 @@ t/test-psgi.pm
 t/testslapd/confs-sessions.ldif
 t/testslapd/slapd.ldif
 t/testslapd/users.ldif
-t/Time-Fake.pm
 t/vrfyOTP.pl
