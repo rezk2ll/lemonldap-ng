@@ -53,7 +53,7 @@
     <span trspan="goToPortal">Go to portal</span>
   </a>
   <span id="explorer-button" class="btn btn-info" role="button" hidden>
-    <span id='icon-explorer-button' class="fa fa-eye"></span>
+    <span id='icon-explorer-button' class="fa fa-eye-slash"></span>
     <span id='text-explorer-button' class="explorer" trspan="explorer">Explorer</span>
   </span>
 </div>

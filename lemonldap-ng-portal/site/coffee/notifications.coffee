@@ -14,6 +14,24 @@ setMsg = (msg, level) ->
 displayError = (j, status, err) ->
 	setMsg 'notificationRetreiveFailed', 'warning'
 
+toggle_eye = (slash) ->
+		if slash
+			$("#icon-explorer-button").removeClass 'fa-eye'
+			$("#icon-explorer-button").addClass 'fa-eye-slash'
+		else
+			$("#icon-explorer-button").removeClass 'fa-eye-slash'
+			$("#icon-explorer-button").addClass 'fa-eye'
+
+toggle_explorer = (visible) ->
+		if visible
+			$('#explorer').hide()
+			$('#color').hide()
+			toggle_eye 0
+		else
+			$('#explorer').show()
+			$('#color').show()
+			toggle_eye 1
+
 toggle = (button, notif, epoch) ->
 		setMsg msg, 'positive'
 		$(".btn-danger").each ->
@@ -26,16 +44,15 @@ toggle = (button, notif, epoch) ->
 			$(this).text window.translate 'verify'
 			$(this).attr('trspan', 'verify')
 		if notif and epoch
+			button.removeClass 'btn-success'
+			button.addClass 'btn-danger'
 			$("#icon-#{notif}-#{epoch}").removeClass 'fa-eye'
 			$("#icon-#{notif}-#{epoch}").addClass 'fa-eye-slash'
 			$("#text-#{notif}-#{epoch}").text window.translate 'hide'
 			$("#text-#{notif}-#{epoch}").attr('trspan', 'hide')
-			button.removeClass 'btn-success'
-			button.addClass 'btn-danger'
 			$("#myNotification").removeAttr('hidden')
+			toggle_eye 1
 		else
-			$("#icon-explorer-button").removeClass 'fa-eye'
-			$("#icon-explorer-button").addClass 'fa-eye-slash'
 			$("#myNotification").attr('hidden', 'true')
 			$("#explorer-button").attr('hidden', 'true')
 
@@ -71,14 +88,4 @@ $(document).ready ->
 	$('#goback').attr 'href', portal
 	$('body').on 'click', '.btn-success', () -> viewNotif ( $(this).attr 'notif' ), ( $(this).attr 'epoch' ), $(this)
 	$('body').on 'click', '.btn-danger', () -> toggle $(this)
-	$('body').on 'click', '.btn-info', () ->
-		if $('#explorer').is(':visible')
-			$('#explorer').hide()
-			$('#color').hide()
-			$("#icon-explorer-button").removeClass 'fa-eye-slash'
-			$("#icon-explorer-button").addClass 'fa-eye'
-		else
-			$('#explorer').show()
-			$('#color').show()
-			$("#icon-explorer-button").removeClass 'fa-eye'
-			$("#icon-explorer-button").addClass 'fa-eye-slash'
+	$('body').on 'click', '.btn-info', () -> toggle_explorer $('#explorer').is(':visible')

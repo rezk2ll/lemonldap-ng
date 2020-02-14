@@ -5,7 +5,7 @@ LemonLDAP::NG Notifications script
  */
 
 (function() {
-  var displayError, msg, setMsg, toggle, viewNotif;
+  var displayError, msg, setMsg, toggle, toggle_explorer, toggle_eye, viewNotif;
 
   msg = $('#msg').attr('trspan');
 
@@ -23,6 +23,28 @@ LemonLDAP::NG Notifications script
     return setMsg('notificationRetreiveFailed', 'warning');
   };
 
+  toggle_eye = function(slash) {
+    if (slash) {
+      $("#icon-explorer-button").removeClass('fa-eye');
+      return $("#icon-explorer-button").addClass('fa-eye-slash');
+    } else {
+      $("#icon-explorer-button").removeClass('fa-eye-slash');
+      return $("#icon-explorer-button").addClass('fa-eye');
+    }
+  };
+
+  toggle_explorer = function(visible) {
+    if (visible) {
+      $('#explorer').hide();
+      $('#color').hide();
+      return toggle_eye(0);
+    } else {
+      $('#explorer').show();
+      $('#color').show();
+      return toggle_eye(1);
+    }
+  };
+
   toggle = function(button, notif, epoch) {
     setMsg(msg, 'positive');
     $(".btn-danger").each(function() {
@@ -38,16 +60,15 @@ LemonLDAP::NG Notifications script
       return $(this).attr('trspan', 'verify');
     });
     if (notif && epoch) {
+      button.removeClass('btn-success');
+      button.addClass('btn-danger');
       $("#icon-" + notif + "-" + epoch).removeClass('fa-eye');
       $("#icon-" + notif + "-" + epoch).addClass('fa-eye-slash');
       $("#text-" + notif + "-" + epoch).text(window.translate('hide'));
       $("#text-" + notif + "-" + epoch).attr('trspan', 'hide');
-      button.removeClass('btn-success');
-      button.addClass('btn-danger');
-      return $("#myNotification").removeAttr('hidden');
+      $("#myNotification").removeAttr('hidden');
+      return toggle_eye(1);
     } else {
-      $("#icon-explorer-button").removeClass('fa-eye');
-      $("#icon-explorer-button").addClass('fa-eye-slash');
       $("#myNotification").attr('hidden', 'true');
       return $("#explorer-button").attr('hidden', 'true');
     }
@@ -99,17 +120,7 @@ LemonLDAP::NG Notifications script
       return toggle($(this));
     });
     return $('body').on('click', '.btn-info', function() {
-      if ($('#explorer').is(':visible')) {
-        $('#explorer').hide();
-        $('#color').hide();
-        $("#icon-explorer-button").removeClass('fa-eye-slash');
-        return $("#icon-explorer-button").addClass('fa-eye');
-      } else {
-        $('#explorer').show();
-        $('#color').show();
-        $("#icon-explorer-button").removeClass('fa-eye');
-        return $("#icon-explorer-button").addClass('fa-eye-slash');
-      }
+      return toggle_explorer($('#explorer').is(':visible'));
     });
   });
 
