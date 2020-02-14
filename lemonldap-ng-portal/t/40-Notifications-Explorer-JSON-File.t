@@ -24,14 +24,16 @@ close F;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                   => 'error',
-            useSafeJail                => 1,
-            notification               => 1,
-            notificationStorage        => 'File',
-            notificationStorageOptions => { dirName => $main::tmpDir },
-            portalMainLogo             => 'common/logos/logo_llng_old.png',
-            oldNotifFormat             => 0,
-            notificationsExplorer      => 1,
+            logLevel                       => 'error',
+            useSafeJail                    => 1,
+            notification                   => 1,
+            notificationStorage            => 'File',
+            notificationStorageOptions     => { dirName => $main::tmpDir },
+            portalMainLogo                 => 'common/logos/logo_llng_old.png',
+            oldNotifFormat                 => 0,
+            notificationsExplorer          => 1,
+            checkUser                      => 1,
+            checkUserDisplayPersistentInfo => 1
         }
     }
 );
@@ -235,6 +237,25 @@ ok( !$json->{result}, ' Result is 0' )
 ok( !$json->{notification}, ' Notification is 0' )
   or explain( $json, "notification => 0" );
 count(4);
+
+# CheckUser form
+# ------------------------
+ok(
+    $res = $client->_get(
+        '/checkuser',
+        cookie => "lemonldap=$id",
+        accept => 'text/html'
+    ),
+    'CheckUser form',
+);
+my ( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
+  or explain( $res->[2]->[0], 'trspan="checkUser"' );
+ok( $res->[2]->[0] =~ m%<td scope="row">notification_testref</td>%,
+    'Found notification "testref"' )
+  or explain( $res->[2]->[0], 'notification_testref' );
+count(3);
 
 clean_sessions();
 

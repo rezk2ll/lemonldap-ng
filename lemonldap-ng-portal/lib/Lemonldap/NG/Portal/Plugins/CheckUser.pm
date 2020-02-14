@@ -38,6 +38,11 @@ sub hAttr {
       . $_[0]->{conf}->{hiddenAttributes};
 }
 
+sub persistentAttrs {
+    $_[0]->{conf}->{persistentSessionAttributes}
+      || '_loginHistory _2fDevices notification_';
+}
+
 sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;
@@ -71,6 +76,9 @@ sub display {
     $self->userLogger->info("Using spoofed SSO groups if exist")
       if ( $self->conf->{impersonationRule} );
     $attrs = $req->userData;
+
+    $attrs = $self->_removePersistentAttributes($attrs)
+      unless $self->conf->{checkUserDisplayPersistentInfo};
 
     # Create an array of hashes for template loop
     $self->logger->debug("Delete hidden or empty attributes");
@@ -239,7 +247,10 @@ sub check {
         $attrs       = {};
     }
     else {
-        $msg = 'checkUser' . $self->merged;
+        $msg   = 'checkUser' . $self->merged;
+        $attrs = $self->_removePersistentAttributes($attrs)
+          unless $self->conf->{checkUserDisplayPersistentInfo};
+
         if ($compute) {
             $msg                          = 'checkUserComputeSession';
             $attrs->{authenticationLevel} = $authLevel;
@@ -476,6 +487,17 @@ sub _splitAttributes {
         @$others = ( @$spoofedAttrs, @$realAttrs );
     }
     return [ $grps, $mcrs, $others ];
+}
+
+sub _removePersistentAttributes {
+    my ( $self, $attrs ) = @_;
+    my $regex      = join '|', split /\s+/, $self->persistentAttrs;
+    my %attributes = %$attrs;
+    my @keys       = grep /$regex/, keys %attributes;
+    $self->logger->debug("Remove persistent session attributes");
+    delete @attributes{@keys};
+
+    return \%attributes;
 }
 
 1;

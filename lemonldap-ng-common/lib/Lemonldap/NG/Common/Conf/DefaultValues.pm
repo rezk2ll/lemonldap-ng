@@ -221,6 +221,8 @@ sub defaultValues {
         'passwordPolicyMinSize'               => 0,
         'passwordPolicyMinUpper'              => 0,
         'passwordResetAllowedRetries'         => 3,
+        'persistentSessionAttributes' =>
+          '_loginHistory _2fDevices notification_',
         'port'                                => -1,
         'portal'                              => 'http://auth.example.com/',
         'portalAntiFrame'                     => 1,

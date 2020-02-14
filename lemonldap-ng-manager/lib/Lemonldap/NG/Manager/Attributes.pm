@@ -142,7 +142,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
                 eval {
                     do {
                         qr/$_[0]/;
-                    }
+                      }
                 };
                 return $@ ? ( 0, "__badRegexp__: $@" ) : 1;
             }
@@ -223,7 +223,8 @@ m[^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\
         },
         'select' => {
             'test' => sub {
-                my $test = grep( { $_ eq $_[0]; }
+                my $test =
+                  grep( { $_ eq $_[0]; }
                     map( { $_->{'k'}; } @{ $_[2]{'select'}; } ) );
                 return $test
                   ? 1
@@ -1694,7 +1695,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
                     eval {
                         do {
                             qr/$_[0]/;
-                        }
+                          }
                     };
                     return $@ ? 0 : 1;
                 },
@@ -2433,6 +2434,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'test' =>
 qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
             'type' => 'text'
+        },
+        'persistentSessionAttributes' => {
+            'default' => '_loginHistory _2fDevices notification_',
+            'type'    => 'text'
         },
         'persistentStorage' => {
             'type' => 'PerlModule'

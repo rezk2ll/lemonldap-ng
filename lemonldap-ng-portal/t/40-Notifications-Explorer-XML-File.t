@@ -7,7 +7,7 @@ require 't/test-lib.pm';
 
 my $res;
 my $file      = "$main::tmpDir/20160530_dwho_dGVzdHJlZg==.xml";
-my $maintests = 36;
+my $maintests = 39;
 
 SKIP: {
     eval { require XML::LibXML; require XML::LibXSLT; };
@@ -41,7 +41,8 @@ SKIP: {
                 notificationStorageOptions => { dirName => $main::tmpDir },
                 portalMainLogo             => 'common/logos/logo_llng_old.png',
                 oldNotifFormat             => 1,
-                notificationsExplorer      => 1,
+                checkUser                  => 1,
+                notificationsExplorer      => 1
             }
         }
     );
@@ -255,10 +256,27 @@ m%<span notif=\'testref\' epoch=\'(\d{10})\' class="btn btn-success" role="butto
     ok( !$json->{notification}, ' Notification is 0' )
       or explain( $json, "notification => 0" );
 
+    # CheckUser form
+    # ------------------------
+    ok(
+        $res = $client->_get(
+            '/checkuser',
+            cookie => "lemonldap=$id",
+            accept => 'text/html'
+        ),
+        'CheckUser form',
+    );
+    my ( $host, $url, $query ) =
+      expectForm( $res, undef, '/checkuser', 'user', 'url' );
+    ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%,
+        'Found trspan="checkUser"' )
+      or explain( $res->[2]->[0], 'trspan="checkUser"' );
+    ok( $res->[2]->[0] !~ m%<td scope="row">notification_%,
+        'Notification "testref" not found' )
+      or explain( $res->[2]->[0], 'notification_testref' );
+
     clean_sessions();
-
     unlink $file;
-
 }
 
 count($maintests);

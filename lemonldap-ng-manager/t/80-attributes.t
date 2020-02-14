@@ -57,7 +57,7 @@ my @notManagedAttributes = (
     'mySessionAuthorizedRWKeys',    'handlerInternalCache',
     'handlerServiceTokenTTL',       'impersonationPrefix',    'pdataDomain',
     'forceGlobalStorageUpgradeOTT', 'forceGlobalStorageIssuerOTT',
-    'notificationsMaxRetrieve'
+    'notificationsMaxRetrieve', 'persistentSessionAttributes'
 );
 
 # Words used either as attribute name and node title

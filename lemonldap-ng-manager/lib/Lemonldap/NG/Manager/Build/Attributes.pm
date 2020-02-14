@@ -415,7 +415,7 @@ sub attributes {
         },
         groupsBeforeMacros => {
             type          => 'bool',
-            default       =>  0,
+            default       => 0,
             documentation => 'Compute groups before macros',
         },
         multiValuesSeparator => {
@@ -792,6 +792,11 @@ sub attributes {
             type          => 'text',
             default       => '_password _2fDevices',
             documentation => 'Name of attributes to hide in logs',
+        },
+        persistentSessionAttributes => {
+            type          => 'text',
+            default       => '_loginHistory _2fDevices notification_',
+            documentation => 'Persistent session attributes to hide',
         },
         key => {
             type          => 'password',
