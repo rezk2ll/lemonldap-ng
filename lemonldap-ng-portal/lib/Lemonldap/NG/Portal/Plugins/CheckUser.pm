@@ -492,12 +492,11 @@ sub _splitAttributes {
 sub _removePersistentAttributes {
     my ( $self, $attrs ) = @_;
     my $regex      = join '|', split /\s+/, $self->persistentAttrs;
-    my %attributes = %$attrs;
-    my @keys       = grep /$regex/, keys %attributes;
+    my @keys       = grep /$regex/, keys %$attrs;
     $self->logger->debug("Remove persistent session attributes");
-    delete @attributes{@keys};
+    delete @$attrs{@keys};
 
-    return \%attributes;
+    return $attrs;
 }
 
 1;
