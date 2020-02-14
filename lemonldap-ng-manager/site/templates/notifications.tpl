@@ -15,9 +15,9 @@
       <div class="navbar navbar-default">
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" role="grid">
-            <li><a id="a-actives" href="#" role="row"><i class="glyphicon glyphicon-eye-open"></i> {{translate('actives')}}</a></li>
-            <li><a id="a-done" href="#!/done" role="row"><i class="glyphicon glyphicon-check"></i> {{translate('dones')}}</a></li>
-            <li><a id="a-new" href="#!/new" role="row"><i class="glyphicon glyphicon-plus-sign"></i> {{translate('create')}}</a></li>
+            <li><a id="a-actives" href="#" role="row" ng-style="activesStyle"><i class="glyphicon glyphicon-eye-open"></i> {{translate('actives')}}</a></li>
+            <li><a id="a-done" href="#!/done" role="row" ng-style="doneStyle"><i class="glyphicon glyphicon-check"></i> {{translate('dones')}}</a></li>
+            <li><a id="a-new" href="#!/new" role="row" ng-style="newStyle"><i class="glyphicon glyphicon-plus-sign"></i> {{translate('create')}}</a></li>
           </ul>
         </div>
       </div>

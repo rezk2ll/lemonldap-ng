@@ -492,6 +492,15 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		, (resp) ->
 			$scope.waiting = false
 
+		# Highlight current selection
+		console.log "Selection", sessionType
+		$scope.navssoStyle = {color: '#777'}
+		$scope.offlineStyle = {color: '#777'}
+		$scope.persistentStyle = {color: '#777'}
+		$scope.navssoStyle = {color: '#333'} if sessionType == 'global'
+		$scope.offlineStyle = {color: '#333'} if sessionType == 'offline'
+		$scope.persistentStyle = {color: '#333'} if sessionType == 'persistent'
+
 	# Intialization function
 	# Simply set $scope.waiting to false during $translator and tree root
 	# initialization

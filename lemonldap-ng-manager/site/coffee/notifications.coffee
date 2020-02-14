@@ -193,6 +193,14 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 			, (resp) ->
 				$scope.waiting = false
 
+		# Highlight current selection
+		console.log "Selection", $scope.type
+		$scope.activesStyle = {color: '#777'}
+		$scope.doneStyle = {color: '#777'}
+		$scope.newStyle = {color: '#777'}
+		$scope.activesStyle = {color: '#333'} if $scope.type == 'actives'
+		$scope.doneStyle = {color: '#333'} if $scope.type == 'done'		
+
 	$scope.displayNotification = (scope) ->
 		$scope.waiting = true
 		$scope.currentScope = scope
@@ -304,6 +312,9 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 		$scope.myStyle = {color: '#ffb84d'}
 
 	$scope.displayCreateForm = ->
+		$scope.activesStyle = {color: '#777'}
+		$scope.doneStyle = {color: '#777'}
+		$scope.newStyle = {color: '#333'}
 		$scope.waiting = true
 		$translator.init($scope.lang).then ->
 			$scope.currentNotification = null

@@ -537,7 +537,7 @@
         } else {
           over = 0;
         }
-        return $http.get(scriptname + "sessions/" + sessionType + "?" + query).then(function(response) {
+        $http.get(scriptname + "sessions/" + sessionType + "?" + query).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;
           if (data.result) {
@@ -565,6 +565,31 @@
         }, function(resp) {
           return $scope.waiting = false;
         });
+        console.log("Selection", sessionType);
+        $scope.navssoStyle = {
+          color: '#777'
+        };
+        $scope.offlineStyle = {
+          color: '#777'
+        };
+        $scope.persistentStyle = {
+          color: '#777'
+        };
+        if (sessionType === 'global') {
+          $scope.navssoStyle = {
+            color: '#333'
+          };
+        }
+        if (sessionType === 'offline') {
+          $scope.offlineStyle = {
+            color: '#333'
+          };
+        }
+        if (sessionType === 'persistent') {
+          return $scope.persistentStyle = {
+            color: '#333'
+          };
+        }
       };
       $scope.init = function() {
         $scope.waiting = true;

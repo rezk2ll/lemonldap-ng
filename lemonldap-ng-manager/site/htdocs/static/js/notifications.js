@@ -195,7 +195,7 @@
           over = 0;
         }
         if ($scope.type === 'done' || $scope.type === 'actives') {
-          return $http.get(scriptname + "notifications/" + $scope.type + "?" + query).then(function(response) {
+          $http.get(scriptname + "notifications/" + $scope.type + "?" + query).then(function(response) {
             var data, i, len, n, ref;
             data = response.data;
             if (data.result) {
@@ -220,6 +220,26 @@
           }, function(resp) {
             return $scope.waiting = false;
           });
+        }
+        console.log("Selection", $scope.type);
+        $scope.activesStyle = {
+          color: '#777'
+        };
+        $scope.doneStyle = {
+          color: '#777'
+        };
+        $scope.newStyle = {
+          color: '#777'
+        };
+        if ($scope.type === 'actives') {
+          $scope.activesStyle = {
+            color: '#333'
+          };
+        }
+        if ($scope.type === 'done') {
+          return $scope.doneStyle = {
+            color: '#333'
+          };
         }
       };
       $scope.displayNotification = function(scope) {
@@ -358,6 +378,15 @@
         };
       };
       $scope.displayCreateForm = function() {
+        $scope.activesStyle = {
+          color: '#777'
+        };
+        $scope.doneStyle = {
+          color: '#777'
+        };
+        $scope.newStyle = {
+          color: '#333'
+        };
         $scope.waiting = true;
         return $translator.init($scope.lang).then(function() {
           $scope.currentNotification = null;

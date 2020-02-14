@@ -572,7 +572,7 @@ sub tree {
                 {
                     title => 'reloadParams',
                     help  => 'configlocation.html#configuration_reload',
-                    nodes => [ 'reloadUrls', 'reloadTimeout', 'compactConf' ]
+                    nodes => [ 'reloadTimeout', 'compactConf', 'reloadUrls' ]
                 },
                 {
                     title => 'plugins',

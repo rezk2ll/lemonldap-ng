@@ -16,7 +16,7 @@
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" role="grid">
             <li uib-dropdown>
-              <a id="navsso" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-user"></i> {{translate('ssoSessions')}} <span class="caret"></span></a>
+              <a id="navsso" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" ng-style="navssoStyle"><i class="glyphicon glyphicon-user"></i> {{translate('ssoSessions')}} <span class="caret"></span></a>
               <ul uib-dropdown-menu aria-labelled-by="navsso">
                 <li><a id="a-users" href="#" role="row"><i class="glyphicon glyphicon-user"></i> {{translate('users')}}</a></li>
                 <li><a id="a-ip" href="#!/ipAddr" role="row"><i class="glyphicon glyphicon-sort-by-order"></i> {{translate('ipAddresses')}}</a></li>
@@ -25,8 +25,8 @@
                 <li><a id="a-updatetime" href="#!/_updateTime" role="row"><i class="glyphicon glyphicon-hourglass"></i> {{translate('_updateTime')}}</a></li>
               </ul>
             </li>
-            <li><a id="a-persistent" href="#!/persistent" role="row"><i class="glyphicon glyphicon-lock"></i> {{translate('persistentSessions')}}</a></li>
-            <li><a id="a-offline" href="#!/offline" role="row"><i class="glyphicon glyphicon-time"></i> {{translate('offlineSessions')}}</a></li>
+            <li><a id="a-persistent" href="#!/persistent" role="row" ng-style="persistentStyle"><i class="glyphicon glyphicon-lock"></i> {{translate('persistentSessions')}}</a></li>
+            <li><a id="a-offline" href="#!/offline" role="row" ng-style="offlineStyle"><i class="glyphicon glyphicon-time"></i> {{translate('offlineSessions')}}</a></li>
           </ul>
         </div>
       </div>
