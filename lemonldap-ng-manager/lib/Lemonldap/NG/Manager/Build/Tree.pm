@@ -808,6 +808,25 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'yubikey2f',
+                            help  => 'yubikey2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'yubikey2fActivation',
+                                'yubikey2fSelfRegistration',
+                                'yubikey2fClientID',
+                                'yubikey2fSecretKey',
+                                'yubikey2fNonce',
+                                'yubikey2fUrl',
+                                'yubikey2fPublicIDSize',
+                                'yubikey2fUserCanRemoveKey',
+                                'yubikey2fTTL',
+                                'yubikey2fAuthnLevel',
+                                'yubikey2fLabel',
+                                'yubikey2fLogo',
+                            ],
+                        },
+                        {
                             title => 'mail2f',
                             help  => 'mail2f.html',
                             form  => 'simpleInputContainer',
@@ -853,25 +872,6 @@ sub tree {
                                 'rest2fVerifyArgs', 'rest2fAuthnLevel',
                                 'rest2fLabel',      'rest2fLogo',
                             ]
-                        },
-                        {
-                            title => 'yubikey2f',
-                            help  => 'yubikey2f.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'yubikey2fActivation',
-                                'yubikey2fSelfRegistration',
-                                'yubikey2fClientID',
-                                'yubikey2fSecretKey',
-                                'yubikey2fNonce',
-                                'yubikey2fUrl',
-                                'yubikey2fPublicIDSize',
-                                'yubikey2fUserCanRemoveKey',
-                                'yubikey2fTTL',
-                                'yubikey2fAuthnLevel',
-                                'yubikey2fLabel',
-                                'yubikey2fLogo',
-                            ],
                         },
                         'sfExtra',
                         {

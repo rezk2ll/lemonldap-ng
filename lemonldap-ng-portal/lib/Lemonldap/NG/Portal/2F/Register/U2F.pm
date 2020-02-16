@@ -5,7 +5,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::U2F';
@@ -261,9 +261,8 @@ sub run {
     elsif ( $action eq 'delete' ) {
 
         # Check if unregistration is allowed
-        unless ( $self->conf->{u2fUserCanRemoveKey} ) {
-            return $self->p->sendError( $req, 'notAuthorized', 200 );
-        }
+        return $self->p->sendError( $req, 'notAuthorized', 200 )
+          unless $self->conf->{u2fUserCanRemoveKey};
 
         my $epoch = $req->param('epoch')
           or return $self->p->sendError( $req, '"epoch" parameter is missing',
@@ -371,9 +370,8 @@ sub loadUser {
                     'U2F error: ' . Crypt::U2F::Server::u2fclib_getError() );
             }
         }
-        unless (@crypters) {
-            return -1;
-        }
+        return -1 unless @crypters;
+
         $req->data->{crypter} = \@crypters;
         return 1;
     }

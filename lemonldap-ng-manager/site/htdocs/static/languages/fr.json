@@ -817,7 +817,7 @@
 "sessionStorage":"Stockage des sessions",
 "sessionTitle":"Contenu de la session",
 "sfaTitle":"Seconds Facteurs d'Authentification",
-"sfExtra":"Seconds Facteurs additionnels",
+"sfExtra":"Seconds facteurs additionnels",
 "sfRequired":"Exiger 2FA",
 "sfRemovedNotification":"Afficher un message si un SF expiré a été supprimé",
 "sfRemovedMsgRule":"Activation",

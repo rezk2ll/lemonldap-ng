@@ -6,7 +6,7 @@ use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
 );
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 
@@ -86,12 +86,10 @@ sub run {
             }
 
             # Get registered keys
-            my @rk;
-            foreach ( @{ $req->data->{crypter} } ) {
-                push @rk,
-                  { keyHandle => $_->{keyHandle}, version => $data->{version} };
-
-            }
+            my @rk =
+              map {
+                { keyHandle => $_->{keyHandle}, version => $data->{version} }
+              } @{ $req->data->{crypter} };
 
             $self->ott->updateToken( $token, __ch => $data->{challenge} );
 
