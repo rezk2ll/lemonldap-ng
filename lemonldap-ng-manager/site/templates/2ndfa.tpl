@@ -12,9 +12,8 @@
       <div class="navbar navbar-default">
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" role="grid">
-            <li><a id="a-persistent" role="row"><i class="glyphicon glyphicon-filter"></i> {{translate('2faSessions')}} &nbsp;&nbsp;</a></li>
-            <form name="filterForm">
-              <div class="form-check ">&nbsp;&nbsp;&nbsp;
+            <form class="navbar-form" name="filterForm">
+              <div class="form-check ">
                 <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="2" ng-false-value="1" ng-change="search2FA()"/>
                 <label class="form-check-label" for="U2FCheck">U2F</label>
                 &nbsp;&nbsp;&&nbsp;&nbsp;
@@ -26,8 +25,8 @@
               </div>
             </form>
           </ul>
-		  <div class="col-lg-6 col-md-6 col-sm-8 col-xs-14" >
-		    <form class="navbar-form" role="search">
+		      <div class="col-lg-6 col-md-6 col-sm-8 col-xs-14" >
+		        <form class="navbar-form" role="search">
               <div class="input-group add-on">
                 <input class="form-control" placeholder="{{translate('search')}}" type="text" ng-model="searchString" ng-init="" ng-keyup="search2FA()"/>
                 <div class="input-group-btn">
