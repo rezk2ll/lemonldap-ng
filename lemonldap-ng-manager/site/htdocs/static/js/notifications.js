@@ -262,14 +262,15 @@
             try {
               console.log("Try to parse a JSON formated notification...");
               notif = JSON.parse(response.data.notifications);
+              $scope.currentNotification.date = $scope.notifDate(notif.date);
               $scope.currentNotification.text = notif.text;
               $scope.currentNotification.title = notif.title;
               $scope.currentNotification.subtitle = notif.subtitle;
             } catch (error) {
               e = error;
               console.log("Unable to parse JSON");
+              $scope.currentNotification.notifications = response.data.notifications;
             }
-            $scope.currentNotification.notifications = response.data.notifications;
           } else {
             $scope.currentNotification.done = response.data.done;
           }

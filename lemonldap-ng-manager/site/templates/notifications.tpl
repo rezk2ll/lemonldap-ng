@@ -69,6 +69,10 @@
             <th>{{translate('reference')}}</th>
             <td>{{currentNotification.reference}}</td>
           </tr>
+          <tr ng-if="currentNotification.date">
+            <th>{{translate('date')}}</th>
+            <td>{{currentNotification.date}}</td>
+          </tr>
           <tr ng-if="currentNotification.condition">
             <th>{{translate('condition')}}</th>
             <td>{{currentNotification.condition}}</td>
