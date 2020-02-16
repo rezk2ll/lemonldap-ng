@@ -1114,7 +1114,8 @@ sub _unitTest {
     my $res   = 1;
 
     foreach my $key ( keys %$conf ) {
-        if (    $localConf->{skippedUnitTests}
+        if (    $localConf
+            and $localConf->{skippedUnitTests}
             and $localConf->{skippedUnitTests} =~ /\b$key\b/ )
         {
             $localConf->logger->debug("-> Ignore test for $key\n");
@@ -1124,7 +1125,8 @@ sub _unitTest {
         my $attr = $attrs->{$key};
         my $type = $types->{ $attr->{type} } if $attr;
         unless ( $type or $attr->{test} ) {
-            $localConf->logger->debug("Unknown attribute $key, deleting it\n");
+            $localConf->logger->debug("Unknown attribute $key, deleting it\n")
+              if $localConf;
             delete $conf->{$key};
             next;
         }
@@ -1245,8 +1247,7 @@ sub _execTest {
 #
 #@return true if tests succeed
 sub _globalTest {
-    my $self      = shift;
-    my $localConf = shift;
+    my ( $self, $localConf ) = @_;
 
     require Lemonldap::NG::Manager::Conf::Tests;
     hdebug('# _globalTest()');
@@ -1254,10 +1255,12 @@ sub _globalTest {
     my $tests  = &Lemonldap::NG::Manager::Conf::Tests::tests( $self->newConf );
 
     foreach my $name ( keys %$tests ) {
-        if (    $localConf->{skippedGlobalTests}
+        if (    $localConf
+            and $localConf->{skippedGlobalTests}
             and $localConf->{skippedGlobalTests} =~ /\b$name\b/ )
         {
-            $localConf->logger->debug("-> Ignore test for $name\n");
+            $localConf->logger->debug("-> Ignore test for $name\n")
+              if $localConf;
             next;
         }
         my $sub = $tests->{$name};
@@ -1279,7 +1282,7 @@ sub _globalTest {
         };
         if ($@) {
             push @{ $self->warnings }, "Test $name failed: $@";
-            $localConf->logger->debug("Test $name failed: $@\n");
+            $localConf->logger->debug("Test $name failed: $@\n") if $localConf;
         }
     }
     return $result;

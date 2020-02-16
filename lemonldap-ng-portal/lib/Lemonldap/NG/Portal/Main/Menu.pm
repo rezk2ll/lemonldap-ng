@@ -126,7 +126,7 @@ sub params {
         $msg .= " -> $res{ContextSwitching}"
           if ( $_ eq 'ContextSwitching' && $res{$_} );
         $self->logger->debug($msg) if $res{$_};
-        $plugin = undef;
+        undef $plugin;
     }
 
     return %res;
