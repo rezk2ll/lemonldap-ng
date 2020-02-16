@@ -579,6 +579,7 @@ sub removeSessions {
 
 sub sendCaptcha {
     my ( $self,  $req )   = @_;
+    $self->logger->info("User request for captcha renew");
     my ( $token, $image ) = $self->captcha->getCaptcha($req);
 
     return $self->p->sendJSONresponse( $req,
