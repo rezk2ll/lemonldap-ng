@@ -248,7 +248,6 @@ m%<span notif=\'testref\' epoch=\'(\d{10})\' class="btn btn-success" role="butto
         ),
         'Bad query'
     );
-    my $json;
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
     ok( !$json->{result}, ' Result is 0' )

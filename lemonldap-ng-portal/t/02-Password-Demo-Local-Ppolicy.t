@@ -87,7 +87,6 @@ ok(
     'Password min lower not respected'
 );
 expectBadRequest($res);
-my $json;
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok(
@@ -124,7 +123,6 @@ ok(
     'Password min upper not respected'
 );
 expectBadRequest($res);
-my $json;
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok(
@@ -161,7 +159,6 @@ ok(
     'Password min digit not respected'
 );
 expectBadRequest($res);
-my $json;
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok(

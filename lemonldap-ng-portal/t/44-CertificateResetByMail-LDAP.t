@@ -264,7 +264,7 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
     # Create the certificate  file
     $cert = "INVALID CERTIFICATE";
 
-    open my $FH2, '>', '/tmp/v296ZJQ_kG';
+    open $FH2, '>', '/tmp/v296ZJQ_kG';
     print {$FH2} "$cert";
     close $FH2;
 

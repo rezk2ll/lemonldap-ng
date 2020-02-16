@@ -21,7 +21,7 @@ count(1);
 
 $notif =
 '{"date":"2099-13-30","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test\"}"}';
-my $res =
+$res =
   &client->jsonPostResponse( 'notifications/actives', '',
     IO::String->new($notif),
     'application/json', length($notif) );
@@ -30,7 +30,7 @@ count(1);
 
 $notif =
 '{"date":"2099-05_12","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test\"}"}';
-my $res =
+$res =
   &client->jsonPostResponse( 'notifications/actives', '',
     IO::String->new($notif),
     'application/json', length($notif) );

@@ -103,7 +103,7 @@ count(1);
 my $idpId = expectCookie($res);
 
 # Get code for RP1
-my $query =
+$query =
 "response_type=code&scope=openid%20profile%20email&client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Frp2.com%2F";
 ok(
     $res = $op->_get(
@@ -141,7 +141,7 @@ is( $res->[0], 400, "Got invalid request" );
 count(1);
 
 # Get new code for RP1
-my $query =
+$query =
 "response_type=code&scope=openid%20profile%20email&client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Frp.com%2F";
 ok(
     $res = $op->_get(
@@ -154,7 +154,7 @@ ok(
 );
 count(1);
 
-my ($code) = expectRedirection( $res, qr#http://rp\.com/.*code=([^\&]*)# );
+($code) = expectRedirection( $res, qr#http://rp\.com/.*code=([^\&]*)# );
 
 # Play code on RP1
 $query =
