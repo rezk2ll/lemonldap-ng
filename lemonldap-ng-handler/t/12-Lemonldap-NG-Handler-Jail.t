@@ -40,13 +40,13 @@ ok( $res = &$code, "Function works" );
 ok( $res eq 'dGVzdA==', 'Get good result' );
 
 $sub = "sub { return ( listMatch('ABC; DEF; GHI','abc',1) ) }";
-my $code = $jail->jail_reval($sub);
+$code = $jail->jail_reval($sub);
 ok( ( defined($code) and ref($code) eq 'CODE' ),
     'listMatch function is defined' );
 ok( &$code eq '1', 'Get good result' );
 
 $sub = "sub { return ( listMatch('ABC; DEF; GHI','ab',1) ) }";
-my $code = $jail->jail_reval($sub);
+$code = $jail->jail_reval($sub);
 ok( ( defined($code) and ref($code) eq 'CODE' ),
     'listMatch function is defined' );
 ok( &$code eq '0', 'Get good result' );

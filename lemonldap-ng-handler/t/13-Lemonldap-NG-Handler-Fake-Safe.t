@@ -50,7 +50,7 @@ ok( ( defined($listMatch) and ref($listMatch) eq 'CODE' ),
 ok( &$listMatch eq '1', 'Get good result' );
 
 my $sub5      = "sub { return ( listMatch('ABC; DEF; GHI','ab', 1) ) }";
-my $listMatch = $jail->jail_reval($sub5);
+$listMatch = $jail->jail_reval($sub5);
 ok( ( defined($listMatch) and ref($listMatch) eq 'CODE' ),
     'listMatch function is defined' );
 ok( &$listMatch eq '0', 'Get good result' );

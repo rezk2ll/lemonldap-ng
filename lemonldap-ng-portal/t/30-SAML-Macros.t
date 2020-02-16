@@ -14,11 +14,12 @@ BEGIN {
 
 my $debug = 'error';
 my ( $issuer, $res );
+my $maintests = 6;
 
 SKIP: {
     eval "use Lasso";
     if ($@) {
-        skip 'Lasso not found';
+        skip 'Lasso not found', $maintests;
     }
 
     # Initialization
@@ -66,10 +67,11 @@ SKIP: {
     {
         is( $value->textContent, 'Accents', 'Check Attribute' );
     }
+    clean_sessions();
 }
 
-clean_sessions();
-done_testing();
+count($maintests);
+done_testing( count() );
 
 sub issuer {
     return LLNG::Manager::Test->new( {
@@ -80,12 +82,12 @@ sub issuer {
                 authentication         => 'Demo',
                 userDB                 => 'Same',
                 issuerDBSAMLActivation => 1,
-                samlSPMetaDataMacros                   => {
+                samlSPMetaDataMacros   => {
                     'sp.com' => {
                         extracted_sn => '(split(/\s/, $cn))[1]'
                     }
                 },
-                samlSPMetaDataOptions  => {
+                samlSPMetaDataOptions => {
                     'sp.com' => {
                         samlSPMetaDataOptionsEncryptionMode           => 'none',
                         samlSPMetaDataOptionsEnableIDPInitiatedURL    => 1,
@@ -109,10 +111,10 @@ sub issuer {
                 samlOrganizationName        => "IDP",
                 samlOrganizationURL         => "http://www.idp.com/",
                 samlServicePrivateKeyEnc    => saml_key_idp_private_enc,
-                samlServicePrivateKeySig => saml_key_idp_private_sig,
-                samlServicePublicKeyEnc => saml_key_idp_public_enc,
-                samlServicePublicKeySig => saml_key_idp_public_sig,
-                samlSPMetaDataXML => {
+                samlServicePrivateKeySig    => saml_key_idp_private_sig,
+                samlServicePublicKeyEnc     => saml_key_idp_public_enc,
+                samlServicePublicKeySig     => saml_key_idp_public_sig,
+                samlSPMetaDataXML           => {
                     "sp.com" => {
                         samlSPMetaDataXML =>
                           samlSPMetaDataXML( 'sp', 'HTTP-Redirect' )
