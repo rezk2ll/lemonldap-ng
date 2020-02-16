@@ -83,7 +83,7 @@ $res = $op->_post(
 );
 my $idpId = expectCookie($res);
 
-my $query =
+$query =
     "response_type=code&scope=openid%20profile%20email&"
   . "client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Ftest%2F";
 $res = $op->_get(
