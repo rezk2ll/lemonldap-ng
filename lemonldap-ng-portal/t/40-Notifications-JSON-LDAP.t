@@ -138,9 +138,9 @@ SKIP: {
           /<input type="hidden" name="reference[\dx]+" value="(\w+?)">/gs );
     ok( @refs == 2, 'Two notification references found' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok( @refs[0] eq 'testref2', '1st reference found is "testref2"' )
+    ok( $refs[0] eq 'testref2', '1st reference found is "testref2"' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok( @refs[1] eq 'testref', '2nd reference found is "testref"' )
+    ok( $refs[1] eq 'testref', '2nd reference found is "testref"' )
       or print STDERR Dumper( $res->[2]->[0] );
     expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
 

@@ -64,13 +64,13 @@ SKIP: {
     );
     ok( $res->[2]->[0] =~ /totpregistration\.(?:min\.)?js/, 'Found TOTP js' );
     ok(
-        $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old\.png"%,
+        $res->[2]->[0] =~
+          qr%<img src="/static/common/logos/logo_llng_old\.png"%,
         'Found custom Main Logo'
     ) or print STDERR Dumper( $res->[2]->[0] );
-    ok(
-        $res->[2]->[0] =~ qr%<span id="languages"></span>%,
-        'Language icons found'
-    ) or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ qr%<span id="languages"></span>%,
+        'Language icons found' )
+      or print STDERR Dumper( $res->[2]->[0] );
 
     # Register TOTP
     # JS query
@@ -231,7 +231,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
             version          => "U2F_V2"
         }
     );
-    my ( $host, $url, $query );
+    ( $host, $url, $query );
     $query = Lemonldap::NG::Common::FormEncode::build_urlencoded(
         registration => $registrationData,
         challenge    => $res->[2]->[0],

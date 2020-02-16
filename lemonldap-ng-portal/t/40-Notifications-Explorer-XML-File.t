@@ -233,7 +233,7 @@ m%<span notif=\'testref\' epoch=\'(\d{10})\' class="btn btn-success" role="butto
         ),
         'Malformed query'
     );
-    my $json;
+    $json;
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
     ok( $json->{error} eq 'Missing parameter', ' Missing parameter' )

@@ -220,7 +220,7 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
     # ------------------------
     ok( $res = $client->_get( '/certificateReset', accept => 'text/html' ),
         'Reset form', );
-    my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'mail' );
+    ( $host, $url, $query ) = expectForm( $res, '#', undef, 'mail' );
 
     $query = 'mail=dwho%40badwolf.org';
 
@@ -236,8 +236,8 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
 
     ok( mail() =~ m#a href="http://auth.example.com/certificateReset\?(.*?)"#,
         'Found link in mail' );
-    $query = $1;
-    my $querymail = $query;
+    $query     = $1;
+    $querymail = $query;
     ok(
         $res = $client->_get(
             '/certificateReset',
@@ -253,11 +253,11 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
     ok( $res->[2]->[0] =~ /certif/s, ' Ask for a new certificate file' );
 
     #print STDERR Dumper($query);
-    my %inputs   = split( /[=&]/, $query );
-    my %querytab = split( /[=&]/, $querymail );
+    %inputs   = split( /[=&]/, $query );
+    %querytab = split( /[=&]/, $querymail );
 
     # Create the certificate  file
-    my $cert = "INVALID CERTIFICATE";
+    $cert = "INVALID CERTIFICATE";
 
     open my $FH2, '>', '/tmp/v296ZJQ_kG';
     print {$FH2} "$cert";

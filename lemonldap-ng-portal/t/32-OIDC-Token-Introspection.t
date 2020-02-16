@@ -97,7 +97,7 @@ ok(
 my $idpId = expectCookie($res);
 
 # Get code for RP1
-my $query =
+$query =
 "response_type=code&scope=openid%20profile%20email&client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Frp2.com%2F";
 ok(
     $res = $op->_get(
@@ -131,7 +131,7 @@ my $json  = from_json( $res->[2]->[0] );
 my $token = $json->{access_token};
 ok( $token, 'Access token present' );
 
-my $query = "token=$token";
+$query = "token=$token";
 ok(
     $res = $op->_post(
         "/oauth2/introspect",
@@ -146,7 +146,7 @@ ok(
 );
 
 expectOK($res);
-my $json = from_json( $res->[2]->[0] );
+$json = from_json( $res->[2]->[0] );
 ok( $json->{active}, "Token is valid" );
 is( $json->{sub}, "french", "Response contains the correct sub" );
 

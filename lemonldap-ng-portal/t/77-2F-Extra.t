@@ -9,6 +9,7 @@ require 't/smtp.pm';
 use_ok('Lemonldap::NG::Common::FormEncode');
 count(1);
 
+my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel              => 'error',
@@ -42,7 +43,7 @@ my $client = LLNG::Manager::Test->new( {
 # Login with rtyler
 # -----------------
 ok(
-    my $res = $client->_post(
+    $res = $client->_post(
         '/',
         IO::String->new('user=rtyler&password=rtyler'),
         length => 27,
@@ -88,7 +89,7 @@ clean_sessions();
 # Login with dwho
 # ---------------
 ok(
-    my $res = $client->_post(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho'),
         length => 23,
@@ -99,7 +100,7 @@ ok(
 count(1);
 
 # Expect choice page
-my ( $host, $url, $query ) =
+( $host, $url, $query ) =
   expectForm( $res, undef, '/2fchoice', 'token', 'checkLogins' );
 
 ok(
@@ -136,7 +137,7 @@ ok(
 );
 count(1);
 
-my ( $host, $url, $query ) =
+( $host, $url, $query ) =
   expectForm( $res, undef, '/home2fcheck?skin=bootstrap', 'token', 'code' );
 
 ok(
@@ -149,7 +150,7 @@ count(1);
 ok( mail() =~ m%<b>(\w{4})</b>%, 'Found 2F code in mail' )
   or print STDERR Dumper( mail() );
 
-my $code = $1;
+$code = $1;
 count(1);
 
 $query =~ s/code=/code=${code}/;
@@ -163,7 +164,7 @@ ok(
     'Post code'
 );
 count(1);
-my $id = expectCookie($res);
+$id = expectCookie($res);
 $client->logout($id);
 
 clean_sessions();
