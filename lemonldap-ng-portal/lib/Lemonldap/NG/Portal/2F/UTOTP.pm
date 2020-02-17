@@ -118,9 +118,7 @@ sub verify {
     if ( $req->param('signature') ) {
         $self->logger->debug('UTOTP: U2F response detected');
         my $r1 = $self->u2f->verify( $req, $session );
-        if ( $r1 == PE_OK ) {
-            return PE_OK;
-        }
+        return PE_OK if ( $r1 == PE_OK );
     }
     if ( $req->param('code') ) {
         $self->logger->debug('UTOTP: TOTP response detected');
