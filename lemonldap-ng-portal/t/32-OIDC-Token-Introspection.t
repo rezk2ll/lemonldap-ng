@@ -76,7 +76,7 @@ my $op = LLNG::Manager::Test->new( {
                 'loa-3' => 3
             },
             oidcServicePrivateKeySig => oidc_key_op_private_sig,
-            oidcServicePublicKeySig => oidc_key_op_public_sig,
+            oidcServicePublicKeySig  => oidc_key_op_public_sig,
         }
     }
 );
@@ -132,6 +132,19 @@ my $token = $json->{access_token};
 ok( $token, 'Access token present' );
 
 $query = "token=$token";
+
+ok(
+    $res = $op->_post(
+        "/oauth2/introspect",
+        IO::String->new($query),
+        accept => 'application/json',
+        length => length($query),
+    ),
+    "Try introspection without authentication"
+);
+
+expectReject($res);
+
 ok(
     $res = $op->_post(
         "/oauth2/introspect",
@@ -149,6 +162,12 @@ expectOK($res);
 $json = from_json( $res->[2]->[0] );
 ok( $json->{active}, "Token is valid" );
 is( $json->{sub}, "french", "Response contains the correct sub" );
+is( $json->{iss}, "http://auth.op.com",
+    "Response contains the correct issuer" );
+is( $json->{client_id}, "rpid", "Response contains the correct client id" );
+like( $json->{scope}, qr/\bopenid\b/,  "Response contains the correct scopes" );
+like( $json->{scope}, qr/\bprofile\b/, "Response contains the correct scopes" );
+like( $json->{scope}, qr/\bemail\b/,   "Response contains the correct scopes" );
 
 # Check status after expiration
 Time::Fake->offset("+2h");

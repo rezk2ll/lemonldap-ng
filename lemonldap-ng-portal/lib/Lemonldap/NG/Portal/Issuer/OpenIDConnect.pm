@@ -1631,7 +1631,7 @@ sub introspection {
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
 
     unless ($rp) {
-        return $self->p->sendError( $req, 'invalid_request', 400 );
+        return $self->p->sendError( $req, 'invalid_client', 401 );
     }
 
     if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -1672,6 +1672,7 @@ sub introspection {
                   $self->oidcRPList->{ $oidcSession->{data}->{rp} }
                   ->{oidcRPMetaDataOptionsClientID}
                   if $oidcSession->{data}->{rp};
+                $response->{iss} = $self->iss;
                 $response->{exp} =
                   $oidcSession->{data}->{_utime} + $self->conf->{timeout};
             }
