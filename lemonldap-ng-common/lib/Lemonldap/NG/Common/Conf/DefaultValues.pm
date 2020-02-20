@@ -323,6 +323,7 @@ sub defaultValues {
         'slaveExportedVars'       => {},
         'SMTPServer'              => '',
         'SMTPTLS'                 => '',
+        'soapProxyUrn'            => 'urn:Lemonldap/NG/Common/PSGI/SOAPService',
         'SSLAuthnLevel'           => 5,
         'SSLVar'                  => 'SSL_CLIENT_S_DN_Email',
         'SSLVarIf'                => {},

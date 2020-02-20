@@ -1993,6 +1993,13 @@ sub attributes {
             documentation => 'Enable /portal.wsdl server',
         },
 
+        # SOAP Procy client
+        soapProxyUrn => {
+            default       => 'urn:Lemonldap/NG/Common/PSGI/SOAPService',
+            type          => 'text',
+            documentation => 'SOAP URN for Proxy',
+        },
+
         # AutoSignin
         autoSigninRules => {
             type          => 'keyTextContainer',

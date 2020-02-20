@@ -57,7 +57,7 @@ my @notManagedAttributes = (
     'mySessionAuthorizedRWKeys',    'handlerInternalCache',
     'handlerServiceTokenTTL',       'impersonationPrefix',    'pdataDomain',
     'forceGlobalStorageUpgradeOTT', 'forceGlobalStorageIssuerOTT',
-    'notificationsMaxRetrieve', 'persistentSessionAttributes'
+    'notificationsMaxRetrieve', 'persistentSessionAttributes', 'soapProxyUrn',
 );
 
 # Words used either as attribute name and node title
@@ -153,7 +153,7 @@ sub scanTree {
 
             # Nodes must have a title
             ok( $name = $leaf->{title}, "Node has a name" );
-            ok( $name =~ /^\w+$/, "Name is a string" );
+            ok( $name =~ /^\w+$/,       "Name is a string" );
 
             # Nodes must have leafs or subnodes
             ok( (

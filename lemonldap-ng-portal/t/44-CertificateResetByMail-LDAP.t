@@ -34,7 +34,7 @@ use DateTime::Format::RFC3339;';
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel              => 'debug',
+                logLevel              => 'error',
                 useSafeJail           => 1,
                 portalDisplayRegister => 1,
                 authentication        => 'SSL',

@@ -3643,6 +3643,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'bool'
         },
+        'soapProxyUrn' => {
+            'default' => 'urn:Lemonldap/NG/Common/PSGI/SOAPService',
+            'type'    => 'text'
+        },
         'soapSessionServer' => {
             'default' => 0,
             'type'    => 'bool'
