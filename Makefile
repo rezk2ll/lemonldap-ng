@@ -1130,6 +1130,11 @@ tidy: clean
 		find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print -exec perltidy -se -b {} \; ; \
 		else echo "Wrong perltidy version, please install Perl::Tidy@20181120" ; exit 1 ;\
 	fi
+	for f in `find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \)`; do \
+		echo -n $$f; \
+		perltidy -se -b $$f; \
+		echo; \
+	done
 	find lemon*/ -name '*.bak' -delete
 	$(MAKE) json
 
