@@ -45,7 +45,7 @@ sub newNotification {
                 $self->logger->error("$err");
                 return 0;
             }
-            
+
             # Prevent to store time. Keep date only
             $tmp =~ s/^(\d{4}-\d{2}-\d{2}).*$/$1/;
             push @data, $tmp;
@@ -59,8 +59,8 @@ sub newNotification {
             }
             else {
                 $self->userLogger->info(
-                    "Set defaultCondition ($defaultCond) for notification " . $notif->{reference}
-                );
+                    "Set defaultCondition ($defaultCond) for notification "
+                      . $notif->{reference} );
                 push @data, $defaultCond;
             }
         }

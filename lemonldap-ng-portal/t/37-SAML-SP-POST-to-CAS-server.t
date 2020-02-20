@@ -64,13 +64,13 @@ SKIP: {
 
     # Initialization
     # Build CAS server
-    $issuer = register('issuer', \&issuer);
+    $issuer = register( 'issuer', \&issuer );
 
     # Build proxy
-    $proxy = register('proxy', \&proxy);
+    $proxy = register( 'proxy', \&proxy );
 
     # Buils SAML SP
-    $sp = register('sp', \&sp);
+    $sp = register( 'sp', \&sp );
 
     # Simple SP access
     my $res;
@@ -251,10 +251,10 @@ sub proxy {
                 samlOrganizationName        => "IDP",
                 samlOrganizationURL         => "http://www.proxy.com/",
                 samlServicePrivateKeyEnc    => saml_key_idp_private_enc,
-                samlServicePrivateKeySig => saml_key_idp_private_sig,
-                samlServicePublicKeyEnc => saml_key_idp_public_enc,
-                samlServicePublicKeySig => saml_key_idp_public_sig,
-                samlSPMetaDataXML => {
+                samlServicePrivateKeySig    => saml_key_idp_private_sig,
+                samlServicePublicKeyEnc     => saml_key_idp_public_enc,
+                samlServicePublicKeySig     => saml_key_idp_public_sig,
+                samlSPMetaDataXML           => {
                     "sp.com" => {
                         samlSPMetaDataXML =>
                           samlSPMetaDataXML( 'sp', 'HTTP-POST' )
@@ -310,9 +310,9 @@ sub sp {
                 samlOrganizationName        => "SP",
                 samlOrganizationURL         => "http://www.sp.com",
                 samlServicePublicKeySig     => saml_key_sp_public_sig,
-                samlServicePrivateKeyEnc => saml_key_sp_private_enc,
-                samlServicePrivateKeySig => saml_key_sp_private_sig,
-                samlServicePublicKeyEnc => saml_key_sp_public_enc,
+                samlServicePrivateKeyEnc    => saml_key_sp_private_enc,
+                samlServicePrivateKeySig    => saml_key_sp_private_sig,
+                samlServicePublicKeyEnc     => saml_key_sp_public_enc,
                 samlSPSSODescriptorAuthnRequestsSigned => 1,
             },
         }

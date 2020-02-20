@@ -13,7 +13,8 @@ sub new {
 
     my $res = $self->{p}->loadModule( $self->{conf}->{customResetCertByMail} );
     unless ($res) {
-        die 'Unable to load register module ' . $self->{conf}->{customResetCertByMail};
+        die 'Unable to load register module '
+          . $self->{conf}->{customResetCertByMail};
     }
 
     return $res;

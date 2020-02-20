@@ -321,7 +321,8 @@ ok( $res->[2]->[0] =~ m%<td scope="row">rtyler/dwho</td>%, 'Found rtyler/dwo' )
   or explain( $res->[2]->[0], 'Found rtyler/dwo' );
 ok( $res->[2]->[0] =~ m%<td scope="row">_session_id</td>%, 'Found _session_id' )
   or explain( $res->[2]->[0], 'Found _session_id' );
-ok( $res->[2]->[0] =~ m%<td scope="row">_session_kind</td>%, 'Found _session_id' )
+ok( $res->[2]->[0] =~ m%<td scope="row">_session_kind</td>%,
+    'Found _session_id' )
   or explain( $res->[2]->[0], 'Found _session_kind' );
 count(18);
 

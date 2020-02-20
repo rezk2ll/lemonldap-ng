@@ -26,8 +26,9 @@ my $client = LLNG::Manager::Test->new( {
             checkUserDisplayPersistentInfo => 0,
             checkUserDisplayEmptyValues    => 0,
             impersonationMergeSSOgroups    => 0,
-            checkUserHiddenAttributes      => '_loginHistory hGroups _session_id _session_kind',
-            macros                         => {
+            checkUserHiddenAttributes =>
+              '_loginHistory hGroups _session_id _session_kind',
+            macros => {
                 test_impersonation => '"$testPrefix__user/$_user"',
                 _whatToTrace =>
                   '$_auth eq "SAML" ? "$_user@$_idpConfKey" : $_user',

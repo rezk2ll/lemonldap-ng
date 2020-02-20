@@ -52,7 +52,7 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsUserIDAttr            => "",
                     oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
-                    oidcRPMetaDataOptionsIDTokenForceClaims         => 1,
+                    oidcRPMetaDataOptionsIDTokenForceClaims    => 1,
                 }
             },
             oidcOPMetaDataOptions           => {},
@@ -66,7 +66,7 @@ my $op = LLNG::Manager::Test->new( {
                 'loa-3' => 3
             },
             oidcServicePrivateKeySig => oidc_key_op_private_sig,
-            oidcServicePublicKeySig => oidc_key_op_public_sig,
+            oidcServicePublicKeySig  => oidc_key_op_public_sig,
         }
     }
 );
@@ -116,8 +116,10 @@ ok( $refresh_token, "Got refresh token" );
 ok( $id_token,      "Got ID token" );
 count(3);
 
-my $id_token_payload = JSON::from_json(decode_base64([split /\./, $id_token]->[1]));
-is($id_token_payload->{name}, 'Frédéric Accents', 'Found claim in ID token');
+my $id_token_payload =
+  JSON::from_json( decode_base64( [ split /\./, $id_token ]->[1] ) );
+is( $id_token_payload->{name}, 'Frédéric Accents',
+    'Found claim in ID token' );
 count(1);
 
 # Get userinfo
@@ -142,7 +144,6 @@ $op->logout($idpId);
 
 $query = "grant_type=refresh_token&refresh_token=$refresh_token";
 
-
 ok(
     $res = $op->_post(
         "/oauth2/token",
@@ -158,17 +159,19 @@ ok(
 count(1);
 expectOK($res);
 
-$json          = expectJSON($res);
-$access_token  = $json->{access_token};
+$json         = expectJSON($res);
+$access_token = $json->{access_token};
 my $refresh_token2 = $json->{refresh_token};
-$id_token      = $json->{id_token};
-ok( $access_token,           "Got refreshed Access token" );
-ok( $id_token,               "Got refreshed ID token" );
+$id_token = $json->{id_token};
+ok( $access_token,            "Got refreshed Access token" );
+ok( $id_token,                "Got refreshed ID token" );
 ok( !defined $refresh_token2, "Refresh token not present" );
 count(3);
 
-$id_token_payload = JSON::from_json(decode_base64([split /\./, $id_token]->[1]));
-is($id_token_payload->{name}, 'Frédéric Accents', 'Found claim in ID token');
+$id_token_payload =
+  JSON::from_json( decode_base64( [ split /\./, $id_token ]->[1] ) );
+is( $id_token_payload->{name}, 'Frédéric Accents',
+    'Found claim in ID token' );
 count(1);
 
 ## Get userinfo again
@@ -197,7 +200,6 @@ Time::Fake->offset("+10d");
 
 $query = "grant_type=refresh_token&refresh_token=$refresh_token";
 
-
 ok(
     $res = $op->_post(
         "/oauth2/token",
@@ -213,17 +215,19 @@ ok(
 count(1);
 expectOK($res);
 
-$json          = expectJSON($res);
-$access_token  = $json->{access_token};
+$json           = expectJSON($res);
+$access_token   = $json->{access_token};
 $refresh_token2 = $json->{refresh_token};
-$id_token      = $json->{id_token};
-ok( $access_token,           "Got refreshed Access token" );
-ok( $id_token,               "Got refreshed ID token" );
+$id_token       = $json->{id_token};
+ok( $access_token,            "Got refreshed Access token" );
+ok( $id_token,                "Got refreshed ID token" );
 ok( !defined $refresh_token2, "Refresh token not present" );
 count(3);
 
-$id_token_payload = JSON::from_json(decode_base64([split /\./, $id_token]->[1]));
-is($id_token_payload->{name}, 'Frédéric Accents', 'Found claim in ID token');
+$id_token_payload =
+  JSON::from_json( decode_base64( [ split /\./, $id_token ]->[1] ) );
+is( $id_token_payload->{name}, 'Frédéric Accents',
+    'Found claim in ID token' );
 count(1);
 
 ## Get userinfo again

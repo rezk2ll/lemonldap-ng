@@ -10,7 +10,10 @@ require 't/test-lib.pm';
 
 my $res;
 
-my $client = register('portal', sub {LLNG::Manager::Test->new( {
+my $client = register(
+    'portal',
+    sub {
+        LLNG::Manager::Test->new( {
                 ini => {
                     logLevel    => 'error',
                     useSafeJail => 1,
@@ -18,7 +21,7 @@ my $client = register('portal', sub {LLNG::Manager::Test->new( {
                     logger      => 'Lemonldap::NG::Common::Logger::Std',
                 }
             }
-        )
+        );
     }
 );
 
@@ -64,7 +67,8 @@ count(2);
 
 my ( $cli, $app );
 switch ('app');
-$app = register('app', sub {Lemonldap::NG::Handler::Server->run( $client->ini ) } );
+$app = register( 'app',
+    sub { Lemonldap::NG::Handler::Server->run( $client->ini ) } );
 
 ok(
     $res = $app->( {

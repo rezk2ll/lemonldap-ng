@@ -502,7 +502,6 @@ sub tempdb {
     return "$tmpDir/userdb.db";
 }
 
-
 my %handlerOR;
 
 =head4 register
@@ -512,14 +511,14 @@ Registers a new LLNG instance
 =cut
 
 sub register {
-    my ($type, $constructor) = @_;
+    my ( $type, $constructor ) = @_;
     my $obj;
     @Lemonldap::NG::Handler::Main::_onReload = ();
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-    ok($obj = $constructor->(), 'Register $type');
+    ok( $obj = $constructor->(), 'Register $type' );
     count(1);
     $handlerOR{$type} = \@Lemonldap::NG::Handler::Main::_onReload;
-    return  $obj;
+    return $obj;
 }
 
 =head4 register
@@ -636,7 +635,7 @@ has ini => (
         main::ok( $self->{p} = $self->class->new(), 'Portal object' );
         main::count(1);
         unless ( $self->confFailure ) {
-            main::ok( $self->{p}->init($ini), 'Init' );
+            main::ok( $self->{p}->init($ini),           'Init' );
             main::ok( $self->{app} = $self->{p}->run(), 'Portal app' );
             main::count(2);
             no warnings 'redefine';
@@ -863,6 +862,5 @@ sub _put {
     $args{method} = 'PUT';
     return $self->_post( $path, $body, %args );
 }
-
 
 1;

@@ -28,7 +28,7 @@ our $VERSION = '2.0.8';
 
 use constant defaultRoute => 'manager.html';
 
-has ua       => ( is => 'rw' );
+has ua => ( is => 'rw' );
 
 sub init {
     my ( $self, $conf ) = @_;
@@ -309,8 +309,9 @@ sub newRawConf {
         # chances to be equal to last config cfgNum
         my $s = $self->confAcc->saveConf( $new, force => 1 );
         if ( $s > 0 ) {
-            $self->userLogger->notice(
-                'User ' . $self->p->userId($req) . " has stored (raw) conf $s" );
+            $self->userLogger->notice( 'User '
+                  . $self->p->userId($req)
+                  . " has stored (raw) conf $s" );
             $res->{result} = 1;
             $res->{cfgNum} = $s;
         }

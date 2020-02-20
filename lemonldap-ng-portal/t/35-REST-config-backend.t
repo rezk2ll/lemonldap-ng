@@ -62,14 +62,14 @@ LWP::Protocol::PSGI->register(
     }
 );
 
-$issuer = register('issuer', \&issuer);
+$issuer = register( 'issuer', \&issuer );
 
 # Test REST config backend
 ok( $res = $issuer->_get('/config/latest'), 'Get latest conf metadata' );
 count(1);
 expectOK($res);
 
-$sp = register('sp', \&sp);
+$sp = register( 'sp', \&sp );
 
 switch ('sp');
 

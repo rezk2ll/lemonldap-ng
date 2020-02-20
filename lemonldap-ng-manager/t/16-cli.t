@@ -57,7 +57,6 @@ SKIP: {
     @cmd = qw(-yes 1 set locationRules/test1.example.com/default deny);
     Capture::Tiny::capture_stdout( sub { $client->run(@cmd) } );
 
-
     # Test 'save' command
     @cmd = ('save');
     $res = Capture::Tiny::capture_stdout( sub { $client->run(@cmd) } );
@@ -95,16 +94,10 @@ SKIP: {
         qr#\bAuthor IP\b#s,
         '"Author IP" OK'
     );
-    Test::Output::combined_like(
-        $res = sub { $commonClient->run(@cmd) },
-        qr#\bLog\b#s,
-        '"Log" OK'
-    );
-    Test::Output::combined_like(
-        $res = sub { $commonClient->run(@cmd) },
-        qr#\bVersion\b#s,
-        '"Version" OK'
-    ); 
+    Test::Output::combined_like( $res = sub { $commonClient->run(@cmd) },
+        qr#\bLog\b#s, '"Log" OK' );
+    Test::Output::combined_like( $res = sub { $commonClient->run(@cmd) },
+        qr#\bVersion\b#s, '"Version" OK' );
 }
 
 count($tests);

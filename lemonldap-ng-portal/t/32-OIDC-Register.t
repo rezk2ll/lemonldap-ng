@@ -134,7 +134,7 @@ sub op {
                     'loa-3' => 3
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,
-                oidcServicePublicKeySig => oidc_key_op_public_sig,
+                oidcServicePublicKeySig  => oidc_key_op_public_sig,
             }
         }
     );

@@ -49,7 +49,8 @@ sub userData {
     return $self->{userData}
       || {
         ( $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}
-              || '_whatToTrace' ) => $self->{user}, };
+              || '_whatToTrace' ) => $self->{user},
+      };
 }
 
 sub respHeaders {

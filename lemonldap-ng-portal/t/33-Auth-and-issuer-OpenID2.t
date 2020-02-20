@@ -50,9 +50,9 @@ SKIP: {
         skip 'Net::OpenID::* notfound', $maintests;
     }
 
-    $issuer = register('issuer', \&issuer);
+    $issuer = register( 'issuer', \&issuer );
 
-    $sp = register('sp', \&sp);
+    $sp = register( 'sp', \&sp );
 
     # Simple SP access
     my $res;

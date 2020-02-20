@@ -24,7 +24,7 @@ extends 'Lemonldap::NG::Common::Conf::AccessLib',
 
 has csp => ( is => 'rw' );
 
-has loadedPlugins => ( is => 'rw', default => sub { [] } );
+has loadedPlugins  => ( is => 'rw', default => sub { [] } );
 has hLoadedPlugins => ( is => 'rw', default => sub { {} } );
 
 ## @method boolean init($args)
@@ -56,7 +56,7 @@ sub init {
     }
 
     my $conf = $self->confAcc->getConf;
-    $conf->{$_} = $args->{$_} foreach(keys %$args);
+    $conf->{$_} = $args->{$_} foreach ( keys %$args );
 
     $self->{enabledModules} ||= "conf, sessions, notifications, 2ndFA, api";
     my @links;
@@ -163,16 +163,20 @@ sub init {
 
 sub tplParams {
     my ( $self, $req ) = @_;
-    my $res = eval { $self->hLoadedPlugins->{viewer}->brwRule->( $req, $req->{userData} ) } || 0;
+    my $res = eval {
+        $self->hLoadedPlugins->{viewer}->brwRule->( $req, $req->{userData} );
+    } || 0;
     return ( VERSION => $VERSION, ALLOWBROWSER => $res );
 }
 
 sub javascript {
     my ( $self, $req ) = @_;
-    my $res       = eval { $self->hLoadedPlugins->{viewer}->diffRule->( $req, $req->{userData} )} || 0;
+    my $res = eval {
+        $self->hLoadedPlugins->{viewer}->diffRule->( $req, $req->{userData} );
+    } || 0;
     print STDERR $@ if $@;
     my $impPrefix = $self->{impersonationPrefix} || 'real_';
-    my $ttl       = $self->{timeout} || 72000;
+    my $ttl       = $self->{timeout}             || 72000;
 
     return
 'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";var viewPrefix=scriptname+"view/";'

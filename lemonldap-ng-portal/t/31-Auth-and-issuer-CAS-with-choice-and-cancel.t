@@ -75,9 +75,10 @@ SKIP: {
     );
 
     # Build CAS server
-    $issuer = register('issuer', \&issuer);
+    $issuer = register( 'issuer', \&issuer );
+
     # Build CAS App
-    $sp = register('sp', \&sp);
+    $sp = register( 'sp', \&sp );
 
     # Simple SP access
     # Connect to CAS app

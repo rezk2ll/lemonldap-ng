@@ -52,17 +52,19 @@ SKIP: {
     if ($@) {
         skip 'SOAP::Lite not found', $maintests;
     }
-    $client = register('portal', sub {
+    $client = register(
+        'portal',
+        sub {
             LLNG::Manager::Test->new( {
                     ini => {
                         logLevel          => $debug,
                         useSafeJail       => 1,
                         cda               => 1,
                         soapSessionServer => 1,
-                        logger            => 'Lemonldap::NG::Common::Logger::Std',
+                        logger => 'Lemonldap::NG::Common::Logger::Std',
                     }
                 }
-            )
+            );
         }
     );
 
@@ -101,15 +103,18 @@ SKIP: {
     my ( $cli, $app );
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
     switch ('app');
-    $app = register('app', sub { 
+    $app = register(
+        'app',
+        sub {
             Lemonldap::NG::Handler::Server->run( {
                     %{ $client->ini },
-                    globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
+                    globalStorage =>
+                      'Lemonldap::NG::Common::Apache::Session::SOAP',
                     globalStorageOptions =>
-                    { proxy => 'http://auth.example.com/adminSessions' },
+                      { proxy => 'http://auth.example.com/adminSessions' },
                     localSessionStorage => undef,
                 }
-            )
+            );
         }
     );
 

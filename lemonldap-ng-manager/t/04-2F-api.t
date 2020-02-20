@@ -41,7 +41,8 @@ sub newSession {
                 _session_kind => $kind,
                 _2fDevices    => to_json($sfaDevices),
             }
-        ), "New $kind session for $uid"
+        ),
+        "New $kind session for $uid"
     );
     count(1);
 }
@@ -96,7 +97,7 @@ sub checkGet {
     my ( $uid, $id ) = splice @_;
     my ( $test, $res, $ret );
     $test = "$uid should have one 2F with id \"$id\"";
-    $res = get( $test, $uid, undef, $id );
+    $res  = get( $test, $uid, undef, $id );
     check200( $test, $res );
 
     #diag Dumper($res);
@@ -110,7 +111,7 @@ sub checkGet404 {
     my ( $uid, $id ) = splice @_;
     my ( $test, $res, $ret );
     $test = "$uid should not have any 2F with id \"$id\"";
-    $res = get( $test, $uid, undef, $id );
+    $res  = get( $test, $uid, undef, $id );
     check404( $test, $res );
 }
 
@@ -138,7 +139,7 @@ sub checkGetBadType {
     my ( $uid, $type ) = splice @_;
     my ( $test, $res );
     $test = "Get for uid $uid and type \"$type\" should get rejected.";
-    $res = get( $test, $uid, $type );
+    $res  = get( $test, $uid, $type );
     check405( $test, $res );
 }
 
@@ -176,7 +177,7 @@ sub checkDelete {
     my ( $uid, $id ) = splice @_;
     my ( $test, $res );
     $test = "$uid should have a 2F with id \"$id\" to be deleted.";
-    $res = del( $test, $uid, undef, $id );
+    $res  = del( $test, $uid, undef, $id );
     check200( $test, $res );
 }
 
@@ -184,7 +185,7 @@ sub checkDelete404 {
     my ( $uid, $id ) = splice @_;
     my ( $test, $res );
     $test = "$uid should not have a 2F with id \"$id\" to be deleted.";
-    $res = del( $test, $uid, undef, $id );
+    $res  = del( $test, $uid, undef, $id );
     check404( $test, $res );
 }
 
@@ -209,7 +210,7 @@ sub checkDeleteBadType {
     my ( $uid, $type ) = splice @_;
     my ( $test, $res );
     $test = "Delete for uid $uid and type \"$type\" should get rejected.";
-    $res = del( $test, $uid, $type );
+    $res  = del( $test, $uid, $type );
     check405( $test, $res );
 }
 
@@ -218,7 +219,7 @@ my $ret;
 
 ## Sessions creation
 # msmith
-newSession( 'msmith', '127.10.0.1', 'SSO', $sfaDevices );
+newSession( 'msmith', '127.10.0.1', 'SSO',        $sfaDevices );
 newSession( 'msmith', '127.10.0.1', 'Persistent', $sfaDevices );
 
 # dwho
@@ -242,7 +243,7 @@ $sfaDevices = [ {
         "epoch"   => time
     }
 ];
-newSession( 'dwho', '127.10.0.1', 'SSO', $sfaDevices );
+newSession( 'dwho', '127.10.0.1', 'SSO',        $sfaDevices );
 newSession( 'dwho', '127.10.0.1', 'Persistent', $sfaDevices );
 
 # rtyler
@@ -266,7 +267,7 @@ $sfaDevices = [ {
         "epoch"   => time
     }
 ];
-newSession( 'rtyler', '127.10.0.1', 'SSO', $sfaDevices );
+newSession( 'rtyler', '127.10.0.1', 'SSO',        $sfaDevices );
 newSession( 'rtyler', '127.10.0.1', 'Persistent', $sfaDevices );
 
 # davros
@@ -284,7 +285,7 @@ $sfaDevices = [ {
         "epoch"   => time
     }
 ];
-newSession( 'davros', '127.10.0.1', 'SSO', $sfaDevices );
+newSession( 'davros', '127.10.0.1', 'SSO',        $sfaDevices );
 newSession( 'davros', '127.10.0.1', 'Persistent', $sfaDevices );
 
 # tof
@@ -296,7 +297,7 @@ $sfaDevices = [ {
         "epoch"      => time
     }
 ];
-newSession( 'tof', '127.10.0.1', 'SSO', $sfaDevices );
+newSession( 'tof', '127.10.0.1', 'SSO',        $sfaDevices );
 newSession( 'tof', '127.10.0.1', 'Persistent', $sfaDevices );
 
 # dwho

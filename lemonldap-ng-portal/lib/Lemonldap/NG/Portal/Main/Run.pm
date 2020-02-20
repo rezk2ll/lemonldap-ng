@@ -33,8 +33,7 @@ sub groupsAndMacros {
 sub authProcess { qw(extractFormInfo getUser authenticate) }
 
 sub sessionData {
-    return
-      qw(setAuthSessionInfo setSessionInfo), $_[0]->groupsAndMacros,
+    return qw(setAuthSessionInfo setSessionInfo), $_[0]->groupsAndMacros,
       qw(setPersistentSessionInfo setLocalGroups store secondFactor);
 }
 
@@ -1041,7 +1040,7 @@ sub registerLogin {
     }
 
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
-    my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+    my $type    = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 

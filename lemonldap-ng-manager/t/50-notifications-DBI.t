@@ -44,7 +44,8 @@ SKIP: {
       $client->jsonPostResponse( 'notifications/actives', '',
         IO::String->new($notif),
         'application/json', length($notif) );
-    ok( $res->{error} =~ /^Notification not created: Bad date/, 'Notification not inserted' );
+    ok( $res->{error} =~ /^Notification not created: Bad date/,
+        'Notification not inserted' );
 
     $notif =
 '{"date":"2099-13-30","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test\"}"}';
@@ -52,7 +53,8 @@ SKIP: {
       $client->jsonPostResponse( 'notifications/actives', '',
         IO::String->new($notif),
         'application/json', length($notif) );
-    ok( $res->{error} =~ /^Notification not created: Bad date/, 'Notification not inserted' );
+    ok( $res->{error} =~ /^Notification not created: Bad date/,
+        'Notification not inserted' );
 
     $notif =
 '{"date":"2099-05_12","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test\"}"}';
@@ -98,7 +100,7 @@ SKIP: {
     $res =
       $client->jsonResponse( 'notifications/done', 'groupBy=substr(uid,1)' );
     ok( $res->{result} == 1, 'Result = 1' );
-    ok( $res->{count} == 0, 'Count = 0' ) or diag Dumper($res);
+    ok( $res->{count} == 0,  'Count = 0' ) or diag Dumper($res);
 
     #print STDERR Dumper($res);
 }

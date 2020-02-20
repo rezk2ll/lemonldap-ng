@@ -40,7 +40,7 @@ has idRule => ( is => 'rw', default => sub { 1 } );
 sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;
-    $self->addAuthRoute( switchcontext => 'run', ['POST'] )
+    $self->addAuthRoute( switchcontext => 'run',  ['POST'] )
       ->addAuthRoute( switchcontext => 'display', ['GET'] );
 
     # Parse activation rule

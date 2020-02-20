@@ -32,8 +32,8 @@ SKIP: {
     }
 
     # Initialization
-    $issuer = register('issuer', \&issuer);
-    $sp = register('sp', \&sp);
+    $issuer = register( 'issuer', \&issuer );
+    $sp     = register( 'sp',     \&sp );
 
     # Simple SP access
     my $res;
@@ -181,7 +181,7 @@ SKIP: {
     ok( $res->[2]->[0] =~ /trmsg="47"/, 'Found logout message' );
 
     my $logoutCookie = expectCookie($res);
-    is($logoutCookie, 0, "IDP cookie removed");
+    is( $logoutCookie, 0, "IDP cookie removed" );
 
     # Test if logout is done
     ok(
@@ -240,10 +240,10 @@ sub issuer {
                 samlOrganizationName        => "IDP",
                 samlOrganizationURL         => "http://www.idp.com/",
                 samlServicePrivateKeyEnc    => saml_key_idp_private_enc,
-                samlServicePrivateKeySig => saml_key_idp_private_sig,
-                samlServicePublicKeyEnc => saml_key_idp_public_enc,
-                samlServicePublicKeySig => saml_key_idp_public_sig,
-                samlSPMetaDataXML => {
+                samlServicePrivateKeySig    => saml_key_idp_private_sig,
+                samlServicePublicKeyEnc     => saml_key_idp_public_enc,
+                samlServicePublicKeySig     => saml_key_idp_public_sig,
+                samlSPMetaDataXML           => {
                     "sp.com" => {
                         samlSPMetaDataXML => <<EOF
 <?xml version="1.0"?>
@@ -368,9 +368,9 @@ sub sp {
                 samlOrganizationName        => "SP",
                 samlOrganizationURL         => "http://www.sp.com",
                 samlServicePublicKeySig     => saml_key_sp_public_sig,
-                samlServicePrivateKeyEnc => saml_key_sp_private_enc,
-                samlServicePrivateKeySig => saml_key_sp_private_sig,
-                samlServicePublicKeyEnc => saml_key_sp_public_enc,
+                samlServicePrivateKeyEnc    => saml_key_sp_private_enc,
+                samlServicePrivateKeySig    => saml_key_sp_private_sig,
+                samlServicePublicKeyEnc     => saml_key_sp_public_enc,
                 samlSPSSODescriptorAuthnRequestsSigned => 1,
             },
         }

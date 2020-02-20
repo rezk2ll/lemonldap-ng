@@ -11,7 +11,7 @@ if ( $ENV{LLNGTESTLDAP} ) {
         ( $ENV{LLNGTESTLDAP_SCHEMA_DIR} and -d $ENV{LLNGTESTLDAP_SCHEMA_DIR} )
         ? $ENV{LLNGTESTLDAP_SCHEMA_DIR}
         : -d '/etc/openldap/schema' ? '/etc/openldap/schema'
-        :                          '/etc/ldap/schema'
+        :                             '/etc/ldap/schema'
     );
 
     eval { mkdir 't/testslapd/slapd.d' };

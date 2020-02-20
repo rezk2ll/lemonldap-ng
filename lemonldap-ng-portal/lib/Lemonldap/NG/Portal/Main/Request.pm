@@ -102,14 +102,22 @@ sub error_type {
       if (
         scalar(
             grep { /^$code$/ } (
-                PE_INFO,                          PE_SESSIONEXPIRED,
-                PE_FORMEMPTY,                     PE_FIRSTACCESS,
-                PE_PP_GRACE,                      PE_PP_EXP_WARNING,
-                PE_NOTIFICATION,                  PE_BADURL,
-                PE_CONFIRM,                       PE_MAILFORMEMPTY,
-                PE_MAILCONFIRMATION_ALREADY_SENT, PE_PASSWORDFORMEMPTY,
-                PE_CAPTCHAEMPTY,                  PE_REGISTERFORMEMPTY,
-                PE_PP_CHANGE_AFTER_RESET,         PE_RESETCERTIFICATE_FORMEMPTY,
+                PE_INFO,
+                PE_SESSIONEXPIRED,
+                PE_FORMEMPTY,
+                PE_FIRSTACCESS,
+                PE_PP_GRACE,
+                PE_PP_EXP_WARNING,
+                PE_NOTIFICATION,
+                PE_BADURL,
+                PE_CONFIRM,
+                PE_MAILFORMEMPTY,
+                PE_MAILCONFIRMATION_ALREADY_SENT,
+                PE_PASSWORDFORMEMPTY,
+                PE_CAPTCHAEMPTY,
+                PE_REGISTERFORMEMPTY,
+                PE_PP_CHANGE_AFTER_RESET,
+                PE_RESETCERTIFICATE_FORMEMPTY,
             )
         )
       );

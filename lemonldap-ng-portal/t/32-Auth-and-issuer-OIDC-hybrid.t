@@ -200,7 +200,7 @@ count(5);
 my $at;
 ok( $at = $rp->p->_userDB->getUserInfo( 'op', $prms{access_token} ),
     'Get access token' );
-ok( $at = JSON::from_json($at), ' Decode JSON' );
+ok( $at = JSON::from_json($at),         ' Decode JSON' );
 ok( $at->{name} eq 'Doctor Who',        ' Get name' );
 ok( $at->{family_name} eq 'Doctor Who', ' Get family_name' );
 ok( $at->{sub} eq 'dwho',               ' Get sub' );
@@ -262,7 +262,7 @@ sub op {
                     'loa-3' => 3
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,
-                oidcServicePublicKeySig => oidc_key_op_public_sig,
+                oidcServicePublicKeySig  => oidc_key_op_public_sig,
             }
         }
     );

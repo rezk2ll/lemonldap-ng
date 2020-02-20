@@ -52,8 +52,8 @@ SKIP: {
         skip 'SOAP::Lite not found', $maintests;
     }
 
-    $issuer = register('issuer', \&issuer);
-    $sp = register('sp', \&sp);
+    $issuer = register( 'issuer', \&issuer );
+    $sp     = register( 'sp',     \&sp );
 
     # Simple SP access
     my $res;

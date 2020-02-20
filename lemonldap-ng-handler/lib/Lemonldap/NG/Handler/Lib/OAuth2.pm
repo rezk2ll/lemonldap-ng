@@ -75,11 +75,13 @@ sub fetchId {
 
     # Get access token session
     my $infos = $class->getOIDCInfos($access_token);
+
     # If this token is tied to a regular session ID
     if ( my $_session_id = $infos->{user_session_id} ) {
         $class->logger->debug( 'Get user session id ' . $_session_id );
         return $_session_id;
     }
+
     # If this token is tied to an Offline session
     if ( my $_session_id = $infos->{offline_session_id} ) {
         $class->logger->debug( 'Get offline session id ' . $_session_id );

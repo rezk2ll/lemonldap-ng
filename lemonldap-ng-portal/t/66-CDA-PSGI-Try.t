@@ -6,13 +6,13 @@ extends 'Lemonldap::NG::Handler::PSGI::Try';
 
 sub init {
     my ($self) = @_;
-    $self->SUPER::init($_[1]) or return 0;
-    $self->addAuthRouteWithRedirect('*' => 'my');
+    $self->SUPER::init( $_[1] ) or return 0;
+    $self->addAuthRouteWithRedirect( '*' => 'my' );
     return 1;
 }
 
 sub my {
-    return [200,[],['OK']];
+    return [ 200, [], ['OK'] ];
 }
 
 package main;
@@ -29,16 +29,20 @@ require 't/test-lib.pm';
 
 my $res;
 
-my $client = register('portal', sub { LLNG::Manager::Test->new( {
-        ini => {
-            logLevel    => 'error',
-            useSafeJail => 1,
-            cda         => 1,
-            logger      => 'Lemonldap::NG::Common::Logger::Std',
-        }
+my $client = register(
+    'portal',
+    sub {
+        LLNG::Manager::Test->new( {
+                ini => {
+                    logLevel    => 'error',
+                    useSafeJail => 1,
+                    cda         => 1,
+                    logger      => 'Lemonldap::NG::Common::Logger::Std',
+                }
+            }
+        );
     }
-)
-} );
+);
 
 # CDA with unauthentified user
 ok(
@@ -74,7 +78,7 @@ use_ok('Lemonldap::NG::Common::PSGI::Cli::Lib');
 count(2);
 
 my ( $cli, $app );
-$app = register('app', sub { LocalApp->run( $client->ini ) } );
+$app = register( 'app', sub { LocalApp->run( $client->ini ) } );
 
 ok(
     $res = $app->( {

@@ -86,7 +86,7 @@ sub getAccepted {
 # keys date, uid, ref and condition.
 sub getAll {
     my $self = shift;
-    my $ext = $self->extension;
+    my $ext  = $self->extension;
     opendir D, $self->{dirName};
     my @notif;
     my $fns = $self->{fileNameSeparator};
@@ -112,7 +112,7 @@ sub getAll {
 # keys date, uid, ref and condition.
 sub getExisting {
     my $self = shift;
-    my $ext = $self->extension;
+    my $ext  = $self->extension;
     opendir D, $self->{dirName};
     my @notif;
     my $fns = $self->{fileNameSeparator};

@@ -255,13 +255,13 @@ sub op {
                     demo => 'Demo;Demo;Demo',
                     sql  => 'DBI;DBI;DBI',
                 },
-                dbiAuthChain        => "dbi:SQLite:dbname=$userdb",
-                dbiAuthUser         => '',
-                dbiAuthPassword     => '',
-                dbiAuthTable        => 'users',
-                dbiAuthLoginCol     => 'user',
-                dbiAuthPasswordCol  => 'password',
-                dbiAuthPasswordHash => '',
+                dbiAuthChain                    => "dbi:SQLite:dbname=$userdb",
+                dbiAuthUser                     => '',
+                dbiAuthPassword                 => '',
+                dbiAuthTable                    => 'users',
+                dbiAuthLoginCol                 => 'user',
+                dbiAuthPasswordCol              => 'password',
+                dbiAuthPasswordHash             => '',
                 issuerDBOpenIDConnectActivation => "1",
                 oidcRPMetaDataExportedVars      => {
                     rp => {
@@ -306,7 +306,7 @@ sub op {
                     'loa-3' => 3
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,
-                oidcServicePublicKeySig => oidc_key_op_public_sig,
+                oidcServicePublicKeySig  => oidc_key_op_public_sig,
             }
         }
     );

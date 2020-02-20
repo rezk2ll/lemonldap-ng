@@ -5,7 +5,7 @@ use Lemonldap::NG::Common::Notifications::LDAP "JSON";
 use Lemonldap::NG::Common::Logger::Std;
 
 my $res;
-my $notif ;
+my $notif;
 my $maintests = 11;
 my $logLevel  = 'error';
 require 't/test-lib.pm';
@@ -30,7 +30,8 @@ SKIP: {
     skip 'LLNGTESTLDAP is not set', $maintests unless ( $ENV{LLNGTESTLDAP} );
     require 't/test-ldap.pm';
     use Net::LDAP;
-    $notif =  Lemonldap::NG::Common::Notifications::LDAP->new($notificationStorageOptions);
+    $notif = Lemonldap::NG::Common::Notifications::LDAP->new(
+        $notificationStorageOptions);
     my $ldap = Net::LDAP->new($ldapServer);
     my $mesg = $ldap->bind( $ldapBindDN, password => $ldapBindPassword );
     is( $mesg->code, 0, "Bind to LDAP server" ) or diag $mesg->error;

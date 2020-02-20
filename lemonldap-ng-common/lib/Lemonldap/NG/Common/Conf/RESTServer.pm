@@ -198,8 +198,8 @@ sub virtualHosts {
             # If rule contains a comment or an AuthLevel, split them
             if ( $query eq 'locationRules' ) {
                 $res->{comment} = '';
-                $res->{level} = '';
-                $res->{level} = $1 if ( $r =~ s/\(\?#AuthnLevel=(-?\d+)\)// );
+                $res->{level}   = '';
+                $res->{level}   = $1 if ( $r =~ s/\(\?#AuthnLevel=(-?\d+)\)// );
                 if ( $r =~ s/\(\?#(.*?)\)// ) {
                     $res->{title} = $res->{comment} = $1;
                 }
@@ -710,9 +710,9 @@ sub combModules {
     my $res = [];
     foreach my $mod ( keys %$val ) {
         my $tmp;
-        $tmp->{title} = $mod;
-        $tmp->{id}    = "combModules/$mod";
-        $tmp->{type}  = 'cmbModule';
+        $tmp->{title}      = $mod;
+        $tmp->{id}         = "combModules/$mod";
+        $tmp->{type}       = 'cmbModule';
         $tmp->{data}->{$_} = $val->{$mod}->{$_} foreach (qw(type for));
         my $over = $val->{$mod}->{over} // {};
         $tmp->{data}->{over} = [ map { [ $_, $over->{$_} ] } keys %$over ];
@@ -786,8 +786,8 @@ sub metadata {
         }
 
         # Find next and previous conf
-        my @a  = $self->confAcc->available;
-        my $id = -1;
+        my @a     = $self->confAcc->available;
+        my $id    = -1;
         my ($ind) = map { $id++; $_ == $res->{cfgNum} ? ($id) : () } @a;
         if ($ind) { $res->{prev} = $a[ $ind - 1 ]; }
         if ( defined $ind and $ind < $#a ) {

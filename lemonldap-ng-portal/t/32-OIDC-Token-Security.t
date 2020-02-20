@@ -81,7 +81,7 @@ my $op = LLNG::Manager::Test->new( {
                 'loa-3' => 3
             },
             oidcServicePrivateKeySig => oidc_key_op_private_sig,
-            oidcServicePublicKeySig => oidc_key_op_public_sig,
+            oidcServicePublicKeySig  => oidc_key_op_public_sig,
         }
     }
 );
@@ -178,7 +178,6 @@ my $token = $res->{access_token};
 ok( $token, 'Access token present' );
 count(1);
 Time::Fake->offset("+2h");
-
 
 ok(
     $res = $op->_post(

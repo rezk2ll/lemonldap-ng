@@ -122,7 +122,8 @@ sub display {
 
     # 1.3 There is a message to display
     elsif ( my $info = $req->info ) {
-        my $method = $req->data->{infoFormMethod} || $self->conf->{infoFormMethod};
+        my $method =
+          $req->data->{infoFormMethod} || $self->conf->{infoFormMethod};
         $self->logger->debug('Display: info detected');
         $self->logger->debug('Hidden values :');
         $self->logger->debug( " $_: " . $req->{portalHiddenFormValues}->{$_} )
@@ -311,13 +312,14 @@ sub display {
             ASK_LOGINS            => $req->param('checkLogins') || 0,
             DISPLAY_RESETPASSWORD => $self->conf->{portalDisplayResetPassword},
             DISPLAY_REGISTER      => $self->conf->{portalDisplayRegister},
-            DISPLAY_UPDATECERTIF  => $self->conf->{portalDisplayCertificateResetByMail},
-            MAILCERTIF_URL        => $self->conf->{certificateResetByMailURL},
-            MAIL_URL              => $self->conf->{mailUrl},
-            REGISTER_URL          => $self->conf->{registerUrl},
-            HIDDEN_INPUTS         => $self->buildHiddenForm($req),
-            STAYCONNECTED         => $self->conf->{stayConnected},
-            SPOOFID               => $self->conf->{impersonationRule},
+            DISPLAY_UPDATECERTIF =>
+              $self->conf->{portalDisplayCertificateResetByMail},
+            MAILCERTIF_URL => $self->conf->{certificateResetByMailURL},
+            MAIL_URL       => $self->conf->{mailUrl},
+            REGISTER_URL   => $self->conf->{registerUrl},
+            HIDDEN_INPUTS  => $self->buildHiddenForm($req),
+            STAYCONNECTED  => $self->conf->{stayConnected},
+            SPOOFID        => $self->conf->{impersonationRule},
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )

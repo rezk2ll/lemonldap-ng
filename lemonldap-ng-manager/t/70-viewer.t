@@ -32,7 +32,8 @@ count(2);
 
 # Try to display latest conf
 $res = &client->jsonResponse('/view/latest');
-ok( $res->{cfgNum} eq '1', 'Latest conf loaded' ) or explain($res,"cfgNum => 1");
+ok( $res->{cfgNum} eq '1', 'Latest conf loaded' )
+  or explain( $res, "cfgNum => 1" );
 count(1);
 
 ok(
@@ -59,8 +60,8 @@ count(2);
 $res = &client->jsonResponse('/view/diff/1/2');
 
 ok( $res->[1]->{captcha_login_enabled} eq '1', 'Key found' );
-ok( $res->[1]->{captcha_mail_enabled} eq '0', 'Key found' );
-ok( 7 == keys %{ $res->[1] },                 'Right number of keys found' )
+ok( $res->[1]->{captcha_mail_enabled} eq '0',  'Key found' );
+ok( 7 == keys %{ $res->[1] },                  'Right number of keys found' )
   or print STDERR Dumper($res);
 count(3);
 

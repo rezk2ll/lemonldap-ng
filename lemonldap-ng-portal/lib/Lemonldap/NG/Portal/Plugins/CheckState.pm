@@ -22,7 +22,7 @@ sub init {
         return 0;
     }
     $self->addUnauthRoute( checkstate => 'check', ['GET'] );
-    $self->addAuthRoute( checkstate => 'check', ['GET'] );
+    $self->addAuthRoute( checkstate => 'check',   ['GET'] );
     return 1;
 }
 

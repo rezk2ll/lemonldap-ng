@@ -225,7 +225,7 @@ count(1);
 ( $url, $query ) = expectRedirection( $res, qr#.# );
 
 my $removedCookie = expectCookie($res);
-is($removedCookie, 0, "SSO cookie removed");
+is( $removedCookie, 0, "SSO cookie removed" );
 count(1);
 
 # Test logout endpoint without session
@@ -352,7 +352,7 @@ sub op {
                     'loa-3' => 3
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,
-                oidcServicePublicKeySig => oidc_key_op_public_sig,
+                oidcServicePublicKeySig  => oidc_key_op_public_sig,
             }
         }
     );

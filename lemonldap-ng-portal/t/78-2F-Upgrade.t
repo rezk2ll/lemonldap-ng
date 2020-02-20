@@ -141,7 +141,7 @@ ok(
 );
 count(1);
 expectRedirection( $res, 'http://test1.example.com' );
-$id    = expectCookie($res);
+$id = expectCookie($res);
 
 my $cookies = getCookies($res);
 ok( !$cookies->{lemonldappdata}, " Make sure no pdata is returned" );

@@ -34,7 +34,7 @@ sub init {
     foreach my $k ( keys %$args ) {
         $self->{$k} = $args->{$k} unless ( $k eq 'logger' );
     }
-    unless ( ref($self->logger) and ref($self->userLogger) ) {
+    unless ( ref( $self->logger ) and ref( $self->userLogger ) ) {
         my $logger =
              $args->{logger}
           || $ENV{LLNG_DEFAULTLOGGER}

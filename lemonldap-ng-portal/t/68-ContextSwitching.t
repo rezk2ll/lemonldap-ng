@@ -61,10 +61,8 @@ ok(
     $res->[2]->[0] =~ m%<span trspan="connectedAs">Connected as</span> rtyler%,
     'Connected as rtyler'
 ) or print STDERR Dumper( $res->[2]->[0] );
-ok(
-    $res->[2]->[0] =~ qr%<span id="languages"></span>%,
-    'Found language flags'
-) or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ qr%<span id="languages"></span>%, 'Found language flags' )
+  or print STDERR Dumper( $res->[2]->[0] );
 expectAuthenticatedAs( $res, 'rtyler' );
 ok( $res->[2]->[0] !~ m%contextSwitching_ON%, 'Connected as dwho' )
   or print STDERR Dumper( $res->[2]->[0] );
@@ -377,8 +375,7 @@ ok(
 );
 count(6);
 
-ok( $res->[2]->[0] =~ m%<span trmsg="1"></span>%,
-    'Found PE_SESSIONEXPIRED' )
+ok( $res->[2]->[0] =~ m%<span trmsg="1"></span>%, 'Found PE_SESSIONEXPIRED' )
   or explain( $res->[2]->[0], 'Sessuion expired' );
 ok(
     $res = $client->_get(

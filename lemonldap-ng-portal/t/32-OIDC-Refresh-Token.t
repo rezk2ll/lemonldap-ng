@@ -53,7 +53,7 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                     oidcRPMetaDataOptionsRefreshToken          => 1,
-                    oidcRPMetaDataOptionsIDTokenForceClaims         => 1,
+                    oidcRPMetaDataOptionsIDTokenForceClaims    => 1,
                 }
             },
             oidcOPMetaDataOptions           => {},
@@ -67,7 +67,7 @@ my $op = LLNG::Manager::Test->new( {
                 'loa-3' => 3
             },
             oidcServicePrivateKeySig => oidc_key_op_private_sig,
-            oidcServicePublicKeySig => oidc_key_op_public_sig,
+            oidcServicePublicKeySig  => oidc_key_op_public_sig,
         }
     }
 );
@@ -116,8 +116,10 @@ ok( $access_token,  "Got access token" );
 ok( $refresh_token, "Got refresh token" );
 ok( $id_token,      "Got ID token" );
 
-my $id_token_payload = JSON::from_json(decode_base64([split /\./, $id_token]->[1]));
-is($id_token_payload->{name}, 'Frédéric Accents', 'Found claim in ID token');
+my $id_token_payload =
+  JSON::from_json( decode_base64( [ split /\./, $id_token ]->[1] ) );
+is( $id_token_payload->{name}, 'Frédéric Accents',
+    'Found claim in ID token' );
 
 # Get userinfo
 $res = $op->_post(
@@ -175,8 +177,10 @@ ok( $access_token,                   "Got refreshed Access token" );
 ok( $id_token,                       "Got refreshed ID token" );
 ok( !defined $json->{refresh_token}, "Refresh token not present" );
 
-$id_token_payload = JSON::from_json(decode_base64([split /\./, $id_token]->[1]));
-is($id_token_payload->{name}, 'Frédéric Accents', 'Found claim in ID token');
+$id_token_payload =
+  JSON::from_json( decode_base64( [ split /\./, $id_token ]->[1] ) );
+is( $id_token_payload->{name}, 'Frédéric Accents',
+    'Found claim in ID token' );
 
 # Try refreshed access token
 $res = $op->_post(

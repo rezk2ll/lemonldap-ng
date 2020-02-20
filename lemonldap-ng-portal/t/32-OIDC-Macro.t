@@ -120,12 +120,12 @@ sub op {
                 oidcServiceAllowImplicitFlow          => 1,
                 oidcServiceAllowDynamicRegistration   => 1,
                 oidcServiceAllowAuthorizationCodeFlow => 1,
-                oidcRPMetaDataMacros                => {
+                oidcRPMetaDataMacros                  => {
                     rp => {
                         extract_sn => '(split(/\s/, $cn))[1]',
                     }
                 },
-                oidcRPMetaDataOptions                 => {
+                oidcRPMetaDataOptions => {
                     rp => {
                         oidcRPMetaDataOptionsDisplayName       => "RP",
                         oidcRPMetaDataOptionsIDTokenExpiration => 3600,
@@ -148,7 +148,7 @@ sub op {
                     'loa-3' => 3
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,
-                oidcServicePublicKeySig => oidc_key_op_public_sig,
+                oidcServicePublicKeySig  => oidc_key_op_public_sig,
             }
         }
     );

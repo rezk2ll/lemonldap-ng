@@ -46,7 +46,7 @@ sub persistentAttrs {
 sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;
-    $self->addAuthRoute( checkuser => 'check', ['POST'] );
+    $self->addAuthRoute( checkuser => 'check',               ['POST'] );
     $self->addAuthRouteWithRedirect( checkuser => 'display', ['GET'] );
 
     # Parse identity rule
@@ -69,7 +69,7 @@ sub init {
 
 # RUNNING METHOD
 sub display {
-    my ( $self, $req ) = @_;
+    my ( $self,  $req )         = @_;
     my ( $attrs, $array_attrs ) = ( {}, [] );
 
     $self->logger->debug("Display current session data...");
@@ -129,7 +129,7 @@ sub display {
 sub check {
     my ( $self, $req ) = @_;
     my ( $attrs, $array_attrs, $array_hdrs ) = ( {}, [], [] );
-    my $msg = my $auth = my $compute = '';
+    my $msg       = my $auth = my $compute = '';
     my $authLevel = $req->userData->{authenticationLevel};
     my $authMode  = $req->userData->{_auth};
 
@@ -448,7 +448,7 @@ sub _splitAttributes {
         if ( $element->{key} eq 'groups' ) {
             $self->logger->debug('Key "groups" found');
             my $separator = $self->{conf}->{multiValuesSeparator};
-            my @tmp = split /\Q$separator/, $element->{value};
+            my @tmp       = split /\Q$separator/, $element->{value};
             $grps = [ map { { value => $_ } } sort @tmp ];
             next;
         }
@@ -491,8 +491,8 @@ sub _splitAttributes {
 
 sub _removePersistentAttributes {
     my ( $self, $attrs ) = @_;
-    my $regex      = join '|', split /\s+/, $self->persistentAttrs;
-    my @keys       = grep /$regex/, keys %$attrs;
+    my $regex = join '|',      split /\s+/, $self->persistentAttrs;
+    my @keys  = grep /$regex/, keys %$attrs;
     $self->logger->debug("Remove persistent session attributes");
     delete @$attrs{@keys};
 

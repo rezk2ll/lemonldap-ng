@@ -20,7 +20,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 sub init {
     my ($self) = @_;
     $self->addUnauthRoute( portalStatus => 'status', ['GET'] );
-    $self->addAuthRoute( portalStatus => 'status', ['GET'] );
+    $self->addAuthRoute( portalStatus => 'status',   ['GET'] );
     return 1;
 }
 

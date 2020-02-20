@@ -36,16 +36,16 @@ ok(
     ( defined($code) and ref($code) eq 'CODE' ),
     'encode_base64 function is defined'
 );
-ok( $res = &$code, "Function works" );
+ok( $res = &$code,      "Function works" );
 ok( $res eq 'dGVzdA==', 'Get good result' );
 
-$sub = "sub { return ( listMatch('ABC; DEF; GHI','abc',1) ) }";
+$sub  = "sub { return ( listMatch('ABC; DEF; GHI','abc',1) ) }";
 $code = $jail->jail_reval($sub);
 ok( ( defined($code) and ref($code) eq 'CODE' ),
     'listMatch function is defined' );
 ok( &$code eq '1', 'Get good result' );
 
-$sub = "sub { return ( listMatch('ABC; DEF; GHI','ab',1) ) }";
+$sub  = "sub { return ( listMatch('ABC; DEF; GHI','ab',1) ) }";
 $code = $jail->jail_reval($sub);
 ok( ( defined($code) and ref($code) eq 'CODE' ),
     'listMatch function is defined' );
@@ -58,5 +58,5 @@ ok(
     'checkDate extended function is defined'
 );
 ok( $res = &$code, "Function works" );
-ok( $res == 1, 'Get good result' );
+ok( $res == 1,     'Get good result' );
 

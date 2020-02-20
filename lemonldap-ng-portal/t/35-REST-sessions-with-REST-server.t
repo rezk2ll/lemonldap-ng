@@ -61,8 +61,8 @@ LWP::Protocol::PSGI->register(
     }
 );
 
-$issuer = register('issuer', \&issuer);
-$sp = register('sp', \&sp);
+$issuer = register( 'issuer', \&issuer );
+$sp     = register( 'sp',     \&sp );
 
 # Simple SP access
 ok(

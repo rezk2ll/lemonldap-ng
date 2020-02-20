@@ -65,7 +65,9 @@ LWP::Protocol::PSGI->register(
     }
 );
 
-$client = register ('portal', sub {
+$client = register(
+    'portal',
+    sub {
         LLNG::Manager::Test->new( {
                 ini => {
                     logLevel          => $debug,
@@ -112,15 +114,17 @@ use_ok('Lemonldap::NG::Common::PSGI::Cli::Lib');
 my ( $cli, $app );
 &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 switch ('app');
-$app = register('app', sub {
+$app = register(
+    'app',
+    sub {
         Lemonldap::NG::Handler::Server->run( {
                 %{ $client->ini },
                 globalStorage => 'Lemonldap::NG::Common::Apache::Session::REST',
                 globalStorageOptions =>
-                { baseUrl => 'http://auth.example.com/sessions/global/' },
+                  { baseUrl => 'http://auth.example.com/sessions/global/' },
                 localSessionStorage => undef,
             }
-        )
+        );
     }
 );
 

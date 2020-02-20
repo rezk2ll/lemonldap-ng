@@ -42,10 +42,11 @@ sub newNotification {
 
         unless ( exists $notif->{condition} ) {
             $self->userLogger->info(
-                "Set defaultCondition ($defaultCond) for notification $notif->{reference}");
+"Set defaultCondition ($defaultCond) for notification $notif->{reference}"
+            );
             $notif->{condition} = $defaultCond;
         }
-        
+
         push @data, ( $notif->{condition} );
         $notif->{date} =~ s/^(\d{4}-\d{2}-\d{2}).*$/$1/;
         my $body = to_json($notif);

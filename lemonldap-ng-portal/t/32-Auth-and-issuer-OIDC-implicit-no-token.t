@@ -147,7 +147,7 @@ count(5);
 my ( $id_token_header, $id_token_payload, $id_token_signature ) =
   split( /\./, $prms{id_token} );
 my $id_token_decoded = decode_json( decode_base64url($id_token_payload) );
-ok( $id_token_decoded->{sub} eq "dwho", 'Check sub value' );
+ok( $id_token_decoded->{sub} eq "dwho",        'Check sub value' );
 ok( $id_token_decoded->{name} eq "Doctor Who", 'Check name value' );
 count(2);
 
@@ -253,7 +253,7 @@ sub op {
                     'loa-3' => 3
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,
-                oidcServicePublicKeySig => oidc_key_op_public_sig,
+                oidcServicePublicKeySig  => oidc_key_op_public_sig,
             }
         }
     );

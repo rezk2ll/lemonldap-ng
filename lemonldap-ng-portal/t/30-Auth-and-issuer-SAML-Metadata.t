@@ -19,12 +19,12 @@ SKIP: {
     }
 
     # Initialization
-    $issuer = register('issuer', \&issuer);
+    $issuer = register( 'issuer', \&issuer );
 
-    ok( $res = $issuer->_get('/saml/metadata'), 'Get metadata' );
+    ok( $res = $issuer->_get('/saml/metadata'),         'Get metadata' );
     ok( $res->[2]->[0] =~ m#^<\?xml version="1.0"\?>#s, 'Metadata is XML' );
 
-    ok( $res = $issuer->_get('/saml/metadata/idp'), 'Get IDP metadata' );
+    ok( $res = $issuer->_get('/saml/metadata/idp'),     'Get IDP metadata' );
     ok( $res->[2]->[0] =~ m#^<\?xml version="1.0"\?>#s, 'Metadata is XML' );
     ok(
         $res->[2]->[0] !~ m#<SPSSODescriptor#s,
@@ -33,7 +33,7 @@ SKIP: {
     ok( $res->[2]->[0] =~ m#entityID="urn:example\.com"#s,
         'IDP EntityID is overriden' );
 
-    ok( $res = $issuer->_get('/saml/metadata/sp'), 'Get SP metadata' );
+    ok( $res = $issuer->_get('/saml/metadata/sp'),      'Get SP metadata' );
     ok( $res->[2]->[0] =~ m#^<\?xml version="1.0"\?>#s, 'Metadata is XML' );
     ok(
         $res->[2]->[0] !~ m#<IDPSSODescriptor#s,
@@ -78,10 +78,10 @@ sub issuer {
                 samlOrganizationName        => "IDP",
                 samlOrganizationURL         => "http://www.idp.com/",
                 samlServicePrivateKeyEnc    => saml_key_idp_private_enc,
-                samlServicePrivateKeySig => saml_key_idp_private_sig,
-                samlServicePublicKeyEnc => saml_key_idp_public_enc,
-                samlServicePublicKeySig => saml_key_idp_public_sig,
-                samlSPMetaDataXML => {
+                samlServicePrivateKeySig    => saml_key_idp_private_sig,
+                samlServicePublicKeyEnc     => saml_key_idp_public_enc,
+                samlServicePublicKeySig     => saml_key_idp_public_sig,
+                samlSPMetaDataXML           => {
                     "sp.com" => {
                         samlSPMetaDataXML => <<EOF
 <?xml version="1.0"?>

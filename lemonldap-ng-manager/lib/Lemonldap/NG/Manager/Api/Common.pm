@@ -60,8 +60,8 @@ sub _hasAllowedAttributes {
 
 sub _listAttributes {
     my ( $self, $rootNode ) = @_;
-    my $mainTree  = Lemonldap::NG::Manager::Build::CTrees::cTrees();
-    my $rootNodes = [ grep { ref($_) eq "HASH" } @{ $mainTree->{$rootNode} } ];
+    my $mainTree   = Lemonldap::NG::Manager::Build::CTrees::cTrees();
+    my $rootNodes  = [ grep { ref($_) eq "HASH" } @{ $mainTree->{$rootNode} } ];
     my @attributes = map { $self->_listNodeAttributes($_) } @$rootNodes;
 
     return @attributes;

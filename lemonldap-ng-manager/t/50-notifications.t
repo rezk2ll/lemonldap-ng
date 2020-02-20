@@ -16,7 +16,8 @@ my $res =
   &client->jsonPostResponse( 'notifications/actives', '',
     IO::String->new($notif),
     'application/json', length($notif) );
-ok( $res->{error} =~ /^Notification not created: Bad date/, 'Notification not inserted' );
+ok( $res->{error} =~ /^Notification not created: Bad date/,
+    'Notification not inserted' );
 count(1);
 
 $notif =
@@ -25,7 +26,8 @@ $res =
   &client->jsonPostResponse( 'notifications/actives', '',
     IO::String->new($notif),
     'application/json', length($notif) );
-ok( $res->{error} =~ /^Notification not created: Bad date/, 'Notification not inserted' );
+ok( $res->{error} =~ /^Notification not created: Bad date/,
+    'Notification not inserted' );
 count(1);
 
 $notif =

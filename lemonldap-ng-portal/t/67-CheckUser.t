@@ -259,7 +259,8 @@ count(1);
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
   or explain( $res->[2]->[0], 'trspan="checkUser"' );
-ok( $res->[2]->[0] =~ m%value="dwho\@badwolf.org" trplaceholder="user"%, 'Found trplaceholder with mail' )
+ok( $res->[2]->[0] =~ m%value="dwho\@badwolf.org" trplaceholder="user"%,
+    'Found trplaceholder with mail' )
   or explain( $res->[2]->[0], 'trplaceholder with mail' );
 count(3);
 ok( $res->[2]->[0] =~ m%Auth-User: %, 'Found Auth-User' )
@@ -348,6 +349,7 @@ ok(
         IO::String->new($query),
         cookie => "lemonldap=$id",
         length => length($query),
+
         #accept => 'text/html',
     ),
     'POST checkuser'
@@ -355,30 +357,19 @@ ok(
 my $json;
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
-ok(
-    $json->{URL} eq 'http://test1.example.com/test-restricted_uri/rtyler/',
-    'Find well formated URL'
-) or explain( $json, "Find expected URL" );
-ok(
-    $json->{ALLOWED} eq 'allowed',
-    'Find "allowed"'
-) or explain( $json, 'Find "allowed"' );
-ok(
-    $json->{ALERTE} eq 'alert-info',
-    'Find "alert-info"'
-) or explain( $json, "Find alert-info" );
-ok(
-    $json->{ALERTE_AUTH} eq 'alert-success',
-    'Find "alert-success"'
-) or explain( $json, 'Find "alert-success"' );
-ok(
-    $json->{LOGIN} eq 'rtyler',
-    'Find "rtyler"'
-) or explain( $json, 'Find login "rtyler"' );
-ok(
-    $json->{MSG} eq 'checkUser',
-    'Find "checkUser"'
-) or explain( $json, 'Find message "checkUser"' );
+ok( $json->{URL} eq 'http://test1.example.com/test-restricted_uri/rtyler/',
+    'Find well formated URL' )
+  or explain( $json, "Find expected URL" );
+ok( $json->{ALLOWED} eq 'allowed', 'Find "allowed"' )
+  or explain( $json, 'Find "allowed"' );
+ok( $json->{ALERTE} eq 'alert-info', 'Find "alert-info"' )
+  or explain( $json, "Find alert-info" );
+ok( $json->{ALERTE_AUTH} eq 'alert-success', 'Find "alert-success"' )
+  or explain( $json, 'Find "alert-success"' );
+ok( $json->{LOGIN} eq 'rtyler', 'Find "rtyler"' )
+  or explain( $json, 'Find login "rtyler"' );
+ok( $json->{MSG} eq 'checkUser', 'Find "checkUser"' )
+  or explain( $json, 'Find message "checkUser"' );
 count(8);
 
 # Request with good VH & user
@@ -550,15 +541,6 @@ m%<div class="alert alert-warning alert"><div class="text-center"><span trspan="
     ' PE5 found'
 ) or explain( $res->[2]->[0], 'PE5 - Unvalid identity' );
 count(2);
-
-
-
-
-
-
-
-
-
 
 $client->logout($id);
 clean_sessions();

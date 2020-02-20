@@ -63,9 +63,9 @@ SKIP: {
     }
 
     # Initialization
-    $idp = register('idp', \&idp);
-    $proxy = register('proxy', \&proxy);
-    $app = register('app', \&app);
+    $idp   = register( 'idp',   \&idp );
+    $proxy = register( 'proxy', \&proxy );
+    $app   = register( 'app',   \&app );
 
     # Query RP for auth
     ok( $res = $app->_get( '/', accept => 'text/html' ),
@@ -215,10 +215,10 @@ sub idp {
                 samlOrganizationName        => "IDP",
                 samlOrganizationURL         => "http://www.idp.com/",
                 samlServicePrivateKeyEnc    => saml_key_idp_private_enc,
-                samlServicePrivateKeySig => saml_key_idp_private_sig,
-                samlServicePublicKeyEnc => saml_key_idp_public_enc,
-                samlServicePublicKeySig => saml_key_idp_public_sig,
-                samlSPMetaDataXML => {
+                samlServicePrivateKeySig    => saml_key_idp_private_sig,
+                samlServicePublicKeyEnc     => saml_key_idp_public_enc,
+                samlServicePublicKeySig     => saml_key_idp_public_sig,
+                samlSPMetaDataXML           => {
                     "proxy.com" => {
                         samlSPMetaDataXML =>
                           samlSPMetaDataXML( 'proxy', 'HTTP-POST' )
@@ -302,9 +302,9 @@ sub proxy {
                 samlOrganizationName        => "SP",
                 samlOrganizationURL         => "http://www.proxy.com",
                 samlServicePublicKeySig     => saml_key_sp_public_sig,
-                samlServicePrivateKeyEnc => saml_key_sp_private_enc,
-                samlServicePrivateKeySig => saml_key_sp_private_sig,
-                samlServicePublicKeyEnc => saml_key_sp_public_enc,
+                samlServicePrivateKeyEnc    => saml_key_sp_private_enc,
+                samlServicePrivateKeySig    => saml_key_sp_private_sig,
+                samlServicePublicKeyEnc     => saml_key_sp_public_enc,
                 samlSPSSODescriptorAuthnRequestsSigned => 1,
             },
         }

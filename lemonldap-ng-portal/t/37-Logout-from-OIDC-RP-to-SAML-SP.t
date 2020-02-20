@@ -74,7 +74,7 @@ SKIP: {
     }
 
     # Initialization
-    $op = register('op', \&op);
+    $op = register( 'op', \&op );
 
     ok(
         $res = $op->_get('/oauth2/jwks'),
@@ -90,9 +90,9 @@ SKIP: {
     expectOK($res);
     my $metadata = $res->[2]->[0];
 
-    $sp = register('sp', \&sp);
+    $sp = register( 'sp', \&sp );
 
-    $rp = register('rp', sub { rp($jwks, $metadata) });
+    $rp = register( 'rp', sub { rp( $jwks, $metadata ) } );
 
     # Query RP for auth
     ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
@@ -158,8 +158,7 @@ SKIP: {
     switch ('sp');
     ok(
         $res = $sp->_get(
-            '/',
-            accept => 'text/html',
+            '/', accept => 'text/html',
         ),
         'Try SAML SP'
     );
@@ -236,7 +235,7 @@ SKIP: {
     expectOK($res);
 
     my $removedCookie = expectCookie($res);
-    is($removedCookie, 0, "SSO cookie removed");
+    is( $removedCookie, 0, "SSO cookie removed" );
 
     ok(
         $res->[2]->[0] =~
@@ -371,9 +370,9 @@ sub op {
                     'loa-3' => 3
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,
-                oidcServicePublicKeySig => oidc_key_op_public_sig,
-                issuerDBSAMLActivation => 1,
-                samlSPMetaDataOptions  => {
+                oidcServicePublicKeySig  => oidc_key_op_public_sig,
+                issuerDBSAMLActivation   => 1,
+                samlSPMetaDataOptions    => {
                     'sp.com' => {
                         samlSPMetaDataOptionsEncryptionMode           => 'none',
                         samlSPMetaDataOptionsSignSSOMessage           => 1,
@@ -394,10 +393,10 @@ sub op {
                 samlOrganizationName        => "IDP",
                 samlOrganizationURL         => "http://www.op.com/",
                 samlServicePrivateKeyEnc    => saml_key_idp_private_enc,
-                samlServicePrivateKeySig => saml_key_idp_private_sig,
-                samlServicePublicKeyEnc => saml_key_idp_public_enc,
-                samlServicePublicKeySig => saml_key_idp_public_sig,
-                samlSPMetaDataXML => {
+                samlServicePrivateKeySig    => saml_key_idp_private_sig,
+                samlServicePublicKeyEnc     => saml_key_idp_public_enc,
+                samlServicePublicKeySig     => saml_key_idp_public_sig,
+                samlSPMetaDataXML           => {
                     "sp.com" => {
                         samlSPMetaDataXML =>
                           samlSPMetaDataXML( 'sp', 'HTTP-POST' )
@@ -494,9 +493,9 @@ sub sp {
                 samlOrganizationName        => "SP",
                 samlOrganizationURL         => "http://www.sp.com",
                 samlServicePublicKeySig     => saml_key_sp_public_sig,
-                samlServicePrivateKeyEnc => saml_key_sp_private_enc,
-                samlServicePrivateKeySig => saml_key_sp_private_sig,
-                samlServicePublicKeyEnc => saml_key_sp_public_enc,
+                samlServicePrivateKeyEnc    => saml_key_sp_private_enc,
+                samlServicePrivateKeySig    => saml_key_sp_private_sig,
+                samlServicePublicKeyEnc     => saml_key_sp_public_enc,
                 samlSPSSODescriptorAuthnRequestsSigned => 1,
             },
         }

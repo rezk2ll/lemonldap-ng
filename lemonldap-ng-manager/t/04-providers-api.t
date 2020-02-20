@@ -90,7 +90,7 @@ sub checkGet {
     my $res = get( $test, $type, $confKey );
     check200( $test, $res );
     my @path = split '/', $attrPath;
-    my $key = from_json( $res->[2]->[0] );
+    my $key  = from_json( $res->[2]->[0] );
     for (@path) {
         $key = $key->{$_};
     }

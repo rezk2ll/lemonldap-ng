@@ -24,9 +24,9 @@ sub modifCertificate {
         mail     => $uid . '@badwolf.org',
         newCert  => $newCertif,
         userCert => $userCertif,
-      };
+    };
 
-      return PE_OK;
+    return PE_OK;
 }
 
 1;

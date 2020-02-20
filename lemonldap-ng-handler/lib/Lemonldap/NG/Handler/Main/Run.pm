@@ -439,14 +439,15 @@ sub fetchId {
     my ( $class, $req ) = @_;
     my $t     = $req->{env}->{HTTP_COOKIE} or return 0;
     my $vhost = $class->resolveAlias($req);
-    $class->logger->debug("VH $vhost is HTTPS") if $class->_isHttps( $req, $vhost );
+    $class->logger->debug("VH $vhost is HTTPS")
+      if $class->_isHttps( $req, $vhost );
     my $lookForHttpCookie = ( $class->tsv->{securedCookie} =~ /^(2|3)$/
           and not $class->_isHttps( $req, $vhost ) );
     my $cn = $class->tsv->{cookieName};
     my $value =
       $lookForHttpCookie
       ? ( $t =~ /${cn}http=([^,; ]+)/o ? $1 : 0 )
-      : ( $t =~ /$cn=([^,; ]+)/o ? $1 : 0 );
+      : ( $t =~ /$cn=([^,; ]+)/o       ? $1 : 0 );
 
     if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
         $value = $class->tsv->{cipher}->decryptHex( $value, "http" );

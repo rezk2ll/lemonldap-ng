@@ -20,7 +20,7 @@ sub import {
 }
 
 has extension => (
-    is => 'rw',
+    is      => 'rw',
     default => 'json'
 );
 
@@ -39,7 +39,9 @@ has notifField => (
 sub BUILD {
     my $self = shift;
     $self->extension('xml') if $self->p->conf->{oldNotifFormat};
-    $self->logger->debug('Use extension "' . $self->extension . '" to store notification files');
+    $self->logger->debug( 'Use extension "'
+          . $self->extension
+          . '" to store notification files' );
 }
 
 sub getNotifications {
@@ -62,8 +64,9 @@ sub getNotifications {
 
 sub getAcceptedNotifs {
     my ( $self, $uid, $ref ) = @_;
-    my $forAll = $self->getAccepted( $self->conf->{notificationWildcard}, $ref );
-    my $forUser = $self->getAccepted($uid, $ref);
+    my $forAll =
+      $self->getAccepted( $self->conf->{notificationWildcard}, $ref );
+    my $forUser = $self->getAccepted( $uid, $ref );
     if ( $forUser and $forAll ) {
         return { %$forUser, %$forAll };
     }

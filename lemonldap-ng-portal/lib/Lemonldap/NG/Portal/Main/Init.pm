@@ -140,24 +140,24 @@ sub init {
 
       # psgi.js
       ->addUnauthRoute( 'psgi.js' => 'sendJs', ['GET'] )
-      ->addAuthRoute( 'psgi.js' => 'sendJs', ['GET'] )
+      ->addAuthRoute( 'psgi.js' => 'sendJs',   ['GET'] )
 
       # portal.css
       ->addUnauthRoute( 'portal.css' => 'sendCss', ['GET'] )
-      ->addAuthRoute( 'portal.css' => 'sendCss', ['GET'] )
+      ->addAuthRoute( 'portal.css' => 'sendCss',   ['GET'] )
 
       # lmerror
       ->addUnauthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
-      ->addAuthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
+      ->addAuthRoute( lmerror => { ':code'   => 'lmError' }, ['GET'] )
 
       # Core REST API
-      ->addUnauthRoute( ping => 'pleaseAuth', ['GET'] )
+      ->addUnauthRoute( ping => 'pleaseAuth',  ['GET'] )
       ->addAuthRoute( ping => 'authenticated', ['GET'] )
 
       # Refresh session
       ->addAuthRoute( refresh => 'refresh', ['GET'] )
 
-      ->addAuthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
+      ->addAuthRoute( '*' => 'corsPreflight',   ['OPTIONS'] )
       ->addUnauthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
 
       # Logout

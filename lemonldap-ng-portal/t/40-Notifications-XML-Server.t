@@ -94,11 +94,12 @@ SKIP: {
 
     $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel                   => 'error',
-                useSafeJail                => 1,
-                notification               => 1,
-                notificationServer         => 1,
-                #notificationDefaultCond    => '$env->{REMOTE_ADDR} =~ /127.0.0.1/',
+                logLevel           => 'error',
+                useSafeJail        => 1,
+                notification       => 1,
+                notificationServer => 1,
+
+            #notificationDefaultCond    => '$env->{REMOTE_ADDR} =~ /127.0.0.1/',
                 notificationStorage        => 'File',
                 notificationStorageOptions => {
                     dirName => $main::tmpDir
