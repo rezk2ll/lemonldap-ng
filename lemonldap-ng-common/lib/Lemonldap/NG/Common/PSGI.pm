@@ -34,17 +34,17 @@ sub init {
     foreach my $k ( keys %$args ) {
         $self->{$k} = $args->{$k} unless ( $k eq 'logger' );
     }
-    unless ( $self->logger and $self->userLogger ) {
+    unless ( ref($self->logger) and ref($self->userLogger) ) {
         my $logger =
              $args->{logger}
           || $ENV{LLNG_DEFAULTLOGGER}
           || 'Lemonldap::NG::Common::Logger::Std';
-        unless ( $self->logger ) {
+        unless ( ref $self->logger ) {
             eval "require $logger";
             die $@ if ($@);
             $self->logger( $logger->new($self) );
         }
-        unless ( $self->userLogger ) {
+        unless ( ref $self->userLogger ) {
             $logger = $ENV{LLNG_USERLOGGER} || $args->{userLogger} || $logger;
             eval "require $logger";
             die $@ if ($@);
