@@ -63,6 +63,13 @@ sub handler {
             $self->logger->error("Bad JSON content in cookie pdata");
             $req->pdata( {} );
         }
+
+        # Avoid fatal errors when using old keepPdata format
+        if ( $req->pdata->{keepPdata}
+            and not( ref $req->pdata->{keepPdata} eq "ARRAY" ) )
+        {
+            $req->pdata->{keepPdata} = [];
+        }
     }
     my $res = $self->Lemonldap::NG::Common::PSGI::Router::handler($req);
 
