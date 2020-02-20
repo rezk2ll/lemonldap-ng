@@ -6,7 +6,7 @@ use strict;
 use Mouse;
 use Clone 'clone';
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Common::Module';
 

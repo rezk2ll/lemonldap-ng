@@ -5,7 +5,7 @@ use Mouse;
 use SOAP::Lite;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADCREDENTIALS);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.8';
 
 # INITIALIZATION
 

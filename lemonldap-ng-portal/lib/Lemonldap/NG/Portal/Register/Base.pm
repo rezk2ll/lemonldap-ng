@@ -7,7 +7,7 @@ use Text::Unidecode;
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.8';
 
 sub _stripaccents {
     my ( $self, $str ) = @_;

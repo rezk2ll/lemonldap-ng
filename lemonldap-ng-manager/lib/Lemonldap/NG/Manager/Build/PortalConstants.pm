@@ -5,7 +5,7 @@
 
 package Lemonldap::NG::Manager::Build::PortalConstants;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 sub portalConstants {
     return {

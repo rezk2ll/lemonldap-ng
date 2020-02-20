@@ -1,7 +1,7 @@
 # Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 package Lemonldap::NG::Handler::Main;
 

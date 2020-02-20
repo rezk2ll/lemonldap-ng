@@ -5,7 +5,7 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants
   qw( PE_OK PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED PE_MALFORMEDUSER );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 

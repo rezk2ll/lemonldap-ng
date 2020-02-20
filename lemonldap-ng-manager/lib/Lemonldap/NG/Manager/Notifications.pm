@@ -16,7 +16,7 @@ use feature 'state';
 extends 'Lemonldap::NG::Manager::Plugin',
   'Lemonldap::NG::Common::Conf::AccessLib';
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 has notifAccess => ( is => 'rw' );
 has notifFormat => ( is => 'rw' );

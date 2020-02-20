@@ -32,7 +32,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_USERNOTFOUND
 );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::SMTP', 'Lemonldap::NG::Portal::Lib::_tokenRule';

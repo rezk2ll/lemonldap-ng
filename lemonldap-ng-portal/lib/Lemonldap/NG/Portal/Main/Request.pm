@@ -7,7 +7,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants ':all';
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Common::PSGI::Request';
 

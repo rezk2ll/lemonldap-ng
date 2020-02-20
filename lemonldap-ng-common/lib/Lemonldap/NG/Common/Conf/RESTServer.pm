@@ -6,7 +6,7 @@ use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Common::Conf::AccessLib';
 

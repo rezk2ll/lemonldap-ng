@@ -18,7 +18,7 @@ extends 'Lemonldap::NG::Manager::Plugin',
   'Lemonldap::NG::Common::Conf::AccessLib',
   'Lemonldap::NG::Common::Session::REST';
 
-our $VERSION = '2.0.4';
+our $VERSION = '2.0.8';
 
 #############################
 # I. INITIALIZATION METHODS #

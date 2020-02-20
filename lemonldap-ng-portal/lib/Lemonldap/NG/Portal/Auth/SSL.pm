@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
 );
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::Auth';
 

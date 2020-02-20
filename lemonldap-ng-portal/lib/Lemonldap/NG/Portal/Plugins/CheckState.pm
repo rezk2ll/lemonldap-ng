@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::Plugins::CheckState;
 use strict;
 use Mouse;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 

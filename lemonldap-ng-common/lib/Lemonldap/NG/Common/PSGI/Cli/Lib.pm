@@ -4,7 +4,7 @@ use JSON;
 use Mouse;
 use Lemonldap::NG::Common::PSGI;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.8';
 
 has iniFile => ( is => 'ro', isa => 'Str' );
 

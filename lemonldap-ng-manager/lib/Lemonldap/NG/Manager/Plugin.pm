@@ -2,7 +2,7 @@ package Lemonldap::NG::Manager::Plugin;
 
 use strict;
 use Mouse;
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Common::Module';
 
