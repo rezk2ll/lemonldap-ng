@@ -132,11 +132,21 @@ sub controlUrl {
         }
 
         # Unprotected hosts
-        if ( $tmp and !$self->isTrustedUrl($tmp) ) {
+        my ( $vhost, $appuri ) = $tmp =~ m#^https?://([^/]*)(.*)#;
+        $vhost =~ s/:\d+$//;
+        $vhost = 'http://' . $self->HANDLER->resolveAlias($vhost);
+        $self->logger->debug( "Required URL (param: "
+              . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
+              . " | value: $tmp | alias: $vhost)" );
+
+        if (    $tmp
+            and !$self->isTrustedUrl($tmp)
+            and !$self->isTrustedUrl($vhost) )
+        {
             $self->userLogger->error(
                     "URL contains a non protected host (param: "
                   . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
-                  . " | value: $tmp)" );
+                  . " | value: $tmp | alias: $vhost)" );
             delete $req->{urldc};
             return PE_BADURL;
         }
@@ -318,7 +328,7 @@ sub authenticate {
     $req->steps( [
             'setSessionInfo',           'setMacros',
             'setPersistentSessionInfo', 'storeHistory',
-            @{ $self->afterData },      sub { PE_BADCREDENTIALS }
+            @{ $self->afterData }, sub { PE_BADCREDENTIALS }
         ]
     );
 
