@@ -225,8 +225,8 @@ is a LLNG best practice
 
 Free hash ref where plugins can store some persistent data: data are kept
 during auth process and cleaned after successful authentication, except if
-C<$req-E<gt>pdata-E<gt>{keepPdata}> is set to 1. In this case, module that
-has set this flag must remove it after its job ends.
+C<$req-E<gt>pdata-E<gt>{keepPdata}> is set to an array of values. In this
+case, module that has set these values must remove them after its job ends.
 
 =head3 User information
 
