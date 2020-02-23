@@ -39,29 +39,58 @@ sub init {
 }
 
 # RUNNING METHOD
-
 sub run {
     my ( $self, $req ) = @_;
+    my $now          = time;
+    my @failedLogins = grep {
+        ( $now - $_->{_utime} ) < $self->conf->{bruteForceProtectionMaxAge}
+          ? $_
+          : ()
+    } @{ $req->sessionInfo->{_loginHistory}->{failedLogin} };
+    my $countFailed = @failedLogins;
+    $self->logger->debug(
+        " Failed login maxAge = $self->{conf}->{bruteForceProtectionMaxAge}");
+    $self->logger->debug(
+        " Number of failed login(s) to take into account = $countFailed");
 
-    my $MaxAge               = $self->conf->{bruteForceProtectionMaxAge} + 1;
-    my $countFailed          = 0;
-    my @lastFailedLoginEpoch = ();
+    if ( $self->conf->{bruteForceProtectionIncrementalTempo} ) {
+        my @incrementalTempo = split /\s+/,
+          $self->conf->{bruteForceProtectionLockTimes}
+          || ( 5, 15, 60, 300, 600 );
+        $self->logger->warn( 'Number of incremental lock time values ('
+              . scalar @incrementalTempo
+              . ') is higher than failed logins history ('
+              . $self->conf->{failedLoginNumber}
+              . ')' )
+          if ( scalar @incrementalTempo > $self->conf->{failedLoginNumber} );
+        my $lastFailedLoginEpoch = $failedLogins[0]->{_utime} || undef;
 
-    # Auth_N-2 failed login epoch
-    $countFailed = @{ $req->sessionInfo->{_loginHistory}->{failedLogin} }
-      if ( $req->sessionInfo->{_loginHistory}->{failedLogin} );
-    $self->logger->debug(" Number of failedLogin = $countFailed");
+        return PE_OK unless $lastFailedLoginEpoch;
+
+        my $delta = $now - $lastFailedLoginEpoch;
+        $self->logger->debug(" -> Delta = $delta");
+        my $waitingTime = $incrementalTempo[ $countFailed - 1 ]
+          || $self->conf->{bruteForceProtectionMaxLockTime};
+        $self->logger->debug(" -> Waiting time = $waitingTime");
+        unless ( $delta > $waitingTime ) {
+            $self->logger->debug("BruteForceProtection enabled");
+            return PE_WAIT;
+        }
+        return PE_OK;
+    }
 
     return PE_OK
       if ( $countFailed <= $self->conf->{bruteForceProtectionMaxFailed} );
 
+    my @lastFailedLoginEpoch = ();
+    my $MaxAge               = $self->conf->{bruteForceProtectionMaxAge} + 1;
+
+    # Auth_N-2 failed login epoch
     foreach ( 0 .. $self->conf->{bruteForceProtectionMaxFailed} - 1 ) {
         push @lastFailedLoginEpoch,
           $req->sessionInfo->{_loginHistory}->{failedLogin}->[$_]->{_utime}
           if ( $req->sessionInfo->{_loginHistory}->{failedLogin}->[$_] );
     }
-
-    $self->logger->debug("BruteForceProtection enabled");
 
     # If Auth_N-MaxFailed older than MaxAge -> another try allowed
     $MaxAge =
@@ -74,9 +103,8 @@ sub run {
       if ( $MaxAge > $self->conf->{bruteForceProtectionMaxAge} );
 
     # Delta between the two last failed logins -> Auth_N - Auth_N-1
-    my $delta = 0;
-    $delta = time - $lastFailedLoginEpoch[1]
-      if defined $lastFailedLoginEpoch[1];
+    my $delta =
+      defined $lastFailedLoginEpoch[1] ? $now - $lastFailedLoginEpoch[1] : 0;
     $self->logger->debug(" -> Delta = $delta");
 
     # Delta between the two last failed logins < Tempo => wait
@@ -84,6 +112,7 @@ sub run {
       unless ( $delta <= $self->conf->{bruteForceProtectionTempo} );
 
     # Account locked
+    $self->logger->debug("BruteForceProtection enabled");
     return PE_WAIT;
 }
 

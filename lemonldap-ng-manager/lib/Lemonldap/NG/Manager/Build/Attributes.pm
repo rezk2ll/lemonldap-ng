@@ -781,6 +781,23 @@ sub attributes {
             documentation =>
               'Brute force attack protection -> Max allowed failed login',
         },
+        bruteForceProtectionMaxLockTime => {
+            default => 900,
+            type    => 'int',
+            documentation =>
+              'Brute force attack protection -> Max lock time',
+        },
+        bruteForceProtectionIncrementalTempo => {
+            default       => 0,
+            help          => 'bruteforceprotection.html',
+            type          => 'bool',
+            documentation => 'Enable incremental lock time for brute force attack protection',
+        },
+        bruteForceProtectionLockTimes => {
+            type          => 'text',
+            default       => '5 15 60 300 600',
+            documentation => 'Incremental lock time values for brute force attack protection',
+        },
         grantSessionRules => {
             type          => 'grantContainer',
             keyTest       => sub { return perlExpr(@_) },

@@ -927,12 +927,21 @@ sub tree {
                                 'trustedDomains',
                                 'useSafeJail',
                                 'checkXSS',
-                                'bruteForceProtection',
                                 'requireToken',
                                 'formTimeout',
                                 'tokenUseGlobalStorage',
+                                {
+                                    title => 'bruteForceAttackProtection',
+                                    help  => 'bruteforceprotection.html',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'bruteForceProtection',
+                                        'bruteForceProtectionIncrementalTempo',
+                                    ]
+                                },
                                 'lwpOpts',
                                 'lwpSslOpts',
+
                                 {
                                     title => 'contentSecurityPolicy',
                                     help  => 'security.html#portal',

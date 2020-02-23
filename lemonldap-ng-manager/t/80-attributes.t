@@ -20,18 +20,30 @@ my @notManagedAttributes = (
     'oidcOPMetaDataOptions', 'casSrvMetaDataOptions',  'casAppMetaDataOptions',
     'vhostOptions',
 
-    # Second factor engine and lists of 2F modules
-    'sfEngine', 'available2FSelfRegistration', 'available2F',
+    # Second factor engine, lists of 2F modules and other parameters
+    'sfEngine', 'available2FSelfRegistration', 'available2F', 'max2FDevices',
+    'max2FDevicesNameLength',
 
     # Brute force attack protection parameters
     'bruteForceProtectionMaxAge', 'bruteForceProtectionTempo',
     'bruteForceProtectionMaxFailed',
+
+    # Handlers
+    'handlerInternalCache', 'handlerServiceTokenTTL',
 
     # Metadatas (added by manager itself)
     'cfgAuthor', 'cfgAuthorIP', 'cfgNum', 'cfgDate', 'cfgLog', 'cfgVersion',
 
     # HTML template parameter (for PSGI) (must be set in lemonldap-ng.ini)
     'staticPrefix',
+
+    # Loggers
+    'log4perlConfFile', 'userSyslogFacility', 'logger', 'sentryDsn',
+    'syslogFacility',   'userLogger',         'logLevel',
+
+    # Plugins parameters
+    'notificationsMaxRetrieve',      'persistentSessionAttributes',
+    'bruteForceProtectionLockTimes', 'bruteForceProtectionMaxLockTime',
 
     # PSGI/CGI protection (must be set in lemonldap-ng.ini)
     'protection',
@@ -40,24 +52,21 @@ my @notManagedAttributes = (
     'secureTokenAllowOnError', 'secureTokenAttribute', 'secureTokenExpiration',
     'secureTokenHeader', 'secureTokenMemcachedServers', 'secureTokenUrls',
 
-    # Zimbra handler
-    'zimbraAccountKey', 'zimbraBy', 'zimbraPreAuthKey', 'zimbraSsoUrl',
-    'zimbraUrl',
-
-    # Loggers
-    'log4perlConfFile', 'userSyslogFacility', 'logger', 'sentryDsn',
-    'syslogFacility',   'userLogger',         'logLevel',
+    # Sessions and OTT storage
+    'configStorage', 'localStorageOptions', 'localStorage',
+    'forceGlobalStorageUpgradeOTT', 'forceGlobalStorageIssuerOTT',
 
     # Viewer
     'viewerHiddenKeys', 'viewerAllowBrowser', 'viewerAllowDiff',
 
+    # Zimbra handler
+    'zimbraAccountKey', 'zimbraBy', 'zimbraPreAuthKey', 'zimbraSsoUrl',
+    'zimbraUrl',
+
     # Other ini-only prms
-    'configStorage', 'status', 'localStorageOptions', 'localStorage',
-    'max2FDevices',                 'max2FDevicesNameLength', 'checkTime',
-    'mySessionAuthorizedRWKeys',    'handlerInternalCache',
-    'handlerServiceTokenTTL',       'impersonationPrefix',    'pdataDomain',
-    'forceGlobalStorageUpgradeOTT', 'forceGlobalStorageIssuerOTT',
-    'notificationsMaxRetrieve', 'persistentSessionAttributes', 'soapProxyUrn',
+    'checkTime',           'status', 'soapProxyUrn',
+    'impersonationPrefix', 'pdataDomain',
+    'mySessionAuthorizedRWKeys',
 );
 
 # Words used either as attribute name and node title
@@ -153,7 +162,7 @@ sub scanTree {
 
             # Nodes must have a title
             ok( $name = $leaf->{title}, "Node has a name" );
-            ok( $name =~ /^\w+$/,       "Name is a string" );
+            ok( $name =~ /^\w+$/, "Name is a string" );
 
             # Nodes must have leafs or subnodes
             ok( (
