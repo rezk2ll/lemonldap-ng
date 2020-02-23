@@ -57,6 +57,9 @@
     },
     "test.example.org": {
       "default": "accept"
+    },
+    "*.example.llng": {
+      "default": "accept"
     }
   },
   "macros": {
