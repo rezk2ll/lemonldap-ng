@@ -755,6 +755,27 @@ sub tests {
             return ( $res, join( ', ', @msg ) );
         },
 
+        # RS* OIDC algs require a signing key
+        oidcRPNeedRSAKey => sub {
+            return 1
+              unless ( $conf->{oidcRPMetaDataOptions}
+                and %{ $conf->{oidcRPMetaDataOptions} } );
+            my @usingRSA = grep {
+                $conf->{oidcRPMetaDataOptions}->{$_}
+                  ->{oidcRPMetaDataOptionsIDTokenSignAlg}
+                  and $conf->{oidcRPMetaDataOptions}->{$_}
+                  ->{oidcRPMetaDataOptionsIDTokenSignAlg} =~ /^RS/
+            } keys %{ $conf->{oidcRPMetaDataOptions} };
+
+            if ( @usingRSA and not $conf->{oidcServicePrivateKeySig} ) {
+                my $msg =
+                  join( ", ", @usingRSA )
+                  . ": using RS-type encryption, but no RSA key is defined in global OIDC configuration";
+                return ( 0, $msg );
+            }
+            return 1;
+        },
+
     };
 }
 
