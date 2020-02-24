@@ -795,6 +795,11 @@ sub run {
                 my $id_token =
                   $self->createIDToken( $id_token_payload_hash, $rp );
 
+                unless ($id_token) {
+                    $self->logger->error("Could not generate ID token");
+                    return PE_ERROR;
+                }
+
                 $self->logger->debug("Generated id token: $id_token");
 
                 # Send token response
@@ -940,6 +945,11 @@ sub run {
                     # Create ID Token
                     $id_token =
                       $self->createIDToken( $id_token_payload_hash, $rp );
+
+                    unless ($id_token) {
+                        $self->logger->error("Could not generate ID token");
+                        return PE_ERROR;
+                    }
 
                     $self->logger->debug("Generated id token: $id_token");
                 }
@@ -1276,6 +1286,12 @@ sub token {
         # Create ID Token
         my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
 
+        unless ($id_token) {
+            $self->logger->error(
+                "Failed to generate ID Token for service: $client_id");
+            return $self->p->sendError( $req, 'server_error', 500 );
+        }
+
         $self->logger->debug("Generated id token: $id_token");
 
         # Send token response
@@ -1495,6 +1511,12 @@ sub token {
 
         # Create ID Token
         my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
+
+        unless ($id_token) {
+            $self->logger->error(
+                "Failed to generate ID Token for service: $client_id");
+            return $self->p->sendError( $req, 'server_error', 500 );
+        }
 
         $self->logger->debug("Generated id token: $id_token");
 
