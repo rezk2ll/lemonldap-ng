@@ -153,6 +153,7 @@ BuildRequires:  perl(strict)
 BuildRequires:  perl(String::Random)
 BuildRequires:  perl(Sys::Syslog)
 BuildRequires:  perl(Test::MockObject)
+BuildRequires:  perl(Test::Output)
 BuildRequires:  perl(Test::Pod) >= 1.00
 BuildRequires:  perl(Text::Unidecode)
 BuildRequires:  perl(Time::Fake)
