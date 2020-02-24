@@ -229,6 +229,33 @@ sub restore {
     print STDERR Dumper($res);
 }
 
+sub rollback {
+    my ($self)      = @_;
+    my $lastCfg     = $self->mgr->confAcc->lastCfg;
+    my $previousCfg = $lastCfg - 1;
+    my $conf =
+      $self->mgr->confAcc->getConf( { cfgNum => $previousCfg, raw => 1 } )
+      or die $Lemonldap::NG::Common::Conf::msg;
+
+    $conf->{cfgNum}    = $lastCfg;
+    $conf->{cfgAuthor} = scalar( getpwuid $< ) . '(command-line-interface)';
+    chomp $conf->{cfgAuthor};
+    $conf->{cfgAuthorIP} = '127.0.0.1';
+    $conf->{cfgDate}     = time;
+    $conf->{cfgVersion}  = $Lemonldap::NG::Manager::VERSION;
+    $conf->{cfgLog}      = $self->log // "Rolled back configuration $lastCfg";
+
+    my $s = $self->mgr->confAcc->saveConf($conf);
+    if ( $s > 0 ) {
+        $self->logger->info("CLI: Configuration $lastCfg has been rolled back");
+        print STDERR "Configuration $lastCfg has been rolled back\n";
+    }
+    else {
+        $self->logger->error("CLI: Failed to rollback configuration $lastCfg");
+        print STDERR "Failed to rollback configuration $lastCfg\n";
+    }
+}
+
 sub _getKey {
     my ( $self, $key ) = @_;
     my $sep = $self->sep;
@@ -355,7 +382,7 @@ sub run {
     }
     $self->cfgNum( $self->lastCfg ) unless ( $self->cfgNum );
     my $action = shift;
-    unless ( $action =~ /^(?:get|set|addKey|delKey|save|restore)$/ ) {
+    unless ( $action =~ /^(?:get|set|addKey|delKey|save|restore|rollback)$/ ) {
         die "Unknown action $action. Only get, set, addKey or delKey allowed";
     }
 

@@ -22,7 +22,7 @@ for ( my $i = 0 ; $i < @ARGV ; $i++ ) {
 
 $action ||= "help";
 
-if ( $action =~ /^(?:[gs]et|(?:add|del)Key|save|restore)$/ ) {
+if ( $action =~ /^(?:[gs]et|(?:add|del)Key|save|restore|rollback)$/ ) {
     eval { require Lemonldap::NG::Manager::Cli; };
     die "Manager libraries not available, aborting ($@)" if ($@);
     Lemonldap::NG::Manager::Cli->run(@ARGV);
@@ -50,6 +50,7 @@ Available actions:
  - save                          : export configuration to STDOUT
  - restore -                     : import configuration from STDIN
  - restore <file>                : import configuration from file
+ - rollback                      : restore previous configuration
 
 Options:
  - yes <0|1>                     : accept confirmation prompt automatically
@@ -89,6 +90,10 @@ Restore configuration
   $ lemonldap-ng-cli restore conf.json
   # OR
   $ lemonldap-ng-cli restore - <conf.json
+
+Cancel the last configuration change
+
+  $ lemonldap-ng-cli rollback
 
 Get a configuration parameter value
 
