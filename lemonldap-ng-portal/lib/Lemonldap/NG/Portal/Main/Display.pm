@@ -272,8 +272,6 @@ sub display {
             and $req->{error} != PE_FIRSTACCESS
             and $req->{error} != PE_BADCREDENTIALS
             and $req->{error} != PE_PP_PASSWORD_EXPIRED )
-
-       # and ( $req->{error} == PE_TOKENEXPIRED or $req->{error} == PE_NOTOKEN )
       )
     {
         $skinfile       = 'error';
@@ -282,6 +280,7 @@ sub display {
             LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
+            LOCKTIME        => $req->lockTime(),
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -382,6 +381,7 @@ sub display {
 
         # Disable all forms on:
         # * Logout message
+        # * Account lock
         # * Bad URL error
         elsif ($req->{error} == PE_LOGOUT_OK
             or $req->{error} == PE_WAIT

@@ -637,6 +637,10 @@ sub attributes {
             'default' => 3,
             'type'    => 'int'
         },
+        'bruteForceProtectionMaxLockTime' => {
+            'default' => 900,
+            'type'    => 'int'
+        },
         'bruteForceProtectionTempo' => {
             'default' => 30,
             'type'    => 'int'

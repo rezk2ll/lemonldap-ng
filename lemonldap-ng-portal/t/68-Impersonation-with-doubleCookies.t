@@ -112,7 +112,7 @@ ok(
 );
 ok(
     $res->[2]->[0] =~
-m%<div class="message message-negative alert"><span trmsg="93"></span></div>%,
+m%<div class="message message-negative alert"><span trmsg="93"></span>%,
     ' PE93 found'
 ) or explain( $res->[2]->[0], "PE93 - Impersonation service not allowed" );
 count(2);

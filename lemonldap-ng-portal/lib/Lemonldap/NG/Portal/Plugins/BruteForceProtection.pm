@@ -12,6 +12,17 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 use constant afterData => 'run';
 
+has lockTimes => (
+    is      => 'rw',
+    isa     => 'ArrayRef',
+    default => sub { [] }
+);
+
+has maxAge => (
+    is  => 'rw',
+    isa => 'Int'
+);
+
 sub init {
     my ($self) = @_;
     if ( $self->conf->{disablePersistentStorage} ) {
@@ -35,45 +46,55 @@ sub init {
               . ')' );
         return 0;
     }
+    if ( $self->conf->{bruteForceProtectionIncrementalTempo} ) {
+        my $lockTimes = @{ $self->lockTimes } =
+          sort { $a <=> $b }
+          map { $_ < $self->conf->{bruteForceProtectionMaxLockTime} ? $_ : () }
+          grep { /\d+/ }
+          split /\s+/, $self->conf->{bruteForceProtectionLockTimes};
+
+        @{ $self->lockTimes } = ( 5, 15, 60, 300, 600 )
+          unless $lockTimes;
+        $self->logger->warn( 'Number of incremental lock time values ('
+              . "$lockTimes) is higher than failed logins history ("
+              . $self->conf->{failedLoginNumber}
+              . ')' )
+          if ( $lockTimes > $self->conf->{failedLoginNumber} );
+
+        my $sum = 0;
+        $sum += $_ foreach @{ $self->lockTimes };
+        $self->maxAge($sum);
+    }
+    else {
+        $self->maxAge( $self->conf->{bruteForceProtectionMaxAge} );
+    }
     return 1;
 }
 
 # RUNNING METHOD
 sub run {
     my ( $self, $req ) = @_;
-    my $now          = time;
-    my @failedLogins = grep {
-        ( $now - $_->{_utime} ) < $self->conf->{bruteForceProtectionMaxAge}
-          ? $_
-          : ()
-    } @{ $req->sessionInfo->{_loginHistory}->{failedLogin} };
-    my $countFailed = @failedLogins;
-    $self->logger->debug(
-        " Failed login maxAge = $self->{conf}->{bruteForceProtectionMaxAge}");
+    my $now         = time;
+    my $countFailed = my @failedLogins =
+      map { ( $now - $_->{_utime} ) < $self->maxAge ? $_ : () }
+      @{ $req->sessionInfo->{_loginHistory}->{failedLogin} };
+    $self->logger->debug( ' Failed login maxAge = ' . $self->maxAge );
     $self->logger->debug(
         " Number of failed login(s) to take into account = $countFailed");
 
     if ( $self->conf->{bruteForceProtectionIncrementalTempo} ) {
-        my @incrementalTempo = split /\s+/,
-          $self->conf->{bruteForceProtectionLockTimes}
-          || ( 5, 15, 60, 300, 600 );
-        $self->logger->warn( 'Number of incremental lock time values ('
-              . scalar @incrementalTempo
-              . ') is higher than failed logins history ('
-              . $self->conf->{failedLoginNumber}
-              . ')' )
-          if ( scalar @incrementalTempo > $self->conf->{failedLoginNumber} );
         my $lastFailedLoginEpoch = $failedLogins[0]->{_utime} || undef;
 
         return PE_OK unless $lastFailedLoginEpoch;
 
         my $delta = $now - $lastFailedLoginEpoch;
         $self->logger->debug(" -> Delta = $delta");
-        my $waitingTime = $incrementalTempo[ $countFailed - 1 ]
+        my $waitingTime = $self->lockTimes->[ $countFailed - 1 ]
           || $self->conf->{bruteForceProtectionMaxLockTime};
         $self->logger->debug(" -> Waiting time = $waitingTime");
         unless ( $delta > $waitingTime ) {
             $self->logger->debug("BruteForceProtection enabled");
+            $req->lockTime($waitingTime);
             return PE_WAIT;
         }
         return PE_OK;
@@ -83,7 +104,7 @@ sub run {
       if ( $countFailed <= $self->conf->{bruteForceProtectionMaxFailed} );
 
     my @lastFailedLoginEpoch = ();
-    my $MaxAge               = $self->conf->{bruteForceProtectionMaxAge} + 1;
+    my $MaxAge               = $self->maxAge + 1;
 
     # Auth_N-2 failed login epoch
     foreach ( 0 .. $self->conf->{bruteForceProtectionMaxFailed} - 1 ) {
@@ -100,7 +121,7 @@ sub run {
     $self->logger->debug(" -> MaxAge = $MaxAge");
 
     return PE_OK
-      if ( $MaxAge > $self->conf->{bruteForceProtectionMaxAge} );
+      if ( $MaxAge > $self->maxAge );
 
     # Delta between the two last failed logins -> Auth_N - Auth_N-1
     my $delta =
@@ -113,6 +134,7 @@ sub run {
 
     # Account locked
     $self->logger->debug("BruteForceProtection enabled");
+    $req->lockTime( $self->conf->{bruteForceProtectionTempo} );
     return PE_WAIT;
 }
 

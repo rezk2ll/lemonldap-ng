@@ -22,6 +22,7 @@ sub defaultValues {
         'bruteForceProtectionLockTimes'      => '5 15 60 300 600',
         'bruteForceProtectionMaxAge'         => 300,
         'bruteForceProtectionMaxFailed'      => 3,
+        'bruteForceProtectionMaxLockTime'    => 900,
         'bruteForceProtectionTempo'          => 30,
         'captcha_mail_enabled'               => 1,
         'captcha_register_enabled'           => 1,

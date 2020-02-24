@@ -69,6 +69,9 @@ has frame => ( is => 'rw' );
 # Refresh flag to avoid double cookies sessions to be renewed
 has refresh => ( is => 'rw' );
 
+# Scalar to display lock time
+has lockTime => ( is => 'rw' );
+
 # Security
 #
 # Captcha

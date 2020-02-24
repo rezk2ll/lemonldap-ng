@@ -17,7 +17,11 @@ use constant beforeAuth => 'check';
 
 # INITIALIZATION
 
-has rules => ( is => 'rw', default => sub { [] } );
+has rules => (
+    is      => 'rw',
+    isa     => 'ArrayRef',
+    default => sub { [] }
+);
 
 sub init {
     my ($self) = @_;
