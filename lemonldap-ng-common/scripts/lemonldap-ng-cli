@@ -82,6 +82,7 @@ Update local configuration cache
 Save configuration
 
   $ lemonldap-ng-cli save >conf.json
+  $ lemonldap-ng-cli -cfgNum 19 save >conf-19.json
 
 Restore configuration
 

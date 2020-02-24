@@ -200,7 +200,7 @@ sub lastCfg {
 
 sub save {
     my ($self) = @_;
-    my $conf = $self->jsonResponse( '/confs/latest', 'full=1' );
+    my $conf = $self->jsonResponse( '/confs/' . $self->cfgNum, 'full=1' );
     my $json = JSON->new->indent->canonical;
     print $json->encode($conf);
 }
