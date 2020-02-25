@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::OtherSessions';
@@ -77,7 +77,7 @@ sub run {
           . $self->_mkRemoveOtherLink($req) )
       if ( $self->conf->{notifyOther} and @$otherSessions );
 
-    PE_OK;
+    return PE_OK;
 }
 
 # Build the removeOther link

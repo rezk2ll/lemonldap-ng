@@ -22,23 +22,22 @@ sub init {
         return 0;
     }
     $self->addUnauthRoute( checkstate => 'check', ['GET'] );
-    $self->addAuthRoute( checkstate => 'check',   ['GET'] );
+    $self->addAuthRoute( checkstate => 'check', ['GET'] );
     return 1;
 }
 
 sub check {
     my ( $self, $req ) = @_;
     my @rep;
-    unless ($req->param('secret')
-        and $req->param('secret') eq $self->conf->{checkStateSecret} )
-    {
-        return $self->p->sendError( $req, 'Bad secret' );
-    }
+    return $self->p->sendError( $req, 'Bad secret' )
+      unless ( $req->param('secret')
+        and $req->param('secret') eq $self->conf->{checkStateSecret} );
     $req->steps( [ 'controlUrl', @{ $self->p->beforeAuth } ] );
     my $res = $self->p->process($req);
     if ( $res > 0 ) {
         push @rep, "Bad result before auth: $res";
     }
+    
     if ( my $user = $req->param('user') and my $pwd = $req->param('password') )
     {
         $req->user($user);
@@ -59,12 +58,9 @@ sub check {
         }
         $self->p->deleteSession($req);
     }
-    if (@rep) {
-        return $self->p->sendError( $req, join( ",\n", @rep ), 500 );
-    }
-    else {
-        return $self->p->sendJSONresponse( $req, { result => 1 } );
-    }
+
+    return $self->p->sendError( $req, join( ",\n", @rep ), 500 ) if (@rep);
+    return $self->p->sendJSONresponse( $req, { result => 1 } );
 }
 
 1;

@@ -81,7 +81,7 @@ sub display {
 
 sub run {
     my ( $self, $req ) = @_;
-    my ( $msg, $decryptedValue ) = ( '', '' );
+    my $msg = my $decryptedValue = '';
 
     # Check access rules
     unless ( $self->rule->( $req, $req->userData ) ) {
