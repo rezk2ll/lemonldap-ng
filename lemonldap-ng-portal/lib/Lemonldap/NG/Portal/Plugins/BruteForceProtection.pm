@@ -61,7 +61,7 @@ sub init {
               . ')' )
           if ( $lockTimes > $self->conf->{failedLoginNumber} );
 
-        my $sum = 0;
+        my $sum = $self->conf->{bruteForceProtectionMaxAge};
         $sum += $_ foreach @{ $self->lockTimes };
         $self->maxAge($sum);
     }
