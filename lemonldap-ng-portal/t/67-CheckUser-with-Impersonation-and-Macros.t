@@ -26,6 +26,7 @@ my $client = LLNG::Manager::Test->new( {
             userControl                    => '^[\w\.\-/\s]+$',
             whatToTrace                    => '_whatToTrace',
             macros                         => {
+                authLevel => '"Macro_$authenticationLevel"',
                 _whatToTrace =>
                   '$real__user ? "$_user / $real__user" : "$_user / $_user"',
             },
@@ -130,7 +131,12 @@ ok( $res->[2]->[0] =~ m%<td scope="row">_whatToTrace</td>%,
   or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
 ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found uid' )
   or explain( $res->[2]->[0], 'Attribute Value uid' );
-count(8);
+ok( $res->[2]->[0] =~ m%<td scope="row">Macro_1</td>%, 'Found uid' )
+  or explain( $res->[2]->[0], 'Attribute Value uid' );
+ok( my $nbr = ( $res->[2]->[0] =~ s%<td scope="row">Macro_1</td>%%g ),
+    'Found two macros' )
+  or explain( $res->[2]->[0], 'Macros not well computed' );
+count(10);
 
 ok(
     $res = $client->_get(
@@ -161,7 +167,12 @@ ok(
 m%<div class="alert alert-success"><div class="text-center"><b><span trspan="allowed"></span></b></div></div>%,
     'Found trspan="allowed"'
 ) or explain( $res->[2]->[0], 'trspan="allowed"' );
-count(3);
+ok( $res->[2]->[0] =~ m%<td scope="row">Macro_1</td>%, 'Found uid' )
+  or explain( $res->[2]->[0], 'Attribute Value uid' );
+ok( my $nbr = ( $res->[2]->[0] =~ s%<td scope="row">Macro_1</td>%%g ),
+    'Found two well computed macros' )
+  or explain( $res->[2]->[0], 'Macros not well computed' );
+count(5);
 
 $client->logout($id);
 clean_sessions();

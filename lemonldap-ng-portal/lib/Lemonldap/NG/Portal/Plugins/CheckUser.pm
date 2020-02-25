@@ -46,7 +46,7 @@ sub persistentAttrs {
 sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;
-    $self->addAuthRoute( checkuser => 'check',               ['POST'] );
+    $self->addAuthRoute( checkuser => 'check', ['POST'] );
     $self->addAuthRouteWithRedirect( checkuser => 'display', ['GET'] );
 
     # Parse identity rule
@@ -69,7 +69,7 @@ sub init {
 
 # RUNNING METHOD
 sub display {
-    my ( $self,  $req )         = @_;
+    my ( $self, $req ) = @_;
     my ( $attrs, $array_attrs ) = ( {}, [] );
 
     $self->logger->debug("Display current session data...");
@@ -129,9 +129,7 @@ sub display {
 sub check {
     my ( $self, $req ) = @_;
     my ( $attrs, $array_attrs, $array_hdrs ) = ( {}, [], [] );
-    my $msg       = my $auth = my $compute = '';
-    my $authLevel = $req->userData->{authenticationLevel};
-    my $authMode  = $req->userData->{_auth};
+    my $msg = my $auth = my $compute = '';
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
@@ -252,16 +250,24 @@ sub check {
           unless $self->conf->{checkUserDisplayPersistentInfo};
 
         if ($compute) {
-            $msg                          = 'checkUserComputeSession';
-            $attrs->{authenticationLevel} = $authLevel;
-            $attrs->{_auth}               = $authMode;
-
+            $msg = 'checkUserComputeSession';
             if ( $self->conf->{impersonationRule} ) {
                 $self->logger->debug("Map real attributes...");
                 my %realAttrs = map {
                     ( "$self->{conf}->{impersonationPrefix}$_" => $attrs->{$_} )
                 } keys %$attrs;
                 $attrs = { %$attrs, %realAttrs };
+
+                # Compute groups and macros with real and spoofed attributes
+                $self->logger->debug(
+                    "Compute groups and macros with real and spoofed attributes"
+                );
+                $req->sessionInfo($attrs);
+                $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
+                if ( my $error = $self->p->process($req) ) {
+                    $self->logger->debug("Process returned error: $error");
+                    return $req->error($error);
+                }
             }
         }
 
@@ -365,7 +371,10 @@ sub _userData {
     my ( $self, $req ) = @_;
 
     # Compute session
-    my $steps = [ 'getUser', 'setSessionInfo', $self->p->groupsAndMacros, ];
+    my $steps = [
+        'getUser',        'setAuthSessionInfo',
+        'setSessionInfo', $self->p->groupsAndMacros,
+    ];
     $self->conf->{checkUserDisplayPersistentInfo}
       ? push @$steps, 'setPersistentSessionInfo', 'setLocalGroups'
       : push @$steps, 'setLocalGroups';
@@ -378,7 +387,7 @@ sub _userData {
                   . ")" );
         }
         $self->logger->debug("Process returned error: $error");
-        return $req->error($error);
+        return $req->error(PE_BADCREDENTIALS);
     }
 
     unless ( defined $req->sessionInfo->{uid} ) {
@@ -448,7 +457,7 @@ sub _splitAttributes {
         if ( $element->{key} eq 'groups' ) {
             $self->logger->debug('Key "groups" found');
             my $separator = $self->{conf}->{multiValuesSeparator};
-            my @tmp       = split /\Q$separator/, $element->{value};
+            my @tmp = split /\Q$separator/, $element->{value};
             $grps = [ map { { value => $_ } } sort @tmp ];
             next;
         }
@@ -491,8 +500,8 @@ sub _splitAttributes {
 
 sub _removePersistentAttributes {
     my ( $self, $attrs ) = @_;
-    my $regex = join '|',      split /\s+/, $self->persistentAttrs;
-    my @keys  = grep /$regex/, keys %$attrs;
+    my $regex = join '|', split /\s+/, $self->persistentAttrs;
+    my @keys = grep /$regex/, keys %$attrs;
     $self->logger->debug("Remove persistent session attributes");
     delete @$attrs{@keys};
 
