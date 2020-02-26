@@ -54,7 +54,7 @@ ok(
     ),
     'Auth query'
 );
-ok( $res->[2]->[0] =~ m%<span trmsg="40"></span>%, ' PE40 found' )
+ok( $res->[2]->[0] =~ m%<span trmsg="40">%, ' PE40 found' )
   or explain( $res->[2]->[0], "PE40 - Bad formed user" );
 count(2);
 
@@ -82,7 +82,7 @@ ok(
 );
 ok(
     $res->[2]->[0] =~
-m%<div class="message message-negative alert"><span trmsg="5"></span></div>%,
+m%<div class="message message-negative alert"><span trmsg="5">%,
     ' PE5 found'
 ) or explain( $res->[2]->[0], "PE5 - Forbidden identity" );
 count(2);
@@ -111,7 +111,7 @@ ok(
 );
 ok(
     $res->[2]->[0] =~
-m%<div class="message message-negative alert"><span trmsg="93"></span>%,
+m%<div class="message message-negative alert"><span trmsg="93">%,
     ' PE93 found'
 ) or explain( $res->[2]->[0], "PE93 - Impersonation service not allowed" );
 count(2);

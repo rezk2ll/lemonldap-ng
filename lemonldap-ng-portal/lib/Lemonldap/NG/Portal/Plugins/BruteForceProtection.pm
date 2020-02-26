@@ -9,8 +9,7 @@ our $VERSION = '2.0.8';
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 # INITIALIZATION
-
-use constant afterData => 'run';
+use constant afterSub => { storeHistory => 'run' };
 
 has lockTimes => (
     is      => 'rw',
@@ -53,15 +52,21 @@ sub init {
           grep { /\d+/ }
           split /\s+/, $self->conf->{bruteForceProtectionLockTimes};
 
-        @{ $self->lockTimes } = ( 5, 15, 60, 300, 600 )
-          unless $lockTimes;
-        $self->logger->warn( 'Number of incremental lock time values ('
-              . "$lockTimes) is higher than failed logins history ("
-              . $self->conf->{failedLoginNumber}
-              . ')' )
-          if ( $lockTimes > $self->conf->{failedLoginNumber} );
+        unless ($lockTimes) {
+            @{ $self->lockTimes } = ( 5, 15, 60, 300, 600 );
+            $lockTimes = 5;
+        }
+        
+        if ( $lockTimes > $self->conf->{failedLoginNumber} ) {
+            $self->logger->warn( 'Number of incremental lock time values ('
+                  . "$lockTimes) is higher than failed logins history ("
+                  . $self->conf->{failedLoginNumber}
+                  . ')' );
+            splice @{ $self->lockTimes }, $self->conf->{failedLoginNumber};
+            $lockTimes = $self->conf->{failedLoginNumber};
+        }
 
-        my $sum = $self->conf->{bruteForceProtectionMaxAge};
+        my $sum = $self->conf->{bruteForceProtectionMaxAge} * ( 1 + $self->conf->{failedLoginNumber} - $lockTimes );
         $sum += $_ foreach @{ $self->lockTimes };
         $self->maxAge($sum);
     }

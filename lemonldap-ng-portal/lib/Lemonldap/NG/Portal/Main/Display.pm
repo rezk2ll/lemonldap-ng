@@ -395,6 +395,7 @@ sub display {
                 DISPLAY_YUBIKEY_FORM  => 0,
                 AUTH_LOOP             => [],
                 MSG                   => $req->info(),
+                LOCKTIME              => $req->lockTime(),
             );
 
         }

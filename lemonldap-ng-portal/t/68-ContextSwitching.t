@@ -375,7 +375,7 @@ ok(
 );
 count(6);
 
-ok( $res->[2]->[0] =~ m%<span trmsg="1"></span>%, 'Found PE_SESSIONEXPIRED' )
+ok( $res->[2]->[0] =~ m%<span trmsg="1">%, 'Found PE_SESSIONEXPIRED' )
   or explain( $res->[2]->[0], 'Sessuion expired' );
 ok(
     $res = $client->_get(
@@ -403,7 +403,7 @@ expectOK($res);
 
 ok(
     $res->[2]->[0] =~
-m%<div class="message message-positive alert"><span trmsg="47"></span></div>%,
+m%<div class="message message-positive alert"><span trmsg="47">%,
     'Dwho has been well disconnected'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(2);
