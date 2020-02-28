@@ -725,8 +725,8 @@ sub tree {
                                 'checkUserHiddenAttributes',
                                 'checkUserSearchAttributes',
                                 'checkUserDisplayEmptyHeaders',
-                                'checkUserDisplayPersistentInfo',
                                 'checkUserDisplayEmptyValues',
+                                'checkUserDisplayPersistentInfo',
                             ]
                         },
                         {
