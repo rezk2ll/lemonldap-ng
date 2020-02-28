@@ -83,7 +83,7 @@
 "PE91":"Access not granted on OID service",
 "PE92":"Access not granted on GET service",
 "PE93":"Access not granted on IMPERSONATION service",
-"PE94":"A required attribute is not available",
+"PE94":"Un atribut solicitate nu sunt disponibile",
 "PE95":"Access not granted on DECRYPT service",
 "PE96":"Invalid verification code",
 "PE97":"Your certificate is invalid or expires soon",
