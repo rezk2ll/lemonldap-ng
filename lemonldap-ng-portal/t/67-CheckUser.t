@@ -21,6 +21,7 @@ my $client = LLNG::Manager::Test->new( {
             checkUserIdRule           => '$uid ne "msmith"',
             checkUserSearchAttributes => 'employee_nbr  test1 _user test2 mail',
             checkUserDisplayPersistentInfo => 1,
+            checkUserDisplayEmptyHeaders   => 1,
             checkUserDisplayEmptyValues    => 1,
             totp2fSelfRegistration         => 1,
             totp2fActivation               => 1,
@@ -222,16 +223,20 @@ ok(
     ),
     'POST checkuser'
 );
-count(1);
-
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
   or explain( $res->[2]->[0], 'trspan="checkUser"' );
-
 count(2);
+
 ok( $res->[2]->[0] =~ m%Auth-User: %, 'Found Auth-User' )
   or explain( $res->[2]->[0], 'Header Key: Auth-User' );
+ok( $res->[2]->[0] =~ m%testHeader1: %, 'Found testHeader1' )
+  or explain( $res->[2]->[0], 'Header Key: testHeader1' );
+ok( $res->[2]->[0] =~ m%testHeader2: %, 'Found testHeader2' )
+  or explain( $res->[2]->[0], 'Header Key: testHeader2' );
+ok( $res->[2]->[0] =~ m%emptyHeader: %, 'Found emptyHeader' )
+  or explain( $res->[2]->[0], 'Header Key: emptyHeader' );
 ok( $res->[2]->[0] =~ m%: dwho<br/>%, 'Found dwho' )
   or explain( $res->[2]->[0], 'Header Value: dwho' );
 ok( $res->[2]->[0] =~ m%<td scope="row">_whatToTrace</td>%,
@@ -239,7 +244,7 @@ ok( $res->[2]->[0] =~ m%<td scope="row">_whatToTrace</td>%,
   or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
 ok( $res->[2]->[0] =~ m%<td scope="row">dwho</td>%, 'Found dwho' )
   or explain( $res->[2]->[0], 'Macro Value dwho' );
-count(3);
+count(7);
 
 # Request with mail
 $query =~ s/user=dwho/user=dwho%40badwolf.org/;

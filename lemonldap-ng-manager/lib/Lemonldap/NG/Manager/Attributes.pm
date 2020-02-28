@@ -839,6 +839,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'checkUserDisplayEmptyHeaders' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'checkUserDisplayEmptyValues' => {
             'default' => 0,
             'type'    => 'bool'

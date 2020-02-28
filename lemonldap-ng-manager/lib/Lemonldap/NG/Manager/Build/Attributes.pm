@@ -476,6 +476,12 @@ sub attributes {
             documentation => 'Display session empty values',
             flags         => 'p',
         },
+        checkUserDisplayEmptyHeaders => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Display empty headers',
+            flags         => 'p',
+        },
         globalLogoutRule => {
             type          => 'boolOrExpr',
             default       => 0,

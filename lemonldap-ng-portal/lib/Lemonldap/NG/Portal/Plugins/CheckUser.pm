@@ -441,7 +441,14 @@ sub _headers {
     $self->p->HANDLER->headersInit( $self->{conf} );
     $self->logger->debug(
         "Return \"$attrs->{ $self->{conf}->{whatToTrace} }\" headers");
-    return $self->p->HANDLER->checkHeaders( $req, $attrs );
+    return $self->p->HANDLER->checkHeaders( $req, $attrs )
+      if ( $self->conf->{checkUserDisplayEmptyHeaders} );
+
+    $self->logger->debug("Remove empty headers");
+    my @headers = grep $_->{value} =~ /.+/,
+      @{ $self->p->HANDLER->checkHeaders( $req, $attrs ) };
+
+    return \@headers;
 }
 
 sub _splitAttributes {
@@ -457,7 +464,7 @@ sub _splitAttributes {
         if ( $element->{key} eq 'groups' ) {
             $self->logger->debug('Key "groups" found');
             my $separator = $self->{conf}->{multiValuesSeparator};
-            my @tmp = split /\Q$separator/, $element->{value};
+            my @tmp       = split /\Q$separator/, $element->{value};
             $grps = [ map { { value => $_ } } sort @tmp ];
             next;
         }
@@ -500,8 +507,8 @@ sub _splitAttributes {
 
 sub _removePersistentAttributes {
     my ( $self, $attrs ) = @_;
-    my $regex = join '|', split /\s+/, $self->persistentAttrs;
-    my @keys = grep /$regex/, keys %$attrs;
+    my $regex = join '|',      split /\s+/, $self->persistentAttrs;
+    my @keys  = grep /$regex/, keys %$attrs;
     $self->logger->debug("Remove persistent session attributes");
     delete @$attrs{@keys};
 

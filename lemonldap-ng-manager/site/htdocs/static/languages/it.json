@@ -188,6 +188,7 @@
 "checkUserIdRule":"Uso della regola delle identità",
 "checkUserHiddenAttributes":"Attributi nascosti",
 "checkUserDisplayPersistentInfo":"Mostra sessione persistente",
+"checkUserDisplayEmptyHeaders":"Display empty headers",
 "checkUserDisplayEmptyValues":"Mostra valori vuoti",
 "checkUserSearchAttributes":"Attributes used for searching sessions",
 "choiceParams":"Scelta parametri",

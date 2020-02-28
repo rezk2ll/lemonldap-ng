@@ -188,6 +188,7 @@
 "checkUserIdRule":"Identities use rule",
 "checkUserHiddenAttributes":"السمات المخفية",
 "checkUserDisplayPersistentInfo":"Display persistent session",
+"checkUserDisplayEmptyHeaders":"Display empty headers",
 "checkUserDisplayEmptyValues":"Display empty values",
 "checkUserSearchAttributes":"Attributes used for searching sessions",
 "choiceParams":"اختيارالإعدادات",

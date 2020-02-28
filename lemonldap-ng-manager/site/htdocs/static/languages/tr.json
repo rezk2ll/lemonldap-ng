@@ -188,6 +188,7 @@
 "checkUserIdRule":"Kimlik kullanım kuralı",
 "checkUserHiddenAttributes":"Gizli nitelikler",
 "checkUserDisplayPersistentInfo":"Kalıcı oturumu görüntüle",
+"checkUserDisplayEmptyHeaders":"Display empty headers",
 "checkUserDisplayEmptyValues":"Boş değerleri görüntüle",
 "checkUserSearchAttributes":"Arama oturumlarında kullanılan nitelikler",
 "choiceParams":"Tercih parametreleri",
