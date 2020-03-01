@@ -2,19 +2,15 @@ use Test::More;
 use strict;
 use IO::String;
 
-BEGIN {
-    require 't/test-lib.pm';
-}
+require 't/test-lib.pm';
 
 my $res;
-
 my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel                       => 'error',
             authentication                 => 'Demo',
             userDB                         => 'Same',
             loginHistoryEnabled            => 0,
-            brutForceProtection            => 0,
             portalMainLogo                 => 'common/logos/logo_llng_old.png',
             requireToken                   => 0,
             checkUser                      => 0,
@@ -376,7 +372,7 @@ ok(
 count(6);
 
 ok( $res->[2]->[0] =~ m%<span trmsg="1">%, 'Found PE_SESSIONEXPIRED' )
-  or explain( $res->[2]->[0], 'Sessuion expired' );
+  or explain( $res->[2]->[0], 'Session expired' );
 ok(
     $res = $client->_get(
         '/',
