@@ -32,6 +32,12 @@ our %demoAccounts = (
     },
 );
 
+our %demoGroups = (
+    'timelords'  => [qw(dwho)],
+    'earthlings' => [qw(msmith rtyler)],
+    'users'      => [qw(dwho msmith rtyler)],
+);
+
 # INITIALIZATION
 
 sub init {
@@ -82,6 +88,21 @@ sub setSessionInfo {
 # Do nothing
 # @return Lemonldap::NG::Portal constant
 sub setGroups {
+    my ( $self, $req ) = @_;
+
+    my $groups  = $req->sessionInfo->{groups}  || '';
+    my $hGroups = $req->sessionInfo->{hGroups} || {};
+    for my $grp ( keys %demoGroups ) {
+        if ( grep { $_ eq $req->user } @{ $demoGroups{$grp} } ) {
+            $hGroups->{$grp} = {};
+            $groups =
+              ($groups)
+              ? $groups . $self->conf->{multiValuesSeparator} . $grp
+              : $grp;
+        }
+    }
+    $req->sessionInfo->{groups}  = $groups;
+    $req->sessionInfo->{hGroups} = $hGroups;
     PE_OK;
 }
 

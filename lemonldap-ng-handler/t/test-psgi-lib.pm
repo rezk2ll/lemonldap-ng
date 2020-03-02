@@ -46,17 +46,42 @@ sub init {
     my $now = time;
     my $ts  = strftime "%Y%m%d%H%M%S", localtime;
 
-    print F '{"_updateTime":"'
-      . $ts
-      . '","_timezone":"1","_session_kind":"SSO","_passwordDB":"Demo","_startTime":"'
-      . $ts
-      . '","ipAddr":"127.0.0.1","UA":"Mozilla/5.0 (X11; VAX4000; rv:43.0) Gecko/20100101 Firefox/143.0 Iceweasel/143.0.1","_user":"dwho","_userDB":"Demo","_lastAuthnUTime":'
-      . $now
-      . ',"uid":"dwho","_issuerDB":"Null","_session_id":"f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545","authenticationLevel":1,"_whatToTrace":"dwho","_auth":"Demo","_utime":'
-      . $now
-      . ',"_loginHistory":{"successLogin":[{"ipAddr":"127.0.0.1","_utime":'
-      . $now
-      . '}]},"cn":"Doctor Who","mail":"dwho@badwolf.org"}';
+    print F <<EOF;
+    {
+   "_startTime" : "$ts",
+   "_session_kind" : "SSO",
+   "UA" : "Mozilla/5.0 (X11; VAX4000; rv:43.0) Gecko/20100101 Firefox/143.0 Iceweasel/143.0.1",
+   "cn" : "Doctor Who",
+   "_utime" : $now,
+   "_whatToTrace" : "dwho",
+   "mail" : "dwho\@badwolf.org",
+   "_passwordDB" : "Demo",
+   "_lastAuthnUTime" : $now,
+   "uid" : "dwho",
+   "_issuerDB" : "Null",
+   "_userDB" : "Demo",
+   "_user" : "dwho",
+   "_session_id" : "f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545",
+   "authenticationLevel" : 1,
+   "_auth" : "Demo",
+   "_updateTime" : "$ts",
+   "_loginHistory" : {
+      "successLogin" : [
+         {
+            "ipAddr" : "127.0.0.1",
+            "_utime" : $now
+         }
+      ]
+   },
+   "ipAddr" : "127.0.0.1",
+   "_timezone" : "1",
+   "groups" : "users; timelords",
+   "hGroups" : {
+      "users" : {},
+      "timelords" : {}
+   }
+}
+EOF
     close F;
 }
 

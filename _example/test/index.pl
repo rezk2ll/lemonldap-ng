@@ -92,6 +92,10 @@ print
 print "<li>Connected user: <ul>\n";
 print "<li><tt>\$ENV{HTTP_AUTH_USER}</tt>: $ENV{HTTP_AUTH_USER}</li>\n";
 print "<li><tt>\$ENV{REMOTE_USER}</tt>: $ENV{REMOTE_USER}</li>\n";
+print "</ul><li>Groups: <ul>\n";
+for my $grp (split /; /, $ENV{HTTP_AUTH_GROUPS}) {
+print "<li>$grp</li>\n";
+}
 print "</ul></li>\n";
 print "</ul>\n";
 print
