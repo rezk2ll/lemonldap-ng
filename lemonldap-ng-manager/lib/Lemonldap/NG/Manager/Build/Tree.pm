@@ -1151,10 +1151,11 @@ sub tree {
                     help  => 'samlservice.html#advanced',
                     nodes => [
                         'samlMetadataForceUTF8',
-                        'samlStorage',
-                        'samlStorageOptions',
                         'samlRelayStateTimeout',
                         'samlUseQueryStringSpecific',
+                        'samlOverrideIDPEntityID',
+                        'samlStorage',
+                        'samlStorageOptions',
                         {
                             title => 'samlCommonDomainCookie',
                             form  => 'simpleInputContainer',
@@ -1175,7 +1176,6 @@ sub tree {
                                 'samlDiscoveryProtocolIsPassive'
                             ]
                         },
-                        'samlOverrideIDPEntityID',
                     ]
                 }
             ]

@@ -129,7 +129,7 @@
 .\" ========================================================================
 .\"
 .IX Title "llng-fastcgi-server 8"
-.TH llng-fastcgi-server 8 "2020-02-12" "perl v5.26.1" "User Contributed Perl Documentation"
+.TH llng-fastcgi-server 8 "2020-03-02" "perl v5.26.1" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -178,16 +178,10 @@ file to load for custom functions
 Plack::Handler engine, default to \s-1FCGI\s0 (see below)
 .IP "\-\-plackOptions:" 4
 .IX Item "--plackOptions:"
-other options to pass to Plack. This multi-valued parameter must have
-\&\*(L"key=value\*(R" values.
+other options to pass to the Plack handler. This multi-valued parameter must
+have \*(L"key=value\*(R" values.
 .Sp
-Example to use FCGI::ProcManager::Constrained instead of default \s-1FCGI\s0 manager
-(FCGI::ProcManager):
-.Sp
-.Vb 2
-\&  llng\-fastcgi\-server \-u nobody \-g nobody \-s /run/llng.sock \-e FCGI \-n 10 \e
-\&                      \-\-plackOptions manager=FCGI::ProcManager::Constrained
-.Ve
+See Plack::Handler::FCGI for a list of options for the default \s-1FCGI\s0 engine
 .SH "ENGINES"
 .IX Header "ENGINES"
 By default, llng-fastcgi-server uses \s-1FCGI\s0 (= Plack::Handler::FCGI). Some
@@ -195,23 +189,6 @@ other engines can be used:
 .SS "\s-1FCGI\s0 (default)"
 .IX Subsection "FCGI (default)"
 It uses FCGI::ProcManager as manager. Other managers:
-.IP "FCGI::ProcManager::Constrained" 4
-.IX Item "FCGI::ProcManager::Constrained"
-Example to launch it:
-.Sp
-.Vb 2
-\&  llng\-fastcgi\-server \-u nobody \-g nobody \-s /run/llng.sock \-e FCGI \-n 10 \e
-\&                      \-\-plackOptions manager=FCGI::ProcManager::Constrained
-.Ve
-.Sp
-You can then set environment values (in /etc/default/llng\-fastcgi\-server file
-for example):
-.Sp
-.Vb 3
-\&  PM_MAX_REQUESTS=10000
-\&  PM_SIZECHECK_NUM_REQUESTS=100
-\&  PM_MAX_SIZE=300000
-.Ve
 .IP "FCGI::ProcManager::Dynamic" 4
 .IX Item "FCGI::ProcManager::Dynamic"
 .Vb 2

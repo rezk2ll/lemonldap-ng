@@ -96,12 +96,10 @@
    "domain" : "__DNSDOMAIN__",
    "exportedHeaders" : {
       "test1.__DNSDOMAIN__" : {
-         "Auth-User" : "$uid",
-         "Auth-Groups" : "$groups"
+         "Auth-User" : "$uid"
       },
       "test2.__DNSDOMAIN__" : {
-         "Auth-User" : "$uid",
-         "Auth-Groups" : "$groups"
+         "Auth-User" : "$uid"
       }
    },
    "exportedVars" : {},
@@ -122,15 +120,15 @@
    },
    "locationRules" : {
       "auth.__DNSDOMAIN__" : {
-         "(?#checkUser)^/checkuser" : "inGroup(\"timelords\")",
+         "(?#checkUser)^/checkuser" : "$uid eq \"dwho\"",
          "(?#errors)^/lmerror/" : "accept",
          "default" : "accept"
       },
       "manager.__DNSDOMAIN__" : {
-         "(?#Configuration)^/(.*?\\.(fcgi|psgi)/)?(manager\\.html|confs/|$)" : "inGroup(\"timelords\")",
-         "(?#Notifications)/(.*?\\.(fcgi|psgi)/)?notifications" : "inGroup(\"timelords\") or $uid eq \"rtyler\"",
-         "(?#Sessions)/(.*?\\.(fcgi|psgi)/)?sessions" : "inGroup(\"timelords\") or $uid eq \"rtyler\"",
-         "default" : "inGroup(\"timelords\") or $uid eq \"rtyler\""
+         "(?#Configuration)^/(.*?\\.(fcgi|psgi)/)?(manager\\.html|confs/|$)" : "$uid eq \"dwho\"",
+         "(?#Notifications)/(.*?\\.(fcgi|psgi)/)?notifications" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
+         "(?#Sessions)/(.*?\\.(fcgi|psgi)/)?sessions" : "$uid eq \"dwho\" or $uid eq \"rtyler\"",
+         "default" : "$uid eq \"dwho\" or $uid eq \"rtyler\""
       },
       "test1.__DNSDOMAIN__" : {
          "^/logout" : "logout_sso",
