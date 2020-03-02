@@ -311,6 +311,36 @@ count(2);
 expectAuthenticatedAs( $res, 'rtyler' );
 $client->logout($id);
 
+## Try to authenticate => notification prompted
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new('user=msmith&password=msmith'),
+        length => 27,
+        accept => 'text/html',
+    ),
+    'Auth query'
+);
+ok( $res->[2]->[0] =~ m%trspan="gotNewMessages">%,
+    'You have some new messages' )
+  or explain( $res->[2]->[0], 'trspan="gotNewMessages"' );
+count(2);
+
+## Try to authenticate => TOTP prompted
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new('user=dwho&password=dwho'),
+        length => 23,
+        accept => 'text/html',
+    ),
+    'Auth query'
+);
+ok( $res->[2]->[0] =~ m%<span trspan="enterTotpCode">%,
+    'TOTP code required' )
+  or explain( $res->[2]->[0], 'trspan="enterTotpCode"' );
+count(2);
+
 clean_sessions();
 
 done_testing( count() );
