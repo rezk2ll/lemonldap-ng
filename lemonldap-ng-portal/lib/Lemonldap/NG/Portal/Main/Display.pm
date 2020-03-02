@@ -185,6 +185,7 @@ sub display {
         $skinfile       = "redirect";
         %templateParams = (
             MAIN_LOGO     => $self->conf->{portalMainLogo},
+            LANGS         => $self->conf->{showLanguages},
             URL           => $req->{urldc},
             HIDDEN_INPUTS => $self->buildHiddenForm($req),
             FORM_METHOD   => $req->data->{redirectFormMethod} || 'get',
