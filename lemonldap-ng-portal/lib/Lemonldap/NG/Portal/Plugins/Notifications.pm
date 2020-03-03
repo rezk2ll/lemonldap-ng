@@ -206,17 +206,20 @@ sub retrieveNotifs {
     my ( $self, $req ) = @_;
 
     # Retrieve user's accepted notifications
+    $self->logger->debug( 'Searching for "'
+          . $req->userData->{ $self->conf->{whatToTrace} }
+          . '" accepted notification(s)' );
     my @_notifications = sort {
              $b->{epoch} <=> $a->{epoch}
           or $a->{reference} cmp $b->{reference}
-    } (
+      } (
         map {
             /^notification_(.+)$/
               ? { reference => $1, epoch => $req->{userData}->{$_} }
               : ()
           }
           keys %{ $req->{userData} }
-    );
+      );
     splice @_notifications, $self->conf->{notificationsMaxRetrieve};
 
     return \@_notifications;
@@ -224,8 +227,11 @@ sub retrieveNotifs {
 
 sub _viewNotif {
     my ( $self, $req, $ref, $epoch ) = @_;
+
+    $self->logger->debug( "Retrieve notification with reference: \"$ref\" and epoch: \"$epoch\"" );
     my $notif = eval { $self->module->viewNotification( $req, $ref, $epoch ); };
     if ($@) {
+    	$self->logger->debug( "Notification not found" );
         $self->logger->error($@);
         return '';
     }
