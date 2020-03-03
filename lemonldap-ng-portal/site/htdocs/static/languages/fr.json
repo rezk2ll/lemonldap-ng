@@ -205,7 +205,7 @@
 "noTOTPFound":"Aucun secret TOTP trouvé",
 "noU2FKeyFound": "Aucune clef U2F trouvée",
 "notificationNotFound":"Notification non trouvée en base",
-"notificationRetreiveFailed":"Impossible de récupérer la notification",
+"notificationRetrieveFailed":"Impossible de récupérer la notification",
 "notificationsExplorer":"Eplorateur de notifications",
 "oidcConsent":"L'application %s voudrait :",
 "oidcConsents": "Accords OIDC",

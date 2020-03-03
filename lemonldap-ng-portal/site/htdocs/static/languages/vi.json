@@ -205,7 +205,7 @@
 "noTOTPFound":"Đăng xuất khỏi các ứng dụng khác",
 "noU2FKeyFound":"No U2F key found",
 "notificationNotFound":"Không tìm thấy thông báo",
-"notificationRetreiveFailed":"Unable to retreive notification",
+"notificationRetrieveFailed":"Unable to retrieve notification",
 "notificationsExplorer":"Notifications explorer",
 "oidcConsent":"Ứng dụng %s muốn biết:",
 "oidcConsents":"OIDC consents",

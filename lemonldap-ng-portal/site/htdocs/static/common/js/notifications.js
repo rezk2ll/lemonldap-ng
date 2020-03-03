@@ -20,7 +20,8 @@ LemonLDAP::NG Notifications script
   };
 
   displayError = function(j, status, err) {
-    return setMsg('notificationRetreiveFailed', 'warning');
+    setMsg('notificationRetrieveFailed', 'warning');
+    return console.log('Error:', err, 'Status:', status);
   };
 
   toggle_eye = function(slash) {
@@ -102,7 +103,7 @@ LemonLDAP::NG Notifications script
         }
       });
     } else {
-      return setMsg('notificationRetreiveFailed', 'warning');
+      return setMsg('notificationRetrieveFailed', 'warning');
     }
   };
 

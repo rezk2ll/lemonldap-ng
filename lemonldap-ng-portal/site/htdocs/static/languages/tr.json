@@ -205,7 +205,7 @@
 "noTOTPFound":"TOTP bulunamadi",
 "noU2FKeyFound":"U2F anahtarı bulunamadı",
 "notificationNotFound":"Bildirim bulunamadı",
-"notificationRetreiveFailed":"Unable to retreive notification",
+"notificationRetrieveFailed":"Unable to retrieve notification",
 "notificationsExplorer":"Notifications explorer",
 "oidcConsent":"%s uygulaması şunları yapmak istiyor:",
 "oidcConsents":"OIDC izinleri",

@@ -205,7 +205,7 @@
 "noTOTPFound":"Kein TOTP gefunden",
 "noU2FKeyFound":"Kein U2F Schlüssel gefunden",
 "notificationNotFound":"Notification not found in DataBase",
-"notificationRetreiveFailed":"Unable to retreive notification",
+"notificationRetrieveFailed":"Unable to retrieve notification",
 "notificationsExplorer":"Notifications explorer",
 "oidcConsent":"The application %s would like to:",
 "oidcConsents":"OIDC consents",

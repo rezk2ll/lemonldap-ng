@@ -205,7 +205,7 @@
 "noTOTPFound":"Nessun TOTP trovato",
 "noU2FKeyFound":"Nessuna chiave U2F trovata",
 "notificationNotFound":"La notifica non é stata trovata",
-"notificationRetreiveFailed":"Unable to retreive notification",
+"notificationRetrieveFailed":"Unable to retrieve notification",
 "notificationsExplorer":"Notifications explorer",
 "oidcConsent":"L'applicazione %s vorrebbe sapere:",
 "oidcConsents":"Consensi OIDC",

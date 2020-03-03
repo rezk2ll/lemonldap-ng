@@ -12,7 +12,8 @@ setMsg = (msg, level) ->
 	$('#color').addClass "alert-#{level}"
 
 displayError = (j, status, err) ->
-	setMsg 'notificationRetreiveFailed', 'warning'
+	setMsg 'notificationRetrieveFailed', 'warning'
+	console.log 'Error:', err, 'Status:', status
 
 toggle_eye = (slash) ->
 		if slash
@@ -78,7 +79,7 @@ viewNotif = (notif, epoch, button) ->
 						$('#notifEpoch').text(myDate.toLocaleString())
 						$("#explorer-button").removeAttr('hidden')
 					else setMsg 'notificationNotFound', 'warning'
-		else setMsg 'notificationRetreiveFailed', 'warning'
+		else setMsg 'notificationRetrieveFailed', 'warning'
 
 # Register "click" events
 $(document).ready ->
