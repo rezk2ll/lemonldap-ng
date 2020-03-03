@@ -32,7 +32,10 @@ sub checkForNotifications {
     my $uid = $req->sessionInfo->{ $self->notifObject->notifField };
     my ( $notifs, $forUser ) = $self->notifObject->getNotifications($uid);
     my $form;
-    return 0 unless ($notifs);
+    unless ($notifs) {
+        $self->logger->info("No notification found");
+        return 0;
+    };
 
     # Transform notifications
     my $i = 0;    # Files count
@@ -119,7 +122,10 @@ sub viewNotification {
     my ( $notifs, $forUser ) =
       $self->notifObject->getAcceptedNotifs( $uid, $ref );
     my $form;
-    return 0 unless ($notifs);
+    unless ($notifs) {
+        $self->logger->info("No accepted notification found");
+        return 0;
+    };
 
     # Transform notifications
     my $i = 0;    # Files count
