@@ -123,7 +123,13 @@ sub init {
     Lemonldap::NG::Handler::Main->onReload( $self, 'reloadConf' );
 
     # Handler::PSGI::Try initialization
-    return 0 unless ( $self->SUPER::init( $self->localConfig ) );
+    unless ( $self->SUPER::init( $self->localConfig ) ) {
+        $self->logger->error( 'Initialization failed: ' . $self->error );
+        $self->error(
+"Initialization failed! Enable debug logs, reload your web server and catch main error..."
+        );
+        return 0;
+    }
     if ( $self->error ) {
         $self->logger->error( $self->error );
         return 0;
@@ -140,24 +146,24 @@ sub init {
 
       # psgi.js
       ->addUnauthRoute( 'psgi.js' => 'sendJs', ['GET'] )
-      ->addAuthRoute( 'psgi.js' => 'sendJs',   ['GET'] )
+      ->addAuthRoute( 'psgi.js' => 'sendJs', ['GET'] )
 
       # portal.css
       ->addUnauthRoute( 'portal.css' => 'sendCss', ['GET'] )
-      ->addAuthRoute( 'portal.css' => 'sendCss',   ['GET'] )
+      ->addAuthRoute( 'portal.css' => 'sendCss', ['GET'] )
 
       # lmerror
       ->addUnauthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
-      ->addAuthRoute( lmerror => { ':code'   => 'lmError' }, ['GET'] )
+      ->addAuthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
 
       # Core REST API
-      ->addUnauthRoute( ping => 'pleaseAuth',  ['GET'] )
+      ->addUnauthRoute( ping => 'pleaseAuth', ['GET'] )
       ->addAuthRoute( ping => 'authenticated', ['GET'] )
 
       # Refresh session
       ->addAuthRoute( refresh => 'refresh', ['GET'] )
 
-      ->addAuthRoute( '*' => 'corsPreflight',   ['OPTIONS'] )
+      ->addAuthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
       ->addUnauthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
 
       # Logout
