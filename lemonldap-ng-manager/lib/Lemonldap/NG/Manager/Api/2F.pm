@@ -148,8 +148,7 @@ sub _get2F {
         '_session_uid', $uid );
 
     foreach ( keys %$psessions ) {
-        my $devices =
-          from_json( $psessions->{$_}->{_2fDevices}, { allow_nonref => 1 } );
+        my $devices = $self->_getDevicesFromSessionData( $psessions->{$_} );
         foreach my $device ( @{$devices} ) {
             $self->logger->debug(
 "Check device [epoch=$device->{epoch}, type=$device->{type}, name=$device->{name}]"
@@ -234,9 +233,8 @@ sub _delete2FFromSessions {
             "Looking for 2F Device(s) attached to sessionId $_");
 
         if ( $session->data->{_2fDevices} ) {
-            $devices =
-              from_json( $session->data->{_2fDevices}, { allow_nonref => 1 } );
-            $total = scalar @$devices;
+            $devices = $self->_getDevicesFromSessionData( $session->data );
+            $total   = scalar @$devices;
 
             $self->logger->debug(
                 "Found $total 2F devices attached to sessionId $_");
@@ -327,6 +325,27 @@ sub _delete2F {
         ? "Successful operation: " . $count . " 2F were removed"
         : "No operation performed"
     };
+}
+
+sub _getDevicesFromSessionData {
+    my ( $self, $sessiondata ) = @_;
+    if ( $sessiondata->{_2fDevices} ) {
+        my $devices;
+        eval { $devices = from_json( $sessiondata->{_2fDevices} ); };
+        if ($@) {
+            $self->logger->warn("Error deserializing _2fDevices: $@");
+        }
+        else {
+            if ( ref($devices) eq "ARRAY" ) {
+                return $devices;
+            }
+            else {
+                $self->logger->warn(
+                    "Error deserializing _2fDevices: not a JSON Array");
+            }
+        }
+    }
+    return [];
 }
 
 sub _checkType {
