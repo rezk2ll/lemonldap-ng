@@ -239,8 +239,11 @@ sub userBind {
                         'simpleInfo',
                         params => {
                             trspan => 'pwdWillExpire,'
-                              . $self->convertSec(
-                                $resp->time_before_expiration
+                              . join(
+                                ',',
+                                $self->convertSec(
+                                    $resp->time_before_expiration
+                                )
                               )
                         }
                     )
