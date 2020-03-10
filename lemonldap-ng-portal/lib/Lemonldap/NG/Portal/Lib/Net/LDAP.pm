@@ -238,7 +238,7 @@ sub userBind {
                         $req,
                         'simpleInfo',
                         params => {
-                            trspan => 'authRemaining,'
+                            trspan => 'pwdWillExpire,'
                               . $self->convertSec(
                                 $resp->time_before_expiration
                               )
