@@ -38,7 +38,7 @@ has notifField => (
 
 sub BUILD {
     my $self = shift;
-    $self->extension('xml') if $self->p->conf->{oldNotifFormat};
+    $self->extension('xml') if $self->conf->{oldNotifFormat};
     $self->logger->debug( 'Use extension "'
           . $self->extension
           . '" to store notification files' );
