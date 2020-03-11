@@ -1,2 +1,4 @@
+/etc/lemonldap-ng/api-apache2.conf /etc/apache2/sites-available/api-apache2.conf
+/etc/lemonldap-ng/api-nginx.conf /etc/nginx/sites-available/api-nginx.conf
 /etc/lemonldap-ng/manager-apache2.conf /etc/apache2/sites-available/manager-apache2.conf
 /etc/lemonldap-ng/manager-nginx.conf /etc/nginx/sites-available/manager-nginx.conf

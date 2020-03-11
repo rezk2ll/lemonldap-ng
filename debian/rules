@@ -49,7 +49,7 @@ override_dh_auto_install:
 			DEFDOCDIR=/usr/share/doc/lemonldap-ng-doc \
 			UWSGIYAMLDIR=/etc/uwsgi/apps-available \
 			PROD=yes
-	for i in handler portal manager test; do \
+	for i in handler portal manager api test; do \
 		mv $(TMP)/etc/lemonldap-ng/$$i-apache2.X.conf $(TMP)/etc/lemonldap-ng/$$i-apache2.conf; \
 	done
 

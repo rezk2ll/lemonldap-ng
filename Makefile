@@ -60,6 +60,7 @@ PORTALTEMPLATESDIR=$(PORTALDIR)/templates
 
 MANAGERDIR=$(DOCUMENTROOT)/manager
 MANAGERSITEDIR=$(MANAGERDIR)/htdocs
+MANAGERAPIDIR=$(MANAGERDIR)/api
 MANAGERSTATICDIR=$(MANAGERSITEDIR)/static
 MANAGERRELATIVESTATICDIR=/static
 MANAGERTEMPLATESDIR=$(MANAGERSITEDIR)/templates
@@ -156,6 +157,7 @@ RPORTALSTATICDIR=$(DESTDIR)/$(PORTALSTATICDIR)
 RPORTALTEMPLATESDIR=$(DESTDIR)/$(PORTALTEMPLATESDIR)
 RMANAGERDIR=$(DESTDIR)/$(MANAGERDIR)
 RMANAGERSITEDIR=$(DESTDIR)/$(MANAGERSITEDIR)
+RMANAGERAPIDIR=$(DESTDIR)/$(MANAGERAPIDIR)
 RMANAGERSTATICDIR=$(DESTDIR)/$(MANAGERSTATICDIR)
 RMANAGERTEMPLATESDIR=$(DESTDIR)/$(MANAGERTEMPLATESDIR)
 RDOCDIR=$(DESTDIR)/$(DOCDIR)
@@ -690,7 +692,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
 	# Fix a lost of rights on the main directory
-	@chmod 755 $(RBINDIR) $(RDOCUMENTROOT) $(REXAMPLESDIR) $(RHANDLERDIR) $(RPORTALSTATICDIR) $(RMANAGERSITEDIR) $(RTOOLSDIR) $(RCONFDIR) $(RDATADIR)
+	@chmod 755 $(RBINDIR) $(RDOCUMENTROOT) $(REXAMPLESDIR) $(RHANDLERDIR) $(RPORTALSTATICDIR) $(RMANAGERSITEDIR) $(RMANAGERAPIDIR) $(RTOOLSDIR) $(RCONFDIR) $(RDATADIR)
 	@echo
 	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${CONFDIR}"
@@ -702,6 +704,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@echo "      include ${CONFDIR}/portal-apache$(APACHEVERSION).conf"
 	@echo "      include ${CONFDIR}/handler-apache$(APACHEVERSION).conf"
 	@echo "      include ${CONFDIR}/manager-apache$(APACHEVERSION).conf"
+	@echo "      include ${CONFDIR}/api-apache$(APACHEVERSION).conf"
 	@echo "      include ${CONFDIR}/test-apache$(APACHEVERSION).conf"
 	@echo
 	@echo "2 - Restart Apache:"
@@ -725,10 +728,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 install_webserver_conf:
 	@install -m 755 -v -d $(RCONFDIR)
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
-		cp -f _example/etc/portal-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp -f _example/etc/handler-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp -f _example/etc/manager-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp -f _example/etc/test-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp -f _example/etc/*-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp -f _example/etc/*nginx*.conf $(RCONFDIR); \
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
@@ -736,6 +736,7 @@ install_webserver_conf:
 			s#__PORTALSITEDIR__#$(PORTALSITEDIR)/#g; \
 			s#__PORTALSTATICDIR__#$(PORTALSTATICDIR)/#g; \
 			s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
+			s#__MANAGERAPIDIR__#$(MANAGERAPIDIR)/#g; \
 			s#__MANAGERSITEDIR__#$(MANAGERSITEDIR)/#g; \
 			s#__MANAGERSTATICDIR__#$(MANAGERSTATICDIR)/#g; \
 			s#__TESTDIR__#$(TESTDIR)/#g; \
@@ -749,7 +750,8 @@ install_webserver_conf:
 install_manager_site:	install_conf_dir
 	# Manager install
 	@install -v -d $(RMANAGERDIR) $(RMANAGERSTATICDIR) \
-		$(RMANAGERTEMPLATESDIR)
+		$(RMANAGERTEMPLATESDIR) $(RMANAGERAPIDIR)
+	@cp -pR -f $(SRCMANAGERDIR)/site/api/* $(RMANAGERAPIDIR)
 	@cp -pR -f $(SRCMANAGERDIR)/site/htdocs/manager.* $(RMANAGERSITEDIR)
 	@cp -pR $(SRCMANAGERDIR)/site/htdocs/static/* $(RMANAGERSTATICDIR)
 	@for f in $(SRCMANAGERDIR)/site/templates/*.tpl; do \
@@ -1061,6 +1063,7 @@ debian-dist:	clean
 	@cp lemonldap-ng-$(VERSION)/_example/etc/handler-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/handler-apache2.conf
 	@cp lemonldap-ng-$(VERSION)/_example/etc/manager-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/manager-apache2.conf
 	@cp lemonldap-ng-$(VERSION)/_example/etc/portal-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/portal-apache2.conf
+	@cp lemonldap-ng-$(VERSION)/_example/etc/api-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/api-apache2.conf
 	@cp lemonldap-ng-$(VERSION)/_example/etc/test-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/test-apache2.conf
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)/node_modules

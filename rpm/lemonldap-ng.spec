@@ -448,7 +448,7 @@ chmod 775 %{buildroot}%{lm_sbindir}/llng-fastcgi-server
 # Install httpd conf files
 # We use "z-lemonldap-ng-*" so that httpd read the files after "perl.conf"
 mkdir -p %{buildroot}%{apache_confdir}
-for i in handler manager portal test; do {
+for i in handler manager portal api test; do {
     mv %{buildroot}%{lm_confdir}/$i-apache%{apache_version}.conf \
         %{buildroot}%{apache_confdir}/z-lemonldap-ng-$i.conf
 }; done
@@ -471,6 +471,9 @@ sed -i 's:/etc/lemonldap-ng/nginx-lua-headers.conf:/etc/nginx/nginx-lua-headers.
 mv %{buildroot}%{lm_confdir}/for_etc_hosts .
 
 # Fix shebang and perms
+sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
+    %{buildroot}/usr/share/lemonldap-ng/manager/api/api.psgi
+chmod 755 %{buildroot}/usr/share/lemonldap-ng/manager/api/api.psgi
 sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
     %{buildroot}/usr/share/lemonldap-ng/manager/htdocs/manager.psgi
 chmod 755 %{buildroot}/usr/share/lemonldap-ng/manager/htdocs/manager.psgi
@@ -544,6 +547,7 @@ fi
 %config(noreplace) %attr(-,root,%{lm_apachegroup}) %{lm_storagefile}
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-manager.conf
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-api.conf
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
 %{_mandir}/man1/convertConfig*
 %{_mandir}/man1/convertSessions*
@@ -618,6 +622,7 @@ fi
 %config(noreplace) %{_sysconfdir}/nginx/nginx-lmlog.conf
 %config(noreplace) %{_sysconfdir}/nginx/nginx-lua-headers.conf
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/portal-nginx.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/api-nginx.conf
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/test-nginx.conf
 
 %files -n perl-Lemonldap-NG-Common

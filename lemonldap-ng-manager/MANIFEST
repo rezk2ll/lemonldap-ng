@@ -46,7 +46,8 @@ site/coffee/notifications.coffee
 site/coffee/sessions.coffee
 site/coffee/viewDiff.coffee
 site/coffee/viewer.coffee
-site/htdocs/api.fcgi
+site/api/api.fcgi
+site/api/api.psgi
 site/htdocs/manager.fcgi
 site/htdocs/manager.psgi
 site/htdocs/static/bwr/angular-animate/angular-animate.js
