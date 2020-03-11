@@ -4,6 +4,7 @@
 "autoMail":"Bu e-posta otomatik olarak gönderilmiştir",
 "click2Register":"Hesap açma işleminizi onaylamak için buraya tıklayın",
 "click2Reset":"Parolanızı sıfırlamak için buraya tıklayın",
+"goToPortal":"Portala git",
 "hello":"Merhaba",
 "mail2fSubject":"[LemonLDAP::NG] Giriş kodunuz",
 "mailConfirmSubject":"[LemonLDAP::NG] Parola sıfırlama onayı",
