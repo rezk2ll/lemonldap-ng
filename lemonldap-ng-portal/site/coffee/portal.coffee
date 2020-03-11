@@ -256,6 +256,9 @@ $(window).on 'load', () ->
 	# Authentication choice tabs
 	authMenuTabs = $("#authMenu").tabs
 		active: 0
+	authMenuIndex = $('#authMenu a[href="#' + datas['displaytab'] + '"]').parent().index()
+	authMenuIndex = 0 if authMenuIndex < 0
+	authMenuTabs.tabs "option", "active", authMenuIndex
 
 	# TODO: cookie
 	# $("#authMenu").tabs
