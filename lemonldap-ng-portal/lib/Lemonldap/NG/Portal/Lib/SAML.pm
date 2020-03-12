@@ -284,7 +284,7 @@ sub loadIDPs {
 
         # Set encryption mode
         my $encryption_mode = $self->conf->{samlIDPMetaDataOptions}->{$_}
-          ->{samlIDPMetaDataOptionsEncryptionMode};
+          ->{samlIDPMetaDataOptionsEncryptionMode} || "none";
         my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
 
         unless (
@@ -390,7 +390,7 @@ sub loadSPs {
 
         # Set encryption mode
         my $encryption_mode = $self->conf->{samlSPMetaDataOptions}->{$_}
-          ->{samlSPMetaDataOptionsEncryptionMode};
+          ->{samlSPMetaDataOptionsEncryptionMode} || "none";
         my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
 
         unless (
