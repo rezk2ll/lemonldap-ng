@@ -447,6 +447,7 @@
 "logParams":"Journalisation",
 "lwpOpts":"Options pour les requêtes serveur",
 "lwpSslOpts":"Options SSL pour les requêtes serveur",
+"instance":"Instance",
 "macros":"Macros",
 "mail2f":"Second facteur par mail",
 "mail2fActivation":"Activation",

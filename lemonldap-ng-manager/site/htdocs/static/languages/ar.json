@@ -447,6 +447,7 @@
 "logParams":"سجلات",
 "lwpOpts":"خيارات لطلبات الخادم",
 "lwpSslOpts":"خيارات سسل لطلبات الخادم",
+"instance":"Instance",
 "macros":"ماكرو",
 "mail2f":"Mail second factor",
 "mail2fActivation":"تفعيل",

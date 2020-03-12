@@ -347,6 +347,7 @@
 "incompleteForm":"Required fields are missing",
 "index":"Index",
 "infoFormMethod":"Method for info form",
+"instance":"Instance",
 "invalidSessionData":"Invalid session data",
 "internalReference":"Internal reference",
 "ipAddr":"IP 地址",

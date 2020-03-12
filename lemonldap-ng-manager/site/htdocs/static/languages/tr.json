@@ -447,6 +447,7 @@
 "logParams":"Günlükler",
 "lwpOpts":"Sunucu istekleri için seçenekler",
 "lwpSslOpts":"Sunucu istekleri için SSL seçenekleri",
+"instance":"Instance",
 "macros":"Makrolar",
 "mail2f":"E-posta ile ikinci faktör",
 "mail2fActivation":"Aktivasyon",

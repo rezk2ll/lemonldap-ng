@@ -35,6 +35,11 @@
               <li role="separator" class="divider"></li>
               <li class="dropdown-header"><span ng-bind="translate('version')"></span></li>
               <li><a href="https://lemonldap-ng.org/team" name="version"><TMPL_VAR NAME="VERSION"></a></li>
+              <TMPL_IF NAME="INSTANCE_NAME">
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header"><span ng-bind="translate('instance')"></span></li>
+                <li><a href="https://lemonldap-ng.org"><TMPL_VAR NAME="INSTANCE_NAME"></a></li>
+              </TMPL_IF>
             </ul>
           </li>
         </ul>
