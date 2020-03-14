@@ -55,7 +55,7 @@ sub types {
         },
         PerlModule => {
             form    => 'text',
-            test    => qr/^[a-zA-Z][a-zA-Z0-9]*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/,
+            test    => qr/^(?:[a-zA-Z][a-zA-Z0-9]*)*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/,
             msgFail => '__badPerlPackageName__',
         },
         hostname => {
