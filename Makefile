@@ -411,7 +411,7 @@ nox_e2e_test:
 
 prepare_test_server:
 	-@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
-	-@mkdir e2e-tests/conf/manager e2e-tests/conf/portal
+	-@mkdir e2e-tests/conf/manager e2e-tests/conf/portal e2e-tests/conf/api
 	$(MAKE) install_webserver_conf install_test_site install_fastcgi_server \
 		CONFDIR=`pwd`/e2e-tests/conf \
 		RCONFDIR=e2e-tests/conf \
@@ -430,7 +430,7 @@ prepare_test_server:
 		ETCDEFAULTDIR=`pwd`/e2e-tests/conf/def
 	#@cp -f e2e-tests/index.* e2e-tests/conf/
 	@cp -f $(SRCMANAGERDIR)/site/htdocs/manager* e2e-tests/conf/manager
-	@cp -f $(SRCMANAGERDIR)/site/htdocs/api* e2e-tests/conf/manager
+	@cp -f $(SRCMANAGERDIR)/site/api/api* e2e-tests/conf/api
 	@cp -f $(SRCPORTALDIR)/site/htdocs/index* e2e-tests/conf/portal
 	@cp e2e-tests/persistent/5efe8af397fc3577e05b483aca964f1b e2e-tests/conf/persistents
 	@cp e2e-tests/saml-sp.xml e2e-tests/conf/site/saml-sp.xml
