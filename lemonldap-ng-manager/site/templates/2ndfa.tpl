@@ -58,6 +58,25 @@
 
     <!-- Right(main) div -->
     <div id="right" class="col-lg-8 col-md-8 col-sm-7 col-xs-12 scrollable" ng-class="{'hidden-xs':showT&&!showM}">
+      <span class="visible-xs">
+      <div ng-if="currentSession"  class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
+        <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
+          <ul class="nav navbar-nav">
+            <li uib-dropdown class="visible-xs">
+              <a id="langmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+              <ul uib-dropdown-menu aria-labelled-by="langmenu" role="grid">
+                <li ng-repeat="link in links"><a href="{{link.target}}" role="row"><i ng-if="link.icon" class="glyphicon glyphicon-{{link.icon}}"></i> {{translate(link.title)}}</a></li>
+                <li ng-repeat="menulink in menulinks"><a href="{{menulink.target}}" role="row"><i ng-if="menulink.icon" class="glyphicon glyphicon-{{menulink.icon}}"></i> {{translate(menulink.title)}}</a></li>
+                <li ng-include="'languages.html'"></li>
+                <TMPL_IF NAME="INSTANCE_NAME">
+                  <li><a href="https://lemonldap-ng.org"><TMPL_VAR NAME="INSTANCE_NAME"></a></li>
+                </TMPL_IF>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      </span>
       <div class="panel panel-default" ng-hide="currentSession===null">
         <div class="panel-heading">
           <h1 class="panel-title text-center">{{translate("sessionTitle")}} {{currentSession.id}}</h1>
