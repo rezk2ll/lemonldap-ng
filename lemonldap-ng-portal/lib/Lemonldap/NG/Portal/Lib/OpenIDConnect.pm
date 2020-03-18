@@ -383,6 +383,11 @@ sub buildHybridAuthnResponse {
             ? ( token_type => 'bearer', access_token => $access_token )
             : ()
         ),
+        (
+            $id_token
+            ? ( id_token => $id_token )
+            : ()
+        ),
         ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
         ( $state         ? ( state         => $state )         : () ),
         ( $session_state ? ( session_state => $session_state ) : () )
