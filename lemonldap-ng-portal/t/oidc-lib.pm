@@ -40,4 +40,8 @@ GQIDAQAB
 -----END PUBLIC KEY-----";
 }
 
+sub id_token_payload {
+    my $token = shift;
+    JSON::from_json( decode_base64( [ split /\./, $token ]->[1] ) );
+}
 1;

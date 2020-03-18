@@ -143,10 +143,13 @@ ok( $prms{access_token},  ' access_token found' );
 ok( $prms{state},         ' state found' );
 count(5);
 
+my $id_token_payload = id_token_payload($prms{id_token});
+diag Dumper($id_token_payload);
+is ($id_token_payload->{acr}, "customacr-1", "Check ACR value");
+count(1);
+
 # Check attributes in ID Token
-my ( $id_token_header, $id_token_payload, $id_token_signature ) =
-  split( /\./, $prms{id_token} );
-my $id_token_decoded = decode_json( decode_base64url($id_token_payload) );
+my $id_token_decoded = id_token_payload($prms{id_token});
 ok( $id_token_decoded->{sub} eq "dwho", 'Check sub value' );
 ok( !$id_token_decoded->{name},         'Claim name must not be in ID token' );
 count(2);
@@ -247,7 +250,7 @@ sub op {
                 oidcOPMetaDataJWKS              => {},
                 oidcServiceMetaDataAuthnContext => {
                     'loa-4' => 4,
-                    'loa-1' => 1,
+                    'customacr-1' => 1,
                     'loa-5' => 5,
                     'loa-2' => 2,
                     'loa-3' => 3

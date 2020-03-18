@@ -198,6 +198,12 @@ ok( $prms{state},         ' state found' );
 ok( $prms{session_state}, ' session_state found' );
 count(6);
 
+my $id_token_payload = id_token_payload($prms{id_token});
+ok( $id_token_payload->{c_hash}, "ID token contains c_hash");
+ok( $id_token_payload->{at_hash}, "ID token contains at_hash");
+is( $id_token_payload->{nonce}, "qwerty", "ID token contains nonce");
+count(3);
+
 my $at;
 ok( $at = $rp->p->_userDB->getUserInfo( 'op', $prms{access_token} ),
     'Get access token' );

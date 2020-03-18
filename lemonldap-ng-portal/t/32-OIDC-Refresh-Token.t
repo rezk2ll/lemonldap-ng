@@ -116,8 +116,7 @@ ok( $access_token,  "Got access token" );
 ok( $refresh_token, "Got refresh token" );
 ok( $id_token,      "Got ID token" );
 
-my $id_token_payload =
-  JSON::from_json( decode_base64( [ split /\./, $id_token ]->[1] ) );
+my $id_token_payload = id_token_payload($id_token);
 is( $id_token_payload->{name}, 'Frédéric Accents',
     'Found claim in ID token' );
 
@@ -177,8 +176,7 @@ ok( $access_token,                   "Got refreshed Access token" );
 ok( $id_token,                       "Got refreshed ID token" );
 ok( !defined $json->{refresh_token}, "Refresh token not present" );
 
-$id_token_payload =
-  JSON::from_json( decode_base64( [ split /\./, $id_token ]->[1] ) );
+$id_token_payload = id_token_payload($id_token);
 is( $id_token_payload->{name}, 'Frédéric Accents',
     'Found claim in ID token' );
 

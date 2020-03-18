@@ -116,8 +116,7 @@ ok( $refresh_token, "Got refresh token" );
 ok( $id_token,      "Got ID token" );
 count(3);
 
-my $id_token_payload =
-  JSON::from_json( decode_base64( [ split /\./, $id_token ]->[1] ) );
+my $id_token_payload = id_token_payload($id_token);
 is( $id_token_payload->{name}, 'Frédéric Accents',
     'Found claim in ID token' );
 count(1);
@@ -168,8 +167,7 @@ ok( $id_token,                "Got refreshed ID token" );
 ok( !defined $refresh_token2, "Refresh token not present" );
 count(3);
 
-$id_token_payload =
-  JSON::from_json( decode_base64( [ split /\./, $id_token ]->[1] ) );
+$id_token_payload = id_token_payload($id_token);
 is( $id_token_payload->{name}, 'Frédéric Accents',
     'Found claim in ID token' );
 count(1);
@@ -224,8 +222,7 @@ ok( $id_token,                "Got refreshed ID token" );
 ok( !defined $refresh_token2, "Refresh token not present" );
 count(3);
 
-$id_token_payload =
-  JSON::from_json( decode_base64( [ split /\./, $id_token ]->[1] ) );
+$id_token_payload = id_token_payload($id_token);
 is( $id_token_payload->{name}, 'Frédéric Accents',
     'Found claim in ID token' );
 count(1);
