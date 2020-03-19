@@ -66,7 +66,8 @@
     }
   },
   "macros": {
-    "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\""
+    "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\"",
+    "array": "$uid eq 'french' ? 'doctor; who' : ''"
   },
   "notifications": 0,
   "passwordDB": "Null",
