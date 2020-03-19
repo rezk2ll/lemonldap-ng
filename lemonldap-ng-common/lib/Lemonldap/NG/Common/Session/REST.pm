@@ -5,7 +5,7 @@ use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 has sessionTypes => ( is => 'rw' );
 
