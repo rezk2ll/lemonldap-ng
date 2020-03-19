@@ -219,14 +219,16 @@ sub _session {
     my $apacheSession = $self->getApacheSession( $mod, $id )
       or return $self->sendError( $req, undef, 400 );
 
-    my %session = %{ $apacheSession->data };
-
+    my %session   = %{ $apacheSession->data };
     unless ($raw) {
+        my $separator = $self->separator();
         foreach my $k ( keys %session ) {
             $session{$k} = '**********'
               if ( $self->hAttr =~ /\b$k\b/ );
-            $session{$k} = [ split /$self->separator/o, $session{$k} ]
-              if ( $session{$k} =~ /$self->separator/o );
+            if ( $session{$k} =~ /$separator/ ) {
+                $self->logger->debug("Convert \"$k\" value to array");
+                $session{$k} = [ split /$separator/, $session{$k} ];
+            }
         }
     }
 
