@@ -185,7 +185,7 @@ sub jailInit {
             multiValuesSeparator => $conf->{multiValuesSeparator},
         }
     );
-    $class->tsv->{jail}->build_jail( $class, $conf->{require}, $conf->{requireDontDie} );
+    $class->tsv->{jail}->build_jail( $class, $conf->{require} );
 }
 
 ## @imethod protected void defaultValuesInit(hashRef args)
