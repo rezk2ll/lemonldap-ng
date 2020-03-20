@@ -144,7 +144,6 @@ ok( $prms{state},         ' state found' );
 count(5);
 
 my $id_token_payload = id_token_payload($prms{id_token});
-diag Dumper($id_token_payload);
 is ($id_token_payload->{acr}, "customacr-1", "Check ACR value");
 count(1);
 
