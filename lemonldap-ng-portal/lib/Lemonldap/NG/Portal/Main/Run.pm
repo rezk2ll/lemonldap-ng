@@ -1100,7 +1100,19 @@ sub corsPreflight {
 sub sendJSONresponse {
     my ( $self, $req, $j, %args ) = @_;
     my $res = Lemonldap::NG::Common::PSGI::sendJSONresponse(@_);
-    if ( $self->conf->{corsEnabled} ) {
+
+    # If this is a cross-domain request from the portal itself
+    # (Ajax SSL to a different VHost)
+    # we allow CORS
+    if ( $req->origin and index( $self->conf->{portal}, $req->origin ) == 0 ) {
+        $self->logger->debug('AJAX request from portal, allowing CORS');
+        push @{ $res->[1] },
+          "Access-Control-Allow-Origin"      => $req->origin,
+          "Access-Control-Allow-Methods"     => "*",
+          "Access-Control-Allow-Credentials" => "true";
+
+    }
+    elsif ( $self->conf->{corsEnabled} ) {
         my @cors = split /;/, $self->cors;
         push @{ $res->[1] }, @cors;
         $self->logger->debug('Apply following CORS policy :');
