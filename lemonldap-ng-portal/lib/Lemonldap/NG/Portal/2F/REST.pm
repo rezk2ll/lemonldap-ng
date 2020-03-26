@@ -122,7 +122,7 @@ sub verify {
         $args->{$k} = (
               $k eq 'code'
             ? $code
-            : $req->sessionInfo->{ $self->{vrfyAttrs}->{$k} }
+            : $session->{ $self->{vrfyAttrs}->{$k} }
         );
     }
 
