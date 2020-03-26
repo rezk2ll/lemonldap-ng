@@ -544,7 +544,7 @@ sub run {
                             $imgSrc =
                               ( $icon =~ m#^https?://# )
                               ? $icon
-                              : $self->p->staticPrefic . "/common/" . $icon;
+                              : $self->p->staticPrefix . "/common/" . $icon;
                         }
 
                         my $scope_messages = {
