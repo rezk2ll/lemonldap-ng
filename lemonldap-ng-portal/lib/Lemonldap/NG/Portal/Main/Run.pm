@@ -260,11 +260,15 @@ sub do {
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
         if ( ( $err > 0 and !$req->id ) or $err eq PE_SESSIONNOTGRANTED ) {
-            return [
-                401,
-                [ 'WWW-Authenticate' => "SSO " . $self->conf->{portal} ],
-                [qq'{"result":0,"error":$err}']
-            ];
+            return $self->sendJSONresponse(
+                $req,
+                { result => 0, error => $err },
+                code    => 401,
+                headers => [
+                    'WWW-Authenticate' => "SSO " . $self->conf->{portal},
+                    "Content-Type"     => "application/javascript"
+                ],
+            );
         }
         elsif ( $err > 0 and $err != PE_PASSWORD_OK and $err != PE_LOGOUT_OK ) {
             return $self->sendJSONresponse(
