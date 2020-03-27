@@ -260,9 +260,19 @@ sub do {
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
         if ( ( $err > 0 and !$req->id ) or $err eq PE_SESSIONNOTGRANTED ) {
+            my $json = { result => 0, error => $err };
+            if ( $req->wantErrorRender ) {
+                $json->{html} = $self->loadTemplate(
+                    $req,
+                    'errormsg',
+                    params => {
+                        AUTH_ERROR      => $err,
+                        AUTH_ERROR_TYPE => $req->error_type,
+                    }
+                );
+            }
             return $self->sendJSONresponse(
-                $req,
-                { result => 0, error => $err },
+                $req, $json,
                 code    => 401,
                 headers => [
                     'WWW-Authenticate' => "SSO " . $self->conf->{portal},
@@ -1045,7 +1055,7 @@ sub registerLogin {
     }
 
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
-    my $type    = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+    my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 
