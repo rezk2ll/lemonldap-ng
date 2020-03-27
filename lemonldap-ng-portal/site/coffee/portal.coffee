@@ -227,6 +227,11 @@ datas = {}
 $(window).on 'load', () ->
 	# Get application/init variables
 	datas = getValues()
+
+	# Keep the currently selected tab
+	if "datas" of window && "choicetab" of window.datas
+		datas.choicetab = window.datas.choicetab;
+
 	# Export datas for other scripts
 	window.datas = datas
 

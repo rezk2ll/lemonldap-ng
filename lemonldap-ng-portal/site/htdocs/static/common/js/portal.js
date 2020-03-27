@@ -225,6 +225,9 @@ LemonLDAP::NG Portal jQuery scripts
   $(window).on('load', function() {
     var action, al, authMenuIndex, authMenuTabs, back_url, i, l, lang, langdiv, langs, langs2, len, len1, len2, len3, link, m, menuIndex, menuTabs, method, n, nl, nlangs, queryLang, queryString, re, ref, ref1, ref2, setCookieLang, urlParams;
     datas = getValues();
+    if ("datas" in window && "choicetab" in window.datas) {
+      datas.choicetab = window.datas.choicetab;
+    }
     window.datas = datas;
     $("#appslist").sortable({
       axis: "y",
