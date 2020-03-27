@@ -67,7 +67,7 @@ sub build_jail {
           $self->customFunctions ? split( /\s+/, $self->customFunctions ) : ();
         foreach (@builtCustomFunctions) {
             no warnings 'redefine';
-            $api->logger->debug("Custom function : $_");
+            $api->logger->debug("Custom function: $_");
             my $sub = $_;
             unless (/::/) {
                 $sub = "$self\::$_";
