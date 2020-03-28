@@ -47,7 +47,8 @@ sub init {
     my $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{issuerDBSAMLRule} ) );
     unless ($rule) {
-        $self->error( "Bad SAML rule -> " . $hd->tsv->{jail}->error );
+        my $error = $hd->tsv->{jail}->error || '';
+        $self->error( "Bad SAML activation rule -> $error" );
         return 0;
     }
     $self->{rule} = $rule;

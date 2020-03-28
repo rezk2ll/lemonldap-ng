@@ -55,8 +55,8 @@ sub init {
     my $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{checkUserIdRule} ) );
     unless ($rule) {
-        $self->error(
-            "Bad checkUser identities rule -> " . $hd->tsv->{jail}->error );
+        my $error = $hd->tsv->{jail}->error || '';
+        $self->error("Bad checkUser identities rule -> $error");
         return 0;
     }
     $self->idRule($rule);

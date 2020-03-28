@@ -40,7 +40,7 @@ has idRule => ( is => 'rw', default => sub { 1 } );
 sub init {
     my ($self) = @_;
     my $hd = $self->p->HANDLER;
-    $self->addAuthRoute( switchcontext => 'run',  ['POST'] )
+    $self->addAuthRoute( switchcontext => 'run', ['POST'] )
       ->addAuthRoute( switchcontext => 'display', ['GET'] );
 
     # Parse activation rule
@@ -49,8 +49,8 @@ sub init {
     my $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{contextSwitchingRule} ) );
     unless ($rule) {
-        $self->error(
-            'Bad contextSwitching rule -> ' . $hd->tsv->{jail}->error );
+        my $error = $hd->tsv->{jail}->error || '';
+        $self->error("Bad contextSwitching rule -> $error");
         return 0;
     }
     $self->rule($rule);
@@ -61,8 +61,8 @@ sub init {
     $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{contextSwitchingIdRule} ) );
     unless ($rule) {
-        $self->error( "Bad contextSwitching identities rule -> "
-              . $hd->tsv->{jail}->error );
+        my $error = $hd->tsv->{jail}->error || '';
+        $self->error("Bad contextSwitching identities rule -> $error");
         return 0;
     }
     $self->idRule($rule);

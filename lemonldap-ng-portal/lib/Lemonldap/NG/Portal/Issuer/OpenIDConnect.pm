@@ -76,7 +76,8 @@ sub init {
       $hd->buildSub(
         $hd->substitute( $self->conf->{issuerDBOpenIDConnectRule} ) );
     unless ($rule) {
-        $self->error( "Bad OIDC rule -> " . $hd->tsv->{jail}->error );
+        my $error = $hd->tsv->{jail}->error || '';
+        $self->error( "Bad OIDC activation rule -> $error" );
         return 0;
     }
     $self->{rule} = $rule;

@@ -31,7 +31,8 @@ sub init {
     my $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{impersonationRule} ) );
     unless ($rule) {
-        $self->error( "Bad impersonation rule -> " . $hd->tsv->{jail}->error );
+        my $error = $hd->tsv->{jail}->error || '';
+        $self->error("Bad impersonation rule -> $error");
         return 0;
     }
     $self->rule($rule);
@@ -42,8 +43,8 @@ sub init {
     $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{impersonationIdRule} ) );
     unless ($rule) {
-        $self->error(
-            "Bad impersonation identities rule -> " . $hd->tsv->{jail}->error );
+        my $error = $hd->tsv->{jail}->error || '';
+        $self->error("Bad impersonation identities rule -> $error");
         return 0;
     }
     $self->idRule($rule);

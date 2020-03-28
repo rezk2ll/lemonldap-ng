@@ -45,7 +45,8 @@ sub init {
     my $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{globalLogoutRule} ) );
     unless ($rule) {
-        $self->error( "Bad globalLogout rule -> " . $hd->tsv->{jail}->error );
+        my $error = $hd->tsv->{jail}->error || '';
+        $self->error("Bad globalLogout rule -> $error");
         return 0;
     }
     $self->rule($rule);
