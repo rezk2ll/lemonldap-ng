@@ -49,7 +49,7 @@ sub init {
     my $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{contextSwitchingRule} ) );
     unless ($rule) {
-        my $error = $hd->tsv->{jail}->error || '';
+        my $error = $hd->tsv->{jail}->error || '???';
         $self->error("Bad contextSwitching rule -> $error");
         return 0;
     }
@@ -61,7 +61,7 @@ sub init {
     $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{contextSwitchingIdRule} ) );
     unless ($rule) {
-        my $error = $hd->tsv->{jail}->error || '';
+        my $error = $hd->tsv->{jail}->error || '???';
         $self->error("Bad contextSwitching identities rule -> $error");
         return 0;
     }

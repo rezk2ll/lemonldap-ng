@@ -40,7 +40,7 @@ sub init {
     my $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{decryptValueRule} ) );
     unless ($rule) {
-        my $error = $hd->tsv->{jail}->error || '';
+        my $error = $hd->tsv->{jail}->error || '???';
         $self->error("Bad decryptValue rule -> $error");
         return 0;
     }

@@ -35,7 +35,7 @@ sub init {
     my $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{issuerDBCASRule} ) );
     unless ($rule) {
-        my $error = $hd->tsv->{jail}->error || '';
+        my $error = $hd->tsv->{jail}->error || '???';
         $self->error("Bad CAS activation rule -> $error");
         return 0;
     }
