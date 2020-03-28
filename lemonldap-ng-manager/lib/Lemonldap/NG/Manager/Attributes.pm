@@ -21,7 +21,7 @@ sub perlExpr {
         '',
         grep( { $_ =~ /Undefined subroutine/ ? () : $_; } split( /\n/, $@, 0 ) )
     );
-    return $err ? ( 1, "__badExpression__: $err" ) : 1;
+    return $err ? ( 0, "__badExpression__: $err" ) : 1;
 }
 
 sub types {

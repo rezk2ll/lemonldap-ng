@@ -26,7 +26,7 @@ sub perlExpr {
     $cpt->reval("BEGIN { 'warnings'->unimport; } $val");
     my $err = join( '',
         grep { $_ =~ /Undefined subroutine/ ? () : $_ } split( /\n/, $@ ) );
-    return $err ? ( 1, "__badExpression__: $err" ) : (1);
+    return $err ? ( 0, "__badExpression__: $err" ) : (1);
 }
 
 my $url = $RE{URI}{HTTP}{ -scheme => "https?" };
