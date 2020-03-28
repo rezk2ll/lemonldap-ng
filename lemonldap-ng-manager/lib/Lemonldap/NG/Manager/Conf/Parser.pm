@@ -1207,7 +1207,14 @@ sub _execTest {
     if ( $ref eq 'CODE' ) {
         my ( $r, $m ) = ( $test->( $value, $conf, $attr ) );
         if ($m) {
-            push @{ $self->{ ( $r ? 'warnings' : 'errors' ) } },
+            push @{
+                $self->{ (
+                        $r > 0
+                        ? 'warnings'
+                        : ( $r < 0 ? 'needConfirmation' : 'errors' )
+                    )
+                }
+              },
               { message => "$key: $m" };
         }
         elsif ( !$r ) {

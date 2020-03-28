@@ -19,9 +19,10 @@ sub perlExpr {
     $cpt->reval("BEGIN { 'warnings'->unimport; } $val");
     my $err = join(
         '',
-        grep( { $_ =~ /Undefined subroutine/ ? () : $_; } split( /\n/, $@, 0 ) )
+        grep( { $_ =~ /(?:Undefined subroutine|Devel::StackTrace)/ ? () : $_; }
+            split( /\n/, $@, 0 ) )
     );
-    return $err ? ( 0, "__badExpression__: $err" ) : 1;
+    return $err ? ( -1, "__badExpression__: $err" ) : 1;
 }
 
 sub types {
