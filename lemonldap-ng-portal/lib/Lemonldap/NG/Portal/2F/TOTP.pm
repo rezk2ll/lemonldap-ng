@@ -112,8 +112,7 @@ sub verify {
     }
     else {
         $self->userLogger->notice( 'Invalid TOTP for '
-              . $session->{ $self->conf->{whatToTrace} }
-              . ')' );
+              . $session->{ $self->conf->{whatToTrace} } );
         return PE_BADOTP;
     }
 }

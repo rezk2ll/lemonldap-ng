@@ -32,7 +32,9 @@ my $client = LLNG::Manager::Test->new( {
             contextSwitchingIdRule         => 1,
             totp2fSelfRegistration         => 1,
             totp2fActivation               => 1,
+            totp2fAuthnLevel               => 8,
             contextSwitchingStopWithLogout => 0,
+            checkUser                      => 1,
             notification                   => 1,
             notificationStorage            => 'File',
             notificationStorageOptions     => { dirName => $main::tmpDir },
@@ -147,15 +149,14 @@ ok(
 eval { $res = JSON::from_json( $res->[2]->[0] ) };
 ok( not($@), 'Content is JSON' )
   or explain( $res->[2]->[0], 'JSON content' );
-my ( $key, $token );
-ok( $key   = $res->{secret}, 'Found secret' );
+my $keyR;
+ok( $keyR  = $res->{secret}, 'Found secret' );
 ok( $token = $res->{token},  'Found token' );
-$key = Convert::Base32::decode_base32($key);
+$keyR = Convert::Base32::decode_base32($keyR);
 count(4);
 
 # Post code
-my $code;
-ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
+ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $keyR, 0, 30, 6 ),
     'Code' );
 ok( $code =~ /^\d{6}$/, 'Code contains 6 digits' );
 my $s = "code=$code&token=$token";
@@ -219,6 +220,26 @@ ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%,
     'Found trspan="contextSwitching_OFF"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_OFF"' );
 count(6);
+
+# CheckUser form
+ok(
+    $res = $client->_get(
+        '/checkuser',
+        cookie => "lemonldap=$id",
+        accept => 'text/html'
+    ),
+    'CheckUser form',
+);
+
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
+  or explain( $res->[2]->[0], 'trspan="checkUser"' );
+ok( $res->[2]->[0] =~ m%<td scope="row">authMode</td>%, 'Found macro authMode' )
+  or explain( $res->[2]->[0], 'Macro Key authMode' );
+ok( $res->[2]->[0] =~ m%<td scope="row">DEMO</td>%, 'Found DEMO' )
+  or explain( $res->[2]->[0], 'Macro Value DEMO' );
+count(4);
 
 # Stop ContextSwitching
 # ------------------------
@@ -336,10 +357,90 @@ ok(
     ),
     'Auth query'
 );
-ok( $res->[2]->[0] =~ m%<span trspan="enterTotpCode">%,
-    'TOTP code required' )
+
+ok( $res->[2]->[0] =~ m%<span trspan="enterTotpCode">%, 'TOTP code required' )
   or explain( $res->[2]->[0], 'trspan="enterTotpCode"' );
 count(2);
+( $host, $url, $query ) = expectForm( $res, undef, '/totp2fcheck', 'token' );
+ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
+    'LLNG Code' );
+$query =~ s/code=/code=$code/;
+ok(
+    $res = $client->_post(
+        '/totp2fcheck',
+        IO::String->new($query),
+        length => length($query),
+    ),
+    'Post code'
+);
+count(2);
+$id = expectCookie($res);
+
+# CheckUser form
+ok(
+    $res = $client->_get(
+        '/checkuser',
+        cookie => "lemonldap=$id",
+        accept => 'text/html'
+    ),
+    'CheckUser form',
+);
+
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
+  or explain( $res->[2]->[0], 'trspan="checkUser"' );
+ok( $res->[2]->[0] =~ m%<td scope="row">authMode</td>%, 'Found macro authMode' )
+  or explain( $res->[2]->[0], 'Macro Key authMode' );
+ok( $res->[2]->[0] =~ m%<td scope="row">TOTP</td>%, 'Found TOTP' )
+  or explain( $res->[2]->[0], 'Macro Value TOTP' );
+count(4);
+
+# Request not connected user
+$query =~ s/user=dwho/user=davros/;
+ok(
+    $res = $client->_post(
+        '/checkuser',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'POST checkuser'
+);
+
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok( $res->[2]->[0] =~ m%<span trspan="checkUserComputeSession">%, 'Found trspan="checkUserComputeSession"' )
+  or explain( $res->[2]->[0], 'trspan="checkUserComputeSession"' );
+ok( $res->[2]->[0] =~ m%<td scope="row">authMode</td>%, 'Found macro authMode' )
+  or explain( $res->[2]->[0], 'Macro Key authMode' );
+ok( $res->[2]->[0] =~ m%<td scope="row">TOTP</td>%, 'Found TOTP' )
+  or explain( $res->[2]->[0], 'Macro Value TOTP' );
+count(4);
+
+# Request connected user
+$query =~ s/user=davros/user=msmith/;
+ok(
+    $res = $client->_post(
+        '/checkuser',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+        accept => 'text/html',
+    ),
+    'POST checkuser'
+);
+
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkuser', 'user', 'url' );
+ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
+  or explain( $res->[2]->[0], 'trspan="checkUser"' );
+ok( $res->[2]->[0] =~ m%<td scope="row">authMode</td>%, 'Found macro authMode' )
+  or explain( $res->[2]->[0], 'Macro Key authMode' );
+ok( $res->[2]->[0] =~ m%<td scope="row">DEMO</td>%, 'Found DEMO' )
+  or explain( $res->[2]->[0], 'Macro Value DEMO' );
+count(4);
 
 clean_sessions();
 

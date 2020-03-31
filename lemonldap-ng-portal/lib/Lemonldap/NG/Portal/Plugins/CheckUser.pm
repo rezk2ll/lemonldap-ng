@@ -369,6 +369,7 @@ sub _urlFormat {
 
 sub _userData {
     my ( $self, $req ) = @_;
+    my $realAuthLevel = $req->userData->{authenticationLevel};
 
     # Compute session
     my $steps = [
@@ -404,6 +405,16 @@ sub _userData {
         $req->{sessionInfo} = {};
         $self->logger->debug('Identity not authorized');
         return $req->error(PE_BADCREDENTIALS);
+    }
+
+    # Compute groups & macros again with real authenticationLevel
+    $req->sessionInfo->{authenticationLevel} = $realAuthLevel;
+    delete $req->sessionInfo->{groups};
+    $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
+    if ( my $error = $self->p->process($req) ) {
+        $self->logger->debug(
+            "ContextSwitching: Process returned error: $error");
+        return $req->error($error);
     }
 
     $self->logger->debug("Return \"$req->{user}\" sessionInfo");

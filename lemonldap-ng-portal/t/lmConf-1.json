@@ -67,7 +67,8 @@
   },
   "macros": {
     "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\"",
-    "array": "$uid eq 'french' ? 'doctor; who' : ''"
+    "array": "$uid eq 'french' ? 'doctor; who' : ''",
+    "authMode": "$authenticationLevel == 8 ? TOTP : 'DEMO'"
   },
   "notifications": 0,
   "passwordDB": "Null",

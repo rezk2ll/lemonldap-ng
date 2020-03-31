@@ -197,6 +197,7 @@ sub run {
 sub _switchContext {
     my ( $self, $req, $spoofId ) = @_;
     my $realSessionId = $req->userData->{_session_id};
+    my $realAuthLevel = $req->userData->{authenticationLevel};
     my $realId        = $req->{user};
     my $raz           = 0;
     $req->{user} = $spoofId;
@@ -234,13 +235,28 @@ sub _switchContext {
 
     $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"} =
       $realSessionId;
-    $self->userLogger->notice(
-        "Start ContextSwitching: $realId becomes $spoofId ")
-      unless $raz;
 
-    return $raz
-      ? $self->_abortImpersonation( $req, $spoofId, $realId, 1 )
-      : $req;
+    if ($raz) {
+        return $self->_abortImpersonation( $req, $spoofId, $realId, 1 );
+    }
+    else {
+        $self->logger->debug(
+            "Update sessionInfo with real authenticationLevel: $realAuthLevel");
+        $req->sessionInfo->{authenticationLevel} = $realAuthLevel;
+        delete $req->sessionInfo->{groups};
+
+        # Compute groups & macros again with real authenticationLevel
+        $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
+        if ( my $error = $self->p->process($req) ) {
+            $self->logger->debug(
+                "ContextSwitching: Process returned error: $error");
+            $req->error($error);
+        }
+
+        $self->userLogger->notice(
+            "Start ContextSwitching: $realId becomes $spoofId ");
+        return $req;
+    }
 }
 
 sub _abortImpersonation {

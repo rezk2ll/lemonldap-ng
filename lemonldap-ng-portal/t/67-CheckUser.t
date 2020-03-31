@@ -16,8 +16,8 @@ my $client = LLNG::Manager::Test->new( {
             userDB                    => 'Same',
             loginHistoryEnabled       => 0,
             brutForceProtection       => 0,
-            checkUser                 => 1,
             requireToken              => 0,
+            checkUser                 => 1,
             checkUserIdRule           => '$uid ne "msmith"',
             checkUserSearchAttributes => 'employee_nbr  test1 _user test2 mail',
             checkUserDisplayPersistentInfo => 1,
@@ -26,6 +26,7 @@ my $client = LLNG::Manager::Test->new( {
             totp2fSelfRegistration         => 1,
             totp2fActivation               => 1,
             totp2fDigits                   => 6,
+            totp2fAuthnLevel               => 8,
             impersonationRule              => 1,
 
             #hiddenAttributes               => 'test',
@@ -173,7 +174,6 @@ ok(
 my ( $host, $url, $query ) = expectForm( $res, undef, '/totp2fcheck', 'token' );
 
 # Generate TOTP with LLNG
-
 my $totp = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 );
 
 $query =~ s/code=/code=$code/;
@@ -189,7 +189,6 @@ $id = expectCookie($res);
 
 # CheckUser form -> granted
 # ------------------------
-
 ok(
     $res = $client->_get(
         '/checkuser',
@@ -210,7 +209,17 @@ ok( $res->[2]->[0] =~ m%<td scope="row">dwho</td>%, 'Found value dwho' )
   or explain( $res->[2]->[0], 'Value dwho' );
 ok( $res->[2]->[0] !~ m%_2fDevices</td>%, '_2fDevices NOT Found!' )
   or explain( $res->[2]->[0], 'Value _2fDevices' );
-count(4);
+
+ok( $res->[2]->[0] =~ m%<td scope="row">authMode</td>%, 'Found macro authMode' )
+  or explain( $res->[2]->[0], 'Macro Key authMode' );
+ok( $res->[2]->[0] =~ m%<td scope="row">DEMO</td>%, 'Found DEMO' )
+  or explain( $res->[2]->[0], 'Macro Value DEMO' );
+ok( $res->[2]->[0] =~ m%<td scope="row">real_authMode</td>%,
+    'Found macro real_authMode' )
+  or explain( $res->[2]->[0], 'Macro Key real_authMode' );
+ok( $res->[2]->[0] =~ m%<td scope="row">TOTP</td>%, 'Found TOTP' )
+  or explain( $res->[2]->[0], 'Macro Value TOTP' );
+count(8);
 
 $query =~ s/url=/url=http%3A%2F%2Ftest1.example.com/;
 ok(
@@ -345,7 +354,7 @@ m%<div class="alert alert-danger"><div class="text-center"><b><span trspan="forb
 ) or explain( $res->[2]->[0], 'trspan="forbidden"' );
 count(2);
 
-# Request with allowed URL proteced by extended function
+# Request with allowed URL protected by extended function
 $query =~
 s#url=http%3A%2F%2Ftest1.example.com%2Ftest-restricted_uri%2Frtyler#url=http%3A%2F%2Ftest1.example.com/test-restricted_uri/rtyler/#;
 ok(
