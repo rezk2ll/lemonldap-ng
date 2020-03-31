@@ -185,7 +185,8 @@ sub jailInit {
             multiValuesSeparator => $conf->{multiValuesSeparator},
         }
     );
-    $class->tsv->{jail}->build_jail( $class, $conf->{require}, $conf->{requireDontDie} );
+    $class->tsv->{jail}
+      ->build_jail( $class, $conf->{require}, $conf->{requireDontDie} );
 }
 
 ## @imethod protected void defaultValuesInit(hashRef args)
@@ -363,13 +364,14 @@ sub sessionStorageInit {
         if ( $conf->{status} ) {
             my $params = "";
             if ( $class->tsv->{sessionCacheModule} ) {
-                $params = ' ' . join(
+                $params = $class->tsv->{sessionCacheModule} . ',{' . join(
                     ',',
-                    $class->tsv->{sessionCacheModule} . map {
-                        "$_ => "
-                          . $class->tsv->{sessionCacheOptions}->{$_}
-                    } keys %{ $class->tsv->{sessionCacheOptions} // {} }
-                );
+                    map {
+                        "$_ => '"
+                          . $class->tsv->{sessionCacheOptions}->{$_} . "'"
+                      }
+                      keys %{ $class->tsv->{sessionCacheOptions} // {} }
+                ) . '}';
             }
             $class->tsv->{statusPipe}->print("RELOADCACHE $params\n");
         }
