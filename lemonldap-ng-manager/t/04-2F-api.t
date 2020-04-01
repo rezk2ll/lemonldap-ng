@@ -54,9 +54,9 @@ sub check200 {
     checkJson( $test, $res );
 }
 
-sub check405 {
+sub check400 {
     my ( $test, $res ) = splice @_;
-    ok( $res->[0] == 405, "$test: Result code is 405" );
+    ok( $res->[0] == 400, "$test: Result code is 400" );
     count(1);
     checkJson( $test, $res );
 }
@@ -140,7 +140,7 @@ sub checkGetBadType {
     my ( $test, $res );
     $test = "Get for uid $uid and type \"$type\" should get rejected.";
     $res  = get( $test, $uid, $type );
-    check405( $test, $res );
+    check400( $test, $res );
 }
 
 sub checkGetOnIds {
@@ -211,7 +211,7 @@ sub checkDeleteBadType {
     my ( $test, $res );
     $test = "Delete for uid $uid and type \"$type\" should get rejected.";
     $res  = del( $test, $uid, $type );
-    check405( $test, $res );
+    check400( $test, $res );
 }
 
 my $sfaDevices = [];

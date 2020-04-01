@@ -27,9 +27,9 @@ sub check404 {
     checkJson( $test, $res );
 }
 
-sub check405 {
+sub check400 {
     my ( $test, $res ) = splice @_;
-    ok( $res->[0] == 405, "$test: Result code is 405" );
+    ok( $res->[0] == 400, "$test: Result code is 400" );
     count(1);
     checkJson( $test, $res );
 }
@@ -68,12 +68,12 @@ sub checkAdd {
 
 sub checkAddFailsIfExists {
     my ( $test, $type, $add ) = splice @_;
-    check405( $test, add( $test, $type, $add ) );
+    check400( $test, add( $test, $type, $add ) );
 }
 
 sub checkAddWithUnknownAttributes {
     my ( $test, $type, $add ) = splice @_;
-    check405( $test, add( $test, $type, $add ) );
+    check400( $test, add( $test, $type, $add ) );
 }
 
 sub get {
@@ -136,12 +136,12 @@ sub checkUpdateNotFound {
 
 sub checkUpdateFailsIfExists {
     my ( $test, $type, $confKey, $update ) = splice @_;
-    check405( $test, update( $test, $type, $confKey, $update ) );
+    check400( $test, update( $test, $type, $confKey, $update ) );
 }
 
 sub checkUpdateWithUnknownAttributes {
     my ( $test, $type, $confKey, $update ) = splice @_;
-    check405( $test, update( $test, $type, $confKey, $update ) );
+    check400( $test, update( $test, $type, $confKey, $update ) );
 }
 
 sub replace {
@@ -167,7 +167,7 @@ sub checkReplace {
 
 sub checkReplaceAlreadyThere {
     my ( $test, $type, $confKey, $replace ) = splice @_;
-    check405( $test, replace( $test, $type, $confKey, $replace ) );
+    check400( $test, replace( $test, $type, $confKey, $replace ) );
 }
 
 sub checkReplaceNotFound {
@@ -177,7 +177,7 @@ sub checkReplaceNotFound {
 
 sub checkReplaceWithUnknownAttribute {
     my ( $test, $type, $confKey, $replace ) = splice @_;
-    check405( $test, replace( $test, $type, $confKey, $replace ) );
+    check400( $test, replace( $test, $type, $confKey, $replace ) );
 }
 
 sub findByConfKey {

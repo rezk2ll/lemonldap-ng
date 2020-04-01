@@ -353,7 +353,7 @@ sub _checkType {
 
     return {
         res  => "ko",
-        code => 405,
+        code => 400,
         msg =>
 "Invalid input: Type \"$type\" does not exist. Allowed values for type are: \"U2F\", \"TOTP\" or \"UBK\""
       }

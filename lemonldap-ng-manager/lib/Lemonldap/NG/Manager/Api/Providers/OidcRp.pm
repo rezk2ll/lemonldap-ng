@@ -40,7 +40,7 @@ sub findOidcRpByConfKey {
         : ( defined $req->params('pattern') ? $req->params('pattern') : undef )
     );
 
-    return $self->sendError( $req, 'Invalid input: pattern is missing', 405 )
+    return $self->sendError( $req, 'Invalid input: pattern is missing', 400 )
       unless ( defined $pattern );
 
     $self->logger->debug(
@@ -67,7 +67,7 @@ sub findOidcRpByClientId {
         )
     );
 
-    return $self->sendError( $req, 'Invalid input: clientId is missing', 405 )
+    return $self->sendError( $req, 'Invalid input: clientId is missing', 400 )
       unless ( defined $clientId );
 
     $self->logger->debug("[API] Find OIDC RPs by clientId $clientId requested");
@@ -87,13 +87,13 @@ sub addOidcRp {
     my ( $self, $req ) = @_;
     my $add = $req->jsonBodyToObj;
 
-    return $self->sendError( $req, "Invalid input: " . $req->error, 405 )
+    return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($add);
 
-    return $self->sendError( $req, 'Invalid input: confKey is missing', 405 )
+    return $self->sendError( $req, 'Invalid input: confKey is missing', 400 )
       unless ( defined $add->{confKey} );
 
-    return $self->sendError( $req, 'Invalid input: clientId is missing', 405 )
+    return $self->sendError( $req, 'Invalid input: clientId is missing', 400 )
       unless ( defined $add->{clientId} );
 
     $self->logger->debug(
@@ -106,13 +106,13 @@ sub addOidcRp {
     return $self->sendError(
         $req,
         "Invalid input: An OIDC RP with confKey $add->{confKey} already exists",
-        405
+        400
     ) if ( defined $self->_getOidcRpByConfKey( $conf, $add->{confKey} ) );
 
     return $self->sendError(
         $req,
 "Invalid input: An OIDC RP with clientId $add->{clientId} already exists",
-        405
+        400
     ) if ( defined $self->_getOidcRpByClientId( $conf, $add->{clientId} ) );
 
     $add->{options} = {} unless ( defined $add->{options} );
@@ -120,7 +120,7 @@ sub addOidcRp {
 
     my $res = $self->_pushOidcRp( $conf, $add->{confKey}, $add, 1 );
 
-    return $self->sendError( $req, $res->{msg}, 405 )
+    return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req,
@@ -134,7 +134,7 @@ sub updateOidcRp {
 
     my $update = $req->jsonBodyToObj;
 
-    return $self->sendError( $req, "Invalid input: " . $req->error, 405 )
+    return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
 
     $self->logger->debug(
@@ -154,12 +154,12 @@ sub updateOidcRp {
     # check if new clientID exists already
     my $res = $self->_isNewOidcRpClientIdUnique( $conf, $confKey, $update );
 
-    return $self->sendError( $req, $res->{msg}, 405 )
+    return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
     $res = $self->_pushOidcRp( $conf, $confKey, $update, 0 );
 
-    return $self->sendError( $req, $res->{msg}, 405 )
+    return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req,
@@ -173,9 +173,9 @@ sub replaceOidcRp {
 
     my $replace = $req->jsonBodyToObj;
 
-    return $self->sendError( $req, "Invalid input: " . $req->error, 405 )
+    return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
-    return $self->sendError( $req, 'Invalid input: clientId is missing', 405 )
+    return $self->sendError( $req, 'Invalid input: clientId is missing', 400 )
       unless ( defined $replace->{clientId} );
 
     $self->logger->debug(
@@ -192,11 +192,11 @@ sub replaceOidcRp {
 
     # check if new clientID exists already
     my $res = $self->_isNewOidcRpClientIdUnique( $conf, $confKey, $replace );
-    return $self->sendError( $req, $res->{msg}, 405 )
+    return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
     $res = $self->_pushOidcRp( $conf, $confKey, $replace, 1 );
-    return $self->sendError( $req, $res->{msg}, 405 )
+    return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req,

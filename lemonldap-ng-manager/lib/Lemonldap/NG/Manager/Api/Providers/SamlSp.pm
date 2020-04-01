@@ -38,7 +38,7 @@ sub findSamlSpByConfKey {
         : ( defined $req->params('pattern') ? $req->params('pattern') : undef )
     );
 
-    return $self->sendError( $req, 'Invalid input: pattern is missing', 405 )
+    return $self->sendError( $req, 'Invalid input: pattern is missing', 400 )
       unless ( defined $pattern );
 
     $self->logger->debug(
@@ -63,7 +63,7 @@ sub findSamlSpByEntityId {
         )
     );
 
-    return $self->sendError( $req, 'entityId is missing', 405 )
+    return $self->sendError( $req, 'entityId is missing', 400 )
       unless ( defined $entityId );
 
     $self->logger->debug("[API] Find SAML SPs by entityId $entityId requested");
@@ -82,19 +82,19 @@ sub addSamlSp {
     my ( $self, $req ) = @_;
     my $add = $req->jsonBodyToObj;
 
-    return $self->sendError( $req, "Invalid input: " . $req->error, 405 )
+    return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($add);
 
-    return $self->sendError( $req, 'Invalid input: confKey is missing', 405 )
+    return $self->sendError( $req, 'Invalid input: confKey is missing', 400 )
       unless ( defined $add->{confKey} );
 
-    return $self->sendError( $req, 'Invalid input: metadata is missing', 405 )
+    return $self->sendError( $req, 'Invalid input: metadata is missing', 400 )
       unless ( defined $add->{metadata} );
 
     my $entityId = $self->_readSamlSpEntityId( $add->{metadata} );
 
     return $self->sendError( $req,
-        'Invalid input: entityID is missing in metadata', 405 )
+        'Invalid input: entityID is missing in metadata', 400 )
       unless ( defined $entityId );
 
     $self->logger->debug(
@@ -107,16 +107,16 @@ sub addSamlSp {
     return $self->sendError(
         $req,
         "Invalid input: A SAML SP with confKey $add->{confKey} already exists",
-        405
+        400
     ) if ( defined $self->_getSamlSpByConfKey( $conf, $add->{confKey} ) );
 
     return $self->sendError( $req,
-        "Invalid input: A SAML SP with entityID $entityId already exists", 405 )
+        "Invalid input: A SAML SP with entityID $entityId already exists", 400 )
       if ( defined $self->_getSamlSpByEntityId( $conf, $entityId ) );
 
     my $res = $self->_pushSamlSp( $conf, $add->{confKey}, $add, 1 );
 
-    return $self->sendError( $req, $res->{msg}, 405 )
+    return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req,
@@ -131,10 +131,10 @@ sub replaceSamlSp {
 
     my $replace = $req->jsonBodyToObj;
 
-    return $self->sendError( $req, "Invalid input: " . $req->error, 405 )
+    return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
 
-    return $self->sendError( $req, 'Invalid input: metadata is missing', 405 )
+    return $self->sendError( $req, 'Invalid input: metadata is missing', 400 )
       unless ( defined $replace->{metadata} );
 
     $self->logger->debug(
@@ -152,12 +152,12 @@ sub replaceSamlSp {
     # check if new entityId exists already
     my $res = $self->_isNewSamlSpEntityIdUnique( $conf, $confKey, $replace );
 
-    return $self->sendError( $req, $res->{msg}, 405 )
+    return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
     $res = $self->_pushSamlSp( $conf, $confKey, $replace, 1 );
 
-    return $self->sendError( $req, $res->{msg}, 405 )
+    return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req,
@@ -172,7 +172,7 @@ sub updateSamlSp {
 
     my $update = $req->jsonBodyToObj;
 
-    return $self->sendError( $req, "Invalid input: " . $req->error, 405 )
+    return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
 
     $self->logger->debug(
@@ -192,13 +192,13 @@ sub updateSamlSp {
         # check if new entityId exists already
         $res = $self->_isNewSamlSpEntityIdUnique( $conf, $confKey, $update );
 
-        return $self->sendError( $req, $res->{msg}, 405 )
+        return $self->sendError( $req, $res->{msg}, 400 )
           unless ( $res->{res} eq 'ok' );
 
     }
 
     $res = $self->_pushSamlSp( $conf, $confKey, $update, 0 );
-    return $self->sendError( $req, $res->{msg}, 405 )
+    return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req,
