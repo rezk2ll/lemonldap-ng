@@ -221,8 +221,11 @@ sub defaultValues {
         'passwordPolicyMinDigit'              => 0,
         'passwordPolicyMinLower'              => 0,
         'passwordPolicyMinSize'               => 0,
+        'passwordPolicyMinSpeChar'            => 0,
         'passwordPolicyMinUpper'              => 0,
-        'passwordResetAllowedRetries'         => 3,
+        'passwordPolicySpecialChar' =>
+          '! @ # $ % & * ( ) - _ = + [ ] { } ; : , . / ?',
+        'passwordResetAllowedRetries' => 3,
         'persistentSessionAttributes' =>
           '_loginHistory _2fDevices notification_',
         'port'                                => -1,

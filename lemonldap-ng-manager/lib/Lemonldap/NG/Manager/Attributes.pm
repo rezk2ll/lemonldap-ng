@@ -2436,9 +2436,18 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 0,
             'type'    => 'int'
         },
+        'passwordPolicyMinSpeChar' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
         'passwordPolicyMinUpper' => {
             'default' => 0,
             'type'    => 'int'
+        },
+        'passwordPolicySpecialChar' => {
+            'default' => '! @ # $ % & * ( ) - _ = + [ ] { } ; : , . / ?',
+            'test'    => qr/^[\s\W_]+$/,
+            'type'    => 'text'
         },
         'passwordResetAllowedRetries' => {
             'default' => 3,

@@ -1434,6 +1434,17 @@ sub attributes {
             type          => 'int',
             documentation => 'Password policy: minimal digit characters',
         },
+        passwordPolicyMinSpeChar => {
+            default       => 0,
+            type          => 'int',
+            documentation => 'Password policy: minimal special characters',
+        },
+        passwordPolicySpecialChar => {
+            default       => '! @ # $ % & * ( ) - _ = + [ ] { } ; : , . / ?',
+            type          => 'text',
+            test          => qr/^[\s\W_]+$/,
+            documentation => 'Password policy: allowed special characters',
+        },
         portalDisplayPasswordPolicy => {
             default       => 0,
             type          => 'bool',

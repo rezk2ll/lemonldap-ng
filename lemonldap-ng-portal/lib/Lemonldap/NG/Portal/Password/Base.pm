@@ -8,14 +8,14 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADOLDPASSWORD
   PE_PASSWORD_OK
   PE_PASSWORD_MISMATCH
-  PE_PP_MUST_SUPPLY_OLD_PASSWORD
   PE_PP_PASSWORD_TOO_SHORT
+  PE_PP_MUST_SUPPLY_OLD_PASSWORD
   PE_PP_INSUFFICIENT_PASSWORD_QUALITY
 );
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 # INITIALIZATION
 
@@ -25,7 +25,7 @@ sub init {
 
 # INTERFACE
 
-sub forAuthUser { '_modifyPassword' }
+use constant forAuthUser => '_modifyPassword';
 
 # RUNNING METHODS
 
@@ -127,6 +127,19 @@ sub checkPasswordQuality {
         $digit++ while ( $password =~ m/\d/g );
         if ( $digit < $self->conf->{passwordPolicyMinDigit} ) {
             $self->logger->error("Password has not enough digit characters");
+            return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
+        }
+    }
+
+    # Min special characters
+    if ( $self->conf->{passwordPolicyMinSpeChar} ) {
+        my $spe      = 0;
+        my $speChars = $self->conf->{passwordPolicySpecialChar}
+          || '! @ # $ % & * ( ) - _ = + [ ] { } ; : , . / ?';
+        $speChars =~ s/\s+//g;
+        $spe = $password =~ s/[\Q$speChars\E]//g;
+        if ( $spe < $self->conf->{passwordPolicyMinSpeChar} ) {
+            $self->logger->error("Password has not enough special characters");
             return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
         }
     }
