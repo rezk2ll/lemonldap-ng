@@ -230,6 +230,18 @@ sub _userData {
             $req->error($error);
         }
     }
+
+    # Compute groups & macros again with real authenticationLevel
+    $req->sessionInfo->{authenticationLevel} =
+      $realSession->{real_authenticationLevel};
+    delete $req->sessionInfo->{groups};
+    $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
+    if ( my $error = $self->p->process($req) ) {
+        $self->logger->debug("Impersonation: Process returned error: $error");
+        $req->error($error);
+    }
+
+    $self->logger->debug("Return \"$req->{user}\" sessionInfo");
     return $req->{sessionInfo};
 }
 

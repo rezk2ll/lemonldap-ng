@@ -263,6 +263,7 @@ sub check {
                     "Compute groups and macros with real and spoofed attributes"
                 );
                 $req->sessionInfo($attrs);
+                delete $req->sessionInfo->{groups};
                 $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
                 if ( my $error = $self->p->process($req) ) {
                     $self->logger->debug("Process returned error: $error");
@@ -410,10 +411,10 @@ sub _userData {
     # Compute groups & macros again with real authenticationLevel
     $req->sessionInfo->{authenticationLevel} = $realAuthLevel;
     delete $req->sessionInfo->{groups};
+
     $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
     if ( my $error = $self->p->process($req) ) {
-        $self->logger->debug(
-            "ContextSwitching: Process returned error: $error");
+        $self->logger->debug("CheckUser: Process returned error: $error");
         return $req->error($error);
     }
 

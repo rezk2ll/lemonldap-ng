@@ -321,8 +321,8 @@ ok( $res->[2]->[0] =~ m%<td scope="row">rtyler/dwho</td>%, 'Found rtyler/dwo' )
 count(15);
 
 my %attributes = map /<td scope="row">(.+)?<\/td>/g, $res->[2]->[0];
-ok( scalar keys %attributes == 35, 'Found 35 attributes' )
-  or print STDERR ( keys %attributes < 35 )
+ok( scalar keys %attributes == 34, 'Found 34 attributes' )
+  or print STDERR ( keys %attributes < 34 )
   ? "Missing attributes -> " . scalar keys %attributes
   : "Too much attributes -> " . scalar keys %attributes;
 ok( $attributes{'_auth'} eq 'Demo', '_auth' )

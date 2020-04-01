@@ -212,14 +212,12 @@ ok( $res->[2]->[0] !~ m%_2fDevices</td>%, '_2fDevices NOT Found!' )
 
 ok( $res->[2]->[0] =~ m%<td scope="row">authMode</td>%, 'Found macro authMode' )
   or explain( $res->[2]->[0], 'Macro Key authMode' );
-ok( $res->[2]->[0] =~ m%<td scope="row">DEMO</td>%, 'Found DEMO' )
-  or explain( $res->[2]->[0], 'Macro Value DEMO' );
 ok( $res->[2]->[0] =~ m%<td scope="row">real_authMode</td>%,
     'Found macro real_authMode' )
   or explain( $res->[2]->[0], 'Macro Key real_authMode' );
 ok( $res->[2]->[0] =~ m%<td scope="row">TOTP</td>%, 'Found TOTP' )
   or explain( $res->[2]->[0], 'Macro Value TOTP' );
-count(8);
+count(7);
 
 $query =~ s/url=/url=http%3A%2F%2Ftest1.example.com/;
 ok(
