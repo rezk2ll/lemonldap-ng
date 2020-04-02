@@ -227,6 +227,8 @@
 "passwordPolicyMinLower":"Minimal lower characters:",
 "passwordPolicyMinUpper":"Minimal upper characters:",
 "passwordPolicyMinDigit":"Minimal digit characters:",
+"passwordPolicyMinSpeChar":"Minimal special characters:",
+"passwordPolicySpecialChar":"Allowed special characters:",
 "ppGrace":"authentications remaining, change your password!",
 "proxyError":"Bad gateway: unable to join remote server",
 "pwd":"Salasana",

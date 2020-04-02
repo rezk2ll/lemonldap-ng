@@ -541,8 +541,7 @@ sub display {
         STARTMAILTIME   => $req->data->{startMailTime},
         MAILALREADYSENT => $req->data->{mailAlreadySent},
         MAIL            => (
-            $self->p->checkXSSAttack( 'mail', $req->{user} )
-            ? ''
+              $self->p->checkXSSAttack( 'mail', $req->{user} ) ? ''
             : $req->{user}
         ),
         DISPLAY_FORM            => 0,
@@ -555,6 +554,12 @@ sub display {
         PPOLICY_MINLOWER        => $self->conf->{passwordPolicyMinLower},
         PPOLICY_MINUPPER        => $self->conf->{passwordPolicyMinUpper},
         PPOLICY_MINDIGIT        => $self->conf->{passwordPolicyMinDigit},
+        PPOLICY_ALLOWEDSPECHAR  => $self->conf->{passwordPolicySpecialChar},
+        (
+            $self->conf->{passwordPolicySpecialChar}
+            ? ( PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar} )
+            : ()
+        ),
         DISPLAY_GENERATE_PASSWORD =>
           $self->conf->{portalDisplayGeneratePassword},
     );

@@ -227,6 +227,8 @@
 "passwordPolicyMinLower":"Minimal lower characters:",
 "passwordPolicyMinUpper":"Minimal upper characters:",
 "passwordPolicyMinDigit":"Minimal digit characters:",
+"passwordPolicyMinSpeChar":"Minimal special characters:",
+"passwordPolicySpecialChar":"Allowed special characters:",
 "ppGrace":"autenticazioni restanti, modifica la tua password!",
 "proxyError":"Gateway errata: impossibile associarsi a un server remoto",
 "pwd":"Password",

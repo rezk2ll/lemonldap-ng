@@ -227,6 +227,8 @@
 "passwordPolicyMinLower":"Minimum küçük harf karakter sayısı :",
 "passwordPolicyMinUpper":"Minimum büyük harf karakter sayısı :",
 "passwordPolicyMinDigit":"Minimum rakam karakter sayısı :",
+"passwordPolicyMinSpeChar":"Minimal special characters:",
+"passwordPolicySpecialChar":"Allowed special characters:",
 "ppGrace":"kimlik doğrulaması kaldı, parolanızı değiştirin!",
 "proxyError":"Kötü ağ geçidi: uzak sunucuya katılamıyor",
 "pwd":"Parola",

@@ -227,6 +227,8 @@
 "passwordPolicyMinLower":"Minimal lower characters:",
 "passwordPolicyMinUpper":"Minimal upper characters:",
 "passwordPolicyMinDigit":"Minimal digit characters:",
+"passwordPolicyMinSpeChar":"Minimal special characters:",
+"passwordPolicySpecialChar":"Allowed special characters:",
 "ppGrace":"authentications remaining, change your password!",
 "proxyError":"错误的网关：无法连接远程服务器",
 "pwd":"密码",

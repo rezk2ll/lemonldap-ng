@@ -227,6 +227,8 @@
 "passwordPolicyMinLower":"Minimal lower characters:",
 "passwordPolicyMinUpper":"Minimal upper characters:",
 "passwordPolicyMinDigit":"Minimal digit characters:",
+"passwordPolicyMinSpeChar":"Minimal special characters:",
+"passwordPolicySpecialChar":"Allowed special characters:",
 "ppGrace":"المصادقات المتبقية، غير كلمة المرور الخاصة بك!",
 "proxyError":"بوابة سيئة: غير قادر على الانضمام لالخادم البعيد",
 "pwd":"كلمة المرور",

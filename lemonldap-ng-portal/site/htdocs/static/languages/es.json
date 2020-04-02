@@ -227,6 +227,8 @@
 "passwordPolicyMinLower":"Minúsculas, como mínimo:",
 "passwordPolicyMinUpper":"Mayúsculas, como mínimo:",
 "passwordPolicyMinDigit":"Dígitos, como mínimo:",
+"passwordPolicyMinSpeChar":"Minimal special characters:",
+"passwordPolicySpecialChar":"Allowed special characters:",
 "ppGrace":"autenticaciones restantes, ¡cambie su contraseña!.",
 "proxyError":"Puerta de enlace no válida: servidor remoto inalcanzable",
 "pwd":"Contraseña",

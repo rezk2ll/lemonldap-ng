@@ -217,6 +217,13 @@ sub display {
             PPOLICY_MINLOWER    => $self->conf->{passwordPolicyMinLower},
             PPOLICY_MINUPPER    => $self->conf->{passwordPolicyMinUpper},
             PPOLICY_MINDIGIT    => $self->conf->{passwordPolicyMinDigit},
+            PPOLICY_ALLOWEDSPECHAR => $self->conf->{passwordPolicySpecialChar},
+            (
+                $self->conf->{passwordPolicySpecialChar}
+                ? ( PPOLICY_MINSPECHAR =>
+                      $self->conf->{passwordPolicyMinSpeChar} )
+                : ()
+            ),
             $self->menu->params($req),
             (
                 $req->data->{customScript}
