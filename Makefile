@@ -207,14 +207,20 @@ MANAGERJSONSRC= scripts/jsongenerator.pl \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Attributes.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Tree.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/CTrees.pm \
-		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Conf/Zero.pm
+		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Conf/Zero.pm \
+		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/PortalConstants.pm
 MANAGERJSONDST=$(SRCMANAGERDIR)/site/htdocs/static/struct.json \
+		$(SRCMANAGERDIR)/site/htdocs/static/reverseTree.json \
 		$(SRCMANAGERDIR)/site/htdocs/static/js/conftree.js \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Attributes.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/ReConstants.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/Constants.pm \
+		$(SRCPORTALDIR)/lib/Lemonldap/NG/Portal/Main/Constants.pm \
+		$(SRCHANDLERDIR)/lib/Lemonldap/NG/Handler/Lib/StatusConstants.pm \
 		_example/conf/lmConf-1.json
+
+
 
 # Javascript and CSS to minify
 JSSRCFILES:=$(shell find */site/htdocs/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
