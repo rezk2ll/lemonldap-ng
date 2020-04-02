@@ -525,7 +525,11 @@ sub setSecurity {
 
 sub display {
     my ( $self, $req ) = @_;
+    my $speChars = $self->conf->{passwordPolicySpecialChar};
+    $speChars =~ s/\s+/ /g;
+    $speChars =~ s/(?:^\s|\s$)//g;
     $self->logger->debug( 'Display called with code: ' . $req->error );
+    
     my %tplPrm = (
         SKIN_PATH       => $self->conf->{staticPrefix},
         SKIN            => $self->p->getSkin($req),
@@ -554,9 +558,9 @@ sub display {
         PPOLICY_MINLOWER        => $self->conf->{passwordPolicyMinLower},
         PPOLICY_MINUPPER        => $self->conf->{passwordPolicyMinUpper},
         PPOLICY_MINDIGIT        => $self->conf->{passwordPolicyMinDigit},
-        PPOLICY_ALLOWEDSPECHAR  => $self->conf->{passwordPolicySpecialChar},
+        PPOLICY_ALLOWEDSPECHAR  => $speChars,
         (
-            $self->conf->{passwordPolicySpecialChar}
+            $speChars
             ? ( PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar} )
             : ()
         ),

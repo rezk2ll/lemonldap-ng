@@ -199,6 +199,9 @@ sub display {
 
     # 2.2 Case : display menu (with error or not)
     elsif ( $req->error == PE_OK ) {
+        my $speChars = $self->conf->{passwordPolicySpecialChar};
+        $speChars =~ s/\s+/ /g;
+        $speChars =~ s/(?:^\s|\s$)//g;
         $skinfile = 'menu';
 
         #utf8::decode($auth_user);
@@ -217,9 +220,9 @@ sub display {
             PPOLICY_MINLOWER    => $self->conf->{passwordPolicyMinLower},
             PPOLICY_MINUPPER    => $self->conf->{passwordPolicyMinUpper},
             PPOLICY_MINDIGIT    => $self->conf->{passwordPolicyMinDigit},
-            PPOLICY_ALLOWEDSPECHAR => $self->conf->{passwordPolicySpecialChar},
+            PPOLICY_ALLOWEDSPECHAR => $speChars,
             (
-                $self->conf->{passwordPolicySpecialChar}
+                $speChars
                 ? ( PPOLICY_MINSPECHAR =>
                       $self->conf->{passwordPolicyMinSpeChar} )
                 : ()
