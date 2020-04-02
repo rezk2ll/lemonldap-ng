@@ -1440,9 +1440,9 @@ sub attributes {
             documentation => 'Password policy: minimal special characters',
         },
         passwordPolicySpecialChar => {
-            default       => '! @ # $ % & * ( ) - _ = + [ ] { } ; : , . / ?',
+            default       => '! @ # $ % & * ( ) - = + [ ] { } ; : , . / ?',
             type          => 'text',
-            test          => qr/^[\s\W_]+$/,
+            test          => qr/^[\s\W_]*$/,
             documentation => 'Password policy: allowed special characters',
         },
         portalDisplayPasswordPolicy => {

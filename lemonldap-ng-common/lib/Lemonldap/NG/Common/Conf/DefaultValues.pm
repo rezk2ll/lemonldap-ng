@@ -224,7 +224,7 @@ sub defaultValues {
         'passwordPolicyMinSpeChar'            => 0,
         'passwordPolicyMinUpper'              => 0,
         'passwordPolicySpecialChar' =>
-          '! @ # $ % & * ( ) - _ = + [ ] { } ; : , . / ?',
+          '! @ # $ % & * ( ) - = + [ ] { } ; : , . / ?',
         'passwordResetAllowedRetries' => 3,
         'persistentSessionAttributes' =>
           '_loginHistory _2fDevices notification_',

@@ -106,7 +106,9 @@ sub portalConstants {
         PE_BADOTP                            => 96,
         PE_RESETCERTIFICATE_INVALID          => 97,
         PE_RESETCERTIFICATE_FORMEMPTY        => 98,
-        PE_RESETCERTIFICATE_FIRSTACCESS      => 99
+        PE_RESETCERTIFICATE_FIRSTACCESS      => 99,
+        PE_PP_NOT_ALLOWED_CHARACTER          => 100,
+        PE_PP_NOT_ALLOWED_CHARACTERS         => 101
     };
 }
 

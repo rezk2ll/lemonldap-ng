@@ -680,6 +680,8 @@
 "passwordPolicyMinLower": "Minimum de minuscules",
 "passwordPolicyMinUpper": "Minimum de majuscules",
 "passwordPolicyMinDigit": "Minimum de chiffres",
+"passwordPolicyMinSpeChar":"Minimum de caractètes spéciaux",
+"passwordPolicySpecialChar":"Caractètes spéciaux autorisés",
 "passwordResetAllowedRetries":"Nombre d'essais pour réinitialiser le mot de passe",
 "persistent":"Persistantes",
 "persistentSessions":"Sessions persistantes",

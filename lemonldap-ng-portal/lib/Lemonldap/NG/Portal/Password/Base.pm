@@ -9,6 +9,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORD_OK
   PE_PASSWORD_MISMATCH
   PE_PP_PASSWORD_TOO_SHORT
+  PE_PP_NOT_ALLOWED_CHARACTER
+  PE_PP_NOT_ALLOWED_CHARACTERS
   PE_PP_MUST_SUPPLY_OLD_PASSWORD
   PE_PP_INSUFFICIENT_PASSWORD_QUALITY
 );
@@ -131,17 +133,27 @@ sub checkPasswordQuality {
         }
     }
 
+    ## Special characters policy
+    my $speChars = $self->conf->{passwordPolicySpecialChar};
+    $speChars =~ s/\s+//g;
+
     # Min special characters
-    if ( $self->conf->{passwordPolicyMinSpeChar} ) {
-        my $spe      = 0;
-        my $speChars = $self->conf->{passwordPolicySpecialChar}
-          || '! @ # $ % & * ( ) - _ = + [ ] { } ; : , . / ?';
-        $speChars =~ s/\s+//g;
-        $spe = $password =~ s/[\Q$speChars\E]//g;
+    if ( $self->conf->{passwordPolicyMinSpeChar} && $speChars ) {
+        my $spe  = 0;
+        my $test = $password;
+        $spe = $test =~ s/[\Q$speChars\E]//g;
         if ( $spe < $self->conf->{passwordPolicyMinSpeChar} ) {
             $self->logger->error("Password has not enough special characters");
             return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
         }
+    }
+
+    # Fobidden special characters
+    $password =~ s/[\Q$speChars\E\w]//g;
+    if ($password) {
+        $self->logger->error(
+            'Password contains ' . length($password) . " forbidden character(s): $password");
+        return length($password) > 1 ? PE_PP_NOT_ALLOWED_CHARACTERS : PE_PP_NOT_ALLOWED_CHARACTER;
     }
 
     return PE_OK;

@@ -89,6 +89,8 @@
 "PE97":"Your certificate is invalid or expires soon",
 "PE98":"Please select your new certificate",
 "PE99":"Please select your new certificate",
+"PE100":"Password contains not allowed character",
+"PE101":"Password contains not allowed characters",
 "2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"Chấp nhận",
 "accessDenied":"Bạn không có quyền truy cập vào ứng dụng này",

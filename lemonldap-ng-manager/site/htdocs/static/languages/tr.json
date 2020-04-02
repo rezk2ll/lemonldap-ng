@@ -680,6 +680,8 @@
 "passwordPolicyMinLower":"Minimum küçük harf karakter sayısı",
 "passwordPolicyMinUpper":"Minimum büyük harf karakter sayısı",
 "passwordPolicyMinDigit":"Minimum rakam karakter sayısı",
+"passwordPolicyMinSpeChar":"Minimal special characters",
+"passwordPolicySpecialChar":"Allowed special characters",
 "passwordResetAllowedRetries":"Maksimum parola sıfırlama denemesi",
 "persistent":"Kalıcı",
 "persistentSessions":"Kalıcı oturumlar",

@@ -680,6 +680,8 @@
 "passwordPolicyMinLower": "Minimal lower characters",
 "passwordPolicyMinUpper": "Minimal upper characters",
 "passwordPolicyMinDigit": "Minimal digit characters",
+"passwordPolicyMinSpeChar":"Minimal special characters",
+"passwordPolicySpecialChar":"Allowed special characters",
 "passwordResetAllowedRetries":"Max reset password retries",
 "persistent":"Persistent",
 "persistentSessions":"Persistent sessions",

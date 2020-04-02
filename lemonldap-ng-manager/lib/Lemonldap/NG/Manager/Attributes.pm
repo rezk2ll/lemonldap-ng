@@ -2445,8 +2445,8 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type'    => 'int'
         },
         'passwordPolicySpecialChar' => {
-            'default' => '! @ # $ % & * ( ) - _ = + [ ] { } ; : , . / ?',
-            'test'    => qr/^[\s\W_]+$/,
+            'default' => '! @ # $ % & * ( ) - = + [ ] { } ; : , . / ?',
+            'test'    => qr/^[\s\W_]*$/,
             'type'    => 'text'
         },
         'passwordResetAllowedRetries' => {
