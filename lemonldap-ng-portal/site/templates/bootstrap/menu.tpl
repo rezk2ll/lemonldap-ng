@@ -67,10 +67,10 @@
                 <span trspan="sfaManager">sfaManager</span>
               </a></li>
             </TMPL_IF>
-            <TMPL_IF NAME="ContextSwitching">
-              <li class="dropdown-item"><a href="/switchcontext" class="nav-link">
-                <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/switchcontext_<TMPL_VAR NAME="contextSwitching">.png" width="20" height="20" alt="ContentSwitching" />
-                <span trspan="contextSwitching_<TMPL_VAR NAME="contextSwitching">">contextSwitching_<TMPL_VAR NAME="ContextSwitching"></span>
+            <TMPL_IF NAME="Notifications">
+              <li class="dropdown-item"><a href="/mynotifications" class="nav-link">
+                <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/notifsExplorer.png" width="20" height="20" alt="NotificationsExplorer" />
+                <span trspan="notificationsExplorer">notificationsExplorer</span>
               </a></li>
             </TMPL_IF>
             <TMPL_IF NAME="DecryptValue">
@@ -79,10 +79,10 @@
                 <span trspan="decryptCipheredValue">decryptCipheredValue</span>
               </a></li>
             </TMPL_IF>
-            <TMPL_IF NAME="Notifications">
-              <li class="dropdown-item"><a href="/mynotifications" class="nav-link">
-                <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/notifsExplorer.png" width="20" height="20" alt="NotificationsExplorer" />
-                <span trspan="notificationsExplorer">notificationsExplorer</span>
+            <TMPL_IF NAME="ContextSwitching">
+              <li class="dropdown-item"><a href="/switchcontext" class="nav-link">
+                <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/switchcontext_<TMPL_VAR NAME="contextSwitching">.png" width="20" height="20" alt="ContentSwitching" />
+                <span trspan="contextSwitching_<TMPL_VAR NAME="contextSwitching">">contextSwitching_<TMPL_VAR NAME="ContextSwitching"></span>
               </a></li>
             </TMPL_IF>
             <li class="dropdown-item"><a href="/refresh" class="nav-link">
