@@ -244,6 +244,7 @@ sub run {
                 my $uid   = $req->user;
                 my $date  = strftime "%Y-%m-%d", localtime;
                 my $ref   = $self->conf->{sfRemovedNotifRef} || 'RemoveSF';
+                $ref .= '_' . time();
                 my $title = $self->conf->{sfRemovedNotifTitle}
                   || 'Second factor notification';
                 my $msg = $self->conf->{sfRemovedNotifMsg}
@@ -255,10 +256,12 @@ sub run {
                   ? { trspan => "expired2Fremoved, $removed" }
                   : { trspan => "oneExpired2Fremoved" };
 
+                my $notifEngine = $self->p->loadedModules->{
+                    'Lemonldap::NG::Portal::Plugins::Notifications'};
+
                 my $res =
-                  $self->conf->{sfRemovedUseNotif}
-                  ? $self->createNotification( $req, $uid, $date, $ref, $title,
-                    $msg )
+                  ( $self->conf->{sfRemovedUseNotif} && $notifEngine )
+                  ? $self->createNotification( $req, $uid, $date, $ref, $title, $msg )
                   : $self->displayTemplate( $req, 'simpleInfo', $params );
                 return $res if $res;
             }
