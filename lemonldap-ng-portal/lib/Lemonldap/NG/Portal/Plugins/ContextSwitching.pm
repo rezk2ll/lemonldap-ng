@@ -85,14 +85,17 @@ sub display {
 
     # Check access rules
     unless ( $self->rule->( $req, $req->userData )
-        || $req->userData->{"$self->{conf}->{contextSwitchingPrefix}_session_id"} )
+        || $req->userData->{
+            "$self->{conf}->{contextSwitchingPrefix}_session_id"} )
     {
         $self->userLogger->warn('ContextSwitching service NOT authorized');
         return $self->p->do( $req,
             [ sub { PE_IMPERSONATION_SERVICE_NOT_ALLOWED } ] );
     }
 
-    if ( $req->userData->{"$self->{conf}->{contextSwitchingPrefix}_session_id"} ) {
+    if (
+        $req->userData->{"$self->{conf}->{contextSwitchingPrefix}_session_id"} )
+    {
         $self->logger->debug('Request to stop ContextSwitching');
         if ( $self->conf->{contextSwitchingStopWithLogout} ) {
             $self->userLogger->notice("Stop ContextSwitching for $req->{user}");
@@ -177,14 +180,9 @@ sub run {
 
     # Create spoofed session
     $req = $self->_switchContext( $req, $spoofId );
-    if ( $req->error ) {
-        if ( $req->error == PE_BADCREDENTIALS ) {
-            $statut = PE_MALFORMEDUSER;
-        }
-        else {
-            $statut = $req->error;
-        }
-    }
+    $statut =
+      ( $req->error == PE_BADCREDENTIALS ? PE_MALFORMEDUSER : $req->error )
+      if $req->error;
 
     # Main session
     $self->p->updateSession( $req, $req->sessionInfo );
@@ -211,12 +209,11 @@ sub _switchContext {
         ]
     );
     if ( my $error = $self->p->process($req) ) {
-        if ( $error == PE_BADCREDENTIALS ) {
-            $self->userLogger->warn(
-                    'ContextSwitching requested for an unvalid user ('
-                  . $req->{user}
-                  . ")" );
-        }
+        $self->userLogger->warn(
+                'ContextSwitching requested for an unvalid user ('
+              . $req->{user}
+              . ")" )
+          if ( $error == PE_BADCREDENTIALS );
         $self->logger->debug("Process returned error: $error");
         $req->error($error);
         $raz = 1;
@@ -236,27 +233,24 @@ sub _switchContext {
     $req->sessionInfo->{"$self->{conf}->{contextSwitchingPrefix}_session_id"} =
       $realSessionId;
 
-    if ($raz) {
-        return $self->_abortImpersonation( $req, $spoofId, $realId, 1 );
-    }
-    else {
+    return $self->_abortImpersonation( $req, $spoofId, $realId, 1 ) if $raz;
+
+    $self->logger->debug(
+        "Update sessionInfo with real authenticationLevel: $realAuthLevel");
+    $req->sessionInfo->{authenticationLevel} = $realAuthLevel;
+    delete $req->sessionInfo->{groups};
+
+    # Compute groups & macros again with real authenticationLevel
+    $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
+    if ( my $error = $self->p->process($req) ) {
         $self->logger->debug(
-            "Update sessionInfo with real authenticationLevel: $realAuthLevel");
-        $req->sessionInfo->{authenticationLevel} = $realAuthLevel;
-        delete $req->sessionInfo->{groups};
-
-        # Compute groups & macros again with real authenticationLevel
-        $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
-        if ( my $error = $self->p->process($req) ) {
-            $self->logger->debug(
-                "ContextSwitching: Process returned error: $error");
-            $req->error($error);
-        }
-
-        $self->userLogger->notice(
-            "Start ContextSwitching: $realId becomes $spoofId ");
-        return $req;
+            "ContextSwitching: Process returned error: $error");
+        $req->error($error);
     }
+
+    $self->userLogger->notice(
+        "Start ContextSwitching: $realId becomes $spoofId ");
+    return $req;
 }
 
 sub _abortImpersonation {
@@ -293,7 +287,8 @@ sub _abortImpersonation {
     $req->urldc( $self->conf->{portal} );
     $req->id($realSessionId);
     $self->p->buildCookie($req);
-    delete $req->{$type}->{"$self->{conf}->{contextSwitchingPrefix}_session_id"};
+    delete $req->{$type}
+      ->{"$self->{conf}->{contextSwitchingPrefix}_session_id"};
 
     return $req;
 }
