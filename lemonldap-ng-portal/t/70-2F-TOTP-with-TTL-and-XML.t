@@ -3,8 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 20;
-my $file      = '20190616_dwho_Tm90aWZpY2F0aW9uX1NG.json';
+my $maintests = 21;
 
 SKIP: {
     eval {
@@ -150,9 +149,11 @@ SKIP: {
     expectOK($res);
     ok(
         $res->[2]->[0] =~
-          qr%<input type="hidden" name="reference1x1" value="RemoveSF">%,
+qr%<input type="hidden" name="reference1x1" value="RemoveSF_(\d{10})">%,
         'Notification reference found'
     ) or print STDERR Dumper( $res->[2]->[0] );
+    ok( $1 == time() + 300, 'Right reference found' )
+      or print STDERR Dumper( $res->[2]->[0] );
     ok(
         $res->[2]->[0] =~
 qr%<p class="notifText">1 expired second factor\(s\) has/have been removed!</p>%,
@@ -162,7 +163,7 @@ qr%<p class="notifText">1 expired second factor\(s\) has/have been removed!</p>%
     $client->logout($id);
 }
 count($maintests);
-system 'rm -f t/*_dwho_UmVtb3ZlU0Y=.xml';
+system 'rm -f t/*_dwho_*.xml';
 clean_sessions();
 
 done_testing( count() );
