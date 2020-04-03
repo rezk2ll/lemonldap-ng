@@ -779,7 +779,7 @@ sub tests {
         # Notification system required with removed SF notification
         sfRemovedNotification => sub {
             return 1 unless ( $conf->{sfRemovedMsgRule} );
-            return ( -1,
+            return ( 1,
 'Notification system must be enabled to display a notification if a SF is removed'
             ) if ( $conf->{sfRemovedUseNotif} and not $conf->{notification} );
             return 1;
