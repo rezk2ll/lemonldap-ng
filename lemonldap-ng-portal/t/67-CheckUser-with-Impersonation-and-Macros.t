@@ -174,7 +174,7 @@ m%<div class="alert alert-success"><div class="text-center"><b><span trspan="all
 ) or explain( $res->[2]->[0], 'trspan="allowed"' );
 ok( $res->[2]->[0] =~ m%<td scope="row">Macro_1</td>%, 'Found uid' )
   or explain( $res->[2]->[0], 'Attribute Value uid' );
-ok( my $nbr = ( $res->[2]->[0] =~ s%<td scope="row">Macro_1</td>%%g ),
+ok( $nbr = ( $res->[2]->[0] =~ s%<td scope="row">Macro_1</td>%%g ),
     'Found two well computed macros' )
   or explain( $res->[2]->[0], 'Macros not well computed' );
 ok( $res->[2]->[0] =~ m%<div class="col">authGroup</div>%, 'Found group "authGroup"' )

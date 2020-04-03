@@ -159,7 +159,7 @@ count(4);
 ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $keyR, 0, 30, 6 ),
     'Code' );
 ok( $code =~ /^\d{6}$/, 'Code contains 6 digits' );
-my $s = "code=$code&token=$token";
+$s = "code=$code&token=$token";
 ok(
     $res = $client->_post(
         '/2fregisters/totp/verify',
