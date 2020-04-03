@@ -776,7 +776,7 @@ sub tests {
             return 1;
         },
 
-        # Notification system required SF removed notification
+        # Notification system required with removed SF notification
         sfRemovedNotification => sub {
             return 1 unless ( $conf->{sfRemovedMsgRule} );
             return ( -1,
