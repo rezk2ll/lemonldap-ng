@@ -149,7 +149,7 @@ SKIP: {
 qr%<input type="hidden" name="reference1x1" value="RemoveTOTP-(\d{10})">%,
         'Notification reference found'
     ) or print STDERR Dumper( $res->[2]->[0] );
-    ok( $1 == time() + 300, 'Right reference found' )
+    ok( time() + 300 <= $1 && $1 <= time() + 305, 'Right reference found' )
       or print STDERR Dumper( $res->[2]->[0] );
     ok(
         $res->[2]->[0] =~
