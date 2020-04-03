@@ -825,7 +825,7 @@
 "sfaTitle":"Seconds Facteurs d'Authentification",
 "sfExtra":"Seconds facteurs additionnels",
 "sfRequired":"Exiger 2FA",
-"sfRemovedNotification":"Afficher un message si un SF expiré a été supprimé",
+"sfRemovedNotification":"Avertir si un SF expiré a été supprimé",
 "sfRemovedMsgRule":"Activation",
 "sfRemovedUseNotif":"Utiliser les notifications",
 "sfRemovedNotifMsg":"Message de la notification",

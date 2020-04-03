@@ -825,7 +825,7 @@
 "sfaTitle":"İki Faktörlü Kimlik Doğrulaması",
 "sfExtra":"Ek ikinci faktörler",
 "sfRequired":"2FA gerektir",
-"sfRemovedNotification":"Süresi dolan bir SF kaldırıldığında bir mesaj göster",
+"sfRemovedNotification":"Warn if an expired SF is removed",
 "sfRemovedMsgRule":"Aktivasyon",
 "sfRemovedUseNotif":"Bildirimler eklentisini kullan",
 "sfRemovedNotifMsg":"Bildirim mesajı",
