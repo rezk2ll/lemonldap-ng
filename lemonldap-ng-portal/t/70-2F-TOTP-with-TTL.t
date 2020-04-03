@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 18;
+my $maintests = 20;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -18,6 +18,7 @@ SKIP: {
                 totp2fSelfRegistration => 1,
                 totp2fActivation       => 1,
                 totp2fTTL              => 120,
+                totp2fIssuer           => 'LLNG_Demo',
                 portalMainLogo         => 'common/logos/logo_llng_old.png',
             }
         }
@@ -73,8 +74,12 @@ SKIP: {
     ok( not($@), 'Content is JSON' )
       or explain( $res->[2]->[0], 'JSON content' );
     my ( $key, $token );
-    ok( $key   = $res->{secret}, 'Found secret' );
-    ok( $token = $res->{token},  'Found token' );
+    ok( $key   = $res->{secret}, 'Found secret' ) or print STDERR Dumper($res);
+    ok( $token = $res->{token},  'Found token' )  or print STDERR Dumper($res);
+    ok( $res->{portal} eq 'LLNG_Demo', 'Found issuer' )
+      or print STDERR Dumper($res);
+    ok( $res->{user} eq 'dwho', 'Found user' )
+      or print STDERR Dumper($res);
     $key = Convert::Base32::decode_base32($key);
 
     # Post code
