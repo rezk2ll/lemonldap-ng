@@ -13,19 +13,19 @@ my $client = LLNG::Manager::Test->new( {
             logLevel                       => 'error',
             authentication                 => 'Demo',
             userDB                         => 'Same',
+            https                          => 0,
             loginHistoryEnabled            => 0,
             brutForceProtection            => 0,
             portalMainLogo                 => 'common/logos/logo_llng_old.png',
             requireToken                   => 1,
             checkUser                      => 1,
-            impersonationPrefix            => 'testPrefix_',
             securedCookie                  => 0,
-            https                          => 0,
             checkUserDisplayPersistentInfo => 0,
             checkUserDisplayEmptyValues    => 0,
             contextSwitchingRule           => 1,
             contextSwitchingIdRule         => 1,
             contextSwitchingStopWithLogout => 1,
+            contextSwitchingPrefix         => 'testPrefix_',
         }
     }
 );
@@ -109,7 +109,7 @@ ok(
 );
 ok(
     $res->[2]->[0] =~
-m%<div class="message message-negative alert"><span trmsg="82"></span>%,
+      m%<div class="message message-negative alert"><span trmsg="82"></span>%,
     'Found "<span trmsg="82">"'
 ) or explain( $res->[2]->[0], '<span trmsg="82">' );
 count(3);

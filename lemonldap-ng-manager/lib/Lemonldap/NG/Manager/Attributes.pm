@@ -1004,6 +1004,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             },
             'type' => 'text'
         },
+        'contextSwitchingPrefix' => {
+            'default' => 'switching',
+            'type'    => 'text'
+        },
         'contextSwitchingRule' => {
             'default' => 0,
             'type'    => 'boolOrExpr'

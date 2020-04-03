@@ -66,7 +66,7 @@ my @notManagedAttributes = (
     # Other ini-only prms
     'checkTime',           'status', 'soapProxyUrn',
     'impersonationPrefix', 'pdataDomain',
-    'mySessionAuthorizedRWKeys',
+    'mySessionAuthorizedRWKeys', 'contextSwitchingPrefix'
 );
 
 # Words used either as attribute name and node title

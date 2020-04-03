@@ -75,7 +75,7 @@ sub init {
 sub display {
     my ( $self, $req ) = @_;
     my $realSessionId =
-      $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
+      $req->userData->{"$self->{conf}->{contextSwitchingPrefix}_session_id"};
     my $realSession;
     unless ( $realSession = $self->p->getApacheSession($realSessionId) ) {
         $self->userLogger->info(
@@ -85,14 +85,14 @@ sub display {
 
     # Check access rules
     unless ( $self->rule->( $req, $req->userData )
-        || $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} )
+        || $req->userData->{"$self->{conf}->{contextSwitchingPrefix}_session_id"} )
     {
         $self->userLogger->warn('ContextSwitching service NOT authorized');
         return $self->p->do( $req,
             [ sub { PE_IMPERSONATION_SERVICE_NOT_ALLOWED } ] );
     }
 
-    if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"} ) {
+    if ( $req->userData->{"$self->{conf}->{contextSwitchingPrefix}_session_id"} ) {
         $self->logger->debug('Request to stop ContextSwitching');
         if ( $self->conf->{contextSwitchingStopWithLogout} ) {
             $self->userLogger->notice("Stop ContextSwitching for $req->{user}");
@@ -233,7 +233,7 @@ sub _switchContext {
         $raz = 1;
     }
 
-    $req->sessionInfo->{"$self->{conf}->{impersonationPrefix}_session_id"} =
+    $req->sessionInfo->{"$self->{conf}->{contextSwitchingPrefix}_session_id"} =
       $realSessionId;
 
     if ($raz) {
@@ -263,7 +263,7 @@ sub _abortImpersonation {
     my ( $self, $req, $spoofId, $realId, $abort ) = @_;
     my $type = $abort ? 'sessionInfo' : 'userData';
     my $realSessionId =
-      $req->{$type}->{"$self->{conf}->{impersonationPrefix}_session_id"};
+      $req->{$type}->{"$self->{conf}->{contextSwitchingPrefix}_session_id"};
     my $session;
     unless ( $session = $self->p->getApacheSession($realSessionId) ) {
         $self->userLogger->info("Session $session expired");
@@ -293,7 +293,7 @@ sub _abortImpersonation {
     $req->urldc( $self->conf->{portal} );
     $req->id($realSessionId);
     $self->p->buildCookie($req);
-    delete $req->{$type}->{"$self->{conf}->{impersonationPrefix}_session_id"};
+    delete $req->{$type}->{"$self->{conf}->{contextSwitchingPrefix}_session_id"};
 
     return $req;
 }
@@ -301,7 +301,7 @@ sub _abortImpersonation {
 sub displayLink {
     my ( $self, $req ) = @_;
     return 'OFF'
-      if $req->userData->{"$self->{conf}->{impersonationPrefix}_session_id"};
+      if $req->userData->{"$self->{conf}->{contextSwitchingPrefix}_session_id"};
     return 'ON' if $self->rule->( $req, $req->userData );
 }
 

@@ -550,6 +550,12 @@ sub attributes {
             documentation => 'Stop context switching by logout',
             flags         => 'p',
         },
+        contextSwitchingPrefix => {
+            type          => 'text',
+            default       => 'switching',
+            documentation => 'Prefix to store real session Id',
+            flags         => 'p',
+        },
         decryptValueRule => {
             type          => 'boolOrExpr',
             default       => 0,

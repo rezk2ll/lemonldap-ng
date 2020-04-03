@@ -41,6 +41,7 @@ sub defaultValues {
         'checkXSS'                       => 1,
         'confirmFormMethod'              => 'post',
         'contextSwitchingIdRule'         => 1,
+        'contextSwitchingPrefix'         => 'switching',
         'contextSwitchingRule'           => 0,
         'contextSwitchingStopWithLogout' => 1,
         'cookieName'                     => 'lemonldap',
