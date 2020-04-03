@@ -24,7 +24,7 @@ SKIP: {
                 totp2fTTL                  => 120,
                 sfRemovedMsgRule           => '$uid eq "dwho"',
                 sfRemovedUseNotif          => 1,
-                sfRemovedNotifRef          => 'RemoveTOTP',
+                sfRemovedNotifRef          => 'Remove_TOTP',
                 portalMainLogo             => 'common/logos/logo_llng_old.png',
                 notification               => 1,
                 notificationStorage        => 'File',
@@ -150,7 +150,7 @@ SKIP: {
     expectOK($res);
     ok(
         $res->[2]->[0] =~
-qr%<input type="hidden" name="reference1x1" value="RemoveTOTP-(\d{10})">%,
+qr%<input type="hidden" name="reference1x1" value="Remove-TOTP-(\d{10})">%,
         'Notification reference found'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( time() + 300 <= $1 && $1 <= time() + 305, 'Right reference found' )

@@ -41,7 +41,7 @@ my $jsonbis = '{
 
 my $json2 = q%{
 "date": "2016-05-30",
-"reference": "testref2",
+"reference": "test_ref2",
 "uid": "dwho",
 "title": "Test2 title",
 "text": "This is a second test text",
@@ -187,7 +187,7 @@ ok( scalar @{ $json->{result} } == 3,             'Three notifications found' )
   or print STDERR Dumper($json);
 
 foreach ( @{ $json->{result} } ) {
-    ok( $_->{reference} =~ /^testref/, "Reference \'$_->{reference}\' found" )
+    ok( $_->{reference} =~ /^test-?ref/, "Reference \'$_->{reference}\' found" )
       or print STDERR Dumper($json);
     ok( $_->{uid} =~ /^(dwho|everyone)$/, "UID \'$_->{uid}\' found" )
       or print STDERR Dumper($json);
@@ -204,7 +204,7 @@ ok( $res->[2]->[0] =~ /"result"\s*:\s*/, 'Result found' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ /"reference":"testref"/, 'First notification found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ /"reference":"testref2"/, 'Second notification found' )
+ok( $res->[2]->[0] =~ /"reference":"test-ref2"/, 'Second notification found' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok(
     $res->[2]->[0] =~ /"reference":"testrefall"/,
@@ -236,14 +236,14 @@ count(7);
 
 ok(
     $res = $client->_get(
-        '/notifications/dwho/testref2',
+        '/notifications/dwho/test-ref2',
         type => 'application/json',
     ),
-    'List notification with reference "testref2"'
+    'List notification with reference "test-ref2"'
 );
 ok( $res->[2]->[0] =~ /"result"\s*:\s*/, 'Result found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ /"reference"\s*:\s*"testref2"/,
+ok( $res->[2]->[0] =~ /"reference"\s*:\s*"test-ref2"/,
     'Notification reference found' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ /"title"\s*:\s*"Test2 title"/,
@@ -275,7 +275,7 @@ ok(
 ok( $res->[2]->[0] =~ /"error"\s*:\s*"Bad request"/, 'Bad method is refused' );
 count(2);
 
-foreach (qw(testrefall testref2)) {
+foreach (qw(testrefall test-ref2)) {
     my $user = $_ eq 'testrefall' ? 'everyone' : 'dwho';
     ok(
         $res = $client->_delete(

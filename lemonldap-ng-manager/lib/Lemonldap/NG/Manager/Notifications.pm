@@ -271,6 +271,8 @@ sub newNotification {
         return $self->sendError( $req, undef, 200 );
     }
 
+    $json->{reference} =~ s/_/-/g; # Remove underscores (#2135)
+
     foreach my $r (qw(uid reference xml)) {
         return $self->sendError( $req, "Missing $r", 200 )
           unless ( $json->{$r} );

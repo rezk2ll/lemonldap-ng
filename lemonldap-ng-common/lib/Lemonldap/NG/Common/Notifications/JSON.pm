@@ -15,10 +15,13 @@ sub newNotification {
         eval { $self->logger->error("Unable to decode JSON file: $err") };
         return 0;
     }
+
     my @notifs;
     $json = [$json] unless ( ref($json) eq 'ARRAY' );
+
     foreach my $notif (@$json) {
         my @data;
+        $notif->{reference} =~ s/_/-/g; # Remove underscores (#2135)
 
         # Mandatory information
         foreach (qw(date uid reference)) {

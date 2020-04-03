@@ -25,12 +25,15 @@ sub newNotification {
         eval { $self->logger->error("Unable to read XML file : $err") };
         return 0;
     }
+
     my @notifs;
     my ( $version, $encoding ) = ( $xml->version(), $xml->encoding() );
+
     foreach
       my $notif ( $xml->documentElement->getElementsByTagName('notification') )
     {
         my @data = ();
+        $notif->{reference} =~ s/_/-/g; # Remove underscores (#2135)
 
         # Mandatory information
         foreach (qw(date uid reference)) {
