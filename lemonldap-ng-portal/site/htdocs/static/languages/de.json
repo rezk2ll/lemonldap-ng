@@ -228,6 +228,7 @@
 "passwordPolicyMinUpper":"Minimal upper characters:",
 "passwordPolicyMinDigit":"Minimal digit characters:",
 "passwordPolicyMinSpeChar":"Minimal special characters:",
+"passwordPolicyNone":"You are free to choose your password!",
 "passwordPolicySpecialChar":"Allowed special characters:",
 "ppGrace":"verbleibende Authentifizierungen, bitte Passwort ändern !",
 "proxyError":"Bad gateway: Der Remote-Server kann nicht verbunden werden",

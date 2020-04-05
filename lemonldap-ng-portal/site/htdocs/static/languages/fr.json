@@ -228,6 +228,7 @@
 "passwordPolicyMinUpper": "Minimum de majuscules :",
 "passwordPolicyMinDigit": "Minimum de chiffres :",
 "passwordPolicyMinSpeChar":"Minimum de caractères spéciaux :",
+"passwordPolicyNone":"Vous êtes libre de choisir votre mot de passe !",
 "passwordPolicySpecialChar":"Caractères spéciaux autorisés :",
 "ppGrace": "authentifications restantes, changez votre mot de passe !",
 "proxyError": "Mauvaise passerelle : impossible de joindre le serveur amont",

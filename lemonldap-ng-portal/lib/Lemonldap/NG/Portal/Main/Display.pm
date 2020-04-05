@@ -204,6 +204,13 @@ sub display {
         $speChars =~ s/(?:^\s|\s$)//g;
         $skinfile = 'menu';
 
+        my $isPP =
+             $self->conf->{passwordPolicyMinSize}
+          || $self->conf->{passwordPolicyMinLower}
+          || $self->conf->{passwordPolicyMinUpper}
+          || $self->conf->{passwordPolicyMinDigit}
+          || $speChars;
+
         #utf8::decode($auth_user);
         %templateParams = (
             MAIN_LOGO => $self->conf->{portalMainLogo},
@@ -220,6 +227,7 @@ sub display {
             PPOLICY_MINLOWER    => $self->conf->{passwordPolicyMinLower},
             PPOLICY_MINUPPER    => $self->conf->{passwordPolicyMinUpper},
             PPOLICY_MINDIGIT    => $self->conf->{passwordPolicyMinDigit},
+            PPOLICY_NOPOLICY    => !$isPP,
             PPOLICY_ALLOWEDSPECHAR => $speChars,
             (
                 $speChars

@@ -228,6 +228,7 @@
 "passwordPolicyMinUpper":"Minimal upper characters:",
 "passwordPolicyMinDigit":"Minimal digit characters:",
 "passwordPolicyMinSpeChar":"Minimal special characters:",
+"passwordPolicyNone":"You are free to choose your password!",
 "passwordPolicySpecialChar":"Allowed special characters:",
 "ppGrace":"chứng thực vẫn còn, thay đổi mật khẩu của bạn!",
 "proxyError":"Gateway không chính xác: không thể kết nối máy chủ từ xa",

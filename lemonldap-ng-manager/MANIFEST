@@ -37,6 +37,8 @@ README
 REST-API.md
 scripts/lmConfigEditor
 scripts/testConfBackend.pl
+site/api/api.fcgi
+site/api/api.psgi
 site/coffee/2ndfa.coffee
 site/coffee/diff.coffee
 site/coffee/filterFunctions.coffee
@@ -46,8 +48,6 @@ site/coffee/notifications.coffee
 site/coffee/sessions.coffee
 site/coffee/viewDiff.coffee
 site/coffee/viewer.coffee
-site/api/api.fcgi
-site/api/api.psgi
 site/htdocs/manager.fcgi
 site/htdocs/manager.psgi
 site/htdocs/static/bwr/angular-animate/angular-animate.js
