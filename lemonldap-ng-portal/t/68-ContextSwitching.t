@@ -14,7 +14,6 @@ my $client = LLNG::Manager::Test->new( {
             portalMainLogo                 => 'common/logos/logo_llng_old.png',
             requireToken                   => 0,
             checkUser                      => 0,
-            impersonationPrefix            => 'testPrefix_',
             securedCookie                  => 0,
             https                          => 0,
             checkUserDisplayPersistentInfo => 0,

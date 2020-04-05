@@ -1,6 +1,7 @@
 use Test::More;
 use strict;
 use IO::String;
+use JSON;
 
 BEGIN {
     require 't/test-lib.pm';
@@ -147,12 +148,12 @@ ok(
 ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%,
     'Found trspan="contextSwitching_OFF"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_OFF"' );
-$id = expectCookie($res);
+my $id2 = expectCookie($res);
 
 ok(
     $res = $client->_get(
         '/',
-        cookie => "lemonldap=$id",
+        cookie => "lemonldap=$id2",
         accept => 'text/html'
     ),
     'Get Menu',
@@ -165,7 +166,7 @@ ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%,
 ok(
     $res = $client->_get(
         '/checkuser',
-        cookie => "lemonldap=$id",
+        cookie => "lemonldap=$id2",
         accept => 'text/html'
     ),
     'CheckUser form',
@@ -187,12 +188,27 @@ ok( $res->[2]->[0] =~ m%<td scope="row">testPrefix__session_id</td>%,
   or explain( $res->[2]->[0], 'Spoofed _id_session' );
 count(5);
 
+ok(
+    $res = $client->_get(
+        '/checkuser', cookie => "lemonldap=$id2",
+    ),
+    'CheckUser form',
+);
+eval { $res = JSON::from_json( $res->[2]->[0] ) };
+ok( not($@), 'Content is JSON' )
+  or explain( $res->[2]->[0], 'JSON content' );
+my @switching_id = map { $_->{key} eq 'testPrefix__session_id' ? $_ : () }
+  @{ $res->{ATTRIBUTES} };
+ok( $switching_id[0]->{value} eq $id, 'Good switching_id found' )
+  or explain( $switching_id[0]->{value}, 'Switching_id' );
+count(3);
+
 # Stop ContextSwitching
 # ------------------------
 ok(
     $res = $client->_get(
         '/switchcontext',
-        cookie => "lemonldap=$id",
+        cookie => "lemonldap=$id2",
         accept => 'text/html'
     ),
     'Stop context switching',
