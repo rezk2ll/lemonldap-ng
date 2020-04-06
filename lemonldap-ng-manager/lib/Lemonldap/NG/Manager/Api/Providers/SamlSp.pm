@@ -244,7 +244,12 @@ sub _getSamlSpByConfKey {
     my $metadata = $conf->{samlSPMetaDataXML}->{$confKey}->{samlSPMetaDataXML};
 
     # Get options
-    my $options = $conf->{samlSPMetaDataOptions}->{$confKey};
+    my $options = {};
+    for my $confOption ( keys %{ $conf->{samlSPMetaDataOptions}->{$confKey} } )
+    {
+        $options->{ $self->_translateOptionConfToApi($confOption) } =
+          $conf->{samlSPMetaDataOptions}->{$confKey}->{$confOption};
+    }
 
     # Get macros
     my $macros = $conf->{samlSPMetaDataMacros}->{$confKey} || {};
@@ -349,27 +354,33 @@ sub _readSamlSpExportedAttributes {
 sub _pushSamlSp {
     my ( $self, $conf, $confKey, $push, $replace ) = @_;
 
+    my $translatedOptions = {};
     if ($replace) {
         $conf->{samlSPMetaDataXML}->{$confKey}                = {};
         $conf->{samlSPMetaDataOptions}->{$confKey}            = {};
         $conf->{samlSPMetaDataMacros}->{$confKey}             = {};
         $conf->{samlSPMetaDataExportedAttributes}->{$confKey} = {};
-        $push->{options} =
-          $self->_setDefaultValues( $push->{options}, 'samlSPMetaDataNode' );
+        $translatedOptions = $self->_getDefaultValues('samlSPMetaDataNode');
     }
 
     $conf->{samlSPMetaDataXML}->{$confKey}->{samlSPMetaDataXML} =
       $push->{metadata};
 
     if ( defined $push->{options} ) {
-        my $res = $self->_hasAllowedAttributes( $push->{options},
-            'samlSPMetaDataNode' );
-        return $res unless ( $res->{res} eq 'ok' );
 
         foreach ( keys %{ $push->{options} } ) {
-            $conf->{samlSPMetaDataOptions}->{$confKey}->{$_} =
-              $push->{options}->{$_};
+            $translatedOptions->{ $self->_translateOptionApiToConf( $_,
+                    'samlSP' ) } = $push->{options}->{$_};
         }
+
+        my $res = $self->_hasAllowedAttributes( $translatedOptions,
+            'samlSPMetaDataNode' );
+        return $res unless ( $res->{res} eq 'ok' );
+        foreach ( keys %{$translatedOptions} ) {
+            $conf->{samlSPMetaDataOptions}->{$confKey}->{$_} =
+              $translatedOptions->{$_};
+        }
+
     }
 
     if ( defined $push->{macros} ) {

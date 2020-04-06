@@ -297,41 +297,35 @@ my $oidcRp = {
         email => 'mail',
     },
     options => {
-        oidcRPMetaDataOptionsClientSecret => 'secret',
-        oidcRPMetaDataOptionsIcon         => 'web.png'
+        clientSecret => 'secret',
+        icon         => 'web.png'
     }
 };
 
 $test = "OidcRp - Add should succeed";
 checkAdd( $test, 'oidc/rp', $oidcRp );
-checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/oidcRPMetaDataOptionsIcon',
-    'web.png' );
-checkGet( $test, 'oidc/rp', 'myOidcRp1',
-    'options/oidcRPMetaDataOptionsClientSecret', 'secret' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/icon',         'web.png' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/clientSecret', 'secret' );
 
 $test = "OidcRp - Check attribute default value was set after add";
-checkGet( $test, 'oidc/rp', 'myOidcRp1',
-    'options/oidcRPMetaDataOptionsIDTokenSignAlg', 'HS512' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/IDTokenSignAlg', 'HS512' );
 
 $test = "OidcRp - Add Should fail on duplicate confKey";
 checkAddFailsIfExists( $test, 'oidc/rp', $oidcRp );
 
 $test = "OidcRp - Update should succeed and keep existing values";
-$oidcRp->{options}->{oidcRPMetaDataOptionsClientSecret}   = 'secret2';
-$oidcRp->{options}->{oidcRPMetaDataOptionsIDTokenSignAlg} = 'RS512';
-delete $oidcRp->{options}->{oidcRPMetaDataOptionsIcon};
+$oidcRp->{options}->{clientSecret}   = 'secret2';
+$oidcRp->{options}->{IDTokenSignAlg} = 'RS512';
+delete $oidcRp->{options}->{icon};
 delete $oidcRp->{extraClaims};
 delete $oidcRp->{exportedVars};
 $oidcRp->{macros}->{given_name} = '$givenName';
-$oidcRp->{exportedVars}->{cn} = 'cn';
+$oidcRp->{exportedVars}->{cn}   = 'cn';
 checkUpdate( $test, 'oidc/rp', 'myOidcRp1', $oidcRp );
-checkGet( $test, 'oidc/rp', 'myOidcRp1',
-    'options/oidcRPMetaDataOptionsClientSecret', 'secret2' );
-checkGet( $test, 'oidc/rp', 'myOidcRp1',
-    'options/oidcRPMetaDataOptionsIDTokenSignAlg', 'RS512' );
-checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/oidcRPMetaDataOptionsIcon',
-    'web.png' );
-checkGet( $test, 'oidc/rp', 'myOidcRp1', 'exportedVars/cn',          'cn' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/clientSecret',   'secret2' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/IDTokenSignAlg', 'RS512' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/icon',           'web.png' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'exportedVars/cn',        'cn' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'exportedVars/family_name', 'sn' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'macros/given_name', '$givenName' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'extraClaims/phone',
@@ -367,13 +361,12 @@ checkUpdateNotFound( $test, 'oidc/rp', 'myOidcRp3', $oidcRp );
 $test               = "OidcRp - Replace should succeed";
 $oidcRp->{confKey}  = 'myOidcRp2';
 $oidcRp->{clientId} = 'myOidcClient2';
-delete $oidcRp->{options}->{oidcRPMetaDataOptionsIcon};
-delete $oidcRp->{options}->{oidcRPMetaDataOptionsIDTokenSignAlg};
+delete $oidcRp->{options}->{icon};
+delete $oidcRp->{options}->{IDTokenSignAlg};
 checkReplace( $test, 'oidc/rp', 'myOidcRp2', $oidcRp );
 
 $test = "OidcRp - Check attribute default value was set after replace";
-checkGet( $test, 'oidc/rp', 'myOidcRp2',
-    'options/oidcRPMetaDataOptionsIDTokenSignAlg', 'HS512' );
+checkGet( $test, 'oidc/rp', 'myOidcRp2', 'options/IDTokenSignAlg', 'HS512' );
 
 $test = "OidcRp - Replace should fail on non existing options";
 $oidcRp->{options}->{playingPossum} = 'elephant';
@@ -449,40 +442,39 @@ my $samlSp = {
         given_name => '$givenName',
     },
     options => {
-        samlSPMetaDataOptionsCheckSLOMessageSignature   => 0,
-        samlSPMetaDataOptionsEncryptionMode             => "assertion",
-        samlSPMetaDataOptionsSessionNotOnOrAfterTimeout => 36000
+        checkSLOMessageSignature   => 0,
+        encryptionMode             => "assertion",
+        sessionNotOnOrAfterTimeout => 36000
     }
 };
 
 $test = "SamlSp -  Add should succeed";
 checkAdd( $test, 'saml/sp', $samlSp );
 checkGet( $test, 'saml/sp', 'mySamlSp1',
-    'options/samlSPMetaDataOptionsEncryptionMode', 'assertion' );
+    'options/encryptionMode', 'assertion' );
 checkGet( $test, 'saml/sp', 'mySamlSp1',
-    'options/samlSPMetaDataOptionsSessionNotOnOrAfterTimeout', 36000 );
+    'options/sessionNotOnOrAfterTimeout', 36000 );
 
 $test = "SamlSp -  Check attribute default value was set after add";
-checkGet( $test, 'saml/sp', 'mySamlSp1',
-    'options/samlSPMetaDataOptionsNotOnOrAfterTimeout', 72000 );
+checkGet( $test, 'saml/sp', 'mySamlSp1', 'options/notOnOrAfterTimeout', 72000 );
 
 $test = "SamlSp -  Add Should fail on duplicate confKey";
 checkAddFailsIfExists( $test, 'saml/sp', $samlSp );
 
 $test = "SamlSp -  Update should succeed and keep existing values";
-$samlSp->{options}->{samlSPMetaDataOptionsCheckSLOMessageSignature} = 1;
-$samlSp->{options}->{samlSPMetaDataOptionsEncryptionMode}           = 'nameid';
-delete $samlSp->{options}->{samlSPMetaDataOptionsSessionNotOnOrAfterTimeout};
+$samlSp->{options}->{checkSLOMessageSignature} = 1;
+$samlSp->{options}->{encryptionMode}           = 'nameid';
+delete $samlSp->{options}->{sessionNotOnOrAfterTimeout};
 delete $samlSp->{exportedAttributes};
 $samlSp->{macros}->{family_name}                      = '$sn',
-$samlSp->{exportedAttributes}->{cn}->{name}           = "cn",
+  $samlSp->{exportedAttributes}->{cn}->{name}         = "cn",
   $samlSp->{exportedAttributes}->{cn}->{friendlyName} = "common_name",
   $samlSp->{exportedAttributes}->{cn}->{mandatory}    = "false",
   checkUpdate( $test, 'saml/sp', 'mySamlSp1', $samlSp );
 checkGet( $test, 'saml/sp', 'mySamlSp1',
-    'options/samlSPMetaDataOptionsCheckSLOMessageSignature', 1 );
+    'options/checkSLOMessageSignature', 1 );
 checkGet( $test, 'saml/sp', 'mySamlSp1',
-    'options/samlSPMetaDataOptionsSessionNotOnOrAfterTimeout', 36000 );
+    'options/sessionNotOnOrAfterTimeout', 36000 );
 checkGet( $test, 'saml/sp', 'mySamlSp1', 'exportedAttributes/cn/friendlyName',
     'common_name' );
 checkGet( $test, 'saml/sp', 'mySamlSp1', 'exportedAttributes/cn/mandatory',
@@ -493,7 +485,7 @@ checkGet( $test, 'saml/sp', 'mySamlSp1', 'exportedAttributes/cn/name', 'uid' );
 checkGet( $test, 'saml/sp', 'mySamlSp1', 'exportedAttributes/given_name/name',
     'givenName' );
 checkGet( $test, 'saml/sp', 'mySamlSp1', 'macros/family_name', '$sn' );
-checkGet( $test, 'saml/sp', 'mySamlSp1', 'macros/given_name', '$givenName' );
+checkGet( $test, 'saml/sp', 'mySamlSp1', 'macros/given_name',  '$givenName' );
 
 $test = "SamlSp -  Update should fail on non existing options";
 $samlSp->{options}->{playingPossum} = 'elephant';
@@ -525,12 +517,11 @@ checkUpdateNotFound( $test, 'saml/sp', 'mySamlSp3', $samlSp );
 $test               = "SamlSp -  Replace should succeed";
 $samlSp->{confKey}  = 'mySamlSp2';
 $samlSp->{metadata} = $metadata2;
-delete $samlSp->{options}->{samlSPMetaDataOptionsEncryptionMode};
+delete $samlSp->{options}->{encryptionMode};
 checkReplace( $test, 'saml/sp', 'mySamlSp2', $samlSp );
 
 $test = "SamlSp -  Check attribute default value was set after replace";
-checkGet( $test, 'saml/sp', 'mySamlSp2',
-    'options/samlSPMetaDataOptionsEncryptionMode', 'none' );
+checkGet( $test, 'saml/sp', 'mySamlSp2', 'options/encryptionMode', 'none' );
 
 $test = "SamlSp -  Replace should fail on non existing options";
 $samlSp->{options}->{playingPossum} = 'elephant';

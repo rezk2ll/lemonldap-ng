@@ -116,7 +116,7 @@ sub addOidcRp {
     ) if ( defined $self->_getOidcRpByClientId( $conf, $add->{clientId} ) );
 
     $add->{options} = {} unless ( defined $add->{options} );
-    $add->{options}->{oidcRPMetaDataOptionsClientID} = $add->{clientId};
+    $add->{options}->{clientID} = $add->{clientId};
 
     my $res = $self->_pushOidcRp( $conf, $add->{confKey}, $add, 1 );
 
@@ -251,7 +251,13 @@ sub _getOidcRpByConfKey {
     my $macros = $conf->{oidcRPMetaDataMacros}->{$confKey} || {};
 
     # Get options
-    my $options = $conf->{oidcRPMetaDataOptions}->{$confKey};
+    my $options = {};
+    for
+      my $configOption ( keys %{ $conf->{oidcRPMetaDataOptions}->{$confKey} } )
+    {
+        $options->{ $self->_translateOptionConfToApi($configOption) } =
+          $conf->{oidcRPMetaDataOptions}->{$confKey}->{$configOption};
+    }
 
     return {
         confKey      => $confKey,
@@ -297,24 +303,31 @@ sub _isNewOidcRpClientIdUnique {
 sub _pushOidcRp {
     my ( $self, $conf, $confKey, $push, $replace ) = @_;
 
+    my $translatedOptions = {};
     if ($replace) {
         $conf->{oidcRPMetaDataOptions}->{$confKey}            = {};
         $conf->{oidcRPMetaDataExportedVars}->{$confKey}       = {};
         $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey} = {};
         $conf->{oidcRPMetaDataMacros}->{$confKey}             = {};
-        $push->{options} =
-          $self->_setDefaultValues( $push->{options}, 'oidcRPMetaDataNode' );
+        $translatedOptions = $self->_getDefaultValues('oidcRPMetaDataNode');
     }
 
     if ( defined $push->{options} ) {
-        my $res = $self->_hasAllowedAttributes( $push->{options},
+
+        foreach ( keys %{ $push->{options} } ) {
+            $translatedOptions->{ $self->_translateOptionApiToConf( $_,
+                    'oidcRP' ) } = $push->{options}->{$_};
+        }
+
+        my $res = $self->_hasAllowedAttributes( $translatedOptions,
             'oidcRPMetaDataNode' );
         return $res unless ( $res->{res} eq 'ok' );
 
-        foreach ( keys %{ $push->{options} } ) {
+        foreach ( keys %{$translatedOptions} ) {
             $conf->{oidcRPMetaDataOptions}->{$confKey}->{$_} =
-              $push->{options}->{$_};
+              $translatedOptions->{$_};
         }
+
     }
 
     $conf->{oidcRPMetaDataOptions}->{$confKey}->{oidcRPMetaDataOptionsClientID}

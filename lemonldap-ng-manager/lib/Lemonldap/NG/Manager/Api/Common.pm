@@ -20,17 +20,16 @@ sub _isSimpleKeyValueHash {
     return 1;
 }
 
-sub _setDefaultValues {
-    my ( $self, $attrs, $rootNode ) = @_;
+sub _getDefaultValues {
+    my ( $self, $rootNode ) = @_;
     my @allAttrs     = $self->_listAttributes($rootNode);
     my $defaultAttrs = Lemonldap::NG::Manager::Build::Attributes::attributes();
+    my $attrs        = {};
 
     foreach $attr (@allAttrs) {
-        unless ( defined $attrs->{$attr} ) {
-            $attrs->{$attr} = $defaultAttrs->{$attr}->{default}
-              if ( defined $defaultAttrs->{$attr}
-                && defined $defaultAttrs->{$attr}->{default} );
-        }
+        $attrs->{$attr} = $defaultAttrs->{$attr}->{default}
+          if ( defined $defaultAttrs->{$attr}
+            && defined $defaultAttrs->{$attr}->{default} );
     }
 
     return $attrs;
@@ -47,7 +46,7 @@ sub _hasAllowedAttributes {
                 msg => "Invalid input: Attribute $attribute is not a string."
             };
         }
-        unless ( grep { /^$attribute$/ } @allowedAttributes ) {
+        unless ( grep { $_ eq $attribute } @allowedAttributes ) {
             return {
                 res => "ko",
                 msg => "Invalid input: Attribute $attribute does not exist."
@@ -74,6 +73,22 @@ sub _listNodeAttributes {
       @{ $node->{nodes} };
 
     return @attributes;
+}
+
+sub _translateOptionApiToConf {
+    my ( $self, $optionName, $prefix ) = @_;
+    return $prefix . "MetaDataOptions" . ( ucfirst $optionName );
+}
+
+sub _translateOptionConfToApi {
+    my ( $self, $optionName ) = @_;
+    $optionName =~ s/^(\w+)MetaDataOptions//;
+
+    $optionName = lcfirst $optionName;
+
+    # iDToken looks ugly
+    $optionName =~ s/^iDToken/IDToken/;
+    return $optionName;
 }
 
 1;
