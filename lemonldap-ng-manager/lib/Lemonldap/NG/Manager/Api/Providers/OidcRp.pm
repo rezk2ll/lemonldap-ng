@@ -222,6 +222,7 @@ sub deleteOidcRp {
     delete $conf->{oidcRPMetaDataOptions}->{$confKey};
     delete $conf->{oidcRPMetaDataExportedVars}->{$confKey};
     delete $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey};
+    delete $conf->{oidcRPMetaDataMacros}->{$confKey};
 
     # Save configuration
     $self->_confAcc->saveConf($conf);
@@ -246,6 +247,9 @@ sub _getOidcRpByConfKey {
     # Get extra claim
     my $extraClaims = $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey};
 
+    # Get macros
+    my $macros = $conf->{oidcRPMetaDataMacros}->{$confKey} || {};
+
     # Get options
     my $options = $conf->{oidcRPMetaDataOptions}->{$confKey};
 
@@ -254,6 +258,7 @@ sub _getOidcRpByConfKey {
         clientId     => $clientId,
         exportedVars => $exportedVars,
         extraClaims  => $extraClaims,
+        macros       => $macros,
         options      => $options
     };
 }
@@ -296,6 +301,7 @@ sub _pushOidcRp {
         $conf->{oidcRPMetaDataOptions}->{$confKey}            = {};
         $conf->{oidcRPMetaDataExportedVars}->{$confKey}       = {};
         $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey} = {};
+        $conf->{oidcRPMetaDataMacros}->{$confKey}             = {};
         $push->{options} =
           $self->_setDefaultValues( $push->{options}, 'oidcRPMetaDataNode' );
     }
@@ -327,6 +333,22 @@ sub _pushOidcRp {
                 res => 'ko',
                 msg =>
 "Invalid input: exportedVars is not a hash object with \"key\":\"value\" attributes"
+            };
+        }
+    }
+
+    if ( defined $push->{macros} ) {
+        if ( $self->_isSimpleKeyValueHash( $push->{macros} ) ) {
+            foreach ( keys %{ $push->{macros} } ) {
+                $conf->{oidcRPMetaDataMacros}->{$confKey}->{$_} =
+                  $push->{macros}->{$_};
+            }
+        }
+        else {
+            return {
+                res => 'ko',
+                msg =>
+"Invalid input: macros is not a hash object with \"key\":\"value\" attributes"
             };
         }
     }

@@ -225,6 +225,7 @@ sub deleteSamlSp {
     delete $conf->{samlSPMetaDataXML}->{$confKey};
     delete $conf->{samlSPMetaDataOptions}->{$confKey};
     delete $conf->{samlSPMetaDataExportedAttributes}->{$confKey};
+    delete $conf->{samlSPMetaDataMacros}->{$confKey};
 
     # Save configuration
     $self->_confAcc->saveConf($conf);
@@ -245,10 +246,14 @@ sub _getSamlSpByConfKey {
     # Get options
     my $options = $conf->{samlSPMetaDataOptions}->{$confKey};
 
+    # Get macros
+    my $macros = $conf->{samlSPMetaDataMacros}->{$confKey} || {};
+
     my $samlSp = {
         confKey            => $confKey,
         metadata           => $metadata,
         exportedAttributes => {},
+        macros             => $macros,
         options            => $options
     };
 
@@ -347,6 +352,7 @@ sub _pushSamlSp {
     if ($replace) {
         $conf->{samlSPMetaDataXML}->{$confKey}                = {};
         $conf->{samlSPMetaDataOptions}->{$confKey}            = {};
+        $conf->{samlSPMetaDataMacros}->{$confKey}             = {};
         $conf->{samlSPMetaDataExportedAttributes}->{$confKey} = {};
         $push->{options} =
           $self->_setDefaultValues( $push->{options}, 'samlSPMetaDataNode' );
@@ -363,6 +369,22 @@ sub _pushSamlSp {
         foreach ( keys %{ $push->{options} } ) {
             $conf->{samlSPMetaDataOptions}->{$confKey}->{$_} =
               $push->{options}->{$_};
+        }
+    }
+
+    if ( defined $push->{macros} ) {
+        if ( $self->_isSimpleKeyValueHash( $push->{macros} ) ) {
+            foreach ( keys %{ $push->{macros} } ) {
+                $conf->{samlSPMetaDataMacros}->{$confKey}->{$_} =
+                  $push->{macros}->{$_};
+            }
+        }
+        else {
+            return {
+                res => 'ko',
+                msg =>
+"Invalid input: macros is not a hash object with \"key\":\"value\" attributes"
+            };
         }
     }
 

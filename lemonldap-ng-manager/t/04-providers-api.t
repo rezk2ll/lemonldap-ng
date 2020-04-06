@@ -289,9 +289,12 @@ my $oidcRp = {
         family_name => "sn",
         given_name  => "givenName"
     },
+    macros => {
+        given_name => '$cn',
+    },
     extraClaims => {
         phone => 'telephoneNumber',
-        email => 'mail'
+        email => 'mail',
     },
     options => {
         oidcRPMetaDataOptionsClientSecret => 'secret',
@@ -319,6 +322,7 @@ $oidcRp->{options}->{oidcRPMetaDataOptionsIDTokenSignAlg} = 'RS512';
 delete $oidcRp->{options}->{oidcRPMetaDataOptionsIcon};
 delete $oidcRp->{extraClaims};
 delete $oidcRp->{exportedVars};
+$oidcRp->{macros}->{given_name} = '$givenName';
 $oidcRp->{exportedVars}->{cn} = 'cn';
 checkUpdate( $test, 'oidc/rp', 'myOidcRp1', $oidcRp );
 checkGet( $test, 'oidc/rp', 'myOidcRp1',
@@ -329,6 +333,7 @@ checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/oidcRPMetaDataOptionsIcon',
     'web.png' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'exportedVars/cn',          'cn' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'exportedVars/family_name', 'sn' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'macros/given_name', '$givenName' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'extraClaims/phone',
     'telephoneNumber' );
 
@@ -440,6 +445,9 @@ my $samlSp = {
             name      => "givenName"
         }
     },
+    macros => {
+        given_name => '$givenName',
+    },
     options => {
         samlSPMetaDataOptionsCheckSLOMessageSignature   => 0,
         samlSPMetaDataOptionsEncryptionMode             => "assertion",
@@ -466,6 +474,7 @@ $samlSp->{options}->{samlSPMetaDataOptionsCheckSLOMessageSignature} = 1;
 $samlSp->{options}->{samlSPMetaDataOptionsEncryptionMode}           = 'nameid';
 delete $samlSp->{options}->{samlSPMetaDataOptionsSessionNotOnOrAfterTimeout};
 delete $samlSp->{exportedAttributes};
+$samlSp->{macros}->{family_name}                      = '$sn',
 $samlSp->{exportedAttributes}->{cn}->{name}           = "cn",
   $samlSp->{exportedAttributes}->{cn}->{friendlyName} = "common_name",
   $samlSp->{exportedAttributes}->{cn}->{mandatory}    = "false",
@@ -483,6 +492,8 @@ checkGet( $test, 'saml/sp', 'mySamlSp1', 'exportedAttributes/cn/mandatory',
 checkGet( $test, 'saml/sp', 'mySamlSp1', 'exportedAttributes/cn/name', 'uid' );
 checkGet( $test, 'saml/sp', 'mySamlSp1', 'exportedAttributes/given_name/name',
     'givenName' );
+checkGet( $test, 'saml/sp', 'mySamlSp1', 'macros/family_name', '$sn' );
+checkGet( $test, 'saml/sp', 'mySamlSp1', 'macros/given_name', '$givenName' );
 
 $test = "SamlSp -  Update should fail on non existing options";
 $samlSp->{options}->{playingPossum} = 'elephant';
