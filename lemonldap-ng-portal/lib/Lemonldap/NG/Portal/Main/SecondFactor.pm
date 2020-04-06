@@ -127,7 +127,6 @@ sub _verify {
         $self->logger->debug(
             "Update sessionInfo with new authenticationLevel: $l");
         $req->sessionInfo->{authenticationLevel} = $l;
-        delete $req->sessionInfo->{groups};
 
         # Compute groups & macros again with new authenticationLevel
         $req->steps( [ 'setMacros', 'setLocalGroups' ] );
@@ -136,6 +135,13 @@ sub _verify {
             $req->error($error);
             return $self->p->do( $req, [ sub { $error } ] );
         }
+        $self->logger->debug("Deduplicate groups...");
+        $req->sessionInfo->{groups} = join $self->conf->{multiValuesSeparator},
+          keys %{ {
+                map { $_ => 1 } split $self->conf->{multiValuesSeparator},
+                $req->sessionInfo->{groups}
+            }
+          };
         $self->p->updateSession( $req, $req->sessionInfo );
     }
 
