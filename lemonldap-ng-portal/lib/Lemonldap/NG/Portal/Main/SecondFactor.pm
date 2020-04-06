@@ -78,7 +78,6 @@ sub _redirect {
 
 sub _verify {
     my ( $self, $req ) = @_;
-
     my $checkLogins = $req->param('checkLogins');
     $self->logger->debug("checkLogins set") if ($checkLogins);
 
@@ -135,13 +134,15 @@ sub _verify {
             $req->error($error);
             return $self->p->do( $req, [ sub { $error } ] );
         }
-        $self->logger->debug("Deduplicate groups...");
+        $self->logger->debug("De-duplicate groups...");
         $req->sessionInfo->{groups} = join $self->conf->{multiValuesSeparator},
           keys %{ {
                 map { $_ => 1 } split $self->conf->{multiValuesSeparator},
                 $req->sessionInfo->{groups}
             }
           };
+        delete $req->sessionInfo->{_session_kind}
+          if ( $self->conf->{tokenUseGlobalStorage} );
         $self->p->updateSession( $req, $req->sessionInfo );
     }
 
