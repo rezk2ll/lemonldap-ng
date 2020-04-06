@@ -100,9 +100,7 @@ sub getAccepted {
     $self->_execute(
         "SELECT * FROM "
           . $self->dbiTable
-          . " WHERE done IS NOT NULL AND uid=?"
-          . ( $ref ? " AND ref=?" : '' )
-          . " ORDER BY date",
+          . " WHERE uid=? AND ref=? ORDER BY date",
         $uid,
         ( $ref ? $ref : () )
     ) or return ();

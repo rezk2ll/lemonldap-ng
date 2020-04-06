@@ -167,7 +167,7 @@ sub myNotifs {
     my ( $self, $req, $ref ) = @_;
 
     if ($ref) {
-        return $self->sendJSONresponse( $req, { error => 'Missing parameter' } )
+        return $self->sendJSONresponse( $req, { error => 'Missing epoch parameter' } )
           unless $req->param('epoch');
 
         # Retrieve notification reference=$ref with epoch

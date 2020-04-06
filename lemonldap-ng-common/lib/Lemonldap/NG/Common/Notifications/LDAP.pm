@@ -95,8 +95,7 @@ sub getAccepted {
 
     my $filter =
         '(&(objectClass=applicationProcess)(description={done}*)'
-      . "(description={uid}$uid)"
-      . ( $ref ? '(description={ref}' . $ref . ')' : '' ) . ')';
+      . "(description={uid}$uid)(description={ref}$ref))";
     my @entries = _search( $self, $filter );
 
     my $result;

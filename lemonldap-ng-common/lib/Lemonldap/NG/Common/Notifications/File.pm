@@ -65,7 +65,7 @@ sub getAccepted {
     my $identifier = &getIdentifier( $self, $uid, $ref );
 
     opendir D, $self->{dirName};
-    my @notif = grep /^\d{8}${fns}${identifier}\S*\.done$/, readdir(D);
+    my @notif = grep /^\d{8}${fns}${identifier}\S*\.(?:done|json)$/, readdir(D);
     closedir D;
 
     my $files;
