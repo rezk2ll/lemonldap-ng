@@ -35,8 +35,8 @@ has fileNameSeparator => ( is => 'rw', default => '_' );
 # If $ref is set, returns only notification corresponding to this reference.
 sub get {
     my ( $self, $uid, $ref ) = @_;
-    my $ext = $self->extension;
     return () unless ($uid);
+    my $ext = $self->extension;
     my $fns        = $self->{fileNameSeparator};
     my $identifier = &getIdentifier( $self, $uid, $ref );
 
@@ -61,11 +61,12 @@ sub get {
 sub getAccepted {
     my ( $self, $uid, $ref ) = @_;
     return () unless ($uid);
+    my $ext = $self->extension;
     my $fns        = $self->{fileNameSeparator};
     my $identifier = &getIdentifier( $self, $uid, $ref );
 
     opendir D, $self->{dirName};
-    my @notif = grep /^\d{8}${fns}${identifier}\S*\.(?:done|json)$/, readdir(D);
+    my @notif = grep /^\d{8}${fns}${identifier}\S*\.(?:done|$ext)$/, readdir(D);
     closedir D;
 
     my $files;

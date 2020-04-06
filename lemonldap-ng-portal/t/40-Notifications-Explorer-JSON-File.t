@@ -6,12 +6,12 @@ use JSON qw(from_json);
 require 't/test-lib.pm';
 
 my $res;
-my $file = "$main::tmpDir/20160530_dwho_dGVzdHJlZg==.json";
+my $file = "$main::tmpDir/20160530_allusers_dGVzdHJlZg==.json";
 
 open F, "> $file" or die($!);
 print F '[
 {
-  "uid": "dwho",
+  "uid": "allusers",
   "date": "2016-05-30",
   "reference": "testref",
   "title": "Test title",
@@ -104,8 +104,8 @@ ok(
     ),
     "Accept notification"
 );
-$file =~ s/json$/done/;
-ok( -e $file, 'Notification was deleted' );
+
+ok( -e $file, 'Notification was not deleted' );
 count(2);
 
 $id = expectCookie($res);
@@ -216,8 +216,8 @@ ok(
 
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
-ok( $json->{error} eq 'Missing parameter', ' Missing parameter' )
-  or explain( $json, "Missing parameter" );
+ok( $json->{error} eq 'Missing epoch parameter', ' Missing epoch parameter' )
+  or explain( $json, "Missing epoch parameter" );
 count(3);
 
 # Bad request
