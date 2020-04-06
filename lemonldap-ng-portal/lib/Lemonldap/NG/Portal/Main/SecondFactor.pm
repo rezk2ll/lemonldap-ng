@@ -142,7 +142,8 @@ sub _verify {
                 $req->sessionInfo->{groups}
             }
           };
-        $self->p->updateSession( $req, $req->sessionInfo );
+        $self->p->updateSession( $req, $req->sessionInfo,
+            $req->sessionInfo->{_session_id} );
     }
 
     $req->authResult(PE_SENDRESPONSE);
