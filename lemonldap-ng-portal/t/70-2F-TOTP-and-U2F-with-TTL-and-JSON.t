@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 40;
+my $maintests = 39;
 
 SKIP: {
     eval {
@@ -296,17 +296,12 @@ qr%<input type="hidden" name="reference1x2" value="RemoveSF-(\d{10})">%,
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( time() + 300 <= $1 && $1 <= time() + 300, 'Right reference found' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok(
-        $res->[2]->[0] =~
-qr%<p class="notifText">1 expired second factor\(s\) has/have been removed!</p>%,
-        'Notification message found'
-    ) or print STDERR Dumper( $res->[2]->[0] );
     my @notifs =
       ( $res->[2]->[0] =~
 m%<p class="notifText">1 expired second factor\(s\) has/have been removed!</p>%gs
       );
     ok( 2 == @notifs, '2 notifications found' )
-      or print STDERR Dumper( \@notifs );
+      or print STDERR Dumper( $res->[2]->[0] );
 }
 
 count($maintests);
