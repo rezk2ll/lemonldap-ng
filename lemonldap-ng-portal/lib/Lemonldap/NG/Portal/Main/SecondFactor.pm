@@ -124,12 +124,13 @@ sub _verify {
           . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
     if ( my $l = $self->conf->{ $self->prefix . '2fAuthnLevel' } ) {
-        $self->logger->debug("Update sessionInfo with new authenticationLevel: $l");
+        $self->logger->debug(
+            "Update sessionInfo with new authenticationLevel: $l");
         $req->sessionInfo->{authenticationLevel} = $l;
         delete $req->sessionInfo->{groups};
 
         # Compute groups & macros again with new authenticationLevel
-        $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups'] );
+        $req->steps( [ 'setMacros', 'setLocalGroups' ] );
         if ( my $error = $self->p->process($req) ) {
             $self->logger->debug("SFA: Process returned error: $error");
             $req->error($error);
