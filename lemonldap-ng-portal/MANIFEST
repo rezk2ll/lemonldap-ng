@@ -644,6 +644,7 @@ t/68-Impersonation-with-merge.t
 t/68-Impersonation-with-TOTP.t
 t/68-Impersonation.t
 t/70-2F-TOTP-8-with-global-storage.t
+t/70-2F-TOTP-and-U2F-with-TTL-and-JSON.t
 t/70-2F-TOTP-with-History.t
 t/70-2F-TOTP-with-TTL-and-JSON.t
 t/70-2F-TOTP-with-TTL-and-XML.t
