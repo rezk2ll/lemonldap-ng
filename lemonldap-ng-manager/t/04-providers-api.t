@@ -289,7 +289,7 @@ my $oidcRp = {
         family_name => "sn",
         given_name  => "givenName"
     },
-    extraClaim => {
+    extraClaims => {
         phone => 'telephoneNumber',
         email => 'mail'
     },
@@ -317,7 +317,7 @@ $test = "OidcRp - Update should succeed and keep existing values";
 $oidcRp->{options}->{oidcRPMetaDataOptionsClientSecret}   = 'secret2';
 $oidcRp->{options}->{oidcRPMetaDataOptionsIDTokenSignAlg} = 'RS512';
 delete $oidcRp->{options}->{oidcRPMetaDataOptionsIcon};
-delete $oidcRp->{extraClaim};
+delete $oidcRp->{extraClaims};
 delete $oidcRp->{exportedVars};
 $oidcRp->{exportedVars}->{cn} = 'cn';
 checkUpdate( $test, 'oidc/rp', 'myOidcRp1', $oidcRp );
@@ -329,7 +329,7 @@ checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/oidcRPMetaDataOptionsIcon',
     'web.png' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'exportedVars/cn',          'cn' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'exportedVars/family_name', 'sn' );
-checkGet( $test, 'oidc/rp', 'myOidcRp1', 'extraClaim/phone',
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'extraClaims/phone',
     'telephoneNumber' );
 
 $test = "OidcRp - Update should fail on non existing options";

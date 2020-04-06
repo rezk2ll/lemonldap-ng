@@ -244,7 +244,7 @@ sub _getOidcRpByConfKey {
     my $exportedVars = $conf->{oidcRPMetaDataExportedVars}->{$confKey};
 
     # Get extra claim
-    my $extraClaim = $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey};
+    my $extraClaims = $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey};
 
     # Get options
     my $options = $conf->{oidcRPMetaDataOptions}->{$confKey};
@@ -253,7 +253,7 @@ sub _getOidcRpByConfKey {
         confKey      => $confKey,
         clientId     => $clientId,
         exportedVars => $exportedVars,
-        extraClaim   => $extraClaim,
+        extraClaims  => $extraClaims,
         options      => $options
     };
 }
@@ -331,18 +331,18 @@ sub _pushOidcRp {
         }
     }
 
-    if ( defined $push->{extraClaim} ) {
-        if ( $self->_isSimpleKeyValueHash( $push->{extraClaim} ) ) {
-            foreach ( keys %{ $push->{extraClaim} } ) {
+    if ( defined $push->{extraClaims} ) {
+        if ( $self->_isSimpleKeyValueHash( $push->{extraClaims} ) ) {
+            foreach ( keys %{ $push->{extraClaims} } ) {
                 $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey}->{$_} =
-                  $push->{extraClaim}->{$_};
+                  $push->{extraClaims}->{$_};
             }
         }
         else {
             return {
                 res => 'ko',
                 msg =>
-"Invalid input: extraClaim is not a hash object with \"key\":\"value\" attributes"
+"Invalid input: extraClaims is not a hash object with \"key\":\"value\" attributes"
             };
         }
     }
