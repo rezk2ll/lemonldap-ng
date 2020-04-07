@@ -224,6 +224,7 @@ m[^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\
         },
         'select' => {
             'test' => sub {
+                return 0, 'Value is not a scalar' if ref $_[0];
                 my $test = grep( { $_ eq $_[0]; }
                     map( { $_->{'k'}; } @{ $_[2]{'select'}; } ) );
                 return $test
