@@ -107,11 +107,11 @@ sub addSamlSp {
     return $self->sendError(
         $req,
         "Invalid input: A SAML SP with confKey $add->{confKey} already exists",
-        400
+        409
     ) if ( defined $self->_getSamlSpByConfKey( $conf, $add->{confKey} ) );
 
     return $self->sendError( $req,
-        "Invalid input: A SAML SP with entityID $entityId already exists", 400 )
+        "Invalid input: A SAML SP with entityID $entityId already exists", 409 )
       if ( defined $self->_getSamlSpByEntityId( $conf, $entityId ) );
 
     my $res = $self->_pushSamlSp( $conf, $add->{confKey}, $add, 1 );
@@ -152,7 +152,7 @@ sub replaceSamlSp {
     # check if new entityId exists already
     my $res = $self->_isNewSamlSpEntityIdUnique( $conf, $confKey, $replace );
 
-    return $self->sendError( $req, $res->{msg}, 400 )
+    return $self->sendError( $req, $res->{msg}, 409 )
       unless ( $res->{res} eq 'ok' );
 
     $res = $self->_pushSamlSp( $conf, $confKey, $replace, 1 );
@@ -192,7 +192,7 @@ sub updateSamlSp {
         # check if new entityId exists already
         $res = $self->_isNewSamlSpEntityIdUnique( $conf, $confKey, $update );
 
-        return $self->sendError( $req, $res->{msg}, 400 )
+        return $self->sendError( $req, $res->{msg}, 409 )
           unless ( $res->{res} eq 'ok' );
 
     }

@@ -19,6 +19,16 @@ sub check200 {
 
 }
 
+sub check409 {
+    my ( $test, $res ) = splice @_;
+
+    #diag Dumper($res);
+    is( $res->[0], "409", "$test: Result code is 409" )
+      or diag explain $res->[2];
+    count(1);
+    checkJson( $test, $res );
+}
+
 sub check404 {
     my ( $test, $res ) = splice @_;
 
@@ -72,7 +82,7 @@ sub checkAdd {
 
 sub checkAddFailsIfExists {
     my ( $test, $type, $add ) = splice @_;
-    check400( $test, add( $test, $type, $add ) );
+    check409( $test, add( $test, $type, $add ) );
 }
 
 sub checkAddWithUnknownAttributes {
@@ -145,7 +155,7 @@ sub checkUpdateNotFound {
 
 sub checkUpdateFailsIfExists {
     my ( $test, $type, $confKey, $update ) = splice @_;
-    check400( $test, update( $test, $type, $confKey, $update ) );
+    check409( $test, update( $test, $type, $confKey, $update ) );
 }
 
 sub checkUpdateWithUnknownAttributes {
@@ -323,7 +333,7 @@ checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/clientSecret', 'secret' );
 $test = "OidcRp - Check attribute default value was set after add";
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/IDTokenSignAlg', 'HS512' );
 
-$test = "OidcRp - Add Should fail on duplicate confKey";
+$test = "OidcRp - Add should fail on duplicate confKey";
 checkAddFailsIfExists( $test, 'oidc/rp', $oidcRp );
 
 $test = "OidcRp - Update should succeed and keep existing values";
@@ -354,12 +364,12 @@ $oidcRp->{options}->{playingPossum} = 'elephant';
 checkUpdateWithUnknownAttributes( $test, 'oidc/rp', 'myOidcRp1', $oidcRp );
 delete $oidcRp->{options}->{playingPossum};
 
-$test = "OidcRp - Add Should fail on duplicate clientId";
+$test               = "OidcRp - Add should fail on duplicate clientId";
 $oidcRp->{clientId} = "myOidcClient1";
-$oidcRp->{confKey} = 'myOidcRp2';
+$oidcRp->{confKey}  = 'myOidcRp2';
 checkAddFailsIfExists( $test, 'oidc/rp', $oidcRp );
 
-$test               = "OidcRp - Add Should fail on non existing options";
+$test               = "OidcRp - Add should fail on non existing options";
 $oidcRp->{confKey}  = 'myOidcRp2';
 $oidcRp->{clientId} = 'myOidcClient2';
 $oidcRp->{options}->{playingPossum} = 'ElephantInTheRoom';
@@ -482,7 +492,7 @@ checkGet( $test, 'saml/sp', 'mySamlSp1',
 $test = "SamlSp -  Check attribute default value was set after add";
 checkGet( $test, 'saml/sp', 'mySamlSp1', 'options/notOnOrAfterTimeout', 72000 );
 
-$test = "SamlSp -  Add Should fail on duplicate confKey";
+$test = "SamlSp -  Add should fail on duplicate confKey";
 checkAddFailsIfExists( $test, 'saml/sp', $samlSp );
 
 $test = "SamlSp -  Update should succeed and keep existing values";
@@ -516,11 +526,11 @@ $samlSp->{options}->{playingPossum} = 'elephant';
 checkUpdateWithUnknownAttributes( $test, 'saml/sp', 'mySamlSp1', $samlSp );
 delete $samlSp->{options}->{playingPossum};
 
-$test = "SamlSp -  Add Should fail on duplicate entityId";
+$test = "SamlSp -  Add should fail on duplicate entityId";
 $samlSp->{confKey} = 'mySamlSp2';
 checkAddFailsIfExists( $test, 'saml/sp', $samlSp );
 
-$test               = "SamlSp -  Add Should fail on non existing options";
+$test               = "SamlSp -  Add should fail on non existing options";
 $samlSp->{confKey}  = 'mySamlSp2';
 $samlSp->{metadata} = $metadata2;
 $samlSp->{options}->{playingPossum} = 'ElephantInTheRoom';

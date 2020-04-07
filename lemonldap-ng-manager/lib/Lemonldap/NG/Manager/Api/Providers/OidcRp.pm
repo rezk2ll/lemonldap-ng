@@ -123,13 +123,13 @@ sub addOidcRp {
     return $self->sendError(
         $req,
         "Invalid input: An OIDC RP with confKey $add->{confKey} already exists",
-        400
+        409
     ) if ( defined $self->_getOidcRpByConfKey( $conf, $add->{confKey} ) );
 
     return $self->sendError(
         $req,
 "Invalid input: An OIDC RP with clientId $add->{clientId} already exists",
-        400
+        409
     ) if ( defined $self->_getOidcRpByClientId( $conf, $add->{clientId} ) );
 
     $add->{options} = {} unless ( defined $add->{options} );
@@ -172,7 +172,7 @@ sub updateOidcRp {
     # check if new clientID exists already
     my $res = $self->_isNewOidcRpClientIdUnique( $conf, $confKey, $update );
 
-    return $self->sendError( $req, $res->{msg}, 400 )
+    return $self->sendError( $req, $res->{msg}, 409 )
       unless ( $res->{res} eq 'ok' );
 
     $res = $self->_pushOidcRp( $conf, $confKey, $update, 0 );
@@ -230,7 +230,7 @@ sub replaceOidcRp {
 
     # check if new clientID exists already
     my $res = $self->_isNewOidcRpClientIdUnique( $conf, $confKey, $replace );
-    return $self->sendError( $req, $res->{msg}, 400 )
+    return $self->sendError( $req, $res->{msg}, 409 )
       unless ( $res->{res} eq 'ok' );
 
     $replace->{options} = {} unless ( defined $replace->{options} );
