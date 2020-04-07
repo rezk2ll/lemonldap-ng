@@ -393,8 +393,8 @@ ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
   or explain( $res->[2]->[0], 'trspan="checkUser"' );
 ok( $res->[2]->[0] =~ m%<td scope="row">authMode</td>%, 'Found macro authMode' )
   or explain( $res->[2]->[0], 'Macro Key authMode' );
-ok( $res->[2]->[0] =~ m%<td scope="row">TOTP</td>%, 'Found TOTP' )
-  or explain( $res->[2]->[0], 'Macro Value TOTP' );
+ok( $res->[2]->[0] =~ m%<td scope="row">TOTP</td>%, 'Found macro value "TOTP"' )
+  or explain( $res->[2]->[0], 'Macro value "TOTP"' );
 count(4);
 
 # Request not connected user

@@ -127,7 +127,8 @@ sub _verify {
             "Update sessionInfo with new authenticationLevel: $l");
         $req->sessionInfo->{authenticationLevel} = $l;
 
-        # Compute groups & macros again with new authenticationLevel
+        # Compute macros & local groups again with new authenticationLevel
+        $self->logger->debug("Compute macros and local groups...");
         $req->steps( [ 'setMacros', 'setLocalGroups' ] );
         if ( my $error = $self->p->process($req) ) {
             $self->logger->debug("SFA: Process returned error: $error");
@@ -141,9 +142,24 @@ sub _verify {
                 $req->sessionInfo->{groups}
             }
           };
-        delete $req->sessionInfo->{_session_kind}
-          if ( $self->conf->{tokenUseGlobalStorage} );
-        $self->p->updateSession( $req, $req->sessionInfo );
+
+        $self->logger->debug("Filter macros...");
+        my %macros = (
+            map { $_ => $req->sessionInfo->{$_} }
+              keys %{ $self->{conf}->{macros} }
+        );
+
+        $self->logger->debug(
+            "Update session with new authenticationLevel, groups, hGroups and macros");
+        $self->p->updateSession(
+            $req,
+            {
+                authenticationLevel => $l,
+                groups              => $req->sessionInfo->{groups},
+                hGroups             => $req->sessionInfo->{hGroups},
+                %macros
+            }
+        );
     }
 
     $req->authResult(PE_SENDRESPONSE);
