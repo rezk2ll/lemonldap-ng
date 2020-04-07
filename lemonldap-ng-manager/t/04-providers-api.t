@@ -12,7 +12,8 @@ sub check200 {
     my ( $test, $res ) = splice @_;
 
     #diag Dumper($res);
-    ok( $res->[0] == 200, "$test: Result code is 200" );
+    is( $res->[0], "200", "$test: Result code is 200" )
+      or diag explain $res->[2];
     count(1);
     checkJson( $test, $res );
 
@@ -22,14 +23,17 @@ sub check404 {
     my ( $test, $res ) = splice @_;
 
     #diag Dumper($res);
-    ok( $res->[0] == 404, "$test: Result code is 404" );
+    is( $res->[0], "404", "$test: Result code is 404" )
+      or diag explain $res->[2];
     count(1);
     checkJson( $test, $res );
 }
 
 sub check400 {
     my ( $test, $res ) = splice @_;
-    ok( $res->[0] == 400, "$test: Result code is 400" );
+    is( $res->[0], "400", "$test: Result code is 400" )
+      or diag explain $res->[2];
+    count(1);
     count(1);
     checkJson( $test, $res );
 }
