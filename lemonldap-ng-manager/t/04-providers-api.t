@@ -184,7 +184,7 @@ sub checkReplaceNotFound {
     check404( $test, replace( $test, $type, $confKey, $update ) );
 }
 
-sub checkReplaceWithUnknownAttribute {
+sub checkReplaceWithInvalidAttribute {
     my ( $test, $type, $confKey, $replace ) = splice @_;
     check400( $test, replace( $test, $type, $confKey, $replace ) );
 }
@@ -385,10 +385,12 @@ checkGet( $test, 'oidc/rp', 'myOidcRp2', 'options/IDTokenSignAlg', 'HS512' );
 checkGet( $test, 'oidc/rp', 'myOidcRp2', 'options/redirectUris/0',
     'http://url/3' );
 
-$test = "OidcRp - Replace should fail on non existing options";
+$test = "OidcRp - Replace should fail on non existing or invalid options";
 $oidcRp->{options}->{playingPossum} = 'elephant';
-checkReplaceWithUnknownAttribute( $test, 'oidc/rp', 'myOidcRp2', $oidcRp );
+checkReplaceWithInvalidAttribute( $test, 'oidc/rp', 'myOidcRp2', $oidcRp );
 delete $oidcRp->{options}->{playingPossum};
+$oidcRp->{options}->{IDTokenExpiration} = "XXX";
+checkReplaceWithInvalidAttribute( $test, 'oidc/rp', 'myOidcRp2', $oidcRp );
 
 $test = "OidcRp - Replace should fail if confKey not found";
 $oidcRp->{confKey} = 'myOidcRp3';
@@ -542,8 +544,10 @@ checkGet( $test, 'saml/sp', 'mySamlSp2', 'options/encryptionMode', 'none' );
 
 $test = "SamlSp -  Replace should fail on non existing options";
 $samlSp->{options}->{playingPossum} = 'elephant';
-checkReplaceWithUnknownAttribute( $test, 'saml/sp', 'mySamlSp2', $samlSp );
+checkReplaceWithInvalidAttribute( $test, 'saml/sp', 'mySamlSp2', $samlSp );
 delete $samlSp->{options}->{playingPossum};
+$samlSp->{options}->{notOnOrAfterTimeout} = "XXX";
+checkReplaceWithInvalidAttribute( $test, 'saml/sp', 'mySamlSp2', $samlSp );
 
 $test = "SamlSp -  Replace should fail if confKey not found";
 $samlSp->{confKey} = 'mySamlSp3';

@@ -7,6 +7,7 @@ package Lemonldap::NG::Manager::Api;
 use 5.10.0;
 use utf8;
 use Mouse;
+use Lemonldap::NG::Manager::Conf::Parser;
 
 extends 'Lemonldap::NG::Manager::Api::Common';
 
@@ -447,6 +448,22 @@ sub _pushOidcRp {
 "Invalid input: extraClaims is not a hash object with \"key\":\"value\" attributes"
             };
         }
+    }
+
+    # Test new configuration
+    my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
+            refConf => $self->_confAcc->getConf,
+            newConf => $conf,
+            req     => {},
+        }
+    );
+    unless ( $parser->testNewConf( $self->p ) ) {
+        return {
+            res  => 'ko',
+            code => 400,
+            msg  => "Configuration error: "
+              . join( ". ", map { $_->{message} } @{ $parser->errors } ),
+        };
     }
 
     # Save configuration

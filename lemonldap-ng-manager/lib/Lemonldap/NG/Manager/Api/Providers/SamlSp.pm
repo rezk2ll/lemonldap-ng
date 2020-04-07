@@ -409,6 +409,22 @@ sub _pushSamlSp {
           $res->{exportedAttributes};
     }
 
+    # Test new configuration
+    my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
+            refConf => $self->_confAcc->getConf,
+            newConf => $conf,
+            req     => {},
+        }
+    );
+    unless ( $parser->testNewConf( $self->p ) ) {
+        return {
+            res  => 'ko',
+            code => 400,
+            msg  => "Configuration error: "
+              . join( ". ", map { $_->{message} } @{ $parser->errors } ),
+        };
+    }
+
     # Save configuration
     $self->_confAcc->saveConf($conf);
 
