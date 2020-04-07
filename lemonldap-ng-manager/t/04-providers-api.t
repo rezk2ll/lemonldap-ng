@@ -292,7 +292,7 @@ my $test;
 
 my $oidcRp = {
     confKey      => 'myOidcRp1',
-    clientId     => 'myOidcClient1',
+    clientId     => 'myOidcClient0',
     exportedVars => {
         'sub'       => "uid",
         family_name => "sn",
@@ -314,7 +314,8 @@ my $oidcRp = {
 
 $test = "OidcRp - Add should succeed";
 checkAdd( $test, 'oidc/rp', $oidcRp );
-checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/icon', 'web.png' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/icon',     'web.png' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/clientId', 'myOidcClient0' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/redirectUris/0',
     'http://url/1' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/clientSecret', 'secret' );
@@ -326,15 +327,18 @@ $test = "OidcRp - Add Should fail on duplicate confKey";
 checkAddFailsIfExists( $test, 'oidc/rp', $oidcRp );
 
 $test = "OidcRp - Update should succeed and keep existing values";
+$oidcRp->{options}->{clientId}       = 'myOidcClient1';
 $oidcRp->{options}->{clientSecret}   = 'secret2';
 $oidcRp->{options}->{IDTokenSignAlg} = 'RS512';
 delete $oidcRp->{options}->{icon};
 delete $oidcRp->{extraClaims};
 delete $oidcRp->{exportedVars};
+delete $oidcRp->{clientId};
 $oidcRp->{macros}->{given_name} = '$givenName';
 $oidcRp->{exportedVars}->{cn}   = 'cn';
 checkUpdate( $test, 'oidc/rp', 'myOidcRp1', $oidcRp );
-checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/clientSecret',   'secret2' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/clientSecret', 'secret2' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/clientId', 'myOidcClient1' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/IDTokenSignAlg', 'RS512' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/icon',           'web.png' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'exportedVars/cn',        'cn' );
@@ -351,6 +355,7 @@ checkUpdateWithUnknownAttributes( $test, 'oidc/rp', 'myOidcRp1', $oidcRp );
 delete $oidcRp->{options}->{playingPossum};
 
 $test = "OidcRp - Add Should fail on duplicate clientId";
+$oidcRp->{clientId} = "myOidcClient1";
 $oidcRp->{confKey} = 'myOidcRp2';
 checkAddFailsIfExists( $test, 'oidc/rp', $oidcRp );
 

@@ -77,6 +77,10 @@ sub _listNodeAttributes {
 
 sub _translateOptionApiToConf {
     my ( $self, $optionName, $prefix ) = @_;
+
+    # For consistency
+    $optionName =~ s/^clientId$/clientID/;
+
     return $prefix . "MetaDataOptions" . ( ucfirst $optionName );
 }
 
@@ -88,6 +92,9 @@ sub _translateOptionConfToApi {
 
     # iDToken looks ugly
     $optionName =~ s/^iDToken/IDToken/;
+
+    # For consistency
+    $optionName =~ s/^clientID/clientId/;
     return $optionName;
 }
 

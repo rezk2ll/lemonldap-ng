@@ -133,7 +133,7 @@ sub addOidcRp {
     ) if ( defined $self->_getOidcRpByClientId( $conf, $add->{clientId} ) );
 
     $add->{options} = {} unless ( defined $add->{options} );
-    $add->{options}->{clientID}     = $add->{clientId};
+    $add->{options}->{clientId}     = $add->{clientId};
     $add->{options}->{redirectUris} = $add->{redirectUris};
 
     my $res = $self->_pushOidcRp( $conf, $add->{confKey}, $add, 1 );
@@ -234,7 +234,7 @@ sub replaceOidcRp {
       unless ( $res->{res} eq 'ok' );
 
     $replace->{options} = {} unless ( defined $replace->{options} );
-    $replace->{options}->{clientID}     = $replace->{clientId};
+    $replace->{options}->{clientId}     = $replace->{clientId};
     $replace->{options}->{redirectUris} = $replace->{redirectUris};
 
     $res = $self->_pushOidcRp( $conf, $confKey, $replace, 1 );
@@ -339,7 +339,7 @@ sub _isNewOidcRpClientIdUnique {
     my $curClientId = $self->_getOidcRpByConfKey( $conf, $confKey )->{clientId};
     my $newClientId =
          $oidcRp->{clientId}
-      || $oidcRp->{options}->{oidcRPMetaDataOptionsClientID}
+      || $oidcRp->{options}->{clientId}
       || "";
     if ( $newClientId ne '' && $newClientId ne $curClientId ) {
         return {
