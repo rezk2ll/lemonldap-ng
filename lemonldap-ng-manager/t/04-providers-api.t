@@ -96,7 +96,12 @@ sub checkGet {
     my @path = split '/', $attrPath;
     my $key  = from_json( $res->[2]->[0] );
     for (@path) {
-        $key = $key->{$_};
+        if ( ref($key) eq 'ARRAY' ) {
+            $key = $key->[$_];
+        }
+        else {
+            $key = $key->{$_};
+        }
     }
     ok(
         $key eq $expectedValue,
@@ -296,7 +301,8 @@ my $oidcRp = {
     macros => {
         given_name => '$cn',
     },
-    extraClaims => {
+    redirectUris => [ "http://url/1", "http://url/2", ],
+    extraClaims  => {
         phone => 'telephoneNumber',
         email => 'mail',
     },
@@ -308,7 +314,9 @@ my $oidcRp = {
 
 $test = "OidcRp - Add should succeed";
 checkAdd( $test, 'oidc/rp', $oidcRp );
-checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/icon',         'web.png' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/icon', 'web.png' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/redirectUris/0',
+    'http://url/1' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/clientSecret', 'secret' );
 
 $test = "OidcRp - Check attribute default value was set after add";
@@ -334,6 +342,8 @@ checkGet( $test, 'oidc/rp', 'myOidcRp1', 'exportedVars/family_name', 'sn' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'macros/given_name', '$givenName' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'extraClaims/phone',
     'telephoneNumber' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/redirectUris/1',
+    'http://url/2' );
 
 $test = "OidcRp - Update should fail on non existing options";
 $oidcRp->{options}->{playingPossum} = 'elephant';
@@ -362,15 +372,18 @@ $test = "OidcRp - Update should fail if confKey not found";
 $oidcRp->{confKey} = 'myOidcRp3';
 checkUpdateNotFound( $test, 'oidc/rp', 'myOidcRp3', $oidcRp );
 
-$test               = "OidcRp - Replace should succeed";
-$oidcRp->{confKey}  = 'myOidcRp2';
-$oidcRp->{clientId} = 'myOidcClient2';
+$test                   = "OidcRp - Replace should succeed";
+$oidcRp->{confKey}      = 'myOidcRp2';
+$oidcRp->{clientId}     = 'myOidcClient2';
+$oidcRp->{redirectUris} = ["http://url/3"];
 delete $oidcRp->{options}->{icon};
 delete $oidcRp->{options}->{IDTokenSignAlg};
 checkReplace( $test, 'oidc/rp', 'myOidcRp2', $oidcRp );
 
 $test = "OidcRp - Check attribute default value was set after replace";
 checkGet( $test, 'oidc/rp', 'myOidcRp2', 'options/IDTokenSignAlg', 'HS512' );
+checkGet( $test, 'oidc/rp', 'myOidcRp2', 'options/redirectUris/0',
+    'http://url/3' );
 
 $test = "OidcRp - Replace should fail on non existing options";
 $oidcRp->{options}->{playingPossum} = 'elephant';

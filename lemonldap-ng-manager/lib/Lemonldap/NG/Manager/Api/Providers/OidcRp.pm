@@ -93,8 +93,24 @@ sub addOidcRp {
     return $self->sendError( $req, 'Invalid input: confKey is missing', 400 )
       unless ( defined $add->{confKey} );
 
+    return $self->sendError( $req, 'Invalid input: confKey is not a string',
+        400 )
+      if ( ref $add->{confKey} );
+
     return $self->sendError( $req, 'Invalid input: clientId is missing', 400 )
       unless ( defined $add->{clientId} );
+
+    return $self->sendError( $req, 'Invalid input: clientId is not a string',
+        400 )
+      if ( ref $add->{clientId} );
+
+    return $self->sendError( $req, 'Invalid input: redirectUris is missing',
+        400 )
+      unless ( defined $add->{redirectUris} );
+
+    return $self->sendError( $req,
+        'Invalid input: redirectUris must be an array', 400 )
+      unless ( ref( $add->{redirectUris} ) eq "ARRAY" );
 
     $self->logger->debug(
 "[API] Add OIDC RP with confKey $add->{confKey} and clientId $add->{clientId} requested"
@@ -116,7 +132,8 @@ sub addOidcRp {
     ) if ( defined $self->_getOidcRpByClientId( $conf, $add->{clientId} ) );
 
     $add->{options} = {} unless ( defined $add->{options} );
-    $add->{options}->{clientID} = $add->{clientId};
+    $add->{options}->{clientID}     = $add->{clientId};
+    $add->{options}->{redirectUris} = $add->{redirectUris};
 
     my $res = $self->_pushOidcRp( $conf, $add->{confKey}, $add, 1 );
 
@@ -175,8 +192,28 @@ sub replaceOidcRp {
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
+
+    return $self->sendError( $req, 'Invalid input: confKey is missing', 400 )
+      unless ( defined $replace->{confKey} );
+
+    return $self->sendError( $req, 'Invalid input: confKey is not a string',
+        400 )
+      if ( ref $replace->{confKey} );
+
     return $self->sendError( $req, 'Invalid input: clientId is missing', 400 )
       unless ( defined $replace->{clientId} );
+
+    return $self->sendError( $req, 'Invalid input: clientId is not a string',
+        400 )
+      if ( ref $replace->{clientId} );
+
+    return $self->sendError( $req, 'Invalid input: redirectUris is missing',
+        400 )
+      unless ( defined $replace->{redirectUris} );
+
+    return $self->sendError( $req,
+        'Invalid input: redirectUris must be an array', 400 )
+      unless ( ref( $replace->{redirectUris} ) eq "ARRAY" );
 
     $self->logger->debug(
         "[API] OIDC RP $confKey configuration replace requested");
@@ -194,6 +231,10 @@ sub replaceOidcRp {
     my $res = $self->_isNewOidcRpClientIdUnique( $conf, $confKey, $replace );
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
+
+    $replace->{options} = {} unless ( defined $replace->{options} );
+    $replace->{options}->{clientID}     = $replace->{clientId};
+    $replace->{options}->{redirectUris} = $replace->{redirectUris};
 
     $res = $self->_pushOidcRp( $conf, $confKey, $replace, 1 );
     return $self->sendError( $req, $res->{msg}, 400 )
@@ -255,8 +296,19 @@ sub _getOidcRpByConfKey {
     for
       my $configOption ( keys %{ $conf->{oidcRPMetaDataOptions}->{$confKey} } )
     {
-        $options->{ $self->_translateOptionConfToApi($configOption) } =
-          $conf->{oidcRPMetaDataOptions}->{$confKey}->{$configOption};
+        # redirectUris is handled as an array
+        if ( $configOption eq "oidcRPMetaDataOptionsRedirectUris" ) {
+            $options->{ $self->_translateOptionConfToApi($configOption) } = [
+                split(
+                    /\s+/,
+                    $conf->{oidcRPMetaDataOptions}->{$confKey}->{$configOption}
+                )
+            ];
+        }
+        else {
+            $options->{ $self->_translateOptionConfToApi($configOption) } =
+              $conf->{oidcRPMetaDataOptions}->{$confKey}->{$configOption};
+        }
     }
 
     return {
@@ -315,8 +367,23 @@ sub _pushOidcRp {
     if ( defined $push->{options} ) {
 
         foreach ( keys %{ $push->{options} } ) {
-            $translatedOptions->{ $self->_translateOptionApiToConf( $_,
-                    'oidcRP' ) } = $push->{options}->{$_};
+
+            # redirectUris is handled as an array
+            if ( $_ eq 'redirectUris' ) {
+                my $option = $push->{options}->{$_};
+                return {
+                    res => 'ko',
+                    msg => "Invalid input: redirectUris is not an array"
+                  }
+                  unless ( ref($option) eq "ARRAY" );
+
+                $translatedOptions->{ $self->_translateOptionApiToConf( $_,
+                        'oidcRP' ) } = join( ' ', @{ $push->{options}->{$_} } );
+            }
+            else {
+                $translatedOptions->{ $self->_translateOptionApiToConf( $_,
+                        'oidcRP' ) } = $push->{options}->{$_};
+            }
         }
 
         my $res = $self->_hasAllowedAttributes( $translatedOptions,
