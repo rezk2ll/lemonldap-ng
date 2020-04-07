@@ -150,7 +150,8 @@ sub _verify {
         );
 
         $self->logger->debug(
-            "Update session with new authenticationLevel, groups, hGroups and macros");
+"Update session with new authenticationLevel, groups, hGroups and macros"
+        );
         $self->p->updateSession(
             $req,
             {
