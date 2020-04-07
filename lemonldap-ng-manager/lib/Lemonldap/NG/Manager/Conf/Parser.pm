@@ -1131,10 +1131,25 @@ sub _unitTest {
             next;
         }
 
-        if ( $attr->{type} and $attr->{type} eq 'subContainer' ) {
+        # Vhost, CAS, SAML, OIDC options
+        if ( $key =~
+/^(?^:(?:(?:(?:saml(?:ID|S)|oidc[OR])P|cas(?:App|Srv))MetaData|vhost)Options)$/
+          )
+        {
 
-            # TODO Recursive for SAML/OIDC nodes
+            # Iterate on vhost names, or saml/cas/oidc configuration keys
+            for my $vhost ( keys %{ $conf->{$key} } ) {
+                my $options = $conf->{$key}->{$vhost};
+                if ( ref($options) eq "HASH" ) {
+
+                    # Recurse on option list,
+                    # FIXME this does check for oidcRPMetaDataOptionsXXX appearing under
+                    # samlSPMetadataOptions
+                    $res = 0 unless $self->_unitTest( $options, $localConf, "$key/$vhost/" );
+                }
+            }
         }
+
         else {
 
             # Check if key exists
