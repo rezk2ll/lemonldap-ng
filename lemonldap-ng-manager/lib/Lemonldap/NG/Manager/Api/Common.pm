@@ -98,4 +98,18 @@ sub _translateOptionConfToApi {
     return $optionName;
 }
 
+sub _getRegexpFromPattern {
+    my ( $self, $pattern ) = @_;
+    return unless ( $pattern =~ /[\w\.\-\*]+/ );
+
+    # . is allowed, and must be escaped
+    $pattern =~ s/\./\\\./g;
+    $pattern =~ s/\*/\.\*/g;
+
+    # anchor string, unless * was provided
+    $pattern = "^$pattern\$" if ( $pattern =~ /\*/ );
+
+    return qr/$pattern/;
+}
+
 1;

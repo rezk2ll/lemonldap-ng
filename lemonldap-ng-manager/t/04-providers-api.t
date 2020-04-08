@@ -213,21 +213,19 @@ sub findByConfKey {
     return $res;
 }
 
+sub checkFindByConfKeyError {
+    my ( $test, $type, $pattern ) = splice @_;
+    my $res = findByConfKey( $test, $type, $pattern );
+    check400( $test, $res );
+}
+
 sub checkFindByConfKey {
     my ( $test, $type, $confKey, $expectedHits ) = splice @_;
     my $res = findByConfKey( $test, $type, $confKey );
     check200( $test, $res );
     my $hits = from_json( $res->[2]->[0] );
     my $hit;
-    my $counter = 0;
-    foreach $hit ( @{$hits} ) {
-        $counter++;
-        ok(
-            $hit->{confKey} =~ $confKey,
-"$test: check if confKey value \"$hit->{confKey}\" matches pattern \"$confKey\""
-        );
-        count(1);
-    }
+    my $counter = @{$hits};
     ok(
         $counter eq $expectedHits,
 "$test: check if nb of hits returned ($counter) matches expectation ($expectedHits)"
@@ -412,13 +410,20 @@ $oidcRp->{confKey} = 'myOidcRp3';
 checkReplaceNotFound( $test, 'oidc/rp', 'myOidcRp3', $oidcRp );
 
 $test = "OidcRp - FindByConfKey should find 2 hits";
-checkFindByConfKey( $test, 'oidc/rp', '^myOidcRp.$', 2 );
+checkFindByConfKey( $test, 'oidc/rp', '*', 2 );
+
+$test = "OidcRp - FindByConfKey should find 2 hits";
+checkFindByConfKey( $test, 'oidc/rp', 'myOidcRp*', 2 );
 
 $test = "OidcRp - FindByConfKey should find 1 hit";
 checkFindByConfKey( $test, 'oidc/rp', 'myOidcRp1', 1 );
 
 $test = "OidcRp - FindByConfKey should find 0 hits";
 checkFindByConfKey( $test, 'oidc/rp', 'myOidcRp3', 0 );
+
+$test = "OidcRp - FindByConfKey should err on invalid patterns";
+checkFindByConfKeyError( $test, 'oidc/rp', '' );
+checkFindByConfKeyError( $test, 'oidc/rp', '$' );
 
 $test = "OidcRp - FindByClientId should find one entry";
 checkFindByProviderId( $test, 'oidc/rp', 'clientId', 'myOidcClient1' );
@@ -569,13 +574,23 @@ $samlSp->{confKey} = 'mySamlSp3';
 checkReplaceNotFound( $test, 'saml/sp', 'mySamlSp3', $samlSp );
 
 $test = "SamlSp -  FindByConfKey should find 2 hits";
-checkFindByConfKey( $test, 'saml/sp', '^mySamlSp.$', 2 );
+checkFindByConfKey( $test, 'saml/sp', '*', 2 );
+
+$test = "SamlSp -  FindByConfKey should find 2 hits";
+checkFindByConfKey( $test, 'saml/sp', 'mySamlSp*', 2 );
 
 $test = "SamlSp -  FindByConfKey should find 1 hit";
 checkFindByConfKey( $test, 'saml/sp', 'mySamlSp1', 1 );
 
+$test = "SamlSp -  FindByConfKey should find 1 hit";
+checkFindByConfKey( $test, 'saml/sp', '*Sp1', 1 );
+
 $test = "SamlSp -  FindByConfKey should find 0 hits";
 checkFindByConfKey( $test, 'saml/sp', 'mySamlSp3', 0 );
+
+$test = "SamlSp -  FindByConfKey should err on invalid patterns";
+checkFindByConfKeyError( $test, 'saml/sp', '' );
+checkFindByConfKeyError( $test, 'saml/sp', '$' );
 
 $test = "SamlSp -  FindByEntityId should find one entry";
 checkFindByProviderId( $test, 'saml/sp', 'entityId',

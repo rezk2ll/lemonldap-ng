@@ -44,6 +44,11 @@ sub findOidcRpByConfKey {
     return $self->sendError( $req, 'Invalid input: pattern is missing', 400 )
       unless ( defined $pattern );
 
+    unless ( $pattern = $self->_getRegexpFromPattern($pattern) ) {
+        return $self->sendError( $req, 'Invalid input: pattern is invalid',
+            400 );
+    }
+
     $self->logger->debug(
         "[API] Find OIDC RPs by confKey regexp $pattern requested");
 
