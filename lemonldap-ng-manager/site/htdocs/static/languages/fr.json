@@ -882,6 +882,7 @@
 "timeoutActivityInterval":"Intervalle de mise à jour des sessions",
 "title":"Titre",
 "tokenUseGlobalStorage":"Utiliser le cache global",
+"tooltip":"Info-bulle",
 "totp2f":"TOTP",
 "totp2fActivation":"Activation",
 "totp2fAuthnLevel":"Niveau d'authentification TOTP",

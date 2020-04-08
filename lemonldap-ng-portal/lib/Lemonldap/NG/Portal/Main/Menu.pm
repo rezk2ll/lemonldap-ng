@@ -273,6 +273,7 @@ sub _buildApplicationHash {
     my $appuri  = $apphash->{options}->{uri}  || "";
     my $appdesc = $apphash->{options}->{description};
     my $applogo = $apphash->{options}->{logo};
+    my $apptip = $apphash->{options}->{tooltip} || $appname;
 
     # Detect sub applications
     my $subapphash;
@@ -306,6 +307,7 @@ sub _buildApplicationHash {
         appdesc     => $appdesc,
         applogo     => $applogo,
         appid       => $appid,
+        apptip      => $apptip,
     };
     $applicationHash->{applications} = $applications if $applications;
     return $applicationHash;

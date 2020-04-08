@@ -61,7 +61,15 @@ ok( $res->[2]->[0] =~ qr%<span id="languages"></span>%, 'Found language flags' )
 expectAuthenticatedAs( $res, 'rtyler' );
 ok( $res->[2]->[0] !~ m%contextSwitching_ON%, 'Connected as dwho' )
   or print STDERR Dumper( $res->[2]->[0] );
-count(3);
+ok( $res->[2]->[0] =~ qr%href="http://test1\.example\.com/" title="Application Test 1"%, 'Found test1 & title' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ qr%href="http://test2\.example\.com/" title="A nice application!"%, 'Found test2 & title' )
+  or print STDERR Dumper( $res->[2]->[0] );
+
+my @appdesc = ($res->[2]->[0] =~ qr%class="appdesc%);
+ok( @appdesc == 1 , 'Found only one description' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(6);
 
 $client->logout($id);
 

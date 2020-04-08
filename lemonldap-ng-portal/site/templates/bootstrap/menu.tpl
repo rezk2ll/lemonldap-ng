@@ -113,7 +113,7 @@
               <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> card border-secondary" id="sort_<TMPL_VAR NAME="__counter__">">
 
                 <div class="card-header text-white bg-secondary">
-                <h4 class="catname card-title"><TMPL_VAR NAME="catname"></h4>
+                <h4 class="catname card-title"><TMPL_VAR NAME="catname"><span><i class="fa fa-arrows-v float-right" ></i></span></h4>
                 </div>
 
                   <TMPL_IF applications>
@@ -126,7 +126,7 @@
                       <!-- Application -->
                       <div class="col-md-4">
                       <div class="application <TMPL_VAR NAME="appid"> card">
-                        <a href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="appname">" >
+                        <a href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="apptip">" >
 
                         <div class="card-body">
                         <div class="row">

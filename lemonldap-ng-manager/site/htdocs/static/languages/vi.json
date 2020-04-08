@@ -882,6 +882,7 @@
 "timeoutActivityInterval":"Khoảng thời gian cập nhật phiên",
 "title":"Title",
 "tokenUseGlobalStorage":"Sử dụng lưu trữ toàn cục",
+"tooltip":"Tooltip",
 "totp2f":"TOTP",
 "totp2fActivation":"Kích hoạt",
 "totp2fAuthnLevel":"TOTP authentication level",

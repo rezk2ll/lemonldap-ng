@@ -882,6 +882,7 @@
 "timeoutActivityInterval":"Oturum güncellenme sıklığı",
 "title":"Başlık",
 "tokenUseGlobalStorage":"Global depolamayı kullan",
+"tooltip":"Tooltip",
 "totp2f":"TOTP",
 "totp2fActivation":"Aktivasyon",
 "totp2fAuthnLevel":"TOTP doğrulama seviyesi",

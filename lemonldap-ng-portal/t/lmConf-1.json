@@ -1,4 +1,32 @@
 {
+  "applicationList": {
+    "0001-cat": {
+      "catname": "Sample applications",
+      "0002-app": {
+        "options": {
+          "description": "A simple application displaying authenticated user",
+          "display": "on",
+          "logo": "demo.png",
+          "name": "Application Test 1",
+          "uri": "http://test1.example.com/",
+          "tooltip": ""
+        },
+        "type": "application"
+      },
+      "0003-app": {
+        "options": {
+          "description": "",
+          "display": "on",
+          "logo": "thumbnail.png",
+          "name": "Application Test 2",
+          "uri": "http://test2.example.com/",
+          "tooltip": "A nice application!"
+        },
+        "type": "application"
+      },
+    "type": "category"
+    }
+  },
   "authentication": "Demo",
   "cfgAuthor": "The LemonLDAP::NG team",
   "cfgAuthorIP": "127.0.0.1",

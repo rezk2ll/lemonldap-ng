@@ -882,6 +882,7 @@
 "timeoutActivityInterval":"فترة تحديث الجلسات",
 "title":"Title",
 "tokenUseGlobalStorage":"استخدام سعة التخزين العامة",
+"tooltip":"Tooltip",
 "totp2f":"TOTP",
 "totp2fActivation":"تفعيل",
 "totp2fAuthnLevel":"TOTP authentication level",
