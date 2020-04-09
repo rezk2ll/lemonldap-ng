@@ -8,6 +8,26 @@ require 't/test-lib.pm';
 
 our $_json = JSON->new->allow_nonref;
 
+sub check201 {
+    my ( $test, $res ) = splice @_;
+
+    #diag Dumper($res);
+    is( $res->[0], "201", "$test: Result code is 201" )
+      or diag explain $res->[2];
+    count(1);
+    checkJson( $test, $res );
+}
+
+sub check204 {
+    my ( $test, $res ) = splice @_;
+
+    #diag Dumper($res);
+    is( $res->[0], "204", "$test: Result code is 204" )
+      or diag explain $res->[2];
+    count(1);
+    is( $res->[2]->[0], undef, "204 code returns no content" );
+}
+
 sub check200 {
     my ( $test, $res ) = splice @_;
 
@@ -77,7 +97,7 @@ sub add {
 
 sub checkAdd {
     my ( $test, $type, $add ) = splice @_;
-    check200( $test, add( $test, $type, $add ) );
+    check201( $test, add( $test, $type, $add ) );
 }
 
 sub checkAddFailsIfExists {
@@ -145,7 +165,7 @@ sub update {
 
 sub checkUpdate {
     my ( $test, $type, $confKey, $update ) = splice @_;
-    check200( $test, update( $test, $type, $confKey, $update ) );
+    check204( $test, update( $test, $type, $confKey, $update ) );
 }
 
 sub checkUpdateNotFound {
@@ -181,7 +201,7 @@ sub replace {
 
 sub checkReplace {
     my ( $test, $type, $confKey, $replace ) = splice @_;
-    check200( $test, replace( $test, $type, $confKey, $replace ) );
+    check204( $test, replace( $test, $type, $confKey, $replace ) );
 }
 
 sub checkReplaceAlreadyThere {
@@ -288,7 +308,7 @@ sub deleteProvider {
 
 sub checkDelete {
     my ( $test, $type, $confKey ) = splice @_;
-    check200( $test, deleteProvider( $test, $type, $confKey ) );
+    check204( $test, deleteProvider( $test, $type, $confKey ) );
 }
 
 sub checkDeleteNotFound {

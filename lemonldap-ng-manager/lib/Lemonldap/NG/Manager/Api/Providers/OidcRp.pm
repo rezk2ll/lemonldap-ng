@@ -146,8 +146,11 @@ sub addOidcRp {
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
-    return $self->sendJSONresponse( $req,
-        { message => "Successful operation" } );
+    return $self->sendJSONresponse(
+        $req,
+        { message => "Successful operation" },
+        code => 201
+    );
 }
 
 sub updateOidcRp {
@@ -185,8 +188,7 @@ sub updateOidcRp {
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
-    return $self->sendJSONresponse( $req,
-        { message => "Successful operation" } );
+    return $self->sendJSONresponse( $req, undef, code => 204 );
 }
 
 sub replaceOidcRp {
@@ -246,8 +248,7 @@ sub replaceOidcRp {
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
-    return $self->sendJSONresponse( $req,
-        { message => "Successful operation" } );
+    return $self->sendJSONresponse( $req, undef, code => 204 );
 }
 
 sub deleteOidcRp {
@@ -274,8 +275,7 @@ sub deleteOidcRp {
     # Save configuration
     $self->_confAcc->saveConf($conf);
 
-    return $self->sendJSONresponse( $req,
-        { message => "Successful operation" } );
+    return $self->sendJSONresponse( $req, undef, code => 204 );
 }
 
 sub _getOidcRpByConfKey {

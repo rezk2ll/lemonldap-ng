@@ -124,8 +124,11 @@ sub addSamlSp {
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
-    return $self->sendJSONresponse( $req,
-        { message => "Successful operation" } );
+    return $self->sendJSONresponse(
+        $req,
+        { message => "Successful operation" },
+        code => 201
+    );
 }
 
 sub replaceSamlSp {
@@ -165,8 +168,7 @@ sub replaceSamlSp {
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
-    return $self->sendJSONresponse( $req,
-        { message => "Successful operation" } );
+    return $self->sendJSONresponse( $req, undef, code => 204 );
 }
 
 sub updateSamlSp {
@@ -206,8 +208,7 @@ sub updateSamlSp {
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
-    return $self->sendJSONresponse( $req,
-        { message => "Successful operation" } );
+    return $self->sendJSONresponse( $req, undef, code => 204 );
 }
 
 sub deleteSamlSp {
@@ -235,8 +236,7 @@ sub deleteSamlSp {
     # Save configuration
     $self->_confAcc->saveConf($conf);
 
-    return $self->sendJSONresponse( $req,
-        { message => "Successful operation" } );
+    return $self->sendJSONresponse( $req, undef, code => 204 );
 }
 
 sub _getSamlSpByConfKey {
