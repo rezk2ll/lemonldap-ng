@@ -339,7 +339,10 @@ sub grant {
 # @return Constant $class->FORBIDDEN
 sub forbidden {
     my ( $class, $req, $session, $vhost ) = @_;
-    my $uri = $req->{env}->{REQUEST_URI};
+    my $uri    = $req->{env}->{REQUEST_URI};
+    my $portal = $class->tsv->{portal}->();
+    $portal = ( $portal =~ m#^https?://([^/]*).*# )[0];
+    $portal =~ s/:\d+$//;
     $vhost ||= $class->resolveAlias($req);
 
     if ( $session->{_logout} ) {
@@ -362,11 +365,12 @@ sub forbidden {
         $session->{ $class->tsv->{whatToTrace} } );
 
     # Redirect or Forbidden?
-    if ( $class->tsv->{useRedirectOnForbidden} ) {
-        $class->logger->debug("Use redirect for forbidden access");
+    if ( $class->tsv->{useRedirectOnForbidden} && $vhost ne $portal ) {
+        $class->logger->debug("Use redirect for forbidden access ");
         return $class->goToError( $req, $uri, 403 );
     }
     else {
+        $class->logger->debug("Self protected Portal URL") if $vhost eq $portal;
         $class->logger->debug("Return forbidden access");
         return $class->FORBIDDEN;
     }
@@ -447,7 +451,7 @@ sub fetchId {
     my $value =
       $lookForHttpCookie
       ? ( $t =~ /${cn}http=([^,; ]+)/o ? $1 : 0 )
-      : ( $t =~ /$cn=([^,; ]+)/o       ? $1 : 0 );
+      : ( $t =~ /$cn=([^,; ]+)/o ? $1 : 0 );
 
     if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
         $value = $class->tsv->{cipher}->decryptHex( $value, "http" );
