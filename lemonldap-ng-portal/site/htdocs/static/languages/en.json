@@ -34,7 +34,7 @@
 "PE42":"Confirmation required",
 "PE43":"Your mail address is mandatory",
 "PE44":"Confirmation key is invalid or too old",
-"PE45":"An error occurs when sending mail",
+"PE45":"An error occurred when sending mail",
 "PE46":"A mail has been sent",
 "PE47":"You have been disconnected",
 "PE48":"Undefined SAML error",
