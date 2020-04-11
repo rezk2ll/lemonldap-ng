@@ -42,8 +42,11 @@ sub extractFormInfo {
             $field = $tmp;
         }
     }
-    $self->logger->debug("Using SSL environment variable $field");
-    if ( $req->user( $req->env->{$field} ) ) {
+    $req->env->{$field}
+      ? $self->logger->debug("Using SSL environment variable $field")
+      : $self->logger->notice(
+        "No name found in certificate, check your configuration");
+    if ( $req->env->{$field} and $req->user( $req->env->{$field} ) ) {
         $self->userLogger->notice( "GoodSSL authentication for " . $req->user );
         return PE_OK;
     }
