@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -55,7 +55,7 @@ sub init {
 }
 
 # RUNNING METHODS
-# Look for user active SSO sessions and propose to close them
+# Look for user active SSO sessions and suggest to close them
 sub run {
     my ( $self, $req ) = @_;
     my $user = $req->{userData}->{ $self->conf->{whatToTrace} };
@@ -102,6 +102,7 @@ sub run {
             SESSIONS  => $sessions,
             TOKEN     => $token,
             LOGIN     => $user,
+            CUSTOMPRM => $self->conf->{globalLogoutCustomParam}
         }
     );
     $req->response($tmp);
@@ -168,10 +169,12 @@ sub activeSessions {
     my ( $self, $req ) = @_;
     my $activeSessions = [];
     my $sessions       = {};
+    my $regex          = '^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$';
     my $user           = $req->{userData}->{ $self->conf->{whatToTrace} };
+    my $customParam    = $self->conf->{globalLogoutCustomParam} || '';
 
-    # Try to retrieve session from sessions DB
-    $self->logger->debug('Try to retrieve session from DB');
+    # Try to retrieve sessions from sessions DB
+    $self->logger->debug('Try to retrieve sessions from DB');
     my $moduleOptions = $self->conf->{globalStorageOptions} || {};
     $moduleOptions->{backend} = $self->conf->{globalStorage};
     $self->logger->debug("Looking for \"$user\" sessions...");
@@ -181,12 +184,18 @@ sub activeSessions {
 
     $self->logger->debug("Building array ref with sessions info...");
     @$activeSessions = map { {
-            id         => $_,
-            UA         => $sessions->{$_}->{'UA'},
-            ipAddr     => $sessions->{$_}->{'ipAddr'},
-            authLevel  => $sessions->{$_}->{'authenticationLevel'},
-            startTime  => $sessions->{$_}->{'_startTime'},
-            updateTime => $sessions->{$_}->{'_updateTime'},
+            id          => $_,
+            customParam => $sessions->{$_}->{$customParam},
+            ipAddr      => $sessions->{$_}->{'ipAddr'},
+            authLevel   => $sessions->{$_}->{'authenticationLevel'},
+            startTime   => $sessions->{$_}->{'_startTime'} =~
+              s/$regex/$1-$2-$3 $4:$5:$6/ro,
+            updateTime => (
+                  $sessions->{$_}->{'_updateTime'}
+                ? $sessions->{$_}->{'_updateTime'} =~
+                  s/$regex/$1-$2-$3 $4:$5:$6/ro
+                : ''
+            ),
         };
     } keys %$sessions;
 

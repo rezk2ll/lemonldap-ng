@@ -317,6 +317,7 @@
 "friendlyName":"Friendly name",
 "generalParameters":"通用参数",
 "globalLogout":"Global logout",
+"globalLogoutCustomParam":"Custom parameter",
 "globalLogoutRule":"Activation",
 "globalLogoutTimer":"自动接收时间",
 "globalStorage":"Apache::Session 模块",

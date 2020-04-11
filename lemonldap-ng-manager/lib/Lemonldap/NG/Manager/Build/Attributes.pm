@@ -494,6 +494,11 @@ sub attributes {
             documentation => 'Global logout auto accept time',
             flags         => 'p',
         },
+        globalLogoutCustomParam => {
+            type          => 'text',
+            documentation => 'Custom session parameter to display',
+            flags         => 'p',
+        },
         impersonationMergeSSOgroups => {
             default       => 0,
             type          => 'boolOrExpr',

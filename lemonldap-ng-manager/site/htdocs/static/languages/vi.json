@@ -317,6 +317,7 @@
 "friendlyName":"Tên thân thiện",
 "generalParameters":"Thông số chung",
 "globalLogout":"Global logout",
+"globalLogoutCustomParam":"Custom parameter",
 "globalLogoutRule":"Activation",
 "globalLogoutTimer":"Tự động chấp nhận thời gian",
 "globalStorage":"Mô đun Apache :: Session",

@@ -11,14 +11,15 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel             => 'error',
-            authentication       => 'Demo',
-            userDB               => 'Same',
-            loginHistoryEnabled  => 0,
-            bruteForceProtection => 0,
-            requireToken         => 0,
-            restSessionServer    => 1,
-            globalLogoutRule     => '$uid eq "dwho"',
+            logLevel                => 'error',
+            authentication          => 'Demo',
+            userDB                  => 'Same',
+            loginHistoryEnabled     => 0,
+            bruteForceProtection    => 0,
+            requireToken            => 0,
+            restSessionServer       => 1,
+            globalLogoutRule        => '$uid eq "dwho"',
+            globalLogoutCustomParam => 'authMode'
         }
     }
 );
@@ -138,15 +139,17 @@ my ( $host, $url, $query ) =
 ok( $res->[2]->[0] =~ m%<span trspan="globalLogout">%,
     'Found trspan="globalLogout"' )
   or explain( $res->[2]->[0], 'trspan="globalLogout"' );
+ok( $res->[2]->[0] =~ m%<td scope="row">DEMO</td>%, 'CustomParam found "DEMO"' )
+  or explain( $res->[2]->[0], 'CustomParam DEMO' );
 my @c = ( $res->[2]->[0] =~ m%<td scope="row">127.0.0.1</td>%gs );
-my @d = ( $res->[2]->[0] =~ m%<th scope="col"><span trspan="%gs );
+my @d = ( $res->[2]->[0] =~ m%<th scope="col">%gs );
 
 ## Three entries found
 ok( @c == 3, ' -> Three entries found' )
   or explain( $res->[2]->[0], "Number of session(s) found = " . scalar @c );
 ok( @d == 5, ' -> Five <th> found' )
   or explain( $res->[2]->[0], "Number of <th> found = " . scalar @d );
-count(3);
+count(4);
 
 ## GlobalLogout request for 'dwho'
 $query .= '&all=1';

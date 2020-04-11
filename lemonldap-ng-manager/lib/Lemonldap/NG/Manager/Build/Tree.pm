@@ -709,7 +709,7 @@ sub tree {
                             help  => 'globallogout.html',
                             form  => 'simpleInputContainer',
                             nodes =>
-                              [ 'globalLogoutRule', 'globalLogoutTimer', ],
+                              [ 'globalLogoutRule', 'globalLogoutTimer','globalLogoutCustomParam' ],
                         },
                         {
                             title => 'stateCheck',

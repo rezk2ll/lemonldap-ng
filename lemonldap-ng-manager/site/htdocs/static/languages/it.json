@@ -317,6 +317,7 @@
 "friendlyName":"Nome amichevole",
 "generalParameters":"Parametri generali",
 "globalLogout":"Global logout",
+"globalLogoutCustomParam":"Custom parameter",
 "globalLogoutRule":"Attivazione",
 "globalLogoutTimer":"Auto accettazione tempo",
 "globalStorage":"Modulo Apache::Session",

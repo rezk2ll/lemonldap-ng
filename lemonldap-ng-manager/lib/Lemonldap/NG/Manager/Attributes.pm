@@ -1294,6 +1294,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 120,
             'type'    => 'int'
         },
+        'globalLogoutCustomParam' => {
+            'type' => 'text'
+        },
         'globalLogoutRule' => {
             'default' => 0,
             'type'    => 'boolOrExpr'
