@@ -98,7 +98,8 @@
       </table>
     </div>
     <div ng-if="!node.nodes">
-       <th ng-if="node.td!='1' && node.td!='2'"><span title="{{node.title}}">{{translate(node.title)}}</span></th>
+       <th ng-if="node.title=='type'"><span title="{{node.title}}">{{translate(node.title)}}</span></th>
+       <th ng-if="node.td!='1' && node.td!='2' && node.title!='type'"><span title="{{node.title}}">{{node.title}}</span></th>
        <td class="data-{{node.epoch}}" ng-if="node.td>='1'">{{node.title}}</td>
        <th ng-if="node.title=='type' || node.title=='rp'">{{translate(node.value)}}</th>
        <td id="v-{{node.title}}" class="col-md-4 data-{{node.epoch}}" ng-if="node.title!='type' && node.title!='rp'">{{node.value}}</td>
