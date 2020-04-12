@@ -680,7 +680,7 @@ sub _scanNodes {
             }
 
             # Create new apps
-            else {
+            if ( $leaf->{type} eq 'menuApp' ) {
                 hdebug('  new app');
                 $knownCat->{__id}++;
                 $cn->{$newapp} = {
