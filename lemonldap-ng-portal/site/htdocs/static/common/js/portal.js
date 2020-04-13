@@ -223,7 +223,7 @@ LemonLDAP::NG Portal jQuery scripts
   datas = {};
 
   $(window).on('load', function() {
-    var action, al, authMenuIndex, authMenuTabs, back_url, i, l, lang, langdiv, langs, langs2, len, len1, len2, len3, link, m, menuIndex, menuTabs, method, n, nl, nlangs, queryLang, queryString, re, ref, ref1, ref2, urlParams;
+    var action, al, authMenuIndex, authMenuTabs, back_url, i, l, lang, langdiv, langs, langs2, len, len1, len2, len3, link, m, menuIndex, menuTabs, method, n, nl, nlangs, queryLang, queryString, re, ref, ref1, ref2, setCookieLang, urlParams;
     datas = getValues();
     window.datas = datas;
     $("#appslist").sortable({
@@ -290,9 +290,13 @@ LemonLDAP::NG Portal jQuery scripts
     }
     if (urlParams) {
       queryLang = urlParams.get('llnglanguage');
-    }
-    if (queryLang) {
-      console.log('Get lang from parameter');
+      if (queryLang) {
+        console.log('Get lang from parameter');
+      }
+      setCookieLang = urlParams.get('setCookieLang');
+      if (setCookieLang === 1) {
+        console.log('Set lang cookie');
+      }
     }
     if (!lang) {
       lang = getCookie('llnglanguage');
@@ -347,6 +351,10 @@ LemonLDAP::NG Portal jQuery scripts
     }
     if (queryLang) {
       console.log('Selected lang ->', queryLang);
+      if (setCookieLang) {
+        console.log('Set lang ->', querylang);
+        setCookie('llnglanguage', queryLang);
+      }
       translatePage(queryLang);
     } else {
       console.log('Selected lang ->', lang);

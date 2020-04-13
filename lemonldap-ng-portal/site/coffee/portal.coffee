@@ -303,8 +303,11 @@ $(window).on 'load', () ->
 	queryString = window.location.search
 	console.log 'Parsed queryString:', queryString
 	urlParams = new URLSearchParams queryString if queryString
-	queryLang = urlParams.get('llnglanguage') if urlParams
-	console.log 'Get lang from parameter' if queryLang
+	if urlParams
+		queryLang = urlParams.get('llnglanguage')
+		console.log 'Get lang from parameter' if queryLang
+		setCookieLang = urlParams.get('setCookieLang')
+		console.log 'Set lang cookie' if setCookieLang == 1
 	if !lang
 		lang = getCookie 'llnglanguage'
 		console.log 'Get lang from cookie' if lang && !queryLang
@@ -337,6 +340,9 @@ $(window).on 'load', () ->
 		console.log 'Get default lang' if !queryLang
 	if queryLang
 		console.log 'Selected lang ->', queryLang
+		if setCookieLang
+			console.log 'Set lang ->', querylang
+			setCookie 'llnglanguage', queryLang
 		translatePage(queryLang)
 	else
 		console.log 'Selected lang ->', lang
