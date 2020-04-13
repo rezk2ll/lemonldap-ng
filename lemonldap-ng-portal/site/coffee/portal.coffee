@@ -301,8 +301,9 @@ $(window).on 'load', () ->
 	#  2 - first navigator.languages item that exists in window.availableLanguages
 	#  3 - first value of window.availableLanguages
 	queryString = window.location.search
-	console.log 'Parsed queryString:', queryString
-	urlParams = new URLSearchParams queryString if queryString
+	if queryString
+		console.log 'Parsed queryString:', queryString
+		urlParams = new URLSearchParams queryString
 	if urlParams
 		queryLang = urlParams.get('llnglanguage')
 		console.log 'Get lang from parameter' if queryLang
@@ -341,7 +342,7 @@ $(window).on 'load', () ->
 	if queryLang
 		console.log 'Selected lang ->', queryLang
 		if setCookieLang
-			console.log 'Set lang ->', querylang
+			console.log 'Set lang ->', queryLang
 			setCookie 'llnglanguage', queryLang
 		translatePage(queryLang)
 	else

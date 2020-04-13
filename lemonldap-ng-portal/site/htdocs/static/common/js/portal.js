@@ -284,8 +284,8 @@ LemonLDAP::NG Portal jQuery scripts
       $("p.removeOther a").attr("href", link);
     }
     queryString = window.location.search;
-    console.log('Parsed queryString:', queryString);
     if (queryString) {
+      console.log('Parsed queryString:', queryString);
       urlParams = new URLSearchParams(queryString);
     }
     if (urlParams) {
@@ -352,7 +352,7 @@ LemonLDAP::NG Portal jQuery scripts
     if (queryLang) {
       console.log('Selected lang ->', queryLang);
       if (setCookieLang) {
-        console.log('Set lang ->', querylang);
+        console.log('Set lang ->', queryLang);
         setCookie('llnglanguage', queryLang);
       }
       translatePage(queryLang);
