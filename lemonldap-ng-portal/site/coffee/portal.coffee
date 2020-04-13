@@ -296,10 +296,18 @@ $(window).on 'load', () ->
 		$("p.removeOther a").attr "href", link
 
 	# Language detection. Priority order:
+	#  0 - llnglanguage parameter
 	#  1 - cookie value
 	#  2 - first navigator.languages item that exists in window.availableLanguages
 	#  3 - first value of window.availableLanguages
-	lang = getCookie 'llnglanguage'
+	queryString = window.location.search
+	console.log 'Parsed queryString:', queryString
+	urlParams = new URLSearchParams queryString if queryString
+	lang = urlParams.get('llnglanguage') if urlParams
+	console.log 'Get lang from parameter' if lang
+	if !lang
+		lang = getCookie 'llnglanguage'
+		console.log 'Get lang from cookie' if lang
 	if !lang
 		if navigator
 			langs = []
@@ -320,10 +328,13 @@ $(window).on 'load', () ->
 					else if al.substring(0, 1) == nl.substring(0, 1)
 						langs2.push al
 			lang = if langs[0] then langs[0] else if langs2[0] then langs2[0] else window.availableLanguages[0]
+			console.log 'Get lang from navigator' if lang
 		else
 			lang = window.availableLanguages[0]
+			console.log 'Get lang from window' if lang
 	else if lang not in window.availableLanguages
 		lang = window.availableLanguages[0]
+		console.log 'Get default lang'
 	console.log 'Selected lang ->', lang
 	setCookie 'llnglanguage', lang
 	translatePage(lang)
