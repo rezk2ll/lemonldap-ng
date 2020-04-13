@@ -223,7 +223,7 @@ LemonLDAP::NG Portal jQuery scripts
   datas = {};
 
   $(window).on('load', function() {
-    var action, al, authMenuIndex, authMenuTabs, back_url, i, l, lang, langdiv, langs, langs2, len, len1, len2, len3, link, m, menuIndex, menuTabs, method, n, nl, nlangs, queryString, re, ref, ref1, ref2, urlParams;
+    var action, al, authMenuIndex, authMenuTabs, back_url, i, l, lang, langdiv, langs, langs2, len, len1, len2, len3, link, m, menuIndex, menuTabs, method, n, nl, nlangs, queryLang, queryString, re, ref, ref1, ref2, urlParams;
     datas = getValues();
     window.datas = datas;
     $("#appslist").sortable({
@@ -289,14 +289,14 @@ LemonLDAP::NG Portal jQuery scripts
       urlParams = new URLSearchParams(queryString);
     }
     if (urlParams) {
-      lang = urlParams.get('llnglanguage');
+      queryLang = urlParams.get('llnglanguage');
     }
-    if (lang) {
+    if (queryLang) {
       console.log('Get lang from parameter');
     }
     if (!lang) {
       lang = getCookie('llnglanguage');
-      if (lang) {
+      if (lang && !queryLang) {
         console.log('Get lang from cookie');
       }
     }
@@ -330,22 +330,29 @@ LemonLDAP::NG Portal jQuery scripts
           }
         }
         lang = langs[0] ? langs[0] : langs2[0] ? langs2[0] : window.availableLanguages[0];
-        if (lang) {
+        if (lang && !queryLang) {
           console.log('Get lang from navigator');
         }
       } else {
         lang = window.availableLanguages[0];
-        if (lang) {
+        if (lang && !queryLang) {
           console.log('Get lang from window');
         }
       }
     } else if (indexOf.call(window.availableLanguages, lang) < 0) {
       lang = window.availableLanguages[0];
-      console.log('Get default lang');
+      if (!queryLang) {
+        console.log('Get default lang');
+      }
     }
-    console.log('Selected lang ->', lang);
-    setCookie('llnglanguage', lang);
-    translatePage(lang);
+    if (queryLang) {
+      console.log('Selected lang ->', queryLang);
+      translatePage(queryLang);
+    } else {
+      console.log('Selected lang ->', lang);
+      setCookie('llnglanguage', lang);
+      translatePage(lang);
+    }
     langdiv = '';
     ref2 = window.availableLanguages;
     for (n = 0, len3 = ref2.length; n < len3; n++) {

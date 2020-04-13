@@ -303,11 +303,11 @@ $(window).on 'load', () ->
 	queryString = window.location.search
 	console.log 'Parsed queryString:', queryString
 	urlParams = new URLSearchParams queryString if queryString
-	lang = urlParams.get('llnglanguage') if urlParams
-	console.log 'Get lang from parameter' if lang
+	queryLang = urlParams.get('llnglanguage') if urlParams
+	console.log 'Get lang from parameter' if queryLang
 	if !lang
 		lang = getCookie 'llnglanguage'
-		console.log 'Get lang from cookie' if lang
+		console.log 'Get lang from cookie' if lang && !queryLang
 	if !lang
 		if navigator
 			langs = []
@@ -328,16 +328,20 @@ $(window).on 'load', () ->
 					else if al.substring(0, 1) == nl.substring(0, 1)
 						langs2.push al
 			lang = if langs[0] then langs[0] else if langs2[0] then langs2[0] else window.availableLanguages[0]
-			console.log 'Get lang from navigator' if lang
+			console.log 'Get lang from navigator' if lang && !queryLang
 		else
 			lang = window.availableLanguages[0]
-			console.log 'Get lang from window' if lang
+			console.log 'Get lang from window' if lang && !queryLang
 	else if lang not in window.availableLanguages
 		lang = window.availableLanguages[0]
-		console.log 'Get default lang'
-	console.log 'Selected lang ->', lang
-	setCookie 'llnglanguage', lang
-	translatePage(lang)
+		console.log 'Get default lang' if !queryLang
+	if queryLang
+		console.log 'Selected lang ->', queryLang
+		translatePage(queryLang)
+	else
+		console.log 'Selected lang ->', lang
+		setCookie 'llnglanguage', lang
+		translatePage(lang)
 
 	# Build language icons
 	langdiv = ''
