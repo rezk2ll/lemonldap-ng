@@ -13,8 +13,11 @@ require Lemonldap::NG::Common::Notifications;
 
 use feature 'state';
 
-extends 'Lemonldap::NG::Manager::Plugin',
-  'Lemonldap::NG::Common::Conf::AccessLib';
+extends qw(
+  Lemonldap::NG::Manager::Plugin
+  Lemonldap::NG::Common::Conf::AccessLib
+  Lemonldap::NG::Common::PSGI::Router
+);
 
 our $VERSION = '2.0.8';
 
@@ -271,7 +274,7 @@ sub newNotification {
         return $self->sendError( $req, undef, 200 );
     }
 
-    $json->{reference} =~ s/_/-/g; # Remove underscores (#2135)
+    $json->{reference} =~ s/_/-/g;    # Remove underscores (#2135)
 
     foreach my $r (qw(uid reference xml)) {
         return $self->sendError( $req, "Missing $r", 200 )
