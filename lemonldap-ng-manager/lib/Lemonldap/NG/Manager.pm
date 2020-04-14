@@ -172,7 +172,9 @@ sub tplParams {
 sub javascript {
     my ( $self, $req ) = @_;
     my $res = eval {
-        $self->hLoadedPlugins->{viewer}->diffRule->( $req, $req->{userData} );
+             $self->hLoadedPlugins->{viewer}
+          && $self->hLoadedPlugins->{viewer}
+          ->diffRule->( $req, $req->{userData} );
     } || 0;
     print STDERR $@ if $@;
     my $impPrefix = $self->{impersonationPrefix} || 'real_';
