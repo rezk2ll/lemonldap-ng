@@ -176,10 +176,14 @@ SKIP: {
         ),
         'Follow internal redirection from SAML-SP to OIDC-OP'
     );
-    ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
+
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, qr#/oauth2/authorize#, 'confirm' );
+    $spPdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+
     ok(
         $res = $sp->_get(
-            $url,
+            '/oauth2/authorize',
             query  => $query,
             accept => 'text/html',
             cookie => "lemonldap=$spId;$spPdata"
