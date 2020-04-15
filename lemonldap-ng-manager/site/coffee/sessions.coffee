@@ -320,6 +320,9 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						for key, value of l
 							if !key.match /^(_utime|ipAddr|error)$/ 
 								cv += ", #{key} : #{value}"
+						tab = cv.split ', '
+						tab.sort()
+						cv = tab.join ', '
 						tmp.push
 							t: l._utime
 							title: $scope.localeDate l._utime
@@ -331,6 +334,9 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						for key, value of l
 							if !key.match /^(_utime|ipAddr|error)$/
 								cv += ", #{key} : #{value}"
+						tab = cv.split ', '
+						tab.sort()
+						cv = tab.join ', '
 						tmp.push
 							t: l._utime
 							title: $scope.localeDate l._utime
