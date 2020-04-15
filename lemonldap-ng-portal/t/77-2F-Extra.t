@@ -17,6 +17,7 @@ my $client = LLNG::Manager::Test->new( {
             tokenUseGlobalStorage => 1,
             authentication        => 'Demo',
             userDB                => 'Same',
+            restSessionServer     => 1,
             'sfExtra'             => {
                 'home' => {
                     'over' => {
@@ -25,7 +26,8 @@ my $client = LLNG::Manager::Test->new( {
                     'logo'  => 'home.jpg',
                     'label' => "Home Label",
                     'rule'  => '$uid eq "dwho" or $uid eq "msmith"',
-                    'type'  => 'Mail2F'
+                    'type'  => 'Mail2F',
+                    'level' => 5,
                 },
                 'work' => {
                     'over' => {
@@ -165,6 +167,15 @@ ok(
 );
 count(1);
 $id = expectCookie($res);
+
+# Verify Authn Level
+ok( $res = $client->_get("/sessions/global/$id"), 'Get session' );
+expectOK($res);
+ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+  or print STDERR $@;
+is( $res->{authenticationLevel}, 5, "Correct authentication level" );
+count(3);
+
 $client->logout($id);
 
 clean_sessions();

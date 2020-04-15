@@ -427,6 +427,7 @@
 "ldapTimeout":"Thời gian chờ",
 "ldapUsePasswordResetAttribute":"Sử dụng thuộc tính đặt lại",
 "ldapVersion":"Phiên bản",
+"level":"Mức",
 "linkedInAuthnLevel":"Mức xác thực",
 "linkedInClientID":"Client ID",
 "linkedInClientSecret":"Trình khách bí mật",

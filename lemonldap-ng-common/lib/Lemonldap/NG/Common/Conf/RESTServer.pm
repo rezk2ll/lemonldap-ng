@@ -733,7 +733,7 @@ sub sfExtra {
         $tmp->{id}         = "sfExtra/$mod";
         $tmp->{type}       = 'sfExtra';
         $tmp->{data}->{$_} = $val->{$mod}->{$_}
-          foreach (qw(type rule logo label));
+          foreach (qw(type rule logo level label));
         my $over = $val->{$mod}->{over} // {};
         $tmp->{data}->{over} = [ map { [ $_, $over->{$_} ] } keys %$over ];
         push @$res, $tmp;

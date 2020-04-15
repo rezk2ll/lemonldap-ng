@@ -427,6 +427,7 @@
 "ldapTimeout":"Timeout",
 "ldapUsePasswordResetAttribute":"Use reset attribute",
 "ldapVersion":"Version",
+"level":"Level",
 "linkedInAuthnLevel":"Authentication level",
 "linkedInClientID":"Client ID",
 "linkedInClientSecret":"Client secret",

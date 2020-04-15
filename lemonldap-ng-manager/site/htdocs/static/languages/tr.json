@@ -427,6 +427,7 @@
 "ldapTimeout":"Zaman aşımı",
 "ldapUsePasswordResetAttribute":"Sıfırlama niteliklerini kullan",
 "ldapVersion":"Sürüm",
+"level":"Seviyesi",
 "linkedInAuthnLevel":"Doğrulama seviyesi",
 "linkedInClientID":"İstemci ID",
 "linkedInClientSecret":"İstemci sırrı",

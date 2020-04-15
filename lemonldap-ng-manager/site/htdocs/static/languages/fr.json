@@ -427,6 +427,7 @@
 "ldapTimeout":"Temps maximum d'inactivité",
 "ldapUsePasswordResetAttribute":"Utiliser l'attribut de réinitialisation",
 "ldapVersion":"Version",
+"level":"Niveau",
 "linkedInAuthnLevel":"Niveau d'authentification",
 "linkedInClientID":"Identifiant",
 "linkedInClientSecret":"Mot de passe",

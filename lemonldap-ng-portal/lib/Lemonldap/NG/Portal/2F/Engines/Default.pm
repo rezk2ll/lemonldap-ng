@@ -113,11 +113,13 @@ sub init {
         my $rule   = $self->conf->{sfExtra}->{$extraKey}->{rule} || 1;
         my $prefix = $m->prefix;
 
-        # Overwrite logo and label from user configuration
+        # Overwrite logo, label, level from user configuration
         $m->logo( $self->conf->{sfExtra}->{$extraKey}->{logo} )
           if $self->conf->{sfExtra}->{$extraKey}->{logo};
         $m->label( $self->conf->{sfExtra}->{$extraKey}->{label} )
           if $self->conf->{sfExtra}->{$extraKey}->{label};
+        $m->authnLevel( $self->conf->{sfExtra}->{$extraKey}->{level} )
+          if $self->conf->{sfExtra}->{$extraKey}->{level};
 
         # Compile rule
         $rule = $self->p->HANDLER->substitute($rule);

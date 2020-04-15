@@ -34,6 +34,13 @@ has prefix  => ( is => 'rw' );
 has logo    => ( is => 'rw', default => '2f.png' );
 has label   => ( is => 'rw' );
 has noRoute => ( is => 'ro' );
+has authnLevel => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        return $_[0]->conf->{ $_[0]->prefix . '2fAuthnLevel' };
+    }
+);
 
 sub init {
     my ($self) = @_;
@@ -122,7 +129,7 @@ sub _verify {
           . '2F verification for '
           . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
-    if ( my $l = $self->conf->{ $self->prefix . '2fAuthnLevel' } ) {
+    if ( my $l = $self->authnLevel ) {
         $self->logger->debug(
             "Update sessionInfo with new authenticationLevel: $l");
         $req->sessionInfo->{authenticationLevel} = $l;

@@ -427,6 +427,7 @@
 "ldapTimeout":"مهلة",
 "ldapUsePasswordResetAttribute":"استخدام سمة إعادة الضبط",
 "ldapVersion":"الإصدار",
+"level":"مستوى",
 "linkedInAuthnLevel":"مستوى إثبات الهوية",
 "linkedInClientID":"معرف العميل",
 "linkedInClientSecret":"سرالعميل",
