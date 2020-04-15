@@ -8,7 +8,7 @@ sub defaultValues {
         'activeTimer'        => 1,
         'ADPwdExpireWarning' => 0,
         'ADPwdMaxAge'        => 0,
-        'apacheAuthnLevel'   => 4,
+        'apacheAuthnLevel'   => 3,
         'applicationList'    => {
             'default' => {
                 'catname' => 'Default category',
