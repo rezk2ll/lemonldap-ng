@@ -3477,7 +3477,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         # Apache
         apacheAuthnLevel => {
             type          => 'int',
-            default       => 4,
+            default       => 3,
             documentation => 'Apache authentication level',
         },
 
