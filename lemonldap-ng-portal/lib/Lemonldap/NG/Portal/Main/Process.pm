@@ -200,7 +200,7 @@ sub deleteSession {
 
     # TODO
     # Collect logout services and build hidden iFrames
-    if ( $req->data->{logoutServices} and %{ $req->data->{logoutServices} } ) {
+    if ( $self->{'_authentication'}->{'conf'}->{'logoutServices'} and %{ $self->{'_authentication'}->{'conf'}->{'logoutServices'} } ) {
 
         $self->logger->debug("Create iFrames to forward logout to services");
 
@@ -211,10 +211,10 @@ sub deleteSession {
             )
         );
 
-        foreach ( keys %{ $req->data->{logoutServices} } ) {
+        foreach ( keys %{ $self->{'_authentication'}->{'conf'}->{'logoutServices'} } ) {
             my $logoutServiceName = $_;
             my $logoutServiceUrl =
-              $req->data->{logoutServices}->{$logoutServiceName};
+              $self->{'_authentication'}->{'conf'}->{'logoutServices'}->{$logoutServiceName};
 
             $self->logger->debug(
                 "Find logout service $logoutServiceName ($logoutServiceUrl)");
