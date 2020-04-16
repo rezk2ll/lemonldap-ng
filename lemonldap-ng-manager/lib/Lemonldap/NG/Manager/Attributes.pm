@@ -271,7 +271,7 @@ sub attributes {
             'type'    => 'int'
         },
         'apacheAuthnLevel' => {
-            'default' => 4,
+            'default' => 3,
             'type'    => 'int'
         },
         'applicationList' => {

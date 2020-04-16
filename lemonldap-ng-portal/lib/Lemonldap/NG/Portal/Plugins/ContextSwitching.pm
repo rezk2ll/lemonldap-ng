@@ -74,13 +74,15 @@ sub init {
 
 sub display {
     my ( $self, $req ) = @_;
-    my $realSessionId =
-      $req->userData->{"$self->{conf}->{contextSwitchingPrefix}_session_id"};
-    my $realSession;
-    unless ( $realSession = $self->p->getApacheSession($realSessionId) ) {
-        $self->userLogger->info(
-            "ContextSwitching: session $realSessionId expired");
-        return $self->p->do( $req, [ sub { PE_SESSIONEXPIRED } ] );
+    my ( $realSession, $realSessionId );
+    if ( $realSessionId =
+        $req->userData->{"$self->{conf}->{contextSwitchingPrefix}_session_id"} )
+    {
+        unless ( $realSession = $self->p->getApacheSession($realSessionId) ) {
+            $self->userLogger->info(
+                "ContextSwitching: session $realSessionId expired");
+            return $self->p->do( $req, [ sub { PE_SESSIONEXPIRED } ] );
+        }
     }
 
     # Check access rules

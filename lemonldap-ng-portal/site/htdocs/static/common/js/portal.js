@@ -349,13 +349,17 @@ LemonLDAP::NG Portal jQuery scripts
     } else if (indexOf.call(window.availableLanguages, lang) < 0) {
       lang = window.availableLanguages[0];
       if (!queryLang) {
-        console.log('Get default lang');
+        console.log('Lang not available -> Get default lang');
       }
     }
     if (queryLang) {
+      if (indexOf.call(window.availableLanguages, queryLang) < 0) {
+        console.log('Lang not available -> Get default lang');
+        queryLang = window.availableLanguages[0];
+      }
       console.log('Selected lang ->', queryLang);
       if (setCookieLang) {
-        console.log('Set lang ->', queryLang);
+        console.log('Set cookie lang ->', queryLang);
         setCookie('llnglanguage', queryLang);
       }
       translatePage(queryLang);
