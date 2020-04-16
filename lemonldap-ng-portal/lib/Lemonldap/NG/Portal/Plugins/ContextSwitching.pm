@@ -78,7 +78,6 @@ sub display {
     if ( $realSessionId =
         $req->userData->{"$self->{conf}->{contextSwitchingPrefix}_session_id"} )
     {
-
         unless ( $realSession = $self->p->getApacheSession($realSessionId) ) {
             $self->userLogger->info(
                 "ContextSwitching: session $realSessionId expired");
