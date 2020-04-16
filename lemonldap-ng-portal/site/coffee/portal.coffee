@@ -338,11 +338,14 @@ $(window).on 'load', () ->
 			console.log 'Get lang from window' if lang && !queryLang
 	else if lang not in window.availableLanguages
 		lang = window.availableLanguages[0]
-		console.log 'Get default lang' if !queryLang
+		console.log 'Lang not available -> Get default lang' if !queryLang
 	if queryLang
+		if queryLang not in window.availableLanguages
+			console.log 'Lang not available -> Get default lang'
+			queryLang = window.availableLanguages[0]
 		console.log 'Selected lang ->', queryLang
 		if setCookieLang
-			console.log 'Set lang ->', queryLang
+			console.log 'Set cookie lang ->', queryLang
 			setCookie 'llnglanguage', queryLang
 		translatePage(queryLang)
 	else
