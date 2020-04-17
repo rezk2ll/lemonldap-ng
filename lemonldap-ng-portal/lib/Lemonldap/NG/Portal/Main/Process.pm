@@ -198,6 +198,20 @@ sub deleteSession {
         }
     }
 
+    # Merge logoutServices from user context (for example CAS logoutServices
+    # url) and from global configuration
+    if ( $self->{'conf'}->{'logoutServices'} and
+         %{ $self->{'conf'}->{'logoutServices'} } ) {
+
+        # initialize logoutServices (if not already done)
+        $req->data->{logoutServices} = {} unless $req->data->{logoutServices};
+
+        $req->data->{logoutServices} = {
+                                        %{ $req->data->{logoutServices} },
+                                        %{ $self->{'conf'}->{'logoutServices'} }
+                                       };
+    }
+
     # TODO
     # Collect logout services and build hidden iFrames
     if ( $req->data->{logoutServices} and %{ $req->data->{logoutServices} } ) {
