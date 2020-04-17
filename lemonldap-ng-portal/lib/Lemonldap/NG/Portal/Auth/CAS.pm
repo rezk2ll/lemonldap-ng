@@ -269,7 +269,8 @@ sub authLogout {
     $self->logger->debug("Build CAS logout URL: $logout_url");
 
     # Register CAS logout URL in logoutServices
-    $req->data->{logoutServices}->{CASserver} = $logout_url;
+    #$req->data->{logoutServices}->{CASserver} = $logout_url;
+    $self->conf->{logoutServices}->{CASserver} = $logout_url;
 
     PE_OK;
 }
