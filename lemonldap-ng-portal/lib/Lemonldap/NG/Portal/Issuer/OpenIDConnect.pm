@@ -12,6 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_LOGOUT_OK
   PE_REDIRECT
   PE_OK
+  PE_PASSWORD_OK
   PE_UNAUTHORIZEDPARTNER
   PE_OIDC_SERVICE_NOT_ALLOWED
 );
@@ -1009,6 +1010,19 @@ sub token {
         return $self->_handleRefreshTokenGrant( $req, $rp );
     }
 
+    # Resource Owner Password Credenials
+    elsif ( $grant_type eq 'password' ) {
+        unless (
+            $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsAllowPasswordGrant}
+          )
+        {
+            $self->logger->warn(
+                "Access to grant_type=password, is not allowed for RP $rp");
+            return $self->p->sendError( $req, 'unauthorized_client', 400 );
+        }
+        return $self->_handlePasswordGrant( $req, $rp );
+    }
+
     # Unknown or unspecified grant type
     else {
         $self->userLogger->error(
@@ -1019,6 +1033,137 @@ sub token {
         return $self->p->sendError( $req, 'unsupported_grant_type', 400 );
     }
 
+}
+
+sub _handlePasswordGrant {
+    my ( $self, $req, $rp ) = @_;
+
+    my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
+    my $scope     = $req->param('scope') || 'openid';
+
+    my $username = $req->param('username');
+    my $password = $req->param('password');
+
+    unless ( $username and $password ) {
+        $self->logger->error("Missing username or password");
+
+        # FIXME
+        return $self->p->sendError( $req, 'invalid_request', 400 );
+    }
+
+    ####
+    # Authenticate user by running through the regular login process
+    # minus the buildCookie step
+    $req->parameters->{user}     = ($username);
+    $req->parameters->{password} = $password;
+    $req->data->{skipToken}      = 1;
+
+    $req->steps( [
+            @{ $self->p->beforeAuth },
+            $self->p->authProcess,
+            @{ $self->p->betweenAuthAndData },
+            $self->p->sessionData,
+            @{ $self->p->afterData },
+            'storeHistory',
+            @{ $self->p->endAuth },
+        ]
+    );
+    my $result = $self->p->process($req);
+
+    $self->logger->debug( "Credentials check returned "
+          . $self->p->_formatProcessResult($result) )
+      if $result;
+
+    ## Make sure we returned successfuly from the process AND we were able to create a session
+    unless ( $result == PE_OK and $req->id and $req->user ) {
+        return $self->p->sendError( $req, 'invalid_grant', 400 );
+    }
+
+    ## Make sure the current user is allowed to use this RP
+    if ( my $rule = $self->spRules->{$rp} ) {
+        unless ( $rule->( $req, $req->sessionInfo ) ) {
+            $self->userLogger->warn( 'User '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  . " is not authorized to access to $rp" );
+            $self->p->deleteSession($req);
+            return $self->p->sendError( $req, 'invalid_grant', 400 );
+        }
+    }
+
+    my $user_id_attribute =
+      $self->conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsUserIDAttr}
+      || $self->conf->{whatToTrace};
+    my $user_id = $req->sessionInfo->{$user_id_attribute};
+
+    $self->logger->debug("Found corresponding user: $user_id");
+
+    # Generate access_token
+    my $accessTokenSession = $self->newAccessToken(
+        $rp,
+        {
+            scope           => $scope,
+            rp              => $rp,
+            user_session_id => $req->id,
+        }
+    );
+
+    unless ($accessTokenSession) {
+        $self->userLogger->error(
+            "Unable to create OIDC session for access_token");
+
+        #FIXME: should be an error 500
+        return $self->p->sendError( $req, 'invalid_request', 400 );
+    }
+
+    my $access_token = $accessTokenSession->id;
+
+    $self->logger->debug("Generated access token: $access_token");
+
+    # Generate refresh_token
+    my $refresh_token = undef;
+
+    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
+        ->{oidcRPMetaDataOptionsRefreshToken} )
+    {
+        my $refreshTokenSession = $self->newRefreshToken(
+            $rp,
+            {
+                scope           => $req->param('scope'),
+                client_id       => $client_id,
+                user_session_id => $req->id,
+            },
+            0,
+        );
+
+        unless ($refreshTokenSession) {
+            $self->userLogger->error(
+                "Unable to create OIDC session for refresh_token");
+            return $self->p->sendError( $req,
+                'Could not create refresh token session', 500 );
+        }
+
+        $refresh_token = $refreshTokenSession->id;
+
+        $self->logger->debug("Generated refresh token: $refresh_token");
+    }
+
+    # Send token response
+    my $expires_in =
+      $self->conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsAccessTokenExpiration}
+      || $self->conf->{oidcServiceAccessTokenExpiration};
+
+    my $token_response = {
+        access_token => $access_token,
+        token_type   => 'Bearer',
+        expires_in   => $expires_in,
+        ( $refresh_token ? ( refresh_token => $refresh_token ) : () ),
+    };
+
+    $self->logger->debug("Send token response");
+
+    return $self->p->sendJSONresponse( $req, $token_response );
 }
 
 sub _handleAuthorizationCodeGrant {
@@ -1918,6 +2063,17 @@ sub metadata {
         push( @$response_types, "id_token", "id_token token" );
         push( @$grant_types, "implicit" );
     }
+
+    # If one of the RPs has password grant enabled
+    if (
+        grep {
+            $self->oidcRPList->{$_}->{oidcRPMetaDataOptionsAllowPasswordGrant}
+        } keys %{ $self->oidcRPList }
+      )
+    {
+        push( @$grant_types, "password" );
+    }
+
     if ( $self->conf->{oidcServiceAllowHybridFlow} ) {
         push( @$response_types,
             "code id_token",
