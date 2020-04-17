@@ -153,8 +153,8 @@ SKIP: {
 qr%<input type="hidden" name="reference1x1" value="Remove-TOTP-(\d{10})">%,
         'Notification reference found'
     ) or print STDERR Dumper( $res->[2]->[0] );
-    ok( time() + 290 <= $1 && $1 <= time() + 310, 'Right reference found' )
-      or print STDERR Dumper( $res->[2]->[0] ), time(), $1;
+    ok( time() + 295 <= $1 && $1 <= time() + 305, 'Right reference found' )
+      or print STDERR Dumper( $res->[2]->[0] ), time(), " / $1";
     ok(
         $res->[2]->[0] =~
 qr%<p class="notifText">1 expired second factor\(s\) has/have been removed!</p>%,
