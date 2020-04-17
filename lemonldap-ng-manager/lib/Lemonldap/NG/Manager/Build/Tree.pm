@@ -306,8 +306,8 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'linkedinParams',
-                            help  => 'authlinkedin.html',
+                            title => 'githubParams',
+                            help  => 'authgithub.html',
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'githubAuthnLevel',   'githubClientID',
