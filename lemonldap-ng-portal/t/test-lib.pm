@@ -96,6 +96,29 @@ sub count {
     return $count;
 }
 
+=head4 buildForm($params)
+
+Convenience method that builds a url-encoded query string from a hash of arguments
+
+=cut
+
+sub buildForm {
+    my $fields = shift;
+    my $query  = join(
+        '&',
+        map {
+            "$_="
+              . (
+                $fields->{$_}
+                ? uri_escape( uri_unescape( $fields->{$_} ) )
+                : ''
+              )
+          }
+          keys(%$fields)
+    );
+    return $query;
+}
+
 =head4 explain( $result, $expected_result )
 
 Used to display error if test fails:
@@ -276,18 +299,7 @@ m@<form.+?action="(?:(?:http://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
               m#<input.+?name="([^"]+)"[^>]+(?:value="([^"]*?)")?#gs,
             %fields
         );
-        my $query = join(
-            '&',
-            map {
-                "$_="
-                  . (
-                    $fields{$_}
-                    ? uri_escape( uri_unescape( $fields{$_} ) )
-                    : ''
-                  )
-              }
-              keys(%fields)
-        );
+        my $query = buildForm( \%fields );
         foreach my $f (@requiredFields) {
             ok( exists $fields{$f}, qq{ Field "$f" is defined} );
             count(1);
