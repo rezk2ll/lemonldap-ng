@@ -96,6 +96,12 @@ Comment: downloaded from
  .
  Author is unknown and license may be W3C or public-domain
 
+Files: lemonldap-ng-portal/site/htdocs/static/common/modules/GitHub.png
+Copyright: GitHub
+License: MIT
+Comment: downloaded from
+ https://commons.wikimedia.org/wiki/File:Octicons-mark-github.svg
+
 Files: lemonldap-ng-portal/site/htdocs/static/bootstrap/u2f.png
 Copyright: Bautsch <https://commons.wikimedia.org/wiki/User:Bautsch>
 License: CC0-1.0

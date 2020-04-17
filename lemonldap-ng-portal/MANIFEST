@@ -29,6 +29,7 @@ lib/Lemonldap/NG/Portal/Auth/Custom.pm
 lib/Lemonldap/NG/Portal/Auth/DBI.pm
 lib/Lemonldap/NG/Portal/Auth/Demo.pm
 lib/Lemonldap/NG/Portal/Auth/Facebook.pm
+lib/Lemonldap/NG/Portal/Auth/GitHub.pm
 lib/Lemonldap/NG/Portal/Auth/GPG.pm
 lib/Lemonldap/NG/Portal/Auth/Kerberos.pm
 lib/Lemonldap/NG/Portal/Auth/LDAP.pm
@@ -348,6 +349,7 @@ site/htdocs/static/common/modules/Apache.png
 site/htdocs/static/common/modules/CAS.png
 site/htdocs/static/common/modules/CustomAuth.png
 site/htdocs/static/common/modules/Facebook.png
+site/htdocs/static/common/modules/GitHub.png
 site/htdocs/static/common/modules/Google.png
 site/htdocs/static/common/modules/Kerberos.png
 site/htdocs/static/common/modules/LinkedIn.png
@@ -358,6 +360,7 @@ site/htdocs/static/common/modules/SSL.png
 site/htdocs/static/common/modules/Twitter.png
 site/htdocs/static/common/modules/WebID.png
 site/htdocs/static/common/nl.png
+site/htdocs/static/common/pl.png
 site/htdocs/static/common/pt.png
 site/htdocs/static/common/ro.png
 site/htdocs/static/common/tr.png
@@ -371,6 +374,7 @@ site/htdocs/static/languages/fi.json
 site/htdocs/static/languages/fr.json
 site/htdocs/static/languages/it.json
 site/htdocs/static/languages/nl.json
+site/htdocs/static/languages/pl.json
 site/htdocs/static/languages/pt.json
 site/htdocs/static/languages/ro.json
 site/htdocs/static/languages/tr.json
@@ -604,6 +608,7 @@ t/44-CertificateResetByMail-LDAP.t
 t/50-IssuerGet.t
 t/57-GlobalLogout-without-Timer.t
 t/57-GlobalLogout.t
+t/57-LogoutForward.t
 t/58-DecryptValue-with-custom-function.t
 t/58-DecryptValue-with-internal-function.t
 t/59-Double-cookies-for-a-Single-session.t
@@ -668,6 +673,7 @@ t/76-2F-Ext-with-History.t
 t/77-2F-Extra.t
 t/77-2F-Mail-with-global-storage.t
 t/77-2F-Mail.t
+t/78-2F-Upgrade-Many.t
 t/78-2F-Upgrade.t
 t/90-Translations.t
 t/99-Dont-load-Dumper.t
