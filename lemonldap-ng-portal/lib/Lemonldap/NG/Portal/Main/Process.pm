@@ -198,9 +198,23 @@ sub deleteSession {
         }
     }
 
+    # Merge logoutServices from user context (for example CAS logoutServices
+    # url) and from global configuration
+    if ( $self->{'conf'}->{'logoutServices'} and
+         %{ $self->{'conf'}->{'logoutServices'} } ) {
+
+        # initialize logoutServices (if not already done)
+        $req->data->{logoutServices} = {} unless $req->data->{logoutServices};
+
+        $req->data->{logoutServices} = {
+                                        %{ $req->data->{logoutServices} },
+                                        %{ $self->{'conf'}->{'logoutServices'} }
+                                       };
+    }
+
     # TODO
     # Collect logout services and build hidden iFrames
-    if ( $self->{'conf'}->{'logoutServices'} and %{ $self->{'conf'}->{'logoutServices'} } ) {
+    if ( $req->data->{logoutServices} and %{ $req->data->{logoutServices} } ) {
 
         $self->logger->debug("Create iFrames to forward logout to services");
 
@@ -211,10 +225,10 @@ sub deleteSession {
             )
         );
 
-        foreach ( keys %{ $self->{'conf'}->{'logoutServices'} } ) {
+        foreach ( keys %{ $req->data->{logoutServices} } ) {
             my $logoutServiceName = $_;
             my $logoutServiceUrl =
-              $self->{'conf'}->{'logoutServices'}->{$logoutServiceName};
+              $req->data->{logoutServices}->{$logoutServiceName};
 
             $self->logger->debug(
                 "Find logout service $logoutServiceName ($logoutServiceUrl)");
