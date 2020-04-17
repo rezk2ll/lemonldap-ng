@@ -39,13 +39,17 @@ sub process {
             }
         }
     }
-    $self->logger->debug( "Returned "
-          . ( $err > 0 ? "error" : "status" )
-          . ": $err ("
-          . portalConsts->{$err}
-          . ")" )
+    $self->logger->debug( "Returned " . $self->_formatProcessResult($err) )
       if ($err);
     return $err;
+}
+
+sub _formatProcessResult {
+    my ( $self, $err ) = @_;
+    return ( ( $err > 0 ? "error" : "status" )
+        . ": $err ("
+          . portalConsts->{$err}
+          . ")" );
 }
 
 # First process block: check args
