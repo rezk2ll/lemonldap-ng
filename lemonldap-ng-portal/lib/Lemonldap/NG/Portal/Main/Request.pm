@@ -80,6 +80,10 @@ has captcha => ( is => 'rw' );
 # Token
 has token => ( is => 'rw' );
 
+# Whether or not to include a HTML render of the error message
+# in error responses
+has wantErrorRender => ( is => 'rw' );
+
 # Error type
 sub error_type {
     my $req  = shift;

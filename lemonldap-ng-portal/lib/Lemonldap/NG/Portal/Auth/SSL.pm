@@ -31,6 +31,13 @@ sub init {
 # @return Lemonldap::NG::Portal constant
 sub extractFormInfo {
     my ( $self, $req ) = @_;
+
+    # If this is the ajax query, allow response to contain HTML code
+    # to update the portal error message
+    if ( $req->wantJSON ) {
+        $req->wantErrorRender(1);
+    }
+
     my $field = $self->conf->{SSLVar};
     if ( $req->env->{SSL_CLIENT_I_DN} ) {
         $self->logger->debug(
@@ -55,6 +62,12 @@ sub extractFormInfo {
         return PE_BADCERTIFICATE;
     }
     elsif ( $self->conf->{sslByAjax} and not $req->param('nossl') ) {
+
+        # If this is the AJAX query
+        if ( $req->wantJSON ) {
+            return PE_CERTIFICATEREQUIRED;
+        }
+
         $self->logger->debug( 'Append ' . $self->{Name} . ' init/script' );
         $req->data->{customScript} .= $self->{AjaxInitScript};
         $self->logger->debug(
@@ -68,6 +81,7 @@ sub extractFormInfo {
             $req->data->{customScript} .= $self->{AjaxInitScript};
             $self->logger->debug(
                 "Send init/script -> " . $req->data->{customScript} );
+            return PE_BADCERTIFICATE;
         }
         $self->userLogger->warn('No certificate found');
         return PE_CERTIFICATEREQUIRED;

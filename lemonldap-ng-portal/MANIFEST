@@ -392,6 +392,7 @@ site/templates/bootstrap/customLoginFooter.tpl
 site/templates/bootstrap/customLoginHeader.tpl
 site/templates/bootstrap/decryptvalue.tpl
 site/templates/bootstrap/error.tpl
+site/templates/bootstrap/errormsg.tpl
 site/templates/bootstrap/ext2fcheck.tpl
 site/templates/bootstrap/footer.tpl
 site/templates/bootstrap/globallogout.tpl

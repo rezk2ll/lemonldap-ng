@@ -260,11 +260,25 @@ sub do {
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
         if ( ( $err > 0 and !$req->id ) or $err eq PE_SESSIONNOTGRANTED ) {
-            return [
-                401,
-                [ 'WWW-Authenticate' => "SSO " . $self->conf->{portal} ],
-                [qq'{"result":0,"error":$err}']
-            ];
+            my $json = { result => 0, error => $err };
+            if ( $req->wantErrorRender ) {
+                $json->{html} = $self->loadTemplate(
+                    $req,
+                    'errormsg',
+                    params => {
+                        AUTH_ERROR      => $err,
+                        AUTH_ERROR_TYPE => $req->error_type,
+                    }
+                );
+            }
+            return $self->sendJSONresponse(
+                $req, $json,
+                code    => 401,
+                headers => [
+                    'WWW-Authenticate' => "SSO " . $self->conf->{portal},
+                    "Content-Type"     => "application/javascript"
+                ],
+            );
         }
         elsif ( $err > 0 and $err != PE_PASSWORD_OK and $err != PE_LOGOUT_OK ) {
             return $self->sendJSONresponse(
@@ -1041,7 +1055,7 @@ sub registerLogin {
     }
 
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
-    my $type    = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+    my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 
@@ -1096,7 +1110,19 @@ sub corsPreflight {
 sub sendJSONresponse {
     my ( $self, $req, $j, %args ) = @_;
     my $res = Lemonldap::NG::Common::PSGI::sendJSONresponse(@_);
-    if ( $self->conf->{corsEnabled} ) {
+
+    # If this is a cross-domain request from the portal itself
+    # (Ajax SSL to a different VHost)
+    # we allow CORS
+    if ( $req->origin and index( $self->conf->{portal}, $req->origin ) == 0 ) {
+        $self->logger->debug('AJAX request from portal, allowing CORS');
+        push @{ $res->[1] },
+          "Access-Control-Allow-Origin"      => $req->origin,
+          "Access-Control-Allow-Methods"     => "*",
+          "Access-Control-Allow-Credentials" => "true";
+
+    }
+    elsif ( $self->conf->{corsEnabled} ) {
         my @cors = split /;/, $self->cors;
         push @{ $res->[1] }, @cors;
         $self->logger->debug('Apply following CORS policy :');
