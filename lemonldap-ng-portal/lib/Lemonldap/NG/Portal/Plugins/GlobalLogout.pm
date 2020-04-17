@@ -183,7 +183,7 @@ sub activeSessions {
         $user );
 
     $self->logger->debug("Building array ref with sessions info...");
-    @$activeSessions = map { {
+    @$activeSessions = sort { $b->{startTime} cmp $a->{startTime} } map { {
             id          => $_,
             customParam => $sessions->{$_}->{$customParam},
             ipAddr      => $sessions->{$_}->{'ipAddr'},
