@@ -315,6 +315,10 @@ sub attributes {
                         'v' => 'Facebook'
                     },
                     {
+                        'k' => 'GitHub',
+                        'v' => 'GitHub'
+                    },
+                    {
                         'k' => 'GPG',
                         'v' => 'GPG'
                     },
@@ -508,6 +512,10 @@ sub attributes {
                 {
                     'k' => 'Facebook',
                     'v' => 'Facebook'
+                },
+                {
+                    'k' => 'GitHub',
+                    'v' => 'GitHub'
                 },
                 {
                     'k' => 'GPG',
@@ -890,6 +898,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'Facebook',
                     'v' => 'Facebook'
+                },
+                {
+                    'k' => 'GitHub',
+                    'v' => 'GitHub'
                 },
                 {
                     'k' => 'GPG',
@@ -1293,6 +1305,24 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'formTimeout' => {
             'default' => 120,
             'type'    => 'int'
+        },
+        'githubAuthnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'githubClientID' => {
+            'type' => 'text'
+        },
+        'githubClientSecret' => {
+            'type' => 'password'
+        },
+        'githubScope' => {
+            'default' => 'user:email',
+            'type'    => 'text'
+        },
+        'githubUserField' => {
+            'default' => 'login',
+            'type'    => 'text'
         },
         'globalLogoutCustomParam' => {
             'type' => 'text'

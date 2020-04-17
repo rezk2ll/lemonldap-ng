@@ -25,7 +25,8 @@ sub perlExpr {
         $Lemonldap::NG::Common::Safelib::functions );
     $cpt->reval("BEGIN { 'warnings'->unimport; } $val");
     my $err = join( '',
-        grep { $_ =~ /(?:Undefined subroutine|Devel::StackTrace)/ ? () : $_ } split( /\n/, $@ ) );
+        grep { $_ =~ /(?:Undefined subroutine|Devel::StackTrace)/ ? () : $_ }
+          split( /\n/, $@ ) );
     return $err ? ( -1, "__badExpression__: $err" ) : (1);
 }
 
@@ -54,8 +55,8 @@ sub types {
             msgFail => '__badUrl__',
         },
         PerlModule => {
-            form    => 'text',
-            test    => qr/^(?:[a-zA-Z][a-zA-Z0-9]*)*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/,
+            form => 'text',
+            test => qr/^(?:[a-zA-Z][a-zA-Z0-9]*)*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/,
             msgFail => '__badPerlPackageName__',
         },
         hostname => {
@@ -799,21 +800,22 @@ sub attributes {
               'Brute force attack protection -> Max allowed failed login',
         },
         bruteForceProtectionMaxLockTime => {
-            default => 900,
-            type    => 'int',
-            documentation =>
-              'Brute force attack protection -> Max lock time',
+            default       => 900,
+            type          => 'int',
+            documentation => 'Brute force attack protection -> Max lock time',
         },
         bruteForceProtectionIncrementalTempo => {
-            default       => 0,
-            help          => 'bruteforceprotection.html',
-            type          => 'bool',
-            documentation => 'Enable incremental lock time for brute force attack protection',
+            default => 0,
+            help    => 'bruteforceprotection.html',
+            type    => 'bool',
+            documentation =>
+              'Enable incremental lock time for brute force attack protection',
         },
         bruteForceProtectionLockTimes => {
-            type          => 'text',
-            default       => '5 15 60 300 600',
-            documentation => 'Incremental lock time values for brute force attack protection',
+            type    => 'text',
+            default => '5 15 60 300 600',
+            documentation =>
+              'Incremental lock time values for brute force attack protection',
         },
         grantSessionRules => {
             type          => 'grantContainer',
@@ -2902,6 +2904,7 @@ sub attributes {
                 { k => 'AD',          v => 'Active Directory' },
                 { k => 'DBI',         v => 'Database (DBI)' },
                 { k => 'Facebook',    v => 'Facebook' },
+                { k => 'GitHub',      v => 'GitHub' },
                 { k => 'GPG',         v => 'GPG' },
                 { k => 'Kerberos',    v => 'Kerberos' },
                 { k => 'LDAP',        v => 'LDAP' },
@@ -3417,6 +3420,17 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         linkedInScope =>
           { type => 'text', default => 'r_liteprofile r_emailaddress' },
 
+        # GitHub
+        githubAuthnLevel => {
+            type          => 'int',
+            default       => 1,
+            documentation => 'GitHub authentication level',
+        },
+        githubClientID     => { type => 'text', },
+        githubClientSecret => { type => 'password', },
+        githubScope        => { type => 'text', default => 'user:email' },
+        githubUserField    => { type => 'text', default => 'login' },
+
         # WebID
         webIDAuthnLevel => {
             type          => 'int',
@@ -3563,6 +3577,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'DBI',           v => 'Database (DBI)' },
                     { k => 'Demo',          v => 'Demo' },
                     { k => 'Facebook',      v => 'Facebook' },
+                    { k => 'GitHub',        v => 'GitHub' },
                     { k => 'GPG',           v => 'GPG' },
                     { k => 'Kerberos',      v => 'Kerberos' },
                     { k => 'LDAP',          v => 'LDAP' },
@@ -3631,6 +3646,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'AD',       v => 'Active Directory' },
                 { k => 'DBI',      v => 'Database (DBI)' },
                 { k => 'Facebook', v => 'Facebook' },
+                { k => 'GitHub',   v => 'GitHub' },
                 { k => 'GPG',      v => 'GPG' },
                 { k => 'Kerberos', v => 'Kerberos' },
                 { k => 'LDAP',     v => 'LDAP' },

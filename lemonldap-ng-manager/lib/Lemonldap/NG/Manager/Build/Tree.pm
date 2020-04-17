@@ -306,6 +306,16 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'linkedinParams',
+                            help  => 'authlinkedin.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'githubAuthnLevel',   'githubClientID',
+                                'githubClientSecret', 'githubUserField',
+                                'githubScope'
+                            ]
+                        },
+                        {
                             title => 'combinationParams',
                             help  => 'authcombination.html',
                             nodes => [ 'combination', 'combModules' ]
@@ -708,8 +718,11 @@ sub tree {
                             title => 'globalLogout',
                             help  => 'globallogout.html',
                             form  => 'simpleInputContainer',
-                            nodes =>
-                              [ 'globalLogoutRule', 'globalLogoutTimer','globalLogoutCustomParam' ],
+                            nodes => [
+                                'globalLogoutRule',
+                                'globalLogoutTimer',
+                                'globalLogoutCustomParam'
+                            ],
                         },
                         {
                             title => 'stateCheck',
