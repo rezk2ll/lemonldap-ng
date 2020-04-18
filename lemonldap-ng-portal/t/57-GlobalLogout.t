@@ -19,7 +19,7 @@ my $client = LLNG::Manager::Test->new( {
             requireToken            => 0,
             restSessionServer       => 1,
             globalLogoutRule        => '$uid eq "dwho"',
-            globalLogoutCustomParam => 'authMode'
+            globalLogoutCustomParam => 'zeAUTHMODE_authmode'
         }
     }
 );
@@ -139,8 +139,8 @@ my ( $host, $url, $query ) =
 ok( $res->[2]->[0] =~ m%<span trspan="globalLogout">%,
     'Found trspan="globalLogout"' )
   or explain( $res->[2]->[0], 'trspan="globalLogout"' );
-ok( $res->[2]->[0] =~ m%<td scope="row">DEMO</td>%, 'CustomParam found "DEMO"' )
-  or explain( $res->[2]->[0], 'CustomParam DEMO' );
+ok( $res->[2]->[0] =~ m%<td scope="row">DEMO_demo</td>%, 'Found CustomParam "DEMO_demo" macro' )
+  or explain( $res->[2]->[0], 'CustomParam "DEMO_demo" macro' );
 my @c = ( $res->[2]->[0] =~ m%<td scope="row">127.0.0.1</td>%gs );
 my @d = ( $res->[2]->[0] =~ m%<th scope="col">%gs );
 my @e = ( $res->[2]->[0] =~ m%class="data-epoch">(\d{10})</td>%gs );

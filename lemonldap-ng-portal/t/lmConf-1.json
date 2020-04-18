@@ -96,7 +96,8 @@
   "macros": {
     "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\"",
     "array": "$uid eq 'french' ? 'doctor; who' : ''",
-    "authMode": "$authenticationLevel == 8 ? TOTP : 'DEMO'"
+    "authMode": "$authenticationLevel == 8 ? 'TOTP' : 'DEMO'",
+    "zeAUTHMODE_authmode": "$authMode. '_' . lc $authMode"
   },
   "notifications": 0,
   "passwordDB": "Null",
