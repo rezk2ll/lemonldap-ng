@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Plugins::GlobalLogout;
 use strict;
 use Mouse;
 use JSON qw(from_json to_json);
+use Time::Local;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
@@ -169,7 +170,6 @@ sub activeSessions {
     my ( $self, $req ) = @_;
     my $activeSessions = [];
     my $sessions       = {};
-    my $regex          = '^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$';
     my $user           = $req->{userData}->{ $self->conf->{whatToTrace} };
     my $customParam    = $self->conf->{globalLogoutCustomParam} || '';
 
@@ -183,21 +183,29 @@ sub activeSessions {
         $user );
 
     $self->logger->debug("Building array ref with sessions info...");
-    @$activeSessions = sort { $b->{startTime} cmp $a->{startTime} } map { {
+    @$activeSessions =
+      map {
+        my $epoch;
+        my $regex = '^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$';
+        $_->{startTime} =~ /$regex/;
+        $epoch = timelocal( $6, $5, $4, $3, $2 - 1, $1 );
+        $_->{startTime} = $epoch;
+        if ( $_->{updateTime} ) {
+            $_->{updateTime} =~ /$regex/;
+            $epoch = timelocal( $6, $5, $4, $3, $2 - 1, $1 );
+            $_->{updateTime} = $epoch;
+        }
+        $_;
+      }
+      sort { $b->{startTime} cmp $a->{startTime} } map { {
             id          => $_,
             customParam => $sessions->{$_}->{$customParam},
-            ipAddr      => $sessions->{$_}->{'ipAddr'},
-            authLevel   => $sessions->{$_}->{'authenticationLevel'},
-            startTime   => $sessions->{$_}->{'_startTime'} =~
-              s/$regex/$1-$2-$3 $4:$5:$6/ro,
-            updateTime => (
-                  $sessions->{$_}->{'_updateTime'}
-                ? $sessions->{$_}->{'_updateTime'} =~
-                  s/$regex/$1-$2-$3 $4:$5:$6/ro
-                : ''
-            ),
+            ipAddr      => $sessions->{$_}->{ipAddr},
+            authLevel   => $sessions->{$_}->{authenticationLevel},
+            startTime   => $sessions->{$_}->{_startTime},
+            updateTime  => $sessions->{$_}->{_updateTime}
         };
-    } keys %$sessions;
+      } keys %$sessions;
 
     return $activeSessions;
 }

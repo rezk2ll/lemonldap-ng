@@ -22,8 +22,8 @@
         <tbody>
           <TMPL_LOOP NAME="SESSIONS">
           <tr>
-            <td scope="row"><TMPL_VAR NAME="startTime"></td>
-            <td scope="row"><TMPL_VAR NAME="updateTime"></td>
+            <td scope="row" class="data-epoch"><TMPL_VAR NAME="startTime"></td>
+            <td scope="row" class="data-epoch"><TMPL_VAR NAME="updateTime"></td>
             <td scope="row"><TMPL_VAR NAME="ipAddr"></td>
             <td scope="row"><TMPL_VAR NAME="authLevel"></td>
             <TMPL_IF NAME="CUSTOMPRM">

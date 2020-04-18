@@ -143,13 +143,18 @@ ok( $res->[2]->[0] =~ m%<td scope="row">DEMO</td>%, 'CustomParam found "DEMO"' )
   or explain( $res->[2]->[0], 'CustomParam DEMO' );
 my @c = ( $res->[2]->[0] =~ m%<td scope="row">127.0.0.1</td>%gs );
 my @d = ( $res->[2]->[0] =~ m%<th scope="col">%gs );
+my @e = ( $res->[2]->[0] =~ m%class="data-epoch">(\d{10})</td>%gs );
 
 ## Three entries found
 ok( @c == 3, ' -> Three entries found' )
   or explain( $res->[2]->[0], "Number of session(s) found = " . scalar @c );
 ok( @d == 5, ' -> Five <th> found' )
   or explain( $res->[2]->[0], "Number of <th> found = " . scalar @d );
-count(4);
+ok( @e == 3, ' -> Three epoch found' )
+  or explain( $res->[2]->[0], "Number of epoch found = " . scalar @e );
+    ok( time() - 1 <= $e[0] && $e[0] <= time() + 5, 'Right epoch found' )
+      or print STDERR Dumper( $res->[2]->[0] ), time(), " / $1";
+count(6);
 
 ## GlobalLogout request for 'dwho'
 $query .= '&all=1';
