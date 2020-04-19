@@ -8,7 +8,7 @@ use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_REDIRECT);
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 extends 'Lemonldap::NG::Portal::Main::Auth';
 
