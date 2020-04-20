@@ -846,7 +846,6 @@
 "singleIP":"عنوان آي بي واحد لكل مستخدم",
 "singleSession":"جلسة واحدة فقط من قبل المستخدم",
 "singleUserByIP":"مستخدم واحد لكل عنوان آي بي",
-"singleSessionUserByIP":"جلسة واحدة بواسطة عنوان الآي بي",
 "skipRenewConfirmation":"Skip re-auth confirmation",
 "slaveAuthnLevel":"مستوى إثبات الهوية",
 "slaveDisplayLogo":"Display authentication logo",

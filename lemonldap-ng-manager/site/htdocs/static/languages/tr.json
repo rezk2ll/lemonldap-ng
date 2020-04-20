@@ -846,7 +846,6 @@
 "singleIP":"Kullanıcıdan yalnızca bir IP",
 "singleSession":"Kullanıcıdan yalnızca bir oturum",
 "singleUserByIP":"IP adresinden bir kullanıcı",
-"singleSessionUserByIP":"IP adresinden bir oturum",
 "skipRenewConfirmation":"Yeniden yetkilendirme doğrulamasını geç",
 "slaveAuthnLevel":"Doğrulama seviyesi",
 "slaveDisplayLogo":"Doğrulama logosunu görüntüle",

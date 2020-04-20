@@ -3625,10 +3625,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
-        'singleSessionUserByIP' => {
-            'default' => 0,
-            'type'    => 'bool'
-        },
         'singleUserByIP' => {
             'default' => 0,
             'type'    => 'bool'

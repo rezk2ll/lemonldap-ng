@@ -846,7 +846,6 @@
 "singleIP":"Chỉ một địa chỉ IP bởi người dùng",
 "singleSession":"Một phiên chỉ bởi người dùng",
 "singleUserByIP":"Một người dùng theo địa chỉ IP",
-"singleSessionUserByIP":"Một phiên theo địa chỉ IP",
 "skipRenewConfirmation":"Skip re-auth confirmation",
 "slaveAuthnLevel":"Mức xác thực",
 "slaveDisplayLogo":"Display authentication logo",

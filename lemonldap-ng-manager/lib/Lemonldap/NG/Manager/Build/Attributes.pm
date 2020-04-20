@@ -1981,11 +1981,6 @@ sub attributes {
             type          => 'bool',
             documentation => 'Allow only one user per IP',
         },
-        singleSessionUserByIP => {
-            default       => 0,
-            type          => 'bool',
-            documentation => 'Allow only one session per user on an IP',
-        },
 
         # REST server
         restSessionServer => {

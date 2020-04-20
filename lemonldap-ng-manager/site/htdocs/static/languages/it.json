@@ -846,7 +846,6 @@
 "singleIP":"Solo un IP per utente",
 "singleSession":"Una sola sessione per utente",
 "singleUserByIP":"Un utente per indirizzo IP",
-"singleSessionUserByIP":"Una sessione per indirizzo IP",
 "skipRenewConfirmation":"Salta la conferma di re-auth",
 "slaveAuthnLevel":"Livello di autenticazione",
 "slaveDisplayLogo":"Display authentication logo",
