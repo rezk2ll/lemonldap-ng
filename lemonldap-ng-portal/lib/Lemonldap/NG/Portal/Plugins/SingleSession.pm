@@ -57,7 +57,7 @@ sub run {
     if ( $self->conf->{singleUserByIP} ) {
         my $sessions =
           $self->module->searchOn( $moduleOptions, 'ipAddr',
-            $req->sessionInfo->ipAddr );
+            $req->sessionInfo->{ipAddr} );
         foreach my $id ( keys %$sessions ) {
             next if ( $req->id eq $id );
             my $session = $self->p->getApacheSession($id) or next;
