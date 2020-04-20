@@ -804,7 +804,10 @@ sub _post {
             'PATH_INFO' => $path,
             ( $args{query}   ? ( QUERY_STRING => $args{query} )   : () ),
             ( $args{referer} ? ( REFERER      => $args{referer} ) : () ),
-            'REMOTE_ADDR' => '127.0.0.1',
+            (
+                $args{ip} ? ( 'REMOTE_ADDR' => $args{ip} )
+                : ( 'REMOTE_ADDR' => '127.0.0.1' )
+            ),
             (
                 $args{remote_user}
                 ? ( 'REMOTE_USER' => $args{remote_user} )

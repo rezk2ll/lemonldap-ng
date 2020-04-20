@@ -6,54 +6,140 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
+my $level = 'error';
 my $res;
-
-my $client = LLNG::Manager::Test->new( {
+my $client1 = LLNG::Manager::Test->new( {
         ini => {
-            logLevel       => 'error',
+            logLevel       => $level,
             authentication => 'Demo',
             userDB         => 'Same',
             singleSession  => 1,
         }
     }
 );
-
-ok(
-    $res = $client->_post(
-        '/',
-        IO::String->new('user=dwho&password=dwho'),
-        length => 23
-    ),
-    'Auth query'
+my $client2 = LLNG::Manager::Test->new( {
+        ini => {
+            logLevel       => $level,
+            authentication => 'Demo',
+            userDB         => 'Same',
+            singleIP       => 1,
+        }
+    }
 );
-count(1);
-expectOK($res);
+my $client3 = LLNG::Manager::Test->new( {
+        ini => {
+            logLevel       => $level,
+            authentication => 'Demo',
+            userDB         => 'Same',
+            singleUserByIP => 1,
+        }
+    }
+);
+
+sub loginUser {
+    my ( $client, $user, $ip ) = @_;
+    my $query = "user=$user&password=$user";
+    ok(
+        my $res = $client->_post(
+            '/',
+            IO::String->new($query),
+            length => length($query),
+            ip     => $ip,
+        ),
+        'Auth query'
+    );
+    count(1);
+    expectOK($res);
+    return $res;
+}
+
+sub testReq {
+    my ( $client, $id, $msg ) = @_;
+    my $res;
+    ok( $res = $client->_get( '/', cookie => "lemonldap=$id" ), $msg );
+    count(1);
+    return $res;
+}
+
+# Issue #2081
+sub testGetParam {
+    my ( $res, $expected ) = @_;
+    if ($expected) {
+        ok(
+            $res->[2]->[0] =~
+              m%<input type="hidden" name="skin" value="bootstrap" />%,
+            '"skin=bootstrap" input found'
+        ) or explain( $res->[2]->[0], '"skin=bootstrap" not found' );
+    }
+    else {
+        ok(
+            $res->[2]->[0] =
+              !m%<input type="hidden" name="skin" value="bootstrap" />%,
+            '"skin=bootstrap" input not found'
+        ) or explain( $res->[2]->[0], '"skin=bootstrap" found' );
+    }
+    count(1);
+}
+
+####################
+# Test singleSession
+switch ($client1);
+
+$res = loginUser( $client1, "dwho", "127.0.0.1" );
 my $id1 = expectCookie($res);
 
-ok(
-    $res = $client->_post(
-        '/',
-        IO::String->new('user=dwho&password=dwho'),
-        length => 23,
-        accept => 'text/html',
-    ),
-    'Auth query'
-);
-ok(
-    $res->[2]->[0] !~ m%<input type="hidden" name="skin" value="bootstrap" />%,
-    '"skin=bootstrap" input not found'
-) or explain( $res->[2]->[0], '"skin=bootstrap" found' );
-count(2);
-expectOK($res);
+$res = loginUser( $client1, "dwho", "127.0.0.1" );
+my $id2 = expectCookie($res);
+testGetParam( $res, 0 );
+
+expectOK( testReq( $client1, $id2, 'Attempt login with latest session' ) );
+expectReject( testReq( $client1, $id1, 'Attempt login with removed session' ) );
+
+clean_sessions();
+
+####################
+# Test singleIP
+switch ($client2);
+
+$res = loginUser( $client2, "dwho", "127.0.0.1" );
+my $id1 = expectCookie($res);
+
+$res = loginUser( $client2, "dwho", "127.0.0.1" );
 my $id2 = expectCookie($res);
 
-ok( $res = $client->_get( '/', cookie => "lemonldap=$id2" ), 'Use id 2' );
-count(1);
-expectOK($res);
+$res = loginUser( $client2, "dwho", "127.0.0.2" );
+my $id3 = expectCookie($res);
 
-ok( $res = $client->_get( '/', cookie => "lemonldap=$id1" ), 'Use id 1' );
-count(1);
-expectReject($res);
+$res = loginUser( $client2, "dwho", "127.0.0.2" );
+my $id4 = expectCookie($res);
+
+expectOK( testReq( $client2, $id3, 'First session on latest IP' ) );
+expectOK( testReq( $client2, $id4, 'Latest session on latest IP' ) );
+expectReject( testReq( $client2, $id1, 'session on old IP' ) );
+expectReject( testReq( $client2, $id2, 'session on old IP' ) );
+
+clean_sessions();
+
+####################
+# Test singleUserByIP
+switch ($client3);
+
+$res = loginUser( $client3, "rtyler", "127.0.0.1" );
+my $id1 = expectCookie($res);
+
+$res = loginUser( $client3, "rtyler", "127.0.0.2" );
+my $id2 = expectCookie($res);
+
+$res = loginUser( $client3, "dwho", "127.0.0.2" );
+my $id3 = expectCookie($res);
+
+$res = loginUser( $client3, "dwho", "127.0.0.2" );
+my $id4 = expectCookie($res);
+
+expectOK( testReq( $client3, $id1, 'Other user, but other IP' ) );
+expectReject( testReq( $client3, $id2, 'Other user, same IP' ) );
+expectOK( testReq( $client3, $id3, 'Same user, same IP' ) );
+expectOK( testReq( $client3, $id4, 'Same user, same IP' ) );
 
 clean_sessions();
 
