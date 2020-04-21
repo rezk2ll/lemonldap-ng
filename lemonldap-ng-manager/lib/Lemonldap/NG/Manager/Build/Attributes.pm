@@ -1968,17 +1968,17 @@ sub attributes {
         },
         singleSession => {
             default       => 0,
-            type          => 'bool',
+            type          => 'boolOrExpr',
             documentation => 'Allow only one session per user',
         },
         singleIP => {
             default       => 0,
-            type          => 'bool',
+            type          => 'boolOrExpr',
             documentation => 'Allow only one session per IP',
         },
         singleUserByIP => {
             default       => 0,
-            type          => 'bool',
+            type          => 'boolOrExpr',
             documentation => 'Allow only one user per IP',
         },
 
