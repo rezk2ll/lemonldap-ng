@@ -14,8 +14,8 @@ extends 'Lemonldap::NG::Portal::Auth::_WebForm',
 sub init {
     my ($self) = @_;
     foreach (qw(dbiAuthTable dbiAuthLoginCol dbiAuthPasswordCol)) {
-        $self->logger->warn(
-            ref($self) . " seems not configured: missing $_" );
+        $self->logger->warn( ref($self) . " seems not configured: missing $_" )
+          unless $self->conf->{$_};
     }
     return (  $self->Lemonldap::NG::Portal::Auth::_WebForm::init
           and $self->Lemonldap::NG::Portal::Lib::DBI::init );
