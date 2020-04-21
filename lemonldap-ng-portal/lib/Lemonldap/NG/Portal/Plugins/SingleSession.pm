@@ -11,7 +11,29 @@ extends 'Lemonldap::NG::Portal::Main::Plugin',
 
 use constant endAuth => 'run';
 
-sub init { 1 }
+has singleIPRule       => ( is => 'rw' );
+has singleSessionRule  => ( is => 'rw' );
+has singleUserByIPRule => ( is => 'rw' );
+
+sub init {
+    my ($self) = @_;
+
+    # Build triggering rules from configuration
+    $self->singleIPRule(
+        $self->p->buildRule( $self->conf->{singleIP}, 'singleIP' ) );
+    return 0 unless $self->singleIPRule;
+
+    $self->singleSessionRule(
+        $self->p->buildRule( $self->conf->{singleSession}, 'singleSession' ) );
+    return 0 unless $self->singleSessionRule;
+
+    $self->singleUserByIPRule(
+        $self->p->buildRule( $self->conf->{singleUserByIP}, 'singleUserByIP' )
+    );
+    return 0 unless $self->singleUserByIPRule;
+
+    return 1;
+}
 
 sub run {
     my ( $self, $req ) = @_;
@@ -42,8 +64,8 @@ sub run {
         next if ( $linkedSessionId and $id eq $linkedSessionId );
         my $session = $self->p->getApacheSession($id) or next;
         if (
-            $self->conf->{singleSession}
-            or (    $self->conf->{singleIP}
+            $self->singleSessionRule->( $req, $req->sessionInfo )
+            or (    $self->singleIPRule->( $req, $req->sessionInfo )
                 and $req->{sessionInfo}->{ipAddr} ne $session->data->{ipAddr} )
           )
         {
@@ -54,7 +76,8 @@ sub run {
             push @$otherSessions, $self->p->_sumUpSession( $session->data );
         }
     }
-    if ( $self->conf->{singleUserByIP} ) {
+
+    if ( $self->singleUserByIPRule->( $req, $req->sessionInfo ) ) {
         my $sessions =
           $self->module->searchOn( $moduleOptions, 'ipAddr',
             $req->sessionInfo->{ipAddr} );
