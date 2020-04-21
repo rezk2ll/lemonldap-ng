@@ -46,6 +46,15 @@ SKIP: {
     );
     expectCookie( try('dvador') );
     expectReject( try('dwho') );
+    $client = iniCmb(
+        'if($env->{REMOTE_ADDR} =~ /^(127\.)/) then [Dm] or [DB] else [DB]');
+    expectCookie( try('rtyler') );
+    expectCookie( try('dwho') );
+    $client = iniCmb(
+'if($env->{REMOTE_ADDR} =~ /^(128\.)/) then [Dm,Dm] or [DB,DB] else [DB,DB]'
+    );
+    expectCookie( try('rtyler') );
+    expectReject( try('dwho') );
 }
 count($maintests);
 clean_sessions();
