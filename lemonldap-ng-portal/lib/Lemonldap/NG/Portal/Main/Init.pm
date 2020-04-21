@@ -518,4 +518,25 @@ sub displayError {
         'Portal error, contact your administrator', 500 );
 }
 
+# This helper method builds a rule from a string expression
+# - $rule: rule text
+# - $ruleDesc optional hint of what the rule is for, to display in error message
+# returns undef if the rule syntax was invalid
+sub buildRule {
+    my ( $self, $rule, $ruleDesc ) = @_;
+    if ($ruleDesc) {
+        $ruleDesc = " $ruleDesc ";
+    }
+    else {
+        $ruleDesc = " ";
+    }
+    my $compiledRule =
+      $self->HANDLER->buildSub( $self->HANDLER->substitute($rule) );
+    unless ($compiledRule) {
+        my $error = $self->HANDLER->tsv->{jail}->error || '???';
+        $self->logger->error( "Bad" . $ruleDesc . "rule: " . $error );
+    }
+    return $compiledRule,;
+}
+
 1;
