@@ -375,7 +375,10 @@ sub autoRedirect {
             $req->data->{redirectFormMethod} = "get";
         }
         else {
-            if ( $req->{pdata}->{_url} eq encode_base64( $req->{urldc}, '' ) ) {
+            if (    $req->{pdata}->{_url}
+                and $req->{pdata}->{_url} eq encode_base64( $req->{urldc}, '' )
+              )
+            {
                 $self->logger->info("Force cleaning pdata");
                 $req->pdata( {} );
             }
@@ -1055,7 +1058,7 @@ sub registerLogin {
     }
 
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
-    my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+    my $type    = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 
