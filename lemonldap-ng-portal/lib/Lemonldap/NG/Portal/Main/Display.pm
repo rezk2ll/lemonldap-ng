@@ -8,6 +8,7 @@ package Lemonldap::NG::Portal::Main;
 use strict;
 use Mouse;
 use JSON;
+use URI;
 
 has skinRules => ( is => 'rw' );
 
@@ -136,7 +137,7 @@ sub display {
             AUTH_ERROR_TYPE => $req->error_type,
             MSG             => $info,
             URL             => $req->{urldc},
-            HIDDEN_INPUTS   => $self->buildHiddenForm($req),
+            HIDDEN_INPUTS   => $self->buildOutgoingHiddenForm( $req, $method ),
             ACTIVE_TIMER    => $req->data->{activeTimer},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->data->{_authChoice},
@@ -182,13 +183,14 @@ sub display {
 
     # 2.1 Redirection
     elsif ( $req->{error} == PE_REDIRECT ) {
+        my $method = $req->data->{redirectFormMethod} || 'get';
         $skinfile       = "redirect";
         %templateParams = (
             MAIN_LOGO     => $self->conf->{portalMainLogo},
             LANGS         => $self->conf->{showLanguages},
             URL           => $req->{urldc},
-            HIDDEN_INPUTS => $self->buildHiddenForm($req),
-            FORM_METHOD   => $req->data->{redirectFormMethod} || 'get',
+            HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
+            FORM_METHOD   => $method,
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -506,6 +508,29 @@ sub staticFile {
         ],
         $fh,
     ];
+}
+
+sub buildOutgoingHiddenForm {
+    my ( $self, $req, $method ) = @_;
+    my @keys = keys %{ $req->{portalHiddenFormValues} };
+
+    # Redirection URL contains query string. Before displaying a form,
+    # we must set the query string parameters as form fields so they can
+    # be preserved #2085
+
+    my $uri          = URI->new( $req->{urldc} );
+    my %query_params = $uri->query_form;
+    if (%query_params) {
+        $self->logger->debug(
+"urldc contains query parameters, setting them as hidden form values"
+        );
+        $self->clearHiddenFormValue($req);
+        foreach ( keys %query_params ) {
+            $self->setHiddenFormValue( $req, $_, $query_params{$_}, "", 0 );
+        }
+    }
+
+    return $self->buildHiddenForm($req);
 }
 
 sub buildHiddenForm {
