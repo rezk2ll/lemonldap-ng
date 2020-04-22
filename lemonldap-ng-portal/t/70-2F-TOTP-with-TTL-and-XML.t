@@ -28,7 +28,7 @@ SKIP: {
                 portalMainLogo             => 'common/logos/logo_llng_old.png',
                 notification               => 1,
                 notificationStorage        => 'File',
-                notificationStorageOptions => { dirName => 't' },
+                notificationStorageOptions => { dirName => $main::tmpDir },
                 oldNotifFormat             => 1,
             }
         }
