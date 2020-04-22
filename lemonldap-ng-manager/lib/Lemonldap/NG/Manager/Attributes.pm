@@ -2148,6 +2148,7 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         },
         'oidcRPMetaDataOptionsExtraClaims' => {
             'default' => {},
+            'keyTest' => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
             'type'    => 'keyTextContainer'
         },
         'oidcRPMetaDataOptionsIcon' => {
@@ -2274,7 +2275,8 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type' => 'keyTextContainer'
         },
         'oidcServiceDynamicRegistrationExtraClaims' => {
-            'type' => 'keyTextContainer'
+            'keyTest' => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
+            'type'    => 'keyTextContainer'
         },
         'oidcServiceIDTokenExpiration' => {
             'default' => 3600,

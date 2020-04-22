@@ -82,8 +82,10 @@ $res = $op->_post(
 );
 my $idpId = expectCookie($res);
 
+# Include a weird scope name, to make sure they work (#2168)
 $query =
-    "response_type=code&scope=openid%20profile%20email%20offline_access&"
+    "response_type=code&scope=openid%20profile%20email%20"
+  . "offline_access%20%21weird%3Ascope.name~&"
   . "client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Ftest%2F";
 $res = $op->_get(
     "/oauth2/authorize",
@@ -265,7 +267,10 @@ is( $json->{active},    1 );
 is( $json->{client_id}, 'rpid' );
 is( $json->{sub},       'french' );
 
-count(3);
+# #2168
+ok( grep { $_ eq "!weird:scope.name~" } ( split /\s+/, $json->{scope} ),
+    "Scope contains weird scope name" );
+count(4);
 
 clean_sessions();
 done_testing( count() );

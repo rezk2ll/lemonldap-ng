@@ -102,6 +102,21 @@ ok(
 count(1);
 my $idpId = expectCookie($res);
 
+# Try to get code for RP1 with invalide scope name
+$query =
+"response_type=code&scope=openid%20profile%20email%22&client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Frp2.com%2F";
+ok(
+    $res = $op->_get(
+        "/oauth2/authorize",
+        query  => "$query",
+        accept => 'text/html',
+        cookie => "lemonldap=$idpId",
+    ),
+    "Get authorization code for rp1"
+);
+count(1);
+expectPortalError( $res, 24, "Invalid scope" );
+#
 # Get code for RP1
 $query =
 "response_type=code&scope=openid%20profile%20email&client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Frp2.com%2F";

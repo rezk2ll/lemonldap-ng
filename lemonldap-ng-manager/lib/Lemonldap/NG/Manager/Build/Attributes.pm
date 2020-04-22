@@ -3840,7 +3840,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
               'OpenID Connect exported variables for dynamic registration',
         },
         oidcServiceDynamicRegistrationExtraClaims => {
-            type => 'keyTextContainer',
+            type    => 'keyTextContainer',
+            keyTest => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
             documentation =>
               'OpenID Connect extra claims for dynamic registration',
         },
@@ -3960,8 +3961,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsAuthorizationCodeExpiration => { type => 'int' },
         oidcRPMetaDataOptionsOfflineSessionExpiration    => { type => 'int' },
         oidcRPMetaDataOptionsRedirectUris                => { type => 'text', },
-        oidcRPMetaDataOptionsExtraClaims =>
-          { type => 'keyTextContainer', default => {} },
+        oidcRPMetaDataOptionsExtraClaims                 => {
+            type    => 'keyTextContainer',
+            keyTest => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
+            default => {}
+        },
         oidcRPMetaDataOptionsBypassConsent => {
             type    => 'bool',
             help    => 'openidconnectclaims.html',

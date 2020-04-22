@@ -346,14 +346,20 @@ sub run {
             }
 
             # Check scope validity
-            unless ( $oidc_request->{'scope'} =~ /^[a-zA-Z_\-\s]+$/ ) {
-                $self->logger->error( "Submitted scope is not valid: "
-                      . $oidc_request->{'scope'} );
+            # We use a slightly more relaxed version of
+            # https://tools.ietf.org/html/rfc6749#appendix-A.4
+            # To be tolerant of user error (trailing spaces, etc.)
+            # Scope names are restricted to printable ASCII characters,
+            # excluding double quote and backslash
+            unless (
+                $oidc_request->{'scope'} =~ /^[\x20\x21\x23-\x5B\x5D-\x7E]*$/ )
+            {
+                $self->logger->error("Submitted scope is not valid");
                 return PE_ERROR;
             }
 
             # Check openid scope
-            unless ( $oidc_request->{'scope'} =~ /\bopenid\b/ ) {
+            unless ( $self->_hasScope( 'openid', $oidc_request->{'scope'} ) ) {
                 $self->logger->debug("No openid scope found");
 
                 #TODO manage standard OAuth request
@@ -467,7 +473,12 @@ sub run {
                     foreach my $requested_scope (
                         split( /\s+/, $oidc_request->{'scope'} ) )
                     {
-                        if ( $consent_scope =~ /\b$requested_scope\b/ ) {
+                        if (
+                            $self->_hasScope(
+                                $requested_scope, $consent_scope
+                            )
+                          )
+                        {
                             $self->logger->debug(
                                 "Scope $requested_scope already accepted");
                         }
@@ -543,7 +554,8 @@ sub run {
                         my $display_name =
                           $self->conf->{oidcRPMetaDataOptions}->{$rp}
                           ->{oidcRPMetaDataOptionsDisplayName};
-                        my $icon = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+                        my $icon =
+                          $self->conf->{oidcRPMetaDataOptions}->{$rp}
                           ->{oidcRPMetaDataOptionsIcon};
                         my $imgSrc;
 
@@ -564,7 +576,7 @@ sub run {
                         };
                         my @list;
                         foreach my $requested_scope (
-                            split( /\s/, $oidc_request->{'scope'} ) )
+                            split( /\s+/, $oidc_request->{'scope'} ) )
                         {
                             if ( my $message =
                                 $scope_messages->{$requested_scope} )
@@ -620,7 +632,9 @@ sub run {
 
             # WIP: Offline access
             my $offline = 0;
-            if ( $oidc_request->{'scope'} =~ /\boffline_access\b/ ) {
+            if (
+                $self->_hasScope( 'offline_access', $oidc_request->{'scope'} ) )
+            {
                 $offline = 1;
 
                 # MUST ensure that the prompt parameter contains consent unless
@@ -655,8 +669,10 @@ sub run {
                 }
 
                 # Strip offline_access from scopes from now on
-                $oidc_request->{'scope'} = join " ", grep !/^offline_access$/,
-                  split /\s+/, $oidc_request->{'scope'};
+                $oidc_request->{'scope'} = join " ",
+                  grep !/^offline_access$/,
+                  split /\s+/,
+                  $oidc_request->{'scope'};
             }
 
             # Authorization Code Flow
@@ -730,7 +746,8 @@ sub run {
                         "Generated access token: $access_token");
 
                     # Compute hash to store in at_hash
-                    my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+                    my $alg =
+                      $self->conf->{oidcRPMetaDataOptions}->{$rp}
                       ->{oidcRPMetaDataOptionsIDTokenSignAlg};
                     my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
                     $at_hash = $self->createHash( $access_token, $hash_level )
@@ -1510,8 +1527,8 @@ sub userInfo {
     my $userinfo_response =
       $self->buildUserInfoResponse( $req, $scope, $rp, $session );
     unless ($userinfo_response) {
-        return $self->returnBearerError( 'invalid_request', 'Invalid request',
-            401 );
+        return $self->returnBearerError( 'invalid_request',
+            'Invalid request', 401 );
     }
 
     my $userinfo_sign_alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -2018,6 +2035,11 @@ sub exportRequestParameters {
     }
 
     return PE_OK;
+}
+
+sub _hasScope {
+    my ( $self, $scope, $scopelist ) = @_;
+    return scalar grep { $_ eq $scope } ( split /\s+/, $scopelist );
 }
 
 sub _convertOldFormatConsents {
