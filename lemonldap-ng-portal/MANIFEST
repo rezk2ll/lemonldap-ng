@@ -676,6 +676,7 @@ t/77-2F-Mail.t
 t/78-2F-Upgrade-Many.t
 t/78-2F-Upgrade.t
 t/90-Translations.t
+t/91-Memory-Leak.t
 t/99-Dont-load-Dumper.t
 t/99-pod.t
 t/gpghome/key.asc
