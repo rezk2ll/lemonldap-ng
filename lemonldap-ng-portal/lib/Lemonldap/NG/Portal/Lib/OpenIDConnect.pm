@@ -384,8 +384,7 @@ sub buildHybridAuthnResponse {
             : ()
         ),
         (
-            $id_token
-            ? ( id_token => $id_token )
+            $id_token ? ( id_token => $id_token )
             : ()
         ),
         ( $expires_in    ? ( expires_in    => $expires_in )    : () ),

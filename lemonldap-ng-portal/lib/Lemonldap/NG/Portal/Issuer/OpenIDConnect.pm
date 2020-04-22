@@ -77,7 +77,7 @@ sub init {
         $hd->substitute( $self->conf->{issuerDBOpenIDConnectRule} ) );
     unless ($rule) {
         my $error = $hd->tsv->{jail}->error || '???';
-        $self->error( "Bad OIDC activation rule -> $error" );
+        $self->error("Bad OIDC activation rule -> $error");
         return 0;
     }
     $self->{rule} = $rule;
@@ -2073,11 +2073,10 @@ sub _convertOldFormatConsents {
 }
 
 sub _generateIDToken {
-    my ( $self, $req, $oidc_request, $rp, $extra_claims )
-      = @_;
+    my ( $self, $req, $oidc_request, $rp, $extra_claims ) = @_;
 
     my $response_type = $oidc_request->{'response_type'};
-    my $client_id = $oidc_request->{'client_id'};
+    my $client_id     = $oidc_request->{'client_id'};
 
     my $id_token_exp =
       $self->conf->{oidcRPMetaDataOptions}->{$rp}
