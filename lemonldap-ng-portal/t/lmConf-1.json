@@ -43,7 +43,7 @@
   "exportedHeaders": {
     "test1.example.com": {
       "Auth-User": "$uid",
-      "testHeader1": "testHeader_value",
+      "testHeader1": "'testHeader_value'",
       "testHeader2": "' '",
       "emptyHeader": "''"
     },
