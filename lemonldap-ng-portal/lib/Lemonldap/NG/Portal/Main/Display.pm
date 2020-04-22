@@ -142,7 +142,7 @@ sub display {
             CHOICE_VALUE    => $req->data->{_authChoice},
             FORM_METHOD     => $method,
             (
-                $method ne 'get' ? ( SEND_PARAMS => 1 )
+                (not $req->{urldc}) ? ( SEND_PARAMS => 1 )
                 : ()
             ),
             (
