@@ -146,9 +146,11 @@ sub init {
 }
 
 sub setPortalRoutes {
-    my($self)=@_;
-    $self->authRoutes({ GET => {}, POST => {}, PUT => {}, DELETE => {}, OPTIONS => {} });
-    $self->unAuthRoutes({ GET => {}, POST => {}, PUT => {}, DELETE => {}, OPTIONS => {} });
+    my ($self) = @_;
+    $self->authRoutes(
+        { GET => {}, POST => {}, PUT => {}, DELETE => {}, OPTIONS => {} } );
+    $self->unAuthRoutes(
+        { GET => {}, POST => {}, PUT => {}, DELETE => {}, OPTIONS => {} } );
     $self
 
       # "/" or undeclared paths
@@ -181,6 +183,12 @@ sub setPortalRoutes {
 
       # Logout
       ->addAuthRoute( logout => 'logout', ['GET'] );
+
+    # Default routes must point to routines declared above
+    $self->defaultAuthRoute('');
+    $self->defaultUnauthRoute('');
+    return 1;
+
 }
 
 sub reloadConf {
