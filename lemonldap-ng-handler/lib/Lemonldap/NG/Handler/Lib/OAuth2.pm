@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler::Lib::OAuth2;
 
 use strict;
 
-our $VERSION = '2.0.4';
+our $VERSION = '2.0.8';
 
 sub retrieveSession {
     my ( $class, $req, $id ) = @_;
@@ -88,7 +88,11 @@ sub fetchId {
         return "O-$_session_id";
     }
 
-    return $class->Lemonldap::NG::Handler::Main::fetchId($req);
+    my $value = $class->Lemonldap::NG::Handler::Main::fetchId($req);
+    unless ($value) {
+        $req->data->{oauth2_error} = 'invalid_token';
+    }
+    return $value;
 }
 
 ## @rmethod protected hash getOIDCInfos(id)
@@ -121,6 +125,20 @@ sub getOIDCInfos {
     }
 
     return $infos;
+}
+
+## The OAuth2 handler does not redirect, we simply return a 401 with relevant
+# information as described in https://tools.ietf.org/html/rfc6750#section-3
+sub goToPortal {
+    my ( $class, $req, $url, $arg, $path ) = @_;
+
+    my $oauth2_error = '';
+    if ( $req->data->{oauth2_error} ) {
+        $oauth2_error = ' error="' . $req->data->{oauth2_error} . '"';
+    }
+    $class->set_header_out( $req,
+        'WWW-Authenticate' => "Bearer" . $oauth2_error );
+    return $class->HTTP_UNAUTHORIZED;
 }
 
 1;
