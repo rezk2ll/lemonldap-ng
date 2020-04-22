@@ -3,6 +3,7 @@ package Lemonldap::NG::Common::PSGI::Router;
 use Mouse;
 use Lemonldap::NG::Common::PSGI;
 use Lemonldap::NG::Common::PSGI::Constants;
+use Scalar::Util 'weaken';
 
 our $VERSION = '2.0.8';
 
@@ -93,6 +94,7 @@ sub genRoute {
             }
         }
         elsif ( $self->can($dest) ) {
+            weaken($self);
             $routes->{$word} = sub { shift; $self->$dest(@_) };
         }
         else {

@@ -1,6 +1,7 @@
 package Lemonldap::NG::Common::Logger::_Duplicate;
 
 use strict;
+use Scalar::Util 'weaken';
 
 our $VERSION = '2.0.6';
 
@@ -11,6 +12,7 @@ sub new {
     die $@ if ($@);
     $self->{logger} = $args{logger}->new(@_);
     $self->{dup}    = $args{dup} or die 'Missing dup';
+    weaken($self->{dup});
     return $self;
 }
 

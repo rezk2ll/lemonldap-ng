@@ -15,6 +15,7 @@ package Lemonldap::NG::Portal::Main;
 use strict;
 use Mouse;
 use Regexp::Assemble;
+use Scalar::Util 'weaken';
 
 # PROPERTIES
 
@@ -92,13 +93,16 @@ has cors => ( is => 'rw' );
 sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
-    $self->localConfig( {
-            %{ Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
-                  ->getLocalConf('portal')
-            },
-            %$args
+    $self->localConfig( {} );
+    {
+        my $h = Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
+          ->getLocalConf('portal');
+        foreach ( keys %$h ) {
+            $self->localConfig->{$_} = $h->{$_};
+            weaken( $self->localConfig->{$_} ) if ref $self->localConfig->{$_};
         }
-    );
+    }
+    $self->localConfig->{$_} = $args->{$_} foreach ( keys %$args );
 
     # Load override messages from lemonldap-ng.ini
     foreach my $k ( keys %{ $self->localConfig } ) {
@@ -179,7 +183,10 @@ sub reloadConf {
     my ( $self, $conf ) = @_;
 
     # Reinitialize $self->conf
-    %{ $self->{conf} } = %{ $self->localConfig };
+    foreach ( keys %{ $self->localConfig } ) {
+        $self->{conf}->{$_} = $self->localConfig->{$_};
+        weaken( $self->{conf}->{$_} ) if ref $self->{conf}->{$_};
+    }
 
     # Reinitialize arrays
     foreach ( qw(_macros _groups), @entryPoints ) {
