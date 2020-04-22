@@ -1,6 +1,7 @@
 use Test::More;
 use strict;
 use IO::String;
+use MIME::Base64;
 
 BEGIN {
     require 't/test-lib.pm';
@@ -37,19 +38,20 @@ my $client3 = LLNG::Manager::Test->new( {
 );
 
 sub loginUser {
-    my ( $client, $user, $ip ) = @_;
+    my ( $client, $user, $ip, %args ) = @_;
     my $query = "user=$user&password=$user";
     ok(
         my $res = $client->_post(
             '/',
             IO::String->new($query),
             length => length($query),
+            accept => 'text/html',
             ip     => $ip,
+            %args
         ),
         'Auth query'
     );
     count(1);
-    expectOK($res);
     return $res;
 }
 
@@ -85,14 +87,23 @@ sub testGetParam {
 # Test singleSession
 switch ($client1);
 
+# Test login
 $res = loginUser( $client1, "dwho", "127.0.0.1" );
 my $id1 = expectCookie($res);
+testGetParam( $res, 0 );
 
 $res = loginUser( $client1, "dwho", "127.0.0.1" );
 my $id2 = expectCookie($res);
+testGetParam( $res, 1 );
+
+# Check that skin=bootstrap isn't appended when going to external URL (#2081)
+$res = loginUser( $client1, "dwho", "127.0.0.1",
+    query => 'url=' . encode_base64( "http://test1.example.com/", '' ), );
+my $id3 = expectCookie($res);
 testGetParam( $res, 0 );
 
-expectOK( testReq( $client1, $id2, 'Attempt login with latest session' ) );
+expectOK( testReq( $client1, $id3, 'Attempt login with latest session' ) );
+expectReject( testReq( $client1, $id2, 'Attempt login with removed session' ) );
 expectReject( testReq( $client1, $id1, 'Attempt login with removed session' ) );
 
 clean_sessions();
