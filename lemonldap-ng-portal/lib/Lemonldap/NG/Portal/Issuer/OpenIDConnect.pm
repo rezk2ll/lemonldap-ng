@@ -490,11 +490,17 @@ sub run {
                     {
                         $RPoidcConsent[0]{epoch} = time;
                         $RPoidcConsent[0]{scope} = $oidc_request->{'scope'};
-                        push @{$_oidcConsents}, @RPoidcConsent;
+
+                        # Build new consent list by removing all references
+                        # to the current RP from the old list and appending the
+                        # new consent
+                        my @newoidcConsents =
+                          grep { $_->{rp} ne $rp } @$_oidcConsents;
+                        push @newoidcConsents, $RPoidcConsent[0];
                         $self->logger->debug(
                             "Append Relying Party $rp Consent");
                         $self->p->updatePersistentSession( $req,
-                            { _oidcConsents => to_json($_oidcConsents) } );
+                            { _oidcConsents => to_json( \@newoidcConsents ) } );
 
                         $self->logger->debug(
                             "Consent given for Relying Party $rp");
