@@ -2130,6 +2130,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'default' => 0,
             'type'    => 'bool'
         },
+        'oidcRPMetaDataOptionsAllowPasswordGrant' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcRPMetaDataOptionsAuthorizationCodeExpiration' => {
             'type' => 'int'
         },
@@ -2266,6 +2270,10 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcServiceAllowImplicitFlow' => {
             'default' => 0,
             'type'    => 'bool'
+        },
+        'oidcServiceAllowPasswordGrant' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
         },
         'oidcServiceAuthorizationCodeExpiration' => {
             'default' => 60,

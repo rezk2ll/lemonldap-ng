@@ -596,6 +596,7 @@
 "oidcRPMetaDataNode":"OpenID Connect Relying Parties",
 "oidcRPMetaDataOptions":"Seçenekler",
 "oidcRPMetaDataOptionsAccessTokenExpiration":"Erişim jetonu sona erme",
+"oidcRPMetaDataOptionsAllowPasswordGrant":"Allow OAuth2.0 Password Grant",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Yetkilendirme Kodu sona erme",
 "oidcRPMetaDataOptionsBypassConsent":"İzni es geç",
 "oidcRPMetaDataOptionsClientID":"İstemci ID",

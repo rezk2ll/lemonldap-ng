@@ -14,7 +14,7 @@
 
 package Lemonldap::NG::Manager::Build::CTrees;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.8';
 
 sub cTrees {
     return {
@@ -210,6 +210,7 @@ sub cTrees {
                     'oidcRPMetaDataOptionsAllowOffline',
                     'oidcRPMetaDataOptionsRefreshToken',
                     'oidcRPMetaDataOptionsOfflineSessionExpiration',
+                    'oidcRPMetaDataOptionsAllowPasswordGrant',
                     'oidcRPMetaDataOptionsRedirectUris',
                     'oidcRPMetaDataOptionsBypassConsent',
                     {

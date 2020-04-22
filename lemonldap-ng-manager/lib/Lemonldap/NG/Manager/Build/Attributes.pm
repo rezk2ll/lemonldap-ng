@@ -4005,6 +4005,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 0,
             documentation => 'Allow offline access',
         },
+        oidcRPMetaDataOptionsAllowPasswordGrant => {
+            type    => 'bool',
+            default => 0,
+            documentation =>
+              'Allow OAuth2 Resource Owner Password Credentials Grant',
+        },
         oidcRPMetaDataOptionsRefreshToken => {
             type          => 'bool',
             default       => 0,

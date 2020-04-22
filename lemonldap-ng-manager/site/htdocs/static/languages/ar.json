@@ -596,6 +596,7 @@
 "oidcRPMetaDataNode":"الأطراف المعتمد لي أوبين أيدي كونيكت",
 "oidcRPMetaDataOptions":"الخيارات",
 "oidcRPMetaDataOptionsAccessTokenExpiration":"انتهاء صلاحية التوكن",
+"oidcRPMetaDataOptionsAllowPasswordGrant":"Allow OAuth2.0 Password Grant",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Authorization Code expiration",
 "oidcRPMetaDataOptionsBypassConsent":"تخطى الموافقة ",
 "oidcRPMetaDataOptionsClientID":"معرف العميل",

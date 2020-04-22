@@ -596,6 +596,7 @@
 "oidcRPMetaDataNode":"OpenID Connect Relying Parties",
 "oidcRPMetaDataOptions":"Options",
 "oidcRPMetaDataOptionsAccessTokenExpiration":"Access Token expiration",
+"oidcRPMetaDataOptionsAllowPasswordGrant":"Allow OAuth2.0 Password Grant",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Authorization Code expiration",
 "oidcRPMetaDataOptionsBypassConsent":"Bypass consent",
 "oidcRPMetaDataOptionsClientID":"Client ID",

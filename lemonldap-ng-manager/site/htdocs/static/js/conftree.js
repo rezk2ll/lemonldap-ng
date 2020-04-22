@@ -525,6 +525,13 @@ function templates(tpl,key) {
             "type" : "int"
          },
          {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowPasswordGrant",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowPasswordGrant",
+            "title" : "oidcRPMetaDataOptionsAllowPasswordGrant",
+            "type" : "bool"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRedirectUris",
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRedirectUris",
             "title" : "oidcRPMetaDataOptionsRedirectUris"

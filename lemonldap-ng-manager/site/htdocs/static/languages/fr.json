@@ -596,6 +596,7 @@
 "oidcRPMetaDataNode":"Clients OpenID Connect",
 "oidcRPMetaDataOptions":"Options",
 "oidcRPMetaDataOptionsAccessTokenExpiration":"Expiration des jetons d'accès",
+"oidcRPMetaDataOptionsAllowPasswordGrant":"Autoriser le Password Grant OAuth2.0",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Expiration des codes d'autorisation",
 "oidcRPMetaDataOptionsBypassConsent":"Contourner le consentement",
 "oidcRPMetaDataOptionsClientID":"Identifiant",
