@@ -139,7 +139,16 @@ sub init {
         return 0;
     }
 
-    # Handle requests (other path may be declared in enabled plugins)
+    # Default routes must point to routines declared above
+    $self->defaultAuthRoute('');
+    $self->defaultUnauthRoute('');
+    return 1;
+}
+
+sub setPortalRoutes {
+    my($self)=@_;
+    $self->authRoutes({ GET => {}, POST => {}, PUT => {}, DELETE => {}, OPTIONS => {} });
+    $self->unAuthRoutes({ GET => {}, POST => {}, PUT => {}, DELETE => {}, OPTIONS => {} });
     $self
 
       # "/" or undeclared paths
@@ -172,15 +181,13 @@ sub init {
 
       # Logout
       ->addAuthRoute( logout => 'logout', ['GET'] );
-
-    # Default routes must point to routines declared above
-    $self->defaultAuthRoute('');
-    $self->defaultUnauthRoute('');
-    return 1;
 }
 
 sub reloadConf {
     my ( $self, $conf ) = @_;
+
+    # Handle requests (other path may be declared in enabled plugins)
+    $self->setPortalRoutes;
 
     # Reinitialize $self->conf
     foreach ( keys %{ $self->localConfig } ) {
