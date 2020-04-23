@@ -243,7 +243,8 @@ sub _switchContext {
     delete $req->sessionInfo->{groups};
 
     # Compute groups & macros again with real authenticationLevel
-    $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
+    $req->steps(
+        [ 'setSessionInfo', $self->p->groupsAndMacros, 'setLocalGroups' ] );
     if ( my $error = $self->p->process($req) ) {
         $self->logger->debug(
             "ContextSwitching: Process returned error: $error");
