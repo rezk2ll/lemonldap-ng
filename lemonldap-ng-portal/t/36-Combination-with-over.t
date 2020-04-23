@@ -21,8 +21,8 @@ SKIP: {
     $dbh->do("INSERT INTO users VALUES ('rtyler','rtyler','Test user 1')");
 
     $client = iniCmb('[Dm] or [DB]');
-    expectCookie( try('dwho') );
-    expectCookie( try('dvador') );
+    $client->logout( expectCookie( try('dwho') ) );
+    $client->logout( expectCookie( try('dvador') ) );
 }
 count($maintests);
 clean_sessions();
