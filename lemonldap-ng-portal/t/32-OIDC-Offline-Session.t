@@ -247,6 +247,26 @@ $json = expectJSON($res);
 ok( $json->{name} eq "Frédéric Accents", "Correct user info" );
 count(1);
 
+## Test introspection of refreshed token #2171
+my $req = 'client_id=rpid&client_secret=rpsecret&token=' . $access_token;
+ok(
+    $res = $op->_post(
+        "/oauth2/introspect",
+        IO::String->new($req),
+        accept => 'application/json',
+        length => length($req),
+    ),
+    "Post new access token"
+);
+count(1);
+$json = expectJSON($res);
+
+is( $json->{active},    1 );
+is( $json->{client_id}, 'rpid' );
+is( $json->{sub},       'french' );
+
+count(3);
+
 clean_sessions();
 done_testing( count() );
 

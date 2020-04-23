@@ -1500,35 +1500,11 @@ sub userInfo {
     my $rp              = $accessTokenSession->data->{rp};
     my $user_session_id = $accessTokenSession->data->{user_session_id};
 
-    my $session;
-
-    # If using a refreshed access token
-    if ($user_session_id) {
-
-        # Get user identifier
-        $session = $self->p->getApacheSession($user_session_id);
-
-        unless ($session) {
-            $self->logger->error("Unable to find user session");
-            return $self->returnBearerError( 'invalid_request',
-                'Invalid request', 401 );
-        }
-    }
-    else {
-        my $offline_session_id =
-          $accessTokenSession->data->{offline_session_id};
-        unless ($offline_session_id) {
-            return $self->returnBearerError( 'invalid_request',
-                'Invalid request', 401 );
-        }
-
-        $session = $self->getRefreshToken($offline_session_id);
-
-        unless ($session) {
-            $self->logger->error("Unable to find refresh session");
-            return $self->returnBearerError( 'invalid_request',
-                'Invalid request', 401 );
-        }
+    my $session =
+      $self->_getSessionFromAccessTokenData( $accessTokenSession->data );
+    unless ($session) {
+        return $self->returnBearerError( 'invalid_request',
+            'Invalid request', 401 );
     }
 
     my $userinfo_response =
@@ -1559,6 +1535,32 @@ sub userInfo {
     }
 }
 
+sub _getSessionFromAccessTokenData {
+    my ( $self, $tokenData ) = @_;
+    my $session;
+
+    # If using a refreshed access token
+    if ( $tokenData->{user_session_id} ) {
+
+        # Get user identifier
+        $session = $self->p->getApacheSession( $tokenData->{user_session_id} );
+
+        unless ($session) {
+            $self->logger->error("Unable to find user session");
+        }
+    }
+    else {
+        my $offline_session_id = $tokenData->{offline_session_id};
+        if ($offline_session_id) {
+            $session = $self->getRefreshToken($offline_session_id);
+            unless ($session) {
+                $self->logger->error("Unable to find refresh session");
+            }
+        }
+    }
+    return $session;
+}
+
 sub introspection {
     my ( $self, $req ) = @_;
     $self->logger->debug("URL detected as an OpenID Connect INTROSPECTION URL");
@@ -1586,35 +1588,31 @@ sub introspection {
     my $response    = { active => JSON::false };
     my $oidcSession = $self->getOpenIDConnectSession($token);
     if ($oidcSession) {
-        if ( my $user_session_id = $oidcSession->{data}->{user_session_id} ) {
+        my $apacheSession =
+          $self->_getSessionFromAccessTokenData( $oidcSession->{data} );
+        if ($apacheSession) {
 
-            # Get user identifier
-            my $apacheSession = $self->p->getApacheSession($user_session_id);
-            if ($apacheSession) {
-
-                $response->{active} = JSON::true;
+            $response->{active} = JSON::true;
 
         # The ID attribute we choose is the one of the calling webservice,
         # which might be different from the OIDC client the token was issued to.
-                my $user_id_attribute =
-                  $self->conf->{oidcRPMetaDataOptions}->{$rp}
-                  ->{oidcRPMetaDataOptionsUserIDAttr}
-                  || $self->conf->{whatToTrace};
-                $response->{sub}   = $apacheSession->data->{$user_id_attribute};
-                $response->{scope} = $oidcSession->{data}->{scope}
-                  if $oidcSession->{data}->{scope};
-                $response->{client_id} =
-                  $self->oidcRPList->{ $oidcSession->{data}->{rp} }
-                  ->{oidcRPMetaDataOptionsClientID}
-                  if $oidcSession->{data}->{rp};
-                $response->{iss} = $self->iss;
-                $response->{exp} =
-                  $oidcSession->{data}->{_utime} + $self->conf->{timeout};
-            }
+            my $user_id_attribute =
+              $self->conf->{oidcRPMetaDataOptions}->{$rp}
+              ->{oidcRPMetaDataOptionsUserIDAttr}
+              || $self->conf->{whatToTrace};
+            $response->{sub}   = $apacheSession->data->{$user_id_attribute};
+            $response->{scope} = $oidcSession->{data}->{scope}
+              if $oidcSession->{data}->{scope};
+            $response->{client_id} =
+              $self->oidcRPList->{ $oidcSession->{data}->{rp} }
+              ->{oidcRPMetaDataOptionsClientID}
+              if $oidcSession->{data}->{rp};
+            $response->{iss} = $self->iss;
+            $response->{exp} =
+              $oidcSession->{data}->{_utime} + $self->conf->{timeout};
         }
         else {
-            $self->logger->error(
-                "Could not find user session ID in access token object");
+            $self->logger->error("Count not find session tied to Access Token");
         }
     }
     return $self->p->sendJSONresponse( $req, $response );
