@@ -19,8 +19,8 @@ our @_onReload;
 
 sub onReload {
     my ( $class, $obj, $sub ) = @_;
+    weaken($obj);
     push @_onReload, [ $obj, $sub ];
-    weaken($_onReload[$#_onReload]->[0]);
 }
 
 # CONFIGURATION UPDATE
