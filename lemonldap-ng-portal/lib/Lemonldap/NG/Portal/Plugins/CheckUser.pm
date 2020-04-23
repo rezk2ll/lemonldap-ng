@@ -29,9 +29,12 @@ has ott => (
         return $ott;
     }
 );
-has idRule => ( is => 'rw', default => sub { 1 } );
-has sorted => ( is => 'rw', default => sub { 0 } );
-has merged => ( is => 'rw', default => '' );
+has IdRule                    => ( is => 'rw', default => sub { 1 } );
+has DisplayEmptyValuesRule    => ( is => 'rw', default => sub { 0 } );
+has DisplayEmptyHeadersRule   => ( is => 'rw', default => sub { 0 } );
+has DisplayPersistentInfoRule => ( is => 'rw', default => sub { 0 } );
+has sorted                    => ( is => 'rw', default => sub { 0 } );
+has merged                    => ( is => 'rw', default => '' );
 
 sub hAttr {
     $_[0]->{conf}->{checkUserHiddenAttributes} . ' '
@@ -49,17 +52,60 @@ sub init {
     $self->addAuthRoute( checkuser => 'check', ['POST'] );
     $self->addAuthRouteWithRedirect( checkuser => 'display', ['GET'] );
 
-    # Parse identity rule
+    # Parse checkUser rules
+    # Id DisplayEmptyHeaders DisplayEmptyValues DisplayPersistentInfo
     $self->logger->debug(
-        "checkUser identities rule -> " . $self->conf->{checkUserIdRule} );
+        "checkUser: Idrule -> " . $self->conf->{checkUserIdRule} )
+      if $self->conf->{checkUserIdRule};
     my $rule =
       $hd->buildSub( $hd->substitute( $self->conf->{checkUserIdRule} ) );
     unless ($rule) {
         my $error = $hd->tsv->{jail}->error || '???';
-        $self->error("Bad checkUser identities rule -> $error");
+        $self->error("Bad checkUser Id rule -> $error");
         return 0;
     }
-    $self->idRule($rule);
+    $self->IdRule($rule);
+
+    $self->logger->debug( "checkUser: DisplayEmptyHeaders -> "
+          . $self->conf->{checkUserDisplayEmptyHeaders} )
+      if $self->conf->{checkUserDisplayEmptyHeaders};
+    $rule =
+      $hd->buildSub(
+        $hd->substitute( $self->conf->{checkUserDisplayEmptyHeaders} ) );
+    unless ($rule) {
+        my $error = $hd->tsv->{jail}->error || '???';
+        $self->error("Bad checkUser DisplayEmptyHeaders rule -> $error");
+        return 0;
+    }
+    $self->DisplayEmptyHeadersRule($rule);
+
+    $self->logger->debug( "checkUser: DisplayEmptyValues -> "
+          . $self->conf->{checkUserDisplayEmptyValues} )
+      if $self->conf->{checkUserDisplayEmptyValues};
+    $rule =
+      $hd->buildSub(
+        $hd->substitute( $self->conf->{checkUserDisplayEmptyValues} ) );
+    unless ($rule) {
+        my $error = $hd->tsv->{jail}->error || '???';
+        $self->error("Bad checkUser DisplayEmptyValues rule -> $error");
+        return 0;
+    }
+    $self->DisplayEmptyValuesRule($rule);
+
+    $self->logger->debug( "checkUser: DisplayPersistentInfo -> "
+          . $self->conf->{checkUserDisplayPersistentInfo} )
+      if $self->conf->{checkUserDisplayPersistentInfo};
+    $rule =
+      $hd->buildSub(
+        $hd->substitute( $self->conf->{checkUserDisplayPersistentInfo} ) );
+    unless ($rule) {
+        my $error = $hd->tsv->{jail}->error || '???';
+        $self->error("Bad checkUser DisplayPersistentInfo rule -> $error");
+        return 0;
+    }
+    $self->DisplayPersistentInfoRule($rule);
+
+    # Init. other options
     $self->sorted( $self->conf->{impersonationRule}
           || $self->conf->{contextSwitchingRule} );
     $self->merged( $self->conf->{impersonationMergeSSOgroups}
@@ -78,11 +124,11 @@ sub display {
     $attrs = $req->userData;
 
     $attrs = $self->_removePersistentAttributes($attrs)
-      unless $self->conf->{checkUserDisplayPersistentInfo};
+      unless $self->DisplayPersistentInfoRule->( $req, $req->userData );
 
     # Create an array of hashes for template loop
     $self->logger->debug("Delete hidden or empty attributes");
-    if ( $self->conf->{checkUserDisplayEmptyValues} ) {
+    if ( $self->DisplayEmptyValuesRule->( $req, $req->userData ) ) {
         foreach my $k ( sort keys %$attrs ) {
 
             # Ignore hidden attributes
@@ -247,7 +293,7 @@ sub check {
     else {
         $msg   = 'checkUser' . $self->merged;
         $attrs = $self->_removePersistentAttributes($attrs)
-          unless $self->conf->{checkUserDisplayPersistentInfo};
+          unless $self->DisplayPersistentInfoRule->( $req, $req->userData );
 
         if ($compute) {
             $msg = 'checkUserComputeSession';
@@ -274,7 +320,7 @@ sub check {
 
         # Create an array of hashes for template loop
         $self->logger->debug("Delete hidden or empty attributes");
-        if ( $self->conf->{checkUserDisplayEmptyValues} ) {
+        if ( $self->DisplayEmptyValuesRule->( $req, $req->userData ) ) {
             foreach my $k ( sort keys %$attrs ) {
 
                 # Ignore hidden attributes
@@ -400,7 +446,7 @@ sub _userData {
     }
 
     # Check identities rule
-    unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
+    unless ( $self->IdRule->( $req, $req->sessionInfo ) ) {
         $self->userLogger->warn(
             'checkUser requested for an unvalid user (' . $req->{user} . ")" );
         $req->{sessionInfo} = {};
@@ -454,7 +500,7 @@ sub _headers {
     $self->logger->debug(
         "Return \"$attrs->{ $self->{conf}->{whatToTrace} }\" headers");
     return $self->p->HANDLER->checkHeaders( $req, $attrs )
-      if ( $self->conf->{checkUserDisplayEmptyHeaders} );
+      if ( $self->DisplayEmptyHeadersRule->( $req, $req->userData ) );
 
     $self->logger->debug("Remove empty headers");
     my @headers = grep $_->{value} =~ /.+/,

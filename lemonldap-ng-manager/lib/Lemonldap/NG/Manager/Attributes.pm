@@ -851,15 +851,15 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'checkUserDisplayEmptyHeaders' => {
             'default' => 0,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'checkUserDisplayEmptyValues' => {
             'default' => 0,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'checkUserDisplayPersistentInfo' => {
             'default' => 0,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'checkUserHiddenAttributes' => {
             'default' => '_loginHistory _session_id hGroups',
@@ -2270,10 +2270,6 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcServiceAllowImplicitFlow' => {
             'default' => 0,
             'type'    => 'bool'
-        },
-        'oidcServiceAllowPasswordGrant' => {
-            'default' => 0,
-            'type'    => 'boolOrExpr'
         },
         'oidcServiceAuthorizationCodeExpiration' => {
             'default' => 60,

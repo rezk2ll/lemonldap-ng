@@ -468,20 +468,20 @@ sub attributes {
         },
         checkUserDisplayPersistentInfo => {
             default       => 0,
-            type          => 'bool',
-            documentation => 'Display persistent session info',
+            type          => 'boolOrExpr',
+            documentation => 'Display persistent session info rule',
             flags         => 'p',
         },
         checkUserDisplayEmptyValues => {
             default       => 0,
-            type          => 'bool',
-            documentation => 'Display session empty values',
+            type          => 'boolOrExpr',
+            documentation => 'Display session empty values rule',
             flags         => 'p',
         },
         checkUserDisplayEmptyHeaders => {
             default       => 0,
-            type          => 'bool',
-            documentation => 'Display empty headers',
+            type          => 'boolOrExpr',
+            documentation => 'Display empty headers rule',
             flags         => 'p',
         },
         globalLogoutRule => {

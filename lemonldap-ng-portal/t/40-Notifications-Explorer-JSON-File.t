@@ -33,7 +33,7 @@ my $client = LLNG::Manager::Test->new( {
             oldNotifFormat                 => 0,
             notificationsExplorer          => 1,
             checkUser                      => 1,
-            checkUserDisplayPersistentInfo => 1
+            checkUserDisplayPersistentInfo => '$uid eq "dwho"',
         }
     }
 );
