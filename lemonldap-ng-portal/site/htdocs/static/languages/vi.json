@@ -105,7 +105,7 @@
 "askToRenew":"Ứng dụng này cần có chứng thực gần đây hơn. Bạn có muốn chứng thực lại?",
 "askToUpgrade":"Ứng dụng này cần một mức xác thực cao hơn. Bạn có muốn chứng thực lại?",
 "attributes":"ATTRIBUTES",
-"authLevel":"Authentication level",
+"authLevel":"Mức xác thực",
 "authPortal":"Cổng thông tin xác thực",
 "authRemaining":"%s xác thực vẫn còn, thay đổi mật khẩu của bạn!",
 "autoAccept":"Tự động chấp nhận trong 30 giây",

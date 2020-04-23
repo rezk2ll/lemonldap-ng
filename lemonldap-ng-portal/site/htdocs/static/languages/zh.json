@@ -34,7 +34,7 @@
 "PE42":"需要确认",
 "PE43":"您的邮箱地址是必填项",
 "PE44":"Confirmation key is invalid or too old",
-"PE45":"发送邮件失败",
+"PE45":"An error occurred when sending mail",
 "PE46":"邮件已发送",
 "PE47":"您的连接已断开",
 "PE48":"Undefined SAML error",
