@@ -22,7 +22,7 @@ my $client = LLNG::Manager::Test->new( {
             checkUserSearchAttributes => 'employee_nbr  test1 _user test2 mail',
             checkUserDisplayPersistentInfo => 1,
             checkUserDisplayEmptyHeaders   => '$uid eq "dwho"',
-            checkUserDisplayEmptyValues    => 1,
+            checkUserDisplayEmptyValues    => '$uid eq "dwho"',
             totp2fSelfRegistration         => 1,
             totp2fActivation               => 1,
             totp2fDigits                   => 6,
@@ -251,7 +251,11 @@ ok( $res->[2]->[0] =~ m%<td scope="row">_whatToTrace</td>%,
   or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
 ok( $res->[2]->[0] =~ m%<td scope="row">dwho</td>%, 'Found dwho' )
   or explain( $res->[2]->[0], 'Macro Value dwho' );
-count(7);
+ok( $res->[2]->[0] =~ m%<td scope="row">array</td>%, 'Found empty macro' )
+  or explain( $res->[2]->[0], 'Macro: empty' );
+ok( $res->[2]->[0] =~ m%<td scope="row">real_array</td>%, 'Found empty real_macro' )
+  or explain( $res->[2]->[0], 'Macro: empty real' );
+count(9);
 
 # Request with mail
 $query =~ s/user=dwho/user=dwho%40badwolf.org/;
