@@ -2162,7 +2162,8 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'type' => 'int'
         },
         'oidcRPMetaDataOptionsIDTokenForceClaims' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsIDTokenSignAlg' => {
             'default' => 'HS512',

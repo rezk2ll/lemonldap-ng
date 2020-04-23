@@ -192,27 +192,46 @@ sub cTrees {
             {
                 title => 'oidcRPMetaDataOptions',
                 nodes => [ {
-                        title => 'oidcRPMetaDataOptionsAuthentication',
+                        title => 'oidcRPMetaDataOptionsBasic',
                         form  => 'simpleInputContainer',
                         nodes => [
                             'oidcRPMetaDataOptionsClientID',
                             'oidcRPMetaDataOptionsClientSecret',
                             'oidcRPMetaDataOptionsPublic',
-                            'oidcRPMetaDataOptionsRequirePKCE',
+                            'oidcRPMetaDataOptionsRedirectUris',
                         ]
                     },
-                    'oidcRPMetaDataOptionsUserIDAttr',
-                    'oidcRPMetaDataOptionsIDTokenSignAlg',
-                    'oidcRPMetaDataOptionsIDTokenExpiration',
-                    'oidcRPMetaDataOptionsIDTokenForceClaims',
-                    'oidcRPMetaDataOptionsAccessTokenExpiration',
-                    'oidcRPMetaDataOptionsAuthorizationCodeExpiration',
-                    'oidcRPMetaDataOptionsAllowOffline',
-                    'oidcRPMetaDataOptionsRefreshToken',
-                    'oidcRPMetaDataOptionsOfflineSessionExpiration',
-                    'oidcRPMetaDataOptionsAllowPasswordGrant',
-                    'oidcRPMetaDataOptionsRedirectUris',
-                    'oidcRPMetaDataOptionsBypassConsent',
+                    {
+                        title => 'oidcRPMetaDataOptionsAdvanced',
+                        form  => 'simpleInputContainer',
+                        nodes => [
+                            'oidcRPMetaDataOptionsUserIDAttr',
+                            'oidcRPMetaDataOptionsBypassConsent',
+                            'oidcRPMetaDataOptionsIDTokenForceClaims',
+                            'oidcRPMetaDataOptionsRefreshToken',
+                        ]
+                    },
+                    {
+                        title => 'security',
+                        form  => 'simpleInputContainer',
+                        nodes => [
+                            'oidcRPMetaDataOptionsIDTokenSignAlg',
+                            'oidcRPMetaDataOptionsRequirePKCE',
+                            'oidcRPMetaDataOptionsAllowOffline',
+                            'oidcRPMetaDataOptionsAllowPasswordGrant',
+                            'oidcRPMetaDataOptionsRule',
+                        ]
+                    },
+                    {
+                        title => 'oidcRPMetaDataOptionsTimeouts',
+                        form  => 'simpleInputContainer',
+                        nodes => [
+                            'oidcRPMetaDataOptionsAuthorizationCodeExpiration',
+                            'oidcRPMetaDataOptionsIDTokenExpiration',
+                            'oidcRPMetaDataOptionsAccessTokenExpiration',
+                            'oidcRPMetaDataOptionsOfflineSessionExpiration',
+                        ]
+                    },
                     {
                         title => 'logout',
                         form  => 'simpleInputContainer',
@@ -223,7 +242,6 @@ sub cTrees {
                             'oidcRPMetaDataOptionsLogoutSessionRequired',
                         ]
                     },
-                    'oidcRPMetaDataOptionsRule',
                 ]
             },
             'oidcRPMetaDataMacros',
