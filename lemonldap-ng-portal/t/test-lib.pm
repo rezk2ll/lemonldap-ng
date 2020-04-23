@@ -359,6 +359,18 @@ sub expectBadRequest {
     count(1);
 }
 
+=head4 expectPortalError( $res, $errnum )
+
+Verify that an error is displayed on the portal
+=cut
+
+sub expectPortalError {
+    my ( $res, $errnum, $message ) = @_;
+    $errnum ||= 9;
+    like( $res->[2]->[0], qr/<span trmsg="$errnum">/, $message );
+    count(1);
+}
+
 =head4 expectReject( $res, $code )
 
 Verify that returned code is 401 and JSON result contains C<error:"$code">.
@@ -635,7 +647,7 @@ has ini => (
         main::ok( $self->{p} = $self->class->new(), 'Portal object' );
         main::count(1);
         unless ( $self->confFailure ) {
-            main::ok( $self->{p}->init($ini),           'Init' );
+            main::ok( $self->{p}->init($ini), 'Init' );
             main::ok( $self->{app} = $self->{p}->run(), 'Portal app' );
             main::count(2);
             no warnings 'redefine';
@@ -809,8 +821,7 @@ sub _post {
                 : ( 'REMOTE_ADDR' => '127.0.0.1' )
             ),
             (
-                $args{remote_user}
-                ? ( 'REMOTE_USER' => $args{remote_user} )
+                $args{remote_user} ? ( 'REMOTE_USER' => $args{remote_user} )
                 : ()
             ),
             'REQUEST_METHOD' => $args{method} || 'POST',
