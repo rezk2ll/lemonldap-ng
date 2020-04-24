@@ -2866,6 +2866,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 2,
             'type'    => 'int'
         },
+        'restAuthServer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'restAuthUrl' => {
             'type' => 'url'
         },

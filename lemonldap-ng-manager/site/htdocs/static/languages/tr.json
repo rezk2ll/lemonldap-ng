@@ -789,6 +789,7 @@
 "requireToken":"Formlar için jeton gerekir",
 "restAuthnLevel":"Doğrulama seviyesi",
 "restAuthUrl":"Doğrulama URL'si",
+"restAuthServer":"REST authentication server",
 "restConfigServer":"REST konfigürasyon sunucusu",
 "restore":"Geri yükle",
 "restoreConf":"Yapılandırmayı geri yükle",

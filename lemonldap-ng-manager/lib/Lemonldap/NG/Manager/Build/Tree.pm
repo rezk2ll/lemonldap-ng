@@ -604,6 +604,7 @@ sub tree {
                                 'restExportSecretKeys', 'restClockTolerance',
                                 'restConfigServer',     'soapSessionServer',
                                 'soapConfigServer',     'exportedAttr',
+                                'restAuthServer',
                             ]
                         },
                         {

@@ -1994,6 +1994,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Enable REST session server',
         },
+        restAuthServer => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable REST authentication server',
+        },
         restExportSecretKeys => {
             default => 0,
             type    => 'bool',

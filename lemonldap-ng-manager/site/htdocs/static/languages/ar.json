@@ -806,6 +806,7 @@
 "restPwdConfirmUrl":"عنوان اليو آر إل لتأكيد كلمة المرور",
 "restPwdModifyUrl":"عنوان اليو آر إل لتغيير كلمة المرور",
 "restSessionServer":"خادم جلسة ريست",
+"restAuthServer":"REST authentication server",
 "restClockTolerance":"REST server clock tolerance",
 "restUserDBUrl":"عنوان يو آر إل لبيانات المستخدم",
 "returnUrl":"إرجاع اليو آر إل",

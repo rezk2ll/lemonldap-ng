@@ -806,6 +806,7 @@
 "restPwdConfirmUrl":"URL xác nhận mật khẩu",
 "restPwdModifyUrl":"URL thay đổi mật khẩu",
 "restSessionServer":"Máy chủ phiên REST",
+"restAuthServer":"REST authentication server",
 "restClockTolerance":"REST server clock tolerance",
 "restUserDBUrl":"URL dữ liệu người dùng",
 "returnUrl":"Trả lại URL",

@@ -806,6 +806,7 @@
 "restPwdConfirmUrl":"URL di conferma password",
 "restPwdModifyUrl":"URL di modifica password",
 "restSessionServer":"Server di sessione REST",
+"restAuthServer":"REST authentication server",
 "restClockTolerance":"REST server clock tolerance",
 "restUserDBUrl":"URL dei dati utente",
 "returnUrl":"URL di ritorno",
