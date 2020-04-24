@@ -223,7 +223,7 @@ LemonLDAP::NG Portal jQuery scripts
   datas = {};
 
   $(window).on('load', function() {
-    var action, al, authMenuIndex, authMenuTabs, back_url, i, l, lang, langdiv, langs, langs2, len, len1, len2, len3, link, m, menuIndex, menuTabs, method, n, nl, nlangs, queryLang, queryString, re, ref, ref1, ref2, setCookieLang, urlParams;
+    var action, al, authMenuIndex, authMenuTabs, back_url, hiddenParams, i, l, lang, langdiv, langs, langs2, len, len1, len2, len3, link, m, menuIndex, menuTabs, method, n, nl, nlangs, queryLang, queryString, re, ref, ref1, ref2, setCookieLang, urlParams;
     datas = getValues();
     if ("datas" in window && "choicetab" in window.datas) {
       datas.choicetab = window.datas.choicetab;
@@ -272,18 +272,27 @@ LemonLDAP::NG Portal jQuery scripts
       $('#appslist a').attr("target", "_blank");
     }
     if ($("p.removeOther").length) {
-      action = $("form.login").attr("action");
-      method = $("form.login").attr("method");
-      back_url = "";
-      if (action.indexOf("?") !== -1) {
-        action.substring(0, action.indexOf("?")) + "?";
-      } else {
-        back_url = action + "?";
-      }
-      $("form.login input[type=hidden]").each(function(index) {
-        return back_url += "&" + $(this).attr("name") + "=" + $(this).val();
+      action = $("#form").attr("action");
+      method = $("#form").attr("method");
+      console.log('method=', method);
+      hiddenParams = "";
+      $("#form input[type=hidden]").each(function(index) {
+        console.log('Parse hidden values');
+        console.log(' ->', $(this).attr("name"), $(this).val());
+        return hiddenParams += "&" + $(this).attr("name") + "=" + $(this).val();
       });
-      link = $("p.removeOther a").attr("href") + "&method=" + method + "&url=" + btoa(back_url);
+      back_url = "";
+      if (action) {
+        console.log('action=', action);
+        if (action.indexOf("?") !== -1) {
+          action.substring(0, action.indexOf("?")) + "?";
+        } else {
+          back_url = action + "?";
+        }
+        back_url += hiddenParams;
+        hiddenParams = "";
+      }
+      link = $("p.removeOther a").attr("href") + "&method=" + method + hiddenParams + "&url=" + btoa(back_url);
       $("p.removeOther a").attr("href", link);
     }
     queryString = window.location.search;

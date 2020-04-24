@@ -285,19 +285,27 @@ $(window).on 'load', () ->
 
 	# Complete removeOther link
 	if $("p.removeOther").length
-		action = $("form.login").attr "action"
-		method = $("form.login").attr "method"
+		action = $("#form").attr "action"
+		method = $("#form").attr "method"
+		console.log 'method=', method
+
+		hiddenParams = ""
+		$("#form input[type=hidden]").each (index) ->
+			console.log 'Parse hidden values'
+			console.log ' ->', $(this).attr("name"), $(this).val()
+			hiddenParams +=  "&" + $(this).attr("name") + "=" + $(this).val()
 
 		back_url = ""
-		if action.indexOf("?") != -1
-			action.substring(0, action.indexOf("?")) + "?"
-		else
-			back_url = action + "?"
+		if action
+			console.log 'action=', action
+			if action.indexOf("?") != -1
+				action.substring(0, action.indexOf("?")) + "?"
+			else
+				back_url = action + "?"
+			back_url += hiddenParams
+			hiddenParams = ""
 
-		$("form.login input[type=hidden]").each (index) ->
-			back_url +=  "&" + $(this).attr("name") + "=" + $(this).val()
-
-		link = $("p.removeOther a").attr("href") + "&method=" + method + "&url=" + btoa(back_url)
+		link = $("p.removeOther a").attr("href") + "&method=" + method + hiddenParams + "&url=" + btoa(back_url)
 		$("p.removeOther a").attr "href", link
 
 	# Language detection. Priority order:
