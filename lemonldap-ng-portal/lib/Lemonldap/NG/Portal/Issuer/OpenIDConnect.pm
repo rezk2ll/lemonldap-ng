@@ -1342,7 +1342,7 @@ sub _handleAuthorizationCodeGrant {
     my $id_token_payload_hash = {
         iss       => $self->iss,                            # Issuer Identifier
         sub       => $user_id,                              # Subject Identifier
-        aud       => [$client_id],                          # Audience
+        aud       => $self->getAudiences($rp),              # Audience
         exp       => $id_token_exp,                         # expiration
         iat       => time,                                  # Issued time
         auth_time => $apacheSession->data->{_lastAuthnUTime}
@@ -1568,11 +1568,11 @@ sub _handleRefreshTokenGrant {
     my $id_token_acr = "loa-0";
 
     my $id_token_payload_hash = {
-        iss => $self->iss,       # Issuer Identifier
-        sub => $user_id,         # Subject Identifier
-        aud => [$client_id],     # Audience
-        exp => $id_token_exp,    # expiration
-        iat => time,             # Issued time
+        iss => $self->iss,                  # Issuer Identifier
+        sub => $user_id,                    # Subject Identifier
+        aud => $self->getAudiences($rp),    # Audience
+        exp => $id_token_exp,               # expiration
+        iat => time,                        # Issued time
              # TODO: is this the right value when using refresh tokens??
         auth_time => $auth_time,       # Authentication time
         acr       => $id_token_acr,    # Authentication Context Class Reference
@@ -2287,7 +2287,7 @@ sub _generateIDToken {
     my $id_token_payload_hash = {
         iss       => $self->iss,                            # Issuer Identifier
         sub       => $user_id,                              # Subject Identifier
-        aud       => [$client_id],                          # Audience
+        aud       => $self->getAudiences($rp),              # Audience
         exp       => $id_token_exp,                         # expiration
         iat       => time,                                  # Issued time
         auth_time => $req->{sessionInfo}->{_lastAuthnUTime}
