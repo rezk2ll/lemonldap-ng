@@ -35,9 +35,10 @@
 #   * GET /error/<lang>/<errNum>                  : get <errNum> message reference and errors file <lang>.json
 #   Return 'en' error file if no <lang> specified
 #
-# - Endpoints for proxy auth/userdb/password (if restPasswordServer is on)
-#   * POST /proxy/pwdReset                       : reset password
-#   * POST /proxy/pwdConfirm                     : check password
+# - Endpoints for proxy auth/userdb/password
+#   * POST /proxy/getUser                        : get user attributes (restAuthServer)
+#   * POST /proxy/pwdReset                       : reset password (restPasswordServer)
+#   * POST /proxy/pwdConfirm                     : check password (restAuthServer or restPasswordServer)
 #
 # - Authorizations for connected users (always):
 #   * GET /mysession/?whoami                               : get "my" uid
@@ -203,9 +204,22 @@ sub init {
                 'pwdReset' => 'pwdReset',
             },
             ['POST']
-        )->addUnauthRoute(
+        );
+    }
+
+    if ( $self->conf->{restAuthServer} or $self->conf->{restPasswordServer} ) {
+        $self->addUnauthRoute(
             proxy => {
                 'pwdConfirm' => 'pwdConfirm',
+            },
+            ['POST']
+        );
+    }
+
+    if ( $self->conf->{restAuthServer} ) {
+        $self->addUnauthRoute(
+            proxy => {
+                'getUser' => 'getUser',
             },
             ['POST']
         );
@@ -714,6 +728,50 @@ sub pwdConfirm {
             return $self->p->sendJSONresponse( $req,
                 { 'result' => JSON::false } );
         }
+    }
+}
+
+sub getUser {
+    my ( $self, $req ) = @_;
+
+    $self->logger->debug("Entering REST getUser method");
+
+    my $jsonBody = eval { from_json( $req->content ) };
+    if ($@) {
+        $self->logger->error("Received invalid JSON $@");
+        return $self->p->sendError( $req, "Invalid JSON", 400 );
+    }
+
+    my $user = $jsonBody->{user};
+    my $mail = $jsonBody->{mail};
+
+    unless ( $user or $mail ) {
+        $self->logger->error("Missing user or mail argument");
+        return $self->p->sendError( $req, "Missing user or mail argument",
+            400 );
+    }
+
+    $req->user( $user || $mail );
+
+    # Search user in database
+    $req->steps( [
+            'getUser',   'setSessionInfo',
+            'setMacros', 'setGroups',
+            'setLocalGroups'
+        ]
+    );
+    my $error = $self->p->process( $req, ( $mail ? ( useMail => 1 ) : () ) );
+    if ( $error == PE_OK ) {
+        return $self->p->sendJSONresponse(
+            $req,
+            {
+                'result' => JSON::true,
+                'info'   => $req->sessionInfo,
+            }
+        );
+    }
+    else {
+        return $self->p->sendJSONresponse( $req, { 'result' => JSON::false } );
     }
 }
 
