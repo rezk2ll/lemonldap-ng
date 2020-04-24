@@ -113,6 +113,7 @@ sub run {
 
 sub globalLogout {
     my ( $self, $req ) = @_;
+    my $res = PE_OK;
     my $count = 0;
 
     if ( $req->param('all') ) {
@@ -123,7 +124,7 @@ sub globalLogout {
                 my $sessions = eval { from_json( $token->{sessions} ) };
                 if ($@) {
                     $self->logger->error("Bad encoding in OTT: $@");
-                    return PE_ERROR;
+                    $res = PE_ERROR;
                 }
                 my $as;
                 foreach (@$sessions) {
@@ -146,23 +147,24 @@ sub globalLogout {
                     else {
                         $self->userLogger->warn(
                             "GlobalLogout called with an unvalid token");
-                        return PE_TOKENEXPIRED;
+                        $res = PE_TOKENEXPIRED;
                     }
                 }
             }
             else {
                 $self->userLogger->error(
                     "GlobalLogout called with an expired token");
-                return PE_TOKENEXPIRED;
+                $res = PE_TOKENEXPIRED;
             }
         }
         else {
             $self->userLogger->error('GlobalLogout called without token');
-            return PE_NOTOKEN;
+            $res = PE_NOTOKEN;
         }
     }
-    $self->userLogger->info("$count remaining session(s) removed");
 
+    return $self->p->do( $req, [ sub { $res } ] ) if $res;
+    $self->userLogger->info("$count remaining session(s) removed");
     return $self->p->do( $req, [ 'authLogout', 'deleteSession' ] );
 }
 

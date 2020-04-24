@@ -2,6 +2,8 @@ use Test::More;
 use strict;
 use IO::String;
 use Data::Dumper;
+use JSON;
+use Lemonldap::NG::Portal::Main::Constants 'PE_TOKENEXPIRED';
 
 BEGIN {
     require 't/test-lib.pm';
@@ -139,7 +141,8 @@ my ( $host, $url, $query ) =
 ok( $res->[2]->[0] =~ m%<span trspan="globalLogout">%,
     'Found trspan="globalLogout"' )
   or explain( $res->[2]->[0], 'trspan="globalLogout"' );
-ok( $res->[2]->[0] =~ m%<td scope="row">DEMO_demo</td>%, 'Found CustomParam "DEMO_demo" macro' )
+ok( $res->[2]->[0] =~ m%<td scope="row">DEMO_demo</td>%,
+    'Found CustomParam "DEMO_demo" macro' )
   or explain( $res->[2]->[0], 'CustomParam "DEMO_demo" macro' );
 my @c = ( $res->[2]->[0] =~ m%<td scope="row">127.0.0.1</td>%gs );
 my @d = ( $res->[2]->[0] =~ m%<th scope="col">%gs );
@@ -152,9 +155,27 @@ ok( @d == 5, ' -> Five <th> found' )
   or explain( $res->[2]->[0], "Number of <th> found = " . scalar @d );
 ok( @e == 3, ' -> Three epoch found' )
   or explain( $res->[2]->[0], "Number of epoch found = " . scalar @e );
-    ok( time() - 1 <= $e[0] && $e[0] <= time() + 5, 'Right epoch found' )
-      or print STDERR Dumper( $res->[2]->[0] ), time(), " / $1";
+ok( time() - 1 <= $e[0] && $e[0] <= time() + 5, 'Right epoch found' )
+  or print STDERR Dumper( $res->[2]->[0] ), time(), " / $1";
 count(6);
+
+## GlobalLogout request with bad token
+my $bad_query = 'token=1234567890_12345&all=1';
+ok(
+    $res = $client->_post(
+        '/globallogout',
+        IO::String->new($bad_query),
+        cookie => "lemonldap=$idd",
+        length => length($bad_query),
+    ),
+    'POST /globallogout?all=1'
+);
+my $json;
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok( $json->{error} == PE_TOKENEXPIRED, 'Response is PE_TOKENEXPIRED' )
+  or explain( $json, "error => 82" );
+count(3);
 
 ## GlobalLogout request for 'dwho'
 $query .= '&all=1';
