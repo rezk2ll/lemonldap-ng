@@ -2885,6 +2885,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'restPasswordServer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'restPwdConfirmUrl' => {
             'type' => 'url'
         },

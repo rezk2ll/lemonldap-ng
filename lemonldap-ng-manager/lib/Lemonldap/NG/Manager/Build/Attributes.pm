@@ -1999,6 +1999,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Enable REST authentication server',
         },
+        restPasswordServer => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable REST password reset server',
+        },
         restExportSecretKeys => {
             default => 0,
             type    => 'bool',
@@ -3974,8 +3979,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsIDTokenExpiration => { type => 'int' },
         oidcRPMetaDataOptionsIDTokenForceClaims =>
           { type => 'bool', default => 0 },
-        oidcRPMetaDataOptionsAdditionalAudiences  =>
-          { type => 'text' },
+        oidcRPMetaDataOptionsAdditionalAudiences         => { type => 'text' },
         oidcRPMetaDataOptionsAccessTokenExpiration       => { type => 'int' },
         oidcRPMetaDataOptionsAuthorizationCodeExpiration => { type => 'int' },
         oidcRPMetaDataOptionsOfflineSessionExpiration    => { type => 'int' },

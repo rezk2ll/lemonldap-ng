@@ -600,11 +600,11 @@ sub tree {
                             help  => 'portalservers.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'wsdlServer',           'restSessionServer',
-                                'restExportSecretKeys', 'restClockTolerance',
-                                'restConfigServer',     'soapSessionServer',
-                                'soapConfigServer',     'exportedAttr',
-                                'restAuthServer',
+                                'wsdlServer',         'restExportSecretKeys',
+                                'restClockTolerance', 'restSessionServer',
+                                'restConfigServer',   'restAuthServer',
+                                'restPasswordServer', 'soapSessionServer',
+                                'soapConfigServer',   'exportedAttr',
                             ]
                         },
                         {

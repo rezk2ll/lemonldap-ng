@@ -791,6 +791,7 @@
 "restAuthUrl":"Doğrulama URL'si",
 "restAuthServer":"REST authentication server",
 "restConfigServer":"REST konfigürasyon sunucusu",
+"restPasswordServer":"REST password reset server",
 "restore":"Geri yükle",
 "restoreConf":"Yapılandırmayı geri yükle",
 "rest2f":"REST ile ikinci faktör",

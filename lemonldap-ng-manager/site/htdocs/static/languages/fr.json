@@ -808,6 +808,7 @@
 "restSessionServer":"Serveur de sessions REST",
 "restAuthServer":"Serveur d'authentification REST",
 "restClockTolerance":"Tolérance aux écarts d'horloge",
+"restPasswordServer":"Serveur de réinitialisation de mdp REST",
 "restUserDBUrl":"URL de données utilisateurs",
 "returnUrl":"URL de retour",
 "rp":"Client",
