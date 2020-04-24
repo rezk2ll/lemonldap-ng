@@ -3983,7 +3983,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type   => 'select',
             select => [
                 { k => 'front', v => 'Front Channel' },
-                { k => 'back',  v => 'Back Channel' },
+                #TODO #1194
+                # { k => 'back',  v => 'Back Channel' },
             ],
             default       => 'front',
             documentation => 'Logout type',

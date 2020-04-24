@@ -2210,10 +2210,6 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
             'select'  => [ {
                     'k' => 'front',
                     'v' => 'Front Channel'
-                },
-                {
-                    'k' => 'back',
-                    'v' => 'Back Channel'
                 }
             ],
             'type' => 'select'
