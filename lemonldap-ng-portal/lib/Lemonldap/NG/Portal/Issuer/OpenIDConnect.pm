@@ -1854,7 +1854,7 @@ sub registration {
     my $redirect_uris = $client_metadata->{redirect_uris};
 
     # Register RP in global configuration
-    my $conf = $self->confAcc->getConf( { raw => 1 } );
+    my $conf = $self->confAcc->getConf( { raw => 1, noCache => 1 } );
 
     $conf->{cfgAuthor}   = "OpenID Connect Registration ($client_name)";
     $conf->{cfgAuthorIP} = $source_ip;
