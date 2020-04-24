@@ -1,0 +1,785 @@
+openapi: 3.0.1
+info:
+  title: LemonLDAP::NG Manager API
+  description: The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users.
+  version: 2.0.8
+servers:
+  - url: /api/v1
+tags:
+- name: samlsp
+  description: SAML Service Providers
+- name: oidcrp
+  description: OpenID Connect Relaying Parties
+- name: 2fa
+  description: Registered Second Factors
+  
+paths:
+  /api/v1/providers/saml/sp:
+    post:
+      tags:
+      - samlsp
+      summary: Create a new SAML Service provider
+      operationId: addsamlsp
+      requestBody:
+        description: SAML Service provider to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SamlSp'
+        required: true
+      responses:
+        201:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/Error'  
+        409:
+          $ref: '#/components/responses/Conflict'
+          
+  /api/v1/providers/saml/sp/findByConfKey:
+    get:
+      tags:
+      - samlsp
+      summary: Finds SAML Service providers by configuration key
+      description: Takes a search pattern to be tested against existing service providers
+      operationId: findSamlSpByConfKey
+      parameters:
+      - name: pattern
+        in: query
+        description: Search pattern
+        required: true
+        schema:
+          type: "string"
+        examples:
+          any: 
+            summary: Any value
+            value: "*"
+          prefix: 
+            summary: Given prefix
+            value: "zone1-*"
+          anywhere:
+            summary: Substring
+            value: "something"
+      responses:
+        200:
+          $ref: '#/components/responses/ManySamlSp'
+        400:
+          $ref: '#/components/responses/Error'  
+
+  /api/v1/providers/saml/sp/findByEntityId:
+    get:
+      tags:
+      - samlsp
+      summary: Finds SAML Service Provider by Entity ID
+      operationId: findSamlSpByEntityId
+      parameters:
+      - name: entityId
+        in: query
+        description: Entity ID to search
+        required: true
+        schema:
+          type: "string"
+        example: http://mysp.example.com/saml/metadata
+      responses:
+        200:
+          $ref: '#/components/responses/OneSamlSp'
+        400:
+          $ref: '#/components/responses/Error'  
+        404:
+          $ref: '#/components/responses/NotFound'
+          
+  /api/v1/providers/saml/sp/{confKey}:
+    get:
+      tags:
+      - samlsp
+      summary: Get SAML Service Provider by configuration key
+      description: Returns a single Service Provider
+      operationId: getSamlSpByConfKey
+      parameters:
+      - name: confKey
+        in: path
+        description: Configuration key of SAML Service Provider
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      responses:
+        200:
+          $ref: '#/components/responses/OneSamlSp'
+        400:
+          $ref: '#/components/responses/Error'  
+        404:
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+      - samlsp
+      summary: Replaces a SAML Service
+      operationId: replaceSamlSp
+      parameters:
+      - name: confKey
+        in: path
+        description: Configuration key of SAML Service Provider that needs to be replaced
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SamlSp'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/Error'     
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          $ref: '#/components/responses/Conflict'
+    patch:
+      tags:
+      - samlsp
+      summary: Updates a SAML Service.
+      operationId: updateSamlSp
+      parameters:
+      - name: confKey
+        in: path
+        description: Configuration key of SAML Service Provider that needs to be updated
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SamlSpUpdate'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          $ref: '#/components/responses/Conflict'
+          
+    delete:
+      tags:
+      - samlsp
+      summary: Deletes a SAML Service Provider
+      operationId: deleteSamlSp
+      parameters:
+      - name: confKey
+        in: path
+        description: Configuration key of SAML Service Provider to delete
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/Error'  
+        404:
+          $ref: '#/components/responses/NotFound'     
+   
+  /api/v1/providers/oidc/rp:
+    post:
+      tags:
+      - oidcrp
+      summary: Create a new OpenID Connect Relaying Party
+      operationId: addoidcrp
+      requestBody:
+        description: OpenID Connect Relaying Party to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OidcRp'
+        required: true
+      responses:
+        201:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/Error'
+        409:
+          $ref: '#/components/responses/Conflict'
+  /api/v1/providers/oidc/rp/findByConfKey:
+    get:
+      tags:
+      - oidcrp
+      summary: Finds OpenID Connect Relaying Partys by configuration key
+      description: Takes a search pattern to be tested against existing service providers
+      operationId: findOidcRpByConfKey
+      parameters:
+      - name: pattern
+        in: query
+        description: Search pattern
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+        examples:
+          any: 
+            summary: Any value
+            value: "*"
+          prefix: 
+            summary: Given prefix
+            value: "zone1-*"
+          anywhere:
+            summary: Substring
+            value: "something"
+      responses:
+        200:
+          $ref: '#/components/responses/ManyOidcRp'
+        400:
+          $ref: '#/components/responses/Error'  
+
+  /api/v1/providers/oidc/rp/findByClientId:
+    get:
+      tags:
+      - oidcrp
+      summary: Finds OpenID Connect Relaying Party by Client ID
+      operationId: findOidcRpByClientId
+      parameters:
+      - name: clientId
+        in: query
+        description: Client ID to search
+        required: true
+        schema:
+          type: "string"
+        example: my_client_id
+      responses:
+        200:
+          $ref: '#/components/responses/OneOidcRp'
+        400:
+          $ref: '#/components/responses/Error'  
+        404:
+          $ref: '#/components/responses/NotFound'
+  /api/v1/providers/oidc/rp/{confKey}:
+    get:
+      tags:
+      - oidcrp
+      summary: Get OpenID Connect Relaying Party by configuration key
+      description: Returns a single Service Provider
+      operationId: getOidcRpByConfKey
+      parameters:
+      - name: confKey
+        in: path
+        description: Configuration key of OpenID Connect Relaying Party
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      responses:
+        200:
+          $ref: '#/components/responses/OneOidcRp'
+        400:
+          $ref: '#/components/responses/Error'  
+        404:
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags:
+      - oidcrp
+      summary: Updates an OpenID Connect Relaying Party
+      operationId: updateOidcRp
+      parameters:
+      - name: confKey
+        in: path
+        description: Configuration key of OpenID Connect Relaying Party that needs to be updated
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OidcRpUpdate'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/Error'    
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          $ref: '#/components/responses/Conflict'
+    put:
+      tags:
+      - oidcrp
+      summary: Replaces an OpenID Connect Relaying Party
+      operationId: replaceOidcRp
+      parameters:
+      - name: confKey
+        in: path
+        description: Configuration key of OpenID Connect Relaying Party that needs to be replaced
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OidcRp'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          $ref: '#/components/responses/Conflict'
+
+    delete:
+      tags:
+      - oidcrp
+      summary: Deletes a OpenID Connect Relaying Party
+      operationId: deleteOidcRp
+      parameters:
+      - name: confKey
+        in: path
+        description: Configuration key of OpenID Connect Relaying Party to delete
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/Error'  
+        404:
+          $ref: '#/components/responses/NotFound'    
+ 
+  '/api/v1/secondFactor/{uid}':
+    description: Second factors for a particular user
+    parameters:
+      - name: uid
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: List second factors for a user
+      description: ''
+      tags:
+      - 2fa
+      operationId: getSecondFactors
+      responses:
+        200:
+          $ref: '#/components/responses/SecondFactors'
+        404:
+          $ref: '#/components/responses/NotFound'
+          
+    delete:
+      summary: Delete all second factors for a user
+      description: ''
+      tags:
+      - 2fa
+      operationId: deleteSecondFactors
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+          
+  '/api/v1/secondFactor/{uid}/type/{type}':
+    description: Second factors of a given type for a particular user
+    parameters:
+      - name: uid
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: List second factors for a user given its type
+      description: ''
+      tags:
+      - 2fa
+      operationId: getSecondFactorsByType
+      responses:
+        200:
+          $ref: '#/components/responses/SecondFactors'
+        404:
+          $ref: '#/components/responses/NotFound'
+          
+          
+    delete:
+      summary: Delete all second factors of a given type for a user 
+      description: ''
+      tags:
+      - 2fa
+      operationId: deleteSecondFactorsByType
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+          
+  '/api/v1/secondFactor/{uid}/id/{id}':
+    description: Second factors of a given id for a particular user
+    parameters:
+      - name: uid
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get second factors for a user given its ID
+      description: ''
+      tags:
+      - 2fa
+      operationId: getSecondFactorsById
+      responses:
+        200:
+          $ref: '#/components/responses/SecondFactors'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+          
+    delete:
+      summary: Delete a second factors for a user 
+      description: ''
+      tags:
+      - 2fa
+      operationId: deleteSecondFactorsById
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+
+components:
+  schemas:
+    confKey:
+      type: string
+      pattern: '^\w[\w\.\-]*$'
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+    SamlSp:
+      required:
+      - confKey
+      - metadata
+      type: object
+      properties:
+        confKey:
+          $ref: '#/components/schemas/confKey'
+        metadata:
+          type: string
+          example: '<?xml version="1.0"?><EntityDescriptor...'
+        exportedAttributes:
+          type: object
+          items:
+            $ref: '#/components/schemas/samlAttribute'
+        macros:
+          type: object
+          example:
+            myMacroName: "$macro(rule)"
+          
+        options:
+          $ref: '#/components/schemas/samlOptions'
+    SamlSpUpdate:
+      type: object
+      properties:
+        metadata:
+          type: string
+          
+          example: '<?xml version="1.0"?><EntityDescriptor...'
+        macros:
+          type: object
+          example:
+            myMacroName: "$macro(rule)"
+        exportedAttributes:
+          type: object
+          items:
+            $ref: '#/components/schemas/samlAttribute'
+        options:
+          $ref: '#/components/schemas/samlOptions'
+    samlOptions:
+      type: object
+      properties:
+        checkSSOMessageSignature:
+          type: boolean
+          default: 1
+        sessionNotOnOrAfterTimeout:
+          type: integer
+          default: 72000
+        signSLOMessage:
+          type: integer
+          minimum: -1
+          maximum: 1
+          default: -1
+        enableIDPInitiatedURL:
+          type: boolean
+        oneTimeUse:
+          type: boolean
+        checkSLOMessageSignature:
+          type: boolean
+          default: 1
+        encryptionMode:
+          type: string
+          enum: 
+              - none
+              - nameid
+              - assertion
+          default: none
+        notOnOrAfterTimeout:
+          type: integer
+          default: 72000
+        rule:
+          type: string
+        forceUTF8:
+          type: boolean
+          default: 1
+        signSSOMessage:
+          type: integer
+          minimum: -1
+          maximum: 1
+          default: -1
+        nameIDSessionKey:
+          type: string
+        nameIDFormat:
+          type: string
+          enum: 
+              - unspecified
+              - email
+              - x509
+              - windows
+              - kerberos
+              - entity
+              - persistent
+              - transient
+              - encrypted
+
+    samlAttribute:
+      type: object
+      properties:
+        mandatory:
+          type: boolean
+        friendlyName:
+          type: string
+        format:
+          type: string
+          example: 'urn:oasis:names:tc:SAML:2.0:attrname-format:basic'
+    OidcRp:
+      required:
+      - confKey
+      - clientId
+      - redirectUris
+      type: object
+      properties:
+        confKey:
+          $ref: '#/components/schemas/confKey'
+        clientId:
+          type: string
+        redirectUris:
+          type: array
+          items:
+            type: string
+            minItems: 1
+            format: "uri"
+        exportedVars:
+          type: object
+          example:
+            email: mail
+            family_name: sn
+            name: cn
+        extraClaims:
+          type: object
+          example:
+            myscope: "myattr1 myattr2 myattr3"
+        macros:
+          type: object
+          example:
+            myMacroName: "$macro(rule)"
+        options:
+          $ref: '#/components/schemas/OidcOptions'
+    OidcOptions:
+      type: object
+      properties:
+        logoutUrl:
+          type: string
+          format: url
+        clientSecret:
+          type: string
+          format: password
+        displayName:
+          type: string
+        allowOffline:
+          type: boolean
+        rule:
+          type: string
+        IDTokenSignAlg:
+          type: string
+          enum: 
+            - none
+            - HS256
+            - HS384
+            - HS512
+            - RS256
+            - RS384
+            - RS512
+          default: HS512
+        refreshToken:
+          type: boolean
+        public:
+          type: boolean
+        postLogoutRedirectUris:
+          type: string
+        logoutType:
+          type: string
+          enum: 
+            - front
+            - back
+          default: front
+        accessTokenExpiration:
+          type: integer
+        IDTokenForceClaims:
+          type: boolean
+        requirePKCE:
+          type: boolean
+        offlineSessionExpiration:
+          type: integer
+        redirectUris:
+          type: array
+          items:
+            type: string
+        bypassConsent:
+          type: boolean
+        logoutSessionRequired:
+          type: boolean
+        clientId:
+          type: string
+        IDTokenExpiration:
+          type: integer
+        authorizationCodeExpiration:
+          type: integer
+        icon:
+          type: string
+        userIDAttr:
+          type: string
+
+    OidcRpUpdate:
+      type: object
+      properties:
+        clientId:
+          type: string
+        exportedVars:
+          type: object
+          example:
+            email: mail
+            family_name: sn
+            name: cn
+        extraClaims:
+          type: object
+          example:
+            myscope: "myattr1 myattr2 myattr3"
+        macros:
+          type: object
+          example:
+            myMacroName: "$macro(rule)"
+        options:
+          $ref: '#/components/schemas/OidcOptions'
+          
+    SecondFactor:
+      type: object
+      required:
+        - type
+        - id
+      properties:
+        id:
+          type: string
+          description: "An opaque idenfifier for this particular token"
+        type:
+          type: string
+          description: "The type of token in use"
+          example: "TOTP, U2F, UBK (Yubikey)"
+        name:
+          type: string
+          description: "A user-set description of the token"
+    SecondFactors:
+      type: array
+      items:
+        $ref: "#/components/schemas/SecondFactor"
+
+
+  responses:
+    NoContent:
+      description: Successful modification
+    Created:
+      description: Successful creation
+    OneOidcRp:
+      description: Return an OpenID Connect Provider
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OidcRp'
+    OneSamlSp:
+      description: Return a SAML Provider
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SamlSp'
+    ManyOidcRp:
+      description: Return a list of OpenID Connect Providers
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/OidcRp'
+    ManySamlSp:
+      description: Return a list of SAML Providers
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SamlSp'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: The specified object could not be created because its configuration key, client_id or entityID already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Error:
+      description: An error was encountered when processing the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    SecondFactor:
+      description: Return a second factor
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SecondFactor"
+    SecondFactors:
+      description: Return a list of second factors
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SecondFactors"
+
+

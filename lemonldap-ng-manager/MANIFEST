@@ -210,6 +210,7 @@ site/htdocs/static/logos/zh.png
 site/htdocs/static/reverseTree.json
 site/htdocs/static/struct.json
 site/templates/2ndfa.tpl
+site/templates/api.tpl
 site/templates/diff.tpl
 site/templates/footer.tpl
 site/templates/header.tpl
