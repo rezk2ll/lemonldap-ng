@@ -191,6 +191,7 @@ sub cTrees {
             'oidcRPMetaDataOptionsExtraClaims',
             {
                 title => 'oidcRPMetaDataOptions',
+                help  => 'idpopenidconnect.html#options',
                 nodes => [ {
                         title => 'oidcRPMetaDataOptionsBasic',
                         form  => 'simpleInputContainer',

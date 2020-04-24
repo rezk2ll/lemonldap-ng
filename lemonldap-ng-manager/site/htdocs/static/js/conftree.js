@@ -618,6 +618,7 @@ function templates(tpl,key) {
             "type" : "simpleInputContainer"
          }
       ],
+      "help" : "idpopenidconnect.html#options",
       "id" : "oidcRPMetaDataOptions",
       "title" : "oidcRPMetaDataOptions"
    },
