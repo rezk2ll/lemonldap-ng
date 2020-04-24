@@ -565,6 +565,7 @@
 "oidcOPMetaDataNode":"Nhà cung cấp Kết nối OpenID",
 "oidcOPMetaDataOptions":"Tùy chọn",
 "oidcRPMetaDataOptionsBasic":"Basic",
+"oidcRPMetaDataOptionsAdditionalAudiences":"Additional audiences",
 "oidcRPMetaDataOptionsAdvanced":"Advanced",
 "oidcRPMetaDataOptionsTimeouts":"Timeouts",
 "oidcRPMetaDataOptionsAllowOffline":"Allow offline access",

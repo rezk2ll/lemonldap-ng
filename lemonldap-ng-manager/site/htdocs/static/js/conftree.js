@@ -439,11 +439,6 @@ function templates(tpl,key) {
          {
             "_nodes" : [
                {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserIDAttr",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserIDAttr",
-                  "title" : "oidcRPMetaDataOptionsUserIDAttr"
-               },
-               {
                   "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsBypassConsent",
                   "help" : "openidconnectclaims.html",
@@ -452,11 +447,21 @@ function templates(tpl,key) {
                   "type" : "bool"
                },
                {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserIDAttr",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserIDAttr",
+                  "title" : "oidcRPMetaDataOptionsUserIDAttr"
+               },
+               {
                   "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenForceClaims",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenForceClaims",
                   "title" : "oidcRPMetaDataOptionsIDTokenForceClaims",
                   "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAdditionalAudiences",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAdditionalAudiences",
+                  "title" : "oidcRPMetaDataOptionsAdditionalAudiences"
                },
                {
                   "default" : 0,

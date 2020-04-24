@@ -205,9 +205,10 @@ sub cTrees {
                         title => 'oidcRPMetaDataOptionsAdvanced',
                         form  => 'simpleInputContainer',
                         nodes => [
-                            'oidcRPMetaDataOptionsUserIDAttr',
                             'oidcRPMetaDataOptionsBypassConsent',
+                            'oidcRPMetaDataOptionsUserIDAttr',
                             'oidcRPMetaDataOptionsIDTokenForceClaims',
+                            'oidcRPMetaDataOptionsAdditionalAudiences',
                             'oidcRPMetaDataOptionsRefreshToken',
                         ]
                     },

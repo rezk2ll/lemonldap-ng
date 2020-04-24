@@ -565,6 +565,7 @@
 "oidcOPMetaDataNode":"Provider di OpenID Connect",
 "oidcOPMetaDataOptions":"Opzioni",
 "oidcRPMetaDataOptionsBasic":"Basic",
+"oidcRPMetaDataOptionsAdditionalAudiences":"Additional audiences",
 "oidcRPMetaDataOptionsAdvanced":"Advanced",
 "oidcRPMetaDataOptionsTimeouts":"Timeouts",
 "oidcRPMetaDataOptionsAllowOffline":"Allow offline access",

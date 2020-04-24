@@ -2126,6 +2126,9 @@ qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][
         'oidcRPMetaDataOptionsAccessTokenExpiration' => {
             'type' => 'int'
         },
+        'oidcRPMetaDataOptionsAdditionalAudiences' => {
+            'type' => 'text'
+        },
         'oidcRPMetaDataOptionsAllowOffline' => {
             'default' => 0,
             'type'    => 'bool'

@@ -3958,6 +3958,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsIDTokenExpiration => { type => 'int' },
         oidcRPMetaDataOptionsIDTokenForceClaims =>
           { type => 'bool', default => 0 },
+        oidcRPMetaDataOptionsAdditionalAudiences  =>
+          { type => 'text' },
         oidcRPMetaDataOptionsAccessTokenExpiration       => { type => 'int' },
         oidcRPMetaDataOptionsAuthorizationCodeExpiration => { type => 'int' },
         oidcRPMetaDataOptionsOfflineSessionExpiration    => { type => 'int' },
