@@ -4,8 +4,13 @@ use strict;
 use Mouse;
 use MIME::Base64;
 use JSON qw(from_json to_json);
-use Lemonldap::NG::Portal::Main::Constants
-  qw(PE_OK PE_ERROR PE_TOKENEXPIRED PE_NOTOKEN PE_REDIRECT);
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
+  PE_ERROR
+  PE_TOKENEXPIRED
+  PE_NOTOKEN
+  PE_REDIRECT
+);
 
 our $VERSION = '2.0.8';
 
@@ -170,6 +175,7 @@ sub removeOther {
         $self->userLogger->error('SingleSession called without token');
         $res = PE_NOTOKEN;
     }
+
     return $self->p->do( $req, [ sub { $res } ] ) if $res;
     $req->mustRedirect(1);
     return $self->p->autoRedirect($req);
