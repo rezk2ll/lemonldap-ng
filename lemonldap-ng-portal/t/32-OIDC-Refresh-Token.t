@@ -54,6 +54,8 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                     oidcRPMetaDataOptionsRefreshToken          => 1,
                     oidcRPMetaDataOptionsIDTokenForceClaims    => 1,
+                    oidcRPMetaDataOptionsAdditionalAudiences =>
+                      "http://my.extra.audience/test urn:extra2",
                 }
             },
             oidcOPMetaDataOptions           => {},
@@ -119,6 +121,16 @@ ok( $id_token,      "Got ID token" );
 my $id_token_payload = id_token_payload($id_token);
 is( $id_token_payload->{name}, 'Frédéric Accents',
     'Found claim in ID token' );
+ok( ( grep { $_ eq "rpid" } @{ $id_token_payload->{aud} } ),
+    'Check that clientid is in audience' );
+ok( (
+        grep { $_ eq "http://my.extra.audience/test" }
+          @{ $id_token_payload->{aud} }
+    ),
+    'Check for additional audiences'
+);
+ok( ( grep { $_ eq "urn:extra2" } @{ $id_token_payload->{aud} } ),
+    'Check for additional audiences' );
 
 # Get userinfo
 $res = $op->_post(

@@ -53,6 +53,9 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                     oidcRPMetaDataOptionsIDTokenForceClaims    => 1,
+                    oidcRPMetaDataOptionsAdditionalAudiences =>
+                      "http://my.extra.audience/test urn:extra2",
+
                 }
             },
             oidcOPMetaDataOptions           => {},
@@ -227,7 +230,17 @@ count(3);
 $id_token_payload = id_token_payload($id_token);
 is( $id_token_payload->{name}, 'Frédéric Accents',
     'Found claim in ID token' );
-count(1);
+ok( ( grep { $_ eq "rpid" } @{ $id_token_payload->{aud} } ),
+    'Check that clientid is in audience' );
+ok( (
+        grep { $_ eq "http://my.extra.audience/test" }
+          @{ $id_token_payload->{aud} }
+    ),
+    'Check for additional audiences'
+);
+ok( ( grep { $_ eq "urn:extra2" } @{ $id_token_payload->{aud} } ),
+    'Check for additional audiences' );
+count(4);
 
 ## Get userinfo again
 ok(
@@ -263,12 +276,12 @@ ok(
 count(1);
 $json = expectJSON($res);
 
-is( $json->{active},    1 );
-is( $json->{client_id}, 'rpid' );
-is( $json->{sub},       'french' );
+is( $json->{active},    1,        'Token is active' );
+is( $json->{client_id}, 'rpid',   'Introspection contains client_id' );
+is( $json->{sub},       'french', 'Introspection contains sub' );
 
 # #2168
-ok( grep { $_ eq "!weird:scope.name~" } ( split /\s+/, $json->{scope} ),
+ok( ( grep { $_ eq "!weird:scope.name~" } ( split /\s+/, $json->{scope} ) ),
     "Scope contains weird scope name" );
 count(4);
 

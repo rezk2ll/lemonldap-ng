@@ -143,12 +143,22 @@ ok( $prms{access_token},  ' access_token found' );
 ok( $prms{state},         ' state found' );
 count(5);
 
-my $id_token_payload = id_token_payload($prms{id_token});
-is ($id_token_payload->{acr}, "customacr-1", "Check ACR value");
-count(1);
+my $id_token_payload = id_token_payload( $prms{id_token} );
+is( $id_token_payload->{acr}, "customacr-1", "Check ACR value" );
+ok( ( grep { $_ eq "rpid" } @{ $id_token_payload->{aud} } ),
+    'Check that clientid is in audience' );
+ok( (
+        grep { $_ eq "http://my.extra.audience/test" }
+          @{ $id_token_payload->{aud} }
+    ),
+    'Check for additional audiences'
+);
+ok( ( grep { $_ eq "urn:extra2" } @{ $id_token_payload->{aud} } ),
+    'Check for additional audiences' );
+count(4);
 
 # Check attributes in ID Token
-my $id_token_decoded = id_token_payload($prms{id_token});
+my $id_token_decoded = id_token_payload( $prms{id_token} );
 ok( $id_token_decoded->{sub} eq "dwho", 'Check sub value' );
 ok( !$id_token_decoded->{name},         'Claim name must not be in ID token' );
 count(2);
@@ -234,7 +244,9 @@ sub op {
                 oidcServiceAllowAuthorizationCodeFlow => 1,
                 oidcRPMetaDataOptions                 => {
                     rp => {
-                        oidcRPMetaDataOptionsDisplayName       => "RP",
+                        oidcRPMetaDataOptionsDisplayName => "RP",
+                        oidcRPMetaDataOptionsAdditionalAudiences =>
+                          "http://my.extra.audience/test urn:extra2",
                         oidcRPMetaDataOptionsIDTokenExpiration => 3600,
                         oidcRPMetaDataOptionsClientID          => "rpid",
                         oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
@@ -248,11 +260,11 @@ sub op {
                 oidcOPMetaDataJSON              => {},
                 oidcOPMetaDataJWKS              => {},
                 oidcServiceMetaDataAuthnContext => {
-                    'loa-4' => 4,
+                    'loa-4'       => 4,
                     'customacr-1' => 1,
-                    'loa-5' => 5,
-                    'loa-2' => 2,
-                    'loa-3' => 3
+                    'loa-5'       => 5,
+                    'loa-2'       => 2,
+                    'loa-3'       => 3
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,
                 oidcServicePublicKeySig  => oidc_key_op_public_sig,
