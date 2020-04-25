@@ -31,7 +31,8 @@ my $client = LLNG::Manager::Test->new( {
                 test_impersonation => '"$testPrefix__user/$_user"',
                 _whatToTrace =>
                   '$_auth eq "SAML" ? "$_user@$_idpConfKey" : $_user',
-            },
+                mail => 'uc $mail'
+            }
         }
     }
 );
@@ -196,7 +197,10 @@ ok( $res->[2]->[0] =~ m%<td scope="row">test_impersonation</td>%,
 ok( $res->[2]->[0] =~ m%<td scope="row">msmith/msmith</td>%,
     'Found msmith/msmith' )
   or explain( $res->[2]->[0], 'Found msmith/msmith' );
-count(2);
+my $nbr = $res->[2]->[0] =~ s%MSMITH\@BADWOLF\.ORG%%g;
+ok( $nbr == 2, 'Found two MSMITH@BADWOLF.ORG' )
+  or explain( $res->[2]->[0], 'Found two MSMITH@BADWOLF.ORG' );
+count(3);
 
 $client->logout($id);
 
@@ -325,8 +329,8 @@ count(17);
 my %attributes = map /<td scope="row">(.+)?<\/td>/g, $res->[2]->[0];
 ok( keys %attributes == 34, 'Found 34 attributes' )
   or print STDERR ( keys %attributes < 34 )
-  ? "Missing attributes -> " . scalar keys %attributes
-  : "Too much attributes -> " . scalar keys %attributes;
+  ? "Missing attributes -> " . scalar keys (%attributes) . "\n"
+  : "Too much attributes -> " . scalar keys (%attributes). "\n";
 ok( $attributes{'_auth'} eq 'Demo', '_auth' )
   or print STDERR Dumper( \%attributes );
 ok( $attributes{'uid'}, 'uid' ) or print STDERR Dumper( \%attributes );
