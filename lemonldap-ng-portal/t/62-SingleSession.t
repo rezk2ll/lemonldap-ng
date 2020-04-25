@@ -189,26 +189,26 @@ $id3 = expectCookie($res);
 
 switch ($client4);
 
-$res = loginUser( $client4, "dwho", "127.0.0.2" );
+$res = loginUser( $client4, "dwho", "127.0.0.2",
+    query => 'url=' . encode_base64( "http://test1.example.com/", '' ) );
 $id4 = expectCookie($res);
 
-
+ok( $res->[2]->[0] =~ m%<h3 trspan="sessionsDeleted"></h3>%,
+    'sessionsDeleted found' )
+  or explain( $res->[2]->[0], 'sessionsDeleted found' );
+ok( $res->[2]->[0] =~ m%<h3 trspan="otherSessions"></h3>%,
+    'otherSessions found' )
+  or explain( $res->[2]->[0], 'otherSessions found' );
 ok(
     $res->[2]->[0] =~
-      m%<h3 trspan="sessionsDeleted"></h3>%,
-    'sessionsDeleted found'
-) or explain( $res->[2]->[0], 'sessionsDeleted found' );
-ok(
-    $res->[2]->[0] =~
-      m%<h3 trspan="otherSessions"></h3>%,
-    'otherSessions found'
-) or explain( $res->[2]->[0], 'otherSessions found' );
-ok(
-    $res->[2]->[0] =~
-      m%<a href="http://auth.example.com/removeOther\?token=\d{10}_\d{5}" onclick="_go=0" trspan="removeOtherSessions"></a>%,
-    ' found'
+m%<a href="http://auth.example.com/removeOther\?token=\d{10}_\d{5}" onclick="_go=0" trspan="removeOtherSessions"></a>%,
+    'Link found'
 ) or explain( $res->[2]->[0], 'Link found' );
-count(3);
+ok(
+    $res->[2]->[0] =~ m%action="http://test1.example.com/"%,
+    'action found'
+) or explain( $res->[2]->[0], 'action found' );
+count(4);
 
 clean_sessions();
 
