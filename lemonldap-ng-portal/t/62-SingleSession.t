@@ -36,6 +36,26 @@ my $client3 = LLNG::Manager::Test->new( {
         }
     }
 );
+my $client4 = LLNG::Manager::Test->new( {
+        ini => {
+            logLevel       => $level,
+            authentication => 'Demo',
+            userDB         => 'Same',
+            notifyOther    => 1,
+            notifyDeleted  => 1,
+            singleIP       => 1,
+        }
+    }
+);
+
+my $client5 = LLNG::Manager::Test->new( {
+        ini => {
+            logLevel       => $level,
+            authentication => 'Demo',
+            userDB         => 'Same',
+        }
+    }
+);
 
 sub loginUser {
     my ( $client, $user, $ip, %args ) = @_;
@@ -98,7 +118,7 @@ testGetParam( $res, 1 );
 
 # Check that skin=bootstrap isn't appended when going to external URL (#2081)
 $res = loginUser( $client1, "dwho", "127.0.0.1",
-    query => 'url=' . encode_base64( "http://test1.example.com/", '' ), );
+    query => 'url=' . encode_base64( "http://test1.example.com/", '' ) );
 my $id3 = expectCookie($res);
 testGetParam( $res, 0 );
 
@@ -113,13 +133,13 @@ clean_sessions();
 switch ($client2);
 
 $res = loginUser( $client2, "dwho", "127.0.0.1" );
-my $id1 = expectCookie($res);
+$id1 = expectCookie($res);
 
 $res = loginUser( $client2, "dwho", "127.0.0.1" );
-my $id2 = expectCookie($res);
+$id2 = expectCookie($res);
 
 $res = loginUser( $client2, "dwho", "127.0.0.2" );
-my $id3 = expectCookie($res);
+$id3 = expectCookie($res);
 
 $res = loginUser( $client2, "dwho", "127.0.0.2" );
 my $id4 = expectCookie($res);
@@ -136,21 +156,59 @@ clean_sessions();
 switch ($client3);
 
 $res = loginUser( $client3, "rtyler", "127.0.0.1" );
-my $id1 = expectCookie($res);
+$id1 = expectCookie($res);
 
 $res = loginUser( $client3, "rtyler", "127.0.0.2" );
-my $id2 = expectCookie($res);
+$id2 = expectCookie($res);
 
 $res = loginUser( $client3, "dwho", "127.0.0.2" );
-my $id3 = expectCookie($res);
+$id3 = expectCookie($res);
 
 $res = loginUser( $client3, "dwho", "127.0.0.2" );
-my $id4 = expectCookie($res);
+$id4 = expectCookie($res);
 
 expectOK( testReq( $client3, $id1, 'Other user, but other IP' ) );
 expectReject( testReq( $client3, $id2, 'Other user, same IP' ) );
 expectOK( testReq( $client3, $id3, 'Same user, same IP' ) );
 expectOK( testReq( $client3, $id4, 'Same user, same IP' ) );
+
+clean_sessions();
+
+####################
+# Test DisplayDeleted & DisplayOther
+switch ($client5);
+
+$res = loginUser( $client5, "dwho", "127.0.0.1" );
+$id1 = expectCookie($res);
+
+$res = loginUser( $client5, "dwho", "127.0.0.1" );
+$id2 = expectCookie($res);
+
+$res = loginUser( $client5, "dwho", "127.0.0.2" );
+$id3 = expectCookie($res);
+
+switch ($client4);
+
+$res = loginUser( $client4, "dwho", "127.0.0.2" );
+$id4 = expectCookie($res);
+
+
+ok(
+    $res->[2]->[0] =~
+      m%<h3 trspan="sessionsDeleted"></h3>%,
+    'sessionsDeleted found'
+) or explain( $res->[2]->[0], 'sessionsDeleted found' );
+ok(
+    $res->[2]->[0] =~
+      m%<h3 trspan="otherSessions"></h3>%,
+    'otherSessions found'
+) or explain( $res->[2]->[0], 'otherSessions found' );
+ok(
+    $res->[2]->[0] =~
+      m%<a href="http://auth.example.com/removeOther\?token=\d{10}_\d{5}" onclick="_go=0" trspan="removeOtherSessions"></a>%,
+    ' found'
+) or explain( $res->[2]->[0], 'Link found' );
+count(3);
 
 clean_sessions();
 
