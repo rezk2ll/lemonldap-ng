@@ -276,11 +276,13 @@ LemonLDAP::NG Portal jQuery scripts
       method = $("#form").attr("method");
       console.log('method=', method);
       hiddenParams = "";
-      $("#form input[type=hidden]").each(function(index) {
+      if ($("#form input[type=hidden]")) {
         console.log('Parse hidden values');
-        console.log(' ->', $(this).attr("name"), $(this).val());
-        return hiddenParams += "&" + $(this).attr("name") + "=" + $(this).val();
-      });
+        $("#form input[type=hidden]").each(function(index) {
+          console.log(' ->', $(this).attr("name"), $(this).val());
+          return hiddenParams += "&" + $(this).attr("name") + "=" + $(this).val();
+        });
+      }
       back_url = "";
       if (action) {
         console.log('action=', action);
@@ -292,7 +294,10 @@ LemonLDAP::NG Portal jQuery scripts
         back_url += hiddenParams;
         hiddenParams = "";
       }
-      link = $("p.removeOther a").attr("href") + "&method=" + method + hiddenParams + "&url=" + btoa(back_url);
+      link = $("p.removeOther a").attr("href") + "&method=" + method + hiddenParams;
+      if (back_url) {
+        link += "&url=" + btoa(back_url);
+      }
       $("p.removeOther a").attr("href", link);
     }
     queryString = window.location.search;

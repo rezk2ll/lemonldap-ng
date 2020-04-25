@@ -9,7 +9,6 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_TOKENEXPIRED
   PE_NOTOKEN
-  PE_REDIRECT
 );
 
 our $VERSION = '2.0.8';
@@ -56,12 +55,12 @@ sub init {
 
 sub run {
     my ( $self, $req ) = @_;
+    my ( $linkedSessionId, $token, $html ) = ( '', '', '' );
     my $deleted         = [];
     my $otherSessions   = [];
     my @otherSessionsId = ();
-    my $linkedSessionId = '';
-    my $token           = '';
-    my $moduleOptions   = $self->conf->{globalStorageOptions} || {};
+
+    my $moduleOptions = $self->conf->{globalStorageOptions} || {};
     $moduleOptions->{backend} = $self->conf->{globalStorage};
 
     my $sessions = $self->module->searchOn(
@@ -120,14 +119,15 @@ sub run {
             }
         }
     }
-    $req->info(
-        $self->p->mkSessionArray( $req, $deleted, 'sessionsDeleted', 1 ) )
+
+    $html = $self->p->mkSessionArray( $req, $deleted, 'sessionsDeleted', 1 )
       if ( $self->conf->{notifyDeleted} and @$deleted );
-    $req->info(
-            $self->p->mkSessionArray( $req, $otherSessions, 'otherSessions', 1 )
-          . $self->_mkRemoveOtherLink( $req, $token ) )
+    $html .=
+        $self->p->mkSessionArray( $req, $otherSessions, 'otherSessions', 1 )
+      . $self->_mkRemoveOtherLink($req, $token)
       if ( $self->conf->{notifyOther} and @$otherSessions );
 
+    $req->info($html);
     return PE_OK;
 }
 

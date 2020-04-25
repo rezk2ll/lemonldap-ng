@@ -290,10 +290,11 @@ $(window).on 'load', () ->
 		console.log 'method=', method
 
 		hiddenParams = ""
-		$("#form input[type=hidden]").each (index) ->
-			console.log 'Parse hidden values'
-			console.log ' ->', $(this).attr("name"), $(this).val()
-			hiddenParams +=  "&" + $(this).attr("name") + "=" + $(this).val()
+		if $("#form input[type=hidden]")
+			console.log 'Parse hidden values' 
+			$("#form input[type=hidden]").each (index) ->
+				console.log ' ->', $(this).attr("name"), $(this).val()
+				hiddenParams +=  "&" + $(this).attr("name") + "=" + $(this).val()
 
 		back_url = ""
 		if action
@@ -305,7 +306,8 @@ $(window).on 'load', () ->
 			back_url += hiddenParams
 			hiddenParams = ""
 
-		link = $("p.removeOther a").attr("href") + "&method=" + method + hiddenParams + "&url=" + btoa(back_url)
+		link = $("p.removeOther a").attr("href") + "&method=" + method + hiddenParams
+		link += "&url=" + btoa(back_url) if back_url
 		$("p.removeOther a").attr "href", link
 
 	# Language detection. Priority order:
