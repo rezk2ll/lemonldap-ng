@@ -23,31 +23,16 @@ sub hAttr {
 
 sub init {
     my ($self) = @_;
-    my $hd = $self->p->HANDLER;
 
-    # Parse activation rule
-    $self->logger->debug(
-        "Impersonation rule -> " . $self->conf->{impersonationRule} );
-    my $rule =
-      $hd->buildSub( $hd->substitute( $self->conf->{impersonationRule} ) );
-    unless ($rule) {
-        my $error = $hd->tsv->{jail}->error || '???';
-        $self->error("Bad impersonation rule -> $error");
-        return 0;
-    }
-    $self->rule($rule);
+    # Parse Impersonation rules
+    $self->rule(
+        $self->p->buildRule( $self->conf->{impersonationRule}, 'impersonation' ) );
+    return 0 unless $self->rule;
 
-    # Parse identity rule
-    $self->logger->debug( "Impersonation identities rule -> "
-          . $self->conf->{impersonationIdRule} );
-    $rule =
-      $hd->buildSub( $hd->substitute( $self->conf->{impersonationIdRule} ) );
-    unless ($rule) {
-        my $error = $hd->tsv->{jail}->error || '???';
-        $self->error("Bad impersonation identities rule -> $error");
-        return 0;
-    }
-    $self->idRule($rule);
+    $self->idRule(
+        $self->p->buildRule( $self->conf->{impersonationIdRule}, 'impersonationId' ) );
+    return 0 unless $self->idRule;
+
     return 1;
 }
 
