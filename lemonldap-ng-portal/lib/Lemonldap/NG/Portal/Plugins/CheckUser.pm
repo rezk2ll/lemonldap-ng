@@ -48,7 +48,6 @@ sub persistentAttrs {
 
 sub init {
     my ($self) = @_;
-    my $hd = $self->p->HANDLER;
     $self->addAuthRoute( checkuser => 'check', ['POST'] );
     $self->addAuthRouteWithRedirect( checkuser => 'display', ['GET'] );
 
@@ -58,16 +57,26 @@ sub init {
     return 0 unless $self->idRule;
 
     $self->displayEmptyValuesRule(
-        $self->p->buildRule( $self->conf->{checkUserDisplayEmptyValues}, 'checkUserDisplayEmptyValues' ) );
+        $self->p->buildRule(
+            $self->conf->{checkUserDisplayEmptyValues},
+            'checkUserDisplayEmptyValues'
+        )
+    );
     return 0 unless $self->displayEmptyValuesRule;
 
     $self->displayEmptyHeadersRule(
-        $self->p->buildRule( $self->conf->{checkUserDisplayEmptyHeaders}, 'checkUserDisplayEmptyHeaders' )
+        $self->p->buildRule(
+            $self->conf->{checkUserDisplayEmptyHeaders},
+            'checkUserDisplayEmptyHeaders'
+        )
     );
     return 0 unless $self->displayEmptyHeadersRule;
 
     $self->displayPersistentInfoRule(
-        $self->p->buildRule( $self->conf->{checkUserDisplayPersistentInfo}, 'checkUserDisplayPersistentInfo' )
+        $self->p->buildRule(
+            $self->conf->{checkUserDisplayPersistentInfo},
+            'checkUserDisplayPersistentInfo'
+        )
     );
     return 0 unless $self->displayPersistentInfoRule;
 
@@ -76,7 +85,7 @@ sub init {
           || $self->conf->{contextSwitchingRule} );
     $self->merged( $self->conf->{impersonationMergeSSOgroups}
           && $self->conf->{impersonationRule} ? 'Merged' : '' );
-    
+
     return 1;
 }
 

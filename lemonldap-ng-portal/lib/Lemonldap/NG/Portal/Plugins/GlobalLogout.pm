@@ -41,7 +41,8 @@ sub init {
 
     # Parse activation rule
     $self->rule(
-        $self->p->buildRule( $self->conf->{globalLogoutRule}, 'globalLogout' ) );
+        $self->p->buildRule( $self->conf->{globalLogoutRule}, 'globalLogout' )
+    );
     return 0 unless $self->rule;
 
     return 1;
@@ -105,7 +106,7 @@ sub run {
 
 sub globalLogout {
     my ( $self, $req ) = @_;
-    my $res = PE_OK;
+    my $res   = PE_OK;
     my $count = 0;
 
     if ( $req->param('all') ) {

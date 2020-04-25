@@ -26,11 +26,18 @@ sub init {
 
     # Parse Impersonation rules
     $self->rule(
-        $self->p->buildRule( $self->conf->{impersonationRule}, 'impersonation' ) );
+        $self->p->buildRule(
+            $self->conf->{impersonationRule}, 'impersonation'
+        )
+    );
     return 0 unless $self->rule;
 
     $self->idRule(
-        $self->p->buildRule( $self->conf->{impersonationIdRule}, 'impersonationId' ) );
+        $self->p->buildRule(
+            $self->conf->{impersonationIdRule},
+            'impersonationId'
+        )
+    );
     return 0 unless $self->idRule;
 
     return 1;

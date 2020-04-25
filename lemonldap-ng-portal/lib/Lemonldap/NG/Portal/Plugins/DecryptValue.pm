@@ -30,13 +30,13 @@ has ott  => (
 
 sub init {
     my ($self) = @_;
-    my $hd = $self->p->HANDLER;
     $self->addAuthRoute( decryptvalue => 'run', ['POST'] )
       ->addAuthRouteWithRedirect( decryptvalue => 'display', ['GET'] );
 
     # Parse activation rule
     $self->rule(
-        $self->p->buildRule( $self->conf->{decryptValueRule}, 'decryptValue' ) );
+        $self->p->buildRule( $self->conf->{decryptValueRule}, 'decryptValue' )
+    );
     return 0 unless $self->rule;
 
     return 1;

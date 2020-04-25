@@ -39,19 +39,26 @@ has idRule => ( is => 'rw', default => sub { 1 } );
 
 sub init {
     my ($self) = @_;
-    my $hd = $self->p->HANDLER;
     $self->addAuthRoute( switchcontext => 'run', ['POST'] )
       ->addAuthRoute( switchcontext => 'display', ['GET'] );
 
     # Parse ContextSwitching rules
     $self->rule(
-        $self->p->buildRule( $self->conf->{contextSwitchingRule}, 'contextSwitching' ) );
+        $self->p->buildRule(
+            $self->conf->{contextSwitchingRule},
+            'contextSwitching'
+        )
+    );
     return 0 unless $self->rule;
 
     $self->idRule(
-        $self->p->buildRule( $self->conf->{contextSwitchingIdRule}, 'contextSwitchingId' ) );
+        $self->p->buildRule(
+            $self->conf->{contextSwitchingIdRule},
+            'contextSwitchingId'
+        )
+    );
     return 0 unless $self->idRule;
-    
+
     return 1;
 }
 

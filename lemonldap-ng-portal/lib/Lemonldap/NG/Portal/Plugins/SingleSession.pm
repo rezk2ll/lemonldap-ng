@@ -124,7 +124,7 @@ sub run {
       if ( $self->conf->{notifyDeleted} and @$deleted );
     $html .=
         $self->p->mkSessionArray( $req, $otherSessions, 'otherSessions', 1 )
-      . $self->_mkRemoveOtherLink($req, $token)
+      . $self->_mkRemoveOtherLink( $req, $token )
       if ( $self->conf->{notifyOther} and @$otherSessions );
 
     $req->info($html);
