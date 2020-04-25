@@ -43,30 +43,15 @@ sub init {
     $self->addAuthRoute( switchcontext => 'run', ['POST'] )
       ->addAuthRoute( switchcontext => 'display', ['GET'] );
 
-    # Parse activation rule
-    $self->logger->debug(
-        'ContextSwitching rule -> ' . $self->conf->{contextSwitchingRule} );
-    my $rule =
-      $hd->buildSub( $hd->substitute( $self->conf->{contextSwitchingRule} ) );
-    unless ($rule) {
-        my $error = $hd->tsv->{jail}->error || '???';
-        $self->error("Bad contextSwitching rule -> $error");
-        return 0;
-    }
-    $self->rule($rule);
+    # Parse ContextSwitching rules
+    $self->rule(
+        $self->p->buildRule( $self->conf->{contextSwitchingRule}, 'contextSwitching' ) );
+    return 0 unless $self->rule;
 
-    # Parse identity rule
-    $self->logger->debug( "ContextSwitching identities rule -> "
-          . $self->conf->{contextSwitchingIdRule} );
-    $rule =
-      $hd->buildSub( $hd->substitute( $self->conf->{contextSwitchingIdRule} ) );
-    unless ($rule) {
-        my $error = $hd->tsv->{jail}->error || '???';
-        $self->error("Bad contextSwitching identities rule -> $error");
-        return 0;
-    }
-    $self->idRule($rule);
-
+    $self->idRule(
+        $self->p->buildRule( $self->conf->{contextSwitchingIdRule}, 'contextSwitchingId' ) );
+    return 0 unless $self->idRule;
+    
     return 1;
 }
 
