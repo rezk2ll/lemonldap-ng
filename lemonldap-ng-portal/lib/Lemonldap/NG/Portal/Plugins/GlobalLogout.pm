@@ -40,17 +40,9 @@ sub init {
     $self->addAuthRoute( globallogout => 'globalLogout', [ 'POST', 'GET' ] );
 
     # Parse activation rule
-    my $hd = $self->p->HANDLER;
-    $self->logger->debug(
-        "GlobalLogout rule -> " . $self->conf->{globalLogoutRule} );
-    my $rule =
-      $hd->buildSub( $hd->substitute( $self->conf->{globalLogoutRule} ) );
-    unless ($rule) {
-        my $error = $hd->tsv->{jail}->error || '???';
-        $self->error("Bad globalLogout rule -> $error");
-        return 0;
-    }
-    $self->rule($rule);
+    $self->rule(
+        $self->p->buildRule( $self->conf->{globalLogoutRule}, 'globalLogout' ) );
+    return 0 unless $self->rule;
 
     return 1;
 }
