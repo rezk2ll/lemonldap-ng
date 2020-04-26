@@ -75,7 +75,10 @@ ok(
 );
 count(1);
 expectOK($res);
-my $id = expectCookie($res);
+my $id        = expectCookie($res);
+my $rawCookie = getHeader( $res, 'Set-Cookie' );
+ok( $rawCookie =~ /;\s*SameSite=None/, 'Found SameSite=None' );
+count(1);
 
 # Try to get a redirection for an auth user with a valid url
 # ----------------------------------------------------------
