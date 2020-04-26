@@ -133,7 +133,7 @@ sub globalLogout {
                         unless ( $req->{userData}->{_session_id} eq $_->{id} ) {
                             $self->userLogger->info(
                                 "Remove \"$user\" session: $_->{id}");
-                            $self->p->_deleteSession( $req, $as, 1 );
+                            $as->remove;
                             $count++;
                         }
                     }
