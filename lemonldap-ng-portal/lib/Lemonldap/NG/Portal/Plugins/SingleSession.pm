@@ -134,7 +134,9 @@ sub run {
 sub removeOther {
     my ( $self, $req ) = @_;
     my $res = PE_OK;
+    my $count = 0;
     $req->{urldc} = decode_base64( $req->param('url') );
+
     if ( my $token = $req->param('token') ) {
         if ( $token = $self->ott->getToken($token) ) {
 
@@ -145,18 +147,19 @@ sub removeOther {
                 $res = PE_ERROR;
             }
             my $as;
-            foreach my $id (@$sessions) {
-                unless ( $as = $self->p->getApacheSession($id) ) {
+            foreach (@$sessions) {
+                unless ( $as = $self->p->getApacheSession($_) ) {
                     $self->userLogger->info(
-                        "SingleSession: session $id expired");
+                        "SingleSession: session $_ expired");
                     next;
                 }
                 my $user = $token->{user};
                 if ( $req->{userData}->{ $self->{conf}->{whatToTrace} } eq
                     $user )
                 {
-                    $self->userLogger->info("Remove \"$user\" session: $id");
+                    $self->userLogger->info("Remove \"$user\" session: $_");
                     $self->p->_deleteSession( $req, $as, 1 );
+                    $count++;
                 }
                 else {
                     $self->userLogger->warn(
@@ -177,6 +180,7 @@ sub removeOther {
     }
 
     return $self->p->do( $req, [ sub { $res } ] ) if $res;
+    $self->userLogger->info("$count remaining session(s) have been removed");
     $req->mustRedirect(1);
     return $self->p->autoRedirect($req);
 }

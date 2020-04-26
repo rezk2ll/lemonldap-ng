@@ -133,7 +133,7 @@ sub globalLogout {
                         unless ( $req->{userData}->{_session_id} eq $_->{id} ) {
                             $self->userLogger->info(
                                 "Remove \"$user\" session: $_->{id}");
-                            $as->remove;
+                            $self->p->_deleteSession( $req, $as, 1 );
                             $count++;
                         }
                     }
@@ -157,7 +157,7 @@ sub globalLogout {
     }
 
     return $self->p->do( $req, [ sub { $res } ] ) if $res;
-    $self->userLogger->info("$count remaining session(s) removed");
+    $self->userLogger->info("$count remaining session(s) have been removed");
     return $self->p->do( $req, [ 'authLogout', 'deleteSession' ] );
 }
 
