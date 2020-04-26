@@ -93,8 +93,9 @@ sub _redirect {
         $self->logger->debug(
             'Add ' . $self->ipath . ', ' . $self->ipath . 'Path in keepPdata' );
         push @{ $req->pdata->{keepPdata} }, $self->ipath, $self->ipath . 'Path';
-        $req->{urldc} = $self->conf->{portal} . '/' . $self->path;
-        $req->pdata->{_url} = encode_base64( $req->urldc, '' );
+        $req->{urldc}           = $self->conf->{portal} . '/' . $self->path;
+        $req->pdata->{_url}     = encode_base64( $req->urldc, '' );
+        $req->pdata->{issuerTs} = time;
     }
     else {
         $self->logger->debug('Not seen as Issuer request, skipping');
@@ -131,6 +132,11 @@ sub _redirect {
 sub _forAuthUser {
     my ( $self, $req, @path ) = @_;
 
+    if (    $req->pdata->{issuerTs}
+        and $req->pdata->{issuerTs} > time + $self->conf->{issuersTimeout} )
+    {
+        $self->cleanPdata($req);
+    }
     $self->logger->debug('Processing _forAuthUser');
     if ( my $r = $req->pdata->{ $self->ipath } ) {
         $self->logger->debug("Restoring request to $self->{path} issuer");
@@ -220,6 +226,7 @@ qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/auto
       encode_base64( $self->conf->{portal} . $req->path_info, '' );
     $req->pdata->{ $self->ipath } = $self->storeRequest($req);
     push @{ $req->pdata->{keepPdata} }, $self->ipath, $self->ipath . 'Path';
+    $req->pdata->{issuerTs} = time;
     return PE_RENEWSESSION;
 }
 
