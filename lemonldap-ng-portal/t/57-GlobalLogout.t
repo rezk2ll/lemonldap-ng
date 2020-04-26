@@ -155,7 +155,7 @@ ok( @d == 5, ' -> Five <th> found' )
   or explain( $res->[2]->[0], "Number of <th> found = " . scalar @d );
 ok( @e == 3, ' -> Three epoch found' )
   or explain( $res->[2]->[0], "Number of epoch found = " . scalar @e );
-ok( time() - 1 <= $e[0] && $e[0] <= time() + 5, 'Right epoch found' )
+ok( time() - 5 <= $e[0] && $e[0] <= time() + 5, 'Right epoch found' )
   or print STDERR Dumper( $res->[2]->[0] ), time(), " / $1";
 count(6);
 
@@ -189,11 +189,12 @@ ok(
     ),
     'POST /globallogout?all=1'
 );
-
+ok( $res->[2]->[0] =~ m%<span trmsg="47"></span>%, 'Found PE_LOGOUT_OK' )
+  or explain( $res->[2]->[0], "PE_LOGOUT_OK" );
 $nbr = count_sessions();
 ok( $nbr == 0, "No session found" )
   or explain("Number of session(s) found = $nbr");
-count(2);
+count(3);
 
 ## Test GlobalLogout request
 # Try to auth: first request
