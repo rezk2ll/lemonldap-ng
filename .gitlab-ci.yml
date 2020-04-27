@@ -12,6 +12,7 @@
 .build_job_centos:
   stage: build
   script:
+     - rm -f /etc/yum.repos.d/CentOS-Sources.repo
      - yum -y install epel-release
      - make rpm-dist
      - ci-build-pkg
