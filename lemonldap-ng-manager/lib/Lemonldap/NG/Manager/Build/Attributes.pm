@@ -1425,8 +1425,8 @@ sub attributes {
         },
         portalRequireOldPassword => {
             default       => 1,
-            type          => 'bool',
-            documentation => 'Old password is required to change the password',
+            type          => 'boolOrExpr',
+            documentation => 'Rule to require old password to change the password',
         },
         hideOldPassword => {
             default       => 0,

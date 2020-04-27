@@ -2610,7 +2610,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'portalRequireOldPassword' => {
             'default' => 1,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'portalSkin' => {
             'default' => 'bootstrap',

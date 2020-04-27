@@ -10,7 +10,8 @@ use Mouse;
 use JSON;
 use URI;
 
-has skinRules => ( is => 'rw' );
+has skinRules     => ( is => 'rw' );
+has requireOldPwd => ( is => 'rw', default => sub { 1 } );
 
 sub displayInit {
     my ($self) = @_;
@@ -29,6 +30,13 @@ sub displayInit {
             }
         }
     }
+    my $rule = HANDLER->buildSub(
+        HANDLER->substitute( $self->conf->{portalRequireOldPassword} ) );
+    unless ($rule) {
+        my $error = HANDLER->tsv->{jail}->error || '???';
+        $self->logger->error( "Bad requireOldPwd rule: " . $error );
+    }
+    $self->requireOldPwd($rule);
 }
 
 # Call portal process and set template parameters
@@ -143,7 +151,7 @@ sub display {
             CHOICE_VALUE    => $req->data->{_authChoice},
             FORM_METHOD     => $method,
             (
-                (not $req->{urldc}) ? ( SEND_PARAMS => 1 )
+                  ( not $req->{urldc} ) ? ( SEND_PARAMS => 1 )
                 : ()
             ),
             (
@@ -222,7 +230,7 @@ sub display {
             LOGOUT_URL          => $self->conf->{portal} . "?logout=1",
             APPSLIST_ORDER      => $req->{sessionInfo}->{'_appsListOrder'},
             PING                => $self->conf->{portalPingInterval},
-            REQUIRE_OLDPASSWORD => $self->conf->{portalRequireOldPassword},
+            REQUIRE_OLDPASSWORD => $self->requireOldPwd->($req, $req->userData),
             HIDE_OLDPASSWORD    => 0,
             DISPLAY_PPOLICY     => $self->conf->{portalDisplayPasswordPolicy},
             PPOLICY_MINSIZE     => $self->conf->{passwordPolicyMinSize},
