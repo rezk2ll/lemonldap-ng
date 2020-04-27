@@ -20,7 +20,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.8';
 
 # PROPERTIES
 
@@ -133,7 +133,7 @@ sub _forAuthUser {
     my ( $self, $req, @path ) = @_;
 
     if (    $req->pdata->{issuerTs}
-        and $req->pdata->{issuerTs} + $self->conf->{issuersTimeout} > time )
+        and $req->pdata->{issuerTs} + $self->conf->{issuersTimeout} < time )
     {
         $self->cleanPdata($req);
     }
