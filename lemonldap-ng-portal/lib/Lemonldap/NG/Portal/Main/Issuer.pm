@@ -133,7 +133,7 @@ sub _forAuthUser {
     my ( $self, $req, @path ) = @_;
 
     if (    $req->pdata->{issuerTs}
-        and $req->pdata->{issuerTs} > time + $self->conf->{issuersTimeout} )
+        and $req->pdata->{issuerTs} + $self->conf->{issuersTimeout} > time )
     {
         $self->cleanPdata($req);
     }
