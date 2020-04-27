@@ -715,6 +715,7 @@
 "portalDisplayLogout":"Logout",
 "portalDisplayPasswordPolicy": "Display policy in password form",
 "portalDisplayOidcConsents":"OIDC Consents",
+"portalDisplayRefreshMyRights": "Display rights refresh link",
 "portalDisplayRegister":"Register new account",
 "portalDisplayResetPassword":"Reset password",
 "portalErrorOnExpiredSession":"Show error on expired session",

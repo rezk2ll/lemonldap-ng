@@ -715,6 +715,7 @@
 "portalDisplayLogout":"Çıkış Yap",
 "portalDisplayPasswordPolicy":"Politikayı parola form alanında görüntüle",
 "portalDisplayOidcConsents":"OIDC İzinleri",
+"portalDisplayRefreshMyRights": "Display rights refresh link",
 "portalDisplayRegister":"Yeni hesap kaydet",
 "portalDisplayResetPassword":"Parolayı sıfırla",
 "portalErrorOnExpiredSession":"Süresi dolmuş oturumda hatayı göster",

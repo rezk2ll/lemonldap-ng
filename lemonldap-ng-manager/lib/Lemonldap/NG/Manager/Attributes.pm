@@ -2568,6 +2568,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'portalDisplayRefreshMyRights' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'portalDisplayRegister' => {
             'default' => 1,
             'type'    => 'bool'

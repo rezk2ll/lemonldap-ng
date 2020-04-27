@@ -715,6 +715,7 @@
 "portalDisplayLogout":"Déconnexion",
 "portalDisplayPasswordPolicy": "Afficher la politique dans le formulaire de mot de passe",
 "portalDisplayOidcConsents":"Accords OIDC",
+"portalDisplayRefreshMyRights": "Afficher le lien de rafraichissement des droits",
 "portalDisplayRegister":"Création d'un nouveau compte",
 "portalDisplayResetPassword":"Réinitialisation de mot de passe",
 "portalErrorOnExpiredSession":"Affiche une erreur si la session est expirée",

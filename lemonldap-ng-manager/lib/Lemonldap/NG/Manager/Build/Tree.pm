@@ -99,7 +99,8 @@ sub tree {
                                         'portalAntiFrame',
                                         'portalPingInterval',
                                         'portalErrorOnExpiredSession',
-                                        'portalErrorOnMailNotFound'
+                                        'portalErrorOnMailNotFound',
+                                        'portalDisplayRefreshMyRights',
                                     ]
                                 }
                             ]

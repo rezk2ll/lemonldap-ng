@@ -715,6 +715,7 @@
 "portalDisplayLogout":"تسجيل الخروج",
 "portalDisplayPasswordPolicy":"Display policy in password form",
 "portalDisplayOidcConsents":"OIDC Consents",
+"portalDisplayRefreshMyRights": "Display rights refresh link",
 "portalDisplayRegister":"تسجيل حساب جديد",
 "portalDisplayResetPassword":"إعادة تعيين كلمة المرور",
 "portalErrorOnExpiredSession":"عرض الخطأ في الجلسة المنتهية صلحيتها",

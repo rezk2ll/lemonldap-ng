@@ -715,6 +715,7 @@
 "portalDisplayLogout":"Đăng xuất",
 "portalDisplayPasswordPolicy":"Display policy in password form",
 "portalDisplayOidcConsents":"OIDC Consents",
+"portalDisplayRefreshMyRights": "Display rights refresh link",
 "portalDisplayRegister":"Đăng ký tài khoản mới",
 "portalDisplayResetPassword":"Đặt lại mật khẩu",
 "portalErrorOnExpiredSession":"Show error on expired session",

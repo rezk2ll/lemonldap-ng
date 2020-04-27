@@ -114,6 +114,9 @@ sub params {
       $self->p->_sfEngine->display2fRegisters( $req, $req->userData );
     $self->logger->debug("Display 2fRegisters link") if $res{sfaManager};
 
+    # Display refresh my rights unless disabled
+    $res{RefreshMyRights} = $self->conf->{portalDisplayRefreshMyRights};
+
     # Display menu links only if required
     foreach (qw(ContextSwitching DecryptValue Notifications)) {
         my $plugin =
@@ -127,6 +130,19 @@ sub params {
           if ( $_ eq 'ContextSwitching' && $res{$_} );
         $self->logger->debug($msg) if $res{$_};
         undef $plugin;
+    }
+
+    # Decide whether to display the dropdown or regular text
+    $res{DropdownMenu} = 0;
+
+    foreach (
+        qw(RefreshMyRights sfaManager Notifications DecryptValue ContextSwitching)
+      )
+    {
+        if ( $res{$_} ) {
+            $res{DropdownMenu} = 1;
+            last;
+        }
     }
 
     return %res;

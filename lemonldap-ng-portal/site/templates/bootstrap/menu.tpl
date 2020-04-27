@@ -56,10 +56,17 @@
 
       <ul class="user nav navbar-nav navbar-right">
         <li class="nav-item dropdown">
+          <TMPL_IF NAME="DropdownMenu">
           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
             <span trspan="connectedAs">Connected as</span> <TMPL_VAR NAME="AUTH_USER">
             <span class="caret"></span>
           </a>
+          <TMPL_ELSE>
+          <div class="text-muted">
+            <span trspan="connectedAs">Connected as</span> <TMPL_VAR NAME="AUTH_USER">
+          </div>
+          </TMPL_IF>
+          <TMPL_IF NAME="DropdownMenu">
           <ul class="dropdown-menu" role="menu">
             <TMPL_IF NAME="sfaManager">
               <li class="dropdown-item"><a href="/2fregisters" class="nav-link">
@@ -85,11 +92,14 @@
                 <span trspan="contextSwitching_<TMPL_VAR NAME="contextSwitching">">contextSwitching_<TMPL_VAR NAME="ContextSwitching"></span>
               </a></li>
             </TMPL_IF>
+            <TMPL_IF NAME="RefreshMyRights">
             <li class="dropdown-item"><a href="/refresh" class="nav-link">
               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/icons/arrow_refresh.png" width="16" height="16" alt="refresh" />
               <span trspan="refreshrights">Refresh</span>
             </a></li>
+            </TMPL_IF>
           </ul>
+          </TMPL_IF>
         </li>
       </ul>
 
