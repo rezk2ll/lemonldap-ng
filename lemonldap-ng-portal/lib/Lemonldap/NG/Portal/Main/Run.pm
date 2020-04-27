@@ -179,7 +179,8 @@ sub postAuthenticatedRequest {
 sub refresh {
     my ( $self, $req ) = @_;
     $req->mustRedirect(1);
-    my %data = %{ $req->userData };
+    my %data          = %{ $req->userData };
+    my $lastAuthLevel = $req->userData->{authenticationLevel};
     $self->userLogger->notice(
         'Refresh request for ' . $data{ $self->conf->{whatToTrace} } );
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
@@ -195,6 +196,11 @@ sub refresh {
             @{ $self->betweenAuthAndData },
             'setAuthSessionInfo',
             'setSessionInfo',
+            sub {
+                $req->sessionInfo->{authenticationLevel} = $lastAuthLevel
+                  ;    # Restore previous authentication level (#2179)
+                return PE_OK;
+            },
             $self->groupsAndMacros,
             'setLocalGroups',
             sub {
@@ -1058,7 +1064,7 @@ sub registerLogin {
     }
 
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
-    my $type    = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+    my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 
