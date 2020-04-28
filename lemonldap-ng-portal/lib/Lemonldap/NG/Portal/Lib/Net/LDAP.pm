@@ -266,20 +266,21 @@ sub userBind {
     return PE_BADCREDENTIALS;
 }
 
-## @method int userModifyPassword(string dn, string newpassword, string oldpassword, boolean ad)
+## @method int userModifyPassword(string dn, string newpassword, string oldpassword, boolean ad, boolean requireOldPassword)
 # Change user's password.
 # @param $dn DN
 # @param $newpassword New password
 # @param $oldpassword Current password
 # @param $ad Active Directory mode
+# @param $requireOldPassword Old password is needed to update
 # @return Lemonldap::NG::Portal constant
 sub userModifyPassword {
-    my ( $self, $dn, $newpassword, $oldpassword, $ad ) = @_;
-    my $ppolicyControl     = $self->{conf}->{ldapPpolicyControl};
-    my $setPassword        = $self->{conf}->{ldapSetPassword};
-    my $asUser             = $self->{conf}->{ldapChangePasswordAsUser};
-    my $requireOldPassword = $self->{conf}->{portalRequireOldPassword};
-    my $passwordAttribute  = "userPassword";
+    my ( $self, $dn, $newpassword, $oldpassword, $ad, $requireOldPassword ) =
+      @_;
+    my $ppolicyControl    = $self->{conf}->{ldapPpolicyControl};
+    my $setPassword       = $self->{conf}->{ldapSetPassword};
+    my $asUser            = $self->{conf}->{ldapChangePasswordAsUser};
+    my $passwordAttribute = "userPassword";
     my $err;
     my $mesg;
 
