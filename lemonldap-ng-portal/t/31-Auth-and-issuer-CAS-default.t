@@ -145,7 +145,9 @@ ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
 ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );
-count(3);
+ok( ref( $res->{multi} ) eq "ARRAY" and $res->{multi}->[0] =~ /value/ )
+  or explain( $res->{multi}, 'Multi valued attribute' );
+count(4);
 
 # Logout initiated by SP
 ok(
@@ -216,16 +218,18 @@ done_testing( count() );
 sub issuer {
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel               => $debug,
-                domain                 => 'idp.com',
-                portal                 => 'http://auth.idp.com',
-                authentication         => 'Demo',
-                userDB                 => 'Same',
-                issuerDBCASActivation  => 1,
-                casAttr                => 'uid',
-                casAttributes          => { cn => 'cn', uid => 'uid', },
+                logLevel              => $debug,
+                domain                => 'idp.com',
+                portal                => 'http://auth.idp.com',
+                authentication        => 'Demo',
+                userDB                => 'Same',
+                issuerDBCASActivation => 1,
+                casAttr               => 'uid',
+                casAttributes => { cn => 'cn', uid => 'uid', multi => 'multi' },
                 casAccessControlPolicy => 'none',
                 multiValuesSeparator   => ';',
+                macros =>
+                  { multi => '"value1;value2"', _whatToTrace => '$uid' },
             }
         }
     );
@@ -244,9 +248,10 @@ sub sp {
                 multiValuesSeparator       => ';',
                 casSrvMetaDataExportedVars => {
                     idp => {
-                        cn   => 'cn',
-                        mail => 'mail',
-                        uid  => 'uid',
+                        cn    => 'cn',
+                        mail  => 'mail',
+                        uid   => 'uid',
+                        multi => 'multi',
                     }
                 },
                 casSrvMetaDataOptions => {
