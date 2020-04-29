@@ -628,6 +628,7 @@ t/61-GrantSession.t
 t/61-Session-ActivityTimeout.t
 t/61-Session-Timeout.t
 t/62-Refresh-plugin.t
+t/62-SingleSession-with-History.t
 t/62-SingleSession-with-Rules.t
 t/62-SingleSession.t
 t/62-UpgradeSession.t
