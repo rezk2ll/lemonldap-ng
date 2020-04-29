@@ -41,48 +41,53 @@ sub init {
     );
     ok( $client->app, 'App object' ) or explain( $client, '->app...' );
     count(3);
-    open F, ">$file"
-      or die $!;
+
     my $now = time;
     my $ts  = strftime "%Y%m%d%H%M%S", localtime;
 
-    print F <<EOF;
-    {
-   "_startTime" : "$ts",
-   "_session_kind" : "SSO",
-   "UA" : "Mozilla/5.0 (X11; VAX4000; rv:43.0) Gecko/20100101 Firefox/143.0 Iceweasel/143.0.1",
-   "cn" : "Doctor Who",
-   "_utime" : $now,
-   "_whatToTrace" : "dwho",
-   "mail" : "dwho\@badwolf.org",
-   "_passwordDB" : "Demo",
-   "_lastAuthnUTime" : $now,
-   "uid" : "dwho",
-   "_issuerDB" : "Null",
-   "_userDB" : "Demo",
-   "_user" : "dwho",
-   "_session_id" : "f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545",
-   "authenticationLevel" : 1,
-   "_auth" : "Demo",
-   "_updateTime" : "$ts",
-   "_loginHistory" : {
-      "successLogin" : [
-         {
-            "ipAddr" : "127.0.0.1",
-            "_utime" : $now
-         }
-      ]
-   },
-   "ipAddr" : "127.0.0.1",
-   "_timezone" : "1",
-   "groups" : "users; timelords",
-   "hGroups" : {
-      "users" : {},
-      "timelords" : {}
-   }
-}
-EOF
-    close F;
+    my $sessionData = {
+        '_timezone'     => '1',
+        'groups'        => 'users; timelords',
+        'uid'           => 'dwho',
+        '_loginHistory' => {
+            'successLogin' => [ {
+                    '_utime' => $now,
+                    'ipAddr' => '127.0.0.1'
+                }
+            ]
+        },
+        'cn'              => 'Doctor Who',
+        '_lastAuthnUTime' => $now,
+        '_whatToTrace'    => 'dwho',
+        '_issuerDB'       => 'Null',
+        '_startTime'      => "$ts",
+        '_user'           => 'dwho',
+        '_updateTime'     => "$ts",
+        '_userDB'         => 'Demo',
+        'hGroups'         => {
+            'users'     => {},
+            'timelords' => {}
+        },
+        'ipAddr'              => '127.0.0.1',
+        'mail'                => 'dwho@badwolf.org',
+        'authenticationLevel' => 1,
+        '_utime'              => $now,
+        '_passwordDB'         => 'Demo',
+        '_auth'               => 'Demo',
+        'UA' =>
+'Mozilla/5.0 (X11; VAX4000; rv:43.0) Gecko/20100101 Firefox/143.0 Iceweasel/143.0.1'
+    };
+
+    my $as = Lemonldap::NG::Common::Session->new( {
+            storageModule        => 'Apache::Session::File',
+            storageModuleOptions => { Directory => 't/sessions' },
+            id                   => $sessionId,
+            force                => 1,
+            kind                 => 'SSO',
+            info                 => $sessionData,
+        }
+    );
+
 }
 
 sub client {
@@ -109,7 +114,8 @@ sub explain {
 }
 
 sub clean {
-    unlink $file;
+    unlink glob 't/sessions/*';
+    unlink glob 't/sessions/lock/*';
 }
 
 package Lemonldap::NG::Handler::PSGI::Cli::Lib;
