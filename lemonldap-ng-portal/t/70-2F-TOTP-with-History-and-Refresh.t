@@ -1,9 +1,10 @@
 use Test::More;
 use strict;
 use IO::String;
+use JSON;
 
 require 't/test-lib.pm';
-my $maintests = 18;
+my $maintests = 25;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -18,6 +19,8 @@ SKIP: {
                 totp2fSelfRegistration => 1,
                 totp2fActivation       => 1,
                 loginHistoryEnabled    => 1,
+                totp2fAuthnLevel       => 8,
+                checkUser              => 1,
                 authentication         => 'Demo',
                 userDB                 => 'Same',
             }
@@ -126,6 +129,57 @@ SKIP: {
       or explain( $res->[2]->[0], 'trspan="noHistory"' );
     my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
     ok( @c == 2, 'Two entries found' );
+
+    ok(
+        $res = $client->_post(
+            '/checkuser',
+            IO::String->new($query),
+            cookie => "lemonldap=$id",
+            length => length($query),
+        ),
+        'POST checkuser'
+    );
+
+    my $data = eval { JSON::from_json( $res->[2]->[0] ) };
+    ok( not($@), ' Content is JSON' )
+      or explain( [ $@, $res->[2] ], 'JSON content' );
+    my @authLevel = map { $_->{key} eq 'authenticationLevel' ? $_ : () }
+      @{ $data->{ATTRIBUTES} };
+    ok( $authLevel[0]->{value} eq 8, 'Good authenticationLevel found' )
+      or explain( $authLevel[0]->{value}, 'authenticationLevel' );
+
+    # Refresh rights (#2179)
+    # ------------------------
+    ok(
+        $res = $client->_get(
+            '/refresh',
+            cookie => "lemonldap=$id",
+            accept => 'text/html'
+        ),
+        'Refresh query',
+    );
+    expectRedirection( $res, 'http://auth.example.com/' );
+
+    Time::Fake->offset("+20s"); # Go through handler internal cache
+
+    ok(
+        $res = $client->_post(
+            '/checkuser',
+            IO::String->new($query),
+            cookie => "lemonldap=$id",
+            length => length($query),
+        ),
+        'POST checkuser'
+    );
+
+    $data = eval { JSON::from_json( $res->[2]->[0] ) };
+    ok( not($@), ' Content is JSON' )
+      or explain( [ $@, $res->[2] ], 'JSON content' );
+    @authLevel = map { $_->{key} eq 'authenticationLevel' ? $_ : () }
+      @{ $data->{ATTRIBUTES} };
+    ok( $authLevel[0]->{value} eq 8, 'Good authenticationLevel found' )
+      or explain( $authLevel[0]->{value}, 'authenticationLevel' );
+
     $client->logout($id);
 }
 count($maintests);

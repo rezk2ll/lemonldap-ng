@@ -536,6 +536,7 @@ t/31-Auth-and-issuer-CAS-XSS-on-logout.t
 t/32-Auth-and-issuer-OIDC-authorization_code-OP-logout.t
 t/32-Auth-and-issuer-OIDC-authorization_code-public_client.t
 t/32-Auth-and-issuer-OIDC-authorization_code-with-authchoice.t
+t/32-Auth-and-issuer-OIDC-authorization_code-with-info.t
 t/32-Auth-and-issuer-OIDC-authorization_code-with-none-alg.t
 t/32-Auth-and-issuer-OIDC-authorization_code.t
 t/32-Auth-and-issuer-OIDC-hybrid.t
@@ -546,6 +547,7 @@ t/32-CAS-10.t
 t/32-CAS-Macros.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Offline-Session.t
+t/32-OIDC-Password-Grant-with-Bruteforce.t
 t/32-OIDC-Refresh-Token.t
 t/32-OIDC-Register.t
 t/32-OIDC-RP-rule.t
@@ -606,6 +608,8 @@ t/43-MailPasswordReset.t
 t/44-CertificateResetByMail-Demo.t
 t/44-CertificateResetByMail-LDAP.t
 t/50-IssuerGet.t
+t/57-GlobalLogout-with-Double-cookies-Single-session.t
+t/57-GlobalLogout-with-Double-cookies.t
 t/57-GlobalLogout-without-Timer.t
 t/57-GlobalLogout.t
 t/57-LogoutForward.t
@@ -624,6 +628,7 @@ t/61-GrantSession.t
 t/61-Session-ActivityTimeout.t
 t/61-Session-Timeout.t
 t/62-Refresh-plugin.t
+t/62-SingleSession-with-Rules.t
 t/62-SingleSession.t
 t/62-UpgradeSession.t
 t/63-History.t
@@ -651,7 +656,7 @@ t/68-Impersonation-with-TOTP.t
 t/68-Impersonation.t
 t/70-2F-TOTP-8-with-global-storage.t
 t/70-2F-TOTP-and-U2F-with-TTL-and-JSON.t
-t/70-2F-TOTP-with-History.t
+t/70-2F-TOTP-with-History-and-Refresh.t
 t/70-2F-TOTP-with-TTL-and-JSON.t
 t/70-2F-TOTP-with-TTL-and-XML.t
 t/70-2F-TOTP-with-TTL.t
