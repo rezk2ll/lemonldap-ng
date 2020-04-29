@@ -265,6 +265,7 @@
 "serviceProvidedBy":"Dịch vụ được cung cấp bởi",
 "sessionsDeleted":"Các phiên làm việc sau đã được đóng lại",
 "sfaManager":"2ndFA Manager",
+"showhidePasswords": "Show/Hide passwords",
 "spoofId":"Spoofed Id",
 "SSOSessionInactive":"Phiên SSO không hoạt động",
 "startTime":"Creation date",

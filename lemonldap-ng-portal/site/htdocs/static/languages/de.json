@@ -265,6 +265,7 @@
 "serviceProvidedBy":"Dienst angeboten von",
 "sessionsDeleted":"Die folgenden Sitzungen wurden geschlossen",
 "sfaManager":"2ndFA Manager",
+"showhidePasswords": "Show/Hide passwords",
 "spoofId":"Spoofed Id",
 "SSOSessionInactive":"SSO Sitzung inaktiv",
 "startTime":"Creation date",

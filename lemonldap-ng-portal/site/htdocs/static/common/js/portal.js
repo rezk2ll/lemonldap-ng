@@ -402,8 +402,23 @@ LemonLDAP::NG Portal jQuery scripts
       s = new Date($(this).attr("val") * 1000);
       return $(this).text(s.toLocaleString());
     });
-    return $('.oidcConsent').on('click', function() {
+    $('.oidcConsent').on('click', function() {
       return removeOidcConsent($(this).attr('partner'));
+    });
+    return $('#show-hide-button').on('click', function() {
+      if ($("#newpassword").attr('type') === 'password') {
+        console.log('Show passwords');
+        $("#newpassword").attr('type', 'input');
+        $("#confirmpassword").attr('type', 'input');
+        $("#show-hide-icon-button").removeClass('fa-eye');
+        return $("#show-hide-icon-button").addClass('fa-eye-slash');
+      } else {
+        console.log('Hide passwords');
+        $("#newpassword").attr('type', 'password');
+        $("#confirmpassword").attr('type', 'password');
+        $("#show-hide-icon-button").removeClass('fa-eye-slash');
+        return $("#show-hide-icon-button").addClass('fa-eye');
+      }
     });
   });
 

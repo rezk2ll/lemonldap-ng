@@ -265,6 +265,7 @@
 "serviceProvidedBy":"Ce service est fourni par",
 "sessionsDeleted":"Les sessions suivantes ont été fermées",
 "sfaManager":"Gestionnaire 2ndFA",
+"showhidePasswords": "Mots de passe",
 "spoofId":"Identifiant simulé",
 "SSOSessionInactive":"Session SSO inactive",
 "startTime":"Date de création",

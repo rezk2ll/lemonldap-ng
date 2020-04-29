@@ -223,7 +223,7 @@ setCookie = (name, value, exdays) ->
 
 # Initialization
 datas = {}
-#$(document).ready ->
+
 $(window).on 'load', () ->
 	# Get application/init variables
 	datas = getValues()
@@ -389,5 +389,20 @@ $(window).on 'load', () ->
 
 	$('.oidcConsent').on 'click', () ->
 		removeOidcConsent $(this).attr 'partner'
+
+	# Functions to show/hide change password inputs
+	$('#show-hide-button').on 'click', () ->
+		if  $("#newpassword").attr('type') == 'password'
+			console.log 'Show passwords'
+			$("#newpassword").attr('type', 'input')
+			$("#confirmpassword").attr('type', 'input')
+			$("#show-hide-icon-button").removeClass 'fa-eye'
+			$("#show-hide-icon-button").addClass 'fa-eye-slash'
+		else
+			console.log 'Hide passwords'
+			$("#newpassword").attr('type', 'password')
+			$("#confirmpassword").attr('type', 'password')
+			$("#show-hide-icon-button").removeClass 'fa-eye-slash'
+			$("#show-hide-icon-button").addClass 'fa-eye'
 
 	#$('#formpass').on 'submit', changePwd

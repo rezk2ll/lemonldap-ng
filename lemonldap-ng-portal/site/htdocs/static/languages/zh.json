@@ -265,6 +265,7 @@
 "serviceProvidedBy":"服务提供者为",
 "sessionsDeleted":"下列时域已被关闭",
 "sfaManager":"2ndFA Manager",
+"showhidePasswords": "Show/Hide passwords",
 "spoofId":"Spoofed Id",
 "SSOSessionInactive":"SSO session inactive",
 "startTime":"Creation date",
