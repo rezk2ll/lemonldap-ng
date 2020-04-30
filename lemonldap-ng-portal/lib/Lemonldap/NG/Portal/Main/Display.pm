@@ -144,7 +144,7 @@ sub display {
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $req->error_type,
             MSG             => $info,
-            URL             => $req->{urldc},
+            URL             => $req->{urldc} || $self->conf->{portal}, # Fix 2158
             HIDDEN_INPUTS   => $self->buildOutgoingHiddenForm( $req, $method ),
             ACTIVE_TIMER    => $req->data->{activeTimer},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
