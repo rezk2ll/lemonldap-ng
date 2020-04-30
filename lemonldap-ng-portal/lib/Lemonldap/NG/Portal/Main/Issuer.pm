@@ -82,6 +82,11 @@ sub init {
 
 sub _redirect {
     my ( $self, $req, @path ) = @_;
+    if (    $req->pdata->{issuerTs}
+        and $req->pdata->{issuerTs} + $self->conf->{issuersTimeout} < time )
+    {
+        $self->cleanPdata($req);
+    }
     my $restore;
     my $ir;
     unless ( $self->can('ssoMatch') and not $self->ssoMatch($req) ) {

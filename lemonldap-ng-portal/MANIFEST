@@ -571,6 +571,7 @@ t/36-Combination-with-TOTP.t
 t/36-Combination.t
 t/37-CAS-App-to-SAML-IdP-POST-with-WAYF.t
 t/37-CAS-App-to-SAML-IdP-POST.t
+t/37-Issuer-Timeout.t
 t/37-Logout-from-OIDC-RP-to-SAML-SP.t
 t/37-OIDC-RP-to-SAML-IdP-GET-with-WAYF.t
 t/37-OIDC-RP-to-SAML-IdP-GET.t
