@@ -3599,6 +3599,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             },
             'type' => 'sfExtraContainer'
         },
+        'sfManagerRule' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
         'sfRemovedMsgRule' => {
             'default' => 0,
             'type'    => 'boolOrExpr'

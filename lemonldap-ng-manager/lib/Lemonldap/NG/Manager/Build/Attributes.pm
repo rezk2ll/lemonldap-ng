@@ -2974,6 +2974,13 @@ sub attributes {
             help          => 'secondfactor.html',
             documentation => 'Second factor required',
         },
+        sfManagerRule => {
+            type    => 'boolOrExpr',
+            default => 1,
+            help    => 'secondfactor.html',
+            documentation =>
+              'Rule to display second factor Manager link',
+        },
         sfRemovedMsgRule => {
             type    => 'boolOrExpr',
             default => 0,

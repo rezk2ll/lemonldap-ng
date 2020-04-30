@@ -30,7 +30,8 @@ has menuModules => (
     }
 );
 
-has specific => ( is => 'rw', default => sub { {} } );
+has specific      => ( is => 'rw', default => sub { {} } );
+has sfManagerRule => ( is => 'rw', default => sub { 1 } );
 
 has imgPath => (
     is      => 'rw',
@@ -44,7 +45,13 @@ has imgPath => (
 # INITIALIZATION
 
 sub init {
-    1;
+    my ($self) = @_;
+
+    $self->sfManagerRule(
+        $self->p->buildRule( $self->conf->{sfManagerRule}, 'sfManagerRule' ) );
+    $self->sfManagerRule(1) unless $self->sfManagerRule;
+
+    return 1;
 }
 
 # RUNNING METHODS
@@ -109,9 +116,10 @@ sub params {
     $res{AUTH_ERROR_TYPE} =
       $req->error_type( $res{AUTH_ERROR} = $req->menuError );
 
-    # Display menu 2fRegisters link only if at least a 2F device is registered
+# Display menu 2fRegisters link only if at least a 2F device is registered and rule
     $res{sfaManager} =
-      $self->p->_sfEngine->display2fRegisters( $req, $req->userData );
+         $self->p->_sfEngine->display2fRegisters( $req, $req->userData )
+      && $self->sfManagerRule->( $req, $req->userData );
     $self->logger->debug("Display 2fRegisters link") if $res{sfaManager};
 
     # Display refresh my rights unless disabled
@@ -285,11 +293,11 @@ sub _buildApplicationHash {
     my $applications;
 
     # Get application items
-    my $appname = $apphash->{options}->{name} || $appid;
-    my $appuri  = $apphash->{options}->{uri}  || "";
+    my $appname = $apphash->{options}->{name}    || $appid;
+    my $appuri  = $apphash->{options}->{uri}     || "";
     my $appdesc = $apphash->{options}->{description};
     my $applogo = $apphash->{options}->{logo};
-    my $apptip = $apphash->{options}->{tooltip} || $appname;
+    my $apptip  = $apphash->{options}->{tooltip} || $appname;
 
     # Detect sub applications
     my $subapphash;

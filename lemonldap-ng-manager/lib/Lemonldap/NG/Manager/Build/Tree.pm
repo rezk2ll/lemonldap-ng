@@ -901,6 +901,7 @@ sub tree {
                                 'sfRemovedNotifMsg',
                             ],
                         },
+                        'sfManagerRule',
                         'sfRequired',
                     ]
                 },

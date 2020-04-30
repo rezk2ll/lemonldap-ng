@@ -837,6 +837,7 @@
 "sessionTitle":"Contenu de la session",
 "sfaTitle":"Seconds facteurs d'authentification",
 "sfExtra":"Seconds facteurs additionnels",
+"sfManagerRule":"Afficher le lien du Gestionnaire",
 "sfRequired":"Exiger l'enrôlement d'un SF à l'authentification",
 "sfRemovedNotification":"Avertir si un SF expiré est supprimé",
 "sfRemovedMsgRule":"Activation",

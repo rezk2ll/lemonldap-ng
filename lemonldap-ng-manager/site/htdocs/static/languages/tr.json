@@ -837,6 +837,7 @@
 "sessionTitle":"Oturum içeriği",
 "sfaTitle":"İki Faktörlü Kimlik Doğrulaması",
 "sfExtra":"Ek ikinci faktörler",
+"sfManagerRule":"Display Manager link",
 "sfRequired":"Force 2FA registration at login",
 "sfRemovedNotification":"Warn if an expired 2FA is removed",
 "sfRemovedMsgRule":"Aktivasyon",
