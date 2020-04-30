@@ -4,7 +4,7 @@ use IO::String;
 use Data::Dumper;
 
 require 't/test-lib.pm';
-my $maintests = 54;
+my $maintests = 56;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -26,6 +26,7 @@ SKIP: {
                 totp2fActivation       => 1,
                 u2fSelfRegistration    => 1,
                 u2fActivation          => 1,
+                sfManagerRule          => '$uid eq "dwho"',
                 portalMainLogo         => 'common/logos/logo_llng_old.png',
             }
         }
@@ -43,6 +44,18 @@ SKIP: {
         'Auth query'
     );
     my $id = expectCookie($res);
+
+    ok(
+        $res = $client->_get(
+            '/',
+            cookie => "lemonldap=$id",
+            accept => 'text/html'
+        ),
+        'Get Menu'
+    );
+    ok( $res->[2]->[0] =~ m%<span trspan="sfaManager">sfaManager</span>%,
+        'sfaManager link found' )
+      or print STDERR Dumper( $res->[2]->[0] );
 
     # TOTP form
     ok(
