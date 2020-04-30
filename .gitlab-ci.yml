@@ -9,18 +9,6 @@
       - result/*
 
 
-.build_job_centos:
-  stage: build
-  script:
-     - rm -f /etc/yum.repos.d/CentOS-Sources.repo
-     - yum -y install epel-release
-     - make rpm-dist
-     - ci-build-pkg
-  artifacts:
-     expire_in: 1 day
-     paths:
-       - result/*
-
 stages:
 - build
 - sign
@@ -50,8 +38,30 @@ build_bionic:
   <<: *job_build
 
 build_centos_7:
-   image: buildpkg/centos:7
-   extends: .build_job_centos
+  image: buildpkg/centos:7
+  stage: build
+  script:
+     - rm -f /etc/yum.repos.d/CentOS-Sources.repo
+     - yum -y install epel-release
+     - make rpm-dist
+     - ci-build-pkg
+  artifacts:
+     expire_in: 1 day
+     paths:
+       - result/*
+
+build_centos_8:
+  image: buildpkg/centos:8
+  stage: build
+  script:
+     - yum-config-manager --enable PowerTools
+     - yum -y install epel-release
+     - make rpm-dist
+     - ci-build-pkg
+  artifacts:
+     expire_in: 1 day
+     paths:
+       - result/*
 
 sign:
   image: buildpkg/debian:stretch
@@ -68,6 +78,7 @@ sign:
 #    - build_xenial
     - build_bionic
     - build_centos_7
+    - build_centos_8
   artifacts:
     expire_in: 1 day
     paths:
