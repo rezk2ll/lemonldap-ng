@@ -5,6 +5,7 @@ use Mouse;
 use Lemonldap::NG::Portal::Lib::SAML;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
+  PE_SESSIONEXPIRED
   PE_SAML_ART_ERROR
   PE_SAML_DESTINATION_ERROR
   PE_SAML_SESSION_ERROR
@@ -48,7 +49,7 @@ sub init {
       $hd->buildSub( $hd->substitute( $self->conf->{issuerDBSAMLRule} ) );
     unless ($rule) {
         my $error = $hd->tsv->{jail}->error || '???';
-        $self->error( "Bad SAML activation rule -> $error" );
+        $self->error("Bad SAML activation rule -> $error");
         return 0;
     }
     $self->{rule} = $rule;
@@ -1610,7 +1611,7 @@ sub sloServer {
 
         if ($session_index) {
             my $sessionIndexSession = $self->getSamlSession($session_index);
-            return $self->p->sendError( $req, 'SAML session not found', 400 )
+            return $self->p->do( $req, [ sub { PE_SESSIONEXPIRED } ] )
               unless $sessionIndexSession;
 
             $local_session_id = $sessionIndexSession->data->{_saml_id};
