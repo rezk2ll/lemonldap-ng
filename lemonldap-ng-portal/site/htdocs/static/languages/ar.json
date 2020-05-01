@@ -207,7 +207,7 @@
 "noTOTPFound":"No TOTP found",
 "noU2FKeyFound":"No U2F key found",
 "notificationNotFound":"Notification not found in DataBase",
-"notificationRetrieveFailed":"Unable to retreive notification",
+"notificationRetrieveFailed":"Unable to retrieve notification",
 "notificationsExplorer":"Notifications explorer",
 "oidcConsent":"التطبيق ٪s هل ترغب في معرفة:",
 "oidcConsents":"OIDC consents",
