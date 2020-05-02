@@ -517,6 +517,7 @@ t/30-CDC.t
 t/30-SAML-Head-to-Tail-POST.t
 t/30-SAML-Macros.t
 t/30-SAML-POST-Logout-when-expired.t
+t/30-SAML-POST-Logout-when-removed.t
 t/30-SAML-POST-with-2F-and-Notification.t
 t/30-SAML-POST-with-Notification.t
 t/30-SAML-ReAuth-with-choice.t
