@@ -62,7 +62,7 @@ SKIP: {
     expectOK($res);
     my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
-    # Try to authenticate with an authorized user to IdP
+    # Try to authenticate to IdP
     $s = "user=french&password=french&$s";
     ok(
         $res = $issuer->_post(
@@ -111,7 +111,7 @@ SKIP: {
             cookie => "lemonldap=$idpId",
             accept => 'text/html'
         ),
-        'Query SP for logout'
+        'Query IDP for logout'
     );
     my $logoutCookie = expectCookie($res);
     is( $logoutCookie, 0, "IDP cookie removed" );
