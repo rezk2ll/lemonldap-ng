@@ -226,7 +226,7 @@ sub reloadConf {
         my $prm    = $self->conf->{ 'cors' . $_ };
         $header =~ s/_/-/;
         $prm    =~ s/\s+//;
-        $cors .= "Access-Control-$header;$prm;";
+        $cors .= "Access-Control-$header;$prm;" if $header and $prm;
     }
     $self->cors($cors);
     $self->logger->debug( "Initialized CORS headers : " . $self->cors );
