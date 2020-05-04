@@ -1,3 +1,121 @@
+lemonldap-ng (2.0.8) stable; urgency=medium
+
+  * Bugs:
+    * #1314: Workaround for memory Leak in perl-fcgi with Perl < 5.18
+    * #1659: RESTProxy doesn't fully work as a UserDB module
+    * #1776: Manager breaks when moving a newly created category or application
+    * #1939: expired issuer context is not reset when starting new authentication
+    * #1990: [warn] Route xxx redefined when using the fastCGI server
+    * #1992: Memory leak issue on CentOS 7 / perl 5.16
+    * #2048: t/32-OIDC-Refresh-Token.t fails randomly
+    * #2049: Unable to display notifications marked as done (DBI)
+    * #2050: Wrong message displayed by CheckUser plugin
+    * #2051: SAML Service Provider Macros are incorrectly displayed/saved by the manager
+    * #2057: Log in request without captcha returns an internal server error
+    * #2058: Use of configuration cache can mix global and local configuration parameters
+    * #2059: Error in Manager / CLI / Editor when an attribute is not defined
+    * #2061: pdata not cleaned with Kerberos authentication
+    * #2063: Javascript error: window.datas is undefined
+    * #2072: Configuration comparator error on application menu "order"
+    * #2074: Portal menu : display condition with sp: does not work for SAML SP
+    * #2080: SAML POST to SP becomes GET when an info is displayed
+    * #2081: Parameter added to external redirect URL when info.tpl is used
+    * #2082: SSLVarIf cannot be set in manager
+    * #2085: OIDC provider doesn't work when info is displayed during the login process
+    * #2086: LDAP notifications backend does not work
+    * #2089: Old format notifications with file backend don t work
+    * #2090: Session creation mixup when supplying an existing _session_id
+    * #2097: Error after activating userLogger (Apache)
+    * #2099: Error 500 when SAML Session is expired
+    * #2101: Wildcard in virtualhost names : URL contains a non protected host
+    * #2104: Sessions are not well computed by CheckUser plugin
+    * #2105: Using RS* ID Token signature algorithm without a RSA key causes ID Token to be returned as "null"
+    * #2111: Bad translation tag for password policy remaining grace message
+    * #2113: Password policy warning before password expiration is badly displayed
+    * #2116: Missing goToPortal translation for mails
+    * #2118: Multivalued attributes received from CAS server stored as string "ARRAY" in session
+    * #2120: OIDC: hybrid flow does not issue ID token
+    * #2123: Rest2F does not transmit session attributes to Verify URL
+    * #2127: Cache reload throw an error if status enabled
+    * #2128: Manager with CDA issue
+    * #2133: Issues with removed second factors notification system
+    * #2138: logout forward doesn't work anymore
+    * #2141: Auth Combination SSL/LDAP + VHOSTTYPE AuthBasic broken
+    * #2142: OIDC consent validation fails after second factor form or redirection from external IDP
+    * #2143: Enable redirection on forbidden access with self protected Portal URLs leads to an endless loop
+    * #2144: OTT is not sent if SSL authentication fails with Choice
+    * #2148: Bad request with Notification SPA
+    * #2151: Session upgrade does not work with multiple second factors
+    * #2152: Nginx configuration files do not work with IPv6
+    * #2159: Single session module configuration
+    * #2165: Server error with rule on Combination
+    * #2167: OAuth2 handler should return 401 when access token is missing or invalid
+    * #2168: LLNG is too strict on OIDC scope syntax
+    * #2169: duplicates in _oidcConsents when scope is updated
+    * #2171: Introspection endpoint does not recognize refreshed Access Tokens
+    * #2179: refresh my rights downgrades authentication level set by 2FA
+    * #2180: SingleSession plugin does not work if history is displayed
+
+  * New features:
+    * #2033: Manager API to reset 2FA
+    * #2034: Manager API to manage SAML and OIDC clients
+    * #2069: Manage Cookie SameSite value
+    * #2136: Possibility to override language with a parameter in URL
+    * #2154: Github authentication backend
+
+  * Improvements:
+    * #1598: Proxy Backend support for Password Module (passwordDB)
+    * #1877: Option to run setMacros after setGroups
+    * #1902: Configuration is saved even with errors with lemonldap-ng-cli
+    * #1957: Provide packages for CentOS 8
+    * #2046: compactConf is confusing
+    * #2064: Do not show action buttons on portal when displaying waiting message (Kerberos or SSL Ajax call)
+    * #2065: Improve diff.html templates to display Author, Date and Summary of both configurations
+    * #2068: Append an option to set CSP frame ancestors header
+    * #2070: LemonLDAP session cookie - SameSite attribute
+    * #2071: Allow users to see and display theirs accepted notifications
+    * #2073: Improve notifications SPA
+    * #2076: Possibility to configure a custom CSS file
+    * #2084: Make "error" the default log level for lasso
+    * #2088: BruteForce module: increase delay between each login attempt
+    * #2091: Better look for buttons in 2FA choice screen
+    * #2093: CheckUser - Remove persistent session attributes if required
+    * #2096: Improve introspection endpoint
+    * #2102: Bad  Autologin rule lead to error 500 and crash the portal
+    * #2103: Add a rollback option to lemonldap-ng-cli
+    * #2106: CheckUser: Append an option to hide empty headers
+    * #2108: "Underlying object can't load conf" is a bad error message
+    * #2109: Securing the new API endpoints for 2.0.8 release
+    * #2114: Improve adaptive display and show instance name
+    * #2115: Possibility to select choice tab, as for menu tab
+    * #2117: Remove warning messages "uninitialized value $encryption_mode"
+    * #2119: Rely on "isRequired" XML field in importMetadata script to mark SAML attributes as mandatory
+    * #2121: Prevent Portal to crash if Custom Functions module is not found
+    * #2125: Internal Server Error when REST backend does not return a JSON Object
+    * #2126: Prevent Portal to crash if a bad rule is used for enabling a plugin
+    * #2129: AuthenticationLevel based macros and groups should be updated with second factor
+    * #2130: Append password policy options to define and require special characters
+    * #2131: Make json does nothing if only a Portal constant is appended
+    * #2132: Application icons are displayed with real sizes by the Manager and It is not particularly convenient
+    * #2135: Remove 'underscore' in notification reference
+    * #2140: Append an option to define applications tooltip
+    * #2145: Display  a custom param with GlobalLogout plugin
+    * #2149: Add an easy way to set level of additional second factors
+    * #2155: Implement Resource Owner Password Credentials Grant
+    * #2156: "Require 2FA" should be renamed
+    * #2161: DBI should test that "table" is set
+    * #2164: Make SingleSession options configurable by a rule
+    * #2166: Configuration parser does not check validity of SAML/OIDC/CAS/vhost options
+    * #2173: Make CheckUser options configurable by a rule
+    * #2175: Reorganize OIDC RP options in manager
+    * #2177: OIDC: Allow additional audiences for ID Token
+    * #2178: Make require old password option configurable by a rule
+    * #2182: Append a Show/Hide password button into  change password form
+    * #2184: SAML logout request returns 400 error code if session is not found
+    * #2185: Append a rule to display sfaManager link
+
+ -- Clément <clem.oudot@gmail.com>  Mon, 04 May 2020 22:43:29 +0200
+
 lemonldap-ng (2.0.7) stable; urgency=medium
 
   * Bugs:
