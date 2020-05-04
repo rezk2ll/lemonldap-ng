@@ -85,7 +85,7 @@ sub _redirect {
     if (    $req->pdata->{issuerTs}
         and $req->pdata->{issuerTs} + $self->conf->{issuersTimeout} < time )
     {
-        $self->cleanPdata($req);
+        $self->cleanAllPdata($req);
     }
     my $restore;
     my $ir;
@@ -140,7 +140,7 @@ sub _forAuthUser {
     if (    $req->pdata->{issuerTs}
         and $req->pdata->{issuerTs} + $self->conf->{issuersTimeout} < time )
     {
-        $self->cleanPdata($req);
+        $self->cleanAllPdata($req);
     }
     $self->logger->debug('Processing _forAuthUser');
     if ( my $r = $req->pdata->{ $self->ipath } ) {
@@ -169,9 +169,19 @@ sub _forAuthUser {
     );
 }
 
-sub cleanPdata {
+sub cleanAllPdata {
     my ( $self, $req ) = @_;
-    for my $s ( $self->ipath, $self->ipath . 'Path' ) {
+    foreach my $k ( keys %{ $req->pdata } ) {
+        if ( exists $req->pdata->{ $k . 'Path' } ) {
+            $self->cleanPdata( $req, $k );
+        }
+    }
+}
+
+sub cleanPdata {
+    my ( $self, $req, $path ) = @_;
+    $path ||= $self->ipath;
+    for my $s ( $path, $path . 'Path' ) {
         if ( $req->pdata->{$s} ) {
             $self->logger->debug("Removing $s key from pdata");
             delete $req->pdata->{$s};
@@ -180,8 +190,8 @@ sub cleanPdata {
     if ( $req->pdata->{keepPdata} and ref $req->pdata->{keepPdata} ) {
         @{ $req->pdata->{keepPdata} } =
           grep {
-                  $_ ne $self->ipath
-              and $_ ne $self->ipath . 'Path'
+                  $_ ne $path
+              and $_ ne $path . 'Path'
               ? 1
               : ( $self->logger->debug("Removing $_ from keepPdata") and 0 )
           } @{ $req->pdata->{keepPdata} };
