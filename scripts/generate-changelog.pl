@@ -12,7 +12,7 @@
 use LWP::UserAgent;
 use JSON;
 
-my $milestone = '2.0.7';
+my $milestone = '2.0.8';
 my @cat = ( 'Bug', 'New feature', 'Improvement' );
 
 open F, "$ENV{HOME}/.ow2-token" or die "Unable to get OW2 token ($!)";
@@ -36,7 +36,7 @@ for (@cat) {
     $result .=  "\n";
 }
 
-`dch -c changelog -v $milestone '##CONTENT##';dch -c changelog -r --force-save-on-release '';cp changelog tmp.dch`;
+`dch -b -c changelog -v $milestone '##CONTENT##';dch -c changelog -r --force-save-on-release '';cp changelog tmp.dch`;
 open IN, 'tmp.dch';
 open OUT, '>changelog';
 
