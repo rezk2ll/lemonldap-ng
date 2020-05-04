@@ -85,6 +85,7 @@ sub display {
             MSG             => $req->info,
             HIDDEN_INPUTS   => $self->buildHiddenForm($req),
             ACTIVE_TIMER    => $req->data->{activeTimer},
+            FORM_ACTION     => $req->data->{confirmFormAction} || "#",
             FORM_METHOD     => $self->conf->{confirmFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->data->{_authChoice},

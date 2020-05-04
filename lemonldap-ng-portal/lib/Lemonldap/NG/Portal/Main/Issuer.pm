@@ -12,6 +12,7 @@ use Mouse;
 use MIME::Base64;
 use IO::String;
 use URI::Escape;
+use URI;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
@@ -148,6 +149,10 @@ sub _forAuthUser {
         $self->restoreRequest( $req, $r );
         @path = @{ $req->pdata->{ $self->ipath . 'Path' } }
           if ( $req->pdata->{ $self->ipath . 'Path' } );
+
+        # In case a confirm form is shown, we need it to POST on the
+        # current Path
+        $req->data->{confirmFormAction} = URI->new($req->uri)->path;
     }
 
     # Clean pdata: keepPdata has been set, so pdata must be cleaned here
