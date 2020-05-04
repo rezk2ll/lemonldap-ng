@@ -145,7 +145,7 @@ sub authLogout {
                 "Condition changed between login and logout for "
               . $req->user
               . ", unable to select good backend" );
-        return PE_ERROR;
+        return PE_OK;
     }
     my ( $res, $name ) = $sub->( 'authLogout', @_ );
     $self->logger->debug(qq'User disconnected using scheme "$name"');
