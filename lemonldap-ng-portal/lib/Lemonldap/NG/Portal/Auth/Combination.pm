@@ -219,9 +219,8 @@ sub try {
     # If more than 1 scheme is available
     my ( $res, $name );
     unless ( ref $stack->[$nb]->[$type] ) {
-        $self->logger->error( 'Something went wrong in combination for '
-              . $req->user
-              . ', unable to find any auth scheme (try == '
+        $self->logger->error(
+'Something went wrong in combination, unable to find any auth scheme (try == '
               . ( $nb + 1 )
               . ')' );
         return PE_ERROR;
