@@ -1,7 +1,7 @@
 #!perl -w
 use constant HAS_LEAKTRACE => eval { require Test::LeakTrace };
 use Test::More HAS_LEAKTRACE
-  ? ( tests => 4 )
+  ? ( tests => 5 )
   : ( skip_all => 'require Test::LeakTrace' );
 use Test::LeakTrace;
 
@@ -31,17 +31,21 @@ leaks_cmp_ok {
 TODO: {
     local $TODO = "Not yet fully cleaned";
 
+    fail "Unable to really destroy a portal object for now";
     # Test with initialization
-    Lemonldap::NG::Handler::PSGI::Main->init($ini);
-    Lemonldap::NG::Handler::PSGI::Main->checkConf(1);
-    leaks_cmp_ok {
-        my $p = Lemonldap::NG::Portal::Main->new();
-        $p->init($ini);
-        $p                                       = undef;
-        @Lemonldap::NG::Handler::Main::_onReload = ();
-
-        #$ini = undef;
-        diag "After onReload clean\n";
-    }
-    '<', 1;
+    #my $p = Lemonldap::NG::Portal::Main->new();
+    #$p->init($ini);
+    #leaks_cmp_ok {
+    #    my $p2 = Lemonldap::NG::Portal::Main->new();
+    #    $p2->init($ini);
+    #    pop @Lemonldap::NG::Handler::Main::_onReload;
+    #} '<', 1;
 }
+
+my $p = Lemonldap::NG::Portal::Main->new();
+$p->init($ini);
+print STDERR Dumper($p->conf);
+leaks_cmp_ok {
+    $p->reloadConf($p->conf);
+}
+'<', 1;

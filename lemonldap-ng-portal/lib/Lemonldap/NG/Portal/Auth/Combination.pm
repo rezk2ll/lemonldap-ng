@@ -137,9 +137,16 @@ sub authLogout {
 
     # Avoid warning msg at first access
     $req->userData->{_combinationTry} ||= 0;
-    my ( $res, $name ) =
+    my $sub =
       $req->data->{combinationStack}->[ $req->userData->{_combinationTry} ]
-      ->[0]->( 'authLogout', @_ );
+      ->[0];
+    unless ($sub) {
+        $self->logger->warn(
+"Condition changed between and logout, unable to select good backend"
+        );
+        return PE_ERROR;
+    }
+    my ( $res, $name ) = $sub->( 'authLogout', @_ );
     $self->logger->debug(qq'User disconnected using scheme "$name"');
     return $res;
 }
