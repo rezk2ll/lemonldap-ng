@@ -44,7 +44,6 @@ TODO: {
 
 my $p = Lemonldap::NG::Portal::Main->new();
 $p->init($ini);
-print STDERR Dumper($p->conf);
 leaks_cmp_ok {
     $p->reloadConf($p->conf);
 }
