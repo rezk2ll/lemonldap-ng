@@ -52,7 +52,7 @@ Build-Depends-Indep: libapache-session-perl <!nocheck>,
                      libxml-libxslt-perl <!nocheck>,
                      libxml-simple-perl <!nocheck>,
                      perl
-Standards-Version: 4.4.0
+Standards-Version: 4.5.0
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng
 Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng.git
 Homepage: https://lemonldap-ng.org/
