@@ -234,9 +234,9 @@ other engines can be used:
 
 =head2 FCGI (default)
 
-=over
-
 It uses L<FCGI::ProcManager> as manager. Other managers:
+
+=over
 
 =item L<FCGI::ProcManager::Dynamic>
 
