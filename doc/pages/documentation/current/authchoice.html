@@ -118,6 +118,8 @@ Then, go in <code>Choice Parameters</code>:
 <ul>
 <li class="level1"><div class="li"> <strong><abbr title="Uniform Resource Locator">URL</abbr> parameter</strong>: parameter name used to set choice value (default: <code>lmAuth</code>)</div>
 </li>
+<li class="level1"><div class="li"> <strong>AuthBasic handler parameter</strong>: authentication module used by AuthBasic handler</div>
+</li>
 <li class="level1"><div class="li"> <strong>Allowed modules</strong>: click on <code>New chain</code> to add a choice.</div>
 </li>
 </ul>
@@ -140,9 +142,10 @@ Define here:
 </li>
 <li class="level1"><div class="li"> <strong><abbr title="Uniform Resource Locator">URL</abbr></strong>: optional, can be used to redirect on another <abbr title="Uniform Resource Locator">URL</abbr> (for example <a href="https://authssl.example.com" class="urlextern" title="https://authssl.example.com"  rel="nofollow">https://authssl.example.com</a>). This is mandatory if you want to use an Apache authentication module, which is run by Apache before showing the LemonLDAP::NG portal page.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Condition</strong>: optional, can be used to evaluate an expression to display the tab.</div>
+<li class="level1"><div class="li"> <strong>Condition</strong>: optional, can be used to evaluate an expression to display the tab. For example, to display a tab only if redirected by Handler from application <code>test1.example.com</code>, you can set this condition:</div>
 </li>
 </ul>
+<pre class="code perl"><span class="re0">$env</span><span class="sy0">-&gt;</span><span class="br0">&#123;</span>urldc<span class="br0">&#125;</span> <span class="sy0">=~</span> <span class="sy0">/</span>test1\<span class="sy0">.</span>example\<span class="sy0">.</span>com<span class="sy0">/</span></pre>
 <div class="noteclassic">Authentication request to an another <abbr title="Uniform Resource Locator">URL</abbr> than Portal <abbr title="Uniform Resource Locator">URL</abbr> can lead to a persistent loop between Portal and a redirection <abbr title="Uniform Resource Locator">URL</abbr> (pdata is not removed because domains mismatch). To avoid this, you have to set pdata cookie domain by editing <code>lemonldap-ng.ini</code> in section [portal]:<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
 <span class="re1">pdataDomain</span> <span class="sy0">=</span><span class="re2"> example.com</span></pre>
 

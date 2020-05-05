@@ -43,24 +43,39 @@
 </head>
 <body>
 <div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
 
-<h1 class="sectionedit1" id="brute_force_protection_addon">Brute Force Protection Addon</h1>
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#incremental_lock_time_enabled">Incremental lock time enabled</a></div></li>
+<li class="level2"><div class="li"><a href="#incremental_lock_time_disabled">Incremental lock time disabled</a></div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<h1 class="sectionedit1" id="brute_force_protection_plugin">Brute Force Protection plugin</h1>
 <div class="level1">
 
 <p>
-bruteForceProtection plugin prevents brute force attack. Plugin DISABLED by default.
+This plugin prevents brute force attack. Plugin DISABLED by default.
 </p>
 
 <p>
-After some failed login attempts, user must wait (30 seconds by default) before try to log in again.
+After some failed login attempts, user must wait before trying to log in again.
 </p>
 
 <p>
-The aim of a brute force attack is to gain access to user accounts by repeatedly trying to guess the password of a user. If it is disabled, automated tools may submit thousands of password attempts in a matter of seconds.
+The aim of a brute force attack is to gain access to user accounts by repeatedly trying to guess the password of an user. If disabled, automated tools may submit thousands of password attempts in a matter of seconds.
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Brute Force Protection Addon" [1-455] -->
+<!-- EDIT1 SECTION "Brute Force Protection plugin" [1-414] -->
 <h2 class="sectionedit2" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -69,18 +84,53 @@ To enable Brute Force Attack protection :
 </p>
 
 <p>
-Go in Manager, <code>General Parameters</code> » <code>Advanced Parameters</code> » <code>Security</code> » <code>Brute-force attack protection</code> and set to <code>On</code>.
+Go in Manager, <code>General Parameters</code> » <code>Advanced Parameters</code> » <code>Security</code> » <code>Brute-force attack protection</code> » 
+ <code>Activation</code>and set to <code>On</code>.
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Configuration" [415-641] -->
+<h3 class="sectionedit3" id="incremental_lock_time_enabled">Incremental lock time enabled</h3>
+<div class="level3">
+
+<p>
+You just have to activate it in the Manager :
 </p>
 
 <p>
-To modify waiting time (30 seconds by default) before reAuthentication, MaxAge between current and last stored failed login (300 seconds by default) or number of allowed failed login attempts (3 by default) edit <code>lemonldap-ng.ini</code> in section [portal]:
+Go in Manager, <code>General Parameters</code> » <code>Advanced Parameters</code> » <code>Security</code> » <code>Brute-force attack protection</code> » 
+ <code>Incremental lock times</code> and set to <code>On</code>. (DISABLED by default) or in <code>lemonldap-ng.ini</code> [portal] section:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">bruteForceProtectionIncrementalTempo</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
+
+<p>
+Lock time increases between each failed login attempt. 
+To modify lock time values (&#039;5 15 60 300 600&#039; seconds by default) or max lock time value (900 seconds by default) edit <code>lemonldap-ng.ini</code> in [portal] section:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">bruteForceProtectionLockTimes</span> <span class="sy0">=</span><span class="re2"> '5 15 60 300 600'</span>
+<span class="re1">bruteForceProtectionMaxLockTime</span> <span class="sy0">=</span><span class="re2"> 900</span></pre>
+<div class="noteclassic">Max lock time value is used by this plugin if a lock time is missing (number of failed logins higher than listed lock time values). Lock time values can not be higher than max lock time.
+
+</div>
+</div>
+<!-- EDIT3 SECTION "Incremental lock time enabled" [642-1572] -->
+<h3 class="sectionedit4" id="incremental_lock_time_disabled">Incremental lock time disabled</h3>
+<div class="level3">
+
+<p>
+After <code>bruteForceProtectionMaxFailed</code> failed login attempts, user must wait <code>bruteForceProtectionTempo</code> seconds before trying to log in again.
+To modify waiting time (30 seconds by default), MaxAge between current and last stored failed login (300 seconds by default) or number of allowed failed login attempts (3 by default) edit <code>lemonldap-ng.ini</code> in [portal] section:
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
 <span class="re1">bruteForceProtectionTempo</span> <span class="sy0">=</span><span class="re2"> 30</span>
 <span class="re1">bruteForceProtectionMaxAge</span> <span class="sy0">=</span><span class="re2"> 300</span>
 <span class="re1">bruteForceProtectionMaxFailed</span> <span class="sy0">=</span><span class="re2"> 3</span></pre>
+<div class="noteimportant">Number of failed login attempts stored in history MUST be higher than allowed failed logins for this plugin takes effect.
 
 </div>
-<!-- EDIT2 SECTION "Configuration" [456-] --></div>
+</div>
+<!-- EDIT4 SECTION "Incremental lock time disabled" [1573-] --></div>
 </body>
 </html>

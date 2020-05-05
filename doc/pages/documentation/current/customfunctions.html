@@ -143,7 +143,9 @@ Just declare files or Perl module that must be loaded:
 <pre class="code file :ini"><span class="re0"><span class="br0">&#91;</span>all<span class="br0">&#93;</span></span>
 <span class="re1">require</span> <span class="sy0">=</span><span class="re2"> /path/to/functions.pl, /path/to/SSOExtensions.pm</span>
 # OR
-<span class="re1">require</span> <span class="sy0">=</span><span class="re2"> SSOExtensions::function1, SSOExtensions::function2</span></pre>
+<span class="re1">require</span> <span class="sy0">=</span><span class="re2"> SSOExtensions::function1, SSOExtensions::function2</span>
+<span class="co0">; Prevent Portal to crash if Perl module is not found</span>
+<span class="co0">;requireDontDie = 1</span></pre>
 
 </div>
 
@@ -189,7 +191,7 @@ GROUP=www-data
 CUSTOM_FUNCTIONS_FILE=/path/to/SSOExtensions.pm</pre>
 
 </div>
-<!-- EDIT5 SECTION "Load relevant code in handler server" [1006-2337] -->
+<!-- EDIT5 SECTION "Load relevant code in handler server" [1006-2411] -->
 <h3 class="sectionedit6" id="declare_custom_functions">Declare custom functions</h3>
 <div class="level3">
 
@@ -200,16 +202,16 @@ Go in Manager, <code>General Parameters</code> » <code>Advanced Parameters</cod
 <div class="noteimportant">If your function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail.
 </div>
 </div>
-<!-- EDIT6 SECTION "Declare custom functions" [2338-2659] -->
+<!-- EDIT6 SECTION "Declare custom functions" [2412-2733] -->
 <h2 class="sectionedit7" id="use_it">Use it</h2>
 <div class="level2">
 
 <p>
 You can now use your function in a macro, an header or an access rule, for example:
 </p>
-<pre class="code">Custom-Header =&gt; function1( $uid, $ENV{REMOTE_ADDR} )</pre>
+<pre class="code :perl">SSOExtensions<span class="sy0">::</span><span class="me2">function1</span><span class="br0">&#40;</span> <span class="re0">$uid</span><span class="sy0">,</span> <span class="re0">$ENV</span><span class="br0">&#123;</span>REMOTE_ADDR<span class="br0">&#125;</span> <span class="br0">&#41;</span></pre>
 
 </div>
-<!-- EDIT7 SECTION "Use it" [2660-] --></div>
+<!-- EDIT7 SECTION "Use it" [2734-] --></div>
 </body>
 </html>

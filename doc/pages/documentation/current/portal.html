@@ -43,6 +43,19 @@
 </head>
 <body>
 <div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#functioning">Functioning</a></div></li>
+<li class="level1"><div class="li"><a href="#kinematics">Kinematics</a></div></li>
+<li class="level1"><div class="li"><a href="#url_parameters">URL parameters</a></div></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
 
 <h1 class="sectionedit1" id="the_portal">The portal</h1>
 <div class="level1">
@@ -99,10 +112,12 @@ The portal is the main component of <abbr title="LemonLDAP::NG">LL::NG</abbr>. I
 </li>
 <li class="level1"><div class="li"> <strong><a href="notifications.html" class="wikilink1" title="documentation:2.0:notifications">Notifications</a></strong>: prompt users with a message if found in the notification database</div>
 </li>
+<li class="level1"><div class="li"> Second factors management</div>
+</li>
 </ul>
 
 </div>
-<!-- EDIT1 SECTION "The portal" [1-1816] -->
+<!-- EDIT1 SECTION "The portal" [1-1846] -->
 <h2 class="sectionedit2" id="functioning">Functioning</h2>
 <div class="level2">
 
@@ -122,7 +137,7 @@ The portal is the main component of <abbr title="LemonLDAP::NG">LL::NG</abbr>. I
 <div class="notetip">Each module can be disabled using the <code>Null</code> backend.
 </div>
 </div>
-<!-- EDIT2 SECTION "Functioning" [1817-2363] -->
+<!-- EDIT2 SECTION "Functioning" [1847-2393] -->
 <h2 class="sectionedit3" id="kinematics">Kinematics</h2>
 <div class="level2">
 <ol>
@@ -146,6 +161,25 @@ The portal is the main component of <abbr title="LemonLDAP::NG">LL::NG</abbr>. I
 <div class="noteclassic">See also <a href="documentation/presentation.html#kinematics" class="wikilink1" title="documentation:presentation">general kinematics presentation</a>.
 </div>
 </div>
-<!-- EDIT3 SECTION "Kinematics" [2364-] --></div>
+<!-- EDIT3 SECTION "Kinematics" [2394-3058] -->
+<h2 class="sectionedit4" id="url_parameters">URL parameters</h2>
+<div class="level2">
+
+<p>
+Some parameters in <abbr title="Uniform Resource Locator">URL</abbr> can change the behavior of the portal:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>logout</strong>: Launch the logout process (for example: <code>logout=1</code>)</div>
+</li>
+<li class="level1"><div class="li"> <strong>tab</strong>: Preselect a tab (Choice or Menu) (for example: <code>tab=password</code>)</div>
+</li>
+<li class="level1"><div class="li"> <strong>llnglanguage</strong>: Force lang used to display the page (for example: <code>llnglanguage=fr</code>)</div>
+</li>
+<li class="level1"><div class="li"> <strong>setCookieLang</strong>: Update lang cookie to persist the language set with <code>llnglanguage</code> parameter (for example: <code>setCookieLang=1</code>)</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT4 SECTION "URL parameters" [3059-] --></div>
 </body>
 </html>

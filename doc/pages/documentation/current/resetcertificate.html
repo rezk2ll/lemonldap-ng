@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:resetcertificate</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,resetcertificate"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="resetcertificate.html"/>
+<link rel="contents" href="resetcertificate.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:resetcertificate","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.js"></script>
+<!-- //endif -->
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<p>
+<a href="documentation/latest/beta.png_documentation_2.0_resetcertificate.html" class="media" title="documentation:latest:beta.png"><img src="documentation/latest/beta.ea231b49369c9f6406cbdf58d06a616c.png" class="media" alt="" width="100" /></a>
+</p>
+
+<h1 class="sectionedit1" id="global_logout_plugin">Global logout plugin</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT1 SECTION "Global logout plugin" [40-75] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+This plugin allows users to reset their certificate informations. 
+</p>
+
+<p>
+<strong>Kinematics</strong>:
+</p>
+<ul>
+<li class="level1"><div class="li"> User click reset certificate button.</div>
+</li>
+<li class="level1"><div class="li"> He enters his mail.</div>
+</li>
+<li class="level1"><div class="li"> <abbr title="LemonLDAP::NG">LL::NG</abbr> looks for the user in users database with given information.</div>
+</li>
+<li class="level1"><div class="li"> An email with a link is sent if user exists.</div>
+</li>
+<li class="level1"><div class="li"> User clicks on the link and he is redirected to the portal.</div>
+</li>
+<li class="level1"><div class="li"> The portal asks him to upload his certificate file (base64, pem only).</div>
+</li>
+<li class="level1"><div class="li"> A confirmation mail is sent to confirm the certificate has been successfully reset.</div>
+</li>
+</ul>
+<div class="notewarning">      LDAP backend supported only
+
+</div>
+</div>
+<!-- EDIT2 SECTION "Presentation" [76-660] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+<strong>Requirements</strong>
+</p>
+
+<p>
+You have to activate the certificate reset link in the login page, go in Manager, <code>General Parameters</code>  →  <code>Portal</code>  → <code> Customization</code> → <code>Buttons on login page</code>→ <code>Reset your Certificate</code>
+</p>
+
+<p>
+The SMTP server must be setup, see <a href="smtp.html" class="wikilink1" title="documentation:2.0:smtp">SMTP server setup</a>.
+</p>
+
+<p>
+The register module also must be setup. Go in Manager, <code>General Parameters</code>  →  <code>Authentication parameters</code>  → <code>Register Module</code> and choose your module.
+</p>
+
+<p>
+<strong>Manager Configuration</strong>
+</p>
+
+<p>
+Go in Manager, <code>General Parameters</code> → <code>Plugins</code> → <code>Certificate Reset Management</code>:
+</p>
+
+<p>
+<strong>Certificate reset mail content </strong>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Certificat reset mail subject </strong>: Subject of mail sent when certificate is reset</div>
+</li>
+<li class="level4"><div class="li"> <strong>Certificat reset mail content </strong>: (optional): Content of mail sent when certificate is reset</div>
+</li>
+<li class="level4"><div class="li"> <strong>Confirmation mail subject</strong>: Subject of mail sent when certificate reset  is asked</div>
+</li>
+<li class="level4"><div class="li"> <strong>Confirmation mail content</strong>: (optional) Content of mail sent when certificate is asked    </div>
+</li>
+</ul>
+<div class="noteimportant"> By default, mail contents are empty in order to use templates:<ul>
+<li class="level1"><div class="li"> portal/skins/common/mail_certificateConfirm.tpl</div>
+</li>
+<li class="level2"><div class="li"> portal/skins/common/mail_certificateReset.tpl</div>
+</li>
+</ul>
+
+<p>
+ If you define custom mail contents in Manager, then templates won&#039;t be used.
+</p>
+
+</div>
+<p>
+<strong>Other</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Reset Page <abbr title="Uniform Resource Locator">URL</abbr></strong>: <abbr title="Uniform Resource Locator">URL</abbr> of certificate reset page (default: [PORTAL]/certificateReset)</div>
+</li>
+<li class="level2"><div class="li"> <strong>Certificate descrition attribute Name</strong>:  Attribute where to save certificate description name (Default description) </div>
+</li>
+<li class="level2"><div class="li"> <strong>Certificate hash attribute Name</strong>:  Attribute where to store certificate hash (Default userCertificate;binary)   </div>
+</li>
+<li class="level2"><div class="li"> <strong>Minimun duration before expiration</strong>: number of days of validity before certificate expires. Default 0.</div>
+</li>
+</ul>
+<div class="notewarning">      .p12 certificates only.
+
+</div>
+</div>
+<!-- EDIT3 SECTION "Configuration" [661-] --></div>
+</body>
+</html>

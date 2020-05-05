@@ -80,46 +80,44 @@
 <div class="level2">
 
 <p>
-The portal displays in JSON format its activity. Some d This can give a view to all returned codes.
+The Portal displays in JSON format its activity. It can provide a view of all returned codes.
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Portal Status (experimental)" [29-171] -->
+<!-- EDIT2 SECTION "Portal Status (experimental)" [29-165] -->
 <h3 class="sectionedit3" id="configuration">Configuration</h3>
 <div class="level3">
-
-<p>
-*  Set <code>portalStatus = 1</code> in lemonldap-ng.ini file (section <code>[Portal]</code>)
-*  Note that handler status must also been enabled
-*  Protect <a href="http://portal/portalStatus" class="urlextern" title="http://portal/portalStatus"  rel="nofollow">http://portal/portalStatus</a> using your webserver configuration
-</p>
-
-<p>
-Status is displayed by calling this <abbr title="Uniform Resource Locator">URL</abbr>.
-</p>
+<ul>
+<li class="level1"><div class="li"> Ordered List ItemSet <code>portalStatus = 1</code> in lemonldap-ng.ini file (section <code>[Portal]</code>)</div>
+</li>
+<li class="level1"><div class="li"> Note that handler status must also been enabled</div>
+</li>
+<li class="level1"><div class="li"> The <abbr title="Uniform Resource Locator">URL</abbr> <a href="http://portal/status" class="urlextern" title="http://portal/status"  rel="nofollow">http://portal/status</a> must be protected by your webserver configuration</div>
+</li>
+</ul>
 
 </div>
-<!-- EDIT3 SECTION "Configuration" [172-439] -->
+<!-- EDIT3 SECTION "Configuration" [166-421] -->
 <h2 class="sectionedit4" id="handler_status">Handler Status</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT4 SECTION "Handler Status" [440-467] -->
+<!-- EDIT4 SECTION "Handler Status" [422-449] -->
 <h3 class="sectionedit5" id="presentation">Presentation</h3>
 <div class="level3">
 
 <p>
-When status feature is activated, Handlers and portal will collect statistics and save them in their local cache. This means that if several Handlers are deployed, each will manage its own statistics.
+When status feature is enabled, Handlers and portal will collect statistics and save them in their local cache. This means that if several Handlers are deployed, each will manage its own statistics.
 </p>
 <div class="notetip">This page can be browsed for example by <a href="http://oss.oetiker.ch/mrtg/" class="urlextern" title="http://oss.oetiker.ch/mrtg/"  rel="nofollow">MRTG</a> using the <a href="mrtg.html" class="wikilink1" title="documentation:2.0:mrtg">MRTG monitoring script</a>.
 
 </div>
 <p>
-The statistics are collected trough a daemon launched by the Handler. It can be seen in system processes.
+Statistics are collected through a daemon launched by the Handler. It can be supervised in system processes.
 </p>
 
 <p>
-Statistics are displayed when calling the status path on an Handler (for example: <a href="http://reload.example.com/status" class="urlextern" title="http://reload.example.com/status"  rel="nofollow">http://reload.example.com/status</a>).
+The statistics are displayed when calling the status path on an Handler (for example: <a href="http://reload.example.com/status" class="urlextern" title="http://reload.example.com/status"  rel="nofollow">http://reload.example.com/status</a>).
 </p>
 
 <p>
@@ -131,7 +129,7 @@ Example of status page:
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Presentation" [468-1126] -->
+<!-- EDIT5 SECTION "Presentation" [450-1113] -->
 <h3 class="sectionedit6" id="configuration1">Configuration</h3>
 <div class="level3">
 
@@ -216,7 +214,7 @@ Then restart webserver.
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Configuration" [1127-3029] -->
+<!-- EDIT6 SECTION "Configuration" [1114-3016] -->
 <h3 class="sectionedit7" id="advanced">Advanced</h3>
 <div class="level3">
 <ol>
@@ -227,6 +225,6 @@ Then restart webserver.
 </ol>
 
 </div>
-<!-- EDIT7 SECTION "Advanced" [3030-] --></div>
+<!-- EDIT7 SECTION "Advanced" [3017-] --></div>
 </body>
 </html>

@@ -50,7 +50,7 @@
 
 <ul class="toc">
 <li class="level1"><div class="li"><a href="#presentation">Presentation</a></div></li>
-<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
+<li class="level1"><div class="li"><a href="#configuration_as_the_only_authentication_module">Configuration (as the only authentication module)</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#with_apache">With Apache</a></div>
 <ul class="toc">
@@ -65,10 +65,16 @@
 </ul>
 </li>
 <li class="level2"><div class="li"><a href="#configuration_of_lemonldapng">Configuration of LemonLDAP::NG</a></div></li>
-<li class="level2"><div class="li"><a href="#auto_reloading_ssl_certificates">Auto reloading SSL Certificates</a></div></li>
+<li class="level2"><div class="li"><a href="#auto_reloading_ssl_certificates">Auto reloading SSL Certificates</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#apache_server">Apache server</a></div></li>
+<li class="level3"><div class="li"><a href="#nginx_server">Nginx server</a></div></li>
 </ul>
 </li>
-<li class="level1"><div class="li"><a href="#ssl_by_ajax">SSL by Ajax</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#configuration_for_combinationchoice">Configuration (for Combination/Choice)</a></div></li>
+<li class="level1"><div class="li"><a href="#extracting_the_username_attribute">Extracting the username attribute</a></div></li>
 </ul>
 </div>
 </div>
@@ -104,7 +110,7 @@
 
 </div>
 <!-- EDIT3 SECTION "Presentation" [78-401] -->
-<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<h2 class="sectionedit4" id="configuration_as_the_only_authentication_module">Configuration (as the only authentication module)</h2>
 <div class="level2">
 
 <p>
@@ -112,7 +118,7 @@ By default, SSL is required before the portal is displayed (handled by webserver
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Configuration" [402-713] -->
+<!-- EDIT4 SECTION "Configuration (as the only authentication module)" [402-749] -->
 <h3 class="sectionedit5" id="with_apache">With Apache</h3>
 <div class="level3">
 
@@ -192,7 +198,7 @@ Here are the main options used by <abbr title="LemonLDAP::NG">LL::NG</abbr>:
 </ul>
 
 </div>
-<!-- EDIT5 SECTION "With Apache" [714-2684] -->
+<!-- EDIT5 SECTION "With Apache" [750-2720] -->
 <h3 class="sectionedit6" id="with_nginx">With Nginx</h3>
 <div class="level3">
 
@@ -204,14 +210,20 @@ ssl_verify_client optional;
 ssl_certificate /etc/letsencrypt/live/my/fullchain.pem;
 ssl_certificate_key /etc/letsencrypt/live/my/privkey.pem;
 ssl_verify_depth 3;
+# All CA certificates concatenated in a single file
 ssl_client_certificate /etc/nginx/ssl/ca.pem;
-ssl_crl /etc/nginx/ssl/crl/my.crl;</pre>
+ssl_crl /etc/nginx/ssl/crl/my.crl;
+&nbsp;
+# Reset SSL connection. User does not have to close his browser to try connecting again
+keepalive_timeout 0 0;
+add_header 'Connection' 'close';
+ssl_session_timeout 1s;</pre>
 
 <p>
 You must also export SSL_CLIENT_S_<abbr title="Distinguished Name">DN</abbr>_CN in FastCGI params:
 </p>
-<pre class="code file nginx"># map directive must be in http context
-map $ssl_client_s_dn  $ssl_client_s_dn_cn {
+<pre class="code file nginx"># map directive must be set in http context
+map $ssl_client_s_dn $ssl_client_s_dn_cn {
            default           &quot;&quot;;
            ~/CN=(?&lt;CN&gt;[^/]+) $CN; # prior Nginx 1.11.6
            #~,CN=(?&lt;CN&gt;[^,]+) $CN; # Nginx &gt;= 1.11.6
@@ -261,7 +273,7 @@ in the $ssl_client_s_dn_legacy and $ssl_client_i_dn_legacy variables.
 
 </div>
 </div>
-<!-- EDIT6 SECTION "With Nginx" [2685-4659] -->
+<!-- EDIT6 SECTION "With Nginx" [2721-4919] -->
 <h3 class="sectionedit7" id="configuration_of_lemonldapng">Configuration of LemonLDAP::NG</h3>
 <div class="level3">
 
@@ -281,7 +293,7 @@ Then, go in <code>SSL parameters</code>:
 </ul>
 
 </div>
-<!-- EDIT7 SECTION "Configuration of LemonLDAP::NG" [4660-5085] -->
+<!-- EDIT7 SECTION "Configuration of LemonLDAP::NG" [4920-5345] -->
 <h3 class="sectionedit8" id="auto_reloading_ssl_certificates">Auto reloading SSL Certificates</h3>
 <div class="level3">
 
@@ -289,6 +301,11 @@ Then, go in <code>SSL parameters</code>:
 A known problematic is that many browser (Firefox, Chrome) remembers the fact that the certificate is not available at a certain time.
 It is particularly important for smart cards: when the card is not inserted before the browser starts, the user must restart his browser, or at least refresh (F5) the page.
 </p>
+
+</div>
+
+<h4 id="apache_server">Apache server</h4>
+<div class="level4">
 
 <p>
 It is possible with AJAX code and 3 Apache locations to bypass this limitation.
@@ -386,11 +403,23 @@ $('.enteteBouton').click( function (e) {
 });
 <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/script.html"><span class="kw2">script</span></a>&gt;</span>
 <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/body.html"><span class="kw2">body</span></a>&gt;</span></pre>
+
+</div>
+
+<h4 id="nginx_server">Nginx server</h4>
+<div class="level4">
+
+<p>
+With Nginx, append those server context directives to force SSL connexion reset:
+</p>
+<pre class="code file nginx">keepalive_timeout 0 0;
+add_header 'Connection' 'close';
+ssl_session_timeout 1s;</pre>
 <div class="notewarning">It is incompatible with authentication combination because of Apache parameter &quot;SSLVerifyClient&quot;, which must have the value &quot;require&quot;. To enable SSL with <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination</a>, use <a href="#ssl_by_ajax" title="documentation:2.0:authssl ↵" class="wikilink1">SSL by Ajax</a>
 </div>
 </div>
-<!-- EDIT8 SECTION "Auto reloading SSL Certificates" [5086-8349] -->
-<h2 class="sectionedit9" id="ssl_by_ajax">SSL by Ajax</h2>
+<!-- EDIT8 SECTION "Auto reloading SSL Certificates" [5346-8837] -->
+<h2 class="sectionedit9" id="configuration_for_combinationchoice">Configuration (for Combination/Choice)</h2>
 <div class="level2">
 
 <p>
@@ -449,6 +478,33 @@ and set :
 
 </div>
 </div>
-<!-- EDIT9 SECTION "SSL by Ajax" [8350-] --></div>
+<!-- EDIT9 SECTION "Configuration (for Combination/Choice)" [8838-10508] -->
+<h2 class="sectionedit10" id="extracting_the_username_attribute">Extracting the username attribute</h2>
+<div class="level2">
+
+<p>
+The &quot;Extracted certificate field&quot; must be set to the Apache/Nginx environment variable containing the username attribute.
+</p>
+
+<p>
+See the <a href="https://httpd.apache.org/docs/current/en/mod/mod_ssl.html" class="urlextern" title="https://httpd.apache.org/docs/current/en/mod/mod_ssl.html"  rel="nofollow">mod_ssl documentation</a> for a list of supported variables names.
+</p>
+
+<p>
+If your webserver configuration allows multiple CAs, you may configure a different environment variable for each CA.
+</p>
+
+<p>
+In the &quot;Conditional extracted certificate field&quot;, add a line for each CA.
+</p>
+<ul>
+<li class="level1"><div class="li"> key: the CA subject <abbr title="Distinguished Name">DN</abbr> (will be printed in debug logs)</div>
+</li>
+<li class="level1"><div class="li"> value: the variable containing the username when using certificates emitted by this CA</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT10 SECTION "Extracting the username attribute" [10509-] --></div>
 </body>
 </html>

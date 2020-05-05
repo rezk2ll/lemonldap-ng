@@ -78,12 +78,21 @@ LLNG can propose to users to register their keys. When done, 2F registered users
 <div class="level2">
 
 <p>
-This feature uses <a href="https://metacpan.org/pod/Crypt::U2F::Server::Simple" class="urlextern" title="https://metacpan.org/pod/Crypt::U2F::Server::Simple"  rel="nofollow">Crypt::U2F::Server::Simple</a> that is only available on CPAN repository for now. Before compiling it, you must install Yubico&#039;s C library headers (called libu2f-server-dev on Debian).
+This feature uses <a href="https://metacpan.org/pod/Crypt::U2F::Server::Simple" class="urlextern" title="https://metacpan.org/pod/Crypt::U2F::Server::Simple"  rel="nofollow">Crypt::U2F::Server::Simple</a>.
+</p>
+
+<p>
+It is available as package on Debian:
+</p>
+<pre class="code">apt install libcrypt-u2f-server-perl</pre>
+
+<p>
+For other systems, use CPAN. Before compiling it, you must install Yubico&#039;s C library headers.
 </p>
 <div class="noteimportant">An HTTPS portal is required to use U2F
 </div>
 </div>
-<!-- EDIT2 SECTION "Prerequisites and dependencies" [530-891] -->
+<!-- EDIT2 SECTION "Prerequisites and dependencies" [530-925] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -109,7 +118,7 @@ In the manager (second factors), you just have to enable it:
 <div class="noteimportant">If you want to use a custom rule for &quot;activation&quot; and enable self-registration, you have to include this in your rule: <code>$_2fDevices =~ /&quot;type&quot;:\s*&quot;U2F&quot;/s</code>, else U2F will be required even if users are not registered. This is automatically done when &quot;activation&quot; is set to &quot;on&quot;.
 </div>
 </div>
-<!-- EDIT3 SECTION "Configuration" [892-2150] -->
+<!-- EDIT3 SECTION "Configuration" [926-2184] -->
 <h2 class="sectionedit4" id="browser_compatibility">Browser compatibility</h2>
 <div class="level2">
 <ul>
@@ -130,7 +139,7 @@ In the manager (second factors), you just have to enable it:
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "Browser compatibility" [2151-2591] -->
+<!-- EDIT4 SECTION "Browser compatibility" [2185-2625] -->
 <h2 class="sectionedit5" id="enrollment">Enrollment</h2>
 <div class="level2">
 
@@ -139,7 +148,7 @@ If you have enabled self registration, users can register their U2F keys using <
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Enrollment" [2592-2722] -->
+<!-- EDIT5 SECTION "Enrollment" [2626-2756] -->
 <h2 class="sectionedit6" id="assistance">Assistance</h2>
 <div class="level2">
 
@@ -150,7 +159,7 @@ If a user loses its key, you can delete it from the manager Second Factor module
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions, notifications, 2ndFA</span></pre>
 
 </div>
-<!-- EDIT6 SECTION "Assistance" [2723-3030] -->
+<!-- EDIT6 SECTION "Assistance" [2757-3064] -->
 <h2 class="sectionedit7" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
@@ -165,6 +174,6 @@ Note that both &quot;origin&quot; and &quot;appId&quot; are fixed to portal <abb
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Developer corner" [3031-] --></div>
+<!-- EDIT7 SECTION "Developer corner" [3065-] --></div>
 </body>
 </html>

@@ -60,6 +60,7 @@
 <li class="level2"><div class="li"><a href="#iso2unicode">iso2unicode</a></div></li>
 <li class="level2"><div class="li"><a href="#groupmatch">groupMatch</a></div></li>
 <li class="level2"><div class="li"><a href="#listmatch">listMatch</a></div></li>
+<li class="level2"><div class="li"><a href="#ingroup">inGroup</a></div></li>
 <li class="level2"><div class="li"><a href="#encrypt">encrypt</a></div></li>
 <li class="level2"><div class="li"><a href="#token">token</a></div></li>
 <li class="level2"><div class="li"><a href="#isinnet6">isInNet6</a></div></li>
@@ -130,6 +131,8 @@ Inside this jail, you can access to:
 </li>
 <li class="level2"><div class="li"> <a href="#listmatch" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">listMatch</a> (<a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> <em> since 2.0.7)</em></div>
 </li>
+<li class="level2"><div class="li"> <a href="#ingroup" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">inGroup</a> (<a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> <em> since 2.0.8)</em></div>
+</li>
 <li class="level2"><div class="li"> <a href="#encrypt" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">encrypt</a></div>
 </li>
 <li class="level2"><div class="li"> <a href="#token" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">token</a></div>
@@ -144,12 +147,12 @@ Inside this jail, you can access to:
 <div class="notetip">To know more about the jail, check <a href="http://perldoc.perl.org/Safe.html" class="urlextern" title="http://perldoc.perl.org/Safe.html"  rel="nofollow">Safe module documentation</a>.
 </div>
 </div>
-<!-- EDIT2 SECTION "Presentation" [35-1324] -->
+<!-- EDIT2 SECTION "Presentation" [35-1396] -->
 <h2 class="sectionedit3" id="extended_functions_list">Extended Functions List</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Extended Functions List" [1325-1361] -->
+<!-- EDIT3 SECTION "Extended Functions List" [1397-1433] -->
 <h3 class="sectionedit4" id="date">date</h3>
 <div class="level3">
 
@@ -159,7 +162,7 @@ Returns the date, in format YYYYMMDDHHMMSS, local time by default, GMT by callin
 <pre class="code">date(1)</pre>
 
 </div>
-<!-- EDIT4 SECTION "date" [1362-1481] -->
+<!-- EDIT4 SECTION "date" [1434-1553] -->
 <h3 class="sectionedit5" id="checklogonhours">checkLogonHours</h3>
 <div class="level3">
 
@@ -216,7 +219,7 @@ You can modify the default behavior for people without value in ssoLogonHours. I
 <pre class="code">checkLogonHours($ssoLogonHours, &#039;&#039;, &#039;&#039;, &#039;1&#039;)</pre>
 
 </div>
-<!-- EDIT5 SECTION "checkLogonHours" [1482-3419] -->
+<!-- EDIT5 SECTION "checkLogonHours" [1554-3491] -->
 <h3 class="sectionedit6" id="checkdate">checkDate</h3>
 <div class="level3">
 
@@ -248,7 +251,7 @@ Simple usage example:
 <pre class="code">checkDate($ssoStartDate, $ssoEndDate)</pre>
 
 </div>
-<!-- EDIT6 SECTION "checkDate" [3420-4047] -->
+<!-- EDIT6 SECTION "checkDate" [3492-4119] -->
 <h3 class="sectionedit7" id="basic">basic</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -273,7 +276,7 @@ Simple usage example:
 <pre class="code">basic($uid,$_password)</pre>
 
 </div>
-<!-- EDIT7 SECTION "basic" [4048-4510] -->
+<!-- EDIT7 SECTION "basic" [4120-4582] -->
 <h3 class="sectionedit8" id="unicode2iso">unicode2iso</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -296,7 +299,7 @@ Simple usage example:
 <pre class="code">unicode2iso($name)</pre>
 
 </div>
-<!-- EDIT8 SECTION "unicode2iso" [4511-4815] -->
+<!-- EDIT8 SECTION "unicode2iso" [4583-4887] -->
 <h3 class="sectionedit9" id="iso2unicode">iso2unicode</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -319,7 +322,7 @@ Simple usage example:
 <pre class="code">iso2unicode($name)</pre>
 
 </div>
-<!-- EDIT9 SECTION "iso2unicode" [4816-5120] -->
+<!-- EDIT9 SECTION "iso2unicode" [4888-5192] -->
 <h3 class="sectionedit10" id="groupmatch">groupMatch</h3>
 <div class="level3">
 
@@ -345,7 +348,7 @@ Simple usage example:
 <pre class="code">groupMatch($hGroups, &#039;description&#039;, &#039;Service 1&#039;)</pre>
 
 </div>
-<!-- EDIT10 SECTION "groupMatch" [5121-5479] -->
+<!-- EDIT10 SECTION "groupMatch" [5193-5551] -->
 <h3 class="sectionedit11" id="listmatch">listMatch</h3>
 <div class="level3">
 
@@ -383,8 +386,32 @@ The function returns 1 if the value was found, and 0 if it was not found.
 </p>
 
 </div>
-<!-- EDIT11 SECTION "listMatch" [5480-6107] -->
-<h3 class="sectionedit12" id="encrypt">encrypt</h3>
+<!-- EDIT11 SECTION "listMatch" [5552-6179] -->
+<h3 class="sectionedit12" id="ingroup">inGroup</h3>
+<div class="level3">
+
+<p>
+(<a href="documentation/new.png" class="media" title="documentation:new.png"><img src="documentation/new.ae92cc06c5d7671f1d904a7fe6e5ed09.png" class="media" alt="" width="35" /></a> <em> since 2.0.8)</em>
+</p>
+
+<p>
+This function lets you test if the user is in a given group. It is case-insensitive.
+</p>
+
+<p>
+Usage example:
+</p>
+<pre class="code">inGroup(&#039;admins&#039;)
+
+inGroup(&#039;test users&#039;)</pre>
+
+<p>
+The function returns 1 if the user belongs to the given group, and 0 if they don&#039;t.
+</p>
+
+</div>
+<!-- EDIT12 SECTION "inGroup" [6180-6486] -->
+<h3 class="sectionedit13" id="encrypt">encrypt</h3>
 <div class="level3">
 <div class="notetip">Since version 2.0, this function is now compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>.
 </div>
@@ -394,8 +421,8 @@ This function uses the secret key of LLNG configuration to crypt a data. This ca
 <pre class="code">encrypt($_whatToTrace)</pre>
 
 </div>
-<!-- EDIT12 SECTION "encrypt" [6108-6416] -->
-<h3 class="sectionedit13" id="token">token</h3>
+<!-- EDIT13 SECTION "encrypt" [6487-6795] -->
+<h3 class="sectionedit14" id="token">token</h3>
 <div class="level3">
 
 <p>
@@ -404,8 +431,8 @@ This function generates token used for <a href="servertoserver.html" class="wiki
 <pre class="code">token($_session_id,&#039;webapp1.example.com&#039;,&#039;webapp2.example.com&#039;)</pre>
 
 </div>
-<!-- EDIT13 SECTION "token" [6417-6624] -->
-<h3 class="sectionedit14" id="isinnet6">isInNet6</h3>
+<!-- EDIT14 SECTION "token" [6796-7003] -->
+<h3 class="sectionedit15" id="isinnet6">isInNet6</h3>
 <div class="level3">
 
 <p>
@@ -414,8 +441,8 @@ Function to check if an IPv6 address is in a subnet. Example <em>check if <abbr 
 <pre class="code perl">isInNet6<span class="br0">&#40;</span><span class="re0">$ipAddr</span><span class="sy0">,</span> <span class="st_h">'fe80::/10'</span><span class="br0">&#41;</span></pre>
 
 </div>
-<!-- EDIT14 SECTION "isInNet6" [6625-6792] -->
-<h3 class="sectionedit15" id="varisinuri">varIsInUri</h3>
+<!-- EDIT15 SECTION "isInNet6" [7004-7171] -->
+<h3 class="sectionedit16" id="varisinuri">varIsInUri</h3>
 <div class="level3">
 
 <p>
@@ -441,6 +468,6 @@ https<span class="sy0">://</span>test1<span class="sy0">.</span>example<span cla
 https<span class="sy0">://</span>test1<span class="sy0">.</span>example<span class="sy0">.</span>com<span class="sy0">/</span>check<span class="sy0">-</span>auth<span class="sy0">/</span>rtyler      <span class="sy0">-&gt;</span> <span class="me1">false</span></pre>
 
 </div>
-<!-- EDIT15 SECTION "varIsInUri" [6793-] --></div>
+<!-- EDIT16 SECTION "varIsInUri" [7172-] --></div>
 </body>
 </html>

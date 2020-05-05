@@ -49,6 +49,7 @@
 <div>
 
 <ul class="toc">
+<li class="level1"><div class="li"><a href="#section208">2.0.8</a></div></li>
 <li class="level1"><div class="li"><a href="#section207">2.0.7</a></div></li>
 <li class="level1"><div class="li"><a href="#section206">2.0.6</a></div></li>
 <li class="level1"><div class="li"><a href="#section205">2.0.5</a></div></li>
@@ -65,6 +66,7 @@
 <li class="level1"><div class="li"><a href="#security">Security</a></div></li>
 <li class="level1"><div class="li"><a href="#handlers">Handlers</a></div></li>
 <li class="level1"><div class="li"><a href="#rules_and_headers">Rules and headers</a></div></li>
+<li class="level1"><div class="li"><a href="#opening_conditions">Opening conditions</a></div></li>
 <li class="level1"><div class="li"><a href="#supported_servers">Supported servers</a></div></li>
 <li class="level1"><div class="li"><a href="#ajax_requests">Ajax requests</a></div></li>
 <li class="level1"><div class="li"><a href="#soaprest_services">SOAP/REST services</a></div></li>
@@ -90,7 +92,32 @@ Please apply general caution as you would with any software: have backups and a 
 </div>
 </div>
 <!-- EDIT1 SECTION "Upgrade from 2.0.x to 2.0.y" [1-527] -->
-<h2 class="sectionedit2" id="section207">2.0.7</h2>
+<h2 class="sectionedit2" id="section208">2.0.8</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> New dependency: Perl module Time::Fake is now required to run unit test and build packages, but should not be mandatory to run the software.</div>
+</li>
+<li class="level1"><div class="li"> Nginx configuration: some changes are required to allow IPv6, see <a href="https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/2152" class="urlextern" title="https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/2152"  rel="nofollow">#2152</a></div>
+</li>
+<li class="level1"><div class="li"> Option <code>singleSessionUserByIP</code> was removed, see <a href="https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/2159" class="urlextern" title="https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/2159"  rel="nofollow">#2159</a></div>
+</li>
+<li class="level1"><div class="li"> A memory leak was found in perl-fcgi with Perl &lt; 5.18, a workaround is possible with Apache and llng-fastcgi-server, see <a href="https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1314" class="urlextern" title="https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1314"  rel="nofollow">#1314</a></div>
+<ul>
+<li class="level2"><div class="li"> With Apache: set <code>FcgidMaxRequestsPerProcess 500</code> in portal virtual host</div>
+</li>
+<li class="level2"><div class="li"> With llng-fastcgi-server: set <code>PM_MAX_REQUESTS=500</code> in llng-fastcgi-server service configuration</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Cookie <code>SameSite</code> value: to avoid problems with recent browsers, <abbr title="Security Assertion Markup Language">SAML</abbr> POST binding, LLNG cookies are now tagged as &quot;<strong>SameSite=None</strong>&quot;. You can change this value using manager, &quot;<strong>SameSite=Lax</strong>&quot; is best for installations without federations. <strong>Important note</strong>: if you&#039;re using an unsecured connection <em>(http:// instead of https://)</em>, &quot;SameSite=None&quot; will be ignored by browsers and users that already have a valid session might be prompted to login again.</div>
+</li>
+<li class="level1"><div class="li"> OAuth2.0 Handler: a VHost protected by the OAuth2.0 handler will now return a 401 when called without an Access Token, instead of redirecting to the portal, as specified by <a href="https://tools.ietf.org/html/rfc6750" class="urlextern" title="https://tools.ietf.org/html/rfc6750"  rel="nofollow">RFC6750</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "2.0.8" [528-2048] -->
+<h2 class="sectionedit3" id="section207">2.0.7</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Security:</div>
@@ -102,8 +129,12 @@ Please apply general caution as you would with any software: have backups and a 
 </ul>
 </li>
 </ul>
+<pre class="code">portal-apache2.conf</pre>
 <pre class="code file apache">    <span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_URI}&quot;</span> <span class="st0">&quot;!^/(?:(?:static|javascript|favicon).*|.*<span class="es0">\.</span>fcgi(?:/.*)?)$&quot;</span>
     <span class="kw1">RewriteRule</span> <span class="st0">&quot;^/(.+)$&quot;</span> <span class="st0">&quot;/index.fcgi/$1&quot;</span> [PT]</pre>
+<pre class="code">manager-apache2.conf</pre>
+<pre class="code file apache">    <span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_URI}&quot;</span> <span class="st0">&quot;!^/(?:static|doc|lib|javascript|favicon).*&quot;</span>
+    <span class="kw1">RewriteRule</span> <span class="st0">&quot;^/(.+)$&quot;</span> <span class="st0">&quot;/manager.fcgi/$1&quot;</span> [PT]</pre>
 <ul>
 <li class="level1"><div class="li"> Other:</div>
 <ul>
@@ -111,11 +142,17 @@ Please apply general caution as you would with any software: have backups and a 
 </li>
 </ul>
 </li>
+<li class="level1"><div class="li"> Removed parameters:</div>
+<ul>
+<li class="level2"><div class="li"> <code>samlIdPResolveCookie</code></div>
+</li>
+</ul>
+</li>
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "2.0.7" [528-1651] -->
-<h2 class="sectionedit3" id="section206">2.0.6</h2>
+<!-- EDIT3 SECTION "2.0.7" [2049-3443] -->
+<h2 class="sectionedit4" id="section206">2.0.6</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Option was added to display generate password box in <a href="resetpassword.html" class="wikilink1" title="documentation:2.0:resetpassword">password reset by mail plugin</a>. If you use this feature, you must enable this option, which is disabled by default.</div>
@@ -132,8 +169,8 @@ Please apply general caution as you would with any software: have backups and a 
 sed &#039;s,/usr/share/fonts/default/Type1/,/usr/share/X11/fonts/urw-fonts/,g&#039; -i /etc/ImageMagick/type-ghostscript.xml</pre>
 
 </div>
-<!-- EDIT3 SECTION "2.0.6" [1652-2845] -->
-<h2 class="sectionedit4" id="section205">2.0.5</h2>
+<!-- EDIT4 SECTION "2.0.6" [3444-4637] -->
+<h2 class="sectionedit5" id="section205">2.0.5</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> The Text::Unidecode perl module becomes a requirement <em>(it will be automatically installed if you upgrade from from the deb or RPM repositories)</em></div>
@@ -147,14 +184,14 @@ sed &#039;s,/usr/share/fonts/default/Type1/,/usr/share/X11/fonts/urw-fonts/,g&#0
 </ul>
 
 </div>
-<!-- EDIT4 SECTION "2.0.5" [2846-3836] -->
-<h1 class="sectionedit5" id="upgrade_from_19_to_20">Upgrade from 1.9 to 2.0</h1>
+<!-- EDIT5 SECTION "2.0.5" [4638-5628] -->
+<h1 class="sectionedit6" id="upgrade_from_19_to_20">Upgrade from 1.9 to 2.0</h1>
 <div class="level1">
 <div class="noteimportant">2.0 is a major release, lot of things have been changed. You must read this document before upgrade.
 </div>
 </div>
-<!-- EDIT5 SECTION "Upgrade from 1.9 to 2.0" [3837-4000] -->
-<h2 class="sectionedit6" id="upgrade_order_from_19">Upgrade order from 1.9.*</h2>
+<!-- EDIT6 SECTION "Upgrade from 1.9 to 2.0" [5629-5792] -->
+<h2 class="sectionedit7" id="upgrade_order_from_19">Upgrade order from 1.9.*</h2>
 <div class="level2">
 
 <p>
@@ -171,8 +208,8 @@ As usual, if you use more than 1 server and don&#039;t want to stop <abbr title=
 <div class="noteimportant">You must revalidate your configuration using the manager.
 </div>
 </div>
-<!-- EDIT6 SECTION "Upgrade order from 1.9.*" [4001-4475] -->
-<h2 class="sectionedit7" id="installation">Installation</h2>
+<!-- EDIT7 SECTION "Upgrade order from 1.9.*" [5793-6267] -->
+<h2 class="sectionedit8" id="installation">Installation</h2>
 <div class="level2">
 <div class="noteimportant">French documentation is no more available. Only English version of this documentation is maintained now.
 </div>
@@ -195,8 +232,8 @@ For <abbr title="Security Assertion Markup Language">SAML</abbr> features, we re
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Installation" [4476-4861] -->
-<h2 class="sectionedit8" id="configuration">Configuration</h2>
+<!-- EDIT8 SECTION "Installation" [6268-6653] -->
+<h2 class="sectionedit9" id="configuration">Configuration</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>lemonldap-ng.ini</strong> requires some new fields in portal section. Update yours using the one given installed by default. New requires fields are:</div>
@@ -233,8 +270,8 @@ For <abbr title="Security Assertion Markup Language">SAML</abbr> features, we re
 
 </div>
 </div>
-<!-- EDIT8 SECTION "Configuration" [4862-6689] -->
-<h3 class="sectionedit9" id="configuration_refresh">Configuration refresh</h3>
+<!-- EDIT9 SECTION "Configuration" [6654-8481] -->
+<h3 class="sectionedit10" id="configuration_refresh">Configuration refresh</h3>
 <div class="level3">
 
 <p>
@@ -243,8 +280,8 @@ Now portal has the same behavior than handlers: it looks to configuration stored
 <div class="noteimportant">If you want to use reload mechanism on a portal only host, you must install a handler in Portal host to be able to refresh local cache. Include <code>handler-nginx.conf</code> or <code>handler-apache2.conf</code> for example
 </div>
 </div>
-<!-- EDIT9 SECTION "Configuration refresh" [6690-7111] -->
-<h2 class="sectionedit10" id="ldap_connection">LDAP connection</h2>
+<!-- EDIT10 SECTION "Configuration refresh" [8482-8903] -->
+<h2 class="sectionedit11" id="ldap_connection">LDAP connection</h2>
 <div class="level2">
 
 <p>
@@ -252,8 +289,8 @@ Now LDAP connections are kept open to improve performances. To allow that, <abbr
 </p>
 
 </div>
-<!-- EDIT10 SECTION "LDAP connection" [7112-7295] -->
-<h2 class="sectionedit11" id="kerberos_or_ssl_usage">Kerberos or SSL usage</h2>
+<!-- EDIT11 SECTION "LDAP connection" [8904-9087] -->
+<h2 class="sectionedit12" id="kerberos_or_ssl_usage">Kerberos or SSL usage</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> A new <a href="authkerberos.html" class="wikilink1" title="documentation:2.0:authkerberos">Kerberos</a> authentication backend has been added since 2.0. This module solves many Kerberos integration problems <em>(usage in conjunction with other backends, better error display,…)</em>. However, you can retain the old integration manner <em>(using <a href="authapache.html" class="wikilink1" title="documentation:2.0:authapache">Apache authentication module</a>)</em>.</div>
@@ -263,8 +300,8 @@ Now LDAP connections are kept open to improve performances. To allow that, <abbr
 </ul>
 
 </div>
-<!-- EDIT11 SECTION "Kerberos or SSL usage" [7296-7804] -->
-<h2 class="sectionedit12" id="logs">Logs</h2>
+<!-- EDIT12 SECTION "Kerberos or SSL usage" [9088-9596] -->
+<h2 class="sectionedit13" id="logs">Logs</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>Syslog</strong>: logs are now configured in <code>lemonldap-ng.ini</code> file only. If you use Syslog, you must reconfigure it. See <a href="logs.html" class="wikilink1" title="documentation:2.0:logs">logs</a> for more.</div>
@@ -276,8 +313,8 @@ Now LDAP connections are kept open to improve performances. To allow that, <abbr
 </ul>
 
 </div>
-<!-- EDIT12 SECTION "Logs" [7805-8386] -->
-<h2 class="sectionedit13" id="security">Security</h2>
+<!-- EDIT13 SECTION "Logs" [9597-10178] -->
+<h2 class="sectionedit14" id="security">Security</h2>
 <div class="level2">
 
 <p>
@@ -291,8 +328,8 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT13 SECTION "Security" [8387-8954] -->
-<h2 class="sectionedit14" id="handlers">Handlers</h2>
+<!-- EDIT14 SECTION "Security" [10179-10746] -->
+<h2 class="sectionedit15" id="handlers">Handlers</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>Apache only</strong>:</div>
@@ -310,8 +347,8 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT14 SECTION "Handlers" [8955-10040] -->
-<h2 class="sectionedit15" id="rules_and_headers">Rules and headers</h2>
+<!-- EDIT15 SECTION "Handlers" [10747-11832] -->
+<h2 class="sectionedit16" id="rules_and_headers">Rules and headers</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> hostname() and remote_ip() are no more provided to avoid some name conflicts <em>(replaced by $ENV{})</em></div>
@@ -323,8 +360,17 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT15 SECTION "Rules and headers" [10041-10359] -->
-<h2 class="sectionedit16" id="supported_servers">Supported servers</h2>
+<!-- EDIT16 SECTION "Rules and headers" [11833-12151] -->
+<h2 class="sectionedit17" id="opening_conditions">Opening conditions</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Rule and message fields have been swaped. You have to modifiy and validate again your access rules.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT17 SECTION "Opening conditions" [12152-12287] -->
+<h2 class="sectionedit18" id="supported_servers">Supported servers</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Apache-1.3 files are not provided now. You can build them yourself by looking at Apache-2 configuration files</div>
@@ -332,8 +378,8 @@ LLNG portal now embeds the following features:
 </ul>
 
 </div>
-<!-- EDIT16 SECTION "Supported servers" [10360-10505] -->
-<h2 class="sectionedit17" id="ajax_requests">Ajax requests</h2>
+<!-- EDIT18 SECTION "Supported servers" [12288-12433] -->
+<h2 class="sectionedit19" id="ajax_requests">Ajax requests</h2>
 <div class="level2">
 
 <p>
@@ -341,8 +387,8 @@ Before 2.0, an Ajax query launched after session timeout received a 302 code. No
 </p>
 
 </div>
-<!-- EDIT17 SECTION "Ajax requests" [10506-10703] -->
-<h2 class="sectionedit18" id="soaprest_services">SOAP/REST services</h2>
+<!-- EDIT19 SECTION "Ajax requests" [12434-12631] -->
+<h2 class="sectionedit20" id="soaprest_services">SOAP/REST services</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> SOAP server activation is now split in 2 parameters (configuration/sessions). You must set them else SOAP service will be disabled</div>
@@ -357,8 +403,8 @@ Before 2.0, an Ajax query launched after session timeout received a 302 code. No
 <div class="noteimportant"><a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">AuthBasic Handler</a> uses now REST services instead of SOAP.
 </div>
 </div>
-<!-- EDIT18 SECTION "SOAP/REST services" [10704-11301] -->
-<h2 class="sectionedit19" id="cas">CAS</h2>
+<!-- EDIT20 SECTION "SOAP/REST services" [12632-13229] -->
+<h2 class="sectionedit21" id="cas">CAS</h2>
 <div class="level2">
 
 <p>
@@ -370,13 +416,13 @@ Before 2.0, an Ajax query launched after session timeout received a 302 code. No
 </p>
 
 </div>
-<!-- EDIT19 SECTION "CAS" [11302-11679] -->
-<h2 class="sectionedit20" id="developer_corner">Developer corner</h2>
+<!-- EDIT21 SECTION "CAS" [13230-13607] -->
+<h2 class="sectionedit22" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT20 SECTION "Developer corner" [11680-11709] -->
-<h3 class="sectionedit21" id="apis">APIs</h3>
+<!-- EDIT22 SECTION "Developer corner" [13608-13637] -->
+<h3 class="sectionedit23" id="apis">APIs</h3>
 <div class="level3">
 
 <p>
@@ -384,8 +430,8 @@ Portal has now many REST features and includes an <abbr title="Application Progr
 </p>
 
 </div>
-<!-- EDIT21 SECTION "APIs" [11710-11871] -->
-<h3 class="sectionedit22" id="portal_overview">Portal overview</h3>
+<!-- EDIT23 SECTION "APIs" [13638-13799] -->
+<h3 class="sectionedit24" id="portal_overview">Portal overview</h3>
 <div class="level3">
 
 <p>
@@ -406,8 +452,8 @@ Requests are independent objects based on Lemonldap::NG::Portal::Main::Request w
 </p>
 
 </div>
-<!-- EDIT22 SECTION "Portal overview" [11872-12347] -->
-<h3 class="sectionedit23" id="handler">Handler</h3>
+<!-- EDIT24 SECTION "Portal overview" [13800-14275] -->
+<h3 class="sectionedit25" id="handler">Handler</h3>
 <div class="level3">
 
 <p>
@@ -419,6 +465,6 @@ If you used self protected CGI, you also need to rewrite them, see <a href="self
 </p>
 
 </div>
-<!-- EDIT23 SECTION "Handler" [12348-] --></div>
+<!-- EDIT25 SECTION "Handler" [14276-] --></div>
 </body>
 </html>

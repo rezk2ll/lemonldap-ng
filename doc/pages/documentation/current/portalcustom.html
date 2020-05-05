@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:portalcustom</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,portalcustom"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="portalcustom.html"/>
@@ -51,6 +51,7 @@
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#main_logo">Main Logo</a></div></li>
 <li class="level2"><div class="li"><a href="#show_languages_choice">Show languages choice</a></div></li>
+<li class="level2"><div class="li"><a href="#custom_css_file">Custom CSS file</a></div></li>
 <li class="level1"><div class="li"><a href="#skin">Skin</a></div></li>
 <li class="level2"><div class="li"><a href="#default_skin">Default skin</a></div></li>
 <li class="level2"><div class="li"><a href="#skin_background">Skin background</a></div></li>
@@ -111,8 +112,28 @@ Option enabled by default.
 <div class="notetip">If languages choice is disabled, Portal displays accepted languages by your browser (EN by default).
 </div>
 </div>
-<!-- EDIT3 SECTION "Show languages choice" [529-829] -->
-<h2 class="sectionedit4" id="skin">Skin</h2>
+<!-- EDIT3 SECTION "Show languages choice" [529-828] -->
+<h3 class="sectionedit4" id="custom_css_file">Custom CSS file</h3>
+<div class="level3">
+
+<p>
+You can define a custom <abbr title="Cascading Style Sheets">CSS</abbr> file, for example <code>custom.css</code>, which will be loaded after default <abbr title="Cascading Style Sheets">CSS</abbr> files. This file needs to be created in the static repository (<code>/usr/share/lemonldap-ng/portal/htdocs/static/boostrap/css</code>).
+</p>
+
+<p>
+Then set this value in Custom <abbr title="Cascading Style Sheets">CSS</abbr> parameter : <code>bootstrap/css/custom.css</code>.
+</p>
+
+<p>
+Sample <abbr title="Cascading Style Sheets">CSS</abbr> file, to remove white background of main logo:
+</p>
+<pre class="code file css"><span class="re0">#header</span> img <span class="br0">&#123;</span>
+  <span class="kw1">background-color</span><span class="sy0">:</span> <span class="kw2">transparent</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+
+</div>
+<!-- EDIT4 SECTION "Custom CSS file" [829-1288] -->
+<h2 class="sectionedit5" id="skin">Skin</h2>
 <div class="level2">
 
 <p>
@@ -124,8 +145,8 @@ But you can make your own. See Skin customization below.
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Skin" [830-952] -->
-<h3 class="sectionedit5" id="default_skin">Default skin</h3>
+<!-- EDIT5 SECTION "Skin" [1289-1411] -->
+<h3 class="sectionedit6" id="default_skin">Default skin</h3>
 <div class="level3">
 
 <p>
@@ -137,8 +158,8 @@ Select the <code>Custom</code> skin, then set the name of the skin you want to u
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Default skin" [953-1192] -->
-<h3 class="sectionedit6" id="skin_background">Skin background</h3>
+<!-- EDIT6 SECTION "Default skin" [1412-1651] -->
+<h3 class="sectionedit7" id="skin_background">Skin background</h3>
 <div class="level3">
 
 <p>
@@ -161,8 +182,8 @@ You can also use <code>lemonldap-ng-cli</code>:
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli set portalSkinBackground file.png</pre>
 
 </div>
-<!-- EDIT6 SECTION "Skin background" [1193-1862] -->
-<h3 class="sectionedit7" id="skin_rules">Skin rules</h3>
+<!-- EDIT7 SECTION "Skin background" [1652-2321] -->
+<h3 class="sectionedit8" id="skin_rules">Skin rules</h3>
 <div class="level3">
 
 <p>
@@ -180,8 +201,8 @@ To achieve this, you can create a rule in the Manager: select <code>General Para
 </ul>
 
 </div>
-<!-- EDIT7 SECTION "Skin rules" [1863-2505] -->
-<h3 class="sectionedit8" id="skin_files">Skin files</h3>
+<!-- EDIT8 SECTION "Skin rules" [2322-2964] -->
+<h3 class="sectionedit9" id="skin_files">Skin files</h3>
 <div class="level3">
 
 <p>
@@ -203,8 +224,8 @@ A skin will often refer to the <code>common</code> skin, which is not a real ski
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Skin files" [2506-2840] -->
-<h3 class="sectionedit9" id="skin_customization">Skin customization</h3>
+<!-- EDIT9 SECTION "Skin files" [2965-3299] -->
+<h3 class="sectionedit10" id="skin_customization">Skin customization</h3>
 <div class="level3">
 <div class="noteimportant">If you modify directly the skin files, your modifications will certainly be erased on the next upgrade. The best is to create your own skin, based on an existing skin.
 </div>
@@ -276,8 +297,8 @@ To configure your new skin in Manager, select the custom skin, and enter your sk
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set portalSkin &#039;myskin&#039; portalSkinBackground &#039;&#039;</pre>
 
 </div>
-<!-- EDIT9 SECTION "Skin customization" [2841-4810] -->
-<h3 class="sectionedit10" id="messages">Messages</h3>
+<!-- EDIT10 SECTION "Skin customization" [3300-5269] -->
+<h3 class="sectionedit11" id="messages">Messages</h3>
 <div class="level3">
 
 <p>
@@ -327,8 +348,8 @@ You can also create a file called <code>all.json</code> to override messages in 
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Messages" [4811-5947] -->
-<h3 class="sectionedit11" id="menu_tabs">Menu tabs</h3>
+<!-- EDIT11 SECTION "Messages" [5270-6406] -->
+<h3 class="sectionedit12" id="menu_tabs">Menu tabs</h3>
 <div class="level3">
 
 <p>
@@ -343,8 +364,8 @@ This will allow one to display the tab directly with this <abbr title="Uniform R
 </p>
 
 </div>
-<!-- EDIT11 SECTION "Menu tabs" [5948-6254] -->
-<h3 class="sectionedit12" id="template_parameters">Template parameters</h3>
+<!-- EDIT12 SECTION "Menu tabs" [6407-6713] -->
+<h3 class="sectionedit13" id="template_parameters">Template parameters</h3>
 <div class="level3">
 
 <p>
@@ -371,8 +392,8 @@ You can also display environment variables, with the prefix <code>env_</code>:
 <pre class="code file html4strict">Your IP is <span class="sc2">&lt;TMPL_VAR <span class="kw3">NAME</span><span class="sy0">=</span><span class="st0">&quot;env_REMOTE_ADDR&quot;</span>&gt;</span></pre>
 
 </div>
-<!-- EDIT12 SECTION "Template parameters" [6255-6902] -->
-<h2 class="sectionedit13" id="buttons">Buttons</h2>
+<!-- EDIT13 SECTION "Template parameters" [6714-7361] -->
+<h2 class="sectionedit14" id="buttons">Buttons</h2>
 <div class="level2">
 
 <p>
@@ -388,13 +409,13 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT13 SECTION "Buttons" [6903-7419] -->
-<h2 class="sectionedit14" id="password_management">Password management</h2>
+<!-- EDIT14 SECTION "Buttons" [7362-7878] -->
+<h2 class="sectionedit15" id="password_management">Password management</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT14 SECTION "Password management" [7420-7452] -->
-<h3 class="sectionedit15" id="general">General</h3>
+<!-- EDIT15 SECTION "Password management" [7879-7911] -->
+<h3 class="sectionedit16" id="general">General</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> <strong>Require old password</strong>: used only in the password changing module of the menu, will check the old password before updating it</div>
@@ -406,8 +427,8 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT15 SECTION "General" [7453-7888] -->
-<h3 class="sectionedit16" id="password_policy">Password Policy</h3>
+<!-- EDIT16 SECTION "General" [7912-8347] -->
+<h3 class="sectionedit17" id="password_policy">Password Policy</h3>
 <div class="level3">
 <div class="notetip">Available since version 2.0.6
 </div><ul>
@@ -419,13 +440,17 @@ This node allows one to enable/disable buttons on the login page:
 </li>
 <li class="level1"><div class="li"> <strong>Minimal digit characters</strong>: leave 0 to bypass the check</div>
 </li>
+<li class="level1"><div class="li"> <strong>Minimal special characters</strong>: leave 0 to bypass the check</div>
+</li>
+<li class="level1"><div class="li"> <strong>Allowed special characters</strong>: set blanck to forbid special characters (<code>_</code> is not a special character)</div>
+</li>
 <li class="level1"><div class="li"> <strong>Display policy in password form</strong>: enable this to display an information message about password policy constraints</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT16 SECTION "Password Policy" [7889-8321] -->
-<h2 class="sectionedit17" id="other_parameters">Other parameters</h2>
+<!-- EDIT17 SECTION "Password Policy" [8348-8955] -->
+<h2 class="sectionedit18" id="other_parameters">Other parameters</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>User attribute</strong>: which session attribute will be used to display <code>Connected as</code> in the menu</div>
@@ -443,6 +468,6 @@ This node allows one to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- EDIT17 SECTION "Other parameters" [8322-] --></div>
+<!-- EDIT18 SECTION "Other parameters" [8956-] --></div>
 </body>
 </html>

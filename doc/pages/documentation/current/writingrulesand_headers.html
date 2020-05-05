@@ -151,7 +151,9 @@ Examples:
 <p>
 The &quot;<strong>default</strong>&quot; access rule is used if no other access rule match the current <abbr title="Uniform Resource Locator">URL</abbr>.
 </p>
-<div class="notetip"><ul>
+<div class="notetip">See <a href="rules_examples.html" class="wikilink1" title="documentation:2.0:rules_examples">the rules examples page</a> for a few common use cases
+
+</div><div class="notetip"><ul>
 <li class="level1"><div class="li"> Comments can be used to order your rules: rules are applied in the alphabetical order of comment (or regexp in there is no comment). See <strong><a href="security.html#write_good_rules" class="wikilink1" title="documentation:2.0:security">security chapter</a></strong> to learn more about writing good rules.</div>
 </li>
 <li class="level1"><div class="li"> See <a href="performances.html#handler_performance" class="wikilink1" title="documentation:2.0:performances">performances</a> to know how to use macros and groups in rules.</div>
@@ -178,7 +180,7 @@ Rules can also be used to intercept logout <abbr title="Uniform Resource Locator
 		<td class="col0"> Logout user from current application and from Lemonldap::NG and redirect it to http://intranet/ <strong><em>(Apache only)</em></strong> </td><td class="col1 centeralign">  ^/index.php\?logout  </td><td class="col2 centeralign">  logout_app_sso&nbsp;http://intranet/  </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [2798-3446] --><div class="notewarning"><code>logout_app</code> and <code>logout_app_sso</code> rules are not available on Nginx, only on Apache.
+<!-- EDIT5 TABLE [2892-3540] --><div class="notewarning"><code>logout_app</code> and <code>logout_app_sso</code> rules are not available on Nginx, only on Apache.
 </div>
 <p>
 By default, user will be redirected on portal if no <abbr title="Uniform Resource Locator">URL</abbr> defined, or on the specified <abbr title="Uniform Resource Locator">URL</abbr> if any.
@@ -186,7 +188,7 @@ By default, user will be redirected on portal if no <abbr title="Uniform Resourc
 <div class="noteimportant">Only current application is concerned by logout_app* targets. Be careful with some applications which doesn&#039;t verify Lemonldap::NG headers after having created their own cookies. If so, you can redirect users to a <abbr title="HyperText Markup Language">HTML</abbr> page that explain that it is safe to close browser after disconnect.
 </div>
 </div>
-<!-- EDIT3 SECTION "Rules" [1239-3967] -->
+<!-- EDIT3 SECTION "Rules" [1239-4061] -->
 <h3 class="sectionedit6" id="rules_based_on_authentication_level">Rules based on authentication level</h3>
 <div class="level3">
 
@@ -222,12 +224,12 @@ There are three ways to impose users a higher authentication level:
 <div class="notetip">Instead of returning a 403 code, &quot;minimum level&quot; returns user to a form that explain that a higher level is required and propose to reauthenticate himself.
 </div>
 </div>
-<!-- EDIT6 SECTION "Rules based on authentication level" [3968-5088] -->
+<!-- EDIT6 SECTION "Rules based on authentication level" [4062-5182] -->
 <h2 class="sectionedit7" id="headers">Headers</h2>
 <div class="level2">
 
 <p>
-Headers are associations between an header name and a perl expression that returns a string. Headers are used to give user datas to the application. 
+Headers are associations between an header name and a perl expression that returns a string. Headers are used to give user data to the application.
 </p>
 
 <p>
@@ -252,7 +254,7 @@ Examples:
 		<td class="col0 leftalign"> Give a non ascii data  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  encode_base64($givenName."&nbsp;".$surName,"")  </td>
 	</tr>
 </table></div>
-<!-- EDIT8 TABLE [5272-5608] -->
+<!-- EDIT8 TABLE [5364-5700] -->
 <p>
 As described in <a href="performances.html#handler_performance" class="wikilink1" title="documentation:2.0:performances">performances chapter</a>, you can use macros, local macros,...
 </p>
@@ -270,7 +272,7 @@ As described in <a href="performances.html#handler_performance" class="wikilink1
 
 </div>
 </div>
-<!-- EDIT7 SECTION "Headers" [5089-6281] -->
+<!-- EDIT7 SECTION "Headers" [5183-6373] -->
 <h2 class="sectionedit9" id="available_functions">Available functions</h2>
 <div class="level2">
 
@@ -285,7 +287,7 @@ In addition to macros and name, you can use some functions in rules and headers:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "Available functions" [6282-6492] -->
+<!-- EDIT9 SECTION "Available functions" [6374-6584] -->
 <h2 class="sectionedit10" id="wildcards_in_hostnames">Wildcards in hostnames</h2>
 <div class="level2">
 
@@ -308,6 +310,6 @@ Even if a wildcard exists, if a virtualhost is explicitly declared, this rule is
 </ol>
 
 </div>
-<!-- EDIT10 SECTION "Wildcards in hostnames" [6493-] --></div>
+<!-- EDIT10 SECTION "Wildcards in hostnames" [6585-] --></div>
 </body>
 </html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:rules_examples</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,rules_examples"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="rules_examples.html"/>
+<link rel="contents" href="rules_examples.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:rules_examples","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.js"></script>
+<!-- //endif -->
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<h1 class="sectionedit1" id="rules_examples">Rules examples</h1>
+<div class="level1">
+
+<p>
+This page contains a few useful Perl expressions you can use in your <a href="writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Handler rules</a>, <abbr title="Security Assertion Markup Language">SAML</abbr>/OIDC/<abbr title="Central Authentication Service">CAS</abbr> security rules, 2FA Activation rules, etc.
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Rules examples" [1-200] -->
+<h2 class="sectionedit2" id="using_session_attributes">Using session attributes</h2>
+<div class="level2">
+
+<p>
+Session attributes are visible in the Manager&#039;s Session browser, any attribute you see there can be used in a rule!
+</p>
+<ul>
+<li class="level1"><div class="li"> Restricting access to a single user:</div>
+</li>
+</ul>
+<pre class="code">$uid eq &quot;dwho&quot;
+$uidNumber == 1000
+$cn eq &quot;Doctor Who&quot;
+$email eq &quot;dwho@tardis.info&quot;
+etc.</pre>
+<div class="notetip">In Perl, <code>eq</code> means <em>Equal</em> and must be used on strings. <code>==</code> should be used only on numbers
+
+</div><ul>
+<li class="level1"><div class="li"> Restricting access to a group</div>
+</li>
+</ul>
+<pre class="code">defined $hGroups{&#039;administrators&#039;}
+
+# 2.0.8 and higher only
+inGroup(&#039;administrators&#039;)</pre>
+<ul>
+<li class="level1"><div class="li"> Combining multiple expressions </div>
+</li>
+</ul>
+<pre class="code">inGroup(&#039;timelords&#039;) and not $uid eq &#039;missy&#039;</pre>
+<ul>
+<li class="level1"><div class="li"> Using Perl&#039;s regular expressions</div>
+</li>
+</ul>
+<pre class="code">$cn =~ /^Doctor.*/i
+$email !~ /@spam.com$/</pre>
+<ul>
+<li class="level1"><div class="li"> Filtering on Authentication Level</div>
+</li>
+</ul>
+<pre class="code">$authenticationLevel &gt;= 3</pre>
+<ul>
+<li class="level1"><div class="li"> Filtering on Authentication method </div>
+</li>
+</ul>
+<pre class="code">$_auth ne &#039;Demo&#039;</pre>
+<div class="notetip">In Perl, <code>ne</code> means <em>Not Equal</em> and must be used on strings
+
+</div>
+</div>
+<!-- EDIT2 SECTION "Using session attributes" [201-1187] -->
+<h2 class="sectionedit3" id="using_environment_variables">Using environment variables</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Comparing the <abbr title="Internet Protocol">IP</abbr> address </div>
+</li>
+</ul>
+<pre class="code">$env-&gt;{REMOTE_ADDR} =~ /^10\./</pre>
+
+</div>
+<!-- EDIT3 SECTION "Using environment variables" [1188-] --></div>
+</body>
+</html>

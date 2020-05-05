@@ -49,86 +49,86 @@
 <div class="table sectionedit2"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
-		<th class="col0"> Claim name </th><th class="col1"> Type </th><th class="col2"> Example of corresponding LDAP attribute </th>
+		<th class="col0"> Claim name </th><th class="col1"> Associated scope </th><th class="col2"> Type </th><th class="col3"> Example of corresponding LDAP attribute </th>
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0"> sub </td><td class="col1"> string </td><td class="col2"> uid </td>
+		<td class="col0"> sub </td><td class="col1"> openid </td><td class="col2"> string </td><td class="col3"> uid </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0"> name </td><td class="col1"> string </td><td class="col2"> cn </td>
+		<td class="col0"> name </td><td class="col1"> profile </td><td class="col2"> string </td><td class="col3"> cn </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0"> given_name </td><td class="col1"> string </td><td class="col2"> givenName </td>
+		<td class="col0"> given_name </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> givenName </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0"> family_name </td><td class="col1"> string </td><td class="col2"> sn </td>
+		<td class="col0"> family_name </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> sn </td>
 	</tr>
 	<tr class="row5 rowodd">
-		<td class="col0"> middle_name </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> middle_name </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0"> nickname </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> nickname </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row7 rowodd">
-		<td class="col0"> preferred_username </td><td class="col1"> string </td><td class="col2"> displayName </td>
+		<td class="col0"> preferred_username </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> displayName </td>
 	</tr>
 	<tr class="row8 roweven">
-		<td class="col0"> profile </td><td class="col1"> string </td><td class="col2"> labeledURI </td>
+		<td class="col0"> profile </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> labeledURI </td>
 	</tr>
 	<tr class="row9 rowodd">
-		<td class="col0"> picture </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> picture </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row10 roweven">
-		<td class="col0"> website </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> website </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row11 rowodd">
-		<td class="col0"> email </td><td class="col1"> string </td><td class="col2"> mail </td>
+		<td class="col0"> email </td><td class="col1"> email </td><td class="col2">string </td><td class="col3"> mail </td>
 	</tr>
 	<tr class="row12 roweven">
-		<td class="col0"> email_verified </td><td class="col1"> boolean </td><td class="col2"> </td>
+		<td class="col0"> email_verified </td><td class="col1"> email </td><td class="col2">boolean </td><td class="col3"> </td>
 	</tr>
 	<tr class="row13 rowodd">
-		<td class="col0"> gender </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> gender </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row14 roweven">
-		<td class="col0"> birthdate </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> birthdate </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row15 rowodd">
-		<td class="col0"> zoneinfo </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> zoneinfo </td><td class="col1"> profile </td><td class="col2"> string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row16 roweven">
-		<td class="col0"> locale </td><td class="col1"> string </td><td class="col2"> preferredLanguage </td>
+		<td class="col0"> locale </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> preferredLanguage </td>
 	</tr>
 	<tr class="row17 rowodd">
-		<td class="col0"> phone_number </td><td class="col1"> string </td><td class="col2"> telephoneNumber </td>
+		<td class="col0"> phone_number </td><td class="col1"> phone </td><td class="col2">string </td><td class="col3"> telephoneNumber </td>
 	</tr>
 	<tr class="row18 roweven">
-		<td class="col0"> phone_number_verified </td><td class="col1"> boolean </td><td class="col2"> </td>
+		<td class="col0"> phone_number_verified </td><td class="col1"> phone </td><td class="col2">boolean </td><td class="col3"> </td>
 	</tr>
 	<tr class="row19 rowodd">
-		<td class="col0"> updated_at </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> updated_at </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row20 roweven">
-		<td class="col0"> formatted </td><td class="col1"> string </td><td class="col2"> registeredAddress </td>
+		<td class="col0"> formatted </td><td class="col1"> address </td><td class="col2">string </td><td class="col3"> registeredAddress </td>
 	</tr>
 	<tr class="row21 rowodd">
-		<td class="col0"> street_address </td><td class="col1"> string </td><td class="col2"> street </td>
+		<td class="col0"> street_address </td><td class="col1"> address </td><td class="col2"> string </td><td class="col3"> street </td>
 	</tr>
 	<tr class="row22 roweven">
-		<td class="col0"> locality </td><td class="col1"> string </td><td class="col2"> l </td>
+		<td class="col0"> locality </td><td class="col1"> address </td><td class="col2"> string </td><td class="col3"> l </td>
 	</tr>
 	<tr class="row23 rowodd">
-		<td class="col0"> region </td><td class="col1"> string </td><td class="col2"> st </td>
+		<td class="col0"> region </td><td class="col1"> address </td><td class="col2"> string </td><td class="col3"> st </td>
 	</tr>
 	<tr class="row24 roweven">
-		<td class="col0"> postal_code </td><td class="col1"> string </td><td class="col2"> postalCode </td>
+		<td class="col0"> postal_code </td><td class="col1"> address </td><td class="col2"> string </td><td class="col3"> postalCode </td>
 	</tr>
 	<tr class="row25 rowodd">
-		<td class="col0"> country </td><td class="col1"> string </td><td class="col2"> co </td>
+		<td class="col0"> country </td><td class="col1"> address </td><td class="col2"> string </td><td class="col3"> co </td>
 	</tr>
 </table></div>
-<!-- EDIT2 TABLE [38-861] -->
+<!-- EDIT2 TABLE [38-1104] -->
 </div>
 </div>
 </body>

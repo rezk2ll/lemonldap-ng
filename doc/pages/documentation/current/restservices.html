@@ -141,7 +141,10 @@ The JSON response fields are:
 </li>
 </ul>
 <pre class="code">curl -H &quot;Accept: application/json&quot; -d user=rtyler -d password=rtyler http://auth.example.com/ | json_pp</pre>
-<ul>
+<div class="noteimportant">With <code>cURL &gt; 7.18.0</code>, to include special characters like @, &amp; or + in the cURL POST data:
+<pre class="code">curl -H &quot;Accept: application/json&quot; -d name=rtyler --data-urlencode passwd=@31&amp;3+*J http://auth.example.com/ | json_pp</pre>
+
+</div><ul>
 <li class="level1"><div class="li"> Response for bad authentication:</div>
 </li>
 </ul>
@@ -160,7 +163,7 @@ The JSON response fields are:
 <span class="br0">&#125;</span></pre>
 
 </div>
-<!-- EDIT3 SECTION "Authentication" [165-1962] -->
+<!-- EDIT3 SECTION "Authentication" [165-2213] -->
 <h3 class="sectionedit4" id="sessions">Sessions</h3>
 <div class="level3">
 
@@ -173,7 +176,7 @@ See <a href="restsessionbackend.html" class="wikilink1" title="documentation:2.0
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Sessions" [1963-2184] -->
+<!-- EDIT4 SECTION "Sessions" [2214-2435] -->
 <h3 class="sectionedit5" id="configuration">Configuration</h3>
 <div class="level3">
 
@@ -186,6 +189,6 @@ See <a href="restconfbackend.html" class="wikilink1" title="documentation:2.0:re
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Configuration" [2185-] --></div>
+<!-- EDIT5 SECTION "Configuration" [2436-] --></div>
 </body>
 </html>

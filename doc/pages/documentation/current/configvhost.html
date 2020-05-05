@@ -509,7 +509,7 @@ A virtual host contains:
 <p>
 See <strong><a href="writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Writing rules and headers</a></strong> to learn how to configure access control and HTTP headers sent to application by <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </p>
-<div class="noteimportant">With <strong>Nginx</strong>-based ReverseProxy, headers directives can be appended by a LUA script.
+<div class="noteimportant">With <strong>Nginx</strong>-based ReverseProxy, header directives can be appended by a LUA script.
 <p>
 To send more than <strong>TEN</strong> headers to protected applications, you have to edit and modify :
 </p>
@@ -518,9 +518,14 @@ To send more than <strong>TEN</strong> headers to protected applications, you ha
 <code>/etc/nginx/nginx-lua-headers.conf</code>
 </p>
 
+</div><div class="notewarning">* <strong>Nginx</strong> gets rid of any empty headers. There is no point of passing along empty values to another server; it would only serve to bloat the request. In other words, headers with <strong>empty values are completely removed</strong> from the passed request.
+<p>
+* <strong>Nginx</strong>, by default, will consider any header that <strong>contains underscores as invalid</strong>. It will remove these from the proxied request. If you wish to have Nginx interpret these as valid, you can set the <code>underscores_in_headers</code> directive to “on”, otherwise your headers will never make it to the backend server.
+</p>
+
 </div>
 </div>
-<!-- EDIT10 SECTION "Access rules and HTTP headers" [12002-12436] -->
+<!-- EDIT10 SECTION "Access rules and HTTP headers" [12002-13028] -->
 <h3 class="sectionedit11" id="post_data">POST data</h3>
 <div class="level3">
 
@@ -529,7 +534,7 @@ See <strong><a href="formreplay.html" class="wikilink1" title="documentation:2.0
 </p>
 
 </div>
-<!-- EDIT11 SECTION "POST data" [12437-12571] -->
+<!-- EDIT11 SECTION "POST data" [13029-13163] -->
 <h3 class="sectionedit12" id="options">Options</h3>
 <div class="level3">
 
@@ -569,6 +574,6 @@ Keep in mind that AuthBasic handler use &quot;Login/Password&quot; to authentica
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Options" [12572-] --></div>
+<!-- EDIT12 SECTION "Options" [13164-] --></div>
 </body>
 </html>

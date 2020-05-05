@@ -68,43 +68,41 @@ Just enable it in the manager (section “plugins”).
 </li>
 <li class="level2"><div class="li"> <strong>Hidden attributes</strong>: Attributes not displayed</div>
 </li>
-<li class="level2"><div class="li"> <strong>Attributes used for searching sessions</strong>: User&#039;s attributes used for searching sessions in Data Base if <code>whatToTrace</code> fails. Useful to look for sessions by mail or givenName. Let it blank to search by <code>whatToTrace</code> only.</div>
+<li class="level2"><div class="li"> <strong>Attributes used for searching sessions</strong>: User&#039;s attributes used for searching sessions in backend if <code>whatToTrace</code> fails. Useful to look for sessions by mail or givenName. Let it blank to search by <code>whatToTrace</code> only.</div>
 </li>
-<li class="level2"><div class="li"> <strong>Display persistent session</strong>: Display persistent session attributes</div>
+<li class="level2"><div class="li"> <strong>Display empty headers</strong>: Rule to display ALL headers appended by LemonLDAP::NG including empty ones</div>
 </li>
-<li class="level2"><div class="li"> <strong>Display empty value</strong>: Display ALL attributes even empty ones</div>
+<li class="level2"><div class="li"> <strong>Display empty value</strong>: Rule to display ALL attributes even empty ones</div>
+</li>
+<li class="level2"><div class="li"> <strong>Display persistent session</strong>: Rule to display persistent session attributes</div>
 </li>
 </ul>
 </li>
 </ul>
-<div class="noteclassic">By example :
+<div class="noteclassic">By examples :
 <p>
-Search attributes =&gt; <code>mail uid givenName</code>
+* Search attributes =&gt; <code>mail uid givenName</code>
 </p>
 
 <p>
-If <code>whatToTrace</code> fails, sessions are searched by <code>mail</code>, next <code>uid</code> if no sessions are found and so on...
+If <code>whatToTrace</code> fails, sessions are searched by <code>mail</code>, next <code>uid</code> if none session is found and so on...
 </p>
+
+<p>
+* Display empty headers rule =&gt; <code>$uid eq &quot;dwho&quot;</code> -&gt; Only &#039;dwho&#039; will see empty headers
+</p>
+
+</div><div class="noteclassic">Keep in mind that Nginx HTTP proxy module gets rid of empty headers. If the value of a header field is an empty string then this field will not be passed to a proxied server. To avoid misunderstanding, it might be useful to not display empty headers.
 
 </div><div class="noteimportant">Be careful to not display secret attributes.
 <p>
-checkUser plugin hidden attributes are concatenation of
-</p>
-
-<p>
-<code>checkUserHiddenAttributes</code> and <code>hiddenAttributes</code>.
-</p>
-
-<p>
+checkUser plugin hidden attributes are concatenation of <code>checkUserHiddenAttributes</code> and <code>hiddenAttributes</code>.
 You just have to append checkUser specific attributes.
 </p>
 
 </div><div class="notewarning">This plugin displays ALL user session attributes except the hidden ones.
 <p>
 You have to restrict access to specific users (administrators, DevOps, power users and so on...) 
-</p>
-
-<p>
 by setting an access rule like other VirtualHosts.
 </p>
 
@@ -113,16 +111,24 @@ By example: <code>$groups =~ /\bsu\b/</code>
 </p>
 
 </div>
+<p>
+To modify persistent sessions attributes (&#039;_loginHistory _2fDevices notification_&#039; by default), edit <code>lemonldap-ng.ini</code> in [portal] section:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">persistentSessionAttributes</span> <span class="sy0">=</span><span class="re2"> _loginHistory _2fDevices notification_</span></pre>
+
 </div>
-<!-- EDIT2 SECTION "Configuration" [265-1680] -->
+<!-- EDIT2 SECTION "Configuration" [265-2403] -->
 <h2 class="sectionedit3" id="usage">Usage</h2>
 <div class="level2">
 
 <p>
 When enabled, <code>/checkuser</code> <abbr title="Uniform Resource Locator">URL</abbr> path is handled by this plugin.
 </p>
+<div class="noteimportant">With federated authentication, checkUser plugin works only if a session can be found in backend.
 
 </div>
-<!-- EDIT3 SECTION "Usage" [1681-] --></div>
+</div>
+<!-- EDIT3 SECTION "Usage" [2404-] --></div>
 </body>
 </html>

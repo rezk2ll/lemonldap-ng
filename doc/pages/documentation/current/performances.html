@@ -82,6 +82,7 @@
 <li class="level1"><div class="li"><a href="#manager_performances">Manager performances</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#disable_unused_modules">Disable unused modules</a></div></li>
+<li class="level2"><div class="li"><a href="#enable_compactconf_parameter">Enable compactConf parameter</a></div></li>
 <li class="level2"><div class="li"><a href="#use_static_html_files">Use static HTML files</a></div></li>
 </ul></li>
 </ul>
@@ -196,8 +197,11 @@ Macros and groups are calculated during authentication process by the portal:
 </li>
 <li class="level1"><div class="li"> macros can also be used to import environment variables <em>(these variables are in CGI format)</em>. Example: <code>$ENV{HTTP_COOKIE}</code></div>
 </li>
-<li class="level1"><div class="li"> groups are stored as space-separated strings in the special attribute &quot;groups&quot;: it contains the names of groups whose rules were returned true for the current user</div>
+<li class="level1"><div class="li"> groups are stored as a string with values separated by <code>; </code> (default values separator) in the special attribute <code>groups</code>: it contains the names of groups whose rules were returned true for the current user. For example:</div>
 </li>
+</ul>
+<pre class="code perl"><span class="re0">$groups</span> <span class="sy0">=</span> group3<span class="sy0">;</span> admin</pre>
+<ul>
 <li class="level1"><div class="li"> You can also get groups in <code>$hGroups</code> which is a Hash Reference of this form:</div>
 </li>
 </ul>
@@ -231,21 +235,26 @@ displayName <span class="sy0">-&gt;</span> <span class="re0">$givenName</span><s
 Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class="re0">$displayName</span></pre>
 
 <p>
-Example for groups:
+Defining a group for admins
 </p>
 <pre class="code perl"><span class="co1"># group</span>
-admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span>
-&nbsp;
-<span class="co1"># Use a group in a rule</span>
-<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$groups</span> <span class="sy0">=~</span> <span class="co2">/\badmin\b/</span>
+admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span></pre>
+
+<p>
+Using groups in a rule
+</p>
+<pre class="code perl"><span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$groups</span> <span class="sy0">=~</span> <span class="co2">/\badmin\b/</span>
 &nbsp;
 <span class="co1"># Or with hGroups</span>
-<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <a href="http://perldoc.perl.org/functions/defined.html"><span class="kw3">defined</span></a> <span class="re0">$hGroups</span><span class="sy0">-&gt;</span><span class="br0">&#123;</span><span class="st_h">'admin'</span><span class="br0">&#125;</span></pre>
+<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <a href="http://perldoc.perl.org/functions/defined.html"><span class="kw3">defined</span></a> <span class="re0">$hGroups</span><span class="sy0">-&gt;</span><span class="br0">&#123;</span><span class="st_h">'admin'</span><span class="br0">&#125;</span>
+&nbsp;
+<span class="co1"># Since 2.0.8</span>
+<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="me1">inGroup</span><span class="br0">&#40;</span><span class="st_h">'admin'</span><span class="br0">&#41;</span></pre>
 <div class="noteclassic">Groups are computed after macros, so a group rule may involve a macro value.
 </div><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro &quot;macro1&quot; will be computed before macro &quot;macro2&quot;: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
 </div>
 </div>
-<!-- EDIT8 SECTION "Macros and groups" [2450-4544] -->
+<!-- EDIT8 SECTION "Macros and groups" [2450-4718] -->
 <h3 class="sectionedit9" id="local_macros">Local macros</h3>
 <div class="level3">
 
@@ -259,12 +268,12 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 <div class="notetip">Note that this feature is interesting only for the Lemonldap::NG systems protecting a high number of applications
 </div>
 </div>
-<!-- EDIT9 SECTION "Local macros" [4545-5206] -->
+<!-- EDIT9 SECTION "Local macros" [4719-5380] -->
 <h2 class="sectionedit10" id="portal_performances">Portal performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT10 SECTION "Portal performances" [5207-5239] -->
+<!-- EDIT10 SECTION "Portal performances" [5381-5413] -->
 <h3 class="sectionedit11" id="general_performances">General performances</h3>
 <div class="level3">
 
@@ -287,7 +296,7 @@ By default it uses local storage to store its tokens. If you have more than 1 po
 
 </div>
 </div>
-<!-- EDIT11 SECTION "General performances" [5240-6117] -->
+<!-- EDIT11 SECTION "General performances" [5414-6291] -->
 <h3 class="sectionedit12" id="apachesession_performances">Apache::Session performances</h3>
 <div class="level3">
 
@@ -399,7 +408,7 @@ This test isn&#039;t an &quot;only-backend&quot; test but embedded some LLNG met
 		<td class="col0 centeralign" colspan="8">  <em>The source of this test is available in sources: e2e-tests/sbperf.pl</em>  </td>
 	</tr>
 </table></div>
-<!-- EDIT13 TABLE [9018-10921] --><ul>
+<!-- EDIT13 TABLE [9192-11095] --><ul>
 <li class="level1"><div class="li"> <em><strong>(1) :</strong> &quot;purge&quot; test is done with Apache::Session::Browseable-1.2.5 and LLG-2.0. Earlier results are not so good.</em></div>
 </li>
 <li class="level1"><div class="li"> <em><strong>(2) :</strong> &quot;purge&quot; test is done with Apache::Session::Browseable-1.2.6 and LLG-2.0.</em></div>
@@ -423,7 +432,7 @@ Analysis:
 </ul>
 
 </div>
-<!-- EDIT12 SECTION "Apache::Session performances" [6118-11699] -->
+<!-- EDIT12 SECTION "Apache::Session performances" [6292-11873] -->
 <h3 class="sectionedit14" id="ldap_performances">LDAP performances</h3>
 <div class="level3">
 
@@ -439,28 +448,36 @@ LDAP server can slow you down when you use LDAP groups retrieval. You can avoid 
 So instead of using LDAP groups retrieval, you just have to store &quot;memberOf&quot; field in your exported variables. With OpenLDAP, you can use the <a href="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance" class="urlextern" title="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance"  rel="nofollow">memberof overlay</a> to do it automatically.
 </p>
 <div class="noteimportant">Don&#039;t forget to create an index on the field used to find users (uid by default)
-</div><div class="notetip">To avoid having group dn stored in sessions datas, you can use a macro to rewrite memberOf:<ul>
-<li class="level1"><div class="li"> Exported variables</div>
-</li>
-</ul>
-<pre class="code">ldapgroups -&gt; memberOf</pre>
-
-<p>
-For now, ldapgroups contains &quot;cn=admin,dmdName=groups,dc=example,dc=com cn=su,dmdName=groups,dc=example,dc=com&quot;
-</p>
+</div><div class="notetip">To avoid storing the full group DNs in session data, you can use a macro to rewrite <code>memberOf</code>:
 <ul>
-<li class="level1"><div class="li"> A little macro:</div>
+<li class="level1"><div class="li"> In *Exported variables*, export the <code>memberof</code> LDAP attribute as a <code>ldapGroups</code> session variable</div>
+<ul>
+<li class="level2"><div class="li"> key: <code>memberof</code></div>
+</li>
+<li class="level2"><div class="li"> value: <code>ldapGroups</code></div>
 </li>
 </ul>
-<pre class="code perl">ldapgroups <span class="sy0">-&gt;</span> <a href="http://perldoc.perl.org/functions/join.html"><span class="kw3">join</span></a><span class="br0">&#40;</span><span class="st0">&quot; &quot;</span><span class="sy0">,</span><span class="br0">&#40;</span><span class="re0">$ldapgroups</span> <span class="sy0">=~</span> <span class="co2">/cn=(.*?),/g</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Next, add a <code>ldapGroups</code> macro that will overwrite the exported attribute</div>
+<ul>
+<li class="level2"><div class="li"> key: <code>ldapGroups</code></div>
+</li>
+<li class="level2"><div class="li"> value: </div>
+</li>
+</ul>
+</li>
+</ul>
+<pre class="code ="perl""><a href="http://perldoc.perl.org/functions/join.html"><span class="kw3">join</span></a><span class="br0">&#40;</span><span class="st0">&quot;; &quot;</span><span class="sy0">,</span><span class="br0">&#40;</span><span class="re0">$ldapGroups</span> <span class="sy0">=~</span> <span class="co2">/cn=(.*?),/g</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
 
 <p>
-Now ldapgroups contains &quot;admin su&quot;
+<code>ldapGroups</code> should now contain something like <code>admin; su</code> just like it would if you had used the regular, slower group resolution mechanism.
 </p>
 
 </div>
 </div>
-<!-- EDIT14 SECTION "LDAP performances" [11700-12834] -->
+<!-- EDIT14 SECTION "LDAP performances" [11874-13201] -->
 <h3 class="sectionedit15" id="nginx_performances">NGINX performances</h3>
 <div class="level3">
 
@@ -496,12 +513,12 @@ Restart NGINX and watch web-browser console.
 </p>
 
 </div>
-<!-- EDIT15 SECTION "NGINX performances" [12835-13757] -->
+<!-- EDIT15 SECTION "NGINX performances" [13202-14124] -->
 <h2 class="sectionedit16" id="manager_performances">Manager performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT16 SECTION "Manager performances" [13758-13791] -->
+<!-- EDIT16 SECTION "Manager performances" [14125-14158] -->
 <h3 class="sectionedit17" id="disable_unused_modules">Disable unused modules</h3>
 <div class="level3">
 
@@ -512,8 +529,22 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
 </div>
-<!-- EDIT17 SECTION "Disable unused modules" [13792-14053] -->
-<h3 class="sectionedit18" id="use_static_html_files">Use static HTML files</h3>
+<!-- EDIT17 SECTION "Disable unused modules" [14159-14420] -->
+<h3 class="sectionedit18" id="enable_compactconf_parameter">Enable compactConf parameter</h3>
+<div class="level3">
+
+<p>
+By enabling compactConf option, all unused configuration parameters are removed. Could be usefull to shrink lemonldap-ng configuration file and save space.
+</p>
+
+<p>
+Go in Manager, <code>General Parameters</code> » <code>Configuration reload</code> » <code>Compact configuration file
+</code> and set to <code>On</code>.
+</p>
+
+</div>
+<!-- EDIT18 SECTION "Enable compactConf parameter" [14421-14737] -->
+<h3 class="sectionedit19" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
 <p>
@@ -539,6 +570,6 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 </p>
 
 </div>
-<!-- EDIT18 SECTION "Use static HTML files" [14054-] --></div>
+<!-- EDIT19 SECTION "Use static HTML files" [14738-] --></div>
 </body>
 </html>

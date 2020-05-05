@@ -54,6 +54,7 @@
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#external_portal">External portal</a></div></li>
 <li class="level2"><div class="li"><a href="#internal_portal">Internal portal</a></div></li>
+<li class="level2"><div class="li"><a href="#soap_compatibility_with_19_server">SOAP compatibility with 1.9 server</a></div></li>
 </ul></li>
 </ul>
 </div>
@@ -126,6 +127,17 @@ The portal must be configured to accept REST or SOAP authentication requests if 
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Internal portal" [1340-] --></div>
+<!-- EDIT6 SECTION "Internal portal" [1340-1598] -->
+<h3 class="sectionedit7" id="soap_compatibility_with_19_server">SOAP compatibility with 1.9 server</h3>
+<div class="level3">
+
+<p>
+If you Proxy is a 2.0.x and your server is a 1.9.x, you should add this in your lemonldap-ng.ini:
+</p>
+<pre class="code ini"><span class="re1">soapProxyUrn</span> <span class="sy0">=</span><span class="re2"> urn:Lemonldap/NG/Common/CGI/SOAPService</span></pre>
+<div class="noteimportant">This needs LLNG version 2.0.8 at least
+</div>
+</div>
+<!-- EDIT7 SECTION "SOAP compatibility with 1.9 server" [1599-] --></div>
 </body>
 </html>

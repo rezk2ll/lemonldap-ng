@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:authgithub</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,authgithub"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="authgithub.html"/>
+<link rel="contents" href="authgithub.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authgithub","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/static/bwr/jquery-ui/jquery-ui.js"></script>
+<!-- //endif -->
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<h1 class="sectionedit1" id="github">GitHub</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  ✔  </td><td class="col1 leftalign">  </td><td class="col2 leftalign">  </td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [23-82] -->
+</div>
+<!-- EDIT1 SECTION "GitHub" [1-83] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+<a href="https://github.com/" class="urlextern" title="https://github.com/"  rel="nofollow">GitHub</a> uses <a href="http://en.wikipedia.org/wiki/OAuth2" class="urlextern" title="http://en.wikipedia.org/wiki/OAuth2"  rel="nofollow">OAuth2</a> protocol to allow applications to reuse its own authentication process (see <a href="https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/" class="urlextern" title="https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/"  rel="nofollow">https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/</a>).
+</p>
+
+<p>
+You need to register a new application on LinkedIn to get an application ID and a secret: <a href="https://github.com/settings/apps/new" class="urlextern" title="https://github.com/settings/apps/new"  rel="nofollow">https://github.com/settings/apps/new</a>.
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Presentation" [84-486] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose GitHub for authentication module.
+</p>
+
+<p>
+Then, go in <code>GitHub parameters</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Authentication level</strong>: authentication level for this module.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Client ID</strong>: the application ID you get</div>
+</li>
+<li class="level1"><div class="li"> <strong>Client secret</strong>: the corresponding secret</div>
+</li>
+<li class="level1"><div class="li"> <strong>Field containing user identifier</strong>: Field that will be used as main user identifier in <abbr title="LemonLDAP::NG">LL::NG</abbr>, usually <code>login</code> </div>
+</li>
+<li class="level1"><div class="li"> <strong>Scope</strong>: OAuth 2.0 scopes, see <a href="https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/" class="urlextern" title="https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/"  rel="nofollow">https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/</a></div>
+</li>
+</ul>
+<div class="notetip">Collected fields are stored in session in <code>github_</code> keys
+</div><div class="noteimportant">Browser implementations of formAction directive are inconsistent (e.g. Firefox doesn&#039;t block the redirects whereas Chrome does).
+Administrators may have to modify formAction value with wildcard likes *.
+<p>
+In Manager, go in: 
+</p>
+
+<p>
+<code>General Parameters</code> &gt; <code>Advanced Parameters</code> &gt; <code>Security</code> &gt; <code>Content Security Policy</code> &gt; <code>Form destination</code>
+</p>
+
+</div>
+</div>
+<!-- EDIT4 SECTION "Configuration" [487-] --></div>
+</body>
+</html>

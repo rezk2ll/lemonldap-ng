@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:configlocation</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,configlocation"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="configlocation.html"/>
@@ -51,6 +51,7 @@
 <ul class="toc">
 <li class="level1"><div class="li"><a href="#backends">Backends</a></div></li>
 <li class="level1"><div class="li"><a href="#manager">Manager</a></div></li>
+<li class="level1"><div class="li"><a href="#manager_api">Manager API</a></div></li>
 <li class="level1"><div class="li"><a href="#configuration_text_editor">Configuration text editor</a></div></li>
 <li class="level1"><div class="li"><a href="#command_line_interface_cli">Command Line Interface (CLI)</a></div></li>
 <li class="level1"><div class="li"><a href="#apache">Apache</a></div>
@@ -176,10 +177,43 @@ LemonLDAP::NG configuration is mainly a key/value structure, so Manager will pre
 When all modifications are done, click on <code>Save</code> to store configuration.
 </p>
 <div class="notewarning">LemonLDAP::NG will do some checks on configuration and display errors and warnings if any. Configuration <strong>is not saved</strong> if errors occur.
+</div><div class="notetip"><ul>
+<li class="level1"><div class="li"> <a href="viewer.html" class="wikilink1" title="documentation:2.0:viewer">Configuration viewer</a> allow some users to edit WebSSO configuration in Read Only mode.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> You can set and display instance name in Manager menu by editing <code>lemonldap-ng.ini</code> in [manager] section:</div>
+</li>
+</ul>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>manager<span class="br0">&#93;</span></span>
+<span class="re1">instanceName</span> <span class="sy0">=</span><span class="re2"> LLNG_Demo</span></pre>
+
 </div>
 </div>
-<!-- EDIT3 SECTION "Manager" [1048-3236] -->
-<h2 class="sectionedit4" id="configuration_text_editor">Configuration text editor</h2>
+<!-- EDIT3 SECTION "Manager" [1048-3525] -->
+<h2 class="sectionedit4" id="manager_api">Manager API</h2>
+<div class="level2">
+
+<p>
+Since 2.0.8, a Manager <abbr title="Application Programming Interface">API</abbr> is available for:
+</p>
+<ul>
+<li class="level1"><div class="li"> Second factors management for users</div>
+</li>
+<li class="level1"><div class="li"> OpenID Connect RP management</div>
+</li>
+<li class="level1"><div class="li"> <abbr title="Security Assertion Markup Language">SAML</abbr> SP management</div>
+</li>
+</ul>
+
+<p>
+See <a href="https://lemonldap-ng.org/manager-api/2.0/" class="urlextern" title="https://lemonldap-ng.org/manager-api/2.0/"  rel="nofollow">Manager API documentation</a>.
+</p>
+<div class="noteimportant">To access Manager <abbr title="Application Programming Interface">API</abbr>, enable the <code>manager-api</code> virtual host and change the access rule. You can protect the <abbr title="Application Programming Interface">API</abbr> through Basic authentication, <abbr title="Internet Protocol">IP</abbr> white list or any other condition.
+</div>
+</div>
+<!-- EDIT4 SECTION "Manager API" [3526-3977] -->
+<h2 class="sectionedit5" id="configuration_text_editor">Configuration text editor</h2>
 <div class="level2">
 
 <p>
@@ -221,8 +255,8 @@ If a modification is done, the configuration is saved with a new configuration n
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Configuration text editor" [3237-4556] -->
-<h2 class="sectionedit5" id="command_line_interface_cli">Command Line Interface (CLI)</h2>
+<!-- EDIT5 SECTION "Configuration text editor" [3978-5297] -->
+<h2 class="sectionedit6" id="command_line_interface_cli">Command Line Interface (CLI)</h2>
 <div class="level2">
 
 <p>
@@ -290,8 +324,8 @@ Some examples:
 <div class="notetip">See <a href="cli_examples.html" class="wikilink1" title="documentation:2.0:cli_examples">other examples</a>.
 </div>
 </div>
-<!-- EDIT5 SECTION "Command Line Interface (CLI)" [4557-6445] -->
-<h2 class="sectionedit6" id="apache">Apache</h2>
+<!-- EDIT6 SECTION "Command Line Interface (CLI)" [5298-7186] -->
+<h2 class="sectionedit7" id="apache">Apache</h2>
 <div class="level2">
 <div class="noteimportant">LemonLDAP::NG does not manage Apache configuration
 </div>
@@ -314,8 +348,8 @@ See <a href="configapache.html" class="wikilink1" title="documentation:2.0:confi
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Apache" [6446-6893] -->
-<h3 class="sectionedit7" id="portal">Portal</h3>
+<!-- EDIT7 SECTION "Apache" [7187-7634] -->
+<h3 class="sectionedit8" id="portal">Portal</h3>
 <div class="level3">
 
 <p>
@@ -332,8 +366,8 @@ By default, access to those URLs is denied:
     &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT7 SECTION "Portal" [6894-7343] -->
-<h3 class="sectionedit8" id="allowing_configuration_reload">Allowing configuration reload</h3>
+<!-- EDIT8 SECTION "Portal" [7635-8084] -->
+<h3 class="sectionedit9" id="allowing_configuration_reload">Allowing configuration reload</h3>
 <div class="level3">
 
 <p>
@@ -349,8 +383,8 @@ In order to allow configuration reload from a different server (if your manager 
     &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT8 SECTION "Allowing configuration reload" [7344-7834] -->
-<h3 class="sectionedit9" id="handler">Handler</h3>
+<!-- EDIT9 SECTION "Allowing configuration reload" [8085-8575] -->
+<h3 class="sectionedit10" id="handler">Handler</h3>
 <div class="level3">
 
 <p>
@@ -386,8 +420,8 @@ See <strong>test-apache2.conf</strong> for a complete example of a protected app
 </p>
 
 </div>
-<!-- EDIT9 SECTION "Handler" [7835-8686] -->
-<h2 class="sectionedit10" id="nginx">Nginx</h2>
+<!-- EDIT10 SECTION "Handler" [8576-9427] -->
+<h2 class="sectionedit11" id="nginx">Nginx</h2>
 <div class="level2">
 <div class="noteimportant">LemonLDAP::NG does not manage Nginx configuration
 </div>
@@ -411,8 +445,8 @@ See <a href="confignginx.html" class="wikilink1" title="documentation:2.0:config
 <div class="notewarning"><a href="fastcgiserver.html" class="wikilink1" title="documentation:2.0:fastcgiserver">LL::NG FastCGI</a> server must be enabled and started separately.
 </div>
 </div>
-<!-- EDIT10 SECTION "Nginx" [8687-9209] -->
-<h3 class="sectionedit11" id="portal1">Portal</h3>
+<!-- EDIT11 SECTION "Nginx" [9428-9950] -->
+<h3 class="sectionedit12" id="portal1">Portal</h3>
 <div class="level3">
 
 <p>
@@ -428,8 +462,8 @@ By default, access to those URLs is denied:
     }</pre>
 
 </div>
-<!-- EDIT11 SECTION "Portal" [9210-9587] -->
-<h3 class="sectionedit12" id="allowing_configuration_reload1">Allowing configuration reload</h3>
+<!-- EDIT12 SECTION "Portal" [9951-10328] -->
+<h3 class="sectionedit13" id="allowing_configuration_reload1">Allowing configuration reload</h3>
 <div class="level3">
 
 <p>
@@ -451,8 +485,8 @@ In order to allow configuration reload from a different server (if your manager 
   }</pre>
 
 </div>
-<!-- EDIT12 SECTION "Allowing configuration reload" [9588-10127] -->
-<h3 class="sectionedit13" id="handler1">Handler</h3>
+<!-- EDIT13 SECTION "Allowing configuration reload" [10329-10868] -->
+<h3 class="sectionedit14" id="handler1">Handler</h3>
 <div class="level3">
 
 <p>
@@ -520,8 +554,8 @@ To protect a standard virtual host, you must insert this (or create an included 
     # Insert then your configuration (fastcgi_* or proxy_*)</pre>
 
 </div>
-<!-- EDIT13 SECTION "Handler" [10128-12131] -->
-<h2 class="sectionedit14" id="configuration_reload">Configuration reload</h2>
+<!-- EDIT14 SECTION "Handler" [10869-12872] -->
+<h2 class="sectionedit15" id="configuration_reload">Configuration reload</h2>
 <div class="level2">
 <div class="noteclassic">As Handlers keep configuration in cache, when configuration change, it should be updated in Handlers. An Apache restart will work, but LemonLDAP::NG offers the mean to reload them through an HTTP request. Configuration reload will then be effective in less than 10 minutes. If you want to change this timeout, set <code>checkTime = 240</code> in your lemonldap-ng.ini file <em>(values in seconds)</em>
 </div>
@@ -532,7 +566,7 @@ After configuration is saved by Manager, LemonLDAP::NG will try to reload config
 <p>
 You also have a parameter to adjust the timeout used to request reload URLs, it is be default set to 5 seconds.
 </p>
-<div class="noteimportant">Configuration file is compacted to limit file size. All useless parameters are removed. Typically, if SAMLv2 service is disabled, all relative parameters will be erased. To avoid unused parameters to be purged, you can enable &quot;Don&#039;t compact configuration file&quot; option.
+<div class="noteimportant">If &quot;Compact configuration file&quot; option is enabled, all useless parameters are removed to limit file size. Typically, if SAMLv2 service is disabled, all relative parameters will be erased. To avoid useless parameters to be purged, you can disable this option.
 </div>
 <p>
 These parameters can be overwritten in LemonLDAP::NG ini file, in the section <code>apply</code>.
@@ -579,8 +613,8 @@ You also need to adjust the protection of the reload vhost, for example:
     &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- EDIT14 SECTION "Configuration reload" [12132-14981] -->
-<h2 class="sectionedit15" id="local_file">Local file</h2>
+<!-- EDIT15 SECTION "Configuration reload" [12873-15712] -->
+<h2 class="sectionedit16" id="local_file">Local file</h2>
 <div class="level2">
 
 <p>
@@ -613,6 +647,6 @@ For example, to override configured skin for portal:
 <div class="notetip">You need to know the technical name of configuration parameter to do this. You can refer to <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">parameter list</a> to find it.
 </div>
 </div>
-<!-- EDIT15 SECTION "Local file" [14982-] --></div>
+<!-- EDIT16 SECTION "Local file" [15713-] --></div>
 </body>
 </html>

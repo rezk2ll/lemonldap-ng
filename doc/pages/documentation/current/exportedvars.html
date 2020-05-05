@@ -106,8 +106,11 @@ Macros and groups are calculated during authentication process by the portal:
 </li>
 <li class="level1"><div class="li"> macros can also be used to import environment variables <em>(these variables are in CGI format)</em>. Example: <code>$ENV{HTTP_COOKIE}</code></div>
 </li>
-<li class="level1"><div class="li"> groups are stored as space-separated strings in the special attribute &quot;groups&quot;: it contains the names of groups whose rules were returned true for the current user</div>
+<li class="level1"><div class="li"> groups are stored as a string with values separated by <code>; </code> (default values separator) in the special attribute <code>groups</code>: it contains the names of groups whose rules were returned true for the current user. For example:</div>
 </li>
+</ul>
+<pre class="code perl"><span class="re0">$groups</span> <span class="sy0">=</span> group3<span class="sy0">;</span> admin</pre>
+<ul>
 <li class="level1"><div class="li"> You can also get groups in <code>$hGroups</code> which is a Hash Reference of this form:</div>
 </li>
 </ul>
@@ -141,16 +144,21 @@ displayName <span class="sy0">-&gt;</span> <span class="re0">$givenName</span><s
 Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class="re0">$displayName</span></pre>
 
 <p>
-Example for groups:
+Defining a group for admins
 </p>
 <pre class="code perl"><span class="co1"># group</span>
-admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span>
-&nbsp;
-<span class="co1"># Use a group in a rule</span>
-<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$groups</span> <span class="sy0">=~</span> <span class="co2">/\badmin\b/</span>
+admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span></pre>
+
+<p>
+Using groups in a rule
+</p>
+<pre class="code perl"><span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$groups</span> <span class="sy0">=~</span> <span class="co2">/\badmin\b/</span>
 &nbsp;
 <span class="co1"># Or with hGroups</span>
-<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <a href="http://perldoc.perl.org/functions/defined.html"><span class="kw3">defined</span></a> <span class="re0">$hGroups</span><span class="sy0">-&gt;</span><span class="br0">&#123;</span><span class="st_h">'admin'</span><span class="br0">&#125;</span></pre>
+<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <a href="http://perldoc.perl.org/functions/defined.html"><span class="kw3">defined</span></a> <span class="re0">$hGroups</span><span class="sy0">-&gt;</span><span class="br0">&#123;</span><span class="st_h">'admin'</span><span class="br0">&#125;</span>
+&nbsp;
+<span class="co1"># Since 2.0.8</span>
+<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="me1">inGroup</span><span class="br0">&#40;</span><span class="st_h">'admin'</span><span class="br0">&#41;</span></pre>
 <div class="noteclassic">Groups are computed after macros, so a group rule may involve a macro value.
 </div><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro &quot;macro1&quot; will be computed before macro &quot;macro2&quot;: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
 </div>

@@ -54,6 +54,8 @@
 <li class="level1"><div class="li"><a href="#configure_sessions_backend">Configure sessions backend</a></div></li>
 <li class="level1"><div class="li"><a href="#configure_virtual_host">Configure virtual host</a></div></li>
 <li class="level1"><div class="li"><a href="#configure_ldap_authentication_backend">Configure LDAP authentication backend</a></div></li>
+<li class="level1"><div class="li"><a href="#configure_cas_identity_provider">Configure CAS Identity Provider</a></div></li>
+<li class="level1"><div class="li"><a href="#register_a_cas_application">Register a CAS application</a></div></li>
 <li class="level1"><div class="li"><a href="#configure_saml_identity_provider">Configure SAML Identity Provider</a></div></li>
 <li class="level1"><div class="li"><a href="#register_an_saml_service_provider">Register an SAML Service Provider</a></div></li>
 <li class="level1"><div class="li"><a href="#configure_openid_connect_identity_provider">Configure OpenID Connect Identity Provider</a></div></li>
@@ -71,9 +73,10 @@
 <p>
 This page shows some examples of <abbr title="LemonLDAP::NG">LL::NG</abbr> Command Line Interface. See <a href="configlocation.html#command_line_interface_cli" class="wikilink1" title="documentation:2.0:configlocation">how to use the command</a>.
 </p>
-
+<div class="noteimportant">On Debian, the command is located in <code>/usr/share/lemonldap-ng/bin</code> and on CentOS in <code>/usr/libexec/lemonldap-ng/bin</code>. Adapt the path for the system you are using.
 </div>
-<!-- EDIT1 SECTION "Command Line Interface (lemonldap-ng-cli) examples" [1-205] -->
+</div>
+<!-- EDIT1 SECTION "Command Line Interface (lemonldap-ng-cli) examples" [1-395] -->
 <h2 class="sectionedit2" id="saverestore_configuration">Save/restore configuration</h2>
 <div class="level2">
 
@@ -93,8 +96,13 @@ Restore:
 # Or
 /usr/share/lemonldap-ng/bin/lemonldap-ng-cli restore - &lt;config.json</pre>
 
+<p>
+Rollback (restore previous configuration, <em>since 2.0.8</em>):
+</p>
+<pre class="code shell">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli rollback</pre>
+
 </div>
-<!-- EDIT2 SECTION "Save/restore configuration" [206-543] -->
+<!-- EDIT2 SECTION "Save/restore configuration" [396-871] -->
 <h2 class="sectionedit3" id="configure_https">Configure HTTPS</h2>
 <div class="level2">
 
@@ -110,7 +118,7 @@ When setting HTTPS, you first need to modify Apache/Nginx configuration, then yo
         securedCookie 1</pre>
 
 </div>
-<!-- EDIT3 SECTION "Configure HTTPS" [544-1014] -->
+<!-- EDIT3 SECTION "Configure HTTPS" [872-1342] -->
 <h2 class="sectionedit4" id="configure_sessions_backend">Configure sessions backend</h2>
 <div class="level2">
 
@@ -225,7 +233,7 @@ In this example we have:
        oidcStorageOptions TableName &#039;oidcsessions&#039;</pre>
 
 </div>
-<!-- EDIT4 SECTION "Configure sessions backend" [1015-4603] -->
+<!-- EDIT4 SECTION "Configure sessions backend" [1343-4931] -->
 <h2 class="sectionedit5" id="configure_virtual_host">Configure virtual host</h2>
 <div class="level2">
 
@@ -264,7 +272,7 @@ In this example we have:
         &#039;exportedHeaders/test.example.com&#039; &#039;Auth-Mail&#039; &#039;$mail&#039;</pre>
 
 </div>
-<!-- EDIT5 SECTION "Configure virtual host" [4604-5304] -->
+<!-- EDIT5 SECTION "Configure virtual host" [4932-5632] -->
 <h2 class="sectionedit6" id="configure_ldap_authentication_backend">Configure LDAP authentication backend</h2>
 <div class="level2">
 
@@ -331,8 +339,47 @@ In this example we use:
         ldapGroupRecursive 1</pre>
 
 </div>
-<!-- EDIT6 SECTION "Configure LDAP authentication backend" [5305-6778] -->
-<h2 class="sectionedit7" id="configure_saml_identity_provider">Configure SAML Identity Provider</h2>
+<!-- EDIT6 SECTION "Configure LDAP authentication backend" [5633-7106] -->
+<h2 class="sectionedit7" id="configure_cas_identity_provider">Configure CAS Identity Provider</h2>
+<div class="level2">
+
+<p>
+You just have to enable the <abbr title="Central Authentication Service">CAS</abbr> server feature, and you can set the access control policy (see <a href="idpcas.html#configuring_the_cas_service" class="wikilink1" title="documentation:2.0:idpcas">CAS service options</a>):
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
+    set \
+        issuerDBCASActivation 1 \
+        casAccessControlPolicy error</pre>
+
+</div>
+<!-- EDIT7 SECTION "Configure CAS Identity Provider" [7107-7458] -->
+<h2 class="sectionedit8" id="register_a_cas_application">Register a CAS application</h2>
+<div class="level2">
+
+<p>
+This is only required if your access control policy is not <code>none</code>.
+</p>
+
+<p>
+In this example we have:
+</p>
+<ul>
+<li class="level1"><div class="li"> App configuration key: testapp</div>
+</li>
+<li class="level1"><div class="li"> App service <abbr title="Uniform Resource Locator">URL</abbr>: <a href="https://testapp.example.com/" class="urlextern" title="https://testapp.example.com/"  rel="nofollow">https://testapp.example.com/</a></div>
+</li>
+<li class="level1"><div class="li"> App exported attribute: mail and cn</div>
+</li>
+</ul>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
+    addKey \
+        casAppMetaDataExportedVars/testapp mail mail \
+        casAppMetaDataExportedVars/testapp cn cn
+        casAppMetaDataOptions/testapp casAppMetaDataOptionsService &#039;https://testapp.example.com/&#039;</pre>
+
+</div>
+<!-- EDIT8 SECTION "Register a CAS application" [7459-8004] -->
+<h2 class="sectionedit9" id="configure_saml_identity_provider">Configure SAML Identity Provider</h2>
 <div class="level2">
 
 <p>
@@ -366,8 +413,8 @@ You can also define organization name and <abbr title="Uniform Resource Locator"
         samlOrganizationURL &#039;http://www.acme.com&#039;</pre>
 
 </div>
-<!-- EDIT7 SECTION "Configure SAML Identity Provider" [6779-7785] -->
-<h2 class="sectionedit8" id="register_an_saml_service_provider">Register an SAML Service Provider</h2>
+<!-- EDIT9 SECTION "Configure SAML Identity Provider" [8005-9011] -->
+<h2 class="sectionedit10" id="register_an_saml_service_provider">Register an SAML Service Provider</h2>
 <div class="level2">
 
 <p>
@@ -387,8 +434,8 @@ In this example we have:
         samlSPMetaDataExportedAttributes/testsp mail &#039;1;EmailAddress&#039;</pre>
 
 </div>
-<!-- EDIT8 SECTION "Register an SAML Service Provider" [7786-8238] -->
-<h2 class="sectionedit9" id="configure_openid_connect_identity_provider">Configure OpenID Connect Identity Provider</h2>
+<!-- EDIT10 SECTION "Register an SAML Service Provider" [9012-9464] -->
+<h2 class="sectionedit11" id="configure_openid_connect_identity_provider">Configure OpenID Connect Identity Provider</h2>
 <div class="level2">
 
 <p>
@@ -423,8 +470,8 @@ If needed you can allow implicit and hybrid flows:
         oidcServiceAllowHybridFlow 1</pre>
 
 </div>
-<!-- EDIT9 SECTION "Configure OpenID Connect Identity Provider" [8239-9122] -->
-<h2 class="sectionedit10" id="register_an_openid_connect_relying_party">Register an OpenID Connect Relying Party</h2>
+<!-- EDIT11 SECTION "Configure OpenID Connect Identity Provider" [9465-10348] -->
+<h2 class="sectionedit12" id="register_an_openid_connect_relying_party">Register an OpenID Connect Relying Party</h2>
 <div class="level2">
 
 <p>
@@ -492,8 +539,8 @@ In this example we have:
         oidcRPMetaDataOptions/testrp oidcRPMetaDataOptionsAccessTokenExpiration 3600</pre>
 
 </div>
-<!-- EDIT10 SECTION "Register an OpenID Connect Relying Party" [9123-10754] -->
-<h2 class="sectionedit11" id="categories_and_applications_in_menu">Categories and applications in menu</h2>
+<!-- EDIT12 SECTION "Register an OpenID Connect Relying Party" [10349-11980] -->
+<h2 class="sectionedit13" id="categories_and_applications_in_menu">Categories and applications in menu</h2>
 <div class="level2">
 
 <p>
@@ -517,8 +564,8 @@ Create the application &quot;sample&quot; inside category &quot;applications&quo
         applicationList/applications/sample/options uri &quot;https://sample.example.com/&quot;</pre>
 
 </div>
-<!-- EDIT11 SECTION "Categories and applications in menu" [10755-11636] -->
-<h2 class="sectionedit12" id="encryption_key">Encryption key</h2>
+<!-- EDIT13 SECTION "Categories and applications in menu" [11981-12862] -->
+<h2 class="sectionedit14" id="encryption_key">Encryption key</h2>
 <div class="level2">
 
 <p>
@@ -529,6 +576,6 @@ To update the master encryption key:
         key &#039;xxxxxxxxxxxxxxx&#039;</pre>
 
 </div>
-<!-- EDIT12 SECTION "Encryption key" [11637-] --></div>
+<!-- EDIT14 SECTION "Encryption key" [12863-] --></div>
 </body>
 </html>

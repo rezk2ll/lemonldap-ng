@@ -78,11 +78,11 @@ To configure sessions, go in Manager, <code>General Parameters</code> » <code>S
 </li>
 <li class="level1"><div class="li"> <strong>Multiple sessions</strong>, you can restrict the number of open sessions:</div>
 <ul>
-<li class="level2"><div class="li"> <strong>One session only by user</strong>: a user can not open 2 sessions with the same account.</div>
+<li class="level2"><div class="li"> <strong>One session per user</strong>: when a user logs in, all their previous sessions are removed</div>
 </li>
-<li class="level2"><div class="li"> <strong>One <abbr title="Internet Protocol">IP</abbr> only by user</strong>: a user can not open 2 sessions with different <abbr title="Internet Protocol">IP</abbr>.</div>
+<li class="level2"><div class="li"> <strong>One <abbr title="Internet Protocol">IP</abbr> address per user</strong>: when a user logs in, all their previous sessions on a different <abbr title="Internet Protocol">IP</abbr> address are removed</div>
 </li>
-<li class="level2"><div class="li"> <strong>One user by <abbr title="Internet Protocol">IP</abbr> address</strong>: 2 users can not open a session with the same <abbr title="Internet Protocol">IP</abbr>.</div>
+<li class="level2"><div class="li"> <strong>One user per <abbr title="Internet Protocol">IP</abbr> address</strong>: when a user logs in, all sessions that belong to a different user on that <abbr title="Internet Protocol">IP</abbr> address are removed</div>
 </li>
 <li class="level2"><div class="li"> <strong>Display deleted sessions</strong>: display deleted sessions on authentication phase.</div>
 </li>
@@ -100,7 +100,7 @@ To configure sessions, go in Manager, <code>General Parameters</code> » <code>S
 <div class="noteimportant">Note that since HTTP protocol is not connected, restrictions are not applied to the new session: the oldest are destroyed.
 </div>
 </div>
-<!-- EDIT1 SECTION "Sessions" [1-2404] -->
+<!-- EDIT1 SECTION "Sessions" [1-2497] -->
 <h1 class="sectionedit2" id="command-line_tools">Command-line tools</h1>
 <div class="level1">
 <ul>
@@ -115,6 +115,6 @@ $ llngDeleteSession dh*
 $ llngDeleteSession *</pre>
 
 </div>
-<!-- EDIT2 SECTION "Command-line tools" [2405-] --></div>
+<!-- EDIT2 SECTION "Command-line tools" [2498-] --></div>
 </body>
 </html>

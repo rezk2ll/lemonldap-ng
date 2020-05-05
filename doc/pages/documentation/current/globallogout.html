@@ -44,19 +44,15 @@
 <body>
 <div class="dokuwiki export container">
 
-<p>
-<a href="documentation/latest/beta.png_documentation_2.0_globallogout.html" class="media" title="documentation:latest:beta.png"><img src="documentation/latest/beta.ea231b49369c9f6406cbdf58d06a616c.png" class="media" alt="" width="100" /></a>
-</p>
-
 <h1 class="sectionedit1" id="global_logout_plugin">Global logout plugin</h1>
 <div class="level1">
 
 <p>
-This plugin allows a user to close all his opened sessions at logout process.
+This plugin allows a user to log out of all his active sessions.
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Global logout plugin" [40-154] -->
+<!-- EDIT1 SECTION "Global logout plugin" [1-102] -->
 <h2 class="sectionedit2" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -68,13 +64,20 @@ Just enable it in the Manager (section “plugins”).
 <ul>
 <li class="level2"><div class="li"> <strong>Activation</strong>: Enable/Disable or set a rule to select which users are allowed to close there sessions.</div>
 </li>
-<li class="level2"><div class="li"> <strong>Auto accept time</strong>: Enable/Disable timer. If timer is disabled, all opened sessions are always closed.</div>
+<li class="level2"><div class="li"> <strong>Auto accept time</strong>: Enable/Disable timer. If timer is disabled, all opened sessions will be immediately closed.</div>
+</li>
+<li class="level2"><div class="li"> <strong>Custom parameter</strong>: Session attribut to display at global logout</div>
 </li>
 </ul>
 </li>
 </ul>
+<div class="noteclassic">To display more than one session attribute, you can create a macro like this :
+<p>
+<code>user_USER =&gt; &quot;$uid_&quot; . uc $uid</code>
+</p>
 
 </div>
-<!-- EDIT2 SECTION "Configuration" [155-] --></div>
+</div>
+<!-- EDIT2 SECTION "Configuration" [103-] --></div>
 </body>
 </html>

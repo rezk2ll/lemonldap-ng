@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:idpopenidconnect</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="noindex,nofollow"/>
+<meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,idpopenidconnect"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="idpopenidconnect.html"/>
@@ -58,8 +58,8 @@
 <li class="level2"><div class="li"><a href="#configuration_of_relying_party_in_llng">Configuration of Relying Party in LL::NG</a></div>
 <ul class="toc">
 <li class="level3"><div class="li"><a href="#exported_attributes">Exported attributes</a></div></li>
+<li class="level3"><div class="li"><a href="#extra_claims">Extra Claims</a></div></li>
 <li class="level3"><div class="li"><a href="#options">Options</a></div></li>
-<li class="level3"><div class="li"><a href="#extra_claims">Extra claims</a></div></li>
 <li class="level3"><div class="li"><a href="#macros">Macros</a></div></li>
 <li class="level3"><div class="li"><a href="#display">Display</a></div></li>
 </ul></li>
@@ -246,7 +246,7 @@ An example of its content:
 <div class="level3">
 
 <p>
-Go in Manager and click on <code>OpenID Connect Relying Parties</code>, then click on <code>Add OpenID Relying Party</code>. Give a technical name (no spaces, no special characters), like “sample-rp”;
+Go in Manager and click on <code>OpenID Connect Relying Parties</code>, then click on <code>Add OpenID Relying Party</code>. Give a technical label (no spaces, no special characters), like “sample-rp”;
 </p>
 
 <p>
@@ -268,86 +268,86 @@ You can map here the attribute names from the <abbr title="LemonLDAP::NG">LL::NG
 <div class="table sectionedit10"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
-		<th class="col0"> Claim name </th><th class="col1"> Type </th><th class="col2"> Example of corresponding LDAP attribute </th>
+		<th class="col0"> Claim name </th><th class="col1"> Associated scope </th><th class="col2"> Type </th><th class="col3"> Example of corresponding LDAP attribute </th>
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0"> sub </td><td class="col1"> string </td><td class="col2"> uid </td>
+		<td class="col0"> sub </td><td class="col1"> openid </td><td class="col2"> string </td><td class="col3"> uid </td>
 	</tr>
 	<tr class="row2 roweven">
-		<td class="col0"> name </td><td class="col1"> string </td><td class="col2"> cn </td>
+		<td class="col0"> name </td><td class="col1"> profile </td><td class="col2"> string </td><td class="col3"> cn </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0"> given_name </td><td class="col1"> string </td><td class="col2"> givenName </td>
+		<td class="col0"> given_name </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> givenName </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0"> family_name </td><td class="col1"> string </td><td class="col2"> sn </td>
+		<td class="col0"> family_name </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> sn </td>
 	</tr>
 	<tr class="row5 rowodd">
-		<td class="col0"> middle_name </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> middle_name </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0"> nickname </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> nickname </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row7 rowodd">
-		<td class="col0"> preferred_username </td><td class="col1"> string </td><td class="col2"> displayName </td>
+		<td class="col0"> preferred_username </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> displayName </td>
 	</tr>
 	<tr class="row8 roweven">
-		<td class="col0"> profile </td><td class="col1"> string </td><td class="col2"> labeledURI </td>
+		<td class="col0"> profile </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> labeledURI </td>
 	</tr>
 	<tr class="row9 rowodd">
-		<td class="col0"> picture </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> picture </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row10 roweven">
-		<td class="col0"> website </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> website </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row11 rowodd">
-		<td class="col0"> email </td><td class="col1"> string </td><td class="col2"> mail </td>
+		<td class="col0"> email </td><td class="col1"> email </td><td class="col2">string </td><td class="col3"> mail </td>
 	</tr>
 	<tr class="row12 roweven">
-		<td class="col0"> email_verified </td><td class="col1"> boolean </td><td class="col2"> </td>
+		<td class="col0"> email_verified </td><td class="col1"> email </td><td class="col2">boolean </td><td class="col3"> </td>
 	</tr>
 	<tr class="row13 rowodd">
-		<td class="col0"> gender </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> gender </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row14 roweven">
-		<td class="col0"> birthdate </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> birthdate </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row15 rowodd">
-		<td class="col0"> zoneinfo </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> zoneinfo </td><td class="col1"> profile </td><td class="col2"> string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row16 roweven">
-		<td class="col0"> locale </td><td class="col1"> string </td><td class="col2"> preferredLanguage </td>
+		<td class="col0"> locale </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> preferredLanguage </td>
 	</tr>
 	<tr class="row17 rowodd">
-		<td class="col0"> phone_number </td><td class="col1"> string </td><td class="col2"> telephoneNumber </td>
+		<td class="col0"> phone_number </td><td class="col1"> phone </td><td class="col2">string </td><td class="col3"> telephoneNumber </td>
 	</tr>
 	<tr class="row18 roweven">
-		<td class="col0"> phone_number_verified </td><td class="col1"> boolean </td><td class="col2"> </td>
+		<td class="col0"> phone_number_verified </td><td class="col1"> phone </td><td class="col2">boolean </td><td class="col3"> </td>
 	</tr>
 	<tr class="row19 rowodd">
-		<td class="col0"> updated_at </td><td class="col1"> string </td><td class="col2"> </td>
+		<td class="col0"> updated_at </td><td class="col1"> profile </td><td class="col2">string </td><td class="col3"> </td>
 	</tr>
 	<tr class="row20 roweven">
-		<td class="col0"> formatted </td><td class="col1"> string </td><td class="col2"> registeredAddress </td>
+		<td class="col0"> formatted </td><td class="col1"> address </td><td class="col2">string </td><td class="col3"> registeredAddress </td>
 	</tr>
 	<tr class="row21 rowodd">
-		<td class="col0"> street_address </td><td class="col1"> string </td><td class="col2"> street </td>
+		<td class="col0"> street_address </td><td class="col1"> address </td><td class="col2"> string </td><td class="col3"> street </td>
 	</tr>
 	<tr class="row22 roweven">
-		<td class="col0"> locality </td><td class="col1"> string </td><td class="col2"> l </td>
+		<td class="col0"> locality </td><td class="col1"> address </td><td class="col2"> string </td><td class="col3"> l </td>
 	</tr>
 	<tr class="row23 rowodd">
-		<td class="col0"> region </td><td class="col1"> string </td><td class="col2"> st </td>
+		<td class="col0"> region </td><td class="col1"> address </td><td class="col2"> string </td><td class="col3"> st </td>
 	</tr>
 	<tr class="row24 roweven">
-		<td class="col0"> postal_code </td><td class="col1"> string </td><td class="col2"> postalCode </td>
+		<td class="col0"> postal_code </td><td class="col1"> address </td><td class="col2"> string </td><td class="col3"> postalCode </td>
 	</tr>
 	<tr class="row25 rowodd">
-		<td class="col0"> country </td><td class="col1"> string </td><td class="col2"> co </td>
+		<td class="col0"> country </td><td class="col1"> address </td><td class="col2"> string </td><td class="col3"> co </td>
 	</tr>
 </table></div>
-<!-- EDIT10 TABLE [38-861] -->
+<!-- EDIT10 TABLE [38-1104] -->
 </div>
 <!-- EDIT9 PLUGIN_INCLUDE_END "documentation:2.0:openidconnectclaims" [0-] --></div>
 <div class="level4">
@@ -365,22 +365,35 @@ So you can define for example:
 </ul>
 <div class="noteimportant">The specific <code>sub</code> attribute is not defined here, but in User attribute parameter (see below).
 </div>
+</div>
+
+<h4 id="extra_claims">Extra Claims</h4>
+<div class="level4">
+<div class="noteimportant">By default, only claims that are part of standard OpenID Connect scopes will be sent to a client. If you want to send a claim that is not in the OpenID Connect specification, you need to declare it in the Extra Claims section
+</div>
 <p>
-You can also define extra claims and link them to attributes (see below). Then you just have to define the mapping of this new attributes, for example:
+If you want to make custom claims visible to OpenID Connect clients, you need to declare them in a scope.
+</p>
+
+<p>
+Add your additional scope as the <strong>Key</strong>, and a space-separated list of claims as the <strong>Value</strong>:
 </p>
 <ul>
-<li class="level1"><div class="li"> birthplace =&gt; l</div>
-</li>
-<li class="level1"><div class="li"> birthcountry =&gt; co</div>
+<li class="level1"><div class="li"> timelord =&gt; rebirth_count bloodline </div>
 </li>
 </ul>
 
+<p>
+In this example, an OpenID Client asking for the <code>timelord</code> scope will be able to read the <code>rebirth_count</code> and <code>bloodline</code> claims from the Userinfo endpoint.
+</p>
+<div class="notewarning">Any Claim defined in this section must be mapped to a LemonLDAP::NG session attribute in the <strong>Exported Attributes</strong> section
+</div>
 </div>
 
 <h4 id="options">Options</h4>
 <div class="level4">
 <ul>
-<li class="level1"><div class="li"> <strong>Authentication</strong>:</div>
+<li class="level1"><div class="li"> <strong>Basic</strong></div>
 <ul>
 <li class="level2"><div class="li"> <strong>Client ID</strong>: Client ID for this RP</div>
 </li>
@@ -388,42 +401,67 @@ You can also define extra claims and link them to attributes (see below). Then y
 </li>
 <li class="level2"><div class="li"> <strong>Public client</strong> (since version <code>2.0.4</code>): set this RP as public client, so authentication is not needed on token endpoint</div>
 </li>
+<li class="level2"><div class="li"> <strong>Redirection addresses</strong>: Space separated list of redirect addresses allowed for this RP</div>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <strong>Advanced</strong></div>
+<ul>
+<li class="level2"><div class="li"> <strong>Bypass consent</strong>: Enable if you never want to display the scope sharing consent screen (consent will be accepted by default). Bypassing the consent is <strong>not</strong> compliant with OpenID Connect standard.</div>
+</li>
+<li class="level2"><div class="li"> <strong>User attribute</strong>: session field that will be used as main identifier (<code>sub</code>)</div>
+</li>
+<li class="level2"><div class="li"> <strong>Force claims to be returned in ID Token</strong>: This options will make user attributes from the requested scope appear as ID Token claims.</div>
+</li>
+<li class="level2"><div class="li"> <strong>Additional audiences</strong> (since version <code>2.0.8</code>): You can specify a space-separate list of audiences that will be added the audiences of the ID Token</div>
+</li>
+<li class="level2"><div class="li"> <strong>Use refresh tokens</strong> (since version <code>2.0.7</code>): If this option is set, LemonLDAP::NG will issue a Refresh Token that can be used to obtain new access tokens as long as the user session is still valid.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>Timeouts</strong></div>
+<ul>
+<li class="level2"><div class="li"> <strong>Authorization Code expiration</strong>: Expiration time of authorization code, when using the Authorization Code flow. The default value is one minute.</div>
+</li>
+<li class="level2"><div class="li"> <strong>ID Token expiration</strong>: Expiration time of ID Tokens. The default value is one hour.</div>
+</li>
+<li class="level2"><div class="li"> <strong>Access token expiration</strong>: Expiration time of Access Tokens. The default value is one hour.</div>
+</li>
+<li class="level2"><div class="li"> <strong>Offline session expiration</strong>: This sets the lifetime of the refresh token obtained with the <strong>offline_access</strong> scope. The default value is one month. This parameter only applies if offline sessions are enabled.</div>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <strong>Security</strong></div>
+<ul>
+<li class="level2"><div class="li"> <strong>ID Token signature algorithm</strong>: Select one of <code>none</code>, <code>HS256</code>, <code>HS384</code>, <code>HS512</code>, <code>RS256</code>, <code>RS384</code>, <code>RS512</code></div>
+</li>
 <li class="level2"><div class="li"> <strong>Require PKCE</strong> (since version <code>2.0.4</code>): a code challenge is required at token endpoint (see <a href="https://tools.ietf.org/html/rfc7636" class="urlextern" title="https://tools.ietf.org/html/rfc7636"  rel="nofollow">RFC7636</a>)</div>
 </li>
-</ul>
+<li class="level2"><div class="li"> <strong>Allow offline access</strong> (since version <code>2.0.7</code>): After enabling this feature, an application may request the  <strong>offline_access</strong> scope, and will obtain a Refresh Token that persists even after the user has logged off. See <a href="https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess" class="urlextern" title="https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess"  rel="nofollow">https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess</a> for details. These offline sessions can be administered through the Session Browser.</div>
 </li>
-<li class="level1"><div class="li"> <strong>User attribute</strong>: session field that will be used as main identifier (<code>sub</code>)</div>
+<li class="level2"><div class="li"> <strong>Allow OAuth2.0 Password Grant</strong> (since version <code>2.0.8</code>): Allow the use of the Resource Owner Password Credentials Grant on by this client. This feature only works if you have configured a form-based authentication module.</div>
 </li>
-<li class="level1"><div class="li"> <strong>ID Token signature algorithm</strong>: Select one of <code>none</code>, <code>HS256</code>, <code>HS384</code>, <code>HS512</code>, <code>RS256</code>, <code>RS384</code>, <code>RS512</code></div>
-</li>
-<li class="level1"><div class="li"> <strong>ID Token expiration</strong>: Expiration time of ID Tokens. The default value is one hour.</div>
-</li>
-<li class="level1"><div class="li"> <strong>Force claims to be returned in ID Token</strong>: This options will make user attributes from the requested scope appear as ID Token claims.</div>
-</li>
-<li class="level1"><div class="li"> <strong>Access token expiration</strong>: Expiration time of Access Tokens. The default value is one hour.</div>
-</li>
-<li class="level1"><div class="li"> <strong>Authorization Code expiration</strong>: Expiration time of authorization code, when using the Authorization Code flow. The default value is one minute.</div>
-</li>
-<li class="level1"><div class="li"> <strong>Use refresh tokens</strong>: If this option is set, LemonLDAP::NG will issue a Refresh Token that can be used to obtain new access tokens as long as the user session is still valid.</div>
-</li>
-<li class="level1"><div class="li"> <strong>Allow offline access</strong>: After enabling this feature, an application may request the  <strong>offline_access</strong> scope, and will obtain a Refresh Token that persists even after the user has logged off. See <a href="https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess" class="urlextern" title="https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess"  rel="nofollow">https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess</a> for details. These offline sessions can be administered through the Session Browser.</div>
-</li>
-<li class="level1"><div class="li"> <strong>Offline session expiration</strong>: This sets the lifetime of the refresh token obtained with the <strong>offline_access</strong> scope. The default value is one month. This parameter only applies if offline sessions are enabled.</div>
-</li>
-<li class="level1"><div class="li"> <strong>Redirection addresses</strong>: Space separated list of redirect addresses allowed for this RP</div>
-</li>
-<li class="level1"><div class="li"> <strong>Bypass consent</strong>: Enable if you never want to display the scope sharing consent screen (consent will be accepted by default). Bypassing the consent is <strong>not</strong> compliant with OpenID Connect standard.</div>
+<li class="level2"><div class="li"> <strong>Access Rule</strong>: lets you specify a <a href="rules_examples.html" class="wikilink1" title="documentation:2.0:rules_examples">Perl rule</a> to restrict access to this client</div>
 </li>
 </ul>
-
-</div>
-
-<h4 id="extra_claims">Extra claims</h4>
-<div class="level4">
-
-<p>
-Associate attributes to extra claims if the RP request them, for example <code>birth</code> =&gt; <code>birthplace birthcountry</code>
-</p>
+</li>
+<li class="level1"><div class="li"> <strong>Logout</strong></div>
+<ul>
+<li class="level2"><div class="li"> <strong>Allowed redirection addresses for logout</strong>: A space separated list of URLs that this client can redirect the user to once the logout is done (through <code>post_logout_redirect_uri</code>)</div>
+</li>
+<li class="level2"><div class="li"> <strong><abbr title="Uniform Resource Locator">URL</abbr></strong>: Specify the relying party&#039;s logout <abbr title="Uniform Resource Locator">URL</abbr></div>
+</li>
+<li class="level2"><div class="li"> <strong>Type</strong>: Type of Logout to perform (only Front-Channel is implemented for now)</div>
+</li>
+<li class="level2"><div class="li"> <strong>Session required</strong>: Whether to send the Session ID in the logout request</div>
+</li>
+</ul>
+</li>
+</ul>
 
 </div>
 
