@@ -14,7 +14,7 @@ my $SKIPUSER = 0;
 # --------------------
 ok( $res = $client->_get('/'), 'Unauthentified query' );
 ok( ref($res) eq 'ARRAY', 'Response is an array' ) or explain( $res, 'array' );
-ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
+ok( $res->[0] == 302, ' Code is 302' ) or explain( $res->[0], 302 );
 my %h = @{ $res->[1] };
 ok(
     $h{Location} eq 'http://auth.example.com/?url='
@@ -33,7 +33,7 @@ count(4);
 # Authorized query
 ok( $res = $client->_get( '/', undef, undef, "lemonldap=$sessionId" ),
     'Authentified query' );
-ok( $res->[0] == 200, 'Code is 200' ) or explain( $res, 200 );
+ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);
 
 # Request an URI protected by custom function -> allowed
@@ -78,7 +78,7 @@ count(2);
 # Denied query
 ok( $res = $client->_get( '/deny', undef, undef, "lemonldap=$sessionId" ),
     'Denied query' );
-ok( $res->[0] == 403, 'Code is 403' ) or explain( $res->[0], 403 );
+ok( $res->[0] == 403, ' Code is 403' ) or explain( $res->[0], 403 );
 count(2);
 
 # Required "timelords" group
@@ -87,7 +87,7 @@ ok(
       $client->_get( '/fortimelords', undef, undef, "lemonldap=$sessionId" ),
     'Require Timelords group'
 );
-ok( $res->[0] == 200, 'Code is 200' ) or explain( $res, 200 );
+ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);
 
 # Required "dalek" group
@@ -95,13 +95,13 @@ ok(
     $res = $client->_get( '/fordaleks', undef, undef, "lemonldap=$sessionId" ),
     'Require Dalek group'
 );
-ok( $res->[0] == 403, 'Code is 403' ) or explain( $res, 403 );
+ok( $res->[0] == 403, ' Code is 403' ) or explain( $res, 403 );
 count(2);
 
 # Required AuthnLevel = 1
 ok( $res = $client->_get( '/AuthWeak', undef, undef, "lemonldap=$sessionId" ),
     'Weak Authentified query' );
-ok( $res->[0] == 200, 'Code is 200' ) or explain( $res, 200 );
+ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);
 
 # Required AuthnLevel = 5
@@ -109,7 +109,7 @@ ok(
     $res = $client->_get( '/AuthStrong', undef, undef, "lemonldap=$sessionId" ),
     'Strong Authentified query'
 );
-ok( $res->[0] == 302, 'Code is 302' ) or explain( $res, 302 );
+ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
 %h = @{ $res->[1] };
 ok(
     $h{Location} eq 'http://auth.example.com//upgradesession?url='
@@ -133,7 +133,7 @@ ok(
     ),
     'Bad cookie'
 );
-ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
+ok( $res->[0] == 302, ' Code is 302' ) or explain( $res->[0], 302 );
 unlink(
 't/sessions/lock/Apache-Session-e5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545.lock'
 );
@@ -146,7 +146,7 @@ ok(
     ),
     'Weak Authentified query'
 );
-ok( $res->[0] == 200, 'Code is 200' ) or explain( $res, 200 );
+ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);
 
 # Required AuthnLevel = 5
@@ -155,7 +155,7 @@ ok(
       $client->_get( '/', undef, 'test2.example.com', "lemonldap=$sessionId" ),
     'Default Authentified query'
 );
-ok( $res->[0] == 302, 'Code is 302' ) or explain( $res, 302 );
+ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
 %h = @{ $res->[1] };
 ok(
     $h{Location} eq 'http://auth.example.com//upgradesession?url='
@@ -171,12 +171,25 @@ count(3);
 
 ok( $res = $client->_get( '/skipif/za', undef, 'test1.example.com' ),
     'Test skip() rule 1' );
-ok( $res->[0] == 302, 'Code is 302' ) or explain( $res, 302 );
+ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
 $SKIPUSER = 1;
 ok( $res = $client->_get( '/skipif/zz', undef, 'test1.example.com' ),
     'Test skip() rule 2' );
-ok( $res->[0] == 200, 'Code is 200' ) or explain( $res, 200 );
+ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(4);
+
+# Wildcards
+ok($res = $client->_get( '/', undef, 'foo.example.org', "lemonldap=$sessionId" ), 'Accept "*.example.org"');
+ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
+count(2);
+
+ok($res = $client->_get( '/', undef, 'foo.example.fr', "lemonldap=$sessionId" ), 'Reject "foo.example.fr"');
+ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
+count(2);
+
+ok($res = $client->_get( '/', undef, 'test-foo.example.fr', "lemonldap=$sessionId" ), 'Accept "test*.example.fr"');
+ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
+count(2);
 
 done_testing( count() );
 
