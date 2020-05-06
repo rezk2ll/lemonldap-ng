@@ -276,9 +276,20 @@ sub locationRulesInit {
     my ( $class, $conf, $orules ) = @_;
 
     $orules ||= $conf->{locationRules};
+    $class->tsv->{vhostReg} = [];
 
     foreach my $vhost ( keys %$orules ) {
         my $rules = $orules->{$vhost};
+        if ( $vhost =~ /\*/ ) {
+            my @elts = map { quotemeta $_ } split /\*/, $vhost;
+            if (@elts) {
+                my $expr = '^' . join( '.*', @elts ) . '$';
+                push @{ $class->tsv->{vhostReg} }, [ qr/$expr/, $vhost ];
+            }
+            else {
+                push @{ $class->tsv->{vhostReg} }, [ qr/.+/, $vhost ];
+            }
+        }
         $class->tsv->{locationCount}->{$vhost}         = 0;
         $class->tsv->{locationCondition}->{$vhost}     = [];
         $class->tsv->{locationProtection}->{$vhost}    = [];

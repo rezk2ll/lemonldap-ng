@@ -451,7 +451,7 @@ sub fetchId {
     my $value =
       $lookForHttpCookie
       ? ( $t =~ /${cn}http=([^,; ]+)/o ? $1 : 0 )
-      : ( $t =~ /$cn=([^,; ]+)/o ? $1 : 0 );
+      : ( $t =~ /$cn=([^,; ]+)/o       ? $1 : 0 );
 
     if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
         $value = $class->tsv->{cipher}->decryptHex( $value, "http" );
@@ -730,10 +730,8 @@ sub resolveAlias {
     return $class->tsv->{vhostAlias}->{$vhost}
       if ( $class->tsv->{vhostAlias}->{$vhost} );
     return $vhost if ( $class->tsv->{defaultCondition}->{$vhost} );
-    my $v = $vhost;
-    while ( $v =~ s/[\w\-]+/\*/ ) {
-        return $v if ( $class->tsv->{defaultCondition}->{$v} );
-        $v =~ s/^\*\.*//;
+    foreach ( @{ $class->tsv->{vhostReg} } ) {
+        return $_->[1] if $vhost =~ $_->[0];
     }
     return $vhost;
 }
