@@ -225,7 +225,7 @@ count(2);
 ok(
     $res =
       $client->_get( '/', undef, 'abfoo.example.org', "lemonldap=$sessionId" ),
-    'Reject "abfoo.example.org/orgdeny"'
+    'Reject "abfoo.example.org/"'
 );
 ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
 count(2);
