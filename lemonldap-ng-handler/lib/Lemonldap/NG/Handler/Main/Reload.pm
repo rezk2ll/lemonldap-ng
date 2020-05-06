@@ -339,7 +339,7 @@ sub locationRulesInit {
         my $bv = $b->[1];
         return 1  if $av =~ /^\*/ and $bv !~ /^\*/;
         return -1 if $bv =~ /^\*/ and $av !~ /^\*/;
-        return length($bv) <=> length($av);
+        return length($bv) <=> length($av) || $bv cmp $av;
     } @{ $class->tsv->{vhostReg} } if @{ $class->tsv->{vhostReg} };
     push @{ $class->tsv->{vhostReg} }, @lastReg if @lastReg;
     return 1;
