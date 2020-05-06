@@ -195,6 +195,10 @@ ok($res = $client->_get( '/orgdeny', undef, 'afoo.example.org', "lemonldap=$sess
 ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);
 
+ok($res = $client->_get( '/orgdeny', undef, 'abfoo.example.org', "lemonldap=$sessionId" ), 'Reject "abfoo.example.org/orgdeny"');
+ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
+count(2);
+
 ok($res = $client->_get( '/', undef, 'test-foo.example.fr', "lemonldap=$sessionId" ), 'Accept "test*.example.fr"');
 ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);

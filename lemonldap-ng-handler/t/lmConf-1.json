@@ -65,6 +65,9 @@
     "a*.example.org": {
       "default": "accept"
     },
+    "ab*.example.org": {
+      "default": "deny"
+    },
     "test*.example.fr": {
       "default": "accept"
     }

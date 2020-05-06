@@ -337,10 +337,10 @@ sub locationRulesInit {
     @{ $class->tsv->{vhostReg} } = sort {
         my $av = $a->[1];
         my $bv = $b->[1];
-        return -1 if $av =~ /^*/ and $bv !~ /^*/;
-        return 1  if $bv =~ /^*/ and $av !~ /^*/;
-        return length($a) <=> length($b);
-    } @{ $class->tsv->{vhostReg} };
+        return 1  if $av =~ /^\*/ and $bv !~ /^\*/;
+        return -1 if $bv =~ /^\*/ and $av !~ /^\*/;
+        return length($bv) <=> length($av);
+    } @{ $class->tsv->{vhostReg} } if @{ $class->tsv->{vhostReg} };
     push @{ $class->tsv->{vhostReg} }, @lastReg if @lastReg;
     return 1;
 }
