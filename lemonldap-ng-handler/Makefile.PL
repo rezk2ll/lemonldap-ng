@@ -13,6 +13,7 @@ WriteMakefile(
         'IO::Pipe'          => 0,
         'Test::MockObject'  => 0,
         'Test::Pod'         => 0,
+        'Time::Fake'        => 0,
         'Cwd'               => 0,
     },
     META_MERGE => {

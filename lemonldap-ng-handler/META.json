@@ -26,7 +26,8 @@
             "Digest::HMAC_SHA1" : "0",
             "IO::Pipe" : "0",
             "Test::MockObject" : "0",
-            "Test::Pod" : "0"
+            "Test::Pod" : "0",
+            "Time::Fake" : "0"
          }
       },
       "configure" : {
@@ -59,5 +60,5 @@
       "x_MailingList" : "mailto:lemonldap-ng-dev@ow2.org"
    },
    "version" : "v2.0.8",
-   "x_serialization_backend" : "JSON::PP version 2.97001"
+   "x_serialization_backend" : "JSON::PP version 4.02"
 }
