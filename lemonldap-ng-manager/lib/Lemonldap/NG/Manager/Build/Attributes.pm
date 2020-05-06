@@ -2086,7 +2086,7 @@ sub attributes {
                 },
                 msgFail => '__badExpression__',
             },
-            keyTest => qr/^(?:\*\.)?$Regexp::Common::URI::RFC2396::hostname$/,
+            keyTest => qr/^\S+$/,
             keyMsgFail    => '__badHostname__',
             default       => { default => 'deny', },
             documentation => 'Virtualhost rules',
@@ -2095,7 +2095,7 @@ sub attributes {
         exportedHeaders => {
             type    => 'keyTextContainer',
             help    => 'writingrulesand_headers.html#headers',
-            keyTest => qr/^(?:\*\.)?$Regexp::Common::URI::RFC2396::hostname$/,
+            keyTest => qr/^\S+$/,
             keyMsgFail => '__badHostname__',
             test       => {
                 keyTest    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
@@ -2109,7 +2109,7 @@ sub attributes {
             type    => 'postContainer',
             help    => 'formreplay.html',
             test    => sub { 1 },
-            keyTest => qr/^(?:\*\.)?$Regexp::Common::URI::RFC2396::hostname$/,
+            keyTest => qr/^\S+$/,
             keyMsgFail    => '__badHostname__',
             documentation => 'Virtualhost urls/Data to post',
         },

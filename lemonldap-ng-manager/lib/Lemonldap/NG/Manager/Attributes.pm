@@ -1227,9 +1227,8 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
         },
         'exportedHeaders' => {
             'keyMsgFail' => '__badHostname__',
-            'keyTest' =>
-qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
-            'test' => {
+            'keyTest'    => qr/^\S+$/,
+            'test'       => {
                 'keyMsgFail' => '__badHeaderName__',
                 'keyTest'    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
                 'test'       => sub {
@@ -1741,9 +1740,8 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'default' => 'deny'
             },
             'keyMsgFail' => '__badHostname__',
-            'keyTest' =>
-qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
-            'test' => {
+            'keyTest'    => qr/^\S+$/,
+            'test'       => {
                 'keyMsgFail' => '__badRegexp__',
                 'keyTest'    => sub {
                     eval {
@@ -2674,9 +2672,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'post' => {
             'keyMsgFail' => '__badHostname__',
-            'keyTest' =>
-qr/^(?:\*\.)?(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
-            'test' => sub {
+            'keyTest'    => qr/^\S+$/,
+            'test'       => sub {
                 1;
             },
             'type' => 'postContainer'
