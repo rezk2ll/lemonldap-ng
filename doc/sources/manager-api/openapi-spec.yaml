@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: LemonLDAP::NG Manager API
-  description: The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users.
+  description: The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users. The client libraries mentionned in examples can be generated from doc/sources/manager-api/openapi-spec.yaml
   version: 2.0.8
 servers:
   - url: /api/v1
