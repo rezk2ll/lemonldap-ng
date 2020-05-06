@@ -10,6 +10,7 @@ WriteMakefile(
     PMLIBDIRS      => ['lib'],
     BUILD_REQUIRES => {
         'Digest::HMAC_SHA1' => 0,
+        'Env'               => 0,
         'IO::Pipe'          => 0,
         'Test::MockObject'  => 0,
         'Test::Pod'         => 0,
