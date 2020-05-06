@@ -179,27 +179,63 @@ ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(4);
 
 # Wildcards
-ok($res = $client->_get( '/', undef, 'foo.example.org', "lemonldap=$sessionId" ), 'Accept "*.example.org"');
+ok(
+    $res =
+      $client->_get( '/', undef, 'foo.example.org', "lemonldap=$sessionId" ),
+    'Accept "*.example.org"'
+);
 ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);
 
-ok($res = $client->_get( '/', undef, 'foo.example.fr', "lemonldap=$sessionId" ), 'Reject "foo.example.fr"');
+ok(
+    $res =
+      $client->_get( '/', undef, 'foo.example.fr', "lemonldap=$sessionId" ),
+    'Reject "foo.example.fr"'
+);
 ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
 count(2);
 
-ok($res = $client->_get( '/orgdeny', undef, 'foo.example.org', "lemonldap=$sessionId" ), 'Reject "foo.example.org/orgdeny"');
+ok(
+    $res = $client->_get(
+        '/orgdeny', undef, 'foo.example.org', "lemonldap=$sessionId"
+    ),
+    'Reject "foo.example.org/orgdeny"'
+);
 ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
 count(2);
 
-ok($res = $client->_get( '/orgdeny', undef, 'afoo.example.org', "lemonldap=$sessionId" ), 'Accept "afoo.example.org/orgdeny"');
+ok(
+    $res = $client->_get(
+        '/orgdeny', undef, 'afoo.example.org', "lemonldap=$sessionId"
+    ),
+    'Accept "afoo.example.org/orgdeny"'
+);
 ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);
 
-ok($res = $client->_get( '/orgdeny', undef, 'abfoo.example.org', "lemonldap=$sessionId" ), 'Reject "abfoo.example.org/orgdeny"');
+ok(
+    $res = $client->_get(
+        '/orgdeny', undef, 'abfoo.example.org', "lemonldap=$sessionId"
+    ),
+    'Reject "abfoo.example.org/orgdeny"'
+);
 ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
 count(2);
 
-ok($res = $client->_get( '/', undef, 'test-foo.example.fr', "lemonldap=$sessionId" ), 'Accept "test*.example.fr"');
+ok(
+    $res =
+      $client->_get( '/', undef, 'abfoo.example.org', "lemonldap=$sessionId" ),
+    'Reject "abfoo.example.org/orgdeny"'
+);
+ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
+count(2);
+
+ok(
+    $res = $client->_get(
+        '/', undef, 'test-foo.example.fr', "lemonldap=$sessionId"
+    ),
+    'Accept "test*.example.fr"'
+);
 ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);
 
