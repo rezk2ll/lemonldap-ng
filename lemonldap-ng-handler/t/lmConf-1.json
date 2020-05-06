@@ -62,6 +62,9 @@
       "^/orgdeny": "deny",
       "default": "accept"
     },
+    "a*.example.org": {
+      "default": "accept"
+    },
     "test*.example.fr": {
       "default": "accept"
     }

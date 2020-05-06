@@ -277,6 +277,7 @@ sub locationRulesInit {
 
     $orules ||= $conf->{locationRules};
     $class->tsv->{vhostReg} = [];
+    my @lastReg;
 
     foreach my $vhost ( keys %$orules ) {
         my $rules = $orules->{$vhost};
@@ -287,7 +288,7 @@ sub locationRulesInit {
                 push @{ $class->tsv->{vhostReg} }, [ qr/$expr/, $vhost ];
             }
             else {
-                push @{ $class->tsv->{vhostReg} }, [ qr/.+/, $vhost ];
+                push @lastReg, [ qr/.+/, $vhost ];
             }
         }
         $class->tsv->{locationCount}->{$vhost}         = 0;
@@ -333,6 +334,14 @@ sub locationRulesInit {
             $class->tsv->{defaultProtection}->{$vhost} = 0;
         }
     }
+    @{ $class->tsv->{vhostReg} } = sort {
+        my $av = $a->[1];
+        my $bv = $b->[1];
+        return -1 if $av =~ /^*/ and $bv !~ /^*/;
+        return 1  if $bv =~ /^*/ and $av !~ /^*/;
+        return length($a) <=> length($b);
+    } @{ $class->tsv->{vhostReg} };
+    push @{ $class->tsv->{vhostReg} }, @lastReg if @lastReg;
     return 1;
 }
 
