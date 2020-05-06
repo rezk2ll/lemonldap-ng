@@ -224,6 +224,23 @@ count(2);
 
 ok(
     $res =
+      $client->_get( '/', undef, 'abfoo.a.example.org', "lemonldap=$sessionId" ),
+    'Accept "abfoo.a.example.org/"'
+);
+ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
+count(2);
+
+ok(
+    $res = $client->_get(
+        '/orgdeny', undef, 'abfoo.a.example.org', "lemonldap=$sessionId"
+    ),
+    'Accept "abfoo.a.example.org/orgdeny"'
+);
+ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
+count(2);
+
+ok(
+    $res =
       $client->_get( '/', undef, 'abfoo.example.org', "lemonldap=$sessionId" ),
     'Reject "abfoo.example.org/"'
 );

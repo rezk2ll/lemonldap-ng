@@ -281,11 +281,13 @@ sub locationRulesInit {
 
     foreach my $vhost ( keys %$orules ) {
         my $rules = $orules->{$vhost};
-        if ( $vhost =~ /\*/ ) {
-            my @elts = map { quotemeta $_ } split /\*/, $vhost;
-            if (@elts) {
-                my $expr = '^' . join( '.*', @elts ) . '$';
-                push @{ $class->tsv->{vhostReg} }, [ qr/$expr/, $vhost ];
+        if ( $vhost =~ /[\%\*]/ ) {
+            my $expr = join '[^\.]*', map {
+                my $elt = $_;
+                join '.*', map { quotemeta $_ } split /\*/, $elt;
+            } split /\%/, $vhost;
+            if ($expr) {
+                push @{ $class->tsv->{vhostReg} }, [ qr/^$expr$/, $vhost ];
             }
             else {
                 push @lastReg, [ qr/.+/, $vhost ];
@@ -339,6 +341,8 @@ sub locationRulesInit {
         my $bv = $b->[1];
         return 1  if $av =~ /^\*/ and $bv !~ /^\*/;
         return -1 if $bv =~ /^\*/ and $av !~ /^\*/;
+        return 1  if $av =~ /^\%/ and $bv !~ /^\%/;
+        return -1 if $bv =~ /^\%/ and $av !~ /^\%/;
         return length($bv) <=> length($av) || $av cmp $bv;
     } @{ $class->tsv->{vhostReg} } if @{ $class->tsv->{vhostReg} };
     push @{ $class->tsv->{vhostReg} }, @lastReg if @lastReg;
