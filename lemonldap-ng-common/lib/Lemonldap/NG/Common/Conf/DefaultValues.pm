@@ -245,7 +245,7 @@ sub defaultValues {
         'portalDisplayGeneratePassword' => 1,
         'portalDisplayLoginHistory'     => 1,
         'portalDisplayLogout'           => 1,
-        'portalDisplayOidcConsents'     => '$_oidcConnectedRP',
+        'portalDisplayOidcConsents'     => '$_oidcConsents',
         'portalDisplayRefreshMyRights'  => 1,
         'portalDisplayRegister'         => 1,
         'portalErrorOnExpiredSession'   => 1,

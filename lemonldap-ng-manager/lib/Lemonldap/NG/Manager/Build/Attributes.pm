@@ -1069,7 +1069,7 @@ sub attributes {
         },
         portalDisplayOidcConsents => {
             type          => 'boolOrExpr',
-            default       => '$_oidcConnectedRP',
+            default       => '$_oidcConsents',
             documentation => 'Display OIDC consent tab in portal',
         },
         portalDisplayGeneratePassword => {
