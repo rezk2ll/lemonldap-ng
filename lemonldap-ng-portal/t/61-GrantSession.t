@@ -20,6 +20,7 @@ my $client = LLNG::Manager::Test->new( {
                 'Rtyler_Allowed##rule3'        => '$uid eq "rtyler"',
                 '##rule2'                      => '$uid ne "msmith"',
                 '##rule4'                      => '$uid ne "jdoe"',
+                '##bad_rule'                   => '$uid n "jdoe"',
             }
         }
     }

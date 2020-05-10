@@ -28,8 +28,9 @@ sub init {
             $hd->substitute( $self->conf->{grantSessionRules}->{$_} ) );
         unless ($rule) {
             my $error = $hd->tsv->{jail}->error || '???';
-            $self->error("Bad grantSession rule -> $error");
-            return 0;
+            $self->logger->error("Bad grantSession rule -> $error");
+            $self->logger->debug("Skipping GrantSession rule \"$_\"");
+            next;
         }
         $self->rules->{$_} = $rule;
     }
