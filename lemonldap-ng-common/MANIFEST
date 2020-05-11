@@ -10,6 +10,7 @@ lib/Lemonldap/NG/Common/Apache/Session/Serialize/JSON.pm
 lib/Lemonldap/NG/Common/Apache/Session/SOAP.pm
 lib/Lemonldap/NG/Common/Apache/Session/Store.pm
 lib/Lemonldap/NG/Common/Cli.pm
+lib/Lemonldap/NG/Common/CliSessions.pm
 lib/Lemonldap/NG/Common/Combination/Parser.pm
 lib/Lemonldap/NG/Common/Conf.pm
 lib/Lemonldap/NG/Common/Conf/AccessLib.pm
@@ -73,6 +74,7 @@ scripts/convertConfig
 scripts/convertSessions
 scripts/importMetadata
 scripts/lemonldap-ng-cli
+scripts/lemonldap-ng-sessions
 scripts/lmMigrateConfFiles2ini
 scripts/rotateOidcKeys
 t/01-Common-Conf.t

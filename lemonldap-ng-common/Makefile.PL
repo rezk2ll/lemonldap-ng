@@ -93,5 +93,6 @@ WriteMakefile(
         'scripts/convertConfig'    => 'blib/man1/convertConfig.1p',
         'scripts/convertSessions'  => 'blib/man1/convertSessions.1p',
         'scripts/lemonldap-ng-cli' => 'blib/man1/lemonldap-ng-cli.1p',
+        'scripts/lemonldap-ng-sessions' => 'blib/man1/lemonldap-ng-sessions.1p',
     },
 );

@@ -639,17 +639,30 @@ install_bin:	install_conf_dir
 		${SRCCOMMONDIR}/scripts/rotateOidcKeys \
 		${SRCMANAGERDIR}/scripts/lmConfigEditor \
 		${SRCCOMMONDIR}/scripts/lemonldap-ng-cli \
+		${SRCCOMMONDIR}/scripts/lemonldap-ng-sessions \
 		${SRCCOMMONDIR}/scripts/importMetadata \
 			$(RBINDIR)
 	@if [ ! "$(APACHEUSER)" ]; then \
-		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RBINDIR)/lmConfigEditor $(RBINDIR)/lemonldap-ng-cli; \
+		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' \
+			$(RBINDIR)/lmConfigEditor \
+			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/lemonldap-ng-sessions; \
 	else \
-		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RBINDIR)/lmConfigEditor $(RBINDIR)/lemonldap-ng-cli; \
+		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' \
+			$(RBINDIR)/lmConfigEditor \
+			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/lemonldap-ng-sessions; \
 	fi
 	@if [ ! "$(APACHEGROUP)" ]; then \
-		$(PERL) -i -pe 's#__APACHEGROUP__#nobody#g;' $(RBINDIR)/lmConfigEditor $(RBINDIR)/lemonldap-ng-cli; \
+		$(PERL) -i -pe 's#__APACHEGROUP__#nobody#g;' \
+			$(RBINDIR)/lmConfigEditor \
+			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/lemonldap-ng-sessions; \
 	else \
-		$(PERL) -i -pe 's#__APACHEGROUP__#$(APACHEGROUP)#g;' $(RBINDIR)/lmConfigEditor $(RBINDIR)/lemonldap-ng-cli; \
+		$(PERL) -i -pe 's#__APACHEGROUP__#$(APACHEGROUP)#g;' \
+			$(RBINDIR)/lmConfigEditor \
+			$(RBINDIR)/lemonldap-ng-cli \
+			$(RBINDIR)/lemonldap-ng-sessions; \
 	fi
 	@chmod +x $(RBINDIR)/*
 

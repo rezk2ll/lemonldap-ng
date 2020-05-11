@@ -425,6 +425,8 @@ sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{_sysconfdir}/cron.d/*
 sed -i 's/nobody/%{lm_apacheuser}/' \
     %{buildroot}%{lm_bindir}/lmConfigEditor
 sed -i 's/nobody/%{lm_apacheuser}/g' \
+    %{buildroot}%{lm_bindir}/lemonldap-ng-sessions
+sed -i 's/nobody/%{lm_apacheuser}/g' \
     %{buildroot}%{lm_bindir}/lemonldap-ng-cli
 sed -i 's/nobody/%{lm_apacheuser}/g' \
     %{buildroot}%{lm_bindir}/llngDeleteSession
@@ -551,11 +553,13 @@ fi
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
 %{_mandir}/man1/convertConfig*
 %{_mandir}/man1/convertSessions*
+%{_mandir}/man1/lemonldap-ng-sessions*
 %dir %{_libexecdir}/%{name}
 %dir %{lm_sbindir}
 %dir %{lm_bindir}
 %{lm_bindir}/convertConfig
 %{lm_bindir}/convertSessions
+%{lm_bindir}/lemonldap-ng-sessions
 %{lm_bindir}/importMetadata
 %{lm_bindir}/lmMigrateConfFiles2ini
 %{lm_bindir}/rotateOidcKeys
