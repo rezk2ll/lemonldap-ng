@@ -1,0 +1,88 @@
+Rules examples
+==============
+
+This page contains a few useful Perl expressions you can use in your
+:doc:`Handler rules<writingrulesand_headers>`, SAML/OIDC/CAS security
+rules, 2FA Activation rules, etc.
+
+Using session attributes
+------------------------
+
+Session attributes are visible in the Manager's Session browser, any
+attribute you see there can be used in a rule!
+
+-  Restricting access to a single user:
+
+::
+
+   $uid eq "dwho"
+   $uidNumber == 1000
+   $cn eq "Doctor Who"
+   $email eq "dwho@tardis.info"
+   etc.
+
+
+.. tip:: 
+
+    In Perl, ``eq`` means *Equal* and must be used on strings.
+    ``==`` should be used only on numbers 
+
+-  Restricting access to specific groups
+
+::
+
+   $groups =~ /\b(?:admins|su)\b/ # admins OR su
+   $groups =~ /\badmin_[1-3a]\b/ # admin_1 OR admin_2 OR admin_3 OR admin_a
+
+   defined $hGroups{'administrators'}
+
+   # 2.0.8 and higher only
+   inGroup('administrators')
+
+-  Combining multiple expressions
+
+::
+
+   inGroup('timelords') and not $uid eq 'missy'
+
+-  Using Perl's regular expressions
+
+::
+
+   $cn =~ /^Doctor.*/i
+   $email !~ /@spam.com$/
+
+-  Filtering on Authentication Level
+
+::
+
+   $authenticationLevel >= 3
+
+-  Filtering on Authentication method
+
+::
+
+   $_auth ne 'Demo'
+
+
+.. tip:: 
+
+    In Perl, ``ne`` means *Not Equal* and must be used on
+    strings. ``\b`` means *word Boundary*. (?:) means *non capturing*
+    parenthesis. 
+
+Using environment variables
+---------------------------
+
+-  Comparing the IP address
+
+::
+
+   $env->{REMOTE_ADDR} =~ /^10\./
+
+-  Comparing requested URI
+
+::
+
+   $env->{REQUEST_URI} =~ /test/
+
