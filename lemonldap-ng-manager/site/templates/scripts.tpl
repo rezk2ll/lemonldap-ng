@@ -55,7 +55,6 @@
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/file-saver.js/FileSaver.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/llApp.min.js"></script>
 //else -->
-<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/es5-shim/es5-shim.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular/angular.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-aria/angular-aria.js"></script>
