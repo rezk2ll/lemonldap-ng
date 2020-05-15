@@ -20,9 +20,6 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
-import recommonmark
-from recommonmark.transform import AutoStructify
-
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -40,9 +37,7 @@ templates_path = ['_templates']
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
-source_suffix = ['.rst', '.md']
-
-source_parsers = {'.md': 'recommonmark.parser.CommonMarkParser'}
+source_suffix = ['.rst' ]
 
 # The encoding of source files.
 #
@@ -349,12 +344,3 @@ texinfo_documents = [
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #
 # texinfo_no_detailmenu = False
-
-# At the bottom of conf.py
-def setup(app):
-    #app.add_config_value('recommonmark_config', {
-    #    'url_resolver': lambda url: github_doc_root + url,
-    #    'auto_toc_tree_section': 'Contents',
-    #    }, True)
-    app.add_transform(recommonmark.transform.AutoStructify)
-
