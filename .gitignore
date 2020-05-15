@@ -1,6 +1,6 @@
 .gitignore
 .vstags
-node_modules
+doc/sources/admin/_build/
 e2e-tests/conf
 lemonldap-ng-common/MYMETA.json
 lemonldap-ng-common/MYMETA.yml
@@ -22,3 +22,4 @@ lemonldap-ng-portal/MYMETA.yml
 lemonldap-ng-portal/Makefile
 lemonldap-ng-portal/blib/
 lemonldap-ng-portal/pm_to_blib
+node_modules
