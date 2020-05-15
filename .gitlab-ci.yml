@@ -55,6 +55,7 @@ build_centos_8:
   stage: build
   script:
      - yum-config-manager --enable PowerTools
+     - yum-config-manager --enable AppStream
      - yum -y install epel-release
      - make rpm-dist
      - ci-build-pkg
