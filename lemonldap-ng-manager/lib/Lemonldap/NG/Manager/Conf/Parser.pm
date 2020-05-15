@@ -148,14 +148,15 @@ sub scanTree {
     $self->newConf->{cfgNum} = $self->req->params('cfgNum');
     $self->newConf->{cfgAuthor} =
       $self->req->userData->{ Lemonldap::NG::Handler::Main->tsv->{whatToTrace}
-          || '_whatToTrace' } // $ENV{REMOTE_USER} // "anonymous";
+          || '_whatToTrace' } // $self->req->env->{REMOTE_USER}
+      // $ENV{REMOTE_USER} // "anonymous";
     $self->newConf->{cfgAuthorIP} = $self->req->address;
     $self->newConf->{cfgAuthorIP} .=
       ' (maybe '
-      . (    $self->req->env->{ X-Real-IP }
+      . (    $self->req->env->{'X-Real-IP'}
           || $self->req->env->{HTTP_X_FORWARDED_FOR} )
       . ')'
-      if $self->req->env->{ X-Real-IP }
+      if $self->req->env->{'X-Real-IP'}
       or $self->req->env->{HTTP_X_FORWARDED_FOR};
     $self->newConf->{cfgDate}    = time;
     $self->newConf->{cfgVersion} = $Lemonldap::NG::Manager::VERSION;
