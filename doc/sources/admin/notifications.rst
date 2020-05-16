@@ -272,7 +272,7 @@ Examples
 JSON
 ''''
 
-.. code:: javascript
+.. code:: json
 
    [{
    "uid": "foo",

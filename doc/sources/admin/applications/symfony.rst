@@ -22,7 +22,7 @@ HTTP header.
 
 1. Adapt the app/config/security.yml configuration file as below:
 
-.. code:: json
+.. code:: yaml
 
    security:
 
