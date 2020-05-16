@@ -107,7 +107,7 @@ keys in Second Factor Devices array (JSON) in your user-database. Then
 map it to the \_2fDevices attribute *(see
 :doc:`exported variables<exportedvars>`)*:
 
-.. code:: json
+.. code:: perl
 
    $_2fDevices = [{"name" : "MyU2FKey" , "type" : "U2F" , "_userKey" : "########" , "_keyHandle":"########" , "epoch":"1524078936"}, ...]
 
