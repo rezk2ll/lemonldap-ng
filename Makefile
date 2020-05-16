@@ -1129,7 +1129,7 @@ manager_cpan:	manager_conf
 	@mv ${SRCMANAGERDIR}/Lemonldap*.gz .
 
 documentation:
-	@cd doc/ && ../scripts/doc.pl
+	@cd doc/sources/admin/ && make html
 
 test-diff:
 	@for file in `find lemonldap-ng-*/lib -type f`; do \
