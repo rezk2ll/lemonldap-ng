@@ -52,10 +52,18 @@ sub init {
 
     $self->yubi(
         Auth::Yubikey_WebClient->new( {
-                id    => $self->conf->{yubikey2fClientID},
-                api   => $self->conf->{yubikey2fSecretKey},
-                nonce => $self->conf->{yubikey2fNonce},
-                url   => $self->conf->{yubikey2fUrl}
+                id  => $self->conf->{yubikey2fClientID},
+                api => $self->conf->{yubikey2fSecretKey},
+                (
+                    $self->conf->{yubikey2fNonce}
+                    ? ( nonce => $self->conf->{yubikey2fNonce} )
+                    : ()
+                ),
+                (
+                    $self->conf->{yubikey2fUrl}
+                    ? ( url => $self->conf->{yubikey2fUrl} )
+                    : ()
+                ),
             }
         )
     );
